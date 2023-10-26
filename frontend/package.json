@@ -31,9 +31,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-move": "BUILD_PATH='temp' && BACKEND_PUBLIC_PATH='../backend/' && npm run build && rm -rf $BACKEND_PUBLIC_PATH/public/static && mv $BUILD_PATH/* $BACKEND_PUBLIC_PATH/public && rm $BUILD_PATH",
-
-
     "watch": "npm-watch"
   },
   "watch": {
