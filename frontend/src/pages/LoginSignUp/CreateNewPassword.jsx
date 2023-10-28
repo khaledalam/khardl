@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import {API_ENDPOINT} from "../../config/consts";
 
 const CreateNewPassword = () => {
     const { t } = useTranslation();
@@ -28,7 +29,7 @@ const CreateNewPassword = () => {
     // API POST REQUEST 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch('https://khardl.com/api/password/reset', {
+            const response = await fetch(`${API_ENDPOINT}/password/reset`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

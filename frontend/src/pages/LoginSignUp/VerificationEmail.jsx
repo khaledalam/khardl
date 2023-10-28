@@ -59,7 +59,7 @@ const VerificationEmail = () => {
     // API POST REQUEST
     const onSubmit = async (data) => {
         try {
-            const response = await fetch('https://khardl.com/api/email/verify', {
+            const response = await fetch(`${API_ENDPOINT}/email/verify`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

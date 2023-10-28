@@ -7,4 +7,4 @@ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 docker-compose down --remove-orphans
 docker-compose up -d --build --remove-orphans
 
-cd backend && php artisan serv
+cd backend && php artisan serv # --port 80

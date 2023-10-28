@@ -9,9 +9,10 @@ const Protected = (props) => {
         if (!sessionStorage.getItem('email')) {
             if (props.Cmp === CreateNewPassword) {
                 navigate("/reset-password");
-            } else {
-                navigate("/login");
             }
+            // else {
+            //     navigate("/login");
+            // }
         }
         if (!sessionStorage.getItem('user-info')) {
             navigate("/login");

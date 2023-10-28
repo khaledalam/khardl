@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import {API_ENDPOINT} from "../../config/consts";
 
 const Login = () => {
     const { t } = useTranslation();
@@ -27,7 +28,7 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             setSpinner(true);
-            const response = await fetch('https://khardl.com/api/login', {
+            const response = await fetch(`${API_ENDPOINT}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

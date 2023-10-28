@@ -32,7 +32,7 @@ const Register = () => {
     const onSubmit = async (data) => {
         try {
             setSpinner(true);
-            let response = await fetch(API_ENDPOINT, {
+            let response = await fetch(`${API_ENDPOINT}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

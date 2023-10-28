@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaStarOfLife } from "react-icons/fa";
+import {API_ENDPOINT, WEBSITE_URL} from "../../config/consts";
 
 function CompleteRegisteration() {
   const { t } = useTranslation();
@@ -35,13 +36,14 @@ function CompleteRegisteration() {
 
   // API POST REQUEST
   const onSubmit = async (data) => {
+    console.log(data)
     try {
-      let response = await fetch("https://khardl.com/api/register-step2", {
+      let response = await fetch(`${API_ENDPOINT}/register-step2`, {
         method: "POST",
         headers: {
           'Content-Type': "text/plain",
           Authorization: `Bearer ${token}`,
-          Origin: "https://khardl.com"
+          Origin: WEBSITE_URL
         },
         body: JSON.stringify({
           commercial_registration: data.commercial_registration[0],

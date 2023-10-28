@@ -4,7 +4,7 @@
 export BUILD_PATH='temp'
 BACKEND_PUBLIC_PATH='backend/public'
 
-NEW_HASH_JS_MAIN_PATH=$($BACKEND_PUBLIC_PATH/static/js)
+NEW_HASH_JS_MAIN_PATH="$BACKEND_PUBLIC_PATH/static/js"
 INDEX_BLADE_FILE_PATH='backend/resources/views/index.blade.php'
 
 

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import {API_ENDPOINT} from "../../config/consts";
 
 const ResetPassword = () => {
     const { t } = useTranslation();
@@ -15,7 +16,7 @@ const ResetPassword = () => {
     // API POST REQUEST 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch('https://khardl.com/api/password/forgot', {
+            const response = await fetch(`${API_ENDPOINT}/password/forgot`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

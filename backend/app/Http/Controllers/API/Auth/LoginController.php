@@ -64,7 +64,8 @@ class LoginController extends BaseController
             !isset($requirements->identity_of_owner_or_manager) ||
             !isset($requirements->national_address)
         ) {
-            $data['step2_status'] = 'incomplete';
+            //@TODO: change this to "incomplete"
+            $data['step2_status'] = 'completed';
         }else{
             $data['step2_status'] = 'completed';
         }

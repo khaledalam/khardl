@@ -22,6 +22,6 @@ foreach ($sharedRoutes as $route) {
     })->name($route);
 }
 
-Route::middleware(['auth', 'accepted'])->prefix('panel')->group(function () {
+Route::middleware(['accepted'])->prefix('panel')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Panel\DashboardController::class, 'index'])->name('dashboard');
 });
