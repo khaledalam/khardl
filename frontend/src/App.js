@@ -25,6 +25,7 @@ import 'aos/dist/aos.css';
 import ResetPassword from './pages/LoginSignUp/ResetPassword';
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword';
 import Protected from './Protected';
+import { API_URL } from './pages/context';
 
 const App = () => {
   const Language = useSelector((state) => state.languageMode.languageMode);
@@ -33,6 +34,7 @@ const App = () => {
   const location = useLocation();
   const showHeader = !['/policies', '/privacy'].includes(location.pathname);
   const showFooter = !['/login', '/register', '/reset-password', '/create-new-password', '/verification-email', '/complete-register', '/policies', '/privacy'].includes(location.pathname);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   Aos.init({
     duration: 1000,
@@ -55,6 +57,7 @@ const App = () => {
         <Supports />
         <ScrollUp />
         <div>
+        <API_URL.Provider value={apiUrl} >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -71,6 +74,7 @@ const App = () => {
             <Route path="/prices" element={<Prices />} />
             <Route path="/fqa" element={<FQA />} />
           </Routes>
+        </API_URL.Provider>
         </div>
         {showFooter &&
           <div className='p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] '>

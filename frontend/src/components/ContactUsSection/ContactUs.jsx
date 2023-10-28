@@ -5,17 +5,17 @@ import { Link } from "react-router-dom";
 import MainText from '../MainText';
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import {API_ENDPOINT} from "../../config/consts";
+import { useApiContext } from '../../pages/context';
 
 function ContactUs() {
     const { t } = useTranslation();
-    const { register, handleSubmit, formState: { errors } } = useForm();
-
+    const { register, handleSubmit, formState: { errors }, reset} = useForm();
+    const apiUrl = useApiContext();
     /////////////////////////////////////////////////////////////////////////////////////
     // API POST REQUEST 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch(`${API_ENDPOINT}/contact-us`, {
+            const response = await fetch(`${apiUrl}/contact-us`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,6 +31,7 @@ function ContactUs() {
             if (response.ok) {
                 const responseData = await response.json();
                 toast.success(`${t("Your contact information has been sent successfully")}`);
+                reset();
             } else {
                 throw new Error(`${t("Your contact information has not been sent")}`);
             }
@@ -78,7 +79,7 @@ function ContactUs() {
                                             placeholder={t("Phone")}
                                             name="Phone"
                                             {...register("phone_number", { required: true })}
-                                            maxLength={12}
+                                            minLength={10}
                                         />
                                         {errors.phone_number && <span className='text-red-500 text-xs mt-2 ms-2 text-start'>{t("Phone Error")}</span>}
                                     </div>
@@ -89,6 +90,7 @@ function ContactUs() {
                                             className="p-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--secondary)]"
                                             placeholder={t("Business name")}
                                             name="BusinessName"
+                                            minLength={5}
                                             {...register("business_name", { required: true })}
                                         />
                                         {errors.business_name && <span className='text-red-500 text-xs mt-2 ms-2 text-start'>{t("Business name Error")}</span>}
@@ -100,6 +102,7 @@ function ContactUs() {
                                             className="p-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--secondary)]"
                                             placeholder={t("Responsible person name")}
                                             name="ResponsiblePersonName"
+                                            minLength={3}
                                             {...register("responsible_person_name", { required: true })}
                                         />
                                         {errors.responsible_person_name && <span className='text-red-500 text-xs mt-2 ms-2 text-start'>{t("Responsible person Error")}</span>}

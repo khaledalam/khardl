@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import {API_ENDPOINT} from "../../config/consts";
+import { useApiContext } from '../context';
 
 const CreateNewPassword = () => {
     const { t } = useTranslation();
@@ -17,6 +17,7 @@ const CreateNewPassword = () => {
     const [openEyeRePassword, setOpenEyeRePassword] = useState(false);
     const Language = useSelector((state) => state.languageMode.languageMode);
     let user_email = sessionStorage.getItem('email');
+    const apiUrl = useApiContext();
 
     const EyePassword = () => {
         setOpenEyePassword(!openEyePassword)
@@ -29,7 +30,7 @@ const CreateNewPassword = () => {
     // API POST REQUEST 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch(`${API_ENDPOINT}/password/reset`, {
+            const response = await fetch(`${apiUrl}/password/reset`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

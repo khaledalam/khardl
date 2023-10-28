@@ -8,7 +8,8 @@ import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import {API_ENDPOINT} from "../../config/consts";
+import { useApiContext } from '../context';
+
 
 const Login = () => {
     const { t } = useTranslation();
@@ -17,6 +18,7 @@ const Login = () => {
     const [openEyePassword, setOpenEyePassword] = useState(false);
     const Language = useSelector((state) => state.languageMode.languageMode);
     const [spinner, setSpinner] = useState(false);
+    const apiUrl = useApiContext();
 
     const EyePassword = () => {
         setOpenEyePassword(!openEyePassword)
@@ -28,7 +30,7 @@ const Login = () => {
     const onSubmit = async (data) => {
         try {
             setSpinner(true);
-            const response = await fetch(`${API_ENDPOINT}/login`, {
+            const response = await fetch(`${apiUrl}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

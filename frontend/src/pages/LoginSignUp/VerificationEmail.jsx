@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { GrPowerReset } from 'react-icons/gr';
-import {API_ENDPOINT} from "../../config/consts";
+import { useApiContext } from "../context";
 
 const VerificationEmail = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const apiUrl = useApiContext();
+
 
     const { register: register, handleSubmit: handleSubmit1, formState: { errors: errors } } = useForm();
     const { handleSubmit: handleSubmit2 } = useForm();
@@ -30,7 +32,7 @@ const VerificationEmail = () => {
     // API POST REQUEST
     const ResendCode = async (data) => {
         try {
-            const response = await fetch(`${API_ENDPOINT}/email/send-verify`, {
+            const response = await fetch(`${apiUrl}/email/send-verify`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +61,7 @@ const VerificationEmail = () => {
     // API POST REQUEST
     const onSubmit = async (data) => {
         try {
-            const response = await fetch(`${API_ENDPOINT}/email/verify`, {
+            const response = await fetch(`${apiUrl}/email/verify`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -9,7 +9,8 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
-import {API_ENDPOINT} from "../../config/consts";
+import { useApiContext } from '../context';
+
 
 const Register = () => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Register = () => {
     const [openEyeRePassword, setOpenEyeRePassword] = useState(false);
     const Language = useSelector((state) => state.languageMode.languageMode);
     const [spinner, setSpinner] = useState(false);
+    const apiUrl = useApiContext();
 
     const EyePassword = () => {
         setOpenEyePassword(!openEyePassword)
@@ -32,7 +34,7 @@ const Register = () => {
     const onSubmit = async (data) => {
         try {
             setSpinner(true);
-            let response = await fetch(`${API_ENDPOINT}/register`, {
+            let response = await fetch(`${apiUrl}/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -80,10 +82,9 @@ const Register = () => {
                         <div className="relative flex flex-col justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none ">
                             <div className='mt-6 w-[100%]'>
                                 <MainText
-                                    Title={t("Create an account aa")}
+                                    Title={t("Create an account")}
                                     classTitle="!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]"
                                 />
-                                <span>test</span>
                                 <div className="w-[100%] flex items-center justify-center mt-4">
                                     <form onSubmit={handleSubmit(onSubmit)} className="w-[100%] flex flex-col gap-[14px] px-[15px]">
                                         <div className='flex justify-stretch items-center gap-3 w-[100%]'>

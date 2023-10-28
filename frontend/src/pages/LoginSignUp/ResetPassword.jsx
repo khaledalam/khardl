@@ -5,18 +5,19 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import {API_ENDPOINT} from "../../config/consts";
+import { useApiContext } from "../context";
 
 const ResetPassword = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const apiUrl = useApiContext();
 
     /////////////////////////////////////////////////////////////////////////////////////
     // API POST REQUEST 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch(`${API_ENDPOINT}/password/forgot`, {
+            const response = await fetch(`${apiUrl}/password/forgot`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaStarOfLife } from "react-icons/fa";
-import {API_ENDPOINT, WEBSITE_URL} from "../../config/consts";
+import { WEBSITE_URL} from "../../config/consts";
+import { useApiContext } from '../context';
 
 function CompleteRegisteration() {
   const { t } = useTranslation();
@@ -33,12 +34,13 @@ function CompleteRegisteration() {
   } = useForm();
   let user_info = JSON.parse(sessionStorage.getItem("user-info"));
   const token = user_info ? user_info.access_token : "";
+  const apiUrl = useApiContext();
 
   // API POST REQUEST
   const onSubmit = async (data) => {
     console.log(data)
     try {
-      let response = await fetch(`${API_ENDPOINT}/register-step2`, {
+      let response = await fetch(`${apiUrl}/register-step2`, {
         method: "POST",
         headers: {
           'Content-Type': "text/plain",
