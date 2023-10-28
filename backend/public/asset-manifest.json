@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bfcd8873.css",
+    "main.js": "/static/js/main.40180095.js",
+    "static/media/HeroPitcureEn.webp": "/static/media/HeroPitcureEn.4f0f825cba6cc8899068.webp",
+    "static/media/HeroPitcureAr.webp": "/static/media/HeroPitcureAr.bca4aa51b2d4712bdff9.webp",
+    "static/media/Logo.webp": "/static/media/Logo.3ee521685f2a51a3a161.webp",
+    "static/media/bgRegisteration.webp": "/static/media/bgRegisteration.9750651741baee1e4f65.webp",
+    "static/media/LogoPattern.webp": "/static/media/LogoPattern.6032d565356344543ea0.webp",
+    "static/media/Hero.webp": "/static/media/Hero.be6cbdb497c53bf531f6.webp",
+    "static/media/saudiArabia.png": "/static/media/saudiArabia.bc7e41a44faab66bd278.png",
+    "static/media/KhardlDelivery.webp": "/static/media/KhardlDelivery.e5cd066f74f4115bd5e4.webp",
+    "static/media/unitedKingdom.png": "/static/media/unitedKingdom.789ff1da7dc0b7ff0220.png",
+    "static/media/request.webp": "/static/media/request.60c284fdfb6556f413d1.webp",
+    "static/media/ElectronicPayments.webp": "/static/media/ElectronicPayments.b11597e01c48a816f5cc.webp",
+    "static/media/ContactUsCover.webp": "/static/media/ContactUsCover.8cfedd3a2b6f1b95be8d.webp",
+    "static/media/driversApp.webp": "/static/media/driversApp.5b2cd412de2418b75827.webp",
+    "static/media/ClientSection.webp": "/static/media/ClientSection.46fce287b4a6bf2a7077.webp",
+    "static/media/Branches.webp": "/static/media/Branches.f3d8c2969c75dc52b5d3.webp",
+    "static/media/receiveRequests.webp": "/static/media/receiveRequests.539d14b387586cb5c904.webp",
+    "static/media/WebsiteAndApplication.webp": "/static/media/WebsiteAndApplication.cda5b6b6e5e5c94800d9.webp",
+    "static/media/revicons.eot": "/static/media/revicons.a77de540a38981833f9e.eot",
+    "static/media/revicons.ttf": "/static/media/revicons.57fd05d4ae650374c8de.ttf",
+    "static/media/ClientLogo3.webp": "/static/media/ClientLogo3.643e50f2c48953a95e7f.webp",
+    "static/media/ClientLogo2.webp": "/static/media/ClientLogo2.d8774362b6866c770c0b.webp",
+    "static/media/revicons.woff": "/static/media/revicons.e8746a624ed098489406.woff",
+    "static/media/OvalShape.webp": "/static/media/OvalShape.933e5604215dde5f6f0e.webp",
+    "static/media/ClientLogo1.webp": "/static/media/ClientLogo1.080532ec52d66a078a01.webp",
+    "static/media/RequestPointSection.webp": "/static/media/RequestPointSection.c31925fe407549de32d3.webp",
+    "index.html": "/index.html",
+    "main.bfcd8873.css.map": "/static/css/main.bfcd8873.css.map",
+    "main.40180095.js.map": "/static/js/main.40180095.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bfcd8873.css",
+    "static/js/main.40180095.js"
+  ]
+}
