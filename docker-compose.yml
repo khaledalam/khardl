@@ -1,0 +1,28 @@
+version: '3'
+
+# khardl
+services:
+    khardl_db:
+        platform: 'linux/amd64'
+        container_name: khardl_db
+        image: mariadb
+        restart: unless-stopped
+        environment:
+            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./docker/database/data:/var/lib/mysql:z
+
+#    backend:
+#        container_name: backend
+#
+#    frontend:
+#        container_name: frontend
+
+volumes:
+  db:
+    driver: local
