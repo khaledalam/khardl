@@ -17,13 +17,12 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 | Feel free to customize them however you want. Good luck!
 |
 */
-/*
-Route::middleware([
-    'web',
-    InitializeTenancyByDomain::class,
-    PreventAccessFromCentralDomains::class,
-])->group(function () {
+
+Route::group([
+    'middleware' => ['tenant', PreventAccessFromCentralDomains::class,InitializeTenancyByDomain::class], // See the middleware group in Http Kernel
+    'as' => 'tenant.',
+], function () {
     Route::get('/', function () {
         return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
     });
-});*/
+});

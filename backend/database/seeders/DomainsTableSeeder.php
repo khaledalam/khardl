@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Domain;
+use App\Models\Tenant;
 use Illuminate\Database\Seeder;
 
 class DomainsTableSeeder extends Seeder
@@ -18,16 +20,13 @@ class DomainsTableSeeder extends Seeder
 
         \DB::table('domains')->delete();
         
-        \DB::table('domains')->insert(array (
-            0 => 
-            array (
-                'id' => 1,
-                'domain' => 'first.khardl-back.test',
-                'tenant_id' => 'first',
-                'created_at' => '2023-10-01 19:55:57',
-                'updated_at' => '2023-10-01 19:55:57',
-            ),
-        ));
+        Domain::create([
+            'id' => 1,
+            'domain' => 'first.'.config('tenancy.central_domains')[0],
+            'tenant_id' => Tenant::first()->id,
+            'created_at' => '2023-10-01 19:55:57',
+            'updated_at' => '2023-10-01 19:55:57',
+        ]);
         
         
     }

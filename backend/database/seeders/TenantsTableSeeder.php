@@ -3,6 +3,15 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\Tenant\UserSeeder;
+use Database\Seeders\Tenant\OrderSeeder;
+use Database\Seeders\Tenant\BranchSeeder;
+use Database\Seeders\Tenant\ProductSeeder;
+use Database\Seeders\Tenant\CategorySeeder;
+use Database\Seeders\Tenant\OrderItemSeeder;
+use Database\Seeders\Tenant\RestaurantSeeder;
+use Database\Seeders\Tenant\ProductSizeSeeder;
+use Database\Seeders\Tenant\RolesAndPermissionsSeeder;
 
 class TenantsTableSeeder extends Seeder
 {
@@ -15,19 +24,18 @@ class TenantsTableSeeder extends Seeder
     public function run()
     {
         
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+            UserSeeder::class,
+            RestaurantSeeder::class,
+            BranchSeeder::class,
+            OrderSeeder::class,
+            CategorySeeder::class,
+            ProductSizeSeeder::class,
+            ProductSeeder::class,
+            OrderItemSeeder::class
+        ]);
 
-        \DB::table('tenants')->delete();
-        
-        \DB::table('tenants')->insert(array (
-            0 => 
-            array (
-                'id' => 'first',
-                'created_at' => '2023-10-01 19:55:47',
-                'updated_at' => '2023-10-01 19:55:47',
-                'data' => '{"tenancy_db_name": "restaurantfirst"}',
-            ),
-        ));
-        
         
     }
 }

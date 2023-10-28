@@ -50,7 +50,9 @@ class PermissionSeeder extends Seeder
             'admin.tag.add', 'admin.tag.edit', 'admin.tag.update', 'admin.tag.delete',
             'admin.tenant.add', 'admin.tenant.edit', 'admin.tenant.update', 'admin.tenant.delete',
             'admin.transaction.add', 'admin.transaction.edit', 'admin.transaction.update', 'admin.transaction.delete',
-            'admin.whishlist.add', 'admin.whishlist.edit', 'admin.whishlist.update', 'admin.whishlist.delete'
+            'admin.whishlist.add', 'admin.whishlist.edit', 'admin.whishlist.update', 'admin.whishlist.delete',
+            'admin.domain.add', 'admin.domain.edit', 'admin.domain.update', 'admin.domain.delete'
+
         ];
 
         // Create each permission
