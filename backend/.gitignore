@@ -14,8 +14,12 @@ Homestead.yaml
 auth.json
 npm-debug.log
 yarn-error.log
+composer.lock
 /.fleet
 /.idea
 /.vscode
 .DS_Store
 storage
+nova/node_modules
+nova/vendor
+backend/nova/composer.lock
