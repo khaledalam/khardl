@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +16,24 @@ use Illuminate\Support\Facades\Route;
 
 
 
-$sharedRoutes = \App\Traits\SharedRoutesTrait::getSharedRoutes();
-foreach ($sharedRoutes as $route) {
-    Route::get($route, function() {
-        return view('index');
-    })->name($route);
-}
+
+
+
+Route::group(['middleware'=>'universal', InitializeTenancyByDomain::class,'as'=>'central.'],function() {
+    $groups = \App\Traits\SharedRoutesTrait::groups();
+    foreach ($groups as $group) {
+        Route::middleware($group['middleware'])->group(function() use ($group){
+            foreach ($group['routes'] as $route=>$name) {
+                Route::get($route, function() {
+                    return view('index');
+                })->name($name);
+            }
+        });
+    }
+})
+->middleware(['universal', InitializeTenancyByDomain::class]);
+
+Route::get('test', [\App\Http\Controllers\TestController::class, 'index'])->middleware("web");
 
 Route::middleware(['accepted'])->prefix('panel')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Panel\DashboardController::class, 'index'])->name('dashboard');

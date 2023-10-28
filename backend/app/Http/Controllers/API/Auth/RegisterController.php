@@ -51,6 +51,7 @@ class RegisterController extends BaseController
         $restaurant->save();
 
         $user->assignRole('Restaurant Owner');
+        Auth::login($user);
         return $this->sendResponse($success, 'User register successfully.');
     }
 
