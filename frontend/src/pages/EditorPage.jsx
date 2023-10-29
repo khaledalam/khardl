@@ -74,7 +74,6 @@ const EditorPage = () => {
                     <Sidebar />
                 </>
             }
-
             <div className={`editor bg-[var(--secondary)] w-[100%]`}>
                 <div className={`flex justify-center`}>
                     <div className={`${screenSize === "desktop" ? "w-[100%]" : (screenSize === "mobile" ? "w-[30%]" : "w-[60%]")} m-6 mt-[85px] rounded-[10px]`}>
