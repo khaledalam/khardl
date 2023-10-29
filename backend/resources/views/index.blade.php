@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="root"></div>
-    <script src="/static/js/main.afd7bb89.js"></script> <!-- Adjust path if necessary -->
+    <script src="/static/js/main.1f77f6a2.js"></script> <!-- Adjust path if necessary -->
 </body>
 </html>
 

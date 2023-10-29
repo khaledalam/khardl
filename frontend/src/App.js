@@ -28,8 +28,7 @@ import { API_URL } from './pages/context';
 import EditorPage from "./pages/EditorPage";
 import ResturentsPreview from './components/Resturents/ResturentsPreview/Preview';
 import CustomersPreview from './components/Customers/CustomersPreview/Preview';
-
-
+import EditorSwitcher from "./pages/EditorSwitcher";
 
 const App = () => {
   const Language = useSelector((state) => state.languageMode.languageMode);
@@ -80,6 +79,7 @@ const App = () => {
             <Route path="/fqa" element={<FQA />} />
 
             {/*Editor*/}
+            <Route path="/switcher" element={<EditorSwitcher />} />
             <Route path="/resturents/:branch_id" element={<EditorPage />} />
             <Route path="/resturents/:branch_id/Preview" element={<ResturentsPreview />} />
             <Route path="/customers/:branch_id" element={<EditorPage />} />
