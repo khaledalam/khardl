@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeLanguage } from '../redux/features/languageSlice';
+import { changeLanguage } from '../redux/languageSlice';
 import Arabic from '../assets/saudiArabia.png';
 import English from '../assets/unitedKingdom.png';
 import Button from './Button';
