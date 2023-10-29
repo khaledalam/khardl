@@ -35,8 +35,8 @@ const App = () => {
   const direction = Language === 'en' ? 'ltr' : 'rtl';
   const fontFamily = 'cairo, sans-serif';
   const location = useLocation();
-  const showHeader = !['/policies', '/privacy'].includes(location.pathname);
-  const showFooter = !['/login', '/register', '/reset-password', '/create-new-password', '/verification-email', '/complete-register', '/policies', '/privacy'].includes(location.pathname);
+  const showHeader = !['/switcher', '/policies', '/privacy'].includes(location.pathname);
+  const showFooter = !['/switcher', '/login', '/register', '/reset-password', '/create-new-password', '/verification-email', '/complete-register', '/policies', '/privacy'].includes(location.pathname);
   const apiUrl = process.env.REACT_APP_API_URL;
 
 

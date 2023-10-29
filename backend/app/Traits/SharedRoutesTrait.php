@@ -26,14 +26,14 @@ trait SharedRoutesTrait
             'middleware'=>[
                 'web'
             ]
-           
+
         ];
     }
     public static function getAuthRoutes(): array
     {
         return [
             'routes'=>[
-                'reset-password'=>'reset-password',  
+                'reset-password'=>'reset-password',
                 'verification-email'=>'verification-email',
                 'create-new-password'=>'create-new-password',
                 'verification-password'=>'verification-password',
@@ -43,7 +43,7 @@ trait SharedRoutesTrait
                 'auth',
                 'web'
             ]
-           
+
         ];
     }
     public static function getGuestRoutes(): array
@@ -52,6 +52,7 @@ trait SharedRoutesTrait
             'routes'=>[
                 'register'=>'register',
                 'login'=>'login',
+                'switcher' => 'switcher'
             ],
             'middleware'=>[
                 'guest',
