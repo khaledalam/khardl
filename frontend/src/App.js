@@ -1,4 +1,3 @@
-
 import React from 'react';
 import './App.css';
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -26,6 +25,11 @@ import ResetPassword from './pages/LoginSignUp/ResetPassword';
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword';
 import Protected from './Protected';
 import { API_URL } from './pages/context';
+import EditorPage from "./pages/EditorPage";
+import ResturentsPreview from './components/Resturents/ResturentsPreview/Preview';
+import CustomersPreview from './components/Customers/CustomersPreview/Preview';
+
+
 
 const App = () => {
   const Language = useSelector((state) => state.languageMode.languageMode);
@@ -35,6 +39,7 @@ const App = () => {
   const showHeader = !['/policies', '/privacy'].includes(location.pathname);
   const showFooter = !['/login', '/register', '/reset-password', '/create-new-password', '/verification-email', '/complete-register', '/policies', '/privacy'].includes(location.pathname);
   const apiUrl = process.env.REACT_APP_API_URL;
+
 
   Aos.init({
     duration: 1000,
@@ -61,18 +66,24 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/verification-email" element={<Protected Cmp={VerificationEmail} />} />
             <Route path="/create-new-password" element={<Protected Cmp={CreateNewPassword} />} />
             <Route path="/complete-register" element={<Protected Cmp={CompleteRegisteration} />} />
             <Route path="/policies" element={<TermsPolicies />} />
             <Route path="/privacy" element={<Privacy />} />
-            <Route path="/register" element={<Register />} />
             <Route path="/advantages" element={<Advantages />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="/services" element={<Services />} />
             <Route path="/prices" element={<Prices />} />
             <Route path="/fqa" element={<FQA />} />
+
+            {/*Editor*/}
+            <Route path="/resturents/:branch_id" element={<EditorPage />} />
+            <Route path="/resturents/:branch_id/Preview" element={<ResturentsPreview />} />
+            <Route path="/customers/:branch_id" element={<EditorPage />} />
+            <Route path="/customers/:branch_id/Preview" element={<CustomersPreview />} />
           </Routes>
         </API_URL.Provider>
         </div>

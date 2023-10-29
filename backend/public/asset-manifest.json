@@ -1,11 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.bfcd8873.css",
-    "main.js": "/static/js/main.40180095.js",
+    "main.css": "/static/css/main.b6a6d44e.css",
+    "main.js": "/static/js/main.afd7bb89.js",
+    "static/js/483.da772232.chunk.js": "/static/js/483.da772232.chunk.js",
     "static/media/HeroPitcureEn.webp": "/static/media/HeroPitcureEn.4f0f825cba6cc8899068.webp",
     "static/media/HeroPitcureAr.webp": "/static/media/HeroPitcureAr.bca4aa51b2d4712bdff9.webp",
     "static/media/Logo.webp": "/static/media/Logo.3ee521685f2a51a3a161.webp",
     "static/media/bgRegisteration.webp": "/static/media/bgRegisteration.9750651741baee1e4f65.webp",
+    "static/media/image.webp": "/static/media/image.78560625f83a63abcde1.webp",
     "static/media/LogoPattern.webp": "/static/media/LogoPattern.6032d565356344543ea0.webp",
     "static/media/Hero.webp": "/static/media/Hero.be6cbdb497c53bf531f6.webp",
     "static/media/saudiArabia.png": "/static/media/saudiArabia.bc7e41a44faab66bd278.png",
@@ -28,11 +30,12 @@
     "static/media/ClientLogo1.webp": "/static/media/ClientLogo1.080532ec52d66a078a01.webp",
     "static/media/RequestPointSection.webp": "/static/media/RequestPointSection.c31925fe407549de32d3.webp",
     "index.html": "/index.html",
-    "main.bfcd8873.css.map": "/static/css/main.bfcd8873.css.map",
-    "main.40180095.js.map": "/static/js/main.40180095.js.map"
+    "main.b6a6d44e.css.map": "/static/css/main.b6a6d44e.css.map",
+    "main.afd7bb89.js.map": "/static/js/main.afd7bb89.js.map",
+    "483.da772232.chunk.js.map": "/static/js/483.da772232.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bfcd8873.css",
-    "static/js/main.40180095.js"
+    "static/css/main.b6a6d44e.css",
+    "static/js/main.afd7bb89.js"
   ]
 }
