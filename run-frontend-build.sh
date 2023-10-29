@@ -13,7 +13,7 @@ rm -rf frontend/$BUILD_PATH
 
 
 # build new fresh version of frontend
-mkdir -p $BUILD_PATH
+mkdir -p frontend/$BUILD_PATH
 npm run build --prefix frontend
 
 
@@ -24,6 +24,8 @@ rm -rf $BACKEND_PUBLIC_PATH/static
 # move new build frontend files
 cp -r frontend/$BUILD_PATH/ $BACKEND_PUBLIC_PATH/
 
+# remove temp build folder
+rm -rf frontend/$BUILD_PATH
 
 # rename static filename hashes in index.blade.php
 #NEW_HASH=$(find "$NEW_HASH_JS_MAIN_PATH" -type f -regex ".*/main[^/]*\.js$")
