@@ -5,6 +5,7 @@ namespace App\Providers;
 use Laravel\Nova\Nova;
 use App\Nova\Menu\NovaMenu;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider

@@ -102,11 +102,12 @@ return [
     'middleware' => [
         'web',
         HandleInertiaRequests::class,
+        LanguageSwitch::class  ,
         DispatchServingNovaEvent::class,
         BootTools::class,
-        LanguageSwitch::class  
+      
 
-],
+    ],
 
     'api_middleware' => [
         'nova',
