@@ -72,4 +72,12 @@ class LoginController extends BaseController
 
         return $this->sendResponse($data, 'User logged in successfully.');
     }
+    public function auth(){
+        $user = auth()->user();
+        if($user){
+            return $this->sendResponse($user,"Authenticated.");
+        }else {
+            return $this->sendError($user,"UnAuthenticated.",401);
+        }
+    }
 }
