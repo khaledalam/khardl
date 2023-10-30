@@ -24,7 +24,7 @@ trait SharedRoutesTrait
                 'FQA'=>'FQA',
             ],
             'middleware'=>[
-                'web'
+               
             ]
 
         ];
@@ -41,7 +41,7 @@ trait SharedRoutesTrait
             ],
             'middleware'=>[
                 'auth',
-                'web'
+               
             ]
 
         ];
@@ -56,7 +56,7 @@ trait SharedRoutesTrait
             ],
             'middleware'=>[
                 'guest',
-                'web'
+               
             ]
         ];
     }

@@ -9,7 +9,10 @@
 </head>
 <body>
     <div id="root"></div>
-    <script src="/static/js/main.cf8c6e49.js"></script> <!-- Adjust path if necessary -->
+    <script> 
+          window.csrfToken = "{{ csrf_token() }}";
+    </script>
+    <script src="/static/js/main.76796c7f.js"></script> <!-- Adjust path if necessary -->
 </body>
 </html>
 

@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaStarOfLife } from "react-icons/fa";
-import { WEBSITE_URL} from "../../config/consts";
 import { useApiContext } from '../context';
 
 function CompleteRegisteration() {
@@ -44,8 +43,7 @@ function CompleteRegisteration() {
         method: "POST",
         headers: {
           'Content-Type': "text/plain",
-          Authorization: `Bearer ${token}`,
-          Origin: WEBSITE_URL
+          'X-CSRF-TOKEN':  window.csrfToken,
         },
         body: JSON.stringify({
           commercial_registration: data.commercial_registration[0],

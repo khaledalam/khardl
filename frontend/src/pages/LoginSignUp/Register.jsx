@@ -39,6 +39,7 @@ const Register = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'X-CSRF-TOKEN':  window.csrfToken
                 },
                 body: JSON.stringify({
                     first_name: data.first_name,

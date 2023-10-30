@@ -35,6 +35,7 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'X-CSRF-TOKEN':  window.csrfToken
                 },
                 body: JSON.stringify({
                     email: data.email,
@@ -86,6 +87,7 @@ const Login = () => {
                                 <div className="w-[100%] flex items-center justify-center mt-4">
                                     <form onSubmit={handleSubmit(onSubmit)} className="w-[100%] flex flex-col gap-[14px] px-[15px]">
                                         {/* Input 1 */}
+                                        
                                         <div>
                                             <h4 className='mb-2 ms-2 text-[13px] font-semibold'>{t("Email")}</h4>
                                             <input

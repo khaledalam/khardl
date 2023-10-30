@@ -37,6 +37,7 @@ const VerificationEmail = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'X-CSRF-TOKEN':  window.csrfToken
                 },
                 body: JSON.stringify({
                     email: user_email,
@@ -66,6 +67,7 @@ const VerificationEmail = () => {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'X-CSRF-TOKEN':  window.csrfToken
                 },
                 body: JSON.stringify({
                     code: data.verificationcode,

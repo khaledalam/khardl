@@ -21,6 +21,16 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                if ($request->expectsJson()) {
+                    $errorMessages = 'User is already registered with this email address.';
+                    $response = [
+                        'success' => false,
+                        'message' => 'Authorized',
+                        'data' => $errorMessages
+                    ];
+        
+                    return response()->json($response, 401);
+                }
                 return redirect(RouteServiceProvider::HOME);
             }
         }

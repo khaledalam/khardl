@@ -20,6 +20,7 @@ function ContactUs() {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'X-CSRF-TOKEN':  window.csrfToken
                 },
                 body: JSON.stringify({
                     email: data.email,
