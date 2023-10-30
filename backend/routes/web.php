@@ -30,6 +30,7 @@ Route::group(['middleware'=>['universal', InitializeTenancyByDomain::class],'as'
             }
         });
     }
+    Route::post('auth-validation', [\App\Http\Controllers\API\Auth\LoginController::class, 'auth']);
     Route::post('register', [\App\Http\Controllers\API\Auth\RegisterController::class, 'register'])->middleware('guest');
     Route::post('login', [\App\Http\Controllers\API\Auth\LoginController::class, 'login'])->middleware('guest');
 
