@@ -1,11 +1,12 @@
 <?php
 
 use Laravel\Nova\Actions\ActionResource;
-use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Http\Middleware\Authorize;
 use Laravel\Nova\Http\Middleware\BootTools;
-use Laravel\Nova\Http\Middleware\DispatchServingNovaEvent;
+use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Http\Middleware\HandleInertiaRequests;
+use Laravel\Nova\Http\Middleware\DispatchServingNovaEvent;
+use Badinansoft\LanguageSwitch\Http\Middleware\LanguageSwitch;
 
 return [
 
@@ -103,7 +104,9 @@ return [
         HandleInertiaRequests::class,
         DispatchServingNovaEvent::class,
         BootTools::class,
-    ],
+        LanguageSwitch::class  
+
+],
 
     'api_middleware' => [
         'nova',
