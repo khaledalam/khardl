@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
+use App\Nova\Menu\NovaMenu;
+use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -16,6 +17,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+        NovaMenu::showMenu();
+        Nova::withoutNotificationCenter();
     }
 
     /**
@@ -68,6 +71,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new \Badinansoft\LanguageSwitch\LanguageSwitch(),
+          
 
         ];
     }

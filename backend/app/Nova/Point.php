@@ -101,4 +101,7 @@ class Point extends Resource
     public static function label(){
         return __("Points");
     }
+    public function name(){
+        return __("Points");
+    }
 }
