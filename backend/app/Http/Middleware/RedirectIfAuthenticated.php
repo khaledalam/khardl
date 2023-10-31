@@ -31,7 +31,7 @@ class RedirectIfAuthenticated
         
                     return response()->json($response, 401);
                 }
-                return redirect(RouteServiceProvider::HOME);
+                return redirect()->route("central.dashboard");
             }
         }
 

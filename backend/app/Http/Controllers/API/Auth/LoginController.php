@@ -53,16 +53,9 @@ class LoginController extends BaseController
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
         ];
 
-        $requirements = $user->traderRegistrationRequirement;
 
         // Check if the trader's registration requirements are not fulfilled.
-        if (!isset($requirements) ||
-            !isset($requirements->IBAN) ||
-            !isset($requirements->facility_name) ||
-            !isset($requirements->tax_registration_certificate) ||
-            !isset($requirements->bank_certificate) ||
-            !isset($requirements->identity_of_owner_or_manager) ||
-            !isset($requirements->national_address)
+        if ($user->traderRegistrationRequirement
         ) {
             //@TODO: change this to "incomplete"
             $data['step2_status'] = 'completed';

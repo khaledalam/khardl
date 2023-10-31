@@ -6,14 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureTraderRegistrationIsComplete
+class EnsureTraderRegistrationIsNotComplete
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
 
@@ -21,18 +21,18 @@ class EnsureTraderRegistrationIsComplete
         if ($user && $user->hasRole('Restaurant Owner')) {
   
             // Check if the trader's registration requirements are not fulfilled.
-            if (!$user->traderRegistrationRequirement
+            if ($user->traderRegistrationRequirement
             ) {
                 if ($request->expectsJson()) {
                     $response = [
                         'success' => false,
-                        'message' => 'Not Accepted',
+                        'message' => 'Accepted',
                         'data' =>['error' => 'Accepted']
                     ];
         
                     return response()->json($response, 401);
                 }
-                return redirect()->route("central.complete-register");
+                return redirect()->route("central.home");
 
             }
         }
@@ -40,6 +40,4 @@ class EnsureTraderRegistrationIsComplete
         // If the user is not a "Restaurant Owner" or has already fulfilled registration requirements, continue.
         return $next($request);
     }
-
-
 }

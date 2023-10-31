@@ -70,7 +70,7 @@ class RegisterController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $request->all());
+            return $this->sendError('Validation Error.', $validator->errors());
         }
 
         $user = auth()->user();
@@ -78,14 +78,8 @@ class RegisterController extends BaseController
         $requirements = $user->traderRegistrationRequirement;
 
         // Check if the trader's registration requirements are not fulfilled.
-        if (isset($requirements) &
-            isset($requirements->IBAN) &
-            isset($requirements->facility_name) &
-            isset($requirements->tax_registration_certificate) &
-            isset($requirements->bank_certificate) &
-            isset($requirements->identity_of_owner_or_manager) &
-            isset($requirements->national_address)
-        ) {
+        if ($user->traderRegistrationRequirement)
+        {
             return $this->sendResponse(null, 'User complete register step2 successfully.');
         }
 
@@ -120,7 +114,6 @@ class RegisterController extends BaseController
 
 
         TraderRequirement::create($input);
-
         return $this->sendResponse(null, 'User complete register step2 successfully.');
     }
 
