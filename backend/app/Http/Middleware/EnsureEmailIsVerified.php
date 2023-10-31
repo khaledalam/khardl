@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Classes\ResponseCode;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,13 +19,8 @@ class EnsureEmailIsVerified
     {
         if (!$request->user()->hasVerifiedEmail()) {
                 if ($request->expectsJson()) {
-                    $response = [
-                        'success' => false,
-                        'message' => 'Not Verified',
-                        'data' =>['error' => 'Not Verified']
-                    ];
-        
-                    return response()->json($response, 401);
+                    $response = new ResponseCode();
+                    return $response->NotVerified($response::HTTP_FORBIDDEN);
                 }
                 return redirect()->route("central.verification-email");
         }

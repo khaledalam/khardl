@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Classes\ResponseCode;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureTraderRegistrationIsComplete
@@ -24,13 +25,8 @@ class EnsureTraderRegistrationIsComplete
             if (!$user->traderRegistrationRequirement
             ) {
                 if ($request->expectsJson()) {
-                    $response = [
-                        'success' => false,
-                        'message' => 'Not Accepted',
-                        'data' =>['error' => 'Accepted']
-                    ];
-        
-                    return response()->json($response, 401);
+                    $response = new ResponseCode();
+                    return $response->NotAccepted($response::HTTP_FORBIDDEN);
                 }
                 return redirect()->route("central.complete-register");
 

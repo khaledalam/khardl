@@ -1,10 +1,11 @@
 <?php
-namespace App\Traits;
+namespace App\Classes;
 
+use App\Traits\ResponseTypeInterface;
 use Illuminate\Support\Facades\Response;
 
 
-abstract class ResponseBaseClass implements ResponseTypeInterface
+abstract class ResponseBaseClass  implements ResponseTypeInterface
 {
     const HTTP_OK = 200;
     const HTTP_CREATED = 201;
@@ -16,8 +17,10 @@ abstract class ResponseBaseClass implements ResponseTypeInterface
 
     const HTTP_AUTHENTICATED = 200;
     const HTTP_NOT_AUTHENTICATED = 401;
-    const HTTP_NOT_VERIFIED = 203;
-    const HTTP_NOT_ACCEPTED = 204;
+    const HTTP_VERIFIED = 203;
+    const HTTP_NOT_VERIFIED = 204;
+    const HTTP_ACCEPTED = 205;
+    const HTTP_NOT_ACCEPTED = 206;
     
    
 
@@ -25,14 +28,17 @@ abstract class ResponseBaseClass implements ResponseTypeInterface
     public $code;
     public $msg = '';
 
-    public abstract function Authenticated();
-    public abstract function UnAuthenticated();
-    public abstract function NotVerified();
-    public abstract function NotAccepted();
+    abstract public function Authenticated();
+    abstract public function UnAuthenticated();
+    abstract public function Verified();
+    abstract public function NotVerified();
+    abstract public function Accepted();
+    abstract public function NotAccepted();
 
     public function Response($message,$code = self::HTTP_OK){
         $this->code = $code;
         $this->msg = __($message);
+        return __($message);
         return  Response::json($this);
     }
 }

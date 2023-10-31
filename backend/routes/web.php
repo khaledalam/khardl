@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\Panel\DashboardController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use App\Http\Controllers\Central\AuthenticatedController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\Central\AuthenticationController;
 
@@ -39,7 +40,7 @@ Route::group(['middleware'=>['universal', InitializeTenancyByDomain::class],'as'
             }
         });
     }
-    Route::post('auth-validation', ResponseCode::class);
+    Route::post('auth-validation', [AuthenticatedController::class,'auth']);
 
     Route::post('register', [RegisterController::class, 'register'])->middleware('guest');
     Route::post('login', [LoginController::class, 'login'])->middleware('guest');

@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
+use App\Classes\ResponseCode;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
@@ -22,14 +23,8 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 if ($request->expectsJson()) {
-                    $errorMessages = 'User is already registered with this email address.';
-                    $response = [
-                        'success' => false,
-                        'message' => 'Authorized',
-                        'data' => $errorMessages
-                    ];
-        
-                    return response()->json($response, 401);
+                    $response = new ResponseCode();
+                    return $response->Authenticated($response::HTTP_FORBIDDEN);
                 }
                 return redirect()->route("central.dashboard");
             }

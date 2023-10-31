@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Classes\ResponseCode;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureEmailIsNotVerified
@@ -17,13 +18,8 @@ class EnsureEmailIsNotVerified
     {
         if ($request->user()->hasVerifiedEmail()) {
             if ($request->expectsJson()) {
-                $response = [
-                    'success' => false,
-                    'message' => 'Verified',
-                    'data' =>['error' => 'Verified']
-                ];
-    
-                return response()->json($response, 401);
+                $response = new ResponseCode();
+                return $response->Verified($response::HTTP_FORBIDDEN);
             }
             return redirect()->route("central.dashboard");
         }
