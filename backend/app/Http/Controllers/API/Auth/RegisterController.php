@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\API\BaseController;
-use App\Models\Restaurant;
-use App\Models\TraderRequirement;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\File;
+use App\Models\Restaurant;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\TraderRequirement;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth as AuthFacades;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\API\BaseController;
 
 class RegisterController extends BaseController
 {
@@ -41,7 +42,7 @@ class RegisterController extends BaseController
         $user = User::create($input);
         $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
         $success['name'] =  "$user->first_name $user->last_name";
-        $this->sendVerificationCode($request);
+       
 
         $restaurant = new Restaurant();
         $restaurant->name = [
@@ -51,7 +52,8 @@ class RegisterController extends BaseController
         $restaurant->save();
 
         $user->assignRole('Restaurant Owner');
-        Auth::login($user);
+        AuthFacades::login($user);
+        $this->sendVerificationCode($request);
         return $this->sendResponse($success, 'User register successfully.');
     }
 
@@ -71,7 +73,7 @@ class RegisterController extends BaseController
             return $this->sendError('Validation Error.', $request->all());
         }
 
-        $user = auth('api')->user();
+        $user = auth()->user();
 
         $requirements = $user->traderRegistrationRequirement;
 
