@@ -5,6 +5,7 @@ export BUILD_PATH='temp'
 BACKEND_PUBLIC_PATH='backend/public'
 
 NEW_HASH_JS_MAIN_PATH="$BACKEND_PUBLIC_PATH/static/js"
+NEW_HASH_CSS_MAIN_PATH="$BACKEND_PUBLIC_PATH/static/css"
 INDEX_BLADE_FILE_PATH='backend/resources/views/index.blade.php'
 
 
@@ -13,7 +14,7 @@ rm -rf frontend/$BUILD_PATH
 
 
 # build new fresh version of frontend
-mkdir -p $BUILD_PATH
+mkdir -p frontend/$BUILD_PATH
 npm run build --prefix frontend
 
 
@@ -24,10 +25,12 @@ rm -rf $BACKEND_PUBLIC_PATH/static
 # move new build frontend files
 cp -r frontend/$BUILD_PATH/ $BACKEND_PUBLIC_PATH/
 
+# remove temp build folder
+rm -rf frontend/$BUILD_PATH
 
 # rename static filename hashes in index.blade.php
-#NEW_HASH=$(find "$NEW_HASH_JS_MAIN_PATH" -type f -regex ".*/main[^/]*\.js$")
-#
-#sed -i "s/main\.\([a-zA-Z0-9]*\)\.css/$NEW_HASH/g" "$INDEX_BLADE_FILE_PATH"
-#sed -i "s/main\.\([a-zA-Z0-9]*\)\.js/$NEW_HASH/g" "$INDEX_BLADE_FILE_PATH"
+NEW_JS_HASH=$(find "$NEW_HASH_JS_MAIN_PATH" -type f -regex ".*/main[^/]*\.js$" | sed 's/.*main\.\(.*\)\.js/\1/')
+NEW_CSS_HASH=$(find "$NEW_HASH_CSS_MAIN_PATH" -type f -regex ".*/main[^/]*\.css$" | sed 's/.*main\.\(.*\)\.css/\1/')
 
+sed -i '' "s/main\.\([a-zA-Z0-9]*\)\.css/main.$NEW_CSS_HASH.css/g" $INDEX_BLADE_FILE_PATH
+sed -i '' "s/main\.\([a-zA-Z0-9]*\)\.js/main.$NEW_JS_HASH.js/g" $INDEX_BLADE_FILE_PATH

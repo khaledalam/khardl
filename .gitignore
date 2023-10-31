@@ -19,3 +19,5 @@ yarn-error.log
 /.vscode
 .DS_Store
 docker/database/data
+frontend/temp
+frontend/package-lock.json
