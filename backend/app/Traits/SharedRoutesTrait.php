@@ -15,13 +15,18 @@ trait SharedRoutesTrait
         return [
             'routes'=>[
                 ''=>"home",
-                'Advantages'=>'Advantages',
-                'Clients'=>'Clients',
-                'Services'=>'Services',
+                'advantages'=>'advantages',
+                'clients'=>'clients',
+                'services'=>'services',
                 'privacy'=>'privacy',
                 'policies'=>'policies',
-                'Prices'=>'Prices',
-                'FQA'=>'FQA',
+                'prices'=>'prices',
+                'fqa'=>'fqa',
+                'switcher'=>'switcher',
+                'restaurants/{branch_id}'=>"restaurants",
+                'restaurants/{branch_id}/preview'=>"restaurants.preview",
+                'customers/{branch_id}'=>"customers",
+                'customers/{branch_id}/preview'=>"customers.preview"
             ],
             'middleware'=>[
                
@@ -51,8 +56,7 @@ trait SharedRoutesTrait
         return [
             'routes'=>[
                 'register'=>'register',
-                'login'=>'login',
-                'switcher' => 'switcher'
+                'login'=>'login'
             ],
             'middleware'=>[
                 'guest',
