@@ -47,10 +47,9 @@ Route::group(['middleware'=>['universal', InitializeTenancyByDomain::class],'as'
     });
     
 
-})
-->middleware(['universal', InitializeTenancyByDomain::class]);
+});
 
-Route::get('test', [\App\Http\Controllers\TestController::class, 'index']);
+// Route::get('test', [\App\Http\Controllers\TestController::class, 'index']);
 
 Route::middleware(['accepted'])->prefix('panel')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Panel\DashboardController::class, 'index'])->name('dashboard');
