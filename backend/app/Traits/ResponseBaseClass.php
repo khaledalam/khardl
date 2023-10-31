@@ -15,9 +15,10 @@ abstract class ResponseBaseClass implements ResponseTypeInterface
     const HTTP_TOO_MANY_REQUESTS = 429;
 
     const HTTP_AUTHENTICATED = 200;
-    const HTTP_NOT_AUTHENTICATED = 201;
-    const HTTP_NOT_ACCEPTED = 203;
-    const HTTP_NOT_VERIFIED = 204;
+    const HTTP_NOT_AUTHENTICATED = 401;
+    const HTTP_NOT_VERIFIED = 203;
+    const HTTP_NOT_ACCEPTED = 204;
+    
    
 
     public $status = true;
