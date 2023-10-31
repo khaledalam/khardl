@@ -31,7 +31,7 @@ abstract class ResponseBaseClass implements ResponseTypeInterface
 
     public function Response($message,$code = self::HTTP_OK){
         $this->code = $code;
-        $this->msg = __();
+        $this->msg = __($message);
         return  Response::json($this);
     }
 }
