@@ -16,6 +16,6 @@ class Authenticate extends Middleware
         if ($request->expectsJson()) {
             return ResponseHelper::response('User is not authenticated', ResponseHelper::HTTP_UNAUTHORIZED);
         }
-        return route('login');
+        return route('central.login');
     }
 }
