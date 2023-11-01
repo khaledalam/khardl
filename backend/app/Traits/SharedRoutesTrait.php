@@ -6,7 +6,6 @@ trait SharedRoutesTrait
     public static function groups(){
         return [
             self::getSharedRoutes(),
-            self::getAuthRoutes(),
             self::getGuestRoutes(),
         ];
     }
@@ -15,48 +14,39 @@ trait SharedRoutesTrait
         return [
             'routes'=>[
                 ''=>"home",
-                'Advantages'=>'Advantages',
-                'Clients'=>'Clients',
-                'Services'=>'Services',
+                'advantages'=>'advantages',
+                'clients'=>'clients',
+                'services'=>'services',
                 'privacy'=>'privacy',
                 'policies'=>'policies',
-                'Prices'=>'Prices',
-                'FQA'=>'FQA',
+                'prices'=>'prices',
+                'fqa'=>'fqa',
+                'reset-password'=> 'reset-password',
+                'create-new-password'=> 'create-new-password',
+                'switcher'=>'switcher',
+                // TODO @todo: move restaurants routes under auth guard after its flow complete
+                'restaurants/{branch_id}'=>"restaurants",
+                'restaurants/{branch_id}/preview'=>"restaurants.preview",
+                'customers/{branch_id}'=>"customers",
+                'customers/{branch_id}/preview'=>"customers.preview"
             ],
             'middleware'=>[
-                'web'
+               
             ]
 
         ];
     }
-    public static function getAuthRoutes(): array
-    {
-        return [
-            'routes'=>[
-                'reset-password'=>'reset-password',
-                'verification-email'=>'verification-email',
-                'create-new-password'=>'create-new-password',
-                'verification-password'=>'verification-password',
-                'complete-register'=>'complete-register',
-            ],
-            'middleware'=>[
-                'auth',
-                'web'
-            ]
-
-        ];
-    }
+    
     public static function getGuestRoutes(): array
     {
         return [
             'routes'=>[
                 'register'=>'register',
-                'login'=>'login',
-                'switcher' => 'switcher'
+                'login'=>'login'
             ],
             'middleware'=>[
                 'guest',
-                'web'
+               
             ]
         ];
     }

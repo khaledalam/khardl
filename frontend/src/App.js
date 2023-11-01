@@ -80,8 +80,8 @@ const App = () => {
 
             {/*Editor*/}
             <Route path="/switcher" element={<EditorSwitcher />} />
-            <Route path="/resturents/:branch_id" element={<EditorPage />} />
-            <Route path="/resturents/:branch_id/Preview" element={<ResturentsPreview />} />
+            <Route path="/restaurants/:branch_id" element={<EditorPage />} />
+            <Route path="/restaurants/:branch_id/Preview" element={<ResturentsPreview />} />
             <Route path="/customers/:branch_id" element={<EditorPage />} />
             <Route path="/customers/:branch_id/Preview" element={<CustomersPreview />} />
           </Routes>

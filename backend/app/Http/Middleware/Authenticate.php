@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
@@ -13,15 +14,8 @@ class Authenticate extends Middleware
     protected function redirectTo(Request $request): ?string
     {
         if ($request->expectsJson()) {
-            $errorMessages = 'You must be authenticated to access this resource. Please log in and try again.';
-            $response = [
-                'success' => false,
-                'message' => 'Unauthorized',
-                'data' => $errorMessages
-            ];
-
-            return response()->json($response, 401);
+            return ResponseHelper::response('User is not authenticated', ResponseHelper::HTTP_UNAUTHORIZED);
         }
-        return $request->expectsJson() ? null : route('login');
+        return route('login');
     }
 }

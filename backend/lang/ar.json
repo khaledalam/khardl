@@ -1,0 +1,10 @@
+{
+    "User Verified before": "تم التحقق من البريد الالكتروني",
+    "User has not complete the registration": "لم يتم اكتمال تسجيل بيانات المستخدم",
+    "User trader documents are not approved yet": "تم اكتمال تسجيل بيانات المستخدم",
+    "User is not verified email yet": "لم يتم التحقق من البريد الالكتروني",
+    "User is authenticated":  "تمت مصادقة المستخدم",
+    "User is not authenticated": "المستخدم غير مصرح",
+    "User is already approved": "المستخةم حصل علي م،افقه بالفعل",
+    "User is already verified his email": "تم التحقق من برية المستخدم بالفعل"
+}
