@@ -38,8 +38,8 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
     // Public
     Route::middleware('guest')->group(function () {
 
-        Route::post('register', [RegisterController::class, 'register'])->middleware('guest')->name('register');
-        Route::post('login', [LoginController::class, 'login'])->middleware('guest')->name('login');
+        Route::post('register', [RegisterController::class, 'register'])->name('register');
+        Route::post('login', [LoginController::class, 'login'])->name('login');
 
         Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
@@ -66,13 +66,14 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
         Route::middleware('verified')->group(function () {
 
             Route::middleware(['role:Restaurant Owner', 'notAccepted'])->group(function () {
+
                 Route::get('complete-register', static function(){
                     return view("index");
                 })->name("complete-register");
                 Route::post('register-step2', [RegisterController::class, 'stepTwo']);
             });
 
-            Route::middleware(['accepted'])->prefix('panel')->group(function () {
+            Route::middleware(['accepted'])->group(function () {
 
                 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
             });
