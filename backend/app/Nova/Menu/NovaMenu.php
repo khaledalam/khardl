@@ -13,18 +13,11 @@ class NovaMenu
 {
     public static function showMenu()
     {
-        return [
-            Nova::mainMenu(function (Request $request) {
-                return [
-                    MenuSection::dashboard(Main::class)->icon('chart-bar'),
-    
-                    MenuSection::make(__('Customers'), [
-                        MenuItem::resource(User::class),
-                    ])->icon('user')->collapsable(),
-    
-                    
-                ];
-            })
-        ];
+        if (tenancy()->initialized) {
+            return TenantMenu::Menu();
+        }else{
+            return CentralMenu::Menu();
+        }
+
     }
 }

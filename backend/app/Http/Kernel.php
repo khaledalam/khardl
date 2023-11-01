@@ -7,6 +7,7 @@ use App\Http\Middleware\EnsureEmailIsNotVerified;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
 use App\Http\Middleware\EnsureTraderRegistrationIsNotComplete;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use \Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 
 class Kernel extends HttpKernel
@@ -39,7 +40,7 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
+            // \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
@@ -51,6 +52,7 @@ class Kernel extends HttpKernel
         'tenant' => [
             'web',
             InitializeTenancyByDomainOrSubdomain::class,
+            PreventAccessFromCentralDomains::class
         ],
 
         'universal' => [],

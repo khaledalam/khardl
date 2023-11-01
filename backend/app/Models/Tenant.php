@@ -19,4 +19,27 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'user_id'
         ];
     }
+    public function primary_domain()
+    {
+        return $this->hasOne(Domain::class);
+    }
+
+    public function route($route, $parameters = [], $absolute = true)
+    {
+        $domain = $this->primary_domain->domain;
+        $parts = explode('.', $domain);
+        if (count($parts) === 1) { // If subdomain
+            $domain = Domain::domainFromSubdomain($domain);
+        }
+
+        return tenant_route($domain, $route, $parameters, $absolute);
+    }
+
+    public function impersonationUrl($user_id): string
+    {
+        $token = tenancy()->impersonate($this, $user_id, $this->route('tenant.home'), 'web')->token;
+
+        return $this->route('tenant.impersonate', ['token' => $token]);
+    }
+
 }

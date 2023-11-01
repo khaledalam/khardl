@@ -29,6 +29,7 @@ class AuthenticationController extends Controller
             }
             return ResponseHelper::response('User is authenticated', ResponseHelper::HTTP_OK);
         }
+        
 
         return ResponseHelper::response('User is not authenticated', ResponseHelper::HTTP_UNAUTHORIZED);
     }
