@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Utils\ResponseHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
@@ -31,6 +32,23 @@ class AuthenticationController extends Controller
         }
 
         return ResponseHelper::response('User is not authenticated', ResponseHelper::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * logout
+     *
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        /** @var ?User $user */
+        $user = auth()?->user();
+
+        if ($user) {
+            Auth::logout();
+            return ResponseHelper::response('logged out successfully', ResponseHelper::HTTP_OK);
+        }
+        return ResponseHelper::response('User is not logged in', ResponseHelper::HTTP_FORBIDDEN);
     }
 
 }

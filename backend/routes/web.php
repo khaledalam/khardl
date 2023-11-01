@@ -53,6 +53,9 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
     // Auth Protected
     Route::middleware('auth')->group(function () {
 
+        Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
+
+
         Route::middleware('notVerified')->group(function () {
 
             Route::post('email/send-verify', [RegisterController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
