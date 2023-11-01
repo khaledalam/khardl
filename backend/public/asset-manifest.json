@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.b6a6d44e.css",
-    "main.js": "/static/js/main.e3d3c3b3.js",
-    "static/js/483.da772232.chunk.js": "/static/js/483.da772232.chunk.js",
+    "main.js": "/static/js/main.13c03c66.js",
+    "static/js/483.6feb4a58.chunk.js": "/static/js/483.6feb4a58.chunk.js",
     "static/media/HeroPitcureEn.webp": "/static/media/HeroPitcureEn.4f0f825cba6cc8899068.webp",
     "static/media/HeroPitcureAr.webp": "/static/media/HeroPitcureAr.bca4aa51b2d4712bdff9.webp",
     "static/media/Logo.webp": "/static/media/Logo.3ee521685f2a51a3a161.webp",
@@ -31,11 +31,11 @@
     "static/media/RequestPointSection.webp": "/static/media/RequestPointSection.c31925fe407549de32d3.webp",
     "index.html": "/index.html",
     "main.b6a6d44e.css.map": "/static/css/main.b6a6d44e.css.map",
-    "main.e3d3c3b3.js.map": "/static/js/main.e3d3c3b3.js.map",
-    "483.da772232.chunk.js.map": "/static/js/483.da772232.chunk.js.map"
+    "main.13c03c66.js.map": "/static/js/main.13c03c66.js.map",
+    "483.6feb4a58.chunk.js.map": "/static/js/483.6feb4a58.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b6a6d44e.css",
-    "static/js/main.e3d3c3b3.js"
+    "static/js/main.13c03c66.js"
   ]
 }
