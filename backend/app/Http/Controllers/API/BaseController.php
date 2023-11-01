@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
 
 class BaseController extends Controller
@@ -14,10 +15,10 @@ class BaseController extends Controller
             'data'    => $result,
             'message' => $message,
         ];
-        return response()->json($response, 200);
+        return response()->json($response);
     }
 
-    public function sendError($error, $errorMessages = [], $code = 403)
+    public function sendError($error, $errorMessages = [], $code = ResponseHelper::HTTP_FORBIDDEN)
     {
         $response = [
             'success' => false,

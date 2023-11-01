@@ -2,17 +2,20 @@
 
 namespace App\Http\Middleware;
 
+use App\Utils\ResponseHelper;
 use Closure;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Classes\ResponseCode;
-use Symfony\Component\HttpFoundation\Response;
 
 class EnsureTraderRegistrationIsComplete
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Request $request
+     * @param Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @return JsonResponse|RedirectResponse|mixed
      */
     public function handle(Request $request, Closure $next)
     {
@@ -20,16 +23,13 @@ class EnsureTraderRegistrationIsComplete
 
         // Check if the user is authenticated and has the "Restaurant Owner" role.
         if ($user && $user->hasRole('Restaurant Owner')) {
-  
+
             // Check if the trader's registration requirements are not fulfilled.
-            if (!$user->traderRegistrationRequirement
-            ) {
+            if (!$user->traderRegistrationRequirement) {
                 if ($request->expectsJson()) {
-                    $response = new ResponseCode();
-                    return $response->NotAccepted($response::HTTP_FORBIDDEN);
+                    return ResponseHelper::response('User trader documents are not approved yet', ResponseHelper::HTTP_NOT_ACCEPTED);
                 }
                 return redirect()->route("central.complete-register");
-
             }
         }
 

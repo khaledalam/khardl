@@ -2,10 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Utils\ResponseHelper;
 use Closure;
 use Illuminate\Http\Request;
-use App\Classes\ResponseCode;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureEmailIsVerified
@@ -19,8 +18,7 @@ class EnsureEmailIsVerified
     {
         if (!$request->user()->hasVerifiedEmail()) {
                 if ($request->expectsJson()) {
-                    $response = new ResponseCode();
-                    return $response->NotVerified($response::HTTP_FORBIDDEN);
+                    return ResponseHelper::response('User email is not verified yet', ResponseHelper::HTTP_NOT_VERIFIED);
                 }
                 return redirect()->route("central.verification-email");
         }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Utils\ResponseHelper;
 use Closure;
 use Illuminate\Http\Request;
-use App\Classes\ResponseCode;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureTraderRegistrationIsNotComplete
@@ -20,13 +20,11 @@ class EnsureTraderRegistrationIsNotComplete
 
         // Check if the user is authenticated and has the "Restaurant Owner" role.
         if ($user && $user->hasRole('Restaurant Owner')) {
-  
+
             // Check if the trader's registration requirements are not fulfilled.
-            if ($user->traderRegistrationRequirement
-            ) {
+            if ($user->traderRegistrationRequirement) {
                 if ($request->expectsJson()) {
-                    $response = new ResponseCode();
-                    return $response->Accepted($response::HTTP_FORBIDDEN);
+                    return ResponseHelper::response('User is already approved', ResponseHelper::HTTP_ACCEPTED);
                 }
                 return redirect()->route("central.home");
 

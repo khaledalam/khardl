@@ -30,14 +30,13 @@ class ContactUsController extends BaseController
                 'phone_number' =>$request->phone_number,
                 'business_name' => $request->business_name,
                 'responsible_person_name' =>$request->responsible_person_name,
-            ], function($message)  {
+            ], static function($message)  {
                 $message->to(env("MAIL_CONTACT_USERNAME",'contact-us@khardl.com'));
                 $message->subject('New Contact Form');
             });
-        }catch(\Exception $e){
+        } catch (\Exception $e){
             logger($e->getMessage());
         }
-       
 
         return $this->sendResponse(null, 'Contact information successfully submitted.');
     }

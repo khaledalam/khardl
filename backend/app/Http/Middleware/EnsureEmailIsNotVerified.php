@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Utils\ResponseHelper;
 use Closure;
 use Illuminate\Http\Request;
-use App\Classes\ResponseCode;
 use Symfony\Component\HttpFoundation\Response;
 
 class EnsureEmailIsNotVerified
@@ -12,14 +12,15 @@ class EnsureEmailIsNotVerified
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Request $request
+     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @return Response
      */
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user()->hasVerifiedEmail()) {
             if ($request->expectsJson()) {
-                $response = new ResponseCode();
-                return $response->Verified($response::HTTP_FORBIDDEN);
+                return ResponseHelper::response('User is already verified his email', ResponseHelper::HTTP_VERIFIED);
             }
             return redirect()->route("central.dashboard");
         }

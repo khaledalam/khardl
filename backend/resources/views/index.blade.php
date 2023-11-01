@@ -12,7 +12,7 @@
     <script> 
           window.csrfToken = "{{ csrf_token() }}";
     </script>
-    <script src="/static/js/main.76796c7f.js"></script> <!-- Adjust path if necessary -->
+    <script src="/static/js/main.e3d3c3b3.js"></script> <!-- Adjust path if necessary -->
 </body>
 </html>
 
