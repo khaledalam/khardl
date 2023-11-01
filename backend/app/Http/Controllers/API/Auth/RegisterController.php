@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\API\BaseController;
-use App\Models\Restaurant;
-use App\Models\TraderRequirement;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\File;
+use App\Models\Restaurant;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\TraderRequirement;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth as AuthFacades;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\API\BaseController;
 
 class RegisterController extends BaseController
 {
@@ -41,7 +42,7 @@ class RegisterController extends BaseController
         $user = User::create($input);
         $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
         $success['name'] =  "$user->first_name $user->last_name";
-        $this->sendVerificationCode($request);
+       
 
         $restaurant = new Restaurant();
         $restaurant->name = [
@@ -51,7 +52,8 @@ class RegisterController extends BaseController
         $restaurant->save();
 
         $user->assignRole('Restaurant Owner');
-        Auth::login($user);
+        AuthFacades::login($user);
+        $this->sendVerificationCode($request);
         return $this->sendResponse($success, 'User register successfully.');
     }
 
@@ -68,22 +70,16 @@ class RegisterController extends BaseController
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $request->all());
+            return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $user = auth('api')->user();
+        $user = auth()->user();
 
         $requirements = $user->traderRegistrationRequirement;
 
         // Check if the trader's registration requirements are not fulfilled.
-        if (isset($requirements) &
-            isset($requirements->IBAN) &
-            isset($requirements->facility_name) &
-            isset($requirements->tax_registration_certificate) &
-            isset($requirements->bank_certificate) &
-            isset($requirements->identity_of_owner_or_manager) &
-            isset($requirements->national_address)
-        ) {
+        if ($user->traderRegistrationRequirement)
+        {
             return $this->sendResponse(null, 'User complete register step2 successfully.');
         }
 
@@ -118,7 +114,6 @@ class RegisterController extends BaseController
 
 
         TraderRequirement::create($input);
-
         return $this->sendResponse(null, 'User complete register step2 successfully.');
     }
 
