@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             'updated_at'=>now(),
         ]);
         $user->assignRole('Administrator');
+        $user->assignRole('Restaurant Owner');
 
     }
 }

@@ -16,6 +16,7 @@ class EnsureTraderRegistrationIsNotComplete
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         $user = $request->user();
 
         // Check if the user is authenticated and has the "Restaurant Owner" role.
