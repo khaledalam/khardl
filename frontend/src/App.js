@@ -21,16 +21,17 @@ import ScrollUp from './components/ScrollUp'
 import Prices from './pages/Prices/prices'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
-import ResetPassword from './pages/LoginSignUp/ResetPassword'
+import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword'
-import Protected from './Protected'
 import { API_URL } from './pages/context'
 import EditorPage from './pages/EditorPage'
 import ResturentsPreview from './components/Resturents/ResturentsPreview/Preview'
 import CustomersPreview from './components/Customers/CustomersPreview/Preview'
 import EditorSwitcher from './pages/EditorSwitcher'
+import Protected from './Protected'
 
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
+import Layout from './components/Layout/Layout'
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
@@ -79,28 +80,27 @@ const App = () => {
                <API_URL.Provider value={apiUrl}>
                   <Routes>
                      <Route path='/' element={<Home />} />
-                     <Route path='/login' element={<Login />} />
-                     <Route path='/register' element={<Register />} />
                      <Route
                         path='/reset-password'
-                        element={<ResetPassword />}
-                     />
-                     <Route
-                        path='/verification-email'
-                        element={<Protected Cmp={VerificationEmail} />}
+                        element={<Protected Cmp={ForgotPassword} />}
                      />
                      <Route
                         path='/create-new-password'
                         element={<Protected Cmp={CreateNewPassword} />}
                      />
 
-                     <Route path='/policies' element={<TermsPolicies />} />
+                     <Route element={<Layout />}>
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/register' element={<Register />} />
+                     </Route>
+
+                     {/* <Route path='/policies' element={<TermsPolicies />} />
                      <Route path='/privacy' element={<Privacy />} />
                      <Route path='/advantages' element={<Advantages />} />
                      <Route path='/clients' element={<Clients />} />
                      <Route path='/services' element={<Services />} />
                      <Route path='/prices' element={<Prices />} />
-                     <Route path='/fqa' element={<FQA />} />
+                     <Route path='/fqa' element={<FQA />} /> */}
 
                      {/*Editor*/}
                      <Route element={<PrivateRoute />}>
@@ -108,7 +108,12 @@ const App = () => {
                            path='/complete-register'
                            element={<CompleteRegisteration />}
                         />
+                        <Route
+                           path='/verification-email'
+                           element={<VerificationEmail />}
+                        />
                         <Route path='/switcher' element={<EditorSwitcher />} />
+
                         <Route
                            path='/restaurants/:branch_id'
                            element={<EditorPage />}
