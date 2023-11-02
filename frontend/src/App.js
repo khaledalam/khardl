@@ -12,7 +12,7 @@ import Services from './pages/Services/services'
 import FQA from './pages/FQA/fqa'
 import Login from './pages/LoginSignUp/Login'
 import Register from './pages/LoginSignUp/Register'
-import CompleteRegisteration from './pages/LoginSignUp/CompleteRegisteration'
+import CompleteRegistration from './pages/LoginSignUp/CompleteRegistration'
 import VerificationEmail from './pages/LoginSignUp/VerificationEmail'
 import TermsPolicies from './pages/TermsPoliciesPrivacy/TermsPolicies'
 import Privacy from './pages/TermsPoliciesPrivacy/Privacy'
@@ -25,7 +25,7 @@ import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword'
 import { API_URL } from './pages/context'
 import EditorPage from './pages/EditorPage'
-import ResturentsPreview from './components/Resturents/ResturentsPreview/Preview'
+import RestaurantsPreview from './components/Restaurants/RestaurantsPreview/Preview'
 import CustomersPreview from './components/Customers/CustomersPreview/Preview'
 import EditorSwitcher from './pages/EditorSwitcher'
 import Protected from './Protected'
@@ -106,7 +106,7 @@ const App = () => {
                      <Route element={<PrivateRoute />}>
                         <Route
                            path='/complete-register'
-                           element={<CompleteRegisteration />}
+                           element={<CompleteRegistration />}
                         />
                         <Route
                            path='/verification-email'
@@ -120,7 +120,7 @@ const App = () => {
                         />
                         <Route
                            path='/restaurants/:branch_id/Preview'
-                           element={<ResturentsPreview />}
+                           element={<RestaurantsPreview />}
                         />
                         <Route
                            path='/customers/:branch_id'

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import bgRegisteration from '../../assets/bgRegisteration.webp'
+import bgRegistration from '../../assets/bgRegistration.webp'
 import { useTranslation } from 'react-i18next'
 import MainText from '../../components/MainText'
 import { FiUpload } from 'react-icons/fi'
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { FaStarOfLife } from 'react-icons/fa'
 import { useApiContext } from '../context'
 
-function CompleteRegisteration() {
+function CompleteRegistration() {
    const { t } = useTranslation()
    const navigate = useNavigate()
    const [fileUploadSuccess, setFileUploadSuccess] = useState({
@@ -78,7 +78,7 @@ function CompleteRegisteration() {
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{
-               backgroundImage: `url(${bgRegisteration})`,
+               backgroundImage: `url(${bgRegistration})`,
                backgroundSize: 'cover',
             }}
          >
@@ -399,4 +399,4 @@ function CompleteRegisteration() {
    )
 }
 
-export default CompleteRegisteration
+export default CompleteRegistration
