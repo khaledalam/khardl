@@ -21,8 +21,3 @@ yarn-error.log
 docker/database/data
 frontend/temp
 frontend/package-lock.json
-
-# build frontend
-backend/public/static/js/
-backend/public/
-backend/resources/views/index.blade.php
