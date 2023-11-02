@@ -1,32 +1,11 @@
-// import { useState, useEffect } from 'react'
 import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
 import { Navigate, useLocation, Outlet } from 'react-router-dom'
-// import { axiosAuth } from '../../axios/axios'
 
 const PrivateRoute = () => {
    let location = useLocation()
    const { statusCode, loading } = useCheckAuthenticated()
-   // const [statusCode, setStatusCode] = useState(null)
-   // // const { pathname } = useLocation()
 
-   // useEffect(() => {
-   //    const checkAuthenticated = async () => {
-   //       try {
-   //          const { data } = await axiosAuth.post('/auth-validation')
-   //          console.log(data.response)
-
-   //          setStatusCode(data?.response?.status)
-
-   //          // if (data?.response?.status === 200) {
-   //          //    setStatusCode(200)
-   //          // }
-   //       } catch (err) {
-   //          console.log(err)
-   //       }
-   //    }
-
-   //    checkAuthenticated()
-   // }, [])
+   // const { pathname } = useLocation()
 
    // if (statusCode === 203) {
    //    return <Navigate to='/' state={{ from: location }} />
