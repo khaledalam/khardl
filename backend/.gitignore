@@ -25,10 +25,3 @@ storage
 nova/node_modules
 nova/vendor
 nova/composer.lock
-
-# build frontend
-public/static/js/
-public/static/css/
-public/index.html
-public/asset-manifest.json
-resources/views/index.blade.php
