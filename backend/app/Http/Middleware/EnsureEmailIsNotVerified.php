@@ -20,7 +20,10 @@ class EnsureEmailIsNotVerified
     {
         if ($request->user()->hasVerifiedEmail()) {
             if ($request->expectsJson()) {
-                return ResponseHelper::response('User is already verified his email', ResponseHelper::HTTP_VERIFIED);
+                return ResponseHelper::response([
+                    'message' => 'User is already verified his email',
+                    'is_loggedin' => true
+                ], ResponseHelper::HTTP_VERIFIED);
             }
             return redirect()->route("central.dashboard");
         }

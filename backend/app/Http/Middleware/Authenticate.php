@@ -14,7 +14,10 @@ class Authenticate extends Middleware
     protected function redirectTo(Request $request): ?string
     {
         if ($request->expectsJson()) {
-            return ResponseHelper::response('User is not authenticated', ResponseHelper::HTTP_UNAUTHORIZED);
+            return ResponseHelper::response([
+                'message' => 'User is not authenticated',
+                'is_loggedin' => true
+            ], ResponseHelper::HTTP_UNAUTHORIZED);
         }
         return route('central.login');
     }
