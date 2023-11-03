@@ -12,7 +12,7 @@ import Services from './pages/Services/services'
 import FQA from './pages/FQA/fqa'
 import Login from './pages/LoginSignUp/Login'
 import Register from './pages/LoginSignUp/Register'
-import CompleteRegisteration from './pages/LoginSignUp/CompleteRegisteration'
+import CompleteRegistration from './pages/LoginSignUp/CompleteRegistration'
 import VerificationEmail from './pages/LoginSignUp/VerificationEmail'
 import TermsPolicies from './pages/TermsPoliciesPrivacy/TermsPolicies'
 import Privacy from './pages/TermsPoliciesPrivacy/Privacy'
@@ -106,7 +106,7 @@ const App = () => {
                      <Route element={<PrivateRoute />}>
                         <Route
                            path='/complete-register'
-                           element={<CompleteRegisteration />}
+                           element={<CompleteRegistration />}
                         />
                         <Route
                            path='/verification-email'

@@ -10,8 +10,24 @@ const Layout = () => {
 
    console.log(`status-code: ${statusCode}, loading: ${loading}`)
 
+   if (loading) {
+      return (
+         <p style={{ textAlign: 'center', padding: '20px 10px' }}>
+            Redirecting ...
+         </p>
+      )
+   }
+
    if (statusCode === 200 && !loading) {
       return <Navigate to={from} state={{ from: location }} />
+   }
+
+   if (statusCode === 204 && !loading) {
+      return <Navigate to='/verification-email' state={{ from: location }} />
+   }
+
+   if (statusCode === 206 && !loading) {
+      return <Navigate to='/complete-register' />
    }
 
    return <Outlet />
