@@ -27,7 +27,10 @@ class EnsureTraderRegistrationIsComplete
             // Check if the trader's registration requirements are not fulfilled.
             if (!$user->traderRegistrationRequirement) {
                 if ($request->expectsJson()) {
-                    return ResponseHelper::response('User trader documents are not approved yet', ResponseHelper::HTTP_NOT_ACCEPTED);
+                    return ResponseHelper::response([
+                        'message' => 'User trader documents are not approved yet',
+                        'is_loggedin' => true
+                    ], ResponseHelper::HTTP_NOT_ACCEPTED);
                 }
                 return redirect()->route("central.complete-register");
             }

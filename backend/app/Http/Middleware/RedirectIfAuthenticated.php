@@ -25,7 +25,10 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
                 if ($request->expectsJson()) {
-                    return ResponseHelper::response('User is already authenticated', ResponseHelper::HTTP_AUTHENTICATED);
+                    return ResponseHelper::response([
+                        'message' => 'User is already authenticated',
+                        'is_loggedin' => true
+                    ], ResponseHelper::HTTP_AUTHENTICATED);
                 }
                 return redirect()->route("central.dashboard");
             }

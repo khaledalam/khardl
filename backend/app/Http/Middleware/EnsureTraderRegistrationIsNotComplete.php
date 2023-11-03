@@ -25,7 +25,10 @@ class EnsureTraderRegistrationIsNotComplete
             // Check if the trader's registration requirements are not fulfilled.
             if ($user->traderRegistrationRequirement) {
                 if ($request->expectsJson()) {
-                    return ResponseHelper::response('User is already approved', ResponseHelper::HTTP_ACCEPTED);
+                    return ResponseHelper::response([
+                        'message' => 'User is already approved',
+                        'is_loggedin' => true
+                    ], ResponseHelper::HTTP_ACCEPTED);
                 }
                 return redirect()->route("central.home");
 
