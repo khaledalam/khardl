@@ -21,6 +21,8 @@ composer.lock
 .DS_Store
 storage
 /docker
+
+# nova
 nova/node_modules
 nova/vendor
-backend/nova/composer.lock
+nova/composer.lock

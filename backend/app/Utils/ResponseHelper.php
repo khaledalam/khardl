@@ -10,7 +10,6 @@ class ResponseHelper {
     const HTTP_UNAUTHORIZED         = 401;
     const HTTP_FORBIDDEN            = 403;
     const HTTP_NOT_FOUND            = 404;
-    const HTTP_UNPROCESSABLE_ENTITY = 422;
     const HTTP_TOO_MANY_REQUESTS    = 429;
 
     const HTTP_AUTHENTICATED        = 200;
@@ -22,9 +21,9 @@ class ResponseHelper {
     // not approve restaurant owner trade documents
     const HTTP_NOT_ACCEPTED = 206;
 
-    public static function response(string $message, int $code): JsonResponse
+    public static function response(array $data, int $code): JsonResponse
     {
-        return response()->json(['message' => $message], $code);
+        return response()->json($data, $code);
     }
     public static function responseWithData(string $message,array $data = [], int $code): JsonResponse
     {

@@ -32,7 +32,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        if ($e instanceof UnauthorizedException) {
+        if ($e instanceof UnauthorizedException && $request->expectsJson()) {
             // You can return a JSON response or redirect or whatever you prefer
             return response()->json(['error' => 'You do not have the required authorization.'], 403);
         }
