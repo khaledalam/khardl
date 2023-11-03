@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Logo from '../../assets/Logo.webp'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Button from '../Button'
 import Li from './Li'
 import { useSelector, useDispatch } from 'react-redux'
@@ -11,6 +11,9 @@ import { useTranslation } from 'react-i18next'
 import Languages from '../../components/Languages'
 
 import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
+import { changeLogState } from '../../redux/auth/authSlice'
+import Axios from '../../axios/axios'
+import { toast } from 'react-toastify'
 
 const Header = () => {
    const [isMobile, setIsMobile] = useState(false)
@@ -20,8 +23,23 @@ const Header = () => {
    const isOpen = useSelector((state) => state.drawer.isOpen)
    const Language = useSelector((state) => state.languageMode.languageMode)
 
-   const { statusCode, loading } = useCheckAuthenticated()
-   const statusText = 'ok'
+   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+   const { loading } = useCheckAuthenticated()
+   const navigate = useNavigate()
+
+   const logout = async (e) => {
+      e.preventDefault()
+      try {
+         await Axios.post('/logout')
+         dispatch(changeLogState(false))
+         dispatch(setIsOpen(false))
+         navigate('/login')
+         toast.success('Logged out successfully') //toast.success(`${t("Logged out successfully")}`)
+      } catch (err) {
+         console.error(err.message)
+         toast.error('Logout failed') // toast.error(`${t("Login failed")}`)
+      }
+   }
 
    const toggleMenu = () => {
       dispatch(setIsOpen(!isOpen))
@@ -41,7 +59,7 @@ const Header = () => {
 
    useEffect(() => {
       dispatch(setActiveLink(location.pathname))
-   }, [location.pathname, dispatch])
+   }, [location.pathname, dispatch, isLoggedIn])
 
    useEffect(() => {
       const handleResize = () => {
@@ -144,10 +162,10 @@ const Header = () => {
                <div className='flex justify-center items-center gap-2'>
                   <Languages />
                   <div className='relative flex justify-center items-center gap-2 min-[1000px]:flex min-[1000px]:justify-center'>
-                     {statusText === 'ok' ? (
+                     {isLoggedIn && !loading ? (
                         <Button
                            title={t('Logout')}
-                           link='/logout'
+                           onClick={logout}
                            classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                         />
                      ) : (
@@ -235,10 +253,10 @@ const Header = () => {
                   <div className='mt-6 w-[100%]'>
                      <Languages />
                      <div className='relative flex flex-col items-center gap-2 justify-center mt-4'>
-                        {statusText === 'ok' ? (
+                        {isLoggedIn && !loading ? (
                            <Button
                               title={t('Logout')}
-                              link='/logout'
+                              onClick={logout}
                               classContainer='!w-100 !px-[16px] !font-medium'
                            />
                         ) : (
