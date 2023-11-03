@@ -2,26 +2,39 @@
 
 namespace App\Models;
 
-use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
+use App\Models\User;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
-use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
+use Stancl\Tenancy\Database\Concerns\HasDatabase;
+use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
+    protected $casts = [
+        'trial_ends_at' => 'datetime',
+
+    ];
+
     public static function getCustomColumns(): array
     {
         return [
             'id',
             'email',
             'subscription_id',
-            'user_id'
         ];
     }
     public function primary_domain()
     {
         return $this->hasOne(Domain::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function getNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 
     public function route($route, $parameters = [], $absolute = true)

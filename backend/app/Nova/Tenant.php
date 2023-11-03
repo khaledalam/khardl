@@ -2,10 +2,15 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
+use Carbon\Carbon;
 use App\Nova\Domain;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 
@@ -43,19 +48,38 @@ class Tenant extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-                Text::make('ID')
-                ->sortable()
-                ->help('Optional.')
-                ->rules('nullable', 'max:254')
-                ->creationRules('unique:tenants,id')
-                ->updateRules('unique:tenants,id,{{resourceId}}'),
+            Text::make('ID')
+            ->sortable()
+            ->help('Optional.')
+            ->rules('nullable', 'max:254')
+            ->creationRules('unique:tenants,id')
+            ->updateRules('unique:tenants,id,{{resourceId}}'),
 
-                Text::make('Email')
-                    ->sortable()
-                    ->rules('required', 'email', 'max:254')
-                    ->creationRules('unique:tenants,email')
-                    ->updateRules('unique:tenants,email,{{resourceId}}'),
-                HasMany::make('Domains', 'domains', Domain::class),
+            Text::make('Email')
+                ->sortable()
+                ->rules('required', 'email', 'max:254')
+                ->creationRules('unique:tenants,email')
+                ->updateRules('unique:tenants,email,{{resourceId}}'),
+
+            Text::make('Name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+
+
+            Password::make('Password')
+                ->onlyOnForms()
+                ->creationRules('required', 'string', 'min:8')
+                ->updateRules('nullable', 'string', 'min:8'),
+
+            DateTime::make('Trial until', 'trial_ends_at')->rules('required')
+                ->default(Carbon::now()->addDays(30)),
+
+            BelongsTo::make('user','user','App\Nova\User'),
+            Boolean::make('Ready')
+                ->readonly()
+                ->onlyOnDetail(),
+                    HasMany::make('Domains', 'domains', Domain::class),
         ];
     }
 

@@ -26,5 +26,9 @@ class ResponseHelper {
     {
         return response()->json(['message' => $message], $code);
     }
+    public static function responseWithData(string $message,array $data = [], int $code): JsonResponse
+    {
+        return response()->json(['message' => $message,'data'=>$data], $code);
+    }
 
 }

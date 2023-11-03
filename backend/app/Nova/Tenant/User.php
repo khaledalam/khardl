@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Tenant;
 
+use App\Nova\Resource;
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Text;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -17,14 +18,14 @@ class User extends Resource
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Tenant\User::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'email';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.

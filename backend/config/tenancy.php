@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Database\Seeders\Tenant\TenantSeeder;
 use Stancl\Tenancy\Database\Models\Domain;
 
 
@@ -192,7 +193,7 @@ return [
      * Parameters used by the tenants:seed command.
      */
     'seeder_parameters' => [
-        '--class' => 'DatabaseSeeder', // root seeder class
+        '--class' => \Database\Seeders\Tenant\TenantSeeder::class,
         // '--force' => true,
     ],
 ];
