@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const BASE_URL = process.env.REACT_APP_API_URL || 'http://khardl:8000'
 

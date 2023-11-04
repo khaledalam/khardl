@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import ResturentsEditor from '../components/Resturents/ResturentsEditor/Editor'
+import RestaurantsEditor from '../components/Restaurants/RestaurantsEditor/Editor'
 import CustomersEditor from '../components/Customers/CustomersEditor/Editor'
 import Header from '../components/Header/Header'
 import Sidebar from '../components/Sidebar/Sidebar'
@@ -33,8 +33,8 @@ const EditorPage = () => {
       }
    }, [])
    useEffect(() => {
-      if (location.pathname === `/resturents/${parseInt(branch_id)}`) {
-         setTemplate('resturents')
+      if (location.pathname === `/restaurants/${parseInt(branch_id)}`) {
+         setTemplate('restaurants')
       }
       if (location.pathname === `/customers/${parseInt(branch_id)}`) {
          setTemplate('customers')
@@ -88,7 +88,7 @@ const EditorPage = () => {
                         : 'w-[60%]'
                   } m-6 mt-[85px] rounded-[10px]`}
                >
-                  {template === 'resturents' && <ResturentsEditor />}
+                  {template === 'restaurants' && <RestaurantsEditor />}
                   {template === 'customers' && <CustomersEditor />}
                </div>
             </div>

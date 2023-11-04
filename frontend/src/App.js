@@ -25,7 +25,7 @@ import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword'
 import { API_URL } from './pages/context'
 import EditorPage from './pages/EditorPage'
-import ResturentsPreview from './components/Resturents/ResturentsPreview/Preview'
+import RestaurantsPreview from './components/Restaurants/RestaurantsPreview/Preview'
 import CustomersPreview from './components/Customers/CustomersPreview/Preview'
 import EditorSwitcher from './pages/EditorSwitcher'
 import Protected from './Protected'
@@ -120,7 +120,7 @@ const App = () => {
                         />
                         <Route
                            path='/restaurants/:branch_id/Preview'
-                           element={<ResturentsPreview />}
+                           element={<RestaurantsPreview />}
                         />
                         <Route
                            path='/customers/:branch_id'
