@@ -80,7 +80,6 @@ class Kernel extends HttpKernel
         'notVerified' => EnsureEmailIsNotVerified::class,
         'accepted' => EnsureTraderRegistrationIsComplete::class,
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
-        'admin'=> AdminAuthenticate::class,
         'notBlocked'=> EnsureUserIsNotBlocked::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
     ];

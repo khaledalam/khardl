@@ -48,10 +48,21 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true;
         });
+    }
+    protected function authorization(){
+        if(tenancy()->initialized){
+            Nova::auth(function ($request) {
+                return $request->user()->hasRole('Restaurant Owner');
+            });
+        }else {
+            Nova::auth(function ($request) {
+                return $request->user()->isAdmin();
+            });
+        }
+        
+       
     }
 
     /**

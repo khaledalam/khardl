@@ -119,6 +119,7 @@ return [
         'nova',
         Authenticate::class,
         Authorize::class,
+        
     ],
 
     /*

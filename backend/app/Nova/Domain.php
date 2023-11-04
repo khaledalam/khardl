@@ -33,7 +33,6 @@ class Domain extends Resource
     public static $search = [
         'id', 'domain',
     ];
-
     /**
      * Get the fields displayed by the resource.
      *

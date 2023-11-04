@@ -51,6 +51,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_login' => 'datetime',
         'password' => 'hashed',
     ];
+    public function isAdmin(){
+        return $this->hasRole("Administrator");
+    }
     public function isBlocked(){
         return $this->status == 'blocked';
     }
