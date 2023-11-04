@@ -20,6 +20,7 @@ class AuthenticationController extends Controller
         /** @var ?User $user */
         $user = auth()?->user();
 
+
         if ($user) {
             if ($user->hasVerifiedEmail()) {
                 if (!$user?->traderRegistrationRequirement) {

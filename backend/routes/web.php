@@ -1,6 +1,7 @@
 <?php
 
 use App\Traits\SharedRoutesTrait;
+use App\Utils\ResponseHelper;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\API\Auth\LoginController;
@@ -35,6 +36,11 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
         });
     }
 
+    // Note: moved outside gust middleware to prevent
+    // ResponseHelper::response('User is already authenticated', ResponseHelper::HTTP_AUTHENTICATED);
+    Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
+
+
     // Public
     Route::middleware('guest')->group(function () {
 
@@ -43,8 +49,6 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
 
         Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
-
-        Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
         Route::post('contact-us', [ContactUsController::class, 'store']);
 

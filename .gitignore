@@ -27,4 +27,3 @@ backend/public/static/js/
 backend/public/static/css/
 backend/public/index.html
 backend/public/asset-manifest.json
-backend/resources/views/index.blade.php
