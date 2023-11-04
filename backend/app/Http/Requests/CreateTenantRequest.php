@@ -3,13 +3,15 @@
 namespace App\Http\Requests;
 
 use App\Utils\ResponseHelper;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Response;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
 class CreateTenantRequest extends FormRequest
 {
-    
+
     public function authorize(): bool
     {
         return true;
@@ -18,7 +20,7 @@ class CreateTenantRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -33,11 +35,14 @@ class CreateTenantRequest extends FormRequest
     public function passedValidation(){
         $this->replace(['password'=>bcrypt($this->password)]);
     }
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
         throw new ValidationException(
             $validator,
-            ResponseHelper::response($validator->errors()->first(), ResponseHelper::HTTP_UNPROCESSABLE_ENTITY)
+            ResponseHelper::response([
+                'message' => $validator->errors()->first(),
+                'is_loggedin' => true,
+                ], ResponseHelper::HTTP_UNPROCESSABLE_ENTITY)
         );
     }
 }
