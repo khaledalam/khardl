@@ -20,6 +20,7 @@ composer.lock
 /.vscode
 .DS_Store
 storage
+/docker
 
 # nova
 nova/node_modules

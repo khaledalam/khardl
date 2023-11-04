@@ -46,6 +46,7 @@ class AuthenticationController extends Controller
                 'is_loggedin' => true
             ], ResponseHelper::HTTP_OK);
         }
+        
 
         return ResponseHelper::response([
             'message' => 'User is not authenticated',

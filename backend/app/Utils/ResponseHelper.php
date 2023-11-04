@@ -8,6 +8,7 @@ class ResponseHelper {
     const HTTP_OK                   = 200;
     const HTTP_CREATED              = 201;
     const HTTP_UNAUTHORIZED         = 401;
+    const HTTP_UNPROCESSABLE_ENTITY = 422;
     const HTTP_FORBIDDEN            = 403;
     const HTTP_NOT_FOUND            = 404;
     const HTTP_TOO_MANY_REQUESTS    = 429;
@@ -25,6 +26,10 @@ class ResponseHelper {
     public static function response(array $data, int $code): JsonResponse
     {
         return response()->json($data, $code);
+    }
+    public static function responseWithData(string $message,array $data = [], int $code): JsonResponse
+    {
+        return response()->json(['message' => $message,'data'=>$data], $code);
     }
 
 }

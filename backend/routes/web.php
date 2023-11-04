@@ -3,12 +3,12 @@
 use App\Traits\SharedRoutesTrait;
 use App\Utils\ResponseHelper;
 use Illuminate\Support\Facades\Route;
+use App\Traits\CentralSharedRoutesTrait;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\Panel\DashboardController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Controllers\Central\AuthenticatedController;
 use App\Http\Controllers\API\Auth\ResetPasswordController;
 use App\Http\Controllers\Central\AuthenticationController;
 
@@ -25,7 +25,7 @@ use App\Http\Controllers\Central\AuthenticationController;
 
 
 Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'as'=>'central.'], static function() {
-    $groups = SharedRoutesTrait::groups();
+    $groups = CentralSharedRoutesTrait::groups();
     foreach ($groups as $group) {
         Route::middleware($group['middleware'])->group(function() use ($group){
             foreach ($group['routes'] as $route => $name) {
@@ -84,7 +84,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
             });
 
             Route::middleware(['accepted'])->group(function () {
-
+                Route::post('/create-tenant', [\App\Http\Controllers\Central\TenantController::class, 'store']);
                 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
             });
 
@@ -97,5 +97,5 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
 
 
 
-// Route::get('test', [\App\Http\Controllers\TestController::class, 'index']);
+// Route::get('test', [\App\Http\Controllers\Central\TenantController::class, 'store']);
 

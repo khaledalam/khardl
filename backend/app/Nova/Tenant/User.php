@@ -1,34 +1,31 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Tenant;
 
-use Carbon\Carbon;
-use App\Nova\Domain;
-use Laravel\Nova\Fields\BelongsTo;
+use App\Nova\Resource;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\DateTime;
+use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-
-class Tenant extends Resource
+class User extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \App\Models\Tenant::class;
+    public static $model = \App\Models\Tenant\User::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -36,7 +33,7 @@ class Tenant extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'email',
+        'id', 'name', 'email',
     ];
 
     /**
@@ -48,38 +45,24 @@ class Tenant extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            Text::make('ID')
-            ->sortable()
-            ->help('Optional.')
-            ->rules('nullable', 'max:254')
-            ->creationRules('unique:tenants,id')
-            ->updateRules('unique:tenants,id,{{resourceId}}'),
+            ID::make()->sortable(),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:tenants,email')
-                ->updateRules('unique:tenants,email,{{resourceId}}'),
+            Gravatar::make()->maxWidth(50),
 
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-
+            Text::make('Email')
+                ->sortable()
+                ->rules('required', 'email', 'max:254')
+                ->creationRules('unique:users,email')
+                ->updateRules('unique:users,email,{{resourceId}}'),
 
             Password::make('Password')
                 ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
-            DateTime::make('Trial until', 'trial_ends_at')->rules('required')
-                ->default(Carbon::now()->addDays(30)),
-
-            BelongsTo::make('user','user','App\Nova\User'),
-            Boolean::make('Ready')
-                ->readonly()
-                ->onlyOnDetail(),
-                    HasMany::make('Domains', 'domains', Domain::class),
+                ->creationRules('required', Rules\Password::defaults())
+                ->updateRules('nullable', Rules\Password::defaults()),
         ];
     }
 
@@ -126,4 +109,11 @@ class Tenant extends Resource
     {
         return [];
     }
+    public function name(){
+        return __("Users");
+    }
+    public static function label(){
+        return __("Users");
+    }
+    
 }

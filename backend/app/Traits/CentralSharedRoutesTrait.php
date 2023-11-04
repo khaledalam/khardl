@@ -1,7 +1,7 @@
 <?php
 namespace App\Traits;
 
-trait SharedRoutesTrait
+trait CentralSharedRoutesTrait
 {
     public static function groups(){
         return [
@@ -25,6 +25,7 @@ trait SharedRoutesTrait
                 'create-new-password'=> 'create-new-password',
                 'switcher'=>'switcher',
                 // TODO @todo: move restaurants routes under auth guard after its flow complete
+                // TODO  @todo: update: moved to restaurants but it remain here for testing 
                 'restaurants/{branch_id}'=>"restaurants",
                 'restaurants/{branch_id}/preview'=>"restaurants.preview",
                 'customers/{branch_id}'=>"customers",
