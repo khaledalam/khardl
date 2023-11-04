@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\EnsureEmailIsVerified;
+use App\Http\Middleware\EnsureUserIsNotBlocked;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
@@ -77,6 +78,7 @@ class Kernel extends HttpKernel
         'notVerified' => EnsureEmailIsNotVerified::class,
         'accepted' => EnsureTraderRegistrationIsComplete::class,
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
+        'notBlocked'=> EnsureUserIsNotBlocked::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
     ];
 }
