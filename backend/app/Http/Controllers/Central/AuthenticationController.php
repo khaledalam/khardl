@@ -25,7 +25,7 @@ class AuthenticationController extends Controller
             if($user->isBlocked()){
                 return ResponseHelper::response([
                     'message' => 'User is Blocked',
-                    'is_loggedin' => true
+                    'is_loggedin' => false
                 ], ResponseHelper::HTTP_BLOCKED);
             }
             else if ($user->hasVerifiedEmail()) {
