@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             UserSeeder::class
         ]);
-        // $this->call(TenantTruncateSeeder::class);
-        // $this->call(DomainsTableSeeder::class);
-        // $this->call(OauthClientsTableSeeder::class);
-        // $this->call(OauthPersonalAccessClientsTableSeeder::class);
+        $this->call(TenantTruncateSeeder::class);
+        $this->call(DomainsTableSeeder::class);
+        $this->call(OauthClientsTableSeeder::class);
+        $this->call(OauthPersonalAccessClientsTableSeeder::class);
     }
 }

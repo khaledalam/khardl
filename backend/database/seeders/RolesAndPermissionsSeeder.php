@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use App\Models\Domain;
+use App\Models\Tenant;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -25,22 +28,24 @@ class RolesAndPermissionsSeeder extends Seeder
         }
 
         $permissions = collect([
-            'create',
-            'update',
-            'view',
-            'delete',
-            'forceDelete',
-            'restore',
-            'view.own',
-            'manage',
-            
-            'manage.own',                
+            'create ',
+            'update ',
+            'view ',
+            'delete ',
+            'forceDelete ',
+            'restore ',
+            'view ',
+            'view own ',
+            'manage ',
+            'manage own ',                
         ]);
 
         $Modules = collect([
             User::class,
             Role::class,
             Permission::class,
+            Tenant::class,
+            Domain::class
       
         ]);
 
@@ -48,13 +53,13 @@ class RolesAndPermissionsSeeder extends Seeder
             $name = $this->getPermissionName($item);
             // create permissions for each collection item
             $permissions->each(function($permission)use($name){
-                Permission::create(['guard_name' => "web", 'group' => $name, 'name' => $permission.'.'.$name]);
+                Permission::create(['guard_name' => "web", 'group' => $name, 'name' => $permission.$name]);
             });
         });
 
         // Assign all permissions to the 'Administrator' role
         $adminRole = Role::findByName('Administrator');
-        $adminRole->givePermissionTo(Permission::where('name'));
+        $adminRole->givePermissionTo(Permission::all());
 
         
     }
