@@ -32,6 +32,7 @@ const useAxiosAuth = () => {
       (error) => {
          if (error?.response?.status === 401) {
             console.log('navigate to login route')
+            if (location.pathname === '/register') navigate('/register')
             navigate('/login')
             // return <Navigate to='/login' state={{ from: location }} replace />
          }
