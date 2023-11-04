@@ -11,9 +11,10 @@ const useAxiosAuth = () => {
       baseURL: BASE_URL,
       headers: {
          'Content-Type': 'application/json',
-         'X-CSRF-TOKEN': window.csrfToken,
+         'X-CSRF-TOKEN': window.csrfToken || "NA",
+         'Accept': 'application/json'
       },
-      withCredentials: true,
+      withCredentials: false,
    })
 
    axiosAuth.interceptors.request.use(
@@ -24,6 +25,7 @@ const useAxiosAuth = () => {
       (error) => Promise.reject(error)
    )
 
+
    axiosAuth.interceptors.response.use(
       (response) => {
          console.log(response)
@@ -33,9 +35,11 @@ const useAxiosAuth = () => {
          if (error?.response?.status === 401) {
             console.log('navigate to login route')
             if (location.pathname === '/register') navigate('/register')
-            navigate('/login')
+            navigate('/login');
+            return;
             // return <Navigate to='/login' state={{ from: location }} replace />
          }
+
          return Promise.reject(error)
       }
    )
