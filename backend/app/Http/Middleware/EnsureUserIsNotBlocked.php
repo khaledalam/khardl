@@ -21,7 +21,7 @@ class EnsureUserIsNotBlocked
             if ($request->expectsJson()) {
                 return ResponseHelper::response([
                     'message' => 'User is Blocked',
-                    'is_loggedin' => true
+                    'is_loggedin' => false
                 ], ResponseHelper::HTTP_BLOCKED);
             }
             return redirect()->route("central.login");
