@@ -33,6 +33,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'restore',
             'view.own',
             'manage',
+            
             'manage.own',                
         ]);
 
