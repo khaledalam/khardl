@@ -80,6 +80,7 @@ const App = () => {
                <API_URL.Provider value={apiUrl}>
                   <Routes>
                      <Route path='/' element={<Home />} />
+                     {/* <Route path='/logout' element={<LogOut />} /> */}
                      <Route
                         path='/reset-password'
                         element={<Protected Cmp={ForgotPassword} />}
