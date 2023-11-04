@@ -52,7 +52,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_login' => 'datetime',
         'password' => 'hashed',
     ];
-
+    public function isBlocked(){
+        return $this->status == 'blocked';
+    }
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";

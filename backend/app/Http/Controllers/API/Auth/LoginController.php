@@ -23,6 +23,9 @@ class LoginController extends BaseController
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
+        if(User::where("email",$request->email)->where('status','blocked')->first()){
+            return $this->sendError('User is blocked', ['error' => 'Blocked']);
+        }
 
         $credentials = request(['email', 'password']);
 

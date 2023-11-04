@@ -9,6 +9,10 @@ compsoer install --working-dir backend
 
 # Setup backend
 php backend/artisan migrate:fresh --seed
+php backend/artisan key:gen
+php backend/artisan passport:install --force
+php backend/artisan optimize:clear
+
 
 # Build frontend
 ./run-frontend-build.sh

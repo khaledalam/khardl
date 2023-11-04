@@ -26,3 +26,8 @@ storage
 nova/node_modules
 nova/vendor
 nova/composer.lock
+
+public/static/js/
+public/static/css/
+public/index.html
+public/asset-manifest.json
