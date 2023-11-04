@@ -2,13 +2,12 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Badge;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class User extends Resource
@@ -25,7 +24,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'email';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -33,7 +32,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'email',
+        'id', 'name', 'email',
     ];
 
     /**
@@ -49,7 +48,7 @@ class User extends Resource
 
             Gravatar::make()->maxWidth(50),
 
-            Text::make('Full Name')
+            Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
@@ -58,12 +57,7 @@ class User extends Resource
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
-            Badge::make('Status')->map([
-                'blocked' => 'danger',
-                'active' => 'success',
-                'inactive'=>'warning',
 
-            ]),
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())

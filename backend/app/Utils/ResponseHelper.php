@@ -17,9 +17,9 @@ class ResponseHelper {
     const HTTP_VERIFIED             = 203;
     const HTTP_NOT_VERIFIED         = 204;
     const HTTP_ACCEPTED             = 205;
+
     // not approve restaurant owner trade documents
-    const HTTP_NOT_ACCEPTED         = 206;
-    const HTTP_BLOCKED              = 207;
+    const HTTP_NOT_ACCEPTED = 206;
 
     public static function response(array $data, int $code): JsonResponse
     {

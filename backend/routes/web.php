@@ -55,7 +55,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
     });
 
     // Auth Protected
-    Route::middleware(['auth','notBlocked'])->group(function () {
+    Route::middleware('auth')->group(function () {
 
         Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
         Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
