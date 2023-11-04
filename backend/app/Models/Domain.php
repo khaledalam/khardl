@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Stancl\Tenancy\Database\Models\Domain as BaseDomain;
 
@@ -43,5 +44,4 @@ class Domain extends BaseDomain
     {
         return $this->isSubdomain() ? 'subdomain' : 'domain';
     }
-
 }

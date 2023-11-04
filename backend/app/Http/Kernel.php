@@ -4,10 +4,12 @@ namespace App\Http;
 
 use App\Http\Middleware\AdminAuthenticate;
 use App\Http\Middleware\EnsureEmailIsVerified;
+use App\Http\Middleware\EnsureUserIsNotBlocked;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
 use App\Http\Middleware\EnsureTraderRegistrationIsNotComplete;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use \Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 
 class Kernel extends HttpKernel
@@ -79,6 +81,7 @@ class Kernel extends HttpKernel
         'accepted' => EnsureTraderRegistrationIsComplete::class,
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
         'admin'=> AdminAuthenticate::class,
+        'notBlocked'=> EnsureUserIsNotBlocked::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
     ];
 }

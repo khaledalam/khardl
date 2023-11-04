@@ -2,29 +2,21 @@
 
 namespace App\Nova\Menu;
 
-use App\Nova\User;
-use Laravel\Nova\Nova;
-use PharIo\Manifest\License;
-use App\Nova\Dashboards\Main;
-use Laravel\Nova\Menu\MenuItem;
-use Laravel\Nova\Menu\MenuSection;
+use Laravel\Nova\Tool;
 use Illuminate\Http\Request;
-class NovaMenu
+use App\Nova\Menu\TenantMenu;
+use App\Nova\Menu\CentralMenu;
+
+
+class NovaMenu extends Tool
 {
-    public static function showMenu()
+   
+    public function menu(Request $request): mixed
     {
-        return [
-            Nova::mainMenu(function (Request $request) {
-                return [
-                    MenuSection::dashboard(Main::class)->icon('chart-bar'),
-    
-                    MenuSection::make(__('Customers'), [
-                        MenuItem::resource(User::class),
-                    ])->icon('user')->collapsable(),
-    
-                    
-                ];
-            })
-        ];
+        if (tenancy()->initialized) {
+            return TenantMenu::Menu();
+        }else{
+            return CentralMenu::Menu();
+        }
     }
 }

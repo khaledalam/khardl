@@ -22,7 +22,13 @@ class AuthenticationController extends Controller
 
 
         if ($user) {
-            if ($user->hasVerifiedEmail()) {
+            if($user->isBlocked()){
+                return ResponseHelper::response([
+                    'message' => 'User is Blocked',
+                    'is_loggedin' => false
+                ], ResponseHelper::HTTP_BLOCKED);
+            }
+            else if ($user->hasVerifiedEmail()) {
                 if (!$user?->traderRegistrationRequirement) {
                     return ResponseHelper::response([
                         'message' => 'User trader documents are not approved yet',
@@ -40,6 +46,7 @@ class AuthenticationController extends Controller
                 'is_loggedin' => true
             ], ResponseHelper::HTTP_OK);
         }
+        
 
         return ResponseHelper::response([
             'message' => 'User is not authenticated',
