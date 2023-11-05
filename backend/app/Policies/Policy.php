@@ -11,8 +11,7 @@ class Policy
     public static $key = '';
     public function before($user, $ability)
     {
-        // TODO handle policies namespace for tenant and central
-        return true; // for now
+        
         if ($user->isAdmin()) {
             return true;
         }

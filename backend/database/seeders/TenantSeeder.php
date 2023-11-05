@@ -25,7 +25,7 @@ class TenantSeeder extends Seeder
         (new CreateTenantAction)
         (
             data: [
-                'email'=>$user->email,
+                'email'=>"first.".config('tenancy.central_domains')[0]."@admin.com",
                 "first_name" => $user->first_name,
                 "last_name" =>$user->last_name,
                 "password" => $user->password,
