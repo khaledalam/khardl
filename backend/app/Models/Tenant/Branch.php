@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +13,6 @@ class Branch extends Model
     protected $table = 'branches';
 
     protected $fillable = [
-        'restaurant_id',
         'name',
         'address',
         'phone',
@@ -25,9 +24,5 @@ class Branch extends Model
 
     public $translatable = ['name', 'address'];
 
-    public function restaurant()
-    {
-        return $this->belongsTo(Restaurant::class);
-    }
 
 }

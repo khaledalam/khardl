@@ -1,40 +1,47 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tenant;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Spatie\Sluggable\HasTranslatableSlug;
+use Spatie\EloquentSortable\SortableTrait;
 
 class Category extends Model
 {
-    use HasTranslations;
+    use HasTranslations,HasTranslatableSlug,SortableTrait;
 
     protected $table = 'categories';
 
+    public $sortable = [
+        'order_column_name' => 'sort_order',
+        'sort_when_creating' => true,
+    ];
+
+
     protected $fillable = [
-        'restaurant_id',
         'name',
         'description',
         'parent_id',
         'image_path',
         'slug',
-        'order',
+        'sort_order',
     ];
 
     public $translatable = ['name', 'description', 'slug'];
-
+    /**
+     * Get the options for generating the slug.
+    */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_categories');
-    }
-
-    /**
-     * Each category belongs to a restaurant.
-     */
-    public function restaurant()
-    {
-        return $this->belongsTo(Restaurant::class);
     }
 
     /**

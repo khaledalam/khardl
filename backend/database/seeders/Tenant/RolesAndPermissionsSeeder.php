@@ -5,6 +5,8 @@ namespace Database\Seeders\Tenant;
 use App\Models\User;
 use App\Models\Domain;
 use App\Models\Tenant;
+use App\Models\Tenant\Branch;
+use App\Models\Tenant\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -37,7 +39,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $Modules = collect([
             User::class,
-      
+            Branch::class,
+            Category::class,
         ]);
 
         $Modules->each(function ($item)use($permissions) {

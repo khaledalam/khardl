@@ -7,18 +7,19 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Branch extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \App\Models\Tenant\User::class;
+    public static $model = \App\Models\Tenant\Branch::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -33,7 +34,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id', 'name', 'phone', 'email'
     ];
 
     /**
@@ -49,16 +50,18 @@ class User extends Resource
 
             Text::make(__('Name'))
                 ->rules('required', 'max:255'),
-
+            Text::make(__('Address'))
+                ->rules('required', 'max:255'),
             Text::make(__('Email'))
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->rules('email', 'max:254')
+                ->creationRules('unique:branches,email')
+                ->updateRules('unique:branches,email,{{resourceId}}'),
+            Boolean::make('Is Active')->nullable(),
+            'latitude',
+            'longitude',
+            Text::make(__('Phone'))
+                ->rules('required', 'max:20'),
 
-            Password::make(__('Password'))
-                ->onlyOnForms()
-                ->creationRules('required', Rules\Password::defaults())
-                ->updateRules('nullable', Rules\Password::defaults()),
         ];
     }
 
