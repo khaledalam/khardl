@@ -26,6 +26,7 @@ export const AuthContextProvider = (props) => {
          } catch (err) {
             console.log(err)
             setStatusCode(err?.response?.status)
+            dispatch(changeLogState(err.response?.data?.is_loggedin))
          } finally {
             setLoading(false)
          }
@@ -39,6 +40,7 @@ export const AuthContextProvider = (props) => {
          value={{
             statusCode,
             loading,
+            setStatusCode,
          }}
       >
          {props.children}
