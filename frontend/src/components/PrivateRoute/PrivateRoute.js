@@ -1,17 +1,25 @@
 // import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
 import { useAuthContext } from '../context/AuthContext'
 import { Navigate, useLocation, Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const PrivateRoute = () => {
    let location = useLocation()
    // const { statusCode, loading } = useCheckAuthenticated()
    const { statusCode, loading } = useAuthContext()
 
+   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+   console.log(isLoggedIn)
+
    // const { pathname } = useLocation()
 
    // if (statusCode === 203) {
    //    return <Navigate to='/' state={{ from: location }} />
    // }
+
+   if (statusCode === 401 && !loading) {
+      return <Navigate to='/login' state={{ from: location }} />
+   }
 
    if (statusCode === 204 && !loading) {
       return <Navigate to='/verification-email' state={{ from: location }} />

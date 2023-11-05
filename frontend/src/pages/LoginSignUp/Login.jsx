@@ -33,8 +33,7 @@ const Login = () => {
       setOpenEyePassword(!openEyePassword)
    }
 
-   /////////////////////////////////////////////////////////////////////////////////////
-   // API POST REQUEST
+   // **API POST REQUEST**
 
    const onSubmit = async (data) => {
       try {

@@ -50,7 +50,7 @@ const useAxiosAuth = () => {
             // if (location.pathname === '/register') navigate('/register')
             if (!privateRoute) navigate(location.pathname)
             else navigate('/login')
-            return
+            // return
             // return <Navigate to='/login' state={{ from: location }} replace />
          }
 

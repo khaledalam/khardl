@@ -187,8 +187,8 @@ const Header = () => {
                               classContainer='!text-[16px] !px-[16px] !py-[6px]'
                            />
                            <Button
-                              title={t('Login')}
-                              link='/login'
+                              title={'switcher'} //t('Login')
+                              link='/switcher' // login
                               onClick={() => dispatch(setIsOpen(false))}
                               classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                            />
@@ -280,8 +280,8 @@ const Header = () => {
                                  classContainer='!w-100 !px-[25px]'
                               />
                               <Button
-                                 title={t('Login')}
-                                 link='/login'
+                                 title={'switcher'} //t('Login')
+                                 link='/switcher' ///login
                                  onClick={() => dispatch(setIsOpen(false))}
                                  classContainer='!w-100 !px-[16px] !font-medium'
                               />
