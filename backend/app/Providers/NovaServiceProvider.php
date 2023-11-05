@@ -4,9 +4,13 @@ namespace App\Providers;
 
 use Laravel\Nova\Nova;
 use App\Nova\Menu\NovaMenu;
+use App\Nova\Menu\TenantMenu;
+use App\Nova\Menu\CentralMenu;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -18,7 +22,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
-        NovaMenu::showMenu();
         Nova::withoutNotificationCenter();
     }
 
@@ -29,10 +32,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function routes()
     {
-        Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+        Nova::routes(['tenant', 'universal'])
+        ->withAuthenticationRoutes(['tenant', 'universal','nova'])
+        ->withPasswordResetRoutes(['tenant', 'universal','nova'])
+        ->register();
     }
 
     /**
@@ -45,10 +48,21 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return true;
         });
+    }
+    protected function authorization(){
+        if(tenancy()->initialized){
+            Nova::auth(function ($request) {
+                return $request->user()->hasRole('Restaurant Owner');
+            });
+        }else {
+            Nova::auth(function ($request) {
+                return $request->user()->isAdmin();
+            });
+        }
+        
+       
     }
 
     /**
@@ -70,11 +84,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
+        
         return [
             new \Badinansoft\LanguageSwitch\LanguageSwitch(),
-          
-
+            new \App\Nova\Menu\NovaMenu
         ];
+
     }
 
     /**

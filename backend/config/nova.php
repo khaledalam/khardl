@@ -5,8 +5,11 @@ use Laravel\Nova\Http\Middleware\Authorize;
 use Laravel\Nova\Http\Middleware\BootTools;
 use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Http\Middleware\HandleInertiaRequests;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Laravel\Nova\Http\Middleware\DispatchServingNovaEvent;
 use Badinansoft\LanguageSwitch\Http\Middleware\LanguageSwitch;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 return [
 
@@ -73,7 +76,7 @@ return [
     |
     */
 
-    'guard' => env('NOVA_GUARD', null),
+    'guard' => 'web',
 
     /*
     |--------------------------------------------------------------------------
@@ -100,19 +103,23 @@ return [
     */
 
     'middleware' => [
+        'tenant',
+        'universal',
         'web',
-        HandleInertiaRequests::class,
         LanguageSwitch::class  ,
+        HandleInertiaRequests::class,
         DispatchServingNovaEvent::class,
         BootTools::class,
-      
 
     ],
 
     'api_middleware' => [
+        'tenant',
+        'universal',
         'nova',
         Authenticate::class,
         Authorize::class,
+        
     ],
 
     /*

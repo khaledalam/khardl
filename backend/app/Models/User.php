@@ -30,7 +30,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'verification_code',
         'last_login',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -40,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
-
+  
     /**
      * The attributes that should be cast.
      *
@@ -52,6 +51,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_login' => 'datetime',
         'password' => 'hashed',
     ];
+    public function isAdmin(){
+        return $this->hasRole("Administrator");
+    }
     public function isBlocked(){
         return $this->status == 'blocked';
     }
