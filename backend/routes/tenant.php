@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use App\Traits\TenantSharedRoutesTrait;
 use Stancl\Tenancy\Features\UserImpersonation;
@@ -24,7 +25,8 @@ Route::group([
     'as' => 'tenant.',
 ], function () {
     Route::get('/', function () {
-        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
+        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id').
+        ',<br> <strong><a href='.Nova::path().' >dashboard</a></strong>';
     })->name("home");
     $groups = TenantSharedRoutesTrait::groups();
     foreach ($groups as $group) {

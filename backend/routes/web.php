@@ -97,5 +97,5 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class],'a
 
 
 
-// Route::get('test', [\App\Http\Controllers\Central\TenantController::class, 'store']);
+// Route::get('test', [\App\Http\Controllers\TestController::class, 'index']);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\Tenant;
+namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Domain;
@@ -20,9 +20,8 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run(): void
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        
-        $roles = ['Restaurant Owner','Worker']; // Customer does not have any roles for now
-        
+
+        $roles = ['Administrator', 'Restaurant Owner'];
 
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
@@ -37,6 +36,10 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $Modules = collect([
             User::class,
+            Role::class,
+            Permission::class,
+            Tenant::class,
+            Domain::class
       
         ]);
 
@@ -49,7 +52,7 @@ class RolesAndPermissionsSeeder extends Seeder
         });
 
         // Assign all permissions to the 'Administrator' role
-        $adminRole = Role::findByName('Restaurant Owner');
+        $adminRole = Role::findByName('Administrator');
         $adminRole->givePermissionTo(Permission::all());
 
         
