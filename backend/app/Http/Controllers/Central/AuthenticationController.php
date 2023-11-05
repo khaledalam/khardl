@@ -46,7 +46,7 @@ class AuthenticationController extends Controller
                 'is_loggedin' => true
             ], ResponseHelper::HTTP_OK);
         }
-        
+
 
         return ResponseHelper::response([
             'message' => 'User is not authenticated',
@@ -59,24 +59,30 @@ class AuthenticationController extends Controller
     /**
      * logout
      *
-     * @return JsonResponse
      */
-    public function logout(): JsonResponse
+    public function logout($request)
     {
         /** @var ?User $user */
         $user = auth()?->user();
 
         if ($user) {
             Auth::logout();
-            return ResponseHelper::response([
-                'message' => 'logged out successfully',
-                'is_loggedin' => false
-            ], ResponseHelper::HTTP_OK);
+            if ($request->expectsJson()) {
+                return ResponseHelper::response([
+                    'message' => 'logged out successfully',
+                    'is_loggedin' => false
+                ], ResponseHelper::HTTP_OK);
+            }
+            return redirect()->route("central.dashboard");
         }
-        return ResponseHelper::response([
-            'message' => 'User is not logged in',
-            'is_loggedin' => false
-        ], ResponseHelper::HTTP_FORBIDDEN);
+
+        if ($request->expectsJson()) {
+            return ResponseHelper::response([
+                'message' => 'User is not logged in',
+                'is_loggedin' => false
+            ], ResponseHelper::HTTP_FORBIDDEN);
+        }
+        return redirect()->route("central.login");
     }
 
 }
