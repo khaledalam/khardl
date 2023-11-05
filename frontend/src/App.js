@@ -32,6 +32,7 @@ import Protected from './Protected'
 
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Layout from './components/Layout/Layout'
+import Logout from './components/Logout/Logout'
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
@@ -80,7 +81,7 @@ const App = () => {
                <API_URL.Provider value={apiUrl}>
                   <Routes>
                      <Route path='/' element={<Home />} />
-                     {/* <Route path='/logout' element={<LogOut />} /> */}
+                     <Route path='/logout' element={<Logout />} />
                      <Route
                         path='/reset-password'
                         element={<Protected Cmp={ForgotPassword} />}

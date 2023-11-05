@@ -8,11 +8,11 @@ import { setActiveLink } from '../../redux/features/linkSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import Languages from '../../components/Languages'
+import Languages from '../Languages'
 
-import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
-import { changeLogState } from '../../redux/auth/authSlice'
-import Axios from '../../axios/axios'
+// import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
+import { logout } from '../../redux/auth/authSlice'
+// import Axios from '../../axios/axios'
 import { toast } from 'react-toastify'
 
 const Header = () => {
@@ -24,21 +24,31 @@ const Header = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
 
    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-   const { loading } = useCheckAuthenticated()
+   // const status = useSelector((state) => state.auth.status)
    const navigate = useNavigate()
 
-   const logout = async (e) => {
+   const handleLogout = async (e) => {
       e.preventDefault()
+      // try {
+      //    dispatch(logout({ method: 'POST' }))
+      //    // dispatch(changeLogState(false))
+      //    dispatch(setIsOpen(false))
+      //    navigate('/login')
+      //    toast.success('Logged out successfully') //toast.success(`${t("Logged out successfully")}`)
+      // } catch (err) {
+      //    console.error(err.message)
+      //    toast.error('Logout failed') // toast.error(`${t("Login failed")}`)
+      // }
+
       try {
-         await Axios.post('/logout')
-         dispatch(changeLogState(false))
-         dispatch(setIsOpen(false))
-         navigate('/login')
-         toast.success('Logged out successfully') //toast.success(`${t("Logged out successfully")}`)
+         await dispatch(logout({ method: 'POST' })).unwrap()
+         navigate('/login', { replace: true })
+         toast.success('Logged out successfully')
       } catch (err) {
          console.error(err.message)
-         toast.error('Logout failed') // toast.error(`${t("Login failed")}`)
+         toast.error('Logout failed')
       }
+      dispatch(setIsOpen(false))
    }
 
    const toggleMenu = () => {
@@ -162,10 +172,10 @@ const Header = () => {
                <div className='flex justify-center items-center gap-2'>
                   <Languages />
                   <div className='relative flex justify-center items-center gap-2 min-[1000px]:flex min-[1000px]:justify-center'>
-                     {isLoggedIn && !loading ? (
+                     {isLoggedIn ? (
                         <Button
                            title={t('Logout')}
-                           onClick={logout}
+                           onClick={handleLogout}
                            classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                         />
                      ) : (
@@ -173,11 +183,13 @@ const Header = () => {
                            <Button
                               title={t('Create an account')}
                               link='/register'
+                              onClick={() => dispatch(setIsOpen(false))}
                               classContainer='!text-[16px] !px-[16px] !py-[6px]'
                            />
                            <Button
                               title={t('Login')}
                               link='/login'
+                              onClick={() => dispatch(setIsOpen(false))}
                               classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                            />
                         </>
@@ -253,10 +265,10 @@ const Header = () => {
                   <div className='mt-6 w-[100%]'>
                      <Languages />
                      <div className='relative flex flex-col items-center gap-2 justify-center mt-4'>
-                        {isLoggedIn && !loading ? (
+                        {isLoggedIn ? (
                            <Button
                               title={t('Logout')}
-                              onClick={logout}
+                              onClick={handleLogout}
                               classContainer='!w-100 !px-[16px] !font-medium'
                            />
                         ) : (
@@ -264,11 +276,13 @@ const Header = () => {
                               <Button
                                  title={t('Create an account')}
                                  link='/register'
+                                 onClick={() => dispatch(setIsOpen(false))}
                                  classContainer='!w-100 !px-[25px]'
                               />
                               <Button
                                  title={t('Login')}
                                  link='/login'
+                                 onClick={() => dispatch(setIsOpen(false))}
                                  classContainer='!w-100 !px-[16px] !font-medium'
                               />
                            </>
