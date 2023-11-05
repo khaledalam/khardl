@@ -11,7 +11,6 @@ class Policy
     public static $key = '';
     public function before($user, $ability)
     {
-        
         if ($user->isAdmin()) {
             return true;
         }
@@ -88,7 +87,7 @@ class Policy
    
     public function viewAny(User $user)
     {
-        return true;
+
         return $user->hasAnyPermission(['view own ' . static::$key,'view ' . static::$key]);
     }
      /**

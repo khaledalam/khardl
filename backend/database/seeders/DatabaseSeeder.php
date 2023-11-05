@@ -20,8 +20,6 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             UserSeeder::class
         ]);
-        // Tenant
-        $this->call(TenantSeeder::class);
         // Passport tokens
         $this->call(OauthClientsTableSeeder::class);
         $this->call(OauthPersonalAccessClientsTableSeeder::class);
