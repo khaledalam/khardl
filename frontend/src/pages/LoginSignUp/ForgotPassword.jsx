@@ -15,7 +15,7 @@ const ForgotPassword = () => {
       handleSubmit,
       formState: { errors },
    } = useForm()
-   const apiUrl = useApiContext()
+   const apiUrl = process.env.REACT_APP_API_URL
 
    // **API POST REQUEST**
    const onSubmit = async (data) => {

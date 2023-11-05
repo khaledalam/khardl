@@ -33,30 +33,33 @@ function CompleteRegistration() {
    } = useForm()
    // let user_info = JSON.parse(sessionStorage.getItem("user-info"));
    // const token = user_info ? user_info.access_token : "";
-   const apiUrl = useApiContext()
+   // const process.env.REACT_APP_API_URL = useApiContext()
 
    // API POST REQUEST
    const onSubmit = async (data) => {
       console.log(data)
       try {
-         let response = await fetch(`${apiUrl}/register-step2`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'text/plain',
-               'X-CSRF-TOKEN': window.csrfToken,
-            },
-            body: JSON.stringify({
-               commercial_registration: data.commercial_registration[0],
-               tax_registration_certificate:
-                  data.tax_registration_certificate[0],
-               bank_certificate: data.bank_certificate[0],
-               identity_of_owner_or_manager:
-                  data.identity_of_owner_or_manager[0],
-               national_address: data.national_address[0],
-               IBAN: data.IBAN,
-               facility_name: data.facility_name,
-            }),
-         })
+         let response = await fetch(
+            `${process.env.REACT_APP_API_URL}/register-step2`,
+            {
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'text/plain',
+                  'X-CSRF-TOKEN': window.csrfToken,
+               },
+               body: JSON.stringify({
+                  commercial_registration: data.commercial_registration[0],
+                  tax_registration_certificate:
+                     data.tax_registration_certificate[0],
+                  bank_certificate: data.bank_certificate[0],
+                  identity_of_owner_or_manager:
+                     data.identity_of_owner_or_manager[0],
+                  national_address: data.national_address[0],
+                  IBAN: data.IBAN,
+                  facility_name: data.facility_name,
+               }),
+            }
+         )
 
          if (response.ok) {
             const responseData = await response.json()

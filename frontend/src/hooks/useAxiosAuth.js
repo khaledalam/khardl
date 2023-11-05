@@ -7,6 +7,20 @@ const useAxiosAuth = () => {
    const location = useLocation()
    const navigate = useNavigate()
 
+   const privateRoute = ![
+      '/',
+      '/register',
+      '/clients',
+      '/services',
+      '/reset-password',
+      '/create-new-password',
+      '/advantages',
+      '/prices',
+      '/fqa',
+      '/policies',
+      '/privacy',
+   ].includes(location.pathname)
+
    const axiosAuth = axios.create({
       baseURL: BASE_URL,
       headers: {
@@ -32,8 +46,9 @@ const useAxiosAuth = () => {
       (error) => {
          if (error?.response?.status === 401) {
             console.log('navigate to login route')
-            if (location.pathname === '/register') navigate('/register')
-            navigate('/login')
+            // if (location.pathname === '/register') navigate('/register')
+            if (!privateRoute) navigate(location.pathname)
+            else navigate('/login')
             // return <Navigate to='/login' state={{ from: location }} replace />
          }
          return Promise.reject(error)

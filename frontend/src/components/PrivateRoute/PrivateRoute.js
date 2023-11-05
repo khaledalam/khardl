@@ -1,9 +1,11 @@
-import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
+// import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
+import { useAuthContext } from '../context/AuthContext'
 import { Navigate, useLocation, Outlet } from 'react-router-dom'
 
 const PrivateRoute = () => {
    let location = useLocation()
-   const { statusCode, loading } = useCheckAuthenticated()
+   // const { statusCode, loading } = useCheckAuthenticated()
+   const { statusCode, loading } = useAuthContext()
 
    // const { pathname } = useLocation()
 

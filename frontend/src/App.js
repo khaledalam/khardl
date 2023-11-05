@@ -33,12 +33,17 @@ import Protected from './Protected'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Layout from './components/Layout/Layout'
 import Logout from './components/Logout/Logout'
+import { useAuthContext } from './components/context/AuthContext'
+// import useCheckAuthenticated from './hooks/useCheckAuthenticated'
+// import { AuthContextProvider } from './components/context/AuthContext'
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
    const direction = Language === 'en' ? 'ltr' : 'rtl'
    const fontFamily = 'cairo, sans-serif'
    const location = useLocation()
+   // const { loading } = useCheckAuthenticated()
+   const { loading } = useAuthContext()
    const showHeader = !['/switcher', '/policies', '/privacy'].includes(
       location.pathname
    )
@@ -53,7 +58,7 @@ const App = () => {
       '/policies',
       '/privacy',
    ].includes(location.pathname)
-   const apiUrl = process.env.REACT_APP_API_URL
+   // const apiUrl = process.env.REACT_APP_API_URL
 
    Aos.init({
       duration: 1000,
@@ -74,69 +79,67 @@ const App = () => {
       >
          <div>
             <ToastContainer theme='colored'></ToastContainer>
-            {showHeader && <Header />}
+            {showHeader && !loading && <Header />}
             <Supports />
             <ScrollUp />
             <div>
-               <API_URL.Provider value={apiUrl}>
-                  <Routes>
-                     <Route path='/' element={<Home />} />
-                     <Route path='/logout' element={<Logout />} />
+               <Routes>
+                  {/* Public Routes */}
+                  <Route path='/' element={<Home />} />
+                  <Route path='/logout' element={<Logout />} />
+                  <Route
+                     path='/reset-password'
+                     element={<Protected Cmp={ForgotPassword} />}
+                  />
+                  <Route
+                     path='/create-new-password'
+                     element={<Protected Cmp={CreateNewPassword} />}
+                  />
+                  <Route path='/policies' element={<TermsPolicies />} />
+                  <Route path='/privacy' element={<Privacy />} />
+                  <Route path='/advantages' element={<Advantages />} />
+                  <Route path='/clients' element={<Clients />} />
+                  <Route path='/services' element={<Services />} />
+                  <Route path='/prices' element={<Prices />} />
+                  <Route path='/fqa' element={<FQA />} />
+
+                  <Route element={<Layout />}>
+                     <Route path='/login' element={<Login />} />
+                     <Route path='/register' element={<Register />} />
+                  </Route>
+
+                  {/*Editor*/}
+                  <Route element={<PrivateRoute />}>
                      <Route
-                        path='/reset-password'
-                        element={<Protected Cmp={ForgotPassword} />}
+                        path='/complete-register'
+                        element={<CompleteRegistration />}
                      />
                      <Route
-                        path='/create-new-password'
-                        element={<Protected Cmp={CreateNewPassword} />}
+                        path='/verification-email'
+                        element={<VerificationEmail />}
                      />
+                     <Route path='/switcher' element={<EditorSwitcher />} />
 
-                     <Route element={<Layout />}>
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/register' element={<Register />} />
-                     </Route>
-
-                     {/* <Route path='/policies' element={<TermsPolicies />} />
-                     <Route path='/privacy' element={<Privacy />} />
-                     <Route path='/advantages' element={<Advantages />} />
-                     <Route path='/clients' element={<Clients />} />
-                     <Route path='/services' element={<Services />} />
-                     <Route path='/prices' element={<Prices />} />
-                     <Route path='/fqa' element={<FQA />} /> */}
-
-                     {/*Editor*/}
-                     <Route element={<PrivateRoute />}>
-                        <Route
-                           path='/complete-register'
-                           element={<CompleteRegistration />}
-                        />
-                        <Route
-                           path='/verification-email'
-                           element={<VerificationEmail />}
-                        />
-                        <Route path='/switcher' element={<EditorSwitcher />} />
-
-                        <Route
-                           path='/restaurants/:branch_id'
-                           element={<EditorPage />}
-                        />
-                        <Route
-                           path='/restaurants/:branch_id/Preview'
-                           element={<RestaurantsPreview />}
-                        />
-                        <Route
-                           path='/customers/:branch_id'
-                           element={<EditorPage />}
-                        />
-                        <Route
-                           path='/customers/:branch_id/Preview'
-                           element={<CustomersPreview />}
-                        />
-                     </Route>
-                  </Routes>
-               </API_URL.Provider>
+                     <Route
+                        path='/restaurants/:branch_id'
+                        element={<EditorPage />}
+                     />
+                     <Route
+                        path='/restaurants/:branch_id/Preview'
+                        element={<RestaurantsPreview />}
+                     />
+                     <Route
+                        path='/customers/:branch_id'
+                        element={<EditorPage />}
+                     />
+                     <Route
+                        path='/customers/:branch_id/Preview'
+                        element={<CustomersPreview />}
+                     />
+                  </Route>
+               </Routes>
             </div>
-            {showFooter && (
+            {showFooter && !loading && (
                <div className='p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] '>
                   <Footer />
                </div>

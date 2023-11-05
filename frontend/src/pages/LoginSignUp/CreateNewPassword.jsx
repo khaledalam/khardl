@@ -21,7 +21,7 @@ const CreateNewPassword = () => {
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
    let user_email = sessionStorage.getItem('email')
-   const apiUrl = useApiContext()
+   const apiUrl = process.env.REACT_APP_API_URL
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)

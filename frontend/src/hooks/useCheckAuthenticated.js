@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-// import { changeLogState } from '../redux/auth/authSlice'
+import { changeLogState } from '../redux/auth/authSlice'
 import useAxiosAuth from './useAxiosAuth'
 
 export default function useCheckAuthenticated() {
@@ -18,7 +18,7 @@ export default function useCheckAuthenticated() {
             const response = await axiosAuth.post('/auth-validation')
             console.log(response)
             setStatusCode(response?.status)
-            // dispatch(changeLogState(response?.data?.is_loggedin))
+            dispatch(changeLogState(response?.data?.is_loggedin))
             console.log('hi from useCHeckAuth')
          } finally {
             setLoading(false)

@@ -1,8 +1,10 @@
-import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
+// import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
+import { useAuthContext } from '../context/AuthContext'
 import { Navigate, useLocation, Outlet } from 'react-router-dom'
 
 const Layout = () => {
-   const { statusCode, loading } = useCheckAuthenticated()
+   const { statusCode, loading } = useAuthContext()
+   // const { statusCode, loading } = useCheckAuthenticated()
 
    let location = useLocation()
    let state = location.state

@@ -27,7 +27,7 @@ const Login = () => {
    const [openEyePassword, setOpenEyePassword] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
-   const apiUrl = useApiContext()
+   const apiUrl = process.env.REACT_APP_API_URL
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
