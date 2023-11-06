@@ -1,6 +1,6 @@
 // import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
 import { useAuthContext } from '../context/AuthContext'
-import { Navigate, useLocation, Outlet } from 'react-router-dom'
+import { useLocation, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Login from '../../pages/LoginSignUp/Login'
 import VerificationEmail from '../../pages/LoginSignUp/VerificationEmail'
@@ -20,19 +20,19 @@ const PrivateRoute = () => {
    //    return <Navigate to='/' state={{ from: location }} />
    // }
 
-   if (statusCode === 401 && !loading) {
+   if ((statusCode === 401 || statusCode == 207) && !loading) {
       // return <Navigate to='/login' state={{ from: location }} />
-      return <Login />
+      return <Login state={{ from: location }} />
    }
 
    if (statusCode === 204 && !loading) {
       // return <Navigate to='/verification-email' state={{ from: location }} />
-      return <VerificationEmail />
+      return <VerificationEmail state={{ from: location }} />
    }
 
    if (statusCode === 206 && !loading) {
       // return <Navigate to='/complete-register' state={{ from: location }} />
-      return <CompleteRegistration />
+      return <CompleteRegistration state={{ from: location }} />
    }
 
    // if (statusCode === 205) {
