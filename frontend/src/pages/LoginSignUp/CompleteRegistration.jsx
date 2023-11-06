@@ -111,7 +111,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         {...register('commercial_registration', {
                            required: true,
                         })}
@@ -134,7 +134,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.commercial_registration && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>
@@ -162,7 +162,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         id='Input(2)'
                         {...register('tax_registration_certificate', {
                            required: true,
@@ -185,7 +185,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.tax_registration_certificate && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>
@@ -213,7 +213,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         id='Input(3)'
                         {...register('national_address', { required: true })}
                         className='hidden'
@@ -234,7 +234,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.national_address && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>
@@ -262,7 +262,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         id='Input(4)'
                         {...register('identity_of_owner_or_manager', {
                            required: true,
@@ -285,7 +285,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.identity_of_owner_or_manager && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>
@@ -313,7 +313,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         id='Input(5)'
                         {...register('bank_certificate', { required: true })}
                         className='hidden'
@@ -334,7 +334,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.bank_certificate && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>

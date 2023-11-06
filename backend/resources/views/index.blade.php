@@ -14,7 +14,7 @@
    <script>
    window.csrfToken = "{{ csrf_token() }}";
    </script>
-   <script src="/static/js/main.82688e49.js"></script> <!-- Adjust path if necessary -->
+   <script src="/static/js/main.8f90ba02.js"></script> <!-- Adjust path if necessary -->
 </body>
 
 </html>
