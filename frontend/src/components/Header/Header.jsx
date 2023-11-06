@@ -10,8 +10,8 @@ import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Languages from '../Languages'
 
-// import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
 import { logout } from '../../redux/auth/authSlice'
+import { useAuthContext } from '../context/AuthContext'
 // import Axios from '../../axios/axios'
 import { toast } from 'react-toastify'
 
@@ -26,6 +26,7 @@ const Header = () => {
    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
    // const status = useSelector((state) => state.auth.status)
    const navigate = useNavigate()
+   const { setStatusCode } = useAuthContext()
 
    const handleLogout = async (e) => {
       e.preventDefault()
@@ -42,6 +43,7 @@ const Header = () => {
 
       try {
          await dispatch(logout({ method: 'POST' })).unwrap()
+         setStatusCode(401)
          navigate('/login', { replace: true })
          toast.success('Logged out successfully')
       } catch (err) {
@@ -187,8 +189,8 @@ const Header = () => {
                               classContainer='!text-[16px] !px-[16px] !py-[6px]'
                            />
                            <Button
-                              title={'switcher'} //t('Login')
-                              link='/switcher' // login
+                              title={t('Login')}
+                              link='/login'
                               onClick={() => dispatch(setIsOpen(false))}
                               classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                            />
@@ -280,8 +282,8 @@ const Header = () => {
                                  classContainer='!w-100 !px-[25px]'
                               />
                               <Button
-                                 title={'switcher'} //t('Login')
-                                 link='/switcher' ///login
+                                 title={t('Login')}
+                                 link='/login'
                                  onClick={() => dispatch(setIsOpen(false))}
                                  classContainer='!w-100 !px-[16px] !font-medium'
                               />

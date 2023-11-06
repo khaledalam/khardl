@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from '../../axios/axios'
-// import useLocalStorage from '../../hooks/useLocalStorage'
 
 export const logout = createAsyncThunk('auth/logout', async ({ method }) => {
    const response = await Axios({ url: '/logout', method })

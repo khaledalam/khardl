@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../redux/auth/authSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
+import { useAuthContext } from '../context/AuthContext'
 import { toast } from 'react-toastify'
 
 const Logout = () => {
@@ -10,6 +11,7 @@ const Logout = () => {
    const navigate = useNavigate()
    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
    const status = useSelector((state) => state.auth.status)
+   const { setStatusCode } = useAuthContext()
 
    useEffect(() => {
       if (!isLoggedIn) {
@@ -20,6 +22,7 @@ const Logout = () => {
             .unwrap()
             .then(() => {
                if (status === 'succeeded') {
+                  setStatusCode(401)
                   navigate('/login', { replace: true })
                   toast.success('Logged out successfully')
                }

@@ -20,7 +20,7 @@ const PrivateRoute = () => {
    //    return <Navigate to='/' state={{ from: location }} />
    // }
 
-   if ((statusCode === 401 || statusCode == 207) && !loading) {
+   if ((statusCode === 401 || statusCode === 207) && !loading) {
       // return <Navigate to='/login' state={{ from: location }} />
       return <Login state={{ from: location }} />
    }
