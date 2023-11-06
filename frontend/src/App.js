@@ -94,13 +94,13 @@ const App = () => {
                         <Route path='/register' element={<Register />} />
                      </Route>
 
-                     {/* <Route path='/policies' element={<TermsPolicies />} />
+                     <Route path='/policies' element={<TermsPolicies />} />
                      <Route path='/privacy' element={<Privacy />} />
                      <Route path='/advantages' element={<Advantages />} />
                      <Route path='/clients' element={<Clients />} />
                      <Route path='/services' element={<Services />} />
                      <Route path='/prices' element={<Prices />} />
-                     <Route path='/fqa' element={<FQA />} /> */}
+                     <Route path='/fqa' element={<FQA />} />
 
                      {/*Editor*/}
                      <Route element={<PrivateRoute />}>
