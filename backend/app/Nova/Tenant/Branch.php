@@ -3,8 +3,8 @@
 namespace App\Nova\Tenant;
 
 use App\Nova\Resource;
-use Ghanem\GoogleMap\GHMap;
 
+use Ghanem\GoogleMap\GHMap;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YieldStudio\NovaGooglePolygon\GooglePolygon;
 
 class Branch extends Resource
 {
@@ -38,7 +39,6 @@ class Branch extends Resource
     public static $search = [
         'id', 'name', 'phone', 'email'
     ];
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -61,7 +61,7 @@ class Branch extends Resource
                 ->creationRules('unique:branches,email')
                 ->updateRules('unique:branches,email,{{resourceId}}'),
             Boolean::make(__('Is Active'))->nullable(),
-            GHMap::make(__('Map')),
+            GooglePolygon::make('map'),
             Text::make(__('Phone'))
                 ->rules('required', 'max:20'),
 

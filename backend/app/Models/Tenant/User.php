@@ -24,7 +24,9 @@ class User extends Authenticatable
         'password',
         'phone',
         'status',
+        'verification_code',
         'last_login',
+        'branch_id',
     ];
 
     /**
@@ -54,5 +56,76 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
+
+    public function generateVerificationCode()
+    {
+        $this->verification_code = Str::random(6);
+        $this->save();
+    }
+
+    public function checkVerificationCode($code)
+    {
+        return $this->verification_code === $code;
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function wishlist()
+    {
+        return $this->hasOne(Wishlist::class);
+    }
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    public function paymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class);
+    }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class);
+    }
+
+    public function blocklistEntry()
+    {
+        return $this->hasOne(Blocklist::class);
+    }
+
+    public function customerStyle()
+    {
+        return $this->hasOne(CustomerStyle::class);
+    }
+
+    public function traderRegistrationRequirement()
+    {
+        return $this->hasOne(TraderRequirement::class);
+    }
 
 }

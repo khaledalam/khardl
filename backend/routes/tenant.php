@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Tenant\Branch;
 use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use App\Traits\TenantSharedRoutesTrait;

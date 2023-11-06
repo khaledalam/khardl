@@ -17,10 +17,21 @@ class Branch extends Model
         'address',
         'phone',
         'email',
-        'latitude',
-        'longitude',
+        'map',
         'is_active'
     ];
+    protected $cast = [
+        'map'=>'json'
+    ];
+    // Define a mutator for the 'map' attribute
+    public function setMapAttribute($value)
+    {
+        $this->attributes['map'] = json_encode($value);
+    }
+    public function getMapAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
     public $translatable = ['name', 'address'];
 

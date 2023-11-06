@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->json('name');
             $table->json('address');
+            $table->json("map");
             $table->string('phone');
             $table->string('email')->nullable();
-            $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
 
