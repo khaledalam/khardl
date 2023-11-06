@@ -1,4 +1,10 @@
-import React, { useState, createContext, useEffect, useContext } from 'react'
+import React, {
+   useState,
+   createContext,
+   useEffect,
+   useContext,
+   useCallback,
+} from 'react'
 import { useDispatch } from 'react-redux'
 import { changeLogState } from '../../redux/auth/authSlice'
 import useAxiosAuth from '../../hooks/useAxiosAuth'
@@ -9,31 +15,28 @@ const AuthContext = createContext()
 export const AuthContextProvider = (props) => {
    const dispatch = useDispatch()
    const { axiosAuth } = useAxiosAuth()
-   const [statusCode, setStatusCode] = useLocalStorage(
-      'status-code',
-      'hey you!'
-   )
+   const [statusCode, setStatusCode] = useLocalStorage('status-code', 401)
    const [loading, setLoading] = useState(true)
 
-   useEffect(() => {
-      const checkAuthenticated = async () => {
-         try {
-            const response = await axiosAuth.post('/auth-validation')
-            console.log(response)
-            setStatusCode(response?.status)
-            dispatch(changeLogState(response?.data?.is_loggedin))
-            console.log('hi from AuthContext')
-         } catch (err) {
-            console.log(err)
-            setStatusCode(err?.response?.status)
-            dispatch(changeLogState(err.response?.data?.is_loggedin))
-         } finally {
-            setLoading(false)
-         }
+   const checkAuthenticated = useCallback(async () => {
+      try {
+         const response = await axiosAuth.post('/auth-validation')
+         console.log(response)
+         setStatusCode(response?.status)
+         dispatch(changeLogState(response?.data?.is_loggedin || true))
+         console.log('hi from AuthContext')
+      } catch (err) {
+         console.log(err)
+         setStatusCode(err?.response?.status)
+         dispatch(changeLogState(err.response?.data?.is_loggedin))
+      } finally {
+         setLoading(false)
       }
-
-      checkAuthenticated()
    }, [])
+
+   useEffect(() => {
+      checkAuthenticated()
+   }, [checkAuthenticated])
 
    return (
       <AuthContext.Provider

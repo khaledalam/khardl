@@ -6,12 +6,16 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { GrPowerReset } from 'react-icons/gr'
-import { useApiContext } from '../context'
+// import { useApiContext } from '../context'
+
+import { useAuthContext } from '../../components/context/AuthContext'
 
 const VerificationEmail = () => {
    const { t } = useTranslation()
    const navigate = useNavigate()
    const apiUrl = process.env.REACT_APP_API_URL
+
+   const { setStatusCode } = useAuthContext()
 
    const {
       register: register,
@@ -52,6 +56,7 @@ const VerificationEmail = () => {
             const responseData = await response.json()
             console.log(responseData)
             sessionStorage.setItem('email', user_email)
+            setStatusCode(206)
             toast.success(`${t('The code has been re-sent successfully')}`)
             resetTimer()
          } else {

@@ -2,6 +2,9 @@
 import { useAuthContext } from '../context/AuthContext'
 import { Navigate, useLocation, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import Login from '../../pages/LoginSignUp/Login'
+import VerificationEmail from '../../pages/LoginSignUp/VerificationEmail'
+import CompleteRegistration from '../../pages/LoginSignUp/CompleteRegistration'
 
 const PrivateRoute = () => {
    let location = useLocation()
@@ -18,15 +21,18 @@ const PrivateRoute = () => {
    // }
 
    if (statusCode === 401 && !loading) {
-      return <Navigate to='/login' state={{ from: location }} />
+      // return <Navigate to='/login' state={{ from: location }} />
+      return <Login />
    }
 
    if (statusCode === 204 && !loading) {
-      return <Navigate to='/verification-email' state={{ from: location }} />
+      // return <Navigate to='/verification-email' state={{ from: location }} />
+      return <VerificationEmail />
    }
 
    if (statusCode === 206 && !loading) {
-      return <Navigate to='/complete-register' />
+      // return <Navigate to='/complete-register' state={{ from: location }} />
+      return <CompleteRegistration />
    }
 
    // if (statusCode === 205) {

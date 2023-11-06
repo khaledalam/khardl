@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from '../../axios/axios'
-import useLocalStorage from '../../hooks/useLocalStorage'
+// import useLocalStorage from '../../hooks/useLocalStorage'
 
 export const logout = createAsyncThunk('auth/logout', async ({ method }) => {
    const response = await Axios({ url: '/logout', method })
@@ -9,8 +9,18 @@ export const logout = createAsyncThunk('auth/logout', async ({ method }) => {
    return response?.data?.is_loggedin
 })
 
+const setIsLoggedIn = () => {
+   const jsonValue = localStorage.getItem('isLoggedIn')
+   if (jsonValue !== null && jsonValue !== undefined)
+      return JSON.parse(jsonValue)
+   else {
+      localStorage.setItem('isLoggedIn', JSON.stringify(false))
+      return false
+   }
+}
+
 const initialState = {
-   isLoggedIn: localStorage.getItem('isLoggedIn') || false,
+   isLoggedIn: setIsLoggedIn(), //localStorage.getItem('isLoggedIn') || false
    status: 'idle',
    error: null,
 }

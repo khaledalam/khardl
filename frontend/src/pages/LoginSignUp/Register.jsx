@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
-import { useApiContext } from '../context'
+// import { useApiContext } from '../context'
 
 const Register = () => {
    const navigate = useNavigate()

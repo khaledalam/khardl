@@ -8,14 +8,16 @@ import { useForm } from 'react-hook-form'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 // import { useSelector } from "react-redux";
-import { useApiContext } from '../context'
+// import { useApiContext } from '../context'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { changeLogState } from '../../redux/auth/authSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
+import { useAuthContext } from '../../components/context/AuthContext'
 
 const Login = () => {
    const dispatch = useDispatch()
+   const { setStatusCode } = useAuthContext()
 
    const { t } = useTranslation()
    const navigate = useNavigate()
@@ -60,13 +62,16 @@ const Login = () => {
             )
             if (responseData.data.user.status === 'inactive') {
                sessionStorage.setItem('email', responseData.data.user.email)
+               setStatusCode(204)
                navigate('/verification-email')
             } else if (responseData.data.step2_status === 'incomplete') {
+               setStatusCode(206)
                navigate('/complete-register')
             } else if (
                responseData.data.step2_status === 'complete' &&
                responseData.data.user.status === 'active'
             ) {
+               setStatusCode(200)
                navigate('/dashboard')
             } else {
                navigate('/dashboard')
@@ -80,6 +85,8 @@ const Login = () => {
          }
       } catch (error) {
          setSpinner(false)
+         dispatch(changeLogState(false))
+         setStatusCode(401)
          toast.error(`${t('Login failed')}`)
       }
    }

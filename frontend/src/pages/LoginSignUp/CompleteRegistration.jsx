@@ -7,11 +7,16 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { FaStarOfLife } from 'react-icons/fa'
-import { useApiContext } from '../context'
+// import { useApiContext } from '../context'
+
+import { useAuthContext } from '../../components/context/AuthContext'
 
 function CompleteRegistration() {
    const { t } = useTranslation()
    const navigate = useNavigate()
+
+   const { setStatusCode } = useAuthContext()
+
    const [fileUploadSuccess, setFileUploadSuccess] = useState({
       commercial_registration: false,
       tax_registration_certificate: false,
@@ -67,6 +72,7 @@ function CompleteRegistration() {
             toast.success(
                `${t('Account creation has been completed successfully')}`
             )
+            setStatusCode(200)
             navigate('/dashboard')
          } else {
             throw new Error(`${t('Account creation failed to complete')}`)
