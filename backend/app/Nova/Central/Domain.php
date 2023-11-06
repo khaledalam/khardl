@@ -44,7 +44,9 @@ class Domain extends Resource
         return [
             ID::make()->sortable(),
             Text::make('Domain')->rules('required'),
-            BelongsTo::make('Tenant'),
+            BelongsTo::make('Tenant')->displayUsing(function(\App\Nova\Central\Tenant $tenant) {
+                return $tenant->name();
+            })
         ];
     }
 
