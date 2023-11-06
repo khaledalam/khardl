@@ -45,10 +45,10 @@ const Header = () => {
          await dispatch(logout({ method: 'POST' })).unwrap()
          setStatusCode(401)
          navigate('/login', { replace: true })
-         toast.success('Logged out successfully')
+         toast.success(`${t('You have been logged out successfully')}`)
       } catch (err) {
          console.error(err.message)
-         toast.error('Logout failed')
+         toast.error(`${t('Logout failed')}`)
       }
       dispatch(setIsOpen(false))
    }
