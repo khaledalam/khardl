@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Utils\ResponseHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
@@ -60,7 +61,7 @@ class AuthenticationController extends Controller
      * logout
      *
      */
-    public function logout($request)
+    public function logout(Request $request)
     {
         /** @var ?User $user */
         $user = auth()?->user();

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Central;
 
 use Carbon\Carbon;
-use App\Nova\Domain;
+use App\Nova\Central\Domain;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -12,7 +12,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
-
+use App\Nova\Resource;
 
 class Tenant extends Resource
 {
@@ -76,7 +76,7 @@ class Tenant extends Resource
             DateTime::make('Trial until', 'trial_ends_at')->rules('required')
                 ->default(Carbon::now()->addDays(30)),
 
-            BelongsTo::make('user','user','App\Nova\User'),
+            BelongsTo::make('user','user',User::class),
             Boolean::make('Ready')
                 ->readonly()
                 ->onlyOnDetail(),
@@ -127,4 +127,11 @@ class Tenant extends Resource
     {
         return [];
     }
+    public function name(){
+        return __("Restaurants");
+    }
+    public static function label(){
+        return __("Restaurants");
+    }
+    
 }

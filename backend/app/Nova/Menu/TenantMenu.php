@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Nova\Menu;
-use App\Nova\User;
+use App\Nova\Tenant\User;
 use Laravel\Nova\Nova;
 use App\Nova\Dashboards\Main;
 use App\Nova\Tenant\Branch;
@@ -17,13 +17,14 @@ class TenantMenu
            
             Nova::mainMenu(function (Request $request) {
                 return [
+                    MenuSection::resource(Branch::class)
+                    ->icon("library"),
                     MenuSection::make(__('Customers'), [
                         MenuItem::resource(User::class)
                     ])
                     ->icon('user')
                     ->collapsable(),
-                    MenuSection::resource(Branch::class)
-                    ->icon("library"),
+                   
                     MenuSection::resource(Category::class)
 
     

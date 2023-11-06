@@ -1,31 +1,29 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Central;
 
 use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Badge;
-use Illuminate\Validation\Rules;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Resource;
 
-class User extends Resource
+class Domain extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Domain::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'email';
+    public static $title = 'domain';
 
     /**
      * The columns that should be searched.
@@ -33,9 +31,8 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'email',
+        'id', 'domain',
     ];
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -46,28 +43,8 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
-
-            Gravatar::make()->maxWidth(50),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-            Badge::make('Status')->map([
-                'blocked' => 'danger',
-                'active' => 'success',
-                'inactive'=>'warning',
-
-            ]),
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', Rules\Password::defaults())
-                ->updateRules('nullable', Rules\Password::defaults()),
+            Text::make('Domain')->rules('required'),
+            BelongsTo::make('Tenant'),
         ];
     }
 
@@ -114,11 +91,4 @@ class User extends Resource
     {
         return [];
     }
-    public function name(){
-        return __("Users");
-    }
-    public static function label(){
-        return __("Users");
-    }
-    
 }
