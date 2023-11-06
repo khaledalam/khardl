@@ -48,15 +48,15 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name'))
+            Text::make(__('Name'),'fullName')
                 ->rules('required', 'max:255'),
 
-            Text::make(__('Email'))
+            Text::make(__('Email'),'email')
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
-            BelongsTo::make(__("Branch"),'branch','App\Nova\Tenant\Branch'),
-            Password::make(__('Password'))
+            BelongsTo::make(__("Branch"),'branch',Branch::class),
+            Password::make(__('Password'),'password')
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),

@@ -26,6 +26,7 @@ class Category extends Model
         'parent_id',
         'image_path',
         'slug',
+        'branch_id',
         'sort_order',
     ];
 
@@ -57,6 +58,14 @@ class Category extends Model
      */
     public function parent()
     {
-        return $this->belongsTo(Category::class, 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    /**
+     * Retrieve branch (if exists).
+     */
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
     }
 }

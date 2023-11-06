@@ -50,19 +50,19 @@ class Branch extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name'))
+            Text::make(__('Name'),'name')
                 ->translatable()
                 ->rules('required', 'max:255'),
-            Text::make(__('Address'))
+            Text::make(__('Address'),'address')
                 ->translatable()
                 ->rules('required', 'max:255'),
-            Text::make(__('Email'))
+            Text::make(__('Email'),'email')
                 ->rules('email', 'max:254')
                 ->creationRules('unique:branches,email')
                 ->updateRules('unique:branches,email,{{resourceId}}'),
-            Boolean::make(__('Is Active'))->nullable(),
-            GooglePolygon::make('map'),
-            Text::make(__('Phone'))
+            Boolean::make(__('Is Active'),'is_active')->nullable(),
+            GooglePolygon::make(__('Map'),'map'),
+            Text::make(__('Phone'),'phone')
                 ->rules('required', 'max:20'),
 
         ];

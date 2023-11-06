@@ -436,6 +436,9 @@
     "Restaurants":"المطاعم",
     "Customers":"العملاء",
     "Restaurant Owners":"ملاك المطاعم",
-    "Owners":"الملاك"
-   
+    "Owners":"الملاك",
+    "Branch":"الفرع",
+    "Description":"الوصف",
+    "Main Category":"التصنيف الأساسي",
+    "Slug":"المسمي الوظيفي"
 }

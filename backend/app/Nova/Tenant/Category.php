@@ -10,6 +10,8 @@ use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Outl1ne\NovaSortable\Traits\HasSortableRows;
 
@@ -29,7 +31,7 @@ class Category extends Resource
      *
      * @var string
      */
-    public static $title = '';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -49,7 +51,22 @@ class Category extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            
+            ID::make()->sortable(),
+
+            Text::make(__('Name'),'name')
+                ->translatable()
+                ->rules('required', 'max:255'),
+            Text::make(__('Description'),'description')
+                ->hideFromIndex()
+                ->translatable()
+                ->rules('max:800'),
+            Text::make(__('Slug'),'slug')
+                ->hideFromIndex()
+                ->translatable()
+                ->rules('required', 'max:255'),
+            BelongsTo::make(__("Main Category"),'parent','\App\Nova\Tenant\Category')->nullable(),
+            BelongsTo::make(__("Branch"),'branch',Branch::class),
+            HasMany::make(__("Categories"),'children','\App\Nova\Tenant\Category'),
         ];
     }
 
