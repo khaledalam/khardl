@@ -68,7 +68,7 @@ const Login = () => {
                setStatusCode(206)
                navigate('/complete-register')
             } else if (
-               responseData.data.step2_status === 'complete' &&
+               responseData.data.step2_status === 'completed' &&
                responseData.data.user.status === 'active'
             ) {
                setStatusCode(200)
