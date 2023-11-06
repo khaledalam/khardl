@@ -97,10 +97,10 @@ class Category extends Resource
         return [];
     }
     public function name(){
-        return __("Users");
+        return __("Categories");
     }
     public static function label(){
-        return __("Users");
+        return __("Categories");
     }
     
 }

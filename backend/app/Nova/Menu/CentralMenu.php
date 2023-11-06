@@ -19,12 +19,12 @@ class CentralMenu
                 return [
                     MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
-                    MenuSection::make(__('Branches'), [
+                    MenuSection::make(__('Restaurants'), [
                         MenuItem::resource(Tenant::class),
                         MenuItem::resource(Domain::class),
                     ])->icon('user')->collapsable(),
 
-                    MenuSection::make(__('Customers'), [
+                    MenuSection::make(__('Restaurant Owners'), [
                         MenuItem::resource(User::class),
                     ])->icon('user')->collapsable(),
     

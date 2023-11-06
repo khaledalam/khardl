@@ -48,12 +48,13 @@ class Tenant extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            Text::make('ID')
-            ->sortable()
-            ->help('Optional.')
-            ->rules('nullable', 'max:254')
-            ->creationRules('unique:tenants,id')
-            ->updateRules('unique:tenants,id,{{resourceId}}'),
+
+        //     Text::make('ID')
+        //     ->sortable()
+        //     ->help('Optional.')
+        //     ->rules('nullable', 'max:254')
+        //     ->creationRules('unique:tenants,id')
+        //     ->updateRules('unique:tenants,id,{{resourceId}}'),
 
             Text::make('Email')
                 ->sortable()

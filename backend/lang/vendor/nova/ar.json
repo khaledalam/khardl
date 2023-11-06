@@ -424,6 +424,17 @@
     "settings":"اعدادات عامة",
     "Users":"المستخدمين ",
     "Roles":"الادوار",
-    "Permissions":"الصلاحيات"
+    "Permissions":"الصلاحيات",
+    "Categories":"التنصيفات",
+    "Branches":"الفروع",
+    "Name":"الأسم",
+    "Address":"العنوان",
+    "Email":"البريد الالتكروني",
+    "Is Active":"مفعل",
+    "Map":"الخريطة",
+    "Phone":"الجوال",
+    "Restaurants":"المطاعم",
+    "Customers":"العملاء",
+    "Restaurant Owners":"ملاك المطاعم"
    
 }

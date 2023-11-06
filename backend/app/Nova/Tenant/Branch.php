@@ -3,6 +3,8 @@
 namespace App\Nova\Tenant;
 
 use App\Nova\Resource;
+use Ghanem\GoogleMap\GHMap;
+
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
@@ -49,16 +51,17 @@ class Branch extends Resource
             ID::make()->sortable(),
 
             Text::make(__('Name'))
+                ->translatable()
                 ->rules('required', 'max:255'),
             Text::make(__('Address'))
+                ->translatable()
                 ->rules('required', 'max:255'),
             Text::make(__('Email'))
                 ->rules('email', 'max:254')
                 ->creationRules('unique:branches,email')
                 ->updateRules('unique:branches,email,{{resourceId}}'),
-            Boolean::make('Is Active')->nullable(),
-            'latitude',
-            'longitude',
+            Boolean::make(__('Is Active'))->nullable(),
+            GHMap::make(__('Map')),
             Text::make(__('Phone'))
                 ->rules('required', 'max:20'),
 
@@ -109,10 +112,10 @@ class Branch extends Resource
         return [];
     }
     public function name(){
-        return __("Users");
+        return __("Branches");
     }
     public static function label(){
-        return __("Users");
+        return __("Branches");
     }
     
 }
