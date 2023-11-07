@@ -136,7 +136,18 @@ class MenuSection implements JsonSerializable
 
         return $this;
     }
+    /**
+     * Set menu's name.
+     *
+     * @param  string  $name
+     * @return $this
+     */
+    public function name($name)
+    {
+        $this->name = $name;
 
+        return $this;
+    }
     /**
      * Set the menu section as collapsable.
      *

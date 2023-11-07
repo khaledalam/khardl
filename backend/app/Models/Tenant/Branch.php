@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,21 +13,27 @@ class Branch extends Model
     protected $table = 'branches';
 
     protected $fillable = [
-        'restaurant_id',
         'name',
         'address',
         'phone',
         'email',
-        'latitude',
-        'longitude',
+        'map',
         'is_active'
     ];
+    protected $cast = [
+        'map'=>'json'
+    ];
+    // Define a mutator for the 'map' attribute
+    public function setMapAttribute($value)
+    {
+        $this->attributes['map'] = json_encode($value);
+    }
+    public function getMapAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
     public $translatable = ['name', 'address'];
 
-    public function restaurant()
-    {
-        return $this->belongsTo(Restaurant::class);
-    }
 
 }

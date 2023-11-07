@@ -106,6 +106,7 @@ return [
         'tenant',
         'universal',
         'web',
+        // TODO Configure switch language not work with tenant
         LanguageSwitch::class  ,
         HandleInertiaRequests::class,
         DispatchServingNovaEvent::class,
@@ -174,7 +175,7 @@ return [
     */
 
     'brand' => [
-    'logo' => public_path('static/media/Logo.3ee521685f2a51a3a161.svg'),
+    // 'logo' => public_path('/static/media/Logo.3ee521685f2a51a3a161.svg'),
 
         // 'colors' => [
         //     "400" => "24, 182, 155, 0.5",

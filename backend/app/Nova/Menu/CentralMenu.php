@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Nova\Menu;
-use App\Nova\User;
 use Laravel\Nova\Nova;
+use App\Nova\Central\User;
+use App\Nova\Central\Domain;
+use App\Nova\Central\Tenant;
+use Illuminate\Http\Request;
 use App\Nova\Dashboards\Main;
-use App\Nova\Domain;
-use App\Nova\Tenant;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
-use Illuminate\Http\Request;
 
 class CentralMenu
 {
@@ -19,14 +19,14 @@ class CentralMenu
                 return [
                     MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
-                    MenuSection::make(__('Branches'), [
+                    MenuSection::make(__('Restaurants'), [
                         MenuItem::resource(Tenant::class),
                         MenuItem::resource(Domain::class),
-                    ])->icon('user')->collapsable(),
+                    ])->icon('library')->collapsable(),
 
-                    MenuSection::make(__('Customers'), [
+                    MenuSection::make(__('Owners'), [
                         MenuItem::resource(User::class),
-                    ])->icon('user')->collapsable(),
+                    ])->icon('user-group')->collapsable(),
     
                     
                 ];

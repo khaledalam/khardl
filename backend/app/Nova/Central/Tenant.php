@@ -1,31 +1,34 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Central;
 
+use Carbon\Carbon;
+use App\Nova\Central\Domain;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Badge;
-use Illuminate\Validation\Rules;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use App\Nova\Resource;
 
-class User extends Resource
+class Tenant extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Tenant::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'email';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -45,29 +48,39 @@ class User extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
+        //     Text::make('ID')
+        //     ->sortable()
+        //     ->help('Optional.')
+        //     ->rules('nullable', 'max:254')
+        //     ->creationRules('unique:tenants,id')
+        //     ->updateRules('unique:tenants,id,{{resourceId}}'),
+
+            Text::make('Email')
+                ->sortable()
+                ->rules('required', 'email', 'max:254')
+                ->creationRules('unique:tenants,email')
+                ->updateRules('unique:tenants,email,{{resourceId}}'),
 
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-            Badge::make('Status')->map([
-                'blocked' => 'danger',
-                'active' => 'success',
-                'inactive'=>'warning',
 
-            ]),
+
             Password::make('Password')
                 ->onlyOnForms()
-                ->creationRules('required', Rules\Password::defaults())
-                ->updateRules('nullable', Rules\Password::defaults()),
+                ->creationRules('required', 'string', 'min:8')
+                ->updateRules('nullable', 'string', 'min:8'),
+
+            DateTime::make('Trial until', 'trial_ends_at')->rules('required')
+                ->default(Carbon::now()->addDays(30)),
+
+            BelongsTo::make('user','user',User::class),
+            Boolean::make('Ready')
+                ->readonly()
+                ->onlyOnDetail(),
+                    HasMany::make('Domains', 'domains', Domain::class),
         ];
     }
 
@@ -115,10 +128,10 @@ class User extends Resource
         return [];
     }
     public function name(){
-        return __("Users");
+        return __("Restaurants");
     }
     public static function label(){
-        return __("Users");
+        return __("Restaurants");
     }
     
 }

@@ -18,6 +18,11 @@ class TenantSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
         ]);
+        // Seeding for debugging
+        $this->call([
+            BranchSeeder::class,
+            CategorySeeder::class
+        ]);
 
         
     }

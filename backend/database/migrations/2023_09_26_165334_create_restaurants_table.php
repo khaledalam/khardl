@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+         // TODO @todo copy additional fields to tenant and remove this file
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
             $table->json('name');

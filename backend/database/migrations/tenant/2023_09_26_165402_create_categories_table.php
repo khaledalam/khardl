@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Tenant\Branch;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,18 +14,18 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('restaurant_id');
-            $table->json('name'); // Multilingual field
-            $table->json('description')->nullable(); // Multilingual field
-            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->json('name'); // 
+            $table->json('description')->nullable(); 
             $table->string('image_path')->nullable();
             $table->json('slug');
-            $table->string('slug_value')->storedAs('JSON_UNQUOTE(JSON_EXTRACT(slug, "$.your_key"))')->unique();
-            $table->integer('order')->default(0);
-            $table->timestamps();
-
-            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
+            $table->integer('sort_order')->default(0);
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreignIdFor(Branch::class)
+            ->constrained()
+            ->cascadeOnDelete()
+            ->cascadeOnUpdate();
+            $table->timestamps();
         });
     }
 

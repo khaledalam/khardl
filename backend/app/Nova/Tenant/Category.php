@@ -7,19 +7,24 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Validation\Rules;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Outl1ne\NovaSortable\Traits\HasSortableRows;
 
-class User extends Resource
+class Category extends Resource
 {
+    use HasSortableRows;
+
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \App\Models\Tenant\User::class;
+    public static $model = \App\Models\Tenant\Category::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -34,7 +39,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id', 
     ];
 
     /**
@@ -48,18 +53,20 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name'),'fullName')
+            Text::make(__('Name'),'name')
+                ->translatable()
                 ->rules('required', 'max:255'),
-
-            Text::make(__('Email'),'email')
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+            Text::make(__('Description'),'description')
+                ->hideFromIndex()
+                ->translatable()
+                ->rules('max:800'),
+            Text::make(__('Slug'),'slug')
+                ->hideFromIndex()
+                ->translatable()
+                ->rules('required', 'max:255'),
+            BelongsTo::make(__("Main Category"),'parent','\App\Nova\Tenant\Category')->nullable(),
             BelongsTo::make(__("Branch"),'branch',Branch::class),
-            Password::make(__('Password'),'password')
-                ->onlyOnForms()
-                ->creationRules('required', Rules\Password::defaults())
-                ->updateRules('nullable', Rules\Password::defaults()),
+            HasMany::make(__("Categories"),'children','\App\Nova\Tenant\Category'),
         ];
     }
 
@@ -107,10 +114,10 @@ class User extends Resource
         return [];
     }
     public function name(){
-        return __("Users");
+        return __("Categories");
     }
     public static function label(){
-        return __("Users");
+        return __("Categories");
     }
     
 }

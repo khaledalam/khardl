@@ -86,8 +86,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         
         return [
-            new \Badinansoft\LanguageSwitch\LanguageSwitch(),
-            new \App\Nova\Menu\NovaMenu
+            new \App\Nova\Menu\NovaMenu,
+            new \Badinansoft\LanguageSwitch\LanguageSwitch()
         ];
 
     }
@@ -100,5 +100,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function register()
     {
         //
+    }
+    public function resources(){
+        
     }
 }

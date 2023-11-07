@@ -1,29 +1,35 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Tenant;
 
+use App\Nova\Resource;
+
+use Ghanem\GoogleMap\GHMap;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\BelongsTo;
+use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use YieldStudio\NovaGooglePolygon\GooglePolygon;
 
-
-class Domain extends Resource
+class Branch extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var class-string<\App\Models\User>
      */
-    public static $model = \App\Models\Domain::class;
+    public static $model = \App\Models\Tenant\Branch::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'domain';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -31,7 +37,7 @@ class Domain extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'domain',
+        'id', 'name', 'phone', 'email'
     ];
     /**
      * Get the fields displayed by the resource.
@@ -43,8 +49,22 @@ class Domain extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Domain')->rules('required'),
-            BelongsTo::make('Tenant'),
+
+            Text::make(__('Name'),'name')
+                ->translatable()
+                ->rules('required', 'max:255'),
+            Text::make(__('Address'),'address')
+                ->translatable()
+                ->rules('required', 'max:255'),
+            Text::make(__('Email'),'email')
+                ->rules('email', 'max:254')
+                ->creationRules('unique:branches,email')
+                ->updateRules('unique:branches,email,{{resourceId}}'),
+            Boolean::make(__('Is Active'),'is_active')->nullable(),
+            GooglePolygon::make(__('Map'),'map'),
+            Text::make(__('Phone'),'phone')
+                ->rules('required', 'max:20'),
+
         ];
     }
 
@@ -91,4 +111,11 @@ class Domain extends Resource
     {
         return [];
     }
+    public function name(){
+        return __("Branches");
+    }
+    public static function label(){
+        return __("Branches");
+    }
+    
 }

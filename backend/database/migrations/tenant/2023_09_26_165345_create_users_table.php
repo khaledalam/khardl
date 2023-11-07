@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tenant\Branch;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,9 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->enum('status', ['active', 'suspended', 'inactive'])->default('active');
+            $table->string('verification_code')->nullable();
             $table->timestamp('last_login')->nullable();
+            $table->foreignIdFor(Branch::class)->nullable()->constrained()->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });
