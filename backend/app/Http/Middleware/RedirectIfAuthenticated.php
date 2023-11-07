@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Utils\ResponseHelper;
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +13,7 @@ class RedirectIfAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     * @param string ...$guards
-     * @return Response
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
@@ -24,13 +21,7 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if ($request->expectsJson()) {
-                    return ResponseHelper::response([
-                        'message' => 'User is already authenticated',
-                        'is_loggedin' => true
-                    ], ResponseHelper::HTTP_AUTHENTICATED);
-                }
-                return redirect()->route("central.dashboard");
+                return redirect(RouteServiceProvider::HOME);
             }
         }
 

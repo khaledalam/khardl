@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html @if(app()->getLocale() === 'ar') direction="rtl" dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">>
+
+<head>
+    <base href="" />
+    <title>{{ __('messages.khardl')}} | @yield('title', __('messages.dashboard'))</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="" />
+    <meta property="og:url" content="#/metronic" />
+    <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="shortcut icon" href="{{ asset('media/logos/favicon.ico')}}"/>
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!--end::Fonts-->
+    <!--begin::Page Vendor Stylesheets(used by this page)-->
+    @if(app()->getLocale() === 'ar') 
+        <link href="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
+        <link href="{{ asset('plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <!--end::Page Vendor Stylesheets-->
+        <!--begin::Global Stylesheets Bundle(used by all pages)-->
+        <link href="{{ asset('plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <!--end::Global Stylesheets Bundle-->
+    @else
+        <link href="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
+        <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <!--end::Page Vendor Stylesheets-->
+        <!--begin::Global Stylesheets Bundle(used by all pages)-->
+        <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    @endif
+    <!--end::Global Stylesheets Bundle-->
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+
+<body id="kt_body"
+    class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="
+      --kt-toolbar-height: 55px;
+      --kt-toolbar-height-tablet-and-mobile: 55px;">
+
+
+    <div class="page-loader flex-column">
+        <span class="spinner-border text-primary" role="status"></span>
+        <span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if(session('success'))
+        <script>
+            showAlert('success', '{{ session('success') }}');
+            
+
+            function showAlert(type, message) {
+                    Swal.fire({
+                        icon: type,
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }    
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            showAlert('error', '{{ session('error') }}');
+
+            function showAlert(type, message) {
+                    Swal.fire({
+                        icon: type,
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+        </script>
+    @endif
+
+    <script>
+        @if ($errors->any())
+            showAlert('error', '<ul>@foreach ($errors->all() as $error)<li style="list-style-type: none">{{ $error }}</li>@endforeach</ul> <br>');
+        @endif
+    
+        function showAlert(type, message) {
+            Swal.fire({
+                icon: type,
+                title: message,
+                showConfirmButton: true,
+                timer: 900000000
+            });
+        }
+    </script>
+    
+    <!--begin::Main-->
+    <!--begin::Root-->
+    <!--begin::Root-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true"
+                data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}"
+                data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+                data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+                <!--begin::Brand-->
+                <div class="aside-logo flex-column-auto" id="kt_aside_logo">
+                    <!--begin::Logo-->
+                    <a href="index.html">
+                        <img alt="Logo" src="{{ asset('img/logo.png') }}" class="h-30px" />
+                    </a>
+                    <!--end::Logo-->
+                    <!--begin::Aside toggler-->
+                    <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-khardl aside-toggle"
+                        data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
+                        data-kt-toggle-name="aside-minimize">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
+                        <span class="svg-icon svg-icon-1 rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <path opacity="0.5"
+                                    d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z"
+                                    fill="currentColor" />
+                                <path
+                                    d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z"
+                                    fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Aside toggler-->
+                </div>
+                <!--end::Brand-->
+                <!--begin::Aside menu-->
+                <div class="aside-menu flex-column-fluid">
+                    <!--begin::Aside Menu-->
+                    <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true"
+                        data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto"
+                        data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer"
+                        data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+                        <!--begin::Menu-->
+                        <div class="menu menu-column menu-title-gray-800 menu-state-title-khardl menu-state-icon-khardl menu-state-bullet-khardl menu-arrow-gray-500"
+                            id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
+
+                            <!-- Braches -->
+                            <div class="menu-item menu-accordion">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="currentColor" />
+                                                    <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="currentColor" />
+                                                    <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                    </span>
+                                    <a href="./branches/branches.html">
+                                        <span class="menu-title">Branches</span>
+                                    </a>
+                                </span>
+                               
+                            </div>
+
+
+                            <!-- menu -->
+                            <div class="menu-item menu-accordion">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 6.00008V4.2844C16 3.51587 16 3.13161 15.8387 2.88321C15.6976 2.66587 15.4776 2.5118 15.2252 2.45345C14.9366 2.38677 14.5755 2.51809 13.8532 2.78073L6.57982 5.4256C6.01064 5.63257 5.72605 5.73606 5.51615 5.91845C5.33073 6.07956 5.18772 6.28374 5.09968 6.51304C5 6.77264 5 7.07546 5 7.6811V12.0001M9 17.0001H15M9 13.5001H15M9 10.0001H15M8.2 21.0001H15.8C16.9201 21.0001 17.4802 21.0001 17.908 20.7821C18.2843 20.5903 18.5903 20.2844 18.782 19.9081C19 19.4802 19 18.9202 19 17.8001V9.20008C19 8.07997 19 7.51992 18.782 7.0921C18.5903 6.71577 18.2843 6.40981 17.908 6.21807C17.4802 6.00008 16.9201 6.00008 15.8 6.00008H8.2C7.0799 6.00008 6.51984 6.00008 6.09202 6.21807C5.71569 6.40981 5.40973 6.71577 5.21799 7.0921C5 7.51992 5 8.07997 5 9.20008V17.8001C5 18.9202 5 19.4802 5.21799 19.9081C5.40973 20.2844 5.71569 20.5903 6.09202 20.7821C6.51984 21.0001 7.07989 21.0001 8.2 21.0001Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                    </span>
+                                    <a href="./Menu.html">
+                                        <span class="menu-title">Menu</span>
+                                    </a>
+                                </span>                            
+                            </div>
+                            
+
+                            <!-- Promotions -->
+                            <div class="menu-item menu-accordion">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg fill="#000000" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15.1,2a1.68,1.68,0,0,1,1.71,1.63V4.85a1.68,1.68,0,0,1-1.63,1.71H10A3.4,3.4,0,0,0,6.56,9.81V42a3.4,3.4,0,0,0,3.25,3.41H42a3.4,3.4,0,0,0,3.41-3.25V36.9a1.68,1.68,0,0,1,1.63-1.71h1.22A1.67,1.67,0,0,1,50,36.82v6.35A6.82,6.82,0,0,1,43.18,50H8.83A6.82,6.82,0,0,1,2,43.18H2V8.83A6.83,6.83,0,0,1,8.82,2H15.1Z" fill-rule="evenodd"></path><path d="M38.11,21a2.23,2.23,0,1,0,2.25,2.23h0A2.22,2.22,0,0,0,38.14,21Z"></path><path d="M27.49,12.76A2.23,2.23,0,1,0,29.72,15a2.22,2.22,0,0,0-2.23-2.23Z"></path><path d="M49.1,16.87l-1.87-2.24a3.94,3.94,0,0,1-.93-2.31l-.22-2.86a3.66,3.66,0,0,0-3.35-3.41l-2.49-.2a5.3,5.3,0,0,1-3-1.28L35.35,2.91a3.68,3.68,0,0,0-4.79-.05L28.5,4.6a4.72,4.72,0,0,1-2.7,1.1l-2.67.18a3.69,3.69,0,0,0-3.42,3.36l-.19,2.44a5.28,5.28,0,0,1-1.29,3L16.6,16.59a3.67,3.67,0,0,0,0,4.78l1.77,2.14a4.42,4.42,0,0,1,1,2.54l.2,2.75a3.68,3.68,0,0,0,3.35,3.42l2.5.22a5.17,5.17,0,0,1,3,1.27l1.9,1.64a3.7,3.7,0,0,0,4.79,0l2.18-1.82a4.08,4.08,0,0,1,2.43-1l2.85-.21A3.68,3.68,0,0,0,46,29l.2-2.31a5.93,5.93,0,0,1,1.43-3.32l1.52-1.73A3.66,3.66,0,0,0,49.1,16.87ZM23.38,15a4.15,4.15,0,1,1,4.15,4.14h0A4.13,4.13,0,0,1,23.36,15v0Zm6,12.22a.39.39,0,0,1-.25.17H27.89a.33.33,0,0,1-.26-.16.29.29,0,0,1,0-.31L36.28,11a.4.4,0,0,1,.26-.16h1.29a.31.31,0,0,1,.15.42h0Zm12.94-4a4.15,4.15,0,1,1-4.17-4.12h0a4.13,4.13,0,0,1,4.12,4.15h0Z"></path></g></svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <a href="#">
+                                        <span class="menu-title">Promotions</span>
+                                    </a>
+                                </span>
+                                
+                            </div>
+
+                            <!-- Staff -->
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="currentColor" />
+                                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">Staff</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="./supports/index.html">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">All Staff</span>
+                                        </a>
+                                    </div>
+                                    <div class="menu-item">
+                                        <a class="menu-link" href="./supports/create.html">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Add Staff</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Menu-->
+                    </div>
+                    <!--end::Aside Menu-->
+                </div>
+                <!--end::Aside menu-->
+            </div>
+            <!--end::Aside-->
+
+            
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                 <!--begin::Header-->
+                 <div id="kt_header" class="header align-items-stretch">
+                    <!--begin::Container-->
+                    <div class="container-fluid d-flex align-items-stretch justify-content-between">
+                        <!--begin::Aside mobile toggle-->
+                        <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
+                            <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
+                                id="kt_aside_mobile_toggle">
+                                <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
+                                <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none">
+                                        <path
+                                            d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z"
+                                            fill="currentColor" />
+                                        <path opacity="0.3"
+                                            d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z"
+                                            fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                        </div>
+                        <!--end::Aside mobile toggle-->
+                        <!--begin::Mobile logo-->
+                        <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                            <a href="demo1/dist/index.html" class="d-lg-none">
+                                <img alt="Logo" src="{{ asset('img/logo.png') }}" class="h-30px" />
+                            </a>
+                        </div>
+                        <!--end::Mobile logo-->
+                       <!--begin::Wrapper-->
+                       <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+                        <!--begin::Navbar-->
+                        <div class="d-flex align-items-stretch" id="kt_header_nav">
+                            <!--begin::Menu wrapper-->
+                            <div class="header-menu align-items-stretch">
+                                <!--begin::Page title-->
+                                <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                                    data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                                    class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                                    <!--begin::Title-->
+                                    <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">
+                                        @yield('title', 'Dashboard')
+                                        <!--begin::Separator-->
+                                        <span class="h-20px border-1 border-gray-200 border-start ms-3 mx-2 me-1"></span>
+                                        <!--end::Separator-->
+                                        <!--begin::Description-->
+                                        <span class="text-muted fs-7 fw-bold mt-2">@yield('subtitle', '')</span>
+                                        <!--end::Description-->
+                                    </h1>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Page title-->
+                            </div>
+                            <!--end::Menu wrapper-->
+                        </div>
+                        <!--end::Navbar-->
+                        <!--begin::Toolbar wrapper-->
+                        <div class="d-flex align-items-stretch flex-shrink-0">
+
+                            <!--begin::User menu-->
+                            <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+                                <!--begin::Menu wrapper-->
+                                <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
+                                    data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                                    data-kt-menu-placement="bottom-end">
+                                    <i class="fa-solid fa-user fa-lg"></i>
+                                </div>
+                                <!--begin::User account menu-->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-khardl fw-bold py-4 fs-6 w-275px"
+                                    data-kt-menu="true">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content d-flex align-items-center px-3">
+                                            <!--begin::Avatar-->
+                                            <div class="symbol symbol-50px me-5">
+                                                <i class="fa-solid fa-user fa-lg"></i>
+                                            </div>
+                                            <!--end::Avatar-->
+                                            <!--begin::Username-->
+                                            <div class="d-flex flex-column">
+                                                <div class="fw-bolder d-flex align-items-center fs-5">
+                                                    {{Auth::user()->first_name}} {{Auth::user()->last_name}}
+                                                </div>
+                                                <a href="#"
+                                                    class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
+                                            </div>
+                                            <!--end::Username-->
+                                        </div>
+                                    </div>
+                                    <!--end::Menu item-->
+
+                                    <!--begin::Menu separator-->
+                                    <div class="separator my-2"></div>
+                                    <!--end::Menu separator-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-5" data-kt-menu-trigger="hover"
+                                            data-kt-menu-placement="left-start">
+                                            <a href="#" class="menu-link px-5">
+                                                <span class="menu-title position-relative">{{ __('messages.language')}}
+                                                    <span
+                                                        class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('messages.english')}} @else {{ __('messages.arabic')}} @endif
+                                                        <img class="w-15px h-15px rounded-1 ms-2"
+                                                            @if(app()->getLocale() != 'ar')
+                                                                src="{{ asset('media/flags/united-kingdom.svg') }}"
+                                                            @else
+                                                                src="{{ asset('media/flags/saudi-arabia.svg') }}"
+                                                            @endif 
+                                                            alt="" /></span></span>
+                                            </a>
+                                            <!--begin::Menu sub-->
+                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <form action="{{ route('change.language', 'en') }}" method="GET">
+                                                        @csrf
+                                                        <button style="border: 0;" type="submit"
+                                                            class="w-100 menu-link d-flex px-5 active">
+                                                            <span class="symbol symbol-20px me-4">
+                                                                <img class="rounded-1"
+                                                                    src={{ asset('media/flags/united-kingdom.svg') }} alt="" />
+                                                            </span>{{ __('messages.english')}}</button>
+                                                    </form>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item mt-1 px-3">
+                                                    <form action="{{ route('change.language', 'ar') }}" method="GET">
+                                                        @csrf
+                                                        <button style="border: 0;" type="submit"
+                                                        class="w-100 menu-link d-flex px-5 active">
+                                                        <span class="symbol symbol-20px me-4">
+                                                            <img class="rounded-1" src="{{ asset('media/flags/saudi-arabia.svg') }}"
+                                                                alt="" /> </span>{{ __('messages.arabic')}}</button>
+                                                    </form>
+                                                </div>
+                                                <!--end::Menu item-->
+                                            </div>
+                                            <!--end::Menu sub-->
+                                        </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-5">
+                                        <a href="{{ route('logout') }}"
+                                        class="menu-link px-5" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">{{ __('messages.sign-out')}}</a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                    <!--end::Menu item-->
+
+                                </div>
+                                <!--end::User account menu-->
+                                <!--end::Menu wrapper-->
+                            </div>
+                            <!--end::User menu-->
+                            <!--begin::Header menu toggle-->
+                            <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
+                                <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
+                                    id="kt_header_menu_mobile_toggle">
+                                    <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none">
+                                            <path
+                                                d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z"
+                                                fill="currentColor" />
+                                            <path opacity="0.3"
+                                                d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z"
+                                                fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </div>
+                            </div>
+                            <!--end::Header menu toggle-->
+                        </div>
+                        <!--end::Toolbar wrapper-->
+                    </div>
+                    <!--end::Wrapper-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Header-->
+                <!--begin::Content-->
+                @yield('content')
+                <!--end::Content-->
+                <!--begin::Footer-->
+                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                    <!--begin::Container-->
+                    <div
+                        class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                        <!--begin::Copyright-->
+                        <div class="text-dark order-2 order-md-1">
+                            <span class="text-muted fw-bold me-1">2023©</span>
+                            <a href="#" target="_blank"
+                                class="text-gray-800 text-hover-khardl">Khardl</a>
+                        </div>
+                        <!--end::Copyright-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Footer-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--end::Main-->
+
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+        <span class="svg-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)"
+                    fill="currentColor" />
+                <path
+                    d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+                    fill="currentColor" />
+            </svg>
+        </span>
+        <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+
+    <!--begin::Javascript-->
+    <script>
+        var hostUrl = "assets/";
+    </script>
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('js/scripts.bundle.js')}}"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Vendors Javascript(used by this page)-->
+
+    <script src="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
+    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <!--end::Page Vendors Javascript-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <script src="{{ asset('js/widgets.bundle.js')}}"></script>
+    <script src="{{ asset('js/custom/widgets.js')}}"></script>
+    <script src="{{ asset('js/custom/apps/chat/chat.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/create-app.js')}}"></script>
+    <script src="{{ asset('js/custom/utilities/modals/users-search.js')}}"></script>
+    <script src="https://kit.fontawesome.com/d2d3f16619.js" crossorigin="anonymous"></script>
+    <!--end::Page Custom Javascript-->
+    <!--end::Javascript-->
+</body>
+<!--end::Body-->
+
+</html>

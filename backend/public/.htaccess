@@ -2,7 +2,7 @@
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
-    DirectoryIndex index.php index.html
+
     RewriteEngine On
 
     # Handle Authorization Header

@@ -2,34 +2,39 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
-use Laravel\Passport\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use MustVerifyEmailTrait, HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table ='users';
+    protected $primaryKey = 'id';
     protected $fillable = [
+        'id',
+        'role',
         'first_name',
         'last_name',
-        'position',
+        'branch_id',
+        'restaurant_name',
+        'phone_number',
         'email',
         'password',
-        'phone',
-        'status',
-        'verification_code',
-        'last_login',
+        'email_verified_at',
+        'phone_verified_at',
+        'isApprovedCommercial',
+        'commercial_registration_pdf',
+        'signed_contract_delivery_company',
+        'points',
     ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -39,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
-  
+
     /**
      * The attributes that should be cast.
      *
@@ -48,84 +53,22 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
-        'last_login' => 'datetime',
         'password' => 'hashed',
     ];
-    public function isAdmin(){
-        return $this->hasRole("Administrator");
-    }
-    public function isBlocked(){
-        return $this->status == 'blocked';
-    }
-    public function getFullNameAttribute()
+
+    
+    public function hasPermission($permission)
     {
-        return "{$this->first_name} {$this->last_name}";
+        return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-    public function generateVerificationCode()
+    public function hasPermissionWorker($permission)
     {
-        $this->verification_code = Str::random(6);
-        $this->save();
+        return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-    public function checkVerificationCode($code)
+    public function is_admin()
     {
-        return $this->verification_code === $code;
+        return $this->role === 10;
     }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
-
-    public function cart()
-    {
-        return $this->hasOne(Cart::class);
-    }
-
-    public function addresses()
-    {
-        return $this->hasMany(Address::class);
-    }
-
-    public function wishlist()
-    {
-        return $this->hasOne(Wishlist::class);
-    }
-
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
-
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
-
-    public function paymentMethods()
-    {
-        return $this->hasMany(PaymentMethod::class);
-    }
-
-    public function feedbacks()
-    {
-        return $this->hasMany(Feedback::class);
-    }
-
-    public function blocklistEntry()
-    {
-        return $this->hasOne(Blocklist::class);
-    }
-
-    public function customerStyle()
-    {
-        return $this->hasOne(CustomerStyle::class);
-    }
-
-    public function traderRegistrationRequirement()
-    {
-        return $this->hasOne(TraderRequirement::class);
-    }
-
 }

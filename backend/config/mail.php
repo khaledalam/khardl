@@ -103,6 +103,11 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+
+    'views' => [
+        'emails.denied_email' => 'emails.denied_email',
+    ],
+    
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings

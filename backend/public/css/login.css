@@ -1,0 +1,75 @@
+body {
+    font-family: "Montserrat";
+    background-image: linear-gradient(black, white);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gradient-custom-2 {
+    background-image: url(Capture.PNG);
+}
+
+
+.nav-logo {
+    width: 80px;
+    margin-right: 16px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img {
+    transform: scale(0.7);
+}
+
+.navbar-toggler:focus,
+.navbar-toggler,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+    border: 0;
+}
+
+@media (max-width: 991.98px) {
+    .navbar {
+        background-color: rgba(0, 0, 0, 0.648);
+    }
+
+    .gradient-custom-2 {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar {
+        background-image: linear-gradient(black, rgba(0, 0, 0, 0));
+    }
+
+    .gradient-custom-2 {
+        display: inline-block;
+    }
+}
+
+form input {
+    border: none;
+    outline: none;
+    border-bottom: 2px solid rgb(91, 91, 91);
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.137);
+}
+
+form input:focus,
+form input:active {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.299);
+    border: 0;
+    outline: none;
+    transition: 0.1s all ease-in-out;
+}
+
+button{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.096);
+}

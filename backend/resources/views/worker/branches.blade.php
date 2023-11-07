@@ -1,0 +1,601 @@
+@extends('layouts.worker-sidebar')
+
+@section('title', 'Branches')
+
+@section('content')
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0
+    &libraries=places"></script>
+<!--begin::Content-->
+    <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+
+                    
+
+        <div class="post d-flex flex-column-fluid" id="kt_post">
+            <!--begin::Container-->
+            <div id="kt_content_container" class="container-xxl">
+                <div class="card card-flush border-0 h-md-100">
+                    <!--begin::Body-->
+                    <div class="card-body py-9">
+                        <!--begin::Row-->
+                        <div class="row gx-9 h-100">
+                            <!--begin::Col-->
+                            <div class="col-sm-6 mb-10 mb-sm-0">
+                                <!--begin::Image-->
+                                
+                                    <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
+                                        <div id="map{{ $branch->id }}" style="width: 100%; height: 90%; border:0;"></div>
+                                            <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">  
+                                                @csrf  
+                                                <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
+                                                <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
+                                                <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl mt-3 w-100">Save Location</button>
+                                            </form>
+                                    </div>
+                                <!--end::Image-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-sm-6">
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-column h-100">
+                                    <!--begin::Header-->
+                                    <div class="mb-7">
+                                        <!--begin::Headin-->
+                                        <div class="d-flex flex-stack mb-6">
+                                            <!--begin::Title-->
+                                            <div class="flex-shrink-0 me-5">
+                                                @if ($branch->is_primary)
+                                                    <span
+                                                        class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-light-khardl text-capitalize">primary
+                                                        branch</span>
+                                                @endif
+                                                <span
+                                                    class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
+                                            </div>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Heading-->
+                                        <!--begin::Items-->
+                                        <div class="d-flex align-items-center flex-wrap d-grid gap-2">
+                                            <!--begin::Item-->
+                                            {{-- <div class="d-flex align-items-center me-5 me-xl-13">
+                                                <!--begin::Symbol-->
+                                                <div class="symbol symbol-30px symbol-circle me-3">
+                                                    <img src="assets/media/avatars/300-3.jpg" class=""
+                                                        alt="" />
+                                                </div>
+                                                <!--end::Symbol-->
+                                                <!--begin::Info-->
+                                                <div class="m-0">
+                                                    <span
+                                                        class="fw-bold text-gray-400 d-block fs-8">Manager</span>
+                                                    <span class="fw-bolder text-gray-800 fs-7">Ibrahim
+                                                        Rogi</span>
+                                                </div>
+                                                <!--end::Info-->
+                                            </div> --}}
+                                            <!--end::Item-->
+                                            <!--begin::Item-->
+                                            <div class="d-flex align-items-center">
+                                                <!--begin::Symbol-->
+                                                <div class="symbol symbol-30px symbol-circle me-3">
+                                                    <span class="symbol-label bg-success">
+                                                        <!--begin::Svg Icon | path: icons/duotune/abstract/abs042.svg-->
+                                                        <span class="svg-icon svg-icon-5 svg-icon-white">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                width="24" height="24" viewBox="0 0 24 24"
+                                                                fill="none">
+                                                                <path
+                                                                    d="M18 21.6C16.6 20.4 9.1 20.3 6.3 21.2C5.7 21.4 5.1 21.2 4.7 20.8L2 18C4.2 15.8 10.8 15.1 15.8 15.8C16.2 18.3 17 20.5 18 21.6ZM18.8 2.8C18.4 2.4 17.8 2.20001 17.2 2.40001C14.4 3.30001 6.9 3.2 5.5 2C6.8 3.3 7.4 5.5 7.7 7.7C9 7.9 10.3 8 11.7 8C15.8 8 19.8 7.2 21.5 5.5L18.8 2.8Z"
+                                                                    fill="currentColor" />
+                                                                <path opacity="0.3"
+                                                                    d="M21.2 17.3C21.4 17.9 21.2 18.5 20.8 18.9L18 21.6C15.8 19.4 15.1 12.8 15.8 7.8C18.3 7.4 20.4 6.70001 21.5 5.60001C20.4 7.00001 20.2 14.5 21.2 17.3ZM8 11.7C8 9 7.7 4.2 5.5 2L2.8 4.8C2.4 5.2 2.2 5.80001 2.4 6.40001C2.7 7.40001 3.00001 9.2 3.10001 11.7C3.10001 15.5 2.40001 17.6 2.10001 18C3.20001 16.9 5.3 16.2 7.8 15.8C8 14.2 8 12.7 8 11.7Z"
+                                                                    fill="currentColor" />
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+                                                </div>
+                                                <!--end::Symbol-->
+                                                <!--begin::Info-->
+                                                <div class="m-0">
+                                                    <span
+                                                        class="fw-bold text-gray-400 d-block fs-8">Revenue</span>
+                                                    <span
+                                                        class="fw-bolder text-gray-800 fs-7">$64.800</span>
+                                                </div>
+                                                <!--end::Info-->
+                                            </div>
+                                            <!--end::Item-->
+                                        </div>
+                                        <!--end::Items-->
+                                    </div>
+                                    <!--end::Header-->
+                                    <!--begin::Body-->
+                                    <div class="mb-6">
+                                        <!--begin::Text-->
+                                        {{-- <span class="fw-bold text-gray-600 fs-6 mb-8 d-block">Lorem ipsum
+                                            dolor sit amet, consectetur adipisicing elit. Rem laborum
+                                            necessitatibus porro.</span> --}}
+                                        <!--end::Text-->
+                                        <!--begin::Stats-->
+                                        <div class="d-flex align-items-center">
+                                            <!--begin::Stat-->
+                                            <div
+                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
+                                                <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">Edit Menu</a>
+                                            </div>
+                                            <!--end::Stat-->
+                                            <!--begin::Stat-->
+                                            <div
+                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
+                                                <a href="#" class="fs-6 text-700 fw-bolder">Advertisement
+                                                    modification</a>
+                                            </div>
+                                            <!--end::Stat-->
+                                        </div>
+                                        <!--end::Stats-->
+                                        <!--begin::Stats-->
+                                        <div class="d-flex align-items-center">
+                                            <!--begin::Stat-->
+                                            <div
+                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
+                                                <a href="{{ route('restaurant.workers', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">Staff
+                                                    modification</a>
+                                            </div>
+                                            <!--end::Stat-->
+                                            <!--begin::Stat-->
+                                            <div
+                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
+                                                <a href="#" class="fs-6 text-700 fw-bolder"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#kt_modal_new_target{{ $branch->id }}">Opening the branch
+                                                    <i class="fas fa-clock"></i></a>
+                                            </div>
+                                            <!--end::Stat-->
+                                        </div>
+                                        <!--end::Stats-->
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Row-->
+                    </div>
+                    <!--end::Body-->
+                </div>
+            </div>
+            <!--end::Container-->
+        </div>
+
+        <div class="modal fade" id="kt_modal_new_target{{ $branch->id }}" tabindex="-1" aria-hidden="true">
+            <!--begin::Modal dialog-->
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+            <!--begin::Modal header-->
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <!--begin::Close-->
+                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--begin::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y pt-0 pb-15">
+                <!--begin:Form-->
+                <form id="kt_modal_new_target_form{{ $branch->id }}" class="form" action="{{ route('restaurant.update-branch', ['id' => $branch->id]) }}" method="POST" id="myForm">
+                    @csrf
+                    @method('PUT')
+                    <!--begin::Heading-->
+                    <div class="mb-13 text-center">
+                        <!--begin::Title-->
+                        <h1 class="mb-3">Branch opening time</h1>
+                        <!--end::Title-->
+                    </div>
+                    <!--end::Heading-->
+        
+                    <!--begin::Input group-->
+                    <div class="row g-9 mb-8">
+                        <!--begin::Col-->
+                        <div class="col-md-12 fv-row">
+                            <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6 d-flex justify-content-center">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark active" data-bs-toggle="tab" href="#kt_tab_pane_1">Saturday</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_2">Sunday</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_3">Monday</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_4">Tuesday</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_5">Wednesday</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_6">Thursday</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_7">Friday</a>
+                                </li>
+                            </ul>
+                            
+                            <div class="tab-content" id="myTabContent">
+        
+                                <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+                                    <div class=" d-flex justify-content-between w-100">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">From </label>
+                                            <input type="time" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="saturday_open"  required />
+                                        </div>
+        
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">To </label>
+                                            <input type="time" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="saturday_close"  required />
+        
+                                        </div>
+                                    </div>
+
+                                    <div class="row fv-row my-7">
+                                        <div
+                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
+                                            <input class="form-check-input" type="checkbox" @if($branch->saturday_closed) checked @endif name="saturday_closed" id="closed_receving"
+                                                value="1" />
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">The
+                                                shop is closed today</label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+                                    <div class=" d-flex justify-content-between w-100">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">From </label>
+                                            <input type="time" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="sunday_open"  required />
+                                        </div>
+        
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">To </label>
+                                            <input type="time" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="sunday_close"  required />
+        
+                                        </div>
+                                    </div>
+
+                                    <div class="row fv-row my-7">
+                                        <div
+                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
+                                            <input class="form-check-input" type="checkbox" @if($branch->sunday_closed) checked @endif name="sunday_closed" id="closed_receving"
+                                                value="1" />
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">The
+                                                shop is closed today</label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel">
+                                    <div class=" d-flex justify-content-between w-100">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">From </label>
+                                            <input type="time" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="monday_open"  required />
+                                        </div>
+        
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">To </label>
+                                            <input type="time" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="monday_close"  required />
+        
+                                        </div>
+                                    </div>
+
+                                    <div class="row fv-row my-7">
+                                        <div
+                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
+                                            <input class="form-check-input" type="checkbox" @if($branch->monday_closed) checked @endif name="monday_closed" id="closed_receving"
+                                                value="1" />
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">The
+                                                shop is closed today</label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel">
+                                    <div class=" d-flex justify-content-between w-100">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">From </label>
+                                            <input type="time" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="tuesday_open"  required />
+                                        </div>
+        
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">To </label>
+                                            <input type="time" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="tuesday_close"  required />
+        
+                                        </div>
+                                    </div>
+
+                                    <div class="row fv-row my-7">
+                                        <div
+                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
+                                            <input class="form-check-input" type="checkbox" @if($branch->tuesday_closed) checked @endif name="tuesday_closed" id="closed_receving"
+                                                value="1" />
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">The
+                                                shop is closed today</label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel">
+                                    <div class=" d-flex justify-content-between w-100">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">From </label>
+                                            <input type="time" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="wednesday_open"  required />
+                                        </div>
+        
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">To </label>
+                                            <input type="time" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="wednesday_close"  required />
+        
+                                        </div>
+                                    </div>
+
+                                    <div class="row fv-row my-7">
+                                        <div
+                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
+                                            <input class="form-check-input" type="checkbox" @if($branch->wednesday_closed) checked @endif name="wednesday_closed" id="closed_receving"
+                                                value="1" />
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">The
+                                                shop is closed today</label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="tab-pane fade" id="kt_tab_pane_6" role="tabpanel">
+                                    <div class=" d-flex justify-content-between w-100">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">From </label>
+                                            <input type="time" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="thursday_open"  required />
+                                        </div>
+        
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">To </label>
+                                            <input type="time" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="thursday_close"  required />
+                                        </div>
+                                    </div>
+
+                                    <div class="row fv-row my-7">
+                                        <div
+                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
+                                            <input class="form-check-input" type="checkbox" @if($branch->thursday_closed) checked @endif name="thursday_closed" id="closed_receving"
+                                                value="1" />
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">The
+                                                shop is closed today</label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="tab-pane fade" id="kt_tab_pane_7" role="tabpanel">
+                                    <div class=" d-flex justify-content-between w-100">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">From </label>
+                                            <input type="time" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="friday_open"  required />
+                                        </div>
+        
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                            <label for="">To </label>
+                                            <input type="time" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="friday_close"  required />
+                                        </div>
+                                    </div>
+
+                                    <div class="row fv-row my-7">
+                                        <div
+                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
+                                            <input class="form-check-input" type="checkbox" @if($branch->friday_closed) checked @endif name="friday_closed" id="closed_receving"
+                                                value="1" />
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">The
+                                                shop is closed today</label>
+                                        </div>
+                                    </div>
+                                </div>
+        
+        
+                            </div>
+                        </div>
+                        <!--end::Col-->
+        
+        
+        
+        
+        
+                        
+        
+        
+                    </div>
+                    <!--end::Input group-->
+        
+        
+                    <!--begin::Actions-->
+                    <div class="text-center">
+                        <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
+                            <span class="indicator-label">Submit</span>
+                            <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end:Form-->
+            </div>
+            <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+            </div>
+            <!--end::Modal dialog-->
+            </div>
+            <!--end::Modal - New Target-->
+
+    
+
+
+
+
+
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+    <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+    <span class="svg-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)"
+        fill="currentColor" />
+    <path
+        d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
+        fill="currentColor" />
+    </svg>
+    </span>
+    <!--end::Svg Icon-->
+    </div>
+    <!--end::Scrolltop-->
+
+    <script>
+        let maps = {}; // Store maps in an object
+        let markers = {}; // Store markers in an object
+      
+        function initializeMap(branchId, lat, lng) {
+          const latLng = new google.maps.LatLng(lat, lng);
+      
+          const map = new google.maps.Map(document.getElementById('map' + branchId), {
+            center: latLng,
+            zoom: 15,
+          });
+      
+          const marker = new google.maps.Marker({
+            position: latLng,
+            map: map,
+            draggable: true,
+          });
+      
+          markers[branchId] = marker; // Store the marker for this branch
+          maps[branchId] = map; // Store the map for this branch
+      
+          google.maps.event.addListener(marker, 'dragend', function () {
+            updateLocationInput(marker.getPosition(), branchId);
+          });
+      
+          // Add a click event listener to the map
+          google.maps.event.addListener(map, 'click', function (event) {
+            marker.setPosition(event.latLng);
+            updateLocationInput(event.latLng, branchId);
+          });
+        }
+      
+        function updateLocationInput(latLng, branchId) {
+          const latInput = document.getElementById('lat' + branchId);
+          const lngInput = document.getElementById('lng' + branchId);
+          latInput.value = latLng.lat();
+          lngInput.value = latLng.lng();
+        }
+      
+        function updateLocation(branchId) {
+            const marker = markers[branchId];
+            const latInput = document.getElementById('lat' + branchId);
+            const lngInput = document.getElementById('lng' + branchId);
+            const lat = parseFloat(latInput.value);
+            const lng = parseFloat(lngInput.value);
+
+            if (!isNaN(lat) && !isNaN(lng)) {
+                const latLng = new google.maps.LatLng(lat, lng);
+                marker.setPosition(latLng);
+                maps[branchId].setCenter(latLng);
+
+                $.ajax({
+                url: '/branches/update-location/' + branchId,
+                method: 'POST',
+                data: {
+                    lat: lat,
+                    lng: lng,
+                },
+                success: function (response) {
+                    console.log('Location updated successfully:');
+                },
+                error: function (error) {
+                    console.error('Error updating location:', error);
+                },
+                });
+            }
+            }
+
+      
+        // Initialize the maps for each branch
+          initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
+      </script>
+      
+
+    <script>
+        
+            
+        
+        const mapElement = document.getElementById('map');
+        const centerCoords = { lat: 24.7136, lng: 46.6753 }; // Default center coordinates
+
+        // Check if the old('location') is not null
+        const locationValue = "{{ old('location') }}";
+        if (locationValue !== null && locationValue !== '') {
+            const locationArray = locationValue.split(' ');
+            if (locationArray.length === 2) {
+                // Update the center coordinates based on the old('location')
+                centerCoords.lat = parseFloat(locationArray[0]);
+                centerCoords.lng = parseFloat(locationArray[1]);
+            }
+        }
+
+        const map = new google.maps.Map(mapElement, {
+            center: centerCoords,
+            zoom: 10, // Set an appropriate zoom level
+        });
+
+
+
+        const locationInput = document.getElementById('location');
+        const geocoder = new google.maps.Geocoder();
+
+        let marker; // To store the dropped pin
+
+        // Create a PlacesService instance for autocomplete
+
+        // Listen for a place selection
+
+        google.maps.event.addListener(map, 'click', function (event) {
+        // If a marker exists, remove it
+        if (marker) {
+            marker.setMap(null);
+        }
+
+        // Create a new marker at the clicked location
+        marker = new google.maps.Marker({
+            map: map,
+            position: event.latLng,
+        });
+
+        // Update the hidden input with the clicked location's latitude and longitude
+        locationInput.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
+    });
+
+
+    
+    </script>
+
+@endsection

@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: Montserrat;
+
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+#Home {
+    background-image: url(rustic-wooden-planks-with-blackboard-background.jpg);
+    height: fit-content;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    font-weight: 900;
+    font-size: 52px;
+}
+
+.logo {
+    width: 80px;
+    margin-right: 16px;
+}
+
+
+.Clients {
+    height: fit-content;
+    background-color: rgba(255, 255, 255, 0.493);
+}
+
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: 0.1s all ease-in-out;
+}
+
+
+.image-container img {
+    width: 120px;
+    height: auto;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.139);
+    border-radius: 8px;
+}
+
+.image-container img:hover {
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.491);
+    transform: scale(1.06);
+}
+
+
+ul li {
+    padding: 0 10px 0 10px;
+}
+
+section {
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.283);
+    padding: 36px 0 36px 0;
+}
+
+.Steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.Footer {
+    padding: 0 0 0 0;
+    background-color: rgba(0, 0, 0, 0.817);
+}
+
+.Step-img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+@media (max-width: 991.98px) {
+    .navbar {
+        background-color: rgba(0, 0, 0, 0.648);
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar {
+        background-image: linear-gradient(black, rgba(0, 0, 0, 0));
+    }
+}
+
+.navbar-toggler:focus,
+.navbar-toggler,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+    border: 0;
+}

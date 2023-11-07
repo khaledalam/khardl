@@ -1,0 +1,240 @@
+@extends('layouts.admin-sidebar')
+
+
+@section('title', __('messages.promoters'))
+
+@section('content')
+    <!--begin::Content-->
+    <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+
+        <!--begin::Post-->
+              <div class="post d-flex flex-column-fluid" id="kt_post">
+                  <!--begin::Container-->
+                  <div id="kt_content_container" class="container-xxl">
+
+                      <!--begin::Form-->
+                  <form method="POST" action="{{ route('admin.add-promoter') }}">
+                  @csrf
+                  <!--begin::Main column-->
+                    <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                        <!--begin::Tab content-->
+                        <div class="tab-content">
+                            <!--begin::Tab pane-->
+                                <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
+                                    <div class="d-flex flex-column gap-7 gap-lg-10">
+                                        <!--begin::General options-->
+                                        <div class="card card-flush py-4">
+                                            <!--begin::Card header-->
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h2>{{ __('messages.add-a-promoter') }}</h2>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-end mt-3">
+                                                    <!--begin::Button-->
+                                                    <a id="resetButton" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{ __('messages.reset') }}</a>
+                                                    <!--end::Button-->
+                                                    <!--begin::Button-->
+                                                    <button type="submit" id="kt_ecommerce_add_product_submit"
+                                                        class="btn btn-sm btn-primary">
+                                                        <span class="indicator-label">{{ __('messages.add') }}</span>
+                                                        <span class="indicator-progress">{{ __('messages.please-wait') }}
+                                                            <span
+                                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                    </button>
+                                                    <!--end::Button-->
+                                                </div>
+                                            </div>
+                                            <!--end::Card header-->
+                                            <!--begin::Card body-->
+                                            <div class="card-body pt-0">
+                                                <!--begin::Input group-->
+                                                <div class="mb-10 fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="required form-label">{{ __('messages.name') }}</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" required id="nameInput" name="name" class="form-control mb-2" placeholder="{{ __('messages.name') }}" value="" />
+                                                    <!--end::Input-->
+                                                    <!--begin::Description-->
+                                                    <div class="text-muted fs-7">{{ __('messages.name') }} {{ __('messages.is-required') }}</div>
+                                                    <!--end::Description-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="mb-10 fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="form-label">{{ __('messages.url') }}</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" id="urlInput" name="url" class="form-control mb-2" placeholder="{{ __('messages.url-example') }}" value="" />
+                                                    <!--end::Input-->
+                                                    <!--begin::Description-->
+                                                    <div class="text-muted fs-7">{{ __('messages.leave-empty-for-random-url') }}</div>
+                                                    <div class="text-muted fs-7">{{ __('messages.url-should-be-unique') }}</div>
+                                                    <!--end::Description-->
+                                                </div>
+                                                <!--end::Input group-->
+
+                                            </div>
+                                            <!--end::Card header-->
+                                        </div>
+                                        <!--end::General options-->
+                                    </div>
+                                </div>
+                                <!--end::Tab pane-->
+                    </div>
+                    <!--end::Main column-->
+                  </form>
+              <!--end::Form-->
+
+
+
+
+                      <!--begin::Tables Widget 9-->
+                      <div class="card mb-5 mb-xl-8">
+
+                          <!--begin::Body-->
+                          <div class="card-body py-3">
+                              <!--begin::Table container-->
+                              <div class="table-responsive">
+                                  <!--begin::Table-->
+                                  <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                      <!--begin::Table head-->
+                                      <thead>
+                                          <tr class="fw-bolder text-muted">
+                                              <th class="min-w-25px">#</th>
+                                              <th class="min-w-200px">{{ __('messages.name') }}</th>
+                                              <th class="min-w-150px">{{ __('messages.url') }}</th>
+                                              <th class="min-w-150px">{{ __('messages.entered') }}</th>
+                                              <th class="min-w-150px">{{ __('messages.registered') }}</th>
+                                              <th class="min-w-150px text-end">{{ __('messages.actions')}}</th>
+                                          </tr>
+                                      </thead>
+                                      <!--end::Table head-->
+                                      <!--begin::Table body-->
+                                      <tbody>
+
+                                        @foreach ($promoters as $promoter)
+                                            <tr>
+                                                <td class="text-muted fw-bolder">
+                                                    {{ $promoter->id }}
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex justify-content-start flex-column">
+                                                            <a class="text-dark fw-bolder text-hover-primary fs-6">{{ $promoter->name }}</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a href="https://khardl.com/register/{{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $promoter->url }}</a>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $promoter->entered }}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $promoter->registered }}</span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter', ['id' => $promoter->id]) }}" method="POST">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                          <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                                                          <span class="svg-icon svg-icon-3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                              <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
+                                                              <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor" />
+                                                              <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
+                                                            </svg>
+                                                          </span>
+                                                          <!--end::Svg Icon-->
+                                                        </button>
+                                                      </form>
+                                                </td>
+                                            
+                                            </tr>
+                                        @endforeach
+                                      </tbody>
+                                      <!--end::Table body-->
+                                  </table>
+                                  <!--end::Table-->
+                              </div>
+                              <!--end::Table container-->
+                              
+                          </div>
+                          <!--begin::Body-->
+                      </div>
+                      <!--end::Tables Widget 9-->
+                  </div>
+                  <!--end::Container-->
+                  <div class="d-flex flex-stack flex-wrap pt-10">
+                    <div class="fs-6 fw-bold text-gray-700">
+                        Showing {{ $promoters->firstItem() }} to {{ $promoters->lastItem() }} of {{ $promoters->total() }} entries
+                    </div>
+                    <!--begin::Pages-->
+                    <ul class="pagination">
+                        @if ($promoters->currentPage() > 1)
+                            <li class="page-item previous">
+                                <a href="{{ $promoters->previousPageUrl() }}" class="page-link">
+                                    <i class="previous"></i>
+                                </a>
+                            </li>
+                        @endif
+                
+                        @for ($page = max(1, $promoters->currentPage() - 2); $page <= min($promoters->lastPage(), $promoters->currentPage() + 2); $page++)
+                            <li class="page-item {{ $page == $promoters->currentPage() ? 'active' : '' }}">
+                                <a href="{{ $promoters->url($page) }}" class="page-link">{{ $page }}</a>
+                            </li>
+                        @endfor
+                
+                        @if ($promoters->hasMorePages())
+                            <li class="page-item next">
+                                <a href="{{ $promoters->nextPageUrl() }}" class="page-link">
+                                    <i class="next"></i>
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                  </div>
+              </div>
+          <!--end::Post-->
+      </div>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#resetButton').click(function() {
+                    $('#nameInput').val("");
+                    $('#urlInput').val("");
+                });
+            });
+        </script>
+
+        <script>
+            var deleteButtons = document.querySelectorAll('.delete-button');
+                        deleteButtons.forEach(function(button) {
+                            button.addEventListener('click', function(event) {
+                                event.preventDefault();
+                                
+                                var form = button.closest('.delete-form');
+                                
+                                Swal.fire({
+                                    title: '{{ __('messages.are-you-sure') }}',
+                                    text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#d33',
+                                    cancelButtonColor: '#3085d6',
+                                    confirmButtonText: '{{ __('messages.delete') }}',
+                                    cancelButtonText: '{{ __('messages.cancel') }}'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        form.submit();
+                                    }
+                                });
+                            });
+                        });
+          </script>
+
+      <!--end::Content-->
+@endsection

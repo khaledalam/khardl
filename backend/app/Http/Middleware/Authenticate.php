@@ -2,9 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Utils\ResponseHelper;
-use Illuminate\Http\Request;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Http\Request;
 
 class Authenticate extends Middleware
 {
@@ -13,12 +12,6 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        if ($request->expectsJson()) {
-            return ResponseHelper::response([
-                'message' => 'User is not authenticated',
-                'is_loggedin' => false
-            ], ResponseHelper::HTTP_NOT_AUTHENTICATED);
-        }
-        return route('central.login');
+        return $request->expectsJson() ? null : route('login');
     }
 }
