@@ -18,7 +18,6 @@ export default function useCheckAuthenticated() {
             const response = await axiosAuth.post('/auth-validation')
             console.log(response)
             setStatusCode(response?.status)
-            // setIsLoggedIn(response?.data?.is_loggedin)
             dispatch(changeLogState(response?.data?.is_loggedin))
             console.log('hi from useCHeckAuth')
          } finally {

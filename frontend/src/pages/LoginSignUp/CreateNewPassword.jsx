@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
-import { useApiContext } from '../context'
+// import { useApiContext } from '../context'
 
 const CreateNewPassword = () => {
    const { t } = useTranslation()
@@ -21,7 +21,7 @@ const CreateNewPassword = () => {
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
    let user_email = sessionStorage.getItem('email')
-   const apiUrl = useApiContext()
+   const apiUrl = process.env.REACT_APP_API_URL
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)

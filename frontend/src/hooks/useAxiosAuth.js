@@ -7,12 +7,26 @@ const useAxiosAuth = () => {
    const location = useLocation()
    const navigate = useNavigate()
 
+   const privateRoute = ![
+      '/',
+      '/register',
+      '/clients',
+      '/services',
+      '/reset-password',
+      '/create-new-password',
+      '/advantages',
+      '/prices',
+      '/fqa',
+      '/policies',
+      '/privacy',
+   ].includes(location.pathname)
+
    const axiosAuth = axios.create({
       baseURL: BASE_URL,
       headers: {
          'Content-Type': 'application/json',
-         'X-CSRF-TOKEN': window.csrfToken || "NA",
-         'Accept': 'application/json'
+         'X-CSRF-TOKEN': window.csrfToken || 'NA',
+         Accept: 'application/json',
       },
       withCredentials: false,
    })
@@ -25,7 +39,6 @@ const useAxiosAuth = () => {
       (error) => Promise.reject(error)
    )
 
-
    axiosAuth.interceptors.response.use(
       (response) => {
          console.log(response)
@@ -34,9 +47,10 @@ const useAxiosAuth = () => {
       (error) => {
          if (error?.response?.status === 401) {
             console.log('navigate to login route')
-            if (location.pathname === '/register') navigate('/register')
-            navigate('/login');
-            return;
+            // if (location.pathname === '/register') navigate('/register')
+            if (!privateRoute) navigate(location.pathname)
+            else navigate('/login')
+            // return
             // return <Navigate to='/login' state={{ from: location }} replace />
          }
 

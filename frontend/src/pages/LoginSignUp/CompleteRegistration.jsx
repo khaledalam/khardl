@@ -7,11 +7,16 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { FaStarOfLife } from 'react-icons/fa'
-import { useApiContext } from '../context'
+// import { useApiContext } from '../context'
+
+import { useAuthContext } from '../../components/context/AuthContext'
 
 function CompleteRegistration() {
    const { t } = useTranslation()
    const navigate = useNavigate()
+
+   const { setStatusCode } = useAuthContext()
+
    const [fileUploadSuccess, setFileUploadSuccess] = useState({
       commercial_registration: false,
       tax_registration_certificate: false,
@@ -33,30 +38,33 @@ function CompleteRegistration() {
    } = useForm()
    // let user_info = JSON.parse(sessionStorage.getItem("user-info"));
    // const token = user_info ? user_info.access_token : "";
-   const apiUrl = useApiContext()
+   // const process.env.REACT_APP_API_URL = useApiContext()
 
    // API POST REQUEST
    const onSubmit = async (data) => {
       console.log(data)
       try {
-         let response = await fetch(`${apiUrl}/register-step2`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'text/plain',
-               'X-CSRF-TOKEN': window.csrfToken,
-            },
-            body: JSON.stringify({
-               commercial_registration: data.commercial_registration[0],
-               tax_registration_certificate:
-                  data.tax_registration_certificate[0],
-               bank_certificate: data.bank_certificate[0],
-               identity_of_owner_or_manager:
-                  data.identity_of_owner_or_manager[0],
-               national_address: data.national_address[0],
-               IBAN: data.IBAN,
-               facility_name: data.facility_name,
-            }),
-         })
+         let response = await fetch(
+            `${process.env.REACT_APP_API_URL}/register-step2`,
+            {
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'text/plain',
+                  'X-CSRF-TOKEN': window.csrfToken,
+               },
+               body: JSON.stringify({
+                  commercial_registration: data.commercial_registration[0],
+                  tax_registration_certificate:
+                     data.tax_registration_certificate[0],
+                  bank_certificate: data.bank_certificate[0],
+                  identity_of_owner_or_manager:
+                     data.identity_of_owner_or_manager[0],
+                  national_address: data.national_address[0],
+                  IBAN: data.IBAN,
+                  facility_name: data.facility_name,
+               }),
+            }
+         )
 
          if (response.ok) {
             const responseData = await response.json()
@@ -64,6 +72,7 @@ function CompleteRegistration() {
             toast.success(
                `${t('Account creation has been completed successfully')}`
             )
+            setStatusCode(200)
             navigate('/dashboard')
          } else {
             throw new Error(`${t('Account creation failed to complete')}`)
@@ -102,7 +111,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         {...register('commercial_registration', {
                            required: true,
                         })}
@@ -125,7 +134,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.commercial_registration && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>
@@ -153,7 +162,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         id='Input(2)'
                         {...register('tax_registration_certificate', {
                            required: true,
@@ -176,7 +185,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.tax_registration_certificate && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>
@@ -204,7 +213,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         id='Input(3)'
                         {...register('national_address', { required: true })}
                         className='hidden'
@@ -225,7 +234,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.national_address && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>
@@ -253,7 +262,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         id='Input(4)'
                         {...register('identity_of_owner_or_manager', {
                            required: true,
@@ -276,7 +285,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.identity_of_owner_or_manager && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>
@@ -304,7 +313,7 @@ function CompleteRegistration() {
                      </div>
                      <input
                         type='file'
-                        accept='image/*, application/pdf'
+                        accept='application/pdf'
                         id='Input(5)'
                         {...register('bank_certificate', { required: true })}
                         className='hidden'
@@ -325,7 +334,7 @@ function CompleteRegistration() {
                         className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                      >
                         <FiUpload size={24} />
-                        <h1>{t('Attach an image/PDF file')}</h1>
+                        <h1>{t('Attach a PDF file')}</h1>
                      </label>
                      {fileUploadSuccess.bank_certificate && (
                         <span className='text-green-500 text-xs mt-1 ms-2'>

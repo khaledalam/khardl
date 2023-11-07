@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
-import { useApiContext } from '../context'
+// import { useApiContext } from '../context'
 
 const Register = () => {
    const navigate = useNavigate()
@@ -23,7 +23,7 @@ const Register = () => {
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
-   const apiUrl = useApiContext()
+   const apiUrl = process.env.REACT_APP_API_URL
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
