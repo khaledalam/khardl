@@ -1,22 +1,25 @@
 import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
 import { Navigate, useLocation, Outlet } from 'react-router-dom'
-
+import VerificationEmail from '../../pages/LoginSignUp/VerificationEmail'
+import CompleteRegistration from '../../pages/LoginSignUp/CompleteRegistration'
+import Login from '../../pages/LoginSignUp/Login'
 const PrivateRoute = () => {
    let location = useLocation()
    const { statusCode, loading } = useCheckAuthenticated()
 
    // const { pathname } = useLocation()
 
-   // if (statusCode === 203) {
-   //    return <Navigate to='/' state={{ from: location }} />
-   // }
+   if ((statusCode === 401 || statusCode == 207) && !loading) {
+      return <Login />;
+   }
 
    if (statusCode === 204 && !loading) {
-      return <Navigate to='/verification-email' state={{ from: location }} />
+      return <VerificationEmail />
+      // return <Navigate to='/verification-email' state={{ from: location }} />
    }
 
    if (statusCode === 206 && !loading) {
-      return <Navigate to='/complete-register' />
+      return <CompleteRegistration />
    }
 
    // if (statusCode === 205) {
