@@ -2,36 +2,38 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\CheckPermissions;
-use App\Http\Middleware\EncryptCookies;
-use App\Http\Middleware\LanguageManager;
-use App\Http\Middleware\NonAdminMiddleware;
-use App\Http\Middleware\PreventRequestsDuringMaintenance;
-use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\Worker;
 use App\Http\Middleware\Restaurant;
 use App\Http\Middleware\TrimStrings;
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\TrustProxies;
-use App\Http\Middleware\ValidateSignature;
+use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\LanguageManager;
 use App\Http\Middleware\VerifyCsrfToken;
-use App\Http\Middleware\Worker;
-use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use App\Http\Middleware\CheckPermissions;
 use Illuminate\Auth\Middleware\Authorize;
-use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
-use Illuminate\Auth\Middleware\RequirePassword;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
-use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
+use App\Http\Middleware\ValidateSignature;
 use Illuminate\Http\Middleware\HandleCors;
+use App\Http\Middleware\NonAdminMiddleware;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Http\Middleware\SetCacheHeaders;
-use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\Routing\Middleware\ThrottleRequests;
-use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use Illuminate\Routing\Middleware\ThrottleRequests;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Http\Middleware\PreventRequestsDuringMaintenance;
+use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
+use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
 
 
 class Kernel extends HttpKernel
@@ -82,6 +84,13 @@ class Kernel extends HttpKernel
             ThrottleRequests::class.':api',
             SubstituteBindings::class,
         ],
+        'tenant' => [
+            'web',
+            InitializeTenancyByDomainOrSubdomain::class,
+            PreventAccessFromCentralDomains::class
+        ],
+
+        'universal' => [],
     ];
 
     /**
