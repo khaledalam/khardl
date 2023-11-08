@@ -1,28 +1,29 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Auth\RegisterController;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Http\Response;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RestaurantController;
-use App\Http\Controllers\WorkerController;
-use App\Http\Controllers\TapController;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TapController;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\AdminController;
+use Illuminate\Auth\Events\PasswordReset;
+use App\Http\Controllers\WorkerController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\Auth\RegisterController;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
 
 /*
@@ -39,18 +40,21 @@ use Illuminate\Support\Facades\App;
 // Exclude new react app endpoints : START ------------------------------
 $react_app_endpoints = ['', 'Advantages', 'Clients', 'Services', 'FQA', 'login', 'register'];
 Route::get('/', static function () {return view('index');});
-foreach ($react_app_endpoints as $endpoint) {
-    Route::get($endpoint, static function(){
-        return view('index');
-    })->name($endpoint);
-
-    $lower_route = strtolower($endpoint);
-    if ($lower_route !== $endpoint) {
-        Route::get(strtolower($endpoint), static function () {
+// TODO add central namespace
+Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], static function()use($react_app_endpoints) {
+    foreach ($react_app_endpoints as $endpoint) {
+        Route::get($endpoint, static function(){
             return view('index');
-        });
-    }
+        })->name($endpoint);
+
+        $lower_route = strtolower($endpoint);
+        if ($lower_route !== $endpoint) {
+            Route::get(strtolower($endpoint), static function () {
+                return view('index');
+            });
+        }
 }
+});
 // Exclude new react app endpoints : END ------------------------------
 
 

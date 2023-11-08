@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 
 Route::post('register', [\App\Http\Controllers\API\Auth\RegisterController::class, 'register']);
 Route::post('login', [\App\Http\Controllers\API\Auth\LoginController::class, 'login']);
@@ -30,6 +26,8 @@ Route::post('email/verify', [\App\Http\Controllers\API\Auth\RegisterController::
 
 Route::post('contact-us', [\App\Http\Controllers\API\ContactUsController::class, 'store']);
 
-Route::middleware(['auth:api', 'role:Restaurant Owner'])->group(function () {
+Route::middleware(['auth:api'])->group(function () { //role:Restaurant Owner
     Route::post('register-step2', [\App\Http\Controllers\API\Auth\RegisterController::class, 'stepTwo']);
+    Route::post('create-tenant', [\App\Http\Controllers\API\TenantController::class, 'store']);
+
 });
