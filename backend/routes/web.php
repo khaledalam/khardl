@@ -36,6 +36,25 @@ use Illuminate\Support\Facades\App;
 |
 */
 
+// Exclude new react app endpoints : START ------------------------------
+$react_app_endpoints = ['', 'Advantages', 'Clients', 'Services', 'FQA', 'login', 'register'];
+Route::get('/', static function () {return view('index');});
+foreach ($react_app_endpoints as $endpoint) {
+    Route::get($endpoint, static function(){
+        return view('index');
+    })->name($endpoint);
+
+    $lower_route = strtolower($endpoint);
+    if ($lower_route !== $endpoint) {
+        Route::get(strtolower($endpoint), static function () {
+            return view('index');
+        });
+    }
+}
+// Exclude new react app endpoints : END ------------------------------
+
+
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/logout', function(){
@@ -195,10 +214,8 @@ Route::middleware('web')->group(function () {
 });
 
 
-Route::get('/', function () {
-    return view('index');
-});
 
-Auth::routes();
+// Old blade view
+//Auth::routes();
 
 

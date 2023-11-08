@@ -23,12 +23,12 @@ export const AuthContextProvider = (props) => {
          const response = await axiosAuth.post('/auth-validation')
          console.log(response)
          setStatusCode(response?.status)
-         dispatch(changeLogState(response?.data?.is_loggedin || true))
+         dispatch(changeLogState(response?.data?.is_loggedin || false))
          console.log('hi from AuthContext')
       } catch (err) {
          console.log(err)
          setStatusCode(err?.response?.status)
-         dispatch(changeLogState(err.response?.data?.is_loggedin))
+         dispatch(changeLogState(err.response?.data?.is_loggedin || false))
       } finally {
          setLoading(false)
       }

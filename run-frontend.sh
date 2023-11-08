@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-npm run watch --prefix frontend
+npm run watch --prefix backend

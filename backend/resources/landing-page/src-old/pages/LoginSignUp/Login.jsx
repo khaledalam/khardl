@@ -74,7 +74,7 @@ const Login = () => {
                     <div className="mt-6">
                         <MainText
                             Title={t("Login")}
-                            SubTitle={t("Default Text")}
+                            SubTitle={t("Default Text") + "fsfa"}
                             classTitle="!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]"
                             classSubTitle="max-w-[380px] !text-[14px] my-4 !px-0 !mx-0"
                         />
@@ -212,7 +212,7 @@ const Login = () => {
                     </div>
                     <div className="mt-6">
                         <MainText
-                            SubTitle={t("Default Text")}
+                            SubTitle={t("Default Text") + "fsfa"}
                             classSubTitle="max-w-[380px] !text-[18px] !px-0"
                         />
                     </div>
