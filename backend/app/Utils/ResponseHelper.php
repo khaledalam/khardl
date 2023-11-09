@@ -16,7 +16,7 @@ class ResponseHelper {
     const HTTP_AUTHENTICATED        = 200;
     const HTTP_NOT_AUTHENTICATED    = 401;
     const HTTP_VERIFIED             = 203;
-    const HTTP_NOT_VERIFIED         = 204;
+    const HTTP_NOT_VERIFIED         = 211;
     const HTTP_ACCEPTED             = 205;
     // not approve restaurant owner trade documents
     const HTTP_NOT_ACCEPTED         = 206;

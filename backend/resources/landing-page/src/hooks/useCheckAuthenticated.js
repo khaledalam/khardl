@@ -15,7 +15,7 @@ export default function useCheckAuthenticated() {
    useEffect(() => {
       const checkAuthenticated = async () => {
          try {
-            const response = await axiosAuth.post('/auth-validation')
+            const response = await axiosAuth.get('/auth-validation')
             console.log(response)
             setStatusCode(response?.status)
             dispatch(changeLogState(response?.data?.is_loggedin))

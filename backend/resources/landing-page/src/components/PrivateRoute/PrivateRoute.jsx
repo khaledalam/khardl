@@ -25,7 +25,7 @@ const PrivateRoute = () => {
       return <Login state={{ from: location }} />
    }
 
-   if (statusCode === 204 && !loading) {
+   if (statusCode === 211 && !loading) {
       // return <Navigate to='/verification-email' state={{ from: location }} />
       return <VerificationEmail state={{ from: location }} />
    }
@@ -39,7 +39,7 @@ const PrivateRoute = () => {
    //    return <Navigate to='/' state={{ from: location }} />
    // }
 
-   if (statusCode === 200 && !loading) {
+   if (statusCode === 204 && !loading) {
       return <Outlet />
    }
 

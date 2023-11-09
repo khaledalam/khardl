@@ -18,7 +18,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\API\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
@@ -37,7 +37,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/logout', function(){
+Route::post('/logout', function(){
     Auth::logout();
     return redirect()->route('login')->with('success', 'You have been logged out.');
 })->middleware('auth')->name('logout');
@@ -220,7 +220,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
 });
 
-Route::post('/auth-validation', [AuthenticationController::class, 'auth_validation'])
+Route::get('/auth-validation', [AuthenticationController::class, 'auth_validation'])
     ->name('auth_validation_web');
 
 Route::post('register', [RegisterController::class, 'register']);

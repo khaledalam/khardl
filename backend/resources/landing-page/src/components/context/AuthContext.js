@@ -21,7 +21,7 @@ export const AuthContextProvider = (props) => {
 
    const checkAuthenticated = useCallback(async () => {
       try {
-         const response = await axiosAuth.post( API_ENDPOINT + '/auth-validation')
+         const response = await axiosAuth.get( API_ENDPOINT + '/auth-validation')
          console.log(response)
          setStatusCode(response?.status)
          dispatch(changeLogState(response?.data?.is_loggedin || false))

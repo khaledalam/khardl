@@ -52,7 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password' => 'hashed',
     ];
 
-    
+
     public function hasPermission($permission)
     {
         return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
@@ -67,4 +67,10 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->role === 10;
     }
+
+    public function traderRegistrationRequirement()
+    {
+        return $this->hasOne(TraderRequirement::class);
+    }
+
 }

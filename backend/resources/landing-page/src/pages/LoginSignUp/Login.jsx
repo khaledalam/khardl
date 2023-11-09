@@ -45,7 +45,7 @@ const Login = () => {
             headers: {
                'Content-Type': 'application/json',
                Accept: 'application/json',
-               'X-CSRF-TOKEN': window.csrfToken,
+               'X-CSRF-TOKEN': window.csrfToken, // @TODO: check this
             },
             body: JSON.stringify({
                email: data.email,
@@ -53,6 +53,8 @@ const Login = () => {
                remember_me: data.remember_me,
             }),
          })
+          console.log("response: ", response);
+
          if (response.ok) {
             const responseData = await response.json()
             console.log(responseData)

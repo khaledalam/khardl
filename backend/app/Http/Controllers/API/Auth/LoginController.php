@@ -32,37 +32,31 @@ class LoginController extends BaseController
 
 
         $user = Auth::user();
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
+        // @TODO: uncomment if need!
+//        $tokenResult = $user->createToken('Personal Access Token');
+//        $token = $tokenResult->token;
 
         // Set token expiration based on 'remember_me'
-        if ($request->remember_me) {
-            $token->expires_at = Carbon::now()->addMonths(1);
-        } else {
-            $token->expires_at = Carbon::now()->addWeeks(1);
-        }
+//        if ($request->remember_me) {
+//            $token->expires_at = Carbon::now()->addMonths(1);
+//        } else {
+//            $token->expires_at = Carbon::now()->addWeeks(1);
+//        }
+//        $token->save();
 
-        $token->save();
-        $user = User::where(['email' => $request->email])->select(['first_name','last_name','email','status'])->first();
+//        $user = User::where(['email' => $request->email])
+//            ->select(['first_name','last_name','email','status'])->first();
 
         $data = [
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
+//            'access_token' => $tokenResult->accessToken,
+//            'token_type' => 'Bearer',
             'user' => $user,
-            'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
+//            'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
         ];
 
-        $requirements = $user->traderRegistrationRequirement;
 
         // Check if the trader's registration requirements are not fulfilled.
-        if (!isset($requirements) ||
-            !isset($requirements->IBAN) ||
-            !isset($requirements->facility_name) ||
-            !isset($requirements->tax_registration_certificate) ||
-            !isset($requirements->bank_certificate) ||
-            !isset($requirements->identity_of_owner_or_manager) ||
-            !isset($requirements->national_address)
-        ) {
+        if ($user->traderRegistrationRequirement) {
             $data['step2_status'] = 'incomplete';
         }else{
             $data['step2_status'] = 'completed';
