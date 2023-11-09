@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import {API_ENDPOINT} from "../../config";
+import AxiosInstance from "../../axios/axios";
 // import { useApiContext } from '../context'
 
 const ForgotPassword = () => {
@@ -20,18 +21,10 @@ const ForgotPassword = () => {
    // **API POST REQUEST**
    const onSubmit = async (data) => {
       try {
-         const response = await fetch(`${API_ENDPOINT}/password/forgot`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-               Accept: 'application/json',
-               'X-CSRF-TOKEN': window.csrfToken,
-            },
-            body: JSON.stringify({
-               email: data.email,
-            }),
+         const response = await AxiosInstance.post(`/password/forgot`, {
+           email: data.email
          })
-         if (response.ok) {
+         if (response.data) {
             const responseData = await response.json()
             console.log(responseData)
             sessionStorage.setItem('email', data.email)

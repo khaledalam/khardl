@@ -17,7 +17,9 @@ export default function useCheckAuthenticated() {
          try {
             const response = await axiosAuth.get('/auth-validation')
             console.log(response)
+             const isLoggedin = response?.data?.is_loggedin;
             setStatusCode(response?.status)
+             localStorage.setItem('isLoggedIn')
             dispatch(changeLogState(response?.data?.is_loggedin))
             console.log('hi from useCHeckAuth')
          } finally {

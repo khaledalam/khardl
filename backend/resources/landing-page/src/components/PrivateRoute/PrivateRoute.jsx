@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import Login from '../../pages/LoginSignUp/Login'
 import VerificationEmail from '../../pages/LoginSignUp/VerificationEmail'
 import CompleteRegistration from '../../pages/LoginSignUp/CompleteRegistration'
+import {HTTP_BLOCKED, HTTP_NOT_ACCEPTED, HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";
 
 const PrivateRoute = () => {
    let location = useLocation()
@@ -20,17 +21,22 @@ const PrivateRoute = () => {
    //    return <Navigate to='/' state={{ from: location }} />
    // }
 
-   if ((statusCode === 401 || statusCode === 207) && !loading) {
+    if (loading) {
+        return;
+    }
+
+
+   if ((statusCode === HTTP_NOT_AUTHENTICATED || statusCode === HTTP_BLOCKED)) {
       // return <Navigate to='/login' state={{ from: location }} />
       return <Login state={{ from: location }} />
    }
 
-   if (statusCode === 204 && !loading) {
+   if (statusCode === HTTP_NOT_VERIFIED) {
       // return <Navigate to='/verification-email' state={{ from: location }} />
       return <VerificationEmail state={{ from: location }} />
    }
 
-   if (statusCode === 206 && !loading) {
+   if (statusCode === HTTP_NOT_ACCEPTED) {
       // return <Navigate to='/complete-register' state={{ from: location }} />
       return <CompleteRegistration state={{ from: location }} />
    }
@@ -39,7 +45,7 @@ const PrivateRoute = () => {
    //    return <Navigate to='/' state={{ from: location }} />
    // }
 
-   if (statusCode === 200 && !loading) {
+   if (statusCode === HTTP_OK) {
       return <Outlet />
    }
 

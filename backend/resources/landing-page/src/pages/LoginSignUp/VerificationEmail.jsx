@@ -9,7 +9,8 @@ import { GrPowerReset } from 'react-icons/gr'
 // import { useApiContext } from '../context'
 
 import { useAuthContext } from '../../components/context/AuthContext'
-import {API_ENDPOINT} from "../../config";
+import {API_ENDPOINT, HTTP_NOT_ACCEPTED} from "../../config";
+import AxiosInstance from "../../axios/axios";
 
 const VerificationEmail = () => {
    const { t } = useTranslation()
@@ -23,7 +24,7 @@ const VerificationEmail = () => {
       formState: { errors: errors },
    } = useForm()
    const { handleSubmit: handleSubmit2 } = useForm()
-   let user_email = sessionStorage.getItem('email')
+   let user_email = sessionStorage.getItem('email') || '';
 
    const [showForm, setShowForm] = useState(false)
    const [countdown, setCountdown] = useState(30)
@@ -36,20 +37,22 @@ const VerificationEmail = () => {
       startTimer()
    }
 
+   console.log("user_email", user_email, user_email.length);
+
+   if (user_email.length < 1) {
+       console.log("user_email", user_email, user_email.length);
+
+       window.location.href = '/logout';
+   }
+
    // API POST REQUEST
    const ResendCode = async (data) => {
       try {
-         const response = await fetch(`${API_ENDPOINT}/email/send-verify`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-               Accept: 'application/json',
-               'X-CSRF-TOKEN': window.csrfToken,
-            },
-            body: JSON.stringify({
-               email: user_email,
-            }),
+         const response = await AxiosInstance.post(`/email/send-verify`, {
+             email: user_email
          })
+
+          console.log(response);
 
          if (response.ok) {
             toast.success(`${t('The code has been re-sent successfully')}`)
@@ -65,21 +68,15 @@ const VerificationEmail = () => {
    // API POST REQUEST
    const onSubmit = async (data) => {
       try {
-         const response = await fetch(`${API_ENDPOINT}/email/verify`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-               Accept: 'application/json',
-               'X-CSRF-TOKEN': window.csrfToken,
-            },
-            body: JSON.stringify({
-               code: data.verificationcode,
-               email: data.email,
-            }),
+         const response = await AxiosInstance.post(`/email/verify`, {
+             code: data.verificationcode,
+             email: data.email
          })
 
-         if (response.ok) {
-            setStatusCode(206)
+          console.log(response.data)
+
+         if (response.data) {
+            setStatusCode(HTTP_NOT_ACCEPTED)
             navigate('/complete-register')
             toast.success(`${t('The code has been verified successfully')}`)
          } else {
@@ -107,12 +104,16 @@ const VerificationEmail = () => {
                return 0
             }
          })
-      }, 1000)
+      }, 1000);
+      return timer;
    }
 
-   useEffect(() => {
-      startTimer()
-   }, [])
+   // useEffect(() => {
+   //    let timer = startTimer();
+   //    return () => {
+   //        clearInterval(timer);
+   //    }
+   // }, [])
 
    return (
       <div className='flex flex-col items-stretch justify-center pt-[40px]'>

@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Languages from '../Languages'
 
-import { logout } from '../../redux/auth/authSlice'
+import {getIsLoggedIn, logout} from '../../redux/auth/authSlice'
 import { useAuthContext } from '../context/AuthContext'
 // import Axios from '../../axios/axios'
 import { toast } from 'react-toastify'
@@ -23,10 +23,14 @@ const Header = () => {
    const isOpen = useSelector((state) => state.drawer.isOpen)
    const Language = useSelector((state) => state.languageMode.languageMode)
 
-   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+
+    const isLoggedIn = getIsLoggedIn();
    // const status = useSelector((state) => state.auth.status)
    const navigate = useNavigate()
    const { setStatusCode } = useAuthContext()
+
+    console.log("isLoggedIn > ", isLoggedIn);
+
 
    const handleLogout = async (e) => {
       e.preventDefault()
@@ -106,10 +110,10 @@ const Header = () => {
                   />
                   <svg viewBox='0 0 32 32'>
                      <path
-                        className='line line-top-bottom'
-                        d='M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22'
-                     ></path>
-                     <path className='line' d='M7 16 27 16'></path>
+    className='line line-top-bottom'
+    d='M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22'
+    />
+                     <path className='line' d='M7 16 27 16'/>
                   </svg>
                </label>
             </div>
@@ -134,35 +138,35 @@ const Header = () => {
                      className='ml-6'
                   />
                   <Li
-                     link='/Advantages'
+                     link='/advantages'
                      handleLinkClick={handleLinkClick}
                      close={closeDrawerHandler}
                      title={t('Advantages')}
                      activeLink={activeLink}
                   />
                   <Li
-                     link='/Clients'
+                     link='/clients'
                      handleLinkClick={handleLinkClick}
                      close={closeDrawerHandler}
                      title={t('Clients')}
                      activeLink={activeLink}
                   />
                   <Li
-                     link='/Services'
+                     link='/services'
                      handleLinkClick={handleLinkClick}
                      close={closeDrawerHandler}
                      title={t('Services')}
                      activeLink={activeLink}
                   />
                   <Li
-                     link='/Prices'
+                     link='/prices'
                      handleLinkClick={handleLinkClick}
                      close={closeDrawerHandler}
                      title={t('Prices')}
                      activeLink={activeLink}
                   />
                   <Li
-                     link='/FQA'
+                     link='/fqa'
                      handleLinkClick={handleLinkClick}
                      close={closeDrawerHandler}
                      title={t('FQA')}
@@ -229,35 +233,35 @@ const Header = () => {
                         activeLink={activeLink}
                      />
                      <Li
-                        link='/Advantages'
+                        link='/advantages'
                         handleLinkClick={handleLinkClick}
                         close={closeDrawerHandler}
                         title={t('Advantages')}
                         activeLink={activeLink}
                      />
                      <Li
-                        link='/Clients'
+                        link='/clients'
                         handleLinkClick={handleLinkClick}
                         close={closeDrawerHandler}
                         title={t('Clients')}
                         activeLink={activeLink}
                      />
                      <Li
-                        link='/Services'
+                        link='/services'
                         handleLinkClick={handleLinkClick}
                         close={closeDrawerHandler}
                         title={t('Services')}
                         activeLink={activeLink}
                      />
                      <Li
-                        link='/Prices'
+                        link='/prices'
                         handleLinkClick={handleLinkClick}
                         close={closeDrawerHandler}
                         title={t('Prices')}
                         activeLink={activeLink}
                      />
                      <Li
-                        link='/FQA'
+                        link='/fqa'
                         handleLinkClick={handleLinkClick}
                         close={closeDrawerHandler}
                         title={t('FQA')}

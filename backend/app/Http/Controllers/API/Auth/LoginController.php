@@ -20,7 +20,7 @@ class LoginController extends BaseController
             'remember_me' => 'nullable|boolean',
         ]);
 
-       
+
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
@@ -30,23 +30,23 @@ class LoginController extends BaseController
 
         $user = Auth::user();
         // @TODO: uncomment if need!
-//        $tokenResult = $user->createToken('Personal Access Token');
-//        $token = $tokenResult->token;
+        $tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->token;
 
         // Set token expiration based on 'remember_me'
-//        if ($request->remember_me) {
-//            $token->expires_at = Carbon::now()->addMonths(1);
-//        } else {
-//            $token->expires_at = Carbon::now()->addWeeks(1);
-//        }
-//        $token->save();
+        if ($request->remember_me) {
+            $token->expires_at = Carbon::now()->addMonths(1);
+        } else {
+            $token->expires_at = Carbon::now()->addWeeks(1);
+        }
+        $token->save();
 
 //        $user = User::where(['email' => $request->email])
 //            ->select(['first_name','last_name','email','status'])->first();
 
         $data = [
-//            'access_token' => $tokenResult->accessToken,
-//            'token_type' => 'Bearer',
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
             'user' => $user,
 //            'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
         ];

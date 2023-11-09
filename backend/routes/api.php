@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Route::post('register', [RegisterController::class, 'register']);
-//Route::post('login', [LoginController::class, 'login']);
+Route::post('register', [RegisterController::class, 'register']);
+Route::post('login', [LoginController::class, 'login']);
 //
 //Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
 //Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');

@@ -14,7 +14,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeLogState } from '../../redux/auth/authSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useAuthContext } from '../../components/context/AuthContext'
-import {API_ENDPOINT} from "../../config";
+import {API_ENDPOINT, HTTP_NOT_ACCEPTED, HTTP_NOT_VERIFIED, HTTP_OK, HTTP_VERIFIED} from "../../config";
+import AxiosInstance from "../../axios/axios";
 
 const Login = () => {
    const dispatch = useDispatch()
@@ -40,23 +41,15 @@ const Login = () => {
    const onSubmit = async (data) => {
       try {
          setSpinner(true)
-         const response = await fetch(`${API_ENDPOINT}/login`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-               Accept: 'application/json',
-               'X-CSRF-TOKEN': window.csrfToken, // @TODO: check this
-            },
-            body: JSON.stringify({
-               email: data.email,
-               password: data.password,
-               remember_me: data.remember_me,
-            }),
-         })
-          console.log("response: ", response);
+         const response = await AxiosInstance.post(`/login`, {
+           email: data.email,
+           password: data.password,
+           // remember_me: data.remember_me, // used only in API token-based
+         });
 
-         if (response.ok) {
-            const responseData = await response.json()
+         console.log(response?.data?.success)
+         if (response?.data?.success) {
+            const responseData = await response?.data;
             console.log(responseData)
             sessionStorage.setItem(
                'user-info',
@@ -64,24 +57,27 @@ const Login = () => {
             )
             if (responseData.data.user.status === 'inactive') {
                sessionStorage.setItem('email', responseData.data.user.email)
-               setStatusCode(204)
+               setStatusCode(HTTP_NOT_VERIFIED)
                navigate('/verification-email')
             } else if (responseData.data.step2_status === 'incomplete') {
-               setStatusCode(206)
+               setStatusCode(HTTP_NOT_ACCEPTED)
                navigate('/complete-register')
             } else if (
                responseData.data.step2_status === 'completed' &&
                responseData.data.user.status === 'active'
             ) {
-               setStatusCode(200)
-               navigate('/dashboard')
+               setStatusCode(HTTP_OK)
+                // Navigate to the summary
+                window.location.href = '/summary'
+               // navigate('/summary')
             } else {
-               navigate('/dashboard')
+               navigate('/error')
             }
             dispatch(changeLogState(true))
             dispatch(setIsOpen(false))
             toast.success(`${t('You have been logged in successfully')}`)
          } else {
+             console.log("response?.data?.success false")
             setSpinner(false)
             throw new Error(`${t('Login failed')}`)
          }
@@ -241,7 +237,7 @@ const Login = () => {
                                     fill='currentFill'
                                  />
                               </svg>
-                              <span class='sr-only'>Loading...</span>
+                              <span className='sr-only'>Loading...</span>
                            </div>
                         </div>
                      )}

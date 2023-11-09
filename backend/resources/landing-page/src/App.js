@@ -34,8 +34,6 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Layout from './components/Layout/Layout'
 import Logout from './components/Logout/Logout'
 import { useAuthContext } from './components/context/AuthContext'
-// import useCheckAuthenticated from './hooks/useCheckAuthenticated'
-// import { AuthContextProvider } from './components/context/AuthContext'
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)

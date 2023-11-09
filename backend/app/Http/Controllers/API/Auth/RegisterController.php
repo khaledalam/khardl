@@ -59,10 +59,9 @@ class RegisterController extends BaseController
         $user = auth('api')->user();
 
 
-        // Check if the trader's registration requirements are not fulfilled.
-        if ($user->traderRegistrationRequirement
-        ) {
-            return $this->sendResponse(null, 'User complete register step2 successfully.');
+        // Check if the trader's registration requirements already fulfilled.
+        if ($user->traderRegistrationRequirement) {
+            return $this->sendResponse(null, 'User already completed register step2 successfully.');
         }
 
         $user_id = $user->id;
@@ -94,8 +93,10 @@ class RegisterController extends BaseController
             }
         }
 
-
         TraderRequirement::create($input);
+
+        // Create tenant logic...
+
 
         return $this->sendResponse(null, 'User complete register step2 successfully.');
     }
@@ -149,6 +150,7 @@ class RegisterController extends BaseController
         // Check the verification code
         if ($user->checkVerificationCode($request->code)) {
             $user->email_verified_at = now();
+            $user->status = 'active';
             $user->verification_code = null; // Clear the verification code
             $user->save();
 

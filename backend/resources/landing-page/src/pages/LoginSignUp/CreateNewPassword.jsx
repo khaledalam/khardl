@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import {API_ENDPOINT} from "../../config";
+import AxiosInstance from "../../axios/axios";
 
 const CreateNewPassword = () => {
    const { t } = useTranslation()
@@ -32,21 +33,13 @@ const CreateNewPassword = () => {
    // **API POST REQUEST**
    const onSubmit = async (data) => {
       try {
-         const response = await fetch(`${API_ENDPOINT}/password/reset`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-               Accept: 'application/json',
-               'X-CSRF-TOKEN': window.csrfToken,
-            },
-            body: JSON.stringify({
-               email: user_email,
-               password: data.password,
-               c_password: data.confirm_password,
-               token: data.token,
-            }),
+         const response = await AxiosInstance.post(`/password/reset`, {
+             email: user_email,
+             password: data.password,
+             c_password: data.confirm_password,
+             token: data.token
          })
-         if (response.ok) {
+         if (response.data) {
             const responseData = await response.json()
             console.log(responseData)
             sessionStorage.removeItem('email')

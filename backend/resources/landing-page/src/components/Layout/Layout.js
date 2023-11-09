@@ -1,6 +1,7 @@
 // import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
 import { useAuthContext } from '../context/AuthContext'
 import { Navigate, useLocation, Outlet } from 'react-router-dom'
+import {HTTP_NOT_ACCEPTED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";
 
 const Layout = () => {
    const { statusCode, loading } = useAuthContext()
@@ -20,19 +21,23 @@ const Layout = () => {
       )
    }
 
-   // if (statusCode === 204 && !loading) {
+   // if (statusCode === HTTP_NOT_VERIFIED && !loading) {
    //    return <Navigate to={from} state={{ from: location }} />
    // }
 
-   if (statusCode === 200 && !loading) {
+    if (loading) {
+        return;
+    }
+
+   if (statusCode === HTTP_OK) {
       return <Navigate to={from} state={{ from: location }} />
    }
 
-   if (statusCode === 204 && !loading) {
+   if (statusCode === HTTP_NOT_VERIFIED) {
       return <Navigate to='/verification-email' state={{ from: location }} />
    }
 
-   if (statusCode === 206 && !loading) {
+   if (statusCode === HTTP_NOT_ACCEPTED) {
       return <Navigate to='/complete-register' />
    }
 

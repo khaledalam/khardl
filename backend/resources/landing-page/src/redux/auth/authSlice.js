@@ -8,18 +8,15 @@ export const logout = createAsyncThunk('auth/logout', async ({ method }) => {
    return response?.data?.is_loggedin
 })
 
-const setIsLoggedIn = () => {
-   const jsonValue = localStorage.getItem('isLoggedIn')
-   if (jsonValue !== null && jsonValue !== undefined)
-      return JSON.parse(jsonValue)
-   else {
-      localStorage.setItem('isLoggedIn', JSON.stringify(false))
-      return false
-   }
+export const getIsLoggedIn = () => {
+
+    console.log("getIsLoggedIn", JSON.parse(sessionStorage.getItem('user-info'))?.user?.email)
+
+   return (JSON.parse(sessionStorage.getItem('user-info'))?.user?.email?.length > 0 || false);
 }
 
 const initialState = {
-   isLoggedIn: setIsLoggedIn(), //localStorage.getItem('isLoggedIn') || false
+   isLoggedIn: getIsLoggedIn(), //localStorage.getItem('isLoggedIn') || false
    status: 'idle',
    error: null,
 }
@@ -41,6 +38,7 @@ const authSlice = createSlice({
          .addCase(logout.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.isLoggedIn = action.payload
+             sessionStorage.setItem('user-info', false);
             localStorage.removeItem('isLoggedIn')
             localStorage.removeItem('khardl-status-code')
          })

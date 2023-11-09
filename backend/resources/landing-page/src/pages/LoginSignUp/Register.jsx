@@ -9,9 +9,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
-import { API_ENDPOINT } from "../../config";
-import axios from '../../axios/axios'
-// import { useApiContext } from '../context'
+import AxiosInstance from "../../axios/axios";
 
 const Register = () => {
    const navigate = useNavigate()
@@ -21,8 +19,6 @@ const Register = () => {
       register,
       setError,
       formState: { errors },
-
-
    } = useForm()
    const [openEyePassword, setOpenEyePassword] = useState(false)
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
@@ -41,7 +37,8 @@ const Register = () => {
    // API POST REQUEST
    const onSubmit = async (data) => {
       try {
-         const response = await axios.post(`/register`, {
+
+         const response = await AxiosInstance.post(`/register`, {
             first_name: data.first_name,
             last_name: data.last_name,
             restaurant_name: data.restaurant_name,
@@ -55,53 +52,23 @@ const Register = () => {
          console.log(response.data);
          toast.success(`${t('Account successfully created')}`)
          sessionStorage.setItem('email', data.email)
-         navigate('/verification-email')
+          window.location.href = '/verification-email';
       } catch (error) {
          setSpinner(false);
-         console.log(error.response.data.errors);
-         Object.keys(error.response.data.errors).forEach((field) => {
-            console.log(error.response.data.errors[field][0]);
-            setError(field, {'message':error.response.data.errors[field][0]});
-         });
+         console.log(error);
+         console.log(errors);
+
+         // if (error.response.data.errors?.length > 0) {
+         //     setError(error.response.data.errors);
+         // }
+
+         // Object.keys(error.response.data.errors).forEach((field) => {
+         //    console.log(error.response.data.errors[field][0]);
+         //    setError(field, {'message':error.response.data.errors[field][0]});
+         // });
          toast.error(`${t('Account creation failed')}`);
       }
 
-      // try {
-      //    setSpinner(true)
-      //    let response = await fetch(`${API_ENDPOINT}/register`, {
-      //       method: 'POST',
-      //       headers: {
-      //          'Content-Type': 'application/json',
-      //          Accept: 'application/json',
-      //          'X-CSRF-TOKEN': window.csrfToken,
-      //       },
-      //       body: JSON.stringify({
-      //          first_name: data.first_name,
-      //          last_name: data.last_name,
-      //          restaurant_name: data.restaurant_name,
-      //          position: data.position,
-      //          email: data.email,
-      //          phone: data.phone,
-      //          password: data.password,
-      //          c_password: data.c_password,
-      //          terms_and_policies: data.terms_and_policies,
-      //       }),
-      //    })
-
-      //    if (response.ok) {
-      //       const responseData = await response.json()
-      //       console.log(responseData)
-      //       toast.success(`${t('Account successfully created')}`)
-      //       sessionStorage.setItem('email', data.email)
-      //       navigate('/verification-email')
-      //    } else {
-      //       setSpinner(false)
-      //       throw new Error(`${t('Account creation failed')}`)
-      //    }
-      // } catch (error) {
-      //    setSpinner(false)
-      //    toast.error(`${t('Account creation failed')}`)
-      // }
    }
    /////////////////////////////////////////////////////////////////////////////////////
 
@@ -214,9 +181,9 @@ const Register = () => {
                                     placeholder={t('Email')}
                                     {...register('email', { required: true })}
                                  />
-                                 {errors.email && (
+                                 {errors?.email && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                        {errors.email.message ||   t('Email Error') }
+                                        {errors?.email[0] ||   t('Email Error') }
                                     </span>
                                  )}
                               </div>
@@ -285,7 +252,7 @@ const Register = () => {
                               {/* Input 8 */}
                               <div className='relative'>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                    {t('Confirm password')} 
+                                    {t('Confirm password')}
                                  </h4>
                                  <input
                                     type={

@@ -1,8 +1,9 @@
 import axios from 'axios'
+import {API_ENDPOINT} from "../config";
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://khardl:8000'
+const BASE_URL = API_ENDPOINT || 'http://khardl:8000'
 
-export default axios.create({
+const AxiosInstance = axios.create({
    baseURL: BASE_URL,
    headers: {
       Accept: 'application/json',
@@ -10,4 +11,6 @@ export default axios.create({
       'X-CSRF-TOKEN': window.csrfToken,
    },
    withCredentials: true,
-})
+});
+
+export default AxiosInstance;

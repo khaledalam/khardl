@@ -26,8 +26,8 @@ const Model = ({ buttonId }) => {
                   </div>
                   <div className='w-[100%]'>
                      <label
-                        for='city'
-                        class='block mb-2 text-md text-start font-bold'
+                        htmlFor='city'
+                        className='block mb-2 text-md text-start font-bold'
                      >
                         {t('City')}
                      </label>
@@ -55,8 +55,8 @@ const Model = ({ buttonId }) => {
                   </div>
                   <div className='w-[100%]'>
                      <label
-                        for='restaurant'
-                        class='block mb-2 text-md text-start text-black font-bold'
+                        htmlFor='restaurant'
+                        className='block mb-2 text-md text-start text-black font-bold'
                      >
                         {t('Restaurant')}
                      </label>

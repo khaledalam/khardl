@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Central\TenantController;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -131,6 +132,11 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                 Route::get($route, static function(Request $request) {
                     return view('index');
                 })->name($name);
+
+                // first letter capital in route
+//                Route::get(ucfirst($route), static function(Request $request) {
+//                    return view('index');
+//                })->name($name);
             }
         });
     }
@@ -154,12 +160,11 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
     });
 
     // Auth Protected
-    
+
     Route::middleware(['auth','notBlocked'])->group(function () {
 
         Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
         Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
-
 
 
         Route::middleware('notVerified')->group(function () {
@@ -183,11 +188,11 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
             });
 
             Route::middleware(['accepted'])->group(function () {
-                Route::post('/create-tenant', [\App\Http\Controllers\Central\TenantController::class, 'store']);
+                Route::post('/create-tenant', [TenantController::class, 'store']);
                 Route::get('/dashboard', function(){
                     return route("restaurant.summary");
                 })->name('dashboard');
-            
+
                 Route::middleware(['auth', 'verified', 'nonadmin', 'worker'])->group(function () {
                     Route::get('/worker/menu/{branchId}', [RestaurantController::class, 'menu'])->name('worker.menu');
                     Route::get('/worker/branches', [WorkerController::class, 'branches'])->name('worker.branches');
@@ -264,7 +269,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Session::put('locale', $locale);
                     return Redirect::back();
                 })->name('change.language');
-    
+
             });
 
         });
