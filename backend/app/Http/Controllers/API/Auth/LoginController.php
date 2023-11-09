@@ -14,16 +14,13 @@ class LoginController extends BaseController
 {
     public function login(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'email' => 'required|string|email|min:10|max:255',
             'password' => 'required|string|min:6|max:255',
             'remember_me' => 'nullable|boolean',
         ]);
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
+       
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {

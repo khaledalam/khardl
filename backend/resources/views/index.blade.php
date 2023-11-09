@@ -18,7 +18,9 @@
 </head>
 <body>
     <div id="root"></div>
-{{--    @csrf--}}
+    <script>
+        window.csrfToken = "{{ csrf_token() }}";
+    </script>
     <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

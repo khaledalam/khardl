@@ -83,7 +83,7 @@ class AuthenticationController extends Controller
                     'is_loggedin' => false
                 ], ResponseHelper::HTTP_OK);
             }
-            return redirect()->route("central.dashboard");
+            return redirect()->route("dashboard");
         }
 
         if ($request->expectsJson()) {
@@ -92,7 +92,7 @@ class AuthenticationController extends Controller
                 'is_loggedin' => false
             ], ResponseHelper::HTTP_FORBIDDEN);
         }
-        return redirect()->route("central.login");
+        return redirect()->route("login");
     }
 
 }

@@ -9,7 +9,8 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
-import {API_ENDPOINT} from "../../config";
+import { API_ENDPOINT } from "../../config";
+import axios from '../../axios/axios'
 // import { useApiContext } from '../context'
 
 const Register = () => {
@@ -18,10 +19,14 @@ const Register = () => {
    const {
       handleSubmit,
       register,
+      setError,
       formState: { errors },
+
+
    } = useForm()
    const [openEyePassword, setOpenEyePassword] = useState(false)
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
+
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
 
@@ -36,41 +41,67 @@ const Register = () => {
    // API POST REQUEST
    const onSubmit = async (data) => {
       try {
-         setSpinner(true)
-         let response = await fetch(`${API_ENDPOINT}/register`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-               Accept: 'application/json',
-               'X-CSRF-TOKEN': window.csrfToken,
-            },
-            body: JSON.stringify({
-               first_name: data.first_name,
-               last_name: data.last_name,
-               restaurant_name: data.restaurant_name,
-               position: data.position,
-               email: data.email,
-               phone: data.phone_number,
-               password: data.password,
-               c_password: data.confirm_password,
-               terms_and_policies: data.terms_and_policies,
-            }),
-         })
-
-         if (response.ok) {
-            const responseData = await response.json()
-            console.log(responseData)
-            toast.success(`${t('Account successfully created')}`)
-            sessionStorage.setItem('email', data.email)
-            navigate('/verification-email')
-         } else {
-            setSpinner(false)
-            throw new Error(`${t('Account creation failed')}`)
-         }
+         const response = await axios.post(`/register`, {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            restaurant_name: data.restaurant_name,
+            position: data.position,
+            email: data.email,
+            phone: data.phone,
+            password: data.password,
+            c_password: data.c_password,
+            terms_and_policies: data.terms_and_policies,
+         });
+         console.log(response.data);
+         toast.success(`${t('Account successfully created')}`)
+         sessionStorage.setItem('email', data.email)
+         navigate('/verification-email')
       } catch (error) {
-         setSpinner(false)
-         toast.error(`${t('Account creation failed')}`)
+         setSpinner(false);
+         console.log(error.response.data.errors);
+         Object.keys(error.response.data.errors).forEach((field) => {
+            console.log(error.response.data.errors[field][0]);
+            setError(field, {'message':error.response.data.errors[field][0]});
+         });
+         toast.error(`${t('Account creation failed')}`);
       }
+
+      // try {
+      //    setSpinner(true)
+      //    let response = await fetch(`${API_ENDPOINT}/register`, {
+      //       method: 'POST',
+      //       headers: {
+      //          'Content-Type': 'application/json',
+      //          Accept: 'application/json',
+      //          'X-CSRF-TOKEN': window.csrfToken,
+      //       },
+      //       body: JSON.stringify({
+      //          first_name: data.first_name,
+      //          last_name: data.last_name,
+      //          restaurant_name: data.restaurant_name,
+      //          position: data.position,
+      //          email: data.email,
+      //          phone: data.phone,
+      //          password: data.password,
+      //          c_password: data.c_password,
+      //          terms_and_policies: data.terms_and_policies,
+      //       }),
+      //    })
+
+      //    if (response.ok) {
+      //       const responseData = await response.json()
+      //       console.log(responseData)
+      //       toast.success(`${t('Account successfully created')}`)
+      //       sessionStorage.setItem('email', data.email)
+      //       navigate('/verification-email')
+      //    } else {
+      //       setSpinner(false)
+      //       throw new Error(`${t('Account creation failed')}`)
+      //    }
+      // } catch (error) {
+      //    setSpinner(false)
+      //    toast.error(`${t('Account creation failed')}`)
+      // }
    }
    /////////////////////////////////////////////////////////////////////////////////////
 
@@ -111,7 +142,7 @@ const Register = () => {
                                     />
                                     {errors.first_name && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {t('First name Error')}
+                                           {errors.first_name.message ||   t('First name Error') }
                                        </span>
                                     )}
                                  </div>
@@ -129,7 +160,7 @@ const Register = () => {
                                     />
                                     {errors.last_name && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {t('Last name Error')}
+                                          {errors.last_name.message ||   t('Last name Error') }
                                        </span>
                                     )}
                                  </div>
@@ -148,7 +179,7 @@ const Register = () => {
                                  />
                                  {errors.restaurant_name && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {t('Restaurant name Error')}
+                                          {errors.restaurant_name.message ||   t('Restaurant name Error') }
                                     </span>
                                  )}
                               </div>
@@ -167,7 +198,7 @@ const Register = () => {
                                  />
                                  {errors.position && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {t('Position Error')}
+                                     {errors.position.message ||   t('Position Error') }
                                     </span>
                                  )}
                               </div>
@@ -185,7 +216,7 @@ const Register = () => {
                                  />
                                  {errors.email && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {t('Email Error')}
+                                        {errors.email.message ||   t('Email Error') }
                                     </span>
                                  )}
                               </div>
@@ -199,14 +230,14 @@ const Register = () => {
                                     type='tel'
                                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
                                     placeholder={t('Phone')}
-                                    {...register('phone_number', {
+                                    {...register('phone', {
                                        required: true,
                                     })}
                                     maxLength={12}
                                  />
-                                 {errors.phone_number && (
+                                 {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {t('Phone Error')}
+                                       {errors.phone.message ||   t('Phone Error') }
                                     </span>
                                  )}
                               </div>
@@ -230,13 +261,12 @@ const Register = () => {
                                  />
                                  {errors.password && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {t('Password Error')}
+                                       {errors.password.message ||   t('Password Error') }
                                     </span>
                                  )}
                                  <div
-                                    className={`text-2xl absolute top-[38px] ${
-                                       Language === 'en' ? 'right-5' : 'left-5'
-                                    }`}
+                                    className={`text-2xl absolute top-[38px] ${Language === 'en' ? 'right-5' : 'left-5'
+                                       }`}
                                  >
                                     {openEyePassword === false ? (
                                        <AiFillEye
@@ -255,7 +285,7 @@ const Register = () => {
                               {/* Input 8 */}
                               <div className='relative'>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                    {t('Confirm password')}
+                                    {t('Confirm password')} 
                                  </h4>
                                  <input
                                     type={
@@ -265,19 +295,18 @@ const Register = () => {
                                     }
                                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                     placeholder={t('Confirm password')}
-                                    {...register('confirm_password', {
+                                    {...register('c_password', {
                                        required: true,
                                     })}
                                  />
-                                 {errors.confirm_password && (
+                                 {errors.c_password && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {t('Confirm password Error')}
+                                       {errors.c_password.message ||   t('Confirm password Error') }
                                     </span>
                                  )}
                                  <div
-                                    className={`text-2xl absolute top-[38px] ${
-                                       Language === 'en' ? 'right-5' : 'left-5'
-                                    }`}
+                                    className={`text-2xl absolute top-[38px] ${Language === 'en' ? 'right-5' : 'left-5'
+                                       }`}
                                  >
                                     {openEyeRePassword === false ? (
                                        <AiFillEye
@@ -324,7 +353,7 @@ const Register = () => {
                               </div>
                               {errors.terms_and_policies && (
                                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                                    {t('Approval Error')}
+                                 {errors.terms_and_policies.message ||   t('Approval Error') }
                                  </span>
                               )}
 

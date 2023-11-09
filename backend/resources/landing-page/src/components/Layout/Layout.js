@@ -24,7 +24,11 @@ const Layout = () => {
    //    return <Navigate to={from} state={{ from: location }} />
    // }
 
-   if (statusCode === 211 && !loading) {
+   if (statusCode === 200 && !loading) {
+      return <Navigate to={from} state={{ from: location }} />
+   }
+
+   if (statusCode === 204 && !loading) {
       return <Navigate to='/verification-email' state={{ from: location }} />
    }
 

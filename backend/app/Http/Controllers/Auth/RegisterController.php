@@ -53,10 +53,11 @@ class RegisterController extends Controller
      *
      * @return void
      *
-//    public function __construct()
-//    {
-//        $this->middleware('guest');
-//    }
+     * */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -67,7 +68,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
 
-        die("validator");
 
         return Validator::make($data, [
             'has_mobile_app' => 'required|in:0,1',
@@ -116,9 +116,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        die("create");
-
         $contents = file_get_contents($data['commercial_registration']);
         $fileName = Str::random(40) . '.' . $data['commercial_registration']->getClientOriginalExtension();
         $filePath = 'private/commercial_registration/' . $fileName;
@@ -138,8 +135,6 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-
-        die("register");
 
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|min:3|max:255',

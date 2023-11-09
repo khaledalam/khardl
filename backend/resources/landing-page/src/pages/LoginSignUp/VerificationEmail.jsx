@@ -52,11 +52,6 @@ const VerificationEmail = () => {
          })
 
          if (response.ok) {
-            console.log(user_email)
-            const responseData = await response.json()
-            console.log(responseData)
-            sessionStorage.setItem('email', user_email)
-            setStatusCode(206)
             toast.success(`${t('The code has been re-sent successfully')}`)
             resetTimer()
          } else {
@@ -84,10 +79,8 @@ const VerificationEmail = () => {
          })
 
          if (response.ok) {
-            const responseData = await response.json()
-            console.log(responseData)
-            sessionStorage.removeItem('email')
-            navigate('/login')
+            setStatusCode(206)
+            navigate('/complete-register')
             toast.success(`${t('The code has been verified successfully')}`)
          } else {
             throw new Error(`${t('Code verification failed')}`)

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -52,6 +53,16 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password' => 'hashed',
     ];
 
+    public function isAdmin(){
+        return $this->hasRole("Administrator");
+    }
+    public function isBlocked(){
+        return $this->status == 'blocked';
+    }
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 
     public function hasPermission($permission)
     {
@@ -72,5 +83,16 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->hasOne(TraderRequirement::class);
     }
+    public function generateVerificationCode()
+    {
+        $this->verification_code = Str::random(6);
+        $this->save();
+    }
+
+    public function checkVerificationCode($code)
+    {
+        return $this->verification_code === $code;
+    }
+
 
 }
