@@ -1,18 +1,15 @@
 <?php
 
+use App\Http\Controllers\AuthenticationController;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Redirect;
@@ -21,7 +18,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\Auth\RegisterController;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
@@ -36,27 +33,6 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// Exclude new react app endpoints : START ------------------------------
-$react_app_endpoints = ['', 'Advantages', 'Clients', 'Services', 'FQA', 'login', 'register'];
-Route::get('/', static function () {return view('index');});
-// TODO add central namespace
-Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], static function()use($react_app_endpoints) {
-    foreach ($react_app_endpoints as $endpoint) {
-        Route::get($endpoint, static function(){
-            return view('index');
-        })->name($endpoint);
-
-        $lower_route = strtolower($endpoint);
-        if ($lower_route !== $endpoint) {
-            Route::get(strtolower($endpoint), static function () {
-                return view('index');
-            });
-        }
-}
-});
-// Exclude new react app endpoints : END ------------------------------
-
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -219,7 +195,50 @@ Route::middleware('web')->group(function () {
 
 
 
+// Exclude new react app endpoints : START ------------------------------
+$react_app_endpoints = ['Advantages', 'Clients', 'Services', 'FQA', 'login', 'register'];
+Route::get('/', static function () {return view('index');});
+foreach ($react_app_endpoints as $endpoint) {
+    Route::get($endpoint, static function () {
+        return view('index');
+    })->name($endpoint);
+
+    $lower_route = strtolower($endpoint);
+    if ($lower_route !== $endpoint) {
+        Route::get(strtolower($endpoint), static function () {
+            return view('index');
+        });
+    }
+}
+// Exclude new react app endpoints : END ------------------------------
+
+// @TODO add central namespace
+Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], static function()use($react_app_endpoints) {
+
+
+
+
+});
+
+Route::post('/auth-validation', [AuthenticationController::class, 'auth_validation'])
+    ->name('auth_validation_web');
+
+Route::post('register', [RegisterController::class, 'register']);
+Route::post('login', [LoginController::class, 'login']);
+
+
 // Old blade view
 //Auth::routes();
 
+// define auth routes manually
+// Authentication Routes...
+//Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+//Route::post('/login', [LoginController::class, 'login']);
+//Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+//
+//// Password Reset Routes...
+//Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+//Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+//Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+//Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
 

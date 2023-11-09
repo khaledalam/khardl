@@ -19,7 +19,7 @@
                                         <h4 class="mt-1 mb-4 pb-1">LOGIN</h4>
                                     </div>
 
-                                    <form method="POST" action="{{ route('login') }}">
+                                    <form metod="POST" action="{{ route('login') }}">
                                         @csrf
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="d-flex align-items-center justify-content-center">
@@ -45,7 +45,7 @@
                                         </div>
                                         <div class="form-outline">
                                             <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-        
+
                                             <label class="form-check-label" for="remember">
                                                 {{ __('Remember Me') }}
                                             </label>

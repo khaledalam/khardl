@@ -17,7 +17,7 @@ class LoginController extends BaseController
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|min:10|max:255',
             'password' => 'required|string|min:6|max:255',
-            'remember_me' => 'nullable|boolean|min:1|max:1',
+            'remember_me' => 'nullable|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -30,11 +30,10 @@ class LoginController extends BaseController
             return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
 
-        $user = $request->user();
+
+        $user = Auth::user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-
-
 
         // Set token expiration based on 'remember_me'
         if ($request->remember_me) {
