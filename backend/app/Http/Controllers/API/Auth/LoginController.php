@@ -56,7 +56,7 @@ class LoginController extends BaseController
 
 
         // Check if the trader's registration requirements are not fulfilled.
-        if ($user->traderRegistrationRequirement) {
+        if (!$user->traderRegistrationRequirement) {
             $data['step2_status'] = 'incomplete';
         }else{
             $data['step2_status'] = 'completed';

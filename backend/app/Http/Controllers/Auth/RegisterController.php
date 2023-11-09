@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\Restaurant;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+//use Illuminate\Http\JsonResponse;
+//use Illuminate\Http\Request;
+//use App\Http\Controllers\Controller;
+//use App\Providers\RouteServiceProvider;
+//use App\Models\User;
+////use Illuminate\Foundation\Auth\RegistersUsers;
+//use Illuminate\Support\Facades\Auth as AuthFacades;
+//use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Validator;
+//use Illuminate\Http\UploadedFile;
+//use Illuminate\Support\Str;
+//use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\DB;
+
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Auth as AuthFacades;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Log;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -127,7 +136,7 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function register(Request $request): JsonResponse
+    public function register(Request $request)
     {
 
         die("register");
