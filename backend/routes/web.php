@@ -188,7 +188,6 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
             });
 
             Route::middleware(['accepted'])->group(function () {
-                Route::post('/create-tenant', [TenantController::class, 'store']);
                 Route::get('/dashboard', function(){
                     return route("restaurant.summary");
                 })->name('dashboard');

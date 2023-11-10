@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password',
         'phone',
         'status',
+        'restaurant_name',
         'verification_code',
         'last_login',
 

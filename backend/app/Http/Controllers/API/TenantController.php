@@ -12,6 +12,7 @@ use App\Http\Requests\CreateTenantRequest;
 class TenantController  extends Controller
 {
     public function store(CreateTenantRequest $request){
+
         $data = $request->validated();
         $domain = $data['domain'];
         unset($data['domain']);

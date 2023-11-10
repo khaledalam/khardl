@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\API\BaseController;
-use App\Models\Restaurant;
-use App\Models\TraderRequirement;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\File;
+use App\Models\Restaurant;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\TraderRequirement;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use App\Actions\CreateTenantAction;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\API\BaseController;
 
 class RegisterController extends BaseController
 {
@@ -29,7 +30,9 @@ class RegisterController extends BaseController
             'c_password' => 'required|same:password',
             'phone' => 'required|string|min:10|max:14',
             'terms_and_policies' => 'accepted',
-            'restaurant_name' => 'required|string|min:3|max:255',
+            'restaurant_name' => 'required|unique:domains,domain|string|min:3|max:255|regex:/^[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$/',
+        ],[
+            'restaurant_name.regex' => __('The restaurant name is not in a valid domain .'),
         ]);
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
@@ -45,6 +48,7 @@ class RegisterController extends BaseController
 
     public function stepTwo(Request $request)
     {
+
         $request->validate([
             'commercial_registration' => 'required|mimes:pdf|max:2048',
             'tax_registration_certificate' => 'required|mimes:pdf|max:2048',
@@ -55,8 +59,7 @@ class RegisterController extends BaseController
             'facility_name' => 'required|string|min:5|max:255',
         ]);
 
-
-        $user = auth('api')->user();
+        $user = auth()->user();
 
 
         // Check if the trader's registration requirements already fulfilled.
@@ -92,13 +95,17 @@ class RegisterController extends BaseController
                 );
             }
         }
-
         TraderRequirement::create($input);
+
 
         // Create tenant logic...
 
-
-        return $this->sendResponse(null, 'User complete register step2 successfully.');
+        $tenant = (new CreateTenantAction)
+        (
+            user: $user,
+            domain: $user->restaurant_name
+        );
+        return $this->sendResponse(['url'=>$tenant->impersonationUrl(1)], 'User complete register step two successfully.');
     }
 
 

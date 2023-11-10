@@ -51,7 +51,6 @@ function CompleteRegistration() {
 
    // API POST REQUEST
    const onSubmit = async (data) => {
-      console.log(data)
       try {
          const response =  await AxiosInstance.post(`/register-step2`,
             {
@@ -72,11 +71,12 @@ function CompleteRegistration() {
          }
          );
 
-         if (response.data) {
-            
+         if (response) {
+            const responseData = await response?.data;
             toast.success(
                `${t('Account creation has been completed successfully')}`
             )
+            window.open(responseData.data.url, '_blank', 'noopener,noreferrer')
             setStatusCode(200)
             window.location.href = '/summary';
          } else {

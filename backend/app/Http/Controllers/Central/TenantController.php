@@ -21,7 +21,7 @@ class TenantController  extends Controller
             user: auth()->user(),
             domain: $domain
         );
-        return ResponseHelper::responseWithData("Tenant has been created successfully",[
+        return ResponseHelper::responseWithData("User complete register step two successfully.",[
             // We impersonate user with id 1. This user will be created by the CreateTenantAdmin job.
             'url'=>$tenant->impersonationUrl(1)
         ], ResponseHelper::HTTP_OK);

@@ -2,11 +2,13 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Session\TokenMismatchException;
 use Throwable;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Stancl\Tenancy\Contracts\TenantCouldNotBeIdentifiedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Stancl\Tenancy\Exceptions\DomainOccupiedByOtherTenantException;
 
 class Handler extends ExceptionHandler
 {
@@ -41,6 +43,9 @@ class Handler extends ExceptionHandler
 
          if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
             return  redirect()->back();
+        }
+        if ($exception instanceof TenantCouldNotBeIdentifiedException || $exception instanceof DomainOccupiedByOtherTenantException) {
+            return redirect()->route('home');
         }
     
         return parent::render($request, $exception);

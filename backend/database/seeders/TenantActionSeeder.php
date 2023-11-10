@@ -24,13 +24,6 @@ class TenantActionSeeder extends Seeder
         $user = User::first();
         (new CreateTenantAction)
         (
-            data: [
-                'email'=>$name.'.'.config('tenancy.central_domains')[0]."@admin.com",
-                "first_name" => $user->first_name,
-                "last_name" =>$user->last_name,
-                "password" => $user->password,
-                "trial_ends_at" => now()->addDays(30),
-            ],
             domain: $name,
             user: $user
         );
