@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { FaStarOfLife } from 'react-icons/fa'
 // import { useApiContext } from '../context'
-
+import AxiosInstance from "../../axios/axios";
 import { useAuthContext } from '../../components/context/AuthContext'
 
 function CompleteRegistration() {
@@ -16,7 +16,9 @@ function CompleteRegistration() {
    const navigate = useNavigate()
 
    const { setStatusCode } = useAuthContext()
+   const [files, setFiles] = useState()
 
+   
    const [fileUploadSuccess, setFileUploadSuccess] = useState({
       commercial_registration: false,
       tax_registration_certificate: false,
@@ -31,6 +33,13 @@ function CompleteRegistration() {
       identity_of_owner_or_manager: '',
       bank_certificate: '',
    })
+   const [selectedFiles, setSelectedFiles] = useState({
+      commercial_registration: false,
+      tax_registration_certificate: false,
+      national_address: false,
+      identity_of_owner_or_manager: false,
+      bank_certificate: false,
+   })
    const {
       handleSubmit,
       register,
@@ -44,36 +53,32 @@ function CompleteRegistration() {
    const onSubmit = async (data) => {
       console.log(data)
       try {
-         let response = await fetch(
-            `${process.env.REACT_APP_API_URL}/register-step2`,
+         const response =  await AxiosInstance.post(`/register-step2`,
             {
-               method: 'POST',
-               headers: {
-                  'Content-Type': 'text/plain',
-                  'X-CSRF-TOKEN': window.csrfToken,
-               },
-               body: JSON.stringify({
-                  commercial_registration: data.commercial_registration[0],
-                  tax_registration_certificate:
-                     data.tax_registration_certificate[0],
-                  bank_certificate: data.bank_certificate[0],
-                  identity_of_owner_or_manager:
-                     data.identity_of_owner_or_manager[0],
-                  national_address: data.national_address[0],
-                  IBAN: data.IBAN,
-                  facility_name: data.facility_name,
-               }),
+               commercial_registration: selectedFiles.commercial_registration,
+               tax_registration_certificate: selectedFiles.tax_registration_certificate,
+               bank_certificate:selectedFiles.bank_certificate,
+               identity_of_owner_or_manager:selectedFiles.identity_of_owner_or_manager,
+               national_address: selectedFiles.national_address,
+               IBAN: data.IBAN,
+               facility_name: data.facility_name,
+         },{
+            headers:{
+               Accept: 'application/json',
+      // * Don't remove *
+               'Content-Type': 'multipart/form-data',
+               'X-CSRF-TOKEN': window.csrfToken,
             }
-         )
+         }
+         );
 
-         if (response.ok) {
-            const responseData = await response.json()
-            console.log(responseData)
+         if (response.data) {
+            
             toast.success(
                `${t('Account creation has been completed successfully')}`
             )
             setStatusCode(200)
-            navigate('/dashboard')
+            window.location.href = '/summary';
          } else {
             throw new Error(`${t('Account creation failed to complete')}`)
          }
@@ -103,6 +108,7 @@ function CompleteRegistration() {
                <form
                   onSubmit={handleSubmit(onSubmit)}
                   className='flex flex-col items-center gap-6 w-[80%] max-sm:w-[90%]'
+                  encType='multipart/form-data' 
                >
                   {/* First Input */}
                   <div className='w-[100%]'>
@@ -122,10 +128,11 @@ function CompleteRegistration() {
                               ...fileUploadSuccess,
                               commercial_registration: true,
                            })
-                           const selectedFileName = event.target.files[0].name
+                           const selectedFileName = event.target.files[0];
+                           setSelectedFiles({...selectedFiles,commercial_registration: selectedFileName})
                            setSelectedFileNames({
                               ...selectedFileNames,
-                              commercial_registration: selectedFileName,
+                              commercial_registration: selectedFileName.name,
                            })
                         }}
                      />
@@ -173,10 +180,11 @@ function CompleteRegistration() {
                               ...fileUploadSuccess,
                               tax_registration_certificate: true,
                            })
-                           const selectedFileName = event.target.files[0].name
+                           const selectedFileName = event.target.files[0]
+                           setSelectedFiles({...selectedFiles,tax_registration_certificate: selectedFileName})
                            setSelectedFileNames({
                               ...selectedFileNames,
-                              tax_registration_certificate: selectedFileName,
+                              tax_registration_certificate: selectedFileName.name,
                            })
                         }}
                      />
@@ -222,10 +230,11 @@ function CompleteRegistration() {
                               ...fileUploadSuccess,
                               national_address: true,
                            })
-                           const selectedFileName = event.target.files[0].name
+                           const selectedFileName = event.target.files[0]
+                           setSelectedFiles({...selectedFiles,national_address: selectedFileName})
                            setSelectedFileNames({
                               ...selectedFileNames,
-                              national_address: selectedFileName,
+                              national_address: selectedFileName.name,
                            })
                         }}
                      />
@@ -273,10 +282,12 @@ function CompleteRegistration() {
                               ...fileUploadSuccess,
                               identity_of_owner_or_manager: true,
                            })
-                           const selectedFileName = event.target.files[0].name
+                           const selectedFileName = event.target.files[0]
+                           setSelectedFiles({...selectedFiles,identity_of_owner_or_manager: selectedFileName})
+
                            setSelectedFileNames({
                               ...selectedFileNames,
-                              identity_of_owner_or_manager: selectedFileName,
+                              identity_of_owner_or_manager: selectedFileName.name,
                            })
                         }}
                      />
@@ -322,10 +333,12 @@ function CompleteRegistration() {
                               ...fileUploadSuccess,
                               bank_certificate: true,
                            })
-                           const selectedFileName = event.target.files[0].name
+                           const selectedFileName = event.target.files[0]
+                           setSelectedFiles({...selectedFiles,bank_certificate: selectedFileName})
+
                            setSelectedFileNames({
                               ...selectedFileNames,
-                              bank_certificate: selectedFileName,
+                              bank_certificate: selectedFileName.name,
                            })
                         }}
                      />
@@ -354,9 +367,9 @@ function CompleteRegistration() {
                            </span>
                         )}
                   </div>
-
+                  {/* Input 6 */}
                   <div className='w-[100%] flex flex-col items-start gap-4'>
-                     {/* Input 6 */}
+                  
                      <div className='w-[100%]'>
                         <div className='mb-2 font-semibold'>{t('IBAN')}</div>
                         <input
