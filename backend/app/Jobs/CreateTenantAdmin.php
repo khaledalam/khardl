@@ -39,6 +39,7 @@ class CreateTenantAdmin implements ShouldQueue
                 $tenant->only(['first_name','last_name', 'email', 'password','phone'])
             );
             $user->assignRole('Restaurant Owner');
+            
             $tenant->update([
                 'ready' => true,
             ]);

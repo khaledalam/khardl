@@ -2,37 +2,33 @@
 
 namespace App\Models\Tenant;
 
+use Illuminate\Support\Facades\DB;
+use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
-    use MustVerifyEmailTrait, HasApiTokens, HasFactory, Notifiable;
+    use MustVerifyEmailTrait, HasApiTokens, HasFactory, Notifiable,HasRoles;
 
     protected $table ='users';
     protected $primaryKey = 'id';
+    protected $guard_name = 'web';
     protected $fillable = [
-        'id',
-        'role',
         'first_name',
         'last_name',
-        'branch_id',
-        'restaurant_name',
-        'phone_number',
+        'position',
         'email',
         'password',
-        'email_verified_at',
-        'phone_verified_at',
-        'isApprovedCommercial',
-        'commercial_registration_pdf',
-        'signed_contract_delivery_company',
-        'points',
+        'phone',
+        'status',
+        'verification_code',
+        'last_login',
     ];
 
     /**
