@@ -13,7 +13,7 @@ mix.setPublicPath("public");
 
 mix.webpackConfig({
     resolve: {
-        extensions: [".js", ".vue"],
+        extensions: [".js", ".vue", ".jsx"],
         alias: {
             "@": __dirname + "resources",
         },
@@ -24,4 +24,6 @@ mix.webpackConfig({
 }).react();
 
 mix.js("resources/landing-page/src/index.js", "public/js/app.js").version();
+mix.js("resources/tenant/src/index.js", "public/js/tenant.js").version();
 mix.copy("resources/landing-page/public", "public");
+mix.copy("resources/tenant/public", "public");

@@ -1,0 +1,435 @@
+import ClientLogo1 from '../assets/ClientLogo1.webp';
+import ClientLogo2 from '../assets/ClientLogo2.webp';
+import ClientLogo3 from '../assets/ClientLogo3.webp';
+
+import PersonalImage from '../assets/image.webp';
+import Logo from '../assets/Logo.webp';
+
+export const branches = [
+    {
+        branch_id: 1,
+        branch_name: "Mac",
+    },
+    {
+        branch_id: 2,
+        branch_name: "Apple",
+    },
+    {
+        branch_id: 3,
+        branch_name: "Cake",
+    }
+]
+
+export const categories = [
+    {
+        category_id: 1,
+        branch_id: 1,
+        category_name: "All",
+    },
+    {
+        category_id: 2,
+        branch_id: 1,
+        category_name: "Drinks",
+    },
+    {
+        category_id: 1,
+        branch_id: 2,
+        category_name: "Cake",
+    },
+    {
+        category_id: 2,
+        branch_id: 2,
+        category_name: "All",
+    },
+    {
+        category_id: 3,
+        branch_id: 2,
+        category_name: "Drinks",
+    }
+]
+
+export const items = [
+    {
+        id: 1,
+        category_id: 1,
+        branch_id: 1,
+        title: "بيتزا بالخضار",
+        image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1928&q=80",
+        price: 80,
+        desciption: "هذا النص افتراضي ، هذا النص افتراضي ، هذا النص افتراضي . ",
+        calories: 40,
+        selection_input_titles: "Size",
+        selection_input_names: ["Big", "Medium", "Small"],
+        selection_input_prices: [7, 10, 18],
+        checkbox_required: 2,
+        checkbox_input_titles: "Topings",
+        checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
+        checkbox_input_prices: [16, 18, 28],
+        dropdown_input_names: ["10 min", "15 min"]
+    },
+    {
+        id: 2,
+        category_id: 1,
+        branch_id: 1,
+        title: "هامبرجر",
+        image: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
+        price: 50,
+        desciption: "هذا النص افتراضي ، هذا النص افتراضي ، هذا النص افتراضي . ",
+        calories: 30,
+        selection_input_titles: "Size",
+        selection_input_names: ["Big", "Medium", "Small"],
+        selection_input_prices: [2, 3, 7],
+        checkbox_required: 1,
+        checkbox_input_titles: "Topings",
+        checkbox_input_names: ["Mayo", "Ketchup"],
+        checkbox_input_prices: [9, 10],
+        dropdown_input_names: ["10 min", "15 min"]
+    },
+    {
+        id: 3,
+        category_id: 2,
+        branch_id: 1,
+        title: "بيتزا بالخضار",
+        image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1928&q=80",
+        price: 80,
+        desciption: "هذا النص افتراضي ، هذا النص افتراضي ، هذا النص افتراضي . ",
+        calories: 40,
+        selection_input_titles: "Size",
+        selection_input_names: ["Big", "Medium", "Small"],
+        selection_input_prices: [7, 10, 18],
+        checkbox_required: 2,
+        checkbox_input_titles: "Topings",
+        checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
+        checkbox_input_prices: [16, 18, 28],
+        dropdown_input_names: ["10 min", "15 min"]
+    },
+    {
+        id: 4,
+        category_id: 1,
+        branch_id: 2,
+        title: "بيتزا بالخضار",
+        image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1928&q=80",
+        price: 80,
+        desciption: "هذا النص افتراضي ، هذا النص افتراضي ، هذا النص افتراضي . ",
+        calories: 40,
+        selection_input_titles: "Size",
+        selection_input_names: ["Big", "Medium", "Small"],
+        selection_input_prices: [7, 10, 18],
+        checkbox_required: 2,
+        checkbox_input_titles: "Topings",
+        checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
+        checkbox_input_prices: [16, 18, 28],
+        dropdown_input_names: ["10 min", "15 min"]
+    },
+    {
+        id: 5,
+        category_id: 1,
+        branch_id: 2,
+        title: "هامبرجر",
+        image: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
+        price: 50,
+        desciption: "هذا النص افتراضي ، هذا النص افتراضي ، هذا النص افتراضي . ",
+        calories: 30,
+        selection_input_titles: "Size",
+        selection_input_names: ["Big", "Medium", "Small"],
+        selection_input_prices: [2, 3, 7],
+        checkbox_required: 1,
+        checkbox_input_titles: "Topings",
+        checkbox_input_names: ["Mayo", "Ketchup"],
+        checkbox_input_prices: [9, 10],
+        dropdown_input_names: ["10 min", "15 min"]
+    },
+    {
+        id: 6,
+        category_id: 1,
+        branch_id: 2,
+        title: "كيك",
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1989&q=80",
+        price: 50,
+        desciption: "هذا النص افتراضي ، هذا النص افتراضي ، هذا النص افتراضي . ",
+        calories: 10,
+        selection_input_titles: "Size",
+        selection_input_names: ["Big", "Medium", "Small"],
+        selection_input_prices: [2, 3, 7],
+        checkbox_required: 1,
+        checkbox_input_titles: "Topings",
+        checkbox_input_names: ["Mayo", "Ketchup"],
+        checkbox_input_prices: [9, 10],
+        dropdown_input_names: ["10 min", "15 min"]
+    },
+]
+/*
+
+{
+    "id":"10",
+    "category_id":"14",
+    "branch_id":"3",
+    "user_id":"22",
+    "photo":"jZ1p53XyUQfKiMTUfRBqY0rDqC5Rnzqd5lGawEZn.ico",
+    "price":"312.00",
+    "calories":"2",
+    "description":"tasty",
+    "checkbox_required":"1",
+    "checkbox_input_titles":"Topings",
+    "checkbox_input_maximum_choices":"3",
+    "checkbox_input_names":"Mayo|Ketchup",
+    "checkbox_input_prices":"5sar|3 sar",
+    "selection_required":"1",
+    "selection_input_names":"Big|Small",
+    "selection_input_prices":"5sar|2 sar",
+    "selection_input_titles":"Size",
+    "dropdown_required":"1",
+    "dropdown_input_names":"Cook|10 min|15 min",
+    "created_at":"2023-09-03 03:55:35",
+    "updated_at":"2023-09-03 03:55:35"
+ }
+  */
+
+
+
+/* Customers Data */
+
+export const OrdersCustomer = [
+    {
+        id: 1,
+        OrderID: "7005",
+        Product: "Bag",
+        image: Logo,
+        Status: "Completed",
+        Total: "120",
+        DateAdded: "9.9.2023",
+        number_of_orders: 4,
+        delivary_price:30,
+        services_price:20,
+        pruducts_price:240,
+        items: [
+            {
+                id: "1",
+                name: "pizza",
+                additions: ["Mayo", "Ketchup", "Mayo"],
+                price: 30,
+                image: PersonalImage,
+                number: 2,
+            }
+        ],
+        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+    },
+    {
+        id: 2,
+        OrderID: "2145",
+        Product: "Bag",
+        image: PersonalImage,
+        Status: "Refunded",
+        Total: "130",
+        DateAdded: "2.9.2023",
+        number_of_orders: 7,
+        delivary_price:30,
+        services_price:20,
+        pruducts_price:240,
+        items: [
+            {
+                id: "1",
+                name: "pizza",
+                additions: ["Mayo", "Ketchup", "Mayo"],
+                price: 30,
+                image: PersonalImage,
+                number: 2,
+            }
+        ],
+        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+    },
+    {
+        id: 3,
+        OrderID: "87786",
+        Product: "Bag",
+        image: Logo,
+        Status: "Cancelled",
+        Total: "118",
+        DateAdded: "7.9.2023",
+        number_of_orders: 2,
+        delivary_price:30,
+        services_price:20,
+        pruducts_price:240,
+        items: [
+            {
+                id: "1",
+                name: "pizza",
+                additions: ["Mayo", "Ketchup", "Mayo"],
+                price: 30,
+                image: PersonalImage,
+                number: 2,
+            },
+            {
+                id: "1",
+                name: "pizza",
+                additions: ["Mayo", "Ketchup", "Mayo"],
+                price: 30,
+                image: PersonalImage,
+                number: 2,
+            }
+        ],
+        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+    },
+    {
+        id: 4,
+        OrderID: "254",
+        Product: "Bag",
+        image: PersonalImage,
+        Status: "Refunded",
+        Total: "200",
+        DateAdded: "8.9.2023",
+        number_of_orders: 5,
+        delivary_price:30,
+        services_price:20,
+        pruducts_price:240,
+        items: [
+            {
+                id: "1",
+                name: "pizza",
+                additions: ["Mayo", "Ketchup", "Mayo"],
+                price: 30,
+                image: PersonalImage,
+                number: 2,
+            },
+            {
+                id: "1",
+                name: "Ketchup",
+                additions: ["Mayo", "Mayo"],
+                price: 18,
+                image: PersonalImage,
+                number: 2,
+            }
+        ],
+        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+    },
+    {
+        id: 5,
+        OrderID: "8789",
+        Product: "Bag",
+        image: Logo,
+        Status: "Refunded",
+        Total: "150",
+        DateAdded: "4.9.2023",
+        number_of_orders: 12,
+        delivary_price:30,
+        services_price:20,
+        pruducts_price:240,
+        items: [
+            {
+                id: "1",
+                name: "pizza",
+                additions: ["Mayo", "Ketchup", "Mayo"],
+                price: 30,
+                image: PersonalImage,
+                number: 2,
+            }
+        ],
+        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+    },
+    {
+        id: 6,
+        OrderID: "7565",
+        Product: "Bag",
+        image: PersonalImage,
+        Status: "Refunded",
+        Total: "150",
+        DateAdded: "4.9.2023",
+        number_of_orders: 8,
+        delivary_price:30,
+        services_price:20,
+        pruducts_price:240,
+        items: [
+            {
+                id: "1",
+                name: "pizza",
+                additions: ["Mayo", "Ketchup", "Mayo"],
+                price: 30,
+                image: PersonalImage,
+                number: 2,
+            }
+        ],
+        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+    }
+]
+export const clients = [
+    { 
+        client_id: 1,
+        client_image: ClientLogo1,
+        client_link:""
+    },
+    { 
+        client_id: 2,
+        client_image: ClientLogo2,
+        client_link:""
+    },
+    { 
+        client_id: 3,
+        client_image: ClientLogo3,
+        client_link:""
+    },
+    { 
+        client_id: 4,
+        client_image: ClientLogo1,
+        client_link:""
+    },
+    { 
+        client_id: 5,
+        client_image: ClientLogo2,
+        client_link:"" 
+    },
+    { 
+        client_id: 6,
+        client_image: ClientLogo3,
+        client_link:"" 
+    },
+    { 
+        client_id: 7,
+        client_image: ClientLogo1,
+        client_link:"" 
+    },
+    { 
+        client_id: 8,
+        client_image: ClientLogo2,
+        client_link:"" 
+    },
+    { 
+        client_id: 9,
+        client_image: ClientLogo3,
+        client_link:"" 
+    },
+    { 
+        client_id: 10,
+        client_image: ClientLogo2,
+        client_link:"" 
+    },
+    { 
+        client_id: 11,
+        client_image: ClientLogo3,
+        client_link:"" 
+    },
+    { 
+        client_id: 12,
+        client_image: ClientLogo3,
+        client_link:"" 
+    },
+    { 
+        client_id: 13,
+        client_image: ClientLogo3,
+        client_link:"" 
+    },
+    { 
+        client_id: 14,
+        client_image: ClientLogo3,
+        client_link:""
+    },
+    { 
+        client_id: 15,
+        client_image: ClientLogo3,
+        client_link:"" 
+    },
+    { 
+        client_id: 16,
+        client_image: ClientLogo3,
+        client_link:"" 
+    }
+  ];

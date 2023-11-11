@@ -27,11 +27,10 @@ use App\Http\Controllers\Tenant\DashboardController;
 */
 
 Route::group([
-    'middleware' => ['tenant'], 
+    'middleware' => ['tenant'],
 ],function () {
-    Route::get('/', function () {
-        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
-    })->name("home");
+    Route::get('/', [DashboardController::class, 'index'])->name("tenant.home");
+
 
     Route::get('/impersonate/{token}', function ($token) {
         return UserImpersonation::makeResponse($token);
@@ -55,7 +54,7 @@ Route::group([
             Route::get('/worker/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->name('worker.edit-worker');
             Route::get('/worker/profile', [RestaurantController::class, 'profile'])->name('worker.profile');
         });
-    
+
         Route::middleware([])->group(function () { // middleware => restaurant
             Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
             Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->name('restaurant.menu');
@@ -81,7 +80,7 @@ Route::group([
             Route::any('/callback',[TapController::class,'callback'])->name('tap.callback');
         });
     });
-    
+
     Route::get('/change-language/{locale}', function ($locale) {
         App::setLocale($locale);
         Session::put('locale', $locale);
