@@ -67,8 +67,5 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-    public function is_admin()
-    {
-        return $this->role === 10;
-    }
+   
 }

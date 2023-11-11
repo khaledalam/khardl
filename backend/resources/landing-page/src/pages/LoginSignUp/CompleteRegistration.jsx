@@ -78,7 +78,7 @@ function CompleteRegistration() {
             )
             window.open(responseData.data.url, '_blank', 'noopener,noreferrer')
             setStatusCode(200)
-            window.location.href = '/summary';
+            window.location.href = '/';
          } else {
             throw new Error(`${t('Account creation failed to complete')}`)
          }

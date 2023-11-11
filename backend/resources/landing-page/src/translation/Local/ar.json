@@ -46,6 +46,7 @@
    "You have been logged in successfully": "تم تسجيل الدخول بنجاح",
    "You have been logged out successfully": "تم تسجيل الخروج بنجاح",
    "Login failed": "فشلت عملية تسجيل الدخول",
+   "Logout":"تسجيل الخروج",
    "Logout failed": "فشلت عملية تسجيل الخروج",
    "Account creation has been completed successfully": "تم إكمال إنشاء الحساب بنجاح",
    "Account creation failed to complete": "فشل إكمال إنشاء الحساب",

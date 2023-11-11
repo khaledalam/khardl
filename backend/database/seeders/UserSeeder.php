@@ -30,8 +30,7 @@ class UserSeeder extends Seeder
             'updated_at'=>now(),
         ]);
         
-        // $user->assignRole('Administrator');
-        // $user->assignRole('Restaurant Owner');
+        $user->assignRole('Administrator');
 
         $faker = (new Factory())::create();
         TraderRequirement::create([

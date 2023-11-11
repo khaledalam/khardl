@@ -1,6 +1,7 @@
 :root {
   --primary: #C0D123;
   --secondary: #B8CB0A20;
+  --danger: #d21d1d;
   --third: #F9F9F9;
 }
 /* @font-face {

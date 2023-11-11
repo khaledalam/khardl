@@ -67,9 +67,9 @@ const Login = () => {
                responseData.data.user.status === 'active'
             ) {
                setStatusCode(HTTP_OK)
-                // Navigate to the summary
-                window.location.href = '/summary'
-               // navigate('/summary')
+                // Navigate to the dashboard
+                window.location.href = '/dashboard'
+               // navigate('/dashboard')
             } else {
                navigate('/error')
             }

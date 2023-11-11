@@ -1725,6 +1725,9 @@ video {
   --tw-border-opacity: 1;
   border-top-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
+.\!bg-\[var\(--danger\)\] {
+  background-color: var(--danger) !important;
+}
 .\!bg-\[var\(--secondary\)\] {
   background-color: var(--secondary) !important;
 }
@@ -2326,6 +2329,10 @@ video {
 .\!text-black {
   --tw-text-opacity: 1 !important;
   color: rgb(0 0 0 / var(--tw-text-opacity)) !important;
+}
+.\!text-white {
+  --tw-text-opacity: 1 !important;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
 }
 .text-\[\#00000040\] {
   color: #00000040;
