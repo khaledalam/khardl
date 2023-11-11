@@ -20,6 +20,7 @@
     <div id="root"></div>
     <script>
         window.csrfToken = "{{ csrf_token() }}";
+        const url_tenant = "{{request()->getSchemeAndHttpHost()}}";
     </script>
     <script type="text/javascript" src="{{ mix('js/tenant.js') }}"></script>
 </body>
