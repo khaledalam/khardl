@@ -16,7 +16,7 @@ class TenantSeeder extends Seeder
     {
         
         $this->call([
-            // RolesAndPermissionsSeeder::class,
+            RolesAndPermissionsSeeder::class,
         ]);
       
 

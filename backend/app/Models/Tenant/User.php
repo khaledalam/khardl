@@ -61,7 +61,13 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
     }
-
+    public function isRestaurantOwner(){
+        return $this->hasRole("Restaurant Owner");
+    }
+    public function isWorker(){
+        return $this->hasRole("Worker");
+    }
+    
     public function hasPermissionWorker($permission)
     {
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;

@@ -166,7 +166,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
             Route::middleware(['accepted'])->group(function () {
                 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
-                Route::prefix('admin')->group(function () {
+                Route::prefix('admin')->middleware('admin')->group(function () {
                     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
                     Route::get('/download-commercial-registration/{filename}', [AdminController::class, 'downloadCommercialRegistration'])->name('download.commercial');
                     Route::get('/download-delivery-contract/{filename}', [AdminController::class, 'downloadDeliveryContract'])->name('download.delivery');

@@ -107,7 +107,6 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $middlewareAliases = [
-        'nonadmin' => NonAdminMiddleware::class,
         'admin' => AdminMiddleware::class,
         'restaurant' => Restaurant::class,
         'worker' => Worker::class,
