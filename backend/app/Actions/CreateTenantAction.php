@@ -9,14 +9,17 @@ use Database\Factories\Tenant\UserFactory;
 class CreateTenantAction
 {
     public function __invoke(
-        array $data,
         string $domain,
         User $user): Tenant
     {
-        $tenant = Tenant::create($data + [
+        $tenant = Tenant::create([
             'user_id'=> $user->id,
             'ready' => true,
-            'trial_ends_at' => now()->addDays(30),
+            'email'=>'admin'.'@'.$domain.'.com',
+            "first_name" => $user->first_name,
+            "last_name" =>$user->last_name,
+            "trial_ends_at" => now()->addDays(30),
+            "password" => $user->password,
         ]);
 
         $tenant->createDomain([

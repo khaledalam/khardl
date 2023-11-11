@@ -17,24 +17,28 @@ use App\Http\Middleware\ValidateSignature;
 use Illuminate\Http\Middleware\HandleCors;
 use App\Http\Middleware\NonAdminMiddleware;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Http\Middleware\EnsureEmailIsVerified;
+use App\Http\Middleware\EnsureUserIsNotBlocked;
 use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\EnsureEmailIsNotVerified;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Laravel\Passport\Http\Middleware\CreateFreshApiToken;
+use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Http\Middleware\EnsureTraderRegistrationIsNotComplete;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
-
 
 class Kernel extends HttpKernel
 {
@@ -83,6 +87,8 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             ThrottleRequests::class.':api',
             SubstituteBindings::class,
+//            CreateFreshApiToken::class,
+//            'auth:api'
         ],
         'tenant' => [
             'web',
@@ -116,5 +122,12 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'notVerified' => EnsureEmailIsNotVerified::class,
+        'accepted' => EnsureTraderRegistrationIsComplete::class,
+        'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
+        'notBlocked'=> EnsureUserIsNotBlocked::class,
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+
     ];
+
 }

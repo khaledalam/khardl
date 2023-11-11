@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\JsonResponse;
+//use Illuminate\Http\Request;
+//use App\Http\Controllers\Controller;
+//use App\Providers\RouteServiceProvider;
+//use App\Models\User;
+////use Illuminate\Foundation\Auth\RegistersUsers;
+//use Illuminate\Support\Facades\Auth as AuthFacades;
+//use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Validator;
+//use Illuminate\Http\UploadedFile;
+//use Illuminate\Support\Str;
+//use Illuminate\Support\Facades\Storage;
+//use Illuminate\Support\Facades\DB;
+
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Log;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -40,7 +52,8 @@ class RegisterController extends Controller
      * Create a new controller instance.
      *
      * @return void
-     */
+     *
+     * */
     public function __construct()
     {
         $this->middleware('guest');
@@ -54,6 +67,8 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
+
         return Validator::make($data, [
             'has_mobile_app' => 'required|in:0,1',
             'has_delivery_system' => 'required|in:0,1',
@@ -65,7 +80,7 @@ class RegisterController extends Controller
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'restaurant_name' => 'required|string|unique:users',
-            'phone_number' => 'required|string|unique:users',
+            'phone' => 'required|string|unique:users',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'commercial_registration' => 'required|file',
@@ -86,7 +101,7 @@ class RegisterController extends Controller
             DB::table('promoters')
                 ->where('url', $url)
                 ->increment('entered', 1);
-            
+
             session([$key => true]);
         }
 
@@ -110,11 +125,51 @@ class RegisterController extends Controller
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'restaurant_name' => $data['restaurant_name'],
-            'phone_number' => $data['phone_number'],
+            'phone' => $data['phone'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'commercial_registration_pdf' => $fileName,
             'membership' => 0
         ]);
+    }
+
+    public function register(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|min:3|max:255',
+            'last_name' => 'required|string|min:3|max:255',
+            'email' => 'required|string|email|min:10|max:255|unique:users',
+            'position' => 'required|string|min:3|max:255',
+            'password' => 'required|string|min:6|max:255',
+            'c_password' => 'required|same:password',
+            'phone' => 'required|string|min:10|max:14',
+            'terms_and_policies' => 'accepted',
+            'restaurant_name' => 'required|string|min:3|max:255',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        $input['status'] = 'inactive';
+        $user = User::create($input);
+        $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
+        $success['name'] =  "$user->first_name $user->last_name";
+
+
+        $restaurant = new Restaurant();
+        $restaurant->name = [
+            'ar' => $input['restaurant_name'],
+            'en' => null,
+        ];
+        $restaurant->save();
+
+        $user->assignRole('Restaurant Owner');
+        AuthFacades::login($user);
+        $this->sendVerificationCode($request);
+        return $this->sendResponse($success, 'User register successfully.');
     }
 }

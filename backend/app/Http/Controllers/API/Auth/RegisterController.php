@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\API\BaseController;
-use App\Models\Restaurant;
-use App\Models\TraderRequirement;
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\File;
+use App\Models\Restaurant;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\TraderRequirement;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+use App\Actions\CreateTenantAction;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\API\BaseController;
 
 class RegisterController extends BaseController
 {
     public function register(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'first_name' => 'required|string|min:3|max:255',
             'last_name' => 'required|string|min:3|max:255',
             'email' => 'required|string|email|min:10|max:255|unique:users',
@@ -28,35 +30,26 @@ class RegisterController extends BaseController
             'c_password' => 'required|same:password',
             'phone' => 'required|string|min:10|max:14',
             'terms_and_policies' => 'accepted',
-            'restaurant_name' => 'required|string|min:3|max:255',
+            'restaurant_name' => 'required|unique:domains,domain|string|min:3|max:255|regex:/^[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$/',
+        ],[
+            'restaurant_name.regex' => __('The restaurant name is not in a valid domain .'),
         ]);
-
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
         $user = User::create($input);
         $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
         $success['name'] =  "$user->first_name $user->last_name";
-        $this->sendVerificationCode($request);
-
-        $restaurant = new Restaurant();
-        $restaurant->name = [
-            'ar' => $input['restaurant_name'],
-            'en' => null,
-        ];
-        $restaurant->save();
-
         $user->assignRole('Restaurant Owner');
+
+        $this->sendVerificationCode($request);
         return $this->sendResponse($success, 'User register successfully.');
     }
 
     public function stepTwo(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+
+        $request->validate([
             'commercial_registration' => 'required|mimes:pdf|max:2048',
             'tax_registration_certificate' => 'required|mimes:pdf|max:2048',
             'bank_certificate' => 'required|mimes:pdf|max:2048',
@@ -66,24 +59,12 @@ class RegisterController extends BaseController
             'facility_name' => 'required|string|min:5|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
+        $user = auth()->user();
 
-        $user = auth('api')->user();
 
-        $requirements = $user->traderRegistrationRequirement;
-
-        // Check if the trader's registration requirements are not fulfilled.
-        if (isset($requirements) &
-            isset($requirements->IBAN) &
-            isset($requirements->facility_name) &
-            isset($requirements->tax_registration_certificate) &
-            isset($requirements->bank_certificate) &
-            isset($requirements->identity_of_owner_or_manager) &
-            isset($requirements->national_address)
-        ) {
-            return $this->sendResponse(null, 'User complete register step2 successfully.');
+        // Check if the trader's registration requirements already fulfilled.
+        if ($user->traderRegistrationRequirement) {
+            return $this->sendResponse(null, 'User already completed register step2 successfully.');
         }
 
         $user_id = $user->id;
@@ -114,23 +95,25 @@ class RegisterController extends BaseController
                 );
             }
         }
-
-
         TraderRequirement::create($input);
 
-        return $this->sendResponse(null, 'User complete register step2 successfully.');
+
+        // Create tenant logic...
+
+        $tenant = (new CreateTenantAction)
+        (
+            user: $user,
+            domain: $user->restaurant_name
+        );
+        return $this->sendResponse(['url'=>$tenant->impersonationUrl(1)], 'User complete register step two successfully.');
     }
 
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'email' => 'required|email|exists:users,email|min:10|max:255',
         ]);
-
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
 
         $today = Carbon::today();
 
@@ -145,7 +128,7 @@ class RegisterController extends BaseController
         }
 
         $user = User::where('email', $request->email)->first();
-
+        Auth::login($user);
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
 
@@ -160,15 +143,10 @@ class RegisterController extends BaseController
 
     public function verify(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'email' => 'required|email|exists:users,email|min:10|max:255',
             'code' => 'required|string|min:6|max:6', // Assuming a 6-digit code
         ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
         $user = User::where('email', $request->email)->first();
 
         // If the user has already verified their email
@@ -179,6 +157,7 @@ class RegisterController extends BaseController
         // Check the verification code
         if ($user->checkVerificationCode($request->code)) {
             $user->email_verified_at = now();
+            $user->status = 'active';
             $user->verification_code = null; // Clear the verification code
             $user->save();
 
