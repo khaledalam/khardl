@@ -6,21 +6,39 @@ trait TenantSharedRoutesTrait
     public static function groups(){
         return [
             self::getSharedRoutes(),
+            self::getGuestRoutes()
         ];
     }
     public static function getSharedRoutes(): array
     {
         return [
             'routes'=>[
+                ''=>"home",
                 'restaurants/{branch_id}'=>"restaurants",
                 'restaurants/{branch_id}/preview'=>"restaurants.preview",
                 'customers/{branch_id}'=>"customers",
-                'customers/{branch_id}/preview'=>"customers.preview"
+                'customers/{branch_id}/preview'=>"customers.preview",
+                'switcher'=>'switcher',
+
             ],
             'middleware'=>[
                
             ]
 
+        ];
+    }
+
+    public static function getGuestRoutes(): array
+    {
+        return [
+            'routes'=>[
+                'register'=>'register',
+                'login'=>'login'
+            ],
+            'middleware'=>[
+                'guest',
+               
+            ]
         ];
     }
     

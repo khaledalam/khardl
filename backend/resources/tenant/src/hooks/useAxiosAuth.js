@@ -11,15 +11,8 @@ const useAxiosAuth = () => {
    const privateRoute = ![
       '/',
       '/register',
-      '/clients',
-      '/services',
       '/reset-password',
       '/create-new-password',
-      '/advantages',
-      '/prices',
-      '/fqa',
-      '/policies',
-      '/privacy',
    ].includes(location.pathname)
 
    const axiosAuth = axios.create({

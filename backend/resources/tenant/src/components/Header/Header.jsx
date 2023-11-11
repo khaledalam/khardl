@@ -140,41 +140,7 @@ const Header = () => {
                      activeLink={activeLink}
                      className='ml-6'
                   />
-                  <Li
-                     link='/advantages'
-                     handleLinkClick={handleLinkClick}
-                     close={closeDrawerHandler}
-                     title={t('Advantages')}
-                     activeLink={activeLink}
-                  />
-                  <Li
-                     link='/clients'
-                     handleLinkClick={handleLinkClick}
-                     close={closeDrawerHandler}
-                     title={t('Clients')}
-                     activeLink={activeLink}
-                  />
-                  <Li
-                     link='/services'
-                     handleLinkClick={handleLinkClick}
-                     close={closeDrawerHandler}
-                     title={t('Services')}
-                     activeLink={activeLink}
-                  />
-                  <Li
-                     link='/prices'
-                     handleLinkClick={handleLinkClick}
-                     close={closeDrawerHandler}
-                     title={t('Prices')}
-                     activeLink={activeLink}
-                  />
-                  <Li
-                     link='/fqa'
-                     handleLinkClick={handleLinkClick}
-                     close={closeDrawerHandler}
-                     title={t('FQA')}
-                     activeLink={activeLink}
-                  />
+                 
                </ul>
             </div>
             {isMobile && (
@@ -242,41 +208,7 @@ const Header = () => {
                         title={t('Home')}
                         activeLink={activeLink}
                      />
-                     <Li
-                        link='/advantages'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Advantages')}
-                        activeLink={activeLink}
-                     />
-                     <Li
-                        link='/clients'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Clients')}
-                        activeLink={activeLink}
-                     />
-                     <Li
-                        link='/services'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Services')}
-                        activeLink={activeLink}
-                     />
-                     <Li
-                        link='/prices'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Prices')}
-                        activeLink={activeLink}
-                     />
-                     <Li
-                        link='/fqa'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('FQA')}
-                        activeLink={activeLink}
-                     />
+                    
                   </ul>
                   <div className='mt-6 w-[100%]'>
                      <Languages />

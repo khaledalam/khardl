@@ -8,7 +8,7 @@ import React, {
 import { useDispatch } from 'react-redux'
 import { changeLogState } from '../../redux/auth/authSlice'
 import useAxiosAuth from '../../hooks/useAxiosAuth'
-import useLocalStorage from '../../hooks/useLocalStorage'
+import useLocalStorageStatusCode from '../../hooks/useLocalStorageStatusCode'
 import {API_ENDPOINT} from "../../config";
 
 const AuthContext = createContext()
@@ -16,7 +16,7 @@ const AuthContext = createContext()
 export const AuthContextProvider = (props) => {
    const dispatch = useDispatch()
    const { axiosAuth } = useAxiosAuth()
-   const [statusCode, setStatusCode] = useLocalStorage('status-code', 401)
+   const [statusCode, setStatusCode] = useLocalStorageStatusCode('status-code', 401)
    const [loading, setLoading] = useState(true)
 
    const checkAuthenticated = useCallback(async () => {

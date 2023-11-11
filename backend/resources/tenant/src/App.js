@@ -6,19 +6,11 @@ import { ToastContainer } from 'react-toastify'
 import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Home from './pages/Home/Home'
-import Advantages from './pages/Advantages/Advantages'
-import Clients from './pages/Clients/clients'
-import Services from './pages/Services/services'
-import FQA from './pages/FQA/fqa'
 import Login from './pages/LoginSignUp/Login'
 import Register from './pages/LoginSignUp/Register'
-import CompleteRegistration from './pages/LoginSignUp/CompleteRegistration'
 import VerificationEmail from './pages/LoginSignUp/VerificationEmail'
-import TermsPolicies from './pages/TermsPoliciesPrivacy/TermsPolicies'
-import Privacy from './pages/TermsPoliciesPrivacy/Privacy'
 import Supports from './components/Supports'
 import ScrollUp from './components/ScrollUp'
-import Prices from './pages/Prices/prices'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
@@ -91,13 +83,7 @@ const App = () => {
                      path='/create-new-password'
                      element={<Protected Cmp={CreateNewPassword} />}
                   />
-                  <Route path='/policies' element={<TermsPolicies />} />
-                  <Route path='/privacy' element={<Privacy />} />
-                  <Route path='/advantages' element={<Advantages />} />
-                  <Route path='/clients' element={<Clients />} />
-                  <Route path='/services' element={<Services />} />
-                  <Route path='/prices' element={<Prices />} />
-                  <Route path='/fqa' element={<FQA />} />
+               
 
                   <Route element={<Layout />}>
                      <Route path='/login' element={<Login />} />

@@ -1,5 +1,6 @@
 // development
-export const API_ENDPOINT = 'http://khardl:8000';
+
+export const API_ENDPOINT = (window.location.href[window.location.href.length - 1] == '/')?window.location.href.slice(0,-1):window.location.href;
 export const WEBSITE_URL = 'http://khardl:8000';
 
 

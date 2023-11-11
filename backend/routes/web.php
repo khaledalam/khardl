@@ -2,12 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use App\Http\Controllers\DashboardController;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -118,12 +119,13 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         Route::middleware($group['middleware'])->group(function() use ($group){
             foreach ($group['routes'] as $route => $name) {
                 Route::get($route, static function(Request $request) {
-                    return view('index');
+                    return view('central');
                 })->name($name);
             }
         });
     }
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
+   
     // Public
     Route::middleware('guest')->group(function () {
 

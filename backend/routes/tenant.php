@@ -3,16 +3,20 @@
 declare(strict_types=1);
 
 use App\Models\Tenant\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
+use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
+use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\RestaurantController;
 use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\Tenant\DashboardController;
+use App\Http\Controllers\Tenant\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,14 +33,31 @@ use App\Http\Controllers\Tenant\DashboardController;
 Route::group([
     'middleware' => ['tenant'],
 ],function () {
-    Route::get('/', [DashboardController::class, 'index'])->name("tenant.home");
-
-
+    $groups = TenantSharedRoutesTrait::groups();
+    foreach ($groups as $group) {
+        Route::middleware($group['middleware'])->group(function() use ($group){
+            foreach ($group['routes'] as $route => $name) {
+                Route::get($route, static function(Request $request) {
+                    return view('tenant');
+                })->name($name);
+            }
+        });
+    }
     Route::get('/impersonate/{token}', function ($token) {
         return UserImpersonation::makeResponse($token);
     })->name("impersonate");
+    Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
+ 
+
     Route::middleware([])->group(function () { // middleware => 'auth', 'verified'
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+        Route::get('verification-email', static function() {
+            return view("index");
+        })->name("verification-email");
+        Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
+        Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
+
         Route::middleware('worker')->group(function () {
             Route::get('/worker/menu/{branchId}', [RestaurantController::class, 'menu'])->name('worker.menu');
             Route::get('/worker/branches', [WorkerController::class, 'branches'])->name('worker.branches');

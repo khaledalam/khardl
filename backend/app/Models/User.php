@@ -19,6 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     protected $table ='users';
     protected $primaryKey = 'id';
+    protected $guard_name = 'web';
     protected $fillable = [
         'first_name',
         'last_name',
