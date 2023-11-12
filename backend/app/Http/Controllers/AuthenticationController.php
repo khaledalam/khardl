@@ -83,7 +83,7 @@ class AuthenticationController extends Controller
                     'is_loggedin' => false
                 ], ResponseHelper::HTTP_OK);
             }
-            return redirect()->route("dashboard");
+            return redirect()->route("home");
         }
 
         if ($request->expectsJson()) {

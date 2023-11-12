@@ -66,7 +66,8 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            // for user central and tenant 
+            'model' => Illuminate\Foundation\Auth\User::class,        
         ],
 
         // 'users' => [

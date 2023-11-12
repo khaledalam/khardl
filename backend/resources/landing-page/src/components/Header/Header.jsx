@@ -31,7 +31,10 @@ const Header = () => {
 
     console.log("isLoggedIn > ", isLoggedIn);
 
-
+    const redirectToDashboard = () => {
+      // Redirect to an external URL (window.location.href)
+      window.open('/dashboard', '_blank');
+    };
    const handleLogout = async (e) => {
       e.preventDefault()
       // try {
@@ -179,11 +182,18 @@ const Header = () => {
                   <Languages />
                   <div className='relative flex justify-center items-center gap-2 min-[1000px]:flex min-[1000px]:justify-center'>
                      {isLoggedIn ? (
+                        <>
                         <Button
                            title={t('Logout')}
                            onClick={handleLogout}
-                           classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
+                           classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium !bg-[var(--danger)] !text-white'
                         />
+                        <Button
+                              onClick={redirectToDashboard}
+                              title={t('Dashboard')}
+                              classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
+                           />
+                        </>
                      ) : (
                         <>
                            <Button

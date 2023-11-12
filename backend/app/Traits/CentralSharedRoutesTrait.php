@@ -23,13 +23,7 @@ trait CentralSharedRoutesTrait
                 'fqa'=>'fqa',
                 'reset-password'=> 'reset-password',
                 'create-new-password'=> 'create-new-password',
-                'switcher'=>'switcher',
-                // TODO @todo: move restaurants routes under auth guard after its flow complete
-                // TODO  @todo: update: moved to restaurants but it remain here for testing 
-                'restaurants/{branch_id}'=>"restaurants",
-                'restaurants/{branch_id}/preview'=>"restaurants.preview",
-                'customers/{branch_id}'=>"customers",
-                'customers/{branch_id}/preview'=>"customers.preview"
+
             ],
             'middleware'=>[
                

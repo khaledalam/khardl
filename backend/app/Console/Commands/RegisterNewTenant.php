@@ -46,7 +46,7 @@ class RegisterNewTenant extends Command
         }
        
         // sign first user
-        $url = Tenant::latest()->first()->impersonationUrl(1);
+        $url = Tenant::latest()->first()->impersonationUrl(2); //  USER restaurant owner id 
         $this->info("Tenant has been created successfully, visit `$url`");
         return ;
     }

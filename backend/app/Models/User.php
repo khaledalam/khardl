@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
+use App\Models\TraderRequirement;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -19,6 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 
     protected $table ='users';
     protected $primaryKey = 'id';
+    protected $guard_name = 'web';
     protected $fillable = [
         'first_name',
         'last_name',
@@ -57,6 +59,9 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function isAdmin(){
         return $this->hasRole("Administrator");
     }
+    public function isRestaurantOwner(){
+        return $this->hasRole("Restaurant Owner");
+    }
     public function isBlocked(){
         return $this->status == 'blocked';
     }
@@ -75,10 +80,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-    public function is_admin()
-    {
-        return $this->role === 10;
-    }
 
     public function traderRegistrationRequirement()
     {
@@ -94,6 +95,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->verification_code === $code;
     }
-
+    public function restaurant(){
+        return $this->hasOne(Tenant::class);
+    }
 
 }

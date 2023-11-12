@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models\Tenant;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
+
+class Tag extends Model
+{
+    use HasTranslations;
+
+    protected $table = 'tags';
+
+    public $translatable = ['name', 'slug'];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_tags');
+    }
+}

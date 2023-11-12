@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Utils\ResponseHelper;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -15,11 +16,21 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user()->is_admin()) {
-            return $next($request);
+        $user = $request->user();
+
+        // // Check if the user is authenticated and has the "Restaurant Owner" role.
+        if (!$user->isAdmin()) {
+            if ($request->expectsJson()) {
+                return ResponseHelper::response([
+                    'message' => 'Forbidden access admin dashboard',
+                    'is_loggedin' => true
+                ], ResponseHelper::HTTP_FORBIDDEN);
+            }
+            return redirect()->route("home");
         }
 
-        abort(404);
+        // If the user is not a "Restaurant Owner" or has already fulfilled registration requirements, continue.
+        return $next($request);
     }
 }
 

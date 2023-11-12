@@ -34,10 +34,18 @@ mix.webpackConfig({
 }).react();
 
 // used to run app using reactjs
-mix.js("resources/landing-page/src/index.js", "public/js/app.js").version();
+mix.js("resources/landing-page/src/index.js", "public/js/central.js").version();
 mix.css(
     "resources/landing-page/src/index.css",
     "public/css/index.css"
 ).version();
 
 mix.copy("resources/landing-page/public", "public");
+
+mix.js("resources/tenant/src/index.js", "public/js/tenant.js").version();
+mix.css(
+    "resources/tenant/src/index.css",
+    "public/css/index.css"
+).version();
+
+mix.copy("resources/tenant/public", "public");
