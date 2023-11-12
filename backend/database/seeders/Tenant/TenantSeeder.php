@@ -3,8 +3,11 @@
 namespace Database\Seeders\Tenant;
 
 use Illuminate\Database\Seeder;
+use Laravel\Passport\ClientRepository;
 use Database\Seeders\Tenant\UserSeeder;
+use Database\Seeders\OauthClientsTableSeeder;
 use Database\Seeders\Tenant\RolesAndPermissionsSeeder;
+use Database\Seeders\OauthPersonalAccessClientsTableSeeder;
 
 class TenantSeeder extends Seeder
 {
@@ -20,7 +23,8 @@ class TenantSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             UserSeeder::class,
         ]);
-      
+        $this->call(OauthClientsTableSeeder::class);
+        $this->call(OauthPersonalAccessClientsTableSeeder::class);
 
         
     }

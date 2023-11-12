@@ -15,7 +15,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\API\Auth\RegisterController as AuthRegisterController;
 use App\Http\Controllers\API\Auth\ResetPasswordController as AuthResetPasswordController;
-
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,7 +152,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
             Route::post('email/verify', [AuthRegisterController::class, 'verify'])->middleware('throttle:passwordReset');
 
             Route::get('verification-email', static function() {
-                return view("index");
+                return view("central");
             })->name("verification-email");
         });
 
@@ -161,7 +161,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
             Route::middleware(['role:Restaurant Owner', 'notAccepted'])->group(function () {
 
                 Route::get('complete-register', static function(){
-                    return view("index");
+                    return view("central");
                 })->name("complete-register");
                 Route::post('register-step2', [AuthRegisterController::class, 'stepTwo']);
             });
