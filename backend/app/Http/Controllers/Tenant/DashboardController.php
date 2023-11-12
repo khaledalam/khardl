@@ -14,7 +14,7 @@ class DashboardController extends Controller
         return match(true){
             $user->isRestaurantOwner() => redirect()->route('restaurant.summary'),
             $user->isWorker() => redirect()->route('worker.profile'),
-            default => view('home')
+            default => view('tenant')
         };
     }
 }

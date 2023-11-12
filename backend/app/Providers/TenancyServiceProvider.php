@@ -103,8 +103,11 @@ class TenancyServiceProvider extends ServiceProvider
     {
         $this->bootEvents();
         $this->mapRoutes();
-
         $this->makeTenancyMiddlewareHighestPriority();
+        \Stancl\Tenancy\Features\TenantConfig::$storageToConfigMap = [
+            'passport_public_key' => 'passport.public_key',
+            'passport_private_key' => 'passport.private_key',
+        ];
     }
 
     protected function bootEvents()

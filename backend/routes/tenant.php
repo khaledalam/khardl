@@ -18,6 +18,9 @@ use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\Tenant\DashboardController;
 use App\Http\Controllers\Tenant\AuthenticationController;
 
+use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\API\Auth\RegisterController as AuthRegisterController;
+use App\Http\Controllers\API\Auth\ResetPasswordController as AuthResetPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -43,6 +46,16 @@ Route::group([
             }
         });
     }
+    Route::middleware('guest')->group(function () {
+
+        Route::post('register', [AuthRegisterController::class, 'register'])->name('register');
+        Route::post('login', [AuthLoginController::class, 'login'])->name('login');
+
+        Route::post('password/forgot', [AuthResetPasswordController::class, 'forgot']);
+        Route::post('password/reset', [AuthResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
+
+
+    });
     Route::get('/impersonate/{token}', function ($token) {
         return UserImpersonation::makeResponse($token);
     })->name("impersonate");
@@ -53,7 +66,7 @@ Route::group([
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
         Route::get('verification-email', static function() {
-            return view("index");
+            return view("tenant");
         })->name("verification-email");
         Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
         Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
@@ -103,6 +116,7 @@ Route::group([
     });
 
     Route::get('/change-language/{locale}', function ($locale) {
+
         App::setLocale($locale);
         Session::put('locale', $locale);
         return Redirect::back();

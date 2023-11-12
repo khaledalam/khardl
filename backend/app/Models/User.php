@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
+use App\Models\TraderRequirement;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
