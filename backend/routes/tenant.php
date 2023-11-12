@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Tenant\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;

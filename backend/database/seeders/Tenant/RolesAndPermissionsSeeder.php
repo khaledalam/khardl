@@ -2,12 +2,11 @@
 
 namespace Database\Seeders\Tenant;
 
-use App\Models\Tenant\User;
+
 use Illuminate\Support\Str;
-use App\Models\Tenant\Branch;
-use App\Models\Tenant\Category;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use App\Models\Tenant\RestaurantUser;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -36,7 +35,7 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
 
         $Modules = collect([
-            User::class,
+            RestaurantUser::class,
         ]);
 
         $Modules->each(function ($item)use($permissions) {

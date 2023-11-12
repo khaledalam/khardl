@@ -3,8 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Tenant;
-use App\Models\Tenant\User;
 use Illuminate\Bus\Queueable;
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -35,7 +35,7 @@ class CreateTenantAdmin implements ShouldQueue
     public function handle()
     {
         $this->tenant->run(function ($tenant) {
-            $user= User::create(
+            $user= RestaurantUser::create(
                 $tenant->only(['first_name','last_name', 'email', 'password','phone'])
             );
             $user->assignRole('Restaurant Owner');

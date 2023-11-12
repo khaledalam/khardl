@@ -59,11 +59,7 @@ const Login = () => {
                sessionStorage.setItem('email', responseData.data.user.email)
                setStatusCode(HTTP_NOT_VERIFIED)
                navigate('/verification-email')
-            } else if (responseData.data.step2_status === 'incomplete') {
-               setStatusCode(HTTP_NOT_ACCEPTED)
-               navigate('/complete-register')
-            } else if (
-               responseData.data.step2_status === 'completed' &&
+            }else if (
                responseData.data.user.status === 'active'
             ) {
                setStatusCode(HTTP_OK)

@@ -2,13 +2,10 @@
 
 namespace Database\Seeders\Tenant;
 
-use Faker\Factory;
-use Faker\Generator;
-use App\Models\Tenant\User;
+
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use App\Models\TraderRequirement;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -17,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        RestaurantUser::create([
             'first_name' => "khardl",
             'last_name' => "customer",
             'email' => env("NOVA_ADMIN_EMAIL","khardl@customer.com"),

@@ -2,8 +2,9 @@
 
 namespace App\Models\Tenant;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Review extends Model
 {
@@ -24,6 +25,6 @@ class Review extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(RestaurantUser::class);
     }
 }
