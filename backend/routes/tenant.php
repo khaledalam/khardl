@@ -62,12 +62,17 @@ Route::group([
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
  
 
-    Route::middleware([])->group(function () { // middleware => 'auth', 'verified'
+    Route::middleware('auth')->group(function () { 
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
-        Route::get('verification-email', static function() {
-            return view("tenant");
-        })->name("verification-email");
+        Route::middleware('notVerified')->group(function () {
+            Route::get('verification-email', static function() {
+                return view("tenant");
+            })->name("verification-email");
+            Route::post('email/send-verify', [AuthRegisterController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
+            Route::post('email/verify', [AuthRegisterController::class, 'verify'])->middleware('throttle:passwordReset');
+        });
+
         Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
         Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
 
@@ -89,7 +94,7 @@ Route::group([
             Route::get('/worker/profile', [RestaurantController::class, 'profile'])->name('worker.profile');
         });
 
-        Route::middleware([])->group(function () { // middleware => restaurant
+        Route::middleware('restaurant')->group(function () { 
             Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
             Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->name('restaurant.menu');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');

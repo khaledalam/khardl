@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Utils\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class Worker
 {
@@ -16,14 +17,18 @@ class Worker
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            if ($user->role === 2) {
-                return $next($request);
+        $user = $request->user();
+        // // Check if the user is authenticated and has the "Restaurant Owner" role.
+        if (!$user->isWorker()) {
+            if ($request->expectsJson()) {
+                return ResponseHelper::response([
+                    'message' => 'Forbidden access worker dashboard',
+                    'is_loggedin' => true
+                ], ResponseHelper::HTTP_FORBIDDEN);
             }
+            return redirect()->route("home");
         }
-        
-        return abort(403, 'Unauthorized');
+        // If the user is not a "Restaurant Owner" or has already fulfilled registration requirements, continue.
+        return $next($request);
     }
 }

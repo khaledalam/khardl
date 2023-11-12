@@ -26,33 +26,35 @@ class RolesAndPermissionsSeeder extends Seeder
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
         }
+        
+        // OLD Permission base code  for admin
 
-        $permissions = collect([
-            'view ',
-            'view own ',
-            'manage ',
-            'manage own ',                
-        ]);
+        // $permissions = collect([
+        //     'view ',
+        //     'view own ',
+        //     'manage ',
+        //     'manage own ',                
+        // ]);
 
-        $Modules = collect([
-            User::class,
-            Role::class,
-            Permission::class,
+        // $Modules = collect([
+        //     User::class,
+        //     Role::class,
+        //     Permission::class,
             
       
-        ]);
+        // ]);
 
-        $Modules->each(function ($item)use($permissions) {
-            $name = $this->getPermissionName($item);
-            // create permissions for each collection item
-            $permissions->each(function($permission)use($name){
-                Permission::create(['guard_name' => "web", 'group' => $name, 'name' => $permission.$name]);
-            });
-        });
+        // $Modules->each(function ($item)use($permissions) {
+        //     $name = $this->getPermissionName($item);
+        //     // create permissions for each collection item
+        //     $permissions->each(function($permission)use($name){
+        //         Permission::create(['guard_name' => "web", 'group' => $name, 'name' => $permission.$name]);
+        //     });
+        // });
 
-        // Assign all permissions to the 'Administrator' role
-        $adminRole = Role::findByName('Administrator');
-        $adminRole->givePermissionTo(Permission::all());
+        // // Assign all permissions to the 'Administrator' role
+        // $adminRole = Role::findByName('Administrator');
+        // $adminRole->givePermissionTo(Permission::all());
 
         
     }

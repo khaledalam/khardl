@@ -14,28 +14,10 @@ class CreatePermissionTables extends Migration
      */
     public function up()
     {
-        // TODO remove old permissions
-        // $table->unsignedBigInteger('user_id');
-
-        // $table->boolean('can_access_dashboard')->default(false);
-        // $table->boolean('can_access_restaurants')->default(false);
-        // $table->boolean('can_view_restaurants')->default(false);
-        // $table->boolean('can_delete_restaurants')->default(false);
-        // $table->boolean('can_approve_restaurants')->default(false);
-        // $table->boolean('can_see_admins')->default(false);
-        // $table->boolean('can_add_admins')->default(false);
-        // $table->boolean('can_edit_admins')->default(false);
-        // $table->boolean('can_promoters')->default(false);
-        // $table->boolean('can_see_logs')->default(false);
-        // $table->boolean('can_settings')->default(false);
-        // $table->boolean('can_edit_profile')->default(false);
-        
-        // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        
         $tableNames = config('permission.table_names');
         $columnNames = config('permission.column_names');
         $teams = config('permission.teams');
-
+        
         if (empty($tableNames)) {
             throw new \Exception('Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
@@ -43,16 +25,26 @@ class CreatePermissionTables extends Migration
             throw new \Exception('Error: team_foreign_key on config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
 
-        Schema::create($tableNames['permissions'], function (Blueprint $table) {
-            $table->bigIncrements('id'); // permission id
-            $table->string('name');    
-            $table->string('group');    // For MySQL 8.0 use string('name', 125);
-            $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
-            $table->timestamps();
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->id();
 
-            $table->unique(['name', 'guard_name']);
+            $table->unsignedBigInteger('user_id');
+
+            $table->boolean('can_access_dashboard')->default(false);
+            $table->boolean('can_access_restaurants')->default(false);
+            $table->boolean('can_view_restaurants')->default(false);
+            $table->boolean('can_delete_restaurants')->default(false);
+            $table->boolean('can_approve_restaurants')->default(false);
+            $table->boolean('can_see_admins')->default(false);
+            $table->boolean('can_add_admins')->default(false);
+            $table->boolean('can_edit_admins')->default(false);
+            $table->boolean('can_promoters')->default(false);
+            $table->boolean('can_see_logs')->default(false);
+            $table->boolean('can_settings')->default(false);
+            $table->boolean('can_edit_profile')->default(false);
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-
         Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
             $table->bigIncrements('id'); // role id
             if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
@@ -67,30 +59,6 @@ class CreatePermissionTables extends Migration
             } else {
                 $table->unique(['name', 'guard_name']);
             }
-        });
-
-        Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $teams) {
-            $table->unsignedBigInteger(PermissionRegistrar::$pivotPermission);
-
-            $table->string('model_type');
-            $table->unsignedBigInteger($columnNames['model_morph_key']);
-            $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_permissions_model_id_model_type_index');
-
-            $table->foreign(PermissionRegistrar::$pivotPermission)
-                ->references('id') // permission id
-                ->on($tableNames['permissions'])
-                ->onDelete('cascade');
-            if ($teams) {
-                $table->unsignedBigInteger($columnNames['team_foreign_key']);
-                $table->index($columnNames['team_foreign_key'], 'model_has_permissions_team_foreign_key_index');
-
-                $table->primary([$columnNames['team_foreign_key'], PermissionRegistrar::$pivotPermission, $columnNames['model_morph_key'], 'model_type'],
-                    'model_has_permissions_permission_model_type_primary');
-            } else {
-                $table->primary([PermissionRegistrar::$pivotPermission, $columnNames['model_morph_key'], 'model_type'],
-                    'model_has_permissions_permission_model_type_primary');
-            }
-
         });
 
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $teams) {
@@ -115,27 +83,9 @@ class CreatePermissionTables extends Migration
                     'model_has_roles_role_model_type_primary');
             }
         });
-
-        Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
-            $table->unsignedBigInteger(PermissionRegistrar::$pivotPermission);
-            $table->unsignedBigInteger(PermissionRegistrar::$pivotRole);
-
-            $table->foreign(PermissionRegistrar::$pivotPermission)
-                ->references('id') // permission id
-                ->on($tableNames['permissions'])
-                ->onDelete('cascade');
-
-            $table->foreign(PermissionRegistrar::$pivotRole)
-                ->references('id') // role id
-                ->on($tableNames['roles'])
-                ->onDelete('cascade');
-
-            $table->primary([PermissionRegistrar::$pivotPermission, PermissionRegistrar::$pivotRole], 'role_has_permissions_permission_id_role_id_primary');
-        });
-
         app('cache')
-            ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
-            ->forget(config('permission.cache.key'));
+        ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
+        ->forget(config('permission.cache.key'));
     }
 
     /**

@@ -18,7 +18,6 @@ class TenantController  extends Controller
         unset($data['domain']);
         $tenant = (new CreateTenantAction)
         (
-            data: $data,
             user: auth()->user(),
             domain: $domain
         );

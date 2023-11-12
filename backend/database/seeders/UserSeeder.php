@@ -44,5 +44,23 @@ class UserSeeder extends Seeder
             'national_address' => $faker->address
         ]);
 
+
+        // old code permissions 
+        \DB::table('permissions')->insert([
+            'user_id'=> 1,
+            'can_access_dashboard'=> true,
+            'can_access_restaurants'=> true,
+            'can_view_restaurants'=> true,
+            'can_delete_restaurants'=> true,
+            'can_approve_restaurants'=> true,
+            'can_see_admins'=> true,
+            'can_add_admins'=> true,
+            'can_edit_admins'=> true,
+            'can_promoters'=> true,
+            'can_see_logs'=> true,
+            'can_settings'=> true,
+            'can_edit_profile'=> true,
+        ]);
+
     }
 }
