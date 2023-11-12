@@ -46,14 +46,14 @@ const useAxiosAuth = () => {
          return response
       },
       (error) => {
-          console.log("axiosAuth.interceptors.response", error?.response?.status)
 
           if (error?.response?.status === HTTP_NOT_AUTHENTICATED) {
 
-              console.log("axiosAuth.interceptors.response", error?.response?.status)
+              console.log(">> axiosAuth.interceptors.response", error?.response?.status)
 
-              localStorage.setItem('isLoggedIn', "");
-             console.log('navigate to login route')
+              localStorage.setItem('user-info', "");
+              localStorage.setItem('user-info', "");
+             console.log('>> navigate to login route')
             // if (location.pathname === '/register') navigate('/register')
             if (!privateRoute) navigate(location.pathname)
             else navigate('/login')

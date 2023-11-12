@@ -10,9 +10,11 @@ export const logout = createAsyncThunk('auth/logout', async ({ method }) => {
 
 export const getIsLoggedIn = () => {
 
-    console.log("getIsLoggedIn", JSON.parse(sessionStorage.getItem('user-info'))?.user?.email)
+    let userInfo = localStorage.getItem('user-info') || {};
 
-   return (JSON.parse(sessionStorage.getItem('user-info'))?.user?.email?.length > 0 || false);
+    console.log("getIsLoggedIn", userInfo?.user?.email)
+
+   return (userInfo?.user?.email?.length > 0 || false);
 }
 
 const initialState = {
@@ -38,7 +40,7 @@ const authSlice = createSlice({
          .addCase(logout.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.isLoggedIn = action.payload
-             sessionStorage.setItem('user-info', false);
+             localStorage.setItem('user-info', "");
             localStorage.removeItem('isLoggedIn')
             localStorage.removeItem('khardl-status-code')
          })
