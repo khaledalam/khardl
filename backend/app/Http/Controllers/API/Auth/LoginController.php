@@ -29,6 +29,7 @@ class LoginController extends BaseController
 
 
         $user = Auth::user();
+       
         // @TODO: uncomment if need!
         $data = [
             'user'=>$user
@@ -50,11 +51,14 @@ class LoginController extends BaseController
         }
 
         // Check if the trader's registration requirements are not fulfilled.
-        if (!$user->traderRegistrationRequirement) {
-            $data['step2_status'] = 'incomplete';
-        }else{
-            $data['step2_status'] = 'completed';
+        if($user instanceof User){ // USER NOT RESTAURANT USER
+            if (!$user->traderRegistrationRequirement) {
+                $data['step2_status'] = 'incomplete';
+            }else{
+                $data['step2_status'] = 'completed';
+            }
         }
+       
 
         return $this->sendResponse($data, 'User logged in successfully.');
     }

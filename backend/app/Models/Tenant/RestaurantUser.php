@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 
-class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
+class RestaurantUser extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
     use MustVerifyEmailTrait, HasApiTokens, HasFactory, Notifiable,HasRoles;
 
