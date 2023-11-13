@@ -14,7 +14,7 @@ const Protected = (props) => {
             //     navigate("/login");
             // }
         }
-        if (!sessionStorage.getItem('user-info')) {
+        if (!localStorage.getItem('user-info')) {
             navigate("/login");
         }
     }, []);

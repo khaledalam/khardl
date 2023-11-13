@@ -44,10 +44,7 @@ function CompleteRegistration() {
       handleSubmit,
       register,
       formState: { errors },
-   } = useForm()
-   // let user_info = JSON.parse(sessionStorage.getItem("user-info"));
-   // const token = user_info ? user_info.access_token : "";
-   // const process.env.REACT_APP_API_URL = useApiContext()
+   } = useForm();
 
    // API POST REQUEST
    const onSubmit = async (data) => {

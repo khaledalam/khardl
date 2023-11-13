@@ -10,10 +10,10 @@ docker-compose up -d --build --remove-orphans
 # confirm docker db is connected with laravel and up and running
 
 
-TEST="NO"
+TEST="MySQL server has gone away"
 while true; do
     # shellcheck disable=SC2046
-    TEST=$(php backend/artisan tinker --execute="dump(User::find(1)->email)") 2> /dev/null
+    TEST=$(php backend/artisan tinker --execute="dump(User::find(1)->email)") 2> /dev/null;
     if [[ "$TEST" != *"MySQL server has gone away"* ]]; then
         echo "MySQL server is available."
         break
