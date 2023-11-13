@@ -120,7 +120,6 @@ Route::group([
     });
 
     Route::get('/change-language/{locale}', function ($locale) {
-
         App::setLocale($locale);
         Session::put('locale', $locale);
         return Redirect::back();

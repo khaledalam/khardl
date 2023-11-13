@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -21,15 +22,9 @@ class RestaurantController extends Controller
     }
 
     public function branches(){
-
         $user = Auth::user();
-
-        $branches = DB::table('branches')
-            ->where('user_id', $user->id)
-            ->get()
-            ->sortByDesc('is_primary');
-
-        return view('restaurant.branches', compact('user', 'branches'));
+        $branches = Branch::all();
+        return view('restaurant.branches', compact('user', 'branches')); //view('branches')
     }
 
     public function addBranch(Request $request){

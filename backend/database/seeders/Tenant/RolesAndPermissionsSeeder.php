@@ -28,10 +28,11 @@ class RolesAndPermissionsSeeder extends Seeder
         }
 
         $permissions = collect([
-            'view ',
-            'view own ',
-            'manage ',
-            'manage own ',                
+            'create ',
+            'update ',
+            'delete ',
+            'manage ',   
+            'view '             
         ]);
 
         $Modules = collect([
