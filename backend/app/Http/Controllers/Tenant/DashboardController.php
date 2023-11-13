@@ -12,7 +12,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         return match(true){
             $user->isRestaurantOwner() => redirect()->route('restaurant.summary'),
-            $user->isWorker() => redirect()->route('worker.profile'),
+            $user->isWorker() => redirect()->route('restaurant.menu'),
             default => view('tenant')
         };
     }

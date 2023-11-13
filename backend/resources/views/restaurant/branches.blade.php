@@ -146,10 +146,12 @@
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->
+                                            @if($user->isWorker())
                                             <div
                                                 class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                 <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.edit-menu') }}</a>
                                             </div>
+                                            @endif
                                             <!--end::Stat-->
                                             <!--begin::Stat-->
                                             <div
@@ -162,10 +164,12 @@
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->
-                                            <div
-                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                <a href="{{ route('restaurant.workers', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.staff-modification') }}</a>
-                                            </div>
+                                            @if($user->isRestaurantOwner())
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
+                                                    <a href="{{ route('restaurant.workers', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.staff-modification') }}</a>
+                                                </div>
+                                            @endif
                                             <!--end::Stat-->
                                             <!--begin::Stat-->
                                             <div

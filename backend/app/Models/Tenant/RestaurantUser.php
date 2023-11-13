@@ -62,11 +62,14 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail, CanRese
     public function isWorker(){
         return $this->hasRole("Worker");
     }
+    public function branch(){
+        return $this->hasOne(Branch::class,'user_id');
+    }
     
     public function hasPermissionWorker($permission)
     {
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-   
+
 }

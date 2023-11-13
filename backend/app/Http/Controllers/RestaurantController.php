@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tenant\Branch;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Models\Tenant\Branch;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Database\Query\Builder;
 
 class RestaurantController extends Controller
 {
@@ -23,7 +24,13 @@ class RestaurantController extends Controller
 
     public function branches(){
         $user = Auth::user();
-        $branches = Branch::all();
+        $branches =  DB::table('branches')
+        ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
+            $query->where('user_id', $user->id);
+        })
+        ->get()
+        ->sortByDesc('is_primary');
+
         return view('restaurant.branches', compact('user', 'branches')); //view('branches')
     }
 
@@ -137,8 +144,8 @@ class RestaurantController extends Controller
 
     public function updateBranch(Request $request, $id)
     {
-        if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
-            return;
+        // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
+        //     return;
 
         $validatedData = $request->validate([
             'saturday_open' => 'required|date_format:H:i',
@@ -189,8 +196,8 @@ class RestaurantController extends Controller
 
     public function updateBranchLocation(Request $request, $id){
 
-        if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
-        return;
+        // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
+        // return;
 
         $lat = number_format((float)$request->input('lat'), 8, '.', '');
         $lng = number_format((float)$request->input('lng'), 8, '.', '');
@@ -207,14 +214,16 @@ class RestaurantController extends Controller
     
     }
 
-    public function menu($branchId){
+    public function menu($branchId = null){
 
         $user = Auth::user();
-        if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
-            return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
-        }
-
-        $categories = DB::table('categories')->where('user_id', $user->id)->where('branch_id', $branchId)->get();
+        // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
+        //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+        // }
+        $branchId  = $user->branch?->id;
+        $categories = DB::table('categories')
+        ->where('user_id', $user->id)
+        ->where('branch_id', $branchId)->get();
 
         return view('restaurant.menu', compact('user', 'categories', 'branchId'));
     }
@@ -250,7 +259,6 @@ class RestaurantController extends Controller
 
         if($userId != DB::table('branches')->where('id', $branchId)->value('user_id'))
             return;
-
         DB::table('categories')->insert([
             'category_name' => $request->input('category_name'),
             'user_id' => $userId,
@@ -281,24 +289,25 @@ class RestaurantController extends Controller
             $photoFile->storeAs('items', $filename, 'private');
         
             DB::beginTransaction();
-        
+            
             try {
+
                 $itemData = [
                     'photo' => $filename,
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'description' => $request->input('description'),
                     'checkbox_required' => $request->has('checkbox_required'),
-                    'checkbox_input_titles' => implode('|', $request->input('checkboxInputTitle', [])),
-                    'checkbox_input_maximum_choices' => implode('|', $request->input('checkboxInputMaximumChoice', [])),
-                    'checkbox_input_names' => implode('|', $request->input('checkboxInputName', [])),
-                    'checkbox_input_prices' => implode('|', $request->input('checkboxInputPrice', [])),
+                    'checkbox_input_titles' => json_encode($request->input('checkboxInputTitle')),
+                    'checkbox_input_maximum_choices' => json_encode($request->input('checkboxInputMaximumChoice')),
+                    'checkbox_input_names' => json_encode($request->input('checkboxInputName')),
+                    'checkbox_input_prices' => json_encode($request->input('checkboxInputPrice')),
                     'selection_required' => $request->has('selection_required'),
-                    'selection_input_names' => implode('|', $request->input('selectionInputName', [])),
-                    'selection_input_prices' => implode('|', $request->input('selectionInputPrice', [])),
-                    'selection_input_titles' => implode('|', $request->input('selectionInputTitle', [])),
+                    'selection_input_names' => json_encode($request->input('selectionInputName')),
+                    'selection_input_prices' => json_encode($request->input('selectionInputPrice')),
+                    'selection_input_titles' => json_encode($request->input('selectionInputTitle')),
                     'dropdown_required' => $request->has('dropdown_required'),
-                    'dropdown_input_names' => implode('|', $request->input('dropdownInputName', [])),
+                    'dropdown_input_names' => json_encode($request->input('dropdownInputName')),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
                     'branch_id' => $branchId,
@@ -353,11 +362,7 @@ class RestaurantController extends Controller
         }
     }
 
-    public function points(){
-        $user = Auth::user();
-
-        return view('restaurant.points', compact('user'));
-    }
+    
 
     public function updateProfile(Request $request)
     {

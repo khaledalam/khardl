@@ -14,15 +14,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        RestaurantUser::create([
-            'first_name' => "khardl",
-            'last_name' => "customer",
-            'email' => env("NOVA_ADMIN_EMAIL","khardl@customer.com"),
+        $user = RestaurantUser::create([
+            'first_name' => "Worker",
+            'last_name' => "Worker",
+            'email' => "worker@first.com",
             'email_verified_at' => now(),
             'status'=> 'active',
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
+        $user->assignRole('Worker');
+
         
 
     }
