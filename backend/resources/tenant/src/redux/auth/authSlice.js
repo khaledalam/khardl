@@ -38,8 +38,7 @@ const authSlice = createSlice({
          .addCase(logout.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.isLoggedIn = action.payload
-             sessionStorage.setItem('user-info', false);
-            localStorage.removeItem('isLoggedIn')
+             localStorage.setItem('user-info', false);
             localStorage.removeItem('khardl-status-code')
          })
          .addCase(logout.rejected, (state, action) => {
