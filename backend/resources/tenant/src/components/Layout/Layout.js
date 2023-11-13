@@ -1,4 +1,3 @@
-// import useCheckAuthenticated from '../../hooks/useCheckAuthenticated'
 import { useAuthContext } from '../context/AuthContext'
 import { Navigate, useLocation, Outlet } from 'react-router-dom'
 import {HTTP_NOT_ACCEPTED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";

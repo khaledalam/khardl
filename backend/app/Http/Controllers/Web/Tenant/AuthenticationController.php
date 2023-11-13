@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Web\Tenant;
 
 use App\Models\User;
 use Laravel\Passport\Token;
@@ -13,19 +13,18 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
-    
-
     /**
      * Json Auth Validation
      *
+     * @param Request $request
      * @return JsonResponse
      */
     public function auth_validation(Request $request): JsonResponse
     {
         /** @var ?User $user */
         $user = Auth::user();
-//        var_dump($user);
 
+        dd("TEST");
 
         if ($user) {
 //            if($user->isBlocked()){
@@ -35,7 +34,7 @@ class AuthenticationController extends Controller
 //                ], ResponseHelper::HTTP_BLOCKED);
 //            }
 //            else
-//                
+//
             if (!$user->hasVerifiedEmail()) {
                 return ResponseHelper::response([
                     'message' => 'User is not verified email yet',
@@ -55,10 +54,8 @@ class AuthenticationController extends Controller
     }
 
 
-
     /**
      * logout
-     *
      */
     public function logout(Request $request)
     {
@@ -78,9 +75,9 @@ class AuthenticationController extends Controller
 
         if ($request->expectsJson()) {
             return ResponseHelper::response([
-                'message' => 'User is not logged in',
+                'message' => 'User is already logged out',
                 'is_loggedin' => false
-            ], ResponseHelper::HTTP_FORBIDDEN);
+            ], ResponseHelper::HTTP_OK);
         }
         return redirect()->route("login");
     }

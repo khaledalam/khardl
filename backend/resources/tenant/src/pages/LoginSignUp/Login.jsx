@@ -166,20 +166,20 @@ const Login = () => {
                               </div>
 
                               <div className='flex justify-between items-center'>
-                                 <div className='flex justify-between items-center gap-2'>
-                                    <input
-                                       id={`checkbox-1`}
-                                       type='checkbox'
-                                       {...register('remember_me')}
-                                       className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'
-                                    />
-                                    <label
-                                       htmlFor={`checkbox-1`}
-                                       className='text-sm font-medium text-gray-900'
-                                    >
-                                       {t('remember me')}
-                                    </label>
-                                 </div>
+                                 {/*<div className='flex justify-between items-center gap-2'>*/}
+                                 {/*   <input*/}
+                                 {/*      id={`checkbox-1`}*/}
+                                 {/*      type='checkbox'*/}
+                                 {/*      {...register('remember_me')}*/}
+                                 {/*      className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'*/}
+                                 {/*   />*/}
+                                 {/*   <label*/}
+                                 {/*      htmlFor={`checkbox-1`}*/}
+                                 {/*      className='text-sm font-medium text-gray-900'*/}
+                                 {/*   >*/}
+                                 {/*      {t('remember me')}*/}
+                                 {/*   </label>*/}
+                                 {/*</div>*/}
                                  <Link to='/reset-password'>
                                     <label className='text-[14px] text-[var(--primary)] cursor-pointer'>
                                        {t('Forgot your password?')}

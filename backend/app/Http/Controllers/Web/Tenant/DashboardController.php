@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Web\Tenant;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

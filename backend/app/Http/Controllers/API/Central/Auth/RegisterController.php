@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\API\Central\Auth;
 
 use App\Models\User;
 use App\Models\Restaurant;
