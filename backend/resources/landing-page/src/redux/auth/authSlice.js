@@ -18,7 +18,7 @@ export const getIsLoggedIn = () => {
 }
 
 const initialState = {
-   isLoggedIn: getIsLoggedIn(), //localStorage.getItem('isLoggedIn') || false
+   isLoggedIn: getIsLoggedIn(),
    status: 'idle',
    error: null,
 }
@@ -41,7 +41,6 @@ const authSlice = createSlice({
             state.status = 'succeeded'
             state.isLoggedIn = action.payload
              localStorage.setItem('user-info', "");
-            localStorage.removeItem('isLoggedIn')
             localStorage.removeItem('khardl-status-code')
          })
          .addCase(logout.rejected, (state, action) => {

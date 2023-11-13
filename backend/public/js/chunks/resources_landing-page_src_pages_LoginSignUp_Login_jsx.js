@@ -184,7 +184,7 @@ var Login = function Login() {
           case 8:
             responseData = _context.sent;
             console.log(responseData);
-            sessionStorage.setItem("user-info", JSON.stringify(responseData));
+            localStorage.setItem("user-info", JSON.stringify(responseData));
             navigate("/");
             react_toastify__WEBPACK_IMPORTED_MODULE_5__.toast.success("You have been logged in successfully");
             _context.next = 17;

@@ -9,10 +9,8 @@ import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Languages from '../Languages'
-
 import {getIsLoggedIn, logout} from '../../redux/auth/authSlice'
 import { useAuthContext } from '../context/AuthContext'
-// import Axios from '../../axios/axios'
 import { toast } from 'react-toastify'
 
 const Header = () => {
@@ -22,14 +20,13 @@ const Header = () => {
    const { t } = useTranslation()
    const isOpen = useSelector((state) => state.drawer.isOpen)
    const Language = useSelector((state) => state.languageMode.languageMode)
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
-
-    const isLoggedIn = getIsLoggedIn();
    // const status = useSelector((state) => state.auth.status)
    const navigate = useNavigate()
    const { setStatusCode } = useAuthContext()
 
-    console.log("isLoggedIn > ", isLoggedIn);
+    console.log("isLoggedIn >> ", isLoggedIn);
 
     const redirectToDashboard = () => {
       // Redirect to an external URL (window.location.href)
