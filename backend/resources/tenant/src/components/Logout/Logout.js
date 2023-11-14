@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../redux/auth/authSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useAuthContext } from '../context/AuthContext'
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+import {HTTP_NOT_AUTHENTICATED} from "../../config";
+
 
 const Logout = () => {
    const dispatch = useDispatch()
@@ -16,13 +18,16 @@ const Logout = () => {
    useEffect(() => {
       if (!isLoggedIn) {
          // navigate('/login', { replace: true })
-         toast.error('You have to be Loggedin to Logout')
+         toast.error('You have to be Logged in to Logout')
       } else {
          dispatch(logout({ method: 'GET' }))
             .unwrap()
-            .then(() => {
+            .then(res => {
+                console.log("logout res ", res);
+
+                setStatusCode(HTTP_NOT_AUTHENTICATED)
                if (status === 'succeeded') {
-                  setStatusCode(401)
+                  setStatusCode(HTTP_NOT_AUTHENTICATED)
                   navigate('/login', { replace: true })
                   toast.success('Logged out successfully')
                }

@@ -7,14 +7,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-toastify'
-// import { useSelector } from "react-redux";
-// import { useApiContext } from '../context'
-
+import {PREFIX_KEY,HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";
 import { useSelector, useDispatch } from 'react-redux'
-import { changeLogState } from '../../redux/auth/authSlice'
+import { changeLogState, changeUserState } from '../../redux/auth/authSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useAuthContext } from '../../components/context/AuthContext'
-import {API_ENDPOINT, HTTP_NOT_ACCEPTED, HTTP_NOT_VERIFIED, HTTP_OK, HTTP_VERIFIED} from "../../config";
 import AxiosInstance from "../../axios/axios";
 
 const Login = () => {
@@ -56,9 +53,9 @@ const Login = () => {
                JSON.stringify(responseData.data)
             )
             if (responseData.data.user.status === 'inactive') {
-               sessionStorage.setItem('email', responseData.data.user.email)
+               sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)
                setStatusCode(HTTP_NOT_VERIFIED)
-               navigate('/verification-email')
+               navigate('/verification-phone')
             }else if (
                responseData.data.user.status === 'active'
             ) {
@@ -66,7 +63,9 @@ const Login = () => {
             } else {
                navigate('/error')
             }
-            dispatch(changeLogState(true))
+             dispatch(changeLogState(true))
+             dispatch(changeUserState(responseData?.data?.user || null))
+
             dispatch(setIsOpen(false))
             toast.success(`${t('You have been logged in successfully')}`)
          } else {
@@ -77,7 +76,9 @@ const Login = () => {
       } catch (error) {
          setSpinner(false)
          dispatch(changeLogState(false))
-         setStatusCode(401)
+          dispatch(changeUserState(null))
+
+          setStatusCode(HTTP_NOT_AUTHENTICATED)
          toast.error(`${t('Login failed')}`)
       }
    }
@@ -95,7 +96,7 @@ const Login = () => {
             <div className='py-[20px] flex justify-center items-center'>
                <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[60%] max-[1200px]:w-[100%]'>
                   <div className='relative flex flex-col justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
-                     <div className='mt-6  w-[100%]'>
+                     <div className='mt-6 w-[100%]'>
                         <MainText
                            Title={t('Login')}
                            classTitle='!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]'
@@ -166,20 +167,20 @@ const Login = () => {
                               </div>
 
                               <div className='flex justify-between items-center'>
-                                 <div className='flex justify-between items-center gap-2'>
-                                    <input
-                                       id={`checkbox-1`}
-                                       type='checkbox'
-                                       {...register('remember_me')}
-                                       className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'
-                                    />
-                                    <label
-                                       htmlFor={`checkbox-1`}
-                                       className='text-sm font-medium text-gray-900'
-                                    >
-                                       {t('remember me')}
-                                    </label>
-                                 </div>
+                                 {/*<div className='flex justify-between items-center gap-2'>*/}
+                                 {/*   <input*/}
+                                 {/*      id={`checkbox-1`}*/}
+                                 {/*      type='checkbox'*/}
+                                 {/*      {...register('remember_me')}*/}
+                                 {/*      className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'*/}
+                                 {/*   />*/}
+                                 {/*   <label*/}
+                                 {/*      htmlFor={`checkbox-1`}*/}
+                                 {/*      className='text-sm font-medium text-gray-900'*/}
+                                 {/*   >*/}
+                                 {/*      {t('remember me')}*/}
+                                 {/*   </label>*/}
+                                 {/*</div>*/}
                                  <Link to='/reset-password'>
                                     <label className='text-[14px] text-[var(--primary)] cursor-pointer'>
                                        {t('Forgot your password?')}
@@ -205,6 +206,19 @@ const Login = () => {
                                  </p>
                               </div>
                            </form>
+                            <small>
+                                Demo for testing:<br/><br/>
+
+                                <u>Restaurant Owner:</u><br/>
+                                Email: admin@first.com<br/>
+                                Password: password<br/><br/>
+
+                                <hr /><br/>
+
+                                <u>Restaurant Customer:</u><br/>
+                                Email: khardl@customer.com<br/>
+                                Password: password
+                            </small>
                         </div>
                      </div>
                      {spinner && (
@@ -212,7 +226,7 @@ const Login = () => {
                            role='status'
                            className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[39%] max-[860px]:top-[39.5%] left-1/2 w-[100%] h-[100%] '
                         >
-                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
+                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'/>
                            <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
                               <svg
                                  aria-hidden='true'

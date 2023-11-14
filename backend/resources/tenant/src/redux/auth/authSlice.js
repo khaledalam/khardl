@@ -1,10 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import Axios from '../../axios/axios'
+import { PREFIX_KEY} from "../../config";
 
 export const logout = createAsyncThunk('auth/logout', async ({ method }) => {
    const response = await Axios({ url: '/logout', method })
    console.log('logout: ')
    console.log(response)
+    console.log("rtqwerew")
+    sessionStorage.removeItem(PREFIX_KEY + 'email')
+    localStorage.removeItem('user-info');
    return response?.data?.is_loggedin
 })
 
@@ -13,10 +17,16 @@ export const getIsLoggedIn = () => {
    return (JSON.parse(localStorage.getItem('user-info'))?.user?.email?.length > 0 || false);
 }
 
+export const getUser = () => {
+    console.log("getIsLoggedIn", JSON.parse(localStorage.getItem('user-info'))?.user)
+    return (JSON.parse(localStorage.getItem('user-info'))?.user || false);
+}
+
 const initialState = {
    isLoggedIn: getIsLoggedIn(),
    status: 'idle',
    error: null,
+    user: getUser()
 }
 
 const authSlice = createSlice({
@@ -27,6 +37,10 @@ const authSlice = createSlice({
          state.isLoggedIn = action.payload
          localStorage.setItem('isLoggedIn', JSON.stringify(action.payload))
       },
+       changeUserState: (state, action) => {
+           state.user = action.payload
+           localStorage.setItem('user-info', JSON.stringify(action.payload))
+       },
    },
    extraReducers: (builder) => {
       builder
@@ -36,7 +50,7 @@ const authSlice = createSlice({
          .addCase(logout.fulfilled, (state, action) => {
             state.status = 'succeeded'
             state.isLoggedIn = action.payload
-             localStorage.setItem('user-info', false);
+             localStorage.removeItem('user-info');
             localStorage.removeItem('khardl-status-code')
          })
          .addCase(logout.rejected, (state, action) => {
@@ -46,5 +60,5 @@ const authSlice = createSlice({
    },
 })
 
-export const { changeLogState } = authSlice.actions
+export const { changeLogState, changeUserState } = authSlice.actions
 export default authSlice.reducer

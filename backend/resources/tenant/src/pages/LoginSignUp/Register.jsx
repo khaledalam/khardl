@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import AxiosInstance from "../../axios/axios";
+import {PREFIX_KEY} from "../../config";
 
 const Register = () => {
    const navigate = useNavigate()
@@ -41,8 +42,6 @@ const Register = () => {
          const response = await AxiosInstance.post(`/register`, {
             first_name: data.first_name,
             last_name: data.last_name,
-            restaurant_name: data.restaurant_name,
-            position: data.position,
             email: data.email,
             phone: data.phone,
             password: data.password,
@@ -51,8 +50,8 @@ const Register = () => {
          });
          console.log(response.data);
          toast.success(`${t('Account successfully created')}`)
-         sessionStorage.setItem('email', data.email)
-          window.location.href = '/verification-email';
+         sessionStorage.setItem(PREFIX_KEY + 'email', data.email)
+          window.location.href = '/verification-phone';
       } catch (error) {
          setSpinner(false);
          console.log(error);
@@ -132,44 +131,6 @@ const Register = () => {
                                     )}
                                  </div>
                               </div>
-                              {/* Input 3 */}
-                              <div>
-                                 <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                    {t('Restaurant name')}
-                                 </h4>
-                                 <input
-                                    className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                    placeholder={t('Restaurant name')}
-                                    {...register('restaurant_name', {
-                                       required: true,
-                                    })}
-                                 />
-                                 {errors.restaurant_name && (
-                                    <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {errors.restaurant_name.message ||   t('Restaurant name Error') }
-                                    </span>
-                                 )}
-                              </div>
-
-                              {/* Input 4 */}
-                              <div>
-                                 <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                    {t('Position')}
-                                 </h4>
-                                 <input
-                                    className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                    placeholder={t('Position')}
-                                    {...register('position', {
-                                       required: true,
-                                    })}
-                                 />
-                                 {errors.position && (
-                                    <span className='text-red-500 text-xs mt-1 ms-2'>
-                                     {errors.position.message ||   t('Position Error') }
-                                    </span>
-                                 )}
-                              </div>
-
                               {/* Input 5 */}
                               <div>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
@@ -196,11 +157,11 @@ const Register = () => {
                                  <input
                                     type='tel'
                                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                                    placeholder={t('Phone')}
+                                    placeholder={'e.g. +971 582936628'}
                                     {...register('phone', {
                                        required: true,
                                     })}
-                                    maxLength={12}
+                                    maxLength={13}
                                  />
                                  {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>

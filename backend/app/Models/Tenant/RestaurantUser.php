@@ -7,14 +7,12 @@ use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 
-class RestaurantUser extends Authenticatable implements MustVerifyEmail, CanResetPassword
+class RestaurantUser extends Authenticatable implements MustVerifyEmail
 {
-    use MustVerifyEmailTrait, HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable,HasRoles;
 
     protected $table ='users';
     protected $primaryKey = 'id';
@@ -51,7 +49,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail, CanRese
         'password' => 'hashed',
     ];
 
-    
+
     public function hasPermission($permission)
     {
         return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
@@ -66,10 +64,15 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail, CanRese
         return $this->hasOne(Branch::class,'user_id');
     }
     
+
     public function hasPermissionWorker($permission)
     {
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
     }
 
+    public function hasVerifiedPhone(): bool
+    {
+        return $this->phone_verified_at != null;
+    }
 
 }

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import {API_ENDPOINT} from "../../config";
+import { PREFIX_KEY} from "../../config";
 import AxiosInstance from "../../axios/axios";
 // import { useApiContext } from '../context'
 
@@ -27,7 +27,7 @@ const ForgotPassword = () => {
          if (response.data) {
             const responseData = await response.json()
             console.log(responseData)
-            sessionStorage.setItem('email', data.email)
+            sessionStorage.setItem(PREFIX_KEY + 'email', data.email)
             navigate('/create-new-password')
             toast.success(
                `${t('The verification code has been sent to your email')}`

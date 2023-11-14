@@ -22,7 +22,7 @@ const Logout = () => {
             .unwrap()
             .then(() => {
                if (status === 'succeeded') {
-                  setStatusCode(401)
+                  setStatusCode(HTTP_NOT_AUTHENTICATED)
                   navigate('/login', { replace: true })
                   toast.success('Logged out successfully')
                }

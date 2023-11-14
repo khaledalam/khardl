@@ -37,7 +37,7 @@ class AuthenticationController extends Controller
 //                ], ResponseHelper::HTTP_BLOCKED);
 //            }
 //            else
-//                
+//
             if ($user->hasVerifiedEmail()) {
                 if (!$user?->traderRegistrationRequirement) {
                     return ResponseHelper::response([
@@ -48,7 +48,8 @@ class AuthenticationController extends Controller
             } else {
                 return ResponseHelper::response([
                     'message' => 'User is not verified email yet',
-                    'is_loggedin' => true
+                    'is_loggedin' => true,
+                    'email' => $user?->email
                 ], ResponseHelper::HTTP_NOT_VERIFIED);
             }
             return ResponseHelper::response([

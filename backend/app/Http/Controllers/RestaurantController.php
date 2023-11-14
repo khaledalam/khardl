@@ -19,6 +19,7 @@ class RestaurantController extends Controller
     public function index(){
 
         $user = Auth::user();
+
         return view('restaurant.summary', compact('user'));
     }
 
@@ -94,9 +95,9 @@ class RestaurantController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
-    
+
                 $newCategoryId = DB::getPdo()->lastInsertId();
-    
+
                 $items = DB::table('items')->where('category_id', $category->id)->get();
                 foreach ($items as $item) {
                     $newFilename = Str::uuid()->toString() . '.' . pathinfo($item->photo, PATHINFO_EXTENSION);
@@ -187,7 +188,7 @@ class RestaurantController extends Controller
             'thursday_closed' => $request->has('thursday_closed') ? 1 : 0,
             'friday_closed' => $request->has('friday_closed') ? 1 : 0,
         ];
-    
+
         DB::table('branches')->where('id', $id)->update($formattedData);
 
         return redirect()->back()
@@ -202,7 +203,7 @@ class RestaurantController extends Controller
         $lat = number_format((float)$request->input('lat'), 8, '.', '');
         $lng = number_format((float)$request->input('lng'), 8, '.', '');
 
-        
+
         DB::table('branches')
             ->where('id', $id)
             ->update([
@@ -211,7 +212,7 @@ class RestaurantController extends Controller
             ]);
 
         return redirect()->back()->with('success', 'Location successfully changed.');
-    
+
     }
 
     public function menu($branchId = null){
@@ -236,18 +237,18 @@ class RestaurantController extends Controller
         }
 
         $selectedCategory = DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->first();
-    
+
         if ($selectedCategory && $user->id == $selectedCategory->user_id) {
             $categories = DB::table('categories')->where('user_id', $user->id)->where('branch_id', $branchId)->get();
 
             $items = DB::table('items')->where('user_id', $user->id)->where('category_id', $selectedCategory->id)->where('branch_id', $branchId)->get();
-    
+
             return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
         } else {
             return redirect()->back()->with('error', 'You are not authorized to access that page.');
         }
     }
-    
+
 
     public function addCategory(Request $request, $branchId){
 
@@ -275,19 +276,19 @@ class RestaurantController extends Controller
         if(Auth::user()->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
-        
+
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')) {
 
             $photoFile = $request->file('photo');
-        
+
             $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
-        
+
             while (Storage::disk('private')->exists('items/' . $filename)) {
                 $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
             }
-        
+
             $photoFile->storeAs('items', $filename, 'private');
-        
+
             DB::beginTransaction();
             
             try {
@@ -314,11 +315,11 @@ class RestaurantController extends Controller
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-        
+
                 DB::table('items')->insert($itemData);
-        
+
                 DB::commit();
-        
+
                 return redirect()->back()->with('success', 'Item successfully added.');
             } catch (\Exception $e) {
                 DB::rollback();
@@ -330,14 +331,14 @@ class RestaurantController extends Controller
     public function deleteCategory($id){
 
         $user = Auth::user();
-    
+
         $selectedCategory = DB::table('categories')->where('id', $id)->first();
-    
+
         if ($selectedCategory && $user->id == $selectedCategory->user_id) {
-            
+
             DB::table('items')->where('category_id', $id)->delete();
             DB::table('categories')->where('id', $id)->delete();
-    
+
             return redirect()->route('restaurant.menu', ['branchId' => $selectedCategory->branch_id])->with('success', 'Category successfully deleted.');
 
         } else {
@@ -348,13 +349,13 @@ class RestaurantController extends Controller
     public function deleteItem($id){
 
         $user = Auth::user();
-    
+
         $selectedItem = DB::table('items')->where('id', $id)->first();
-    
+
         if ($selectedItem && $user->id == $selectedItem->user_id) {
-            
+
             DB::table('items')->where('id', $id)->delete();
-    
+
             return redirect()->route('restaurant.menu', ['branchId' => $selectedItem->branch_id])->with('success', 'Item successfully deleted.');
 
         } else {
@@ -387,7 +388,7 @@ class RestaurantController extends Controller
             Storage::disk('local')->put($filePath, $contents);
             $user->commercial_registration_pdf = $fileName;
         }
-        
+
         if ($request->hasFile('delivery_contract')) {
             $file = $request->file('delivery_contract');
             $contents = file_get_contents($file);
@@ -396,7 +397,7 @@ class RestaurantController extends Controller
             Storage::disk('local')->put($filePath, $contents);
             $user->signed_contract_delivery_company = $fileName;
         }
-        
+
         $user->first_name = $validatedData['first_name'];
         $user->last_name = $validatedData['last_name'];
         $user->restaurant_name = $validatedData['restaurant_name'];
@@ -407,7 +408,7 @@ class RestaurantController extends Controller
         }
         $user->save();
 
-        
+
 
         return redirect()->back()->with('success', 'Profile updated successfully');
     }
@@ -438,14 +439,14 @@ class RestaurantController extends Controller
 
     public function generateWorker(Request $request, $branchId)
     {
-        
+
         $existingUser = User::where('email', $request['email'])->first();
         if ($existingUser) {
             if(app()->getLocale() === 'en')
                 return redirect()->back()->with('error', 'Email is already registered.');
             else
                 return redirect()->back()->with('error', 'عنوان البريد الإلكترونى هذا مسجل بالفعل');
-            
+
         }
 
         $user = new User();
@@ -466,13 +467,13 @@ class RestaurantController extends Controller
             'can_modify_advertisements',
             'can_edit_menu',
         ];
-        
+
         $insertData = [];
-        
+
         foreach ($permissions as $permission) {
             $insertData[$permission] = $request->has($permission) ? 1 : 0;
         }
-        
+
         $insertData['user_id'] = $user->id;
 
         DB::table('permissions_worker')->insert($insertData);
@@ -487,22 +488,22 @@ class RestaurantController extends Controller
 
         if(Auth::user()->restaurant_name == User::find($id)->restaurant_name && Auth::user()->role == 0)
             DB::beginTransaction();
-    
+
             try {
-    
+
                 DB::table('permissions_worker')->where('user_id', $id)->delete();
                 User::findOrFail($id)->delete();
-        
+
                 DB::commit();
-    
-                
+
+
                 if(app()->getLocale() === 'en')
                     return redirect()->back()->with('success', 'Deleted successfully.');
                 else
                     return redirect()->back()->with('success', 'حذف بنجاح.');
             } catch (\Exception $e) {
                 DB::rollBack();
-                
+
                 if(app()->getLocale() === 'en')
                     return redirect()->back()->with('error', 'Error deleting user and related records: ' . $e->getMessage());
                 else
@@ -553,9 +554,9 @@ class RestaurantController extends Controller
     public function editWorker($id){
 
         $user = Auth::user();
-        
+
         $worker = User::findOrFail($id);
-    
+
         if($worker->role != 2){
             return abort(404);
         }
