@@ -46,8 +46,8 @@ const Preview = () => {
       <div className="w-[100%] bg-white"  style={{fontFamily: `${selectedFont}`}}>
       <Header />
       <div className=''>
-        <div className={`${selectedAlign === "Center" ? "justify-center" : ""} 
-        ${selectedAlign === "Left" && Language === "en" ? "justify-start" : selectedAlign === "Left" ? "justify-end":""} 
+        <div className={`${selectedAlign === "Center" ? "justify-center" : ""}
+        ${selectedAlign === "Left" && Language === "en" ? "justify-start" : selectedAlign === "Left" ? "justify-end":""}
         ${selectedAlign === "Right" && Language === "en" ? "justify-end" : selectedAlign === "Right" ? "justify-start":""}
         flex items-center  gap-4`}>
           <div className='my-[35px] mx-4'>
@@ -68,8 +68,9 @@ const Preview = () => {
                 contentClassName={`
         bg-[var(--secondary)] ${selectedCategory === `${t("Carousel")}` ? `flex justify-center`:''} text-xl
         ${selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}` ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
-                {categoriesForBranch.map((category) => (
+                {categoriesForBranch.map((category, i) => (
                   <Tap
+                      key={i}
                     component={
                       <MenuItems
                         category_id={category.category_id}

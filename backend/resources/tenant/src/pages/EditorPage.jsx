@@ -42,9 +42,10 @@ const EditorPage = () => {
       console.log('entered editorPage')
    }, [location.pathname])
 
+    console.log("gdsgsagd")
    return (
       <div className='flex overflow-x-hidden'>
-         {position === 'absolute' ? (
+             {position === 'absolute' ? (
             <div className={`fixed gap-2 z-[99999999999]`}>
                <div className={`fixed top-0 w-[100%]`}>
                   <Header />

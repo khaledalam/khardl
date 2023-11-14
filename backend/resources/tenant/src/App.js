@@ -8,14 +8,13 @@ import Footer from './components/Footer/Footer'
 import Home from './pages/Home/Home'
 import Login from './pages/LoginSignUp/Login'
 import Register from './pages/LoginSignUp/Register'
-import VerificationEmail from './pages/LoginSignUp/VerificationEmail'
+import VerificationPhone from './pages/LoginSignUp/VerificationPhone'
 import Supports from './components/Supports'
 import ScrollUp from './components/ScrollUp'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword'
-// import { API_URL } from './pages/context'
 import EditorPage from './pages/EditorPage'
 import RestaurantsPreview from './components/Restaurants/RestaurantsPreview/Preview'
 import CustomersPreview from './components/Customers/CustomersPreview/Preview'
@@ -43,7 +42,7 @@ const App = () => {
       '/register',
       '/reset-password',
       '/create-new-password',
-      '/verification-email',
+      '/verification-phone',
       '/policies',
       '/privacy',
    ].includes(location.pathname)
@@ -83,7 +82,7 @@ const App = () => {
                      path='/create-new-password'
                      element={<Protected Cmp={CreateNewPassword} />}
                   />
-               
+
 
                   <Route element={<Layout />}>
                      <Route path='/login' element={<Login />} />
@@ -93,8 +92,8 @@ const App = () => {
                   {/*Editor*/}
                   <Route element={<PrivateRoute />}>
                      <Route
-                        path='/verification-email'
-                        element={<VerificationEmail />}
+                        path='/verification-phone'
+                        element={<VerificationPhone />}
                      />
                      <Route path='/switcher' element={<EditorSwitcher />} />
 
@@ -107,8 +106,8 @@ const App = () => {
                         element={<RestaurantsPreview />}
                      />
                      <Route
-                        path='/customers/:branch_id'
-                        element={<EditorPage />}
+                        path='/dashboard'
+                        element={<CustomersPreview />}
                      />
                      <Route
                         path='/customers/:branch_id/Preview'

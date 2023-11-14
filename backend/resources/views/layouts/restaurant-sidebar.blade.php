@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html @if(app()->getLocale() === 'ar') direction="rtl" dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">>
+<html @if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">>
 
 <head>
     <base href="" />
@@ -14,27 +14,27 @@
     <meta property="og:url" content="#/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="{{ global_asset('new_asset/media/logos/favicon.ico')}}"/>
+    <link rel="shortcut icon" href="{{ global_asset('assets/media/logos/favicon.ico')}}"/>
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @if(app()->getLocale() === 'ar')
-        <link href="{{ global_asset('new_asset/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('new_asset/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
-        <link href="{{ global_asset('new_asset/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('new_asset/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Global Stylesheets Bundle-->
     @else
-        <link href="{{ global_asset('new_asset/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('new_asset/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
-        <link href="{{ global_asset('new_asset/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ global_asset('new_asset/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 @endif
 <!--end::Global Stylesheets Bundle-->
 </head>
@@ -498,7 +498,7 @@
                     <!--begin::Mobile logo-->
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a href="demo1/dist/index.html" class="d-lg-none">
-                            <img alt="Logo" src="{{ global_asset('new_asset/img/logo.png') }}" class="h-30px" />
+                            <img alt="Logo" src="{{ global_asset('assets/img/logo.png') }}" class="h-30px" />
                         </a>
                     </div>
                     <!--end::Mobile logo-->
@@ -576,9 +576,9 @@
                                                         class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('messages.english')}} @else {{ __('messages.arabic')}} @endif
                                                         <img class="w-15px h-15px rounded-1 ms-2"
                                                              @if(app()->getLocale() != 'ar')
-                                                             src="{{ global_asset('new_asset/media/flags/united-kingdom.svg') }}"
+                                                             src="{{ global_asset('assets/media/flags/united-kingdom.svg') }}"
                                                              @else
-                                                             src="{{ global_asset('new_asset/media/flags/saudi-arabia.svg') }}"
+                                                             src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
                                                              @endif
                                                              alt="" /></span></span>
                                         </a>
@@ -592,7 +592,7 @@
                                                             class="w-100 menu-link d-flex px-5 active">
                                                             <span class="symbol symbol-20px me-4">
                                                                 <img class="rounded-1"
-                                                                     src={{ global_asset('new_asset/media/flags/united-kingdom.svg') }} alt="" />
+                                                                     src={{ global_asset('assets/media/flags/united-kingdom.svg') }} alt="" />
                                                             </span>{{ __('messages.english')}}</button>
                                                 </form>
                                             </div>
@@ -604,7 +604,7 @@
                                                     <button style="border: 0;" type="submit"
                                                             class="w-100 menu-link d-flex px-5 active">
                                                         <span class="symbol symbol-20px me-4">
-                                                            <img class="rounded-1" src="{{ global_asset('new_asset/media/flags/saudi-arabia.svg') }}"
+                                                            <img class="rounded-1" src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
                                                                  alt="" /> </span>{{ __('messages.arabic')}}</button>
                                                 </form>
                                             </div>
@@ -620,10 +620,10 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                        <a href="{{ route('logout') }}"
+                                        <a href="{{ route('tenant_logout_get') }}"
                                            class="menu-link px-5" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">{{ __('messages.sign-out')}}</a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('tenant_logout_get') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
                                     </div>
@@ -724,21 +724,21 @@
     var hostUrl = "assets/";
 </script>
 <!--begin::Global Javascript Bundle(used by all pages)-->
-<script src="{{ global_asset('new_asset/plugins/global/plugins.bundle.js') }}"></script>
-<script src="{{ global_asset('new_asset/js/scripts.bundle.js')}}"></script>
+<script src="{{ global_asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+<script src="{{ global_asset('assets/js/scripts.bundle.js')}}"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
 
-<script src="{{ global_asset('new_asset/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
-<script src="{{ global_asset('new_asset/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+<script src="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
+<script src="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
 <!--end::Page Vendors Javascript-->
 <!--begin::Page Custom Javascript(used by this page)-->
-<script src="{{ global_asset('new_asset/js/widgets.bundle.js')}}"></script>
-<script src="{{ global_asset('new_asset/js/custom/widgets.js')}}"></script>
-<script src="{{ global_asset('new_asset/js/custom/apps/chat/chat.js')}}"></script>
-<script src="{{ global_asset('new_asset/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
-<script src="{{ global_asset('new_asset/js/custom/utilities/modals/create-app.js')}}"></script>
-<script src="{{ global_asset('new_asset/js/custom/utilities/modals/users-search.js')}}"></script>
+<script src="{{ global_asset('assets/js/widgets.bundle.js')}}"></script>
+<script src="{{ global_asset('assets/js/custom/widgets.js')}}"></script>
+<script src="{{ global_asset('assets/js/custom/apps/chat/chat.js')}}"></script>
+<script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+<script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
+<script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
 <script src="https://kit.fontawesome.com/d2d3f16619.js" crossorigin="anonymous"></script>
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->

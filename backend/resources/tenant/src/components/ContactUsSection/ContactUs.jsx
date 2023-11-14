@@ -37,7 +37,6 @@ function ContactUs() {
             }
          )
          if (data.response.ok) {
-            // const responseData = await response.json()
             toast.success(
                `${t('Your contact information has been sent successfully')}`
             )

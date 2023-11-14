@@ -44,23 +44,25 @@ Route::group([
             }
         });
     }
-    Route::middleware('guest')->group(function () {
-
-        Route::post('register', [RegisterController::class, 'register'])->name('register');
-        Route::post('login', [LoginController::class, 'login'])->name('login');
-
-        Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
-        Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
 
 
-        Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
-        Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
+    // guest
+    Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
+    Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
+
+    Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
+    Route::post('login', [LoginController::class, 'login'])->name('tenant_login');
+
+    Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
+    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
 
 
-    });
+
+
     Route::get('/impersonate/{token}', function ($token) {
         return UserImpersonation::makeResponse($token);
     })->name("impersonate");
+
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
 

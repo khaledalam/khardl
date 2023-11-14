@@ -10,9 +10,8 @@ import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Languages from '../Languages'
 
-import {getIsLoggedIn, logout} from '../../redux/auth/authSlice'
+import {logout} from '../../redux/auth/authSlice'
 import { useAuthContext } from '../context/AuthContext'
-// import Axios from '../../axios/axios'
 import { toast } from 'react-toastify'
 
 const Header = () => {
@@ -24,12 +23,12 @@ const Header = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
 
 
-    const isLoggedIn = getIsLoggedIn();
-   // const status = useSelector((state) => state.auth.status)
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+    const auth = useSelector((state) => state.auth)
    const navigate = useNavigate()
-   const { setStatusCode } = useAuthContext()
 
     console.log("isLoggedIn > ", isLoggedIn);
+    console.log("auth > ", auth);
 
     const redirectToDashboard = () => {
       // Redirect to an external URL (window.location.href)
@@ -37,20 +36,9 @@ const Header = () => {
     };
    const handleLogout = async (e) => {
       e.preventDefault()
-      // try {
-      //    dispatch(logout({ method: 'POST' }))
-      //    // dispatch(changeLogState(false))
-      //    dispatch(setIsOpen(false))
-      //    navigate('/login')
-      //    toast.success('Logged out successfully') //toast.success(`${t("Logged out successfully")}`)
-      // } catch (err) {
-      //    console.error(err.message)
-      //    toast.error('Logout failed') // toast.error(`${t("Login failed")}`)
-      // }
 
       try {
          await dispatch(logout({ method: 'POST' })).unwrap()
-         setStatusCode(401)
          navigate('/login', { replace: true })
          toast.success(`${t('You have been logged out successfully')}`)
       } catch (err) {
@@ -96,7 +84,7 @@ const Header = () => {
    }, [])
 
    return (
-      <nav className={`fixed gap-2 z-[9998] w-[100%] bg-white`}>
+      <nav className={`relative fixed gap-2 z-[9998] w-[100%] bg-white`}>
          <div className='mx-auto flex items-center justify-between px-12 max-xl:px-4 py-2 '>
             <div className='min-[1000px]:hidden'>
                <label
@@ -131,17 +119,17 @@ const Header = () => {
                </Link>
             </div>
             <div className='hidden min-[1000px]:flex'>
-               <ul className='flex space-x-8'>
-                  <Li
-                     link='/'
-                     handleLinkClick={handleLinkClick}
-                     close={closeDrawerHandler}
-                     title={t('Home')}
-                     activeLink={activeLink}
-                     className='ml-6'
-                  />
-                 
-               </ul>
+               {/*<ul className='flex space-x-8'>*/}
+               {/*   <Li*/}
+               {/*      link='/'*/}
+               {/*      handleLinkClick={handleLinkClick}*/}
+               {/*      close={closeDrawerHandler}*/}
+               {/*      title={t('Home')}*/}
+               {/*      activeLink={activeLink}*/}
+               {/*      className='ml-6'*/}
+               {/*   />*/}
+
+               {/*</ul>*/}
             </div>
             {isMobile && (
                <div className='flex justify-center items-center gap-2'>
@@ -200,16 +188,16 @@ const Header = () => {
          >
             <div className='p-4 w-full h-full text-[20px]'>
                <div className='p-4 ps-8'>
-                  <ul className='space-y-4'>
-                     <Li
-                        link='/'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Home')}
-                        activeLink={activeLink}
-                     />
-                    
-                  </ul>
+                  {/*<ul className='space-y-4'>*/}
+                  {/*   <Li*/}
+                  {/*      link='/'*/}
+                  {/*      handleLinkClick={handleLinkClick}*/}
+                  {/*      close={closeDrawerHandler}*/}
+                  {/*      title={t('Home')}*/}
+                  {/*      activeLink={activeLink}*/}
+                  {/*   />*/}
+
+                  {/*</ul>*/}
                   <div className='mt-6 w-[100%]'>
                      <Languages />
                      <div className='relative flex flex-col items-center gap-2 justify-center mt-4'>

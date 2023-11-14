@@ -9,12 +9,12 @@ use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\API\ContactUsController;
+use App\Http\Controllers\Web\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
-use App\Http\Controllers\API\Auth\RegisterController as AuthRegisterController;
-use App\Http\Controllers\API\Auth\ResetPasswordController as AuthResetPasswordController;
+use App\Http\Controllers\Web\Central\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\Web\Central\Auth\RegisterController as AuthRegisterController;
+use App\Http\Controllers\Web\Central\Auth\ResetPasswordController as AuthResetPasswordController;
 use App\Models\User;
 
 /*

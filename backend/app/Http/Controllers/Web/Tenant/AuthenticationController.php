@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
+use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
 use Laravel\Passport\Token;
 use Illuminate\Http\Request;
@@ -21,10 +22,8 @@ class AuthenticationController extends Controller
      */
     public function auth_validation(Request $request): JsonResponse
     {
-        /** @var ?User $user */
+        /** @var ?RestaurantUser $user */
         $user = Auth::user();
-
-        dd("TEST");
 
         if ($user) {
 //            if($user->isBlocked()){
@@ -35,10 +34,11 @@ class AuthenticationController extends Controller
 //            }
 //            else
 //
-            if (!$user->hasVerifiedEmail()) {
+            if (!$user->hasVerifiedPhone()) {
                 return ResponseHelper::response([
-                    'message' => 'User is not verified email yet',
-                    'is_loggedin' => true
+                    'message' => 'User is not verified phone yet',
+                    'is_loggedin' => true,
+                    'phone' => $user?->phone
                 ], ResponseHelper::HTTP_NOT_VERIFIED);
             }
             return ResponseHelper::response([

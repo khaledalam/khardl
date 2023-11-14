@@ -36,7 +36,7 @@ const CustomerDashboard = () => {
         <div className="h-full p-4 overflow-y-auto">
           <ul className="space-y-3 font-medium py-6">
             <li
-              className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)] 
+              className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Dashboard" ? "!bg-[var(--secondary)]" : ""}`}
               onClick={() => {handleTabClick("Dashboard"); handleOrderClick(false)}}
               style={activeTab === "Dashboard" ? {
@@ -47,7 +47,7 @@ const CustomerDashboard = () => {
               <TapPage icon={<BsFillGridFill />} title={t("Dashboard")} />
             </li>
             <li
-              className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)] 
+              className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Orders" ? "!bg-[var(--secondary)]" : ""}`}
               onClick={() => {handleTabClick("Orders"); handleOrderClick(false)}}
               style={activeTab === "Orders" ? {
@@ -58,7 +58,7 @@ const CustomerDashboard = () => {
               <TapPage icon={<BsFillFileTextFill />} title={t("Orders")} />
             </li>
             <li
-              className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)] 
+              className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Profile" ? "!bg-[var(--secondary)]" : ""}`}
               onClick={() => {handleTabClick("Profile"); handleOrderClick(false)}}
               style={activeTab === "Profile" ? {

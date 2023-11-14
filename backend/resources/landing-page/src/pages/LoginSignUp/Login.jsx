@@ -78,7 +78,7 @@ const Login = () => {
       } catch (error) {
          setSpinner(false)
          dispatch(changeLogState(false))
-         setStatusCode(401)
+         setStatusCode(HTTP_NOT_AUTHENTICATED)
          toast.error(`${t('Login failed')}`)
       }
    }
