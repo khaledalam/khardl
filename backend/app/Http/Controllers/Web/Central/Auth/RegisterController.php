@@ -1,30 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
-
-//use Illuminate\Http\JsonResponse;
-//use Illuminate\Http\Request;
-//use App\Http\Controllers\Controller;
-//use App\Providers\RouteServiceProvider;
-//use App\Models\User;
-////use Illuminate\Foundation\Auth\RegistersUsers;
-//use Illuminate\Support\Facades\Auth as AuthFacades;
-//use Illuminate\Support\Facades\Hash;
-//use Illuminate\Support\Facades\Validator;
-//use Illuminate\Http\UploadedFile;
-//use Illuminate\Support\Str;
-//use Illuminate\Support\Facades\Storage;
-//use Illuminate\Support\Facades\DB;
-
+namespace App\Http\Controllers\Web\Central\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Log;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
