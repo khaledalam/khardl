@@ -20,6 +20,7 @@
     <div id="root"></div>
     <script>
         window.csrfToken = "{{ csrf_token() }}";
+
     </script>
     <script type="text/javascript" src="{{ mix('js/central.js') }}"></script>
 </body>
