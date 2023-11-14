@@ -216,7 +216,7 @@ const Login = () => {
                                 <hr /><br/>
 
                                 <u>Restaurant Customer:</u><br/>
-                                Email: khardl@customer.com<br/>
+                                Email: worker@first.com<br/>
                                 Password: password
                             </small>
                         </div>

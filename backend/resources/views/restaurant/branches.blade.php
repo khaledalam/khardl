@@ -10,7 +10,7 @@
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
                     
-
+        @if($user->isRestaurantOwner() )
         <!--begin::Post-->
         <div class="post d-flex flex-column-fluid mb-10" id="kt_post">
             <!--begin::Container-->
@@ -33,7 +33,7 @@
             <!--end::Container-->
         </div>
         <!--end::Post-->
-
+        @endif
         <!--begin::Post-->
         @foreach ($branches as $branch)
         <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -146,25 +146,27 @@
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->
-                                            @if($user->isWorker())
-                                            <div
-                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.edit-menu') }}</a>
-                                            </div>
+                                            @if($user->isRestaurantOwner() || ($user->hasPermissionWorker('can_edit_menu')) )
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
+                                                    <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.edit-menu') }}</a>
+                                                </div>
                                             @endif
                                             <!--end::Stat-->
                                             <!--begin::Stat-->
+                                            @if($user->isRestaurantOwner() || ($user->hasPermissionWorker('can_modify_advertisements')) )
                                             <div
                                                 class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
                                                 <a href="#" class="fs-6 text-700 fw-bolder">{{ __('messages.advertisement-modification') }}</a>
                                             </div>
+                                            @endif
                                             <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->
-                                            @if($user->isRestaurantOwner())
+                                            @if($user->isRestaurantOwner() || ($user->hasPermissionWorker('can_modify_and_see_other_workers')) )
                                                 <div
                                                     class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                     <a href="{{ route('restaurant.workers', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.staff-modification') }}</a>
@@ -172,13 +174,15 @@
                                             @endif
                                             <!--end::Stat-->
                                             <!--begin::Stat-->
-                                            <div
-                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
-                                                <a href="#" class="fs-6 text-700 fw-bolder"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#kt_modal_new_target{{ $branch->id }}">{{ __('messages.opening-the-branch') }}
-                                                    <i class="fas fa-clock"></i></a>
-                                            </div>
+                                            @if($user->isRestaurantOwner() || ($user->hasPermissionWorker('can_modify_working_time')) )
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
+                                                    <a href="#" class="fs-6 text-700 fw-bolder"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#kt_modal_new_target{{ $branch->id }}">{{ __('messages.opening-the-branch') }}
+                                                        <i class="fas fa-clock"></i></a>
+                                                </div>
+                                            @endif
                                             <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
@@ -517,7 +521,7 @@
                 </div>
             </div>
         @endif
-
+        @if($user->isRestaurantOwner() )
         <!--begin::Post-->
         <div class="post d-flex flex-column-fluid mt-10" id="kt_post">
             <!--begin::Container-->
@@ -536,7 +540,8 @@
             </div>
             <!--end::Container-->
         </div>
-        <!--end::Post-->        
+        <!--end::Post-->    
+        @endif    
     </div>
     <!--end::Content-->
 
@@ -570,6 +575,7 @@
     </div>
     <!--begin::Modal header-->
     <!--begin::Modal body-->
+    @if($user->isRestaurantOwner() )
     <div class="modal-body scroll-y pt-0 pb-15">
         <!--begin:Form-->
         <form id="kt_modal_new_bransh_form" class="form" action="{{ route('restaurant.add-branch') }}" method="POST" id="myForm">
@@ -773,21 +779,23 @@
             <!--end::Input group-->
             
 
-
-            <!--begin::Actions-->
-            <div class="text-center">
-                <button type="reset" id="kt_modal_new_bransh_cancel"
-                    class="btn btn-light me-3">{{ __('messages.reset') }}</button>
-                <button type="submit" id="kt_modal_new_bransh_submit" class="btn btn-khardl">
-                    <span class="indicator-label">{{ __('messages.add-branch') }}</span>
-                    <span class="indicator-progress">{{ __('messages.please-wait') }}
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                </button>
-            </div>
+            @if($user->isRestaurantOwner() )
+                <!--begin::Actions-->
+                <div class="text-center">
+                    <button type="reset" id="kt_modal_new_bransh_cancel"
+                        class="btn btn-light me-3">{{ __('messages.reset') }}</button>
+                    <button type="submit" id="kt_modal_new_bransh_submit" class="btn btn-khardl">
+                        <span class="indicator-label">{{ __('messages.add-branch') }}</span>
+                        <span class="indicator-progress">{{ __('messages.please-wait') }}
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+            @endif
             <!--end::Actions-->
         </form>
         <!--end:Form-->
     </div>
+    @endif
     <!--end::Modal body-->
     </div>
     <!--end::Modal content-->

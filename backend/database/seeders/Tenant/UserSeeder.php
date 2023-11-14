@@ -3,9 +3,10 @@
 namespace Database\Seeders\Tenant;
 
 
-use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use App\Models\Tenant\RestaurantUser;
 
 class UserSeeder extends Seeder
 {
@@ -24,6 +25,13 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
         $user->assignRole('Worker');
+        DB::table('permissions_worker')->insert([
+            'user_id'=>$user->id,
+            'can_modify_and_see_other_workers'=>true,
+            'can_modify_working_time'=>true,
+            'can_modify_advertisements'=>true,
+            'can_edit_menu'=>true,
+        ]);
 
         
 

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class RestaurantController extends Controller
         $user = Auth::user();
         $branches =  DB::table('branches')
         ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
-            $query->where('user_id', $user->id);
+            $query->where('id', $user->branch->id);
         })
         ->get()
         ->sortByDesc('is_primary');
@@ -60,11 +61,10 @@ class RestaurantController extends Controller
 
         list($lat, $lng) = explode(' ', $validatedData['location']);
 
-        $branchesExist = DB::table('branches')->where('user_id', Auth::user()->id)->exists();
+        $branchesExist = DB::table('branches')->where('is_primary',1)->exists();
 
         $newBranchId = DB::table('branches')->insertGetId([
             'name' => $validatedData['name'],
-            'user_id' => Auth::user()->id,
             'lat' => (float) $lat,
             'lng' => (float) $lng,
             'is_primary' => !$branchesExist,
@@ -221,7 +221,10 @@ class RestaurantController extends Controller
         // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
         //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         // }
-        $branchId  = $user->branch?->id;
+        if(!$user->isRestaurantOwner()){
+            $branchId  = $user->branch->id;
+        }
+      
         $categories = DB::table('categories')
         ->where('user_id', $user->id)
         ->where('branch_id', $branchId)->get();
@@ -232,9 +235,9 @@ class RestaurantController extends Controller
     public function getCategory(Request $request, $id, $branchId){
         $user = Auth::user();
 
-        if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
-            return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
-        }
+        // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
+        //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+        // }
 
         $selectedCategory = DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->first();
 
@@ -254,12 +257,12 @@ class RestaurantController extends Controller
 
         $userId = Auth::user()->id;
 
-        if($userId != DB::table('branches')->where('id', $branchId)->value('user_id')){
-            return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
-        }
+        // if($userId != DB::table('branches')->where('id', $branchId)->value('user_id')){
+        //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+        // }
 
-        if($userId != DB::table('branches')->where('id', $branchId)->value('user_id'))
-            return;
+        // if($userId != DB::table('branches')->where('id', $branchId)->value('user_id'))
+        //     return;
         DB::table('categories')->insert([
             'category_name' => $request->input('category_name'),
             'user_id' => $userId,
@@ -273,9 +276,9 @@ class RestaurantController extends Controller
 
     public function addItem(Request $request, $id, $branchId){
 
-        if(Auth::user()->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
-            return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
-        }
+        // if(Auth::user()->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
+        //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+        // }
 
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')) {
 
@@ -370,42 +373,41 @@ class RestaurantController extends Controller
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'restaurant_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'phone_number' => 'required|string|max:255',
-            'commercial_registration' => 'nullable|file',
-            'delivery_contract' => 'nullable|file',
+            'phone' => 'required|string|max:255',
+            // 'commercial_registration' => 'nullable|file',
+            // 'delivery_contract' => 'nullable|file',
         ]);
 
         $loggedUserId = Auth::id();
-        $user = User::find($loggedUserId);
+        $user = RestaurantUser::find($loggedUserId);
 
-        if ($request->hasFile('commercial_registration')) {
-            $file = $request->file('commercial_registration');
-            $contents = file_get_contents($file);
-            $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $filePath = 'private/commercial_registration/' . $fileName;
-            Storage::disk('local')->put($filePath, $contents);
-            $user->commercial_registration_pdf = $fileName;
-        }
+        // if ($request->hasFile('commercial_registration')) {
+        //     $file = $request->file('commercial_registration');
+        //     $contents = file_get_contents($file);
+        //     $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+        //     $filePath = 'private/commercial_registration/' . $fileName;
+        //     Storage::disk('local')->put($filePath, $contents);
+        //     $user->commercial_registration_pdf = $fileName;
+        // }
 
-        if ($request->hasFile('delivery_contract')) {
-            $file = $request->file('delivery_contract');
-            $contents = file_get_contents($file);
-            $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $filePath = 'private/delivery_contract/' . $fileName;
-            Storage::disk('local')->put($filePath, $contents);
-            $user->signed_contract_delivery_company = $fileName;
-        }
+        // if ($request->hasFile('delivery_contract')) {
+        //     $file = $request->file('delivery_contract');
+        //     $contents = file_get_contents($file);
+        //     $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+        //     $filePath = 'private/delivery_contract/' . $fileName;
+        //     Storage::disk('local')->put($filePath, $contents);
+        //     $user->signed_contract_delivery_company = $fileName;
+        // }
 
         $user->first_name = $validatedData['first_name'];
         $user->last_name = $validatedData['last_name'];
-        $user->restaurant_name = $validatedData['restaurant_name'];
-        $user->phone_number = $validatedData['phone_number'];
+        // $user->restaurant_name = $validatedData['restaurant_name'];
+        $user->phone = $validatedData['phone'];
 
-        if($user->signed_contract_delivery_company != null && $user->commercial_registration_pdf != null){
-            $user->isApproved = 0;
-        }
+        // if($user->signed_contract_delivery_company != null && $user->commercial_registration_pdf != null){
+        //     $user->isApproved = 0;
+        // }
         $user->save();
 
 
@@ -421,13 +423,14 @@ class RestaurantController extends Controller
 
     public function workers($branchId){
 
+      
+        $branch = Branch::findOrFail($branchId);
         $user = Auth::user();
+        // $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)
+        // ->paginate(15);
+        $workers = $branch->workers;
 
-        $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)
-        ->paginate(15);
-        $user = Auth::user();
-
-        return view('restaurant.workers', compact('user', 'workers', 'branchId'));
+        return view('restaurant.workers', compact('user', 'workers', 'branchId','branch'));
     }
 
     public function addWorker($branchId){
@@ -440,7 +443,7 @@ class RestaurantController extends Controller
     public function generateWorker(Request $request, $branchId)
     {
 
-        $existingUser = User::where('email', $request['email'])->first();
+        $existingUser = RestaurantUser::where('email', $request['email'])->first();
         if ($existingUser) {
             if(app()->getLocale() === 'en')
                 return redirect()->back()->with('error', 'Email is already registered.');
@@ -449,18 +452,16 @@ class RestaurantController extends Controller
 
         }
 
-        $user = new User();
+        $user = new RestaurantUser();
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->role = 2;
-        $user->restaurant_name = Auth::user()->restaurant_name;
         $user->branch_id = $branchId;
-        $user->phone_number = $request->phone_number;
+        $user->phone = $request->phone;
 
         $user->save();
-
+        $user->assignRole('Worker');
         $permissions = [
             'can_modify_and_see_other_workers',
             'can_modify_working_time',
@@ -513,11 +514,11 @@ class RestaurantController extends Controller
 
     public function updateWorker(Request $request, $id){
 
-        $selectedWorker = User::find($id);
+        $selectedWorker = RestaurantUser::find($id);
 
         $selectedWorker->first_name = $request->input('first_name');
         $selectedWorker->last_name = $request->input('last_name');
-        $selectedWorker->phone_number = $request->input('phone_number');
+        $selectedWorker->phone = $request->input('phone');
         $selectedWorker->email = $request->input('email');
 
         $permissions = [
@@ -555,11 +556,11 @@ class RestaurantController extends Controller
 
         $user = Auth::user();
 
-        $worker = User::findOrFail($id);
+        $worker = RestaurantUser::findOrFail($id);
 
-        if($worker->role != 2){
-            return abort(404);
-        }
+        // if($worker->role != 2){
+        //     return abort(404);
+        // }
         return view('restaurant.edit-worker', compact('worker', 'user'));
     }
 }

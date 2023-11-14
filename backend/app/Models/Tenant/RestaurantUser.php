@@ -52,7 +52,8 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     public function hasPermission($permission)
     {
-        return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
+        if($this->isRestaurantOwner()) return true;
+        return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
     }
     public function isRestaurantOwner(){
         return $this->hasRole("Restaurant Owner");
@@ -61,14 +62,15 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         return $this->hasRole("Worker");
     }
     public function branch(){
-        return $this->hasOne(Branch::class,'user_id');
+        return $this->belongsTo(Branch::class);
     }
     
 
     public function hasPermissionWorker($permission)
     {
+        if($this->isRestaurantOwner()) return true;
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
-    }
+    }       
 
     public function hasVerifiedPhone(): bool
     {

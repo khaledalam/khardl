@@ -1,4 +1,4 @@
-@extends('layouts.sidebar-customer')
+@extends('layouts.restaurant-sidebar')
 
 @section('content')
     <h3>Edit profile</h3>
@@ -16,7 +16,7 @@
             Your account is approved. Congratulations!
           </div>
     @endif
-    <form action="{{ route('user.profile-update') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('restaurant.profile-update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
           <label for="first_name" class="form-label">First Name</label>
@@ -31,12 +31,8 @@
           <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" readonly>
         </div>
         <div class="mb-3">
-          <label for="restaurant_name" class="form-label">Restaurant Name</label>
-          <input type="text" class="form-control" id="restaurant_name" name="restaurant_name" value="{{ $user->restaurant_name }}" required>
-        </div>
-        <div class="mb-3">
-          <label for="phone_number" class="form-label">Phone Number</label>
-          <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ $user->phone_number }}" required>
+          <label for="phone" class="form-label">Phone </label>
+          <input type="tel" class="form-control" id="phone" name="phone" value="{{ $user->phone }}" required>
         </div>
         @if ($user->isApproved === 2)
             <div class="alert alert-danger">

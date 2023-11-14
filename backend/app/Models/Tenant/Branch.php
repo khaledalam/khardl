@@ -42,6 +42,9 @@ class Branch extends Model
    
 
     // public $translatable = ['name'];
+    public function workers(){
+        return $this->hasMany(RestaurantUser::class);
+    }
 
 
 }

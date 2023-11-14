@@ -45,8 +45,6 @@ return new class extends Migration
             $table->boolean('sunday_closed')->default(false);
 
             $table->boolean('is_primary')->default(false);
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
 
         });

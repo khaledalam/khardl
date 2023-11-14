@@ -28,6 +28,8 @@ return [
     'new-customers-this-month' => 'New Customers This Month',
     'todays-heroes' => "Today's heroes",
     'minutes' => 'minutes',
+    'None' => 'None',
+    'none' => 'None',
     'restaurants-average-delivery-time' => 'Restaurants average delivery time',
     'restaurants-delivery-success-rate' => 'Restaurants delivery success rate',
     'sales-this-month' => 'Sales This Month',

@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.workers'))
+@section('title', $branch->name.' | '. __('messages.workers'))
 
 @section('content')
 

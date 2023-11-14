@@ -81,28 +81,29 @@ Route::group([
         Route::middleware('restaurantOrWorker')->group(function () {
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
+            Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
+            Route::get('/workers/add/{branchId}', [RestaurantController::class, 'addWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.get-workers');
+            Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
+            Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
+            Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
+            Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
+            Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
+            Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
+            Route::get('/menu/{branchId?}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
+            Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->middleware('permission:can_edit_menu')->name('restaurant.get-category');
+            Route::post('/category/add/{branchId}', [RestaurantController::class, 'addCategory'])->middleware('permission:can_edit_menu')->name('restaurant.add-category');
+            Route::post('/category/{id}/{branchId}/add-item', [RestaurantController::class, 'addItem'])->middleware('permission:can_edit_menu')->name('restaurant.add-item');
+            Route::delete('/category/{id}/delete-item', [RestaurantController::class, 'deleteItem'])->middleware('permission:can_edit_menu')->name('restaurant.delete-item');
+            Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::middleware('restaurant')->group(function () { 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
-                Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
-                Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->name('restaurant.update-branch');
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
-                Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->name('restaurant.workers');
-                Route::get('/workers/add/{branchId}', [RestaurantController::class, 'addWorker'])->name('restaurant.get-workers');
-                Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->name('restaurant.generate-worker');
-                Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->name('restaurant.delete-worker');
-                Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->name('restaurant.update-worker');
-                Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->name('restaurant.edit-worker');
                 Route::post('/payment', [TapController::class,'payment'])->name('tap.payment');
                 Route::any('/callback',[TapController::class,'callback'])->name('tap.callback');
             });
             Route::middleware('worker')->group(function () {
-                Route::get('/menu/{branchId?}', [RestaurantController::class, 'menu'])->name('restaurant.menu');
-                Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->name('restaurant.get-category');
-                Route::post('/category/add/{branchId}', [RestaurantController::class, 'addCategory'])->name('restaurant.add-category');
-                Route::post('/category/{id}/{branchId}/add-item', [RestaurantController::class, 'addItem'])->name('restaurant.add-item');
-                Route::delete('/category/{id}/delete-item', [RestaurantController::class, 'deleteItem'])->name('restaurant.delete-item');
-                Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->name('restaurant.delete-category');
+               
             });
         });
       
