@@ -9,9 +9,9 @@ import { useDispatch } from 'react-redux'
 import { changeLogState } from '../../redux/auth/authSlice'
 import useAxiosAuth from '../../hooks/useAxiosAuth'
 import useLocalStorage from '../../hooks/useLocalStorage'
-import {API_ENDPOINT} from "../../config";
+import {API_ENDPOINT, HTTP_NOT_AUTHENTICATED} from "../../config";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
    const dispatch = useDispatch()
