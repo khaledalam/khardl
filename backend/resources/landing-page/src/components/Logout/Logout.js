@@ -5,6 +5,7 @@ import { logout } from '../../redux/auth/authSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useAuthContext } from '../context/AuthContext'
 import { toast } from 'react-toastify'
+import {HTTP_NOT_AUTHENTICATED} from "../../config";
 
 const Logout = () => {
    const dispatch = useDispatch()

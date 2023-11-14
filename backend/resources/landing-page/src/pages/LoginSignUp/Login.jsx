@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeLogState } from '../../redux/auth/authSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useAuthContext } from '../../components/context/AuthContext'
-import {HTTP_NOT_ACCEPTED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";
+import {HTTP_NOT_ACCEPTED, HTTP_NOT_VERIFIED, HTTP_NOT_AUTHENTICATED, HTTP_OK} from "../../config";
 import AxiosInstance from "../../axios/axios";
 
 const Login = () => {
