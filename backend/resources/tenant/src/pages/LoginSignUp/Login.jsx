@@ -215,8 +215,13 @@ const Login = () => {
 
                                 <hr /><br/>
 
-                                <u>Restaurant Customer:</u><br/>
+                                <u>Restaurant Worker:</u><br/>
                                 Email: worker@first.com<br/>
+                                Password: password
+
+                                <hr /><br/>
+                                <u>Restaurant Customer:</u><br/>
+                                Email: customer@first.com<br/>
                                 Password: password
                             </small>
                         </div>

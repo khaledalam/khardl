@@ -5,7 +5,7 @@
 
 @section('content')
   <!--begin::Content-->
-  <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+  <div class="content d-flex flex-column flex-column-fluid pt-0   " id="kt_content">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -24,12 +24,12 @@
                           <!--begin::Card header-->
                           <div class="card-header">
                             <div class="card-title w-100 d-flex justify-content-between align-items-center">
-                                                              <div>
-                                                                  <h2>{{ __('messages.profile')}}</h2>
-                                                              </div>
-                                                              <div>
-                                                                  <a href="{{ route('admin.edit-profile') }}" class="badge badge-primary p-3"><i class="fas fa-edit text-white"></i></a>
-                                                              </div>
+                              <div>
+                                  <h2>{{ __('messages.profile')}}</h2>
+                              </div>
+                              <div>
+                                  <a href="{{ route('admin.edit-profile') }}" class="badge badge-primary p-3"><i class="fas fa-edit text-white"></i></a>
+                              </div>
                             </div>
                           </div>
                           <!--end::Card header-->

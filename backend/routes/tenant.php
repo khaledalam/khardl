@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\RestaurantController;
+use App\Models\Tenant\Branch;
+use App\Models\Tenant\RestaurantUser;
 use Stancl\Tenancy\Features\UserImpersonation;
 
 /*
@@ -84,7 +86,7 @@ Route::group([
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
             Route::get('/workers/add/{branchId}', [RestaurantController::class, 'addWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.get-workers');
             Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
-            Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
+            
             Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
             Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
@@ -101,6 +103,7 @@ Route::group([
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
                 Route::post('/payment', [TapController::class,'payment'])->name('tap.payment');
                 Route::any('/callback',[TapController::class,'callback'])->name('tap.callback');
+                Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->name('restaurant.delete-worker');
             });
             Route::middleware('worker')->group(function () {
                

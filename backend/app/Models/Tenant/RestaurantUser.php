@@ -48,8 +48,6 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'phone_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-
     public function hasPermission($permission)
     {
         if($this->isRestaurantOwner()) return true;
@@ -64,8 +62,6 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function branch(){
         return $this->belongsTo(Branch::class);
     }
-    
-
     public function hasPermissionWorker($permission)
     {
         if($this->isRestaurantOwner()) return true;

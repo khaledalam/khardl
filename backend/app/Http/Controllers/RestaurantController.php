@@ -228,28 +228,25 @@ class RestaurantController extends Controller
         $categories = DB::table('categories')
         ->where('user_id', $user->id)
         ->where('branch_id', $branchId)->get();
-
         return view('restaurant.menu', compact('user', 'categories', 'branchId'));
     }
 
     public function getCategory(Request $request, $id, $branchId){
         $user = Auth::user();
 
-        // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
-        //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
-        // }
+        if(!$user->isRestaurantOwner()  && $user->branch->id != $branchId){
+            return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+        }
 
         $selectedCategory = DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->first();
+        $categories = DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->get();
 
-        if ($selectedCategory && $user->id == $selectedCategory->user_id) {
-            $categories = DB::table('categories')->where('user_id', $user->id)->where('branch_id', $branchId)->get();
+        $items = DB::table('items')
+        ->where('user_id', $user->id)
+        ->where('category_id', $selectedCategory->id)
+        ->where('branch_id', $branchId)->get();
 
-            $items = DB::table('items')->where('user_id', $user->id)->where('category_id', $selectedCategory->id)->where('branch_id', $branchId)->get();
-
-            return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
-        } else {
-            return redirect()->back()->with('error', 'You are not authorized to access that page.');
-        }
+        return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId')); 
     }
 
 
@@ -280,7 +277,9 @@ class RestaurantController extends Controller
         //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         // }
 
-        if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')) {
+        // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
+
+        if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
 
@@ -428,8 +427,7 @@ class RestaurantController extends Controller
         $user = Auth::user();
         // $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)
         // ->paginate(15);
-        $workers = $branch->workers;
-
+        $workers = $branch->workers()->where('id','!=',$user->id)->get();
         return view('restaurant.workers', compact('user', 'workers', 'branchId','branch'));
     }
 
@@ -486,29 +484,26 @@ class RestaurantController extends Controller
     }
 
     public function deleteWorker($id){
-
-        if(Auth::user()->restaurant_name == User::find($id)->restaurant_name && Auth::user()->role == 0)
+        try {
             DB::beginTransaction();
+            DB::table('permissions_worker')->where('user_id', $id)->delete();
 
-            try {
+            RestaurantUser::findOrFail($id)->delete();
 
-                DB::table('permissions_worker')->where('user_id', $id)->delete();
-                User::findOrFail($id)->delete();
-
-                DB::commit();
+            DB::commit();
 
 
-                if(app()->getLocale() === 'en')
-                    return redirect()->back()->with('success', 'Deleted successfully.');
-                else
-                    return redirect()->back()->with('success', 'حذف بنجاح.');
-            } catch (\Exception $e) {
-                DB::rollBack();
+            if(app()->getLocale() === 'en')
+                return redirect()->back()->with('success', 'Deleted successfully.');
+            else
+                return redirect()->back()->with('success', 'حذف بنجاح.');
+        } catch (\Exception $e) {
+            DB::rollBack();
 
-                if(app()->getLocale() === 'en')
-                    return redirect()->back()->with('error', 'Error deleting user and related records: ' . $e->getMessage());
-                else
-                    return redirect()->back()->with('error', 'خطأ في حذف المستخدم والسجلات ذات الصلة' . $e->getMessage());
+            if(app()->getLocale() === 'en')
+                return redirect()->back()->with('error', 'Error deleting user and related records: ' . $e->getMessage());
+            else
+                return redirect()->back()->with('error', 'خطأ في حذف المستخدم والسجلات ذات الصلة' . $e->getMessage());
         }
     }
 

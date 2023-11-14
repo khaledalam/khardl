@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\Tenant;
 
-
+use App\Models\Tenant\Branch;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        $branch =Branch::find(1);
         $user = RestaurantUser::create([
             'first_name' => "Worker",
             'last_name' => "Worker",
@@ -24,6 +25,9 @@ class UserSeeder extends Seeder
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
+        $user->branch()->associate($branch);
+        $user->save();
+
         $user->assignRole('Worker');
         DB::table('permissions_worker')->insert([
             'user_id'=>$user->id,
@@ -33,7 +37,18 @@ class UserSeeder extends Seeder
             'can_edit_menu'=>true,
         ]);
 
+        $user = RestaurantUser::create([
+            'first_name' => "customer",
+            'last_name' => "customer",
+            'email' => "customer@first.com",
+            'email_verified_at' => now(),
+            'status'=> 'active',
+            'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
+            'remember_token' => Str::random(10),
+        ]);
         
+        $user->branch()->associate($branch);
+        $user->save();
 
     }
 }
