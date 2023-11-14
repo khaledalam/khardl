@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    @if(app()->getLocale() === 'ar') 
+    @if(app()->getLocale() === 'ar')
         <link href="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ asset('plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
@@ -51,7 +51,7 @@
     @if(session('success'))
         <script>
             showAlert('success', '{{ session('success') }}');
-            
+
 
             function showAlert(type, message) {
                     Swal.fire({
@@ -60,7 +60,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     });
-                }    
+                }
         </script>
     @endif
 
@@ -128,7 +128,7 @@
                             id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
 
                             <!-- Dashboard -->
-                            
+
                             <div class="menu-item">
                                 <a href="{{ route('admin.dashboard') }}">
                                     <span class="menu-link">
@@ -148,13 +148,13 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        
+
                                         <span class="menu-title">
                                             {{ __('messages.dashboard')}}</span>
                                     </span>
                                 </a>
                             </div>
-                            
+
 
                             <!-- Restaurants -->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -290,7 +290,7 @@
             </div>
             <!--end::Aside-->
             <!--begin::Wrapper-->
-            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 <!--begin::Header-->
                 <div id="kt_header" style="" class="header align-items-stretch">
                     <!--begin::Container-->
@@ -375,10 +375,10 @@
                                                 <div class="d-flex flex-column">
                                                     <a href="{{ route('admin.profile') }}">
                                                         <div class="fw-bolder d-flex align-items-center fs-5">
-                                                                <a href="{{ route('admin.profile') }}">{{ Auth::user()->first_name}} {{ Auth::user()->last_name }}</a> 
+                                                                <a href="{{ route('admin.profile') }}">{{ Auth::user()->first_name}} {{ Auth::user()->last_name }}</a>
                                                         </div>
                                                     </a>
-                                                    
+
                                                     <a
                                                         class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                                                 </div>
@@ -387,7 +387,7 @@
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu separator-->
-                                        
+
                                         <!--end::Menu separator-->
 
                                         <!--begin::Menu separator-->
@@ -400,8 +400,8 @@
                                         <!--end::Menu separator-->
                                         <!--begin::Menu item-->
 
-                                        
-                                        
+
+
 
                                         <div class="menu-item px-5" data-kt-menu-trigger="hover"
                                             data-kt-menu-placement="left-start">
@@ -414,7 +414,7 @@
                                                                 src="{{ asset('media/flags/united-kingdom.svg') }}"
                                                             @else
                                                                 src="{{ asset('media/flags/saudi-arabia.svg') }}"
-                                                            @endif 
+                                                            @endif
                                                             alt="" /></span></span>
                                             </a>
                                             <!--begin::Menu sub-->

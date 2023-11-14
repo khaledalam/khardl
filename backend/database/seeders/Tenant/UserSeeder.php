@@ -42,11 +42,13 @@ class UserSeeder extends Seeder
             'last_name' => "customer",
             'email' => "customer@first.com",
             'email_verified_at' => now(),
+            'phone' => '+971582936628',
+            'phone_verified_at' => now(),
             'status'=> 'active',
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
-        
+
         $user->branch()->associate($branch);
         $user->save();
 

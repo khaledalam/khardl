@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    @if(app()->getLocale() === 'ar') 
+    @if(app()->getLocale() === 'ar')
         <link href="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ asset('plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
@@ -56,7 +56,7 @@
     @if(session('success'))
         <script>
             showAlert('success', '{{ session('success') }}');
-            
+
 
             function showAlert(type, message) {
                     Swal.fire({
@@ -65,7 +65,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     });
-                }    
+                }
         </script>
     @endif
 
@@ -88,7 +88,7 @@
         @if ($errors->any())
             showAlert('error', '<ul>@foreach ($errors->all() as $error)<li style="list-style-type: none">{{ $error }}</li>@endforeach</ul> <br>');
         @endif
-    
+
         function showAlert(type, message) {
             Swal.fire({
                 icon: type,
@@ -98,7 +98,7 @@
             });
         }
     </script>
-    
+
     <!--begin::Main-->
     <!--begin::Root-->
     <!--begin::Root-->
@@ -167,7 +167,7 @@
                                         <span class="menu-title">Branches</span>
                                     </a>
                                 </span>
-                               
+
                             </div>
 
 
@@ -184,9 +184,9 @@
                                     <a href="./Menu.html">
                                         <span class="menu-title">Menu</span>
                                     </a>
-                                </span>                            
+                                </span>
                             </div>
-                            
+
 
                             <!-- Promotions -->
                             <div class="menu-item menu-accordion">
@@ -202,7 +202,7 @@
                                         <span class="menu-title">Promotions</span>
                                     </a>
                                 </span>
-                                
+
                             </div>
 
                             <!-- Staff -->
@@ -249,9 +249,9 @@
             </div>
             <!--end::Aside-->
 
-            
+
             <!--begin::Wrapper-->
-            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+            <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                  <!--begin::Header-->
                  <div id="kt_header" class="header align-items-stretch">
                     <!--begin::Container-->
@@ -360,7 +360,7 @@
                                                                 src="{{ asset('media/flags/united-kingdom.svg') }}"
                                                             @else
                                                                 src="{{ asset('media/flags/saudi-arabia.svg') }}"
-                                                            @endif 
+                                                            @endif
                                                             alt="" /></span></span>
                                             </a>
                                             <!--begin::Menu sub-->

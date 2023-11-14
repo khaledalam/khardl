@@ -1,5 +1,6 @@
 #!/bin/bash
 
+killall -9 php
 
 # MAC M1 --platform linux/amd64
 export DOCKER_DEFAULT_PLATFORM=linux/amd64

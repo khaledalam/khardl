@@ -20,17 +20,15 @@ const Logout = () => {
          // navigate('/login', { replace: true })
          toast.error('You have to be Logged in to Logout')
       } else {
-         dispatch(logout({ method: 'GET' }))
+         dispatch(logout({ method: 'POST' }))
             .unwrap()
             .then(res => {
-                console.log("logout res ", res);
+                console.log("logout resss ", res);
 
                 setStatusCode(HTTP_NOT_AUTHENTICATED)
-               if (status === 'succeeded') {
                   setStatusCode(HTTP_NOT_AUTHENTICATED)
                   navigate('/login', { replace: true })
                   toast.success('Logged out successfully')
-               }
             })
             .catch((err) => {
                console.error(err.message)

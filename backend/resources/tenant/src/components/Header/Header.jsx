@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Logo from '../../assets/Logo.webp'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../Button'
-import Li from './Li'
 import { useSelector, useDispatch } from 'react-redux'
 import { setActiveLink } from '../../redux/features/linkSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Languages from '../Languages'
-
 import {logout} from '../../redux/auth/authSlice'
 import { useAuthContext } from '../context/AuthContext'
 import { toast } from 'react-toastify'
+import {HTTP_NOT_AUTHENTICATED} from "../../config";
 
 const Header = () => {
    const [isMobile, setIsMobile] = useState(false)
@@ -21,7 +20,7 @@ const Header = () => {
    const { t } = useTranslation()
    const isOpen = useSelector((state) => state.drawer.isOpen)
    const Language = useSelector((state) => state.languageMode.languageMode)
-
+    const { setStatusCode } = useAuthContext()
 
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
     const auth = useSelector((state) => state.auth)
@@ -39,8 +38,13 @@ const Header = () => {
 
       try {
          await dispatch(logout({ method: 'POST' })).unwrap()
-         navigate('/login', { replace: true })
-         toast.success(`${t('You have been logged out successfully')}`)
+             .then(res => {
+                 console.log("logout resss ", res);
+                 setStatusCode(HTTP_NOT_AUTHENTICATED)
+                 setStatusCode(HTTP_NOT_AUTHENTICATED)
+                 navigate('/login', { replace: true })
+                 toast.success('Logged out successfully')
+             })
       } catch (err) {
          console.error(err.message)
          toast.error(`${t('Logout failed')}`)
