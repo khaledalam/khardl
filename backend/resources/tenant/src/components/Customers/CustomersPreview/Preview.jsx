@@ -9,6 +9,7 @@ import ResizeDetector from 'react-resize-detector';
 import { setDivWidth } from '../../../redux/editor/divWidthSlice';
 import Header from './components/header';
 import Dashboard from './components/Dashboard/Dashboard';
+import 'babel-polyfill'
 
 const Preview = () => {
   const { branch_id } = useParams();
@@ -25,6 +26,7 @@ const Preview = () => {
   const dispatch = useDispatch();
 
 
+
   /*   const fetchData = async () => {
       try {
         const response = await fetch('https://khardl.com/api/branches');
@@ -34,7 +36,7 @@ const Preview = () => {
         console.error('Error fetching data:', error);
       }
     };
-  
+
     useEffect(() => {
       fetchData();
     }, []); */
@@ -69,12 +71,14 @@ const Preview = () => {
     };
   }, []);
 
+
   return (
     <div ref={divRef} className="w-[100%] bg-[var(--forth)] h-[100%] overflow-y-auto"
       style={{
         fontFamily: `${selectedFontFamily}`,
         fontWeight: `${selectedFontWeight}`
       }}>
+
       <ResizeDetector onResize={handleResize} />
       <Header />
       <Dashboard />

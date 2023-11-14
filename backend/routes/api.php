@@ -1,11 +1,7 @@
 <?php
 
-use App\Http\Controllers\API\Auth\LoginController;
-use App\Http\Controllers\API\Auth\RegisterController;
-use App\Http\Controllers\API\Auth\ResetPasswordController;
-use App\Http\Controllers\API\ContactUsController;
-use App\Http\Controllers\API\TenantController;
-use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\API\Central\Auth\LoginController;
+use App\Http\Controllers\API\Central\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +29,6 @@ Route::post('login', [LoginController::class, 'login']);
 //
 //Route::middleware(['auth:api'])->group(function () { //role:Restaurant Owner
 //    Route::post('register-step2', [RegisterController::class, 'stepTwo']);
-//    Route::post('create-tenant', [TenantController::class, 'store']);
 //
 //});
 

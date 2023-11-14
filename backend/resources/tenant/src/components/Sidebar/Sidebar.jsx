@@ -47,18 +47,18 @@ const Sidebar = () => {
       >
          {template === 'restaurants' && (
             <Taps contentClassName='bg-[#ffffff15] w-[100%]'>
-               <Tap component={<Section />} active>
+               <Tap component={<Section />} active key={'t1'}>
                   {t('Section')}
                </Tap>
-               <Tap component={<Edit />}>{t('Edit')}</Tap>
+               <Tap component={<Edit />}  key={'t2'}>{t('Edit')}</Tap>
             </Taps>
          )}
          {template === 'customers' && (
             <Taps contentClassName='bg-[#ffffff15] w-[100%] !justify-start !px-6'>
-               <Tap component={<Edit />} contentClassName='!px-[0px]' active>
+               <Tap component={<Edit />} contentClassName='!px-[0px]' active key={"a1"}>
                   {t('Edit')}
                </Tap>
-               <Tap></Tap>
+               <Tap key={"a2"}/>
             </Taps>
          )}
       </div>

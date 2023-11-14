@@ -52,7 +52,7 @@ function OrderDetail() {
                         </p>
                         <div className='mt-2 flex flex-col gap-4'>
                             {order.items?.map((item, index) => (
-                                <div>
+                                <div key={index}>
                                     <div className='mt-2 flex justify-start items-start gap-12 min-w-[250px]' key={index}>
                                         <p className=''>{item.name}</p>
                                         <p className=''>x{item.number}</p>

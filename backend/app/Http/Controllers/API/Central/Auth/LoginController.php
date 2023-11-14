@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\API\Central\Auth;
 
 use App\Http\Controllers\API\BaseController;
 use App\Models\User;
@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends BaseController
 {
@@ -29,11 +28,12 @@ class LoginController extends BaseController
 
 
         $user = Auth::user();
-       
+
         // @TODO: uncomment if need!
         $data = [
             'user'=>$user
         ];
+
         if(Auth::guard() == 'api'){
             $tokenResult = $user->createToken('Personal Access Token');
             $token = $tokenResult->token;
@@ -58,7 +58,7 @@ class LoginController extends BaseController
                 $data['step2_status'] = 'completed';
             }
         }
-       
+
 
         return $this->sendResponse($data, 'User logged in successfully.');
     }

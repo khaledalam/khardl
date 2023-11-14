@@ -9,12 +9,12 @@ use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\API\ContactUsController;
+use App\Http\Controllers\Web\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Controllers\API\Auth\LoginController as AuthLoginController;
-use App\Http\Controllers\API\Auth\RegisterController as AuthRegisterController;
-use App\Http\Controllers\API\Auth\ResetPasswordController as AuthResetPasswordController;
+use App\Http\Controllers\Web\Central\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\Web\Central\Auth\RegisterController as AuthRegisterController;
+use App\Http\Controllers\Web\Central\Auth\ResetPasswordController as AuthResetPasswordController;
 use App\Models\User;
 
 /*
@@ -111,7 +111,9 @@ use App\Models\User;
 
 
 
-// @TODO add central namespace
+Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
+
 //-----------------------------------------------------------------------------------------------------------------------
 Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], static function() {
     $groups = CentralSharedRoutesTrait::groups();
@@ -125,7 +127,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         });
     }
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
-   
+
     // Public
     Route::middleware('guest')->group(function () {
 
@@ -143,9 +145,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
     Route::middleware(['auth','notBlocked'])->group(function () {
 
-        Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
-        Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
-        
+
         Route::middleware('notVerified')->group(function () {
 
             Route::post('email/send-verify', [AuthRegisterController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');

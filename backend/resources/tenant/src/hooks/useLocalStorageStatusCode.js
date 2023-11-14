@@ -7,10 +7,8 @@ export default function useLocalStorageStatusCode(key, initialValue) {
 
    const [value, setValue] = useState(() => {
       const jsonValue = localStorage.getItem(prefixedKey)
-      
+
       if (jsonValue != null){
-         console.log("TTTTTTTT");
-         console.log(jsonValue);
          return parseInt(jsonValue)
       }
 

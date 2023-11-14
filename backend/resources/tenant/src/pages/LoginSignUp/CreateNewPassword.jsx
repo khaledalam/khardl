@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
-import {API_ENDPOINT} from "../../config";
+import {API_ENDPOINT, PREFIX_KEY} from "../../config";
 import AxiosInstance from "../../axios/axios";
 
 const CreateNewPassword = () => {
@@ -21,7 +21,7 @@ const CreateNewPassword = () => {
    const [openEyePassword, setOpenEyePassword] = useState(false)
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
-   let user_email = sessionStorage.getItem('email')
+   let user_email = sessionStorage.getItem(PREFIX_KEY + 'email')
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
@@ -42,7 +42,7 @@ const CreateNewPassword = () => {
          if (response.data) {
             const responseData = await response.json()
             console.log(responseData)
-            sessionStorage.removeItem('email')
+            sessionStorage.removeItem(PREFIX_KEY + 'email')
             navigate('/login')
             toast.success(`${t('The password has been reset successfully')}`)
          } else {

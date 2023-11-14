@@ -29,9 +29,9 @@ export function Taps({ children, contentClassName = "" }) {
   }
 
   return (
-    <div 
+    <div
     className={`${selectedCategory === `${t("Right")}` ? 'flex gap-2' : ''} ${selectedCategory === `${t("Left")}` ? 'flex flex-row-reverse gap-5' : ''}`}>
-      <div className={`gap-1 justify-start  
+      <div className={`gap-1 justify-start
     ${selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}` ? 'h-fit mt-4 ' : ''}
     ${selectedCategory === `${t("Tabs")}` ? 'flex' : ''}
       ${contentClassName}`}
@@ -57,7 +57,7 @@ export function Taps({ children, contentClassName = "" }) {
         }
         {children.map((item, i) => {
           return (
-            <div className={` ${selectedCategory === `${t("Carousel")}` ? 'flex items-center justify-center ' : ''} `}>
+            <div key={i} className={` ${selectedCategory === `${t("Carousel")}` ? 'flex items-center justify-center ' : ''} `}>
               {(selectedCategory === `${t("Carousel")}` ? (i >= activeTap - 1 && i <= activeTap + 1 && TapValidator(item))
                 : (TapValidator(item)))
                 && (
@@ -95,7 +95,7 @@ export function Taps({ children, contentClassName = "" }) {
       <div className="">
         {children.map((item, i) => {
           return (
-            <div className={` ${i === activeTap ? "visible" : "hidden"}`}>
+            <div key={i} className={` ${i === activeTap ? "visible" : "hidden"}`}>
               {item.props.component}
             </div>
           );
@@ -117,8 +117,8 @@ export function Tap({ children, activeTap, currentTap, setActiveTap, contentClas
         <div
           className={`px-6 cursor-pointer text-black
        text-[18px] max-[600px]:text-[15px] mx-2
-       ${activeTap === currentTap ? `font-bold text-xl my-2` : "text-md"} 
-        py-[6px] 
+       ${activeTap === currentTap ? `font-bold text-xl my-2` : "text-md"}
+        py-[6px]
         select-none ${contentClassName}`}
           style={activeTap === currentTap ?
             {
@@ -133,11 +133,11 @@ export function Tap({ children, activeTap, currentTap, setActiveTap, contentClas
         </div>
         :
         <div
-          className={`px-4 cursor-pointer 
-     text-[18px] max-[600px]:text-[15px]  
+          className={`px-4 cursor-pointer
+     text-[18px] max-[600px]:text-[15px]
      ${(selectedCategory === `${t("Tabs")}` || selectedCategory === `${t("Carousel")}`) ? "mx-1" : "" }
-     ${activeTap === currentTap && (selectedCategory === `${t("Tabs")}` || selectedCategory === `${t("Carousel")}`) ? `font-bold` : ""} 
-     ${activeTap === currentTap && (selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}`) ? `w-[100%] rounded-md py-[6px] font-bold` : "py-[4px] px-[28px] my-2"} 
+     ${activeTap === currentTap && (selectedCategory === `${t("Tabs")}` || selectedCategory === `${t("Carousel")}`) ? `font-bold` : ""}
+     ${activeTap === currentTap && (selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}`) ? `w-[100%] rounded-md py-[6px] font-bold` : "py-[4px] px-[28px] my-2"}
       select-none ${contentClassName}`}
           style={activeTap === currentTap ?
               {

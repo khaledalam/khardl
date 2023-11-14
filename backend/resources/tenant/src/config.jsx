@@ -2,6 +2,7 @@
 export const API_ENDPOINT = url_tenant;
 export const WEBSITE_URL = url_tenant;
 
+export const PREFIX_KEY = 'khardl_tenant_';
 
 export const HTTP_OK            = 200;
 export const HTTP_CREATED              = 201;

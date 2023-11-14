@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { BiSearch } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
+import 'babel-polyfill'
+
 
 function GlobalFilter({
     globalFilter,

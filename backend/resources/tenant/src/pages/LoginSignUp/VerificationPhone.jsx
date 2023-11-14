@@ -6,13 +6,12 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { GrPowerReset } from 'react-icons/gr'
-// import { useApiContext } from '../context'
-
 import { useAuthContext } from '../../components/context/AuthContext'
-import {API_ENDPOINT, HTTP_NOT_ACCEPTED} from "../../config";
+import {HTTP_NOT_ACCEPTED, PREFIX_KEY} from "../../config";
 import AxiosInstance from "../../axios/axios";
 
-const VerificationEmail = () => {
+const VerificationPhone = () => {
+
    const { t } = useTranslation()
    const navigate = useNavigate()
 
@@ -24,7 +23,7 @@ const VerificationEmail = () => {
       formState: { errors: errors },
    } = useForm()
    const { handleSubmit: handleSubmit2 } = useForm()
-   let user_email = sessionStorage.getItem('email') || '';
+   let user_email = sessionStorage.getItem(PREFIX_KEY + 'email') || '';
 
    const [showForm, setShowForm] = useState(false)
    const [countdown, setCountdown] = useState(30)
@@ -52,7 +51,7 @@ const VerificationEmail = () => {
          })
          if (response.data) {
             toast.success(`${t('The code has been re-sent successfully')}`)
-            
+
          } else {
             throw new Error(`${t('Code resend failed')}`)
          }
@@ -125,12 +124,12 @@ const VerificationEmail = () => {
                      <div className='px-8 mb-3 flex flex-col items-center text-center'>
                         <img src={Logo} className='w-[80px]' alt='logo' />
                         <h3 className='pt-8 mb-3 text-md font-bold'>
-                           {t('Please verify your email')}
+                           {t('Please verify your phone number')}
                         </h3>
                         <p className='text-sm text-gray-700'>
-                           {t("You're almost there! We sent an email to")}
+                           {t("You're almost there! We sent an SMS to")}
                         </p>
-                        {user_email ? <p>{user_email}</p> : <p></p>}
+                        {user_phone ? <p>{user_phone}</p> : <p></p>}
                      </div>
                      <div className='mt-4 flex justify-between items-center gap-3'>
                         {showCountdownText && (
@@ -237,7 +236,7 @@ const VerificationEmail = () => {
                            </button>
                         </div>
                      </form>
-                     
+
                   </div>
                </div>
             </div>
@@ -246,4 +245,4 @@ const VerificationEmail = () => {
    )
 }
 
-export default VerificationEmail
+export default VerificationPhone

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Web\Tenant;
 
+use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
 use Laravel\Passport\Token;
 use Illuminate\Http\Request;
@@ -13,19 +14,16 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticationController extends Controller
 {
-    
-
     /**
      * Json Auth Validation
      *
+     * @param Request $request
      * @return JsonResponse
      */
     public function auth_validation(Request $request): JsonResponse
     {
-        /** @var ?User $user */
+        /** @var ?RestaurantUser $user */
         $user = Auth::user();
-//        var_dump($user);
-
 
         if ($user) {
 //            if($user->isBlocked()){
@@ -35,11 +33,12 @@ class AuthenticationController extends Controller
 //                ], ResponseHelper::HTTP_BLOCKED);
 //            }
 //            else
-//                
-            if (!$user->hasVerifiedEmail()) {
+//
+            if (!$user->hasVerifiedPhone()) {
                 return ResponseHelper::response([
-                    'message' => 'User is not verified email yet',
-                    'is_loggedin' => true
+                    'message' => 'User is not verified phone yet',
+                    'is_loggedin' => true,
+                    'phone' => $user?->phone
                 ], ResponseHelper::HTTP_NOT_VERIFIED);
             }
             return ResponseHelper::response([
@@ -55,10 +54,8 @@ class AuthenticationController extends Controller
     }
 
 
-
     /**
      * logout
-     *
      */
     public function logout(Request $request)
     {
@@ -78,9 +75,9 @@ class AuthenticationController extends Controller
 
         if ($request->expectsJson()) {
             return ResponseHelper::response([
-                'message' => 'User is not logged in',
+                'message' => 'User is already logged out',
                 'is_loggedin' => false
-            ], ResponseHelper::HTTP_FORBIDDEN);
+            ], ResponseHelper::HTTP_OK);
         }
         return redirect()->route("login");
     }

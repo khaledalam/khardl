@@ -16,7 +16,7 @@ const AuthContext = createContext()
 export const AuthContextProvider = (props) => {
    const dispatch = useDispatch()
    const { axiosAuth } = useAxiosAuth()
-   const [statusCode, setStatusCode] = useLocalStorage('status-code', 401)
+   const [statusCode, setStatusCode] = useLocalStorage('status-code', HTTP_NOT_AUTHENTICATED)
    const [loading, setLoading] = useState(true)
 
    const checkAuthenticated = useCallback(async () => {

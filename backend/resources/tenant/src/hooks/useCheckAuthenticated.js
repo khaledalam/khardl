@@ -20,6 +20,9 @@ export default function useCheckAuthenticated() {
              const isLoggedin = response?.data?.is_loggedin;
             setStatusCode(response?.status)
             dispatch(changeLogState(isLoggedin))
+             if (!isLoggedin) {
+                 dispatch(changeUserState(null))
+             }
             console.log('hi from useCHeckAuth')
          } finally {
             setLoading(false)

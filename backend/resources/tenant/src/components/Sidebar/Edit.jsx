@@ -88,7 +88,7 @@ function Edit() {
                     <Shape component={
                         <div className="flex justify-between items-center px-1 gap-2">
                             <div className="text-[16px]">{t("Sharp")}</div>
-                            <Shape component={<div className="w-3 h-2"></div>} contentClassName="rounded-none bg-[var(--third)] px-1"
+                            <Shape component={<div className="w-3 h-2"/>} contentClassName="rounded-none bg-[var(--third)] px-1"
                                 active={activeShape === "sharp"}
                             />
                         </div>
@@ -167,8 +167,9 @@ function Edit() {
                 <div className='mt-2 flex flex-col gap-2'>
                     <div className='relative w-[100%]'>
                         <select onChange={handleFontChange} className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
-                            {fontsList.map(font => (
+                            {fontsList.map((font, i) => (
                                 <option
+                                    key={i}
                                     style={{ fontFamily: `${font.family}` }}
                                     className="bg-white text-black" value={font.family}>{font.family}</option>
                             ))}
@@ -189,7 +190,7 @@ function Edit() {
                         <div className='max-w-[80px] relative w-[100%]'>
                             <select className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
                                 {[...Array(5)].map((option, index) => (
-                                    <option className="bg-white text-black" value="">{index + 1}</option>
+                                    <option className="bg-white text-black" value="" key={index}>{index + 1}</option>
                                 ))}
                             </select>
                             <MdKeyboardArrowDown className={`absolute top-1/2 ${Language == "en" ? "right-4" : "left-4"} transform -translate-y-1/2 text-black`} />
