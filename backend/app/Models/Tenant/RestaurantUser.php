@@ -4,6 +4,7 @@ namespace App\Models\Tenant;
 
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -59,6 +60,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function isWorker(){
         return $this->hasRole("Worker");
     }
+    // public function roles()
+    // {
+    //     return $this->belongsToMany(Role::class,'roles');
+    // }
     public function branch(){
         return $this->belongsTo(Branch::class);
     }

@@ -422,12 +422,17 @@ class RestaurantController extends Controller
 
     public function workers($branchId){
 
-      
+        
         $branch = Branch::findOrFail($branchId);
         $user = Auth::user();
         // $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)
         // ->paginate(15);
-        $workers = $branch->workers()->where('id','!=',$user->id)->get();
+        $workers = $branch->workers()
+        ->where('id','!=',$user->id)
+        ->whereHas('roles', function ($query) {
+            $query->where('name', 'Worker');
+        })
+        ->get();
         return view('restaurant.workers', compact('user', 'workers', 'branchId','branch'));
     }
 
