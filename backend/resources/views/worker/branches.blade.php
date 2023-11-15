@@ -10,7 +10,7 @@
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
                     
-
+        @foreach ($branches as $branch)
         <div class="post d-flex flex-column-fluid" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
@@ -122,29 +122,30 @@
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->
+                                            @if($user->hasPermissionWorker('can_edit_menu'))
                                             <div
                                                 class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                 <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">Edit Menu</a>
                                             </div>
+                                            @endif
                                             <!--end::Stat-->
                                             <!--begin::Stat-->
+                                            @if($user->hasPermissionWorker('can_modify_advertisements'))
                                             <div
                                                 class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
                                                 <a href="#" class="fs-6 text-700 fw-bolder">Advertisement
                                                     modification</a>
                                             </div>
+                                            @endif
                                             <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->
-                                            <div
-                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                <a href="{{ route('restaurant.workers', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">Staff
-                                                    modification</a>
-                                            </div>
+                                          
                                             <!--end::Stat-->
+                                            @if($user->hasPermissionWorker('can_modify_working_time'))
                                             <!--begin::Stat-->
                                             <div
                                                 class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
@@ -153,6 +154,7 @@
                                                     data-bs-target="#kt_modal_new_target{{ $branch->id }}">Opening the branch
                                                     <i class="fas fa-clock"></i></a>
                                             </div>
+                                            @endif
                                             <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
@@ -455,6 +457,7 @@
 
 
     <!--begin::Scrolltop-->
+        @endforeach
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
     <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
     <span class="svg-icon">

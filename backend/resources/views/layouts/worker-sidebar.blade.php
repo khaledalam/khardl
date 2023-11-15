@@ -14,27 +14,27 @@
     <meta property="og:url" content="#/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="{{ asset('media/logos/favicon.ico')}}"/>
+    <link rel="shortcut icon" href="{{ global_asset('media/logos/favicon.ico')}}"/>
     <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @if(app()->getLocale() === 'ar')
-        <link href="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
-        <link href="{{ asset('plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
-        <link href="{{ asset('plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Global Stylesheets Bundle-->
     @else
-        <link href="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
-        <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('plugins/custom/fullcalendar/fullcalendar.bundle.css')}}"rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
-        <link href="{{ asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ global_asset('css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
     @endif
     <!--end::Global Stylesheets Bundle-->
 </head>
@@ -114,7 +114,7 @@
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
                     <a href="index.html">
-                        <img alt="Logo" src="{{ asset('img/logo.png') }}" class="h-30px" />
+                        <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Aside toggler-->
@@ -151,7 +151,7 @@
 
                             <!-- Braches -->
                             <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+                                <span class="{{ ($link == 'branches' || $link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                             <span class="svg-icon svg-icon-2">
@@ -161,32 +161,34 @@
                                                     <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                            <!--end::Svg Icon-->
+                                        <!--end::Svg Icon-->
                                     </span>
-                                    <a href="./branches/branches.html">
+                                    <a href="{{route('restaurant.branches')}}">
                                         <span class="menu-title">Branches</span>
                                     </a>
                                 </span>
-
-                            </div>
+                                </div>
 
 
                             <!-- menu -->
-                            <div class="menu-item menu-accordion">
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon -->
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 6.00008V4.2844C16 3.51587 16 3.13161 15.8387 2.88321C15.6976 2.66587 15.4776 2.5118 15.2252 2.45345C14.9366 2.38677 14.5755 2.51809 13.8532 2.78073L6.57982 5.4256C6.01064 5.63257 5.72605 5.73606 5.51615 5.91845C5.33073 6.07956 5.18772 6.28374 5.09968 6.51304C5 6.77264 5 7.07546 5 7.6811V12.0001M9 17.0001H15M9 13.5001H15M9 10.0001H15M8.2 21.0001H15.8C16.9201 21.0001 17.4802 21.0001 17.908 20.7821C18.2843 20.5903 18.5903 20.2844 18.782 19.9081C19 19.4802 19 18.9202 19 17.8001V9.20008C19 8.07997 19 7.51992 18.782 7.0921C18.5903 6.71577 18.2843 6.40981 17.908 6.21807C17.4802 6.00008 16.9201 6.00008 15.8 6.00008H8.2C7.0799 6.00008 6.51984 6.00008 6.09202 6.21807C5.71569 6.40981 5.40973 6.71577 5.21799 7.0921C5 7.51992 5 8.07997 5 9.20008V17.8001C5 18.9202 5 19.4802 5.21799 19.9081C5.40973 20.2844 5.71569 20.5903 6.09202 20.7821C6.51984 21.0001 7.07989 21.0001 8.2 21.0001Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                    </span>
-                                    <a href="./Menu.html">
-                                        <span class="menu-title">Menu</span>
-                                    </a>
+                         <!-- menu -->
+                         @if($user->hasPermissionWorker('can_edit_menu'))
+                        <div class="menu-item menu-accordion">
+                            <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
+                                <span class="menu-icon">
+                                    <!--begin::Svg Icon -->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 6.00008V4.2844C16 3.51587 16 3.13161 15.8387 2.88321C15.6976 2.66587 15.4776 2.5118 15.2252 2.45345C14.9366 2.38677 14.5755 2.51809 13.8532 2.78073L6.57982 5.4256C6.01064 5.63257 5.72605 5.73606 5.51615 5.91845C5.33073 6.07956 5.18772 6.28374 5.09968 6.51304C5 6.77264 5 7.07546 5 7.6811V12.0001M9 17.0001H15M9 13.5001H15M9 10.0001H15M8.2 21.0001H15.8C16.9201 21.0001 17.4802 21.0001 17.908 20.7821C18.2843 20.5903 18.5903 20.2844 18.782 19.9081C19 19.4802 19 18.9202 19 17.8001V9.20008C19 8.07997 19 7.51992 18.782 7.0921C18.5903 6.71577 18.2843 6.40981 17.908 6.21807C17.4802 6.00008 16.9201 6.00008 15.8 6.00008H8.2C7.0799 6.00008 6.51984 6.00008 6.09202 6.21807C5.71569 6.40981 5.40973 6.71577 5.21799 7.0921C5 7.51992 5 8.07997 5 9.20008V17.8001C5 18.9202 5 19.4802 5.21799 19.9081C5.40973 20.2844 5.71569 20.5903 6.09202 20.7821C6.51984 21.0001 7.07989 21.0001 8.2 21.0001Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                        </span>
+                                    <!--end::Svg Icon-->
                                 </span>
-                            </div>
-
+                                <a href="{{route('restaurant.menu',['branchId' => $user->branch->id])}}">
+                                    <span class="menu-title">Menu</span>
+                                </a>
+                            </span>
+                          </div>
+                          @endif
+                  
 
                             <!-- Promotions -->
                             <div class="menu-item menu-accordion">
@@ -204,7 +206,7 @@
                                 </span>
 
                             </div>
-
+                            @if($user->hasPermissionWorker('can_modify_and_see_other_workers'))
                             <!-- Staff -->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <span class="menu-link">
@@ -223,7 +225,7 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div class="menu-item">
-                                        <a class="menu-link" href="./supports/index.html">
+                                        <a class="menu-link"  href="{{route('restaurant.workers', ['branchId' => $user->branch->id]) }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -231,7 +233,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="./supports/create.html">
+                                        <a class="menu-link" href="{{route('restaurant.get-workers', ['branchId' => $user->branch->id]) }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -240,6 +242,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         <!--end::Menu-->
                     </div>
@@ -279,7 +282,7 @@
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="{{ asset('img/logo.png') }}" class="h-30px" />
+                                <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->
@@ -357,9 +360,9 @@
                                                         class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('messages.english')}} @else {{ __('messages.arabic')}} @endif
                                                         <img class="w-15px h-15px rounded-1 ms-2"
                                                             @if(app()->getLocale() != 'ar')
-                                                                src="{{ asset('media/flags/united-kingdom.svg') }}"
+                                                                src="{{ global_asset('media/flags/united-kingdom.svg') }}"
                                                             @else
-                                                                src="{{ asset('media/flags/saudi-arabia.svg') }}"
+                                                                src="{{ global_asset('media/flags/saudi-arabia.svg') }}"
                                                             @endif
                                                             alt="" /></span></span>
                                             </a>
@@ -373,7 +376,7 @@
                                                             class="w-100 menu-link d-flex px-5 active">
                                                             <span class="symbol symbol-20px me-4">
                                                                 <img class="rounded-1"
-                                                                    src={{ asset('media/flags/united-kingdom.svg') }} alt="" />
+                                                                    src={{ global_asset('media/flags/united-kingdom.svg') }} alt="" />
                                                             </span>{{ __('messages.english')}}</button>
                                                     </form>
                                                 </div>
@@ -385,7 +388,7 @@
                                                         <button style="border: 0;" type="submit"
                                                         class="w-100 menu-link d-flex px-5 active">
                                                         <span class="symbol symbol-20px me-4">
-                                                            <img class="rounded-1" src="{{ asset('media/flags/saudi-arabia.svg') }}"
+                                                            <img class="rounded-1" src="{{ global_asset('media/flags/saudi-arabia.svg') }}"
                                                                 alt="" /> </span>{{ __('messages.arabic')}}</button>
                                                     </form>
                                                 </div>
@@ -483,24 +486,24 @@
 
     <!--begin::Javascript-->
     <script>
-        var hostUrl = "assets/";
+        var hostUrl = "global_assets/";
     </script>
     <!--begin::Global Javascript Bundle(used by all pages)-->
-    <script src="{{ asset('plugins/global/plugins.bundle.js') }}"></script>
-    <script src="{{ asset('js/scripts.bundle.js')}}"></script>
+    <script src="{{ global_asset('plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ global_asset('js/scripts.bundle.js')}}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
 
-    <script src="{{ asset('plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
-    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
+    <script src="{{ global_asset('plugins/custom/fullcalendar/fullcalendar.bundle.js')}}"></script>
+    <script src="{{ global_asset('plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('js/widgets.bundle.js')}}"></script>
-    <script src="{{ asset('js/custom/widgets.js')}}"></script>
-    <script src="{{ asset('js/custom/apps/chat/chat.js')}}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/create-app.js')}}"></script>
-    <script src="{{ asset('js/custom/utilities/modals/users-search.js')}}"></script>
+    <script src="{{ global_asset('js/widgets.bundle.js')}}"></script>
+    <script src="{{ global_asset('js/custom/widgets.js')}}"></script>
+    <script src="{{ global_asset('js/custom/apps/chat/chat.js')}}"></script>
+    <script src="{{ global_asset('js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+    <script src="{{ global_asset('js/custom/utilities/modals/create-app.js')}}"></script>
+    <script src="{{ global_asset('js/custom/utilities/modals/users-search.js')}}"></script>
     <script src="https://kit.fontawesome.com/d2d3f16619.js" crossorigin="anonymous"></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->

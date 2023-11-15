@@ -32,8 +32,8 @@ class RestaurantController extends Controller
         })
         ->get()
         ->sortByDesc('is_primary');
-
-        return view('restaurant.branches', compact('user', 'branches')); //view('branches')
+        
+        return view(($user->isRestaurantOwner())?'restaurant.branches':'worker.branches', compact('user', 'branches')); //view('branches')
     }
 
     public function addBranch(Request $request){
@@ -215,19 +215,18 @@ class RestaurantController extends Controller
 
     }
 
-    public function menu($branchId = null){
+    public function menu($branchId){
 
         $user = Auth::user();
         // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
         //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         // }
-        if(!$user->isRestaurantOwner()){
-            $branchId  = $user->branch->id;
-        }
-      
+     
         $categories = DB::table('categories')
-        ->where('user_id', $user->id)
-        ->where('branch_id', $branchId)->get();
+        ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
+            $query->where('branch_id', $user->branch->id) ->where('user_id', $user->id);
+        })
+        ->get();
         return view('restaurant.menu', compact('user', 'categories', 'branchId'));
     }
 
@@ -483,7 +482,7 @@ class RestaurantController extends Controller
         DB::table('permissions_worker')->insert($insertData);
 
         if(app()->getLocale() === 'en')
-            return redirect()->back()->with('success', 'Worker added successfully');
+            return redirect()->route("restaurant.workers",$branchId)->with('success', 'Worker added successfully');
         else
             return redirect()->back()->with('success', 'تمت إضافة موظف بنجاح');
     }
