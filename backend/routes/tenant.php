@@ -71,12 +71,12 @@ Route::group([
     Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
-        Route::middleware('notVerified')->group(function () {
-            Route::get('verification-email', static function() {
+        Route::middleware('notVerifiedPhone')->group(function () {
+            Route::get('verification-phone', static function() {
                 return view("tenant");
-            })->name("verification-email");
-            Route::post('email/send-verify', [VerificationController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
-            Route::post('email/verify', [VerificationController::class, 'verify'])->middleware('throttle:passwordReset');
+            })->name("verification-phone");
+            Route::post('phone/send-verify', [VerificationController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
+            Route::post('phone/verify', [VerificationController::class, 'verify'])->middleware('throttle:passwordReset');
         });
 
 
@@ -112,6 +112,10 @@ Route::group([
 
             });
         });
+        Route::middleware('verified')->group(function () {
+
+        });
+
 
 
 
