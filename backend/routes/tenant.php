@@ -75,8 +75,8 @@ Route::group([
             Route::get('verification-phone', static function() {
                 return view("tenant");
             })->name("verification-phone");
-            Route::post('phone/send-verify', [VerificationController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
-            Route::post('phone/verify', [VerificationController::class, 'verify'])->middleware('throttle:passwordReset');
+            Route::post('/phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
+            Route::post('/phone/verify', [RegisterController::class, 'verify']);
         });
 
 

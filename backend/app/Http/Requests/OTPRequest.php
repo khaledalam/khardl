@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Validation\Validator;
 
 class OTPRequest extends FormRequest
 {
@@ -30,21 +31,18 @@ class OTPRequest extends FormRequest
             ]
         ];
     }
-    public function verify($userSender,$otp)
-    {
-        if(!session()->get('otp_id')) return false;
-        $otp = Msegat::verifyOTP(
-                userSender: $userSender,
-                otp: $otp,
-                id: session()->get('otp_id')
-        );
-        if($otp['http_code'] == ResponseHelper::HTTP_OK){
-            session()->remove("otp_id");
-            return true;
+    public function passedValidation(){
+        if(!session('otp'.auth()->user()->id)){
+            throw new ValidationException(
+                new Validator (),
+                ResponseHelper::response([
+                    'message' => "User doesn't generate verification code",
+                    'is_loggedin' => true,
+                ], ResponseHelper::HTTP_UNPROCESSABLE_ENTITY)
+            );
         }
-       return false;
-
     }
+
 
     
 }

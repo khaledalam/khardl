@@ -2,11 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
+use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
@@ -161,7 +163,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                 Route::get('complete-register', static function(){
                     return view("central");
                 })->name("complete-register");
-                Route::post('register-step2', [AuthRegisterController::class, 'stepTwo']);
+                Route::post('register-step2', [RegisterController::class, 'stepTwo']);
             });
 
             Route::middleware(['accepted'])->group(function () {

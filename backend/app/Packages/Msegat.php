@@ -4,34 +4,23 @@ namespace App\Packages;
 
 use Exception;
 use App\Utils\ResponseHelper;
+use Illuminate\Support\Facades\Http;
 
 
 class Msegat
 {
-    protected static $lang ;
-    private   static $userName;
-    private   static $apiKey ;
-    
-    public function __construct()
-    {
-       $this->userName = env("MSEGAT_USER_NAME","");
-       $this->apiKey = env("MSEGAT_API_KEY","");
-       $this->lang = ucfirst(app()->getLocale() ?? 'ar') ;
-    }
-    private static function send($url,$fields){ 
+
+    private static function send(string $url,array $fields){ 
         try {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, env("MSEGAT_API_URL","https://www.msegat.com/gw").$url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_HEADER, TRUE);
-            curl_setopt($ch, CURLOPT_POST, TRUE);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                "Content-Type: application/json"
-            ));
-            $response = curl_exec($ch);
-            $info = curl_getinfo($ch);
-            curl_close($ch);
+            $response = Http::post(env('MSEGAT_API_URL','https://www.msegat.com/gw').$url, 
+            [
+                "userName"=> env("MSEGAT_USER_NAME",""),
+                "apiKey"=> env("MSEGAT_API_KEY",""),
+                "lang"=> ucfirst(app()->getLocale() ?? 'ar') 
+            ] +   $fields
+
+            );
+            $response = json_decode($response->getBody(), true);
             if($response['code'] == 1 || $response['code'] == 'M0000'){
                 return [
                     'http_code'=>ResponseHelper::HTTP_OK,
@@ -39,7 +28,7 @@ class Msegat
                 ];
             }
         }catch(\Exception $e){
-           logger($info["http_code"]);
+           logger($e->getMessage());
         }
         return [
             'http_code'=> ResponseHelper::HTTP_SERVICE_UNAVAILABLE,
@@ -48,37 +37,17 @@ class Msegat
         
     }
     public static function sendOTP(string $userSender,string $number){
-        $apiKey = self::$apiKey;
-        $userName = self::$userName;
-        $lang = self::$lang;
-
-        $fields = <<<EOT
-        {
-            "lang": $lang
-            "userName": $userName,
-            "numbers": $number,
-            "userSender": $userSender",
-            "apiKey": $apiKey,
-        }
-        EOT;
-        return self::send("/sendOTPCode.php",$fields);
-       
+        return self::send("/sendOTPCode.php",[
+            'userSender'=>$userSender,
+            'number'=>$number
+        ]);  
     }
    
-    public static function verifyOTP(string $userSender,string $otp,int $id){
-        $apiKey = self::$apiKey;
-        $userName = self::$userName;
-        $lang = self::$lang;
-        $fields = <<<EOT
-        {
-            "lang": $lang
-            "userName": $userName,
-            "code": $otp,
-            "id": $id,
-            "userSender": $userSender",
-            "apiKey": $apiKey,
-        }
-        EOT;
-        return self::send("/verifyOTPCode.php",$fields);
+    public static function verifyOTP(string $userSender,string $otp,?int $id){
+        return self::send("/sendOTPCode.php",[
+            'userSender'=>$userSender,
+            'code'=>$otp,
+            "id"=>$id
+        ]);  
     }
 }

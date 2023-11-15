@@ -49,21 +49,22 @@ const Register = () => {
             terms_and_policies: data.terms_and_policies,
          });
          console.log(response.data);
+         setSpinner(false);
          toast.success(`${t('Account successfully created')}`)
          sessionStorage.setItem(PREFIX_KEY + 'email', data.email)
-          window.location.href = '/verification-phone';
+         window.location.href = '/verification-phone';
       } catch (error) {
          setSpinner(false);
-         console.log(error);
-         console.log(errors);
+         console.log(error.response.data);
+   
 
          // if (error.response.data.errors?.length > 0) {
          //     setError(error.response.data.errors);
          // }
 
-         Object.keys(error.response.data.errors).forEach((field) => {
-            console.log(error.response.data.errors[field][0]);
-            setError(field, {'message':error.response.data.errors[field][0]});
+         Object.keys(error.response.data.data).forEach((field) => {
+            console.log(error.response.data.data[field][0]);
+            setError(field, {'message':error.response.data.data[field][0]});
          });
          toast.error(`${t('Account creation failed')}`);
       }
@@ -161,7 +162,8 @@ const Register = () => {
                                     {...register('phone', {
                                        required: true,
                                     })}
-                                    maxLength={13}
+                                    minLength={12}
+                                    maxLength={12}
                                  />
                                  {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>

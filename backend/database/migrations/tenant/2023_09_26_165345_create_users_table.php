@@ -17,12 +17,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->enum('status', ['active', 'suspended', 'inactive'])->default('active');
-            $table->string('verification_code')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->foreignIdFor(Branch::class)->nullable()->constrained()->onDelete('set null');
             $table->rememberToken();
