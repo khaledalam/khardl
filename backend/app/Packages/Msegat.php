@@ -12,15 +12,20 @@ class Msegat
 
     private static function send(string $url,array $fields){ 
         try {
-            $response = Http::post(env('MSEGAT_API_URL','https://www.msegat.com/gw').$url, 
-            [
-                "userName"=> env("MSEGAT_USER_NAME",""),
+            $data =  [
+                "userName"=> env("MSEGAT_USERNAME",""),
+                "userSender"=> env("MSEGAT_USER_SENDER",""),
                 "apiKey"=> env("MSEGAT_API_KEY",""),
                 "lang"=> ucfirst(app()->getLocale() ?? 'ar') 
-            ] +   $fields
-
-            );
+            ] +   $fields;
+            if(env('APP_ENV') == 'local'){
+                $data['userSender'] = 'auth-mseg';
+                $data['msg'] = "Pin Code is: 1234";
+            }
+            $response = Http::post('https://www.msegat.com/gw'.$url,$data);
+            
             $response = json_decode($response->getBody(), true);
+            
             if($response['code'] == 1 || $response['code'] == 'M0000'){
                 return [
                     'http_code'=>ResponseHelper::HTTP_OK,
@@ -36,16 +41,14 @@ class Msegat
         ];
         
     }
-    public static function sendOTP(string $userSender,string $number){
+    public static function sendOTP(string $number){
         return self::send("/sendOTPCode.php",[
-            'userSender'=>$userSender,
             'number'=>$number
         ]);  
     }
    
-    public static function verifyOTP(string $userSender,string $otp,?int $id){
+    public static function verifyOTP(string $otp,?int $id){
         return self::send("/sendOTPCode.php",[
-            'userSender'=>$userSender,
             'code'=>$otp,
             "id"=>$id
         ]);  

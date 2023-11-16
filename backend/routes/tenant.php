@@ -19,6 +19,7 @@ use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\RestaurantController;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\RestaurantUser;
+use Illuminate\Support\Facades\Auth;
 use Stancl\Tenancy\Features\UserImpersonation;
 
 /*
@@ -122,7 +123,8 @@ Route::group([
     });
 
     Route::get('/change-language/{locale}', static function ($locale) {
-
+     
+        Auth::user()->generateVerificationSMSCode();
         App::setLocale($locale);
         Session::put('locale', $locale);
         return Redirect::back();

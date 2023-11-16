@@ -89,14 +89,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             'attempts'=>  DB::raw('attempts + 1'),
         ]);
         $response = Msegat::sendOTP(
-            userSender: $this->email,
             number: $this->phone,
         ); 
         return ($response['http_code'] == ResponseHelper::HTTP_OK)?$response['response']['id']:false;
     }
     public function checkVerificationSMSCode(string $otp){
         $response = Msegat::verifyOTP(
-            userSender: $this->email,
             otp: $otp,
             id: session()->get('otp.'.$this->id)
         );

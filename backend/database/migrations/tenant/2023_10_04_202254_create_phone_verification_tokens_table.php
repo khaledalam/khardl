@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_verification_tokens');
+        Schema::dropIfExists('phone_verification_tokens');
     }
 };
