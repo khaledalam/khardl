@@ -18,11 +18,10 @@ trait TenantSharedRoutesTrait
                 'restaurants/{branch_id}/preview'=>"restaurants.preview",
                 'customers/{branch_id}'=>"customers",
                 'customers/{branch_id}/preview'=>"customers.preview",
-                'switcher'=>'switcher',
-
+                'switcher'=>'restaurant.switcher',
             ],
             'middleware'=>[
-               
+
             ]
 
         ];
@@ -37,9 +36,9 @@ trait TenantSharedRoutesTrait
             ],
             'middleware'=>[
                 'guest',
-               
+
             ]
         ];
     }
-    
+
 }

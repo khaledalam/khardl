@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', 'Summary')
+@section('title', __('messages.summary'))
 
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">

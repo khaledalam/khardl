@@ -76,7 +76,7 @@ function CompleteRegistration() {
 
             window.open(responseData.data.url, '_blank', 'noopener,noreferrer')
             setStatusCode(200)
-            navigate('/switcher');
+            navigate('/');
          } else {
             throw new Error(`${t('Account creation failed to complete')}`)
          }

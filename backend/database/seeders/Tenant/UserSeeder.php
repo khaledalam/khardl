@@ -17,13 +17,24 @@ class UserSeeder extends Seeder
         RestaurantUser::create([
             'first_name' => "khardl",
             'last_name' => "customer",
-            'email' => env("NOVA_ADMIN_EMAIL","khardl@customer.com"),
+            'email' => env("NOVA_ADMIN_EMAIL","customer@first.com"),
             'email_verified_at' => now(),
             'status'=> 'active',
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
-        
+
+        $worker = RestaurantUser::create([
+            'first_name' => "khardl",
+            'last_name' => "worker",
+            'email' => env("NOVA_ADMIN_EMAIL","worker@first.com"),
+            'email_verified_at' => now(),
+            'status'=> 'active',
+            'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
+            'remember_token' => Str::random(10),
+        ]);
+        $worker->assignRole('Worker');
+
 
     }
 }
