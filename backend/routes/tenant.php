@@ -76,8 +76,8 @@ Route::group([
             Route::get('verification-phone', static function() {
                 return view("tenant");
             })->name("verification-phone");
-            Route::post('/phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
-            Route::post('/phone/verify', [RegisterController::class, 'verify']);
+            Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
+            Route::post('phone/verify', [RegisterController::class, 'verify']);
         });
 
 
@@ -123,8 +123,6 @@ Route::group([
     });
 
     Route::get('/change-language/{locale}', static function ($locale) {
-     
-        Auth::user()->generateVerificationSMSCode();
         App::setLocale($locale);
         Session::put('locale', $locale);
         return Redirect::back();

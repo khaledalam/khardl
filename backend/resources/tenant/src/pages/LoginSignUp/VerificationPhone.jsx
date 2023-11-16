@@ -37,8 +37,8 @@ const VerificationPhone = () => {
       startTimer()
    }
 
-   if (user_phone.length < 1) {
-       window.location.href = '/logout';
+   if (!user_phone) {
+      window.location.href = '/logout';
    }
 
    // API POST REQUEST
@@ -206,12 +206,7 @@ const VerificationPhone = () => {
                            >
                               {t('Enter the code sent to you')}
                            </label>
-                           <input
-                              type='email'
-                              className={`hidden w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                              value={user_phone}
-                              {...register('phone', { required: true })}
-                           />
+                          
                            <input
                               type='text'
                               className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}

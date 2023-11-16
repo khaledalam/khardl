@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('phone_verified_at')->nullable();
             $table->enum('status', ['active', 'suspended', 'inactive'])->default('active');
             $table->timestamp('last_login')->nullable();
+            $table->string('msegat_id_verification')->nullable();
             $table->foreignIdFor(Branch::class)->nullable()->constrained()->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();

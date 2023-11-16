@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             'first_name' => "customer",
             'last_name' => "customer",
             'email' => "customer@first.com",
-            'phone' => '+971582936628',
+            'phone' => '966123456789',
             'phone_verified_at' => now(),
             'status'=> 'active',
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),

@@ -26,14 +26,6 @@ class AuthenticationController extends Controller
         $user = Auth::user();
 
         if ($user) {
-//            if($user->isBlocked()){
-//                return ResponseHelper::response([
-//                    'message' => 'User is Blocked',
-//                    'is_loggedin' => false
-//                ], ResponseHelper::HTTP_BLOCKED);
-//            }
-//            else
-//
             if (!$user->hasVerifiedPhone()) {
                 return ResponseHelper::response([
                     'message' => 'User is not verified phone yet',
@@ -46,7 +38,6 @@ class AuthenticationController extends Controller
                 'is_loggedin' => true
             ], ResponseHelper::HTTP_OK);
         }
-
         return ResponseHelper::response([
             'message' => 'User is not authenticated',
             'is_loggedin' => false

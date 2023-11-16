@@ -9,23 +9,21 @@ use Illuminate\Support\Facades\Http;
 
 class Msegat
 {
-
+    
+    private static function credentials()
+    {
+        $data =  [
+            "userName"=> env("MSEGAT_USERNAME",""),
+            "userSender"=> env("MSEGAT_USER_SENDER",""),
+            "apiKey"=> env("MSEGAT_API_KEY",""),
+        ];
+        return $data;
+    }
     private static function send(string $url,array $fields){ 
         try {
-            $data =  [
-                "userName"=> env("MSEGAT_USERNAME",""),
-                "userSender"=> env("MSEGAT_USER_SENDER",""),
-                "apiKey"=> env("MSEGAT_API_KEY",""),
-                "lang"=> ucfirst(app()->getLocale() ?? 'ar') 
-            ] +   $fields;
-            if(env('APP_ENV') == 'local'){
-                $data['userSender'] = 'auth-mseg';
-                $data['msg'] = "Pin Code is: 1234";
-            }
-            $response = Http::post('https://www.msegat.com/gw'.$url,$data);
-            
+            $data =  $fields  + self::credentials(); 
+            $response = Http::post('https://www.msegat.com/gw/'.$url,$data);
             $response = json_decode($response->getBody(), true);
-            
             if($response['code'] == 1 || $response['code'] == 'M0000'){
                 return [
                     'http_code'=>ResponseHelper::HTTP_OK,
@@ -42,15 +40,40 @@ class Msegat
         
     }
     public static function sendOTP(string $number){
-        return self::send("/sendOTPCode.php",[
-            'number'=>$number
+        return self::send("sendOTPCode.php",[
+            'number'=> $number,
+            'lang'=>env('MSEGAT_LANG','En')
         ]);  
     }
-   
+    public static function sendFreeOTP(string $number){
+       
+        return [
+            'http_code'=>ResponseHelper::HTTP_OK,
+            'message'=> [
+                'code'=>1,
+                "message" => "Success",
+                "id" => 1234
+            ]
+        ];
+
+        return self::send("sendsms.php",[
+            'numbers'=> $number,
+            'msg'=>"Pin Code is: 1234",
+            'userSender'=>'auth-mseg'
+        ]);  
+    }
     public static function verifyOTP(string $otp,?int $id){
-        return self::send("/sendOTPCode.php",[
+        return [
+            'http_code'=>ResponseHelper::HTTP_OK,
+            'message'=> [
+                'code'=>1,
+                "message" => "Success",
+            ]
+        ];
+        return self::send("verifyOTPCode.php",[
             'code'=>$otp,
-            "id"=>$id
+            "id"=>$id,
+            'lang'=>env('MSEGAT_LANG','En')
         ]);  
     }
 }

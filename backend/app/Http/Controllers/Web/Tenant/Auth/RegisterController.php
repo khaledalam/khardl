@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Web\Tenant\Auth;
 
 
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Requests\OTPRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Tenant\RestaurantUser;
 use App\Providers\RouteServiceProvider;
+use App\Rules\PhoneIsAlreadyRegistered;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Tenant\OTPRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
-use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Requests\Tenant\CustomerRegisterRequest;
 
 class RegisterController extends BaseController
 {
@@ -42,16 +44,7 @@ class RegisterController extends BaseController
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     *
-     * */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+   
 
     /**
      * Get a validator for an incoming registration request.
@@ -116,31 +109,15 @@ class RegisterController extends BaseController
         ]);
     }
 
-    public function register(Request $request)
+    public function register(CustomerRegisterRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|min:3|max:255',
-            'last_name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|min:10|max:255|unique:users',
-            'password' => 'required|string|min:6|max:255',
-            'c_password' => 'required|same:password',
-            'phone' => 'required|unique:users|digits:12|regex:/^966\d{9}$/',
-            'terms_and_policies' => 'accepted',
-        ],[
-            'phone.regex' => __('Invalid phone number'),
-        ]);
-
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
-        }
-
-        $input = $request->all();
+       
+        $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
         $user = RestaurantUser::create($input);
+   
         $success['name'] =  "$user->first_name $user->last_name";
-
-
         Auth::login($user);
         $this->sendVerificationSMSCode($request);
         return $this->sendResponse($success, 'Customer registered successfully.');
@@ -149,17 +126,12 @@ class RegisterController extends BaseController
     public function sendVerificationSMSCode(Request $request):JsonResponse
     {
         $user = Auth::user();
-        $today = Carbon::today();
-
-        $attempts = DB::table('phone_verification_tokens')
-        ->where('user_id', $user->id)
-        ->whereDate('created_at', $today)->get();
-
-        if (count($attempts) >= 3) {
-            return $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
+        if(!$this->checkAttempt($user)){
+            $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
         }
         if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', 'Request failed .');
-        session()->set(['otp.'.$user->id => $id]);
+        $user->msegat_id_verification = $id;
+        $user->save();
         return $this->sendResponse(null, 'Verification code sent to phone.');
     }
     public function verify(OTPRequest $request): JsonResponse
@@ -169,18 +141,26 @@ class RegisterController extends BaseController
         if ($user->phone_verified_at !== null) {
             return $this->sendError('Fail', 'Phone is already verified.');
         }
-
-        // Check the verification code
-        if ($user->checkVerificationSMSCode($request->otp)) {
-            $user->phone_verified_at = now();
-            $user->status = 'active';
-            $user->save();
-
-            return $this->sendResponse(null, 'Email verified successfully!');
+        if(!$this->checkAttempt($user)){
+            return $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
         }
+        // Check the verification code
+        if (!$user->checkVerificationSMSCode($request->otp))
+            return $this->sendError('Fail', 'The verification code is incorrect.');
 
         // If we've reached here, the verification code is incorrect
         // Note: You may want to track the number of incorrect attempts and handle them accordingly.
-        return $this->sendError('Fail', 'The verification code is incorrect.');
+        return $this->sendResponse(null, 'Phone verified successfully!');
+      
+    }
+    public function checkAttempt($user){
+        $today = Carbon::today();
+        $tokens = DB::table('phone_verification_tokens')
+        ->where('user_id', $user->id)
+        ->whereDate('created_at', $today)->get()->first();
+        if ($tokens->attempts >= 3) {
+            return false;
+        }
+        return true;
     }
 }

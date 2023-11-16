@@ -51,7 +51,7 @@ const Register = () => {
          console.log(response.data);
          setSpinner(false);
          toast.success(`${t('Account successfully created')}`)
-         sessionStorage.setItem(PREFIX_KEY + 'email', data.email)
+         sessionStorage.setItem(PREFIX_KEY + 'phone', data.phone)
          window.location.href = '/verification-phone';
       } catch (error) {
          setSpinner(false);
@@ -62,9 +62,8 @@ const Register = () => {
          //     setError(error.response.data.errors);
          // }
 
-         Object.keys(error.response.data.data).forEach((field) => {
-            console.log(error.response.data.data[field][0]);
-            setError(field, {'message':error.response.data.data[field][0]});
+         Object.keys(error.response.data.errors).forEach((field) => {
+            setError(field, {'message':error.response.data.errors[field][0]});
          });
          toast.error(`${t('Account creation failed')}`);
       }
@@ -162,8 +161,8 @@ const Register = () => {
                                     {...register('phone', {
                                        required: true,
                                     })}
-                                    minLength={12}
-                                    maxLength={12}
+                                    minLength={9}
+                                    maxLength={9}
                                  />
                                  {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
