@@ -1004,6 +1004,9 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.ms-4 {
+  margin-inline-start: 1rem;
+}
 .block {
   display: block;
 }
@@ -2183,6 +2186,12 @@ video {
 }
 .pt-\[80px\] {
   padding-top: 80px;
+}
+.ps-14 {
+  padding-inline-start: 3.5rem;
+}
+.pt-7 {
+  padding-top: 1.75rem;
 }
 .text-left {
   text-align: left;

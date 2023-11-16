@@ -23,7 +23,7 @@ const VerificationPhone = () => {
       formState: { errors: errors },
    } = useForm()
    const { handleSubmit: handleSubmit2 } = useForm()
-   let user_email = sessionStorage.getItem(PREFIX_KEY + 'email') || '';
+   let user_phone = sessionStorage.getItem(PREFIX_KEY + 'phone') || '';
 
    const [showForm, setShowForm] = useState(false)
    const [countdown, setCountdown] = useState(30)
@@ -37,7 +37,7 @@ const VerificationPhone = () => {
       startTimer()
    }
 
-   if (user_email.length < 1) {
+   if (user_phone.length < 1) {
        window.location.href = '/logout';
    }
 
@@ -46,8 +46,8 @@ const VerificationPhone = () => {
       try {
          setSpinner(true);
          resetTimer()
-         const response = await AxiosInstance.post(`/email/send-verify`, {
-             email: user_email
+         const response = await AxiosInstance.post(`/phone/send-verify`, {
+             phone: user_phone
          })
          if (response.data) {
             toast.success(`${t('The code has been re-sent successfully')}`)
@@ -203,15 +203,15 @@ const VerificationPhone = () => {
                         <div className='mb-6 text-center'>
                            <label
                               className='block mb-4 text-sm text-start font-bold text-gray-700'
-                              htmlFor='email'
+                              htmlFor='phone'
                            >
                               {t('Enter the code sent to you')}
                            </label>
                            <input
                               type='email'
                               className={`hidden w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                              value={user_email}
-                              {...register('email', { required: true })}
+                              value={user_phone}
+                              {...register('phone', { required: true })}
                            />
                            <input
                               type='text'

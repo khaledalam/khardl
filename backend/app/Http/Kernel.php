@@ -16,6 +16,7 @@ use Illuminate\Auth\Middleware\Authorize;
 use App\Http\Middleware\ValidateSignature;
 use Illuminate\Http\Middleware\HandleCors;
 use App\Http\Middleware\NonAdminMiddleware;
+use App\Http\Middleware\RestaurantOrWorker;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Http\Middleware\EnsureUserIsNotBlocked;
@@ -110,6 +111,7 @@ class Kernel extends HttpKernel
         'admin' => AdminMiddleware::class,
         'restaurant' => Restaurant::class,
         'worker' => Worker::class,
+        'restaurantOrWorker' => RestaurantOrWorker::class,
         'permission' => CheckPermissions::class,
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,

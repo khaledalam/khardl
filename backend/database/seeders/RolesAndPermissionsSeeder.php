@@ -2,15 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Domain;
-use App\Models\Tenant;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -26,22 +21,22 @@ class RolesAndPermissionsSeeder extends Seeder
         foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role]);
         }
-        
+
         // OLD Permission base code  for admin
 
         // $permissions = collect([
         //     'view ',
         //     'view own ',
         //     'manage ',
-        //     'manage own ',                
+        //     'manage own ',
         // ]);
 
         // $Modules = collect([
         //     User::class,
         //     Role::class,
         //     Permission::class,
-            
-      
+
+
         // ]);
 
         // $Modules->each(function ($item)use($permissions) {
@@ -56,7 +51,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // $adminRole = Role::findByName('Administrator');
         // $adminRole->givePermissionTo(Permission::all());
 
-        
+
     }
       /**
      * Get permission name based on the model class provided

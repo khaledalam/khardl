@@ -20,7 +20,8 @@ return new class extends Migration
             $table->boolean('can_modify_advertisements')->default(false);
             $table->boolean('can_modify_and_see_other_workers')->default(false);
             $table->boolean('can_modify_working_time')->default(false);
-            
+            $table->boolean('can_control_payment')->default(false);
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

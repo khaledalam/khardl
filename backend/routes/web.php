@@ -2,20 +2,18 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Web\ContactUsController;
+use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Controllers\Web\Central\Auth\LoginController as AuthLoginController;
-use App\Http\Controllers\Web\Central\Auth\RegisterController as AuthRegisterController;
-use App\Http\Controllers\Web\Central\Auth\ResetPasswordController as AuthResetPasswordController;
-use App\Models\User;
+use App\Http\Controllers\Web\Central\Auth\LoginController;
+use App\Http\Controllers\Web\Central\Auth\RegisterController;
+use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,11 +129,11 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
     // Public
     Route::middleware('guest')->group(function () {
 
-        Route::post('register', [AuthRegisterController::class, 'register'])->name('register');
-        Route::post('login', [AuthLoginController::class, 'login'])->name('login');
+        Route::post('register', [RegisterController::class, 'register'])->name('register');
+        Route::post('login', [LoginController::class, 'login'])->name('login');
 
-        Route::post('password/forgot', [AuthResetPasswordController::class, 'forgot']);
-        Route::post('password/reset', [AuthResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
+        Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
+        Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
 
         Route::post('contact-us', [ContactUsController::class, 'store']);
 
@@ -148,8 +146,8 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
         Route::middleware('notVerified')->group(function () {
 
-            Route::post('email/send-verify', [AuthRegisterController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
-            Route::post('email/verify', [AuthRegisterController::class, 'verify'])->middleware('throttle:passwordReset');
+            Route::post('email/send-verify', [RegisterController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
+            Route::post('email/verify', [RegisterController::class, 'verify'])->middleware('throttle:passwordReset');
 
             Route::get('verification-email', static function() {
                 return view("central");

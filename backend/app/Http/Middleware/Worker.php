@@ -26,7 +26,7 @@ class Worker
                     'is_loggedin' => true
                 ], ResponseHelper::HTTP_FORBIDDEN);
             }
-            return redirect()->route("home");
+            return abort(403, 'Unauthorized');
         }
         // If the user is not a "Restaurant Owner" or has already fulfilled registration requirements, continue.
         return $next($request);

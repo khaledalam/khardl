@@ -21,7 +21,7 @@ class TenantActionSeeder extends Seeder
      */
     public function run($name = 'first')
     {
-        $user = User::first();
+        $user = User::find(2);
         (new CreateTenantAction)
         (
             domain: $name,

@@ -12,14 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('branches', function (Blueprint $table) {
-
             $table->id();
             $table->string('name');
             $table->double('lat', 8, 2);
             $table->double('lng', 8, 2);
-
-            $table->unsignedBigInteger('user_id');
-
             $table->time('monday_open');
             $table->time('monday_close');
             $table->boolean('monday_closed')->default(false);
@@ -49,10 +45,8 @@ return new class extends Migration
             $table->boolean('sunday_closed')->default(false);
 
             $table->boolean('is_primary')->default(false);
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
             $table->timestamps();
+
         });
     }
 
