@@ -469,6 +469,7 @@ class RestaurantController extends Controller
             'can_modify_working_time',
             'can_modify_advertisements',
             'can_edit_menu',
+            'can_control_payment'
         ];
 
         $insertData = [];

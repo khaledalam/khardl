@@ -180,6 +180,7 @@ return [
     'can-modify-advertisements' => 'Can modify advertisements',
     'can-modify-and-see-other-workers' => 'Can modify and see other workers',
     'can-modify-working-time' => 'Can modify working time',
+    'can-control-payment' => 'Can control payment',
     'branches' => 'Branches',
     'branches-available-to-add' => 'Branches available to add',
     'save-location' => 'Save Location',
