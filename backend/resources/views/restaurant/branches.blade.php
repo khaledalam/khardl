@@ -21,7 +21,7 @@
                         <div class="row gx-9 h-100">
                             <div class="d-flex justify-content-center align-items-center bg-white pt-5">
                                 <p class="fw-bolder mx-3">{{ __('messages.branches-available-to-add') }}</p>
-                                <p class="badge badge-light-success">00</p>
+                                <p class="badge badge-light-success">{{$available_branches}}</p>
                             </div>
                         </div>
                         <!--end::Row-->
@@ -515,26 +515,27 @@
                 </div>
             </div>
         @endif
-    
-        <!--begin::Post-->
-        <div class="post d-flex flex-column-fluid mt-10" id="kt_post">
-            <!--begin::Container-->
-            <div id="kt_content_container" class="container-xxl">
-                <div class="card card-flush border-0 h-md-100">
-                    <!--begin::Body-->
-                    <div class="card-body py-9">
-                        <!--begin::Row-->
-                        <div class="row gx-9 h-100 d-flex justify-content-center align-items-center">
-                            <a href="#" class="fs-6 text-700 fw-bolder text-center border p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">{{ __('messages.add-new-branch') }}</a>
+        @if($available_branches > 0)
+            <!--begin::Post-->
+            <div class="post d-flex flex-column-fluid mt-10" id="kt_post">
+                <!--begin::Container-->
+                <div id="kt_content_container" class="container-xxl">
+                    <div class="card card-flush border-0 h-md-100">
+                        <!--begin::Body-->
+                        <div class="card-body py-9">
+                            <!--begin::Row-->
+                            <div class="row gx-9 h-100 d-flex justify-content-center align-items-center">
+                                <a href="#" class="fs-6 text-700 fw-bolder text-center border p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">{{ __('messages.add-new-branch') }}</a>
+                            </div>
+                            <!--end::Row-->
                         </div>
-                        <!--end::Row-->
+                        <!--end::Body-->
                     </div>
-                    <!--end::Body-->
                 </div>
+                <!--end::Container-->
             </div>
-            <!--end::Container-->
-        </div>
-        <!--end::Post-->    
+            <!--end::Post-->   
+        @endif 
      
     </div>
     <!--end::Content-->
@@ -569,7 +570,7 @@
     </div>
     <!--begin::Modal header-->
     <!--begin::Modal body-->
-
+    @if($available_branches > 0)
     <div class="modal-body scroll-y pt-0 pb-15">
         <!--begin:Form-->
         <form id="kt_modal_new_bransh_form" class="form" action="{{ route('restaurant.add-branch') }}" method="POST" id="myForm">
@@ -789,6 +790,7 @@
         </form>
         <!--end:Form-->
     </div>
+    @endif
 
     <!--end::Modal body-->
     </div>

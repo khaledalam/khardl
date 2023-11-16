@@ -77,5 +77,8 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->phone_verified_at != null;
     }
-
+    public function number_of_available_branches(): int
+    {
+        return 0;
+    }
 }

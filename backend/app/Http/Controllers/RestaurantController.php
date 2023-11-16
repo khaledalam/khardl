@@ -26,6 +26,7 @@ class RestaurantController extends Controller
 
     public function branches(){
         $user = Auth::user();
+        $available_branches = $user->number_of_available_branches();
         $branches =  DB::table('branches')
         ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
             $query->where('id', $user->branch->id);
@@ -33,11 +34,15 @@ class RestaurantController extends Controller
         ->get()
         ->sortByDesc('is_primary');
         
-        return view(($user->isRestaurantOwner())?'restaurant.branches':'worker.branches', compact('user', 'branches')); //view('branches')
+        return view(($user->isRestaurantOwner())?'restaurant.branches':'worker.branches', 
+        compact('available_branches','user', 'branches')); //view('branches')
     }
 
     public function addBranch(Request $request){
 
+        if(!$this->can_create_branch()){
+            return redirect()->back()->with('error', 'Not allowed to create branch');
+        }
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required',
@@ -142,7 +147,10 @@ class RestaurantController extends Controller
         return redirect()->back()->with('success', 'Branch successfully added.');
 
     }
-
+    private function can_create_branch(){
+        // redirect to payment gateway
+        return false;
+    }
     public function updateBranch(Request $request, $id)
     {
         // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
