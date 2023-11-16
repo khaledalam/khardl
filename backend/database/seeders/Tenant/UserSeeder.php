@@ -35,6 +35,7 @@ class UserSeeder extends Seeder
             'can_modify_working_time'=>true,
             'can_modify_advertisements'=>true,
             'can_edit_menu'=>true,
+            'can_control_payment'=>true,
         ]);
 
         $user = RestaurantUser::create([

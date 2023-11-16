@@ -31,7 +31,7 @@ class RegisterNewTenant extends Command
      */
     public function handle(TenantActionSeeder $seeder)
     {
-        $user =User::first();
+        $user =User::find(2);
         $name =$this->argument('name') ?? 'first';
         if(!$user){
             $this->error("No user registered, try run `php artisan migrate:fresh --seed`");

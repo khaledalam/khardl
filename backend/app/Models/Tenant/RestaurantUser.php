@@ -112,4 +112,13 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         ]);
     }
 
+    public function number_of_available_branches(): int
+    {
+        return 1;
+    }
+    public function tap_verified(): bool
+    {
+        return $this->tap_verified;
+    }
 }
+

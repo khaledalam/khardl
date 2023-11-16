@@ -168,6 +168,7 @@ return [
     'can-modify-advertisements' => 'يمكن تحرير العروض',
     'can-modify-and-see-other-workers' => 'يمكن تحرير ورؤية العاملين الآخرين',
     'can-modify-working-time' => 'يمكن تحرير وقت العمل',
+    'can-control-payment'=>'يمكن التحكم في بوابة الدفع',
     'branches' => 'الفروع',
     'branches-available-to-add' => 'الفروع المتاحة للإضافة',
     'save-location' => 'حفظ الموقع',

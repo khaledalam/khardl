@@ -26,18 +26,23 @@ class RestaurantController extends Controller
 
     public function branches(){
         $user = Auth::user();
+        $available_branches = $user->number_of_available_branches();
         $branches =  DB::table('branches')
         ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
             $query->where('id', $user->branch->id);
         })
         ->get()
         ->sortByDesc('is_primary');
-
-        return view('restaurant.branches', compact('user', 'branches')); //view('branches')
+        
+        return view(($user->isRestaurantOwner())?'restaurant.branches':'worker.branches', 
+        compact('available_branches','user', 'branches')); //view('branches')
     }
 
     public function addBranch(Request $request){
 
+        if(!$this->can_create_branch()){
+            return redirect()->back()->with('error', 'Not allowed to create branch');
+        }
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required',
@@ -142,7 +147,10 @@ class RestaurantController extends Controller
         return redirect()->back()->with('success', 'Branch successfully added.');
 
     }
-
+    private function can_create_branch(){
+        // redirect to payment gateway
+        return false;
+    }
     public function updateBranch(Request $request, $id)
     {
         // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
@@ -215,19 +223,18 @@ class RestaurantController extends Controller
 
     }
 
-    public function menu($branchId = null){
+    public function menu($branchId){
 
         $user = Auth::user();
         // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
         //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         // }
-        if(!$user->isRestaurantOwner()){
-            $branchId  = $user->branch->id;
-        }
-      
+     
         $categories = DB::table('categories')
-        ->where('user_id', $user->id)
-        ->where('branch_id', $branchId)->get();
+        ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
+            $query->where('branch_id', $user->branch->id) ->where('user_id', $user->id);
+        })
+        ->get();
         return view('restaurant.menu', compact('user', 'categories', 'branchId'));
     }
 
@@ -470,6 +477,7 @@ class RestaurantController extends Controller
             'can_modify_working_time',
             'can_modify_advertisements',
             'can_edit_menu',
+            'can_control_payment'
         ];
 
         $insertData = [];
@@ -483,7 +491,7 @@ class RestaurantController extends Controller
         DB::table('permissions_worker')->insert($insertData);
 
         if(app()->getLocale() === 'en')
-            return redirect()->back()->with('success', 'Worker added successfully');
+            return redirect()->route("restaurant.workers",$branchId)->with('success', 'Worker added successfully');
         else
             return redirect()->back()->with('success', 'تمت إضافة موظف بنجاح');
     }
