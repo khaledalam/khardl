@@ -97,10 +97,10 @@ Route::group([
             Route::delete('/category/{id}/delete-item', [RestaurantController::class, 'deleteItem'])->middleware('permission:can_edit_menu')->name('restaurant.delete-item');
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
-            Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents_get'])->middleware('permission:can_control_payment')->name('tap.payments_upload_tap_documents_get');
-            Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents'])->middleware('permission:can_control_payment')->name('tap.payments_upload_tap_documents');
             Route::post('/payment', [TapController::class, 'payment'])->middleware('permission:can_control_payment')->name('tap.payment');
             Route::middleware('restaurant')->group(function () {
+                Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get');
+                Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents');
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
@@ -118,7 +118,6 @@ Route::group([
     });
 
     Route::get('/change-language/{locale}', static function ($locale) {
-
         App::setLocale($locale);
         Session::put('locale', $locale);
         return Redirect::back();
