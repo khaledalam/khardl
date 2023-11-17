@@ -23,11 +23,6 @@ import Aos from 'aos'
 import 'aos/dist/aos.css'
 import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword'
-// import { API_URL } from './pages/context'
-import EditorPage from './pages/EditorPage'
-import RestaurantsPreview from './components/Restaurants/RestaurantsPreview/Preview'
-import CustomersPreview from './components/Customers/CustomersPreview/Preview'
-import EditorSwitcher from './pages/EditorSwitcher'
 import Protected from './Protected'
 
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
@@ -40,13 +35,11 @@ const App = () => {
    const direction = Language === 'en' ? 'ltr' : 'rtl'
    const fontFamily = 'cairo, sans-serif'
    const location = useLocation()
-   // const { loading } = useCheckAuthenticated()
    const { loading } = useAuthContext()
-   const showHeader = !['/switcher', '/policies', '/privacy'].includes(
+   const showHeader = !['/policies', '/privacy'].includes(
       location.pathname
    )
    const showFooter = ![
-      '/switcher',
       '/login',
       '/register',
       '/reset-password',

@@ -233,4 +233,6 @@ return [
     'buy-points-550' => 'You can buy this package and get 550 points, and you can receive 550 orders',
     'buy-points-300' => 'You can buy this package and get 300 points, and you can receive 300 orders',
     'buy-points-90' => 'You can buy this package and get 90 points, and you can receive 90 orders',
+    'summary' => 'Summary',
+    'site-editor' => 'Site Editor'
 ];

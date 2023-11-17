@@ -153,6 +153,7 @@
                          id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
                         <!-- Dashboard -->
                         <div class="menu-item menu-accordion">
+                            <a href="{{ route('restaurant.summary') }}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -170,13 +171,14 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="{{ route('restaurant.summary') }}">
-                                        <span class="menu-title ">Summary</span>
-                                    </a>
+                                        <span class="menu-title ">{{__('messages.summary')}}</span>
                                 </span>
+                            </a>
+
                         </div>
                         <!-- Site Editor -->
                         <div class="menu-item menu-accordion">
+                            <a href="{{route('restaurant.switcher')}}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -185,10 +187,11 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#">
-                                        <span class="menu-title">Site Editor</span>
-                                    </a>
+
+                                        <span class="menu-title">{{__('messages.site-editor')}}</span>
                                 </span>
+                            </a>
+
                         </div>
                          <!-- Profile -->
                          <div class="menu-item menu-accordion">
