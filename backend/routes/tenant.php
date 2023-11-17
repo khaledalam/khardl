@@ -103,6 +103,7 @@ Route::group([
                 Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get');
                 Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents');
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
+                Route::get('/services', [RestaurantController::class, 'services'])->name('restaurant.services');
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
                 Route::any('/callback',[TapController::class, 'callback'])->name('tap.callback');

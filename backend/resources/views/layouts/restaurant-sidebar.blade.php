@@ -279,7 +279,7 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#">
+                                    <a href="{{route('restaurant.services')}}">
                                         <span class="menu-title">Services</span>
                                     </a>
                                 </span>
@@ -361,7 +361,7 @@
                                 </span>
 
                         </div>
-                       
+
                             <!-- Payments -->
                             <div class="menu-item menu-accordion">
                                 <span class="menu-link">
@@ -393,7 +393,7 @@
                                     </a>
                                 </span>
                             </div>
-             
+
 
 
                     </div>
