@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Central\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Web\BaseController;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -43,14 +44,37 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated(Request $request, $user)
+    public function login(Request $request): JsonResponse
     {
-        if ($user->role == 10) {
-            Log::create([
-                'user_id' => Auth::id(),
-                'action' => 'Logged in',
-            ]);
+        $request->validate([
+            'email' => 'required|string|email|min:10|max:255',
+            'password' => 'required|string|min:6|max:255',
+            'remember_me' => 'nullable|boolean',
+        ]);
+
+
+        $credentials = request(['email', 'password']);
+
+        if (!Auth::attempt($credentials)) {
+            return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
+
+
+        $user = Auth::user();
+
+        // @TODO: uncomment if need!
+        $data = [
+            'user'=>$user
+        ];
+
+        if (!$user->traderRegistrationRequirement) {
+            $data['step2_status'] = 'incomplete';
+        }else{
+            $data['step2_status'] = 'completed';
+        }
+
+
+        return $this->sendResponse($data, 'User logged in successfully.');
     }
 
 

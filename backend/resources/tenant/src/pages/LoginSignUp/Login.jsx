@@ -210,20 +210,19 @@ const Login = () => {
                                 Demo for testing:<br/><br/>
 
                                 <u>Restaurant Owner:</u><br/>
-                                admin@first.com<br/>
-                                password<br/><br/>
-
-                                <hr /><br/>
-
-                                <u>Restaurant Customer:</u><br/>
-                                customer@first.com<br/>
-                                password
+                                Email: admin@first.com<br/>
+                                Password: password<br/><br/>
 
                                 <hr /><br/>
 
                                 <u>Restaurant Worker:</u><br/>
-                                worker@first.com<br/>
-                                password
+                                Email: worker@first.com<br/>
+                                Password: password
+
+                                <hr /><br/>
+                                <u>Restaurant Customer:</u><br/>
+                                Email: customer@first.com<br/>
+                                Password: password
                             </small>
                         </div>
                      </div>

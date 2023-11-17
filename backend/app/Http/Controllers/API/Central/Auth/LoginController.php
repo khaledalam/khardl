@@ -34,21 +34,19 @@ class LoginController extends BaseController
             'user'=>$user
         ];
 
-        if(Auth::guard() == 'api'){
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
-            if ($request->remember_me) {
-                $token->expires_at = Carbon::now()->addMonths(1);
-            } else {
-                $token->expires_at = Carbon::now()->addWeeks(1);
-            }
-            $token->save();
-            $data += [
-                'token_type' => 'Bearer',
-                'access_token' => $tokenResult->accessToken,
-                'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
-            ];
+        $tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->token;
+        if ($request->remember_me) {
+            $token->expires_at = Carbon::now()->addMonths(1);
+        } else {
+            $token->expires_at = Carbon::now()->addWeeks(1);
         }
+        $token->save();
+        $data += [
+            'token_type' => 'Bearer',
+            'access_token' => $tokenResult->accessToken,
+            'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
+        ];
 
         // Check if the trader's registration requirements are not fulfilled.
         if($user instanceof User){ // USER NOT RESTAURANT USER

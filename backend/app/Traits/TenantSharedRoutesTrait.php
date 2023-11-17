@@ -14,14 +14,10 @@ trait TenantSharedRoutesTrait
         return [
             'routes'=>[
                 ''=>"home",
-                'restaurants/{branch_id}'=>"restaurants",
-                'restaurants/{branch_id}/preview'=>"restaurants.preview",
-                'customers/{branch_id}'=>"customers",
-                'customers/{branch_id}/preview'=>"customers.preview",
-                'switcher'=>'restaurant.switcher',
+              
             ],
             'middleware'=>[
-
+               
             ]
 
         ];
@@ -36,9 +32,26 @@ trait TenantSharedRoutesTrait
             ],
             'middleware'=>[
                 'guest',
-
+               
             ]
         ];
     }
-
+    public static function getPrivateRoutes(): array
+    {
+         return [
+            'routes'=>[
+                'restaurants/{branch_id}'=>"restaurants",
+                'restaurants/{branch_id}/preview'=>"restaurants.preview",
+                'customers/{branch_id}'=>"customers",
+                'customers/{branch_id}/preview'=>"customers.preview",
+                'switcher'=>'switcher',
+            ],
+            'middleware'=>[
+                'auth',
+                'verified',
+            ]
+        ];
+     
+    }
+    
 }

@@ -20,14 +20,12 @@ class UserSeeder extends Seeder
         $user = User::create([
             'first_name' => "khardl",
             'last_name' => "admin",
-            'email' => env("NOVA_ADMIN_EMAIL","khardl@admin.com"),
+            'email' => "khardl@admin.com",
             'email_verified_at' => now(),
             'status'=> 'active',
             'position'=>"Super Admin",
-            'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
+            'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
-            'created_at'=>now(),
-            'updated_at'=>now(),
         ]);
         
         $user->assignRole('Administrator');
@@ -43,7 +41,29 @@ class UserSeeder extends Seeder
             'identity_of_owner_or_manager' => $faker->filePath(),
             'national_address' => $faker->address
         ]);
+        $user = User::create([
+            'first_name' => "khadrl",
+            'last_name' => "restaurant",
+            'email' => "khadrl@restaurant.com",
+            'email_verified_at' => now(),
+            'status'=> 'active',
+            'position'=>"Super Admin",
+            'password' => bcrypt('password'),
+            'remember_token' => Str::random(10),
+        ]);
+        $faker = (new Factory())::create();
+        TraderRequirement::create([
+            'user_id' => $user->id,
+            'IBAN' => $faker->iban,
+            'facility_name' => $faker->text,
+            'commercial_registration' => $faker->filePath(),
+            'tax_registration_certificate' => $faker->filePath(),
+            'bank_certificate' => $faker->filePath(),
+            'identity_of_owner_or_manager' => $faker->filePath(),
+            'national_address' => $faker->address
+        ]);
 
+        $user->assignRole('Restaurant Owner');
 
         // old code permissions 
         \DB::table('permissions')->insert([

@@ -10,7 +10,6 @@
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
                     
-
         <!--begin::Post-->
         <div class="post d-flex flex-column-fluid mb-10" id="kt_post">
             <!--begin::Container-->
@@ -22,7 +21,7 @@
                         <div class="row gx-9 h-100">
                             <div class="d-flex justify-content-center align-items-center bg-white pt-5">
                                 <p class="fw-bolder mx-3">{{ __('messages.branches-available-to-add') }}</p>
-                                <p class="badge badge-light-success">00</p>
+                                <p class="badge badge-light-success">{{$available_branches}}</p>
                             </div>
                         </div>
                         <!--end::Row-->
@@ -33,7 +32,6 @@
             <!--end::Container-->
         </div>
         <!--end::Post-->
-
         <!--begin::Post-->
         @foreach ($branches as $branch)
         <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -146,35 +144,39 @@
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->
-                                            <div
-                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.edit-menu') }}</a>
-                                            </div>
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
+                                                    <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.edit-menu') }}</a>
+                                                </div>
+                             
                                             <!--end::Stat-->
                                             <!--begin::Stat-->
                                             <div
                                                 class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
                                                 <a href="#" class="fs-6 text-700 fw-bolder">{{ __('messages.advertisement-modification') }}</a>
                                             </div>
+                                         
                                             <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->
-                                            <div
-                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                <a href="{{ route('restaurant.workers', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.staff-modification') }}</a>
-                                            </div>
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
+                                                    <a href="{{ route('restaurant.workers', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.staff-modification') }}</a>
+                                                </div>
+                                        
                                             <!--end::Stat-->
                                             <!--begin::Stat-->
-                                            <div
-                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
-                                                <a href="#" class="fs-6 text-700 fw-bolder"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#kt_modal_new_target{{ $branch->id }}">{{ __('messages.opening-the-branch') }}
-                                                    <i class="fas fa-clock"></i></a>
-                                            </div>
+                                                <div
+                                                    class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
+                                                    <a href="#" class="fs-6 text-700 fw-bolder"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#kt_modal_new_target{{ $branch->id }}">{{ __('messages.opening-the-branch') }}
+                                                        <i class="fas fa-clock"></i></a>
+                                                </div>
+                                
                                             <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
@@ -513,26 +515,28 @@
                 </div>
             </div>
         @endif
-
-        <!--begin::Post-->
-        <div class="post d-flex flex-column-fluid mt-10" id="kt_post">
-            <!--begin::Container-->
-            <div id="kt_content_container" class="container-xxl">
-                <div class="card card-flush border-0 h-md-100">
-                    <!--begin::Body-->
-                    <div class="card-body py-9">
-                        <!--begin::Row-->
-                        <div class="row gx-9 h-100 d-flex justify-content-center align-items-center">
-                            <a href="#" class="fs-6 text-700 fw-bolder text-center border p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">{{ __('messages.add-new-branch') }}</a>
+        @if($available_branches > 0)
+            <!--begin::Post-->
+            <div class="post d-flex flex-column-fluid mt-10" id="kt_post">
+                <!--begin::Container-->
+                <div id="kt_content_container" class="container-xxl">
+                    <div class="card card-flush border-0 h-md-100">
+                        <!--begin::Body-->
+                        <div class="card-body py-9">
+                            <!--begin::Row-->
+                            <div class="row gx-9 h-100 d-flex justify-content-center align-items-center">
+                                <a href="#" class="fs-6 text-700 fw-bolder text-center border p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">{{ __('messages.add-new-branch') }}</a>
+                            </div>
+                            <!--end::Row-->
                         </div>
-                        <!--end::Row-->
+                        <!--end::Body-->
                     </div>
-                    <!--end::Body-->
                 </div>
+                <!--end::Container-->
             </div>
-            <!--end::Container-->
-        </div>
-        <!--end::Post-->        
+            <!--end::Post-->   
+        @endif 
+     
     </div>
     <!--end::Content-->
 
@@ -566,6 +570,7 @@
     </div>
     <!--begin::Modal header-->
     <!--begin::Modal body-->
+    @if($available_branches > 0)
     <div class="modal-body scroll-y pt-0 pb-15">
         <!--begin:Form-->
         <form id="kt_modal_new_bransh_form" class="form" action="{{ route('restaurant.add-branch') }}" method="POST" id="myForm">
@@ -769,21 +774,24 @@
             <!--end::Input group-->
             
 
-
-            <!--begin::Actions-->
-            <div class="text-center">
-                <button type="reset" id="kt_modal_new_bransh_cancel"
-                    class="btn btn-light me-3">{{ __('messages.reset') }}</button>
-                <button type="submit" id="kt_modal_new_bransh_submit" class="btn btn-khardl">
-                    <span class="indicator-label">{{ __('messages.add-branch') }}</span>
-                    <span class="indicator-progress">{{ __('messages.please-wait') }}
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                </button>
-            </div>
+          
+                <!--begin::Actions-->
+                <div class="text-center">
+                    <button type="reset" id="kt_modal_new_bransh_cancel"
+                        class="btn btn-light me-3">{{ __('messages.reset') }}</button>
+                    <button type="submit" id="kt_modal_new_bransh_submit" class="btn btn-khardl">
+                        <span class="indicator-label">{{ __('messages.add-branch') }}</span>
+                        <span class="indicator-progress">{{ __('messages.please-wait') }}
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+          
             <!--end::Actions-->
         </form>
         <!--end:Form-->
     </div>
+    @endif
+
     <!--end::Modal body-->
     </div>
     <!--end::Modal content-->

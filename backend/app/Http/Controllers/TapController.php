@@ -9,6 +9,26 @@ use Illuminate\Support\Facades\DB;
 
 class TapController extends Controller
 {
+    public function payments()
+    {
+        $user = Auth::user();
+        return view('restaurant.payments', compact('user'));
+    }
+
+    public function payments_upload_tap_documents_get()
+    {
+        $user = Auth::user();
+        return view('restaurant.payments_upload_tap_documents', compact('user'));
+    }
+
+    public function payments_upload_tap_documents()
+    {
+        // @TODO: handle upload tap documents logic here...
+        $user = Auth::user();
+
+        return response()->json(['test' => 'ok']);
+    }
+
 
     public function payment(Request $request)
     {
@@ -36,7 +56,7 @@ class TapController extends Controller
                 "url"=> route('tap.callback')
             ]
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
         CURLOPT_URL => "https://api.tap.company/v2/charges",
@@ -91,7 +111,7 @@ class TapController extends Controller
         $responseTap = json_decode($response);
 
         if ($responseTap->status == 'CAPTURED' && $responseTap->currency == "SAR") {
-            
+
             $user = Auth::user();
 
             $pointsToAdd = $this->calculatePoints($responseTap->amount, $responseTap->currency);
@@ -113,10 +133,10 @@ class TapController extends Controller
             ]);
 
             return redirect()->route('tap.form')->with('success', 'Payment Successfully Made.');
-            
+
         }
 
-        
+
 
         return redirect()->route('tap.form')->with('error','Something Went Wrong.');
     }
@@ -142,7 +162,7 @@ class TapController extends Controller
                 return 5500;
             } elseif ($amount == 4550) {
                 return 7000;
-            }   
+            }
         }
 
         return 0;

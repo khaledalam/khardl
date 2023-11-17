@@ -16,6 +16,7 @@ use Illuminate\Auth\Middleware\Authorize;
 use App\Http\Middleware\ValidateSignature;
 use Illuminate\Http\Middleware\HandleCors;
 use App\Http\Middleware\NonAdminMiddleware;
+use App\Http\Middleware\RestaurantOrWorker;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Http\Middleware\EnsureUserIsNotBlocked;
@@ -24,6 +25,8 @@ use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
+use App\Http\Middleware\EnsurePhoneNotVerified;
+use App\Http\Middleware\EnsurePhoneVerified;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -110,6 +113,7 @@ class Kernel extends HttpKernel
         'admin' => AdminMiddleware::class,
         'restaurant' => Restaurant::class,
         'worker' => Worker::class,
+        'restaurantOrWorker' => RestaurantOrWorker::class,
         'permission' => CheckPermissions::class,
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
@@ -122,6 +126,8 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'notVerified' => EnsureEmailIsNotVerified::class,
+        'verifiedPhone' => EnsurePhoneVerified::class,
+        'notVerifiedPhone' => EnsurePhoneNotVerified::class,
         'accepted' => EnsureTraderRegistrationIsComplete::class,
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
         'notBlocked'=> EnsureUserIsNotBlocked::class,
