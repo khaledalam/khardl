@@ -16,12 +16,16 @@ use Illuminate\Contracts\Database\Query\Builder;
 
 class RestaurantController extends Controller
 {
-
     public function index(){
-
         $user = Auth::user();
-
         return view('restaurant.summary', compact('user'));
+    }
+
+    public function services(){
+        $user = Auth::user();
+        $branches = $user->branches
+        return view('restaurant.services',
+            compact('user'));
     }
 
     public function branches(){
@@ -33,8 +37,8 @@ class RestaurantController extends Controller
         })
         ->get()
         ->sortByDesc('is_primary');
-        
-        return view(($user->isRestaurantOwner())?'restaurant.branches':'worker.branches', 
+
+        return view(($user->isRestaurantOwner())?'restaurant.branches':'worker.branches',
         compact('available_branches','user', 'branches')); //view('branches')
     }
 
@@ -229,7 +233,7 @@ class RestaurantController extends Controller
         // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
         //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         // }
-     
+
         $categories = DB::table('categories')
         ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
             $query->where('branch_id', $user->branch->id) ->where('user_id', $user->id);
@@ -253,7 +257,7 @@ class RestaurantController extends Controller
         ->where('category_id', $selectedCategory->id)
         ->where('branch_id', $branchId)->get();
 
-        return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId')); 
+        return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
     }
 
 
@@ -299,7 +303,7 @@ class RestaurantController extends Controller
             $photoFile->storeAs('items', $filename, 'private');
 
             DB::beginTransaction();
-            
+
             try {
 
                 $itemData = [
@@ -372,7 +376,7 @@ class RestaurantController extends Controller
         }
     }
 
-    
+
 
     public function updateProfile(Request $request)
     {
@@ -429,7 +433,7 @@ class RestaurantController extends Controller
 
     public function workers($branchId){
 
-        
+
         $branch = Branch::findOrFail($branchId);
         $user = Auth::user();
         // $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)

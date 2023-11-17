@@ -46,7 +46,7 @@ use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
 
 // Route::post('/reset-password', function (Request $request) {
 //     $request->validate([
-//         'token' => 'required',
+//         'token' => 'required',restaurants
 //         'email' => 'required|email',
 //         'password' => 'required|min:8|confirmed',
 //     ]);

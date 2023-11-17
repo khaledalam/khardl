@@ -104,7 +104,6 @@ return [
     'overview' => 'Overview',
     'average-delivery-time' => 'Average delivery time',
     'delivery-success-rate' => 'Delivery success rate',
-    'new-customers-this-month' => 'New Customers This Month',
     'number-of-customers' => 'Number of Customers',
     'restaurant-details' => 'Restaurant Details',
     'full-name' => 'Full Name',
@@ -200,7 +199,6 @@ return [
     'thursday' => 'Thursday',
     'friday' => 'Friday',
     'from' => 'From',
-    'to' => 'To',
     'the-shop-is-closed-today' => 'The shop is closed today',
     'submit' => 'Submit',
     'add-your-primary-branch-by-clicking-on-the-button-bellow' => 'Add your primary branch by clicking on the button below.',
@@ -208,8 +206,6 @@ return [
     'name-branch' => 'Name branch',
     'location-branch' => 'Location Branch',
     'copy-menu' => 'Copy menu',
-    'select-an-option' => 'Select an option',
-    'None' => 'none',
     'add-branch' => 'Add Branch',
     'edit-worker' => 'Edit Worker',
     'all-categories' => 'All Categories',
@@ -234,5 +230,6 @@ return [
     'buy-points-300' => 'You can buy this package and get 300 points, and you can receive 300 orders',
     'buy-points-90' => 'You can buy this package and get 90 points, and you can receive 90 orders',
     'summary' => 'Summary',
-    'site-editor' => 'Site Editor'
+    'site-editor' => 'Site Editor',
+    'services' => 'Services'
 ];

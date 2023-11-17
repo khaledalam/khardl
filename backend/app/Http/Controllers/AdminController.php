@@ -30,7 +30,7 @@ class AdminController extends Controller
     }
 
     public function promoters(){
-        
+
         $promoters = DB::table('promoters')->paginate(15);
 
         $user = Auth::user();
@@ -82,14 +82,14 @@ class AdminController extends Controller
 
     public function generateUser(Request $request)
     {
-        
+
         $existingUser = User::where('email', $request['email'])->first();
         if ($existingUser) {
             if(app()->getLocale() === 'en')
                 return redirect()->back()->with('error', 'Email is already registered.');
             else
                 return redirect()->back()->with('error', 'عنوان البريد الإلكترونى هذا مسجل بالفعل');
-            
+
         }
 
         $user = new User();
@@ -115,13 +115,13 @@ class AdminController extends Controller
             'can_edit_profile',
             'can_delete_restaurants',
         ];
-        
+
         $insertData = [];
-        
+
         foreach ($permissions as $permission) {
             $insertData[$permission] = $request->has($permission) ? 1 : 0;
         }
-        
+
         $insertData['user_id'] = $user->id;
         $insertData['can_access_dashboard'] = 1;
 
@@ -137,7 +137,7 @@ class AdminController extends Controller
         else
             return redirect()->back()->with('success', 'تمت إضافة المسؤول بنجاح');
     }
-    
+
 
     public function profile()
     {
@@ -146,7 +146,7 @@ class AdminController extends Controller
     }
 
     public function editProfile(){
-        
+
         $user = Auth::user();
         return view('admin.edit-profile', compact('user'));
     }
@@ -157,12 +157,12 @@ class AdminController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'phone_number' => 'required|string|max:255',            
+            'phone_number' => 'required|string|max:255',
         ]);
 
         $loggedUserId = Auth::id();
         $user = User::find($loggedUserId);
-        
+
         Log::create([
             'user_id' => Auth::id(),
             'action' => 'Has edited his profile.',
@@ -177,7 +177,7 @@ class AdminController extends Controller
         }
 
         $user->save();
-        
+
         if(app()->getLocale() === 'en')
             return redirect()->route('admin.profile')->with('success', 'Profile updated successfully');
         else
@@ -223,7 +223,7 @@ class AdminController extends Controller
             $orders = DB::table('orders')
             ->where('user_id', $id)
             ->get();
-            
+
             return view('admin.view-restaurant-orders', compact('restaurant', 'orders'));
         }
         return abort(404);
@@ -237,7 +237,7 @@ class AdminController extends Controller
                 'user_id' => Auth::id(),
                 'action' => 'Has deleted a restaurant with an ID of: ' . $id,
             ]);
-            
+
         if(app()->getLocale() === 'en')
             return redirect()->back()->with('success', 'Deleted successfully.');
         else
@@ -245,7 +245,7 @@ class AdminController extends Controller
     }
 
     public function deleteUser($id)
-    {   
+    {
         DB::beginTransaction();
 
         try {
@@ -258,17 +258,17 @@ class AdminController extends Controller
             DB::table('logs')->where('user_id', $id)->delete();
             DB::table('permissions')->where('user_id', $id)->delete();
             User::findOrFail($id)->delete();
-    
+
             DB::commit();
 
-            
+
             if(app()->getLocale() === 'en')
                 return redirect()->back()->with('success', 'Deleted successfully.');
             else
                 return redirect()->back()->with('success', 'حذف بنجاح.');
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             if(app()->getLocale() === 'en')
                 return redirect()->back()->with('error', 'Error deleting user and related records: ' . $e->getMessage());
             else
@@ -303,7 +303,7 @@ class AdminController extends Controller
         ->paginate(15);
         $user = Auth::user();
         $logs = Log::orderBy('created_at', 'desc')->get();
-        
+
         return view('admin.user-management', compact('user', 'users', 'logs'));
     }
 
@@ -396,14 +396,14 @@ class AdminController extends Controller
     }
 
     public function giveUnapprovedUsers(){
-        
+
         $unapprovedUsers = User::where('isApproved', 0)
         ->where('role', 0)
         ->whereNotNull('commercial_registration_pdf')
         ->whereNotNull('signed_contract_delivery_company')
         ->whereNotNull('email_verified_at')
         ->paginate(15);
-    
+
         $loggedUser = Auth::user();
 
         return view('admin.unapproved', compact('unapprovedUsers', 'loggedUser'));
@@ -478,11 +478,11 @@ class AdminController extends Controller
                 'user' => Auth::user()
             ]);
     }
-    
+
     public function downloadCommercialRegistration($filename){
         $filePath = 'private/commercial_registration/' . $filename;
         $file = Storage::disk('local')->get($filePath);
-        
+
         if ($file) {
             Log::create([
                 'user_id' => Auth::id(),
@@ -492,13 +492,13 @@ class AdminController extends Controller
         } else {
             abort(404, 'File not found');
         }
-        
+
     }
 
     public function downloadDeliveryContract($filename){
         $filePath = 'private/delivery_contract/' . $filename;
         $file = Storage::disk('local')->get($filePath);
-        
+
         if ($file) {
             Log::create([
                 'user_id' => Auth::id(),
@@ -514,7 +514,7 @@ class AdminController extends Controller
     public function downloadTaxNumber($filename){
         $filePath = 'private/tax_number/' . $filename;
         $file = Storage::disk('local')->get($filePath);
-        
+
         if ($file) {
             Log::create([
                 'user_id' => Auth::id(),
@@ -530,7 +530,7 @@ class AdminController extends Controller
     public function downloadBankCertificate($filename){
         $filePath = 'private/bank_certificate/' . $filename;
         $file = Storage::disk('local')->get($filePath);
-        
+
         if ($file) {
             Log::create([
                 'user_id' => Auth::id(),

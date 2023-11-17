@@ -102,7 +102,6 @@ return [
     'overview' => 'ملخص',
     'average-delivery-time' => 'متوسط وقت التسليم',
     'delivery-success-rate' => 'معدل نجاح التسليم',
-    'new-customers-this-month' => 'العملاء الجدد هذا الشهر',
     'number-of-customers' => 'عدد الزبائن',
     'restaurant-details' => 'تفاصيل المطعم',
     'full-name' => 'الاسم الكامل',
@@ -188,7 +187,6 @@ return [
     'thursday' => 'الخميس',
     'friday' => 'الجمعة',
     'from' => 'من',
-    'to' => 'إلى',
     'the-shop-is-closed-today' => 'المحل مغلق اليوم',
     'submit' => 'أرسل',
     'add-your-primary-branch-by-clicking-on-the-button-bellow' => '.أضف فرعك الأساسي بالضغط على الزر أدناه',
@@ -196,7 +194,6 @@ return [
     'name-branch' => 'اسم الفرع',
     'location-branch' => 'موقع الفرع',
     'copy-menu' => 'نسخ قائمة الطعام',
-    'select-an-option' => 'حدد اختيار',
     'None' => 'لا شيء',
     'none' => 'لا شيء',
     'add-branch' => 'إضافة فرع',
@@ -223,5 +220,6 @@ return [
     'buy-points-300' => 'يمكنك شراء هذه الباقة والحصول على 300 نقطة، ويمكنك الحصول على 300 طلب',
     'buy-points-90' => 'يمكنك شراء هذه الباقة والحصول على 90 نقطة، ويمكنك الحصول على 90 طلب',
     'summary' => 'الملخص',
-    'site-editor' => 'محرر الموقع'
+    'site-editor' => 'محرر الموقع',
+    'services' => 'خدمات'
 ];
