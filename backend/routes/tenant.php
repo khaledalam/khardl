@@ -19,6 +19,7 @@ use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\RestaurantController;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\RestaurantUser;
+use Illuminate\Support\Facades\Auth;
 use Stancl\Tenancy\Features\UserImpersonation;
 
 /*
@@ -71,12 +72,12 @@ Route::group([
     Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 
-        Route::middleware('notVerified')->group(function () {
-            Route::get('verification-email', static function() {
+        Route::middleware('notVerifiedPhone')->group(function () {
+            Route::get('verification-phone', static function() {
                 return view("tenant");
-            })->name("verification-email");
-            Route::post('email/send-verify', [VerificationController::class, 'sendVerificationCode'])->middleware('throttle:passwordReset');
-            Route::post('email/verify', [VerificationController::class, 'verify'])->middleware('throttle:passwordReset');
+            })->name("verification-phone");
+            Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
+            Route::post('phone/verify', [RegisterController::class, 'verify']);
         });
 
 
@@ -112,6 +113,10 @@ Route::group([
 
             });
         });
+        Route::middleware('verified')->group(function () {
+
+        });
+
 
 
 

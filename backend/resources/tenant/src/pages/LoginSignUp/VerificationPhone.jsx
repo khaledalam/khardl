@@ -37,8 +37,8 @@ const VerificationPhone = () => {
       startTimer()
    }
 
-   if (user_phone.length < 1) {
-       window.location.href = '/logout';
+   if (!user_phone) {
+      window.location.href = '/logout';
    }
 
    // API POST REQUEST
@@ -47,7 +47,7 @@ const VerificationPhone = () => {
          setSpinner(true);
          resetTimer()
          const response = await AxiosInstance.post(`/phone/send-verify`, {
-             phone: user_phone
+
          })
          if (response.data) {
             toast.success(`${t('The code has been re-sent successfully')}`)
@@ -64,16 +64,15 @@ const VerificationPhone = () => {
    // API POST REQUEST
    const onSubmit = async (data) => {
       try {
-         const response = await AxiosInstance.post(`/email/verify`, {
-             code: data.verificationcode,
-             email: data.email
+         const response = await AxiosInstance.post(`/phone/verify`, {
+            otp: data.otp,
          })
 
           console.log(response.data)
 
          if (response.data) {
             setStatusCode(HTTP_NOT_ACCEPTED)
-            navigate('/complete-register')
+            navigate('/')
             toast.success(`${t('The code has been verified successfully')}`)
          } else {
             throw new Error(`${t('Code verification failed')}`)
@@ -207,21 +206,16 @@ const VerificationPhone = () => {
                            >
                               {t('Enter the code sent to you')}
                            </label>
-                           <input
-                              type='email'
-                              className={`hidden w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                              value={user_phone}
-                              {...register('phone', { required: true })}
-                           />
+                          
                            <input
                               type='text'
                               className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                               placeholder={t('Validation code')}
-                              {...register('verificationcode', {
+                              {...register('otp', {
                                  required: true,
                               })}
                            />
-                           {errors.verificationcode && (
+                           {errors.otp && (
                               <span className='text-red-500 text-xs mt-1 ms-2'>
                                  {t('Validation code Error')}
                               </span>

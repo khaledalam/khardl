@@ -25,6 +25,8 @@ use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
+use App\Http\Middleware\EnsurePhoneNotVerified;
+use App\Http\Middleware\EnsurePhoneVerified;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -124,6 +126,8 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'notVerified' => EnsureEmailIsNotVerified::class,
+        'verifiedPhone' => EnsurePhoneVerified::class,
+        'notVerifiedPhone' => EnsurePhoneNotVerified::class,
         'accepted' => EnsureTraderRegistrationIsComplete::class,
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
         'notBlocked'=> EnsureUserIsNotBlocked::class,
