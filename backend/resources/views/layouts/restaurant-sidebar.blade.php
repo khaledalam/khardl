@@ -5,7 +5,6 @@
 <html @if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">>
 
 <head>
-    <base href="" />
     <title>{{ __('messages.khardl')}} | @yield('title', __('messages.dashboard'))</title>
     <meta charset="utf-8" />
     <meta name="description" content="" />
@@ -106,6 +105,7 @@
 <!--begin::Root-->
 <!--begin::Root-->
 <div class="d-flex flex-column flex-root">
+
     <!--begin::Page-->
     <div class="page d-flex flex-row flex-column-fluid">
         <!--begin::Aside-->
@@ -113,6 +113,7 @@
              data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}"
              data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}"
              data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+
             <!--begin::Brand-->
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
@@ -378,7 +379,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.payments')}} ✅</span>
+                                    <span class="menu-title"><span class="badge badge-danger mx-1">&#9432;</span> {{__('messages.payments')}} ✅</span>
                                 </span>
                             </a>
                         </div>
@@ -391,10 +392,11 @@
         </div>
         <!--end::Aside-->
 
-
         <!--begin::Wrapper-->
         <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-            <!--begin::Header-->
+        @include('restaurant.components.payment-tap-documents-alert')
+
+        <!--begin::Header-->
             <div id="kt_header" class="header align-items-stretch">
                 <!--begin::Container-->
                 <div class="container-fluid d-flex align-items-stretch justify-content-between">

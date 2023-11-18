@@ -15,6 +15,7 @@ import { updateIconInput, setSelectedIconId, updatePhoneNumber, moveFromMoreToIc
 import { BsTwitter, BsMessenger, BsWhatsapp, BsInstagram, BsFacebook, BsLinkedin, BsTiktok, BsYoutube, BsTelegram } from 'react-icons/bs';
 import { FaYoutube } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
+import {Link} from "react-router-dom";
 
 function Section() {
     const dispatch = useDispatch();
@@ -96,8 +97,8 @@ function Section() {
                         <button
                             onClick={() => handleAlignChange(Language === "en" ? "Left": "Right")}
                             className={`
-                            ${selectedAlign === "Left" && Language === "en" ? "text-[var(--primary)]" 
-                            : 
+                            ${selectedAlign === "Left" && Language === "en" ? "text-[var(--primary)]"
+                            :
                             selectedAlign === "Right" && Language === "ar" ? "text-[var(--primary)]" : "" }
                             `}
                         >
@@ -116,8 +117,8 @@ function Section() {
                         <button
                             onClick={() => handleAlignChange(Language === "en" ? "Right": "Left")}
                             className={`
-                            ${selectedAlign === "Right" && Language === "en" ? "text-[var(--primary)]" 
-                            : 
+                            ${selectedAlign === "Right" && Language === "en" ? "text-[var(--primary)]"
+                            :
                             selectedAlign === "Left" && Language === "ar" ? "text-[var(--primary)]" : "" }
                             `}
                         >
