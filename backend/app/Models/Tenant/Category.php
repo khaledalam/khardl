@@ -61,4 +61,15 @@ class Category extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+    /**
+     * Retrieve user (if exists).
+     */
+    public function user()
+    {
+        return $this->belongsTo(RestaurantUser::class);
+    }
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }

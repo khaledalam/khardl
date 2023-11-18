@@ -18,15 +18,15 @@ use Illuminate\Http\Middleware\HandleCors;
 use App\Http\Middleware\NonAdminMiddleware;
 use App\Http\Middleware\RestaurantOrWorker;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Http\Middleware\EnsurePhoneVerified;
 use App\Http\Middleware\EnsureEmailIsVerified;
+use App\Http\Middleware\EnsurePhoneNotVerified;
 use App\Http\Middleware\EnsureUserIsNotBlocked;
 use Illuminate\Auth\Middleware\RequirePassword;
 use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
-use App\Http\Middleware\EnsurePhoneNotVerified;
-use App\Http\Middleware\EnsurePhoneVerified;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -90,11 +90,10 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             ThrottleRequests::class.':api',
             SubstituteBindings::class,
-//            CreateFreshApiToken::class,
-//            'auth:api'
+           
+
         ],
         'tenant' => [
-            'web',
             InitializeTenancyByDomainOrSubdomain::class,
             PreventAccessFromCentralDomains::class
         ],
