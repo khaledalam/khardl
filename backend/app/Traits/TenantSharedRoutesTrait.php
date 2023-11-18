@@ -42,9 +42,9 @@ trait TenantSharedRoutesTrait
          return [
             'routes'=>[
                 '/site-editor/restaurants/{branch_id}'=>"restaurants",
-                '/site-editor/restaurants/{branch_id}/preview'=>"restaurants.preview",
+                '/site-editor/restaurants/{branch_id}/Preview'=>"restaurants.preview",
                 '/site-editor/customers/{branch_id}'=>"customers",
-                '/site-editor/customers/{branch_id}/preview'=>"customers.preview",
+                '/site-editor/customers/{branch_id}/Preview'=>"customers.preview",
                 '/site-editor'=>'restaurant.site_editor',
             ],
             'middleware'=>[
