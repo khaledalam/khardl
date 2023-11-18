@@ -83,9 +83,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     public function generateVerificationSMSCode(){
         $this->newAttempt();
-        $response = Msegat::sendFreeOTP(
+        $response = Msegat::sendOTP(
             number: $this->phone
         );
+        logger($response);
         return ($response['http_code'] == ResponseHelper::HTTP_OK)?$response['message']['id']:false;
     }
 

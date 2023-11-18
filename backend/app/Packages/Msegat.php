@@ -47,14 +47,14 @@ class Msegat
     }
     public static function sendFreeOTP(string $number){
        
-        return [
-            'http_code'=>ResponseHelper::HTTP_OK,
-            'message'=> [
-                'code'=>1,
-                "message" => "Success",
-                "id" => 1234
-            ]
-        ];
+        // return [
+        //     'http_code'=>ResponseHelper::HTTP_OK,
+        //     'message'=> [
+        //         'code'=>1,
+        //         "message" => "Success",
+        //         "id" => 1234
+        //     ]
+        // ];
 
         return self::send("sendsms.php",[
             'numbers'=> $number,
@@ -63,13 +63,13 @@ class Msegat
         ]);  
     }
     public static function verifyOTP(string $otp,?int $id){
-        return [
-            'http_code'=>ResponseHelper::HTTP_OK,
-            'message'=> [
-                'code'=>1,
-                "message" => "Success",
-            ]
-        ];
+        // return [
+        //     'http_code'=>ResponseHelper::HTTP_OK,
+        //     'message'=> [
+        //         'code'=>1,
+        //         "message" => "Success",
+        //     ]
+        // ];
         return self::send("verifyOTPCode.php",[
             'code'=>$otp,
             "id"=>$id,
