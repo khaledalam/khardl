@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Web\Tenant\Auth\LoginController;
-use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
-use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
-use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
-use App\Http\Controllers\Web\Tenant\AuthenticationController;
-use App\Http\Controllers\Web\Tenant\DashboardController;
 use Illuminate\Http\Request;
+use App\Models\Tenant\Branch;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
@@ -17,10 +14,14 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\RestaurantController;
-use App\Models\Tenant\Branch;
-use App\Models\Tenant\RestaurantUser;
-use Illuminate\Support\Facades\Auth;
 use Stancl\Tenancy\Features\UserImpersonation;
+use App\Http\Controllers\API\Tenant\CategoryController;
+use App\Http\Controllers\Web\Tenant\DashboardController;
+use App\Http\Controllers\Web\Tenant\Auth\LoginController;
+use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
+use App\Http\Controllers\Web\Tenant\AuthenticationController;
+use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
+use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ use Stancl\Tenancy\Features\UserImpersonation;
 */
 
 Route::group([
-    'middleware' => ['tenant'],
+    'middleware' => ['tenant','web'],
 ],function () {
     $groups = TenantSharedRoutesTrait::groups();
     foreach ($groups as $group) {
@@ -128,4 +129,12 @@ Route::group([
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
+
+    // API
+    Route::middleware(['api'])->prefix('api')->group(function () {
+        Route::apiResource('categories',CategoryController::class)->only([
+            'index',
+        ]);
+    });
+    
 });
