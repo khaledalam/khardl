@@ -20,7 +20,7 @@ class RestaurantController extends BaseController
 
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $branches = $user->branch()->get()->all();
+        $branches = Branch::all();
 
         return view('restaurant.summary', compact('user', 'branches'));
     }
@@ -28,7 +28,7 @@ class RestaurantController extends BaseController
     public function services(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $branches = $user->branch()->get()->all();
+        $branches = Branch::all();
 
         return view('restaurant.services',
             compact('user', 'branches'));
