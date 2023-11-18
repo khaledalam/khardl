@@ -74,19 +74,21 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         if($this->isRestaurantOwner()) return true;
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
-    }       
+    }
 
     public function hasVerifiedPhone(): bool
     {
         return $this->phone_verified_at != null;
     }
+
     public function generateVerificationSMSCode(){
         $this->newAttempt();
         $response = Msegat::sendFreeOTP(
             number: $this->phone
-        ); 
+        );
         return ($response['http_code'] == ResponseHelper::HTTP_OK)?$response['message']['id']:false;
     }
+
     public function checkVerificationSMSCode(string $otp){
         $this->newAttempt();
         $response = Msegat::verifyOTP(
@@ -102,6 +104,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         }
         return false;
     }
+
     public function newAttempt(){
         DB::table('phone_verification_tokens')->updateOrInsert([
             'user_id'=>$this->id,
@@ -114,8 +117,11 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     public function number_of_available_branches(): int
     {
+        // @TODO: logic based on how many services(slots) owner buy
+
         return 1;
     }
+
     public function tap_verified(): bool
     {
         return $this->tap_verified;

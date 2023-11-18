@@ -22,12 +22,12 @@ class RestaurantController extends Controller
     }
 
     public function services(){
+        /** @var RestaurantUser $user */
         $user = Auth::user();
-        $branches = DB::table('branches')
-            ->where('id', $user->branch_id)
-            ->all();
+        $branches = $user->branch()->get()->all();
+
         return view('restaurant.services',
-            compact('user'));
+            compact('user', 'branches'));
     }
 
     public function branches(){
