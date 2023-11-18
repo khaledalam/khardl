@@ -16,19 +16,22 @@ use Illuminate\Contracts\Database\Query\Builder;
 
 class RestaurantController extends Controller
 {
-
     public function index(){
 
+        /** @var RestaurantUser $user */
         $user = Auth::user();
+        $branches = $user->branch()->get()->all();
 
-        return view('restaurant.summary', compact('user'));
+        return view('restaurant.summary', compact('user', 'branches'));
     }
 
     public function services(){
-
+        /** @var RestaurantUser $user */
         $user = Auth::user();
+        $branches = $user->branch()->get()->all();
 
-        return view('restaurant.services', compact('user'));
+        return view('restaurant.services',
+            compact('user', 'branches'));
     }
 
     public function branches(){
@@ -156,8 +159,10 @@ class RestaurantController extends Controller
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        return false;
+        return true;
     }
+
+
     public function updateBranch(Request $request, $id)
     {
         // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))

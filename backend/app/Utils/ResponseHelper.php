@@ -21,12 +21,12 @@ class ResponseHelper {
     // not approve restaurant owner trade documents
     const HTTP_NOT_ACCEPTED         = 206;
     const HTTP_BLOCKED              = 207;
-    
+
     public static function response(array $data, int $code): JsonResponse
     {
         return response()->json($data, $code);
     }
-    public static function responseWithData(string $message,array $data = [], int $code): JsonResponse
+    public static function responseWithData(string $message,array $data, int $code): JsonResponse
     {
         return response()->json(['message' => $message,'data'=>$data], $code);
     }

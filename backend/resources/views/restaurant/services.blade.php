@@ -562,6 +562,7 @@
 
 
 
+>>>>>>> development
 
 
 
@@ -591,7 +592,7 @@
                                                         <!--begin::Option-->
                                                         <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75" style="padding-bottom: 45px;">
                                                             <div class="w-100 text-right" style="padding: -15px !important;">
-                                                                <p class="badge bg-khardl p-3 text-page-bg fw-bolder">13 branch</p>
+                                                                <p class="badge bg-khardl p-3 text-page-bg fw-bolder">{{count($branches)}}</p>
                                                             </div>
                                                             <!--begin::Heading-->
                                                             <div class="mb-7 text-center px-10" style="padding-bottom: 15px;">
@@ -986,6 +987,7 @@
 
                     </div>
                     <!--end::Content-->
+
                     <!--begin::Footer-->
                     <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
                         <!--begin::Container-->
@@ -1023,6 +1025,7 @@
         </div>
         <!--end::Root-->
         <!--end::Main-->
+>>>>>>> development
 
         <!--begin::Modal - Cancle branch-->
         <div class="modal fade" id="kt_modal_cancle_branch" tabindex="-1" aria-hidden="true">
@@ -1108,26 +1111,17 @@
         <!--end::Scrolltop-->
 
         <!--begin::Javascript-->
-        <script>
-            var hostUrl = "assets/";
-        </script>
-        <!--begin::Javascript-->
         <script>var hostUrl = "assets/";</script>
         <!--begin::Global Javascript Bundle(used by all pages)-->
-        <script src="assets/plugins/global/plugins.bundle.js"></script>
-        <script src="assets/js/scripts.bundle.js"></script>
-        <!--end::Global Javascript Bundle-->
-        <!--begin::Page Vendors Javascript(used by this page)-->
+        <script src="{{global_asset('assets/plugins/global/plugins.bundle.js')}}"></script>
+{{--        <script src="assets/js/scripts.bundle.js"></script>--}}
         <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-        <!--end::Page Vendors Javascript-->
-        <!--begin::Page Custom Javascript(used by this page)-->
-        <script src="assets/js/custom/apps/file-manager/list.js"></script>
-        <script src="assets/js/widgets.bundle.js"></script>
-        <script src="assets/js/custom/widgets.js"></script>
-        <script src="assets/js/custom/apps/chat/chat.js"></script>
-        <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-        <script src="assets/js/custom/utilities/modals/create-app.js"></script>
-        <script src="assets/js/custom/utilities/modals/users-search.js"></script>
+{{--        <script src="assets/js/custom/apps/file-manager/list.js"></script>--}}
+{{--        <script src="assets/js/widgets.bundle.js"></script>--}}
+{{--        <script src="assets/js/custom/widgets.js"></script>--}}
+{{--        <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>--}}
+{{--        <script src="assets/js/custom/utilities/modals/create-app.js"></script>--}}
+{{--        <script src="assets/js/custom/utilities/modals/users-search.js"></script>--}}
         <!--end::Page Custom Javascript-->
         <script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -1152,9 +1146,6 @@
                 });
             });
 
-        </script>
-
-        <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var myLink2 = document.getElementById("myLink2");
 

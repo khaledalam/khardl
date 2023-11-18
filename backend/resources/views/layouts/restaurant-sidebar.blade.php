@@ -171,15 +171,15 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                        <span class="menu-title ">{{__('messages.summary')}}</span>
+                                        <span class="menu-title ">{{__('messages.summary')}} ✅</span>
                                 </span>
                             </a>
 
                         </div>
                         <!-- Site Editor -->
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('restaurant.switcher')}}">
-                                <span class="menu-link">
+                            <a href="{{route('restaurant.site_editor')}}">
+                                <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -188,47 +188,49 @@
                                         <!--end::Svg Icon-->
                                     </span>
 
-                                        <span class="menu-title">{{__('messages.site-editor')}}</span>
+                                        <span class="menu-title">{{__('messages.site-editor')}} ✅</span>
                                 </span>
                             </a>
 
                         </div>
                          <!-- Profile -->
                          <div class="menu-item menu-accordion">
-                            <span class="{{ ($link == 'profile' ) ? 'menu-link active' : 'menu-link ' }}">
-                                <span class="menu-icon">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="currentColor" />
-                                            <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
-                                        </svg>
+                             <a href="{{route('restaurant.profile')}}">
+                                <span class="{{ ($link == 'profile' ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="currentColor" />
+                                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
                                     </span>
-                                    <!--end::Svg Icon-->
+
+                                    <span class="menu-title">{{__('messages.profile')}} ✅</span>
                                 </span>
-                                <a href="{{route('restaurant.profile')}}">
-                                    <span class="menu-title">Profile</span>
-                                </a>
-                            </span>
-                        </div>
+                             </a>
+                         </div>
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
-                        <span class="{{ ($link == 'branches' || $link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon -->
-                                    <span class="svg-icon svg-icon-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="currentColor" />
-                                            <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="currentColor" />
-                                            <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="currentColor" />
-                                        </svg>
+                           <a href="{{route('restaurant.branches')}}">
+                                <span class="{{ ($link == 'branches' || $link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="currentColor" />
+                                                    <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="currentColor" />
+                                                    <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        <!--end::Svg Icon-->
                                     </span>
-                                <!--end::Svg Icon-->
+                                    <span class="menu-title">{{__('messages.branches')}} ✅</span>
+
                             </span>
-                            <a href="{{route('restaurant.branches')}}">
-                                <span class="menu-title">Branches</span>
-                            </a>
-                        </span>
+                           </a>
                         </div>
                         <!-- Orders -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -274,7 +276,8 @@
                         </div>
                         <!-- Services -->
                         <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+                            <a href="{{route('restaurant.services')}}">
+                                <span class="{{ ($link == 'services' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                             <span class="svg-icon svg-icon-2">
@@ -282,11 +285,9 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="{{route('restaurant.services')}}">
-                                        <span class="menu-title">Services</span>
-                                    </a>
+                                        <span class="menu-title">{{__('messages.services')}} ✅</span>
                                 </span>
-
+                            </a>
                         </div>
                         <!-- Delivery Companies -->
                         <div class="menu-item menu-accordion">
@@ -365,9 +366,11 @@
 
                         </div>
 
-                            <!-- Payments -->
-                            <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+
+                        <!-- Payments -->
+                        <div class="menu-item menu-accordion">
+                            <a href="{{route('tap.payments')}}">
+                                <span class="{{ ($link == 'payments' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -375,30 +378,10 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="{{route('tap.payments')}}">
-                                        <span class="menu-title">Payments</span>
-                                    </a>
+                                    <span class="menu-title">{{__('messages.payments')}} ✅</span>
                                 </span>
-                            </div>
-
-                                <!-- Upload TAP Documents -->
-                                <div class="menu-item menu-accordion">
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                        <span class="svg-icon svg-icon-2">
-                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7 13C7 11.1144 7 10.1716 7.58579 9.58579C8.17157 9 9.11438 9 11 9H14H17C18.8856 9 19.8284 9 20.4142 9.58579C21 10.1716 21 11.1144 21 13V14V15C21 16.8856 21 17.8284 20.4142 18.4142C19.8284 19 18.8856 19 17 19H14H11C9.11438 19 8.17157 19 7.58579 18.4142C7 17.8284 7 16.8856 7 15V14V13Z" stroke="#323232" stroke-width="2" stroke-linejoin="round"></path> <path d="M7 15V15C5.11438 15 4.17157 15 3.58579 14.4142C3.58579 14.4142 3.58579 14.4142 3.58579 14.4142C3 13.8284 3 12.8856 3 11L3 9C3 7.11438 3 6.17157 3.58579 5.58579C4.17157 5 5.11438 5 7 5L13 5C14.8856 5 15.8284 5 16.4142 5.58579C17 6.17157 17 7.11438 17 9V9" stroke="#323232" stroke-width="2" stroke-linejoin="round"></path> <path d="M16 14C16 15.1046 15.1046 16 14 16C12.8954 16 12 15.1046 12 14C12 12.8954 12.8954 12 14 12C15.1046 12 16 12.8954 16 14Z" stroke="#323232" stroke-width="2"></path> </g></svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                    <a href="{{route('tap.payments_upload_tap_documents')}}">
-                                        <span class="menu-title">TAP Documents</span>
-                                    </a>
-                                </span>
-                            </div>
-
-
-
+                            </a>
+                        </div>
                     </div>
                     <!--end::Menu-->
                 </div>

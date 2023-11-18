@@ -6,7 +6,8 @@ trait TenantSharedRoutesTrait
     public static function groups(){
         return [
             self::getSharedRoutes(),
-            self::getGuestRoutes()
+            self::getGuestRoutes(),
+            self::getPrivateRoutes(),
         ];
     }
     public static function getSharedRoutes(): array
@@ -14,10 +15,10 @@ trait TenantSharedRoutesTrait
         return [
             'routes'=>[
                 ''=>"home",
-              
+
             ],
             'middleware'=>[
-               
+
             ]
 
         ];
@@ -32,7 +33,7 @@ trait TenantSharedRoutesTrait
             ],
             'middleware'=>[
                 'guest',
-               
+
             ]
         ];
     }
@@ -40,18 +41,18 @@ trait TenantSharedRoutesTrait
     {
          return [
             'routes'=>[
-                'restaurants/{branch_id}'=>"restaurants",
-                'restaurants/{branch_id}/preview'=>"restaurants.preview",
-                'customers/{branch_id}'=>"customers",
-                'customers/{branch_id}/preview'=>"customers.preview",
-                'switcher'=>'switcher',
+                '/site-editor/restaurants/{branch_id}'=>"restaurants",
+                '/site-editor/restaurants/{branch_id}/preview'=>"restaurants.preview",
+                '/site-editor/customers/{branch_id}'=>"customers",
+                '/site-editor/customers/{branch_id}/preview'=>"customers.preview",
+                '/site-editor'=>'restaurant.site_editor',
             ],
             'middleware'=>[
                 'auth',
-                'verified',
+                'verifiedPhone',
             ]
         ];
-     
+
     }
-    
+
 }
