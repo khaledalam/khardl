@@ -23,7 +23,9 @@ class RestaurantController extends Controller
 
     public function services(){
         $user = Auth::user();
-        $branches = $user->branches
+        $branches = DB::table('branches')
+            ->where('id', $user->branch_id)
+            ->all();
         return view('restaurant.services',
             compact('user'));
     }
@@ -153,8 +155,10 @@ class RestaurantController extends Controller
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        return false;
+        return true;
     }
+
+
     public function updateBranch(Request $request, $id)
     {
         // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))

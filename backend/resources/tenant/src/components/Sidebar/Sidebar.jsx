@@ -28,10 +28,10 @@ const Sidebar = () => {
    }, [])
 
    useEffect(() => {
-      if (location.pathname === `/restaurants/${parseInt(branch_id)}`) {
+      if (location.pathname === `/site-editor/restaurants/${parseInt(branch_id)}`) {
          setTemplate('restaurants')
       }
-      if (location.pathname === `/customers/${parseInt(branch_id)}`) {
+      if (location.pathname === `/site-editor/customers/${parseInt(branch_id)}`) {
          setTemplate('customers')
       }
    }, [location.pathname])

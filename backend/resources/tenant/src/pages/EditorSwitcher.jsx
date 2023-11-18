@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom'
 function EditorSwitcher() {
    return (
       <div className='flex flex-col justify-center items-center gap-2 my-20'>
-         <Link to='/restaurants/1'>
+          <h2>Choose Site Editor:</h2>
+         <Link to='/site-editor/restaurants/1'>
             <button className='bg-[var(--primary)] rounded-md p-2'>
                Restaurants Editor
             </button>
          </Link>
-         <Link to='/customers/1'>
+         <Link to='/site-editor/customers/1'>
             <button className='bg-[var(--primary)] rounded-md p-2'>
                Customer Editor
             </button>

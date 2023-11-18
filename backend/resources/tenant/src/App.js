@@ -31,13 +31,12 @@ const App = () => {
    const direction = Language === 'en' ? 'ltr' : 'rtl'
    const fontFamily = 'cairo, sans-serif'
    const location = useLocation()
-   // const { loading } = useCheckAuthenticated()
    const { loading } = useAuthContext()
-   const showHeader = !['/switcher', '/policies', '/privacy'].includes(
+   const showHeader = !['/site-editor', '/policies', '/privacy'].includes(
       location.pathname
    )
    const showFooter = ![
-      '/switcher',
+      '/site-editor',
       '/login',
       '/register',
       '/reset-password',
@@ -95,14 +94,14 @@ const App = () => {
                         path='/verification-phone'
                         element={<VerificationPhone />}
                      />
-                     <Route path='/switcher' element={<EditorSwitcher />} />
+                     <Route path='/site-editor' element={<EditorSwitcher />} />
 
                      <Route
-                        path='/restaurants/:branch_id'
+                        path='/site-editor/restaurants/:branch_id'
                         element={<EditorPage />}
                      />
                      <Route
-                        path='/restaurants/:branch_id/Preview'
+                        path='/site-editor/restaurants/:branch_id/Preview'
                         element={<RestaurantsPreview />}
                      />
                      <Route
@@ -110,7 +109,7 @@ const App = () => {
                         element={<CustomersPreview />}
                      />
                      <Route
-                        path='/customers/:branch_id/Preview'
+                        path='/site-editor/customers/:branch_id/Preview'
                         element={<CustomersPreview />}
                      />
                   </Route>
