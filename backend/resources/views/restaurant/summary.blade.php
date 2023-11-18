@@ -21,7 +21,7 @@
                                  <!--begin::Info-->
                                  <div class="d-flex align-items-center">
                                      <!--begin::Amount-->
-                                     <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">700</span>
+                                     <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{count($branches)}}</span>
                                      <!--end::Amount-->
                                  </div>
                                  <!--end::Info-->

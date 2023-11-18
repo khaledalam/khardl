@@ -17,8 +17,12 @@ use Illuminate\Contracts\Database\Query\Builder;
 class RestaurantController extends Controller
 {
     public function index(){
+
+        /** @var RestaurantUser $user */
         $user = Auth::user();
-        return view('restaurant.summary', compact('user'));
+        $branches = $user->branch()->get()->all();
+
+        return view('restaurant.summary', compact('user', 'branches'));
     }
 
     public function services(){
