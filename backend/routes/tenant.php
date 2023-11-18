@@ -16,7 +16,7 @@ use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\WorkerController;
-use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\Web\Tenant\RestaurantController;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\Auth;
@@ -100,8 +100,8 @@ Route::group([
             Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
             Route::post('/payment', [TapController::class, 'payment'])->middleware('permission:can_control_payment')->name('tap.payment');
             Route::middleware('restaurant')->group(function () {
-                Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get');
-                Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents');
+                Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get');
+                Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents');
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/services', [RestaurantController::class, 'services'])->name('restaurant.services');
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
