@@ -33,7 +33,7 @@ export function Taps({ children, contentClassName = '' }) {
          >
             {children.map((item, i) => {
                return (
-                  <>
+                  <div key={i}>
                      {TapValidator(item) && (
                         <Tap
                            key={`Tap-{i}`}
@@ -48,7 +48,7 @@ export function Taps({ children, contentClassName = '' }) {
                         template === 'restaurants' && (
                            <div className='w-[1px] h-[25px] bg-gray-500'></div>
                         )}
-                  </>
+                  </div>
                )
             })}
          </div>
@@ -75,12 +75,12 @@ export function Tap({
    return (
       <>
          <div
-            className={`px-2 cursor-pointer 
+            className={`px-2 cursor-pointer
        text-[18px] max-[600px]:text-[15px] ${
           activeTap === currentTap
              ? `font-bold border-b-[3px] border-b-[var(--primary)]`
              : ''
-       } 
+       }
         py-[5px] select-none ${contentClassName}`}
             onClick={() => setActiveTap(currentTap)}
          >

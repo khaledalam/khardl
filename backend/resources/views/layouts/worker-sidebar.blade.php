@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html @if(app()->getLocale() === 'ar') direction="rtl" dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">>
+<html @if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">>
 
 <head>
     <base href="" />
@@ -188,7 +188,7 @@
                             </span>
                           </div>
                           @endif
-                  
+
 
                             <!-- Promotions -->
                             <div class="menu-item menu-accordion">
