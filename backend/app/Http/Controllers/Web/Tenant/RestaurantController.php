@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web\Tenant;
 
-use App\Models\User;
+use App\Http\Controllers\Web\BaseController;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Database\Query\Builder;
 
-class RestaurantController extends Controller
+class RestaurantController extends BaseController
 {
     public function index(){
 
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $branches = $user->branch()->get()->all();
+        $branches = Branch::all();
 
         return view('restaurant.summary', compact('user', 'branches'));
     }
@@ -28,7 +28,7 @@ class RestaurantController extends Controller
     public function services(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $branches = $user->branch()->get()->all();
+        $branches = Branch::all();
 
         return view('restaurant.services',
             compact('user', 'branches'));

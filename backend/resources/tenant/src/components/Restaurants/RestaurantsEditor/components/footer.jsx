@@ -26,7 +26,7 @@ function Footer() {
                     {phoneNumber}
                 </div>
                 <div className='flex items-cnter flex-wrap gap-2'>
-                    {icons.map((icon) => {
+                    {icons?.map((icon) => {
                         const IconComponent = iconComponents[icon.icon];
                         return (
                             <a
