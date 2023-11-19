@@ -14,14 +14,16 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\RestaurantController;
 use Stancl\Tenancy\Features\UserImpersonation;
+use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
-use App\Http\Controllers\API\Central\Auth\LoginController  as APILoginController;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Tenant\Auth\LoginController;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
-use App\Http\Controllers\API\Tenant\CategoryController;
+use App\Http\Controllers\API\Central\Auth\LoginController  as APILoginController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -141,7 +143,19 @@ Route::prefix('api')->middleware([
         'index',
     ]);
     Route::post('login', [APILoginController::class, 'login']);
-    Route::get("protected",function(){
-        return response()->json('Authenticated');
-    })->middleware('auth:api');
+
+    Route::group(['middleware'=>'auth:sanctum'],function(){
+        Route::get("protected",function(){
+            return response()->json('Authenticated');
+        });
+        Route::post('logout', [APILoginController::class, 'logout']);
+    });
+});
+Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
+    Route::get('/csrf-cookie', [CsrfCookieController::class, 'show'])
+        ->middleware([
+            'api',
+            'universal',
+            InitializeTenancyByDomain::class // Use tenancy initialization middleware of your choice
+        ])->name('sanctum.csrf-cookie');
 });

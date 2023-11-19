@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Central\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Utils\ResponseHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -39,22 +40,37 @@ class LoginController extends BaseController
             'user'=>$user
         ];
 
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
+        $token = $user->createToken('Personal Access Token');
         if ($request->remember_me) {
             $token->expires_at = Carbon::now()->addMonths(1);
         } else {
             $token->expires_at = Carbon::now()->addWeeks(1);
         }
-        $token->save();
         $data= [
             'user'=>$user,
             'token_type' => 'Bearer',
-            'access_token' => $tokenResult->accessToken,
-            'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString()
+            'access_token' => $token,
         ];
 
     
         return $this->sendResponse($data, 'User logged in successfully.');
+    }
+    public function logout(Request $request)
+    {
+        /** @var ?User $user */
+        $user = auth()?->user();
+
+        if ($user) {
+            $user->tokens()->delete();
+            return ResponseHelper::response([
+                'message' => 'logged out successfully',
+                'is_loggedin' => false
+            ], ResponseHelper::HTTP_OK);
+        }
+        return ResponseHelper::response([
+            'message' => 'User is not logged in',
+            'is_loggedin' => false
+        ], ResponseHelper::HTTP_FORBIDDEN);
+
     }
 }

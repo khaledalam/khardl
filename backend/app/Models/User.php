@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use App\Models\TraderRequirement;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
-use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

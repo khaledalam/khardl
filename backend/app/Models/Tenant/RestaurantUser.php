@@ -4,9 +4,10 @@ namespace App\Models\Tenant;
 
 use Carbon\Carbon;
 use App\Packages\Msegat;
+use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
-use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
@@ -20,7 +21,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     protected $table ='users';
     protected $primaryKey = 'id';
-    // protected $guard_name = 'web';
+    protected $guard_name = 'web';
     protected $fillable = [
         'first_name',
         'last_name',

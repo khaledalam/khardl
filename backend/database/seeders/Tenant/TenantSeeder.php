@@ -22,11 +22,7 @@ class TenantSeeder extends Seeder
             BranchSeeder::class,
             UserSeeder::class,
         ]);
-        $client = new ClientRepository();
-
-        $client->createPasswordGrantClient(null, 'Default password grant client', 'http://your.redirect.path');
-        $client->createPersonalAccessClient(null, 'Default personal access client', 'http://your.redirect.path');
-
+        
 
     }
 }
