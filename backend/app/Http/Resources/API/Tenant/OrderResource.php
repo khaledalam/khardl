@@ -5,7 +5,7 @@ namespace App\Http\Resources\API\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class OrderResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,13 @@ class CategoryResource extends JsonResource
     {
         $data = [
             'id' => $this->id,
-            'name' => $this->category_name,
-            'created_at'=>$this->created_at,
-            'updated_at'=>$this->updated_at,
+            'transaction_id' => $this->transaction_id,
+            'total_price'=>$this->total_price,
+            'status'=>$this->status,
+            'payment_method'=>$this->payment_method,
+            'payment_status'=>$this->payment_status,
+            'shipping_address'=>$this->shipping_address,
+            'order_notes'=>$this->order_notes,
 
         ];
         if ($request->has('branch')) {
@@ -28,7 +32,7 @@ class CategoryResource extends JsonResource
             $data['user'] = $this->user;
         }
         if ($request->has('items')) {
-            $data['items'] = ItemResource::collection($this->items);
+            $data['items'] = OrderItemResource::collection($this->items);
         }
         return $data;
     }

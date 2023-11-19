@@ -26,6 +26,7 @@ use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\ItemController;
+use App\Http\Controllers\API\Tenant\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,6 +150,10 @@ Route::prefix('api')->middleware([
         Route::apiResource('categories',CategoryController::class)->only([
             'index'
         ]);
+        Route::apiResource('orders',OrderController::class)->only([
+            'index'
+        ]);
+        Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
         Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
         Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
         Route::post('logout', [APILoginController::class, 'logout']);
