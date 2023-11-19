@@ -20,7 +20,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     protected $table ='users';
     protected $primaryKey = 'id';
-    protected $guard_name = 'web';
+    // protected $guard_name = 'web';
     protected $fillable = [
         'first_name',
         'last_name',

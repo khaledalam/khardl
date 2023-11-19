@@ -12,17 +12,16 @@ use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\RestaurantController;
 use Stancl\Tenancy\Features\UserImpersonation;
-use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
+use App\Http\Controllers\API\Central\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
-
+use App\Http\Controllers\API\Tenant\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -130,11 +129,19 @@ Route::group([
         return Redirect::back();
     })->name('change.language');
 
+
+});
+
+Route::prefix('api')->middleware([
+    'api',
+    'tenant'
+])->group(function () {
     // API
-    Route::middleware(['api'])->prefix('api')->group(function () {
-        Route::apiResource('categories',CategoryController::class)->only([
-            'index',
-        ]);
-    });
-    
+    Route::apiResource('categories',CategoryController::class)->only([
+        'index',
+    ]);
+    Route::post('login', [APILoginController::class, 'login']);
+    Route::get("protected",function(){
+        return response()->json('Authenticated');
+    })->middleware('auth:api');
 });
