@@ -23,7 +23,9 @@ use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
-use App\Http\Controllers\API\Central\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\API\Tenant\ItemController;
+
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -139,23 +141,24 @@ Route::prefix('api')->middleware([
     'tenant'
 ])->group(function () {
     // API
-    Route::apiResource('categories',CategoryController::class)->only([
-        'index',
-    ]);
+   
     Route::post('login', [APILoginController::class, 'login']);
 
-    Route::group(['middleware'=>'auth:sanctum'],function(){
-        Route::get("protected",function(){
-            return response()->json('Authenticated');
-        });
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::apiResource('categories',CategoryController::class)->only([
+            'index'
+        ]);
+        Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
         Route::post('logout', [APILoginController::class, 'logout']);
     });
+
+    
 });
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
     Route::get('/csrf-cookie', [CsrfCookieController::class, 'show'])
         ->middleware([
-            'api',
+            'web',
             'universal',
-            InitializeTenancyByDomain::class // Use tenancy initialization middleware of your choice
+            InitializeTenancyByDomain::class 
         ])->name('sanctum.csrf-cookie');
 });

@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
-use App\Http\Controllers\API\Tenant\BaseAPIController;
+use App\Http\Controllers\API\Tenant\BaseRepositoryController;
 use App\Repositories\CategoryRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class CategoryController extends BaseAPIController
+class CategoryController extends BaseRepositoryController
 {
     public function __construct()
     {
-        $this->default_repository = new CategoryRepository();
+        $this->middleware(function ($request, $next) {
+            $this->default_repository = new CategoryRepository();
+            return $next($request);
+        });
     }
+   
 }

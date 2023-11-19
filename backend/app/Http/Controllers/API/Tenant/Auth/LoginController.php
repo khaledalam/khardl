@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Central\Auth;
+namespace App\Http\Controllers\API\Tenant\Auth;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -27,8 +27,8 @@ class LoginController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
         $credentials = request(['email', 'password']);
-
-        if (!Auth::attempt($credentials)) {
+    
+        if (!Auth::attempt($credentials) ||  !Auth::user()->isWorker()) {
             return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
 
@@ -59,18 +59,10 @@ class LoginController extends BaseController
     {
         /** @var ?User $user */
         $user = auth()?->user();
-
-        if ($user) {
-            $user->tokens()->delete();
-            return ResponseHelper::response([
-                'message' => 'logged out successfully',
-                'is_loggedin' => false
-            ], ResponseHelper::HTTP_OK);
-        }
+        $user->tokens()->delete();
         return ResponseHelper::response([
-            'message' => 'User is not logged in',
+            'message' => 'logged out successfully',
             'is_loggedin' => false
-        ], ResponseHelper::HTTP_FORBIDDEN);
-
+        ], ResponseHelper::HTTP_OK);
     }
 }

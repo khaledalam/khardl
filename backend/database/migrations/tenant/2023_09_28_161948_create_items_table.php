@@ -32,6 +32,7 @@ return new class extends Migration
             $table->json('selection_input_titles');
             $table->boolean('dropdown_required');
             $table->json('dropdown_input_names');
+            $table->boolean('availability')->default(true);
             $table->timestamps();
 
             $table->foreign('branch_id')->references('id')->on('branches');
