@@ -24,6 +24,7 @@ use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\ItemController;
 
 /*
@@ -149,6 +150,7 @@ Route::prefix('api')->middleware([
             'index'
         ]);
         Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
+        Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
         Route::post('logout', [APILoginController::class, 'logout']);
     });
 

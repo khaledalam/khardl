@@ -45,6 +45,10 @@ return new class extends Migration
             $table->boolean('sunday_closed')->default(false);
 
             $table->boolean('is_primary')->default(false);
+
+            $table->boolean('delivery_availability')->default(false);
+            $table->time('preparation_time_delivery')->nullable();
+
             $table->timestamps();
 
         });
