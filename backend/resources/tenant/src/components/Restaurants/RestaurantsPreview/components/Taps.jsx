@@ -10,7 +10,9 @@ export function Taps({ children, contentClassName = "" }) {
   const Language = sessionStorage.getItem('Language');
 
   function findActiveTap(a) {
-    return a.reduce((accumulator, currentValue, i) => {
+      console.log("findActiveTap", typeof a);
+
+      return a.reduce((accumulator, currentValue, i) => {
       if (currentValue.props.active) {
         return i;
       }

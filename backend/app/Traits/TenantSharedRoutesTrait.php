@@ -15,7 +15,13 @@ trait TenantSharedRoutesTrait
         return [
             'routes'=>[
                 ''=>"home",
-
+                'advantages'=>'advantages',
+                'clients'=>'clients',
+                'services'=>'services',
+                'privacy'=>'privacy',
+                'policies'=>'policies',
+                'prices'=>'prices',
+                'fqa'=>'fqa',
             ],
             'middleware'=>[
 
@@ -41,15 +47,15 @@ trait TenantSharedRoutesTrait
     {
          return [
             'routes'=>[
-                '/site-editor/restaurants/{branch_id}'=>"restaurants",
-                '/site-editor/restaurants/{branch_id}/Preview'=>"restaurants.preview",
-                '/site-editor/customers/{branch_id}'=>"customers",
-                '/site-editor/customers/{branch_id}/Preview'=>"customers.preview",
-                '/site-editor'=>'restaurant.site_editor',
+                '/site-editor/restaurants/{branch_id}'=>"restaurants.site_editor",
+                '/site-editor/restaurants/{branch_id}/preview'=>"restaurants.site_editor.preview",
+                '/site-editor/customers/{branch_id}'=>"customers.site_editor",
+                '/site-editor/customers/{branch_id}/preview'=>"customers.site_editor.preview",
+                '/site-editor'=>'site_editor',
             ],
             'middleware'=>[
                 'auth',
-                'verifiedPhone',
+//                'verifiedPhone',
             ]
         ];
 

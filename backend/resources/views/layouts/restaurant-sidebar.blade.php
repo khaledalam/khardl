@@ -179,7 +179,7 @@
                         </div>
                         <!-- Site Editor -->
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('restaurant.site_editor')}}">
+                            <a href="{{route('site_editor')}}">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -277,8 +277,8 @@
                         </div>
                         <!-- Services -->
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('restaurant.services')}}">
-                                <span class="{{ ($link == 'services' ) ? 'menu-link active' : 'menu-link ' }}">
+                            <a href="{{route('restaurant.service')}}">
+                                <span class="{{ ($link == 'service' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                             <span class="svg-icon svg-icon-2">

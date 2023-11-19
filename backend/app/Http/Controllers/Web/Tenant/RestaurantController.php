@@ -30,7 +30,7 @@ class RestaurantController extends BaseController
         $user = Auth::user();
         $branches = Branch::all();
 
-        return view('restaurant.services',
+        return view('restaurant.service',
             compact('user', 'branches'));
     }
 
