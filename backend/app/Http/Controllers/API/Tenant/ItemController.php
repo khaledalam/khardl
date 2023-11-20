@@ -17,9 +17,7 @@ class ItemController extends Controller
             'availability' => 'required|boolean',
         ]);
         $user = Auth::user();
-        $item = Item::
-        where('user_id',$user->id)
-        ->where('branch_id',$user->branch->id)
+        $item = Item::where('branch_id',$user->branch->id)
         ->findOrFail($item);
         $item->update(['availability'=>!$item->availability]);
         return $this->sendResponse(null, __('Item has been updated successfully.'));
