@@ -2,7 +2,6 @@
 
 namespace App\Models\Tenant;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class RestaurantStyle extends Model
@@ -10,7 +9,7 @@ class RestaurantStyle extends Model
     protected $table = 'restaurant_styles';
 
     protected $fillable = [
-        'restaurant_id',
+        'user_id',
         'logo',
         'logo_alignment',
         'category_style',
@@ -36,10 +35,10 @@ class RestaurantStyle extends Model
     ];
 
     /**
-     * Get the restaurant associated with this style.
+     * Get the user associated with this style.
      */
-    public function restaurant()
+    public function user()
     {
-        return $this->belongsTo(Restaurant::class);
+        return $this->belongsTo(RestaurantUser::class);
     }
 }

@@ -15,7 +15,7 @@ function EditorSwitcher() {
                Restaurants Editor
             </button>
          </Link>
-         <Link to='/site-editor/customers/'>
+         <Link to='/site-editor/customers'>
             <button className='bg-[var(--primary)] rounded-md p-2'>
                Customer Editor
             </button>

@@ -47,15 +47,15 @@ trait TenantSharedRoutesTrait
     {
          return [
             'routes'=>[
-                '/site-editor/restaurants/{branch_id}'=>"restaurants.site_editor",
-                '/site-editor/restaurants/{branch_id}/preview'=>"restaurants.site_editor.preview",
-                '/site-editor/customers/{branch_id}'=>"customers.site_editor",
-                '/site-editor/customers/{branch_id}/preview'=>"customers.site_editor.preview",
+                '/site-editor/restaurants'=>"restaurants.site_editor",
+                '/site-editor/restaurants/preview'=>"restaurants.site_editor.preview",
+                '/site-editor/customers'=>"customers.site_editor",
+                '/site-editor/customers/preview'=>"customers.site_editor.preview",
                 '/site-editor'=>'site_editor',
             ],
             'middleware'=>[
                 'auth',
-//                'verifiedPhone',
+                'verifiedPhone',
             ]
         ];
 
