@@ -164,6 +164,7 @@ Route::prefix('api')->middleware([
         Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
         Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
         Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
+        Route::get('branches/{branch}/delivery',[BranchController::class,'getDeliveryAvailability']);
         Route::post('logout', [APILoginController::class, 'logout']);
     });
 

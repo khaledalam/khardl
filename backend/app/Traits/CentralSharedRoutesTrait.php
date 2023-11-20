@@ -23,25 +23,24 @@ trait CentralSharedRoutesTrait
                 'fqa'=>'fqa',
                 'reset-password'=> 'reset-password',
                 'create-new-password'=> 'create-new-password',
-
             ],
             'middleware'=>[
-               
+
             ]
 
         ];
     }
-    
+
     public static function getGuestRoutes(): array
     {
         return [
             'routes'=>[
                 'register'=>'register',
+                'register?ref={url}'=>'register.promoter',
                 'login'=>'login'
             ],
             'middleware'=>[
                 'guest',
-               
             ]
         ];
     }

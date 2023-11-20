@@ -46,7 +46,8 @@ const App = () => {
    const showFooter = ![
       '/site-editor',
       '/login',
-      '/register',
+       '/register',
+       '/register/:url',
       '/reset-password',
       '/create-new-password',
       '/verification-phone',
@@ -98,9 +99,9 @@ const App = () => {
                    <Route path='/prices' element={<Prices />} />
                    <Route path='/fqa' element={<FQA />} />
 
-                  <Route element={<Layout />}>
+                   <Route element={<Layout />}>
                      <Route path='/login' element={<Login />} />
-                     <Route path='/register' element={<Register />} />
+                       <Route path='/register' element={<Register />} />
                   </Route>
 
                   {/*Editor*/}
