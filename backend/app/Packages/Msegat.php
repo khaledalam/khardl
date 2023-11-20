@@ -40,6 +40,14 @@ class Msegat
         
     }
     public static function sendOTP(string $number){
+        return [
+            'http_code'=>ResponseHelper::HTTP_OK,
+            'message'=> [
+                'code'=>1,
+                "message" => "Success",
+                "id" => 1234
+            ]
+        ];
         return self::send("sendOTPCode.php",[
             'number'=> $number,
             'lang'=>env('MSEGAT_LANG','En')
@@ -47,15 +55,7 @@ class Msegat
     }
     public static function sendFreeOTP(string $number){
        
-        // return [
-        //     'http_code'=>ResponseHelper::HTTP_OK,
-        //     'message'=> [
-        //         'code'=>1,
-        //         "message" => "Success",
-        //         "id" => 1234
-        //     ]
-        // ];
-
+   
         return self::send("sendsms.php",[
             'numbers'=> $number,
             'msg'=>"Pin Code is: 1234",
@@ -63,13 +63,13 @@ class Msegat
         ]);  
     }
     public static function verifyOTP(string $otp,?int $id){
-        // return [
-        //     'http_code'=>ResponseHelper::HTTP_OK,
-        //     'message'=> [
-        //         'code'=>1,
-        //         "message" => "Success",
-        //     ]
-        // ];
+        return [
+            'http_code'=>ResponseHelper::HTTP_OK,
+            'message'=> [
+                'code'=>1,
+                "message" => "Success",
+            ]
+        ];
         return self::send("verifyOTPCode.php",[
             'code'=>$otp,
             "id"=>$id,

@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\API\Central\Auth\LoginController;
-use App\Http\Controllers\API\Central\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('register', [RegisterController::class, 'register']);
-Route::post('login', [LoginController::class, 'login']);
+// Route::post('register', [RegisterController::class, 'register']);
+// Route::post('login', [LoginController::class, 'login']);
 //
 //Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
 //Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
@@ -33,3 +32,4 @@ Route::post('login', [LoginController::class, 'login']);
 //});
 
 //Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
+

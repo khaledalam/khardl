@@ -3,17 +3,21 @@
 namespace App\Utils;
 use App\Models\Tenant\Category;
 use App\Interfaces\CrudInterface;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\JsonResource;
+
 class DefaultRepositoryPattern implements CrudInterface
 {
-    protected Model $model;
+    protected Builder | Model | Collection $model;
     protected JsonResource $resource;
     protected $collection;
     public function all() 
     {
-        return $this->resource::collection($this->model::paginate());
+        return $this->resource::collection($this->model->paginate());
     }
+
 
     // public function getById(Category $category): Category
     // {

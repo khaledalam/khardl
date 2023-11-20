@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Controllers\API\Tenant;
+
+use Illuminate\Http\Request;
+use App\Traits\APIResponseTrait;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\OrderRepository;
+use App\Http\Controllers\API\Tenant\BaseRepositoryController;
+use App\Models\Tenant\Order;
+
+class OrderController extends BaseRepositoryController
+{
+    use APIResponseTrait;
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->default_repository = new OrderRepository();
+            return $next($request);
+        });
+    }
+    public function updateStatus($order,Request $request){
+        $request->validate([
+            'status' => 'required|in:accepted,cancelled,pending',
+        ]);
+        $user = Auth::user();
+        $order = Order::
+        where('branch_id',$user->branch->id)
+        ->findOrFail($order);
+        $order->update(['status'=>$request->status]);
+        return $this->sendResponse(null, __('Order has been updated successfully.'));
+    }
+   
+}

@@ -17,11 +17,17 @@ use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Tenant\Auth\LoginController;
+use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
+use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\API\Tenant\BranchController;
+use App\Http\Controllers\API\Tenant\ItemController;
+use App\Http\Controllers\API\Tenant\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,11 +136,36 @@ Route::group([
         return Redirect::back();
     })->name('change.language');
 
+
+});
+
+Route::prefix('api')->middleware([
+    'api',
+    'tenant'
+])->group(function () {
     // API
-    Route::middleware(['api'])->prefix('api')->group(function () {
+
+    Route::post('login', [APILoginController::class, 'login']);
+
+    Route::middleware('auth:sanctum')->group(function(){
         Route::apiResource('categories',CategoryController::class)->only([
-            'index',
+            'index'
         ]);
+        Route::apiResource('orders',OrderController::class)->only([
+            'index'
+        ]);
+        Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
+        Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
+        Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
+        Route::post('logout', [APILoginController::class, 'logout']);
     });
 
+});
+Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
+    Route::get('/csrf-cookie', [CsrfCookieController::class, 'show'])
+        ->middleware([
+            'web',
+            'universal',
+            InitializeTenancyByDomain::class
+        ])->name('sanctum.csrf-cookie');
 });

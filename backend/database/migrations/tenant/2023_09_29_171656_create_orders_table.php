@@ -13,16 +13,20 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('order_id');
+            $table->string('transaction_id')->unique()->nullable(); // This field is marked as unique to avoid duplicate entries
             $table->unsignedBigInteger('user_id');
-            $table->string('product_detail');
-            $table->string('buyer_email');
-            $table->string('restaurant_name');
-            $table->enum('status',['accepted','cancelled','pending']);
-            $table->timestamp('date')->nullable();
+            $table->unsignedBigInteger('branch_id')->nullable();
+            $table->decimal('total_price', 15, 2);
+            $table->string('status')->default('pending');
+            $table->string('payment_method');
+            $table->string('payment_status')->default('pending');
+            $table->text('shipping_address');
+            $table->text('order_notes')->nullable();
             $table->timestamps();
 
+            // Foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('set null');
         });
     }
 

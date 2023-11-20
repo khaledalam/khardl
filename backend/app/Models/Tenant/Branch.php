@@ -38,6 +38,8 @@ class Branch extends Model
         'sunday_open',
         'sunday_close',
         'sunday_closed',
+        'delivery_availability',
+        'preparation_time_delivery'
     ];
    
 

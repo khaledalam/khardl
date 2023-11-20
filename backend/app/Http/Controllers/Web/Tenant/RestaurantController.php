@@ -51,6 +51,7 @@ class RestaurantController extends BaseController
     public function addBranch(Request $request){
 
         if(!$this->can_create_branch()){
+            
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
         $validatedData = $request->validate([
@@ -159,7 +160,7 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        return true;
+        return false;
     }
 
 

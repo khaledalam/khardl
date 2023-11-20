@@ -561,12 +561,6 @@
 
 
 
-
->>>>>>> development
-
-
-
-
                         <!--begin::Post-->
                         <div class="post d-flex flex-column-fluid" id="kt_post">
                             <!--begin::Container-->
@@ -965,26 +959,6 @@
                         <!--end::Post-->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
                     <!--end::Content-->
 
@@ -1025,7 +999,6 @@
         </div>
         <!--end::Root-->
         <!--end::Main-->
->>>>>>> development
 
         <!--begin::Modal - Cancle branch-->
         <div class="modal fade" id="kt_modal_cancle_branch" tabindex="-1" aria-hidden="true">

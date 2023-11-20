@@ -12,17 +12,15 @@ class OrderItem extends Model
 
     protected $fillable = [
         'order_id',
-        'product_id',
+        'item_id',
         'quantity',
         'price',
-        'extras',
-        'size',
-        'preparation_time'
+        
     ];
 
-    protected $casts = [
-        'extras' => 'array', // Cast the JSON extras column to an array
-    ];
+    // protected $casts = [
+    //     'extras' => 'array', // Cast the JSON extras column to an array
+    // ];
 
     public function order()
     {
@@ -33,7 +31,10 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
-
+    public function item()
+    {
+        return $this->belongsTo(item::class);
+    }
     public function extras()
     {
         return $this->belongsToMany(ProductExtra::class, 'order_item_extras');
