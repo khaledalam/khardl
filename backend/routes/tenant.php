@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\API\Tenant\CustomerStyleController;
+use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use Illuminate\Support\Facades\App;
@@ -115,6 +117,11 @@ Route::group([
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
                 Route::any('/callback',[TapController::class, 'callback'])->name('tap.callback');
                 Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
+
+                Route::post('/restaurant-style', [RestaurantStyleController::class, 'save'])->name('restaurant.restaurant.style.save');
+                Route::post('/customer-style', [CustomerStyleController::class, 'save'])->name('restaurant.customer.style.save');
+                Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
+                Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
 
             });
             Route::middleware('worker')->group(function () {

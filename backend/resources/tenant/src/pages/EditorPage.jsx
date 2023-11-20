@@ -33,16 +33,15 @@ const EditorPage = () => {
       }
    }, [])
    useEffect(() => {
-      if (location.pathname === `/site-editor/restaurants/${parseInt(branch_id)}`) {
+      if (location.pathname === `/site-editor/restaurants`) {
          setTemplate('restaurants')
       }
-      if (location.pathname === `/site-editor/customers/${parseInt(branch_id)}`) {
+      if (location.pathname === `/site-editor/customers`) {
          setTemplate('customers')
       }
       console.log('entered editorPage')
    }, [location.pathname])
 
-    console.log("gdsgsagd")
    return (
       <div className='flex overflow-x-hidden'>
              {position === 'absolute' ? (

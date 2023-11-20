@@ -24,7 +24,7 @@ export function Taps({ children, contentClassName = '' }) {
    const { branch_id } = useParams()
 
    useEffect(() => {
-      if (location.pathname === `/restaurants/${parseInt(branch_id)}`) {
+      if (location.pathname === `/restaurants`) {
          setTemplate('restaurants')
       }
    }, [location.pathname])

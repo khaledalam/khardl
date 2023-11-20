@@ -2,9 +2,7 @@
 
 namespace App\Models\Tenant;
 
-use App\Models\Tenant\RestaurantUser;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CustomerStyle extends Model
 {
@@ -21,6 +19,9 @@ class CustomerStyle extends Model
         'font_alignment'
     ];
 
+    /**
+     * Get the user associated with this style.
+     */
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);
