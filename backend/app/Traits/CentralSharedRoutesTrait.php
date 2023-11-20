@@ -36,7 +36,6 @@ trait CentralSharedRoutesTrait
         return [
             'routes'=>[
                 'register'=>'register',
-                'register?ref={url}'=>'register.promoter',
                 'login'=>'login'
             ],
             'middleware'=>[

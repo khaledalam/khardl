@@ -96,7 +96,6 @@ const App = () => {
                   <Route element={<Layout />}>
                      <Route path='/login' element={<Login />} />
                       <Route path='/register' element={<Register />} />
-                      <Route path='/register?ref=:url' element={<Register />} />
                   </Route>
 
                   {/*Editor*/}
