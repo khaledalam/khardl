@@ -62,10 +62,10 @@ const Register = () => {
          //     setError(error.response.data.errors);
          // }
 
-         Object.keys(error.response.data.errors).forEach((field) => {
-            console.log(error.response.data.errors[field][0]);
-            setError(field, {'message':error.response.data.errors[field][0]});
-         });
+         // Object.keys(error.response.data.errors).forEach((field) => {
+         //    console.log(error.response.data.errors[field][0]);
+         //    setError(field, {'message':error.response.data.errors[field][0]});
+         // });
          toast.error(`${t('Account creation failed')}`);
       }
 

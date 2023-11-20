@@ -62,9 +62,9 @@ const Register = () => {
          //     setError(error.response.data.errors);
          // }
 
-         Object.keys(error.response.data.errors).forEach((field) => {
-            setError(field, {'message':error.response.data.errors[field][0]});
-         });
+         // Object.keys(error.response.data.errors).forEach((field) => {
+         //    setError(field, {'message':error.response.data.errors[field][0]});
+         // });
          toast.error(`${t('Account creation failed')}`);
       }
 
@@ -142,9 +142,9 @@ const Register = () => {
                                     placeholder={t('Email')}
                                     {...register('email', { required: true })}
                                  />
-                                 {errors?.email && (
+                                 {errors.email && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                        {errors?.email[0] ||   t('Email Error') }
+                                        {errors.email.message ||   t('Email Error') }
                                     </span>
                                  )}
                               </div>
@@ -157,12 +157,12 @@ const Register = () => {
                                  <input
                                     type='tel'
                                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                                    placeholder={'e.g. +971 582936628'}
+                                    placeholder={'e.g. +966 582936628'}
                                     {...register('phone', {
                                        required: true,
                                     })}
                                     minLength={9}
-                                    maxLength={9}
+                                    maxLength={13}
                                  />
                                  {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>

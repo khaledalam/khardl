@@ -137,9 +137,12 @@
                                           <tbody>
                                             @foreach ($items as $item)
                                               <tr>
+                                                <td>
+                                                        @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>@endif
+                                                </td>
                                                   <!--begin::Author-->
-                                                  <td class="text-center w-25">
-                                                      <span class="text-gray fw-bold fs-17 mx-15">123-2023</span>
+                                                  <td class="text-center">
+                                                      <span class="text-gray fw-bold fs-17">123-2023</span>
                                                   </td>
                                                   <!--end::Author-->
                                                   <!--begin::Title-->
@@ -263,6 +266,22 @@
                             </label>
                             <!--end::Label-->
                             <input type="file" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" />
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">Item availability</span>
+                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
+                                </label>
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <input type="checkbox" name="availability" checked value="1"> 
+                                </label>
+                            </div>
+                     
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->

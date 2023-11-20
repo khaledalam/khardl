@@ -27,6 +27,7 @@
                                 <!--begin::Image-->
                                 
                                     <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
+                                        <input id="pac-input" class="form-control" type="text" placeholder="Search for place">
                                         <div id="map{{ $branch->id }}" style="width: 100%; height: 90%; border:0;"></div>
                                             <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">  
                                                 @csrf  
@@ -671,7 +672,8 @@
         // Listen for a place selection
 
         google.maps.event.addListener(map, 'click', function (event) {
-        // If a marker exists, remove it
+        
+            // If a marker exists, remove it
         if (marker) {
             marker.setMap(null);
         }
@@ -680,6 +682,41 @@
         marker = new google.maps.Marker({
             map: map,
             position: event.latLng,
+        });
+        const input = document.getElementById("pac-input");
+        const options = {
+            fields: ["formatted_address", "geometry", "name"],
+            strictBounds: false,
+        };
+        const autocomplete = new google.maps.places.Autocomplete(input, options);
+        autocomplete.bindTo("bounds", map);
+        autocomplete.addListener("place_changed", () => {
+                infowindow.close();
+                marker.setVisible(false);
+
+                const place = autocomplete.getPlace();
+
+                if (!place.geometry || !place.geometry.location) {
+                // User entered the name of a Place that was not suggested and
+                // pressed the Enter key, or the Place Details request failed.
+                window.alert("No details available for input: '" + place.name + "'");
+                return;
+                }
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+                selectedPlacePosition = { lat, lng };
+                updateLocationInput(selectedPlacePosition, branchId);
+                // If the place has a geometry, then present it on a map.
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
+                infowindow.open(map, marker);
         });
 
         // Update the hidden input with the clicked location's latitude and longitude
