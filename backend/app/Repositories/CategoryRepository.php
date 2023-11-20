@@ -13,8 +13,7 @@ class CategoryRepository extends DefaultRepositoryPattern
     public function __construct()
     {
         $user= Auth::user();
-        $this->model = Category::where('user_id',$user->id)
-        ->where('branch_id',$user->branch->id);
+        $this->model = Category::where('branch_id',$user->branch->id);
         $this->resource = new CategoryResource($this->model);
     }
     
