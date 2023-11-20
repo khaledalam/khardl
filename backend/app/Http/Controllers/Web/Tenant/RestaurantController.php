@@ -304,11 +304,11 @@ class RestaurantController extends BaseController
 
             $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
 
-            while (Storage::disk('private')->exists('items/' . $filename)) {
+            while (Storage::disk('public')->exists('items/' . $filename)) {
                 $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
             }
 
-            $photoFile->storeAs('items', $filename, 'private');
+            $photoFile->storeAs('items', $filename, 'public');
 
             DB::beginTransaction();
 
