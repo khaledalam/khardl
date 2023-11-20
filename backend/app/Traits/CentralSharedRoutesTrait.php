@@ -23,15 +23,14 @@ trait CentralSharedRoutesTrait
                 'fqa'=>'fqa',
                 'reset-password'=> 'reset-password',
                 'create-new-password'=> 'create-new-password',
-
             ],
             'middleware'=>[
-               
+
             ]
 
         ];
     }
-    
+
     public static function getGuestRoutes(): array
     {
         return [
@@ -41,7 +40,6 @@ trait CentralSharedRoutesTrait
             ],
             'middleware'=>[
                 'guest',
-               
             ]
         ];
     }

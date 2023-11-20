@@ -2,13 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
-use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
@@ -16,6 +14,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -120,7 +119,17 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
     foreach ($groups as $group) {
         Route::middleware($group['middleware'])->group(function() use ($group){
             foreach ($group['routes'] as $route => $name) {
-                Route::get($route, static function(Request $request) {
+                Route::get($route, static function(Request $request) use ($route) {
+
+                    if ($route === 'register') {
+
+                        $promoter = $request->get('ref');
+
+                        if ($promoter) {
+                            RegisterController::increasePromotersEntered($promoter);
+                        }
+                    }
+
                     return view('central');
                 })->name($name);
             }

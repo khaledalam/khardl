@@ -128,7 +128,7 @@ class RegisterController extends BaseController
         }
 
         $user = User::where('email', $request->email)->first();
-    
+
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
 
@@ -139,6 +139,38 @@ class RegisterController extends BaseController
         });
 
         return $this->sendResponse(null, 'Verification code sent to email.');
+    }
+
+    public static function increasePromotersEntered($url){
+        $urlRecord = DB::table('promoters')->where('url', $url)->first();
+
+        if (!$urlRecord) {
+            abort(404);
+        }
+
+        $key = 'promoter_entered_' . $url . '_' . request()?->ip();
+
+        if (!session()->has($key)) {
+            DB::table('promoters')
+                ->where('url', $url)
+                ->increment('entered', 1);
+
+            session([$key => true]);
+        }
+    }
+
+    // @TODO: register
+    public static function increasePromotersRegistered($url){
+
+        $key = 'promoter_entered_' . $url . '_' . request()?->ip();
+
+        if (session()->has($key)) {
+            DB::table('promoters')
+                ->where('url', $url)
+                ->increment('registered', 1);
+
+            session()->remove($key);
+        }
     }
 
     public function verify(Request $request): JsonResponse

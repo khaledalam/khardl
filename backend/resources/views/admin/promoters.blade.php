@@ -127,7 +127,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="https://khardl.com/register/{{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $promoter->url }}</a>
+                                                    <a href="/register/?ref={{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $promoter->url }}</a>
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $promoter->entered }}</span>
@@ -152,7 +152,7 @@
                                                         </button>
                                                       </form>
                                                 </td>
-                                            
+
                                             </tr>
                                         @endforeach
                                       </tbody>
@@ -161,7 +161,7 @@
                                   <!--end::Table-->
                               </div>
                               <!--end::Table container-->
-                              
+
                           </div>
                           <!--begin::Body-->
                       </div>
@@ -181,13 +181,13 @@
                                 </a>
                             </li>
                         @endif
-                
+
                         @for ($page = max(1, $promoters->currentPage() - 2); $page <= min($promoters->lastPage(), $promoters->currentPage() + 2); $page++)
                             <li class="page-item {{ $page == $promoters->currentPage() ? 'active' : '' }}">
                                 <a href="{{ $promoters->url($page) }}" class="page-link">{{ $page }}</a>
                             </li>
                         @endfor
-                
+
                         @if ($promoters->hasMorePages())
                             <li class="page-item next">
                                 <a href="{{ $promoters->nextPageUrl() }}" class="page-link">
@@ -215,9 +215,9 @@
                         deleteButtons.forEach(function(button) {
                             button.addEventListener('click', function(event) {
                                 event.preventDefault();
-                                
+
                                 var form = button.closest('.delete-form');
-                                
+
                                 Swal.fire({
                                     title: '{{ __('messages.are-you-sure') }}',
                                     text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",

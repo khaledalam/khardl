@@ -20,7 +20,11 @@
                                   <!--begin::Aside content-->
                                   <div class="card-body">
                                       <!--begin::Button-->
-                                      <p class="btn btn-primary text-uppercase w-100 mb-10">{{ __('messages.all-categories') }}</p>
+                                      <p class="btn btn-primary text-uppercase w-100 mb-10">
+                                          <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">
+                                            {{ __('messages.all-categories') }}
+                                          </a>
+                                      </p>
                                       <!--end::Button-->
                                       <!--begin::Menu-->
                                       <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
@@ -53,7 +57,7 @@
                                                 <!--end::Inbox-->
                                             </div>
                                           @endforeach
-                                          
+
                                           <!--end::Menu item-->
                                           <!--begin::Menu item-->
                                           <div class="menu-item">
@@ -81,7 +85,7 @@
                                               </form>
                                           </div>
                                           <!--end::Menu item-->
-                                          
+
                                       </div>
                                       <!--end::Menu-->
                                   </div>
@@ -102,7 +106,7 @@
                                       <!--end::Actions-->
                                       <!--begin::Pagination-->
                                       <div class="d-flex align-items-center flex-wrap gap-2">
-                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('messages.add-new-item') }}         
+                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('messages.add-new-item') }}
                                               <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
                                               <span class="svg-icon svg-icon-2 me-3">
                                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -126,7 +130,7 @@
                                               </span>
                                               <!--end::Svg Icon-->
                                             </button>
-                                          </form>               
+                                          </form>
                                       </div>
                                       <!--end::Pagination-->
                                   </div>
@@ -177,7 +181,7 @@
                                                         </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
-                                                        
+
                                                         <div class="menu-item px-3">
                                                             <form class="delete-form" action="{{ route('restaurant.delete-item', ['id' => $item->id]) }}" method="POST">
                                                                 @method('DELETE')
@@ -205,7 +209,7 @@
                                                           <!--end::Svg Icon--> </a>
                                                   </td>
                                               </tr>
-                                              
+
                                           </tbody>
                                           <!--end::Table body-->
                                       </table>
@@ -304,7 +308,7 @@
                                 <input type="number" required name="calories" class="form-control form-control-solid ps-12" />
                             </div>
                             <!--end::Col-->
-                            
+
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -362,7 +366,7 @@
                         </div>
                         <!--end::Input group-->
 
-                        
+
 
 
                         <!--begin::Input group-->
@@ -408,7 +412,7 @@
     </div>
     <!--end::Modal - New Target-->
 
-        
+
     <!--begin::Scrolltop-->
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
@@ -431,9 +435,9 @@
                     deleteButtons.forEach(function(button) {
                         button.addEventListener('click', function(event) {
                             event.preventDefault();
-                            
+
                             var form = button.closest('.delete-form');
-                            
+
                             Swal.fire({
                                 title: '{{ __('messages.are-you-sure') }}',
                                 text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
