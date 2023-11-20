@@ -17,14 +17,22 @@ import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword'
 import EditorPage from './pages/EditorPage'
 import RestaurantsPreview from './components/Restaurants/RestaurantsPreview/Preview'
+import RestaurantsEditor from './components/Restaurants/RestaurantsEditor/Editor'
 import CustomersPreview from './components/Customers/CustomersPreview/Preview'
 import EditorSwitcher from './pages/EditorSwitcher'
 import Protected from './Protected'
-
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Layout from './components/Layout/Layout'
 import Logout from './components/Logout/Logout'
 import { useAuthContext } from './components/context/AuthContext'
+import TermsPolicies from "../../landing-page/src/pages/TermsPoliciesPrivacy/TermsPolicies";
+import Privacy from "../../landing-page/src/pages/TermsPoliciesPrivacy/Privacy";
+import Advantages from "../../landing-page/src/pages/Advantages/Advantages";
+import Clients from "../../landing-page/src/pages/Clients/clients";
+import Services from "../../landing-page/src/pages/Services/services";
+import Prices from "../../landing-page/src/pages/Prices/prices";
+import FQA from "../../landing-page/src/pages/FQA/fqa";
+import CustomerEditor from "./components/Customers/CustomersEditor/Editor";
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
@@ -34,11 +42,12 @@ const App = () => {
    const { loading } = useAuthContext()
    const showHeader = !['/site-editor', '/policies', '/privacy'].includes(
       location.pathname
-   )
+   );
    const showFooter = ![
       '/site-editor',
       '/login',
-      '/register',
+       '/register',
+       '/register/:url',
       '/reset-password',
       '/create-new-password',
       '/verification-phone',
@@ -82,10 +91,17 @@ const App = () => {
                      element={<Protected Cmp={CreateNewPassword} />}
                   />
 
+                   <Route path='/policies' element={<TermsPolicies />} />
+                   <Route path='/privacy' element={<Privacy />} />
+                   <Route path='/advantages' element={<Advantages />} />
+                   <Route path='/clients' element={<Clients />} />
+                   <Route path='/services' element={<Services />} />
+                   <Route path='/prices' element={<Prices />} />
+                   <Route path='/fqa' element={<FQA />} />
 
-                  <Route element={<Layout />}>
+                   <Route element={<Layout />}>
                      <Route path='/login' element={<Login />} />
-                     <Route path='/register' element={<Register />} />
+                       <Route path='/register' element={<Register />} />
                   </Route>
 
                   {/*Editor*/}
@@ -97,20 +113,21 @@ const App = () => {
                      <Route path='/site-editor' element={<EditorSwitcher />} />
 
                      <Route
-                        path='/site-editor/restaurants/:branch_id'
+                        path='/site-editor/restaurants'
                         element={<EditorPage />}
                      />
                      <Route
-                        path='/site-editor/restaurants/:branch_id/Preview'
+                        path='/site-editor/restaurants/preview'
                         element={<RestaurantsPreview />}
                      />
+                      {/*/site-editor/customers/preview*/}
                      <Route
                         path='/dashboard'
                         element={<CustomersPreview />}
                      />
                      <Route
-                        path='/site-editor/customers/:branch_id/Preview'
-                        element={<CustomersPreview />}
+                        path='/site-editor/customers'
+                        element={<EditorPage />}
                      />
                   </Route>
                </Routes>

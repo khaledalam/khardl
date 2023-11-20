@@ -20,6 +20,11 @@ function Header() {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const divWidth = useSelector((state) => state.divWidth.value);
 
+    console.log(buttons);
+
+    return;
+
+
     function showMeDetailesItem() {
         if (!showDetailesItem) {
             setShowDetailesItem(true);
@@ -38,29 +43,29 @@ function Header() {
     };
     const renderButton = (button, component, fill) => {
         const buttonStyle = {
-            border: `1px solid ${button.color}`,
-            borderRadius: button.shape,
+            border: `1px solid ${button?.color}`,
+            borderRadius: button?.shape,
             color: "black",
-            backgroundColor: fill ? button.color : 'transparent',
+            backgroundColor: fill ? button?.color : 'transparent',
         };
 
         return (
             <div className='relative'>
-                {buttons[2].id === button.id ?
+                {buttons[2].id === button?.id ?
                     <div>
                         <button
                             style={buttonStyle}
                             className='p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                             onClick={showMeDetailesItem}
                         >
-                            {button.text}
+                            {button?.text}
                         </button>
-                        {button.id === isOpen &&
+                        {button?.id === isOpen &&
                             <Toolbar
-                                selectedText={button.text}
-                                selectedColor={button.color}
-                                selectedShape={button.shape}
-                                buttonId={button.id}
+                                selectedText={button?.text}
+                                selectedColor={button?.color}
+                                selectedShape={button?.shape}
+                                buttonId={button?.id}
                                 lastButton={true}
                             />
                         }

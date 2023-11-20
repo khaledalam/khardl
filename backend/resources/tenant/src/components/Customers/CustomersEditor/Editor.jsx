@@ -31,7 +31,7 @@ const Editor = () => {
         console.error('Error fetching data:', error);
       }
     };
-  
+
     useEffect(() => {
       fetchData();
     }, []); */

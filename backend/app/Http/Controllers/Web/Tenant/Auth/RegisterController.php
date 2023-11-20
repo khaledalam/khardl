@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Web\Tenant\Auth;
 
 
-
 use Carbon\Carbon;
-use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -14,13 +12,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Tenant\RestaurantUser;
 use App\Providers\RouteServiceProvider;
-use App\Rules\PhoneIsAlreadyRegistered;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Tenant\OTPRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\Tenant\CustomerRegisterRequest;
+use App\Http\Controllers\API\Central\Auth\RegisterController as RegisterControllerCentral;
+
 
 class RegisterController extends BaseController
 {
@@ -44,7 +43,7 @@ class RegisterController extends BaseController
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-   
+
 
     /**
      * Get a validator for an incoming registration request.
@@ -62,26 +61,6 @@ class RegisterController extends BaseController
             'password' => 'required|string|min:8|confirmed',
             'c_password' => 'required|same:password',
         ]);
-    }
-
-    public function showRegisterForm($url){
-        $urlRecord = DB::table('promoters')->where('url', $url)->first();
-
-        if (!$urlRecord) {
-            abort(404);
-        }
-
-        $key = 'promoter_entered_' . $url . '_' . request()?->ip();
-
-        if (!session()->has($key)) {
-            DB::table('promoters')
-                ->where('url', $url)
-                ->increment('entered', 1);
-
-            session([$key => true]);
-        }
-
-        return view('auth.register', ['url' => $urlRecord]);
     }
 
     /**
@@ -111,15 +90,19 @@ class RegisterController extends BaseController
 
     public function register(CustomerRegisterRequest $request)
     {
-       
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
         $user = RestaurantUser::create($input);
-   
+
         $success['name'] =  "$user->first_name $user->last_name";
         Auth::login($user);
         $this->sendVerificationSMSCode($request);
+
+        //check promoter registration
+        RegisterControllerCentral::increasePromotersRegistered();
+
+
         return $this->sendResponse($success, 'Customer registered successfully.');
     }
 
@@ -151,7 +134,7 @@ class RegisterController extends BaseController
         // If we've reached here, the verification code is incorrect
         // Note: You may want to track the number of incorrect attempts and handle them accordingly.
         return $this->sendResponse(null, 'Phone verified successfully!');
-      
+
     }
     public function checkAttempt($user){
         $today = Carbon::today();

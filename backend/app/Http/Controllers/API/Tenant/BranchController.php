@@ -13,7 +13,7 @@ use App\Http\Controllers\API\BaseController;
 class BranchController extends Controller
 {
     use APIResponseTrait;
-    
+
    public function updateDelivery($branch,Request $request){
         $request->validate([
             'delivery_availability' => 'required_without_all:preparation_time_delivery|boolean',
@@ -32,5 +32,18 @@ class BranchController extends Controller
         return $this->sendResponse(null, __('Branch has been updated successfully.'));
 
    }
-   
+
+    public function getDeliveryAvailability($branch,Request $request){
+        $user = Auth::user();
+        $branch = Branch::where('id',$branch)
+            ->findOrFail($user->branch->id);
+
+        return response()->json([
+            'branch_id' => $user->branch->id,
+            'preparation_time_delivery' => $branch->preparation_time_delivery,
+            'availability' => $branch->delivery_availability
+        ]);
+
+    }
+
 }

@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', 'Services')
+@section('title', 'Service')
 
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -139,7 +139,7 @@
                                 </div>
 
 
-                                <!-- Services -->
+                                <!-- Service -->
                                 <div class="menu-item show here menu-accordion">
                                 <span class="menu-link active">
                                     <span class="menu-icon">
@@ -150,7 +150,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <a href="#">
-                                        <span class="menu-title">Services</span>
+                                        <span class="menu-title">Service</span>
                                     </a>
                                 </span>
 
@@ -561,12 +561,6 @@
 
 
 
-
->>>>>>> development
-
-
-
-
                         <!--begin::Post-->
                         <div class="post d-flex flex-column-fluid" id="kt_post">
                             <!--begin::Container-->
@@ -965,26 +959,6 @@
                         <!--end::Post-->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
                     <!--end::Content-->
 
@@ -1025,7 +999,6 @@
         </div>
         <!--end::Root-->
         <!--end::Main-->
->>>>>>> development
 
         <!--begin::Modal - Cancle branch-->
         <div class="modal fade" id="kt_modal_cancle_branch" tabindex="-1" aria-hidden="true">

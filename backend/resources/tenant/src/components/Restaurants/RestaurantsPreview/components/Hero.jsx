@@ -12,7 +12,7 @@ function Hero() {
     const shapeImageShape = sessionStorage.getItem('shapeImageShape');
     const selectBanner = sessionStorage.getItem('selectBanner');
     const images = JSON.parse(sessionStorage.getItem('images'));
-    const [uploadedImages, setUploadedImages] = useState(images.image);
+    const [uploadedImages, setUploadedImages] = useState(images?.image);
 
     const dispatch = useDispatch();
     const handleImageChange = event => {

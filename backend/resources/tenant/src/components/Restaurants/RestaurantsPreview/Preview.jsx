@@ -8,7 +8,8 @@ import MenuItems from "./components/menuItems";
 import { useTranslation } from "react-i18next";
 import Logo from './components/Logo';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
-import { categories, branches } from '../../../data/data';
+// import { categories, branches } from '../../../data/data';
+import AxiosInstance from "../../../axios/axios";
 
 const Preview = () => {
     const selectedCategory = sessionStorage.getItem('selectedCategory');
@@ -17,20 +18,33 @@ const Preview = () => {
     const { branch_id } = useParams();
     const { t } = useTranslation();
     const [branch, setBranch] = useState([]);
+    const [branches, setBranches] = useState([]);
+    const [categories, setCategories] = useState([]);
     const selectedFont = sessionStorage.getItem('selectedFont');
 
-  /*   const fetchData = async () => {
-    try {
-      const response = await fetch('https://khardl.com/api/branches');
-      const data = await response.json();
-      setBranch(data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []); */
+
+    const fetchData = async () => {
+        try {
+            const response = await AxiosInstance.get(`api/categories?items&user&branch`)
+
+            console.log("SAS>ASAS>>>", response)
+            if (response.data) {
+                console.log(response.data)
+
+                setCategories(response.data?.data);
+
+            } else {
+            }
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
+    };
+
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     useEffect(() => {
       if (branches.length > 0) {
@@ -64,7 +78,11 @@ const Preview = () => {
         <div>
           <div>
             <div className={`px-[30px] text-xl`}>
-              <Taps
+
+                {categoriesForBranch?.length > 0 ?
+                    <>
+                        <h2>Categories:</h2>
+                    <Taps
                 contentClassName={`
         bg-[var(--secondary)] ${selectedCategory === `${t("Carousel")}` ? `flex justify-center`:''} text-xl
         ${selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}` ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
@@ -73,15 +91,14 @@ const Preview = () => {
                       key={i}
                     component={
                       <MenuItems
-                        category_id={category.category_id}
-                        branch_id={category.branch_id}
+                        items={category?.items}
                       />
                     }
                     contentClassName="text-black">
-                    {category.category_name}
+                    {category?.name}
                   </Tap>
                 ))}
-              </Taps>
+              </Taps></> : <h2>No categories of this branch yet!</h2>}
             </div>
           </div>
         </div>

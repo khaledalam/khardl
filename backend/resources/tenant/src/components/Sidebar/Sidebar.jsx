@@ -4,6 +4,8 @@ import Section from './Section'
 import Edit from './Edit'
 import { useTranslation } from 'react-i18next'
 import {Link, useLocation, useParams} from 'react-router-dom'
+import {toast} from "react-toastify";
+import AxiosInstance from "../../axios/axios";
 
 const Sidebar = () => {
    const [position, setPosition] = useState('static')
@@ -28,13 +30,49 @@ const Sidebar = () => {
    }, [])
 
    useEffect(() => {
-      if (location.pathname === `/site-editor/restaurants/${parseInt(branch_id)}`) {
+      if (location.pathname === `/site-editor/restaurants`) {
          setTemplate('restaurants')
       }
-      if (location.pathname === `/site-editor/customers/${parseInt(branch_id)}`) {
+      if (location.pathname === `/site-editor/customers`) {
          setTemplate('customers')
       }
    }, [location.pathname])
+
+    const handleSaveStyle = async () => {
+
+       console.log("action save style");
+
+       let inputs = {};
+       if (template === 'restaurants') {
+           // inputs.
+
+       } else if (template === 'customers') {
+
+       } else {
+           toast.error(`Invalid save style action, template not set`);
+           return;
+       }
+
+        try {
+            const response = await AxiosInstance.post(`restaurant-style`, {
+                ...inputs
+            })
+
+            console.log(response)
+            if (response.data) {
+                const responseData = await response.json()
+                console.log(responseData)
+
+
+                setBranch(data);
+
+            } else {
+            }
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
+    };
 
    return (
       <div
@@ -54,8 +92,8 @@ const Sidebar = () => {
                    <Tap component={<Edit />}  key={'t2'}>{t('Edit')}</Tap>
                 </Taps>
                 <div className={"flex  justify-around w-[100%]"}>
-                    <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"/preview"} href={"/preview"}>Preview</Link>
-                    <Link className={"flex justify-center content-center bg-[var(--primary)] w-[50%]"} to={"/preview"} href={"/preview"}>Save</Link>
+                    <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"/preview"} target={"_blank"} href={"/preview"}>Preview</Link>
+                    <Link className={"flex justify-center content-center bg-[var(--primary)] w-[50%]"} onClick={handleSaveStyle}>Save</Link>
                 </div>
             </>
          )}

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->decimal('total_price', 15, 2);
-            $table->string('status')->default('pending');
+            $table->enum('status',['accepted','cancelled','pending'])->default('pending');
             $table->string('payment_method');
             $table->string('payment_status')->default('pending');
             $table->text('shipping_address');

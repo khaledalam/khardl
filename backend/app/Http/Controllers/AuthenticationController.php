@@ -91,7 +91,7 @@ class AuthenticationController extends Controller
             return ResponseHelper::response([
                 'message' => 'User is not logged in',
                 'is_loggedin' => false
-            ], ResponseHelper::HTTP_FORBIDDEN);
+            ], ResponseHelper::HTTP_OK);
         }
         return redirect()->route("login");
     }

@@ -130,8 +130,12 @@ const DetailesItem = ({
               </div>
               <div className="modal-body p-5 w-full h-full">
                 <div className="w-full h-[150px] bg-center bg-cover"
-                  style={shapeImageShape === "14px" ? { padding: "5px", borderRadius: shapeImageShape, backgroundImage: `url(${image})` } : { borderRadius: shapeImageShape, backgroundImage: `url(${image})` }}
-                ></div>
+    style={shapeImageShape === "14px" ? {
+        padding: "5px",
+        borderRadius: shapeImageShape,
+        backgroundImage: `url(${image})`
+    } : {borderRadius: shapeImageShape, backgroundImage: `url(${image})`}}
+    />
                 <div className="flex justify-between items-center my-3">
                   <div className="text-[18px] font-semibold">{title}</div>
                   <div className="text-[18px] font-semibold">{calories} {t("calories")} </div>

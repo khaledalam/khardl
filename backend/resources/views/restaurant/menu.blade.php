@@ -19,7 +19,11 @@
                                   <!--begin::Aside content-->
                                   <div class="card-body">
                                       <!--begin::Button-->
-                                      <p class="btn btn-khardl text-uppercase w-100 mb-10">{{ __('messages.all-categories') }}</p>
+{{--                                      <p class="btn btn-khardl text-uppercase w-100 mb-10">--}}
+{{--                                          <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">--}}
+{{--                                            {{ __('messages.all-categories') }}--}}
+{{--                                          </a>--}}
+{{--                                      </p>--}}
                                       <!--end::Button-->
                                       <!--begin::Menu-->
                                       <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
@@ -36,7 +40,7 @@
                                                 <!--end::Inbox-->
                                             </div>
                                           @endforeach
-                                          
+
                                           <!--end::Menu item-->
                                           <!--begin::Menu item-->
                                           <div class="menu-item">
@@ -64,7 +68,7 @@
                                               </form>
                                           </div>
                                           <!--end::Menu item-->
-                                          
+
                                       </div>
                                       <!--end::Menu-->
                                   </div>
@@ -85,7 +89,7 @@
                                       <!--end::Actions-->
                                       <!--begin::Pagination-->
                                       {{-- <div class="d-flex align-items-center flex-wrap gap-2">
-                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">Add new item         
+                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">Add new item
                                               <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
                                               <span class="svg-icon svg-icon-2 me-3">
                                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -100,7 +104,7 @@
                                                 document.addEventListener("DOMContentLoaded", function () {
                                                     document.getElementById("delete-category").addEventListener("click", function (e) {
                                                         e.preventDefault();
-                                            
+
                                                         // Show SweetAlert confirmation dialog
                                                         Swal.fire({
                                                             title: 'Are you sure?',
@@ -117,7 +121,7 @@
                                                             }
                                                         });
                                                     });
-                                            
+
                                                     function deleteCategory() {
                                                         // Make an Ajax request to the delete route using POST method
                                                         fetch("{{ route('restaurant.delete-category', ['id' => $category->id]) }}", {
@@ -144,8 +148,8 @@
                                                     }
                                                 });
                                             </script>
-                                        
-                                        
+
+
                                       </div> --}}
                                       <!--end::Pagination-->
                                   </div>
@@ -188,7 +192,7 @@
                                                           <!--end::Svg Icon--> </a>
                                                   </td>
                                               </tr>
-                                              
+
                                           </tbody>
                                           <!--end::Table body-->
                                       </table>
@@ -270,7 +274,7 @@
                                 <input class="form-control form-control-solid ps-12" />
                             </div>
                             <!--end::Col-->
-                            
+
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -328,7 +332,7 @@
                         </div>
                         <!--end::Input group-->
 
-                        
+
 
 
                         <!--begin::Input group-->
@@ -374,7 +378,7 @@
     </div>
     <!--end::Modal - New Target-->
 
-        
+
     <!--begin::Scrolltop-->
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
