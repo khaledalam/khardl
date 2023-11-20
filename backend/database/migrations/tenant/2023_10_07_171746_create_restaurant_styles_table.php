@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unique(); // Ensure one style per user
             $table->string('logo')->nullable();
-            $table->string('logo')->nullable();
             $table->enum('logo_alignment', ['left', 'center', 'right']);
             $table->string('category_style')->nullable();
             $table->json('banner_images')->nullable();

@@ -44,7 +44,7 @@ const Sidebar = () => {
 
        let inputs = {};
        if (template === 'restaurants') {
-           inputs.
+           // inputs.
 
        } else if (template === 'customers') {
 
@@ -54,7 +54,7 @@ const Sidebar = () => {
        }
 
         try {
-            const response = await AxiosInstance.post(`api/categories?items&user&branch`, {
+            const response = await AxiosInstance.post(`restaurant-style`, {
                 ...inputs
             })
 
