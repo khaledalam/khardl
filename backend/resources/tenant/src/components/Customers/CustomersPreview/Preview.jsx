@@ -4,12 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getSelectedCategory } from '../../../redux/editor/categorySlice';
 import { useTranslation } from "react-i18next";
 import { getSelectedAlign } from '../../../redux/editor/alignSlice';
-import { categories, branches } from '../../../data/data';
+// import { categories, branches } from '../../../data/data';
 import ResizeDetector from 'react-resize-detector';
 import { setDivWidth } from '../../../redux/editor/divWidthSlice';
 import Header from './components/header';
 import Dashboard from './components/Dashboard/Dashboard';
 import 'babel-polyfill'
+import AxiosInstance from "../../../axios/axios";
+import {toast} from "react-toastify";
 
 const Preview = () => {
   const { branch_id } = useParams();
@@ -17,7 +19,9 @@ const Preview = () => {
   const { t } = useTranslation();
   const selectedAlign = useSelector(getSelectedAlign);
   const Language = useSelector((state) => state.languageMode.languageMode);
-  const [branch, setBranch] = useState([]);
+    const [branch, setBranch] = useState([]);
+    const [branches, setBranches] = useState([]);
+    const [categories, setCategories] = useState([]);
   const divWidth = useSelector((state) => state.divWidth.value);
   const divRef = useRef(null);
   const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
@@ -26,20 +30,32 @@ const Preview = () => {
   const dispatch = useDispatch();
 
 
+  console.log("branch_id", branch_id);
 
-  /*   const fetchData = async () => {
+     const fetchData = async () => {
       try {
-        const response = await fetch('https://khardl.com/api/branches');
-        const data = await response.json();
-        setBranch(data);
+          const response = await AxiosInstance.post(`api/categories?items&user&branch`)
+
+          console.log(response)
+          if (response.data) {
+              const responseData = await response.json()
+              console.log(responseData)
+
+
+              setBranch(data);
+
+          } else {
+          }
       } catch (error) {
-        console.error('Error fetching data:', error);
+          // toast.error(`${t('Failed to send verification code')}`)
+          console.log(error);
       }
     };
 
     useEffect(() => {
+        console.log("TEST")
       fetchData();
-    }, []); */
+    }, []);
 
     useEffect(() => {
       if (branches.length > 0) {
@@ -49,6 +65,7 @@ const Preview = () => {
         }
       }
     }, [branch_id, branches]);
+
   const categoriesForBranch = categories.filter(category => category.branch_id === branch.branch_id);
   const handleResize = () => {
     if (divRef.current) {

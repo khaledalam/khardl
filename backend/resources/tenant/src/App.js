@@ -25,6 +25,13 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Layout from './components/Layout/Layout'
 import Logout from './components/Logout/Logout'
 import { useAuthContext } from './components/context/AuthContext'
+import TermsPolicies from "../../landing-page/src/pages/TermsPoliciesPrivacy/TermsPolicies";
+import Privacy from "../../landing-page/src/pages/TermsPoliciesPrivacy/Privacy";
+import Advantages from "../../landing-page/src/pages/Advantages/Advantages";
+import Clients from "../../landing-page/src/pages/Clients/clients";
+import Services from "../../landing-page/src/pages/Services/services";
+import Prices from "../../landing-page/src/pages/Prices/prices";
+import FQA from "../../landing-page/src/pages/FQA/fqa";
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
@@ -34,7 +41,7 @@ const App = () => {
    const { loading } = useAuthContext()
    const showHeader = !['/site-editor', '/policies', '/privacy'].includes(
       location.pathname
-   )
+   );
    const showFooter = ![
       '/site-editor',
       '/login',
@@ -82,6 +89,13 @@ const App = () => {
                      element={<Protected Cmp={CreateNewPassword} />}
                   />
 
+                   <Route path='/policies' element={<TermsPolicies />} />
+                   <Route path='/privacy' element={<Privacy />} />
+                   <Route path='/advantages' element={<Advantages />} />
+                   <Route path='/clients' element={<Clients />} />
+                   <Route path='/services' element={<Services />} />
+                   <Route path='/prices' element={<Prices />} />
+                   <Route path='/fqa' element={<FQA />} />
 
                   <Route element={<Layout />}>
                      <Route path='/login' element={<Login />} />
@@ -101,7 +115,7 @@ const App = () => {
                         element={<EditorPage />}
                      />
                      <Route
-                        path='/site-editor/restaurants/:branch_id/Preview'
+                        path='/site-editor/restaurants/:branch_id/preview'
                         element={<RestaurantsPreview />}
                      />
                      <Route
@@ -109,7 +123,7 @@ const App = () => {
                         element={<CustomersPreview />}
                      />
                      <Route
-                        path='/site-editor/customers/:branch_id/Preview'
+                        path='/site-editor/customers/:branch_id/preview'
                         element={<CustomersPreview />}
                      />
                   </Route>

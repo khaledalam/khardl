@@ -12,6 +12,7 @@ import {logout} from '../../redux/auth/authSlice'
 import { useAuthContext } from '../context/AuthContext'
 import { toast } from 'react-toastify'
 import {HTTP_NOT_AUTHENTICATED} from "../../config";
+import Li from "./Li";
 
 const Header = () => {
    const [isMobile, setIsMobile] = useState(false)
@@ -104,10 +105,9 @@ const Header = () => {
                      onChange={handleCheckboxChange}
                   />
                   <svg viewBox='0 0 32 32'>
-                     <path
-    className='line line-top-bottom'
-    d='M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22'
-    />
+                     <path className='line line-top-bottom'
+                           d='M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22'
+                     />
                      <path className='line' d='M7 16 27 16'/>
                   </svg>
                </label>
@@ -123,17 +123,51 @@ const Header = () => {
                </Link>
             </div>
             <div className='hidden min-[1000px]:flex'>
-               {/*<ul className='flex space-x-8'>*/}
-               {/*   <Li*/}
-               {/*      link='/'*/}
-               {/*      handleLinkClick={handleLinkClick}*/}
-               {/*      close={closeDrawerHandler}*/}
-               {/*      title={t('Home')}*/}
-               {/*      activeLink={activeLink}*/}
-               {/*      className='ml-6'*/}
-               {/*   />*/}
-
-               {/*</ul>*/}
+                <ul className='flex space-x-8'>
+                    <Li
+                        link='/'
+                        handleLinkClick={handleLinkClick}
+                        close={closeDrawerHandler}
+                        title={t('Home')}
+                        activeLink={activeLink}
+                        className='ml-6'
+                    />
+                    <Li
+                        link='/advantages'
+                        handleLinkClick={handleLinkClick}
+                        close={closeDrawerHandler}
+                        title={t('Advantages')}
+                        activeLink={activeLink}
+                    />
+                    <Li
+                        link='/clients'
+                        handleLinkClick={handleLinkClick}
+                        close={closeDrawerHandler}
+                        title={t('Clients')}
+                        activeLink={activeLink}
+                    />
+                    <Li
+                        link='/services'
+                        handleLinkClick={handleLinkClick}
+                        close={closeDrawerHandler}
+                        title={t('Services')}
+                        activeLink={activeLink}
+                    />
+                    <Li
+                        link='/prices'
+                        handleLinkClick={handleLinkClick}
+                        close={closeDrawerHandler}
+                        title={t('Prices')}
+                        activeLink={activeLink}
+                    />
+                    <Li
+                        link='/fqa'
+                        handleLinkClick={handleLinkClick}
+                        close={closeDrawerHandler}
+                        title={t('FQA')}
+                        activeLink={activeLink}
+                    />
+                </ul>
             </div>
             {isMobile && (
                <div className='flex justify-center items-center gap-2'>

@@ -96,8 +96,8 @@ function Section() {
                         <button
                             onClick={() => handleAlignChange(Language === "en" ? "Left": "Right")}
                             className={`
-                            ${selectedAlign === "Left" && Language === "en" ? "text-[var(--primary)]" 
-                            : 
+                            ${selectedAlign === "Left" && Language === "en" ? "text-[var(--primary)]"
+                            :
                             selectedAlign === "Right" && Language === "ar" ? "text-[var(--primary)]" : "" }
                             `}
                         >
@@ -116,8 +116,8 @@ function Section() {
                         <button
                             onClick={() => handleAlignChange(Language === "en" ? "Right": "Left")}
                             className={`
-                            ${selectedAlign === "Right" && Language === "en" ? "text-[var(--primary)]" 
-                            : 
+                            ${selectedAlign === "Right" && Language === "en" ? "text-[var(--primary)]"
+                            :
                             selectedAlign === "Left" && Language === "ar" ? "text-[var(--primary)]" : "" }
                             `}
                         >
@@ -162,7 +162,7 @@ function Section() {
                 </div>
                 {showPopup && more_icons.length > 0 && (
                     <div className="flex items-center mt-3 flex-wrap justify-start bg-white text-black ring-1 ring-[var(--third)] p-2 rounded shadow">
-                        {more_icons.map((icon) => {
+                        {more_icons?.map((icon) => {
                             const IconComponent = iconComponents[icon.icon];
                             return (
                                 <div
@@ -177,7 +177,7 @@ function Section() {
                     </div>
                 )}
                 <div className='flex w-fit h-fit justify-center items-center gap-1 gap-y-0 mt-4 mb-2 flex-wrap'>
-                    {icons.map((icon) => {
+                    {icons?.map((icon) => {
                         const IconComponent = iconComponents[icon.icon];
                         return (
                             <div
@@ -199,7 +199,7 @@ function Section() {
                         );
                     })}
                 </div>
-                {icons.map((icon) => (
+                {icons?.map((icon) => (
                     <div key={icon.id}>
                         {icon.id === selectedIconId && (
                             <>

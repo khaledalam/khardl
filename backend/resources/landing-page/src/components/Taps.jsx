@@ -3,6 +3,9 @@ import { useLocation, useParams } from 'react-router-dom'
 
 export function Taps({ children, contentClassName = '' }) {
    function findActiveTap(a) {
+
+       console.log("findActiveTap", a);
+
       return a.reduce((accumulator, currentValue, i) => {
          if (currentValue.props.active) {
             return i
@@ -75,12 +78,12 @@ export function Tap({
    return (
       <>
          <div
-            className={`px-2 cursor-pointer 
+            className={`px-2 cursor-pointer
        text-[18px] max-[600px]:text-[15px] ${
           activeTap === currentTap
              ? `font-bold border-b-[3px] border-b-[var(--primary)]`
              : ''
-       } 
+       }
         py-[5px] select-none ${contentClassName}`}
             onClick={() => setActiveTap(currentTap)}
          >

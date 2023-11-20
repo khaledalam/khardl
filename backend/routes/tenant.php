@@ -12,7 +12,8 @@ use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\WorkerController;
+use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
@@ -106,10 +107,10 @@ Route::group([
             Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
             Route::post('/payment', [TapController::class, 'payment'])->middleware('permission:can_control_payment')->name('tap.payment');
             Route::middleware('restaurant')->group(function () {
-                Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get');
-                Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents');
+                Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get');
+                Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents');
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
-                Route::get('/services', [RestaurantController::class, 'services'])->name('restaurant.services');
+                Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
                 Route::any('/callback',[TapController::class, 'callback'])->name('tap.callback');
@@ -143,7 +144,7 @@ Route::prefix('api')->middleware([
     'tenant'
 ])->group(function () {
     // API
-   
+
     Route::post('login', [APILoginController::class, 'login']);
 
     Route::middleware('auth:sanctum')->group(function(){
@@ -159,13 +160,12 @@ Route::prefix('api')->middleware([
         Route::post('logout', [APILoginController::class, 'logout']);
     });
 
-    
 });
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
     Route::get('/csrf-cookie', [CsrfCookieController::class, 'show'])
         ->middleware([
             'web',
             'universal',
-            InitializeTenancyByDomain::class 
+            InitializeTenancyByDomain::class
         ])->name('sanctum.csrf-cookie');
 });

@@ -33,6 +33,11 @@ function Header() {
     const handleModelClick2 = buttonId => {
         setIsOpenModel2(buttonId);
     };
+
+
+    console.log(buttons);
+
+    return;
     return (
         <div className={`flex items-start justify-between p-[12px] px-8 bg-[var(--secondary)]`}>
             <div className='flex flex-col'>
@@ -56,9 +61,9 @@ function Header() {
                             className='relative p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                             onClick={handleModelClick1}
                             style={{
-                                border: `1px solid ${buttons[0].color}`,
+                                border: `1px solid ${buttons[0]?.color}`,
                                 backgroundColor: 'transparent',
-                                borderRadius: buttons[0].shape,
+                                borderRadius: buttons[0]?.shape,
                             }}>
                             <MdOutlineDeliveryDining size={20} />
                             {isOpenModel1 ? (
@@ -66,7 +71,7 @@ function Header() {
                                     buttonId={1}
                                 />
                             ) : <div></div>}
-                            <div>{buttons[0].text}</div>
+                            <div>{buttons[0]?.text}</div>
                         </button>
                         {isOpenModel1 !== null && (
                             <button

@@ -12,7 +12,10 @@ export function Taps({ children, contentClassName = "" }) {
   const divWidth = useSelector((state) => state.divWidth.value);
 
   function findActiveTap(a) {
-    return a.reduce((accumulator, currentValue, i) => {
+      console.log("findActiveTap", a);
+
+
+      return a.reduce((accumulator, currentValue, i) => {
       if (currentValue.props.active) {
         return i;
       }

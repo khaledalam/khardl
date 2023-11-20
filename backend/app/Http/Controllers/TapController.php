@@ -15,13 +15,13 @@ class TapController extends Controller
         return view('restaurant.payments', compact('user'));
     }
 
-    public function payments_upload_tap_documents_get()
+    public function payments_submit_tap_documents_get()
     {
         $user = Auth::user();
-        return view('restaurant.payments_upload_tap_documents', compact('user'));
+        return view('restaurant.payments_submit_tap_documents', compact('user'));
     }
 
-    public function payments_upload_tap_documents()
+    public function payments_submit_tap_documents()
     {
         // @TODO: handle upload tap documents logic here...
         $user = Auth::user();
