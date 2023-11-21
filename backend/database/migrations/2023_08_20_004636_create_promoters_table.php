@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('url')->unique();
-            $table->integer('entered');
-            $table->integer('registered');
+        
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

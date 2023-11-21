@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API\Central\Auth;
 
 use App\Models\User;
+use App\Models\Promoter;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\PromoterIpAddress;
 use App\Models\TraderRequirement;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +30,7 @@ class RegisterController extends BaseController
             'position' => 'required|string|min:3|max:255',
             'password' => 'required|string|min:6|max:255',
             'c_password' => 'required|same:password',
-            'phone' => 'required|string|min:10|max:14',
+            'phone' => 'required|string|min:9|max:13',
             'terms_and_policies' => 'accepted',
             'restaurant_name' => 'required|unique:domains,domain|string|min:3|max:255|regex:/^[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$/',
         ],[
@@ -42,6 +44,9 @@ class RegisterController extends BaseController
         $success['name'] =  "$user->first_name $user->last_name";
         $user->assignRole('Restaurant Owner');
         Auth::login($user);
+        if($promoter = PromoterIpAddress::where('ip_address',request()?->ip())){
+            $promoter->update(['registered'=>true]);
+        }
         $this->sendVerificationCode($request);
         return $this->sendResponse($success, 'User register successfully.');
     }
@@ -142,36 +147,16 @@ class RegisterController extends BaseController
     }
 
     public static function increasePromotersEntered($url){
-        $urlRecord = DB::table('promoters')->where('url', $url)->first();
-
-        if (!$urlRecord) {
+        $promoter = Promoter::where('url', $url)->first();
+        if (!$promoter) {
             abort(404);
         }
-
-        $key = 'promoter_entered_' . $url . '_' . request()?->ip();
-
-        if (!session()->has($key)) {
-            DB::table('promoters')
-                ->where('url', $url)
-                ->increment('entered', 1);
-
-            session([$key => true]);
-        }
+        PromoterIpAddress::firstOrCreate(['ip_address' => request()?->ip()], [
+            'promoter_id' => $promoter->id
+        ]);
     }
 
-    // @TODO: register
-    public static function increasePromotersRegistered($url){
-
-        $key = 'promoter_entered_' . $url . '_' . request()?->ip();
-
-        if (session()->has($key)) {
-            DB::table('promoters')
-                ->where('url', $url)
-                ->increment('registered', 1);
-
-            session()->remove($key);
-        }
-    }
+    // @TODO: register : collected from users table which is assigned ip address while registered
 
     public function verify(Request $request): JsonResponse
     {
