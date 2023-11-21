@@ -25,7 +25,7 @@ const Preview = () => {
 
     const fetchData = async () => {
         try {
-            const response = await AxiosInstance.get(`api/categories?items&user&branch`)
+            const response = await AxiosInstance.get(`categories?items&user&branch`)
 
             console.log("SAS>ASAS>>>", response)
             if (response.data) {
