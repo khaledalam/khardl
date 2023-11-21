@@ -92,7 +92,7 @@ const Sidebar = () => {
                    <Tap component={<Edit />}  key={'t2'}>{t('Edit')}</Tap>
                 </Taps>
                 <div className={"flex  justify-around w-[100%]"}>
-                    <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"/preview"} target={"_blank"} href={"/preview"}>Preview</Link>
+                    <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"./preview"} target={"_blank"} href={"./preview"}>Preview</Link>
                     <Link className={"flex justify-center content-center bg-[var(--primary)] w-[50%]"} onClick={handleSaveStyle}>Save</Link>
                 </div>
             </>

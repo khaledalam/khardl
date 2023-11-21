@@ -136,7 +136,7 @@ Route::group([
 
 
     });
-
+    Route::get('categories',[CategoryController::class,'index']);
     Route::get('/change-language/{locale}', static function ($locale) {
         App::setLocale($locale);
         Session::put('locale', $locale);
@@ -153,7 +153,7 @@ Route::prefix('api')->middleware([
     // API
 
     Route::post('login', [APILoginController::class, 'login']);
-
+   
     Route::middleware('auth:sanctum')->group(function(){
         Route::apiResource('categories',CategoryController::class)->only([
             'index'
