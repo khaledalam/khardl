@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\RestaurantLive;
 use App\Http\Middleware\Worker;
 use App\Http\Middleware\Restaurant;
 use App\Http\Middleware\TrimStrings;
@@ -39,6 +40,7 @@ use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use App\Http\Middleware\EnsureTraderRegistrationIsNotComplete;
+use Spatie\Permission\Middlewares\RoleMiddleware;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -90,7 +92,7 @@ class Kernel extends HttpKernel
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             ThrottleRequests::class.':api',
             SubstituteBindings::class,
-           
+
 
         ],
         'tenant' => [
@@ -113,6 +115,7 @@ class Kernel extends HttpKernel
         'restaurant' => Restaurant::class,
         'worker' => Worker::class,
         'restaurantOrWorker' => RestaurantOrWorker::class,
+        'restaurantLive' => RestaurantLive::class,
         'permission' => CheckPermissions::class,
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
@@ -130,7 +133,7 @@ class Kernel extends HttpKernel
         'accepted' => EnsureTraderRegistrationIsComplete::class,
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
         'notBlocked'=> EnsureUserIsNotBlocked::class,
-        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'role' => RoleMiddleware::class,
 
     ];
 

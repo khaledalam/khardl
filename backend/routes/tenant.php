@@ -46,9 +46,36 @@ use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 |
 */
 
+
 Route::group([
-    'middleware' => ['tenant','web'],
-],function () {
+    'middleware' => ['tenant'],
+], static function () {
+    Route::get('/impersonate/{token}', static function ($token) {
+        return UserImpersonation::makeResponse($token);
+    })->name("impersonate");
+
+    Route::get('login/owner', static function(Request $request) {
+       return view('login_owner');
+    })->name('tenant.login.owner');
+
+    Route::post('login/owner', static function(Request $request) {
+
+        $credentials = request(['email', 'password']);
+
+
+        if (!Auth::attempt($credentials)) {
+            return \redirect()->to(route('tenant.login.owner'));
+        }
+        return \redirect()->to(route('dashboard'));
+
+
+    })->name('tenant.login.owner.post');
+
+});
+
+Route::group([
+    'middleware' => ['tenant','web', 'restaurantLive'],
+], static function () {
     $groups = TenantSharedRoutesTrait::groups();
     foreach ($groups as $group) {
         Route::middleware($group['middleware'])->group(function() use ($group){
@@ -59,7 +86,6 @@ Route::group([
             }
         });
     }
-
 
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
@@ -73,10 +99,6 @@ Route::group([
 
 
 
-
-    Route::get('/impersonate/{token}', function ($token) {
-        return UserImpersonation::makeResponse($token);
-    })->name("impersonate");
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
@@ -139,7 +161,9 @@ Route::group([
 
 
     });
+
     Route::get('categories',[CategoryController::class,'index']);
+
     Route::get('/change-language/{locale}', static function ($locale) {
         App::setLocale($locale);
         Session::put('locale', $locale);
@@ -159,7 +183,7 @@ Route::prefix('api')->middleware([
     // API
 
     Route::post('login', [APILoginController::class, 'login']);
-   
+
     Route::middleware('auth:sanctum')->group(function(){
         Route::apiResource('categories',CategoryController::class)->only([
             'index'

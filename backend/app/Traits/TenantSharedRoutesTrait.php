@@ -24,7 +24,6 @@ trait TenantSharedRoutesTrait
                 'fqa'=>'fqa',
             ],
             'middleware'=>[
-
             ]
 
         ];
@@ -39,7 +38,6 @@ trait TenantSharedRoutesTrait
             ],
             'middleware'=>[
                 'guest',
-
             ]
         ];
     }
