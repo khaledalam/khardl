@@ -46,76 +46,28 @@ use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 |
 */
 
-
 Route::group([
-    'middleware' => ['tenant'],
+    'middleware' => ['tenant','web'],
 ], static function () {
+
     Route::get('/impersonate/{token}', static function ($token) {
         return UserImpersonation::makeResponse($token);
     })->name("impersonate");
 
-    Route::get('login/owner', static function(Request $request) {
-       return view('login_owner');
-    })->name('tenant.login.owner');
-
-    Route::post('login/owner', static function(Request $request) {
-
-        $credentials = request(['email', 'password']);
-
-
-        if (!Auth::attempt($credentials)) {
-            return \redirect()->to(route('tenant.login.owner'));
-        }
-        return \redirect()->to(route('dashboard'));
-
-
-    })->name('tenant.login.owner.post');
-
-});
-
-Route::group([
-    'middleware' => ['tenant','web', 'restaurantLive'],
-], static function () {
-    $groups = TenantSharedRoutesTrait::groups();
-    foreach ($groups as $group) {
-        Route::middleware($group['middleware'])->group(function() use ($group){
-            foreach ($group['routes'] as $route => $name) {
-                Route::get($route, static function(Request $request) {
-                    return view('tenant');
-                })->name($name);
-            }
-        });
-    }
+    Route::get('login-trial', static function() {
+        return view("tenant");
+    })->name("login-trial")->middleware(['guest','restaurantNotLive']);
+    Route::post('login', [LoginController::class, 'login'])->name('tenant_login');
 
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
 
-    Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
-    Route::post('login', [LoginController::class, 'login'])->name('tenant_login');
-
-    Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
-    Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
-
-
-
-
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
-
-    Route::middleware('auth')->group(function () {
+    Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
-
-        Route::middleware('notVerifiedPhone')->group(function () {
-            Route::get('verification-phone', static function() {
-                return view("tenant");
-            })->name("verification-phone");
-            Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
-            Route::post('phone/verify', [RegisterController::class, 'verify']);
-        });
-
-
-        Route::middleware('restaurantOrWorker')->group(function () {
+        Route::middleware(['restaurantOrWorker'])->group(function () {
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -153,26 +105,59 @@ Route::group([
 
             });
         });
-        Route::middleware('verified')->group(function () {
+    });
+
+    Route::group([
+        'middleware' => ['restaurantLive'],
+    ], static function () {
+        $groups = TenantSharedRoutesTrait::groups();
+        foreach ($groups as $group) {
+            Route::middleware($group['middleware'])->group(function() use ($group){
+                foreach ($group['routes'] as $route => $name) {
+                    Route::get($route, static function(Request $request) {
+                        return view('tenant');
+                    })->name($name);
+                }
+            });
+        }
+
+        Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
+
+        Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
+        Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
+
+
+        Route::middleware('auth')->group(function () {
+
+            Route::middleware('notVerifiedPhone')->group(function () {
+                Route::get('verification-phone', static function() {
+                    return view("tenant");
+                })->name("verification-phone");
+                Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
+                Route::post('phone/verify', [RegisterController::class, 'verify']);
+            });
+
+
+
+            Route::middleware('verified')->group(function () {
+
+            });
+
 
         });
 
+        Route::get('categories',[CategoryController::class,'index']);
 
-
-
+        Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class,'asset'])
+        ->where('path', '(.*)')
+        ->name('stancl.tenancy.asset');
     });
-
-    Route::get('categories',[CategoryController::class,'index']);
 
     Route::get('/change-language/{locale}', static function ($locale) {
         App::setLocale($locale);
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
-    Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class,'asset'])
-    ->where('path', '(.*)')
-    ->name('stancl.tenancy.asset');
-
 
 });
 

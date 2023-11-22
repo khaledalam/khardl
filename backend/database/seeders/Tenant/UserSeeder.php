@@ -10,13 +10,17 @@ use App\Models\Tenant\RestaurantUser;
 
 class UserSeeder extends Seeder
 {
+    public const RESTAURANT_CUSTOMER_USER_ID = 3;
+    public const RESTAURANT_WORKER_USER_ID = 4;
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $branch =Branch::find(1);
+        $branch = Branch::find(BranchSeeder::BRANCH_ID);
         $user = RestaurantUser::create([
+            'id' => self::RESTAURANT_WORKER_USER_ID,
             'first_name' => "Worker",
             'last_name' => "Worker",
             'email' => "worker@first.com",
@@ -30,7 +34,7 @@ class UserSeeder extends Seeder
 
         $user->assignRole('Worker');
         DB::table('permissions_worker')->insert([
-            'user_id'=>$user->id,
+            'user_id'=>self::RESTAURANT_WORKER_USER_ID,
             'can_modify_and_see_other_workers'=>true,
             'can_modify_working_time'=>true,
             'can_modify_advertisements'=>true,
@@ -39,6 +43,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user = RestaurantUser::create([
+            'id' => self::RESTAURANT_CUSTOMER_USER_ID,
             'first_name' => "customer",
             'last_name' => "customer",
             'email' => "customer@first.com",
