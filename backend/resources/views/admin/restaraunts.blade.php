@@ -58,7 +58,7 @@
   <div class="d-flex flex-wrap flex-stack pb-7">
   <!--begin::Title-->
   <div class="d-flex flex-wrap align-items-center my-1">
-    <h3 class="fw-bolder me-5 my-1">{{ $restaurants->count() }} {{ __('messages.items-found')}}</h3>
+    <h3 class="fw-bolder me-5 my-1">{{ $restaurants->count() }} {{ __('messages.restaurants-found')}}</h3>
   </div>
   <!--end::Title-->
   <!--begin::Controls-->
@@ -129,7 +129,7 @@
                                           </div>
                                           <!--begin::Card body-->
                                           <div class="card-body d-flex flex-center flex-column p-9 pt-3">
-                                              
+
                                               <!--begin::Avatar-->
                                               <div class="symbol symbol-65px symbol-circle mb-5">
                                                   <img src="../assets/media//avatars/300-2.jpg" alt="image" />
@@ -195,7 +195,7 @@
 
                                                               ]);
 
-                                                              
+
 
                                                               function showDeleteConfirmation(restaurantId) {
                                                                   Swal.fire({
@@ -244,13 +244,13 @@
                   </a>
               </li>
           @endif
-  
+
           @for ($page = max(1, $restaurants->currentPage() - 2); $page <= min($restaurants->lastPage(), $restaurants->currentPage() + 2); $page++)
               <li class="page-item {{ $page == $restaurants->currentPage() ? 'active' : '' }}">
                   <a href="{{ $restaurants->url($page) }}" class="page-link">{{ $page }}</a>
               </li>
           @endfor
-  
+
           @if ($restaurants->hasMorePages())
               <li class="page-item next">
                   <a href="{{ $restaurants->nextPageUrl() }}" class="page-link">

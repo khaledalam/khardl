@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
         ]);
-        
+
         $user->assignRole('Administrator');
 
         $faker = (new Factory())::create();
@@ -47,7 +47,8 @@ class UserSeeder extends Seeder
             'email' => "khadrl@restaurant.com",
             'email_verified_at' => now(),
             'status'=> 'active',
-            'position'=>"Super Admin",
+            'position'=>"Restaurant Owner",
+            'restaurant_name' => 'first',
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
         ]);
@@ -65,7 +66,7 @@ class UserSeeder extends Seeder
 
         $user->assignRole('Restaurant Owner');
 
-        // old code permissions 
+        // old code permissions
         \DB::table('permissions')->insert([
             'user_id'=> 1,
             'can_access_dashboard'=> true,
