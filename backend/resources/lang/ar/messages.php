@@ -35,6 +35,7 @@ return [
     'all' => 'الكل',
     'search' => 'بحث',
     'items-found' => 'العناصر التي تم العثور عليها',
+    'restaurants-found' => 'المطاعم التي تم العثور عليها',
     'points' => 'النقاط',
     'earnings' => 'أرباح',
     'orders' => 'طلبات',

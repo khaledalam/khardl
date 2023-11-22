@@ -46,9 +46,28 @@ use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 |
 */
 
+
 Route::group([
-    'middleware' => ['tenant','web'],
-],function () {
+    'middleware' => ['tenant', 'web'],
+], static function () {
+    Route::get('/impersonate/{token}', static function ($token) {
+        return UserImpersonation::makeResponse($token);
+    })->name("impersonate");
+
+    Route::get('login/owner', static function(Request $request) {
+       return view('login_owner');
+    })->name('tenant.login.owner');
+
+    Route::post('login/owner',  [LoginController::class, 'login'])->name('tenant.login.owner.post');
+
+    Route::post('login', [LoginController::class, 'login'])->name('tenant_login');
+
+
+});
+
+Route::group([
+    'middleware' => ['tenant','web', 'restaurantLive'],
+], static function () {
     $groups = TenantSharedRoutesTrait::groups();
     foreach ($groups as $group) {
         Route::middleware($group['middleware'])->group(function() use ($group){
@@ -60,23 +79,17 @@ Route::group([
         });
     }
 
-
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
 
     Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
-    Route::post('login', [LoginController::class, 'login'])->name('tenant_login');
 
     Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
 
 
 
-
-    Route::get('/impersonate/{token}', function ($token) {
-        return UserImpersonation::makeResponse($token);
-    })->name("impersonate");
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
@@ -139,7 +152,9 @@ Route::group([
 
 
     });
+
     Route::get('categories',[CategoryController::class,'index']);
+
     Route::get('/change-language/{locale}', static function ($locale) {
         App::setLocale($locale);
         Session::put('locale', $locale);
@@ -159,7 +174,7 @@ Route::prefix('api')->middleware([
     // API
 
     Route::post('login', [APILoginController::class, 'login']);
-   
+
     Route::middleware('auth:sanctum')->group(function(){
         Route::apiResource('categories',CategoryController::class)->only([
             'index'

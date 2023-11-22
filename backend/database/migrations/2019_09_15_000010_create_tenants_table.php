@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,12 +16,12 @@ class CreateTenantsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('tenants', static function (Blueprint $table) {
             $table->string('id')->primary();
 
             // your custom columns may go here
-            $table->string('email')->unique();  
-            $table->foreignIdFor(\App\Models\User::class)->nullable()->index()->constrained()->nullOnDelete();
+            $table->string('email')->unique();
+            $table->foreignIdFor(User::class)->nullable()->index()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->json('data')->nullable();
         });

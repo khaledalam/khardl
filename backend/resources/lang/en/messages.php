@@ -37,6 +37,7 @@ return [
     'all' => 'All',
     'search' => 'Search',
     'items-found' => 'Items found',
+    'restaurants-found' => 'Restaurants found',
     'points' => 'Points',
     'earnings' => 'Earnings',
     'orders' => 'Orders',

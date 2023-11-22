@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Mail\Mailable;
@@ -186,7 +187,8 @@ class AdminController extends Controller
 
     public function restaurants(Request $request)
     {
-        $query = User::where('role', 0);
+        // users from central table
+        $query = User::where('restaurant_name', '<>', null);
 
         if ($request->has('search')) {
             $search = $request->input('search');
@@ -197,6 +199,11 @@ class AdminController extends Controller
             $query->where('isApproved', $status);
         }
 
+        $restaurantCentralUsers = $query->get();
+        // get users from tenants
+        $restaurants = RestaurantUser::where('id', 'IN', $restaurantCentralUsers->pluck('id')->toArray())->get();
+
+        dd($restaurants);
         $restaurants = $query->paginate(15);
 
         $user = Auth::user();
@@ -206,7 +213,7 @@ class AdminController extends Controller
 
     public function viewRestaurant($id){
 
-        $restaurant = User::findOrFail($id);
+        $restaurant = RestaurantUser::findOrFail($id);
 
         if($restaurant->role == 0){
             return view('admin.view-restaurant', compact('restaurant'));
