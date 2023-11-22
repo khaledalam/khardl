@@ -8,6 +8,9 @@ use Illuminate\Database\Seeder;
 
 class BranchSeeder extends Seeder
 {
+
+    public const BRANCH_ID = 1;
+
     /**
      * Run the database seeds.
      */
@@ -15,6 +18,7 @@ class BranchSeeder extends Seeder
     {
         $currentDateTime = Carbon::now();
         Branch::create([
+            'id' => self::BRANCH_ID,
             'name' => 'Branch 1',
             'lat' => '37.7',
             'lng' => '37.7',
@@ -37,7 +41,7 @@ class BranchSeeder extends Seeder
 
 
 
-        
+
 
     }
 }

@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $branch = Branch::find(1);
+        $branch = Branch::find(BranchSeeder::BRANCH_ID);
         $user = RestaurantUser::create([
             'id' => self::RESTAURANT_WORKER_USER_ID,
             'first_name' => "Worker",
