@@ -38,7 +38,8 @@ const Sidebar = () => {
       }
    }, [location.pathname])
 
-    const handleSaveStyle = async () => {
+    const handleSaveStyle = async (e) => {
+       e.preventDefault();
 
        console.log("action save style");
 

@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 class Item extends Model
@@ -31,5 +32,8 @@ class Item extends Model
         'dropdown_input_names',
         'availability'
     ];
+    public function getPhotoAttribute(){
+        return tenant_asset($this->attributes['photo']);
+    }
 
 }

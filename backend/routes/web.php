@@ -120,11 +120,8 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         Route::middleware($group['middleware'])->group(function() use ($group){
             foreach ($group['routes'] as $route => $name) {
                 Route::get($route, static function(Request $request) use ($route) {
-
                     if ($route === 'register') {
-
                         $promoter = $request->get('ref');
-
                         if ($promoter) {
                             RegisterController::increasePromotersEntered($promoter);
                         }

@@ -8,7 +8,6 @@ import MenuItems from "./components/menuItems";
 import { useTranslation } from "react-i18next";
 import Logo from './components/Logo';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
-// import { categories, branches } from '../../../data/data';
 import AxiosInstance from "../../../axios/axios";
 
 const Preview = () => {

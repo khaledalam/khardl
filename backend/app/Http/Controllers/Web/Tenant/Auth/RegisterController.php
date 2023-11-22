@@ -98,11 +98,6 @@ class RegisterController extends BaseController
         $success['name'] =  "$user->first_name $user->last_name";
         Auth::login($user);
         $this->sendVerificationSMSCode($request);
-
-        //check promoter registration
-        RegisterControllerCentral::increasePromotersRegistered();
-
-
         return $this->sendResponse($success, 'Customer registered successfully.');
     }
 

@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { PREFIX_KEY} from "../../config";
 import AxiosInstance from "../../axios/axios";
-// import { useApiContext } from '../context'
 
 const ForgotPassword = () => {
    const { t } = useTranslation()

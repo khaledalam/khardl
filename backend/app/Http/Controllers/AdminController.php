@@ -10,6 +10,7 @@ use App\Mail\DeniedEmail;
 use App\Mail\ApprovedEmail;
 use App\Models\User;
 use App\Models\Log;
+use App\Models\Promoter;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +32,7 @@ class AdminController extends Controller
 
     public function promoters(){
 
-        $promoters = DB::table('promoters')->paginate(15);
+        $promoters = Promoter::paginate(15);
 
         $user = Auth::user();
         return view('admin.promoters', compact('user', 'promoters'));
@@ -61,8 +62,6 @@ class AdminController extends Controller
         $insertData['url'] = $url;
         $insertData['name'] = $name;
         $insertData['user_id'] = Auth::user()->id;
-        $insertData['entered'] = 0;
-        $insertData['registered'] = 0;
         $insertData['created_at'] = now();
         $insertData['updated_at'] = now();
 

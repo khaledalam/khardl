@@ -11,47 +11,58 @@ import { useTranslation } from "react-i18next";
 import { getSelectedAlign } from '../../../redux/editor/alignSlice';
 import Logo from './components/Logo';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
-import { categories, branches } from '../../../data/data';
 import ResizeDetector from 'react-resize-detector';
 import { setDivWidth } from '../../../redux/editor/divWidthSlice';
+import AxiosInstance from "../../../axios/axios";
 
 const Editor = () => {
-  const { branch_id } = useParams();
-  const selectedCategory = useSelector(getSelectedCategory);
-  const { t } = useTranslation();
-  const selectedAlign = useSelector(getSelectedAlign);
-  const Language = useSelector((state) => state.languageMode.languageMode);
-  const [branch, setBranch] = useState([]);
   const divWidth = useSelector((state) => state.divWidth.value);
   const divRef = useRef(null);
   const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
-  const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
+    const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
+    const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
+    const selectedCategory = sessionStorage.getItem('selectedCategory');
+    const selectedAlign = sessionStorage.getItem('selectedAlign');
+    const Language = sessionStorage.getItem('Language');
+    const { branch_id } = useParams();
+    const { t } = useTranslation();
+    const [branch, setBranch] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const selectedFont = sessionStorage.getItem('selectedFont');
+
+    console.log(">> state >> ", state)
+
+    const fetchData = async () => {
+        try {
+            const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch`);
+            const restaurantStyleResponse = await AxiosInstance.get(`restaurant-style`)
+
+            console.log("editor rest restaurantCategoriesResponse >>>", restaurantCategoriesResponse.data)
+            if (restaurantCategoriesResponse.data) {
+                setCategories(restaurantCategoriesResponse.data?.data);
+            }
+
+            console.log("editor rest restaurantStyleResponse >>>", restaurantStyleResponse.data)
+            if (restaurantStyleResponse.data) {
 
 
-  /*   const fetchData = async () => {
-      try {
-        const response = await fetch('https://khardl.com/api/branches');
-        const data = await response.json();
-        setBranch(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+            }
+
+
+
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
     };
 
-    useEffect(() => {
-      fetchData();
-    }, []); */
 
-  useEffect(() => {
-    if (branches.length > 0) {
-      const foundBranch = branches.find((branch) => branch.branch_id === parseInt(branch_id));
-      if (foundBranch) {
-        setBranch(foundBranch);
-      }
-    }
-  }, [branch_id, branches]);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
   const categoriesForBranch = categories.filter(category => category.branch_id === branch.branch_id);
 
 

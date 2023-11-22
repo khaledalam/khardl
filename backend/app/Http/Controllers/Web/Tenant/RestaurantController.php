@@ -316,7 +316,7 @@ class RestaurantController extends BaseController
             try {
 
                 $itemData = [
-                    'photo' => $filename,
+                    'photo' => 'items/'.$filename,
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'description' => $request->input('description'),
@@ -333,6 +333,7 @@ class RestaurantController extends BaseController
                     'dropdown_input_names' => json_encode($request->input('dropdownInputName')),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
+                    'availability'=>($request->input('availability'))?true:false,
                     'branch_id' => $branchId,
                     'created_at' => now(),
                     'updated_at' => now(),
