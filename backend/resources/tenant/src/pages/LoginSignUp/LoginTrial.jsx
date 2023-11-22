@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import AxiosInstance from "../../axios/axios";
 
-const Login = () => {
+const LoginTrial = () => {
 
 
    const { t } = useTranslation()
@@ -50,7 +50,7 @@ const Login = () => {
             throw new Error(`${t('Login failed')}`)
          }
       } catch (error) {
-        
+
          toast.error(`${t('Login failed')}`)
       }
    }
@@ -139,7 +139,7 @@ const Login = () => {
                               </div>
 
                               <div className='flex justify-between items-center'>
-                               
+
                               </div>
                               <div className='flex flex-col justify-center items-center mt-4 mb-10'>
                                  <button
@@ -224,4 +224,4 @@ const Login = () => {
    )
 }
 
-export default Login
+export default LoginTrial
