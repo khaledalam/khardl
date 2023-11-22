@@ -29,7 +29,7 @@
                                     <div class="d-flex flex-column">
                                         <!--begin::Name-->
                                         <div class="d-flex align-items-center mb-2">
-                                            <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{  $restaurant->restaurant_name }}</a>
+                                            <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{  $restaurant->first_name }} {{  $restaurant->last_name }}</a>
                                             <a>
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
                                                 @if ($restaurant->isApproved == 1)
@@ -719,7 +719,32 @@
                             <!--end::Col-->
                         </div>
                         <!--end::Input group-->
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.facility-name') }}
+                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8">
+                                {{$restaurant->user->traderRegistrationRequirement->facility_name}}
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.IBAN') }}
+                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8">
+                                {{$restaurant->user->traderRegistrationRequirement->IBAN}}
+                            </div>
+                            <!--end::Col-->
+                        </div>
                         <hr>
+                      
+                      
+
                         <!--begin::Input group-->
                         <div class="row mb-7">
                             <!--begin::Label-->
@@ -728,11 +753,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                @if ($restaurant->signed_contract_delivery_company)
-                                    <a href="{{ route('download.delivery', ['filename' => $restaurant->signed_contract_delivery_company]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
-                                @else
                                 {{ __('messages.no-file-available') }}
-                                @endif
                             </div>
                             <!--end::Col-->
                         </div>
@@ -744,10 +765,10 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                @if ($restaurant->signed_contract_delivery_company)
-                                    <a href="{{ route('download.delivery', ['filename' => $restaurant->signed_contract_delivery_company]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                @if ($restaurant->user->traderRegistrationRequirement->national_address)
+                                <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->national_address]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                                 @else
-                                {{ __('messages.no-file-available') }}
+                                    {{ __('messages.no-file-available') }}
                                 @endif
                             </div>
                             <!--end::Col-->
@@ -760,10 +781,10 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                @if ($restaurant->signed_contract_delivery_company)
-                                    <a href="{{ route('download.delivery', ['filename' => $restaurant->signed_contract_delivery_company]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                @if ($restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager)
+                                <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                                 @else
-                                {{ __('messages.no-file-available') }}
+                                    {{ __('messages.no-file-available') }}
                                 @endif
                             </div>
                             <!--end::Col-->
@@ -777,8 +798,8 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                @if ($restaurant->commercial_registration_pdf)
-                                    <a href="{{ route('download.commercial', ['filename' => $restaurant->commercial_registration_pdf]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                @if ($restaurant->user->traderRegistrationRequirement->commercial_registration)
+                                <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->commercial_registration]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                                 @else
                                     {{ __('messages.no-file-available') }}
                                 @endif
@@ -793,11 +814,12 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                @if ($restaurant->tax_number)
-                                    <a href="{{ route('download.tax', ['filename' => $restaurant->tax_number]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                @if ($restaurant->user->traderRegistrationRequirement->tax_registration_certificate)
+                                <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->tax_registration_certificate]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                                 @else
                                     {{ __('messages.no-file-available') }}
                                 @endif
+                              
                             </div>
                             <!--end::Col-->
                         </div>
@@ -809,8 +831,8 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                @if ($restaurant->bank_certificate)
-                                    <a href="{{ route('download.bank', ['filename' => $restaurant->bank_certificate]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                @if ($restaurant->user->traderRegistrationRequirement->bank_certificate)
+                                    <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->bank_certificate]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                                 @else
                                     {{ __('messages.no-file-available') }}
                                 @endif
