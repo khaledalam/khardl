@@ -7,6 +7,7 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Home from './pages/Home/Home'
 import Login from './pages/LoginSignUp/Login'
+import LoginTrial from './pages/LoginSignUp/LoginTrial'
 import Register from './pages/LoginSignUp/Register'
 import VerificationPhone from './pages/LoginSignUp/VerificationPhone'
 import Supports from './components/Supports'
@@ -45,6 +46,7 @@ const App = () => {
        // '/site-editor/restaurants',
        // '/site-editor/customers',
        '/policies',
+       '/login-trial',
        '/privacy'].includes(
       location.pathname
    );
@@ -53,6 +55,7 @@ const App = () => {
        '/site-editor/restaurants',
        '/site-editor/customers',
       '/login',
+      '/login-trial',
        '/register',
        '/register/:url',
       '/reset-password',
@@ -105,10 +108,11 @@ const App = () => {
                    <Route path='/services' element={<Services />} />
                    <Route path='/prices' element={<Prices />} />
                    <Route path='/fqa' element={<FQA />} />
+                   <Route path='/login-trial' element={<LoginTrial />} />
 
                    <Route element={<Layout />}>
                      <Route path='/login' element={<Login />} />
-                       <Route path='/register' element={<Register />} />
+                     <Route path='/register' element={<Register />} />
                   </Route>
 
                   {/*Editor*/}

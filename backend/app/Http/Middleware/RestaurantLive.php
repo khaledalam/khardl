@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Tenant\Setting;
 use Closure;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
@@ -18,17 +19,8 @@ class RestaurantLive
      */
     public function handle($request, Closure $next)
     {
-        $liveExist = DB::table('branches')->where('is_live',1)->exists();
-
-
-        $user = $request->user();
-        if ($user && $user->isRestaurantOwner()) {
-            return $next($request);
-        }
-//        var_dump($liveExist);
-//        dd($user);
-
-        if (!$liveExist) {
+        $is_live = Setting::first()->is_live;
+        if (!$is_live) {
             if ($request->expectsJson()) {
                 return ResponseHelper::response([
                     'message' => 'Restaurant not in live mode yet',
@@ -37,19 +29,26 @@ class RestaurantLive
             }
 
             $central_url = env('APP_URL');
-            $login_owner_url = route('tenant.login.owner');
-
+            $user = $request->user();
+            if($user){
+                $url_redirect = route('dashboard');
+                $url = "<a href='$url_redirect'>Go To Dashboard</a><br />";
+            }else {
+                $url_redirect = route('login-trial');
+                $url = "<a href='$url_redirect'>Go To Login Restaurant Page</a><br />";
+            }
+        
             echo <<<HTML
-<div style="text-align: center; height: 100vh; display: flex; flex-direction: column ; justify-content: center; align-items: center;">
-<h3 style="color: red;">This Restaurant is not in live mode yet!</h3>
-<br />
-<a href="$login_owner_url">Go To Login Restaurant Page</a><br />
-<a href="$central_url">Go To Main Khardl Website</a>
-</div>
-HTML;
-
+                <div style="text-align: center; height: 100vh; display: flex; flex-direction: column ; justify-content: center; align-items: center;">
+                <h3 style="color: red;">This Restaurant is not in live mode yet!</h3>
+                <br />
+                $url
+                <a href="$central_url">Go To Main Khardl Website</a>
+                </div>
+                HTML;
             die;
         }
+       
         return $next($request);
     }
 }

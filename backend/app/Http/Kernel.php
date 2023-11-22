@@ -2,18 +2,19 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\RestaurantLive;
 use App\Http\Middleware\Worker;
 use App\Http\Middleware\Restaurant;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\RestaurantLive;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\LanguageManager;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\CheckPermissions;
 use Illuminate\Auth\Middleware\Authorize;
+use App\Http\Middleware\RestaurantNotLive;
 use App\Http\Middleware\ValidateSignature;
 use Illuminate\Http\Middleware\HandleCors;
 use App\Http\Middleware\NonAdminMiddleware;
@@ -28,6 +29,7 @@ use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
+use Spatie\Permission\Middlewares\RoleMiddleware;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -40,7 +42,6 @@ use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use App\Http\Middleware\EnsureTraderRegistrationIsNotComplete;
-use Spatie\Permission\Middlewares\RoleMiddleware;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -116,6 +117,7 @@ class Kernel extends HttpKernel
         'worker' => Worker::class,
         'restaurantOrWorker' => RestaurantOrWorker::class,
         'restaurantLive' => RestaurantLive::class,
+        'restaurantNotLive' => RestaurantNotLive::class,
         'permission' => CheckPermissions::class,
         'auth' => Authenticate::class,
         'auth.basic' => AuthenticateWithBasicAuth::class,
