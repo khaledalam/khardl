@@ -14,6 +14,9 @@ class CreateTenantAdmin implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public const RESTAURANT_OWNER_USER_ID = 5;
+
+
     /** @var Tenant */
     protected $tenant;
 
@@ -37,10 +40,10 @@ class CreateTenantAdmin implements ShouldQueue
         $this->tenant->run(function ($tenant) {
             $user= RestaurantUser::create(
                 $tenant->only(['first_name','last_name', 'email', 'password','phone'])
-                + ['phone_verified_at'=>now(),'status'=>'active']
+                + ['phone_verified_at'=>now(),'status'=>'active', 'id' => self::RESTAURANT_OWNER_USER_ID]
             );
             $user->assignRole('Restaurant Owner');
-            
+
             $tenant->update([
                 'ready' => true,
             ]);

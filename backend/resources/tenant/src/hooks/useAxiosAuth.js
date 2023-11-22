@@ -40,7 +40,12 @@ const useAxiosAuth = () => {
          return response
       },
       (error) => {
-          console.log("axiosAuth.interceptors.response", error?.response?.status)
+          console.log("axiosAuth.interceptors.response", error?.response?.status);
+
+          if(window.location?.pathname.indexOf('login-trial') !== -1) {
+              console.log("twetw");
+              return;
+          }
 
           if (error?.response?.status === HTTP_NOT_AUTHENTICATED) {
 
