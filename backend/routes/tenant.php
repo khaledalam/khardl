@@ -48,7 +48,7 @@ use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 
 
 Route::group([
-    'middleware' => ['tenant'],
+    'middleware' => ['tenant', 'web'],
 ], static function () {
     Route::get('/impersonate/{token}', static function ($token) {
         return UserImpersonation::makeResponse($token);
@@ -58,18 +58,10 @@ Route::group([
        return view('login_owner');
     })->name('tenant.login.owner');
 
-    Route::post('login/owner', static function(Request $request) {
+    Route::post('login/owner',  [LoginController::class, 'login'])->name('tenant.login.owner.post');
 
-        $credentials = request(['email', 'password']);
+    Route::post('login', [LoginController::class, 'login'])->name('tenant_login');
 
-
-        if (!Auth::attempt($credentials)) {
-            return \redirect()->to(route('tenant.login.owner'));
-        }
-        return \redirect()->to(route('dashboard'));
-
-
-    })->name('tenant.login.owner.post');
 
 });
 
@@ -92,7 +84,6 @@ Route::group([
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
 
     Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
-    Route::post('login', [LoginController::class, 'login'])->name('tenant_login');
 
     Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');

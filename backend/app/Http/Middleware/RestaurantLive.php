@@ -20,9 +20,15 @@ class RestaurantLive
     {
         $liveExist = DB::table('branches')->where('is_live',1)->exists();
 
-        $user = $request->user();
 
-        if (!$liveExist && !$user) {
+        $user = $request->user();
+        if ($user && $user->isRestaurantOwner()) {
+            return $next($request);
+        }
+//        var_dump($liveExist);
+//        dd($user);
+
+        if (!$liveExist) {
             if ($request->expectsJson()) {
                 return ResponseHelper::response([
                     'message' => 'Restaurant not in live mode yet',
