@@ -316,7 +316,7 @@ class RestaurantController extends BaseController
             try {
 
                 $itemData = [
-                    'photo' => $filename,
+                    'photo' => 'items/'.$filename,
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'description' => $request->input('description'),

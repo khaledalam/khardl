@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\API\Tenant\CustomerStyleController;
-use App\Http\Controllers\API\Tenant\RestaurantStyleController;
+use App\Models\Tenant\Item;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use Illuminate\Support\Facades\App;
@@ -13,23 +12,27 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\WorkerController;
-use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Stancl\Tenancy\Features\UserImpersonation;
+use App\Http\Controllers\TenantAssetsController;
+use App\Http\Controllers\API\Tenant\ItemController;
+use App\Http\Controllers\API\Tenant\OrderController;
+use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Tenant\Auth\LoginController;
+use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+use App\Http\Controllers\API\Tenant\CustomerStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
+use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
-use App\Http\Controllers\API\Tenant\BranchController;
-use App\Http\Controllers\API\Tenant\ItemController;
-use App\Http\Controllers\API\Tenant\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -142,6 +145,9 @@ Route::group([
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
+    Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class,'asset'])
+    ->where('path', '(.*)')
+    ->name('stancl.tenancy.asset');
 
 
 });
