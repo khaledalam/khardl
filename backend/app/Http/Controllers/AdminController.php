@@ -191,24 +191,24 @@ class AdminController extends Controller
         // users from central table
         $query = User::where('restaurant_name', '<>', null);
 
-        $restaurants =  Tenant::all();
-        foreach($restaurants as $restaurant){
-            $restaurant->run(function ($tenant) {
-                $query = RestaurantUser::where('branch_id', null);
-            });
-        }
-
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where('first_name', 'like', '%' . $search . '%');
-            $query->Where('last_name', 'like', '%' . $search . '%');
-        }
-        if ($request->has('status') && $request->input('status') != "All") {
-            $status = $request->input('status');
-            $query->where('status', $status);
-        }
-
-        $restaurants = $query->paginate(15);
+        $restaurants =  Tenant::with("primary_domain")->paginate();
+        // foreach($restaurants as $restaurant){
+        //     $restaurant->run(function ($tenant) {
+        //         $query = RestaurantUser::where('branch_id', null);
+        //     });
+        // }
+       
+        // if ($request->has('search')) {
+        //     $search = $request->input('search');
+        //     $query->where('first_name', 'like', '%' . $search . '%');
+        //     $query->Where('last_name', 'like', '%' . $search . '%');
+        // }
+        // if ($request->has('status') && $request->input('status') != "All") {
+        //     $status = $request->input('status');
+        //     $query->where('status', $status);
+        // }
+    
+        // $restaurants = $query->paginate(15);
 
         $user = Auth::user();
 
@@ -216,13 +216,16 @@ class AdminController extends Controller
     }
 
     public function viewRestaurant($id){
-
-        $restaurant = RestaurantUser::findOrFail($id);
-
-        if($restaurant->role == 0){
-            return view('admin.view-restaurant', compact('restaurant'));
-        }
-        return abort(404);
+      
+        $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
+        
+        // if($restaurant->role == 0){
+        //     return view('admin.view-restaurant', compact('restaurant'));
+        // }else{
+        //     return abort(404);
+        // }
+        return view('admin.view-restaurant', compact('restaurant'));
+       
     }
 
     public function viewRestaurantOrders($id){

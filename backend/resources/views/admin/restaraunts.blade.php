@@ -118,185 +118,187 @@
   <div id="kt_project_users_card_pane" class="tab-pane fade show active">
     <!--begin::Row-->
     <div class="row g-6 g-xl-9">
-                            <!-- Foreach -->
-                                <!--begin::Col-->
-                                @foreach($restaurants as $restaurant)
-                                  <div class="col-md-6 col-xxl-4">
-                                      <!--begin::Card-->
-                                      <div class="card">
-                                          <div class="w-100 text-right">
-                                              <p class="badge bg-primary p-3 text-page-bg fw-bolder">{{ $restaurant->points }} {{ __('messages.points')}}</p>
-                                          </div>
-                                          <!--begin::Card body-->
-                                          <div class="card-body d-flex flex-center flex-column p-9 pt-3">
+      <!-- Foreach -->
+          <!--begin::Col-->
+          @foreach($restaurants as $restaurant)
+            <div class="col-md-6 col-xxl-4">
+                <!--begin::Card-->
+                <div class="card">
+                    <div class="w-100 text-right">
+                        <p class="badge bg-primary p-3 text-page-bg fw-bolder">{{ $restaurant->points }} {{ __('messages.points')}}</p>
+                    </div>
+                    <!--begin::Card body-->
+                    <div class="card-body d-flex flex-center flex-column p-9 pt-3">
 
-                                              <!--begin::Name-->
-                                              <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">{{ $restaurant->restaurant_name }} @if($restaurant->isApproved == "0")<span class="badge badge-light-warning fw-bolder">{{ __('messages.pending')}}</span>@elseif ($restaurant->status == "active")<span class="badge badge-light-success fw-bolder">{{ __('messages.active')}}</span>@else <span class="badge badge-light-danger fw-bolder">{{ __('messages.denied')}}</span>@endif
-                                              </a>
-                                              <!--end::Name-->
-                                              <!--begin::Position-->
-                                              <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</div>
-                                              <!--end::Position-->
+                        <!--begin::Name-->
+                        <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">{{ $restaurant->primary_domain->domain }} @if($restaurant->isApproved == "0")<span class="badge badge-light-warning fw-bolder">{{ __('messages.pending')}}</span>@elseif ($restaurant->status == "active")<span class="badge badge-light-success fw-bolder">{{ __('messages.active')}}</span>@else <span class="badge badge-light-danger fw-bolder">{{ __('messages.denied')}}</span>@endif
+                        
+                        </a>
+                     
+                        <!--end::Name-->
+                        <!--begin::Position-->
+                        <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</div>
+                        <!--end::Position-->
 
-                                              <div class="d-flex flex-center flex-wrap">
-                                                  <!--begin::Stats-->
-                                                  <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
-                                                      <div class="fs-6 fw-bolder text-gray-700">$14,560</div>
-                                                      <div class="fw-bold text-gray-400">{{ __('messages.earnings')}}</div>
-                                                  </div>
-                                                  <!--end::Stats-->
-                                                  <!--begin::Stats-->
-                                                  <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
-                                                      <div class="fs-6 fw-bolder text-gray-700">230</div>
-                                                      <div class="fw-bold text-gray-400">{{ __('messages.orders')}}</div>
-                                                  </div>
-                                                  <!--end::Stats-->
-                                                  <!--begin::Action-->
-                                                  <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mb-3">
-                                                      <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.actions')}}
-                                                      <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                          <span class="svg-icon svg-icon-5 m-0">
-                                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                  <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                                                              </svg>
-                                                          </span>
-                                                          <!--end::Svg Icon--></a>
-                                                      <!--begin::Menu-->
-                                                      <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                          <!--begin::Menu item-->
-                                                          <div class="menu-item px-3">
-                                                              <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="menu-link px-3">{{ __('messages.view')}}</a>
-                                                          </div>
-                                                          <!--end::Menu item-->
-                                                          <!--begin::Menu item-->
-                                                          <div class="menu-item px-3">
-                                                              <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-user', ['id' => $restaurant->id]) }}" method="POST">
-                                                                  @method('DELETE')
-                                                                  @csrf
-                                                              </form>
-                                                              <a href="#" class="menu-link px-3" onclick="showDeleteConfirmation('{{ $restaurant->id }}')" data-kt-ecommerce-product-filter="delete_row">{{ __('messages.delete')}}</a>
-                                                          </div>
-                                                          <script>
+                        <div class="d-flex flex-center flex-wrap">
+                            <!--begin::Stats-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                <div class="fs-6 fw-bolder text-gray-700">$14,560</div>
+                                <div class="fw-bold text-gray-400">{{ __('messages.earnings')}}</div>
+                            </div>
+                            <!--end::Stats-->
+                            <!--begin::Stats-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                <div class="fs-6 fw-bolder text-gray-700">230</div>
+                                <div class="fw-bold text-gray-400">{{ __('messages.orders')}}</div>
+                            </div>
+                            <!--end::Stats-->
+                            <!--begin::Action-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mb-3">
+                                <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.actions')}}
+                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                    <span class="svg-icon svg-icon-5 m-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon--></a>
+                                <!--begin::Menu-->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="menu-link px-3">{{ __('messages.view')}}</a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-user', ['id' => $restaurant->id]) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                        </form>
+                                        <a href="#" class="menu-link px-3" onclick="showDeleteConfirmation('{{ $restaurant->id }}')" data-kt-ecommerce-product-filter="delete_row">{{ __('messages.delete')}}</a>
+                                    </div>
+                                    <script>
 
-                                                              var translations = @json([
-                                                                  'cancelIt' => __('messages.cancel'),
-                                                                  'yesDeleteIt' => __('messages.yes-delete-it'),
+                                        var translations = @json([
+                                            'cancelIt' => __('messages.cancel'),
+                                            'yesDeleteIt' => __('messages.yes-delete-it'),
 
-                                                              ]);
-                                                              var translationss = @json([
-                                                                'confirmDelete' => __('messages.confirm-delete'),
-                                                                  'areYouSure' => __('messages.are-you-sure-you-want-to-delete-this-restaurant'),
+                                        ]);
+                                        var translationss = @json([
+                                          'confirmDelete' => __('messages.confirm-delete'),
+                                            'areYouSure' => __('messages.are-you-sure-you-want-to-delete-this-restaurant'),
 
-                                                              ]);
-
-
-
-                                                              function showDeleteConfirmation(restaurantId) {
-                                                                  Swal.fire({
-                                                                      title: translationss.confirmDelete,
-                                                                      text: translationss.areYouSure,
-                                                                      icon: 'warning',
-                                                                      showCancelButton: true,
-                                                                      confirmButtonText: translations.yesDeleteIt,
-                                                                      cancelButtonText: translations.cancelIt
-                                                                  }).then((result) => {
-                                                                      if (result.isConfirmed) {
-                                                                          document.getElementById('delete-form' + restaurantId).submit();
-                                                                      }
-                                                                  });
-                                                              }
-                                                          </script>
-                                                          <!--end::Menu item-->
-                                                      </div>
-                                                      <!--end::Menu-->
-                                                  </div>
-                                                  <!--end::Action-->
-                                              </div>
-                                              
-                                              <!--begin::Info-->
-                                              <div class="d-flex flex-center flex-wrap">
-                                                  <!--begin::Stats-->
-                                                  <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
-                                                      <div class="fs-6 fw-bolder text-gray-700">$14,560</div>
-                                                      <div class="fw-bold text-gray-400">{{ __('messages.earnings')}}</div>
-                                                  </div>
-                                                  <!--end::Stats-->
-                                                  <!--begin::Stats-->
-                                                  <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
-                                                      <div class="fs-6 fw-bolder text-gray-700">230</div>
-                                                      <div class="fw-bold text-gray-400">{{ __('messages.orders')}}</div>
-                                                  </div>
-                                                  <!--end::Stats-->
-                                                  <!--begin::Action-->
-                                                  <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mb-3">
-                                                      <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.actions')}}
-                                                          <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                                          <span class="svg-icon svg-icon-5 m-0">
-                                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                  <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
-                                                              </svg>
-                                                          </span>
-                                                          <!--end::Svg Icon--></a>
-                                                          <!--begin::Menu-->
-                                                          <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                                                              <!--begin::Menu item-->
-                                                              <div class="menu-item px-3">
-                                                                  <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="menu-link px-3">{{ __('messages.view')}}</a>
-                                                              </div>
-                                                              <!--end::Menu item-->
-                                                              <!--begin::Menu item-->
-                                                              <div class="menu-item px-3">
-                                                                <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-user', ['id' => $restaurant->id]) }}" method="POST">
-                                                                    @method('DELETE')
-                                                                    @csrf
-                                                                </form>
-                                                                <a href="#" class="menu-link px-3" onclick="showDeleteConfirmation('{{ $restaurant->id }}')" data-kt-ecommerce-product-filter="delete_row">{{ __('messages.delete')}}</a>
-                                                            </div>
-                                                            <script>
-
-                                                              var translations = @json([
-                                                                  'cancelIt' => __('messages.cancel'),
-                                                                  'yesDeleteIt' => __('messages.yes-delete-it'),
-
-                                                              ]);
-                                                              var translationss = @json([
-                                                                'confirmDelete' => __('messages.confirm-delete'),
-                                                                  'areYouSure' => __('messages.are-you-sure-you-want-to-delete-this-restaurant'),
-
-                                                              ]);
+                                        ]);
 
 
 
-                                                              function showDeleteConfirmation(restaurantId) {
-                                                                  Swal.fire({
-                                                                      title: translationss.confirmDelete,
-                                                                      text: translationss.areYouSure,
-                                                                      icon: 'warning',
-                                                                      showCancelButton: true,
-                                                                      confirmButtonText: translations.yesDeleteIt,
-                                                                      cancelButtonText: translations.cancelIt
-                                                                  }).then((result) => {
-                                                                      if (result.isConfirmed) {
-                                                                          document.getElementById('delete-form' + restaurantId).submit();
-                                                                      }
-                                                                  });
-                                                              }
-                                                              </script>
-                                                              <!--end::Menu item-->
-                                                          </div>
-                                                          <!--end::Menu-->
-                                                  </div>
-                                                  <!--end::Action-->
-                                              </div>
-                                              <!--end::Info-->
-                                          </div>
-                                          <!--end::Card body-->
+                                        function showDeleteConfirmation(restaurantId) {
+                                            Swal.fire({
+                                                title: translationss.confirmDelete,
+                                                text: translationss.areYouSure,
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonText: translations.yesDeleteIt,
+                                                cancelButtonText: translations.cancelIt
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    document.getElementById('delete-form' + restaurantId).submit();
+                                                }
+                                            });
+                                        }
+                                    </script>
+                                    <!--end::Menu item-->
+                                </div>
+                                <!--end::Menu-->
+                            </div>
+                            <!--end::Action-->
+                        </div>
+                        
+                        {{-- <!--begin::Info-->
+                        <div class="d-flex flex-center flex-wrap">
+                            <!--begin::Stats-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                <div class="fs-6 fw-bolder text-gray-700">$14,560</div>
+                                <div class="fw-bold text-gray-400">{{ __('messages.earnings')}}</div>
+                            </div>
+                            <!--end::Stats-->
+                            <!--begin::Stats-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
+                                <div class="fs-6 fw-bolder text-gray-700">230</div>
+                                <div class="fw-bold text-gray-400">{{ __('messages.orders')}}</div>
+                            </div>
+                            <!--end::Stats-->
+                            <!--begin::Action-->
+                            <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mb-3">
+                                <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.actions')}}
+                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                    <span class="svg-icon svg-icon-5 m-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                            <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon--></a>
+                                    <!--begin::Menu-->
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="menu-link px-3">{{ __('messages.view')}}</a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                          <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-user', ['id' => $restaurant->id]) }}" method="POST">
+                                              @method('DELETE')
+                                              @csrf
+                                          </form>
+                                          <a href="#" class="menu-link px-3" onclick="showDeleteConfirmation('{{ $restaurant->id }}')" data-kt-ecommerce-product-filter="delete_row">{{ __('messages.delete')}}</a>
                                       </div>
-                                      <!--end::Card-->
-                                  </div>
-                                @endforeach
-                                <!--end::Col-->
-                            <!-- End foreach -->
+                                      <script>
+
+                                        var translations = @json([
+                                            'cancelIt' => __('messages.cancel'),
+                                            'yesDeleteIt' => __('messages.yes-delete-it'),
+
+                                        ]);
+                                        var translationss = @json([
+                                          'confirmDelete' => __('messages.confirm-delete'),
+                                            'areYouSure' => __('messages.are-you-sure-you-want-to-delete-this-restaurant'),
+
+                                        ]);
+
+
+
+                                        function showDeleteConfirmation(restaurantId) {
+                                            Swal.fire({
+                                                title: translationss.confirmDelete,
+                                                text: translationss.areYouSure,
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonText: translations.yesDeleteIt,
+                                                cancelButtonText: translations.cancelIt
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    document.getElementById('delete-form' + restaurantId).submit();
+                                                }
+                                            });
+                                        }
+                                        </script>
+                                        <!--end::Menu item-->
+                                    </div>
+                                    <!--end::Menu-->
+                            </div>
+                            <!--end::Action-->
+                        </div> --}}
+                        <!--end::Info-->
+                    </div>
+                    <!--end::Card body-->
+                </div>
+                <!--end::Card-->
+            </div>
+          @endforeach
+          <!--end::Col-->
+      <!-- End foreach -->
 
     </div>
     <!--end::Row-->
@@ -374,6 +376,7 @@
                       </div>
                       <!--end::Wrapper-->
                       <!--begin::Info-->
+                   
                       <div class="d-flex flex-column justify-content-center">
                         <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
                         <div class="fw-bold fs-6 text-gray-400">{{ $restaurant->email }}</div>

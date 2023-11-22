@@ -110,6 +110,8 @@ return [
     'verified' => 'تم التحقق',
     'unverified' => 'لم يتم التحقق منه',
     'date-of-registration' => 'تاريخ التسجيل',
+    'IBAN'=>'رقم الحساب المصرفي الدولي',
+    'facility-name'=>'إسم المنشأة',
     'delivery-contract' => 'عقد التوصيل',
     'national-address' => 'العنوان الوطني',
     'the-id-of-the-owner-of-manager' => 'هوية المالك او المدير',

@@ -113,6 +113,8 @@ return [
     'unverified' => 'Unverified',
     'date-of-registration' => 'Date of registration',
     'delivery-contract' => 'Delivery contract',
+    'IBAN'=>'IBAN',
+    'facility-name'=>'Facility Name',
     'national-address' => 'National address',
     'the-id-of-the-owner-of-manager' => 'The ID of the owner or manager',
     'no-file-available' => 'No File Available',

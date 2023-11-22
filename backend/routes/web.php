@@ -200,6 +200,16 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
                     Route::get('/edit-profile', [AdminController::class, 'editProfile'])->middleware('permission:can_edit_profile')->name('admin.edit-profile');
                     Route::post('/profile', [AdminController::class, 'updateProfile'])->middleware('permission:can_edit_profile')->name('admin.profile-update');
+                    Route::get('/download/file/{path?}',function($path){
+                        try{
+                            return response()->download(storage_path("app/$path"));
+                        }catch(Exception $e){
+                            return redirect()->back()->with('error',__('File not exists !'));
+                        }
+                        
+                    })
+                    ->where('path', '(.*)')
+                    ->name("download.file");
                 });
 
             });
@@ -211,6 +221,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
+   
 });
 //-----------------------------------------------------------------------------------------------------------------------
 
