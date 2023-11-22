@@ -2,7 +2,7 @@
     @include('layouts.worker-sidebar')
 @else
 <!DOCTYPE html>
-<html @if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">>
+<html @if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">
 
 <head>
     <title>{{ __('messages.khardl')}} | @yield('title', __('messages.dashboard'))</title>
