@@ -64,7 +64,7 @@ Route::group([
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
-   
+
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
         Route::middleware(['restaurantOrWorker'])->group(function () {
@@ -120,15 +120,15 @@ Route::group([
                 }
             });
         }
-    
+
         Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
-    
+
         Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
-    
-    
+
+
         Route::middleware('auth')->group(function () {
-    
+
             Route::middleware('notVerifiedPhone')->group(function () {
                 Route::get('verification-phone', static function() {
                     return view("tenant");
@@ -136,23 +136,23 @@ Route::group([
                 Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
                 Route::post('phone/verify', [RegisterController::class, 'verify']);
             });
-    
-    
-           
+
+
+
             Route::middleware('verified')->group(function () {
-    
+
             });
-    
-    
+
+
         });
-    
+
         Route::get('categories',[CategoryController::class,'index']);
 
         Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class,'asset'])
         ->where('path', '(.*)')
         ->name('stancl.tenancy.asset');
     });
-    
+
     Route::get('/change-language/{locale}', static function ($locale) {
         App::setLocale($locale);
         Session::put('locale', $locale);

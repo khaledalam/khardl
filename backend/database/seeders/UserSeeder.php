@@ -12,12 +12,16 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
+    public const SUPER_ADMIN_USER_ID = 1;
+    public const RESTAURANT_OWNER_USER_ID = 2;
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
         $user = User::create([
+            'id' => self::SUPER_ADMIN_USER_ID,
             'first_name' => "khardl",
             'last_name' => "admin",
             'email' => "khardl@admin.com",
@@ -32,7 +36,7 @@ class UserSeeder extends Seeder
 
         $faker = (new Factory())::create();
         TraderRequirement::create([
-            'user_id' => $user->id,
+            'user_id' => self::SUPER_ADMIN_USER_ID,
             'IBAN' => $faker->iban,
             'facility_name' => $faker->text,
             'commercial_registration' => $faker->filePath(),
@@ -42,6 +46,7 @@ class UserSeeder extends Seeder
             'national_address' => $faker->address
         ]);
         $user = User::create([
+            'id' => self::RESTAURANT_OWNER_USER_ID,
             'first_name' => "khadrl",
             'last_name' => "restaurant",
             'email' => "khadrl@restaurant.com",
@@ -54,7 +59,7 @@ class UserSeeder extends Seeder
         ]);
         $faker = (new Factory())::create();
         TraderRequirement::create([
-            'user_id' => $user->id,
+            'user_id' => self::RESTAURANT_OWNER_USER_ID,
             'IBAN' => $faker->iban,
             'facility_name' => $faker->text,
             'commercial_registration' => $faker->filePath(),
@@ -68,7 +73,7 @@ class UserSeeder extends Seeder
 
         // old code permissions
         \DB::table('permissions')->insert([
-            'user_id'=> 1,
+            'user_id'=> self::SUPER_ADMIN_USER_ID,
             'can_access_dashboard'=> true,
             'can_access_restaurants'=> true,
             'can_view_restaurants'=> true,

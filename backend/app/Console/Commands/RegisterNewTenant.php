@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\CreateTenantAdmin;
 use App\Models\User;
 use App\Models\Tenant;
+use Database\Seeders\UserSeeder;
 use Illuminate\Console\Command;
 use Database\Seeders\TenantActionSeeder;
 use App\Actions\CreateTenantAction;
@@ -31,8 +33,8 @@ class RegisterNewTenant extends Command
      */
     public function handle(TenantActionSeeder $seeder)
     {
-        $user =User::find(2);
-        $name =$this->argument('name') ?? 'first';
+        $user = User::find(UserSeeder::SUPER_ADMIN_USER_ID);
+        $name = $this->argument('name') ?? 'first';
         if(!$user){
             $this->error("No user registered, try run `php artisan migrate:fresh --seed`");
             return ;
@@ -44,10 +46,9 @@ class RegisterNewTenant extends Command
             $this->warn("make sure to add this subdomain to your hosts file");
             return ;
         }
-       
+
         // sign first user
-        $url = Tenant::latest()->first()->impersonationUrl(2); //  USER restaurant owner id 
+        $url = Tenant::latest()->first()->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID); //  USER restaurant owner id
         $this->info("Tenant has been created successfully, visit `$url`");
-        return ;
     }
 }
