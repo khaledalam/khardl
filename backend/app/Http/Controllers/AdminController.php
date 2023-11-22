@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -190,20 +191,23 @@ class AdminController extends Controller
         // users from central table
         $query = User::where('restaurant_name', '<>', null);
 
+        $restaurants =  Tenant::all();
+        foreach($restaurants as $restaurant){
+            $restaurant->run(function ($tenant) {
+                $query = RestaurantUser::where('branch_id', null);
+            });
+        }
+
         if ($request->has('search')) {
             $search = $request->input('search');
-            $query->where('restaurant_name', 'like', '%' . $search . '%');
+            $query->where('first_name', 'like', '%' . $search . '%');
+            $query->Where('last_name', 'like', '%' . $search . '%');
         }
         if ($request->has('status') && $request->input('status') != "All") {
             $status = $request->input('status');
-            $query->where('isApproved', $status);
+            $query->where('status', $status);
         }
 
-        $restaurantCentralUsers = $query->get();
-        // get users from tenants
-        $restaurants = RestaurantUser::where('id', 'IN', $restaurantCentralUsers->pluck('id')->toArray())->get();
-
-        dd($restaurants);
         $restaurants = $query->paginate(15);
 
         $user = Auth::user();
