@@ -105,7 +105,19 @@ Route::group([
 
             });
         });
+
+        $group = TenantSharedRoutesTrait::getPrivateRoutes();
+        Route::middleware($group['middleware'])->group(function() use ($group){
+            foreach ($group['routes'] as $route => $name) {
+                Route::get($route, static function(Request $request) {
+                    return view('tenant');
+                })->name($name);
+            }
+        });
+
     });
+
+
 
     Route::group([
         'middleware' => ['restaurantLive'],
