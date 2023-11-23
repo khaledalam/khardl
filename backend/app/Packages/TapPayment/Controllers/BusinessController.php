@@ -12,7 +12,7 @@ class BusinessController extends Controller
         return Business::create($request->validated());
     }
     public function show($business_id){
-        return Business::get($business_id);
+        return Business::retrieve($business_id);
     }
     public function dummy_data(){
         return [

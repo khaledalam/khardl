@@ -6,12 +6,12 @@ use App\Packages\TapPayment\Tap;
 use App\Packages\TapPayment\Business\BusinessInterface;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
 
-class Business extends Tap implements BusinessInterface
+class File extends Tap implements FileInterface
 {
     public static function create($data):array{
-        return self::send('/business',$data);
+        return self::send('/files',$data);
     }
-    public static function retrieve(string $business_id): array {
+    public static function retrieve(string $file_id): array {
         return [];
     }
 
