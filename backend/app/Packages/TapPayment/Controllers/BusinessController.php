@@ -1,38 +1,20 @@
 <?php
 
-namespace App\Packages\TapPayment;
+namespace App\Packages\TapPayment\Controllers;
 
-use App\Utils\ResponseHelper;
-use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\Controller;
+use App\Packages\TapPayment\Business\Business;
+use App\Packages\TapPayment\Requests\CreateBusinessRequest;
 
-class Tap
+class BusinessController extends Controller
 {
-
-    public static function send(string $url,array $data,string $method = 'post'){
-        try {
-            $secret_key = env('TAP_SECRET_API_KEY','');
-            $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
-         
-            $response = Http::
-            withToken($secret_key)
-            ->$method($prefix_url.$url,$data);
-            dd(json_decode($response->getBody(), true));
-            if($response->successful()){
-                $response = json_decode($response->getBody(), true);
-                return [
-                    'http_code'=>ResponseHelper::HTTP_OK,
-                    'message'=> $response
-                ];
-            }
-        }catch(\Exception $e){
-           logger($e->getMessage());
-        }
-        return [
-            'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
-            'message'=> __("Error Occur")
-        ];
+    public function store(CreateBusinessRequest $request){
+        return Business::create($request->validated());
     }
-    public function sds(){
+    public function show($business_id){
+        return Business::get($business_id);
+    }
+    public function dummy_data(){
         return [
             'name' => [
                 'en' => 'Flexwares',
@@ -109,6 +91,5 @@ class Tap
                 'mtd' => 'metadata',
             ],
         ];
-      
     }
 }

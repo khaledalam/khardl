@@ -2,19 +2,14 @@
 
 declare(strict_types=1);
 
-use App\Models\Tenant\Item;
+
 use Illuminate\Http\Request;
-use App\Models\Tenant\Branch;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Controllers\WorkerController;
 use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
 use App\Http\Controllers\API\Tenant\ItemController;
@@ -30,9 +25,9 @@ use App\Http\Controllers\API\Tenant\CustomerStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
-use App\Http\Controllers\Web\Tenant\Auth\VerificationController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Packages\TapPayment\Controllers\BusinessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -182,6 +177,11 @@ Route::prefix('api')->middleware([
         Route::get('branches/{branch}/delivery',[BranchController::class,'getDeliveryAvailability']);
         Route::post('logout', [APILoginController::class, 'logout']);
     });
+    Route::apiResource('business', BusinessController::class)->only([
+        'store','show'
+    ]);
+
+
 
 });
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
