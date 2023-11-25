@@ -16,9 +16,7 @@ class File extends Tap implements FileInterface
         ]+$data,'post',true);
     }
     public static function retrieve(string $file_id): array {
-        return self::send('/files/file_id',[
-            'file_id'=>$file_id
-        ]);
+        return self::send("/files/$file_id",[],'get');
     }
 
 }
