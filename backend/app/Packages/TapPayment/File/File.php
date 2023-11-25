@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Packages\TapPayment\Business;
+namespace App\Packages\TapPayment\File;
 
 use App\Packages\TapPayment\Tap;
-use App\Packages\TapPayment\Business\BusinessInterface;
-use App\Packages\TapPayment\Requests\CreateBusinessRequest;
+use App\Packages\TapPayment\File\FileInterface;
+
 
 class File extends Tap implements FileInterface
 {
@@ -12,7 +12,9 @@ class File extends Tap implements FileInterface
         return self::send('/files',$data);
     }
     public static function retrieve(string $file_id): array {
-        return [];
+        return self::send('/files/file_id',[
+            'file_id'=>$file_id
+        ],'get');
     }
 
 }

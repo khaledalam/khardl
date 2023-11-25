@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Packages\TapPayment\Business;
+namespace App\Packages\TapPayment\File;
 
 use App\Packages\TapPayment\Requests\CreateFileRequest;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;

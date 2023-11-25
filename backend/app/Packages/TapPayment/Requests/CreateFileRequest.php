@@ -16,7 +16,9 @@ class CreateFileRequest  extends FormRequest
     public function rules()
     {
         return [
-            
+            'file' => 'required|file',
+            'purpose' => 'required|string|in:business_icon,business_logo,customer_signature,dispute_evidence,finance_report_run,identity_document,pci_document,sigma_scheduled_query,tax_document_user_upload',
+            'title' => 'required|string',
         ];
     }
     

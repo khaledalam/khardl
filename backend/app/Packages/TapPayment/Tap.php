@@ -14,7 +14,7 @@ class Tap
             $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
             $response = Http::withToken($secret_key)
             ->$method($prefix_url.$url,$data);
-            
+            logger($response);
             if($response->successful()){
                 $response = json_decode($response->getBody(), true);
                 return [
@@ -29,7 +29,7 @@ class Tap
         return [
             'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
             'gateway_code'=> (isset($response['errors']))?$response['errors'][0]['code']: ResponseHelper::HTTP_BAD_REQUEST,
-            'message'=> (isset($response['errors']))?$response['errors'][0]['error']: __("Error Occur")
+            'message'=> (isset($response['errors']))?$response['errors'][0]['description']: __("Error Occur")
         ];
     }
    
