@@ -28,6 +28,7 @@ use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Packages\TapPayment\Controllers\BusinessController;
+use App\Packages\TapPayment\Controllers\FileController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
 
 /*
@@ -178,12 +179,18 @@ Route::prefix('api')->middleware([
         Route::get('branches/{branch}/delivery',[BranchController::class,'getDeliveryAvailability']);
         Route::post('logout', [APILoginController::class, 'logout']);
     });
-    Route::apiResource('businesses', BusinessController::class)->only([
-        'store','show'
-    ]);
-    Route::apiResource('subscriptions', SubscriptionController::class)->only([
-        'store','show'
-    ]);
+    Route::prefix('tap')->group(function(){
+        Route::apiResource('businesses', BusinessController::class)->only([
+            'store','show'
+        ]);
+        Route::apiResource('subscriptions', SubscriptionController::class)->only([
+            'store','show'
+        ]);
+        Route::apiResource('files', FileController::class)->only([
+            'store','show'
+        ]);
+        Route::webhooks('webhook-tap-actions','tap-payment');
+    });
 
 
 
