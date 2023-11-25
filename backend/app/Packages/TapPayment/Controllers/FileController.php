@@ -9,10 +9,7 @@ use App\Packages\TapPayment\Requests\CreateFileRequest;
 class FileController extends Controller
 {
     public function store(CreateFileRequest $request){
-        return File::create($request->validated()+[
-            'file_link_create' => true,
-            'expires_at' => now()->addDay(),
-        ]);
+        return File::create($request->validated());
     }
     public function show($file_id){
         return File::retrieve($file_id);

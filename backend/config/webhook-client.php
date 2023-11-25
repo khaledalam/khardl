@@ -16,7 +16,8 @@ return [
              * We expect that every webhook call will be signed using a secret. This secret
              * is used to verify that the payload has not been tampered with.
              */
-            'signing_secret' => env('TAP_SECRET_API_KEY'),
+            // Not require as we validate the hash string of coming tap request 
+            'signing_secret' => env('WEBHOOK_CLIENT_SECRET'),
 
             /*
              * The name of the header containing the signature.
