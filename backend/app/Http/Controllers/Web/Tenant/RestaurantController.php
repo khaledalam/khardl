@@ -48,10 +48,25 @@ class RestaurantController extends BaseController
         compact('available_branches','user', 'branches')); //view('branches')
     }
 
+    public function branches_site_editor(){
+        $user = Auth::user();
+
+        if (!$user->isRestaurantOwner()) {
+            return $this->sendResponse(null, 'Bad request');
+        }
+
+        $branches =  DB::table('branches')
+            ->get(['id', 'is_primary', 'name'])
+            ->sortByDesc('is_primary');
+
+        return $this->sendResponse($branches, 'Fetched branches successfully');
+
+    }
+
     public function addBranch(Request $request){
 
         if(!$this->can_create_branch()){
-            
+
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
         $validatedData = $request->validate([
@@ -160,7 +175,7 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        return false;
+        return true;
     }
 
 
@@ -239,14 +254,23 @@ class RestaurantController extends BaseController
     public function menu($branchId){
 
         $user = Auth::user();
-        // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
-        //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
-        // }
+//         if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
+//             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+//         }
 
         $categories = DB::table('categories')
-        ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
+        ->when($user->isWorker(), function (Builder $query, string $role)use($user, $branchId) {
+            if ($branchId) {
+                if ($branchId != $user->branch->id) return;
+            }
+
             $query->where('branch_id', $user->branch->id) ->where('user_id', $user->id);
         })
+            ->when($user->isRestaurantOwner(), function (Builder $query, string $role)use($user, $branchId) {
+                if ($branchId) {
+                    $query->where('branch_id', $branchId) ->where('user_id', $user->id);
+                }
+            })
         ->get();
         return view('restaurant.menu', compact('user', 'categories', 'branchId'));
     }
