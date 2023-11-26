@@ -34,7 +34,7 @@ class Msegat
            logger($e->getMessage());
         }
         return [
-            'http_code'=> ResponseHelper::HTTP_SERVICE_UNAVAILABLE,
+            'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
             'message'=> __("Error Occur")
         ];
         
