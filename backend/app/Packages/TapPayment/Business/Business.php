@@ -19,7 +19,7 @@ class Business extends Tap implements BusinessInterface
         ]);
     }
     public static function retrieve(string $business_id): array {
-        return [];
+        return self::send("/business/$business_id",[],'get');
     }
 
 }
