@@ -134,26 +134,6 @@
                 <!--begin::Input group-->
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
-                    <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="tax_number">
-                        <span class="">Documents</span>
-                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="The official documents related to the business."></i>
-                    </label>
-                    <div id="documents_inputs_group">
-                        <div>
-                            <label>
-                                <span class="">Documents</span>
-                                <input id="" type="file" class="form-control form-control-solid" name="" /><br />
-                            </label>
-                        </div>
-                    </div>
-                    <!--end::Label-->
-                    <button class="btn btn-sm btn-primary" id="add_documents_btn">+</button>
-                </div>
-                <!--end::Input group-->
-
-                <!--begin::Input group-->
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                         <span class="">Bank Account</span>
                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="The official documents related to the business."></i>
@@ -208,9 +188,10 @@
 
             <!--begin::Actions-->
             <div class="text-center">
-                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset</button>
+                <a href="{{route('tap.payments_upload_tap_documents_get')}}" type="button" id="prev_step_btn" class="btn btn-warning me-3">⬅ Back to step 1</a>
+                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset ↻</button>
                 <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                    <span class="indicator-label">Submit</span>
+                    <span class="indicator-label">Submit ✔️</span>
                     <span class="indicator-progress">Please wait...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                 </button>
