@@ -49,27 +49,32 @@ const Sidebar = () => {
 
        console.log(state);
 
-       return;
+  
 
 
        let inputs = {};
        if (template === 'restaurants') {
-           inputs.logo_alignment = state?.align?.selectedAlign;
-           inputs.logo_alignment = state?.align?.selectedAlign;
-           inputs.logo_alignment = state?.align?.selectedAlign;
-           inputs.logo_alignment = state?.align?.selectedAlign;
 
-
-       } else if (template === 'customers') {
-
-       } else {
-           toast.error(`Invalid save style action, template not set`);
-           return;
-       }
-
-        try {
-            const response = await AxiosInstance.post(`restaurant-style`, {
-                ...inputs
+            inputs.logo = (state?.logo)?await fetch(state?.logo).then(r => r.blob()):'';
+            inputs.logo_alignment = state?.align?.selectedAlign;
+            inputs.category_style = state?.category?.selectedCategory;
+            inputs.banner_style = state?.banner?.selectedBanner;
+            inputs.banner_image = (state?.image)?await fetch(state?.image).then(r => r.blob()):'';
+            if (state?.images?.image && state?.images?.image.length > 0) {
+               const imagePromises = state?.images?.image.map(async (image) => {
+                  return await fetch(image).then(r => r.blob());;
+               });
+               inputs.banner_images  =await Promise.all(imagePromises);
+            } else {
+               inputs.banner_images = '';
+            }
+          
+         
+           try {
+            const response = await AxiosInstance.post(`restaurant-style`,inputs,{
+               headers: {
+                  'Content-Type': 'multipart/form-data',
+               }
             })
 
             console.log(response)
@@ -86,6 +91,15 @@ const Sidebar = () => {
             // toast.error(`${t('Failed to send verification code')}`)
             console.log(error);
         }
+
+       } else if (template === 'customers') {
+
+       } else {
+           toast.error(`Invalid save style action, template not set`);
+           return;
+       }
+
+       
     };
 
    return (

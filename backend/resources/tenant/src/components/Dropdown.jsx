@@ -37,11 +37,11 @@ function Dropdown({ title, options, selectedValue, onSelect }) {
                                 onSelect(option); 
                             }}
                             className={`py-1 px-4 ${option === selectedValue ? "bg-[var(--primary)] text-white" : ""}
-                            ${option === `${t("Tabs")}` || option === `${t("Slider")}` ? "rounded-t-xl" : "" }
-                            ${option === `${t("Left")}` || option === `${t("One Photo")}` ? "rounded-b-xl" : "" }
+                            ${option === "Tabs" || option === "Slider" ? "rounded-t-xl" : "" }
+                            ${option === "Left" || option === "One Photo" ? "rounded-b-xl" : "" }
                             `}
                         >
-                            {option}
+                            {t(option)}
                         </div>
                     ))}
                     </div>

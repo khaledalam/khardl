@@ -14,12 +14,13 @@ class RestaurantStyleController extends Controller
    use APIResponseTrait;
 
    public function save(Request $request){
+
+        dd($request->all());
         $request->validate([
-            '' => 'required|string',
-            'logo' => 'string',
-            'logo_alignment' => 'required|string|in:left,right,center',
-            'category_style' => 'required|string|in:tabs,carousel,right,left', // category.selectedCategory
-            'banner_style' => 'required|string|in:Slider,One Phone', // banner.selectedBanner
+            'logo' => 'mimes:png,jpg,jpeg|max:2048',
+            'logo_alignment' => 'required|string|in:Left,Right,Center',
+            'category_style' => 'required|string|in:Tabs,Carousel,Right,Left', // category.selectedCategory
+            'banner_style' => 'required|string|in:Slider,One Photo', // banner.selectedBanner
             'banner_image' => 'string', // One Phone
             'banner_images' => 'array', // Slider
             'social_medias' => 'array',
