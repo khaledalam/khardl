@@ -29,6 +29,7 @@ class Item extends Model
         'selection_input_prices',
         'selection_input_titles',
         'dropdown_required',
+        'dropdown_input_titles',
         'dropdown_input_names',
         'availability'
     ];
