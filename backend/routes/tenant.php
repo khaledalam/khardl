@@ -84,8 +84,16 @@ Route::group([
             Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
             Route::post('/payment', [TapController::class, 'payment'])->middleware('permission:can_control_payment')->name('tap.payment');
             Route::middleware('restaurant')->group(function () {
-                Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get');
-                Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents');
+
+                // TAP Create Business
+                // Step 1:
+                Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get');
+                Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents');
+
+                // Step 2:
+                Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get');
+                Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents');
+
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
@@ -202,7 +210,7 @@ Route::prefix('api')->middleware([
         Route::apiResource('files', FileController::class)->only([
             'store','show'
         ]);
-        Route::webhooks('webhook-tap-actions','tap-payment');
+        Route::apiResource('webhook-tap-actions','tap-payment');
     });
 
 

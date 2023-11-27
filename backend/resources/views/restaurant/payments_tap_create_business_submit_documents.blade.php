@@ -1,7 +1,7 @@
 @extends('layouts.restaurant-sidebar')
 
 @section('content')
-    <h3 class="mb-13">Submit TAP Business</h3>
+    <h3 class="mb-13 mx-3">STEP 2 → Submit Create TAP Business Account</h3>
     @if(session('success'))
       <div class="alert alert-success">
         {{ session('success') }}
