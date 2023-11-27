@@ -141,6 +141,7 @@ const Editor = () => {
                 {categoriesForBranch?.length > 0 ?
                     <>
                         <h2>Categories:</h2>
+                        {console.log(categoriesForBranch)}
                         <Taps
                             contentClassName={`
         bg-[var(--secondary)] ${selectedCategory === `${t("Carousel")}` ? `flex justify-center`:''} text-xl
@@ -151,6 +152,7 @@ const Editor = () => {
                                         component={
                                             category?.items?.length > 0 ? <MenuItems
                                                 items={category?.items}
+                                                branch_id={category?.branch?.id}
                                             /> : <h2 className={"m-4"}>No items in this category yet! <a target={"_blank"} href={`/menu/${category?.id}/${branch}`}
                                                                                        className={"p-1 bg-[var(--primary)]"}>Add items to this category</a></h2>
                                         }
