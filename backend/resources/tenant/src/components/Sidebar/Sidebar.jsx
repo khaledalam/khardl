@@ -54,7 +54,11 @@ const Sidebar = () => {
 
        let inputs = {};
        if (template === 'restaurants') {
-           // inputs.
+           inputs.logo_alignment = state?.align?.selectedAlign;
+           inputs.logo_alignment = state?.align?.selectedAlign;
+           inputs.logo_alignment = state?.align?.selectedAlign;
+           inputs.logo_alignment = state?.align?.selectedAlign;
+
 
        } else if (template === 'customers') {
 
