@@ -15,15 +15,48 @@ class TapController extends Controller
         return view('restaurant.payments', compact('user'));
     }
 
+    public function payments_upload_tap_documents_get()
+    {
+        $user = Auth::user();
+
+        // @TODO: handle get tap files ids from our DB here...
+        $tap_files_ids = []; // ['
+
+
+        return view('restaurant.payments_tap_create_business_upload_documents', compact('user', 'tap_files_ids'));
+    }
+
+    public function payments_upload_tap_documents(Request $request)
+    {
+        // @TODO: handle upload tap documents logic here...
+        $user = Auth::user();
+
+        $request->validate([
+            'business_log' => '',
+            'customer_signature' => '',
+            'dispute_evidence' => '',
+            'identity_document' => '',
+            'pci_document' => '',
+            'tax_document_user_upload' => ''
+        ]);
+
+
+
+        return response()->json(['test' => 'ok']);
+    }
+
     public function payments_submit_tap_documents_get()
     {
         $user = Auth::user();
-        return view('restaurant.payments_submit_tap_documents', compact('user'));
+
+        $tap_files_ids = [];
+
+        return view('restaurant.payments_tap_create_business_submit_documents', compact('user'));
     }
 
-    public function payments_submit_tap_documents()
+    public function payments_submit_tap_documents(Request $request)
     {
-        // @TODO: handle upload tap documents logic here...
+        // @TODO: handle submit tap documents logic here...
         $user = Auth::user();
 
         return response()->json(['test' => 'ok']);
