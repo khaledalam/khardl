@@ -21,8 +21,9 @@ if (! function_exists('store_image')) {
             $image->storeAs($store_at, $filename, 'public');
             return  $store_at.'/'.$filename;
         }catch(Exception $e){
-            return false;
+            return null;
         }
+        
         
     }
 }

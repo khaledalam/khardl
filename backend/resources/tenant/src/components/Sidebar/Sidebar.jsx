@@ -92,15 +92,8 @@ const Sidebar = () => {
             })
 
             console.log(response)
-            if (response.data) {
-                const responseData = await response.json()
-                console.log(responseData)
-
-
-                setBranch(data);
-
-            } else {
-
+            if (response) {
+               toast.success(response.data.message);
             }
         } catch (error) {
             console.log(error.response.data.message);
