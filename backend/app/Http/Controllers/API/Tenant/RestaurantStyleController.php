@@ -16,8 +16,6 @@ class RestaurantStyleController extends Controller
    use APIResponseTrait;
 
    public function save(Request $request){
-
-       
         
         $request->validate([
             'logo' => 'required|mimes:png,jpg,jpeg|max:2048',
@@ -82,14 +80,7 @@ class RestaurantStyleController extends Controller
 
     public function fetch(Request $request)
     {
-        $user = Auth::user();
-
-        $style = RestaurantStyle::
-            where('user_id', $user?->id)
-                ->first();
-
-        return $this->sendResponse($style, __('Restaurant style fetched successfully.'));
-
+        return $this->sendResponse(RestaurantStyle::first() ?? [], __('Restaurant style fetched successfully.'));
     }
 
 }
