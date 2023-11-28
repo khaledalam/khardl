@@ -18,15 +18,26 @@
         <div class="d-flex flex-column mb-8 fv-row">
             <!--begin::Label-->
             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="business_log">
-                <span class="">Business Logo</span>
+                <span class="">Business Icon</span>
                 <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="A business logo."></i>
             </label>
             <input id="business_log" accept=".gif,.jpeg,.png" type="file" class="form-control form-control-solid" name="business_log" />
-            <pre class="mx-3"><small><i>Accept: GIF, JPEG, PNG. size <= 512KB</i></small></pre>
+            <pre class="mx-3"><small><i>Accept: GIF, JPEG, PNG. size <= 8 MG</i></small></pre>
         </div>
         <!--end::Input group-->
 
 
+        <!--begin::Input group-->
+        <div class="d-flex flex-column mb-8 fv-row">
+            <!--begin::Label-->
+            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="business_log">
+                <span class="">Business Logo</span>
+                <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="A business logo."></i>
+            </label>
+            <input id="business_log" accept=".gif,.jpeg,.png" type="file" class="form-control form-control-solid" name="business_log" />
+            <pre class="mx-3"><small><i>Accept: GIF, JPEG, PNG. size <= 8 MG</i></small></pre>
+        </div>
+        <!--end::Input group-->
 
             <!--begin::Input group-->
             <div class="d-flex flex-column mb-8 fv-row">
@@ -35,8 +46,8 @@
                     <span class="">Customer Signature</span>
                     <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="A customer signature."></i>
                 </label>
-                <input id="customer_signature" accept=".jpg,.png" type="file" class="form-control form-control-solid" name="customer_signature" />
-                <pre class="mx-3"><small><i>Accept: JPG, PNG. size <= 4MB</i></small></pre>
+                <input id="customer_signature" accept=".jpg,.png,.pdf" type="file" class="form-control form-control-solid" name="customer_signature" />
+                <pre class="mx-3"><small><i>Accept: GIF, PDF, JPEG, PNG. size <= 8 MG</i></small></pre>
             </div>
             <!--end::Input group-->
 
@@ -48,8 +59,8 @@
                     <span class="">Dispute Evidence</span>
                     <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="Evidence to submit with a dispute response."></i>
                 </label>
-                <input id="dispute_evidence" accept=".jpeg,.png, .pdf" type="file" class="form-control form-control-solid" name="dispute_evidence" />
-                <pre class="mx-3"><small><i>Accept: JPEG, PDF, PNG. size <= 8MB</i></small></pre>
+                <input id="dispute_evidence" accept=" .pdf" type="file" class="form-control form-control-solid" name="dispute_evidence" />
+                <pre class="mx-3"><small><i>Accept: PDF, JPEG, PNG. size <= 8 MG</i></small></pre>
             </div>
             <!--end::Input group-->
 
@@ -60,8 +71,8 @@
                     <span class="">identity Document</span>
                     <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="A document to verify the identity of an account owner during account provisioning."></i>
                 </label>
-                <input id="identity_document" accept=".jpeg,.png" type="file" class="form-control form-control-solid" name="identity_document" />
-                <pre class="mx-3"><small><i>Accept: JPEG, PNG. size <= 10MB</i></small></pre>
+                <input id="identity_document" accept=".jpeg,.png,.pdf" type="file" class="form-control form-control-solid" name="identity_document" />
+                <pre class="mx-3"><small><i>Accept: PDF, JPEG, PNG. size <= 8 MG</i></small></pre>
             </div>
             <!--end::Input group-->
 
@@ -73,7 +84,7 @@
                     <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="A self-assessment PCI questionnaire."></i>
                 </label>
                 <input id="pci_document" accept=".pdf" type="file" class="form-control form-control-solid" name="pci_document" />
-                <pre class="mx-3"><small><i>Accept: PDF. size <= 16MB</i></small></pre>
+                <pre class="mx-3"><small><i>Accept: PDF, JPEG, PNG. size <= 8 MG</i></small></pre>
             </div>
             <!--end::Input group-->
 
@@ -85,7 +96,7 @@
                     <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="A user-uploaded tax document.A user-uploaded tax document."></i>
                 </label>
                 <input id="tax_document_user_upload" accept=".csv,.docx,.jpg,.pdf,.png,.xls,.xlsx" type="file" class="form-control form-control-solid" name="tax_document_user_upload" />
-                <pre class="mx-3"><small><i>Accept: CSV, DOCX, JPG, PDF, PNG, XLS, XLSX. size <= 16MB</i></small></pre>
+                <pre class="mx-3"><small><i>Accept: PDF, JPEG, PNG. size <= 8 MG</i></small></pre>
             </div>
             <!--end::Input group-->
 

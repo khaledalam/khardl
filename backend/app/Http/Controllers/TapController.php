@@ -21,7 +21,7 @@ class TapController extends Controller
 
         // @TODO: handle get tap files ids from our DB here...
         $tap_files_ids = []; // ['
-
+      
 
         return view('restaurant.payments_tap_create_business_upload_documents', compact('user', 'tap_files_ids'));
     }
@@ -30,17 +30,27 @@ class TapController extends Controller
     {
         // @TODO: handle upload tap documents logic here...
         $user = Auth::user();
+        $validationRules = [
+            'business_icon' => 'required|mimes:jpeg,png,gif|file|max:8192',
+            'business_logo' => 'required|mimes:jpeg,png,gif|file|max:8192',
+            'customer_signature' => 'required|mimes:gif,jpeg,png,pdf|file|max:8192',
+            'dispute_evidence' => 'required|mimes:jpeg,png,pdf|file|max:8192',
+            'identity_document' => 'required|mimes:jpeg,png,pdf|file|max:8192',
+            'pci_document' => 'required|mimes:jpeg,png,pdf|file|max:8192',
+            'tax_document_user_upload' => 'required|mimes:jpeg,png,pdf|file|max:8192',
+        ];
+       
+        $request->validate($validationRules);
 
-        $request->validate([
-            'business_log' => '',
-            'customer_signature' => '',
-            'dispute_evidence' => '',
-            'identity_document' => '',
-            'pci_document' => '',
-            'tax_document_user_upload' => ''
-        ]);
+        // Iterate through the keys
+        foreach ($validationRules as $key => $rule) {
+            $file = $request->file($key);
 
+            // Process and save the file as needed
+            // For example: $file->storeAs('uploads', $key . '.' . $file->getClientOriginalExtension());
+        }
 
+        
 
         return response()->json(['test' => 'ok']);
     }
