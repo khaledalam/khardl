@@ -120,6 +120,16 @@ Route::group([
                 })->name($name);
             }
         });
+        Route::get('/download/file/{path?}',function($path){
+            try{
+                return response()->download(storage_path("app/public/$path"));
+            }catch(Exception $e){
+                return redirect()->back()->with('error',__('File not exists !'));
+            }
+            
+        })
+        ->where('path', '(.*)')
+        ->name("download.file");
 
     });
 
@@ -176,6 +186,7 @@ Route::group([
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
+    
 
 });
 
