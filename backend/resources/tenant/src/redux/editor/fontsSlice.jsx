@@ -6,6 +6,7 @@ const fontsSlice = createSlice({
         fontsList: [],
         selectedFontFamily: 'cairo',
         selectedFontWeight: 'normal',
+        selectedFontSize: '15px',
     },
     reducers: {
         setFontsList: (state, action) => {
@@ -17,8 +18,11 @@ const fontsSlice = createSlice({
         setSelectedFontWeight: (state, action) => {
             state.selectedFontWeight = action.payload;
         },
+        setSelectedFontSize: (state, action) => {
+            state.selectedFontSize = action.payload;
+        },
     },
 });
 
-export const { setSelectedFontFamily, setSelectedFontWeight, setFontsList } = fontsSlice.actions;
+export const { setSelectedFontFamily, setSelectedFontWeight, setFontsList ,setSelectedFontSize} = fontsSlice.actions;
 export default fontsSlice.reducer;

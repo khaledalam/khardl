@@ -59,6 +59,20 @@ const Sidebar = () => {
             inputs.logo_alignment = state?.align?.selectedAlign;
             inputs.category_style = state?.category?.selectedCategory;
             inputs.banner_style = state?.banner?.selectedBanner;
+            inputs.social_medias = state?.contact?.icons;
+            inputs.phone_number = state?.contact?.phoneNumber;
+            inputs.primary_color = state?.button?.GlobalColor;
+            inputs.buttons_style = state?.button?.GlobalShape;
+            inputs.images_style= state?.shapeImage?.shapeImageShape;
+            inputs.font_family= state?.fonts?.selectedFontFamily;
+            inputs.font_type= state?.fonts?.selectedFontWeight;
+            inputs.font_size= state?.fonts?.selectedFontSize;
+            inputs.font_alignment= state?.alignText?.selectedAlignText;
+            inputs.right_side_button= state?.button?.buttons[0];
+            inputs.center_side_button= state?.button?.buttons[1];
+            inputs.left_side_button= state?.button?.buttons[2];
+           
+            
             inputs.banner_image = (state?.image)?await fetch(state?.image).then(r => r.blob()):'';
             if (state?.images?.image && state?.images?.image.length > 0) {
                const imagePromises = state?.images?.image.map(async (image) => {
@@ -86,10 +100,11 @@ const Sidebar = () => {
                 setBranch(data);
 
             } else {
+
             }
         } catch (error) {
-            // toast.error(`${t('Failed to send verification code')}`)
-            console.log(error);
+            console.log(error.response.data.message);
+            toast.error(error.response?.data?.message);
         }
 
        } else if (template === 'customers') {

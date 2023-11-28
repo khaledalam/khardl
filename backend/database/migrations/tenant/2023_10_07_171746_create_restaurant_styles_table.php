@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unique(); // Ensure one style per user
             $table->string('logo')->nullable();
-            $table->enum('logo_alignment', ['left', 'center', 'right']);
-            $table->string('category_style')->nullable();
+            $table->string('logo_alignment');
+            $table->string('category_style');
+            $table->string('banner_style');
+            $table->string('banner_image')->nullable();
             $table->json('banner_images')->nullable();
             $table->json('social_medias')->nullable();
             $table->string('phone_number')->nullable();
@@ -26,11 +28,12 @@ return new class extends Migration
             $table->string('font_family')->nullable();
             $table->string('font_type')->nullable();
             $table->string('font_size')->nullable();
-            $table->string('button1_name')->nullable();
-            $table->string('button1_color')->nullable();
-            $table->string('button2_name')->nullable();
-            $table->string('button2_color')->nullable();
-            $table->string('login_logo')->nullable();
+            $table->string('font_alignment')->nullable();
+            $table->json('left_side_button')->nullable();
+            $table->json('right_side_button')->nullable();
+            $table->json('center_side_button')->nullable();
+    
+     
             $table->timestamps();
 
              // Foreign key constraints

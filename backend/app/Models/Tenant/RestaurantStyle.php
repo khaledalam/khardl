@@ -34,6 +34,7 @@ class RestaurantStyle extends Model
         'banner_images' => 'array',
         'social_medias' => 'array',
     ];
+    const STORAGE = 'restaurant-styles';
 
     /**
      * Get the user associated with this style.

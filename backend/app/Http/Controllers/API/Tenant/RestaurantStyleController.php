@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
-use App\Models\Tenant\RestaurantStyle;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Tenant\RestaurantStyle;
+use Illuminate\Support\Facades\Storage;
 
 
 class RestaurantStyleController extends Controller
@@ -15,28 +17,45 @@ class RestaurantStyleController extends Controller
 
    public function save(Request $request){
 
+       
         dd($request->all());
         $request->validate([
-            'logo' => 'mimes:png,jpg,jpeg|max:2048',
+            'logo' => 'required|mimes:png,jpg,jpeg|max:2048',
             'logo_alignment' => 'required|string|in:Left,Right,Center',
-            'category_style' => 'required|string|in:Tabs,Carousel,Right,Left', // category.selectedCategory
-            'banner_style' => 'required|string|in:Slider,One Photo', // banner.selectedBanner
-            'banner_image' => 'string', // One Phone
-            'banner_images' => 'array', // Slider
+            'category_style' => 'required|string|in:Tabs,Carousel,Right,Left',
+            'banner_style' => 'required|string|in:Slider,One Photo', 
+            'banner_image' => 'required_if:banner_style,One Photo|nullable|mimes:png,jpg,jpeg|max:2048',
+            'banner_images' => 'required_if:banner_style,Slider|nullable|array', 
+            'banner_images.*' => 'mimes:png,jpg,jpeg|max:2048',
             'social_medias' => 'array',
-            'phone_number' => 'required|string',
-            'primary_color',
-            'buttons_style',
-            'images_style',
-            'font_family',
-            'font_type',
-            'font_size',
-            'button1_name',
-            'button1_color',
-            'button2_name',
-            'button2_color',
-            'login_logo'
+            'social_medias.*.Link' => 'string',
+            'phone_number' => 'string',
+            'primary_color' => 'string',
+            'buttons_style' => 'string',
+            'images_style' => 'string',
+            'font_family' => 'string',
+            'font_type' => 'string',
+            'font_size' => 'string',
+            'font_alignment' => 'string',
+            'left_side_button'=>'array',
+            'right_side_button'=>'array',
+            "center_side_button"=>'array',
+
         ]);
+        if($request->logo){
+            logger(store_image($request->file('logo'),RestaurantStyle::STORAGE,'logo'));
+        }
+        if($request->banner_image){
+            store_image($request->file('banner_image'),RestaurantStyle::STORAGE,'banner_image');
+
+        }else {
+            if($request->banner_images){
+                foreach($request->banner_images as $k=>$image ){
+                    store_image($image,RestaurantStyle::STORAGE,'banner_image_'.$k+1);
+                }
+            }
+        }
+        dd(1);
         $user = Auth::user();
 
         //@TODO: validate and save logic here
