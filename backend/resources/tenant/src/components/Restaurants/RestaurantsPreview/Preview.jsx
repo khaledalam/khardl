@@ -97,7 +97,7 @@ const Preview = () => {
                     {category?.name}
                   </Tap>
                 ))}
-              </Taps></> : <h2>No categories of this branch yet!</h2>}
+              </Taps></> : <h2>No categories yet!</h2>}
             </div>
           </div>
         </div>

@@ -72,6 +72,7 @@ Route::group([
             Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
             Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
             Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
+            Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
             Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
@@ -83,8 +84,16 @@ Route::group([
             Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
             Route::post('/payment', [TapController::class, 'payment'])->middleware('permission:can_control_payment')->name('tap.payment');
             Route::middleware('restaurant')->group(function () {
-                Route::get('/payments/upload-tap-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get');
-                Route::post('/payments/upload-tap-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents');
+
+                // TAP Create Business
+                // Step 1:
+                Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get');
+                Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents');
+
+                // Step 2:
+                Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get');
+                Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents');
+
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
@@ -102,7 +111,19 @@ Route::group([
 
             });
         });
+
+        $group = TenantSharedRoutesTrait::getPrivateRoutes();
+        Route::middleware($group['middleware'])->group(function() use ($group){
+            foreach ($group['routes'] as $route => $name) {
+                Route::get($route, static function(Request $request) {
+                    return view('tenant');
+                })->name($name);
+            }
+        });
+
     });
+
+
 
     Route::group([
         'middleware' => ['restaurantLive'],
@@ -189,7 +210,7 @@ Route::prefix('api')->middleware([
         Route::apiResource('files', FileController::class)->only([
             'store','show'
         ]);
-        Route::webhooks('webhook-tap-actions','tap-payment');
+        Route::apiResource('webhook-tap-actions','tap-payment');
     });
 
 

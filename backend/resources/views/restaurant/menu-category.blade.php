@@ -250,7 +250,25 @@
                 </div>
                 <!--begin::Modal header-->
                 <!--begin::Modal body-->
-                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
+                    <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse end-0 transform-270 mt-20 gap-2">
+                        <!--begin::Demos drawer toggle-->
+                        <button id="addCheckbox" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Checkbox">
+                            <span id="create_new_checkbox">+ Checkbox</span>
+                        </button>
+                        <!--end::Demos drawer toggle-->
+                        <!--begin::Help drawer toggle-->
+                        <button id="addSelection" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Selection">
+                            <span id="create_new_selection">+ Selection</span>
+                        </button>                        <!--end::Help drawer toggle-->
+                        <!--begin::Purchase link-->
+                        <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Dropdown">
+                            <span id="create_new_Dropdown">+ Dropdown</span>
+                        </button>
+                        <!--end::Purchase link-->
+                    </div>
+
+
                     <!--begin:Form-->
                     <form id="kt_modal_new_target_form" class="form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" id="myForm" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -319,77 +337,21 @@
                         <!--end::Input group-->
 
 
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">checkbox choice</span>
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target priorty"></i>
-                                </label>
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <input type="checkbox" name="checkbox_required" id=""> required
-                                </label>
-                            </div>
-                            <!--end::Label-->
-                            <div id="inputContainer2">
-                                <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                                    <input oninput="restrictCharacter(this, '|')" required type="text" class="form-control form-control-solid mx-3" name="checkboxInputTitle[]" placeholder="Title">
-                                    <input oninput="restrictCharacter(this, '|')" required type="text" class="form-control form-control-solid mx-3" name="checkboxInputMaximumChoice[]" placeholder="Maximum choice">
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-primary" id="addInput2">+</button>
+                       
+                        <div id="checkboxes">
+                            <!-- Checkbox elements will be dynamically added here -->
+                            
                         </div>
-                        <!--end::Input group-->
+                        
 
-
-
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">Selection buttons</span>
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target priorty"></i>
-                                </label>
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <input type="checkbox" name="selection_required" id=""> required
-                                </label>
-                            </div>
-                            <!--end::Label-->
-                            <div id="inputContainer">
-                                <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                                    <input oninput="restrictCharacter(this, '|')" required type="text" class="form-control form-control-solid mx-3" name="selectionInputTitle[]" placeholder="Title ">
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-primary" id="addInput">+</button>
+                        <div id="selections">
+                            <!-- Checkbox elements will be dynamically added here -->
                         </div>
-                        <!--end::Input group-->
 
 
-
-
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">Dropdown</span>
-                                    <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target priorty"></i>
-                                </label>
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <input type="checkbox" name="dropdown_required" id=""> required
-                                </label>
-                            </div>
-                            <!--end::Label-->
-                            <div id="inputContainer3">
-                                <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                                    <input oninput="restrictCharacter(this, '|')" required type="text" class="form-control form-control-solid mx-3" name="dropdownInputName[]" placeholder="Name Dropdown">
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-primary" id="addInput3">+</button>
+                        <div id="dropdowns">
+                            <!-- Checkbox elements will be dynamically added here -->
                         </div>
-                        <!--end::Input group-->
 
                         <!--begin::Actions-->
                         <div class="text-center">
@@ -412,6 +374,160 @@
     </div>
     <!--end::Modal - New Target-->
 
+    <!--begin::Modal - New Target-->
+    {{-- <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content rounded">
+                <!--begin::Modal header-->
+                <div class="modal-header pb-0 border-0 justify-content-end">
+                    <!--begin::Close-->
+                    <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--begin::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+
+
+                    <!-- Toolbar -->
+                    <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2 top-50 end-0 transform-90 mt-20 gap-2">
+                        <!--begin::Demos drawer toggle-->
+                        <button id="addCheckbox" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Checkbox">
+                            <span id="create_new_checkbox">+ Checkbox</span>
+                        </button>
+                        <!--end::Demos drawer toggle-->
+                        <!--begin::Help drawer toggle-->
+                        <button id="addSelection" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Selection">
+                            <span id="create_new_selection">+ Selection</span>
+                        </button>                        <!--end::Help drawer toggle-->
+                        <!--begin::Purchase link-->
+                        <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Dropdown">
+                            <span id="create_new_Dropdown">+ Dropdown</span>
+                        </button>
+                        <!--end::Purchase link-->
+                    </div>
+
+
+
+
+                    <!--begin:Form-->
+                    <form id="kt_modal_new_target_form" class="form" action="#" id="myForm">
+                        <!--begin::Heading-->
+                        <div class="mb-13 text-center">
+                            <!--begin::Title-->
+                            <h1 class="mb-3">Create New Items</h1>
+                            <!--end::Title-->
+                        </div>
+                        <!--end::Heading-->
+                        <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <span class="required">Item photo</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
+                            </label>
+                            <!--end::Label-->
+                            <input type="file" class="form-control form-control-solid" multiple placeholder="Enter Target Title" name="photo[]" />
+                        </div>
+                        <!--end::Input group-->
+
+                         <!--begin::Input group-->
+                         <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <span class="required">Item Title</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
+                            </label>
+                            <!--end::Label-->
+                            <input type="text" class="form-control form-control-solid" name="input2[]" placeholder="Title">
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="row g-9 mb-8">
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <label class="required fs-6 fw-bold mb-2">price</label>
+                                <!--begin::Input-->
+                                <div class="position-relative d-flex align-items-center">
+                                    <!--begin::Datepicker-->
+                                    <input class="form-control form-control-solid ps-12" />
+                                    <!--end::Datepicker-->
+                                </div>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-6 fv-row">
+                                <label class="required fs-6 fw-bold mb-2">Calories</label>
+                                <input class="form-control form-control-solid ps-12" />
+                            </div>
+                            <!--end::Col-->
+                            
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8">
+                            <label class="fs-6 fw-bold mb-2">Description</label>
+                            <textarea class="form-control form-control-solid" rows="3" name="description" placeholder="Write Description"></textarea>
+                        </div>
+                        <!--end::Input group-->
+
+
+
+                        <div id="checkboxes">
+                            <!-- Checkbox elements will be dynamically added here -->
+                            
+                        </div>
+                        
+
+                        <div id="selections">
+                            <!-- Checkbox elements will be dynamically added here -->
+                        </div>
+
+
+                        <div id="dropdowns">
+                            <!-- Checkbox elements will be dynamically added here -->
+                        </div>
+
+
+
+
+
+
+
+                        <!--begin::Actions-->
+                        <div class="text-center">
+                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</button>
+                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+
+
+                    </form>
+                    <!--end:Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div> --}}
+    <!--end::Modal - New Target-->
 
     <!--begin::Scrolltop-->
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
@@ -456,96 +572,390 @@
                     });
       </script>
 
+  
+    <!--begin::Javascript-->
     <script>
         var hostUrl = "assets/";
-      // script.js
+        // script.js
         const addCategoryButton = document.getElementById("addCategoryButton");
         const categoryForm = document.getElementById("categoryForm");
         const categoryInputForm = document.getElementById("categoryInputForm");
         const categoryNameInput = document.getElementById("categoryName");
         const categoryList = document.getElementById("categoryList");
-
+    
         addCategoryButton.addEventListener("click", () => {
             categoryForm.style.display = "block";
             categoryNameInput.focus();
         });
-
+    
         categoryInputForm.addEventListener("submit", (e) => {
             e.preventDefault();
-
+    
             const categoryName = categoryNameInput.value;
             if (categoryName.trim() !== "") {
                 const listItem = document.createElement("li");
-                listItem.textContent = categoryName;
+    
+                const listItemContent = document.createElement("div");
+                listItemContent.classList.add("d-flex", "justify-content-between", "align-items-center");
+    
+                const categoryNameSpan = document.createElement("span");
+                categoryNameSpan.textContent = categoryName;
+    
+                const deleteButton = document.createElement("button");
+                deleteButton.classList.add("btn", "btn-sm", "btn-danger", "delete-btn");
+                deleteButton.innerHTML = '<i class="bi bi-trash"></i>'; // You can replace this with your actual icon
+    
+                listItemContent.appendChild(categoryNameSpan);
+                listItemContent.appendChild(deleteButton);
+    
+                listItem.appendChild(listItemContent);
                 categoryList.appendChild(listItem);
-
+    
                 categoryNameInput.value = "";
                 categoryForm.style.display = "none";
+    
+                deleteButton.addEventListener("click", () => {
+                    listItem.remove();
+                });
             }
         });
-
+    
     </script>
 
-    <script>
-        const addButton2 = document.getElementById('addInput');
-        const inputContainer = document.getElementById('inputContainer');
-        let inputCount2 = 0;
 
-        addButton2.addEventListener('click', () => {
-            inputCount2++;
-            const newInput = document.createElement('div');
-            newInput.className = 'input-container d-flex justify-content-between align-items-center hover-container my-3';
-            newInput.innerHTML = `
-                <input type="text" oninput="restrictCharacter(this, '|')" name="selectionInputName[]" required class="form-control form-control-solid mx-3" placeholder="name ${inputCount2}">
-                <input type="text" oninput="restrictCharacter(this, '|')" name="selectionInputPrice[]" required class="form-control form-control-solid" placeholder="price ${inputCount2}">
-            `;
-            inputContainer.appendChild(newInput);
-        });
-
-    </script>
-
-    <script>
-        const addButton = document.getElementById('addInput2');
-        const inputContainer2 = document.getElementById('inputContainer2');
-        let inputCount = 0;
-
-        addButton.addEventListener('click', () => {
-            inputCount++;
-            const newInput = document.createElement('div');
-            newInput.className = 'input-container d-flex justify-content-between align-items-center hover-container my-3';
-            newInput.innerHTML = `
-                <input type="text" oninput="restrictCharacter(this, '|')" name="checkboxInputName[]" required class="form-control form-control-solid mx-3" placeholder="name ${inputCount}">
-                <input type="text" oninput="restrictCharacter(this, '|')" name="checkboxInputPrice[]" required class="form-control form-control-solid" placeholder="price ${inputCount}">
-            `;
-            inputContainer2.appendChild(newInput);
-        });
-
-    </script>
-
+<!-- Category sidebar -->
 <script>
-    const addButton3 = document.getElementById('addInput3');
-    const inputContainer3 = document.getElementById('inputContainer3');
-    let inputCount3 = 0;
+    const sectionsList = document.getElementById('sections-list');
+    const addSectionButton = document.getElementById('add-section');
 
-    addButton3.addEventListener('click', () => {
-        inputCount3++;
-        const newInput = document.createElement('div');
-        newInput.className = 'input-container d-flex justify-content-between align-items-center hover-container my-3';
-        newInput.innerHTML = `
-            <input type="text" oninput="restrictCharacter(this, '|')" name="dropdownInputName[]" required class="form-control form-control-solid mx-3" placeholder="Option ${inputCount3}">
-        `;
-        inputContainer3.appendChild(newInput);
-    });
+    // Function to toggle between edit and save modes for a section
+    function toggleEditSave(section) {
+        const sectionTitle = section.querySelector('.menu-title');
+        const editButton = section.querySelector('.edit-button');
 
-</script>
-
-<script>
-    function restrictCharacter(input, character) {
-        const value = input.value;
-        if (value.includes(character)) {
-            input.value = value.replace(character, '');
+        if (sectionTitle.contentEditable === 'true') {
+            // Save mode
+            sectionTitle.contentEditable = 'false';
+            editButton.innerHTML = '<i class="fas fa-edit" style="color:#00a0f7;"></i>';
+        } else {
+            // Edit mode
+            sectionTitle.contentEditable = 'true';
+            editButton.innerHTML = '<i class="fas fa-save" style="color:#19b919;"></i>';
         }
     }
+
+    // Function to delete a section with confirmation
+    function deleteSection(section) {
+        const confirmation = confirm("Are you sure you want to delete this section?");
+        if (confirmation) {
+            sectionsList.removeChild(section);
+        }
+    }
+
+    // Function to add a new section
+    function addNewSection() {
+        const section = document.createElement('li');
+        section.className = 'section-item';
+
+        const sectionTitle = document.createElement('span');
+        sectionTitle.className = 'menu-title fw-bolder';
+        sectionTitle.textContent = 'New Section';
+
+        const editButton = document.createElement('span');
+        editButton.className = 'edit-button';
+        editButton.innerHTML = '<i class="fas fa-edit" style="color:#00a0f7;"></i>';
+        editButton.addEventListener('click', () => toggleEditSave(section));
+
+        const deleteButton = document.createElement('span');
+        deleteButton.className = 'delete-button';
+        deleteButton.innerHTML = '<i class="fas fa-trash" style="color:red;"></i>';
+        deleteButton.addEventListener('click', () => deleteSection(section));
+
+        section.appendChild(sectionTitle);
+        section.appendChild(editButton);
+        section.appendChild(deleteButton);
+
+        sectionsList.appendChild(section);
+    }
+
+    // Add event listener for the "Add New Section" button
+    addSectionButton.addEventListener('click', addNewSection);
+</script>
+
+
+    <!-- Checkbox -->
+    <script>
+        const checkboxesContainer = document.getElementById('checkboxes');
+        const addCheckboxButton = document.getElementById('addCheckbox');
+
+        let checkboxCount = 0;
+
+        function createCheckbox() {
+            checkboxCount++;
+            const checkboxDiv = document.createElement('div');
+            checkboxDiv.className = 'd-flex flex-column mb-8 fv-row';
+            checkboxDiv.innerHTML = `
+                <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="">Checkbox buttons ${checkboxCount}</span>
+                        </label>
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <input type="checkbox" name="checkbox_required[]" id=""> required
+                        </label>
+                    </div>
+                    <!--end::Label-->
+
+                    <div id="inputContainer${checkboxCount}">
+                        <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-75" name="checkboxInputTitle[]" placeholder="title ${checkboxCount}">
+                            <input type="number" required class="form-control form-control-solid mx-3 w-25" name="checkboxInputMaximumChoice[]" placeholder="max ${checkboxCount}">
+                            <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                        </div>
+                    </div>
+                    <div id="inputContainer${checkboxCount}">
+                        <!-- Existing ShakePass11 elements will be dynamically added here -->
+                    </div>
+                    <div class="options" id="${checkboxCount}">
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ Add Option</a>
+                    </div>
+                </div>
+            `;
+
+            const deleteCheckboxButton = checkboxDiv.querySelector('.delete-checkbox');
+            deleteCheckboxButton.addEventListener('click', () => {
+                checkboxesContainer.removeChild(checkboxDiv);
+            });
+
+            const addOptionButton = checkboxDiv.querySelector('.add-option');
+            addOptionButton.addEventListener('click', () => {
+                createCheckBoxOption(checkboxDiv);
+            });
+
+            checkboxesContainer.appendChild(checkboxDiv);
+            createCheckBoxOption(checkboxDiv,true);
+        }
+
+        function createCheckBoxOption(checkboxDiv,isDeletable = false) {
+            const optionsDiv = checkboxDiv.querySelector('.options');
+            const optionCount = optionsDiv.id;
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'option';
+            if(isDeletable){
+                optionDiv.innerHTML = `
+                <div class="d-flex justify-content-between mt-4">
+                    <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ${optionCount}">
+                    <input type="text"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
+                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                </div>
+            `;
+            }else {
+                optionDiv.innerHTML = `
+                <div class="d-flex justify-content-between mt-4">
+                    <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ${optionCount}">
+                    <input type="text"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
+                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                </div>
+            `;
+
+                const deleteOptionButton = optionDiv.querySelector('.delete-option');
+                deleteOptionButton.addEventListener('click', () => {
+                    optionsDiv.removeChild(optionDiv);
+                });
+            }
+           
+
+
+            optionsDiv.appendChild(optionDiv);
+        }
+
+        addCheckboxButton.addEventListener('click', createCheckbox);
     </script>
+
+   <!-- Selection -->
+    <script>
+        const selectionsContainer = document.getElementById('selections');
+        const addSelectionButton = document.getElementById('addSelection');
+
+        let selectionCount = 0;
+
+        function createSelection() {
+            selectionCount++;
+            const selectionDiv = document.createElement('div');
+            selectionDiv.className = 'd-flex flex-column mb-8 fv-row';
+            selectionDiv.innerHTML = `
+                <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="">Selection buttons ${selectionCount}</span>
+                        </label>
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <input type="checkbox" name="selection_required[]" id=""> required
+                        </label>
+                    </div>
+                    <!--end::Label-->
+
+                    <div id="inputContainer${selectionCount}">
+                        <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
+                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitle[]" placeholder="title ${selectionCount}">
+                            <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                        </div>
+                    </div>
+                    <div id="inputContainer${selectionCount}">
+                        <!-- Existing ShakePass11 elements will be dynamically added here -->
+                    </div>
+                    <div class="options" id="${selectionCount}">
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ Add Option</a>
+                    </div>
+                </div>
+            `;
+
+            const deleteSelectionButton = selectionDiv.querySelector('.delete-selection');
+            deleteSelectionButton.addEventListener('click', () => {
+                selectionsContainer.removeChild(selectionDiv);
+            });
+
+            const addOptionButton = selectionDiv.querySelector('.add-option');
+            addOptionButton.addEventListener('click', () => {
+                createSelectionOption(selectionDiv, selectionCount); // Pass the selectionCount
+            });
+
+            selectionsContainer.appendChild(selectionDiv);
+            createSelectionOption(selectionDiv, selectionCount,true);
+        }
+
+        function createSelectionOption(selectionDiv, selectionCount,isDeletable = false) {
+            const optionsDiv = selectionDiv.querySelector('.options');
+            const optionCount = optionsDiv.id;
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'option';
+            if(isDeletable){
+            optionDiv.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ${optionCount}">
+                    <input type="text"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
+                    <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                </div>
+            `;  }
+            else {
+                optionDiv.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ${optionCount}">
+                    <input type="text"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
+                    <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+
+            const deleteOptionButton = optionDiv.querySelector('.delete-option');
+            deleteOptionButton.addEventListener('click', () => {
+                optionsDiv.removeChild(optionDiv);
+            });
+            }
+
+
+            optionsDiv.appendChild(optionDiv);
+        }
+
+        addSelectionButton.addEventListener('click', createSelection);
+    </script>
+    
+    <!-- Dropdown -->
+    <script>
+        const dropdownsContainer = document.getElementById('dropdowns');
+        const addDropdownButton = document.getElementById('addDropdown');
+
+        let dropdownCount = 0;
+
+        function createDropdown() {
+            dropdownCount++;
+            const dropdownDiv = document.createElement('div');
+            dropdownDiv.className = 'd-flex flex-column mb-8 fv-row';
+            dropdownDiv.innerHTML = `
+                <div class="d-flex flex-column fv-row">
+                    <!--begin::Label-->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="">Dropdown buttons ${dropdownCount}</span>
+                        </label>
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <input type="checkbox"  name="dropdown_required[]" id=""> required
+                        </label>
+                    </div>
+                    <!--end::Label-->
+
+                    <div id="inputContainer${dropdownCount}">
+                        <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitle[]" placeholder="title ${dropdownCount}">
+                            <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
+                        </div>
+                    </div>
+                    <div id="inputContainer${dropdownCount}">
+                        <!-- Existing ShakePass11 elements will be dynamically added here -->
+                    </div>
+                    <div class="options" id="${dropdownCount}">
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ Add Option</a>
+                    </div>
+                </div>
+            `;
+
+            const deleteDropdownButton = dropdownDiv.querySelector('.delete-dropdown');
+            deleteDropdownButton.addEventListener('click', () => {
+                dropdownsContainer.removeChild(dropdownDiv);
+            });
+
+            const addOptionButton = dropdownDiv.querySelector('.add-option');
+            addOptionButton.addEventListener('click', () => {
+                createDropdownOption(dropdownDiv);
+            });
+
+            dropdownsContainer.appendChild(dropdownDiv);
+            createDropdownOption(dropdownDiv,true);
+        }
+
+        function createDropdownOption(dropdownDiv,isDeletable = false) {
+            const optionsDiv = dropdownDiv.querySelector('.options');
+            const optionCount = optionsDiv.id;
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'option';
+            if(isDeletable){
+            optionDiv.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <input type="text"  required name="dropdownInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Option ${optionCount}">
+    
+                        <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                    </div>
+            `; }else {
+                optionDiv.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <input type="text"  required name="dropdownInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Option ${optionCount}">
+    
+                        <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
+                    </div>
+            `; 
+            const deleteOptionButton = optionDiv.querySelector('.delete-option');
+            deleteOptionButton.addEventListener('click', () => {
+                optionsDiv.removeChild(optionDiv);
+            });
+
+            }
+
+          
+            optionsDiv.appendChild(optionDiv);
+        }
+
+        addDropdownButton.addEventListener('click', createDropdown);
+    </script>
+    <style>
+        .engage-toolbar {
+            position: absolute !important;
+            display: flex !important;
+        }
+        .transform-270 {
+            transform: rotate(270deg);
+            transform-origin: right top;
+        } 
+    </style>
       <!--end::Content-->
 @endsection

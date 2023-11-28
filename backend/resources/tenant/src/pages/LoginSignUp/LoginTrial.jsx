@@ -50,7 +50,7 @@ const LoginTrial = () => {
             throw new Error(`${t('Login failed')}`)
          }
       } catch (error) {
-
+         setSpinner(false)
          toast.error(`${t('Login failed')}`)
       }
    }

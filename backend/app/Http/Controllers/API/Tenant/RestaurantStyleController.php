@@ -16,6 +16,25 @@ class RestaurantStyleController extends Controller
    public function save(Request $request){
         $request->validate([
             '' => 'required|string',
+            'logo' => 'string',
+            'logo_alignment' => 'required|string|in:left,right,center',
+            'category_style' => 'required|string|in:tabs,carousel,right,left', // category.selectedCategory
+            'banner_style' => 'required|string|in:Slider,One Phone', // banner.selectedBanner
+            'banner_image' => 'string', // One Phone
+            'banner_images' => 'array', // Slider
+            'social_medias' => 'array',
+            'phone_number' => 'required|string',
+            'primary_color',
+            'buttons_style',
+            'images_style',
+            'font_family',
+            'font_type',
+            'font_size',
+            'button1_name',
+            'button1_color',
+            'button2_name',
+            'button2_color',
+            'login_logo'
         ]);
         $user = Auth::user();
 
@@ -25,18 +44,15 @@ class RestaurantStyleController extends Controller
 
    }
 
-    public function fetch($item,Request $request)
+    public function fetch(Request $request)
     {
         $user = Auth::user();
 
         $style = RestaurantStyle::
-            where('user_id',$user->id)
-            ->where('branch_id',$user->branch->id)
-                ->findOrFail();
+            where('user_id', $user?->id)
+                ->first();
 
-        return $this->sendResponse([
-            'result' => $style
-        ], __('Restaurant style fetched successfully.'));
+        return $this->sendResponse($style, __('Restaurant style fetched successfully.'));
 
     }
 

@@ -7,7 +7,7 @@ trait TenantSharedRoutesTrait
         return [
             self::getSharedRoutes(),
             self::getGuestRoutes(),
-            self::getPrivateRoutes(),
+//            self::getPrivateRoutes(),
         ];
     }
     public static function getSharedRoutes(): array

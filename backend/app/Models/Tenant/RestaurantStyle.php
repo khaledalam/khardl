@@ -13,6 +13,7 @@ class RestaurantStyle extends Model
         'logo',
         'logo_alignment',
         'category_style',
+        'banner_image',
         'banner_images',
         'social_medias',
         'phone_number',

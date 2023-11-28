@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\BaseController;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
+use App\Models\Tenant\Item;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -48,10 +49,25 @@ class RestaurantController extends BaseController
         compact('available_branches','user', 'branches')); //view('branches')
     }
 
+    public function branches_site_editor(){
+        $user = Auth::user();
+
+        if (!$user->isRestaurantOwner()) {
+            return $this->sendResponse(null, 'Bad request');
+        }
+
+        $branches =  DB::table('branches')
+            ->get(['id', 'is_primary', 'name'])
+            ->sortByDesc('is_primary');
+
+        return $this->sendResponse($branches, 'Fetched branches successfully');
+
+    }
+
     public function addBranch(Request $request){
 
         if(!$this->can_create_branch()){
-            
+
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
         $validatedData = $request->validate([
@@ -136,6 +152,7 @@ class RestaurantController extends BaseController
                         'selection_input_prices' => $item->selection_input_prices,
                         'selection_input_titles' => $item->selection_input_titles,
                         'dropdown_required' => $item->dropdown_required,
+                        'dropdown_input_titles' =>$item->dropdown_input_titles,
                         'dropdown_input_names' => $item->dropdown_input_names,
                         'user_id' => Auth::user()->id,
                         'created_at' => now(),
@@ -160,7 +177,7 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        return false;
+        return true;
     }
 
 
@@ -239,21 +256,30 @@ class RestaurantController extends BaseController
     public function menu($branchId){
 
         $user = Auth::user();
-        // if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
-        //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
-        // }
+//         if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
+//             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+//         }
 
         $categories = DB::table('categories')
-        ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
+        ->when($user->isWorker(), function (Builder $query, string $role)use($user, $branchId) {
+            if ($branchId) {
+                if ($branchId != $user->branch->id) return;
+            }
+
             $query->where('branch_id', $user->branch->id) ->where('user_id', $user->id);
         })
+            ->when($user->isRestaurantOwner(), function (Builder $query, string $role)use($user, $branchId) {
+                if ($branchId) {
+                    $query->where('branch_id', $branchId) ->where('user_id', $user->id);
+                }
+            })
         ->get();
         return view('restaurant.menu', compact('user', 'categories', 'branchId'));
     }
 
     public function getCategory(Request $request, $id, $branchId){
         $user = Auth::user();
-
+    
         if(!$user->isRestaurantOwner()  && $user->branch->id != $branchId){
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
@@ -300,7 +326,7 @@ class RestaurantController extends BaseController
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
 
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
-
+            
             $photoFile = $request->file('photo');
 
             $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
@@ -312,24 +338,24 @@ class RestaurantController extends BaseController
             $photoFile->storeAs('items', $filename, 'public');
 
             DB::beginTransaction();
-
+          
             try {
-
                 $itemData = [
                     'photo' => 'items/'.$filename,
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'description' => $request->input('description'),
-                    'checkbox_required' => $request->has('checkbox_required'),
-                    'checkbox_input_titles' => json_encode($request->input('checkboxInputTitle')),
-                    'checkbox_input_maximum_choices' => json_encode($request->input('checkboxInputMaximumChoice')),
+                    'checkbox_required' => json_encode($request->input('checkbox_required')),
+                    'checkbox_input_titles' =>json_encode( $request->input('checkboxInputTitle')),
+                    'checkbox_input_maximum_choices' =>json_encode( $request->input('checkboxInputMaximumChoice')),
                     'checkbox_input_names' => json_encode($request->input('checkboxInputName')),
-                    'checkbox_input_prices' => json_encode($request->input('checkboxInputPrice')),
-                    'selection_required' => $request->has('selection_required'),
-                    'selection_input_names' => json_encode($request->input('selectionInputName')),
-                    'selection_input_prices' => json_encode($request->input('selectionInputPrice')),
+                    'checkbox_input_prices' =>json_encode( $request->input('checkboxInputPrice')),
+                    'selection_required' => json_encode($request->input('selection_required')),
+                    'selection_input_names' => json_encode( $request->input('selectionInputName')),
+                    'selection_input_prices' =>json_encode( $request->input('selectionInputPrice')),
                     'selection_input_titles' => json_encode($request->input('selectionInputTitle')),
-                    'dropdown_required' => $request->has('dropdown_required'),
+                    'dropdown_required' =>json_encode($request->input('dropdown_required')),
+                    'dropdown_input_titles' => json_encode($request->input('dropdownInputTitle')),
                     'dropdown_input_names' => json_encode($request->input('dropdownInputName')),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
@@ -338,13 +364,14 @@ class RestaurantController extends BaseController
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-
+          
                 DB::table('items')->insert($itemData);
 
                 DB::commit();
 
                 return redirect()->back()->with('success', 'Item successfully added.');
             } catch (\Exception $e) {
+                logger($e->getMessage());
                 DB::rollback();
                 return redirect()->back()->with('error', $e->getMessage());
             }

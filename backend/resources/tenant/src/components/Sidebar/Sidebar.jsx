@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import {Link, useLocation, useParams} from 'react-router-dom'
 import {toast} from "react-toastify";
 import AxiosInstance from "../../axios/axios";
+import {useSelector} from "react-redux";
 
 const Sidebar = () => {
    const [position, setPosition] = useState('static')
@@ -14,7 +15,10 @@ const Sidebar = () => {
    const { t } = useTranslation()
    const [template, setTemplate] = useState('')
 
-   useEffect(() => {
+    const state = useSelector((state) => state);
+
+
+    useEffect(() => {
       const handleResize = () => {
          if (window.innerWidth <= 1200) {
             setPosition('absolute')
@@ -43,9 +47,18 @@ const Sidebar = () => {
 
        console.log("action save style");
 
+       console.log(state);
+
+       return;
+
+
        let inputs = {};
        if (template === 'restaurants') {
-           // inputs.
+           inputs.logo_alignment = state?.align?.selectedAlign;
+           inputs.logo_alignment = state?.align?.selectedAlign;
+           inputs.logo_alignment = state?.align?.selectedAlign;
+           inputs.logo_alignment = state?.align?.selectedAlign;
+
 
        } else if (template === 'customers') {
 
