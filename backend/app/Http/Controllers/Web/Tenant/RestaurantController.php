@@ -152,6 +152,7 @@ class RestaurantController extends BaseController
                         'selection_input_prices' => $item->selection_input_prices,
                         'selection_input_titles' => $item->selection_input_titles,
                         'dropdown_required' => $item->dropdown_required,
+                        'dropdown_input_titles' =>$item->dropdown_input_titles,
                         'dropdown_input_names' => $item->dropdown_input_names,
                         'user_id' => Auth::user()->id,
                         'created_at' => now(),
@@ -370,6 +371,7 @@ class RestaurantController extends BaseController
 
                 return redirect()->back()->with('success', 'Item successfully added.');
             } catch (\Exception $e) {
+                logger($e->getMessage());
                 DB::rollback();
                 return redirect()->back()->with('error', $e->getMessage());
             }
