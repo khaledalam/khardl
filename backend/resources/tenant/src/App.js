@@ -33,6 +33,7 @@ import Services from "../../landing-page/src/pages/Services/services";
 import Prices from "../../landing-page/src/pages/Prices/prices";
 import FQA from "../../landing-page/src/pages/FQA/fqa";
 import CustomerEditor from "./components/Customers/CustomersEditor/Editor";
+import Cart from "./components/Cart/Cart";
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
@@ -122,7 +123,9 @@ const App = () => {
                      />
                      <Route path='/site-editor' element={<EditorSwitcher />} />
 
-                     <Route
+                      <Route path='/cart' element={<Cart />} />
+
+                      <Route
                         path='/site-editor/restaurants'
                         element={<EditorPage />}
                      />

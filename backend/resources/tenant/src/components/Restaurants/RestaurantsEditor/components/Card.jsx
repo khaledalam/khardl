@@ -26,11 +26,11 @@ function Card(props) {
   const handleAddToCart = () => {
     dispatch(addItemToCart("props.title"));
   };
-  
+
   return (
     <>
       <div className={`text-[18px]} ${divWidth <= 1200 ? "w-[250px]":""} `}>
-        <div 
+        <div
         style={{ borderRadius: GlobalShape }}
         className="col-span-4 flex flex-col cursor-pointer  shadow-md bg-[var(--secondary)] transition-transform transform hover:-translate-y-2">
           <button className="" onClick={showMeDetailesItem}>
@@ -68,6 +68,7 @@ function Card(props) {
             >{props.desciption}</h2>
             <div className="flex justify-between items-center px-4 my-4">
               <span className="text-[14px] font-semibold">{props.calories} سعرة</span>
+                <hr />
               <span className="text-[14px] text-[#5e5e5e]">{props.price} ر.س</span>
             </div>
           </button>

@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from 'react-redux';
-import { getSelectedCategory } from '../../../redux/editor/categorySlice';
-import { useTranslation } from "react-i18next";
-import { getSelectedAlign } from '../../../redux/editor/alignSlice';
 import { categories, branches } from '../../../data/data';
 import ResizeDetector from 'react-resize-detector';
 import { setDivWidth } from '../../../redux/editor/divWidthSlice';
