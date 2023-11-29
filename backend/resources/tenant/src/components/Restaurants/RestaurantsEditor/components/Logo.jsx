@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BiImageAdd } from 'react-icons/bi';
 import { AiOutlineClose } from 'react-icons/ai';
 
-function Logo() {
+function Logo(pros) {
+
+    const { url } = pros;
+
     const dispatch = useDispatch();
     const logo = useSelector(state => state.logo);
     const shapeImageType = useSelector(state => state.shapeImage.shapeImageShape);

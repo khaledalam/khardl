@@ -47,4 +47,13 @@ class RestaurantStyle extends Model
     {
         return $this->belongsTo(RestaurantUser::class);
     }
+
+    public function getLogoAttribute(){
+        return tenant_asset($this->attributes['logo']);
+    }
+
+    public function getBannerImageAttribute(){
+        return tenant_asset($this->attributes['banner_image']);
+    }
+
 }

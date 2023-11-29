@@ -3,18 +3,23 @@ import { setLogo } from '../../../../redux/editor/logoSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { BsFillImageFill } from 'react-icons/bs';
 
-function Logo() {
+function Logo(pros) {
+
+    const { url } = pros;
+
     const dispatch = useDispatch();
     const shapeImageShape = sessionStorage.getItem('shapeImageShape');
-    const logo = sessionStorage.getItem('logo');
+    const logo = url || sessionStorage.getItem('logo');
 
     const handleImageChange = event => {
         const selectedImage = event.target.files[0];
 
         if (selectedImage) {
-            dispatch(setLogo(URL.createObjectURL(selectedImage)));
+            dispatch(setLogo(URL.createObjectURL( selectedImage)));
         }
     };
+
+
     return (
         <div className='me-4'>
             {logo ? (

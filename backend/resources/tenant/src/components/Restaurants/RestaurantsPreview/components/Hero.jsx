@@ -7,11 +7,14 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-function Hero() {
-    const image = sessionStorage.getItem('previewImage');
+function Hero(props) {
+
+    const {imageProps, imagesProps, banner_style} = props;
+
+    const image = imageProps || sessionStorage.getItem('previewImage');
     const shapeImageShape = sessionStorage.getItem('shapeImageShape');
-    const selectBanner = sessionStorage.getItem('selectBanner');
-    const images = JSON.parse(sessionStorage.getItem('images'));
+    const selectBanner = banner_style || sessionStorage.getItem('selectBanner');
+    const images = imagesProps || JSON.parse(sessionStorage.getItem('images'));
     const [uploadedImages, setUploadedImages] = useState(images?.image);
 
     const dispatch = useDispatch();
