@@ -13,7 +13,7 @@ const Sidebar = () => {
    const { branch_id } = useParams()
    const location = useLocation()
    const { t } = useTranslation()
-   const [template, setTemplate] = useState('')
+    const [template, setTemplate] = useState('')
 
     const state = useSelector((state) => state);
 
@@ -34,10 +34,10 @@ const Sidebar = () => {
    }, [])
 
    useEffect(() => {
-      if (location.pathname === `/site-editor/restaurants`) {
+      if (location.pathname?.indexOf(`/site-editor/restaurants`) > -1) {
          setTemplate('restaurants')
       }
-      if (location.pathname === `/site-editor/customers`) {
+      if (location.pathname?.indexOf(`/site-editor/customers`) > -1) {
          setTemplate('customers')
       }
    }, [location.pathname])
@@ -46,11 +46,6 @@ const Sidebar = () => {
        e.preventDefault();
 
        console.log("action save style");
-
-       console.log(state);
-       console.log(template);
-
-  
 
 
        let inputs = {};
@@ -95,7 +90,7 @@ const Sidebar = () => {
                toast.error(error.response?.data?.message);
             }
 
-         } else if (template === 'customers') 
+         } else if (template === 'customers')
          {
             inputs.primary_color = state?.button?.GlobalColor;
             inputs.buttons_style = state?.button?.GlobalShape;
@@ -104,8 +99,8 @@ const Sidebar = () => {
             inputs.font_type= state?.fonts?.selectedFontWeight;
             inputs.font_size= state?.fonts?.selectedFontSize;
             inputs.font_alignment= state?.alignText?.selectedAlignText;
-            
-      
+
+
             try {
                const response = await AxiosInstance.post(`customer-style`,inputs);
                if (response) {
@@ -117,10 +112,7 @@ const Sidebar = () => {
             }
          } else {
             toast.error(`Invalid save style action, template not set`);
-            return;
          }
-
-       
     };
 
    return (
@@ -141,8 +133,9 @@ const Sidebar = () => {
                    <Tap component={<Edit />}  key={'t2'}>{t('Edit')}</Tap>
                 </Taps>
                 <div className={"flex  justify-around w-[100%]"}>
-                    <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"./preview"} target={"_blank"} href={"./preview"}>Preview</Link>
                     <Link className={"flex justify-center content-center bg-[var(--primary)] w-[50%]"} onClick={handleSaveStyle}>Save</Link>
+                    <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"/"} target={"_blank"} href={"/"}>Preview</Link>
+
                 </div>
             </>
          )}
@@ -155,8 +148,9 @@ const Sidebar = () => {
                <Tap key={"a2"}/>
             </Taps>
                <div className={"flex  justify-around w-[100%]"}>
-                     <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"./preview"} target={"_blank"} href={"./preview"}>Preview</Link>
                      <Link className={"flex justify-center content-center bg-[var(--primary)] w-[50%]"} onClick={handleSaveStyle}>Save</Link>
+                   <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"/"} target={"_blank"} href={"/"}>Preview</Link>
+
                </div>
             </>
          )}

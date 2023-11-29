@@ -10,30 +10,39 @@ import Logo from './components/Logo';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import AxiosInstance from "../../../axios/axios";
 
-const Preview = () => {
-    const selectedCategory = sessionStorage.getItem('selectedCategory');
-    const selectedAlign = sessionStorage.getItem('selectedAlign');
-    const Language = sessionStorage.getItem('Language');
+const RestaurantHomePage = () => {
+    const Language = sessionStorage.getItem('Language') || 'en';
     const { branch_id } = useParams();
     const { t } = useTranslation();
     const [branch, setBranch] = useState([]);
     const [branches, setBranches] = useState([]);
     const [categories, setCategories] = useState([]);
-    const selectedFont = sessionStorage.getItem('selectedFont');
+    const [styleData, setStyleData] = useState(null);
+
+    console.log("hererer >> " , styleData);
 
 
     const fetchData = async () => {
         try {
-            const response = await AxiosInstance.get(`categories?items&user&branch`)
+            const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch`);
+            const restaurantStyleResponse = await AxiosInstance.get(`restaurant-style`)
 
-            console.log("SAS>ASAS>>>", response)
-            if (response.data) {
-                console.log(response.data)
+            console.log("editor rest restaurantCategoriesResponse >>>", restaurantCategoriesResponse.data)
+            if (restaurantCategoriesResponse.data) {
+                setCategories(restaurantCategoriesResponse.data?.data);
 
-                setCategories(response.data?.data);
-
-            } else {
+                if (!branch) {
+                    setBranch(restaurantCategoriesResponse.data?.data[0]?.branch?.id)
+                }
             }
+
+            console.log("editor rest restaurantStyleResponse >>>", restaurantStyleResponse.data)
+            if (restaurantStyleResponse.data) {
+                setStyleData(restaurantStyleResponse.data?.data);
+
+            }
+
+
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
             console.log(error);
@@ -42,7 +51,7 @@ const Preview = () => {
 
 
     useEffect(() => {
-        fetchData();
+        fetchData().then(r => null);
     }, []);
 
     useEffect(() => {
@@ -54,24 +63,29 @@ const Preview = () => {
       }
     }, [branch_id, branches]);
 
+
+    if (!styleData){
+        return;
+    }
+
     const categoriesForBranch = categories.filter(category => category.branch_id === branch.branch_id);
     return (
-      <div className="w-[100%] bg-white"  style={{fontFamily: `${selectedFont}`}}>
-      <Header />
+      <div className="w-[100%] bg-white"  style={{fontFamily: `${styleData?.selectedFont}`}}>
+      <Header buttonsProps={styleData?.buttons} />
       <div className=''>
-        <div className={`${selectedAlign === "Center" ? "justify-center" : ""}
-        ${selectedAlign === "Left" && Language === "en" ? "justify-start" : selectedAlign === "Left" ? "justify-end":""}
-        ${selectedAlign === "Right" && Language === "en" ? "justify-end" : selectedAlign === "Right" ? "justify-start":""}
+        <div className={`${styleData?.logo_alignment === "Center" ? "justify-center" : ""}
+        ${styleData?.logo_alignment === "Left" && Language === "en" ? "justify-start" : styleData?.logo_alignment === "Left" ? "justify-end":""}
+        ${styleData?.logo_alignment === "Right" && Language === "en" ? "justify-end" : styleData?.logo_alignment === "Right" ? "justify-start":""}
         flex items-center  gap-4`}>
           <div className='my-[35px] mx-4'>
-            <Logo />
+            <Logo url={styleData?.logo}/>
             <div className={`flex justify-center items-center gap-2 mt-2 ${Language === "en" ? "flex-col-reverse" : "" }`}>
-            <h2>العنوان</h2>
-            <HiOutlineLocationMarker />
+            {/*<h2>العنوان</h2>*/}
+            {/*<HiOutlineLocationMarker />*/}
             </div>
           </div>
         </div>
-        <Hero />
+        <Hero banner_style={styleData?.banner_style} imageProps={styleData?.banner_image} />
       </div>
       <div className="flex justify-center mt-[30px] mb-[50px] xl:mx-[150px]">
         <div>
@@ -83,8 +97,8 @@ const Preview = () => {
                         <h2>Categories:</h2>
                     <Taps
                 contentClassName={`
-        bg-[var(--secondary)] ${selectedCategory === `${t("Carousel")}` ? `flex justify-center`:''} text-xl
-        ${selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}` ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
+        bg-[var(--secondary)] ${styleData?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
+        ${styleData?.category_style === "Right" || styleData?.category_style === "Left" ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
                 {categoriesForBranch.map((category, i) => (
                   <Tap
                       key={i}
@@ -107,4 +121,4 @@ const Preview = () => {
     );
 };
 
-export default Preview;
+export default RestaurantHomePage;

@@ -7,22 +7,19 @@ import { useSelector } from 'react-redux';
 import Model from './Model';
 import Login from './Login';
 
-function Header() {
+function Header(props) {
+
+    const {buttonsProps} = props;
+
+
+    console.log(">>> >> " , buttonsProps );
+
+
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isOpenModel1, setIsOpenModel1] = useState(null);
     const [isOpenModel2, setIsOpenModel2] = useState(null);
     const [showDetailesItem, setShowDetailesItem] = useState(false);
-    function showMeDetailesItem() {
-        if (!showDetailesItem) {
-            setShowDetailesItem(true);
-        } else {
-            setShowDetailesItem(false);
-        }
-    }
-    const toggleMenu = () => {
-        setMenuOpen(!isMenuOpen);
-    };
-    const buttons = JSON.parse(sessionStorage.getItem('buttons'));
+    const buttons = buttonsProps || JSON.parse(sessionStorage.getItem('buttons'));
     const shapeImageShape = sessionStorage.getItem('shapeImageShape');
     const previewImage = sessionStorage.getItem('previewImage');
     const cartItems = useSelector((state) => state.cart.items);
@@ -34,10 +31,25 @@ function Header() {
         setIsOpenModel2(buttonId);
     };
 
+    function showMeDetailesItem() {
+        if (!showDetailesItem) {
+            setShowDetailesItem(true);
+        } else {
+            setShowDetailesItem(false);
+        }
+    }
+    const toggleMenu = () => {
+        setMenuOpen(!isMenuOpen);
+    };
 
-    console.log(buttons);
 
-    return;
+    console.log(">>> " , buttons );
+
+    // return;
+
+
+
+
     return (
         <div className={`flex items-start justify-between p-[12px] px-8 bg-[var(--secondary)]`}>
             <div className='flex flex-col'>
@@ -61,9 +73,9 @@ function Header() {
                             className='relative p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                             onClick={handleModelClick1}
                             style={{
-                                border: `1px solid ${buttons[0]?.color}`,
+                                border: `1px solid ${buttons[0]?.color || ''}`,
                                 backgroundColor: 'transparent',
-                                borderRadius: buttons[0]?.shape,
+                                borderRadius: buttons[0]?.shape || '',
                             }}>
                             <MdOutlineDeliveryDining size={20} />
                             {isOpenModel1 ? (
@@ -71,7 +83,7 @@ function Header() {
                                     buttonId={1}
                                 />
                             ) : <div></div>}
-                            <div>{buttons[0]?.text}</div>
+                            <div>{buttons[0]?.text || ''}</div>
                         </button>
                         {isOpenModel1 !== null && (
                             <button
@@ -85,9 +97,9 @@ function Header() {
                             className='relative p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                             onClick={handleModelClick2}
                             style={{
-                                border: `1px solid ${buttons[1].color}`,
+                                border: `1px solid ${buttons[1]?.color || ''}`,
                                 backgroundColor: 'transparent',
-                                borderRadius: buttons[1].shape,
+                                borderRadius: buttons[1]?.shape || '',
                             }}
                         >
                             <MdOutlineDoneAll size={20} />
@@ -96,7 +108,7 @@ function Header() {
                                     buttonId={2}
                                 />
                             ) : <div></div>}
-                            <div>{buttons[1].text}</div>
+                            <div>{buttons[1]?.text || ''}</div>
                         </button>
                         {isOpenModel2 !== null && (
                             <button
@@ -124,10 +136,10 @@ function Header() {
                 </button>
                 <button
                     className='p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
-                    style={{ background: `${buttons[2].color}`, borderRadius: buttons[2].shape }}
+                    style={{ background: `${buttons[2]?.color || ''}`, borderRadius: buttons[2]?.shape || '' }}
                     onClick={showMeDetailesItem}
                     >
-                    {buttons[2].text}
+                    {buttons[2]?.text || ''}
                 </button>
                 {showDetailesItem &&
                     <Login

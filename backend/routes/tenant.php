@@ -62,8 +62,13 @@ Route::group([
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
+    Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
+
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+        Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
+
         Route::middleware(['restaurantOrWorker'])->group(function () {
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
@@ -103,8 +108,15 @@ Route::group([
 
                 Route::post('/restaurant-style', [RestaurantStyleController::class, 'save'])->name('restaurant.restaurant.style.save');
                 Route::post('/customer-style', [CustomerStyleController::class, 'save'])->name('restaurant.customer.style.save');
-                Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
-                Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
+
+                $group = TenantSharedRoutesTrait::getPrivateRoutes();
+                Route::middleware($group['middleware'])->group(function() use ($group){
+                    foreach ($group['routes'] as $route => $name) {
+                        Route::get($route, static function(Request $request) {
+                            return view('tenant');
+                        })->name($name);
+                    }
+                });
 
             });
             Route::middleware('worker')->group(function () {
@@ -112,14 +124,6 @@ Route::group([
             });
         });
 
-        $group = TenantSharedRoutesTrait::getPrivateRoutes();
-        Route::middleware($group['middleware'])->group(function() use ($group){
-            foreach ($group['routes'] as $route => $name) {
-                Route::get($route, static function(Request $request) {
-                    return view('tenant');
-                })->name($name);
-            }
-        });
 
     });
 

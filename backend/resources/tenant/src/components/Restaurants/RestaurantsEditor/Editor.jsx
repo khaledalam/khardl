@@ -20,6 +20,7 @@ const Editor = () => {
   const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
   const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
   const selectedFontSize = useSelector((state) => state.fonts.selectedFontSize);
+    const [styleData, setStyleData] = useState(null);
 
     const state = useSelector((state) => state);
 
@@ -62,8 +63,7 @@ const Editor = () => {
 
             console.log("editor rest restaurantStyleResponse >>>", restaurantStyleResponse.data)
             if (restaurantStyleResponse.data) {
-
-
+                setStyleData(restaurantStyleResponse.data?.data);
             }
 
 
@@ -127,7 +127,7 @@ const Editor = () => {
         ${selectedAlign === "Right" && Language === "en" ? "justify-end" : selectedAlign === "Right" ? "justify-start" : ""}
         flex items-center  gap-4`}>
           <div className='my-[35px] mx-4 text-center'>
-            <Logo />
+            <Logo url={styleData?.logo}/>
             <div className='flex justify-center items-center gap-2 mt-2'>
               <h2>العنوان</h2>
               <HiOutlineLocationMarker />

@@ -17,7 +17,6 @@ import 'aos/dist/aos.css'
 import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword'
 import EditorPage from './pages/EditorPage'
-import RestaurantsPreview from './components/Restaurants/RestaurantsPreview/Preview'
 import RestaurantsEditor from './components/Restaurants/RestaurantsEditor/Editor'
 import CustomersPreview from './components/Customers/CustomersPreview/Preview'
 import EditorSwitcher from './pages/EditorSwitcher'
@@ -126,10 +125,6 @@ const App = () => {
                      <Route
                         path='/site-editor/restaurants'
                         element={<EditorPage />}
-                     />
-                     <Route
-                        path='/site-editor/restaurants/preview'
-                        element={<RestaurantsPreview />}
                      />
                       {/*/site-editor/customers/preview*/}
                      <Route

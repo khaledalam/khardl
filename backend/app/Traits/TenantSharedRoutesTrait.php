@@ -53,7 +53,6 @@ trait TenantSharedRoutesTrait
             ],
             'middleware'=>[
                 'auth',
-                'verifiedPhone',
             ]
         ];
 

@@ -16,14 +16,14 @@ class RestaurantStyleController extends Controller
    use APIResponseTrait;
 
    public function save(Request $request){
-        
+
         $request->validate([
             'logo' => 'required|mimes:png,jpg,jpeg|max:2048',
             'logo_alignment' => 'required|string|in:Left,Right,Center',
             'category_style' => 'required|string|in:Tabs,Carousel,Right,Left',
-            'banner_style' => 'required|string|in:Slider,One Photo', 
+            'banner_style' => 'required|string|in:Slider,One Photo',
             'banner_image' => 'required_if:banner_style,One Photo|nullable|mimes:png,jpg,jpeg|max:2048',
-            'banner_images' => 'required_if:banner_style,Slider|nullable|array', 
+            'banner_images' => 'required_if:banner_style,Slider|nullable|array',
             'banner_images.*' => 'mimes:png,jpg,jpeg|max:2048',
             'social_medias' => 'required|array',
             'social_medias.*.Link' => 'required|string',
@@ -40,7 +40,7 @@ class RestaurantStyleController extends Controller
             "center_side_button"=>'required|array',
 
         ]);
-    
+
         $logo = store_image($request->file('logo'),RestaurantStyle::STORAGE,'logo');
         if($request->banner_image){
             $banner_image= store_image($request->file('banner_image'),RestaurantStyle::STORAGE,'banner_image');
@@ -80,7 +80,15 @@ class RestaurantStyleController extends Controller
 
     public function fetch(Request $request)
     {
-        return $this->sendResponse(RestaurantStyle::first() ?? [], __('Restaurant style fetched successfully.'));
+        $data = RestaurantStyle::first() ?? [];
+
+        $data['buttons'] = [
+            json_decode($data->left_side_button),
+            json_decode($data->center_side_button),
+            json_decode($data->right_side_button)
+        ];
+
+        return $this->sendResponse($data, __('Restaurant style fetched successfully.'));
     }
 
 }
