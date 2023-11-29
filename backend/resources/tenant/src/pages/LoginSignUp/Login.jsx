@@ -206,24 +206,7 @@ const Login = () => {
                                  </p>
                               </div>
                            </form>
-                            <small>
-                                Demo for testing:<br/><br/>
-
-                                <u>Restaurant Owner:</u><br/>
-                                Email: admin@first.com<br/>
-                                Password: password<br/><br/>
-
-                                <hr /><br/>
-
-                                <u>Restaurant Worker:</u><br/>
-                                Email: worker@first.com<br/>
-                                Password: password
-
-                                <hr /><br/>
-                                <u>Restaurant Customer:</u><br/>
-                                Email: customer@first.com<br/>
-                                Password: password
-                            </small>
+                           
                         </div>
                      </div>
                      {spinner && (
