@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{REQUEST_URI} !^backend/public
+    RewriteRule ^(.*)$ backend/public/$1 [L]
+</IfModule>

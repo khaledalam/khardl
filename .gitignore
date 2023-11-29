@@ -21,15 +21,3 @@ yarn-error.log
 docker/database/data
 frontend/temp
 frontend/package-lock.json
-
-# build frontend
-backend/public/static/js/
-backend/public/static/css/
-backend/public/index.html
-backend/public/asset-manifest.json
-
-backend/public/css/app.css
-backend/public/css/index.css
-backend/public/js/central.js
-backend/public/js/tenant.js
-backend/public/mix-manifest.json
