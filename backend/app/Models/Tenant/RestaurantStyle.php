@@ -9,10 +9,12 @@ class RestaurantStyle extends Model
     protected $table = 'restaurant_styles';
 
     protected $fillable = [
+        'id',
         'user_id',
         'logo',
         'logo_alignment',
         'category_style',
+        'banner_style',
         'banner_image',
         'banner_images',
         'social_medias',
@@ -23,17 +25,20 @@ class RestaurantStyle extends Model
         'font_family',
         'font_type',
         'font_size',
-        'button1_name',
-        'button1_color',
-        'button2_name',
-        'button2_color',
-        'login_logo'
+        'font_alignment',
+        'left_side_button',
+        'right_side_button',
+        'center_side_button'
     ];
 
     protected $casts = [
         'banner_images' => 'array',
         'social_medias' => 'array',
+        'left_side_button' => 'array',
+        'right_side_button' => 'array',
+        'center_side_button' => 'array',
     ];
+    const STORAGE = 'restaurant-styles';
 
     /**
      * Get the user associated with this style.

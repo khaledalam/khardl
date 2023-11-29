@@ -18,7 +18,9 @@ const Editor = () => {
   const divWidth = useSelector((state) => state.divWidth.value);
   const divRef = useRef(null);
   const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
-    const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
+  const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
+  const selectedFontSize = useSelector((state) => state.fonts.selectedFontSize);
+
     const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -104,7 +106,7 @@ const Editor = () => {
   }, []);
 
   return (
-    <div ref={divRef} className="w-[100%] bg-white h-[85vh] overflow-y-auto" style={{ fontFamily: `${selectedFontFamily}`, fontWeight: `${selectedFontWeight}` }}>
+    <div ref={divRef} className="w-[100%] bg-white h-[85vh] overflow-y-auto" style={{ fontFamily: `${selectedFontFamily}`, fontWeight: `${selectedFontWeight}`,fontSize:`${selectedFontFamily}` }}>
       <Header />
       <div className=''>
 

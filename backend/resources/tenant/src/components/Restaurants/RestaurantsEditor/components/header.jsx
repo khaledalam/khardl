@@ -20,9 +20,9 @@ function Header() {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const divWidth = useSelector((state) => state.divWidth.value);
 
-    console.log(buttons);
 
-    return;
+
+  
 
 
     function showMeDetailesItem() {

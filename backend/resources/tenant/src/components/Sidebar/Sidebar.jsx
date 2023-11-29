@@ -48,44 +48,79 @@ const Sidebar = () => {
        console.log("action save style");
 
        console.log(state);
+       console.log(template);
 
-       return;
+  
 
 
        let inputs = {};
-       if (template === 'restaurants') {
-           inputs.logo_alignment = state?.align?.selectedAlign;
-           inputs.logo_alignment = state?.align?.selectedAlign;
-           inputs.logo_alignment = state?.align?.selectedAlign;
-           inputs.logo_alignment = state?.align?.selectedAlign;
-
-
-       } else if (template === 'customers') {
-
-       } else {
-           toast.error(`Invalid save style action, template not set`);
-           return;
-       }
-
-        try {
-            const response = await AxiosInstance.post(`restaurant-style`, {
-                ...inputs
-            })
-
-            console.log(response)
-            if (response.data) {
-                const responseData = await response.json()
-                console.log(responseData)
-
-
-                setBranch(data);
-
+       if (template === 'restaurants')
+        {
+            inputs.logo = (state?.logo)?await fetch(state?.logo).then(r => r.blob()):'';
+            inputs.logo_alignment = state?.align?.selectedAlign;
+            inputs.category_style = state?.category?.selectedCategory;
+            inputs.banner_style = state?.banner?.selectedBanner;
+            inputs.social_medias = state?.contact?.icons;
+            inputs.phone_number = state?.contact?.phoneNumber;
+            inputs.primary_color = state?.button?.GlobalColor;
+            inputs.buttons_style = state?.button?.GlobalShape;
+            inputs.images_style= state?.shapeImage?.shapeImageShape;
+            inputs.font_family= state?.fonts?.selectedFontFamily;
+            inputs.font_type= state?.fonts?.selectedFontWeight;
+            inputs.font_size= state?.fonts?.selectedFontSize;
+            inputs.font_alignment= state?.alignText?.selectedAlignText;
+            inputs.right_side_button= state?.button?.buttons[0];
+            inputs.center_side_button= state?.button?.buttons[1];
+            inputs.left_side_button= state?.button?.buttons[2];
+            inputs.banner_image = (state?.image)?await fetch(state?.image).then(r => r.blob()):'';
+            if (state?.images?.image && state?.images?.image.length > 0) {
+               const imagePromises = state?.images?.image.map(async (image) => {
+                  return await fetch(image).then(r => r.blob());;
+               });
+               inputs.banner_images  =await Promise.all(imagePromises);
             } else {
+               inputs.banner_images = '';
             }
-        } catch (error) {
-            // toast.error(`${t('Failed to send verification code')}`)
-            console.log(error);
-        }
+            try {
+               const response = await AxiosInstance.post(`restaurant-style`,inputs,{
+                  headers: {
+                     'Content-Type': 'multipart/form-data',
+                  }
+               })
+            if (response) {
+               toast.success(response.data.message);
+            }
+            } catch (error) {
+               console.log(error.response.data.message);
+               toast.error(error.response?.data?.message);
+            }
+
+         } else if (template === 'customers') 
+         {
+            inputs.primary_color = state?.button?.GlobalColor;
+            inputs.buttons_style = state?.button?.GlobalShape;
+            inputs.images_style= state?.shapeImage?.shapeImageShape;
+            inputs.font_family= state?.fonts?.selectedFontFamily;
+            inputs.font_type= state?.fonts?.selectedFontWeight;
+            inputs.font_size= state?.fonts?.selectedFontSize;
+            inputs.font_alignment= state?.alignText?.selectedAlignText;
+            
+      
+            try {
+               const response = await AxiosInstance.post(`customer-style`,inputs);
+               if (response) {
+                  toast.success(response.data.message);
+               }
+            } catch (error) {
+                  console.log(error.response.data.message);
+                  toast.error(error.response?.data?.message);
+            }
+         } else {
+            toast.error(`Invalid save style action, template not set`);
+            return;
+         }
+
+       
     };
 
    return (
@@ -112,12 +147,18 @@ const Sidebar = () => {
             </>
          )}
          {template === 'customers' && (
+            <>
             <Taps contentClassName='bg-[#ffffff15] w-[100%] !justify-start !px-6'>
                <Tap component={<Edit />} contentClassName='!px-[0px]' active key={"a1"}>
                   {t('Edit')}
                </Tap>
                <Tap key={"a2"}/>
             </Taps>
+               <div className={"flex  justify-around w-[100%]"}>
+                     <Link className={"flex border-[red] justify-center content-center bg-[var(--primary)] w-[50%]"} to={"./preview"} target={"_blank"} href={"./preview"}>Preview</Link>
+                     <Link className={"flex justify-center content-center bg-[var(--primary)] w-[50%]"} onClick={handleSaveStyle}>Save</Link>
+               </div>
+            </>
          )}
       </div>
    )
