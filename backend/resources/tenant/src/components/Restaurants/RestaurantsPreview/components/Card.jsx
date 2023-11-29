@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import DetailesItem from './DetailesItem';
 import { useTranslation } from "react-i18next";
 import { addItemToCart } from '../../../../redux/editor/cartSlice';
+import {toast} from "react-toastify";
 
 function Card(props) {
   const GlobalColor = sessionStorage.getItem('globalColor');
@@ -22,13 +23,20 @@ function Card(props) {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addItemToCart("props.title"));
+      console.log("test");
+
+      toast.info('Item added to cart')
+
+      dispatch(addItemToCart("props.title"));
   };
-  
+
+  console.log("props > ", props);
+
+
   return (
     <>
       <div className="text-[18px]">
-        <div 
+        <div
         style={{ borderRadius: GlobalShape }}
         className="col-span-4 flex flex-col cursor-pointer  shadow-md bg-[var(--secondary)] transition-transform transform hover:-translate-y-2">
           <button className="" onClick={showMeDetailesItem}>
@@ -65,14 +73,15 @@ function Card(props) {
               }}
             >{props.description}</h2>
             <div className="flex justify-between items-center px-4 my-4">
-              <span className="text-[14px] font-semibold">{props.calories} سعرة</span>
-              <span className="text-[14px] text-[#5e5e5e]">{props.price} ر.س</span>
+              <span className="text-[14px] font-semibold">{props.calories}سعرة </span>
+                <hr />
+              <span className="text-[14px] text-[#5e5e5e]">{props.price}ر.س </span>
             </div>
           </button>
           <button className="text-center bg-[var(--primary)] py-1 text-black font-bold"
             style={{ borderRadius: `0 0 ${GlobalShape} ${GlobalShape}`, backgroundColor: GlobalColor }}
             onClick={handleAddToCart}
-          > {t("add to cart")}</button>
+          > {t("Add to cart")}</button>
         </div>
       </div>
       {showDetailesItem ? (

@@ -59,12 +59,11 @@ export function Taps({ children, contentClassName = "" }) {
         }
         {children.map((item, i) => {
           return (
-            <div key={i} className={` ${selectedCategory === `${t("Carousel")}` ? 'flex items-center justify-center ' : ''} `}>
+            <div key={`Tap-${i}`} className={` ${selectedCategory === `${t("Carousel")}` ? 'flex items-center justify-center ' : ''} `}>
               {(selectedCategory === `${t("Carousel")}` ? (i >= activeTap - 1 && i <= activeTap + 1 && TapValidator(item))
                 : (TapValidator(item)))
                 && (
                   <Tap
-                    key={`Tap-${i}`}
                     currentTap={i}
                     activeTap={activeTap}
                     setActiveTap={setActiveTap}

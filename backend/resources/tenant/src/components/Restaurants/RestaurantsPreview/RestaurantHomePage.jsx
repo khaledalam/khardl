@@ -7,7 +7,6 @@ import { Taps, Tap } from "./components/Taps";
 import MenuItems from "./components/menuItems";
 import { useTranslation } from "react-i18next";
 import Logo from './components/Logo';
-import { HiOutlineLocationMarker } from 'react-icons/hi';
 import AxiosInstance from "../../../axios/axios";
 
 const RestaurantHomePage = () => {
@@ -101,7 +100,6 @@ const RestaurantHomePage = () => {
         ${styleData?.category_style === "Right" || styleData?.category_style === "Left" ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
                 {categoriesForBranch.map((category, i) => (
                   <Tap
-                      key={i}
                     component={
                       <MenuItems
                         items={category?.items}

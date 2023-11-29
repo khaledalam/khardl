@@ -1,9 +1,6 @@
 import React, {useState} from 'react'
 import Card from './Card';
-import { useSelector } from 'react-redux';
-import { getSelectedCategory } from '../../../../redux/editor/categorySlice';
 import { useTranslation } from "react-i18next";
-import { items } from '../../../../data/data';
 
 function MenuItems({items}) {
     const { t } = useTranslation();
