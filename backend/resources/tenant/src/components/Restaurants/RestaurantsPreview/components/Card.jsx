@@ -63,7 +63,7 @@ function Card(props) {
                 maxHeight: '1.2em',
                 textAlign: selectedAlignText
               }}
-            >{props.desciption}</h2>
+            >{props.description}</h2>
             <div className="flex justify-between items-center px-4 my-4">
               <span className="text-[14px] font-semibold">{props.calories} سعرة</span>
               <span className="text-[14px] text-[#5e5e5e]">{props.price} ر.س</span>
@@ -80,7 +80,7 @@ function Card(props) {
           onClose={showMeDetailesItem}
           onRequest={showMeDetailesItem}
           title={props.title}
-          desciption={props.desciption}
+          description={props.description}
           image={props.image}
           calories={props.calories}
           price={props.price}
