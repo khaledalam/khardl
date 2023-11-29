@@ -3,6 +3,7 @@
 namespace Database\Seeders\Tenant;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\Tenant\RestaurantStyleSeeder;
 
 
 class TenantSeeder extends Seeder
@@ -20,6 +21,7 @@ class TenantSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             BranchSeeder::class,
             UserSeeder::class,
+            RestaurantStyleSeeder::class,
            
         ]);
         
