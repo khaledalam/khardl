@@ -21,3 +21,4 @@ yarn-error.log
 docker/database/data
 frontend/temp
 frontend/package-lock.json
+.htaccess
