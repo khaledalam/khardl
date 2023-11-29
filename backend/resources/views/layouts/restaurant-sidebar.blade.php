@@ -172,7 +172,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                        <span class="menu-title ">{{__('messages.summary')}} ✅</span>
+                                        <span class="menu-title ">{{__('messages.summary')}} </span>
                                 </span>
                             </a>
 
@@ -189,7 +189,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
 
-                                        <span class="menu-title">{{__('messages.site-editor')}} ✅</span>
+                                        <span class="menu-title">{{__('messages.site-editor')}} </span>
                                 </span>
                             </a>
 
@@ -209,7 +209,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
 
-                                    <span class="menu-title">{{__('messages.profile')}} ✅</span>
+                                    <span class="menu-title">{{__('messages.profile')}} </span>
                                 </span>
                              </a>
                          </div>
@@ -228,7 +228,7 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.branches')}} ✅</span>
+                                    <span class="menu-title">{{__('messages.branches')}} </span>
 
                             </span>
                            </a>
@@ -286,7 +286,7 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                        <span class="menu-title">{{__('messages.services')}} ✅</span>
+                                        <span class="menu-title">{{__('messages.services')}} </span>
                                 </span>
                             </a>
                         </div>
@@ -379,7 +379,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title"><span class="badge badge-danger mx-1">&#9432;</span> {{__('messages.payments')}} ✅</span>
+                                    <span class="menu-title"><span class="badge badge-danger mx-1">&#9432;</span> {{__('messages.payments')}} </span>
                                 </span>
                             </a>
                         </div>
