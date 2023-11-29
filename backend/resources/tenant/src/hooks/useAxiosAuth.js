@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {HTTP_NOT_AUTHENTICATED} from "../config";
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://khardl:8000'
+const BASE_URL = process.env.REACT_APP_API_URL || 'https://khardl.com'
 
 const useAxiosAuth = () => {
    const location = useLocation()
