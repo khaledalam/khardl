@@ -16,12 +16,13 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('item_id');
             $table->integer('quantity');
-            $table->decimal('price', 15, 2);
-        
+            $table->float('price', 8, 2)->default(0);
+            $table->float('options_price',8,2)->default(0);
+            $table->float('total',8,2)->default(0);
+
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
 
-            $table->unique(['order_id', 'item_id']);
             $table->timestamps();
         });
     }

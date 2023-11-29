@@ -14,12 +14,13 @@ class Order extends Model
         'transaction_id',
         'user_id',
         'branch_id',
-        'total_price',
+        'total',
         'status',
-        'payment_method',
+        'payment_method_id',
         'payment_status',
         'shipping_address',
-        'order_notes'
+        'order_notes',
+        'delivery_type'
     ];
 
     public function user()
