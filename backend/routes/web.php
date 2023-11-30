@@ -31,9 +31,7 @@ use Symfony\Component\HttpFoundation\File\File;
 */
 
 
- Route::get('/test', function (){
-
- })->name('test');
+// Route::get('/test', function (){})->name('test');
 
 // Route::post('/logout', function(){
 //     Auth::logout();
