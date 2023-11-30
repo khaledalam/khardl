@@ -16,17 +16,20 @@ return new class extends Migration
             $table->string('transaction_id')->unique()->nullable(); // This field is marked as unique to avoid duplicate entries
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('branch_id')->nullable();
-            $table->decimal('total_price', 15, 2);
+            $table->unsignedBigInteger('payment_method_id')->nullable();
+            $table->decimal('total', 8, 2)->default(0);
             $table->enum('status',['accepted','cancelled','pending'])->default('pending');
-            $table->string('payment_method');
             $table->string('payment_status')->default('pending');
-            $table->text('shipping_address');
+            $table->text('shipping_address')->nullable();
+            $table->enum('delivery_type', ['delivery','receive_from_branch']);
             $table->text('order_notes')->nullable();
-            $table->timestamps();
+          
 
             // Foreign key constraints
+            $table->foreign('payment_method_id')->references('id')->on('payment_methods')->onDelete('set null');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('set null');
+            $table->timestamps();
         });
     }
 

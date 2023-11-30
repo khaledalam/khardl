@@ -17,7 +17,7 @@ function MenuItems({items}) {
             id={item.id}
             title={item.title}
             price={item.price}
-            desciption={item.desciption}
+            description={item.description}
             calories={item.calories}
             image={item.photo}
             selection_input_names={item.selection_input_names}

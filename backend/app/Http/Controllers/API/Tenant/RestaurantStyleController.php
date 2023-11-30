@@ -81,7 +81,6 @@ class RestaurantStyleController extends Controller
     public function fetch(Request $request)
     {
         $data = RestaurantStyle::first() ?? [];
-
         $data['buttons'] = [
             json_decode($data->left_side_button),
             json_decode($data->center_side_button),

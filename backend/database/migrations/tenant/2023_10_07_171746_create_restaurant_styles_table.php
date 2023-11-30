@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('restaurant_styles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique(); // Ensure one style per user
+            $table->unsignedBigInteger('user_id')->nullable(); // Ensure one style per user
             $table->string('logo');
             $table->string('logo_alignment');
             $table->string('category_style');
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->timestamps();
 
              // Foreign key constraints
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
