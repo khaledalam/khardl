@@ -39,9 +39,5 @@ class BranchSeeder extends Seeder
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
         ]);
 
-
-
-
-
     }
 }

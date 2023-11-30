@@ -22,9 +22,8 @@ class TenantSeeder extends Seeder
             BranchSeeder::class,
             UserSeeder::class,
             RestaurantStyleSeeder::class,
-           
         ]);
-        
+
 
     }
 }
