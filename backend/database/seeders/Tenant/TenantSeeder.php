@@ -22,12 +22,17 @@ class TenantSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             UserSeeder::class,
             RestaurantStyleSeeder::class,
+<<<<<<< HEAD
             // Testing seeders
             BranchSeeder::class,
             CategoryItemSeeder::class
          
           
         ]);
+=======
+        ]);
+
+>>>>>>> 95691fc (restaurantstyle empty result check.)
 
     }
 }

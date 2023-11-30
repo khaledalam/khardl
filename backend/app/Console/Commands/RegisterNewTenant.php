@@ -8,9 +8,7 @@ use App\Models\Tenant;
 use Database\Seeders\UserSeeder;
 use Illuminate\Console\Command;
 use Database\Seeders\TenantActionSeeder;
-use App\Actions\CreateTenantAction;
 use Illuminate\Database\UniqueConstraintViolationException;
-use Stancl\Tenancy\Exceptions\DomainOccupiedByOtherTenantException;
 
 class RegisterNewTenant extends Command
 {
