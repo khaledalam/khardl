@@ -8,6 +8,11 @@ import ContactUs from '../../components/ContactUsSection/ContactUs';
 import {Link} from "react-router-dom";
 
 const Home = () => {
+
+    // window.location.href = '/dashboard';
+    //
+    // return;
+
   return (
     <div>
       <Helmet>

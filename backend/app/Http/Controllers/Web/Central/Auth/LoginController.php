@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Central\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\BaseController;
+use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
@@ -72,7 +73,6 @@ class LoginController extends BaseController
         }else{
             $data['step2_status'] = 'completed';
         }
-
 
         return $this->sendResponse($data, 'User logged in successfully.');
     }

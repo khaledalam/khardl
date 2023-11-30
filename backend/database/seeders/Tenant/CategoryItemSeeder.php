@@ -5,9 +5,11 @@ namespace Database\Seeders\Tenant;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\Category;
 use App\Models\Tenant\Item;
+use App\Models\Tenant\RestaurantStyle;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryItemSeeder extends Seeder
@@ -36,17 +38,16 @@ class CategoryItemSeeder extends Seeder
 
 
             foreach($branch->categories as $key=>$category){
-                foreach (range(2, 5) as $k => $it) {
-
-                    // use khardl logo from public folder
-            //        $logo_file = new UploadedFile(global_asset('img/logo.png'), true);
-            //        $logo = store_image($logo_file,RestaurantStyle::STORAGE,'logo');
+                foreach (range(1, 5) as $k => $it) {
+                    $kk = $k + 1;
+                    $photo_file = new UploadedFile(public_path("seeders/items/$kk.jpg"), true);
+                    $photo = store_image($photo_file,RestaurantStyle::STORAGE, "Item $kk");
 
                     $category->items()->save(new Item([
-                        'photo' => '',
+                        'photo' => $photo,
                         'price' => $faker->numberBetween(10, 500),
                         'calories' => $faker->numberBetween(0, 500),
-                        'description' =>  trans_json("Item " . $k+1,"Item " . $k+1),
+                        'description' =>  trans_json("Item " . $kk,"Item " . $kk),
                         'availability'=> (bool)$faker->numberBetween(0, 1),
                         'branch_id' => $branch->id,
                         'user_id'=>UserSeeder::RESTAURANT_WORKER_USER_ID

@@ -20,8 +20,12 @@ class RestaurantStyleSeeder extends Seeder
         $logo_file = new UploadedFile(public_path('seeders/logo.png'), true);
         $logo = store_image($logo_file,RestaurantStyle::STORAGE,'logo');
 
-        $banner_file = new UploadedFile(public_path('seeders/banner.jpeg'), true);
-        $banner = store_image($banner_file,RestaurantStyle::STORAGE,'logo');
+        $banner1_file = new UploadedFile(public_path('seeders/banner_1.jpeg'), true);
+        $banner1 = store_image($banner1_file,RestaurantStyle::STORAGE,'banner_1');
+
+//        $banner2_file = new UploadedFile(public_path('seeders/banner_2.jpg'), true);
+//        $banner2 = store_image($banner2_file,RestaurantStyle::STORAGE,'banner_2');
+
 
         RestaurantStyle::create([
             'id' => self::RESTAURANT_STYLE_ID,
@@ -29,8 +33,12 @@ class RestaurantStyleSeeder extends Seeder
             'logo_alignment' => 'Center',
             'category_style' => 'Tabs',
             'banner_style' => 'One Photo',
-            'banner_image' => $banner,
-            'banner_images' => null,
+            'banner_image' => $banner1,
+            'banner_images' => [
+                // @TODO: handle banner_images tenant_asset() in seeder
+//                tenant_asset($banner1),
+//                tenant_asset($banner2)
+            ],
             'social_medias' => json_encode([
                 'id' => self::RESTAURANT_STYLE_SOCIAL_MEDIA_ID,
                 'name' => 'Whatsapp',

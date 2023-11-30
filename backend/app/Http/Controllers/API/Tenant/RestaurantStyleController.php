@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantStyle;
-use Illuminate\Support\Facades\Storage;
 
 
 class RestaurantStyleController extends Controller

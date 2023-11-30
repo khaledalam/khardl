@@ -117,7 +117,7 @@
             <!--begin::Brand-->
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
-                <a href="index.html">
+                <a href="/">
                     <img alt="Logo" src="{{ global_asset('/img/logo.png') }}" class="h-30px" />
                 </a>
                 <!--end::Logo-->

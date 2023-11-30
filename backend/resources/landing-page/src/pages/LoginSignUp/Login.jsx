@@ -63,7 +63,11 @@ const Login = () => {
                responseData.data.step2_status === 'completed' &&
                responseData.data.user.status === 'active'
             ) {
-               setStatusCode(HTTP_OK)
+                setStatusCode(HTTP_OK);
+               // settimeout(() => {
+               //     window.location.href = '/dashboard';
+               //     //
+               // }, 500);
             } else {
                navigate('/error')
             }

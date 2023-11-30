@@ -7,8 +7,6 @@ use App\Models\Tenant\RestaurantUser;
 
 class DashboardController extends Controller
 {
-   
-     
     public function index()
     {
         $user = Auth::user();
