@@ -33,14 +33,14 @@ class RegisterNewTenant extends Command
      */
     public function handle(TenantActionSeeder $seeder)
     {
-        $user = User::find(UserSeeder::SUPER_ADMIN_USER_ID);
+        $user = User::find(UserSeeder::RESTAURANT_OWNER_USER_ID);
         $name = $this->argument('name') ?? 'first';
         if(!$user){
             $this->error("No user registered, try run `php artisan migrate:fresh --seed`");
             return ;
         }
         try {
-            $seeder->run($name);
+            $seeder->run($name,$user->id);
         }catch(UniqueConstraintViolationException $e){
             $this->error("The $name domain is occupied by another user. try use different tenant name `php artisan create:tenant {name}`");
             $this->warn("make sure to add this subdomain to your hosts file");

@@ -15,7 +15,7 @@ class CreateTenantAction
         $tenant = Tenant::create([
             'user_id'=> $user->id,
             'ready' => true,
-            'email'=>'admin'.'@'.$domain.'.com',
+            'email'=> $user->email,
             "first_name" => $user->first_name,
             "last_name" =>$user->last_name,
             "trial_ends_at" => now()->addDays(30),
