@@ -5,55 +5,23 @@ namespace App\Models\Tenant;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
-use Spatie\Sluggable\HasTranslatableSlug;
 
 class Category extends Model
 {
-    use HasTranslations,HasTranslatableSlug;
+    use HasTranslations;
 
     protected $table = 'categories';
 
 
     protected $fillable = [
         'name',
-        'description',
-        'parent_id',
-        'image_path',
-        'slug',
         'branch_id',
+        'user_id'
     ];
 
-    public $translatable = ['name', 'description', 'slug'];
-    /**
-     * Get the options for generating the slug.
-    */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'product_categories');
-    }
-
-    /**
-     * Retrieve sub-categories (if any).
-     */
-    public function children()
-    {
-        return $this->hasMany(Category::class, 'parent_id');
-    }
-
-    /**
-     * Retrieve parent category (if exists).
-     */
-    public function parent()
-    {
-        return $this->belongsTo(self::class, 'parent_id');
-    }
-
+    public $translatable = ['name'];
+   
+   
     /**
      * Retrieve branch (if exists).
      */

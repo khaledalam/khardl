@@ -33,7 +33,7 @@
                                                 <!--begin::Inbox-->
                                                 <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
                                                     <span class="menu-link">
-                                                        <span class="menu-title fw-bolder">{{ $category->category_name }}</span>
+                                                        <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
                                                     </span>
                                                 </a>
@@ -62,7 +62,7 @@
                                               <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST">
                                                 @csrf
                                                 <div id="categoryForm" style="display: none !important;" class="d-flex justify-content-between align-items-center">
-                                                    <input type="text" name="category_name" class="form-control form-control-solid" placeholder="Category Name"  id="categoryInput" placeholder="Enter category">
+                                                    <input type="text" name="name" class="form-control form-control-solid" placeholder="Category Name"  id="categoryInput" placeholder="Enter category">
                                                     <button type="submit" class="btn btn-sm btn-khardl mx-1" id="saveCategoryBtn">{{ __('messages.save') }}</button>
                                                 </div>
                                               </form>

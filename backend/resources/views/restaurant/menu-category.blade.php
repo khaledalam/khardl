@@ -1,7 +1,7 @@
 @extends('layouts.restaurant-sidebar')
 
 @section('title', DB::table('branches')->where('id', $branchId)->value('name'))
-@section('subtitle', $selectedCategory->category_name)
+@section('subtitle', $selectedCategory->name)
 
 @section('content')
     <!--begin::Content-->
@@ -34,7 +34,7 @@
                                                 <!--begin::Inbox-->
                                                 <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
                                                     <span class="menu-link @if ($category->id === $selectedCategory->id) active @endif">
-                                                        <span class="menu-title fw-bolder">{{ $category->category_name }}</span>
+                                                        <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
                                                         {{-- <span class="badge badge-light-success">3</span> --}}
                                                         {{-- <form class="delete-form" action="{{ route('restaurant.delete-category', ['id' => $selectedCategory->id]) }}" method="POST">
@@ -79,7 +79,7 @@
                                               <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST">
                                                 @csrf
                                                 <div id="categoryForm" style="display: none !important;" class="d-flex justify-content-between align-items-center">
-                                                    <input type="text" name="category_name" class="form-control form-control-solid" placeholder="Category Name"  id="categoryInput" placeholder="Enter category">
+                                                    <input type="text" name="name" class="form-control form-control-solid" placeholder="Category Name"  id="categoryInput" placeholder="Enter category">
                                                     <button type="submit" class="btn btn-sm btn-primary mx-1" id="saveCategoryBtn">{{ __('messages.save') }}</button>
                                                 </div>
                                               </form>
@@ -101,7 +101,7 @@
                                   <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                                       <!--begin::Actions-->
                                       <div class="d-flex flex-wrap gap-1">
-                                          <h3 class="text-primary">{{ DB::table('branches')->where('id', $branchId)->value('name') }} | {{ $selectedCategory->category_name }}</h3>
+                                          <h3 class="text-primary">{{ DB::table('branches')->where('id', $branchId)->value('name') }} | {{ $selectedCategory->name }}</h3>
                                       </div>
                                       <!--end::Actions-->
                                       <!--begin::Pagination-->

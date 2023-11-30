@@ -3,7 +3,14 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Storage;
 
 
-
+if (!function_exists('trans_json')) {
+    function trans_json($value,$value_ar) {
+        return [
+            "en"=>$value,
+            "ar"=>$value_ar,
+        ];
+    }
+}
 if (! function_exists('store_image')) {
 
     function store_image($image,$store_at,$name = null)

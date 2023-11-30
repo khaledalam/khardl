@@ -3,6 +3,7 @@
 namespace Database\Seeders\Tenant;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\Tenant\CategoryItemSeeder;
 use Database\Seeders\Tenant\RestaurantStyleSeeder;
 
 
@@ -19,12 +20,14 @@ class TenantSeeder extends Seeder
         $this->call([
             SettingSeeder::class,
             RolesAndPermissionsSeeder::class,
-            BranchSeeder::class,
             UserSeeder::class,
             RestaurantStyleSeeder::class,
-           
+            // Testing seeders
+            BranchSeeder::class,
+            CategoryItemSeeder::class
+         
+          
         ]);
-        
 
     }
 }

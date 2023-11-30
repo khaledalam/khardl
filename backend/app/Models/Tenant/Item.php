@@ -8,9 +8,9 @@ use Spatie\Translatable\HasTranslations;
 
 class Item extends Model
 {
-
+    use HasTranslations;
     protected $table = 'items';
-
+    
     protected $fillable = [
         'category_id',
         'branch_id',
@@ -33,6 +33,7 @@ class Item extends Model
         'dropdown_input_names',
         'availability'
     ];
+    public $translatable = ['description'];
     public function getPhotoAttribute(){
         return tenant_asset($this->attributes['photo']);
     }
