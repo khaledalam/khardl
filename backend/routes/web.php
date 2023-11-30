@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 /*
@@ -28,7 +30,7 @@ use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
 */
 
 
-// Route::get('/home', [DashboardController::class, 'index'])->name('home');
+// Route::get('/test', function (){})->name('test');
 
 // Route::post('/logout', function(){
 //     Auth::logout();
@@ -206,7 +208,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                         }catch(Exception $e){
                             return redirect()->back()->with('error',__('File not exists !'));
                         }
-                        
+
                     })
                     ->where('path', '(.*)')
                     ->name("download.file");
@@ -221,7 +223,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
-   
+
 });
 //-----------------------------------------------------------------------------------------------------------------------
 

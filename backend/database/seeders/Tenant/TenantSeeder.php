@@ -22,11 +22,8 @@ class TenantSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             UserSeeder::class,
             RestaurantStyleSeeder::class,
-            // Testing seeders
             BranchSeeder::class,
             CategoryItemSeeder::class
-         
-          
         ]);
 
     }
