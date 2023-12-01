@@ -30,7 +30,9 @@ use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
 */
 
 
-// Route::get('/test', function (){})->name('test');
+ Route::get('/test', function (){
+
+ })->name('test');
 
 // Route::post('/logout', function(){
 //     Auth::logout();
