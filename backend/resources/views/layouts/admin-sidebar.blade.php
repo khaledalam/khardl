@@ -13,10 +13,6 @@
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
     <link rel="shortcut icon" href="{{ global_asset('assets/media/logos/favicon.ico')}}"/>
-    <!--begin::Fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @if(app()->getLocale() === 'ar')
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
@@ -45,7 +41,7 @@
     ">
     <!--begin::Main-->
     <!--begin::Root-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
     @if(session('success'))
         <script>
             showAlert('success', '{{ session('success') }}');
@@ -566,7 +562,7 @@
     <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
-    <script src="https://kit.fontawesome.com/d2d3f16619.js" crossorigin="anonymous"></script>
+
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
 </body>

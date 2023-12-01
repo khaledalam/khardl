@@ -224,9 +224,18 @@ return [
     'summary' => 'الملخص',
     'site-editor' => 'محرر الموقع',
     'services' => 'خدمات',
+    'delivery-companies' => 'شركات التوصيل',
+    'promotions' => 'الترقيات',
     'payments' => 'مدفوعات',
     'live' => 'مفعل',
-    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد'
+    'menus' => 'قوائم',
+    'customers-data' => 'بيانات العملاد',
+    'customers-settings' => 'اعدادات العملاد',
+    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
+    'orders-all' => 'جميع الطلبات',
+    'orders-add' => 'اضافه طلبات',
+    'products-out-of-stock' => 'منتجات منتهيه المخزون',
+    'qr-maker' => 'محرر كيو ار'
 
 ];
 

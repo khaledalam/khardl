@@ -51,7 +51,7 @@ const App = () => {
       location.pathname
    );
    const showFooter = ![
-       '/site-editor',
+       // '/site-editor',
        '/site-editor/restaurants',
        '/site-editor/customers',
       '/login',

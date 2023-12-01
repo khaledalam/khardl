@@ -35,6 +35,72 @@ class RestaurantController extends BaseController
             compact('user', 'branches'));
     }
 
+    public function delivery(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.delivery',
+            compact('user'));
+    }
+
+    public function promotions(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.promotions',
+            compact('user'));
+    }
+
+    public function customers_data(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.customers_data',
+            compact('user'));
+    }
+
+    public function customers_settings(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.customers_settings',
+            compact('user'));
+    }
+
+    public function orders_all(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.orders_all',
+            compact('user'));
+    }
+
+    public function orders_add(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.orders_add',
+            compact('user'));
+    }
+
+    public function products_out_of_stock(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.products_out_of_stock',
+            compact('user'));
+    }
+
+    public function qr(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.qr',
+            compact('user'));
+    }
+
+
+
     public function branches(){
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
@@ -279,7 +345,7 @@ class RestaurantController extends BaseController
 
     public function getCategory(Request $request, $id, $branchId){
         $user = Auth::user();
-    
+
         if(!$user->isRestaurantOwner()  && $user->branch->id != $branchId){
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
@@ -326,7 +392,7 @@ class RestaurantController extends BaseController
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
 
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
-            
+
             $photoFile = $request->file('photo');
 
             $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
@@ -338,7 +404,7 @@ class RestaurantController extends BaseController
             $photoFile->storeAs('items', $filename, 'public');
 
             DB::beginTransaction();
-          
+
             try {
                 $itemData = [
                     'photo' => 'items/'.$filename,
@@ -364,7 +430,7 @@ class RestaurantController extends BaseController
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-          
+
                 DB::table('items')->insert($itemData);
 
                 DB::commit();

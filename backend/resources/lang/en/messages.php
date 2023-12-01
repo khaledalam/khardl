@@ -234,9 +234,19 @@ return [
     'summary' => 'Summary',
     'site-editor' => 'Site Editor',
     'services' => 'Services',
+    'delivery-companies' => 'Delivery companies',
+    'promotions' => 'Promotions',
     'payments' => 'Payments',
     'live' => 'Live',
-    'not_upload_register_files' => 'Not Upload Register Files'
+    'menus' => 'Menus',
+    'customers-data' => 'Customers data',
+    'customers-settings' => 'Customers settings',
+    'not_upload_register_files' => 'Not Upload Register Files',
+    'orders-all' => 'All orders',
+    'orders-add' => 'Add orders',
+    'products-out-of-stock' => 'Products out of stock',
+    'qr-maker' => 'QR maker'
+
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',
