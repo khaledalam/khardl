@@ -189,7 +189,6 @@ return [
     'primary-branch' => 'Primary branch',
     'revenue' => 'Revenue',
     'edit-menu' => 'Edit Menu',
-    'advertisement-modification' => 'Advertisement modification',
     'staff-modification' => 'Staff modification',
     'opening-the-branch' => 'Opening the branch',
     'edit-site' => 'Edit Site',
@@ -235,5 +234,9 @@ return [
     'summary' => 'Summary',
     'site-editor' => 'Site Editor',
     'services' => 'Services',
-    'payments' => 'Payments'
+    'payments' => 'Payments',
+    'live' => 'Live',
+    'not_upload_register_files' => 'Not Upload Register Files'
 ];
+
+//    'advertisement-modification' => 'Advertisement modification',

@@ -32,10 +32,9 @@
                                 <!--begin::Col-->
                                 <div class="position-relative w-md-200px me-md-2">
           <select class="form-select form-select-solid" name="status">
-              <option value="All" {{ request('status') === 'All' ? 'selected' : '' }}>{{ __('messages.all')}}</option>
-              <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>{{ __('messages.active')}}</option>
-              <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>{{ __('messages.pending')}}</option>
-              <option value="2" {{ request('status') === '2' ? 'selected' : '' }}>{{ __('messages.denied')}}</option>
+              <option value="all" {{ request('status') === 'All' ? 'selected' : '' }}>{{ __('messages.all')}}</option>
+              <option value="live" {{ request('status') === 'live' ? 'selected' : '' }}>{{ __('messages.active')}}</option>
+              <option value="not_live" {{ request('status') === 'not_live' ? 'selected' : '' }}>{{ __('messages.pending')}}</option>
           </select>
                                     </select>
         </div>
@@ -124,17 +123,18 @@
             <div class="col-md-6 col-xxl-4">
                 <!--begin::Card-->
                 <div class="card">
-                    <div class="w-100 text-right">
-                        <p class="badge bg-primary p-3 text-page-bg fw-bolder">{{ $restaurant->points }} {{ __('messages.points')}}</p>
-                    </div>
                     <!--begin::Card body-->
                     <div class="card-body d-flex flex-center flex-column p-9 pt-3">
 
                         <!--begin::Name-->
-                        <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">{{ $restaurant->primary_domain->domain }} @if($restaurant->isApproved == "0")<span class="badge badge-light-warning fw-bolder">{{ __('messages.pending')}}</span>@elseif ($restaurant->status == "active")<span class="badge badge-light-success fw-bolder">{{ __('messages.active')}}</span>@else <span class="badge badge-light-danger fw-bolder">{{ __('messages.denied')}}</span>@endif
-                        
+                        <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
+                            {{ $restaurant?->primary_domain?->domain }}
+                            @if($restaurant?->is_live())<span class="badge badge-light-success fw-bolder">{{ __('messages.active')}}</span>
+                            @elseif ($restaurant->status == "active")<span class="badge badge-light-warning fw-bolder">{{ __('messages.pending')}}</span>
+{{--                            @else <span class="badge badge-light-danger fw-bolder">{{ __('messages.denied')}}</span>--}}
+                            @endif
                         </a>
-                     
+
                         <!--end::Name-->
                         <!--begin::Position-->
                         <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</div>
@@ -143,13 +143,13 @@
                         <div class="d-flex flex-center flex-wrap">
                             <!--begin::Stats-->
                             <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
-                                <div class="fs-6 fw-bolder text-gray-700">$14,560</div>
+                                <div class="fs-6 fw-bolder text-gray-700">$TODO</div>
                                 <div class="fw-bold text-gray-400">{{ __('messages.earnings')}}</div>
                             </div>
                             <!--end::Stats-->
                             <!--begin::Stats-->
                             <div class="border border-gray-300 border-dashed rounded min-w-80px py-3 px-4 mx-2 mb-3">
-                                <div class="fs-6 fw-bolder text-gray-700">230</div>
+                                <div class="fs-6 fw-bolder text-gray-700">TODO</div>
                                 <div class="fw-bold text-gray-400">{{ __('messages.orders')}}</div>
                             </div>
                             <!--end::Stats-->
@@ -214,7 +214,7 @@
                             </div>
                             <!--end::Action-->
                         </div>
-                        
+
                         {{-- <!--begin::Info-->
                         <div class="d-flex flex-center flex-wrap">
                             <!--begin::Stats-->
@@ -376,7 +376,7 @@
                       </div>
                       <!--end::Wrapper-->
                       <!--begin::Info-->
-                   
+
                       <div class="d-flex flex-column justify-content-center">
                         <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
                         <div class="fw-bold fs-6 text-gray-400">{{ $restaurant->email }}</div>

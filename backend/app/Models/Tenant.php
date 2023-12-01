@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tenant\Setting;
 use App\Models\User;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
@@ -54,4 +55,10 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         return $this->route('impersonate', ['token' => $token]);
     }
 
+    public function is_live(): bool
+    {
+        return $this->run(static function(): bool {
+            return Setting::first()->is_live;
+        });
+    }
 }

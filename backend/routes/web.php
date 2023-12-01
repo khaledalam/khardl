@@ -16,7 +16,6 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
-use Symfony\Component\HttpFoundation\File\File;
 
 
 /*
@@ -129,7 +128,6 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                             RegisterController::increasePromotersEntered($promoter);
                         }
                     }
-
                     return view('central');
                 })->name($name);
             }

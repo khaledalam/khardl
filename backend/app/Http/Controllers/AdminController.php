@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Mail\Mailable;
@@ -23,7 +24,33 @@ class AdminController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        return view('admin.dashboard', compact('user'));
+
+        //
+        $restaurantsAll = Tenant::with("primary_domain")->get();
+
+        // not complete register step2
+        $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->get();
+
+        $restaurantsLive = [];
+        $customers = [];
+
+        foreach ($restaurantsAll as $restaurant) {
+            $restaurant->run(static function ($tenant) use (&$restaurantsLive, &$customers) {
+                $setting = Tenant\Setting::first();
+                if ($setting->is_live) {
+                    $restaurantsLive[] = $tenant;
+                }
+
+                $currentMonth = Carbon::now()->month;
+                $customers = RestaurantUser::whereDoesntHave('roles')->whereMonth('created_at', '=', $currentMonth)->get();
+            });
+        }
+
+
+        return view('admin.dashboard', compact('user',
+            'restaurantsAll', 'restaurantsOwnersNotUploadFiles',
+            'restaurantsLive', 'customers'
+        ));
     }
 
     public function addUser()
@@ -189,26 +216,35 @@ class AdminController extends Controller
     public function restaurants(Request $request)
     {
         // users from central table
-        $query = User::where('restaurant_name', '<>', null);
+        $query = '';
 
-        $restaurants =  Tenant::with("primary_domain")->paginate();
-        // foreach($restaurants as $restaurant){
-        //     $restaurant->run(function ($tenant) {
-        //         $query = RestaurantUser::where('branch_id', null);
-        //     });
-        // }
-       
-        // if ($request->has('search')) {
-        //     $search = $request->input('search');
-        //     $query->where('first_name', 'like', '%' . $search . '%');
-        //     $query->Where('last_name', 'like', '%' . $search . '%');
-        // }
-        // if ($request->has('status') && $request->input('status') != "All") {
-        //     $status = $request->input('status');
-        //     $query->where('status', $status);
-        // }
-    
-        // $restaurants = $query->paginate(15);
+        $restaurants =  Tenant::with("primary_domain")->get()->all();
+
+         foreach($restaurants as $restaurant){
+             $restaurant->run(function ($tenant) use ($request, $query){
+
+
+                 if ($request->has('search')) {
+                     $search = $request->input('search');
+
+                     $query = RestaurantUser::where('name', 'ilike', '%' . $search .  '%');
+
+                     $query->whereHas('primary_domain', static function($query1) use ($search) {
+                         $query1->where('name', 'like', '%' . $search . '%');
+                     });
+                 }
+
+
+             });
+         }
+
+
+         if ($request->has('status') && $request->input('status') !== "all") {
+             $status = $request->input('status');
+             $query->rwhere('status', $status);
+         }
+
+         $restaurants = $query->paginate(15);
 
         $user = Auth::user();
 
@@ -216,16 +252,16 @@ class AdminController extends Controller
     }
 
     public function viewRestaurant($id){
-      
+
         $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
-        
+
         // if($restaurant->role == 0){
         //     return view('admin.view-restaurant', compact('restaurant'));
         // }else{
         //     return abort(404);
         // }
         return view('admin.view-restaurant', compact('restaurant'));
-       
+
     }
 
     public function viewRestaurantOrders($id){

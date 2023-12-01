@@ -177,7 +177,6 @@ return [
     'primary-branch' => 'الفرع الأساسي',
     'revenue' => 'الإيرادات',
     'edit-menu' => 'حرر قائمة الطعام',
-    'advertisement-modification' => 'تحرير العروض',
     'staff-modification' => 'تحرير الموظفين',
     'opening-the-branch' => 'مواعيد الفرع',
     'edit-site' => 'تحرير الموقع',
@@ -225,5 +224,11 @@ return [
     'summary' => 'الملخص',
     'site-editor' => 'محرر الموقع',
     'services' => 'خدمات',
-    'payments' => 'مدفوعات'
+    'payments' => 'مدفوعات',
+    'live' => 'مفعل',
+    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد'
+
 ];
+
+
+//    'advertisement-modification' => 'تحرير العروض',

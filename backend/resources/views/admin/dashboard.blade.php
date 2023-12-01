@@ -19,7 +19,7 @@
                                 <!--begin::Info-->
                                 <div class="d-flex align-items-center">
                                     <!--begin::Amount-->
-                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">700</span>
+                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{count($restaurantsAll)}}</span>
                                     <!--end::Amount-->
                                 </div>
                                 <!--end::Info-->
@@ -48,12 +48,12 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.pending')}}
+                                        {{ __('messages.not_upload_register_files')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        290
+                                        {{count($restaurantsOwnersNotUploadFiles)}}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -65,12 +65,12 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.active')}}
+                                        {{ __('messages.live')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        250
+                                        {{count($restaurantsLive)}}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -83,12 +83,12 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.denied')}}
+                                        {{ __('messages.not_live')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        160
+                                        {{count($restaurantsAll) - count($restaurantsLive)}}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -130,12 +130,12 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.pending')}}
+                                        {{ __('messages.not_upload_register_files')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                       500
+                                       {{count($restaurantsOwnersNotUploadFiles)}}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -240,7 +240,7 @@
                             <!--begin::Title-->
                             <div class="card-title d-flex flex-column">
                                 <!--begin::Amount-->
-                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">6.3k</span>
+                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{count($customers)}}</span>
                                 <!--end::Amount-->
                                 <!--begin::Subtitle-->
                                 <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.new-customers-this-month')}}</span>
@@ -356,7 +356,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        45 m 
+                                        45 m
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -453,7 +453,7 @@
                     </div>
                     <!--end::Card widget 6-->
                 </div>
-                
+
 
 
                 <!--begin::Col-->

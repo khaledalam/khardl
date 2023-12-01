@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Central\Auth;
 
+use App\Jobs\CreateTenantAdmin;
 use App\Models\User;
 use App\Models\Promoter;
 use App\Models\Restaurant;
@@ -110,7 +111,7 @@ class RegisterController extends BaseController
             user: $user,
             domain: $user->restaurant_name
         );
-        return $this->sendResponse(['url'=>$tenant->impersonationUrl(1)], 'User complete register step two successfully.');
+        return $this->sendResponse(['url'=>$tenant->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID)], 'User complete register step two successfully.');
     }
 
 

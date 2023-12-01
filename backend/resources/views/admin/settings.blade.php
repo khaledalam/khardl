@@ -27,17 +27,6 @@
                   <form id="kt_account_profile_details_form" class="form">
                       <!--begin::Card body-->
                       <div class="card-body border-top p-9">
-                      
-                          <!--begin::Input group-->
-                          <div class="row mb-0">
-                              <!--begin::Label-->
-                                  <div class="form-check form-check-solid form-switch fv-row">
-                                      <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing1" checked="checked" />
-                                      <label class="form-check-label" for="allowmarketing1">{{ __('messages.buying-points')}}</label>
-                                  </div>
-                              <!--begin::Label-->
-                          </div>
-                          <!--end::Input group-->
 
                           <!--begin::Input group-->
                           <div class="row mb-0 mt-5">
@@ -75,7 +64,7 @@
                           </div>
                           <!--end::Input group-->
 
-                          
+
                       </div>
                       <!--end::Card body-->
                       <!--begin::Actions-->
@@ -108,7 +97,7 @@
   <form id="kt_account_profile_details_form" class="form">
     <!--begin::Card body-->
     <div class="card-body border-top p-9">
-    
+
       <!--begin::Input group-->
       <div class="row mb-0">
         <!--begin::Label-->
@@ -132,7 +121,7 @@
       </div>
       <!--end::Input group-->
 
-                              
+
     </div>
     <!--end::Card body-->
     <!--begin::Actions-->
@@ -166,7 +155,7 @@
   <form id="kt_account_profile_details_form" class="form">
     <!--begin::Card body-->
     <div class="card-body border-top p-9">
-    
+
       <!--begin::Input group-->
       <div class="row mb-0">
         <!--begin::Label-->
@@ -202,7 +191,7 @@
       </div>
       <!--end::Input group-->
 
-                              
+
     </div>
     <!--end::Card body-->
     <!--begin::Actions-->

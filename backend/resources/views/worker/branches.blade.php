@@ -9,8 +9,8 @@
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
-                    
-       
+
+
         <!--end::Post-->
         <!--begin::Post-->
         @foreach ($branches as $branch)
@@ -25,12 +25,12 @@
                             <!--begin::Col-->
                             <div class="col-sm-6 mb-10 mb-sm-0">
                                 <!--begin::Image-->
-                                
+
                                     <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
                                         <input id="pac-input" class="form-control" type="text" placeholder="Search for place">
                                         <div id="map{{ $branch->id }}" style="width: 100%; height: 90%; border:0;"></div>
-                                            <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">  
-                                                @csrf  
+                                            <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
+                                                @csrf
                                                 <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
                                                 <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
                                                 <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl mt-3 w-100">{{ __('messages.save-location')}}</button>
@@ -106,7 +106,7 @@
                                                     <span
                                                         class="fw-bold text-gray-400 d-block fs-8">{{ __('messages.revenue') }}</span>
                                                     <span
-                                                        class="fw-bolder text-gray-800 fs-7">$64.800</span>
+                                                        class="fw-bolder text-gray-800 fs-7">$TODO</span>
                                                 </div>
                                                 <!--end::Info-->
                                             </div>
@@ -132,14 +132,14 @@
                                                 </div>
                                             @endif
                                             <!--end::Stat-->
-                                            @if($user->hasPermissionWorker('can_modify_advertisements'))
-                                            <!--begin::Stat-->
-                                            <div
-                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
-                                                <a href="#" class="fs-6 text-700 fw-bolder">{{ __('messages.advertisement-modification') }}</a>
-                                            </div>
-                                            @endif
-                                         
+{{--                                            @if($user->hasPermissionWorker('can_modify_advertisements'))--}}
+{{--                                            <!--begin::Stat-->--}}
+{{--                                            <div--}}
+{{--                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">--}}
+{{--                                                <a href="#" class="fs-6 text-700 fw-bolder">{{ __('messages.advertisement-modification') }}</a>--}}
+{{--                                            </div>--}}
+{{--                                            @endif--}}
+
                                             <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
@@ -151,7 +151,7 @@
                                                     class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                     <a href="{{ route('restaurant.workers', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.staff-modification') }}</a>
                                                 </div>
-                                        
+
                                             <!--end::Stat-->
                                             <!--begin::Stat-->
                                                 <div
@@ -161,7 +161,7 @@
                                                         data-bs-target="#kt_modal_new_target{{ $branch->id }}">{{ __('messages.opening-the-branch') }}
                                                         <i class="fas fa-clock"></i></a>
                                                 </div>
-                                
+
                                             <!--end::Stat-->
                                         </div>
                                         @endif
@@ -170,7 +170,7 @@
                                     <!--end::Body-->
                                     <!--begin::Footer-->
                                     <div class="d-flex flex-stack mt-auto bd-highlight">
-                                      
+
                                         <div>
                                             <!--begin::Actions-->
                                             {{-- <a href="demo1/dist/apps/projects/project.html"
@@ -246,7 +246,7 @@
                         <!--end::Title-->
                     </div>
                     <!--end::Heading-->
-        
+
                     <!--begin::Input group-->
                     <div class="row g-9 mb-8">
                         <!--begin::Col-->
@@ -274,20 +274,20 @@
                                     <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_7">{{ __('messages.friday') }}</a>
                                 </li>
                             </ul>
-                            
+
                             <div class="tab-content" id="myTabContent">
-        
+
                                 <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
                                             <input type="time" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="saturday_open"  required />
                                         </div>
-        
+
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
                                             <input type="time" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="saturday_close"  required />
-        
+
                                         </div>
                                     </div>
 
@@ -300,18 +300,18 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
                                             <input type="time" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="sunday_open"  required />
                                         </div>
-        
+
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
                                             <input type="time" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="sunday_close"  required />
-        
+
                                         </div>
                                     </div>
 
@@ -324,18 +324,18 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
                                             <input type="time" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="monday_open"  required />
                                         </div>
-        
+
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
                                             <input type="time" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="monday_close"  required />
-        
+
                                         </div>
                                     </div>
 
@@ -348,18 +348,18 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
                                             <input type="time" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="tuesday_open"  required />
                                         </div>
-        
+
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
                                             <input type="time" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="tuesday_close"  required />
-        
+
                                         </div>
                                     </div>
 
@@ -372,18 +372,18 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
                                             <input type="time" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="wednesday_open"  required />
                                         </div>
-        
+
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
                                             <input type="time" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="wednesday_close"  required />
-        
+
                                         </div>
                                     </div>
 
@@ -396,14 +396,14 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="tab-pane fade" id="kt_tab_pane_6" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
                                             <input type="time" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="thursday_open"  required />
                                         </div>
-        
+
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
                                             <input type="time" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="thursday_close"  required />
@@ -419,14 +419,14 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="tab-pane fade" id="kt_tab_pane_7" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
                                             <input type="time" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="friday_open"  required />
                                         </div>
-        
+
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
                                             <input type="time" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="friday_close"  required />
@@ -442,23 +442,23 @@
                                         </div>
                                     </div>
                                 </div>
-        
-        
+
+
                             </div>
                         </div>
                         <!--end::Col-->
-        
-        
-        
-        
-        
-                        
-        
-        
+
+
+
+
+
+
+
+
                     </div>
                     <!--end::Input group-->
-        
-        
+
+
                     <!--begin::Actions-->
                     <div class="text-center">
                         <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
@@ -496,13 +496,13 @@
                 </div>
             </div>
         @endif
-     
-     
+
+
     </div>
     <!--end::Content-->
 
     <!--begin::Modal - New Target-->
-    
+
 
 
     <!--begin::Modal - New Branshes-->
@@ -532,7 +532,7 @@
     <!--begin::Modal header-->
     <!--begin::Modal body-->
 
-    
+
 
     <!--end::Modal body-->
     </div>
@@ -540,7 +540,7 @@
     </div>
     <!--end::Modal dialog-->
     </div>
-    <!--end::Modal - New Bransh-->   
+    <!--end::Modal - New Bransh-->
 
 
 
@@ -564,42 +564,42 @@
     <script>
         let maps = {}; // Store maps in an object
         let markers = {}; // Store markers in an object
-      
+
         function initializeMap(branchId, lat, lng) {
           const latLng = new google.maps.LatLng(lat, lng);
-      
+
           const map = new google.maps.Map(document.getElementById('map' + branchId), {
             center: latLng,
             zoom: 15,
           });
-      
+
           const marker = new google.maps.Marker({
             position: latLng,
             map: map,
             draggable: true,
           });
-      
+
           markers[branchId] = marker; // Store the marker for this branch
           maps[branchId] = map; // Store the map for this branch
-      
+
           google.maps.event.addListener(marker, 'dragend', function () {
             updateLocationInput(marker.getPosition(), branchId);
           });
-      
+
           // Add a click event listener to the map
           google.maps.event.addListener(map, 'click', function (event) {
             marker.setPosition(event.latLng);
             updateLocationInput(event.latLng, branchId);
           });
         }
-      
+
         function updateLocationInput(latLng, branchId) {
           const latInput = document.getElementById('lat' + branchId);
           const lngInput = document.getElementById('lng' + branchId);
           latInput.value = latLng.lat();
           lngInput.value = latLng.lng();
         }
-      
+
         function updateLocation(branchId) {
             const marker = markers[branchId];
             const latInput = document.getElementById('lat' + branchId);
@@ -629,18 +629,18 @@
             }
             }
 
-      
+
         // Initialize the maps for each branch
         @foreach ($branches as $branch)
           initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
         @endforeach
       </script>
-      
+
 
     <script>
-        
-            
-        
+
+
+
         const mapElement = document.getElementById('map');
         const centerCoords = { lat: 24.7136, lng: 46.6753 }; // Default center coordinates
 
@@ -672,7 +672,7 @@
         // Listen for a place selection
 
         google.maps.event.addListener(map, 'click', function (event) {
-        
+
             // If a marker exists, remove it
         if (marker) {
             marker.setMap(null);
@@ -724,7 +724,7 @@
     });
 
 
-    
+
     </script>
 
 @endsection
