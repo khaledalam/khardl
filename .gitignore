@@ -23,6 +23,6 @@ frontend/temp
 frontend/package-lock.json
 .htaccess
 
-backend/public/js/central.js
-backend/public/js/tenant.js
-backend/public/mix-manifest.json
+#backend/public/js/central.js
+#backend/public/js/tenant.js
+#backend/public/mix-manifest.json
