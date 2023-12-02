@@ -27,6 +27,7 @@ use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\API\Tenant\Customer\CartController;
 use App\Packages\TapPayment\Controllers\BusinessController;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
@@ -61,7 +62,6 @@ Route::group([
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
-
     Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
 
     Route::middleware(['auth'])->group(function () {
@@ -161,8 +161,10 @@ Route::group([
 
 
 
-            Route::middleware('verified')->group(function () {
-
+            Route::middleware('verifiedPhone')->group(function () {
+                Route::resource("carts",CartController::class)->only([
+                    'store'
+                ]);
             });
 
 

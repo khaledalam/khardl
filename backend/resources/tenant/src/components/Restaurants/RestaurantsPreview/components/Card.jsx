@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import DetailesItem from './DetailesItem';
 import { useTranslation } from "react-i18next";
 import { addItemToCart } from '../../../../redux/editor/cartSlice';
-
+import AxiosInstance from "../../../../axios/axios";
 function Card(props) {
   const GlobalColor = sessionStorage.getItem('globalColor');
   const GlobalShape = sessionStorage.getItem('globalShape');
@@ -21,7 +21,19 @@ function Card(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    try {
+      const response = await AxiosInstance.post(`/carts`, {
+        item_id : props.id,
+        quantity : 1,
+        branch_id: 1
+      });
+      if (response?.data) {
+        toast.success(`${t('Item added to cart')}`);
+      }
+    }catch (error) {
+        toast.error(`${t('Fail to add item')}`)
+    }
     dispatch(addItemToCart("props.title"));
   };
   

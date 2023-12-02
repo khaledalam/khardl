@@ -11,10 +11,7 @@ class CartController
     use APIResponseTrait;
     public function store(AddItemToCartRequest $request,CartRepository $cart)
     {
-        if ($cart->add($request)) {
-            return $this->sendResponse(null, __('The meal has been added successfully.'));
-        }
-        return $this->sendError('Fail', 'Error adding items to cart.');
+        return $cart->add($request);
     }
 
     public function edit($id)
