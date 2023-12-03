@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API\Central\Auth;
 
-use App\Jobs\CreateTenantAdmin;
 use App\Models\User;
 use App\Models\Promoter;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use App\Rules\UniqueSubdomain;
 use Illuminate\Support\Carbon;
+use App\Jobs\CreateTenantAdmin;
 use App\Models\PromoterIpAddress;
 use App\Models\TraderRequirement;
 use Illuminate\Http\JsonResponse;
@@ -19,25 +20,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
+use App\Http\Requests\RestaurantOwnerRegisterRequest;
 
 class RegisterController extends BaseController
 {
-    public function register(Request $request): JsonResponse
+    public function register(RestaurantOwnerRegisterRequest $request): JsonResponse
     {
-        $request->validate([
-            'first_name' => 'required|string|min:3|max:255',
-            'last_name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|min:10|max:255|unique:users',
-            'position' => 'required|string|min:3|max:255',
-            'password' => 'required|string|min:6|max:255',
-            'c_password' => 'required|same:password',
-            'phone' => 'required|string|min:9|max:13',
-            'terms_and_policies' => 'accepted',
-            'restaurant_name' => 'required|unique:domains,domain|string|min:3|max:255|regex:/^[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$/',
-        ],[
-            'restaurant_name.regex' => __('The restaurant name is not in a valid domain .'),
-        ]);
-        $input = $request->all();
+       
+        $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
         $user = User::create($input);

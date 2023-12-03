@@ -76,11 +76,28 @@
                                                   <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('messages.add-new-category') }}</button>
                                               </span>
                                               <!--end::Add label-->
-                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST">
+                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit">
                                                 @csrf
-                                                <div id="categoryForm" style="display: none !important;" class="d-flex justify-content-between align-items-center">
-                                                    <input type="text" name="name" class="form-control form-control-solid" placeholder="Category Name"  id="categoryInput" placeholder="Enter category">
-                                                    <button type="submit" class="btn btn-sm btn-primary mx-1" id="saveCategoryBtn">{{ __('messages.save') }}</button>
+                                                <div id="categoryForm" class="mt-2" style="display: none !important;" >
+                                                    <ul class="nav nav-tabs" id="languageTabs">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="en-tab" data-bs-toggle="tab" href="#en">English</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="ar-tab" data-bs-toggle="tab" href="#ar">Arabic</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content mt-3">
+                                                        <div class="tab-pane fade show active" id="en">
+                                                            <input type="text" class="form-control" placeholder="Enter text in English"   name="name_en">
+                                                        </div>
+                                                        <div class="tab-pane fade" id="ar">
+                                                            <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية"   name="name_ar">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('messages.save') }}</button>
+                                                    </div>
                                                 </div>
                                               </form>
                                           </div>
@@ -142,21 +159,32 @@
                                             @foreach ($items as $item)
                                               <tr>
                                                 <td>
-                                                        @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>@endif
+                                                    @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>
+                                                    @else
+                                                    <span class="badge badge-success mx-1">Available</span>
+                                                    @endif
+                                                 </td>
+                                                <td>
+                                                     <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                    title="Melody Macy">
+                                                    <img alt="Pic" src="{{$item->photo}}" />
+                                                </div>
+                                                </td>
+                                               
+                                                 <!--begin::Title-->
+                                                 <td  class="text-center">
+                                                    <div class="text-dark">
+                                                        <!--begin::Heading-->
+                                                        <span class="fw-bolder text-start">{{ $item->description }}</span>
+                                                        <!--end::Heading-->
+                                                    </div>
                                                 </td>
                                                   <!--begin::Author-->
                                                   <td class="text-center">
-                                                      <span class="text-gray fw-bold fs-17">123-2023</span>
+                                                      <span class="text-gray fw-bold fs-17">{{$item->price}}</span>
                                                   </td>
                                                   <!--end::Author-->
-                                                  <!--begin::Title-->
-                                                  <td  class="text-center">
-                                                      <div class="text-dark">
-                                                          <!--begin::Heading-->
-                                                          <span class="fw-bolder text-start">{{ $item->description }}</span>
-                                                          <!--end::Heading-->
-                                                      </div>
-                                                  </td>
+                                                 
                                                   <!--end::Title-->
                                                   <!--begin::Date-->
                                                   <td class="text-center">
@@ -332,7 +360,23 @@
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-bold mb-2">Description</label>
-                            <textarea class="form-control form-control-solid" rows="3" name="description" placeholder="Write Description"></textarea>
+
+                            <ul class="nav nav-tabs" >
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">English</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">Arabic</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane fade show active" id="d-en">
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="Enter Description in English"   name="description_en"></textarea>
+                                </div>
+                                <div class="tab-pane fade" id="d-ar">
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="أدخل الوصف باللغة العربية"   name="description_ar"></textarea>
+                                </div>
+                            </div>
                         </div>
                         <!--end::Input group-->
 
@@ -946,6 +990,44 @@
         }
 
         addDropdownButton.addEventListener('click', createDropdown);
+
+        document.getElementById('category-submit').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var inputValue = document.querySelector('input[name=name_ar]').value.trim();
+            if (inputValue === '') {
+                alert('Please fill in the input in (Arabic) tab.');
+                return ;
+            }
+            var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
+            console.log(inputValueAR);
+            if (inputValueAR === '') {
+                alert('Please fill in the input in the (English) tab .');
+                return ;
+            }
+            document.getElementById('category-submit').submit();
+
+        
+
+        });
+
+        document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var inputValue = document.querySelector('textarea[name=description_ar]').value.trim();
+            if (inputValue === '') {
+                alert('Please fill in the input in (Arabic) tab.');
+                return ;
+            }
+            var inputValueAR = document.querySelector('textarea[name=description_en]').value.trim();
+            console.log(inputValueAR);
+            if (inputValueAR === '') {
+                alert('Please fill in the input in the (English) tab .');
+                return ;
+            }
+            document.getElementById('kt_modal_new_target_form').submit();
+
+        
+
+        });
     </script>
     <style>
         .engage-toolbar {

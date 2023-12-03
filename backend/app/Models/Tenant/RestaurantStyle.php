@@ -49,12 +49,6 @@ class RestaurantStyle extends Model
     }
 
 
-    public function getLogoAttribute(){
-        return tenant_asset($this->attributes['logo']);
-    }
-
-    public function getBannerImageAttribute(){
-        return tenant_asset($this->attributes['banner_image']);
-    }
+  
 
 }

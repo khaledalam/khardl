@@ -245,8 +245,9 @@ return [
     'orders-all' => 'All orders',
     'orders-add' => 'Add orders',
     'products-out-of-stock' => 'Products out of stock',
-    'qr-maker' => 'QR maker'
-
+    'qr-maker' => 'QR maker',
+    'not_upload_register_files' => 'Not Upload Register Files',
+    'not_live'=>"Not live"
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

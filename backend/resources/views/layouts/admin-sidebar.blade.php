@@ -125,7 +125,7 @@
 
                             <div class="menu-item">
                                 <a href="{{ route('admin.dashboard') }}">
-                                    <span class="menu-link">
+                                    <span class="{{ ($admin_link == 'dashboard' ) ? 'menu-link active' : 'menu-link ' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -152,7 +152,7 @@
 
                             <!-- Restaurants -->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'restaurants' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -181,7 +181,7 @@
 
                             <!-- Supports -->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'user-management' || $admin_link == 'add-user'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -221,7 +221,7 @@
                              <!-- Staff evaluation -->
                              <div class="menu-item">
                                 <a href="{{ route('admin.promoters') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'promoters'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -240,7 +240,7 @@
                             <!-- Logs -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.log') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'logs'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -260,7 +260,7 @@
                             <!-- Setting -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.settings') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'settings'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">

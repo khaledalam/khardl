@@ -235,7 +235,9 @@ return [
     'orders-all' => 'جميع الطلبات',
     'orders-add' => 'اضافه طلبات',
     'products-out-of-stock' => 'منتجات منتهيه المخزون',
-    'qr-maker' => 'محرر كيو ار'
+    'qr-maker' => 'محرر كيو ار',
+    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
+    'not_live'=>'غير مفعل',
 
 ];
 
