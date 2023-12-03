@@ -100,7 +100,7 @@
                     </div>
                     <!--end::Card widget 4-->
                     <!--begin::Card widget 5-->
-                    {{-- <div class="card card-flush h-md-50 mb-5 mb-xl-10">
+                    <div class="card card-flush h-md-50 mb-5 mb-xl-10">
                         <!--begin::Header-->
                         <div class="card-header pt-5">
                             <!--begin::Title-->
@@ -108,7 +108,7 @@
                                 <!--begin::Info-->
                                 <div class="d-flex align-items-center">
                                     <!--begin::Amount-->
-                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">1500</span>
+                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">0</span>
                                     <!--end::Amount-->
                                 </div>
                                 <!--end::Info-->
@@ -152,7 +152,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                       500
+                                       0
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -170,7 +170,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        500
+                                        0
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -179,7 +179,7 @@
                             <!--end::Labels-->
                         </div>
                         <!--end::Card body-->
-                    </div> --}}
+                    </div>
                     <!--end::Card widget 5-->
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-4 mb-md-5 mb-xl-10">

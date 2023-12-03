@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {
@@ -167,9 +168,9 @@ class AdminController extends Controller
         ]);
 
         if(app()->getLocale() === 'en')
-            return redirect()->route('user-management')->with('success', 'Admin added successfully');
+            return redirect()->route('admin.user-management')->with('success', 'Admin added successfully');
         else
-            return redirect()->route('user-management')->with('success', 'تمت إضافة المسؤول بنجاح');
+            return redirect()->route('admin.user-management')->with('success', 'تمت إضافة المسؤول بنجاح');
     }
 
 
@@ -337,6 +338,10 @@ class AdminController extends Controller
     
     public function deleteUser($id)
     {
+        $user = User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })->where("id",'!=',Auth::id())->findOrFail($id);
+
         DB::beginTransaction();
 
         try {
@@ -347,8 +352,9 @@ class AdminController extends Controller
             ]);
 
             DB::table('logs')->where('user_id', $id)->delete();
-            DB::table('permissions')->where('user_id', $id)->delete();
-            User::findOrFail($id)->delete();
+            Permission::where('user_id', $id)->delete();
+           
+            $user->delete();
 
             DB::commit();
 
@@ -358,8 +364,8 @@ class AdminController extends Controller
             else
                 return redirect()->back()->with('success', 'حذف بنجاح.');
         } catch (\Exception $e) {
+            logger($e->getMessage());
             DB::rollBack();
-
             if(app()->getLocale() === 'en')
                 return redirect()->back()->with('error', 'Error deleting user and related records: ' . $e->getMessage());
             else
@@ -393,6 +399,7 @@ class AdminController extends Controller
         $users = User::whereHas('roles',function($q){
             return $q->where("name","Administrator");
         })
+        ->where('id','!=',Auth::id())
         ->paginate(15);
         $user = Auth::user();
         $logs = Log::orderBy('created_at', 'desc')->get();
@@ -402,11 +409,10 @@ class AdminController extends Controller
 
     public function userManagementEdit($id){
        
-        $user = User::findOrFail($id);
-
-        if($user->role != 10){
-            return abort(404);
-        }
+        $user = User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })->where("id",'!=',Auth::id())->findOrFail($id);
+        
         return view('admin.edit-user', compact('user'));
 
     }
@@ -438,7 +444,9 @@ class AdminController extends Controller
 
     public function updateUserPermissions(Request $request, $userId){
 
-        $selectedUser = User::find($userId);
+        $selectedUser = User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })->where("id",'!=',Auth::id())->findOrFail($userId);
 
         $selectedUser->first_name = $request->input('first_name');
         $selectedUser->last_name = $request->input('last_name');

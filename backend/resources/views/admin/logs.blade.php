@@ -38,6 +38,7 @@
                     <option value="Logged in" {{ request('action') == 'Logged in' ? 'selected' : '' }}>{{ __('messages.logged-in') }}</option>
                     <option value="Has edited profile and permissions for an user with ID of" {{ request('action') == 'Has edited profile and permissions for an user with ID of' ? 'selected' : '' }}>{{ __('messages.has-edited-permissions') }}</option>
                     <option value="Made an user" {{ request('action') == 'Made an user' ? 'selected' : '' }}>{{ __('messages.made-an-user') }}</option>
+                    <option value="Has activate restaurant" {{ request('action') == 'Has activate restaurant' ? 'selected' : '' }}>{{ __('messages.has-approved-restaurant') }}</option>
                     <option value="Made a promoter" {{ request('action') == 'Made a promoter' ? 'selected' : '' }}>{{ __('messages.made-a-promoter') }}</option>
                     <option value="Has edited his profile" {{ request('action') == 'Has edited his profile' ? 'selected' : '' }}>{{ __('messages.has-edited-his-profile') }}</option>
                     <option value="Has approved an user" {{ request('action') == 'Has approved an user' ? 'selected' : '' }}>{{ __('messages.has-approved-an-user') }}</option>
@@ -90,7 +91,7 @@
                         <span>
                           @if(app()->getLocale() === 'en')
 
-                            {{ $log->action }}
+                            {!! $log->action !!}
 
                           @else
 
@@ -123,7 +124,14 @@
                                     }
                                 @endphp
                                 قاما بقبول مطعم بمعرف: {{ $userId }}
-
+                              @elseif (Str::contains($log->action, 'Has activate restaurant with an ID of:'))
+                                @php
+                                    $matches = [];
+                                    if (preg_match('/\d+/', $log->action, $matches)) {
+                                        $restaurat_id = $matches[0];
+                                    }
+                                @endphp
+                                قاما بتفعيل مطعم بمعرف: {{ $restaurat_id }}
                               @elseif (Str::contains($log->action, 'Has downloaded a commercial registration file with a filename of:'))
                                 @php
                                     $matches = [];

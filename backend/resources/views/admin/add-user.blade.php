@@ -88,17 +88,27 @@
                                                 <!--begin::Input group-->
                   <div class="mb-10 fv-row">
                     <!--begin::Label-->
-                    <label class="required form-label">{{ __('messages.phone-number')}}</label>
+                    <label class="required form-label">{{ __('messages.phone')}}</label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone_number') is-invalid @enderror" value="{{ old('phone_number') }}" name="phone_number" id="phone_number" placeholder="05XXXXXXXX" required>
+                    <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="05XXXXXXXX" required>
                     <!--end::Input-->
                     <!--begin::Description-->
-                    <div class="text-muted fs-7">{{ __('messages.phone-number')}} {{ __('messages.is-required')}}</div>
+                    <div class="text-muted fs-7">{{ __('messages.phone')}} {{ __('messages.is-required')}}</div>
                     <!--end::Description-->
                   </div>
                   <!--end::Input group-->
-
+                  <div class="mb-10 fv-row">
+                    <!--begin::Label-->
+                    <label class="required form-label">{{ __('messages.position')}}</label>
+                    <!--end::Label-->
+                    <!--begin::Input-->
+                    <input type="text" required class="form-control @error('phone') is-invalid @enderror" value="{{ old('position') }}" name="position" id="position" placeholder="position" >
+                    <!--end::Input-->
+                    <!--begin::Description-->
+                    <div class="text-muted fs-7">{{ __('messages.position')}} {{ __('messages.is-required')}}</div>
+                    <!--end::Description-->
+                  </div>
 
                                                 <!--begin::Permission-->
                   <div style="margin-left: 0!important; padding-left: 0!important;" class="card mb-5 mb-xl-10 mx-0 px-0">
@@ -246,6 +256,7 @@
                                                             </div>
                                                             <!--end::Label-->
                                                         </div>
+                                                        
                                                           <!--end::Input group-->
                                                       </div>
                                                       <!--end::Card body-->

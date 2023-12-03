@@ -146,6 +146,7 @@ return [
     'deleted-an-user' => 'لقد حذف مطعم',
     'has-edited-his-profile' => 'قام بتحرير ملفه الشخصي',
     'has-approved-an-user' => 'وافق على مطعم',
+    'has-approved-restaurant' => 'فعل المطعم',
     'has-denied-an-user' => 'قام برفض مطعم',
     'has-downloaded-a-commercial-registration-file' => 'قام بتحميل ملف السجل التجاري',
     'has-downloaded-a-delivery-contract-file' => 'قام بتنزيل ملف عقد التوصيل',

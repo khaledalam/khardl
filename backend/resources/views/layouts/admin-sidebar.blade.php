@@ -71,7 +71,7 @@
                         icon: type,
                         title: message,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3500
                     });
                 }
         </script>
