@@ -40,9 +40,8 @@ class CategoryItemSeeder extends Seeder
             foreach($branch->categories as $key=>$category){
                 foreach (range(1, 5) as $k => $it) {
                     $kk = $k + 1;
-                    $photo_file = new UploadedFile(public_path("seeders/items/$kk.jpg"), true);
-                    $photo = store_image($photo_file,RestaurantStyle::STORAGE, "Item $kk");
-
+                    $photo_file = new UploadedFile(public_path(Item::STORAGE_SEEDER."/$kk.jpg"), true);
+                    $photo = store_image($photo_file,Item::STORAGE_SEEDER,$kk);
                     $category->items()->save(new Item([
                         'photo' => $photo,
                         'price' => $faker->numberBetween(10, 500),

@@ -29,6 +29,9 @@ class TenantSeeder extends Seeder
 
             // make sure UserSeeder run before CategoryItemSeeder
             CategoryItemSeeder::class,
+
+            PaymentMethodSeeder::class,
+            OrderSeeder::class,
         ]);
 
     }
