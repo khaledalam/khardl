@@ -14,6 +14,7 @@ use App\Mail\ApprovedEmail;
 use App\Models\User;
 use App\Models\Log;
 use App\Models\Promoter;
+use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -220,14 +221,7 @@ class AdminController extends Controller
       
         $query =  Tenant::query()->with('primary_domain');
         $restaurants = $query->get();
-        if ($request->has('search')) {
-            $search = $request->input('search');
-
-            $query->whereHas('primary_domain', static function($query1) use ($search) {
-                $query1->where('domain', 'like', '%' . $search . '%');
-            });
-         }
-    
+       
         if ($request->has('status') && $request->input('status') !== "all") {
             $status = $request->input('status');
             foreach($restaurants as $restaurant){
@@ -240,14 +234,24 @@ class AdminController extends Controller
                         }
                     }else {
                         if($restaurant->is_live()){
-                            $query->orWhere('id','!=', $restaurant->id);
+                            $query->Where('id','!=', $restaurant->id);
                         }else {
-                            $query->where('id','!', $restaurant->id);
+                            $query->orWhere('id', $restaurant->id);
                         }
                     }
                     
             }
         }
+        if ($request->has('search')) {
+            $search = $request->input('search');
+
+            $query->whereHas('primary_domain', static function($query1) use ($search) {
+                $query1->where('domain', 'like', '%' . $search . '%');
+            });
+            $query->orWhere('restaurant_name','like', '%' . $search . '%');
+
+        }
+    
          
         $restaurants = $query->paginate();
         $user = Auth::user();
@@ -258,13 +262,16 @@ class AdminController extends Controller
     public function viewRestaurant($id){
 
         $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
-
+        $logo ="";
+        $restaurant->run(static function()use(&$logo){
+            $logo = RestaurantStyle::first()->logo ?? '';
+        });
         // if($restaurant->role == 0){
         //     return view('admin.view-restaurant', compact('restaurant'));
         // }else{
         //     return abort(404);
         // }
-        return view('admin.view-restaurant', compact('restaurant'));
+        return view('admin.view-restaurant', compact('restaurant','logo'));
 
     }
 

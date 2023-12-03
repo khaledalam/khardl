@@ -17,7 +17,7 @@
                             <!--begin: Pic-->
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                    <img src="../assets/media/avatars/300-1.jpg" alt="image" />
+                                    <img src="{{$logo}}" alt="image" />
                                 </div>
                             </div>
                             <!--end::Pic-->
