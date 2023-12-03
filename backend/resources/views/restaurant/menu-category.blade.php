@@ -78,9 +78,26 @@
                                               <!--end::Add label-->
                                               <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST">
                                                 @csrf
-                                                <div id="categoryForm" style="display: none !important;" class="d-flex justify-content-between align-items-center">
-                                                    <input type="text" name="name" class="form-control form-control-solid" placeholder="Category Name"  id="categoryInput" placeholder="Enter category">
-                                                    <button type="submit" class="btn btn-sm btn-primary mx-1" id="saveCategoryBtn">{{ __('messages.save') }}</button>
+                                                <div id="categoryForm" class="mt-2" style="display: none !important;" >
+                                                    <ul class="nav nav-tabs" id="languageTabs">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="en-tab" data-bs-toggle="tab" href="#en">English</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="ar-tab" data-bs-toggle="tab" href="#ar">Arabic</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content mt-3">
+                                                        <div class="tab-pane fade show active" id="en">
+                                                            <input type="text" class="form-control" placeholder="Enter text in English"   name="name_en">
+                                                        </div>
+                                                        <div class="tab-pane fade" id="ar">
+                                                            <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية"   name="name_ar">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('messages.save') }}</button>
+                                                    </div>
                                                 </div>
                                               </form>
                                           </div>
@@ -946,6 +963,25 @@
         }
 
         addDropdownButton.addEventListener('click', createDropdown);
+
+        document.getElementById('category-submit').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var inputValue = document.querySelector('input[name=name_ar]').value.trim();
+            if (inputValue === '') {
+                alert('Please fill in the input in (Arabic) tab.');
+                return ;
+            }
+            var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
+            console.log(inputValueAR);
+            if (inputValueAR === '') {
+                alert('Please fill in the input in the (English) tab .');
+                return ;
+            }
+            document.getElementById('category-submit').submit();
+
+        
+
+        });
     </script>
     <style>
         .engage-toolbar {

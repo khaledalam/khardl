@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\BaseController;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
+use App\Models\Tenant\Category;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Carbon;
@@ -122,7 +123,7 @@ class RestaurantController extends BaseController
             foreach ($categories as $category) {
                 DB::table('categories')->insert([
                     'branch_id' => $newBranchId,
-                    'category_name' => $category->category_name,
+                    'name' => $category->name,
                     'user_id' => Auth::user()->id,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -260,8 +261,8 @@ class RestaurantController extends BaseController
 //             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
 //         }
 
-        $categories = DB::table('categories')
-        ->when($user->isWorker(), function (Builder $query, string $role)use($user, $branchId) {
+        $categories = Category::
+        when($user->isWorker(), function (Builder $query, string $role)use($user, $branchId) {
             if ($branchId) {
                 if ($branchId != $user->branch->id) return;
             }
@@ -284,8 +285,8 @@ class RestaurantController extends BaseController
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
 
-        $selectedCategory = DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->first();
-        $categories = DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->get();
+        $selectedCategory =Category::where('id', $id)->where('branch_id', $branchId)->first();
+        $categories = Category::where('id', $id)->where('branch_id', $branchId)->get();
 
         $items = DB::table('items')
         ->where('user_id', $user->id)
@@ -306,8 +307,8 @@ class RestaurantController extends BaseController
 
         // if($userId != DB::table('branches')->where('id', $branchId)->value('user_id'))
         //     return;
-        DB::table('categories')->insert([
-            'category_name' => $request->input('category_name'),
+        Category::create([
+            'name' =>trans_json( $request->input('name_en'), $request->input('name_ar')),
             'user_id' => $userId,
             'branch_id' => $branchId,
             'created_at' => now(),
