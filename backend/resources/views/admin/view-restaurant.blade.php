@@ -31,7 +31,9 @@
                                     <div class="d-flex flex-column">
                                         <!--begin::Name-->
                                         <div class="d-flex align-items-center mb-2">
-                                            <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{  $restaurant->restaurant_name }}</a>
+                                        
+                                            <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{  $restaurant->restaurant_name }}
+                                            </a>
                                             <a>
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
                                                 @if ($is_live)
@@ -613,10 +615,12 @@
                     <!--begin::Card body-->
                     <div class="card-body p-9">
                         <!--begin::Row-->
+
+                       
                         <div class="row mb-7">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">@if (app()->getLocale() == 'en')
-                                {{ __('messages.name') }}
+                                {{ __('messages.restaurant-name') }}
                             @else
                             {{ __('messages.the-name') }}
                             @endif </label>
@@ -627,7 +631,22 @@
                             </div>
                             <!--end::Col-->
                         </div>
-
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.domain') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8">
+                                <span class="fw-bolder fs-6 text-gray-800">
+                                    <a href="{{ $restaurant->route('home') }}" >
+                                        <p class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{$restaurant->primary_domain->domain}}
+                                    
+                                        </p><i class="fas fa-external-link-alt"></i> 
+                                    </a>
+                                </span>
+                            </div>
+                            <!--end::Col-->
+                        </div>
                         <div class="row mb-7">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">{{ __('messages.position') }}</label>
