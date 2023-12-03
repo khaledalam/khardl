@@ -29,22 +29,24 @@ class AdminController extends Controller
         $restaurantsAll = Tenant::with("primary_domain")->get();
 
         // not complete register step2
-        $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->get();
+        $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
 
-        $restaurantsLive = [];
-        $customers = [];
+        $restaurantsLive = 0;
+        $customers = 0;
 
         foreach ($restaurantsAll as $restaurant) {
             $restaurant->run(static function ($tenant) use (&$restaurantsLive, &$customers) {
                 $setting = Tenant\Setting::first();
                 if ($setting->is_live) {
-                    $restaurantsLive[] = $tenant;
+                    $restaurantsLive ++;
                 }
 
                 $currentMonth = Carbon::now()->month;
-                $customers = RestaurantUser::whereDoesntHave('roles')->whereMonth('created_at', '=', $currentMonth)->get();
+                $customers+= RestaurantUser::whereDoesntHave('roles')->whereMonth('created_at', '=', $currentMonth)->count();
             });
         }
+        $restaurantsAll = count($restaurantsAll);
+    
 
 
         return view('admin.dashboard', compact('user',
@@ -215,37 +217,39 @@ class AdminController extends Controller
 
     public function restaurants(Request $request)
     {
-        // users from central table
-        $query = '';
+      
+        $query =  Tenant::query()->with('primary_domain');
+        $restaurants = $query->get();
+        if ($request->has('search')) {
+            $search = $request->input('search');
 
-        $restaurants =  Tenant::with("primary_domain")->get()->all();
-
-         foreach($restaurants as $restaurant){
-             $restaurant->run(function ($tenant) use ($request, $query){
-
-
-                 if ($request->has('search')) {
-                     $search = $request->input('search');
-
-                     $query = RestaurantUser::where('name', 'ilike', '%' . $search .  '%');
-
-                     $query->whereHas('primary_domain', static function($query1) use ($search) {
-                         $query1->where('name', 'like', '%' . $search . '%');
-                     });
-                 }
-
-
-             });
+            $query->whereHas('primary_domain', static function($query1) use ($search) {
+                $query1->where('domain', 'like', '%' . $search . '%');
+            });
          }
-
-
-         if ($request->has('status') && $request->input('status') !== "all") {
-             $status = $request->input('status');
-             $query->rwhere('status', $status);
-         }
-
-         $restaurants = $query->paginate(15);
-
+    
+        if ($request->has('status') && $request->input('status') !== "all") {
+            $status = $request->input('status');
+            foreach($restaurants as $restaurant){
+                    $status = $request->input('status');
+                    if($status == 'live'){
+                        if($restaurant->is_live()){
+                            $query->orWhere('id', $restaurant->id);
+                        }else {
+                            $query->where('id','!=', $restaurant->id);
+                        }
+                    }else {
+                        if($restaurant->is_live()){
+                            $query->orWhere('id','!=', $restaurant->id);
+                        }else {
+                            $query->where('id','!', $restaurant->id);
+                        }
+                    }
+                    
+            }
+        }
+         
+        $restaurants = $query->paginate();
         $user = Auth::user();
 
         return view('admin.restaraunts', compact('restaurants', 'user'));
@@ -280,6 +284,8 @@ class AdminController extends Controller
 
     public function deleteRestaurant($id)
     {
+        
+        // 
         User::findOrFail($id)->delete();
 
             Log::create([
@@ -292,7 +298,7 @@ class AdminController extends Controller
         else
             return redirect()->back()->with('success', 'حذف بنجاح.');
     }
-
+    
     public function deleteUser($id)
     {
         DB::beginTransaction();
