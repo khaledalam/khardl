@@ -7,19 +7,17 @@
 <head>
     <title>{{ __('messages.khardl')}} | @yield('title', __('messages.dashboard'))</title>
     <meta charset="utf-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
+    <meta name="description" content="Kardl" />
+    <meta name="keywords" content="Kardl" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="" />
-    <meta property="og:url" content="#/metronic" />
-    <meta property="og:site_name" content="Keenthemes | Metronic" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Kardl" />
+    <meta property="og:url" content="Kardl.com" />
+    <meta property="og:site_name" content="Kardl" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="{{ global_asset('assets/media/logos/favicon.ico')}}"/>
+    <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @if(app()->getLocale() === 'ar')
@@ -54,7 +52,7 @@
     <span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
 @if(session('success'))
     <script>
         showAlert('success', '{{ session('success') }}');
@@ -155,19 +153,19 @@
                         <!-- Dashboard -->
                         <div class="menu-item menu-accordion">
                             <a href="{{ route('restaurant.summary') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($link == 'summary' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                         <span class="svg-icon svg-icon-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                  viewBox="0 0 24 24" fill="none">
-                                                <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor" />
+                                                <rect x="2" y="2" width="9" height="9" rx="2" fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
                                                 <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
-                                                      fill="currentColor" />
+                                                      fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
                                                 <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
-                                                      fill="currentColor" />
+                                                      fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
                                                 <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
-                                                      fill="currentColor" />
+                                                      fill="{{ ($link == 'summary' ) ? '#c2da08' : '#000000' }}" />
                                             </svg>
                                         </span>
                                         <!--end::Svg Icon-->
@@ -179,12 +177,12 @@
                         </div>
                         <!-- Site Editor -->
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('site_editor')}}">
+                            <a href="{{route('site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} .st1{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;} .st2{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5.2066,0;} </style> <line class="st0" x1="3" y1="11" x2="29" y2="11"></line> <line class="st0" x1="7" y1="8" x2="7" y2="8"></line> <line class="st0" x1="10" y1="8" x2="10" y2="8"></line> <line class="st0" x1="13" y1="8" x2="13" y2="8"></line> <path class="st0" d="M8.8,27H3V5h26v22l-5.8,0c0.3-0.1,0.6-0.1,0.9-0.1c0.1-0.6,0.2-1.3,0.2-1.9c0-0.7-0.1-1.3-0.2-1.9 c-1,0.1-2-0.3-2.5-1.3c-0.5-0.9-0.4-2,0.2-2.8c-0.9-0.9-2.1-1.6-3.4-2c-0.4,0.9-1.3,1.6-2.4,1.6s-2-0.7-2.4-1.6 c-1.3,0.4-2.4,1.1-3.4,2c0.6,0.8,0.7,1.9,0.2,2.8c-0.5,0.9-1.6,1.4-2.5,1.3c-0.1,0.6-0.2,1.3-0.2,1.9c0,0.7,0.1,1.3,0.2,1.9 C8.2,26.9,8.5,26.9,8.8,27L8.8,27z"></path> <circle class="st0" cx="16" cy="25" r="3"></circle> </g></svg>
+                                            <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve" fill="{{ ($link == 'site-editor' ) ? '#c2da08' : '#000000' }}"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} .st1{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;} .st2{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5.2066,0;} </style> <line class="st0" x1="3" y1="11" x2="29" y2="11"></line> <line class="st0" x1="7" y1="8" x2="7" y2="8"></line> <line class="st0" x1="10" y1="8" x2="10" y2="8"></line> <line class="st0" x1="13" y1="8" x2="13" y2="8"></line> <path class="st0" d="M8.8,27H3V5h26v22l-5.8,0c0.3-0.1,0.6-0.1,0.9-0.1c0.1-0.6,0.2-1.3,0.2-1.9c0-0.7-0.1-1.3-0.2-1.9 c-1,0.1-2-0.3-2.5-1.3c-0.5-0.9-0.4-2,0.2-2.8c-0.9-0.9-2.1-1.6-3.4-2c-0.4,0.9-1.3,1.6-2.4,1.6s-2-0.7-2.4-1.6 c-1.3,0.4-2.4,1.1-3.4,2c0.6,0.8,0.7,1.9,0.2,2.8c-0.5,0.9-1.6,1.4-2.5,1.3c-0.1,0.6-0.2,1.3-0.2,1.9c0,0.7,0.1,1.3,0.2,1.9 C8.2,26.9,8.5,26.9,8.8,27L8.8,27z"></path> <circle class="st0" cx="16" cy="25" r="3"></circle> </g></svg>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
@@ -202,8 +200,8 @@
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="currentColor" />
-                                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                                <rect opacity="0.9" x="8" y="3" width="8" height="8" rx="4" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
                                             </svg>
                                         </span>
                                         <!--end::Svg Icon-->
@@ -216,63 +214,61 @@
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
                            <a href="{{route('restaurant.branches')}}">
-                                <span class="{{ ($link == 'branches' || $link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon -->
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="currentColor" />
-                                                    <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="currentColor" />
-                                                    <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="currentColor" />
-                                                </svg>
-                                            </span>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                    <span class="menu-title">{{__('messages.branches')}} </span>
-
+                            <span class="{{ ($link == 'branches' || $link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
+                                <span class="menu-icon">
+                                    <!--begin::Svg Icon -->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="{{ ($link == 'branches' || $link == 'workers') ? '#c2da08' : '#000000' }}" />
+                                                <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="{{ ($link == 'branches' || $link == 'workers') ? '#c2da08' : '#000000' }}" />
+                                                <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="{{ ($link == 'branches' || $link == 'workers') ? '#c2da08' : '#000000' }}" />
+                                            </svg>
+                                        </span>
+                                    <!--end::Svg Icon-->
+                                </span>
+                                <span class="menu-title">{{__('messages.branches')}}</span>
                             </span>
                            </a>
                         </div>
+
                         <!-- Orders -->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? 'show' : '' }}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M78.8,62.1l-3.6-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,70.6c-1.2,0.6-2.7,0.6-3.9,0L26.5,60.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.6,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,78.5c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,65,80.4,62.8,78.8,62.1z"></path> </g> <g> <path d="M78.8,48.1l-3.7-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,56.6c-1.2,0.6-2.7,0.6-3.9,0L26.6,46.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.7,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,64.6c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,51.1,80.4,48.9,78.8,48.1 z"></path> </g> <g> <path d="M21.2,37.8l26.8,12.7c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7c1.6-0.8,1.6-2.9,0-3.7L51.9,21.4 c-1.2-0.6-2.7-0.6-3.9,0L21.2,34.2C19.6,34.9,19.6,37.1,21.2,37.8z"></path> </g> </g> </g></svg>
+                                            <svg fill="{{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? '#c2da08' : '#000000' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M78.8,62.1l-3.6-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,70.6c-1.2,0.6-2.7,0.6-3.9,0L26.5,60.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.6,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,78.5c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,65,80.4,62.8,78.8,62.1z"></path> </g> <g> <path d="M78.8,48.1l-3.7-1.7c-0.5-0.3-1.2-0.3-1.7,0L52,56.6c-1.2,0.6-2.7,0.6-3.9,0L26.6,46.4 c-0.5-0.3-1.2-0.3-1.7,0l-3.7,1.7c-1.6,0.8-1.6,2.9,0,3.7L48,64.6c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7C80.4,51.1,80.4,48.9,78.8,48.1 z"></path> </g> <g> <path d="M21.2,37.8l26.8,12.7c1.2,0.6,2.7,0.6,3.9,0l26.8-12.7c1.6-0.8,1.6-2.9,0-3.7L51.9,21.4 c-1.2-0.6-2.7-0.6-3.9,0L21.2,34.2C19.6,34.9,19.6,37.1,21.2,37.8z"></path> </g> </g> </g></svg>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">Orders</span>
+                                    <span class="menu-title">{{__('messages.orders')}}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                <div class="menu-item">
-                                    <a class="menu-link" href="">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                        <span class="menu-title">All Orders</span>
-                                    </a>
-                                </div>
-                                <div class="menu-item">
-                                    <a class="menu-link" href="">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                        <span class="menu-title">Add Order</span>
-                                    </a>
-                                </div>
-
-                                <div class="menu-item">
-                                    <a class="menu-link" href="">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                        <span class="menu-title">out of stock</span>
-                                    </a>
-                                </div>
-
+                                <a href="{{route('restaurant.orders_all')}}">
+                                    <div class="{{ ($link == 'orders-all') ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot {{ ($link == 'orders-all') ? 'bg-light' : '' }}"></span>
+                                        </span>
+                                        <span class="menu-title">{{__('messages.orders-all')}}</span>
+                                    </div>
+                                </a>
+                                <a href="{{route('restaurant.orders_add')}}">
+                                    <div class="{{ ($link == 'orders-add') ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot {{ ($link == 'orders-add') ? 'bg-light' : '' }}"></span>
+                                        </span>
+                                        <span class="menu-title">{{__('messages.orders-add')}}</span>
+                                    </div>
+                                </a>
+                                <a href="{{route('restaurant.products_out_of_stock')}}">
+                                    <div class="{{ ($link == 'products-out-of-stock') ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot {{ ($link == 'products-out-of-stock') ? 'bg-light' : '' }}"></span>
+                                        </span>
+                                        <span class="menu-title">{{__('messages.products-out-of-stock')}}</span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <!-- Services -->
@@ -282,89 +278,84 @@
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                             <span class="svg-icon svg-icon-2">
-                                                <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g fill="none" fill-rule="evenodd" id="页面-1" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"> <g id="导航图标" stroke="#212121" stroke-width="1.5" transform="translate(-329.000000, -334.000000)"> <g id="服务" transform="translate(329.000000, 334.000000)"> <g id="编组" transform="translate(2.000000, 3.000000)"> <path d="M8,12.5 L11,13.5 C11,13.5 18.5,12 19.5,12 C20.5,12 20.5,13 19.5,14 C18.5,15 15,18 12,18 C9,18 7,16.5 5,16.5 C3,16.5 0,16.5 0,16.5" id="路径"></path> <path d="M0,10.5 C1,9.5 3,8 5,8 C7,8 11.75,10 12.5,11 C13.25,12 11,13.5 11,13.5" id="路径"></path> <path d="M6,5 L6,1 C6,0.447715 6.4477,0 7,0 L19,0 C19.5523,0 20,0.447715 20,1 L20,9" id="路径"></path> <rect height="4.5" id="矩形" width="5" x="10.5" y="0"></rect> </g> </g> </g> </g> </g></svg>
+                                                <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="{{ ($link == 'service' ) ? '#c2da08' : '#000000' }}"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g fill="none" fill-rule="evenodd" id="页面-1" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"> <g id="导航图标" stroke="{{ ($link == 'service' ) ? '#c2da08' : '#000000' }}" stroke-width="1.5" transform="translate(-329.000000, -334.000000)"> <g id="服务" transform="translate(329.000000, 334.000000)"> <g id="编组" transform="translate(2.000000, 3.000000)"> <path d="M8,12.5 L11,13.5 C11,13.5 18.5,12 19.5,12 C20.5,12 20.5,13 19.5,14 C18.5,15 15,18 12,18 C9,18 7,16.5 5,16.5 C3,16.5 0,16.5 0,16.5" id="路径"></path> <path d="M0,10.5 C1,9.5 3,8 5,8 C7,8 11.75,10 12.5,11 C13.25,12 11,13.5 11,13.5" id="路径"></path> <path d="M6,5 L6,1 C6,0.447715 6.4477,0 7,0 L19,0 C19.5523,0 20,0.447715 20,1 L20,9" id="路径"></path> <rect height="4.5" id="矩形" width="5" x="10.5" y="0"></rect> </g> </g> </g> </g> </g></svg>
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                        <span class="menu-title">{{__('messages.services')}} </span>
+                                        <span class="menu-title">{{__('messages.services')}}</span>
                                 </span>
                             </a>
                         </div>
                         <!-- Delivery Companies -->
                         <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+                            <a href="{{route('restaurant.delivery')}}">
+                                <span class="{{ ($link == 'delivery' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
                                             <span class="svg-icon svg-icon-2">
-                                              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g clip-path="url(#clip0_429_11129)"> <path d="M2 3V1.75C1.30964 1.75 0.75 2.30964 0.75 3L2 3ZM13 3H14.25C14.25 2.30964 13.6904 1.75 13 1.75V3ZM13 9V7.75C12.6685 7.75 12.3505 7.8817 12.1161 8.11612C11.8817 8.35054 11.75 8.66848 11.75 9H13ZM2 4.25H13V1.75H2V4.25ZM11.75 3V19H14.25V3H11.75ZM3.25 17V3H0.75V17H3.25ZM13 10.25H18V7.75H13V10.25ZM20.75 13V17H23.25V13H20.75ZM14.25 19L14.25 9H11.75L11.75 19H14.25ZM18.5303 19.5303C18.2374 19.8232 17.7626 19.8232 17.4697 19.5303L15.7019 21.2981C16.9711 22.5673 19.0289 22.5673 20.2981 21.2981L18.5303 19.5303ZM17.4697 18.4697C17.7626 18.1768 18.2374 18.1768 18.5303 18.4697L20.2981 16.7019C19.0289 15.4327 16.9711 15.4327 15.7019 16.7019L17.4697 18.4697ZM6.53033 19.5303C6.23744 19.8232 5.76256 19.8232 5.46967 19.5303L3.7019 21.2981C4.97111 22.5673 7.02889 22.5673 8.2981 21.2981L6.53033 19.5303ZM5.46967 18.4697C5.76256 18.1768 6.23744 18.1768 6.53033 18.4697L8.2981 16.7019C7.02889 15.4327 4.97111 15.4327 3.7019 16.7019L5.46967 18.4697ZM18.5303 18.4697C18.677 18.6164 18.75 18.8061 18.75 19H21.25C21.25 18.1702 20.9325 17.3363 20.2981 16.7019L18.5303 18.4697ZM18.75 19C18.75 19.1939 18.677 19.3836 18.5303 19.5303L20.2981 21.2981C20.9325 20.6637 21.25 19.8298 21.25 19H18.75ZM16 17.75H13V20.25H16V17.75ZM17.4697 19.5303C17.323 19.3836 17.25 19.1939 17.25 19H14.75C14.75 19.8298 15.0675 20.6637 15.7019 21.2981L17.4697 19.5303ZM17.25 19C17.25 18.8061 17.323 18.6164 17.4697 18.4697L15.7019 16.7019C15.0675 17.3363 14.75 18.1702 14.75 19H17.25ZM5.46967 19.5303C5.32298 19.3836 5.25 19.1939 5.25 19H2.75C2.75 19.8298 3.06755 20.6637 3.7019 21.2981L5.46967 19.5303ZM5.25 19C5.25 18.8061 5.32298 18.6164 5.46967 18.4697L3.7019 16.7019C3.06755 17.3363 2.75 18.1702 2.75 19H5.25ZM13 17.75H8V20.25H13V17.75ZM6.53033 18.4697C6.67702 18.6164 6.75 18.8061 6.75 19H9.25C9.25 18.1702 8.93245 17.3363 8.2981 16.7019L6.53033 18.4697ZM6.75 19C6.75 19.1939 6.67702 19.3836 6.53033 19.5303L8.2981 21.2981C8.93245 20.6637 9.25 19.8298 9.25 19H6.75ZM20.75 17C20.75 17.4142 20.4142 17.75 20 17.75V20.25C21.7949 20.25 23.25 18.7949 23.25 17H20.75ZM18 10.25C19.5188 10.25 20.75 11.4812 20.75 13H23.25C23.25 10.1005 20.8995 7.75 18 7.75V10.25ZM0.75 17C0.75 18.7949 2.20507 20.25 4 20.25V17.75C3.58579 17.75 3.25 17.4142 3.25 17H0.75Z" fill="#292929"></path> <path d="M2 8H5" stroke="#292929" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M2 12H7" stroke="#292929" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> </g> <defs> <clipPath id="clip0_429_11129"> <rect width="24" height="24" fill="white"></rect> </clipPath> </defs> </g></svg>
+                                              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g clip-path="url(#clip0_429_11129)"> <path d="M2 3V1.75C1.30964 1.75 0.75 2.30964 0.75 3L2 3ZM13 3H14.25C14.25 2.30964 13.6904 1.75 13 1.75V3ZM13 9V7.75C12.6685 7.75 12.3505 7.8817 12.1161 8.11612C11.8817 8.35054 11.75 8.66848 11.75 9H13ZM2 4.25H13V1.75H2V4.25ZM11.75 3V19H14.25V3H11.75ZM3.25 17V3H0.75V17H3.25ZM13 10.25H18V7.75H13V10.25ZM20.75 13V17H23.25V13H20.75ZM14.25 19L14.25 9H11.75L11.75 19H14.25ZM18.5303 19.5303C18.2374 19.8232 17.7626 19.8232 17.4697 19.5303L15.7019 21.2981C16.9711 22.5673 19.0289 22.5673 20.2981 21.2981L18.5303 19.5303ZM17.4697 18.4697C17.7626 18.1768 18.2374 18.1768 18.5303 18.4697L20.2981 16.7019C19.0289 15.4327 16.9711 15.4327 15.7019 16.7019L17.4697 18.4697ZM6.53033 19.5303C6.23744 19.8232 5.76256 19.8232 5.46967 19.5303L3.7019 21.2981C4.97111 22.5673 7.02889 22.5673 8.2981 21.2981L6.53033 19.5303ZM5.46967 18.4697C5.76256 18.1768 6.23744 18.1768 6.53033 18.4697L8.2981 16.7019C7.02889 15.4327 4.97111 15.4327 3.7019 16.7019L5.46967 18.4697ZM18.5303 18.4697C18.677 18.6164 18.75 18.8061 18.75 19H21.25C21.25 18.1702 20.9325 17.3363 20.2981 16.7019L18.5303 18.4697ZM18.75 19C18.75 19.1939 18.677 19.3836 18.5303 19.5303L20.2981 21.2981C20.9325 20.6637 21.25 19.8298 21.25 19H18.75ZM16 17.75H13V20.25H16V17.75ZM17.4697 19.5303C17.323 19.3836 17.25 19.1939 17.25 19H14.75C14.75 19.8298 15.0675 20.6637 15.7019 21.2981L17.4697 19.5303ZM17.25 19C17.25 18.8061 17.323 18.6164 17.4697 18.4697L15.7019 16.7019C15.0675 17.3363 14.75 18.1702 14.75 19H17.25ZM5.46967 19.5303C5.32298 19.3836 5.25 19.1939 5.25 19H2.75C2.75 19.8298 3.06755 20.6637 3.7019 21.2981L5.46967 19.5303ZM5.25 19C5.25 18.8061 5.32298 18.6164 5.46967 18.4697L3.7019 16.7019C3.06755 17.3363 2.75 18.1702 2.75 19H5.25ZM13 17.75H8V20.25H13V17.75ZM6.53033 18.4697C6.67702 18.6164 6.75 18.8061 6.75 19H9.25C9.25 18.1702 8.93245 17.3363 8.2981 16.7019L6.53033 18.4697ZM6.75 19C6.75 19.1939 6.67702 19.3836 6.53033 19.5303L8.2981 21.2981C8.93245 20.6637 9.25 19.8298 9.25 19H6.75ZM20.75 17C20.75 17.4142 20.4142 17.75 20 17.75V20.25C21.7949 20.25 23.25 18.7949 23.25 17H20.75ZM18 10.25C19.5188 10.25 20.75 11.4812 20.75 13H23.25C23.25 10.1005 20.8995 7.75 18 7.75V10.25ZM0.75 17C0.75 18.7949 2.20507 20.25 4 20.25V17.75C3.58579 17.75 3.25 17.4142 3.25 17H0.75Z" fill="{{ ($link == 'delivery' ) ? '#c2da08' : '#000000' }}"></path> <path d="M2 8H5" stroke="#292929" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M2 12H7" stroke="#292929" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path> </g> <defs> <clipPath id="clip0_429_11129"> <rect width="24" height="24" fill="white"></rect> </clipPath> </defs> </g></svg>
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="./RestaurantControlpanel/deliveryCompanies.html">
-                                        <span class="menu-title">Delivery Companies</span>
-                                    </a>
+                                    <span class="menu-title">{{__('messages.delivery-companies')}}</span>
                                 </span>
-
+                            </a>
                         </div>
                         <!-- Promotions -->
                         <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+                            <a href="{{route('restaurant.promotions')}}">
+                                <span class="{{ ($link == 'promotions' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg fill="#000000" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15.1,2a1.68,1.68,0,0,1,1.71,1.63V4.85a1.68,1.68,0,0,1-1.63,1.71H10A3.4,3.4,0,0,0,6.56,9.81V42a3.4,3.4,0,0,0,3.25,3.41H42a3.4,3.4,0,0,0,3.41-3.25V36.9a1.68,1.68,0,0,1,1.63-1.71h1.22A1.67,1.67,0,0,1,50,36.82v6.35A6.82,6.82,0,0,1,43.18,50H8.83A6.82,6.82,0,0,1,2,43.18H2V8.83A6.83,6.83,0,0,1,8.82,2H15.1Z" fill-rule="evenodd"></path><path d="M38.11,21a2.23,2.23,0,1,0,2.25,2.23h0A2.22,2.22,0,0,0,38.14,21Z"></path><path d="M27.49,12.76A2.23,2.23,0,1,0,29.72,15a2.22,2.22,0,0,0-2.23-2.23Z"></path><path d="M49.1,16.87l-1.87-2.24a3.94,3.94,0,0,1-.93-2.31l-.22-2.86a3.66,3.66,0,0,0-3.35-3.41l-2.49-.2a5.3,5.3,0,0,1-3-1.28L35.35,2.91a3.68,3.68,0,0,0-4.79-.05L28.5,4.6a4.72,4.72,0,0,1-2.7,1.1l-2.67.18a3.69,3.69,0,0,0-3.42,3.36l-.19,2.44a5.28,5.28,0,0,1-1.29,3L16.6,16.59a3.67,3.67,0,0,0,0,4.78l1.77,2.14a4.42,4.42,0,0,1,1,2.54l.2,2.75a3.68,3.68,0,0,0,3.35,3.42l2.5.22a5.17,5.17,0,0,1,3,1.27l1.9,1.64a3.7,3.7,0,0,0,4.79,0l2.18-1.82a4.08,4.08,0,0,1,2.43-1l2.85-.21A3.68,3.68,0,0,0,46,29l.2-2.31a5.93,5.93,0,0,1,1.43-3.32l1.52-1.73A3.66,3.66,0,0,0,49.1,16.87ZM23.38,15a4.15,4.15,0,1,1,4.15,4.14h0A4.13,4.13,0,0,1,23.36,15v0Zm6,12.22a.39.39,0,0,1-.25.17H27.89a.33.33,0,0,1-.26-.16.29.29,0,0,1,0-.31L36.28,11a.4.4,0,0,1,.26-.16h1.29a.31.31,0,0,1,.15.42h0Zm12.94-4a4.15,4.15,0,1,1-4.17-4.12h0a4.13,4.13,0,0,1,4.12,4.15h0Z"></path></g></svg>
+                                            <svg fill="{{ ($link == 'promotions' ) ? '#c2da08' : '#000000' }}" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15.1,2a1.68,1.68,0,0,1,1.71,1.63V4.85a1.68,1.68,0,0,1-1.63,1.71H10A3.4,3.4,0,0,0,6.56,9.81V42a3.4,3.4,0,0,0,3.25,3.41H42a3.4,3.4,0,0,0,3.41-3.25V36.9a1.68,1.68,0,0,1,1.63-1.71h1.22A1.67,1.67,0,0,1,50,36.82v6.35A6.82,6.82,0,0,1,43.18,50H8.83A6.82,6.82,0,0,1,2,43.18H2V8.83A6.83,6.83,0,0,1,8.82,2H15.1Z" fill-rule="evenodd"></path><path d="M38.11,21a2.23,2.23,0,1,0,2.25,2.23h0A2.22,2.22,0,0,0,38.14,21Z"></path><path d="M27.49,12.76A2.23,2.23,0,1,0,29.72,15a2.22,2.22,0,0,0-2.23-2.23Z"></path><path d="M49.1,16.87l-1.87-2.24a3.94,3.94,0,0,1-.93-2.31l-.22-2.86a3.66,3.66,0,0,0-3.35-3.41l-2.49-.2a5.3,5.3,0,0,1-3-1.28L35.35,2.91a3.68,3.68,0,0,0-4.79-.05L28.5,4.6a4.72,4.72,0,0,1-2.7,1.1l-2.67.18a3.69,3.69,0,0,0-3.42,3.36l-.19,2.44a5.28,5.28,0,0,1-1.29,3L16.6,16.59a3.67,3.67,0,0,0,0,4.78l1.77,2.14a4.42,4.42,0,0,1,1,2.54l.2,2.75a3.68,3.68,0,0,0,3.35,3.42l2.5.22a5.17,5.17,0,0,1,3,1.27l1.9,1.64a3.7,3.7,0,0,0,4.79,0l2.18-1.82a4.08,4.08,0,0,1,2.43-1l2.85-.21A3.68,3.68,0,0,0,46,29l.2-2.31a5.93,5.93,0,0,1,1.43-3.32l1.52-1.73A3.66,3.66,0,0,0,49.1,16.87ZM23.38,15a4.15,4.15,0,1,1,4.15,4.14h0A4.13,4.13,0,0,1,23.36,15v0Zm6,12.22a.39.39,0,0,1-.25.17H27.89a.33.33,0,0,1-.26-.16.29.29,0,0,1,0-.31L36.28,11a.4.4,0,0,1,.26-.16h1.29a.31.31,0,0,1,.15.42h0Zm12.94-4a4.15,4.15,0,1,1-4.17-4.12h0a4.13,4.13,0,0,1,4.12,4.15h0Z"></path></g></svg>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#">
-                                        <span class="menu-title">Promotions</span>
-                                    </a>
+                                    <span class="menu-title">{{__('messages.promotions')}}</span>
                                 </span>
-
+                            </a>
                         </div>
                         <!-- QR maker -->
                         <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+                            <a href="{{route('restaurant.qr')}}">
+                                <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M21,2H15a1,1,0,0,0-1,1V9a1,1,0,0,0,1,1h1v2h2V10h2v2h2V3A1,1,0,0,0,21,2ZM18,8H16V4h4V8ZM3,10H9a1,1,0,0,0,1-1V3A1,1,0,0,0,9,2H3A1,1,0,0,0,2,3V9A1,1,0,0,0,3,10ZM4,4H8V8H4ZM5,16v2H3V16ZM3,20H5v2H3Zm4-2v2H5V18Zm0-2H5V14H7V12H9v4ZM5,12v2H3V12Zm9,3v1H13V14H11v4h3v3a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1V15a1,1,0,0,0-1-1H16V12H14Zm6,1v4H16V16ZM9,18h2v2h1v2H7V20H9ZM13,6H11V4h2ZM11,8h2v4H11ZM5,5H7V7H5ZM17,5h2V7H17Zm2,14H17V17h2Z"></path></g></svg>
+                                            <svg fill="{{ ($link == 'qr' ) ? '#c2da08' : '#000000' }}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M21,2H15a1,1,0,0,0-1,1V9a1,1,0,0,0,1,1h1v2h2V10h2v2h2V3A1,1,0,0,0,21,2ZM18,8H16V4h4V8ZM3,10H9a1,1,0,0,0,1-1V3A1,1,0,0,0,9,2H3A1,1,0,0,0,2,3V9A1,1,0,0,0,3,10ZM4,4H8V8H4ZM5,16v2H3V16ZM3,20H5v2H3Zm4-2v2H5V18Zm0-2H5V14H7V12H9v4ZM5,12v2H3V12Zm9,3v1H13V14H11v4h3v3a1,1,0,0,0,1,1h6a1,1,0,0,0,1-1V15a1,1,0,0,0-1-1H16V12H14Zm6,1v4H16V16ZM9,18h2v2h1v2H7V20H9ZM13,6H11V4h2ZM11,8h2v4H11ZM5,5H7V7H5ZM17,5h2V7H17Zm2,14H17V17h2Z"></path></g></svg>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#">
-                                        <span class="menu-title">QR maker</span>
-                                    </a>
+                                    <span class="menu-title">{{__('messages.qr-maker')}}</span>
                                 </span>
-
+                            </a>
                         </div>
                         <!-- Customer data -->
                         <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+                            <a href="{{route('restaurant.customers_data')}}">
+                                <span class="{{ ($link == 'customers-data' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M1 5C1 3.34315 2.34315 2 4 2H8.43845C9.81505 2 11.015 2.93689 11.3489 4.27239L11.7808 6H13.5H20C21.6569 6 23 7.34315 23 9V10C23 10.5523 22.5523 11 22 11C21.4477 11 21 10.5523 21 10V9C21 8.44772 20.5523 8 20 8H13.5H11.7808H4C3.44772 8 3 8.44772 3 9V10V19C3 19.5523 3.44772 20 4 20H8C8.55228 20 9 20.4477 9 21C9 21.5523 8.55228 22 8 22H4C2.34315 22 1 20.6569 1 19V10V9V5ZM3 6.17071C3.31278 6.06015 3.64936 6 4 6H9.71922L9.40859 4.75746C9.2973 4.3123 8.89732 4 8.43845 4H4C3.44772 4 3 4.44772 3 5V6.17071ZM17 19C14.2951 19 13 20.6758 13 22C13 22.5523 12.5523 23 12 23C11.4477 23 11 22.5523 11 22C11 20.1742 12.1429 18.5122 13.9952 17.6404C13.3757 16.936 13 16.0119 13 15C13 12.7909 14.7909 11 17 11C19.2091 11 21 12.7909 21 15C21 16.0119 20.6243 16.936 20.0048 17.6404C21.8571 18.5122 23 20.1742 23 22C23 22.5523 22.5523 23 22 23C21.4477 23 21 22.5523 21 22C21 20.6758 19.7049 19 17 19ZM17 17C18.1046 17 19 16.1046 19 15C19 13.8954 18.1046 13 17 13C15.8954 13 15 13.8954 15 15C15 16.1046 15.8954 17 17 17Z" fill="#000000"></path> </g></svg>
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M1 5C1 3.34315 2.34315 2 4 2H8.43845C9.81505 2 11.015 2.93689 11.3489 4.27239L11.7808 6H13.5H20C21.6569 6 23 7.34315 23 9V10C23 10.5523 22.5523 11 22 11C21.4477 11 21 10.5523 21 10V9C21 8.44772 20.5523 8 20 8H13.5H11.7808H4C3.44772 8 3 8.44772 3 9V10V19C3 19.5523 3.44772 20 4 20H8C8.55228 20 9 20.4477 9 21C9 21.5523 8.55228 22 8 22H4C2.34315 22 1 20.6569 1 19V10V9V5ZM3 6.17071C3.31278 6.06015 3.64936 6 4 6H9.71922L9.40859 4.75746C9.2973 4.3123 8.89732 4 8.43845 4H4C3.44772 4 3 4.44772 3 5V6.17071ZM17 19C14.2951 19 13 20.6758 13 22C13 22.5523 12.5523 23 12 23C11.4477 23 11 22.5523 11 22C11 20.1742 12.1429 18.5122 13.9952 17.6404C13.3757 16.936 13 16.0119 13 15C13 12.7909 14.7909 11 17 11C19.2091 11 21 12.7909 21 15C21 16.0119 20.6243 16.936 20.0048 17.6404C21.8571 18.5122 23 20.1742 23 22C23 22.5523 22.5523 23 22 23C21.4477 23 21 22.5523 21 22C21 20.6758 19.7049 19 17 19ZM17 17C18.1046 17 19 16.1046 19 15C19 13.8954 18.1046 13 17 13C15.8954 13 15 13.8954 15 15C15 16.1046 15.8954 17 17 17Z" fill="{{ ($link == 'customers-data' ) ? '#c2da08' : '#000000' }}"></path> </g></svg>
                                     </span>
-                                    <a href="#">
-                                        <span class="menu-title">Customers data</span>
-                                    </a>
+                                    <span class="menu-title">{{__('messages.customers-data')}}</span>
                                 </span>
-
+                            </a>
                         </div>
                         <!-- Customer settings -->
                         <div class="menu-item menu-accordion">
-                                <span class="menu-link">
+                            <a href="{{route('restaurant.customers_settings')}}">
+                                <span class="{{ ($link == 'customers-settings' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
-                                            <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>user-settings</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="icon" fill="#000000" transform="translate(64.000000, 42.666667)"> <path d="M328.180488,213.333333 L328.181163,236.169297 C338.584391,239.846405 348.098741,245.405183 356.315274,252.43669 L376.112086,241.006655 L405.741716,292.326679 L385.957797,303.749991 C386.931071,309.018468 387.439747,314.44983 387.439747,320 C387.439747,325.550277 386.931052,330.981742 385.957741,336.250315 L405.741716,347.673321 L376.112086,398.993345 L356.315274,387.56331 C348.098741,394.594817 338.584391,400.153595 328.181163,403.830703 L328.180488,426.666667 L268.921228,426.666667 L268.920553,403.830703 C258.51771,400.153731 249.00368,394.595229 240.787356,387.564092 L220.98963,398.993345 L191.36,347.673321 L211.143975,336.250315 C210.170664,330.981742 209.661969,325.550277 209.661969,320 C209.661969,314.449479 210.170709,309.017781 211.144103,303.74899 L191.36,292.326679 L220.98963,241.006655 L240.786362,252.436758 C249.002913,245.405219 258.517291,239.846417 268.920553,236.169297 L268.921228,213.333333 L328.180488,213.333333 Z M186.666667,192 C206.101493,192 224.380148,197.091591 240.310579,206.048663 C225.561078,213.615034 212.475029,223.960979 201.74082,236.39423 C198.115251,235.549019 194.383883,235.003146 190.574699,234.780576 L186.666667,234.666667 L112,234.666667 C75.2924236,234.666667 44.8342773,264.693102 42.7773631,303.0585 L42.6666667,307.2 L42.6666667,341.333333 L172.436614,341.334332 C175.006125,356.649425 180.295262,371.04231 187.790443,383.999404 L1.42108547e-14,384 L1.42108547e-14,307.2 C1.42108547e-14,245.167377 47.6682427,194.586369 107.383368,192.096089 L112,192 L186.666667,192 Z M298.550858,284.444444 C278.914067,284.444444 262.995302,300.363209 262.995302,320 C262.995302,339.636791 278.914067,355.555556 298.550858,355.555556 C318.187649,355.555556 334.106413,339.636791 334.106413,320 C334.106413,300.363209 318.187649,284.444444 298.550858,284.444444 Z M149.333333,7.10542736e-15 C190.570595,7.10542736e-15 224,33.4294053 224,74.6666667 C224,114.529353 192.762078,147.096031 153.430084,149.222851 L149.333333,149.333333 C108.096072,149.333333 74.6666667,115.903928 74.6666667,74.6666667 C74.6666667,34.8039807 105.904589,2.23730242 145.236582,0.110482405 L149.333333,7.10542736e-15 Z M149.333333,42.6666667 C131.660221,42.6666667 117.333333,56.9935547 117.333333,74.6666667 C117.333333,92.3397787 131.660221,106.666667 149.333333,106.666667 C167.006445,106.666667 181.333333,92.3397787 181.333333,74.6666667 C181.333333,56.9935547 167.006445,42.6666667 149.333333,42.6666667 Z" id="Combined-Shape"> </path> </g> </g> </g></svg>
+                                            <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="{{ ($link == 'customers-settings' ) ? '#c2da08' : '#000000' }}"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>user-settings</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="icon" fill="{{ ($link == 'customers-settings' ) ? '#c2da08' : '#000000' }}" transform="translate(64.000000, 42.666667)"> <path d="M328.180488,213.333333 L328.181163,236.169297 C338.584391,239.846405 348.098741,245.405183 356.315274,252.43669 L376.112086,241.006655 L405.741716,292.326679 L385.957797,303.749991 C386.931071,309.018468 387.439747,314.44983 387.439747,320 C387.439747,325.550277 386.931052,330.981742 385.957741,336.250315 L405.741716,347.673321 L376.112086,398.993345 L356.315274,387.56331 C348.098741,394.594817 338.584391,400.153595 328.181163,403.830703 L328.180488,426.666667 L268.921228,426.666667 L268.920553,403.830703 C258.51771,400.153731 249.00368,394.595229 240.787356,387.564092 L220.98963,398.993345 L191.36,347.673321 L211.143975,336.250315 C210.170664,330.981742 209.661969,325.550277 209.661969,320 C209.661969,314.449479 210.170709,309.017781 211.144103,303.74899 L191.36,292.326679 L220.98963,241.006655 L240.786362,252.436758 C249.002913,245.405219 258.517291,239.846417 268.920553,236.169297 L268.921228,213.333333 L328.180488,213.333333 Z M186.666667,192 C206.101493,192 224.380148,197.091591 240.310579,206.048663 C225.561078,213.615034 212.475029,223.960979 201.74082,236.39423 C198.115251,235.549019 194.383883,235.003146 190.574699,234.780576 L186.666667,234.666667 L112,234.666667 C75.2924236,234.666667 44.8342773,264.693102 42.7773631,303.0585 L42.6666667,307.2 L42.6666667,341.333333 L172.436614,341.334332 C175.006125,356.649425 180.295262,371.04231 187.790443,383.999404 L1.42108547e-14,384 L1.42108547e-14,307.2 C1.42108547e-14,245.167377 47.6682427,194.586369 107.383368,192.096089 L112,192 L186.666667,192 Z M298.550858,284.444444 C278.914067,284.444444 262.995302,300.363209 262.995302,320 C262.995302,339.636791 278.914067,355.555556 298.550858,355.555556 C318.187649,355.555556 334.106413,339.636791 334.106413,320 C334.106413,300.363209 318.187649,284.444444 298.550858,284.444444 Z M149.333333,7.10542736e-15 C190.570595,7.10542736e-15 224,33.4294053 224,74.6666667 C224,114.529353 192.762078,147.096031 153.430084,149.222851 L149.333333,149.333333 C108.096072,149.333333 74.6666667,115.903928 74.6666667,74.6666667 C74.6666667,34.8039807 105.904589,2.23730242 145.236582,0.110482405 L149.333333,7.10542736e-15 Z M149.333333,42.6666667 C131.660221,42.6666667 117.333333,56.9935547 117.333333,74.6666667 C117.333333,92.3397787 131.660221,106.666667 149.333333,106.666667 C167.006445,106.666667 181.333333,92.3397787 181.333333,74.6666667 C181.333333,56.9935547 167.006445,42.6666667 149.333333,42.6666667 Z" id="Combined-Shape"> </path> </g> </g> </g></svg>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <a href="#">
-                                        <span class="menu-title">Customer settings</span>
-                                    </a>
+                                    <span class="menu-title">{{__('messages.customers-settings')}}</span>
                                 </span>
-
+                            </a>
                         </div>
 
 
@@ -422,8 +413,8 @@
                     <!--end::Aside mobile toggle-->
                     <!--begin::Mobile logo-->
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                        <a href="demo1/dist/index.html" class="d-lg-none">
-                            <img alt="Logo" src="{{ global_asset('assets/img/logo.png') }}" class="h-30px" />
+                        <a href="/" class="d-lg-none">
+                            <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
                         </a>
                     </div>
                     <!--end::Mobile logo-->
@@ -463,7 +454,12 @@
                                 <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
                                      data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                      data-kt-menu-placement="bottom-end">
-                                    <i class="fa-solid fa-user fa-lg"></i>
+                                    <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                                <rect opacity="0.9" x="8" y="3" width="8" height="8" rx="4" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                            </svg>
+                                        </span>
                                 </div>
                                 <!--begin::User account menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-khardl fw-bold py-4 fs-6 w-275px"
@@ -473,7 +469,12 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <i class="fa-solid fa-user fa-lg"></i>
+                                                <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                                <rect opacity="0.9" x="8" y="3" width="8" height="8" rx="4" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                            </svg>
+                                        </span>
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
@@ -559,26 +560,7 @@
                                 <!--end::Menu wrapper-->
                             </div>
                             <!--end::User menu-->
-                            <!--begin::Header menu toggle-->
-                            <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
-                                <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
-                                     id="kt_header_menu_mobile_toggle">
-                                    <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
-                                    <span class="svg-icon svg-icon-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                             viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z"
-                                                fill="currentColor" />
-                                            <path opacity="0.3"
-                                                  d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z"
-                                                  fill="currentColor" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                </div>
-                            </div>
-                            <!--end::Header menu toggle-->
+
                         </div>
                         <!--end::Toolbar wrapper-->
                     </div>
@@ -597,8 +579,8 @@
                     class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
                     <!--begin::Copyright-->
                     <div class="text-dark order-2 order-md-1">
-                        <span class="text-muted fw-bold me-1">2023©</span>
-                        <a href="#" target="_blank"
+                        <span class="text-muted fw-bold me-1">{{date('Y')}} ©</span>
+                        <a href="/" target="_blank"
                            class="text-gray-800 text-hover-khardl">Khardl</a>
                     </div>
                     <!--end::Copyright-->
@@ -608,11 +590,7 @@
                             <a href="#" target="_blank" class="menu-link px-2">About</a>
                         </li>
                         <li class="menu-item">
-                            <a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="https://1.envato.market/EA4JP" target="_blank"
-                               class="menu-link px-2">Purchase</a>
+                            <a href="mailto:info@khardl.com" target="_blank" class="menu-link px-2">Support</a>
                         </li>
                     </ul>
                     <!--end::Menu-->
@@ -664,7 +642,7 @@
 <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
-<script src="https://kit.fontawesome.com/d2d3f16619.js" crossorigin="anonymous"></script>
+
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->
 </body>

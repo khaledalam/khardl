@@ -1,11 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import Hero from './Components/Hero';
-import Clients from '../../components/Clients/Clients';
-import RequestPoint from '../../components/RequestPointSection/RequestPoint';
 import Features from '../../components/FeaturesSection/Features';
 import ContactUs from '../../components/ContactUsSection/ContactUs';
-import {Link} from "react-router-dom";
 
 const Home = () => {
 
@@ -22,11 +19,9 @@ const Home = () => {
 
       <div className="flex flex-col justify-start items-center gap-[180px] pt-[80px]">
         <div className='p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] '>
-
           <Hero />
         </div>
-        <Clients />
-        <RequestPoint />
+        {/*<Clients />*/}
         <Features />
         <ContactUs />
       </div>

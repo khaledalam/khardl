@@ -276,5 +276,10 @@
    "(Paid with Cash)": "(الدفع كاش)",
    "Profile Details": "تفاصيل الملف الشخصي",
    "Full Name": "الاسم كامل",
-   "Thin": "رفيع"
+   "Thin": "رفيع",
+    "Choose Site Editor": "اختر محرر الموقع",
+    "Restaurant Editor": "محرر موقع المطعم",
+    "Customer Editor": "محرر موقع العميل",
+    "No items in this category": "لا يوجد منتجات في هذا الصنف",
+    "delivery": "التوصيل"
 }

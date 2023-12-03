@@ -37,7 +37,7 @@ export function Taps({ children, contentClassName = "" }) {
     <div
       className={`${selectedCategory === `${t("Right")}` ? divWidth <= 744 ? 'w-[100%] flex-wrap flex justify-center gap-2 flex-row-reverse' : 'flex gap-2' : ''}
     ${selectedCategory === `${t("Left")}` ? divWidth <= 600 ? 'w-[100%] flex-wrap flex gap-2 justify-center flex-row-reverse' : 'flex flex-row-reverse gap-5' : ''}`}>
-      <div className={`gap-1 justify-start
+      <div className={`p-3 gap-1 justify-start
     ${selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}` ? 'h-fit mt-4 ' : ''}
     ${selectedCategory === `${t("Tabs")}` ? "flex" : ''}
       ${contentClassName}`}

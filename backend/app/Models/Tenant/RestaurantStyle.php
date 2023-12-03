@@ -28,7 +28,7 @@ class RestaurantStyle extends Model
         'font_alignment',
         'left_side_button',
         'right_side_button',
-        'center_side_button'
+        'center_side_button',
     ];
 
     protected $casts = [
@@ -50,6 +50,5 @@ class RestaurantStyle extends Model
 
 
   
-
 
 }

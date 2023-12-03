@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from "react-i18next";
 import ResizeDetector from 'react-resize-detector';
 import AxiosInstance from "../../axios/axios";
+import Header from "../Customers/CustomersEditor/components/header";
 
 
 const Cart = () => {
@@ -10,14 +11,11 @@ const Cart = () => {
   const divRef = useRef(null);
   const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
 
-    const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
     const Language = sessionStorage.getItem('Language');
     const { t } = useTranslation();
     const [cart, setCart] = useState([]);
-
-    console.log(">> state >> ", state)
 
 
     const fetchCartData = async () => {

@@ -56,7 +56,7 @@ const Register = () => {
       } catch (error) {
          setSpinner(false);
          console.log(error.response.data);
-   
+
 
          // if (error.response.data.errors?.length > 0) {
          //     setError(error.response.data.errors);
@@ -72,7 +72,7 @@ const Register = () => {
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{

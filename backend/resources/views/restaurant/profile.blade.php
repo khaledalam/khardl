@@ -1,5 +1,8 @@
 @extends('layouts.restaurant-sidebar')
 
+@section('title', __('messages.profile'))
+
+
 @section('content')
     <h3>Edit profile</h3>
     @if(session('success'))
@@ -38,7 +41,7 @@
             <div class="alert alert-danger">
                 Your approval got denied, to apply again you will have to refill needed documents:
             </div>
-        
+
             @if($user->commercial_registration_pdf == null)
               <div class="mb-3">
                 <label for="commercial_registration" class="form-label">Commercial Registration</label>
@@ -54,6 +57,6 @@
             @endif
         @endif
         <button type="submit" class="btn btn-primary">Submit</button>
-        
+
       </form>
 @endsection
