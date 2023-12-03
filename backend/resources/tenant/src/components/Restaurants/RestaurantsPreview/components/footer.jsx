@@ -2,9 +2,11 @@ import React from 'react';
 import { BsTwitter, BsMessenger, BsWhatsapp, BsInstagram, BsFacebook, BsLinkedin, BsTiktok, BsYoutube, BsTelegram } from 'react-icons/bs';
 import { FaYoutube } from 'react-icons/fa';
 
-function Footer() {
-    const icons = JSON.parse(sessionStorage.getItem('icons'));
-    const phoneNumber = sessionStorage.getItem('phoneNumber');
+function Footer(props) {
+     const {styleData} = props;
+
+    const icons = styleData?.social_medias ? JSON.parse(styleData?.social_medias) : JSON.parse(sessionStorage.getItem('icons'));
+    const phoneNumber = styleData?.phone_number || sessionStorage.getItem('phoneNumber');
     const iconComponents = {
         BsWhatsapp,
         BsMessenger,

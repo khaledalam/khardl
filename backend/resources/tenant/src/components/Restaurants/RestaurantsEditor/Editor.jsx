@@ -19,10 +19,8 @@ const Editor = () => {
   const divRef = useRef(null);
   const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
   const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
-  const selectedFontSize = useSelector((state) => state.fonts.selectedFontSize);
     const [styleData, setStyleData] = useState(null);
 
-    const state = useSelector((state) => state);
 
   const dispatch = useDispatch();
     const selectedCategory = sessionStorage.getItem('selectedCategory');
@@ -35,7 +33,6 @@ const Editor = () => {
     const [categories, setCategories] = useState([]);
     const selectedFont = sessionStorage.getItem('selectedFont');
 
-    console.log(">> state >> ", state)
 
     const fetchRestaurantStyles = async () => {
         const restaurantBranchesResponse = await AxiosInstance.get(`branches-site-editor`)

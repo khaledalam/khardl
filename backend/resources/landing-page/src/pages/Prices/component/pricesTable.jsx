@@ -10,34 +10,17 @@ function PricesTable() {
 
     return (
         <div className='flex flex-col items-center w-[100%] gap-20'>
-            <div 
-            className='flex flex-col items-center w-[100%]'
+            <div
             data-aos='fade-up'
-            data-aos-delay='400'>
-                <Header headerText={t("points")} />
-                <RowTable points={90} price={116.1} />
-                <RowTable points={300} price={387} />
-                <RowTable points={550} price={654.5} />
-                <RowTable points={750} price={742.50} />
-                <RowTable points={990} price={950.4} />
-                <RowTable points={1500} price={1395} />
-                <RowTable points={3000} price={2640} />
-                <RowTable points={5500} price={4400} />
-                <RowTable points={7000} price={4550} />
-                <RowTable points={t("Unlimited points")} price={4800} without />
-                <Footer FooterText={t("Excludes VAT")} />
-            </div>
-            <div 
-            data-aos='fade-up'
-            data-aos-delay='400' 
+            data-aos-delay='400'
             className='flex flex-col items-center w-[100%]'>
                 <Header headerText={t("Location")} />
                 <RowTable points={t("Each Branch")} price={388} without />
                 <Footer FooterText={t("Includes VAT")} />
             </div>
-            <div 
+            <div
             data-aos='fade-up'
-            data-aos-delay='400' 
+            data-aos-delay='400'
             className='flex flex-col items-center w-[100%]'>
                 <Header headerText={t("Applications")} />
                 <div className='border-[0.5px] border-gray-300 border-t-0 w-[60%] max-md:w-[100%]'>

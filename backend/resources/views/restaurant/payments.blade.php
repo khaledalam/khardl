@@ -1,7 +1,8 @@
 @extends('layouts.restaurant-sidebar')
 
+@section('title', __('messages.payments'))
+
 @section('content')
-    <h3>Payments</h3>
     @if(session('success'))
       <div class="alert alert-success">
         {{ session('success') }}
@@ -9,7 +10,7 @@
     @endif
     @if ($user->submitedTapDocuments == 0)
         <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content1">
-           <h2 class="text-center pt-5">TAP documents are not submitted yet!</h2>
+            <h2 class="text-center pt-5">Create TAP <a href="{{route('tap.payments_upload_tap_documents_get')}}"><u>business account</u></a> first to access this page content!</h2>
         </div>
     @elseif ($user->submitedTapDocuments == 1)
           <div class="alert alert-success">

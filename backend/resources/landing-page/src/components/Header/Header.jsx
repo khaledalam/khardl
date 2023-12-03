@@ -146,13 +146,6 @@ const Header = () => {
                      activeLink={activeLink}
                   />
                   <Li
-                     link='/clients'
-                     handleLinkClick={handleLinkClick}
-                     close={closeDrawerHandler}
-                     title={t('Clients')}
-                     activeLink={activeLink}
-                  />
-                  <Li
                      link='/services'
                      handleLinkClick={handleLinkClick}
                      close={closeDrawerHandler}
@@ -245,13 +238,6 @@ const Header = () => {
                         handleLinkClick={handleLinkClick}
                         close={closeDrawerHandler}
                         title={t('Advantages')}
-                        activeLink={activeLink}
-                     />
-                     <Li
-                        link='/clients'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Clients')}
                         activeLink={activeLink}
                      />
                      <Li
