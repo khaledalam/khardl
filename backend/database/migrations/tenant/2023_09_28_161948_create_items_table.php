@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('photo');
             $table->decimal('price', 10, 2);
             $table->integer('calories');
-            $table->text('description')->nullable();
+            $table->json('description')->nullable();
             $table->json('checkbox_required')->nullable();
             $table->json('checkbox_input_titles')->nullable();
             $table->json('checkbox_input_maximum_choices')->nullable();

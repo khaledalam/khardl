@@ -76,7 +76,7 @@
                                                   <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('messages.add-new-category') }}</button>
                                               </span>
                                               <!--end::Add label-->
-                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST">
+                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit">
                                                 @csrf
                                                 <div id="categoryForm" class="mt-2" style="display: none !important;" >
                                                     <ul class="nav nav-tabs" id="languageTabs">
@@ -349,7 +349,23 @@
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-bold mb-2">Description</label>
-                            <textarea class="form-control form-control-solid" rows="3" name="description" placeholder="Write Description"></textarea>
+
+                            <ul class="nav nav-tabs" >
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">English</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">Arabic</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane fade show active" id="d-en">
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="Enter Description in English"   name="description_en"></textarea>
+                                </div>
+                                <div class="tab-pane fade" id="d-ar">
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="أدخل الوصف باللغة العربية"   name="description_ar"></textarea>
+                                </div>
+                            </div>
                         </div>
                         <!--end::Input group-->
 
@@ -978,6 +994,25 @@
                 return ;
             }
             document.getElementById('category-submit').submit();
+
+        
+
+        });
+
+        document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var inputValue = document.querySelector('textarea[name=description_ar]').value.trim();
+            if (inputValue === '') {
+                alert('Please fill in the input in (Arabic) tab.');
+                return ;
+            }
+            var inputValueAR = document.querySelector('textarea[name=description_en]').value.trim();
+            console.log(inputValueAR);
+            if (inputValueAR === '') {
+                alert('Please fill in the input in the (English) tab .');
+                return ;
+            }
+            document.getElementById('kt_modal_new_target_form').submit();
 
         
 

@@ -134,8 +134,7 @@ class RestaurantController extends BaseController
                 $items = DB::table('items')->where('category_id', $category->id)->get();
                 foreach ($items as $item) {
                     $newFilename = Str::uuid()->toString() . '.' . pathinfo($item->photo, PATHINFO_EXTENSION);
-
-                    DB::table('items')->insert([
+                    Item::create([
                         'branch_id' => $newBranchId,
                         'category_id' => $newCategoryId,
                         // 'name' => $item->name,
@@ -155,10 +154,9 @@ class RestaurantController extends BaseController
                         'dropdown_required' => $item->dropdown_required,
                         'dropdown_input_titles' =>$item->dropdown_input_titles,
                         'dropdown_input_names' => $item->dropdown_input_names,
-                        'user_id' => Auth::user()->id,
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                        'user_id' => Auth::user()->id
                     ]);
+                    
 
                     $sourcePath = storage_path("{$item->photo}");
                     $destinationPath = storage_path("{$newFilename}");
@@ -288,8 +286,8 @@ class RestaurantController extends BaseController
         $selectedCategory =Category::where('id', $id)->where('branch_id', $branchId)->first();
         $categories = Category::where('id', $id)->where('branch_id', $branchId)->get();
 
-        $items = DB::table('items')
-        ->where('user_id', $user->id)
+        $items = Item::
+        where('user_id', $user->id)
         ->where('category_id', $selectedCategory->id)
         ->where('branch_id', $branchId)->get();
 
@@ -325,7 +323,6 @@ class RestaurantController extends BaseController
         // }
 
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
-
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
             
             $photoFile = $request->file('photo');
@@ -345,7 +342,7 @@ class RestaurantController extends BaseController
                     'photo' => 'items/'.$filename,
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
-                    'description' => $request->input('description'),
+                    'description' =>trans_json( $request->input('description_en'), $request->input('description_ar')),
                     'checkbox_required' => json_encode($request->input('checkbox_required')),
                     'checkbox_input_titles' =>json_encode( $request->input('checkboxInputTitle')),
                     'checkbox_input_maximum_choices' =>json_encode( $request->input('checkboxInputMaximumChoice')),
@@ -366,8 +363,7 @@ class RestaurantController extends BaseController
                     'updated_at' => now(),
                 ];
           
-                DB::table('items')->insert($itemData);
-
+                Item::create($itemData);
                 DB::commit();
 
                 return redirect()->back()->with('success', 'Item successfully added.');
