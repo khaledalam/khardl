@@ -18,7 +18,7 @@ class CategoryItemSeeder extends Seeder
      * Run the database seeds.
      */
 
-    public function run(): void
+    public function run($assets): void
     {
         $faker = new Generator();
 
@@ -43,7 +43,7 @@ class CategoryItemSeeder extends Seeder
                     $photo_file = new UploadedFile(public_path(Item::STORAGE_SEEDER."/$kk.jpg"), true);
                     $photo = store_image($photo_file,Item::STORAGE_SEEDER,$kk);
                     $category->items()->save(new Item([
-                        'photo' => $photo,
+                        'photo' => $assets.$photo,
                         'price' => $faker->numberBetween(10, 500),
                         'calories' => $faker->numberBetween(0, 500),
                         'description' =>  trans_json("Item " . $kk,"Item " . $kk),

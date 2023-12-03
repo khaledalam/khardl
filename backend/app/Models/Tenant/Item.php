@@ -36,8 +36,6 @@ class Item extends Model
     public $translatable = ['description'];
     const STORAGE = "items";
     const STORAGE_SEEDER = "seeders/items";
-    public function getPhotoAttribute(){
-        return tenant_asset($this->attributes['photo']);
-    }
+    
 
 }
