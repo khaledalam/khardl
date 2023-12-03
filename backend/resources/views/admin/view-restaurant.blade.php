@@ -17,7 +17,9 @@
                             <!--begin: Pic-->
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                    <img src="{{$logo}}" alt="image" />
+                                
+                                    <img alt="Logo" src="{{ $logo ?? global_asset('img/logo.png') }}" />
+
                                 </div>
                             </div>
                             <!--end::Pic-->
@@ -29,12 +31,12 @@
                                     <div class="d-flex flex-column">
                                         <!--begin::Name-->
                                         <div class="d-flex align-items-center mb-2">
-                                            <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{  $restaurant->first_name }} {{  $restaurant->last_name }}</a>
+                                        
+                                            <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{  $restaurant->restaurant_name }}
+                                            </a>
                                             <a>
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
-                                                @if ($restaurant->isApproved == 1)
-
-
+                                                @if ($is_live)
                                                 <span class="svg-icon svg-icon-1 svg-icon-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
                                                         <path d="M10.0813 3.7242C10.8849 2.16438 13.1151 2.16438 13.9187 3.7242V3.7242C14.4016 4.66147 15.4909 5.1127 16.4951 4.79139V4.79139C18.1663 4.25668 19.7433 5.83365 19.2086 7.50485V7.50485C18.8873 8.50905 19.3385 9.59842 20.2758 10.0813V10.0813C21.8356 10.8849 21.8356 13.1151 20.2758 13.9187V13.9187C19.3385 14.4016 18.8873 15.491 19.2086 16.4951V16.4951C19.7433 18.1663 18.1663 19.7433 16.4951 19.2086V19.2086C15.491 18.8873 14.4016 19.3385 13.9187 20.2758V20.2758C13.1151 21.8356 10.8849 21.8356 10.0813 20.2758V20.2758C9.59842 19.3385 8.50905 18.8873 7.50485 19.2086V19.2086C5.83365 19.7433 4.25668 18.1663 4.79139 16.4951V16.4951C5.1127 15.491 4.66147 14.4016 3.7242 13.9187V13.9187C2.16438 13.1151 2.16438 10.8849 3.7242 10.0813V10.0813C4.66147 9.59842 5.1127 8.50905 4.79139 7.50485V7.50485C4.25668 5.83365 5.83365 4.25668 7.50485 4.79139V4.79139C8.50905 5.1127 9.59842 4.66147 10.0813 3.7242V3.7242Z" fill="#00A3FF" />
@@ -56,8 +58,8 @@
                                                     <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                            <!--end::Svg Icon-->{{  $restaurant->first_name }} {{  $restaurant->last_name }}</a>
-                                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                            <!--end::Svg Icon-->{{  $user->first_name }} {{  $user->last_name }}</a>
+                                            {{-- <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
                                             <span class="svg-icon svg-icon-4 me-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -65,7 +67,7 @@
                                                     <path d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                            <!--end::Svg Icon-->SA, Al-Riyadh</a>
+                                            <!--end::Svg Icon-->SA, Al-Riyadh</a> --}}
                                             <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
                                             <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                             <span class="svg-icon svg-icon-4 me-1">
@@ -86,7 +88,7 @@
 
                                     <div class="d-flex flex-wrap flex-stack">
                                         <!--begin::Wrapper-->
-                                        @if ($restaurant->isApproved == 1)
+                                        @if ($is_live)
                                             <div class="d-flex flex-column flex-grow-1 pe-8">
                                                 <!--begin::Stats-->
                                                 <div class="d-flex flex-wrap">
@@ -102,7 +104,7 @@
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
-                                                            <div class="fs-2 fw-bolder" data-kt-countup="true" data-kt-countup-value="3500" data-kt-countup-prefix="$">0</div>
+                                                            <div class="fs-2 fw-bolder" data-kt-countup="true" data-kt-countup-value="0" data-kt-countup-prefix="$">0</div>  <!-- data-kt-countup-value="3500" -->
                                                         </div>
                                                         <!--end::Number-->
                                                         <!--begin::Label-->
@@ -122,7 +124,7 @@
                                                                 </svg>
                                                             </span>
                                                             <!--end::Svg Icon-->
-                                                            <div class="fs-2 fw-bolder" data-kt-countup="true" data-kt-countup-value="150">0</div>
+                                                            <div class="fs-2 fw-bolder" data-kt-countup="true" data-kt-countup-value="0">0</div> <!--  data-kt-countup-value="150" -->
                                                         </div>
                                                         <!--end::Number-->
                                                         <!--begin::Label-->
@@ -131,25 +133,7 @@
                                                     </div>
                                                     <!--end::Stat-->
                                                     <!--begin::Stat-->
-                                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                                        <!--begin::Number-->
-                                                        <div class="d-flex align-items-center">
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                            <span class="svg-icon svg-icon-3 svg-icon-success me-2">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                    <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor" />
-                                                                    <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                            <div class="fs-2 fw-bolder" data-kt-countup="true" data-kt-countup-value="{{  $restaurant->points }}">{{  $restaurant->points }}</div>
-                                                        </div>
-                                                        <!--end::Number-->
-                                                        <!--begin::Label-->
-                                                        <div class="fw-bold fs-6 text-gray-400">{{ __('messages.number-of-points')}}</div>
-                                                        <!--end::Label-->
-                                                    </div>
-                                                    <!--end::Stat-->
+                                                   
                                                 </div>
                                                 <!--end::Stats-->
                                             </div>
@@ -169,11 +153,12 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                        @elseif ($restaurant->isApproved == 0)
+                                        @elseif (!$is_live)
                                         <div class="d-flex justify-content-between align-items-center">
                                             <a onclick="showConfirmation()" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3" >{{ __('messages.approve')}}</a>
-                                            <form id="approve-form" action="{{ route('admin.approveUser', ['id' => $restaurant->id]) }}" method="POST" style="display: inline">
+                                            <form id="approve-form" action="{{ route('admin.restaurant.activate', ['restaurant' => $restaurant->id]) }}" method="POST" style="display: inline">
                                                 @csrf
+                                                @method('PUT')
 
                                             </form>
                                             <script>
@@ -630,28 +615,45 @@
                     <!--begin::Card body-->
                     <div class="card-body p-9">
                         <!--begin::Row-->
+
+                       
                         <div class="row mb-7">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">@if (app()->getLocale() == 'en')
-                                {{ __('messages.name') }}
+                                {{ __('messages.restaurant-name') }}
                             @else
                             {{ __('messages.the-name') }}
                             @endif </label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <span class="fw-bolder fs-6 text-gray-800">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</span>
+                                <span class="fw-bolder fs-6 text-gray-800">{{ $restaurant->restaurant_name }}</span>
                             </div>
                             <!--end::Col-->
                         </div>
-
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.domain') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8">
+                                <span class="fw-bolder fs-6 text-gray-800">
+                                    <a href="{{ $restaurant->route('home') }}" >
+                                        <p class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{$restaurant->primary_domain->domain}}
+                                    
+                                        </p><i class="fas fa-external-link-alt"></i> 
+                                    </a>
+                                </span>
+                            </div>
+                            <!--end::Col-->
+                        </div>
                         <div class="row mb-7">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">{{ __('messages.position') }}</label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <span class="fw-bolder fs-6 text-gray-800">Soon</span>
+                                <span class="fw-bolder fs-6 text-gray-800">{{$restaurant->user->position}}</span>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -664,8 +666,8 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 fv-row">
-                                <span class="fw-bold text-gray-800 fs-6">{{ $restaurant->email }}</span>
-                                @if(!is_null($restaurant->email_verified_at))
+                                <span class="fw-bold text-gray-800 fs-6">{{ $restaurant->user->email }}</span>
+                                @if(!is_null($restaurant->user->email_verified_at))
                                     <span class="badge badge-success">{{ __('messages.verified') }}</span>
                                 @else
                                 <span class="badge badge-warning">{{ __('messages.unverified') }}</span>
@@ -682,7 +684,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 d-flex align-items-center">
-                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ $restaurant->phone_number }}</span>
+                                <span class="fw-bolder fs-6 text-gray-800 me-2">{{ $restaurant->user->phone }}</span>
 
                             </div>
                             <!--end::Col-->
@@ -696,9 +698,9 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8 d-flex align-items-center">
-                                @if($restaurant->isApproved == 0)
-                                    <span class="badge badge-warning">{{ __('messages.pending') }}</span>
-                                @elseif ($restaurant->isApproved == 1)
+                                {{-- @if($restaurant->isApproved == 0)
+                                    <span class="badge badge-warning">{{ __('messages.pending') }}</span> --}}
+                                @if ($is_live)
                                     <span class="badge badge-success">{{ __('messages.active') }}</span>
                                 @else
                                     <span class="badge badge-danger">{{ __('messages.denied') }}</span>
@@ -714,7 +716,7 @@
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="col-lg-8">
-                                <a href="#" class="fw-bold fs-6 text-gray-800 text-hover-primary">{{ $restaurant->created_at }}</a>
+                                <a href="#" class="fw-bold fs-6 text-gray-800 text-hover-primary">{{ $restaurant->created_at->format('Y-m-d') }}</a>
                             </div>
                             <!--end::Col-->
                         </div>

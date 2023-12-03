@@ -17,7 +17,7 @@
    <div class="card-header border-0 pt-5">
      <h3 class="card-title align-items-start flex-column">
        <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.admin-staff')}}</span>
-       <span class="text-muted mt-1 fw-bold fs-7">{{ DB::table('users')->where('role', 10)->count() }} {{ __('messages.admins')}}</span>
+       <span class="text-muted mt-1 fw-bold fs-7">{{ count($users) }} {{ __('messages.admins')}}</span>
      </h3>
      <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
        <a href="{{ route('admin.add-user') }}" class="btn btn-sm btn-light btn-active-primary">
@@ -68,7 +68,7 @@
                 <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $user->last_name }}</a>
               </td>
                                           <td>
-                <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $user->phone_number }}</a>
+                <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $user->phone }}</a>
               </td>
                                           <td>
                 <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $user->email }}</a>

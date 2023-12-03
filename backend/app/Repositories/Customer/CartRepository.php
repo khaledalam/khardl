@@ -9,24 +9,31 @@ use App\Models\Tenant\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
+use App\Traits\APIResponseTrait;
+use Illuminate\Http\JsonResponse;
 
 class CartRepository
 {
     /** @var Cart */
     public $cart;
+    use APIResponseTrait;
 
-    public function __construct()
-    {
+    public  function initiate()
+    {   
+       if($this->cart) return ;
        $this->cart = Cart::query()->firstOrCreate([
-            'user_id' => Auth::id()
-        ]);
+            'user_id' => Auth::id(),
+       ]);
     }
 
-    public function add(AddItemToCartRequest $request): bool
+    public function add(AddItemToCartRequest $request): JsonResponse
     {
-        $food = Item::findOrFail($request->item_id);
-        $this->createCartItem($food,$request);
-        return true;
+        if(!$this->cart->hasBranch($request->branch_id)){
+            return $this->sendError('Fail', 'Cannot add item from different branch.');
+        }
+        $item = Item::findOrFail($request->item_id);
+        $this->createCartItem($item,$request->validated());
+        $this->sendResponse(null, __('The meal has been added successfully.'));
     }
     public function update($request)
     {
@@ -40,6 +47,7 @@ class CartRepository
             'price' =>$item->price,
             'item_id' => $item->id,
             'quantity' => $request->quantity,
+            'user_id'=> Auth::id()
             
         ]);
     }
@@ -76,6 +84,19 @@ class CartRepository
     public function tax()
     {
         return 0;
+    }
+    public function hasBranch($branch_id){
+        // check if cart has branch or not
+        if($this->cart->branch_id == null){
+            $this->cart->branch_id = $branch_id;
+            $this->cart->save();
+            return true;
+        }
+        // check if cart has branch id
+        else if($this->cart->branch_id == $branch_id){
+            return true;
+        }
+        return false;
     }
 
     public function subTotal()
