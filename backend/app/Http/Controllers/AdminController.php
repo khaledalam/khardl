@@ -11,10 +11,12 @@ use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DeniedEmail;
 use App\Mail\ApprovedEmail;
+use App\Mail\ApprovedRestaurant;
 use App\Models\User;
 use App\Models\Log;
 use App\Models\Promoter;
 use App\Models\Tenant\RestaurantStyle;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -263,15 +265,41 @@ class AdminController extends Controller
 
         $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
         $logo ="";
-        $restaurant->run(static function()use(&$logo){
-            $logo = RestaurantStyle::first()->logo ?? '';
+        $is_live = false;
+        $restaurant->run(static function()use(&$logo,&$is_live){
+            $is_live = Setting::first()->is_live;
+            if($is_live){
+                $logo = RestaurantStyle::first()->logo ?? '';
+            }else {
+                $logo = null;
+
+            }
+            
         });
+        
+        $user =  $restaurant->user;
         // if($restaurant->role == 0){
         //     return view('admin.view-restaurant', compact('restaurant'));
         // }else{
         //     return abort(404);
         // }
-        return view('admin.view-restaurant', compact('restaurant','logo'));
+        return view('admin.view-restaurant', compact('restaurant','logo','is_live','user'));
+
+    }
+    public function activateRestaurant(Tenant $restaurant){
+
+        $restaurant->run(static function(){
+            Setting::first()->update(['is_live'=>true]);
+        });
+        Mail::to($restaurant->user->email)->send(new ApprovedRestaurant($restaurant->user,$restaurant));
+
+        
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'Has activate restaurant with an ID of: ' . $restaurant->id,
+        ]);
+
+        return redirect()->route('admin.view-restaurants',['id'=>$restaurant->id])->with('success', __("Restaurant has been activated successfully."));
 
     }
 
@@ -426,6 +454,7 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
+            'can_update_restaurant_settings',
         ];
 
         $updateData = [];

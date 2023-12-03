@@ -138,7 +138,7 @@ class RestaurantController extends BaseController
                         'branch_id' => $newBranchId,
                         'category_id' => $newCategoryId,
                         // 'name' => $item->name,
-                        'photo' => $newFilename,
+                        'photo' => tenant_asset($newFilename),
                         'price' => $item->price,
                         'calories' => $item->calories,
                         'description' => $item->description,
@@ -339,7 +339,7 @@ class RestaurantController extends BaseController
           
             try {
                 $itemData = [
-                    'photo' => 'items/'.$filename,
+                    'photo' => tenant_asset('items/'.$filename),
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'description' =>trans_json( $request->input('description_en'), $request->input('description_ar')),
