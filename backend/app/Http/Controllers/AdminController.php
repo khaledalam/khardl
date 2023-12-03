@@ -61,6 +61,7 @@ class AdminController extends Controller
     public function addUser()
     {
         $user = Auth::user();
+    
         return view('admin.add-user', compact('user'));
     }
 
@@ -130,11 +131,11 @@ class AdminController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->role = 10;
-        $user->phone_number = $request->phone_number;
+        $user->position =$request->position;
+        $user->phone = $request->phone;
 
         $user->save();
-
+        $user->assignRole('Administrator');
         $permissions = [
             'can_access_restaurants',
             'can_view_restaurants',
@@ -166,9 +167,9 @@ class AdminController extends Controller
         ]);
 
         if(app()->getLocale() === 'en')
-            return redirect()->back()->with('success', 'Admin added successfully');
+            return redirect()->route('user-management')->with('success', 'Admin added successfully');
         else
-            return redirect()->back()->with('success', 'تمت إضافة المسؤول بنجاح');
+            return redirect()->route('user-management')->with('success', 'تمت إضافة المسؤول بنجاح');
     }
 
 
@@ -190,7 +191,7 @@ class AdminController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'phone_number' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
         ]);
 
         $loggedUserId = Auth::id();
@@ -204,7 +205,7 @@ class AdminController extends Controller
         $user->first_name = $validatedData['first_name'];
         $user->last_name = $validatedData['last_name'];
         $user->email = $validatedData['email'];
-        $user->phone_number = $validatedData['phone_number'];
+        $user->phone = $validatedData['phone'];
         if($request->input('password') != ""){
             $user->password = Hash::make($request->input('password'));
         }
@@ -296,7 +297,7 @@ class AdminController extends Controller
         
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has activate restaurant with an ID of: ' . $restaurant->id,
+            'action' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['id'=>$restaurant->id])."> $restaurant->id </a>",
         ]);
 
         return redirect()->route('admin.view-restaurants',['id'=>$restaurant->id])->with('success', __("Restaurant has been activated successfully."));
@@ -389,7 +390,9 @@ class AdminController extends Controller
 
     public function userManagement()
     {
-        $users = User::where('role', 10)
+        $users = User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })
         ->paginate(15);
         $user = Auth::user();
         $logs = Log::orderBy('created_at', 'desc')->get();
@@ -398,7 +401,7 @@ class AdminController extends Controller
     }
 
     public function userManagementEdit($id){
-
+       
         $user = User::findOrFail($id);
 
         if($user->role != 10){
@@ -439,7 +442,7 @@ class AdminController extends Controller
 
         $selectedUser->first_name = $request->input('first_name');
         $selectedUser->last_name = $request->input('last_name');
-        $selectedUser->phone_number = $request->input('phone_number');
+        $selectedUser->phone = $request->input('phone');
         $selectedUser->email = $request->input('email');
 
         $permissions = [
@@ -454,7 +457,7 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
-            'can_update_restaurant_settings',
+            
         ];
 
         $updateData = [];

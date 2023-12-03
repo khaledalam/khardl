@@ -88,7 +88,7 @@ class UserSeeder extends Seeder
             'can_see_logs'=> true,
             'can_settings'=> true,
             'can_edit_profile'=> true,
-            'can_update_restaurant_settings'=>true
+            
         ]);
 
     }

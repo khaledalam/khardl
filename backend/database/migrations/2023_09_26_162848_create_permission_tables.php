@@ -42,7 +42,6 @@ class CreatePermissionTables extends Migration
             $table->boolean('can_see_logs')->default(false);
             $table->boolean('can_settings')->default(false);
             $table->boolean('can_edit_profile')->default(false);
-            $table->boolean('can_update_restaurant_settings')->default(false);
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
