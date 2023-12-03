@@ -8,6 +8,9 @@ import MenuItems from "./components/menuItems";
 import { useTranslation } from "react-i18next";
 import Logo from './components/Logo';
 import AxiosInstance from "../../../axios/axios";
+import {useDispatch} from "react-redux";
+import { changeStyleDataRestaurant } from '../../../redux/editor/styleDataRestaurantSlice';
+
 
 const RestaurantHomePage = () => {
     const Language = sessionStorage.getItem('Language') || 'en';
@@ -18,8 +21,7 @@ const RestaurantHomePage = () => {
     const [categories, setCategories] = useState([]);
     const [styleData, setStyleData] = useState(null);
 
-    console.log("hererer >> " , styleData);
-
+    const dispatch = useDispatch()
 
     const fetchData = async () => {
         try {
@@ -38,9 +40,8 @@ const RestaurantHomePage = () => {
             console.log("editor rest restaurantStyleResponse >>>", restaurantStyleResponse.data)
             if (restaurantStyleResponse.data) {
                 setStyleData(restaurantStyleResponse.data?.data);
-
+                dispatch(changeStyleDataRestaurant(restaurantStyleResponse.data?.data));
             }
-
 
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
@@ -69,9 +70,8 @@ const RestaurantHomePage = () => {
 
     const categoriesForBranch = categories.filter(category => category.branch_id === branch.branch_id);
     return (
-      <div className="w-[100%] bg-white"  style={{fontFamily: `${styleData?.selectedFont}`}}>
-      <Header buttonsProps={styleData?.buttons} />
-      <div className=''>
+      <div className="w-[100%] bg-white" style={{fontFamily: `${styleData?.font_family}`}}>
+          <div className=''>
         <div className={`${styleData?.logo_alignment === "Center" ? "justify-center" : ""}
         ${styleData?.logo_alignment === "Left" && Language === "en" ? "justify-start" : styleData?.logo_alignment === "Left" ? "justify-end":""}
         ${styleData?.logo_alignment === "Right" && Language === "en" ? "justify-end" : styleData?.logo_alignment === "Right" ? "justify-start":""}
@@ -84,37 +84,39 @@ const RestaurantHomePage = () => {
             </div>
           </div>
         </div>
-        <Hero banner_style={styleData?.banner_style} imageProps={styleData?.banner_image} />
+        <Hero styleData={styleData} />
       </div>
-      <div className="flex justify-center mt-[30px] mb-[50px] xl:mx-[150px]">
+      <div className="justify-center mt-[30px] mb-[50px] xl:mx-[150px]">
         <div>
           <div>
-            <div className={`px-[30px] text-xl`}>
-
+            <div className={`px-[30px] text-xl `} style={{
+                minWidth: '650px',
+                marginBottom: '200px'
+            }}>
                 {categoriesForBranch?.length > 0 ?
-                    <>
-                        <h2>Categories:</h2>
                     <Taps
+                        styleData={styleData}
                 contentClassName={`
-        bg-[var(--secondary)] ${styleData?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
+        bg-[var(--secondary)] mb-5 ${styleData?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
         ${styleData?.category_style === "Right" || styleData?.category_style === "Left" ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
                 {categoriesForBranch.map((category, i) => (
                   <Tap
+                      key={i}
                     component={
-                      <MenuItems
-                        items={category?.items}
-                      />
+                        category?.items?.length > 0
+                            ? <MenuItems items={category?.items} />
+                             : <h2 style={{color: 'var(--primary)'}}>{t("No items in this category")}</h2>
                     }
                     contentClassName="text-black">
                     {category?.name}
                   </Tap>
                 ))}
-              </Taps></> : <h2>No categories yet!</h2>}
+              </Taps> : <h2>No categories yet!</h2>}
             </div>
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer styleData={styleData} />
     </div>
     );
 };

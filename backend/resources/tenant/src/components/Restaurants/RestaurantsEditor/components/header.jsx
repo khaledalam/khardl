@@ -20,9 +20,13 @@ function Header() {
     const [isMenuOpen, setMenuOpen] = useState(false);
     const divWidth = useSelector((state) => state.divWidth.value);
 
+    const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant);
 
+    if (!styleDataRestaurant) return;
 
-  
+    console.log("styleDataRestaurant >> ", styleDataRestaurant);
+    console.log("buttons >> ", buttons);
+
 
 
     function showMeDetailesItem() {
@@ -125,6 +129,7 @@ function Header() {
             </div>
         );
     };
+
 
     return (
         <div className={`flex items-start justify-between ${divWidth <= 400 ? "px-2" : ""} p-[10px] px-4 bg-[var(--secondary)]`}>

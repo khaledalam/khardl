@@ -32,8 +32,8 @@ return new class extends Migration
             $table->json('left_side_button');
             $table->json('right_side_button');
             $table->json('center_side_button');
-    
-     
+
+
             $table->timestamps();
 
              // Foreign key constraints

@@ -43,8 +43,8 @@
                         <!--end::Aside mobile toggle-->
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                            <a href="demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="assets/media/logos/logo-2.svg" class="h-30px" />
+                            <a href="/" class="d-lg-none">
+                                <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->
@@ -91,7 +91,7 @@
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 <!--begin::Avatar-->
                                                 <div class="symbol symbol-50px me-5">
-                                                    <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+                                                    <img alt="Logo" src="{{ global_asset('img/logo.png') }}" />
                                                 </div>
                                                 <!--end::Avatar-->
                                                 <!--begin::Username-->

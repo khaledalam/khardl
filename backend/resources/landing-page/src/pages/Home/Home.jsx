@@ -1,11 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import Hero from './Components/Hero';
-import Clients from '../../components/Clients/Clients';
-import RequestPoint from '../../components/RequestPointSection/RequestPoint';
 import Features from '../../components/FeaturesSection/Features';
 import ContactUs from '../../components/ContactUsSection/ContactUs';
-import {Link} from "react-router-dom";
 
 const Home = () => {
 

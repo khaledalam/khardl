@@ -109,7 +109,7 @@ const VerificationPhone = () => {
    }, [])
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{
@@ -206,7 +206,7 @@ const VerificationPhone = () => {
                            >
                               {t('Enter the code sent to you')}
                            </label>
-                          
+
                            <input
                               type='text'
                               className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
