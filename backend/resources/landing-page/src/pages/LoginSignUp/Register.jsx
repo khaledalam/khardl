@@ -66,7 +66,7 @@ const Register = () => {
          //    console.log(error.response.data.errors[field][0]);
          //    setError(field, {'message':error.response.data.errors[field][0]});
          // });
-         toast.error(`${t('Account creation failed')}`);
+         toast.error(`${t(error.response.data.message)}`);
       }
 
    }
@@ -137,7 +137,6 @@ const Register = () => {
                                  <h4 className='ms-2 text-[13px] font-semibold'>
                                     {t('Restaurant name')}
                                  </h4>
-                                  <small className={'mb-2 ms-2'} style={{color: 'red'}}>This will be the prefix of your restaurant subdomain </small>
                                  <input
                                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                     placeholder={t('Restaurant name')}
@@ -201,7 +200,8 @@ const Register = () => {
                                     {...register('phone', {
                                        required: true,
                                     })}
-                                    maxLength={12}
+                                    minLength={9}
+                                    maxLength={13}
                                  />
                                  {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>

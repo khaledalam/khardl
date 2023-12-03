@@ -128,7 +128,7 @@
 
                         <!--begin::Name-->
                         <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
-                            {{ $restaurant?->primary_domain?->domain }}
+                            {{ $restaurant?->restaurant_name }}
                             @if($restaurant?->is_live())<span class="badge badge-light-success fw-bolder">{{ __('messages.live')}}</span>
                             @elseif ($restaurant->status == "active")<span class="badge badge-light-warning fw-bolder">{{ __('messages.pending')}}</span>
                             @else 

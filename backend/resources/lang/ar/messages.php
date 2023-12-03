@@ -226,7 +226,8 @@ return [
     'services' => 'خدمات',
     'payments' => 'مدفوعات',
     'live' => 'مفعل',
-    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد'
+    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
+    'not_live'=>'غير مفعل',
 
 ];
 

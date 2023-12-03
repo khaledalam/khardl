@@ -159,21 +159,32 @@
                                             @foreach ($items as $item)
                                               <tr>
                                                 <td>
-                                                        @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>@endif
+                                                    @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>
+                                                    @else
+                                                    <span class="badge badge-success mx-1">Available</span>
+                                                    @endif
+                                                 </td>
+                                                <td>
+                                                     <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
+                                                    title="Melody Macy">
+                                                    <img alt="Pic" src="{{$item->photo}}" />
+                                                </div>
+                                                </td>
+                                               
+                                                 <!--begin::Title-->
+                                                 <td  class="text-center">
+                                                    <div class="text-dark">
+                                                        <!--begin::Heading-->
+                                                        <span class="fw-bolder text-start">{{ $item->description }}</span>
+                                                        <!--end::Heading-->
+                                                    </div>
                                                 </td>
                                                   <!--begin::Author-->
                                                   <td class="text-center">
-                                                      <span class="text-gray fw-bold fs-17">123-2023</span>
+                                                      <span class="text-gray fw-bold fs-17">{{$item->price}}</span>
                                                   </td>
                                                   <!--end::Author-->
-                                                  <!--begin::Title-->
-                                                  <td  class="text-center">
-                                                      <div class="text-dark">
-                                                          <!--begin::Heading-->
-                                                          <span class="fw-bolder text-start">{{ $item->description }}</span>
-                                                          <!--end::Heading-->
-                                                      </div>
-                                                  </td>
+                                                 
                                                   <!--end::Title-->
                                                   <!--begin::Date-->
                                                   <td class="text-center">
