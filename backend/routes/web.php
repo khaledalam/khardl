@@ -203,6 +203,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
                     Route::get('/edit-profile', [AdminController::class, 'editProfile'])->middleware('permission:can_edit_profile')->name('admin.edit-profile');
                     Route::post('/profile', [AdminController::class, 'updateProfile'])->middleware('permission:can_edit_profile')->name('admin.profile-update');
+                    Route::put('/restaurants/{restaurant}/activate', [AdminController::class, 'activateRestaurant'])->middleware('permission:can_approve_restaurants')->name('admin.restaurant.activate');
                     Route::get('/download/file/{path?}',function($path){
                         try{
                             return response()->download(storage_path("app/$path"));

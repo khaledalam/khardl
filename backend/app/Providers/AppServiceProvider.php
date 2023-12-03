@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         
         View::share('link', request()->segment(1));
+        View::share('admin_link', request()->segment(2));
 
     }
 }

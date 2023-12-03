@@ -236,7 +236,8 @@ return [
     'services' => 'Services',
     'payments' => 'Payments',
     'live' => 'Live',
-    'not_upload_register_files' => 'Not Upload Register Files'
+    'not_upload_register_files' => 'Not Upload Register Files',
+    'not_live'=>"Not live"
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

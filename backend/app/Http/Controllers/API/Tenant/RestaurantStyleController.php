@@ -39,12 +39,12 @@ class RestaurantStyleController extends Controller
 
         ]);
 
-        $logo = store_image($request->file('logo'),RestaurantStyle::STORAGE,'logo');
+        $logo = tenant_asset(store_image($request->file('logo'),RestaurantStyle::STORAGE,'logo')) ;
         if($request->banner_image){
-            $banner_image= store_image($request->file('banner_image'),RestaurantStyle::STORAGE,'banner_image');
+            $banner_image= tenant_asset(store_image($request->file('banner_image'),RestaurantStyle::STORAGE,'banner_image'));
         }else {
             foreach($request->banner_images as $k=>$image ){
-                $banner_images[]= store_image($image,RestaurantStyle::STORAGE,'banner_image_'.$k+1);
+                $banner_images[]= tenant_asset(store_image($image,RestaurantStyle::STORAGE,'banner_image_'.$k+1));
             }
         }
         RestaurantStyle::updateOrCreate([
@@ -56,8 +56,8 @@ class RestaurantStyleController extends Controller
             'category_style' => $request->category_style,
             'banner_style' => $request->banner_style,
             'banner_image' => isset($banner_image)?$banner_image: null,
-            'banner_images' => (isset($banner_images))?json_encode($banner_images): null,
-            'social_medias' =>  json_encode($request->social_medias),
+            'banner_images' => (isset($banner_images))?$banner_images: null,
+            'social_medias' =>  $request->social_medias,
             'phone_number' => $request->phone_number,
             'primary_color' => $request->primary_color,
             'buttons_style' => $request->buttons_style,
@@ -66,9 +66,9 @@ class RestaurantStyleController extends Controller
             'font_type' =>$request->font_type,
             'font_size' => $request->font_size,
             'font_alignment' =>$request->font_alignment,
-            'left_side_button'=>json_encode($request->left_side_button),
-            'right_side_button'=>json_encode($request->right_side_button),
-            "center_side_button"=>json_encode($request->center_side_button),
+            'left_side_button'=>$request->left_side_button,
+            'right_side_button'=>$request->right_side_button,
+            "center_side_button"=>$request->center_side_button,
             'user_id'=> Auth::user()->id
         ]);
 
@@ -82,9 +82,9 @@ class RestaurantStyleController extends Controller
 
         if ($data instanceof RestaurantStyle) {
             $data['buttons'] = [
-                json_decode($data->left_side_button),
-                json_decode($data->center_side_button),
-                json_decode($data->right_side_button)
+                $data->left_side_button,
+                $data->center_side_button,
+                $data->right_side_button,
             ];
         }
 

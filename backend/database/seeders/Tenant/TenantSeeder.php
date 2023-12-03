@@ -3,7 +3,8 @@
 namespace Database\Seeders\Tenant;
 
 use Illuminate\Database\Seeder;
-
+use App\Actions\CreateTenantAction;
+use App\Models\Tenant;
 
 class TenantSeeder extends Seeder
 {
@@ -14,6 +15,14 @@ class TenantSeeder extends Seeder
      */
     public function run()
     {
+
+        $assets = tenant_route(
+        // subdomain
+            CreateTenantAction::generateSubdomain(Tenant::latest()->first()->restaurant_name)
+        // domain
+            .'.'.config("tenancy.central_domains")[0]
+        // route
+            ,'stancl.tenancy.asset') . '/';
 
         $this->call([
             SettingSeeder::class,
@@ -29,6 +38,11 @@ class TenantSeeder extends Seeder
 
             // make sure UserSeeder run before CategoryItemSeeder
             CategoryItemSeeder::class,
+
+            PaymentMethodSeeder::class,
+            OrderSeeder::class,
+        ],false,[
+            'assets'=>$assets
         ]);
 
     }

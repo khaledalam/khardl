@@ -34,8 +34,8 @@ class Item extends Model
         'availability'
     ];
     public $translatable = ['description'];
-    public function getPhotoAttribute(){
-        return tenant_asset($this->attributes['photo']);
-    }
+    const STORAGE = "items";
+    const STORAGE_SEEDER = "seeders/items";
+    
 
 }

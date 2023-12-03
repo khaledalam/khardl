@@ -14,7 +14,7 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         Setting::create([
-            'is_live'=>true
+            'is_live'=>false
         ]);
     }
 }
