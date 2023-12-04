@@ -57,7 +57,7 @@ const LoginTrial = () => {
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{
@@ -150,7 +150,7 @@ const LoginTrial = () => {
                                  </button>
                               </div>
                            </form>
-                          
+
                         </div>
                      </div>
                      {spinner && (

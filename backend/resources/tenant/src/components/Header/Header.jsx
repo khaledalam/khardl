@@ -27,8 +27,6 @@ const Header = () => {
     const auth = useSelector((state) => state.auth)
    const navigate = useNavigate()
 
-    console.log("isLoggedIn > ", isLoggedIn);
-    console.log("auth > ", auth);
 
     const redirectToDashboard = () => {
       // Redirect to an external URL (window.location.href)
@@ -40,7 +38,6 @@ const Header = () => {
       try {
          await dispatch(logout({ method: 'POST' })).unwrap()
              .then(res => {
-                 console.log("logout resss ", res);
                  setStatusCode(HTTP_NOT_AUTHENTICATED)
                  setStatusCode(HTTP_NOT_AUTHENTICATED)
                  navigate('/login', { replace: true })
@@ -113,60 +110,53 @@ const Header = () => {
                </label>
             </div>
             <div className='flex justify-start items-center'>
-               <Link to='/' className='flex justify-start items-center gap-2'>
-                  <img
-                     className={`w-[43px]`}
-                     src={Logo}
-                     alt='logo-img'
-                     loading='lazy'
-                  />
-               </Link>
+               {/*<Link to='/' className='flex justify-start items-center gap-2'>*/}
+               {/*   <img*/}
+               {/*      className={`w-[43px]`}*/}
+               {/*      src={Logo}*/}
+               {/*      alt='logo-img'*/}
+               {/*      loading='lazy'*/}
+               {/*   />*/}
+               {/*</Link>*/}
             </div>
             <div className='hidden min-[1000px]:flex'>
                 <ul className='flex space-x-8'>
-                    <Li
-                        link='/'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Home')}
-                        activeLink={activeLink}
-                        className='ml-6'
-                    />
-                    <Li
-                        link='/advantages'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Advantages')}
-                        activeLink={activeLink}
-                    />
-                    <Li
-                        link='/clients'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Clients')}
-                        activeLink={activeLink}
-                    />
-                    <Li
-                        link='/services'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Services')}
-                        activeLink={activeLink}
-                    />
-                    <Li
-                        link='/prices'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('Prices')}
-                        activeLink={activeLink}
-                    />
-                    <Li
-                        link='/fqa'
-                        handleLinkClick={handleLinkClick}
-                        close={closeDrawerHandler}
-                        title={t('FQA')}
-                        activeLink={activeLink}
-                    />
+                    {/*<Li*/}
+                    {/*    link='/'*/}
+                    {/*    handleLinkClick={handleLinkClick}*/}
+                    {/*    close={closeDrawerHandler}*/}
+                    {/*    title={t('Home')}*/}
+                    {/*    activeLink={activeLink}*/}
+                    {/*    className='ml-6'*/}
+                    {/*/>*/}
+                    {/*<Li*/}
+                    {/*    link='/advantages'*/}
+                    {/*    handleLinkClick={handleLinkClick}*/}
+                    {/*    close={closeDrawerHandler}*/}
+                    {/*    title={t('Advantages')}*/}
+                    {/*    activeLink={activeLink}*/}
+                    {/*/>*/}
+                    {/*<Li*/}
+                    {/*    link='/services'*/}
+                    {/*    handleLinkClick={handleLinkClick}*/}
+                    {/*    close={closeDrawerHandler}*/}
+                    {/*    title={t('Services')}*/}
+                    {/*    activeLink={activeLink}*/}
+                    {/*/>*/}
+                    {/*<Li*/}
+                    {/*    link='/prices'*/}
+                    {/*    handleLinkClick={handleLinkClick}*/}
+                    {/*    close={closeDrawerHandler}*/}
+                    {/*    title={t('Prices')}*/}
+                    {/*    activeLink={activeLink}*/}
+                    {/*/>*/}
+                    {/*<Li*/}
+                    {/*    link='/fqa'*/}
+                    {/*    handleLinkClick={handleLinkClick}*/}
+                    {/*    close={closeDrawerHandler}*/}
+                    {/*    title={t('FQA')}*/}
+                    {/*    activeLink={activeLink}*/}
+                    {/*/>*/}
                 </ul>
             </div>
             {isMobile && (
@@ -234,17 +224,23 @@ const Header = () => {
                   {/*      title={t('Home')}*/}
                   {/*      activeLink={activeLink}*/}
                   {/*   />*/}
-
                   {/*</ul>*/}
                   <div className='mt-6 w-[100%]'>
                      <Languages />
                      <div className='relative flex flex-col items-center gap-2 justify-center mt-4'>
                         {isLoggedIn ? (
+                           <>
+                           <Button
+                               onClick={redirectToDashboard}
+                               title={t('Dashboard')}
+                               classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
+                           />
                            <Button
                               title={t('Logout')}
                               onClick={handleLogout}
-                              classContainer='!w-100 !px-[16px] !font-medium'
+                              classContainer='!w-100 !px-[16px] !font-medium !bg-[var(--danger)]'
                            />
+                           </>
                         ) : (
                            <>
                               <Button

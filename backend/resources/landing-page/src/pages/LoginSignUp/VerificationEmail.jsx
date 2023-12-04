@@ -52,7 +52,7 @@ const VerificationEmail = () => {
          })
          if (response.data) {
             toast.success(`${t('The code has been re-sent successfully')}`)
-            
+
          } else {
             throw new Error(`${t('Code resend failed')}`)
          }
@@ -111,7 +111,7 @@ const VerificationEmail = () => {
    }, [])
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{
@@ -237,7 +237,7 @@ const VerificationEmail = () => {
                            </button>
                         </div>
                      </form>
-                     
+
                   </div>
                </div>
             </div>

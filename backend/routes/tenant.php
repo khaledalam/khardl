@@ -101,6 +101,16 @@ Route::group([
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
+                Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
+                Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
+                Route::get('/customers-data', [RestaurantController::class, 'customers_data'])->name('restaurant.customers_data');
+                Route::get('/customers-settings', [RestaurantController::class, 'customers_settings'])->name('restaurant.customers_settings');
+
+                Route::get('/orders-all', [RestaurantController::class, 'orders_all'])->name('restaurant.orders_all');
+                Route::get('/orders-add', [RestaurantController::class, 'orders_add'])->name('restaurant.orders_add');
+                Route::get('/products-out-of-stock', [RestaurantController::class, 'products_out_of_stock'])->name('restaurant.products_out_of_stock');
+                Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
+
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
                 Route::any('/callback',[TapController::class, 'callback'])->name('tap.callback');

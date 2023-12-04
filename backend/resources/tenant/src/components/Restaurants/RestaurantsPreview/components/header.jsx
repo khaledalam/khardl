@@ -1,36 +1,64 @@
 
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { MdOutlineDeliveryDining } from 'react-icons/md';
 import { MdOutlineDoneAll } from 'react-icons/md';
 import { LiaShoppingCartSolid } from 'react-icons/lia';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Model from './Model';
 import Login from './Login';
+import Languages from "../../../Languages";
+import Button from "../../../Button";
+import {setIsOpen} from "../../../../redux/features/drawerSlice";
+import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {useAuthContext} from "../../../context/AuthContext";
+import {logout} from "../../../../redux/auth/authSlice";
+import {HTTP_NOT_AUTHENTICATED} from "../../../../config";
+import {toast} from "react-toastify";
+import AxiosInstance from "../../../../axios/axios";
+import {changeStyleDataRestaurant} from "../../../../redux/editor/styleDataRestaurantSlice";
 
-function Header(props) {
-
-    const {buttonsProps} = props;
-
-
-    console.log(">>> >> " , buttonsProps );
-
+function Header() {
 
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isOpenModel1, setIsOpenModel1] = useState(null);
     const [isOpenModel2, setIsOpenModel2] = useState(null);
     const [showDetailesItem, setShowDetailesItem] = useState(false);
-    const buttons = buttonsProps || JSON.parse(sessionStorage.getItem('buttons'));
-    const shapeImageShape = sessionStorage.getItem('shapeImageShape');
-    const previewImage = sessionStorage.getItem('previewImage');
+
+
+
+
+    useEffect(() => {
+        fetchData().then(r => null);
+    }, []);
+
+    const dispatch = useDispatch()
+    const { t } = useTranslation()
+    const { setStatusCode } = useAuthContext()
     const cartItems = useSelector((state) => state.cart.items);
-    const GlobalColor = sessionStorage.getItem('globalColor');
-    const handleModelClick1 = buttonId => {
-        setIsOpenModel1(buttonId);
-    };
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+    const navigate = useNavigate()
+    const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
+    const GlobalColor = styleDataRestaurant?.primary_color || sessionStorage.getItem('globalColor');
+
+
     const handleModelClick2 = buttonId => {
         setIsOpenModel2(buttonId);
     };
 
+    const fetchData = async () => {
+        try {
+            const restaurantStyleResponse = await AxiosInstance.get(`restaurant-style`)
+
+            if (restaurantStyleResponse.data) {
+                dispatch(changeStyleDataRestaurant(restaurantStyleResponse.data?.data));
+            }
+
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
+    };
     function showMeDetailesItem() {
         if (!showDetailesItem) {
             setShowDetailesItem(true);
@@ -43,12 +71,31 @@ function Header(props) {
     };
 
 
-    console.log(">>> " , buttons );
+    const redirectToDashboard = () => {
+        // Redirect to an external URL (window.location.href)
+        window.location.href = '/dashboard';
+    };
+    const handleLogout = async (e) => {
+        e.preventDefault()
 
-    // return;
+        try {
+            await dispatch(logout({ method: 'POST' })).unwrap()
+                .then(res => {
+                    setStatusCode(HTTP_NOT_AUTHENTICATED)
+                    setStatusCode(HTTP_NOT_AUTHENTICATED)
+                    navigate('/login', { replace: true })
+                    toast.success('Logged out successfully')
+                })
+        } catch (err) {
+            console.error(err.message)
+            toast.error(`${t('Logout failed')}`)
+        }
+        dispatch(setIsOpen(false))
+    }
 
+    if (!styleDataRestaurant) return;
 
-
+    const buttons = styleDataRestaurant?.buttons || JSON.parse(sessionStorage.getItem('buttons'));
 
     return (
         <div className={`flex items-start justify-between p-[12px] px-8 bg-[var(--secondary)]`}>
@@ -69,31 +116,16 @@ function Header(props) {
 
                 <div className={`lg:flex items-center justify-between gap-2 ${isMenuOpen ? 'block' : 'hidden'}`}>
                     <div className='flex max-lg:flex-col max-lg:mt-14 gap-2'>
-                        <button
-                            className='relative p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
-                            onClick={handleModelClick1}
-                            style={{
-                                border: `1px solid ${buttons[0]?.color || ''}`,
-                                backgroundColor: 'transparent',
-                                borderRadius: buttons[0]?.shape || '',
-                            }}>
-                            <MdOutlineDeliveryDining size={20} />
-                            {isOpenModel1 ? (
-                                <Model
-                                    buttonId={1}
-                                />
-                            ) : <div></div>}
-                            <div>{buttons[0]?.text || ''}</div>
-                        </button>
+
                         {isOpenModel1 !== null && (
-                            <button
+                            <span
                                 onClick={() => setIsOpenModel1(null)}
                                 className='w-full h-full fixed inset-0 z-[80] transition-all duration-500'
                                 style={{ display: isOpenModel1 ? 'block' : 'none' }}
                             >
-                            </button>
+                            </span>
                         )}
-                        <button
+                        <span
                             className='relative p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                             onClick={handleModelClick2}
                             style={{
@@ -108,15 +140,15 @@ function Header(props) {
                                     buttonId={2}
                                 />
                             ) : <div></div>}
-                            <div>{buttons[1]?.text || ''}</div>
-                        </button>
+                            <div>{t(buttons[1]?.text) || ''}</div>
+                        </span>
                         {isOpenModel2 !== null && (
-                            <button
+                            <span
                                 onClick={() => setIsOpenModel2(null)}
                                 className='w-full h-full fixed inset-0 z-[80] transition-all duration-500'
                                 style={{ display: isOpenModel2 ? 'block' : 'none' }}
                             >
-                            </button>
+                            </span>
                         )}
                     </div>
                 </div>
@@ -129,17 +161,17 @@ function Header(props) {
                     }}
                 >
                     <LiaShoppingCartSolid size={26} />
-                    <button
+                    <span
                         className='absolute top-[-7px] right-[-6px] text-[10px] text-bold h-[20px] w-[20px] rounded-full bg-red-500 text-white'>
                         <div>{cartItems.length}</div>
-                    </button>
+                    </span>
                 </button>
                 <button
                     className='p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                     style={{ background: `${buttons[2]?.color || ''}`, borderRadius: buttons[2]?.shape || '' }}
                     onClick={showMeDetailesItem}
                     >
-                    {buttons[2]?.text || ''}
+                    {t(buttons[2]?.text) || ''}
                 </button>
                 {showDetailesItem &&
                     <Login
@@ -148,6 +180,47 @@ function Header(props) {
                     />
                 }
             </div>
+
+            <div className='flex items-center justify-between gap-2'>
+                <Languages />
+                <div className='relative flex items-center gap-2 justify-center'>
+                    {isLoggedIn ? (
+                        <>
+                            <Button
+                                onClick={redirectToDashboard}
+                                title={t('Dashboard')}
+                                classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
+                            />
+                            <Button
+                                title={t('Logout')}
+                                onClick={handleLogout}
+                                classContainer='!w-100 !px-[16px] !font-medium !bg-[var(--danger)]'
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Button
+                                title={t('Create an account')}
+                                link='/register'
+                                onClick={() => dispatch(setIsOpen(false))}
+                                classContainer='!w-100 !px-[25px]'
+                            />
+                            <Button
+                                title={t('Login')}
+                                link='/login'
+                                onClick={() => dispatch(setIsOpen(false))}
+                                classContainer='!w-100 !px-[16px] !font-medium'
+                                style={{
+                                    border: `1px solid ${buttons[0]?.color || ''}`,
+                                    backgroundColor: 'transparent',
+                                    borderRadius: buttons[0]?.shape || '',
+                                }}
+                            />
+                        </>
+                    )}
+                </div>
+            </div>
+
         </div>
     );
 }
