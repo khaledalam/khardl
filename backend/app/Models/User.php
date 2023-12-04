@@ -34,7 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'last_login',
 
     ];
-
+    const STORAGE ="user_files";
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -745,8 +745,18 @@
                         </div>
                         <hr>
                       
-                      
-
+                        <div class="row mb-7">
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.download-all-files') }}</label>
+                        <div class="col-lg-8">
+                            <a href="{{ route('download.file',  ['path' => \App\Models\User::STORAGE .'/'. $restaurant->user->id ]) }}" class="btn btn-success">
+                                <i class="fas fa-download me-1"></i> {{ __('messages.download') }}
+                                <span class="badge bg-secondary ms-1">
+                                    5 {{ __('messages.files') }}
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    
                         <!--begin::Input group-->
                         <div class="row mb-7">
                             <!--begin::Label-->

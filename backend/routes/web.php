@@ -15,6 +15,7 @@ use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
 
 
@@ -204,14 +205,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/edit-profile', [AdminController::class, 'editProfile'])->middleware('permission:can_edit_profile')->name('admin.edit-profile');
                     Route::post('/profile', [AdminController::class, 'updateProfile'])->middleware('permission:can_edit_profile')->name('admin.profile-update');
                     Route::put('/restaurants/{restaurant}/activate', [AdminController::class, 'activateRestaurant'])->middleware('permission:can_approve_restaurants')->name('admin.restaurant.activate');
-                    Route::get('/download/file/{path?}',function($path){
-                        try{
-                            return response()->download(storage_path("app/$path"));
-                        }catch(Exception $e){
-                            return redirect()->back()->with('error',__('File not exists !'));
-                        }
-
-                    })
+                    Route::get('/download/file/{path?}',[DownloadController::class,'download'])
                     ->where('path', '(.*)')
                     ->name("download.file");
                 });
