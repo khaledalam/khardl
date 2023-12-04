@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Tenant\Setting;
 use App\Models\User;
+use App\Models\Tenant\Setting;
+use App\Http\Resources\API\Tenant\OrderResource;
+use App\Models\Tenant\Order;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -60,6 +62,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $this->run(static function(): bool {
             return Setting::first()->is_live;
+        });
+    }
+    public function orders()
+    {
+        return $this->run(static function() {
+            return  OrderResource::collection(Order::all());
         });
     }
 }

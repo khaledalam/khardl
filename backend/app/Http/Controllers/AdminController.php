@@ -267,7 +267,7 @@ class AdminController extends Controller
 
         $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
         $logo ="";
-        $is_live = false;
+        $is_live= false;
         $restaurant->run(static function()use(&$logo,&$is_live){
             $is_live = Setting::first()->is_live;
             if($is_live){
@@ -280,13 +280,14 @@ class AdminController extends Controller
         });
         
         $owner =  $restaurant->user;
+        $widget = 'overview';
         $user = Auth::user();
         // if($restaurant->role == 0){
         //     return view('admin.view-restaurant', compact('restaurant'));
         // }else{
         //     return abort(404);
         // }
-        return view('admin.view-restaurant', compact('restaurant','user','logo','is_live','owner'));
+        return view('admin.view-restaurant', compact('restaurant','widget','user','logo','is_live','owner'));
 
     }
     public function activateRestaurant(Tenant $restaurant){
@@ -306,18 +307,15 @@ class AdminController extends Controller
 
     }
 
-    public function viewRestaurantOrders($id){
-
-        $restaurant = User::findOrFail($id);
-
-        if($restaurant->role == 0){
-            $orders = DB::table('orders')
-            ->where('user_id', $id)
-            ->get();
-
-            return view('admin.view-restaurant-orders', compact('restaurant', 'orders'));
-        }
-        return abort(404);
+    public function viewRestaurantOrders( $id){
+       
+        $restaurant = Tenant::findOrFail($id);
+        $is_live = $restaurant->is_live();
+        $owner =  $restaurant->user;
+        $orders = $restaurant->orders();
+        $user = Auth::user();
+        $widget = 'orders';
+        return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live'));
     }
 
     public function deleteRestaurant($id)
