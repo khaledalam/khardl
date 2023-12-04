@@ -170,7 +170,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
             Route::middleware(['role:Restaurant Owner', 'notAccepted'])->group(function () {
 
-                Route::get('complete-register', static function(){
+            Route::get('complete-register', static function(){
                     return view("central");
                 })->name("complete-register");
                 Route::post('register-step2', [RegisterController::class, 'stepTwo']);
@@ -178,7 +178,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
             Route::middleware(['accepted'])->group(function () {
                 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
-                Route::prefix('admin')->middleware('admin')->group(function () {
+                Route::prefix('admin')->middleware(['admin'])->group(function () {
                     Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('permission:can_access_dashboard')->name('admin.dashboard');
                     Route::get('/download-commercial-registration/{filename}', [AdminController::class, 'downloadCommercialRegistration'])->middleware('permission:can_view_restaurants')->name('download.commercial');
                     Route::get('/download-delivery-contract/{filename}', [AdminController::class, 'downloadDeliveryContract'])->middleware('permission:can_view_restaurants')->name('download.delivery');
@@ -208,6 +208,8 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/download/file/{path?}',[DownloadController::class,'download'])
                     ->where('path', '(.*)')
                     ->name("download.file");
+                    Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('admin.toggle-status');
+
                 });
 
             });

@@ -85,6 +85,15 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a> --}}
+                  <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 toggle-status-btn" data-user-id="{{ $admin->id }}">
+                    <span class="svg-icon svg-icon-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input toggle-status-switch" type="checkbox" role="switch" id="flexSwitchCheck{{ $admin->id }}" {{ !$admin->isBlocked() ? 'checked' : '' }}>
+                            <label class="form-check-label" for="flexSwitchCheck{{ $admin->id }}"></label>
+                        </div>
+                    </span>
+                </a>
+                
                   <a href="{{ route('admin.user-management-edit', ['id' => $admin->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                     <span class="svg-icon svg-icon-3">
@@ -95,6 +104,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a>
+                 
                   <form class="delete-form" action="{{ route('admin.delete-user', ['id' => $admin->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
@@ -131,6 +141,7 @@
 <!--end::Post-->
  </div>
  <!--end::Content-->
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
  <script>
   var deleteButtons = document.querySelectorAll('.delete-button');
@@ -158,5 +169,31 @@
               });
 </script>
 
+<script>
+  $(document).ready(function () {
+        $('.toggle-status-btn').click(function (event) {
+            event.preventDefault();
 
+            const userId = $(this).data('user-id');
+            const switchCheckbox = $(`#flexSwitchCheck${userId}`);
+
+            // Make an AJAX request to toggle the status
+            $.ajax({
+                url: '{{ route('admin.toggle-status', ['user' => '__user_id__']) }}'.replace('__user_id__', userId),
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    '_token': '{{ csrf_token() }}', // Include the CSRF token
+                },
+                success: function (response) {
+                    // Update the switch state based on the new status
+                    switchCheckbox.prop('checked', !response.isBlocked);
+                },
+                error: function (error) {
+                    console.error('Error toggling user status:', error);
+                }
+            });
+        });
+    });
+</script>
 @endsection

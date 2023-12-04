@@ -65,6 +65,9 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function isBlocked(){
         return $this->status == 'blocked';
     }
+    public function isActive(){
+        return $this->status == 'active';
+    }
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";

@@ -649,4 +649,12 @@ class AdminController extends Controller
         }
 
     }
+    public function toggleStatus(User $user)
+    {
+        // Toggle the user status
+        $user->update(['status' => ($user->isBlocked())?'active':'blocked']);
+
+        return response()->json(['isBlocked' => $user->isBlocked()]);
+    }
+
 }
