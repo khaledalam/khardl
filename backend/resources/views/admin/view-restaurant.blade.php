@@ -58,7 +58,7 @@
                                                     <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                            <!--end::Svg Icon-->{{  $user->first_name }} {{  $user->last_name }}</a>
+                                            <!--end::Svg Icon-->{{  $owner->first_name }} {{  $owner->last_name }}</a>
                                             {{-- <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
                                             <span class="svg-icon svg-icon-4 me-1">
@@ -155,31 +155,32 @@
                                             </div>
                                         @elseif (!$is_live)
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <a onclick="showConfirmation()" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3" >{{ __('messages.approve')}}</a>
-                                            <form id="approve-form" action="{{ route('admin.restaurant.activate', ['restaurant' => $restaurant->id]) }}" method="POST" style="display: inline">
-                                                @csrf
-                                                @method('PUT')
+                                            @if($user->hasPermission('can_approve_restaurants'))
+                                                <a onclick="showConfirmation()" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3" >{{ __('messages.approve')}}</a>
+                                                <form id="approve-form" action="{{ route('admin.restaurant.activate', ['restaurant' => $restaurant->id]) }}" method="POST" style="display: inline">
+                                                    @csrf
+                                                    @method('PUT')
 
-                                            </form>
-                                            <script>
-                                                function showConfirmation() {
-                                                    event.preventDefault();
+                                                </form>
+                                                <script>
+                                                    function showConfirmation() {
+                                                        event.preventDefault();
 
-                                                    Swal.fire({
-                                                        title: '{{ __('messages.confirm-approval') }}',
-                                                        text: '{{ __('messages.are-you-sure-you-want-to-approve-this-restaurant') }}',
-                                                        icon: 'warning',
-                                                        showCancelButton: true,
-                                                        confirmButtonText: '{{ __('messages.yes-approve-it') }}',
-                                                        cancelButtonText: '{{ __('messages.cancel') }}'
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            document.getElementById('approve-form').submit();
-                                                        }
-                                                    });
-                                                }
-                                            </script>
-
+                                                        Swal.fire({
+                                                            title: '{{ __('messages.confirm-approval') }}',
+                                                            text: '{{ __('messages.are-you-sure-you-want-to-approve-this-restaurant') }}',
+                                                            icon: 'warning',
+                                                            showCancelButton: true,
+                                                            confirmButtonText: '{{ __('messages.yes-approve-it') }}',
+                                                            cancelButtonText: '{{ __('messages.cancel') }}'
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                document.getElementById('approve-form').submit();
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+                                            @endif
 
                                             <form action="{{ route('admin.denyUser', ['id' => $restaurant->id]) }}" method="POST" style="display: inline">
                                                 @csrf

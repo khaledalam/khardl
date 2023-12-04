@@ -75,11 +75,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-    public function hasPermissionWorker($permission)
-    {
-        return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
-    }
-
+   
 
     public function traderRegistrationRequirement()
     {

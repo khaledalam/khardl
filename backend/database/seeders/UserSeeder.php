@@ -76,10 +76,10 @@ class UserSeeder extends Seeder
         // old code permissions
         \DB::table('permissions')->insert([
             'user_id'=> self::SUPER_ADMIN_USER_ID,
-            'can_access_dashboard'=> true,
-            'can_access_restaurants'=> true,
+            'can_access_dashboard'=> true, //  TODO @todo not yet
+            'can_access_restaurants'=> true, 
             'can_view_restaurants'=> true,
-            'can_delete_restaurants'=> true,
+            'can_delete_restaurants'=> true, // TODO @todo not yet
             'can_approve_restaurants'=> true,
             'can_see_admins'=> true,
             'can_add_admins'=> true,

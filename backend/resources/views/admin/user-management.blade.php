@@ -17,7 +17,7 @@
    <div class="card-header border-0 pt-5">
      <h3 class="card-title align-items-start flex-column">
        <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.admin-staff')}}</span>
-       <span class="text-muted mt-1 fw-bold fs-7">{{ count($users) }} {{ __('messages.admins')}}</span>
+       <span class="text-muted mt-1 fw-bold fs-7">{{ count($admins) }} {{ __('messages.admins')}}</span>
      </h3>
      <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
        <a href="{{ route('admin.add-user') }}" class="btn btn-sm btn-light btn-active-primary">
@@ -52,26 +52,26 @@
          <!--end::Table head-->
          <!--begin::Table body-->
          <tbody>
-          @foreach ($users as $user)
+          @foreach ($admins as $admin)
             <tr>
               <td class="text-muted fw-bolder">
-                  {{ $user->id }}
+                  {{ $admin->id }}
               </td>
               <td>
                 <div class="d-flex align-items-center">
                   <div class="d-flex justify-content-start flex-column">
-                    <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{ $user->first_name }}</a>
+                    <a href="#" class="text-dark fw-bolder text-hover-primary fs-6">{{ $admin->first_name }}</a>
                   </div>
                 </div>
               </td>
               <td>
-                <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $user->last_name }}</a>
+                <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->last_name }}</a>
               </td>
                                           <td>
-                <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $user->phone }}</a>
+                <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->phone }}</a>
               </td>
                                           <td>
-                <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $user->email }}</a>
+                <a href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->email }}</a>
               </td>
               <td>
                 <div class="d-flex justify-content-end flex-shrink-0">
@@ -85,7 +85,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a> --}}
-                  <a href="{{ route('admin.user-management-edit', ['id' => $user->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                  <a href="{{ route('admin.user-management-edit', ['id' => $admin->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                     <span class="svg-icon svg-icon-3">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -95,7 +95,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a>
-                  <form class="delete-form" action="{{ route('admin.delete-user', ['id' => $user->id]) }}" method="POST">
+                  <form class="delete-form" action="{{ route('admin.delete-user', ['id' => $admin->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-primary btn-sm">

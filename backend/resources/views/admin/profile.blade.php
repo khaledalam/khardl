@@ -22,6 +22,7 @@
                         <!--begin::General options-->
                         <div class="card card-flush py-4">
                           <!--begin::Card header-->
+                          @if($user->hasPermission('can_edit_profile'))
                           <div class="card-header">
                             <div class="card-title w-100 d-flex justify-content-between align-items-center">
                               <div>
@@ -32,6 +33,7 @@
                               </div>
                             </div>
                           </div>
+                          @endif
                           <!--end::Card header-->
                           <!--begin::Card body-->
                           <div class="card-body pt-0">
@@ -61,7 +63,7 @@
                               <label class="required form-label">{{ __('messages.phone-number')}}</label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" name="phone_number" class="form-control mb-2" placeholder="{{ __('messages.phone-number')}}" value="{{ $user->phone_number }}" disabled/>
+                              <input type="text" name="phone" class="form-control mb-2" placeholder="{{ __('messages.phone-number')}}" value="{{ $user->phone }}" disabled/>
                               <!--end::Input-->
                             </div>
                             <!--end::Input group-->
