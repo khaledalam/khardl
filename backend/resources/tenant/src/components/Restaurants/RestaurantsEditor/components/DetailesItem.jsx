@@ -169,7 +169,7 @@ const DetailesItem = ({
                       </div>
                       <div className="flex  flex-col items-center">
                         {items.map((item, index) => (
-                          <div key={index} className="text-[14px]">{item.price} ر.س</div>
+                          <div key={index} className="text-[14px]">{item.price} {t("SAR")}</div>
                         ))}
                       </div>
                     </div>
@@ -198,7 +198,7 @@ const DetailesItem = ({
                       </div>
                       <div className="flex  flex-col items-center">
                         {radioItems.map((item, index) => (
-                          <div key={index} className="text-[14px]">{item.price} ر.س</div>
+                          <div key={index} className="text-[14px]">{item.price} {t("SAR")}</div>
                         ))}
                       </div>
                     </div>
@@ -247,7 +247,7 @@ const DetailesItem = ({
                       style={{ borderRadius: GlobalShape, backgroundColor: GlobalColor }}
                       onClick={handleAddToCart}
                     >
-                      {t("Add to cart")} ({total * count} ر.س)
+                      {t("Add to cart")} ({total * count} {t("SAR")})
                     </button>
                   </div>
                 </div>

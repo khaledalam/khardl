@@ -255,7 +255,7 @@ return [
     'receipt' => 'Receipt',
     'payment-in-cash-upon-receipt' => 'Payment in cash upon receipt',
     'tap-approve-warning-text' => 'Your TAP business account is not approved yet, please',
-    'tap-approve-warning-link-text' => 'submit your TAP documents.'
+    'tap-approve-warning-link-text' => 'submit your TAP documents.',
     'see-restaurant-owners'=>'See Restaurant owners',
     'restaurant-owners'=>"Restaurant Owners",
     'restaurant-owner-management'=>"Restaurant Owners Management",

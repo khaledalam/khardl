@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
+use App\Models\Tenant\Branch;
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
 use App\Http\Controllers\Controller;
@@ -86,6 +87,9 @@ class RestaurantStyleController extends Controller
                 $data->center_side_button,
                 $data->right_side_button,
             ];
+
+            // get branches of restaurant
+            $data['branches'] = Branch::all(['name', 'id', 'lat', 'lng', 'delivery_availability']);
         }
 
         return $this->sendResponse($data, __('Restaurant style fetched successfully.'));

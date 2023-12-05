@@ -14,7 +14,7 @@ import { changeStyleDataRestaurant } from '../../../redux/editor/styleDataRestau
 
 const RestaurantHomePage = () => {
     const Language = sessionStorage.getItem('Language') || 'en';
-    const { branch_id } = useParams();
+
     const { t } = useTranslation();
     const [branch, setBranch] = useState([]);
     const [branches, setBranches] = useState([]);
@@ -23,9 +23,12 @@ const RestaurantHomePage = () => {
 
     const dispatch = useDispatch()
 
+    const branch_id = localStorage.getItem('selected_branch_id');
+
+
     const fetchData = async () => {
         try {
-            const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch`);
+            const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch&selected_branch_id=${branch_id}`);
             const restaurantStyleResponse = await AxiosInstance.get(`restaurant-style`)
 
             console.log("editor rest restaurantCategoriesResponse >>>", restaurantCategoriesResponse.data)
