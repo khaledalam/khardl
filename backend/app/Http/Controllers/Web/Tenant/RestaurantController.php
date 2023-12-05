@@ -60,11 +60,11 @@ class RestaurantController extends BaseController
             compact('user'));
     }
 
-    public function customers_settings(){
+    public function settings(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        return view('restaurant.customers_settings',
+        return view('restaurant.settings',
             compact('user'));
     }
 
@@ -222,7 +222,7 @@ class RestaurantController extends BaseController
                         'dropdown_input_names' => $item->dropdown_input_names,
                         'user_id' => Auth::user()->id
                     ]);
-                    
+
 
                     $sourcePath = storage_path("{$item->photo}");
                     $destinationPath = storage_path("{$newFilename}");

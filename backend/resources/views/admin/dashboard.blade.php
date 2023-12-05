@@ -12,24 +12,6 @@
                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-4 mb-md-5 mb-xl-10">
                     <!--begin::Card widget 4-->
                     <div class="card card-flush h-md-50 mb-5 mb-xl-10">
-                        <!--begin::Header-->
-                        <div class="card-header pt-5">
-                            <!--begin::Title-->
-                            <div class="card-title d-flex flex-column">
-                                <!--begin::Info-->
-                                <div class="d-flex align-items-center">
-                                    <!--begin::Amount-->
-                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{$restaurantsAll}}</span>
-                                    <!--end::Amount-->
-                                </div>
-                                <!--end::Info-->
-                                <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.all-restaurants')}}</span>
-                                <!--end::Subtitle-->
-                            </div>
-                            <!--end::Title-->
-                        </div>
-                        <!--end::Header-->
                         <!--begin::Card body-->
                         <div class="card-body pt-2 pb-4 d-flex align-items-center">
                             <!--begin::Chart-->
@@ -482,7 +464,7 @@
                                 </div>
                                 <!--end::Statistics-->
                                 <!--begin::Description-->
-                                <span class="fs-6 fw-bold text-gray-400">Another $48,346 to Goal</span> 
+                                <span class="fs-6 fw-bold text-gray-400">Another $48,346 to Goal</span>
                                 <!--end::Description-->
                             </div>
                             <!--end::Statistics-->

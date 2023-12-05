@@ -5,6 +5,7 @@ return [
     'dashboard' => 'Dashboard',
     'restaurants' => 'Restaurants',
     'all-restaurants' => 'All Restaurants',
+    'all-branches' => 'All Branches',
     'supports' => 'Admins',
     'all-supports' => 'All Admins',
     'add-supports' => 'Add Admin',
@@ -241,14 +242,16 @@ return [
     'live' => 'Live',
     'menus' => 'Menus',
     'customers-data' => 'Customers data',
-    'customers-settings' => 'Customers settings',
     'not_upload_register_files' => 'Not Upload Register Files',
     'orders-all' => 'All orders',
     'orders-add' => 'Add orders',
     'products-out-of-stock' => 'Products out of stock',
     'qr-maker' => 'QR maker',
-    'not_upload_register_files' => 'Not Upload Register Files',
     'not_live'=>"Not live",
+    'receipt' => 'Receipt',
+    'payment-in-cash-upon-receipt' => 'Payment in cash upon receipt',
+    'tap-approve-warning-text' => 'Your TAP business account is not approved yet, please',
+    'tap-approve-warning-link-text' => 'submit your TAP documents.'
 
 ];
 

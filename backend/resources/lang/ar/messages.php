@@ -5,6 +5,7 @@ return [
     'dashboard' => 'لوحة التحكم',
     'restaurants' => 'المطاعم',
     'all-restaurants' => 'جميع المطاعم',
+    'all-branches' => 'جميع الفروع',
     'supports' => 'الدعم',
     'all-supports' => 'فريق الدعم ',
     'add-supports' => 'اضافه داعم',
@@ -231,14 +232,16 @@ return [
     'live' => 'مفعل',
     'menus' => 'قوائم',
     'customers-data' => 'بيانات العملاد',
-    'customers-settings' => 'اعدادات العملاد',
     'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
     'orders-all' => 'جميع الطلبات',
     'orders-add' => 'اضافه طلبات',
     'products-out-of-stock' => 'منتجات منتهيه المخزون',
     'qr-maker' => 'محرر كيو ار',
-    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
     'not_live'=>'غير مفعل',
+    'receipt' => 'استلام',
+    'payment-in-cash-upon-receipt' => 'الدفع عند الاستلام',
+    'tap-approve-warning-text' => 'حساب الاعمال الخاص بك علي منصه تاب لم يتم الوافقه عليه بعد، من فضلك',
+    'tap-approve-warning-link-text' => 'ارفع ملفات تاب'
 
 ];
 
