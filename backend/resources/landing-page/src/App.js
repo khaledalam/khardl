@@ -7,7 +7,6 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Home from './pages/Home/Home'
 import Advantages from './pages/Advantages/Advantages'
-import Clients from './pages/Clients/clients'
 import Services from './pages/Services/services'
 import FQA from './pages/FQA/fqa'
 import Login from './pages/LoginSignUp/Login'
@@ -88,7 +87,6 @@ const App = () => {
                   <Route path='/policies' element={<TermsPolicies />} />
                   <Route path='/privacy' element={<Privacy />} />
                   <Route path='/advantages' element={<Advantages />} />
-                  <Route path='/clients' element={<Clients />} />
                   <Route path='/services' element={<Services />} />
                   <Route path='/prices' element={<Prices />} />
                   <Route path='/fqa' element={<FQA />} />

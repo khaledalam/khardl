@@ -27,6 +27,7 @@ use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\API\Tenant\Customer\CartController;
 use App\Packages\TapPayment\Controllers\BusinessController;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
@@ -61,7 +62,6 @@ Route::group([
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
-
     Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
 
     Route::middleware(['auth'])->group(function () {
@@ -101,6 +101,16 @@ Route::group([
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
+                Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
+                Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
+                Route::get('/customers-data', [RestaurantController::class, 'customers_data'])->name('restaurant.customers_data');
+                Route::get('/customers-settings', [RestaurantController::class, 'customers_settings'])->name('restaurant.customers_settings');
+
+                Route::get('/orders-all', [RestaurantController::class, 'orders_all'])->name('restaurant.orders_all');
+                Route::get('/orders-add', [RestaurantController::class, 'orders_add'])->name('restaurant.orders_add');
+                Route::get('/products-out-of-stock', [RestaurantController::class, 'products_out_of_stock'])->name('restaurant.products_out_of_stock');
+                Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
+
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
                 Route::any('/callback',[TapController::class, 'callback'])->name('tap.callback');
@@ -161,8 +171,10 @@ Route::group([
 
 
 
-            Route::middleware('verified')->group(function () {
-
+            Route::middleware('verifiedPhone')->group(function () {
+                Route::resource("carts",CartController::class)->only([
+                    'store'
+                ]);
             });
 
 

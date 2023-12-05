@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unique(); 
-            $table->unsignedBigInteger('payment_method_id');
-            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('payment_method_id')->nullable();
+            $table->unsignedBigInteger('branch_id')->nullable();
             $table->decimal('total', 8, 2)->default(0);
             $table->enum('delivery_type', ['delivery','receive_from_branch']);
 

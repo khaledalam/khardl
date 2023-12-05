@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\BaseController;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
+use App\Models\Tenant\Category;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Carbon;
@@ -34,6 +35,72 @@ class RestaurantController extends BaseController
         return view('restaurant.service',
             compact('user', 'branches'));
     }
+
+    public function delivery(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.delivery',
+            compact('user'));
+    }
+
+    public function promotions(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.promotions',
+            compact('user'));
+    }
+
+    public function customers_data(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.customers_data',
+            compact('user'));
+    }
+
+    public function customers_settings(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.customers_settings',
+            compact('user'));
+    }
+
+    public function orders_all(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.orders_all',
+            compact('user'));
+    }
+
+    public function orders_add(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.orders_add',
+            compact('user'));
+    }
+
+    public function products_out_of_stock(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.products_out_of_stock',
+            compact('user'));
+    }
+
+    public function qr(){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+
+        return view('restaurant.qr',
+            compact('user'));
+    }
+
+
 
     public function branches(){
         $user = Auth::user();
@@ -122,7 +189,7 @@ class RestaurantController extends BaseController
             foreach ($categories as $category) {
                 DB::table('categories')->insert([
                     'branch_id' => $newBranchId,
-                    'category_name' => $category->category_name,
+                    'name' => $category->name,
                     'user_id' => Auth::user()->id,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -133,12 +200,11 @@ class RestaurantController extends BaseController
                 $items = DB::table('items')->where('category_id', $category->id)->get();
                 foreach ($items as $item) {
                     $newFilename = Str::uuid()->toString() . '.' . pathinfo($item->photo, PATHINFO_EXTENSION);
-
-                    DB::table('items')->insert([
+                    Item::create([
                         'branch_id' => $newBranchId,
                         'category_id' => $newCategoryId,
                         // 'name' => $item->name,
-                        'photo' => $newFilename,
+                        'photo' => tenant_asset($newFilename),
                         'price' => $item->price,
                         'calories' => $item->calories,
                         'description' => $item->description,
@@ -154,10 +220,9 @@ class RestaurantController extends BaseController
                         'dropdown_required' => $item->dropdown_required,
                         'dropdown_input_titles' =>$item->dropdown_input_titles,
                         'dropdown_input_names' => $item->dropdown_input_names,
-                        'user_id' => Auth::user()->id,
-                        'created_at' => now(),
-                        'updated_at' => now(),
+                        'user_id' => Auth::user()->id
                     ]);
+                    
 
                     $sourcePath = storage_path("{$item->photo}");
                     $destinationPath = storage_path("{$newFilename}");
@@ -260,8 +325,8 @@ class RestaurantController extends BaseController
 //             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
 //         }
 
-        $categories = DB::table('categories')
-        ->when($user->isWorker(), function (Builder $query, string $role)use($user, $branchId) {
+        $categories = Category::
+        when($user->isWorker(), function (Builder $query, string $role)use($user, $branchId) {
             if ($branchId) {
                 if ($branchId != $user->branch->id) return;
             }
@@ -279,16 +344,16 @@ class RestaurantController extends BaseController
 
     public function getCategory(Request $request, $id, $branchId){
         $user = Auth::user();
-    
+
         if(!$user->isRestaurantOwner()  && $user->branch->id != $branchId){
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
 
-        $selectedCategory = DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->first();
-        $categories = DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->get();
+        $selectedCategory =Category::where('id', $id)->where('branch_id', $branchId)->first();
+        $categories = Category::where('id', $id)->where('branch_id', $branchId)->get();
 
-        $items = DB::table('items')
-        ->where('user_id', $user->id)
+        $items = Item::
+        where('user_id', $user->id)
         ->where('category_id', $selectedCategory->id)
         ->where('branch_id', $branchId)->get();
 
@@ -306,8 +371,8 @@ class RestaurantController extends BaseController
 
         // if($userId != DB::table('branches')->where('id', $branchId)->value('user_id'))
         //     return;
-        DB::table('categories')->insert([
-            'category_name' => $request->input('category_name'),
+        Category::create([
+            'name' =>trans_json( $request->input('name_en'), $request->input('name_ar')),
             'user_id' => $userId,
             'branch_id' => $branchId,
             'created_at' => now(),
@@ -324,9 +389,8 @@ class RestaurantController extends BaseController
         // }
 
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
-
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
-            
+
             $photoFile = $request->file('photo');
 
             $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
@@ -338,13 +402,13 @@ class RestaurantController extends BaseController
             $photoFile->storeAs('items', $filename, 'public');
 
             DB::beginTransaction();
-          
+
             try {
                 $itemData = [
-                    'photo' => 'items/'.$filename,
+                    'photo' => tenant_asset('items/'.$filename),
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
-                    'description' => $request->input('description'),
+                    'description' =>trans_json( $request->input('description_en'), $request->input('description_ar')),
                     'checkbox_required' => json_encode($request->input('checkbox_required')),
                     'checkbox_input_titles' =>json_encode( $request->input('checkboxInputTitle')),
                     'checkbox_input_maximum_choices' =>json_encode( $request->input('checkboxInputMaximumChoice')),
@@ -364,9 +428,7 @@ class RestaurantController extends BaseController
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-          
-                DB::table('items')->insert($itemData);
-
+                Item::create($itemData);
                 DB::commit();
 
                 return redirect()->back()->with('success', 'Item successfully added.');

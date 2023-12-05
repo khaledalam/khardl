@@ -158,6 +158,7 @@ return [
     'deleted-an-user' => 'Deleted an user',
     'has-edited-his-profile' => 'Has edited his profile',
     'has-approved-an-user' => 'Has approved an user',
+    'has-approved-restaurant' => 'Has approved restaurant',
     'has-denied-an-user' => 'Has denied an user',
     'has-downloaded-a-commercial-registration-file' => 'Has downloaded a commercial registration file',
     'has-downloaded-a-delivery-contract-file' => 'Has downloaded a delivery contract file',
@@ -234,9 +235,21 @@ return [
     'summary' => 'Summary',
     'site-editor' => 'Site Editor',
     'services' => 'Services',
+    'delivery-companies' => 'Delivery companies',
+    'promotions' => 'Promotions',
     'payments' => 'Payments',
     'live' => 'Live',
-    'not_upload_register_files' => 'Not Upload Register Files'
+    'menus' => 'Menus',
+    'customers-data' => 'Customers data',
+    'customers-settings' => 'Customers settings',
+    'not_upload_register_files' => 'Not Upload Register Files',
+    'orders-all' => 'All orders',
+    'orders-add' => 'Add orders',
+    'products-out-of-stock' => 'Products out of stock',
+    'qr-maker' => 'QR maker',
+    'not_upload_register_files' => 'Not Upload Register Files',
+    'not_live'=>"Not live",
+
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

@@ -33,8 +33,8 @@
                                 <div class="position-relative w-md-200px me-md-2">
           <select class="form-select form-select-solid" name="status">
               <option value="all" {{ request('status') === 'All' ? 'selected' : '' }}>{{ __('messages.all')}}</option>
-              <option value="live" {{ request('status') === 'live' ? 'selected' : '' }}>{{ __('messages.active')}}</option>
-              <option value="not_live" {{ request('status') === 'not_live' ? 'selected' : '' }}>{{ __('messages.pending')}}</option>
+              <option value="live" {{ request('status') === 'live' ? 'selected' : '' }}>{{ __('messages.live')}}</option>
+              <option value="not_live" {{ request('status') === 'not_live' ? 'selected' : '' }}>{{ __('messages.not_live')}}</option>
           </select>
                                     </select>
         </div>
@@ -128,10 +128,13 @@
 
                         <!--begin::Name-->
                         <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
-                            {{ $restaurant?->primary_domain?->domain }}
-                            @if($restaurant?->is_live())<span class="badge badge-light-success fw-bolder">{{ __('messages.active')}}</span>
+                            {{ $restaurant?->restaurant_name }}
+                            @if($restaurant?->is_live())
+                            <span class="badge badge-light-success fw-bolder">{{ __('messages.live')}}</span>
+                           
                             @elseif ($restaurant->status == "active")<span class="badge badge-light-warning fw-bolder">{{ __('messages.pending')}}</span>
-{{--                            @else <span class="badge badge-light-danger fw-bolder">{{ __('messages.denied')}}</span>--}}
+                            @else 
+                            <span class="badge badge-light-danger fw-bolder">{{ __('messages.not_live')}}</span>
                             @endif
                         </a>
 
@@ -171,13 +174,13 @@
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-user', ['id' => $restaurant->id]) }}" method="POST">
+                                    {{-- <div class="menu-item px-3">
+                                        <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-restaurant', ['id' => $restaurant->id]) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                         </form>
                                         <a href="#" class="menu-link px-3" onclick="showDeleteConfirmation('{{ $restaurant->id }}')" data-kt-ecommerce-product-filter="delete_row">{{ __('messages.delete')}}</a>
-                                    </div>
+                                    </div> --}}
                                     <script>
 
                                         var translations = @json([
@@ -248,7 +251,7 @@
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                          <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-user', ['id' => $restaurant->id]) }}" method="POST">
+                                          <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-restaurant', ['id' => $restaurant->id]) }}" method="POST">
                                               @method('DELETE')
                                               @csrf
                                           </form>
@@ -350,8 +353,6 @@
               <tr>
                 <th class="min-w-250px">{{ __('messages.owner')}}</th>
                 <th class="min-w-150px">{{ __('messages.phone')}}</th>
-                <th class="min-w-90px">{{ __('messages.total-points')}}</th>
-                <th class="min-w-90px">{{ __('messages.current-points')}}</th>
                 <th class="min-w-90px">{{ __('messages.status')}}</th>
                 <th class="min-w-90px">{{ __('messages.orders')}}</th>
                 <th class="min-w-90px">{{ __('messages.earnings')}}</th>
@@ -386,14 +387,9 @@
                     <!--end::User-->
                   </td>
                   <td>{{ $restaurant->phone_number }}</td>
-                  <td>
-                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $restaurant->total_points }}</span>
-                  </td>
+                  
                                                   <td>
-                    <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $restaurant->points }}</span>
-                  </td>
-                                                  <td>
-                                                      @if($restaurant->isApproved == "0")<span class="badge badge-light-warning fw-bolder px-4 py-3">{{ __('messages.pending')}}</span> @elseif ($restaurant->isApproved == "1")<span class="badge badge-light-success fw-bolder px-4 py-3">{{ __('messages.active')}}</span> @else <span class="badge badge-light-danger fw-bolder px-4 py-3">{{ __('messages.denied')}}</span> @endif
+                                                      @if($restaurant->isApproved == "0")<span class="badge badge-light-warning fw-bolder px-4 py-3">{{ __('messages.pending')}}</span> @elseif ($restaurant->isApproved == "1")<span class="badge badge-light-success fw-bolder px-4 py-3">{{ __('messages.live')}}</span> @else <span class="badge badge-light-danger fw-bolder px-4 py-3">{{ __('messages.not_live')}}</span> @endif
                                                   </td>
                   <td>
                                                       <span class="badge badge-light-success fw-bolder px-4 py-3">0</span>
@@ -418,14 +414,14 @@
                                                               </div>
                                                               <!--end::Menu item-->
                                                               <!--begin::Menu item-->
-                                                              <div class="menu-item px-3">
-                                                                  <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-user', ['id' => $restaurant->id]) }}" method="POST">
+                                                              {{-- <div class="menu-item px-3">
+                                                                  <form id="delete-form{{ $restaurant->id }}" class="delete-form" action="{{ route('admin.delete-restaurant', ['id' => $restaurant->id]) }}" method="POST">
                                                                     @method('DELETE')
                                                                     @csrf
                                                                   <form>
-                                                                  <a href="{{ route('admin.delete-user', ['id' => $restaurant->id]) }}" onclick="event.preventDefault();
+                                                                  <a href="{{ route('admin.delete-restaurant', ['id' => $restaurant->id]) }}" onclick="event.preventDefault();
                                                                     document.getElementById('delete-form{{ $restaurant->id }}').submit();" class="menu-link px-3" data-kt-ecommerce-product-filter="delete_row">{{ __('messages.delete')}}</a>
-                                                              </div>
+                                                              </div> --}}
                                                               <!--end::Menu item-->
                                                           </div>
                                                           <!--end::Menu-->

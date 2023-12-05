@@ -11,7 +11,6 @@ const useAxiosAuth = () => {
    const privateRoute = ![
       '/',
       '/register',
-      '/clients',
       '/services',
       '/reset-password',
       '/create-new-password',

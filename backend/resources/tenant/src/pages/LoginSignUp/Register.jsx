@@ -56,7 +56,7 @@ const Register = () => {
       } catch (error) {
          setSpinner(false);
          console.log(error.response.data);
-   
+
 
          // if (error.response.data.errors?.length > 0) {
          //     setError(error.response.data.errors);
@@ -65,14 +65,14 @@ const Register = () => {
          // Object.keys(error.response.data.errors).forEach((field) => {
          //    setError(field, {'message':error.response.data.errors[field][0]});
          // });
-         toast.error(`${t('Account creation failed')}`);
+         toast.error(`${t(error.response.data.message)}`);
       }
 
    }
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{

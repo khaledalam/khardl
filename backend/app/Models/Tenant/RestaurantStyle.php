@@ -28,7 +28,7 @@ class RestaurantStyle extends Model
         'font_alignment',
         'left_side_button',
         'right_side_button',
-        'center_side_button'
+        'center_side_button',
     ];
 
     protected $casts = [
@@ -49,13 +49,6 @@ class RestaurantStyle extends Model
     }
 
 
-    public function getLogoAttribute(){
-        return tenant_asset($this->attributes['logo']);
-    }
-
-    public function getBannerImageAttribute(){
-        return tenant_asset($this->attributes['banner_image']);
-    }
-
+  
 
 }

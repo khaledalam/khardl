@@ -19,7 +19,7 @@
                                 <!--begin::Info-->
                                 <div class="d-flex align-items-center">
                                     <!--begin::Amount-->
-                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{count($restaurantsAll)}}</span>
+                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{$restaurantsAll}}</span>
                                     <!--end::Amount-->
                                 </div>
                                 <!--end::Info-->
@@ -53,7 +53,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        {{count($restaurantsOwnersNotUploadFiles)}}
+                                        {{$restaurantsOwnersNotUploadFiles}}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -70,7 +70,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        {{count($restaurantsLive)}}
+                                        {{$restaurantsLive}}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -88,7 +88,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        {{count($restaurantsAll) - count($restaurantsLive)}}
+                                        {{$restaurantsAll  - $restaurantsLive }}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -108,7 +108,7 @@
                                 <!--begin::Info-->
                                 <div class="d-flex align-items-center">
                                     <!--begin::Amount-->
-                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">1500</span>
+                                    <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">0</span>
                                     <!--end::Amount-->
                                 </div>
                                 <!--end::Info-->
@@ -135,7 +135,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                       {{count($restaurantsOwnersNotUploadFiles)}}
+                                       {{$restaurantsOwnersNotUploadFiles}}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -152,7 +152,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                       500
+                                       0
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -170,7 +170,7 @@
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        500
+                                        0
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -183,7 +183,7 @@
                     <!--end::Card widget 5-->
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-4 mb-md-5 mb-xl-10">
-                    <!--begin::Card widget 6-->
+                    {{-- <!--begin::Card widget 6-->
                     <div class="card card-flush h-md-50 mb-5 mb-xl-10">
                         <!--begin::Header-->
                         <div class="card-header pt-5">
@@ -231,7 +231,7 @@
                             <!--end::Chart-->
                         </div>
                         <!--end::Card body-->
-                    </div>
+                    </div> --}}
                     <!--end::Card widget 6-->
                     <!--begin::Card widget 7-->
                     <div class="card card-flush h-md-50 mb-xl-10">
@@ -240,7 +240,7 @@
                             <!--begin::Title-->
                             <div class="card-title d-flex flex-column">
                                 <!--begin::Amount-->
-                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{count($customers)}}</span>
+                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{$customers}}</span>
                                 <!--end::Amount-->
                                 <!--begin::Subtitle-->
                                 <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.new-customers-this-month')}}</span>
@@ -250,7 +250,7 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Card body-->
-                        <div class="card-body d-flex flex-column justify-content-end pe-0">
+                        {{-- <div class="card-body d-flex flex-column justify-content-end pe-0">
                             <!--begin::Title-->
                             <span class="fs-6 fw-boldest text-gray-800 d-block mb-2">{{ __('messages.todays-heroes')}}</span>
                             <!--end::Title-->
@@ -290,7 +290,7 @@
                                 </a>
                             </div>
                             <!--end::Users group-->
-                        </div>
+                        </div> --}}
                         <!--end::Card body-->
                     </div>
                     <!--end::Card widget 7-->
@@ -298,7 +298,7 @@
 
 
                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-4 mb-md-5 mb-xl-10">
-                    <!--begin::Card widget 4-->
+                    {{-- <!--begin::Card widget 4-->
                     <div class="card card-flush h-md-50 mb-5 mb-xl-10">
                         <!--begin::Header-->
                         <div class="card-header pt-5">
@@ -400,10 +400,10 @@
                             <!--end::Labels-->
                         </div>
                         <!--end::Card body-->
-                    </div>
+                    </div> --}}
                     <!--end::Card widget 4-->
                     <!--begin::Card widget 6-->
-                    <div class="card card-flush h-md-50 mb-5 mb-xl-10">
+                    {{-- <div class="card card-flush h-md-50 mb-5 mb-xl-10">
                         <!--begin::Header-->
                         <div class="card-header pt-5">
                             <!--begin::Title-->
@@ -450,13 +450,13 @@
                             <!--end::Chart-->
                         </div>
                         <!--end::Card body-->
-                    </div>
+                    </div> --}}
                     <!--end::Card widget 6-->
                 </div>
 
 
 
-                <!--begin::Col-->
+                {{-- <!--begin::Col-->
                 <div class="col-lg-12 col-xl-12 col-xxl-12 mb-5 mb-xl-0">
                     <!--begin::Chart widget 3-->
                     <div class="card card-flush overflow-hidden h-md-100">
@@ -482,7 +482,7 @@
                                 </div>
                                 <!--end::Statistics-->
                                 <!--begin::Description-->
-                                {{-- <span class="fs-6 fw-bold text-gray-400">Another $48,346 to Goal</span> --}}
+                                <span class="fs-6 fw-bold text-gray-400">Another $48,346 to Goal</span> 
                                 <!--end::Description-->
                             </div>
                             <!--end::Statistics-->
@@ -495,7 +495,7 @@
                     </div>
                     <!--end::Chart widget 3-->
                 </div>
-                <!--end::Col-->
+                <!--end::Col--> --}}
 
 
             </div>

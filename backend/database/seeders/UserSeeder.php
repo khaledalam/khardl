@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             'email' => "khardl@admin.com",
             'email_verified_at' => now(),
             'status'=> 'active',
+            'phone'=>'966123456789',
             'position'=>"Super Admin",
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
@@ -52,6 +53,7 @@ class UserSeeder extends Seeder
             'email' => "khadrl@restaurant.com",
             'email_verified_at' => now(),
             'status'=> 'active',
+            'phone'=>'966123456789',
             'position'=>"Restaurant Owner",
             'restaurant_name' => 'first',
             'password' => bcrypt('password'),
@@ -86,6 +88,7 @@ class UserSeeder extends Seeder
             'can_see_logs'=> true,
             'can_settings'=> true,
             'can_edit_profile'=> true,
+            
         ]);
 
     }

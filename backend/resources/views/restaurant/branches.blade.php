@@ -4,8 +4,8 @@
 
 @section('content')
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0
-    &libraries=places"></script>
+{{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0--}}
+{{--    &libraries=places"></script>--}}
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -526,7 +526,7 @@
                         <div class="card-body py-9">
                             <!--begin::Row-->
                             <div class="row gx-9 h-100 d-flex justify-content-center align-items-center">
-                                <a href="#" class="fs-6 text-700 fw-bolder text-center border p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">{{ __('messages.add-new-branch') }}</a>
+                                <a href="#" class="fs-6 text-700 fw-bolder text-center border p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">+ {{ __('messages.add-new-branch') }}</a>
                             </div>
                             <!--end::Row-->
                         </div>

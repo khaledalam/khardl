@@ -13,10 +13,6 @@
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
     <link rel="shortcut icon" href="{{ global_asset('assets/media/logos/favicon.ico')}}"/>
-    <!--begin::Fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @if(app()->getLocale() === 'ar')
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
@@ -45,7 +41,7 @@
     ">
     <!--begin::Main-->
     <!--begin::Root-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
     @if(session('success'))
         <script>
             showAlert('success', '{{ session('success') }}');
@@ -71,7 +67,7 @@
                         icon: type,
                         title: message,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3500
                     });
                 }
         </script>
@@ -129,7 +125,7 @@
 
                             <div class="menu-item">
                                 <a href="{{ route('admin.dashboard') }}">
-                                    <span class="menu-link">
+                                    <span class="{{ ($admin_link == 'dashboard' ) ? 'menu-link active' : 'menu-link ' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -156,7 +152,7 @@
 
                             <!-- Restaurants -->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'restaurants' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -185,7 +181,7 @@
 
                             <!-- Supports -->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'user-management' || $admin_link == 'add-user'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -225,7 +221,7 @@
                              <!-- Staff evaluation -->
                              <div class="menu-item">
                                 <a href="{{ route('admin.promoters') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'promoters'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -244,7 +240,7 @@
                             <!-- Logs -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.log') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'logs'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -264,7 +260,7 @@
                             <!-- Setting -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.settings') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'settings'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -316,7 +312,7 @@
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="../../demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="{{ global_asset('assets/img/logo.png') }}" class="h-30px" />
+                                <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->
@@ -566,7 +562,7 @@
     <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
-    <script src="https://kit.fontawesome.com/d2d3f16619.js" crossorigin="anonymous"></script>
+
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
 </body>

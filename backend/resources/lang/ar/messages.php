@@ -146,6 +146,7 @@ return [
     'deleted-an-user' => 'لقد حذف مطعم',
     'has-edited-his-profile' => 'قام بتحرير ملفه الشخصي',
     'has-approved-an-user' => 'وافق على مطعم',
+    'has-approved-restaurant' => 'فعل المطعم',
     'has-denied-an-user' => 'قام برفض مطعم',
     'has-downloaded-a-commercial-registration-file' => 'قام بتحميل ملف السجل التجاري',
     'has-downloaded-a-delivery-contract-file' => 'قام بتنزيل ملف عقد التوصيل',
@@ -224,9 +225,20 @@ return [
     'summary' => 'الملخص',
     'site-editor' => 'محرر الموقع',
     'services' => 'خدمات',
+    'delivery-companies' => 'شركات التوصيل',
+    'promotions' => 'الترقيات',
     'payments' => 'مدفوعات',
     'live' => 'مفعل',
-    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد'
+    'menus' => 'قوائم',
+    'customers-data' => 'بيانات العملاد',
+    'customers-settings' => 'اعدادات العملاد',
+    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
+    'orders-all' => 'جميع الطلبات',
+    'orders-add' => 'اضافه طلبات',
+    'products-out-of-stock' => 'منتجات منتهيه المخزون',
+    'qr-maker' => 'محرر كيو ار',
+    'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
+    'not_live'=>'غير مفعل',
 
 ];
 

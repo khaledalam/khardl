@@ -22,8 +22,8 @@ import fontsReducer from './editor/fontsSlice'
 import dashboardTabReducer from './editor/dashboardTabSlice'
 import idOrderReducer from './editor/idOrderSlice'
 import OrderShowReducer from './editor/orderShowSlice'
-
 import authReducer from './auth/authSlice'
+import styleDataRestaurantReducer from './editor/styleDataRestaurantSlice'
 
 const store = configureStore({
    reducer: {
@@ -51,6 +51,7 @@ const store = configureStore({
       id: idOrderReducer,
       order: OrderShowReducer,
       auth: authReducer,
+        styleDataRestaurant: styleDataRestaurantReducer
    },
 })
 
