@@ -10,6 +10,8 @@ use App\Models\Tenant\RestaurantUser;
 
 class UserSeeder extends Seeder
 {
+    public $dependson = ['CategoryItemSeeder'];
+
     public const RESTAURANT_CUSTOMER_USER_ID = 3;
     public const RESTAURANT_WORKER_USER_ID = 4;
 

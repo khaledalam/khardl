@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Models\Promoter;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use App\Rules\UniqueSubdomain;
 use Illuminate\Support\Carbon;
+use App\Jobs\CreateTenantAdmin;
 use App\Models\PromoterIpAddress;
 use App\Models\TraderRequirement;
 use Illuminate\Http\JsonResponse;
@@ -18,25 +20,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
+use App\Http\Requests\RestaurantOwnerRegisterRequest;
 
 class RegisterController extends BaseController
 {
-    public function register(Request $request): JsonResponse
+    public function register(RestaurantOwnerRegisterRequest $request): JsonResponse
     {
-        $request->validate([
-            'first_name' => 'required|string|min:3|max:255',
-            'last_name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|min:10|max:255|unique:users',
-            'position' => 'required|string|min:3|max:255',
-            'password' => 'required|string|min:6|max:255',
-            'c_password' => 'required|same:password',
-            'phone' => 'required|string|min:9|max:13',
-            'terms_and_policies' => 'accepted',
-            'restaurant_name' => 'required|unique:domains,domain|string|min:3|max:255|regex:/^[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?$/',
-        ],[
-            'restaurant_name.regex' => __('The restaurant name is not in a valid domain .'),
-        ]);
-        $input = $request->all();
+       
+        $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
         $user = User::create($input);
@@ -78,7 +69,7 @@ class RegisterController extends BaseController
         $input['user_id'] = $user_id;
 
         // Ensure the directory exists and is writable
-        $directory = storage_path("app/private/user_files/{$user_id}");
+        $directory = storage_path("app/private/".User::STORAGE."/{$user_id}");
         if (!File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
@@ -94,9 +85,9 @@ class RegisterController extends BaseController
         foreach ($fileNames as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $input[$fileKey] = $request->file($fileKey)->storeAs(
-                    "private/user_files/{$user_id}",
+                    "user_files/{$user_id}",
                     $fileKey . '_' . hash_file('sha256', $request->file($fileKey)->getRealPath()) . '.' . $request->file($fileKey)->getClientOriginalExtension(),
-                    'local'
+                    'private'
                 );
             }
         }
@@ -110,7 +101,7 @@ class RegisterController extends BaseController
             user: $user,
             domain: $user->restaurant_name
         );
-        return $this->sendResponse(['url'=>$tenant->impersonationUrl(1)], 'User complete register step two successfully.');
+        return $this->sendResponse(['url'=>$tenant->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID)], 'User complete register step two successfully.');
     }
 
 

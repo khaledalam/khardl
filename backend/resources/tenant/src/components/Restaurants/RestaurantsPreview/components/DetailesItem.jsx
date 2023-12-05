@@ -9,7 +9,7 @@ import { MdKeyboardArrowDown } from 'react-icons/md';
 const DetailesItem = ({
   onClose,
   title,
-  desciption,
+  description,
   image,
   calories,
   price,
@@ -140,7 +140,7 @@ const DetailesItem = ({
                   <div className="text-[18px] font-semibold">{title}</div>
                   <div className="text-[18px] font-semibold">{calories} {t("calories")} </div>
                 </div>
-                <div className="my-2 text-[15px]">{desciption}</div>
+                <div className="my-2 text-[15px]">{description}</div>
                 <div className="max-w-xl m-4 text-start">
                   <div className="flex flex-col text-black font-bold items-center justify-center">
                     <div className="text-[16px] w-fit p-1 px-4 my-2"

@@ -30,6 +30,8 @@ const Layout = () => {
     }
 
    if (statusCode === HTTP_OK) {
+       window.location.href = '/dashboard';
+       return;
       return <Navigate to={from} state={{ from: location }} />
    }
 

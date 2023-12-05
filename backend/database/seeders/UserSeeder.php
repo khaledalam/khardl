@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             'email' => "khardl@admin.com",
             'email_verified_at' => now(),
             'status'=> 'active',
+            'phone'=>'966123456789',
             'position'=>"Super Admin",
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
@@ -47,11 +48,12 @@ class UserSeeder extends Seeder
         ]);
         $user = User::create([
             'id' => self::RESTAURANT_OWNER_USER_ID,
-            'first_name' => "khadrl",
-            'last_name' => "restaurant",
-            'email' => "khadrl@restaurant.com",
+            'first_name' => "Khardl",
+            'last_name' => "Restaurant",
+            'email' => "khardl@restaurant.com",
             'email_verified_at' => now(),
             'status'=> 'active',
+            'phone'=>'966123456789',
             'position'=>"Restaurant Owner",
             'restaurant_name' => 'first',
             'password' => bcrypt('password'),
@@ -74,10 +76,10 @@ class UserSeeder extends Seeder
         // old code permissions
         \DB::table('permissions')->insert([
             'user_id'=> self::SUPER_ADMIN_USER_ID,
-            'can_access_dashboard'=> true,
-            'can_access_restaurants'=> true,
+            'can_access_dashboard'=> true, //  TODO @todo not yet
+            'can_access_restaurants'=> true, 
             'can_view_restaurants'=> true,
-            'can_delete_restaurants'=> true,
+            'can_delete_restaurants'=> true, // TODO @todo not yet
             'can_approve_restaurants'=> true,
             'can_see_admins'=> true,
             'can_add_admins'=> true,
@@ -86,6 +88,7 @@ class UserSeeder extends Seeder
             'can_see_logs'=> true,
             'can_settings'=> true,
             'can_edit_profile'=> true,
+            'can_see_restaurant_owners'=>true,
         ]);
 
     }

@@ -19,6 +19,9 @@ function Footer() {
         FaYoutube,
     };
 
+    console.log("icons > ", icons)
+    return;
+
     return (
         <div className='w-[100%] bg-[#000000] text-white'>
             <div className='w-[100%] flex flex-wrap justify-center items-center gap-6 items-cnter py-2 px-6'>

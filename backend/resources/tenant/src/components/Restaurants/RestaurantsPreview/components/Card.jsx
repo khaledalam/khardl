@@ -3,7 +3,9 @@ import { useDispatch } from 'react-redux';
 import DetailesItem from './DetailesItem';
 import { useTranslation } from "react-i18next";
 import { addItemToCart } from '../../../../redux/editor/cartSlice';
+import {toast} from "react-toastify";
 
+import AxiosInstance from "../../../../axios/axios";
 function Card(props) {
   const GlobalColor = sessionStorage.getItem('globalColor');
   const GlobalShape = sessionStorage.getItem('globalShape');
@@ -21,14 +23,26 @@ function Card(props) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
+    try {
+      const response = await AxiosInstance.post(`/carts`, {
+        item_id : props.id,
+        quantity : 1,
+        branch_id: 1
+      });
+      if (response?.data) {
+        toast.success(`${t('Item added to cart')}`);
+      }
+    }catch (error) {
+        toast.error(`${t('Fail to add item')}`)
+    }
     dispatch(addItemToCart("props.title"));
   };
-  
+
   return (
     <>
       <div className="text-[18px]">
-        <div 
+        <div
         style={{ borderRadius: GlobalShape }}
         className="col-span-4 flex flex-col cursor-pointer  shadow-md bg-[var(--secondary)] transition-transform transform hover:-translate-y-2">
           <button className="" onClick={showMeDetailesItem}>
@@ -63,16 +77,17 @@ function Card(props) {
                 maxHeight: '1.2em',
                 textAlign: selectedAlignText
               }}
-            >{props.desciption}</h2>
+            >{props.description}</h2>
             <div className="flex justify-between items-center px-4 my-4">
-              <span className="text-[14px] font-semibold">{props.calories} سعرة</span>
-              <span className="text-[14px] text-[#5e5e5e]">{props.price} ر.س</span>
+              <span className="text-[14px] font-semibold">{props.calories}سعرة </span>
+                <hr />
+              <span className="text-[14px] text-[#5e5e5e]">{props.price}ر.س </span>
             </div>
           </button>
           <button className="text-center bg-[var(--primary)] py-1 text-black font-bold"
             style={{ borderRadius: `0 0 ${GlobalShape} ${GlobalShape}`, backgroundColor: GlobalColor }}
             onClick={handleAddToCart}
-          > {t("add to cart")}</button>
+          > {t("Add to cart")}</button>
         </div>
       </div>
       {showDetailesItem ? (
@@ -80,7 +95,7 @@ function Card(props) {
           onClose={showMeDetailesItem}
           onRequest={showMeDetailesItem}
           title={props.title}
-          desciption={props.desciption}
+          description={props.description}
           image={props.image}
           calories={props.calories}
           price={props.price}

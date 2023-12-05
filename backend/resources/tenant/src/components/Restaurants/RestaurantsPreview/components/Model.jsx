@@ -1,6 +1,5 @@
 import React from 'react'
 import { globalColor, globalShape } from '../../../../redux/editor/buttonSlice'
-import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'

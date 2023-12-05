@@ -61,19 +61,19 @@ const Register = () => {
          // if (error.response.data.errors?.length > 0) {
          //     setError(error.response.data.errors);
          // }
-
+         //
          // Object.keys(error.response.data.errors).forEach((field) => {
          //    console.log(error.response.data.errors[field][0]);
          //    setError(field, {'message':error.response.data.errors[field][0]});
          // });
-         toast.error(`${t('Account creation failed')}`);
+         toast.error(`${t(error.response.data.message)}`);
       }
 
    }
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{
@@ -83,7 +83,7 @@ const Register = () => {
          >
             <div className='py-[20px] flex justify-center items-center'>
                <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[70%] max-[1200px]:w-[100%]'>
-                  <div className='relative flex flex-col justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
+                  <div className='relative flex justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
                      <div className='mt-6 w-[100%]'>
                         <MainText
                            Title={t('Create an account')}
@@ -92,7 +92,7 @@ const Register = () => {
                         <div className='w-[100%] flex items-center justify-center mt-4'>
                            <form
                               onSubmit={handleSubmit(onSubmit)}
-                              className='w-[100%] flex flex-col gap-[14px] px-[15px]'
+                              className='w-[100%] flex gap-[14px] px-[15px]'
                            >
                               <div className='flex justify-stretch items-center gap-3 w-[100%]'>
                                  {/* First Input */}
@@ -134,7 +134,7 @@ const Register = () => {
                               </div>
                               {/* Input 3 */}
                               <div>
-                                 <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
+                                 <h4 className='ms-2 text-[13px] font-semibold'>
                                     {t('Restaurant name')}
                                  </h4>
                                  <input
@@ -200,7 +200,8 @@ const Register = () => {
                                     {...register('phone', {
                                        required: true,
                                     })}
-                                    maxLength={12}
+                                    minLength={9}
+                                    maxLength={13}
                                  />
                                  {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
@@ -324,7 +325,7 @@ const Register = () => {
                                  </span>
                               )}
 
-                              <div className='flex flex-col justify-center items-center my-4'>
+                              <div className='flex justify-center items-center my-4'>
                                  <button
                                     type='submit'
                                     className={`hover:bg-[#d6eb16] font-bold bg-[var(--primary)] flex justify-center items-center gap-[3px] rounded-full transition-all delay-100  py-2 px-6 text-[18px] leading-6`}
@@ -372,7 +373,7 @@ const Register = () => {
                         </div>
                      )}
                   </div>
-                  <div className='flex flex-col justify-center items-center max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10 shadow-lg rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none'>
+                  <div className='flex justify-center items-center max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10 shadow-lg rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none'>
                      <Link
                         to='/'
                         className='grid content-between space-y-6  transform transition-transform hover:-translate-y-2'

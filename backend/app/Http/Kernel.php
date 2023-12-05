@@ -22,6 +22,7 @@ use App\Http\Middleware\RestaurantOrWorker;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Middleware\EnsurePhoneVerified;
 use App\Http\Middleware\EnsureEmailIsVerified;
+use App\Http\Middleware\EnsureUserIsNotActive;
 use App\Http\Middleware\EnsurePhoneNotVerified;
 use App\Http\Middleware\EnsureUserIsNotBlocked;
 use Illuminate\Auth\Middleware\RequirePassword;

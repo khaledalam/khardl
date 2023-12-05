@@ -124,19 +124,19 @@
                                                           <!--end::Label-->
                                                       </div>
                                                       <!--end::Input group-->
-                                              
-                                              
-                                                      <!--begin::Input group-->
-                                                      <div class="row mb-0 mt-5">
-                                                          <!--begin::Label-->
-                                                          <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_advertisements" value="1" name="can_modify_advertisements">
-                                                              <label class="form-check-label" for="can_modify_advertisements">{{ __('messages.can-modify-advertisements')}}</label>
-                                                          </div>
-                                                          <!--end::Label-->
-                                                      </div>
-                                                      <!--end::Input group-->
-                                              
+
+
+{{--                                                      <!--begin::Input group-->--}}
+{{--                                                      <div class="row mb-0 mt-5">--}}
+{{--                                                          <!--begin::Label-->--}}
+{{--                                                          <div class="form-check form-check-solid form-switch fv-row">--}}
+{{--                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_advertisements" value="1" name="can_modify_advertisements">--}}
+{{--                                                              <label class="form-check-label" for="can_modify_advertisements">{{ __('messages.can-modify-advertisements')}}</label>--}}
+{{--                                                          </div>--}}
+{{--                                                          <!--end::Label-->--}}
+{{--                                                      </div>--}}
+{{--                                                      <!--end::Input group-->--}}
+
                                                       <!--begin::Input group-->
                                                       <div class="row mb-0 mt-5">
                                                           <!--begin::Label-->
@@ -147,7 +147,7 @@
                                                           <!--end::Label-->
                                                       </div>
                                                       <!--end::Input group-->
-                                              
+
                                                       <!--begin::Input group-->
                                                       <div class="row mb-0 mt-5">
                                                           <!--begin::Label-->
@@ -168,7 +168,7 @@
                                                             <!--end::Label-->
                                                         </div>
                                                         <!--end::Input group-->
-                                              
+
                                                   </div>
                                                   <!--end::Card body-->
                                               </div>

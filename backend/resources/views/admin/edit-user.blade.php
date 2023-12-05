@@ -89,14 +89,14 @@
                                                             <!--begin::Input group-->
                             <div class="mb-10 fv-row">
                                 <!--begin::Label-->
-                                <label class="required form-label">{{ __('messages.phone-number')}}</label>
+                                <label class="required form-label">{{ __('messages.phone')}}</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone_number') is-invalid @enderror" value="{{ $user->phone_number }}" name="phone_number" id="phone_number" placeholder="05XXXXXXXX" required>
+                                <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone') is-invalid @enderror" value="{{ $user->phone }}" name="phone" id="phone" placeholder="05XXXXXXXX" required>
 
                                 <!--end::Input-->
                                 <!--begin::Description-->
-                                <div class="text-muted fs-7">{{ __('messages.phone-number')}} {{ __('messages.is-required')}}</div>
+                                <div class="text-muted fs-7">{{ __('messages.phone')}} {{ __('messages.is-required')}}</div>
                                 <!--end::Description-->
                             </div>
                             <!--end::Input group-->
@@ -209,7 +209,15 @@
                                                                     <!--end::Input group-->
                                                             
                                                                     <hr>
-                                                            
+                                                                    <div class="row mb-0 mt-5">
+                                                                        <!--begin::Label-->
+                                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                                          <input class="form-check-input w-35px h-20px" type="checkbox" id="can_see_restaurant_owners" value="1" @if (DB::table('permissions')->where('user_id', $user->id)->value('can_see_restaurant_owners') == 1) checked  @endif name="can_see_restaurant_owners">
+                                                                            <label class="form-check-label" for="can_see_restaurant_owners">{{ __('messages.see-restaurant-owners')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('messages.see-restaurant-owners') }}"></i></label>
+                                                                        </div>
+                                                                        <!--end::Label-->
+                                                                    </div>
+                                                                    <hr>
                                                                     <!--begin::Input group-->
                                                                     <div class="row mb-0 mt-5">
                                                                         <!--begin::Label-->
@@ -248,6 +256,7 @@
                                                                       </div>
                                                                       <!--end::Label-->
                                                                   </div>
+                                                                  
                                                                     <!--end::Input group-->
                                                                 </div>
                                                                 <!--end::Card body-->

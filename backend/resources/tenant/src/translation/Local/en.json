@@ -269,10 +269,18 @@
    "show": "Show",
    "Delivery Details": "Delivery Details",
    "Summary": "Summary",
-   "Delivery": "Delivery",
    "Products": "Products",
    "(Paid with Cash)": "(Paid with Cash)",
    "Profile Details": "Profile Details",
    "Full Name": "Full Name",
-   "Thin": "Thin"
+   "Thin": "Thin",
+    "Choose Site Editor": "Choose Site Editor",
+    "Restaurant Editor": "Restaurant Editor",
+    "Customer Editor": "Customer Editor",
+    "No items in this category": "No items in this category",
+    "delivery": "Delivery",
+    "Delivery": "Delivery",
+    "receipt": "Receipt",
+    "Receipt": "Receipt"
+
 }

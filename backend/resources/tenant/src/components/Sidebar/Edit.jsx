@@ -7,7 +7,7 @@ import { selectButtons, updateButton, updateGlobalButtons } from '../../redux/ed
 import { selectAlignText } from '../../redux/editor/alignTextSlice';
 import { useTranslation } from "react-i18next";
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { setFontsList, setSelectedFontFamily, setSelectedFontWeight } from '../../redux/editor/fontsSlice';
+import { setFontsList, setSelectedFontFamily, setSelectedFontWeight ,setSelectedFontSize} from '../../redux/editor/fontsSlice';
 
 function Edit() {
     const [GlobalColor, setGlobalColor] = useState('#C0D123');
@@ -18,6 +18,7 @@ function Edit() {
     const Language = useSelector((state) => state.languageMode.languageMode);
     const selectedAlignText = useSelector((state) => state.alignText.selectedAlignText);
     const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
+    const selectedFontSize = useSelector((state) => state.fonts.selectedFontSize);
 
     const dispatch = useDispatch();
     const { t } = useTranslation();
@@ -48,6 +49,10 @@ function Edit() {
     };
     const handleFontChange = (event) => {
         dispatch(setSelectedFontFamily(event.target.value));
+    };
+    const handleFontSizeChange = (event) => {
+        console.log(event.target.value);
+        dispatch(setSelectedFontSize(event.target.value + "px"));
     };
     const handleFontWeightChange = (event) => {
         let fontWeight = 'normal';
@@ -188,9 +193,9 @@ function Edit() {
                             <MdKeyboardArrowDown className={`absolute top-1/2 ${Language == "en" ? "right-4" : "left-4"} transform -translate-y-1/2 text-black`} />
                         </div>
                         <div className='max-w-[80px] relative w-[100%]'>
-                            <select className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
+                            <select onChange={handleFontSizeChange} className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
                                 {[...Array(5)].map((option, index) => (
-                                    <option className="bg-white text-black" value="" key={index}>{index + 1}</option>
+                                    <option className="bg-white text-black" value={15 + index * 5} key={15 + index * 5}>{15 + index * 5}</option>
                                 ))}
                             </select>
                             <MdKeyboardArrowDown className={`absolute top-1/2 ${Language == "en" ? "right-4" : "left-4"} transform -translate-y-1/2 text-black`} />

@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { setImage } from '../../../../redux/editor/imageSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BsFillImageFill } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-function Hero() {
-    const image = sessionStorage.getItem('previewImage');
-    const shapeImageShape = sessionStorage.getItem('shapeImageShape');
-    const selectBanner = sessionStorage.getItem('selectBanner');
-    const images = JSON.parse(sessionStorage.getItem('images'));
+function Hero(props) {
+
+    const {styleData} = props;
+
+    const image = styleData?.banner_image || sessionStorage.getItem('previewImage');
+    const shapeImageShape = styleData?.images_style || sessionStorage.getItem('shapeImageShape');
+    const selectBanner = styleData?.banner_style || sessionStorage.getItem('selectBanner');
+    const images = styleData?.banner_images || JSON.parse(sessionStorage.getItem('images'));
     const [uploadedImages, setUploadedImages] = useState(images?.image);
 
     const dispatch = useDispatch();

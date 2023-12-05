@@ -14,8 +14,11 @@ import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useAuthContext } from '../../components/context/AuthContext'
 import AxiosInstance from "../../axios/axios";
 
+
 const Login = () => {
-   const dispatch = useDispatch()
+    const [openEyePassword, setOpenEyePassword] = useState(false)
+    const [spinner, setSpinner] = useState(false)
+    const dispatch = useDispatch()
    const { setStatusCode } = useAuthContext()
 
    const { t } = useTranslation()
@@ -25,9 +28,8 @@ const Login = () => {
       handleSubmit,
       formState: { errors },
    } = useForm()
-   const [openEyePassword, setOpenEyePassword] = useState(false)
-   const Language = useSelector((state) => state.languageMode.languageMode)
-   const [spinner, setSpinner] = useState(false)
+    const Language = useSelector((state) => state.languageMode.languageMode)
+
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
@@ -44,7 +46,6 @@ const Login = () => {
            // remember_me: data.remember_me, // used only in API token-based
          });
 
-         console.log(response?.data?.success)
          if (response?.data?.success) {
             const responseData = await response?.data;
             console.log(responseData)
@@ -85,7 +86,7 @@ const Login = () => {
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{
@@ -93,7 +94,7 @@ const Login = () => {
                backgroundSize: 'cover',
             }}
          >
-            <div className='py-[20px] flex justify-center items-center'>
+             <div className='py-[20px] flex justify-center items-center'>
                <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[60%] max-[1200px]:w-[100%]'>
                   <div className='relative flex flex-col justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
                      <div className='mt-6 w-[100%]'>
@@ -206,24 +207,7 @@ const Login = () => {
                                  </p>
                               </div>
                            </form>
-                            <small>
-                                Demo for testing:<br/><br/>
 
-                                <u>Restaurant Owner:</u><br/>
-                                Email: admin@first.com<br/>
-                                Password: password<br/><br/>
-
-                                <hr /><br/>
-
-                                <u>Restaurant Worker:</u><br/>
-                                Email: worker@first.com<br/>
-                                Password: password
-
-                                <hr /><br/>
-                                <u>Restaurant Customer:</u><br/>
-                                Email: customer@first.com<br/>
-                                Password: password
-                            </small>
                         </div>
                      </div>
                      {spinner && (

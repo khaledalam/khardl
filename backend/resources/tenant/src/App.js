@@ -3,9 +3,7 @@ import './App.css'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
-import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
-import Home from './pages/Home/Home'
 import Login from './pages/LoginSignUp/Login'
 import LoginTrial from './pages/LoginSignUp/LoginTrial'
 import Register from './pages/LoginSignUp/Register'
@@ -17,8 +15,6 @@ import 'aos/dist/aos.css'
 import ForgotPassword from './pages/LoginSignUp/ForgotPassword'
 import CreateNewPassword from './pages/LoginSignUp/CreateNewPassword'
 import EditorPage from './pages/EditorPage'
-import RestaurantsPreview from './components/Restaurants/RestaurantsPreview/Preview'
-import RestaurantsEditor from './components/Restaurants/RestaurantsEditor/Editor'
 import CustomersPreview from './components/Customers/CustomersPreview/Preview'
 import EditorSwitcher from './pages/EditorSwitcher'
 import Protected from './Protected'
@@ -28,12 +24,9 @@ import Logout from './components/Logout/Logout'
 import { useAuthContext } from './components/context/AuthContext'
 import TermsPolicies from "../../landing-page/src/pages/TermsPoliciesPrivacy/TermsPolicies";
 import Privacy from "../../landing-page/src/pages/TermsPoliciesPrivacy/Privacy";
-import Advantages from "../../landing-page/src/pages/Advantages/Advantages";
-import Clients from "../../landing-page/src/pages/Clients/clients";
-import Services from "../../landing-page/src/pages/Services/services";
-import Prices from "../../landing-page/src/pages/Prices/prices";
-import FQA from "../../landing-page/src/pages/FQA/fqa";
-import CustomerEditor from "./components/Customers/CustomersEditor/Editor";
+import Cart from "./components/Cart/Cart";
+import RestaurantHomePage from "./components/Restaurants/RestaurantsPreview/RestaurantHomePage";
+import Header from "./components/Restaurants/RestaurantsPreview/components/header";
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
@@ -42,16 +35,13 @@ const App = () => {
    const location = useLocation()
    const { loading } = useAuthContext()
    const showHeader = ![
-       // '/site-editor',
-       // '/site-editor/restaurants',
-       // '/site-editor/customers',
        '/policies',
        '/login-trial',
        '/privacy'].includes(
       location.pathname
    );
    const showFooter = ![
-       '/site-editor',
+       '/',
        '/site-editor/restaurants',
        '/site-editor/customers',
       '/login',
@@ -68,7 +58,12 @@ const App = () => {
    Aos.init({
       duration: 1000,
       offset: 0,
-   })
+   });
+
+   if (loading) {
+       return;
+   }
+
 
    return (
       <div
@@ -84,13 +79,13 @@ const App = () => {
       >
          <div>
             <ToastContainer theme='colored'/>
-            {showHeader && !loading && <Header />}
+            {showHeader && <Header />}
             <Supports />
             <ScrollUp />
             <div>
                <Routes>
                   {/* Public Routes */}
-                  <Route path='/' element={<Home />} />
+                  <Route path='/' element={<RestaurantHomePage />} />
                   <Route path='/logout' element={<Logout />} />
                   <Route
                      path='/reset-password'
@@ -103,11 +98,10 @@ const App = () => {
 
                    <Route path='/policies' element={<TermsPolicies />} />
                    <Route path='/privacy' element={<Privacy />} />
-                   <Route path='/advantages' element={<Advantages />} />
-                   <Route path='/clients' element={<Clients />} />
-                   <Route path='/services' element={<Services />} />
-                   <Route path='/prices' element={<Prices />} />
-                   <Route path='/fqa' element={<FQA />} />
+                   {/*<Route path='/advantages' element={<Advantages />} />*/}
+                   {/*<Route path='/services' element={<Services />} />*/}
+                   {/*<Route path='/prices' element={<Prices />} />*/}
+                   {/*<Route path='/fqa' element={<FQA />} />*/}
                    <Route path='/login-trial' element={<LoginTrial />} />
 
                    <Route element={<Layout />}>
@@ -123,13 +117,11 @@ const App = () => {
                      />
                      <Route path='/site-editor' element={<EditorSwitcher />} />
 
-                     <Route
+                      <Route path='/cart' element={<Cart />} />
+
+                      <Route
                         path='/site-editor/restaurants'
                         element={<EditorPage />}
-                     />
-                     <Route
-                        path='/site-editor/restaurants/preview'
-                        element={<RestaurantsPreview />}
                      />
                       {/*/site-editor/customers/preview*/}
                      <Route

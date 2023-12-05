@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -13,6 +15,7 @@ use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
 
 
@@ -28,7 +31,9 @@ use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
 */
 
 
-// Route::get('/home', [DashboardController::class, 'index'])->name('home');
+ Route::get('/test', function (){
+
+ })->name('test');
 
 // Route::post('/logout', function(){
 //     Auth::logout();
@@ -126,7 +131,6 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                             RegisterController::increasePromotersEntered($promoter);
                         }
                     }
-
                     return view('central');
                 })->name($name);
             }
@@ -166,7 +170,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
             Route::middleware(['role:Restaurant Owner', 'notAccepted'])->group(function () {
 
-                Route::get('complete-register', static function(){
+            Route::get('complete-register', static function(){
                     return view("central");
                 })->name("complete-register");
                 Route::post('register-step2', [RegisterController::class, 'stepTwo']);
@@ -174,7 +178,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
             Route::middleware(['accepted'])->group(function () {
                 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
-                Route::prefix('admin')->middleware('admin')->group(function () {
+                Route::prefix('admin')->middleware(['admin'])->group(function () {
                     Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('permission:can_access_dashboard')->name('admin.dashboard');
                     Route::get('/download-commercial-registration/{filename}', [AdminController::class, 'downloadCommercialRegistration'])->middleware('permission:can_view_restaurants')->name('download.commercial');
                     Route::get('/download-delivery-contract/{filename}', [AdminController::class, 'downloadDeliveryContract'])->middleware('permission:can_view_restaurants')->name('download.delivery');
@@ -193,6 +197,8 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('admin.add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('admin.promoters');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('admin.user-management');
+                    Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('admin.restaurant-owner-management');
+
                     Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('admin.delete-user');
                     Route::delete('/promoters/delete/{id}', [AdminController::class, 'deletePromoter'])->middleware('permission:can_promoters')->name('admin.delete-promoter');
                     Route::get('/user-management/edit/{id}', [AdminController::class, 'userManagementEdit'])->middleware('permission:can_edit_admins')->name('admin.user-management-edit');
@@ -200,16 +206,12 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
                     Route::get('/edit-profile', [AdminController::class, 'editProfile'])->middleware('permission:can_edit_profile')->name('admin.edit-profile');
                     Route::post('/profile', [AdminController::class, 'updateProfile'])->middleware('permission:can_edit_profile')->name('admin.profile-update');
-                    Route::get('/download/file/{path?}',function($path){
-                        try{
-                            return response()->download(storage_path("app/$path"));
-                        }catch(Exception $e){
-                            return redirect()->back()->with('error',__('File not exists !'));
-                        }
-                        
-                    })
+                    Route::put('/restaurants/{restaurant}/activate', [AdminController::class, 'activateRestaurant'])->middleware('permission:can_approve_restaurants')->name('admin.restaurant.activate');
+                    Route::get('/download/file/{path?}',[DownloadController::class,'download'])
                     ->where('path', '(.*)')
                     ->name("download.file");
+                    Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('admin.toggle-status');
+
                 });
 
             });
@@ -221,7 +223,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
-   
+
 });
 //-----------------------------------------------------------------------------------------------------------------------
 

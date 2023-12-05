@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('customer_styles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unique(); // Ensure one style per user
-            $table->string('primary_color')->nullable();
-            $table->string('buttons_style')->nullable();
-            $table->string('images_style')->nullable();
-            $table->string('font_family')->nullable();
-            $table->string('font_type')->nullable();
-            $table->string('font_size')->nullable();
-            $table->enum('font_alignment', ['left', 'center', 'right'])->default('left');
+            $table->string('primary_color');
+            $table->string('buttons_style');
+            $table->string('images_style');
+            $table->string('font_family');
+            $table->string('font_type');
+            $table->string('font_size');
+            $table->string('font_alignment');
             $table->timestamps();
 
             // Foreign key constraint

@@ -369,7 +369,7 @@ function CompleteRegistration() {
                   <div className='w-[100%] flex flex-col items-start gap-4'>
 
                      <div className='w-[100%]'>
-                        <div className='mb-2 font-semibold'>{t('IBAN')}</div>
+                        <div className='mb-2 font-semibold'>{t('BANK IBAN')}</div>
                         <input
                            type='text'
                            className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}

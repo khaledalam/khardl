@@ -15,10 +15,6 @@
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
     <link rel="shortcut icon" href="{{ global_asset('assets/media/logos/favicon.ico')}}"/>
-    <!--begin::Fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @if(app()->getLocale() === 'ar')
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
@@ -52,7 +48,7 @@
         <span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{--    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
     @if(session('success'))
         <script>
             showAlert('success', '{{ session('success') }}');
@@ -113,7 +109,7 @@
                 <!--begin::Brand-->
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
-                    <a href="index.html">
+                    <a href="/">
                         <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
                     </a>
                     <!--end::Logo-->
@@ -298,8 +294,8 @@
                         <!--end::Aside mobile toggle-->
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                            <a href="demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="{{ global_asset('assets/img/logo.png') }}" class="h-30px" />
+                            <a href="/" class="d-lg-none">
+                                <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->
@@ -349,7 +345,12 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <i class="fa-solid fa-user fa-lg"></i>
+                                                <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                                <rect opacity="0.9" x="8" y="3" width="8" height="8" rx="4" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                            </svg>
+                                        </span>
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
@@ -521,7 +522,7 @@
     <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
-    <script src="https://kit.fontawesome.com/d2d3f16619.js" crossorigin="anonymous"></script>
+
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
 </body>

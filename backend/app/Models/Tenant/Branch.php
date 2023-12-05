@@ -47,6 +47,9 @@ class Branch extends Model
     public function workers(){
         return $this->hasMany(RestaurantUser::class);
     }
+    public function categories(){
+        return $this->hasMany(Category::class);
+    }
 
 
 }

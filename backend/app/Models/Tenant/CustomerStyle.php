@@ -9,6 +9,7 @@ class CustomerStyle extends Model
     protected $table = 'customer_styles';
 
     protected $fillable = [
+        'id',
         'user_id',
         'primary_color',
         'buttons_style',

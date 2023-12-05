@@ -4,31 +4,65 @@ namespace App\Http\Controllers;
 
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DeniedEmail;
 use App\Mail\ApprovedEmail;
+use App\Mail\ApprovedRestaurant;
 use App\Models\User;
 use App\Models\Log;
 use App\Models\Promoter;
+use App\Models\Tenant\RestaurantStyle;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
         $user = Auth::user();
-        return view('admin.dashboard', compact('user'));
+
+        //
+        $restaurantsAll = Tenant::with("primary_domain")->get();
+
+        // not complete register step2
+        $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
+
+        $restaurantsLive = 0;
+        $customers = 0;
+
+        foreach ($restaurantsAll as $restaurant) {
+            $restaurant->run(static function ($tenant) use (&$restaurantsLive, &$customers) {
+                $setting = Tenant\Setting::first();
+                if ($setting->is_live) {
+                    $restaurantsLive ++;
+                }
+
+                $currentMonth = Carbon::now()->month;
+                $customers+= RestaurantUser::whereDoesntHave('roles')->whereMonth('created_at', '=', $currentMonth)->count();
+            });
+        }
+        $restaurantsAll = count($restaurantsAll);
+    
+
+
+        return view('admin.dashboard', compact('user',
+            'restaurantsAll', 'restaurantsOwnersNotUploadFiles',
+            'restaurantsLive', 'customers'
+        ));
     }
 
     public function addUser()
     {
         $user = Auth::user();
+    
         return view('admin.add-user', compact('user'));
     }
 
@@ -98,11 +132,11 @@ class AdminController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->role = 10;
-        $user->phone_number = $request->phone_number;
+        $user->position =$request->position;
+        $user->phone = $request->phone;
 
         $user->save();
-
+        $user->assignRole('Administrator');
         $permissions = [
             'can_access_restaurants',
             'can_view_restaurants',
@@ -132,11 +166,11 @@ class AdminController extends Controller
             'user_id' => Auth::id(),
             'action' => 'Made an user with an ID of: ' . $user->id,
         ]);
-
+        
         if(app()->getLocale() === 'en')
-            return redirect()->back()->with('success', 'Admin added successfully');
+            return redirect()->route('admin.user-management')->with('success', 'Admin added successfully');
         else
-            return redirect()->back()->with('success', 'تمت إضافة المسؤول بنجاح');
+            return redirect()->route('admin.user-management')->with('success', 'تمت إضافة المسؤول بنجاح');
     }
 
 
@@ -153,15 +187,15 @@ class AdminController extends Controller
     }
 
     public function updateProfile(Request $request){
-
+        $loggedUserId = Auth::id();
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'phone_number' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$loggedUserId,
+            'phone' => 'required|string|max:255',
         ]);
 
-        $loggedUserId = Auth::id();
+     
         $user = User::find($loggedUserId);
 
         Log::create([
@@ -172,7 +206,7 @@ class AdminController extends Controller
         $user->first_name = $validatedData['first_name'];
         $user->last_name = $validatedData['last_name'];
         $user->email = $validatedData['email'];
-        $user->phone_number = $validatedData['phone_number'];
+        $user->phone = $validatedData['phone'];
         if($request->input('password') != ""){
             $user->password = Hash::make($request->input('password'));
         }
@@ -188,62 +222,106 @@ class AdminController extends Controller
 
     public function restaurants(Request $request)
     {
-        // users from central table
-        $query = User::where('restaurant_name', '<>', null);
-
-        $restaurants =  Tenant::with("primary_domain")->paginate();
-        // foreach($restaurants as $restaurant){
-        //     $restaurant->run(function ($tenant) {
-        //         $query = RestaurantUser::where('branch_id', null);
-        //     });
-        // }
+      
+        $query =  Tenant::query()->with('primary_domain');
+        $restaurants = $query->get();
        
-        // if ($request->has('search')) {
-        //     $search = $request->input('search');
-        //     $query->where('first_name', 'like', '%' . $search . '%');
-        //     $query->Where('last_name', 'like', '%' . $search . '%');
-        // }
-        // if ($request->has('status') && $request->input('status') != "All") {
-        //     $status = $request->input('status');
-        //     $query->where('status', $status);
-        // }
-    
-        // $restaurants = $query->paginate(15);
+        if ($request->has('status') && $request->input('status') !== "all") {
+            $status = $request->input('status');
+            foreach($restaurants as $restaurant){
+                    $status = $request->input('status');
+                    if($status == 'live'){
+                        if($restaurant->is_live()){
+                            $query->orWhere('id', $restaurant->id);
+                        }else {
+                            $query->where('id','!=', $restaurant->id);
+                        }
+                    }else {
+                        if($restaurant->is_live()){
+                            $query->Where('id','!=', $restaurant->id);
+                        }else {
+                            $query->orWhere('id', $restaurant->id);
+                        }
+                    }
+                    
+            }
+        }
+        if ($request->has('search')) {
+            $search = $request->input('search');
 
+            $query->whereHas('primary_domain', static function($query1) use ($search) {
+                $query1->where('domain', 'like', '%' . $search . '%');
+            });
+            $query->orWhere('restaurant_name','like', '%' . $search . '%');
+
+        }
+    
+         
+        $restaurants = $query->paginate();
         $user = Auth::user();
 
         return view('admin.restaraunts', compact('restaurants', 'user'));
     }
 
     public function viewRestaurant($id){
-      
+
         $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
+        $logo ="";
+        $is_live= false;
+        $restaurant->run(static function()use(&$logo,&$is_live){
+            $is_live = Setting::first()->is_live;
+            if($is_live){
+                $logo = RestaurantStyle::first()->logo ?? '';
+            }else {
+                $logo = null;
+
+            }
+            
+        });
         
+        $owner =  $restaurant->user;
+        $widget = 'overview';
+        $user = Auth::user();
         // if($restaurant->role == 0){
         //     return view('admin.view-restaurant', compact('restaurant'));
         // }else{
         //     return abort(404);
         // }
-        return view('admin.view-restaurant', compact('restaurant'));
-       
+        return view('admin.view-restaurant', compact('restaurant','widget','user','logo','is_live','owner'));
+
+    }
+    public function activateRestaurant(Tenant $restaurant){
+
+        $restaurant->run(static function(){
+            Setting::first()->update(['is_live'=>true]);
+        });
+        Mail::to($restaurant->user->email)->send(new ApprovedRestaurant($restaurant->user,$restaurant));
+
+        
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['id'=>$restaurant->id])."> $restaurant->id </a>",
+        ]);
+
+        return redirect()->route('admin.view-restaurants',['id'=>$restaurant->id])->with('success', __("Restaurant has been activated successfully."));
+
     }
 
-    public function viewRestaurantOrders($id){
-
-        $restaurant = User::findOrFail($id);
-
-        if($restaurant->role == 0){
-            $orders = DB::table('orders')
-            ->where('user_id', $id)
-            ->get();
-
-            return view('admin.view-restaurant-orders', compact('restaurant', 'orders'));
-        }
-        return abort(404);
+    public function viewRestaurantOrders( $id){
+       
+        $restaurant = Tenant::findOrFail($id);
+        $is_live = $restaurant->is_live();
+        $owner =  $restaurant->user;
+        $orders = $restaurant->orders();
+        $user = Auth::user();
+        $widget = 'orders';
+        return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live'));
     }
 
     public function deleteRestaurant($id)
     {
+        
+        // 
         User::findOrFail($id)->delete();
 
             Log::create([
@@ -256,9 +334,18 @@ class AdminController extends Controller
         else
             return redirect()->back()->with('success', 'حذف بنجاح.');
     }
-
+    
     public function deleteUser($id)
     {
+        $user = User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })
+        ->where("id",'!=',Auth::id())
+        ->where("id",'!=',User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })->first()->id)
+        ->findOrFail($id);
+
         DB::beginTransaction();
 
         try {
@@ -269,8 +356,9 @@ class AdminController extends Controller
             ]);
 
             DB::table('logs')->where('user_id', $id)->delete();
-            DB::table('permissions')->where('user_id', $id)->delete();
-            User::findOrFail($id)->delete();
+            Permission::where('user_id', $id)->delete();
+           
+            $user->delete();
 
             DB::commit();
 
@@ -280,8 +368,8 @@ class AdminController extends Controller
             else
                 return redirect()->back()->with('success', 'حذف بنجاح.');
         } catch (\Exception $e) {
+            logger($e->getMessage());
             DB::rollBack();
-
             if(app()->getLocale() === 'en')
                 return redirect()->back()->with('error', 'Error deleting user and related records: ' . $e->getMessage());
             else
@@ -312,21 +400,30 @@ class AdminController extends Controller
 
     public function userManagement()
     {
-        $users = User::where('role', 10)
+        $admins = User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })
+        ->where('id','!=',Auth::id())
         ->paginate(15);
         $user = Auth::user();
-        $logs = Log::orderBy('created_at', 'desc')->get();
-
-        return view('admin.user-management', compact('user', 'users', 'logs'));
+        return view('admin.user-management', compact('user', 'admins'));
+    }
+    public function restaurantOwnerManagement()
+    {
+        $admins = User::whereHas('roles',function($q){
+            return $q->where("name","Restaurant Owner");
+        })
+        ->paginate(15);
+        $user = Auth::user();
+        return view('admin.restaurant-owner-management', compact('user', 'admins'));
     }
 
     public function userManagementEdit($id){
-
-        $user = User::findOrFail($id);
-
-        if($user->role != 10){
-            return abort(404);
-        }
+       
+        $user = User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })->where("id",'!=',Auth::id())->findOrFail($id);
+        
         return view('admin.edit-user', compact('user'));
 
     }
@@ -358,11 +455,13 @@ class AdminController extends Controller
 
     public function updateUserPermissions(Request $request, $userId){
 
-        $selectedUser = User::find($userId);
+        $selectedUser = User::whereHas('roles',function($q){
+            return $q->where("name","Administrator");
+        })->where("id",'!=',Auth::id())->findOrFail($userId);
 
         $selectedUser->first_name = $request->input('first_name');
         $selectedUser->last_name = $request->input('last_name');
-        $selectedUser->phone_number = $request->input('phone_number');
+        $selectedUser->phone = $request->input('phone');
         $selectedUser->email = $request->input('email');
 
         $permissions = [
@@ -377,6 +476,9 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
+            'can_see_restaurant_owners',
+     
+            
         ];
 
         $updateData = [];
@@ -555,4 +657,12 @@ class AdminController extends Controller
         }
 
     }
+    public function toggleStatus(User $user)
+    {
+        // Toggle the user status
+        $user->update(['status' => ($user->isBlocked())?'active':'blocked']);
+
+        return response()->json(['isBlocked' => $user->isBlocked()]);
+    }
+
 }

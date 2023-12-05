@@ -34,7 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'last_login',
 
     ];
-
+    const STORAGE ="user_files";
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -65,6 +65,9 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function isBlocked(){
         return $this->status == 'blocked';
     }
+    public function isActive(){
+        return $this->status == 'active';
+    }
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
@@ -75,11 +78,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-    public function hasPermissionWorker($permission)
-    {
-        return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
-    }
-
+   
 
     public function traderRegistrationRequirement()
     {

@@ -4,14 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getSelectedCategory } from '../../../redux/editor/categorySlice';
 import { useTranslation } from "react-i18next";
 import { getSelectedAlign } from '../../../redux/editor/alignSlice';
-// import { categories, branches } from '../../../data/data';
 import ResizeDetector from 'react-resize-detector';
 import { setDivWidth } from '../../../redux/editor/divWidthSlice';
 import Header from './components/header';
 import Dashboard from './components/Dashboard/Dashboard';
 import 'babel-polyfill'
 import AxiosInstance from "../../../axios/axios";
-import {toast} from "react-toastify";
 
 const Preview = () => {
   const { branch_id } = useParams();

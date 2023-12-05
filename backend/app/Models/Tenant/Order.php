@@ -14,13 +14,15 @@ class Order extends Model
         'transaction_id',
         'user_id',
         'branch_id',
-        'total_price',
+        'total',
         'status',
-        'payment_method',
+        'payment_method_id',
         'payment_status',
         'shipping_address',
-        'order_notes'
+        'order_notes',
+        'delivery_type'
     ];
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     public function user()
     {
@@ -37,7 +39,7 @@ class Order extends Model
         return $this->belongsToMany(Product::class)->withPivot('quantity', 'price_at_order_time')->withTimestamps();
     }
 
-    public function paymentMethod()
+    public function payment_method()
     {
         return $this->belongsTo(PaymentMethod::class);
     }

@@ -57,7 +57,7 @@ const LoginTrial = () => {
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{
@@ -150,24 +150,7 @@ const LoginTrial = () => {
                                  </button>
                               </div>
                            </form>
-                            <small>
-                                Demo for testing:<br/><br/>
 
-                                <u>Restaurant Owner:</u><br/>
-                                Email: admin@first.com<br/>
-                                Password: password<br/><br/>
-
-                                <hr /><br/>
-
-                                <u>Restaurant Worker:</u><br/>
-                                Email: worker@first.com<br/>
-                                Password: password
-
-                                <hr /><br/>
-                                <u>Restaurant Customer:</u><br/>
-                                Email: customer@first.com<br/>
-                                Password: password
-                            </small>
                         </div>
                      </div>
                      {spinner && (

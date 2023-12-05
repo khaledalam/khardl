@@ -63,7 +63,11 @@ const Login = () => {
                responseData.data.step2_status === 'completed' &&
                responseData.data.user.status === 'active'
             ) {
-               setStatusCode(HTTP_OK)
+                setStatusCode(HTTP_OK);
+               // settimeout(() => {
+               //     window.location.href = '/dashboard';
+               //     //
+               // }, 500);
             } else {
                navigate('/error')
             }
@@ -85,7 +89,7 @@ const Login = () => {
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
-      <div className='flex flex-col items-stretch justify-center pt-[40px]'>
+      <div className='flex flex-col items-stretch justify-center'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{

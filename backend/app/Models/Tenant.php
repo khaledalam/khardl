@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Tenant\Setting;
+use App\Http\Resources\API\Tenant\OrderResource;
+use App\Models\Tenant\Order;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -21,7 +24,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         return [
             'id',
             'email',
-            'user_id'
+            'user_id',
+            'restaurant_name'
         ];
     }
     public function primary_domain()
@@ -48,11 +52,22 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         return tenant_route($domain, $route, $parameters, $absolute);
     }
 
-    public function impersonationUrl($user_id): string
+    public function impersonationUrl($user_id,$route = 'home'): string
     {
-        $token = tenancy()->impersonate($this, $user_id, $this->route('home'), 'web')->token;
-
+        $token = tenancy()->impersonate($this, $user_id, $this->route($route), 'web')->token;
         return $this->route('impersonate', ['token' => $token]);
     }
 
+    public function is_live(): bool
+    {
+        return $this->run(static function(): bool {
+            return Setting::first()->is_live;
+        });
+    }
+    public function orders()
+    {
+        return $this->run(static function() {
+            return  OrderResource::collection(Order::all());
+        });
+    }
 }

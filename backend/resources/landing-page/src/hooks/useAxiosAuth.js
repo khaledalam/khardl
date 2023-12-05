@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {HTTP_NOT_AUTHENTICATED} from "../config";
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://khardl:8000'
+const BASE_URL = process.env.REACT_APP_API_URL || 'https://khardl.com'
 
 const useAxiosAuth = () => {
    const location = useLocation()
@@ -11,7 +11,6 @@ const useAxiosAuth = () => {
    const privateRoute = ![
       '/',
       '/register',
-      '/clients',
       '/services',
       '/reset-password',
       '/create-new-password',
@@ -34,7 +33,7 @@ const useAxiosAuth = () => {
 
    axiosAuth.interceptors.request.use(
       (request) => {
-         console.log('request sent')
+         console.log('request sent: axiosAuth.interceptors.request')
          return request
       },
       (error) => Promise.reject(error)

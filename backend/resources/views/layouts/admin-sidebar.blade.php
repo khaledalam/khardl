@@ -13,10 +13,6 @@
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
     <link rel="shortcut icon" href="{{ global_asset('assets/media/logos/favicon.ico')}}"/>
-    <!--begin::Fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @if(app()->getLocale() === 'ar')
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
@@ -45,7 +41,7 @@
     ">
     <!--begin::Main-->
     <!--begin::Root-->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if(session('success'))
         <script>
             showAlert('success', '{{ session('success') }}');
@@ -71,12 +67,26 @@
                         icon: type,
                         title: message,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 3500
                     });
                 }
         </script>
     @endif
-
+    <script>
+        @if ($errors->any())
+        showAlert('error', '<ul>@foreach ($errors->all() as $error)<li style="list-style-type: none">{{ $error }}</li>@endforeach</ul> <br>');
+        @endif
+    
+        function showAlert(type, message) {
+            Swal.fire({
+                icon: type,
+                title: message,
+                showConfirmButton: true,
+                timer: 900000000
+            });
+        }
+    </script>
+    
 
     <div class="d-flex flex-column flex-root">
         <!--begin::Page-->
@@ -129,7 +139,7 @@
 
                             <div class="menu-item">
                                 <a href="{{ route('admin.dashboard') }}">
-                                    <span class="menu-link">
+                                    <span class="{{ ($admin_link == 'dashboard' ) ? 'menu-link active' : 'menu-link ' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                             <span class="svg-icon svg-icon-2">
@@ -152,40 +162,61 @@
                                     </span>
                                 </a>
                             </div>
-
-
-                            <!-- Restaurants -->
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
+                          
+                            <!-- Setting -->
+                            <div class="menu-item">
+                                <a href="{{ route('admin.profile') }}">
+                                    <span class="{{ ($admin_link == 'edit-profile'   || $admin_link == 'profile' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="currentColor" />
-                                                    <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="currentColor" />
-                                                    <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="currentColor" />
+                                                    <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="currentColor" />
+                                                    <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
                                                 </svg>
                                             </span>
                                             <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title">{{ __('messages.edit-profile')}}</span>
                                     </span>
-                                    <span class="menu-title">{{ __('messages.restaurants')}}</span>
-                                    <span class="menu-arrow"></span>
-                                </span>
-                                <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('admin.restaurants') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">{{ __('messages.all-restaurants')}}</span>
-                                        </a>
+                                </a>
+                            </div>
+                        
+                  
+                            @if($user->hasPermission("can_access_restaurants"))
+                                <!-- Restaurants -->
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                    <span class="{{ ($admin_link == 'restaurants' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="currentColor" />
+                                                        <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="currentColor" />
+                                                        <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title">{{ __('messages.restaurants')}}</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                        <div class="menu-item">
+                                            <a class="menu-link" href="{{ route('admin.restaurants') }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">{{ __('messages.all-restaurants')}}</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
+                            @endif
                             <!-- Supports -->
+                            @if($user->hasPermission('can_see_admins') || $user->hasPermission('can_add_admins'))
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'user-management' || $admin_link == 'add-user'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -202,14 +233,17 @@
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                    <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('admin.user-management') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">{{ __('messages.all-supports')}}</span>
-                                        </a>
-                                    </div>
+                                    @if($user->hasPermission('can_see_admins'))
+                                        <div class="menu-item">
+                                            <a class="menu-link" href="{{ route('admin.user-management') }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">{{ __('messages.all-supports')}}</span>
+                                            </a>
+                                        </div>
+                                    @endif
+                                    @if($user->hasPermission('can_add_admins'))
                                     <div class="menu-item">
                                         <a class="menu-link" href="{{ route('admin.add-user') }}">
                                             <span class="menu-bullet">
@@ -218,14 +252,36 @@
                                             <span class="menu-title">{{ __('messages.add-supports')}}</span>
                                         </a>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
 
-
+                            @endif
+                            @if($user->hasPermission('can_see_restaurant_owners'))
+                             <!-- Staff evaluation -->
+                             <div class="menu-item">
+                                <a href="{{ route('admin.restaurant-owner-management') }}">
+                                <span class="{{ ($admin_link == 'restaurant-owner-management'  ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="currentColor" />
+                                                <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.restaurant-owners')}}</span>
+                                </span>
+                            </a>
+                            </div>
+                            @endif
+                            @if($user->hasPermission('can_promoters'))
                              <!-- Staff evaluation -->
                              <div class="menu-item">
                                 <a href="{{ route('admin.promoters') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'promoters'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -240,11 +296,12 @@
                                 </span>
                             </a>
                             </div>
-
+                            @endif
+                            @if($user->hasPermission('can_see_logs'))
                             <!-- Logs -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.log') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'logs'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -259,12 +316,12 @@
                                 </span>
                             </a>
                             </div>
-
-
+                            @endif
+                            @if($user->hasPermission('can_settings'))
                             <!-- Setting -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.settings') }}">
-                                <span class="menu-link">
+                                <span class="{{ ($admin_link == 'settings'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                         <span class="svg-icon svg-icon-2">
@@ -279,6 +336,7 @@
                                 </span>
                             </a>
                             </div>
+                            @endif
                         </div>
                         <!--end::Menu-->
                     </div>
@@ -316,7 +374,7 @@
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="../../demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="{{ global_asset('assets/img/logo.png') }}" class="h-30px" />
+                                <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->
@@ -366,19 +424,21 @@
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 <!--begin::Avatar-->
                                                 <div class="symbol symbol-50px me-5">
-                                                    <i class="fa-solid fa-user fa-lg"></i>
+                                                <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                                <rect opacity="0.9" x="8" y="3" width="8" height="8" rx="4" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                            </svg>
+                                        </span>
                                                 </div>
                                                 <!--end::Avatar-->
                                                 <!--begin::Username-->
                                                 <div class="d-flex flex-column">
-                                                    <a href="{{ route('admin.profile') }}">
-                                                        <div class="fw-bolder d-flex align-items-center fs-5">
-                                                                <a href="{{ route('admin.profile') }}">{{ Auth::user()->first_name}} {{ Auth::user()->last_name }}</a>
-                                                        </div>
-                                                    </a>
-
-                                                    <a
-                                                        class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
+                                                    <div class="fw-bolder d-flex align-items-center fs-5">
+                                                        {{Auth::user()->first_name}} {{Auth::user()->last_name}}
+                                                    </div>
+                                                    <a href="#"
+                                                       class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
                                                 </div>
                                                 <!--end::Username-->
                                             </div>
@@ -566,7 +626,7 @@
     <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
-    <script src="https://kit.fontawesome.com/d2d3f16619.js" crossorigin="anonymous"></script>
+
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
 </body>

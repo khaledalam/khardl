@@ -44,11 +44,12 @@ function Section() {
     const selectedBanner = useSelector(getSelectedBanner);
     const selectedIconId = useSelector((state) => state.contact.selectedIconId);
     const Language = useSelector((state) => state.languageMode.languageMode);
-    useEffect(() => {
-        const newCategory = Language === 'en' ? 'Tabs' : 'مربعات';
-        dispatch(selectCategory(newCategory));
-    }, [Language, dispatch]);
+    // useEffect(() => {
+    //     const newCategory = Language === 'en' ? 'Tabs' : 'مربعات';
+    //     dispatch(selectCategory(newCategory));
+    // }, [Language, dispatch]);
     const handleCategoryChange = selectedCategory => {
+
         dispatch(selectCategory(selectedCategory));
     };
     const handleAlignChange = selectedAlign => {
@@ -132,13 +133,13 @@ function Section() {
                 </div>
                 <Dropdown
                     title={t("Banner")}
-                    options={[`${t("Slider")}`, `${t("One Photo")}`]}
+                    options={["Slider", "One Photo"]}
                     selectedValue={selectedBanner}
                     onSelect={(option) => handleBannerChange(option)}
                 />
                 <Dropdown
                     title={t("Category")}
-                    options={[`${t("Tabs")}`, `${t("Carousel")}`, `${t("Right")}`, `${t("Left")}`]}
+                    options={["Tabs", "Carousel", "Right", "Left"]}
                     selectedValue={selectedCategory}
                     onSelect={(option) => handleCategoryChange(option)}
                 />

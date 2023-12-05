@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('category_name');
+            $table->json('name');
 
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('user_id');

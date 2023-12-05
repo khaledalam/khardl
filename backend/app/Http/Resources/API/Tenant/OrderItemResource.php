@@ -18,6 +18,8 @@ class OrderItemResource extends JsonResource
             'id' => $this->id,
             'quantity' => $this->price,
             'price' => $this->price,
+            'total' => $this->total,
+            'quantity'=>$this->quantity
         ];
         if ($request->has('item')) {
             $data['item'] = new ItemResource($this->item);

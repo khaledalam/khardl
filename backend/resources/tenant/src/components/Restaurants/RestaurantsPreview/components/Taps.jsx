@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
 
-export function Taps({ children, contentClassName = "" }) {
+export function Taps({ children, contentClassName = "", styleData = {} }) {
   const { t } = useTranslation();
-  const selectedCategory = sessionStorage.getItem('selectedCategory');
-  const GlobalShape = sessionStorage.getItem('globalShape');
-  const Color = sessionStorage.getItem('globalColor');
-  const Language = sessionStorage.getItem('Language');
+
+  const selectedCategory = children[0]?.key || sessionStorage.getItem('selectedCategory');
+  const GlobalShape = styleData?.buttons_style || sessionStorage.getItem('globalShape');
+  const Color = styleData?.primary_color || sessionStorage.getItem('globalColor');
+  const Language = sessionStorage.getItem('Language') || 'en';
 
   function findActiveTap(a) {
-      console.log("findActiveTap", typeof a);
-
       return a.reduce((accumulator, currentValue, i) => {
       if (currentValue.props.active) {
         return i;
@@ -32,10 +31,10 @@ export function Taps({ children, contentClassName = "" }) {
 
   return (
     <div
-    className={`${selectedCategory === `${t("Right")}` ? 'flex gap-2' : ''} ${selectedCategory === `${t("Left")}` ? 'flex flex-row-reverse gap-5' : ''}`}>
-      <div className={`gap-1 justify-start
-    ${selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}` ? 'h-fit mt-4 ' : ''}
-    ${selectedCategory === `${t("Tabs")}` ? 'flex' : ''}
+    className={`${selectedCategory === "Right" ? 'flex gap-2' : ''} ${selectedCategory === "Left" ? 'flex flex-row-reverse gap-5' : ''}`}>
+      <div className={`p-3 gap-1 justify-start
+    ${selectedCategory === "Right" || selectedCategory === "Left" ? 'h-fit mt-4 ' : ''}
+    ${selectedCategory === "Tabs" ? 'flex' : ''}
       ${contentClassName}`}
       style={{borderRadius: GlobalShape}}
       >
@@ -59,12 +58,12 @@ export function Taps({ children, contentClassName = "" }) {
         }
         {children.map((item, i) => {
           return (
-            <div key={i} className={` ${selectedCategory === `${t("Carousel")}` ? 'flex items-center justify-center ' : ''} `}>
+            <div key={`Tap-${i}`} className={` ${selectedCategory === `${t("Carousel")}` ? 'flex items-center justify-center ' : ''} `}>
               {(selectedCategory === `${t("Carousel")}` ? (i >= activeTap - 1 && i <= activeTap + 1 && TapValidator(item))
                 : (TapValidator(item)))
                 && (
                   <Tap
-                    key={`Tap-${i}`}
+                      styleData={styleData}
                     currentTap={i}
                     activeTap={activeTap}
                     setActiveTap={setActiveTap}
@@ -107,10 +106,11 @@ export function Taps({ children, contentClassName = "" }) {
   );
 }
 
-export function Tap({ children, activeTap, currentTap, setActiveTap, contentClassName = "" }) {
-  const selectedCategory = sessionStorage.getItem('selectedCategory');
-  const Color = sessionStorage.getItem('globalColor');
-  const GlobalShape = sessionStorage.getItem('globalShape');
+export function Tap({ children, activeTap, currentTap, setActiveTap, contentClassName = "", styleData = {} }) {
+
+    const selectedCategory = sessionStorage.getItem('selectedCategory');
+  const Color = styleData?.primary_color || sessionStorage.getItem('globalColor');
+  const GlobalShape = styleData?.buttons_style || sessionStorage.getItem('globalShape');
   const { t } = useTranslation();
 
   return (
