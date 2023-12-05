@@ -129,6 +129,7 @@ return [
     'amount' => 'Amount',
     'invoice' => 'Invoice',
     'download' => 'Download',
+    "files"=>"Files",
     'access-restaurants' => 'Access Restaurants',
     'view-restaurants' => 'View Restaurants',
     'delete-restaurants' => 'Delete Restaurants',
@@ -168,6 +169,9 @@ return [
     'has-deleted-an-user' => 'Has deleted an user',
     'name' => 'Name',
     'url' => 'URL',
+    'domain'=>"Domain Name",
+    "download-all-files"=>"Download All files",
+    'restaurant-name'=>"Restaurant Name",
     'url-example' => 'Example: xz3BKiliSwtFMUuT',
     'entered' => 'Entered',
     'registered' => 'Registered',
@@ -249,7 +253,11 @@ return [
     'qr-maker' => 'QR maker',
     'not_upload_register_files' => 'Not Upload Register Files',
     'not_live'=>"Not live",
-
+    'see-restaurant-owners'=>'See Restaurant owners',
+    'restaurant-owners'=>"Restaurant Owners",
+    'restaurant-owner-management'=>"Restaurant Owners Management",
+    'inactive'=>"Inactive",
+    'restaurant'=>'Restaurant'
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

@@ -52,7 +52,7 @@
     <span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
 </div>
 
-{{--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success'))
     <script>
         showAlert('success', '{{ session('success') }}');

@@ -53,16 +53,20 @@ class LoginController extends BaseController
             'remember_me' => 'nullable|boolean',
         ]);
 
-
+        
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
             return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
+       
 
 
         $user = Auth::user();
-
+        if($user->isBlocked() ){
+            Auth::logout();
+            return $this->sendError('Unauthorized.', ['error' => 'Inactive User']);
+        }
         // @TODO: uncomment if need!
         $data = [
             'user'=>$user
