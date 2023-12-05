@@ -243,7 +243,11 @@ return [
     'not_live'=>'غير مفعل',
     "download-all-files"=>"تحميل كل الملفات",
     'domain'=>"اسم النطاق",
-
+    'see-restaurant-owners'=>'القدره على رؤية حسابات ملاك المطاعم',
+    'restaurant-owners'=>'ملاك المطاعم',
+    'restaurant-owner-management'=>'ادارة ملاك المطاعم',
+    'restaurant'=>'المطعم',
+    'inactive'=>"غير فعال ",
 ];
 
 

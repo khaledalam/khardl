@@ -405,9 +405,17 @@ class AdminController extends Controller
         })
         ->where('id','!=',Auth::id())
         ->paginate(15);
-        $logs = Log::orderBy('created_at', 'desc')->get();
         $user = Auth::user();
-        return view('admin.user-management', compact('user', 'admins', 'logs'));
+        return view('admin.user-management', compact('user', 'admins'));
+    }
+    public function restaurantOwnerManagement()
+    {
+        $admins = User::whereHas('roles',function($q){
+            return $q->where("name","Restaurant Owner");
+        })
+        ->paginate(15);
+        $user = Auth::user();
+        return view('admin.restaurant-owner-management', compact('user', 'admins'));
     }
 
     public function userManagementEdit($id){
@@ -468,6 +476,8 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
+            'can_see_restaurant_owners',
+     
             
         ];
 

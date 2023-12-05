@@ -253,7 +253,11 @@ return [
     'qr-maker' => 'QR maker',
     'not_upload_register_files' => 'Not Upload Register Files',
     'not_live'=>"Not live",
-
+    'see-restaurant-owners'=>'See Restaurant owners',
+    'restaurant-owners'=>"Restaurant Owners",
+    'restaurant-owner-management'=>"Restaurant Owners Management",
+    'inactive'=>"Inactive",
+    'restaurant'=>'Restaurant'
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',
