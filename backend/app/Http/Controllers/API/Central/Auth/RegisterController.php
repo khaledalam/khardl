@@ -69,7 +69,7 @@ class RegisterController extends BaseController
         $input['user_id'] = $user_id;
 
         // Ensure the directory exists and is writable
-        $directory = storage_path("app/private/user_files/{$user_id}");
+        $directory = storage_path("app/private/".User::STORAGE."/{$user_id}");
         if (!File::exists($directory)) {
             File::makeDirectory($directory, 0755, true);
         }
@@ -85,9 +85,9 @@ class RegisterController extends BaseController
         foreach ($fileNames as $fileKey) {
             if ($request->hasFile($fileKey)) {
                 $input[$fileKey] = $request->file($fileKey)->storeAs(
-                    "private/user_files/{$user_id}",
+                    "user_files/{$user_id}",
                     $fileKey . '_' . hash_file('sha256', $request->file($fileKey)->getRealPath()) . '.' . $request->file($fileKey)->getClientOriginalExtension(),
-                    'local'
+                    'private'
                 );
             }
         }

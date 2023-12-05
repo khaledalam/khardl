@@ -130,6 +130,7 @@ return [
     'amount' => 'Amount',
     'invoice' => 'Invoice',
     'download' => 'Download',
+    "files"=>"Files",
     'access-restaurants' => 'Access Restaurants',
     'view-restaurants' => 'View Restaurants',
     'delete-restaurants' => 'Delete Restaurants',
@@ -169,6 +170,9 @@ return [
     'has-deleted-an-user' => 'Has deleted an user',
     'name' => 'Name',
     'url' => 'URL',
+    'domain'=>"Domain Name",
+    "download-all-files"=>"Download All files",
+    'restaurant-name'=>"Restaurant Name",
     'url-example' => 'Example: xz3BKiliSwtFMUuT',
     'entered' => 'Entered',
     'registered' => 'Registered',
@@ -252,7 +256,11 @@ return [
     'payment-in-cash-upon-receipt' => 'Payment in cash upon receipt',
     'tap-approve-warning-text' => 'Your TAP business account is not approved yet, please',
     'tap-approve-warning-link-text' => 'submit your TAP documents.'
-
+    'see-restaurant-owners'=>'See Restaurant owners',
+    'restaurant-owners'=>"Restaurant Owners",
+    'restaurant-owner-management'=>"Restaurant Owners Management",
+    'inactive'=>"Inactive",
+    'restaurant'=>'Restaurant'
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

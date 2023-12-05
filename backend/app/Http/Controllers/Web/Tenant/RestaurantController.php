@@ -440,7 +440,6 @@ class RestaurantController extends BaseController
     }
 
     public function deleteCategory($id){
-
         $user = Auth::user();
 
         $selectedCategory = DB::table('categories')->where('id', $id)->first();

@@ -38,10 +38,12 @@ class CreatePermissionTables extends Migration
             $table->boolean('can_see_admins')->default(false);
             $table->boolean('can_add_admins')->default(false);
             $table->boolean('can_edit_admins')->default(false);
+            $table->boolean('can_see_restaurant_owners')->default(false);
             $table->boolean('can_promoters')->default(false);
             $table->boolean('can_see_logs')->default(false);
             $table->boolean('can_settings')->default(false);
             $table->boolean('can_edit_profile')->default(false);
+            
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

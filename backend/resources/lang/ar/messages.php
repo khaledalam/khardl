@@ -33,6 +33,7 @@ return [
     'restaurants-delivery-success-rate' => 'معدل نجاح توصيل المطاعم',
     'sales-this-month' => 'مبيعات هذا الشهر',
     'users-from-all-channels' => 'Users from all channels',
+    'restaurant-name'=>"اسم المطعم",
     'all' => 'الكل',
     'search' => 'بحث',
     'items-found' => 'العناصر التي تم العثور عليها',
@@ -231,6 +232,7 @@ return [
     'payments' => 'مدفوعات',
     'live' => 'مفعل',
     'menus' => 'قوائم',
+    "files"=>"ملفات",
     'customers-data' => 'بيانات العملاد',
     'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
     'orders-all' => 'جميع الطلبات',
@@ -242,7 +244,13 @@ return [
     'payment-in-cash-upon-receipt' => 'الدفع عند الاستلام',
     'tap-approve-warning-text' => 'حساب الاعمال الخاص بك علي منصه تاب لم يتم الوافقه عليه بعد، من فضلك',
     'tap-approve-warning-link-text' => 'ارفع ملفات تاب'
-
+    "download-all-files"=>"تحميل كل الملفات",
+    'domain'=>"اسم النطاق",
+    'see-restaurant-owners'=>'القدره على رؤية حسابات ملاك المطاعم',
+    'restaurant-owners'=>'ملاك المطاعم',
+    'restaurant-owner-management'=>'ادارة ملاك المطاعم',
+    'restaurant'=>'المطعم',
+    'inactive'=>"غير فعال ",
 ];
 
 

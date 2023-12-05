@@ -215,7 +215,20 @@
                                                               <!--end::Label-->
                                                           </div>
                                                           <!--end::Input group-->
-                                                  
+                                                          <hr>
+
+                                                          <!--begin::Input group-->
+                                                          <div class="row mb-0 mt-5">
+                                                              <!--begin::Label-->
+                                                              <div class="form-check form-check-solid form-switch fv-row">
+                                                                <input class="form-check-input w-35px h-20px" type="checkbox" id="can_see_restaurant_owners" value="1" name="can_see_admins">
+                                                                  <label class="form-check-label" for="can_see_restaurant_owners">{{ __('messages.see-restaurant-owners')}}<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('messages.see-restaurant-owners') }}"></i></label>
+                                                              </div>
+                                                              <!--end::Label-->
+                                                          </div>
+                                                          <!--end::Input group-->
+                                                        
+                                                        <!--end::Input group-->
                                                           <hr>
                                                   
                                                           <!--begin::Input group-->
