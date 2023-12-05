@@ -134,6 +134,24 @@ Route::group([
             });
         });
 
+        $group = TenantSharedRoutesTrait::getPrivateRoutes();
+        Route::middleware($group['middleware'])->group(function() use ($group){
+            foreach ($group['routes'] as $route => $name) {
+                Route::get($route, static function(Request $request) {
+                    return view('tenant');
+                })->name($name);
+            }
+        });
+        Route::get('/download/file/{path?}',function($path){
+            try{
+                return response()->download(storage_path("app/public/$path"));
+            }catch(Exception $e){
+                return redirect()->back()->with('error',__('File not exists !'));
+            }
+            
+        })
+        ->where('path', '(.*)')
+        ->name("download.file");
 
     });
 
@@ -192,6 +210,7 @@ Route::group([
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
+    
 
 });
 
