@@ -5,8 +5,8 @@ const initialState = {
   GlobalShape: '0px',
   buttons: [
     { id: 1, text: 'delivery', color: 'var(--primary)', shape: '8px' },
-    { id: 2, text: 'Receipt', color: 'var(--primary)', shape: '8px' },
-    { id: 3, text: 'Login', color: 'var(--primary)', shape: '8px' },
+    { id: 2, text: 'receipt', color: 'var(--primary)', shape: '8px' },
+    { id: 3, text: 'login', color: 'var(--primary)', shape: '8px' },
   ],
 };
 
@@ -26,8 +26,8 @@ const buttonSlice = createSlice({
     },
     updateGlobalButtons: (state, action) => {
       const {newGlobalColor, newGlobalShape } = action.payload;
-      state.GlobalColor = newGlobalColor; 
-      state.GlobalShape = newGlobalShape; 
+      state.GlobalColor = newGlobalColor;
+      state.GlobalShape = newGlobalShape;
     },
   },
 });

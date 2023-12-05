@@ -26,7 +26,7 @@
                                  </div>
                                  <!--end::Info-->
                                  <!--begin::Subtitle-->
-                                 <span class="text-gray-400 pt-1 fw-bold fs-6">All Branshes</span>
+                                 <span class="text-gray-400 pt-1 fw-bold fs-6">{{__('messages.all-branches')}}</span>
                                  <!--end::Subtitle-->
                              </div>
                              <!--end::Title-->

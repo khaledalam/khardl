@@ -64,7 +64,7 @@
                                                     <label class="required form-label">{{ __('messages.phone-number')}}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone_number') is-invalid @enderror" value="{{ old('phone_number') }}" name="phone_number" id="phone_number" placeholder="05XXXXXXXX" required>
+                                                    <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="05XXXXXXXX" required>
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->

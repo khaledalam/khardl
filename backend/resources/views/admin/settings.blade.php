@@ -11,7 +11,7 @@
       <!--begin::Container-->
       <div id="kt_content_container" class="container-xxl">
           <!--begin::Restaurants-->
-          {{-- <div class="card mb-5 mb-xl-10">
+          <div class="card mb-5 mb-xl-10">
               <!--begin::Card header-->
               <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                   <!--begin::Card title-->
@@ -77,11 +77,11 @@
                   <!--end::Form-->
               </div>
               <!--end::Content-->
-          </div> --}}
+          </div>
           <!--end::Restaurants-->
 
               <!--begin::Admin-->
-{{-- <div class="card mb-5 mb-xl-10">
+<div class="card mb-5 mb-xl-10">
 <!--begin::Card header-->
 <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
   <!--begin::Card title-->
@@ -134,13 +134,13 @@
   <!--end::Form-->
 </div>
 <!--end::Content-->
-</div> --}}
+</div>
 <!--end::Admin-->
 
 
               <!--begin::Customers-->
 
-  {{-- <div class="card mb-5 mb-xl-10">
+  <div class="card mb-5 mb-xl-10">
   <!--begin::Card header-->
   <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
     <!--begin::Card title-->
@@ -205,7 +205,7 @@
     <!--end::Form-->
   </div>
   <!--end::Content-->
-  </div> --}}
+  </div>
   <!--end::Customers-->
 
 

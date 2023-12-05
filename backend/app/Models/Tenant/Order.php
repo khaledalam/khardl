@@ -22,6 +22,7 @@ class Order extends Model
         'order_notes',
         'delivery_type'
     ];
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     public function user()
     {

@@ -41,11 +41,13 @@ class RestaurantStyleSeeder extends Seeder
                 $banner2
             ],
             'social_medias' => [
-                'id' => self::RESTAURANT_STYLE_SOCIAL_MEDIA_ID,
-                'name' => 'Whatsapp',
-                'icon' => 'BsWhatsapp',
-                'color' => 'Whatsapp',
-                'Link' => '966666666'
+                [
+                    'id' => self::RESTAURANT_STYLE_SOCIAL_MEDIA_ID,
+                    'name' => 'Whatsapp',
+                    'icon' => 'BsWhatsapp',
+                    'color' => 'Whatsapp',
+                    'Link' => '966666666'
+                ]
             ],
             'phone_number' => '+96600000000',
             'primary_color' => 'var(--primary)',
