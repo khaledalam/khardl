@@ -5,16 +5,12 @@ import { useTranslation } from "react-i18next";
 export function Taps({ children, contentClassName = "", styleData = {} }) {
   const { t } = useTranslation();
 
-  console.log(">> children>>", children);
-
   const selectedCategory = children[0]?.key || sessionStorage.getItem('selectedCategory');
   const GlobalShape = styleData?.buttons_style || sessionStorage.getItem('globalShape');
   const Color = styleData?.primary_color || sessionStorage.getItem('globalColor');
   const Language = sessionStorage.getItem('Language') || 'en';
 
   function findActiveTap(a) {
-      console.log("findActiveTap", typeof a);
-
       return a.reduce((accumulator, currentValue, i) => {
       if (currentValue.props.active) {
         return i;
@@ -111,9 +107,6 @@ export function Taps({ children, contentClassName = "", styleData = {} }) {
 }
 
 export function Tap({ children, activeTap, currentTap, setActiveTap, contentClassName = "", styleData = {} }) {
-
-
-    console.log(">>>> debug now: ", styleData?.primary_color);
 
     const selectedCategory = sessionStorage.getItem('selectedCategory');
   const Color = styleData?.primary_color || sessionStorage.getItem('globalColor');

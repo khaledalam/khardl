@@ -232,7 +232,6 @@ class RestaurantController extends BaseController
                         Storage::disk('local')->copy($sourcePath, $destinationPath);
                     }
 
-
                 }
             }
         }

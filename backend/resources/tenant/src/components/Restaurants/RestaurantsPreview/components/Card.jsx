@@ -39,9 +39,6 @@ function Card(props) {
     dispatch(addItemToCart("props.title"));
   };
 
-  console.log("props > ", props);
-
-
   return (
     <>
       <div className="text-[18px]">

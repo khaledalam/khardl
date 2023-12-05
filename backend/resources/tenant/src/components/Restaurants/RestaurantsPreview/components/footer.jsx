@@ -5,7 +5,8 @@ import { FaYoutube } from 'react-icons/fa';
 function Footer(props) {
      const {styleData} = props;
 
-    const icons = styleData?.social_medias ? JSON.parse(styleData?.social_medias) : JSON.parse(sessionStorage.getItem('icons'));
+
+    const icons = styleData?.social_medias ? styleData?.social_medias : sessionStorage.getItem('icons');
     const phoneNumber = styleData?.phone_number || sessionStorage.getItem('phoneNumber');
     const iconComponents = {
         BsWhatsapp,
@@ -19,6 +20,8 @@ function Footer(props) {
         BsTelegram,
         FaYoutube,
     };
+
+    console.log(">> icons >> ", icons);
 
     return (
         <div className='w-[100%] bg-[#000000] text-white'>
