@@ -48,9 +48,9 @@ class UserSeeder extends Seeder
         ]);
         $user = User::create([
             'id' => self::RESTAURANT_OWNER_USER_ID,
-            'first_name' => "khadrl",
-            'last_name' => "restaurant",
-            'email' => "khadrl@restaurant.com",
+            'first_name' => "Khardl",
+            'last_name' => "Restaurant",
+            'email' => "khardl@restaurant.com",
             'email_verified_at' => now(),
             'status'=> 'active',
             'phone'=>'966123456789',
@@ -89,8 +89,6 @@ class UserSeeder extends Seeder
             'can_settings'=> true,
             'can_edit_profile'=> true,
             'can_see_restaurant_owners'=>true,
-        
-            
         ]);
 
     }

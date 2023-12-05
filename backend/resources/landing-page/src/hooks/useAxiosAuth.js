@@ -33,7 +33,7 @@ const useAxiosAuth = () => {
 
    axiosAuth.interceptors.request.use(
       (request) => {
-         console.log('request sent')
+         console.log('request sent: axiosAuth.interceptors.request')
          return request
       },
       (error) => Promise.reject(error)

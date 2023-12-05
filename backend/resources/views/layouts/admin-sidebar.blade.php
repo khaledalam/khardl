@@ -424,19 +424,21 @@
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 <!--begin::Avatar-->
                                                 <div class="symbol symbol-50px me-5">
-                                                    <i class="fa-solid fa-user fa-lg"></i>
+                                                <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                                <rect opacity="0.9" x="8" y="3" width="8" height="8" rx="4" fill="{{ ($link == 'profile' ) ? '#c2da08' : '#000000' }}" />
+                                            </svg>
+                                        </span>
                                                 </div>
                                                 <!--end::Avatar-->
                                                 <!--begin::Username-->
                                                 <div class="d-flex flex-column">
-                                                    <a href="{{ route('admin.profile') }}">
-                                                        <div class="fw-bolder d-flex align-items-center fs-5">
-                                                                <a href="{{ route('admin.profile') }}">{{ Auth::user()->first_name}} {{ Auth::user()->last_name }}</a>
-                                                        </div>
-                                                    </a>
-
-                                                    <a
-                                                        class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
+                                                    <div class="fw-bolder d-flex align-items-center fs-5">
+                                                        {{Auth::user()->first_name}} {{Auth::user()->last_name}}
+                                                    </div>
+                                                    <a href="#"
+                                                       class="fw-bold text-muted text-hover-khardl fs-7">{{ Auth::user()->email }}</a>
                                                 </div>
                                                 <!--end::Username-->
                                             </div>
