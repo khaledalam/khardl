@@ -23,6 +23,8 @@ class OrderResource extends JsonResource
             'payment_status'=>$this->payment_status,
             'shipping_address'=>$this->shipping_address,
             'order_notes'=>$this->order_notes,
+            'created_at'=>$this->created_at,
+            'updated_at'=>$this->updated_at,
 
         ];
         if ($request->has('branch')) {

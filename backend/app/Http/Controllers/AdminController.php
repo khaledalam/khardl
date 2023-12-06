@@ -315,6 +315,7 @@ class AdminController extends Controller
         $orders = $restaurant->orders();
         $user = Auth::user();
         $widget = 'orders';
+    
         return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live'));
     }
 

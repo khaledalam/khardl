@@ -242,12 +242,14 @@ return [
     'not_upload_register_files' => 'لم يرفعوا ملفات التسجيل بعد',
     'not_live'=>'غير مفعل',
     "download-all-files"=>"تحميل كل الملفات",
+    "download-all"=>"تحميل الكل",
     'domain'=>"اسم النطاق",
     'see-restaurant-owners'=>'القدره على رؤية حسابات ملاك المطاعم',
     'restaurant-owners'=>'ملاك المطاعم',
     'restaurant-owner-management'=>'ادارة ملاك المطاعم',
     'restaurant'=>'المطعم',
     'inactive'=>"غير فعال ",
+    'payment-method'=>"وسيلة الدفع"
 ];
 
 

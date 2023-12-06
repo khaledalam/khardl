@@ -18,7 +18,7 @@ class CategoryRepository extends DefaultRepositoryPattern
             return $query->where('branch_id',$user->branch->id);
         });
      
-        $this->resource = new CategoryResource($this->model);
+        $this->resource = new CategoryResource(new Category());
     }
     
 }

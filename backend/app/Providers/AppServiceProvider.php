@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use App\Repositories\Customer\CartRepository;
+use Illuminate\Http\Request;
+use App\Repositories\PDF\OrderPDF;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\PDF\PdfPrintInterface;
+use App\Repositories\Customer\CartRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +18,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(CartRepository::class,function(){
             return (new CartRepository)->initiate();
+        });
+        $this->app->bind(PdfPrintInterface::class,function(){
+            $request =request()->all();
+            return match($request['type']){
+                'order'=> new OrderPDF($request['tenant_id'],$request['id'] ?? null),
+                default => null
+            };
         });
     }
 

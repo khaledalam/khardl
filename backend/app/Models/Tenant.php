@@ -65,9 +65,9 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         });
     }
     public function orders()
-    {
+    { 
         return $this->run(static function() {
-            return  OrderResource::collection(Order::all());
+            return  Order::orderBy('created_at','DESC')->with(['payment_method:id,name','branch:id,name'])->paginate(10);
         });
     }
 }
