@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order PDF</title>
+    <title>Customer PDF</title>
     <style >
       /* Bootstrap 4.5 styles */
       table {
@@ -103,62 +103,31 @@
 
 <body class="bg-light">
 
-    @foreach($data as $order)
+    @foreach($data as $customer)
     <div class=" mt-5">
 
         <div class="mb-4">
             <table class="table table-bordered table-striped">
                 <thead class="table-light">
                     <tr>
-                        <th class="text-left">{{__('Order ID')}}</th>
-                        <th class="text-left">{{__('Transaction ID')}}</th>
-                        <th class="text-left">{{__('User')}} #{{ $order->user_id }} </th>
-                        <th class="text-left">{{__('Branch')}} #{{ $order->branch_id }}</th>
-                        <th class="text-left">{{__('Payment Method')}}</th>
-                        <th class="text-left">{{__('Total')}}</th>
-                        <th class="text-left">{{__('Delivery Type')}}</th>
-                        <th class="text-left">{{__('Status')}}</th>
+                       <th class="text-left">{{__('Customer ID')}}</th>
+                        <th class="text-left">Name</th>
+                        <th class="text-left">Email</th>
+                        <th class="text-left">Phone</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{__('order')}} #{{ $order->id }}</td>
-                        <td>{{ $order->transaction_id }}</td>
-                        <td> {{ $order->user->first_name }} {{ $order->user->last_name }}</td>
-                        <td>{{ $order->branch->name }}</td>
-                        <td>{{ $order->payment_method->name }}</td>
-                        <td>{{ $order->total }}</td>
-                        <td>{{ str_replace('_', ' ', $order->delivery_type) }}</td>
-                        <td>{{ $order->status }}</td>
+                        <td> #{{ $customer->id }}</td>
+                        <td>{{ $customer->full_name }}</td>
+                        <td> {{ $customer->email }}</td>
+                        <td>{{ $customer->phone }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div>
-            <table class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th class="text-left">#</th>
-                        <th class="text-left">{{__('Item Name')}}</th>
-                        <th class="text-left">{{__('Quantity')}}</th>
-                        <th class="text-left">{{__('Price')}}</th>
-                        <th class="text-left">{{__('Total')}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($order->items as $index => $cart)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $cart->item->description }}</td>
-                        <td>{{ $cart->quantity }}</td>
-                        <td>{{ $cart->price }}</td>
-                        <td>{{ $cart->total }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+ 
     </div>
     @endforeach
 

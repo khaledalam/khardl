@@ -191,13 +191,13 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/logs', [AdminController::class, 'logs'])->middleware('permission:can_see_logs')->name('admin.log');
                     Route::get('/restaurants/{id}', [AdminController::class, 'viewRestaurant'])->middleware('permission:can_view_restaurants')->name('admin.view-restaurants');
                     Route::get('/restaurants/{id}/orders', [AdminController::class, 'viewRestaurantOrders'])->middleware('permission:can_view_restaurants')->name('admin.view-restaurants-orders');
+                    Route::get('/restaurants/{id}/customers', [AdminController::class, 'viewRestaurantCustomers'])->middleware('permission:can_view_restaurants')->name('admin.view-restaurants-customers');
                     Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('admin.restaurants');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('admin.settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('admin.add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('admin.promoters');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('admin.user-management');
                     Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('admin.restaurant-owner-management');
-
                     Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('admin.delete-user');
                     Route::delete('/promoters/delete/{id}', [AdminController::class, 'deletePromoter'])->middleware('permission:can_promoters')->name('admin.delete-promoter');
                     Route::get('/user-management/edit/{id}', [AdminController::class, 'userManagementEdit'])->middleware('permission:can_edit_admins')->name('admin.user-management-edit');

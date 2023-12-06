@@ -46,7 +46,7 @@ class AdminController extends Controller
                 }
 
                 $currentMonth = Carbon::now()->month;
-                $customers+= RestaurantUser::whereDoesntHave('roles')->whereMonth('created_at', '=', $currentMonth)->count();
+                $customers+= RestaurantUser::customers()->whereMonth('created_at', '=', $currentMonth)->count();
             });
         }
         $restaurantsAll = count($restaurantsAll);
@@ -317,6 +317,17 @@ class AdminController extends Controller
         $widget = 'orders';
     
         return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live'));
+    }
+    public function viewRestaurantCustomers( $id){
+       
+        $restaurant = Tenant::findOrFail($id);
+        $is_live = $restaurant->is_live();
+        $owner =  $restaurant->user;
+        $customers = $restaurant->customers();
+        $user = Auth::user();
+        $widget = 'customers';
+    
+        return view('admin.view-restaurant-customers', compact('user','widget','owner','restaurant', 'customers','is_live'));
     }
 
     public function deleteRestaurant($id)

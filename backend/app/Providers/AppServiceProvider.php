@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\PDF\PdfPrintInterface;
 use App\Repositories\Customer\CartRepository;
+use App\Repositories\PDF\CustomerPDF;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,7 +25,8 @@ class AppServiceProvider extends ServiceProvider
             $request =request()->all();
             return match($request['type']){
                 'order'=> new OrderPDF($request['tenant_id'],$request['id'] ?? null),
-                default => null
+                'customer'=> new CustomerPDF($request['tenant_id'],$request['id'] ?? null),
+                default =>  throw new ModelNotFoundException('')
             };
         });
     }

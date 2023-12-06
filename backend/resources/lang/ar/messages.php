@@ -249,7 +249,8 @@ return [
     'restaurant-owner-management'=>'ادارة ملاك المطاعم',
     'restaurant'=>'المطعم',
     'inactive'=>"غير فعال ",
-    'payment-method'=>"وسيلة الدفع"
+    'payment-method'=>"وسيلة الدفع",
+    "user-id"=>"معرف المستخدم"
 ];
 
 

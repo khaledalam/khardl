@@ -259,7 +259,8 @@ return [
     'inactive'=>"Inactive",
     'restaurant'=>'Restaurant',
     "download-all"=>"Download All",
-    'payment-method'=>"Payment Method"
+    'payment-method'=>"Payment Method",
+    "user-id"=>"User id"
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

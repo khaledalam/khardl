@@ -284,7 +284,7 @@
                                     <!--end::Nav item-->
                                     <!--begin::Nav item-->
                                     <li class="nav-item mt-2">
-                                        <a class="nav-link text-active-primary ms-0 me-10 py-5 {{$widget == 'customers' ? 'active':''}}" href="#">{{ __('messages.customers')}}</a>
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5 {{$widget == 'customers' ? 'active':''}}" href="{{ route('admin.view-restaurants-customers', ['id' => $restaurant->id]) }}">{{ __('messages.customers')}}</a>
                                     </li>
                                 @endif
                                 <!--end::Nav item-->

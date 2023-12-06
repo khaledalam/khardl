@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Tenant\Setting;
 use App\Http\Resources\API\Tenant\OrderResource;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\RestaurantUser;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -68,6 +69,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     { 
         return $this->run(static function() {
             return  Order::orderBy('created_at','DESC')->with(['payment_method:id,name','branch:id,name'])->paginate(10);
+        });
+    }
+    public function customers()
+    { 
+        return $this->run(static function() {
+            return  RestaurantUser::customers()->orderBy('created_at','DESC')->paginate(10);
         });
     }
 }
