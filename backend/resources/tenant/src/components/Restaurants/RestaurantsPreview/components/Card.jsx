@@ -12,7 +12,7 @@ function Card(props) {
     const GlobalColor = useSelector(globalColor);
     const GlobalShape = useSelector(globalShape);
     const selectedAlignText = useSelector((state) => state.alignText.selectedAlignText);
-
+    const [isAdded, setIsAdded] = useState(false);
     const [showDetailesItem, setShowDetailesItem] = useState(false);
 
     const { t } = useTranslation();
@@ -28,16 +28,28 @@ function Card(props) {
 
   const handleAddToCart = async () => {
     try {
+      if(isAdded){
+        const response = await AxiosInstance.delete(`/carts/`+props.id, {
+        });
+        if (response?.data) {
+          setIsAdded(false);
+          toast.success(`${t('Item removed from cart')}`)
+        }
+      
+      
+        return ;
+      }
       const response = await AxiosInstance.post(`/carts`, {
         item_id : props.id,
         quantity : 1,
-        branch_id: 1
+        branch_id: 1 // TODO @todo append the real branch 
       });
       if (response?.data) {
+        setIsAdded(true);
         toast.success(`${t('Item added to cart')}`);
       }
     }catch (error) {
-        toast.error(`${t('Fail to add item')}`)
+      toast.error(`${t('Failed')}`)
     }
     dispatch(addItemToCart("props.title"));
   };
@@ -89,9 +101,9 @@ function Card(props) {
             </div>
           </button>
           <button className="text-center bg-[var(--primary)] py-1 text-black font-bold"
-            style={{ borderRadius: `0 0 ${GlobalShape} ${GlobalShape}`, backgroundColor: GlobalColor }}
+            style={{ borderRadius: `0 0 ${GlobalShape} ${GlobalShape}`,  backgroundColor: isAdded ? 'red' : GlobalColor }}
             onClick={handleAddToCart}
-          > {t("Add to cart")}</button>
+          >   {isAdded ? t("Cancel") : t("Add to cart") }</button>
         </div>
       </div>
       {showDetailesItem ? (

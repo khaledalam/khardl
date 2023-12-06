@@ -5,14 +5,21 @@ namespace App\Http\Controllers\API\Tenant\Customer;
 use App\Traits\APIResponseTrait;
 use App\Repositories\Customer\CartRepository;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
+use App\Http\Requests\Tenant\Customer\RemoveItemToCartRequest;
 
 class CartController
 {
     use APIResponseTrait;
-    public function store(AddItemToCartRequest $request,CartRepository $cart)
+    protected $cart;
+    public function __construct()
     {
-        return $cart->add($request);
+        $this->cart = CartRepository::get();
     }
+    public function store(AddItemToCartRequest $request)
+    {
+        return $this->cart->add($request);
+    }
+  
 
     public function edit($id)
     {
@@ -25,9 +32,8 @@ class CartController
         
     }
 
-   
-    public function destroy()
-    {
-       
+    public function destroy($item)
+    {   
+        return $this->cart->remove($item);
     }
 }

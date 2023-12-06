@@ -20,20 +20,22 @@ class CartRepository
 
     public  function initiate()
     {   
-       if($this->cart) return ;
-       $this->cart = Cart::query()->firstOrCreate([
+        $this->cart = Cart::query()->firstOrCreate([
             'user_id' => Auth::id(),
-       ]);
+        ]);
+       return $this;
     }
-
+    public static function get(){
+        return app(CartRepository::class);
+    }
     public function add(AddItemToCartRequest $request): JsonResponse
     {
-        if(!$this->cart->hasBranch($request->branch_id)){
+        if(!$this->hasBranch($request->branch_id)){
             return $this->sendError('Fail', 'Cannot add item from different branch.');
         }
         $item = Item::findOrFail($request->item_id);
         $this->createCartItem($item,$request->validated());
-        $this->sendResponse(null, __('The meal has been added successfully.'));
+        return $this->sendResponse(null, __('The meal has been added successfully.'));
     }
     public function update($request)
     {
@@ -42,13 +44,13 @@ class CartRepository
    
     public function createCartItem($item,$request):CartItem
     {
-        return CartItem::create([
+        return CartItem::updateOrCreate([
+            'item_id' => $item->id,
+        ],[
             'cart_id' => $this->cart->id,
             'price' =>$item->price,
-            'item_id' => $item->id,
-            'quantity' => $request->quantity,
-            'user_id'=> Auth::id()
-            
+            'quantity' => $request['quantity'],
+           
         ]);
     }
     public function updateCartItem(CartItem $cartItem, $request)
@@ -68,11 +70,12 @@ class CartRepository
             ]);
     }
 
-    public function remove($id): bool
+    public function remove($id): JsonResponse
     {
-        return $this->cart->items()
-            ->where('id', $id)
+        $this->cart->items()
+            ->where('item_id', $id)
             ->delete();
+        return $this->sendResponse(null, __('The meal has been removed successfully.'));
     }
 
     public function discount()
