@@ -243,7 +243,7 @@ return [
     'receipt' => 'استلام',
     'payment-in-cash-upon-receipt' => 'الدفع عند الاستلام',
     'tap-approve-warning-text' => 'حساب الاعمال الخاص بك علي منصه تاب لم يتم الوافقه عليه بعد، من فضلك',
-    'tap-approve-warning-link-text' => 'ارفع ملفات تاب'
+    'tap-approve-warning-link-text' => 'ارفع ملفات تاب',
     "download-all-files"=>"تحميل كل الملفات",
     'domain'=>"اسم النطاق",
     'see-restaurant-owners'=>'القدره على رؤية حسابات ملاك المطاعم',

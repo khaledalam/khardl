@@ -24,7 +24,6 @@ const Header = () => {
     const { setStatusCode } = useAuthContext()
 
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-    const auth = useSelector((state) => state.auth)
    const navigate = useNavigate()
 
 

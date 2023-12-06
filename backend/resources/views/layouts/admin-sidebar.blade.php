@@ -76,7 +76,7 @@
         @if ($errors->any())
         showAlert('error', '<ul>@foreach ($errors->all() as $error)<li style="list-style-type: none">{{ $error }}</li>@endforeach</ul> <br>');
         @endif
-    
+
         function showAlert(type, message) {
             Swal.fire({
                 icon: type,
@@ -86,7 +86,7 @@
             });
         }
     </script>
-    
+
 
     <div class="d-flex flex-column flex-root">
         <!--begin::Page-->
@@ -162,7 +162,7 @@
                                     </span>
                                 </a>
                             </div>
-                          
+
                             <!-- Setting -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.profile') }}">
@@ -181,9 +181,9 @@
                                     </span>
                                 </a>
                             </div>
-                        
-                  
-                            @if($user->hasPermission("can_access_restaurants"))
+
+
+                            @if($user?->hasPermission("can_access_restaurants"))
                                 <!-- Restaurants -->
                                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                     <span class="{{ ($admin_link == 'restaurants' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -198,7 +198,7 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">{{ __('messages.restaurants')}}</span>
+                                        <span class="menu-title">{{ __('messages.restaurants')}} </span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -207,14 +207,16 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">{{ __('messages.all-restaurants')}}</span>
+                                                <span class="menu-title">{{ __('messages.all-restaurants')}}
+{{--                                                    @if(($restaurantsAll  - $restaurantsLive) > 0)<span class="badge badge-danger mx-1">{{($restaurantsAll  - $restaurantsLive)}}</span>@endif--}}
+                                                </span>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             @endif
                             <!-- Supports -->
-                            @if($user->hasPermission('can_see_admins') || $user->hasPermission('can_add_admins'))
+                            @if($user?->hasPermission('can_see_admins') || $user?->hasPermission('can_add_admins'))
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <span class="{{ ($admin_link == 'user-management' || $admin_link == 'add-user'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -233,7 +235,7 @@
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                                    @if($user->hasPermission('can_see_admins'))
+                                    @if($user?->hasPermission('can_see_admins'))
                                         <div class="menu-item">
                                             <a class="menu-link" href="{{ route('admin.user-management') }}">
                                                 <span class="menu-bullet">
@@ -243,7 +245,7 @@
                                             </a>
                                         </div>
                                     @endif
-                                    @if($user->hasPermission('can_add_admins'))
+                                    @if($user?->hasPermission('can_add_admins'))
                                     <div class="menu-item">
                                         <a class="menu-link" href="{{ route('admin.add-user') }}">
                                             <span class="menu-bullet">
@@ -257,7 +259,7 @@
                             </div>
 
                             @endif
-                            @if($user->hasPermission('can_see_restaurant_owners'))
+                            @if($user?->hasPermission('can_see_restaurant_owners'))
                              <!-- Staff evaluation -->
                              <div class="menu-item">
                                 <a href="{{ route('admin.restaurant-owner-management') }}">
@@ -277,7 +279,7 @@
                             </a>
                             </div>
                             @endif
-                            @if($user->hasPermission('can_promoters'))
+                            @if($user?->hasPermission('can_promoters'))
                              <!-- Staff evaluation -->
                              <div class="menu-item">
                                 <a href="{{ route('admin.promoters') }}">
@@ -297,7 +299,7 @@
                             </a>
                             </div>
                             @endif
-                            @if($user->hasPermission('can_see_logs'))
+                            @if($user?->hasPermission('can_see_logs'))
                             <!-- Logs -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.log') }}">
@@ -317,7 +319,7 @@
                             </a>
                             </div>
                             @endif
-                            @if($user->hasPermission('can_settings'))
+                            @if($user?->hasPermission('can_settings'))
                             <!-- Setting -->
                             <div class="menu-item">
                                 <a href="{{ route('admin.settings') }}">

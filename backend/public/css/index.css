@@ -556,6 +556,9 @@ video {
   top: 0px;
   bottom: 0px;
 }
+.bottom-0 {
+  bottom: 0px;
+}
 .bottom-6 {
   bottom: 1.5rem;
 }
@@ -1679,6 +1682,9 @@ video {
 }
 .border-2 {
   border-width: 2px;
+}
+.border-4 {
+  border-width: 4px;
 }
 .border-\[0\.5px\] {
   border-width: 0.5px;
@@ -3923,6 +3929,9 @@ video {
   top: 0px;
   bottom: 0px;
 }
+.bottom-0 {
+  bottom: 0px;
+}
 .bottom-6 {
   bottom: 1.5rem;
 }
@@ -5046,6 +5055,9 @@ video {
 }
 .border-2 {
   border-width: 2px;
+}
+.border-4 {
+  border-width: 4px;
 }
 .border-\[0\.5px\] {
   border-width: 0.5px;
