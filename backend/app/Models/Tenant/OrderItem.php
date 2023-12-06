@@ -17,7 +17,7 @@ class OrderItem extends Model
         'price',
         'options_price',
         'total'
-        
+
     ];
 
     // protected $casts = [
@@ -35,7 +35,7 @@ class OrderItem extends Model
     }
     public function item()
     {
-        return $this->belongsTo(item::class);
+        return $this->belongsTo(Item::class);
     }
     public function extras()
     {
