@@ -1,6 +1,5 @@
 
 import React, {useEffect, useState} from 'react';
-import { MdOutlineDeliveryDining } from 'react-icons/md';
 import { MdOutlineDoneAll } from 'react-icons/md';
 import { LiaShoppingCartSolid } from 'react-icons/lia';
 import {useDispatch, useSelector} from 'react-redux';
@@ -26,12 +25,6 @@ function Header() {
     const [showDetailesItem, setShowDetailesItem] = useState(false);
 
 
-
-
-    useEffect(() => {
-        fetchData().then(r => null);
-    }, []);
-
     const dispatch = useDispatch()
     const { t } = useTranslation()
     const { setStatusCode } = useAuthContext()
@@ -41,6 +34,11 @@ function Header() {
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
     const GlobalColor = styleDataRestaurant?.primary_color || sessionStorage.getItem('globalColor');
 
+
+
+    useEffect(() => {
+        fetchData().then(r => null);
+    }, []);
 
     const handleModelClick2 = buttonId => {
         setIsOpenModel2(buttonId);
@@ -96,6 +94,11 @@ function Header() {
     if (!styleDataRestaurant) return;
 
     const buttons = styleDataRestaurant?.buttons || JSON.parse(sessionStorage.getItem('buttons'));
+
+    let selectedBranch = styleDataRestaurant?.branches.filter(b => b?.id == localStorage.getItem('selected_branch_id'));
+    if (selectedBranch.length > 0) {
+        selectedBranch = selectedBranch[0];
+    }
 
     return (
         <div className={`flex items-start justify-between p-[12px] px-8 bg-[var(--secondary)]`}>
@@ -171,7 +174,7 @@ function Header() {
                     style={{ background: `${buttons[2]?.color || ''}`, borderRadius: buttons[2]?.shape || '' }}
                     onClick={showMeDetailesItem}
                     >
-                    {t(buttons[2]?.text) || ''}
+                    {t(buttons[2]?.text) || ''} <small>({selectedBranch?.name})</small>
                 </button>
                 {showDetailesItem &&
                     <Login

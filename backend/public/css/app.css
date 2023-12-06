@@ -563,6 +563,9 @@ video {
   top: 0px;
   bottom: 0px;
 }
+.bottom-0 {
+  bottom: 0px;
+}
 .bottom-6 {
   bottom: 1.5rem;
 }
@@ -1377,6 +1380,9 @@ video {
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+.grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
 .flex-row {
   flex-direction: row;
 }
@@ -1691,6 +1697,9 @@ video {
 }
 .border-2 {
   border-width: 2px;
+}
+.border-4 {
+  border-width: 4px;
 }
 .border-\[0\.5px\] {
   border-width: 0.5px;

@@ -10,6 +10,8 @@ class BranchSeeder extends Seeder
 {
 
     public const BRANCH_ID = 1;
+    public const BRANCH_B_ID = 2;
+
 
     /**
      * Run the database seeds.
@@ -23,6 +25,28 @@ class BranchSeeder extends Seeder
             'lat' => '37.7',
             'lng' => '37.7',
             'is_primary' => true,
+            'saturday_open' => $currentDateTime->format('H:i'),
+            'saturday_close' => $currentDateTime->addHour()->format('H:i'),
+            'sunday_open' => $currentDateTime->format('H:i'),
+            'sunday_close' => $currentDateTime->addHour()->format('H:i'),
+            'monday_open' => $currentDateTime->format('H:i'),
+            'monday_close' => $currentDateTime->addHour()->format('H:i'),
+            'tuesday_open' => $currentDateTime->format('H:i'),
+            'tuesday_close' => $currentDateTime->addHour()->format('H:i'),
+            'wednesday_open' => $currentDateTime->format('H:i'),
+            'wednesday_close' => $currentDateTime->addHour()->format('H:i'),
+            'thursday_open' => $currentDateTime->format('H:i'),
+            'thursday_close' => $currentDateTime->addHour()->format('H:i'),
+            'friday_open' => $currentDateTime->format('H:i'),
+            'friday_close' => $currentDateTime->addHour()->format('H:i'),
+        ]);
+
+        Branch::create([
+            'id' => self::BRANCH_B_ID,
+            'name' => 'Branch 2',
+            'lat' => '27.7',
+            'lng' => '27.7',
+            'is_primary' => false,
             'saturday_open' => $currentDateTime->format('H:i'),
             'saturday_close' => $currentDateTime->addHour()->format('H:i'),
             'sunday_open' => $currentDateTime->format('H:i'),

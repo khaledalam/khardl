@@ -18,9 +18,9 @@
                             <!--begin: Pic-->
                             <div class="me-7 mb-4">
                                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                
+
                                     <img alt="Logo" src="{{ $logo ?? global_asset('img/logo.png') }}" />
-                                    
+
                                     @if($is_live)<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>@endif
 
                                 </div>
@@ -34,7 +34,7 @@
                                     <div class="d-flex flex-column">
                                         <!--begin::Name-->
                                         <div class="d-flex align-items-center mb-2">
-                                        
+
                                             <a class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{  $restaurant->restaurant_name }}
                                             </a>
                                             <a>
@@ -136,7 +136,7 @@
                                                     </div>
                                                     <!--end::Stat-->
                                                     <!--begin::Stat-->
-                                                   
+
                                                 </div>
                                                 <!--end::Stats-->
                                             </div>
@@ -168,7 +168,7 @@
                                             </div>
                                         @elseif (!$is_live)
                                         <div class="d-flex justify-content-between align-items-center">
-                                            @if($user->hasPermission('can_approve_restaurants'))
+                                            @if($user?->hasPermission('can_approve_restaurants'))
                                                 <a onclick="showConfirmation()" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3" >{{ __('messages.approve')}}</a>
                                                 <form id="approve-form" action="{{ route('admin.restaurant.activate', ['restaurant' => $restaurant->id]) }}" method="POST" style="display: inline">
                                                     @csrf
@@ -284,7 +284,7 @@
                                     <!--end::Nav item-->
                                     <!--begin::Nav item-->
                                     <li class="nav-item mt-2">
-                                        <a class="nav-link text-active-primary ms-0 me-10 py-5 {{$widget == 'customers' ? 'active':''}}" href="#">{{ __('messages.customers')}}</a>
+                                        <a class="nav-link text-active-primary ms-0 me-10 py-5 {{$widget == 'customers' ? 'active':''}}" href="{{ route('admin.view-restaurants-customers', ['id' => $restaurant->id]) }}">{{ __('messages.customers')}}</a>
                                     </li>
                                 @endif
                                 <!--end::Nav item-->
@@ -298,7 +298,7 @@
                         </div>
                     </div>
                 </div>
-             
+
                 @yield('body')
 
 
@@ -368,5 +368,5 @@
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - Delete-->
-   
+
 @endsection

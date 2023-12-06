@@ -122,7 +122,7 @@
                                         <!--end::Text-->
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
-                                            @if($user->hasPermissionWorker('can_edit_menu'))
+                                            @if($user?->hasPermissionWorker('can_edit_menu'))
                                             <!--begin::Stat-->
                                                 <div
                                                     class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
@@ -130,7 +130,7 @@
                                                 </div>
                                             @endif
                                             <!--end::Stat-->
-{{--                                            @if($user->hasPermissionWorker('can_modify_advertisements'))--}}
+{{--                                            @if($user?->hasPermissionWorker('can_modify_advertisements'))--}}
 {{--                                            <!--begin::Stat-->--}}
 {{--                                            <div--}}
 {{--                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">--}}
@@ -141,7 +141,7 @@
                                             <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
-                                        @if($user->hasPermissionWorker('can_modify_working_time'))
+                                        @if($user?->hasPermissionWorker('can_modify_working_time'))
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
                                             <!--begin::Stat-->

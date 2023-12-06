@@ -22,7 +22,7 @@ class OrderSeeder extends Seeder
     {
       
         $status = ['accepted','cancelled','pending'];
-        for($i=0;$i<10;$i++){
+        for($i=0;$i<11;$i++){
             $order = Order::create([
                 'user_id'=> RestaurantUser::find(UserSeeder::RESTAURANT_CUSTOMER_USER_ID)->id,
                 'branch_id'=> Branch::first()->id,

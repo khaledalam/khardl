@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Exception;
 use ZipArchive;
+use App\Models\Tenant;
 use Illuminate\Support\Str;
+use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\Storage;
+use App\Repositories\PDF\PdfPrintInterface;
+
 class DownloadController extends Controller
 {
     public function download($path){
@@ -32,9 +37,19 @@ class DownloadController extends Controller
                 }
             }
         }catch(Exception $e){
-            dd($e->getMessage());
+            
         }
         return redirect()->back()->with('error',__('failed to download'));
 
+    }
+    public function downloadPDF(PdfPrintInterface $repository){
+        try{
+            $pdf = PDF::loadView($repository->view(),['data'=>$repository->data()]);
+          
+            return $pdf->download($repository->fileName());
+        }  catch(Exception $e){
+            dd($e->getMessage());
+            return redirect()->back()->with('error',__('failed to download'));
+        }
     }
 }

@@ -31,7 +31,7 @@ const DetailesItem = ({
   const { t } = useTranslation();
   const [count, setCount] = useState(1);
   const [items, setItems] = useState(
-    checkbox_input_names.map((name, index) => ({
+    checkbox_input_names?.map((name, index) => ({
       value: name,
       isChecked: false,
       price: checkbox_input_prices[index]
@@ -107,10 +107,10 @@ const DetailesItem = ({
         className="font-general-medium fixed inset-0 z-[99] transition-all duration-500"
       >
         <button
-          onClick={onClose}
-          className="w-full h-full fixed inset-0 z-30 transition-all duration-500"
-        ></button>
-        <div className="bg-[#000000]  bg-opacity-50 fixed inset-0 w-full h-full z-20"></div>
+    onClick={onClose}
+    className="w-full h-full fixed inset-0 z-30 transition-all duration-500"
+    />
+        <div className="bg-[#000000]  bg-opacity-50 fixed inset-0 w-full h-full z-20"/>
         <main className="flex  flex-col items-center justify-center h-full w-full">
           <div className="modal-wrapper flex items-center z-[50]">
             <div className="modal max-w-md min-w-[480px] h-[95vh] bg-white overflow-y-auto mx-5 xl:max-w-xl lg:max-w-xl md:max-w-xl max-h-screen shadow-lg flex-row rounded-lg">
@@ -145,7 +145,7 @@ const DetailesItem = ({
                   <div className="flex flex-col text-black font-bold items-center justify-center">
                     <div className="text-[16px] w-fit p-1 px-4 my-2"
                       style={{ borderRadius: GlobalShape, backgroundColor: GlobalColor }}
-                    >{price} ر.س</div>
+                    >{price} {t("SAR")}</div>
                   </div>
                   <div className="border-b border-ternary-light my-2 mx-10 p-4">
                     <div className="text-[16px] font-semibold">{checkbox_input_titles}</div>
@@ -172,16 +172,17 @@ const DetailesItem = ({
                       </div>
                       <div className="flex  flex-col items-center">
                         {items.map((item, index) => (
-                          <div key={index} className="text-[14px]">{item.price} ر.س</div>
+                          <div key={index} className="text-[14px]">{item.price} {t("SAR")}</div>
                         ))}
                       </div>
                     </div>
                   </div>
-                  <div className="border-b border-ternary-light  mx-10 p-4">
+                    {radioItems.length > 0 &&
+                  <div className="border-b border-ternary-light mx-10 p-4">
                     <div className="text-[16px] font-semibold ">{selection_input_titles}</div>
                     <div className="flex justify-between items-center">
                       <div>
-                        {radioItems.map((item, index) => (
+                        {radioItems?.map((item, index) => (
                           <div key={index} className="flex justify-start items-center gap-2">
                             <input
                               id={`radio-${index}`}
@@ -200,24 +201,27 @@ const DetailesItem = ({
                         ))}
                       </div>
                       <div className="flex  flex-col items-center">
-                        {radioItems.map((item, index) => (
-                          <div key={index} className="text-[14px]">{item.price} ر.س</div>
+                        {radioItems?.map((item, index) => (
+                          <div key={index} className="text-[14px]">{item.price} {t("SAR")}</div>
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </div>}
+
+                    {dropdown_input_names.length > 0 &&
                   <div className="border-b border-ternary-light mx-10 p-3 ">
                     <div className="">
                       <div className='relative w-[100%] my-2'>
                         <select className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
-                          {dropdown_input_names.map((cook, index) => (
+                          {dropdown_input_names?.map((cook, index) => (
                             <option className="bg-white text-black" key={index}>{cook}</option>
                           ))}
                         </select>
                         <MdKeyboardArrowDown className={`absolute top-1/2 ${Language == "en" ? "right-4" : "left-4"} transform -translate-y-1/2 text-black`} />
                       </div>
                     </div>
-                  </div>
+                  </div>}
+
                   <div className="border-b border-ternary-light my-2 mx-10 p-4">
                     <div className="">
                       <div className="text-[15px] font-semibold mb-2">{t("feedback")}</div>
@@ -246,11 +250,11 @@ const DetailesItem = ({
                   </div>
                   <div className="flex justify-center items-center my-4 pb-8">
                     <button
-                      className="p-1 px-10 text-[16px] text-black font-bold"
+                      className="p-1 px-10 text-[16px] text-black font-bold bg-[var(--primary)]"
                       style={{ borderRadius: GlobalShape, backgroundColor: GlobalColor }}
                       onClick={handleAddToCart}
                     >
-                      {t("Add to cart")} ({total * count} ر.س)
+                      {t("Add to cart")} ({total * count} {t("SAR")})
                     </button>
                   </div>
                 </div>

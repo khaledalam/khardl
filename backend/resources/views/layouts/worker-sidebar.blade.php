@@ -168,7 +168,7 @@
 
                             <!-- menu -->
                          <!-- menu -->
-                         @if($user->hasPermissionWorker('can_edit_menu'))
+                         @if($user?->hasPermissionWorker('can_edit_menu'))
                         <div class="menu-item menu-accordion">
                             <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
                                 <span class="menu-icon">
@@ -202,7 +202,7 @@
                                 </span>
 
                             </div>
-                            @if($user->hasPermissionWorker('can_modify_and_see_other_workers'))
+                            @if($user?->hasPermissionWorker('can_modify_and_see_other_workers'))
                             <!-- Staff -->
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                                 <span class="menu-link {{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
@@ -239,7 +239,7 @@
                                 </div>
                             </div>
                             @endif
-                            @if($user->hasPermissionWorker('can_control_payment'))
+                            @if($user?->hasPermissionWorker('can_control_payment'))
                             <!-- Payments -->
                             <div class="menu-item menu-accordion">
                                 <span class="menu-link">

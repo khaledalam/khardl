@@ -32,7 +32,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'phone_verified_at',
         'last_login',
     ];
-
+    protected $dateFormat = 'Y-m-d H:i:s';
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -64,6 +64,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function isWorker(){
         return $this->hasRole("Worker");
     }
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
     // public function roles()
     // {
     //     return $this->belongsToMany(Role::class,'roles');
@@ -76,7 +80,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         if($this->isRestaurantOwner()) return true;
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
     }
-
+    public function scopeCustomers($query)
+    {
+        return $query->whereDoesntHave('roles');
+    }
     public function hasVerifiedPhone(): bool
     {
         return $this->phone_verified_at != null;

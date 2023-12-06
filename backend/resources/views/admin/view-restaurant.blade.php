@@ -479,9 +479,9 @@
 									<div class="card-title m-0 d-flex justify-content-between align-items-center w-100">
                                         <div><h3 class="fw-bolder m-0">Files</h3></div>
                                         <div>
-                                            <a href="{{ route('download.file',  ['path' => \App\Models\User::STORAGE .'/'. $restaurant->user->id ]) }}" class="btn btn-success">
-                                                <i class="fas fa-download me-1"></i> {{ __('messages.download') }}
-                                                <span class="badge bg-secondary ms-1">
+                                            <a href="{{ route('download.file',  ['path' => \App\Models\User::STORAGE .'/'. $restaurant->user->id ]) }}" class="btn btn-khardl ">
+                                                <i class="fas fa-download me-1 text-black"></i> {{ __('messages.download') }}
+                                                <span class="badge bg-success ms-1">
                                                     5 {{ __('messages.files') }}
                                                 </span>
                                             </a>
@@ -519,7 +519,7 @@
                                 <!--begin::Col-->
                                 <div class="">
                                     @if ($restaurant->user->traderRegistrationRequirement->national_address)
-                                    <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->national_address]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                    <a  href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->national_address]) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                     @else
                                         {{ __('messages.no-file-available') }}
                                     @endif
@@ -535,7 +535,7 @@
                                 <!--begin::Col-->
                                 <div class="">
                                     @if ($restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager)
-                                    <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                    <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager]) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                     @else
                                         {{ __('messages.no-file-available') }}
                                     @endif
@@ -552,7 +552,7 @@
                                 <!--begin::Col-->
                                 <div class="">
                                     @if ($restaurant->user->traderRegistrationRequirement->commercial_registration)
-                                    <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->commercial_registration]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                    <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->commercial_registration]) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                     @else
                                         {{ __('messages.no-file-available') }}
                                     @endif
@@ -568,7 +568,7 @@
                                 <!--begin::Col-->
                                 <div class="">
                                     @if ($restaurant->user->traderRegistrationRequirement->tax_registration_certificate)
-                                    <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->tax_registration_certificate]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                    <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->tax_registration_certificate]) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                     @else
                                         {{ __('messages.no-file-available') }}
                                     @endif
@@ -585,7 +585,7 @@
                                 <!--begin::Col-->
                                 <div class="">
                                     @if ($restaurant->user->traderRegistrationRequirement->bank_certificate)
-                                        <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->bank_certificate]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                                        <a href="{{ route('download.file', ['path' => $restaurant->user->traderRegistrationRequirement->bank_certificate]) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                     @else
                                         {{ __('messages.no-file-available') }}
                                     @endif

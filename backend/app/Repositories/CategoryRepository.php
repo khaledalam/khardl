@@ -13,12 +13,17 @@ class CategoryRepository extends DefaultRepositoryPattern
     public function __construct()
     {
         $user= Auth::user();
+
         // check is request coming from sancum
-        $this->model = Category::when(request()->bearerToken(), function ($query) use ($user) {
-            return $query->where('branch_id',$user->branch->id);
+        $this->model = Category::when(request()->bearerToken(), static function ($query) use ($user) {
+            if ($_GET['selected_branch_id']) {
+//                $q->where()
+                return $query->where('branch_id', $_GET['selected_branch_id']);
+
+            }
         });
      
-        $this->resource = new CategoryResource($this->model);
+        $this->resource = new CategoryResource(new Category());
     }
-    
+
 }

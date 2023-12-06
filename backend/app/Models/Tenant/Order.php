@@ -28,12 +28,13 @@ class Order extends Model
     {
         return $this->belongsTo(RestaurantUser::class);
     }
-
+  
+    
     public function branch()
     {
         return $this->belongsTo(Branch::class);
     }
-
+    
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity', 'price_at_order_time')->withTimestamps();

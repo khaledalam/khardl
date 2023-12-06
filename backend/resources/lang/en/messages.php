@@ -211,7 +211,7 @@ return [
     'submit' => 'Submit',
     'add-your-primary-branch-by-clicking-on-the-button-bellow' => 'Add your primary branch by clicking on the button below.',
     'add-new-branch' => 'Add new branch',
-    'name-branch' => 'Name branch',
+    'name-branch' => 'Branch name',
     'location-branch' => 'Location Branch',
     'copy-menu' => 'Copy menu',
     'add-branch' => 'Add Branch',
@@ -255,12 +255,15 @@ return [
     'receipt' => 'Receipt',
     'payment-in-cash-upon-receipt' => 'Payment in cash upon receipt',
     'tap-approve-warning-text' => 'Your TAP business account is not approved yet, please',
-    'tap-approve-warning-link-text' => 'submit your TAP documents.'
+    'tap-approve-warning-link-text' => 'submit your TAP documents.',
     'see-restaurant-owners'=>'See Restaurant owners',
     'restaurant-owners'=>"Restaurant Owners",
     'restaurant-owner-management'=>"Restaurant Owners Management",
     'inactive'=>"Inactive",
-    'restaurant'=>'Restaurant'
+    'restaurant'=>'Restaurant',
+    "download-all"=>"Download All",
+    'payment-method'=>"Payment Method",
+    "user-id"=>"User id"
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',
