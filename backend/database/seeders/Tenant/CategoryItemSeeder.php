@@ -23,22 +23,43 @@ class CategoryItemSeeder extends Seeder
         $faker = new Generator();
 
         foreach(Branch::all() as $branch){
+
             $branch->categories()->saveMany([
+
+                //BRANCH_ID
                 new Category([
                     'name' => trans_json('First Category',__('First Category',[],'ar')),
-                    'user_id'=>UserSeeder::RESTAURANT_WORKER_USER_ID,
-                    'branch_id'=>BranchSeeder::BRANCH_ID
+                    'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
+                    'branch_id' => BranchSeeder::BRANCH_ID
                 ]),
                 new Category([
                     'name' => trans_json( 'Second Category',__( 'Second Category',[],'ar')),
-                    'user_id'=>UserSeeder::RESTAURANT_WORKER_USER_ID,
-                    'branch_id'=>BranchSeeder::BRANCH_ID
+                    'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
+                    'branch_id' => BranchSeeder::BRANCH_ID
+                ]),
+
+
+                // BRANCH_B_ID
+                new Category([
+                    'name' => trans_json('First Category',__('First Category',[],'ar')),
+                    'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
+                    'branch_id' => BranchSeeder::BRANCH_B_ID
+                ]),
+                new Category([
+                    'name' => trans_json( 'Second Category',__( 'Second Category',[],'ar')),
+                    'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
+                    'branch_id' => BranchSeeder::BRANCH_B_ID
+                ]),
+                new Category([
+                    'name' => trans_json('Third Category',__('First Category',[],'ar')),
+                    'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
+                    'branch_id' => BranchSeeder::BRANCH_B_ID
                 ]),
             ]);
 
 
-            foreach($branch->categories as $key=>$category){
-                foreach (range(1, 5) as $k => $it) {
+            foreach($branch->categories as $key => $category){
+                foreach (range(1, 10) as $k => $it) {
                     $kk = $k + 1;
                     $photo_file = new UploadedFile(public_path(Item::STORAGE_SEEDER."/$kk.jpg"), true);
                     $photo = store_image($photo_file,Item::STORAGE_SEEDER,$kk);

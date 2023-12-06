@@ -22,7 +22,7 @@
                         <!--begin::General options-->
                         <div class="card card-flush py-4">
                           <!--begin::Card header-->
-                          @if($user->hasPermission('can_edit_profile'))
+                          @if($user?->hasPermission('can_edit_profile'))
                           <div class="card-header">
                             <div class="card-title w-100 d-flex justify-content-between align-items-center">
                               <div>

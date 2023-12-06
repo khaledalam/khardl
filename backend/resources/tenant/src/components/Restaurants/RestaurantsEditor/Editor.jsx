@@ -19,8 +19,7 @@ const Editor = () => {
   const divRef = useRef(null);
   const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
   const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
-    const [styleData, setStyleData] = useState(null);
-
+  const styleData = useSelector((state) => state.styleDataRestaurant);
 
   const dispatch = useDispatch();
     const selectedCategory = sessionStorage.getItem('selectedCategory');
@@ -31,8 +30,10 @@ const Editor = () => {
     const [branch, setBranch] = useState(branch_id ?? null);
     const [branches, setBranches] = useState([]);
     const [categories, setCategories] = useState([]);
-    const selectedFont = sessionStorage.getItem('selectedFont');
 
+    if (!styleData) {
+        return;
+    }
 
     const fetchRestaurantStyles = async () => {
         const restaurantBranchesResponse = await AxiosInstance.get(`branches-site-editor`)
@@ -46,7 +47,6 @@ const Editor = () => {
     const fetchData = async () => {
         try {
             const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch`);
-            const restaurantStyleResponse = await AxiosInstance.get(`restaurant-style`)
             await fetchRestaurantStyles();
 
             console.log("editor rest restaurantCategoriesResponse >>>", restaurantCategoriesResponse.data)
@@ -56,11 +56,6 @@ const Editor = () => {
                 if (!branch) {
                     setBranch(restaurantCategoriesResponse.data?.data[0]?.branch?.id)
                 }
-            }
-
-            console.log("editor rest restaurantStyleResponse >>>", restaurantStyleResponse.data)
-            if (restaurantStyleResponse.data) {
-                setStyleData(restaurantStyleResponse.data?.data);
             }
 
 

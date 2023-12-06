@@ -269,7 +269,6 @@
    "show": "Show",
    "Delivery Details": "Delivery Details",
    "Summary": "Summary",
-   "Delivery": "Delivery",
    "Products": "Products",
    "(Paid with Cash)": "(Paid with Cash)",
    "Profile Details": "Profile Details",
@@ -279,6 +278,9 @@
     "Restaurant Editor": "Restaurant Editor",
     "Customer Editor": "Customer Editor",
     "No items in this category": "No items in this category",
-    "delivery": "Delivery"
+    "delivery": "Delivery",
+    "Delivery": "Delivery",
+    "receipt": "Receipt",
+    "Receipt": "Receipt"
 
 }

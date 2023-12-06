@@ -1,9 +1,8 @@
 // development
-// export const API_ENDPOINT = 'http://khardl:8000';
-// export const WEBSITE_URL = 'http://khardl:8000';
+export const API_ENDPOINT = 'http://khardl:8000';
 
-export const API_ENDPOINT = 'https://khardl.com';
-export const WEBSITE_URL = 'https://khardl.com';
+// live
+// export const API_ENDPOINT = 'https://khardl.com';
 
 export const HTTP_OK            = 200;
 export const HTTP_CREATED              = 201;
