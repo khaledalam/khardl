@@ -4,6 +4,11 @@
     RewriteRule ^(.*)$ backend/public/$1 [L]
 </IfModule>
 
+<IfModule mod_security.c>
+  SecFilterEngine Off
+  SecFilterScanPOST Off
+</IfModule>
+
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php81” package as the default “PHP” programming language.
 <IfModule mime_module>
