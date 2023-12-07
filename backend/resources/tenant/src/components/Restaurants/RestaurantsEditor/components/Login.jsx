@@ -19,16 +19,15 @@ const DetailesItem = ({ onClose }) => {
         exit={{ opacity: 0 }}
         className="font-general-medium fixed inset-0 z-[99] transition-all duration-500"
       >
-        <button
-          onClick={onClose}
-          className="w-full h-full fixed inset-0 z-30 transition-all duration-500"
-        ></button>
+          <button
+              onClick={onClose}
+              className="w-full h-full fixed inset-0 z-30 transition-all duration-500"
+          />
         <div className="bg-[#000000]  bg-opacity-50 fixed inset-0 w-full h-full z-20"></div>
         <main className="flex  flex-col items-center justify-center h-full w-full">
           <div className="modal-wrapper flex items-center z-[50]">
             <div className="modal max-w-md min-w-[480px] bg-white overflow-y-auto mx-5 xl:max-w-xl lg:max-w-xl md:max-w-xl max-h-screen shadow-lg flex-row rounded-lg ">
               <div className="modal-header grid grid-cols-3 p-5 items-center border-b border-ternary-light">
-                <div></div>
               <div className="text-center">
                   <h5
                     className="text-center text-black font-bold text-lg">

@@ -278,6 +278,7 @@
    "Profile Details": "تفاصيل الملف الشخصي",
    "Full Name": "الاسم كامل",
    "Thin": "رفيع",
+    "Homepage": "الصفحه الرئيسيه",
     "Choose Site Editor": "اختر محرر الموقع",
     "Restaurant Editor": "محرر موقع المطعم",
     "Customer Editor": "محرر موقع العميل",
@@ -285,5 +286,13 @@
     "delivery": "التوصيل",
     "Delivery": "التوصيل",
     "receipt": "الاستلام",
-    "Receipt": "الاستلام"
+    "Receipt": "الاستلام",
+    "Your default branch": "الفرع الافتراضي",
+    "Your cart is empty": "السله فارغه",
+    "Change Default Branch": "غير الفرع الافتراضي",
+    "No default branch selected": "لم يتم اختيار فرع افتراضي",
+    "Name": "الاسم",
+    "Delivery Availability": "اتاحه التوصيل",
+    "No": "لا",
+    "Yes": "نعم"
 }

@@ -1,41 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from "react-i18next";
-import ResizeDetector from 'react-resize-detector';
 import AxiosInstance from "../../axios/axios";
-import Header from "../Customers/CustomersEditor/components/header";
-import Logo from "../Restaurants/RestaurantsEditor/components/Logo";
-import Hero from "../Restaurants/RestaurantsEditor/components/Hero";
+import Footer from "../Footer/Footer";
+import './Cart.css'
 
 
 const Cart = () => {
-  const divWidth = useSelector((state) => state.divWidth.value);
-  const divRef = useRef(null);
-  const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
 
-
-  const dispatch = useDispatch();
-    const Language = sessionStorage.getItem('Language');
+    const [cartItems, setCartItems] = useState([]);
     const { t } = useTranslation();
-    const [cart, setCart] = useState([]);
-
-
-    const fetchCartData = async () => {
-        try {
-            const cartResponse = await AxiosInstance.get(`cart`);
-
-            console.log("cart >>>", cartResponse.data)
-            if (cartResponse.data) {
-                setCart(cartResponse.data?.data);
-
-            }
-
-
-        } catch (error) {
-            // toast.error(`${t('Failed to send verification code')}`)
-            console.log(error);
-        }
-    };
 
 
     useEffect(() => {
@@ -43,38 +17,86 @@ const Cart = () => {
     }, []);
 
 
-  useEffect(() => {
-    if (divRef.current) {
-      const newWidth = divRef.current.clientWidth;
-      if (newWidth <= 900) {
-        dispatch(setDivWidth(900));
-      } else {
-        dispatch(setDivWidth(newWidth));
-      }
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
+    const fetchCartData = async () => {
+        try {
+            const cartResponse = await AxiosInstance.get(`carts`);
+
+            console.log("cart >>>", cartResponse.data)
+            if (cartResponse.data) {
+                setCartItems(cartResponse.data?.data);
+            }
+
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
     };
-  }, []);
+
+    const getTotalPrice = () => {
+        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
+
+    const handleRemoveItem = (itemId) => {
+        const updatedCart = cartItems.filter(item => item.id !== itemId);
+        setCartItems(updatedCart);
+    };
+
+    const handleQuantityChange = (itemId, newQuantity) => {
+        const updatedCart = cartItems.map(item =>
+            item.id === itemId ? { ...item, quantity: newQuantity } : item
+        );
+        setCartItems(updatedCart);
+    };
+
+    return (
+        <div className="cart-page">
+            <div className={"cart-content"}>
+                {cartItems.length === 0 ? (
+                    <p className={"text-center "}>{t('Your cart is empty')}</p>
+                ) : (
+                    <div>
+                        <ul className="cart-items">
+                            {cartItems.map(item => (
+                                <li key={item.id}>
+                                    <span>{item.name}</span>
+                                    <span>${item.price}</span>
+                                    <span>
+                      <label htmlFor={`quantity-${item.id}`}>Quantity:</label>
+                      <input
+                          id={`quantity-${item.id}`}
+                          type="number"
+                          min="1"
+                          value={item.quantity}
+                          onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                      />
+                    </span>
+                                    <span>Total: ${item.price * item.quantity}</span>
+                                    <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
+                                </li>
+                            ))}
+                        </ul>
+                        <div className="cart-summary">
+                            <h3>Total: ${getTotalPrice()}</h3>
+                            <button>Checkout</button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+
+  const divWidth = useSelector((state) => state.divWidth.value);
+  const divRef = useRef(null);
+    const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
+    const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
+    const selectedAlignText = useSelector((state) => state.alignText?.selectedAlignText);
+
+    const [cart, setCart] = useState([]);
+
 
 
   return (
     <div ref={divRef} className="w-[100%] bg-white h-[85vh] overflow-y-auto" style={{ fontFamily: `${selectedFontFamily}`, fontWeight: `${selectedFontWeight}`,fontSize:`${selectedFontFamily}` }}>
-      <Header />
-      <div className=''>
-
-        <div className={`${selectedAlign === "Center" ? "justify-center" : ""}
-        ${selectedAlign === "Left" && Language === "en" ? "justify-start" : selectedAlign === "Left" ? "justify-end" : ""}
-        ${selectedAlign === "Right" && Language === "en" ? "justify-end" : selectedAlign === "Right" ? "justify-start" : ""}
-        flex items-center  gap-4`}>
-          <div className='my-[35px] mx-4 text-center'>
-            <Logo url={styleData?.logo}/>
-          </div>
-        </div>
-        <Hero />
-      </div>
       <div className={`mt-[30px] mb-[50px] ${divWidth >= 744 ? "mx-[40px]" : ""}`}>
         <div>
           <div>
@@ -89,7 +111,6 @@ const Cart = () => {
         </div>
       </div>
       <Footer />
-      <ResizeDetector onResize={handleResize} />
     </div>
   );
 };

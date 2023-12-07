@@ -110,7 +110,7 @@ const DetailesItem = ({
         <button
           onClick={onClose}
           className="w-full h-full fixed inset-0 z-30 transition-all duration-500"
-        ></button>
+        />
         <div className="bg-[#000000]  bg-opacity-50 fixed inset-0 w-full h-full z-20"></div>
         <main className="flex  flex-col items-center justify-center h-full w-full">
           <div className="modal-wrapper flex items-center z-[50]">

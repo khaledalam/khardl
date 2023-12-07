@@ -275,6 +275,7 @@
    "(Paid with Cash)": "(Paid with Cash)",
    "Profile Details": "Profile Details",
    "Full Name": "Full Name",
+    "Homepage": "Homepage",
    "Thin": "Thin",
     "Choose Site Editor": "Choose Site Editor",
     "Restaurant Editor": "Restaurant Editor",
@@ -283,6 +284,14 @@
     "delivery": "Delivery",
     "Delivery": "Delivery",
     "receipt": "Receipt",
-    "Receipt": "Receipt"
+    "Receipt": "Receipt",
+    "Your default branch": "Your default branch",
+    "Your cart is empty": "Your cart is empty",
+    "Change Default Branch": "Change Default Branch",
+    "No default branch selected": "No default branch selected",
+    "Name": "Name",
+    "Delivery Availability": "Delivery Availability",
+    "No": "No",
+    "Yes": "Yes"
 
 }
