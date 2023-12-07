@@ -134,9 +134,10 @@ class AdminController extends Controller
         $user->password = Hash::make($request->password);
         $user->position =$request->position;
         $user->phone = $request->phone;
-
+        $user->email_verified_at = now();
         $user->save();
         $user->assignRole('Administrator');
+       
         $permissions = [
             'can_access_restaurants',
             'can_view_restaurants',
@@ -364,9 +365,6 @@ class AdminController extends Controller
             return $q->where("name","Administrator");
         })
         ->where("id",'!=',Auth::id())
-        ->where("id",'!=',User::whereHas('roles',function($q){
-            return $q->where("name","Administrator");
-        })->first()->id)
         ->findOrFail($id);
 
         DB::beginTransaction();

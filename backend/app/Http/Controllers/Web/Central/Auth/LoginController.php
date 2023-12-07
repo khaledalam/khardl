@@ -71,12 +71,16 @@ class LoginController extends BaseController
         $data = [
             'user'=>$user
         ];
-
-        if (!$user->traderRegistrationRequirement) {
-            $data['step2_status'] = 'incomplete';
-        }else{
-            $data['step2_status'] = 'completed';
+        if($user->isAdmin()){
+                $data['step2_status'] = 'completed';
+        }else {
+            if (!$user->traderRegistrationRequirement) {
+                $data['step2_status'] = 'incomplete';
+            }else{
+                $data['step2_status'] = 'completed';
+            }
         }
+     
 
         return $this->sendResponse($data, 'User logged in successfully.');
     }
