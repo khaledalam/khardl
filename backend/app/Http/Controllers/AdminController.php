@@ -226,36 +226,36 @@ class AdminController extends Controller
       
         $query =  Tenant::query()->with('primary_domain');
         $restaurants = $query->get();
-       
-        if ($request->has('status') && $request->input('status') !== "all") {
-            $status = $request->input('status');
-            foreach($restaurants as $restaurant){
-                    $status = $request->input('status');
-                    if($status == 'live'){
-                        if($restaurant->is_live()){
-                            $query->orWhere('id', $restaurant->id);
-                        }else {
-                            $query->where('id','!=', $restaurant->id);
-                        }
-                    }else {
-                        if($restaurant->is_live()){
-                            $query->Where('id','!=', $restaurant->id);
-                        }else {
-                            $query->orWhere('id', $restaurant->id);
-                        }
-                    }
-                    
-            }
-        }
         if ($request->has('search')) {
             $search = $request->input('search');
 
             $query->whereHas('primary_domain', static function($query1) use ($search) {
                 $query1->where('domain', 'like', '%' . $search . '%');
             });
-            $query->orWhere('restaurant_name','like', '%' . $search . '%');
+            $query->Where('restaurant_name','like', '%' . $search . '%');
 
         }
+        if ($request->has('status') && $request->input('status') !== "all") {
+            $status = $request->input('status');
+            foreach($restaurants as $restaurant){
+                    $status = $request->input('status');
+                    if($status == 'live'){
+                        if($restaurant->is_live()){
+                            $query->where('id', $restaurant->id);
+                        }else {
+                            $query->where('id','!=', $restaurant->id);
+                        }
+                    }else {
+                        if($restaurant->is_live()){
+                            $query->where('id','!=', $restaurant->id);
+                        }else {
+                            $query->where('id', $restaurant->id);
+                        }
+                    }
+                    
+            }
+        }
+       
     
          
         $restaurants = $query->paginate();
