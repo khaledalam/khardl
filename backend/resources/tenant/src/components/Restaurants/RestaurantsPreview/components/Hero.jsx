@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { setImage } from '../../../../redux/editor/imageSlice';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { BsFillImageFill } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-function Hero(props) {
+function Hero() {
 
-    const {styleData} = props;
+    const styleData = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
+
 
     const image = styleData?.banner_image || sessionStorage.getItem('previewImage');
     const shapeImageShape = styleData?.images_style || sessionStorage.getItem('shapeImageShape');

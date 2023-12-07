@@ -8,7 +8,7 @@ import MenuItems from "./components/menuItems";
 import { useTranslation } from "react-i18next";
 import Logo from './components/Logo';
 import AxiosInstance from "../../../axios/axios";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { changeStyleDataRestaurant } from '../../../redux/editor/styleDataRestaurantSlice';
 
 
@@ -19,17 +19,13 @@ const RestaurantHomePage = () => {
     const [branch, setBranch] = useState([]);
     const [branches, setBranches] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [styleData, setStyleData] = useState(null);
-
-    const dispatch = useDispatch()
+    const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
 
     const branch_id = localStorage.getItem('selected_branch_id');
-
 
     const fetchData = async () => {
         try {
             const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch&selected_branch_id=${branch_id}`);
-            const restaurantStyleResponse = await AxiosInstance.get(`restaurant-style`)
 
             console.log("editor rest restaurantCategoriesResponse >>>", restaurantCategoriesResponse.data)
             if (restaurantCategoriesResponse.data) {
@@ -40,11 +36,6 @@ const RestaurantHomePage = () => {
                 }
             }
 
-            console.log("editor rest restaurantStyleResponse >>>", restaurantStyleResponse.data)
-            if (restaurantStyleResponse.data) {
-                setStyleData(restaurantStyleResponse.data?.data);
-                dispatch(changeStyleDataRestaurant(restaurantStyleResponse.data?.data));
-            }
 
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
@@ -67,27 +58,27 @@ const RestaurantHomePage = () => {
     }, [branch_id, branches]);
 
 
-    if (!styleData){
+    if (!styleDataRestaurant){
         return;
     }
 
     const categoriesForBranch = categories.filter(category => category.branch_id === branch.branch_id);
     return (
-      <div className="w-[100%] bg-white" style={{fontFamily: `${styleData?.font_family}`}}>
+      <div className="w-[100%] bg-white" style={{fontFamily: `${styleDataRestaurant?.font_family}`}}>
           <div className=''>
-        <div className={`${styleData?.logo_alignment === "Center" ? "justify-center" : ""}
-        ${styleData?.logo_alignment === "Left" && Language === "en" ? "justify-start" : styleData?.logo_alignment === "Left" ? "justify-end":""}
-        ${styleData?.logo_alignment === "Right" && Language === "en" ? "justify-end" : styleData?.logo_alignment === "Right" ? "justify-start":""}
+        <div className={`${styleDataRestaurant?.logo_alignment === "Center" ? "justify-center" : ""}
+        ${styleDataRestaurant?.logo_alignment === "Left" && Language === "en" ? "justify-start" : styleDataRestaurant?.logo_alignment === "Left" ? "justify-end":""}
+        ${styleDataRestaurant?.logo_alignment === "Right" && Language === "en" ? "justify-end" : styleDataRestaurant?.logo_alignment === "Right" ? "justify-start":""}
         flex items-center  gap-4`}>
           <div className='my-[35px] mx-4'>
-            <Logo url={styleData?.logo}/>
+            <Logo url={styleDataRestaurant?.logo}/>
             <div className={`flex justify-center items-center gap-2 mt-2 ${Language === "en" ? "flex-col-reverse" : "" }`}>
             {/*<h2>العنوان</h2>*/}
             {/*<HiOutlineLocationMarker />*/}
             </div>
           </div>
         </div>
-        <Hero styleData={styleData} />
+        <Hero />
       </div>
       <div className="justify-center mt-[30px] mb-[50px] xl:mx-[150px]">
         <div>
@@ -98,10 +89,9 @@ const RestaurantHomePage = () => {
             }}>
                 {categoriesForBranch?.length > 0 ?
                     <Taps
-                        styleData={styleData}
                 contentClassName={`
-        bg-[var(--secondary)] mb-5 ${styleData?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
-        ${styleData?.category_style === "Right" || styleData?.category_style === "Left" ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
+        bg-[var(--secondary)] mb-5 ${styleDataRestaurant?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
+        ${styleDataRestaurant?.category_style === "Right" || styleDataRestaurant?.category_style === "Left" ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
                 {categoriesForBranch.map((category, i) => (
                   <Tap
                       key={i}
@@ -119,7 +109,7 @@ const RestaurantHomePage = () => {
           </div>
         </div>
       </div>
-      <Footer styleData={styleData} />
+      <Footer />
     </div>
     );
 };
