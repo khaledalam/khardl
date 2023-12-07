@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
-            $table->unsignedBigInteger('cart_id')->unique(); 
+            $table->unsignedBigInteger('cart_id');
             $table->float('price', 8, 2)->default(0);
             $table->float('options_price',8,2)->default(0);
             $table->float('total',8,2)->default(0);

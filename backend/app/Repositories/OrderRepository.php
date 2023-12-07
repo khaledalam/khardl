@@ -16,7 +16,7 @@ class OrderRepository extends DefaultRepositoryPattern
     {
         $user= Auth::user();
         $this->model = Order::where('branch_id',$user->branch->id);
-        $this->resource = new OrderResource($this->model);
+        $this->resource = new OrderResource(new Order());
     }
     
 }

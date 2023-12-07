@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import ResizeDetector from 'react-resize-detector';
 import AxiosInstance from "../../axios/axios";
 import Header from "../Customers/CustomersEditor/components/header";
+import Logo from "../Restaurants/RestaurantsEditor/components/Logo";
+import Hero from "../Restaurants/RestaurantsEditor/components/Hero";
 
 
 const Cart = () => {

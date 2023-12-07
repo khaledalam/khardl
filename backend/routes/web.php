@@ -1,22 +1,24 @@
 <?php
 
-use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
+use Illuminate\Auth\Events\PasswordReset;
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
-use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
+
 
 
 /*
@@ -178,42 +180,40 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
             Route::middleware(['accepted'])->group(function () {
                 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
-                Route::prefix('admin')->middleware(['admin'])->group(function () {
-                    Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('permission:can_access_dashboard')->name('admin.dashboard');
-                    Route::get('/download-commercial-registration/{filename}', [AdminController::class, 'downloadCommercialRegistration'])->middleware('permission:can_view_restaurants')->name('download.commercial');
-                    Route::get('/download-delivery-contract/{filename}', [AdminController::class, 'downloadDeliveryContract'])->middleware('permission:can_view_restaurants')->name('download.delivery');
-                    Route::get('/download-tax-number/{filename}', [AdminController::class, 'downloadTaxNumber'])->middleware('permission:can_view_restaurants')->name('download.tax');
-                    Route::get('/download-bank-certificate/{filename}', [AdminController::class, 'downloadBankCertificate'])->middleware('permission:can_view_restaurants')->name('download.bank');
-                    Route::post('/approve/{id}', [AdminController::class, 'approveUser'])->middleware('permission:can_approve_restaurants')->name('admin.approveUser');
-                    Route::post('/deny/{id}', [AdminController::class, 'denyUser'])->middleware('permission:can_approve_restaurants')->name('admin.denyUser');
-                    Route::get('/add-user', [AdminController::class, 'addUser'])->middleware('permission:can_add_admins')->name('admin.add-user');
-                    Route::delete('/delete/{id}', [AdminController::class, 'deleteRestaurant'])->middleware('permission:can_delete_restaurants')->name('admin.delete-restaurant');
-                    Route::post('/generate-user', [AdminController::class, 'generateUser'])->middleware('permission:can_add_admins')->name('admin.generate-user');
-                    Route::get('/logs', [AdminController::class, 'logs'])->middleware('permission:can_see_logs')->name('admin.log');
-                    Route::get('/restaurants/{id}', [AdminController::class, 'viewRestaurant'])->middleware('permission:can_view_restaurants')->name('admin.view-restaurants');
-                    Route::get('/restaurants/{id}/orders', [AdminController::class, 'viewRestaurantOrders'])->middleware('permission:can_view_restaurants')->name('admin.view-restaurants-orders');
-                    Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('admin.restaurants');
-                    Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('admin.settings');
-                    Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('admin.add-promoter');
-                    Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('admin.promoters');
-                    Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('admin.user-management');
-                    Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('admin.restaurant-owner-management');
-
-                    Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('admin.delete-user');
-                    Route::delete('/promoters/delete/{id}', [AdminController::class, 'deletePromoter'])->middleware('permission:can_promoters')->name('admin.delete-promoter');
-                    Route::get('/user-management/edit/{id}', [AdminController::class, 'userManagementEdit'])->middleware('permission:can_edit_admins')->name('admin.user-management-edit');
-                    Route::put('/update-user-permissions/{userId}', [AdminController::class, 'updateUserPermissions'])->middleware('permission:can_edit_admins')->name('admin.update-user-permissions');
-                    Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
-                    Route::get('/edit-profile', [AdminController::class, 'editProfile'])->middleware('permission:can_edit_profile')->name('admin.edit-profile');
-                    Route::post('/profile', [AdminController::class, 'updateProfile'])->middleware('permission:can_edit_profile')->name('admin.profile-update');
-                    Route::put('/restaurants/{restaurant}/activate', [AdminController::class, 'activateRestaurant'])->middleware('permission:can_approve_restaurants')->name('admin.restaurant.activate');
-                    Route::get('/download/file/{path?}',[DownloadController::class,'download'])
+                Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function () {
+                    Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('permission:can_access_dashboard')->name('dashboard');
+                    Route::post('/approve/{id}', [AdminController::class, 'approveUser'])->middleware('permission:can_approve_restaurants')->name('approveUser');
+                    Route::post('/deny/{id}', [AdminController::class, 'denyUser'])->middleware('permission:can_approve_restaurants')->name('denyUser');
+                    Route::get('/add-user', [AdminController::class, 'addUser'])->middleware('permission:can_add_admins')->name('add-user');
+                    Route::delete('/delete/{id}', [AdminController::class, 'deleteRestaurant'])->middleware('permission:can_delete_restaurants')->name('delete-restaurant');
+                    Route::post('/generate-user', [AdminController::class, 'generateUser'])->middleware('permission:can_add_admins')->name('generate-user');
+                    Route::get('/logs', [AdminController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
+                    Route::get('/restaurants/{id}', [AdminController::class, 'viewRestaurant'])->middleware('permission:can_view_restaurants')->name('view-restaurants');
+                    Route::get('/restaurants/{id}/orders', [AdminController::class, 'viewRestaurantOrders'])->middleware('permission:can_view_restaurants')->name('view-restaurants-orders');
+                    Route::get('/restaurants/{id}/customers', [AdminController::class, 'viewRestaurantCustomers'])->middleware('permission:can_view_restaurants')->name('view-restaurants-customers');
+                    Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('restaurants');
+                    Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
+                    Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
+                    Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
+                    Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('user-management');
+                    Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('restaurant-owner-management');
+                    Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('delete-user');
+                    Route::delete('/promoters/delete/{id}', [AdminController::class, 'deletePromoter'])->middleware('permission:can_promoters')->name('delete-promoter');
+                    Route::get('/user-management/edit/{id}', [AdminController::class, 'userManagementEdit'])->middleware('permission:can_edit_admins')->name('user-management-edit');
+                    Route::put('/update-user-permissions/{userId}', [AdminController::class, 'updateUserPermissions'])->middleware('permission:can_edit_admins')->name('update-user-permissions');
+                    Route::get('/profile', [AdminController::class, 'profile'])->name('profile');
+                    Route::get('/edit-profile', [AdminController::class, 'editProfile'])->middleware('permission:can_edit_profile')->name('edit-profile');
+                    Route::post('/profile', [AdminController::class, 'updateProfile'])->middleware('permission:can_edit_profile')->name('profile-update');
+                    Route::put('/restaurants/{restaurant}/activate', [AdminController::class, 'activateRestaurant'])->middleware('permission:can_approve_restaurants')->name('restaurant.activate');
+                    Route::get('/download/file/{path}',[DownloadController::class,'download'])
                     ->where('path', '(.*)')
                     ->name("download.file");
-                    Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('admin.toggle-status');
-
+                    Route::get('/download/pdf',[DownloadController::class,'downloadPDF'])
+                    ->name("download.pdf");
+                    Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('toggle-status');
+                    
                 });
-
+                
             });
 
         });

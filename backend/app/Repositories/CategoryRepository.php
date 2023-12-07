@@ -22,8 +22,8 @@ class CategoryRepository extends DefaultRepositoryPattern
 
             }
         });
-
-        $this->resource = new CategoryResource($this->model);
+     
+        $this->resource = new CategoryResource(new Category());
     }
 
 }

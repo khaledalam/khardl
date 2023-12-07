@@ -245,12 +245,15 @@ return [
     'tap-approve-warning-text' => 'حساب الاعمال الخاص بك علي منصه تاب لم يتم الوافقه عليه بعد، من فضلك',
     'tap-approve-warning-link-text' => 'ارفع ملفات تاب',
     "download-all-files"=>"تحميل كل الملفات",
+    "download-all"=>"تحميل الكل",
     'domain'=>"اسم النطاق",
     'see-restaurant-owners'=>'القدره على رؤية حسابات ملاك المطاعم',
     'restaurant-owners'=>'ملاك المطاعم',
     'restaurant-owner-management'=>'ادارة ملاك المطاعم',
     'restaurant'=>'المطعم',
     'inactive'=>"غير فعال ",
+    'payment-method'=>"وسيلة الدفع",
+    "user-id"=>"معرف المستخدم"
 ];
 
 
