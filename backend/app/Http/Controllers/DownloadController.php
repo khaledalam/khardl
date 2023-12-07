@@ -15,16 +15,23 @@ use App\Repositories\PDF\PdfPrintInterface;
 
 class DownloadController extends Controller
 {
-    public function download($path){
- 
+    public function download($path,Request $request){
         try{
             if (Storage::disk('private')->exists($path)) {
                 $storage_path = storage_path("app/private/$path");
                 if (File::isFile($storage_path)) {
+                    if($request->has('fileName')){
+                        $extension = pathinfo($storage_path, PATHINFO_EXTENSION);
+                        $fileName = $request->fileName.'.'.$extension;
+                        return response()->download($storage_path,$fileName);
+                    }
                     return response()->download($storage_path);
                 } elseif (File::isDirectory($storage_path)) {
                     $zip = new ZipArchive;
                     $zipFileName = 'files.zip';
+                    if($request->has('fileName')){
+                        $zipFileName = $request->fileName.'.zip';
+                    }
                     $zip_path = $storage_path.'/'.$zipFileName;
                     if ($zip->open($zip_path, ZipArchive::CREATE) === TRUE) {
                         $filesToZip = Storage::disk('private')->allFiles($path);
@@ -37,7 +44,7 @@ class DownloadController extends Controller
                 }
             }
         }catch(Exception $e){
-            
+            dd($e->getMessage());
         }
         return redirect()->back()->with('error',__('failed to download'));
 

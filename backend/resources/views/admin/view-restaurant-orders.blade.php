@@ -19,7 +19,7 @@
                             <div class="card-title m-0 d-flex justify-content-between align-items-center w-100">
                                 <div><h3 class="fw-bolder m-0"> {{ __('messages.orders') }}</h3></div>
                                 <div>
-                                    <a href="{{route('download.pdf',['type'=>'order','tenant_id'=>$restaurant->id])}}" class="btn btn-khardl">
+                                    <a href="{{route('admin.download.pdf',['type'=>'order','tenant_id'=>$restaurant->id])}}" class="btn btn-khardl">
                                         <i class="fas fa-download me-1 text-black"></i> {{ __('messages.download-all') }}
                                         
                                     </a>
@@ -57,7 +57,7 @@
                                             <td class="text-success">{{ $order->total }}</td>
                                             <td >{{ $order->payment_method->name }}</td>
                                             <td class="text-center">
-                                                <a href="{{route('download.pdf',['type'=>'order','id'=>$order->id,'tenant_id'=>$restaurant->id])}}" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl">{{ __('messages.download') }}</a>
+                                                <a href="{{route('admin.download.pdf',['type'=>'order','id'=>$order->id,'tenant_id'=>$restaurant->id])}}" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl">{{ __('messages.download') }}</a>
                                             </td>
                                         </tr>
                                     @endforeach

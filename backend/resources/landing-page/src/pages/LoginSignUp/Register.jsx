@@ -92,7 +92,7 @@ const Register = () => {
                         <div className='w-[100%] flex items-center justify-center mt-4'>
                            <form
                               onSubmit={handleSubmit(onSubmit)}
-                              className='w-[100%] flex gap-[14px] px-[15px]'
+                              className='w-[100%] flex flex-col gap-[14px] px-[15px]'
                            >
                               <div className='flex justify-stretch items-center gap-3 w-[100%]'>
                                  {/* First Input */}
@@ -325,7 +325,7 @@ const Register = () => {
                                  </span>
                               )}
 
-                              <div className='flex justify-center items-center my-4'>
+                              <div className='flex-col flex justify-center items-center my-4'>
                                  <button
                                     type='submit'
                                     className={`hover:bg-[#d6eb16] font-bold bg-[var(--primary)] flex justify-center items-center gap-[3px] rounded-full transition-all delay-100  py-2 px-6 text-[18px] leading-6`}
