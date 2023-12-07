@@ -120,11 +120,10 @@ class CartRepository
     }
 
 
-    public function items(): Collection
+    public function items()
     {
-        $this->cart->items->load(['']);
-
-        return $this->cart->items;
+        $items = $this->cart->items->load(['item']);
+        return $this->sendResponse($items, '');
     }
    
 

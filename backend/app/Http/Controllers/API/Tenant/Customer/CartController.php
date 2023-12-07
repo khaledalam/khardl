@@ -15,6 +15,9 @@ class CartController
     {
         $this->cart = CartRepository::get();
     }
+    public function index(){
+        return $this->cart->items();
+    }
     public function store(AddItemToCartRequest $request)
     {
         return $this->cart->add($request);
