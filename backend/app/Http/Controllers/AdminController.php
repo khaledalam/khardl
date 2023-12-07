@@ -266,17 +266,13 @@ class AdminController extends Controller
     public function viewRestaurant($id){
 
         $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
-        $logo ="";
+        $logo =null;
         $is_live= false;
-        $restaurant->run(static function()use(&$logo,&$is_live){
-            $is_live = Setting::first()->is_live;
-            if($is_live){
-                $logo = RestaurantStyle::first()->logo ?? '';
-            }else {
-                $logo = null;
 
-            }
-            
+        $restaurant->run(static function($restaurant)use(&$logo,&$is_live){
+            $info = $restaurant->info(false);
+            $logo = $info['logo'];
+            $is_live = $info['is_live'];
         });
         
         $owner =  $restaurant->user;
@@ -310,24 +306,39 @@ class AdminController extends Controller
     public function viewRestaurantOrders( $id){
        
         $restaurant = Tenant::findOrFail($id);
-        $is_live = $restaurant->is_live();
+        $logo =null;
+        $is_live= false;
+        $orders = [];
+        $restaurant->run(static function($restaurant)use(&$logo,&$is_live,&$orders){
+            $info = $restaurant->info(false);
+            $logo = $info['logo'];
+            $is_live = $info['is_live'];
+            $orders = $restaurant->orders(false);
+        });
         $owner =  $restaurant->user;
-        $orders = $restaurant->orders();
         $user = Auth::user();
         $widget = 'orders';
     
-        return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live'));
+        return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live','logo'));
     }
     public function viewRestaurantCustomers( $id){
        
         $restaurant = Tenant::findOrFail($id);
-        $is_live = $restaurant->is_live();
+        $is_live = false;
+        $logo = null;
+      
+        $customers =[];
+        $restaurant->run(static function($restaurant)use(&$logo,&$is_live,&$customers){
+            $info = $restaurant->info(false);
+            $logo = $info['logo'];
+            $is_live = $info['is_live'];
+            $customers = $restaurant->customers(false);
+        });
         $owner =  $restaurant->user;
-        $customers = $restaurant->customers();
         $user = Auth::user();
         $widget = 'customers';
     
-        return view('admin.view-restaurant-customers', compact('user','widget','owner','restaurant', 'customers','is_live'));
+        return view('admin.view-restaurant-customers', compact('user','widget','owner','logo','restaurant', 'customers','is_live'));
     }
 
     public function deleteRestaurant($id)

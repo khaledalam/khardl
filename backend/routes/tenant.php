@@ -191,7 +191,7 @@ Route::group([
 
             Route::middleware('verifiedPhone')->group(function () {
                 Route::resource("carts",CartController::class)->only([
-                    'store'
+                    'index','store','destroy'
                 ]);
             });
 

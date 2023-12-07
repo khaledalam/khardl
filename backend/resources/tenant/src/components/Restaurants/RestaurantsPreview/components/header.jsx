@@ -35,7 +35,7 @@ function Header() {
     const GlobalColor = styleDataRestaurant?.primary_color || sessionStorage.getItem('globalColor');
 
 
-
+    
     useEffect(() => {
         fetchData().then(r => null);
     }, []);
@@ -64,6 +64,12 @@ function Header() {
             setShowDetailesItem(false);
         }
     }
+    const showCartItems = async () =>{
+        const cartItems = await AxiosInstance.get(`carts`)
+        if (cartItems.data) {
+            console.log(data);
+        }
+    };
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
     };
@@ -158,6 +164,7 @@ function Header() {
             </div>
             <div className='flex items-center justify-between  gap-4'>
                 <button className='relative p-1'
+                    onClick={showCartItems}
                     style={{
                         border: `1px solid ${GlobalColor}`,
                         borderRadius: "100%"
@@ -165,6 +172,7 @@ function Header() {
                 >
                     <LiaShoppingCartSolid size={26} />
                     <span
+                      
                         className='absolute top-[-7px] right-[-6px] text-[10px] text-bold h-[20px] w-[20px] rounded-full bg-red-500 text-white'>
                         <div>{cartItems.length}</div>
                     </span>
