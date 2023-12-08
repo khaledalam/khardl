@@ -292,6 +292,17 @@
     "Name": "Name",
     "Delivery Availability": "Delivery Availability",
     "No": "No",
-    "Yes": "Yes"
+    "Yes": "Yes",
+    "Your Cart": "Your Cart",
+    "Checkout": "Checkout",
+    "Remove": "Remove",
+    "Vat": "Vat",
+    "Select Payment Method": "Select Payment Method",
+    "Inclusive VAT": "Inclusive VAT",
+    "Credit Card": "Credit Card",
+    "Cash on Delivery": "Cash on Delivery",
+    "Place Order": "Place Order",
+    "Are You sure you want to place the order?": "Are You sure you want to place the order?"
+
 
 }

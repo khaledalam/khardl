@@ -294,5 +294,15 @@
     "Name": "الاسم",
     "Delivery Availability": "اتاحه التوصيل",
     "No": "لا",
-    "Yes": "نعم"
+    "Yes": "نعم",
+    "Your Cart": "السله",
+    "Checkout": "الدفع",
+    "Remove": "حذف",
+    "Vat": "ضريبة القيمة المضافة",
+    "Select Payment Method": "اختر وسيله الدفع",
+    "Inclusive VAT": "شاملة ضريبة القيمة المضافة",
+    "Credit Card": "بطاقة إئتمان",
+    "Cash on Delivery": "الدفع عند الاستلام",
+    "Place Order": "تقديم الطلب",
+    "Are You sure you want to place the order?": "هل تريد ارسال الطلب؟"
 }

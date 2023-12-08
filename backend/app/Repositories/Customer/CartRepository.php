@@ -16,10 +16,11 @@ class CartRepository
 {
     /** @var Cart */
     public $cart;
+
     use APIResponseTrait;
 
     public  function initiate()
-    {   
+    {
         $this->cart = Cart::query()->firstOrCreate([
             'user_id' => Auth::id(),
         ]);
@@ -28,6 +29,7 @@ class CartRepository
     public static function get(){
         return app(CartRepository::class);
     }
+
     public function add(AddItemToCartRequest $request): JsonResponse
     {
         if(!$this->hasBranch($request->branch_id)){
@@ -41,7 +43,7 @@ class CartRepository
     {
         return true;
     }
-   
+
     public function createCartItem($item,$request):CartItem
     {
         return CartItem::updateOrCreate([
@@ -50,7 +52,7 @@ class CartRepository
             'cart_id' => $this->cart->id,
             'price' =>$item->price,
             'quantity' => $request['quantity'],
-           
+
         ]);
     }
     public function updateCartItem(CartItem $cartItem, $request)
@@ -60,7 +62,7 @@ class CartRepository
             'quantity'  => $request->quantity,
         ]);
     }
-   
+
     public function setQuantity($id, $quantity)
     {
         return $this->cart->items()
@@ -88,6 +90,7 @@ class CartRepository
     {
         return 0;
     }
+
     public function hasBranch($branch_id){
         // check if cart has branch or not
         if($this->cart->branch_id == null){
@@ -104,7 +107,6 @@ class CartRepository
 
     public function subTotal()
     {
-
         return $this->cart->items()
             ->select('price', 'quantity')
             ->cursor()
@@ -125,13 +127,13 @@ class CartRepository
         $items = $this->cart->items->load(['item']);
         return $this->sendResponse($items, '');
     }
-   
+
 
     public function id()
     {
         return $this->cart->id;
     }
 
- 
+
 
 }
