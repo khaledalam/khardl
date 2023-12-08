@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
 {
-    public $canCOD = true;
-
     protected $table = 'carts';
 
     protected $fillable = [
@@ -31,21 +29,14 @@ class Cart extends Model
         return $this->hasMany(CartItem::class);
     }
 
+
+    /*
+
     // Accept Cash on delivery payment method
     public function getCanCOD()
     {
+        // check if branch enable COD or not ...
         return true;
-    }
-
-    /**
-     * Get the user's first name.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function getFirstNameAttribute()
-    {
-        return ucfirst("Test");
     }
 
     // Accept Credit card payment method
@@ -53,4 +44,7 @@ class Cart extends Model
     {
         return true;
     }
+
+    */
+
 }
