@@ -18,6 +18,8 @@ function Card(props) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
 
+    const branch_id = localStorage.getItem('selected_branch_id');
+
     function showMeDetailesItem() {
         if (!showDetailesItem) {
             setShowDetailesItem(true);
@@ -35,14 +37,14 @@ function Card(props) {
           setIsAdded(false);
           toast.success(`${t('Item removed from cart')}`)
         }
-      
-      
+
+
         return ;
       }
       const response = await AxiosInstance.post(`/carts`, {
         item_id : props.id,
         quantity : 1,
-        branch_id: 1 // TODO @todo append the real branch 
+        branch_id: branch_id
       });
       if (response?.data) {
         setIsAdded(true);
@@ -95,14 +97,14 @@ function Card(props) {
               }}
             >{props.description}</h2>
             <div className="flex justify-between items-center px-4 my-4">
-              <span className="text-[14px] font-semibold">{props.calories} {t("calories")}</span>
+              <span className="text-[14px] font-semibold text-[#5e5e5e]">{props.calories} {t("calories")}</span>
                 <hr />
               <span className="text-[14px] text-[#5e5e5e]">{props.price} {t("SAR")}</span>
             </div>
           </button>
           <button className="text-center bg-[var(--primary)] py-1 text-black font-bold"
             style={{ borderRadius: `0 0 ${GlobalShape} ${GlobalShape}`,  backgroundColor: isAdded ? 'red' : GlobalColor }}
-            onClick={handleAddToCart}
+            onClick={() => handleAddToCart()}
           >   {isAdded ? t("Cancel") : t("Add to cart") }</button>
         </div>
       </div>

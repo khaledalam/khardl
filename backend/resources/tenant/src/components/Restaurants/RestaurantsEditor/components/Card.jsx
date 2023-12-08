@@ -70,7 +70,7 @@ function Card(props) {
               }}
             >{props.description}</h2>
             <div className="flex justify-between items-center px-4 my-4">
-              <span className="text-[14px] font-semibold">{props.calories} {t("calories")}</span>
+              <span className="text-[14px] font-semibold text-[#5e5e5e]">{props.calories} {t("calories")}</span>
                 <hr />
               <span className="text-[14px] text-[#5e5e5e]">{props.price} {t("SAR")}</span>
             </div>
