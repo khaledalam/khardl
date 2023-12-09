@@ -47,6 +47,9 @@ const DetailesItem = ({ onClose }) => {
             + branchesSelectRef.current.options[branchesSelectRef.current.selectedIndex]?.text
             + ' successfully'
         );
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
     }
 
     return (
@@ -57,35 +60,32 @@ const DetailesItem = ({ onClose }) => {
         exit={{ opacity: 0 }}
         className="font-general-medium fixed inset-0 z-[99] transition-all duration-500"
       >
-        <button
-    onClick={onClose}
-    className="w-full h-full fixed inset-0 z-30 transition-all duration-500"
-        >X Close</button>
+          <button
+              onClick={onClose}
+              className="w-full h-full fixed inset-0 z-30 transition-all duration-500"
+          />
         <div className="bg-[#000000]  bg-opacity-50 fixed inset-0 w-full h-full z-20"/>
-
           <main className="flex flex-col items-center justify-center h-full w-full">
               <div className="modal-wrapper flex items-center z-[50]">
                   <div className="modal max-w-md min-w-[480px] bg-white overflow-y-auto mx-5 xl:max-w-xl lg:max-w-xl md:max-w-xl max-h-screen shadow-lg flex-row rounded-lg ">
                       <div className="modal-header grid grid-cols-1 p-5 items-center border-b border-ternary-light">
-
                           {isLoggedIn && <div className="text-center">
                               <h5
                                   className="text-center text-black font-bold text-lg">
-                                  Your default branch
+                                  {t('Your default branch')}
                               </h5>
-                              {selectedBranch?.name ? <pre className={"border my-2 text-left p-2"}>
-                                  Name: {selectedBranch?.name}<br />
-                                  Lat: {selectedBranch?.lat}<br />
-                                  Lng: {selectedBranch?.lng}<br />
-                                  Delivery Availability: {t(selectedBranch?.delivery_availability ? 'Yes' : 'No')}
-                              </pre> : <span className={""}>No default branch selected</span>}
+                              {selectedBranch?.name ? <pre className={"border my-2 text-left p-2"} style={{direction: 'ltr'}}>
+                                  {t('Name')}: {selectedBranch?.name}<br />
+                                  Lat: {selectedBranch?.lat} &nbsp; Lng: {selectedBranch?.lng}<br />
+                                  {t('Delivery Availability')}: {t(selectedBranch?.delivery_availability ? 'Yes' : 'No')}
+                              </pre> : <span className={""}>{t('No default branch selected')}</span>}
                           </div> }
 
                           <hr className={"my-5"} />
 
                           <h5
                               className="text-center text-black font-bold text-lg">
-                          Change Default Branch
+                              {t('Change Default Branch')}
                           </h5>
                           <select defaultValue={selectedBranch?.id} ref={branchesSelectRef} className='text-[14px] bg-[var(--primary)] w-[100%] p-1 rounded-full px-4 appearance-none'>
                               {/*<option value={null}/>*/}

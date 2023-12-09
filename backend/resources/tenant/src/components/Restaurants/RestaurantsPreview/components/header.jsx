@@ -35,7 +35,6 @@ function Header() {
     const GlobalColor = styleDataRestaurant?.primary_color || sessionStorage.getItem('globalColor');
 
 
-    
     useEffect(() => {
         fetchData().then(r => null);
     }, []);
@@ -45,6 +44,11 @@ function Header() {
     };
 
     const fetchData = async () => {
+
+        console.log("test ---- ", styleDataRestaurant);
+
+        if (styleDataRestaurant) return;
+
         try {
             const restaurantStyleResponse = await AxiosInstance.get(`restaurant-style`)
 
@@ -70,6 +74,7 @@ function Header() {
             console.log(data);
         }
     };
+
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
     };
@@ -139,8 +144,8 @@ function Header() {
                             onClick={handleModelClick2}
                             style={{
                                 border: `1px solid ${buttons[1]?.color || ''}`,
-                                backgroundColor: 'transparent',
-                                borderRadius: buttons[1]?.shape || '',
+                                backgroundcolor: 'transparent',
+                                borderradius: buttons[1]?.shape || '',
                             }}
                         >
                             <MdOutlineDoneAll size={20} />
@@ -162,18 +167,18 @@ function Header() {
                     </div>
                 </div>
             </div>
-            <div className='flex items-center justify-between  gap-4'>
-                <button className='relative p-1'
-                    onClick={showCartItems}
+            <div className='flex items-center justify-between gap-4'>
+                <button className='relative p-1 text-black'
+                    onClick={() => navigate('/cart')}
                     style={{
                         border: `1px solid ${GlobalColor}`,
+                        backgroundColor: 'transparent',
                         borderRadius: "100%"
                     }}
                 >
                     <LiaShoppingCartSolid size={26} />
                     <span
-                      
-                        className='absolute top-[-7px] right-[-6px] text-[10px] text-bold h-[20px] w-[20px] rounded-full bg-red-500 text-white'>
+                        className='text-center flex items-center justify-center absolute top-[-7px] right-[-6px] text-[10px] text-bold h-[20px] w-[20px] rounded-full bg-red-500 text-white'>
                         <div>{cartItems.length}</div>
                     </span>
                 </button>
@@ -195,17 +200,38 @@ function Header() {
             <div className='flex items-center justify-between gap-2'>
                 <Languages />
                 <div className='relative flex items-center gap-2 justify-center'>
+                    <Button
+                        title={t('Homepage')}
+                        link='/'
+                        onClick={() => navigate('/')}
+                        classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
+                        style={{
+                            border: `1px solid ${buttons[0]?.color || ''}`,
+                            backgroundColor: 'transparent',
+                            borderRadius: buttons[0]?.shape || '',
+                        }}
+                    />
                     {isLoggedIn ? (
                         <>
                             <Button
                                 onClick={redirectToDashboard}
                                 title={t('Dashboard')}
                                 classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
+                                style={{
+                                    border: `1px solid ${buttons[0]?.color || ''}`,
+                                    backgroundColor: 'transparent',
+                                    borderRadius: buttons[0]?.shape || '',
+                                }}
                             />
                             <Button
                                 title={t('Logout')}
                                 onClick={handleLogout}
                                 classContainer='!w-100 !px-[16px] !font-medium !bg-[var(--danger)]'
+                                style={{
+                                    border: `1px solid ${buttons[0]?.color || ''}`,
+                                    backgroundColor: 'transparent',
+                                    borderRadius: buttons[0]?.shape || '',
+                                }}
                             />
                         </>
                     ) : (
@@ -215,6 +241,11 @@ function Header() {
                                 link='/register'
                                 onClick={() => dispatch(setIsOpen(false))}
                                 classContainer='!w-100 !px-[25px]'
+                                style={{
+                                    border: `1px solid ${buttons[0]?.color || ''}`,
+                                    backgroundColor: 'transparent',
+                                    borderRadius: buttons[0]?.shape || '',
+                                }}
                             />
                             <Button
                                 title={t('Login')}

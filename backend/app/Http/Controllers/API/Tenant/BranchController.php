@@ -17,7 +17,7 @@ class BranchController extends Controller
    public function updateDelivery($branch,Request $request){
         $request->validate([
             'delivery_availability' => 'required_without_all:preparation_time_delivery|boolean',
-            'preparation_time_delivery'=>'required_without_all:delivery_availability|date_format:H:i'
+            'preparation_time_delivery'=>'required_without_all:delivery_availability|date_format:"H:i","H:i:s"'
         ]);
         $user = Auth::user();
         $branch = Branch::where('id',$branch)
