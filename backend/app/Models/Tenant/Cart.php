@@ -28,23 +28,10 @@ class Cart extends Model
     {
         return $this->hasMany(CartItem::class);
     }
-
-
-    /*
-
-    // Accept Cash on delivery payment method
-    public function getCanCOD()
+    public function branch()
     {
-        // check if branch enable COD or not ...
-        return true;
+        return $this->belongsTo(Branch::class);
     }
 
-    // Accept Credit card payment method
-    public function canCC()
-    {
-        return true;
-    }
-
-    */
 
 }
