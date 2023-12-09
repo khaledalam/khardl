@@ -72,7 +72,7 @@ class RestaurantController extends BaseController
     public function orders_all(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders =  Order::paginate(10);
+        $orders =  Order::orderBy('created_at','DESC')->paginate(10);
         return view('restaurant.orders_all',
             compact('user','orders'));
     }

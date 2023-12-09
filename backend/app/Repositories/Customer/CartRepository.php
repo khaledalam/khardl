@@ -34,7 +34,7 @@ class CartRepository
     public function add(AddItemToCartRequest $request): JsonResponse
     {
         if(!$this->hasBranch($request->branch_id)){
-            return $this->sendError('Fail', 'Cannot add item from different branch.');
+            return $this->sendError('Fail', __('Cannot add item from different branch.'));
         }
         $item = Item::findOrFail($request->item_id);
         $this->createCartItem($item,$request->validated());
@@ -52,6 +52,7 @@ class CartRepository
         ],[
             'cart_id' => $this->cart->id,
             'price' =>$item->price,
+            'total' =>$item->price,
             'quantity' => $request['quantity'],
 
         ]);
@@ -72,7 +73,6 @@ class CartRepository
                 'quantity' => $quantity
             ]);
     }
-
     public function remove($id): JsonResponse
     {
         $this->cart->items()
@@ -86,7 +86,12 @@ class CartRepository
         $this->cart->delete();
         return $this->sendResponse(null, __('Cart items has been removed successfully.'));
     }
-
+    public function UpdateTotalCartPrice()
+    {
+        $this->cart->total = $this->cart->items->sum('total');
+        // $this->cart->total+= $this->cart->global_options->sum('price');
+        $this->cart->save();
+    }
     public function discount()
     {
         return 0;
@@ -97,20 +102,15 @@ class CartRepository
     {
         return 0;
     }
-
-    public function hasBranch($branch_id){
-        // check if cart has branch or not
-        if($this->cart->branch_id == null){
-            $this->cart->branch_id = $branch_id;
-            $this->cart->save();
-            return true;
-        }
-        // check if cart has branch id
-        else if($this->cart->branch_id == $branch_id){
-            return true;
-        }
-        return false;
+    public function branch()
+    {
+        return $this->cart->branch;
     }
+    public function updatePaymentMethod($payment_method_id):void{
+        $this->cart->payment_method_id = $payment_method_id;
+        $this->cart->save();
+    }
+   
 
     public function subTotal()
     {
@@ -121,11 +121,22 @@ class CartRepository
                 return $total + $item->price * $item->quantity;
             }, 0);
     }
+    public function clone_to_order_items($order_id):void {
+        $this->cart->items->map(function($cart_item)use($order_id){
+            OrderRepository::clone_cart_items(
+                order_id : $order_id,
+                item_id : $cart_item->item_id,
+                quantity : $cart_item->quantity,
+                price : $cart_item->price,
+                options_price : 0,
+                total :  $cart_item->total,
+            );
+        });
+    }
 
     public function total()
     {
-        $total_price = number_format($this->subTotal() - $this->discount() + $this->tax(), 2, '.', '');
-        return   $total_price;
+        return number_format($this->subTotal() - $this->discount() + $this->tax(), 2, '.', '');
     }
 
 
@@ -142,12 +153,30 @@ class CartRepository
     }
 
 
-    public function paymentMethods()
-    {
+    public function paymentMethods(){
         return $this->cart->branch->payment_methods;
     }
+
+
+
+    public function hasItems():bool{
+        return $this->cart->items()->exists();
+    }
+    public function hasBranch($branch_id){
+        // check if cart has branch or not
+        if($this->cart->branch_id == null){
+            $this->cart->branch_id = $branch_id;
+            $this->cart->save();
+            return true;
+        }
+        // check if cart has branch id
+        else if($this->cart->branch_id == $branch_id){
+            return true;
+        }
+        return false;
+    }
     // Accept Cash on delivery payment method
-    public function canCOD()
+    public function hasPaymentCashOnDelivery()
     {
         $method = PaymentMethod::where('name',PaymentMethod::CASH_ON_DELIVERY)->first();
         if($method){
@@ -157,9 +186,18 @@ class CartRepository
     }
 
     // Accept Credit card payment method
-    public function canCC()
+    public function hasPaymentCreditCard()
     {
         $method = PaymentMethod::where('name',PaymentMethod::CREDIT_CARD)->first();
+        if($method){
+            return $this->cart->branch->payment_methods->contains('id',$method->id);
+        }
+        return false;
+    }
+   
+    public function hasPayment($name)
+    {
+        $method = PaymentMethod::where('name',$name)->first();
         if($method){
             return $this->cart->branch->payment_methods->contains('id',$method->id);
         }

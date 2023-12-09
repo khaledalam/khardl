@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\API;
 
 use App\Http\Resources\API\Tenant\CategoryResource;
 use App\Http\Resources\API\Tenant\CategoryResourceCollection;

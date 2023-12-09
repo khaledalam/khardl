@@ -14,6 +14,7 @@ use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
 use App\Http\Controllers\API\Tenant\ItemController;
 use App\Http\Controllers\API\Tenant\OrderController;
+use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
@@ -193,6 +194,9 @@ Route::group([
                 Route::delete("carts/trash",[CartController::class,'trash'])->name('carts.trash');
                 Route::resource("carts",CartController::class)->only([
                     'index','store','destroy'
+                ]);
+                Route::resource("orders",CustomerOrderController::class)->only([
+                    'store'
                 ]);
             });
 

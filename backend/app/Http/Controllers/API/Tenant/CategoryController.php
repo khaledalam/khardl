@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
+use App\Repositories\API\CategoryRepository;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
-use App\Repositories\CategoryRepository;
+
 
 class CategoryController extends BaseRepositoryController
 {
