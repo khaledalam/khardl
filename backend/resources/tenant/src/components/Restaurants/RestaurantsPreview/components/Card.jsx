@@ -25,9 +25,6 @@ function Card(props) {
         }
     }
 
-    console.log(" > props > " , props);
-
-
   return (
     <>
       <div className="text-[18px]">
