@@ -81,6 +81,12 @@ class CartRepository
         return $this->sendResponse(null, __('The meal has been removed successfully.'));
     }
 
+    public function trash(): JsonResponse
+    {
+        $this->cart->delete();
+        return $this->sendResponse(null, __('Cart items has been removed successfully.'));
+    }
+
     public function discount()
     {
         return 0;

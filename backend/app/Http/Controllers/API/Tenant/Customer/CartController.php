@@ -39,4 +39,8 @@ class CartController
     {   
         return $this->cart->remove($item);
     }
+    public function trash()
+    {   
+        return $this->cart->trash();
+    }
 }
