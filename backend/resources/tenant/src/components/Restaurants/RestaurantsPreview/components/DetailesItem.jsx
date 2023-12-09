@@ -7,6 +7,7 @@ import { addItemToCart } from '../../../../redux/editor/cartSlice';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
 const DetailesItem = ({
+  itemId,
   onClose,
   title,
   description,
@@ -94,11 +95,30 @@ const DetailesItem = ({
       setCount(count - 1);
     }
   };
-  const handleAddToCart = () => {
-    dispatch(addItemToCart("props.title"));
-  };
 
-  return (
+
+    const handleAddToCart = async () => {
+      console.log(itemId);
+        try {
+            const response = await AxiosInstance.post(`/carts`, {
+                item_id : itemId,
+                quantity : count,
+                branch_id: branch_id
+            });
+
+            console.log("response " , response)
+
+            if (response?.data) {
+                toast.success(`${t('Item added to cart')}`);
+            }
+        } catch (error) {
+            toast.error(error);
+        }
+        dispatch(addItemToCart("props.description"));
+    };
+
+
+    return (
     <>
       <motion.div
         initial={{ opacity: 0 }}
