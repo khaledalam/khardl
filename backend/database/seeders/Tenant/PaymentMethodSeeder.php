@@ -15,15 +15,21 @@ class PaymentMethodSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    public const PAYMENT_METHOD_COD = 1;
+    public const PAYMENT_METHOD_CC = 2;
+
     public function run(): void
     {
-        $methods = ['online','cash'];
-        foreach($methods as $method){
-            PaymentMethod::create([
-                'name'=>trans_json($method,__($method)),
-                'is_active'=>true,
-            ]);
-        }
+        PaymentMethod::create([
+            'id'=> self::PAYMENT_METHOD_COD,
+            'name'=> PaymentMethod::CASH_ON_DELIVERY,
+            'is_active'=>true,
+        ]);
+        PaymentMethod::create([
+            'id'=> self::PAYMENT_METHOD_CC,
+            'name'=>PaymentMethod::CREDIT_CARD,
+            'is_active'=>true,
+        ]);
      
     }
 }

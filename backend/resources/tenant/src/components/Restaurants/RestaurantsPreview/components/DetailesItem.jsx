@@ -5,10 +5,12 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from "react-i18next";
 import { addItemToCart } from '../../../../redux/editor/cartSlice';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import AxiosInstance from "../../../../axios/axios";
+import {toast} from "react-toastify";
 
 const DetailesItem = ({
+  itemId,
   onClose,
-  title,
   description,
   image,
   calories,
@@ -28,6 +30,7 @@ const DetailesItem = ({
   const Language = sessionStorage.getItem('Language');
   const dispatch = useDispatch();
 
+
   const { t } = useTranslation();
   const [count, setCount] = useState(1);
   const [items, setItems] = useState(
@@ -37,6 +40,15 @@ const DetailesItem = ({
       price: checkbox_input_prices[index]
     }))
   );
+
+    const [radioItems, setRadioItems] = useState(
+        selection_input_names.map((name, index) => ({
+            value: name,
+            isChecked: index === 0,
+            price: selection_input_prices[index]
+        }))
+    );
+
   useEffect(() => {
     const requiredCheckboxes = Math.max(checkbox_required, 0);
     const updatedItems = [...items];
@@ -49,21 +61,16 @@ const DetailesItem = ({
     setItems(updatedItems);
   }, [checkbox_required]);
 
+
+    const branch_id = localStorage.getItem('selected_branch_id');
+
   const handleCheckboxChange = (index) => {
     const updatedItems = [...items];
     updatedItems[index].isChecked = !updatedItems[index].isChecked;
     setItems(updatedItems);
   };
 
-  const [radioItems, setRadioItems] = useState(
-    selection_input_names.map((name, index) => ({
-      value: name,
-      isChecked: index === 0,
-      price: selection_input_prices[index]
-    }))
-  );
-
-  const handleRadioChange = (index) => {
+    const handleRadioChange = (index) => {
     const updatedRadioItems = [...radioItems];
     updatedRadioItems.forEach((item, i) => {
       item.isChecked = i === index;
@@ -94,11 +101,28 @@ const DetailesItem = ({
       setCount(count - 1);
     }
   };
-  const handleAddToCart = () => {
-    dispatch(addItemToCart("props.title"));
-  };
 
-  return (
+    const handleAddToCart = async () => {
+        try {
+            const response = await AxiosInstance.post(`/carts`, {
+                item_id : itemId,
+                quantity : count,
+                branch_id: branch_id
+            });
+
+            console.log("response " , response)
+
+            if (response?.data) {
+                toast.success(`${t('Item added to cart')}`);
+            }
+        } catch (error) {
+            toast.error(`${t('Failed')}`)
+        }
+        dispatch(addItemToCart("props.description"));
+    };
+
+
+    return (
     <>
       <motion.div
         initial={{ opacity: 0 }}
@@ -137,7 +161,7 @@ const DetailesItem = ({
     } : {borderRadius: shapeImageShape, backgroundImage: `url(${image})`}}
     />
                 <div className="flex justify-between items-center my-3">
-                  <div className="text-[18px] font-semibold">{title}</div>
+                  <div className="text-[18px] font-semibold">{description}</div>
                   <div className="text-[18px] font-semibold">{calories} {t("calories")} </div>
                 </div>
                 <div className="my-2 text-[15px]">{description}</div>
@@ -233,7 +257,7 @@ const DetailesItem = ({
                     <div className="flex justify-center items-center rounded-[80px]">
                       <button
                         onClick={decrement}
-                        className="w-[30px] h-[30px] text-black font-bold"
+                        className="w-[30px] h-[30px] text-black font-bold flex items-center "
                         style={{ borderRadius: GlobalShape, backgroundColor: GlobalColor }}
                       >-</button>
                       <div className={`w-[40px] bg-[var(--third)] text-center ${GlobalShape == "20px" ? "mx-1" : ""}`}
@@ -243,7 +267,7 @@ const DetailesItem = ({
                       </div>
                       <button
                         onClick={increment}
-                        className="w-[30px] h-[30px] text-black font-bold"
+                        className="w-[30px] h-[30px] text-black font-bold flex items-center "
                         style={{ borderRadius: GlobalShape, backgroundColor: GlobalColor }}
                       >+</button>
                     </div>
@@ -252,7 +276,7 @@ const DetailesItem = ({
                     <button
                       className="p-1 px-10 text-[16px] text-black font-bold bg-[var(--primary)]"
                       style={{ borderRadius: GlobalShape, backgroundColor: GlobalColor }}
-                      onClick={handleAddToCart}
+                      onClick={() => handleAddToCart()}
                     >
                       {t("Add to cart")} ({total * count} {t("SAR")})
                     </button>

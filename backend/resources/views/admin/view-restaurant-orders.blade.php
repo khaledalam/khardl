@@ -39,7 +39,7 @@
                                         <th class="min-w-125px px-0">{{ __('messages.order-id') }}</th>
                                         <th class="min-w-150px px-0">{{ __('messages.status') }}</th>
                                         <th class="min-w-150px px-0">{{ __('messages.name-branch') }}</th>
-                                        <th class="min-w-125px">{{ __('messages.amount') }}</th>
+                                        <th class="min-w-125px">{{ __('messages.total-price') }}</th>
                                         <th class="min-w-125px">{{ __('messages.payment-method') }}</th>
                                         <th class="min-w-125px text-center">{{ __('messages.invoice') }}</th>
                                     </tr>

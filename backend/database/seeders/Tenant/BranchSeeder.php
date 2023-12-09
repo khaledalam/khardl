@@ -19,7 +19,7 @@ class BranchSeeder extends Seeder
     public function run(): void
     {
         $currentDateTime = Carbon::now();
-        Branch::create([
+        $branch = Branch::create([
             'id' => self::BRANCH_ID,
             'name' => 'Branch 1',
             'lat' => '37.7',
@@ -40,8 +40,11 @@ class BranchSeeder extends Seeder
             'friday_open' => $currentDateTime->format('H:i'),
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
         ]);
+        $branch->payment_methods()->sync([
+            PaymentMethodSeeder::PAYMENT_METHOD_COD
+        ]);
 
-        Branch::create([
+        $branch = Branch::create([
             'id' => self::BRANCH_B_ID,
             'name' => 'Branch 2',
             'lat' => '27.7',
@@ -61,6 +64,9 @@ class BranchSeeder extends Seeder
             'thursday_close' => $currentDateTime->addHour()->format('H:i'),
             'friday_open' => $currentDateTime->format('H:i'),
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
+        ]);
+        $branch->payment_methods()->sync([
+            PaymentMethodSeeder::PAYMENT_METHOD_CC
         ]);
 
     }

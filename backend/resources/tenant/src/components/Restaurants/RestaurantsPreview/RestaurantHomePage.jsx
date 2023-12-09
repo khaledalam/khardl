@@ -61,8 +61,8 @@ const RestaurantHomePage = () => {
     if (!styleDataRestaurant){
         return;
     }
+    const categoriesForBranch = categories.filter(category => category.branch.id == branch_id);
 
-    const categoriesForBranch = categories.filter(category => category.branch_id === branch.branch_id);
     return (
       <div className="w-[100%] bg-white" style={{fontFamily: `${styleDataRestaurant?.font_family}`}}>
           <div className=''>

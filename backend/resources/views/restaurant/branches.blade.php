@@ -4,8 +4,8 @@
 
 @section('content')
 
-{{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0--}}
-{{--    &libraries=places"></script>--}}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0
+   &libraries=places"></script>
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -47,7 +47,7 @@
                                 <!--begin::Image-->
 
                                     <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
-                                        <input id="pac-input" class="form-control" type="text" placeholder="Search for place">
+                                        <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}">
                                         <div id="map{{ $branch->id }}" style="width: 100%; height: 90%; border:0;"></div>
                                             <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
                                                 @csrf
@@ -62,7 +62,7 @@
                             <!--begin::Col-->
                             <div class="col-sm-6">
                                 <!--begin::Wrapper-->
-                                <div class="d-flex flex-column h-100">
+                                <div class="d-fleسx flex-column h-100">
                                     <!--begin::Header-->
                                     <div class="mb-7">
                                         <!--begin::Headin-->
@@ -831,7 +831,7 @@
             center: latLng,
             zoom: 8,
           });
-          const input = document.getElementById("pac-input");
+          const input = document.getElementById("pac-input"+ branchId);
           const options = {
                 fields: ["formatted_address", "geometry", "name"],
                 strictBounds: false,
@@ -858,7 +858,7 @@
             updateLocationInput(event.latLng, branchId);
           });
           autocomplete.addListener("place_changed", () => {
-                infowindow.close();
+                // infowindow.close();
                 marker.setVisible(false);
 
                 const place = autocomplete.getPlace();
@@ -871,7 +871,7 @@
                 }
                 const lat = place.geometry.location.lat();
                 const lng = place.geometry.location.lng();
-                selectedPlacePosition = { lat, lng };
+                selectedPlacePosition = new google.maps.LatLng(lat, lng);
                 updateLocationInput(selectedPlacePosition, branchId);
                 // If the place has a geometry, then present it on a map.
                 if (place.geometry.viewport) {
@@ -883,7 +883,7 @@
 
                 marker.setPosition(place.geometry.location);
                 marker.setVisible(true);
-                infowindow.open(map, marker);
+                // infowindow.open(map, marker);
             });
         }
 

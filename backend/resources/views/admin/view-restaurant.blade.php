@@ -477,7 +477,7 @@
 								<div class="card-header cursor-pointer">
 									<!--begin::Card title-->
 									<div class="card-title m-0 d-flex justify-content-between align-items-center w-100">
-                                        <div><h3 class="fw-bolder m-0">Files</h3></div>
+                                        <div><h3 class="fw-bolder m-0"> {{ __('messages.files') }}</h3></div>
                                         <div>
                                             <a href="{{ route('admin.download.file',  ['path' => \App\Models\User::STORAGE .'/'. $restaurant->user->id, 'fileName'=>'Trader requirements -'.$restaurant->restaurant_name ]) }}" class="btn btn-khardl ">
                                                 <i class="fas fa-download me-1 text-black"></i> {{ __('messages.download') }}

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\Category;
 use App\Models\Tenant\Item;
+use App\Models\Tenant\Order;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -71,9 +72,9 @@ class RestaurantController extends BaseController
     public function orders_all(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
-
+        $orders =  Order::orderBy('created_at','DESC')->paginate(10);
         return view('restaurant.orders_all',
-            compact('user'));
+            compact('user','orders'));
     }
 
     public function orders_add(){

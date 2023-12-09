@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\API;
 
 use App\Http\Resources\API\Tenant\CategoryResource;
 use App\Http\Resources\API\Tenant\CategoryResourceCollection;
@@ -18,7 +18,7 @@ class CategoryRepository extends DefaultRepositoryPattern
             return $query->where('branch_id',$user->branch->id);
         });
      
-        $this->resource = new CategoryResource($this->model);
+        $this->resource = new CategoryResource(new Category());
     }
     
 }

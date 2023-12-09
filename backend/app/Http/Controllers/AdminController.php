@@ -134,9 +134,10 @@ class AdminController extends Controller
         $user->password = Hash::make($request->password);
         $user->position =$request->position;
         $user->phone = $request->phone;
-
+        $user->email_verified_at = now();
         $user->save();
         $user->assignRole('Administrator');
+       
         $permissions = [
             'can_access_restaurants',
             'can_view_restaurants',
@@ -225,36 +226,36 @@ class AdminController extends Controller
       
         $query =  Tenant::query()->with('primary_domain');
         $restaurants = $query->get();
-       
-        if ($request->has('status') && $request->input('status') !== "all") {
-            $status = $request->input('status');
-            foreach($restaurants as $restaurant){
-                    $status = $request->input('status');
-                    if($status == 'live'){
-                        if($restaurant->is_live()){
-                            $query->orWhere('id', $restaurant->id);
-                        }else {
-                            $query->where('id','!=', $restaurant->id);
-                        }
-                    }else {
-                        if($restaurant->is_live()){
-                            $query->Where('id','!=', $restaurant->id);
-                        }else {
-                            $query->orWhere('id', $restaurant->id);
-                        }
-                    }
-                    
-            }
-        }
         if ($request->has('search')) {
             $search = $request->input('search');
 
             $query->whereHas('primary_domain', static function($query1) use ($search) {
                 $query1->where('domain', 'like', '%' . $search . '%');
             });
-            $query->orWhere('restaurant_name','like', '%' . $search . '%');
+            $query->Where('restaurant_name','like', '%' . $search . '%');
 
         }
+        if ($request->has('status') && $request->input('status') !== "all") {
+            $status = $request->input('status');
+            foreach($restaurants as $restaurant){
+                    $status = $request->input('status');
+                    if($status == 'live'){
+                        if($restaurant->is_live()){
+                            $query->where('id', $restaurant->id);
+                        }else {
+                            $query->where('id','!=', $restaurant->id);
+                        }
+                    }else {
+                        if($restaurant->is_live()){
+                            $query->where('id','!=', $restaurant->id);
+                        }else {
+                            $query->where('id', $restaurant->id);
+                        }
+                    }
+                    
+            }
+        }
+       
     
          
         $restaurants = $query->paginate();
@@ -364,9 +365,6 @@ class AdminController extends Controller
             return $q->where("name","Administrator");
         })
         ->where("id",'!=',Auth::id())
-        ->where("id",'!=',User::whereHas('roles',function($q){
-            return $q->where("name","Administrator");
-        })->first()->id)
         ->findOrFail($id);
 
         DB::beginTransaction();
