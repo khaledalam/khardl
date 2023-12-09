@@ -6,10 +6,13 @@ import {useSelector} from "react-redux";
 export function Taps({ children, contentClassName = "" }) {
   const { t } = useTranslation();
 
-  const selectedCategory = children[0]?.key || sessionStorage.getItem('selectedCategory');
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
 
     if (!styleDataRestaurant) return;
+
+    const selectedCategory = styleDataRestaurant?.category_style|| sessionStorage.getItem('selectedCategory');
+    const selectedAlignText = styleDataRestaurant?.font_alignment|| sessionStorage.getItem('selectedCategory');
+
 
     const GlobalShape = styleDataRestaurant?.buttons_style || sessionStorage.getItem('globalShape');
   const Color = styleDataRestaurant?.primary_color || sessionStorage.getItem('globalColor');
@@ -36,9 +39,9 @@ export function Taps({ children, contentClassName = "" }) {
 
   return (
     <div
-    className={`${selectedCategory === "Right" ? 'flex gap-2' : ''} ${selectedCategory === "Left" ? 'flex flex-row-reverse gap-5' : ''}`}>
+    className={`${selectedAlignText === "Right" ? 'flex gap-2' : ''} ${selectedAlignText === "Left" ? 'flex flex-row-reverse gap-5' : ''}`}>
       <div className={`p-3 gap-1 justify-start
-    ${selectedCategory === "Right" || selectedCategory === "Left" ? 'h-fit mt-4 ' : ''}
+    ${selectedAlignText === "Right" || selectedAlignText === "Left" ? 'h-fit mt-4 ' : ''}
     ${selectedCategory === "Tabs" ? 'flex' : ''}
       ${contentClassName}`}
       style={{borderRadius: GlobalShape}}
