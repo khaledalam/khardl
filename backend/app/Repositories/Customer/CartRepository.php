@@ -142,7 +142,10 @@ class CartRepository
     }
 
 
-
+    public function paymentMethods()
+    {
+        return $this->cart->branch->payment_methods;
+    }
     // Accept Cash on delivery payment method
     public function canCOD()
     {
