@@ -16,9 +16,6 @@ function Card(props) {
     const [showDetailesItem, setShowDetailesItem] = useState(false);
 
     const { t } = useTranslation();
-    const dispatch = useDispatch();
-
-    const branch_id = localStorage.getItem('selected_branch_id');
 
     function showMeDetailesItem() {
         if (!showDetailesItem) {
@@ -28,33 +25,7 @@ function Card(props) {
         }
     }
 
-  const handleAddToCart = async () => {
-    try {
-      if(isAdded){
-        const response = await AxiosInstance.delete(`/carts/`+props.id, {
-        });
-        if (response?.data) {
-          setIsAdded(false);
-          toast.success(`${t('Item removed from cart')}`)
-        }
-
-
-        return ;
-      }
-      const response = await AxiosInstance.post(`/carts`, {
-        item_id : props.id,
-        quantity : 1,
-        branch_id: branch_id
-      });
-      if (response?.data) {
-        setIsAdded(true);
-        toast.success(`${t('Item added to cart')}`);
-      }
-    }catch (error) {
-      toast.error(`${t('Failed')}`)
-    }
-    dispatch(addItemToCart("props.title"));
-  };
+    console.log(" > props > " , props);
 
 
   return (
@@ -104,8 +75,8 @@ function Card(props) {
           </button>
           <button className="text-center bg-[var(--primary)] py-1 text-black font-bold"
             style={{ borderRadius: `0 0 ${GlobalShape} ${GlobalShape}`,  backgroundColor: isAdded ? 'red' : GlobalColor }}
-            onClick={() => handleAddToCart()}
-          >   {isAdded ? t("Cancel") : t("Add to cart") }</button>
+                  onClick={() => showMeDetailesItem()}
+          >   {t("Add to cart")}</button>
         </div>
       </div>
       {showDetailesItem ? (
@@ -113,6 +84,7 @@ function Card(props) {
           onClose={showMeDetailesItem}
           onRequest={showMeDetailesItem}
           title={props.title}
+          itemId={props.id}
           description={props.description}
           image={props.image}
           calories={props.calories || []}
