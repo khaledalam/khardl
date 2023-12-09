@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import StatsCard from '../components/statsCard';
 import LastOrders from '../components/Orders';
@@ -14,6 +14,12 @@ const Dashboard = () => {
    const handleTabClick = (tabName) => {
       dispatch(setActiveTab(tabName));
    };
+
+    useEffect(() => {
+        console.log("Dashboard tab");
+
+
+    }, []);
 
    return (
       <div className="w-full bg-[var(--secondary)] py-6 px-4">

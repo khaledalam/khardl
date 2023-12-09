@@ -67,6 +67,9 @@ function Orders() {
     ];
 
     useEffect(() => {
+
+        console.log("Orders tab");
+
         const newData = activeTab === "Dashboard"
             ? [...OrdersCustomer].sort((a, b) => {
                 const dateA = new Date(a.DateAdded);

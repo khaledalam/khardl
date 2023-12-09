@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Logo from '../../assets/Logo.webp'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../Button'
 import { useSelector, useDispatch } from 'react-redux'
