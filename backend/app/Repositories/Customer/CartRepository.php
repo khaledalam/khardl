@@ -9,6 +9,7 @@ use App\Models\Tenant\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
+use App\Models\Tenant\PaymentMethod;
 use App\Traits\APIResponseTrait;
 use Illuminate\Http\JsonResponse;
 
@@ -80,6 +81,12 @@ class CartRepository
         return $this->sendResponse(null, __('The meal has been removed successfully.'));
     }
 
+    public function trash(): JsonResponse
+    {
+        $this->cart->delete();
+        return $this->sendResponse(null, __('Cart items has been removed successfully.'));
+    }
+
     public function discount()
     {
         return 0;
@@ -134,6 +141,30 @@ class CartRepository
         return $this->cart->id;
     }
 
+
+    public function paymentMethods()
+    {
+        return $this->cart->branch->payment_methods;
+    }
+    // Accept Cash on delivery payment method
+    public function canCOD()
+    {
+        $method = PaymentMethod::where('name',PaymentMethod::CASH_ON_DELIVERY)->first();
+        if($method){
+            return $this->cart->branch->payment_methods->contains('id',$method->id);
+        }
+        return false;
+    }
+
+    // Accept Credit card payment method
+    public function canCC()
+    {
+        $method = PaymentMethod::where('name',PaymentMethod::CREDIT_CARD)->first();
+        if($method){
+            return $this->cart->branch->payment_methods->contains('id',$method->id);
+        }
+        return false;
+    }
 
 
 }

@@ -30,6 +30,7 @@ class TenantSeeder extends Seeder
             RestaurantStyleSeeder::class,
 
             // Testing seeders
+            PaymentMethodSeeder::class,
             BranchSeeder::class,
 
 
@@ -39,7 +40,7 @@ class TenantSeeder extends Seeder
             // make sure UserSeeder run before CategoryItemSeeder
             CategoryItemSeeder::class,
 
-            PaymentMethodSeeder::class,
+           
             OrderSeeder::class,
         ],false,[
             'assets'=>$assets

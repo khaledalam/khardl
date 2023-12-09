@@ -6,17 +6,18 @@ use App\Models\Tenant;
 use App\Models\Tenant\Order;
 
 class OrderPDF implements PdfPrintInterface
-{
+{   
+    public $restaurant;
     public function __construct(
         public $tenant_id ,
         public $id = null,
     )
     {
-       
+       $this->restaurant = Tenant::findOrFail($tenant_id);
     }
     public function data()
     {
-        return Tenant::findOrFail($this->tenant_id)->run(function(){
+        return $this->restaurant->run(function(){
             if($this->id){
                 return [Order::with(['payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->findOrFail($this->id)];
             }else{
@@ -30,8 +31,8 @@ class OrderPDF implements PdfPrintInterface
     }
     public function fileName():string {
         if($this->id){
-            return "order-$this->id.pdf";
+            return "{$this->restaurant->restaurant_name}-order-$this->id.pdf";
         }
-        return 'orders.pdf';
+        return "{$this->restaurant->restaurant_name}-orders.pdf";
     }
 }

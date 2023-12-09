@@ -641,6 +641,7 @@
 <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
+@stack('scripts')
 
 <!--end::Page Custom Javascript-->
 <!--end::Javascript-->

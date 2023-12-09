@@ -36,6 +36,7 @@ return [
     'sales-this-month' => 'Sales This Month',
     'users-from-all-channels' => 'Users from all channels',
     'all' => 'All',
+    'delivery' => 'Delivery',
     'search' => 'Search',
     'items-found' => 'Items found',
     'restaurants-found' => 'Restaurants Found',
@@ -56,6 +57,7 @@ return [
     'owner' => 'Owner',
     'phone' => 'Phone',
     'total-points' => 'Total Points',
+    'receive_from_branch' => 'استلام من الفرع',
     'current-points' => 'Current Points',
     'status' => 'Status',
     'save-changes' => 'Save Changes',
@@ -82,8 +84,8 @@ return [
     'use-8-or-more-characters-with-a-mix-of-letters-numbers-symbols' => 'Use 8 or more characters with a mix of letters, numbers &amp; symbols.',
     'view-restaurant' => 'View Restaurant',
     'number-of-points' => 'Number of points',
-    'site-end-date' => 'Site end date:',
-    'app-end-date' => 'App end date:',
+    'site-end-date' => 'Site end date',
+    'app-end-date' => 'App end date',
     'approve' => 'Approve',
     'add-support' => 'Add Admin',
     'please-wait' => 'Please wait...',
@@ -199,6 +201,7 @@ return [
     'opening-the-branch' => 'Opening the branch',
     'edit-site' => 'Edit Site',
     'branch-opening-time' => 'Branch opening time',
+    'total-price'=>'Total Price',
     'saturday' => 'Saturday',
     'sunday' => 'Sunday',
     'monday' => 'Monday',
@@ -263,7 +266,8 @@ return [
     'restaurant'=>'Restaurant',
     "download-all"=>"Download All",
     'payment-method'=>"Payment Method",
-    "user-id"=>"User id"
+    "user-id"=>"User id",
+    "search-for-place"=>"Search for place"
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

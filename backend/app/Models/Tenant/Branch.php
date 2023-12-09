@@ -2,9 +2,10 @@
 
 namespace App\Models\Tenant;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Branch extends Model
 {
@@ -50,6 +51,8 @@ class Branch extends Model
     public function categories(){
         return $this->hasMany(Category::class);
     }
-
+    public function payment_methods(){
+        return $this->belongsToMany(PaymentMethod::class,'branches_payment_methods');
+    }
 
 }

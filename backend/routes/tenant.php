@@ -190,6 +190,7 @@ Route::group([
 
 
             Route::middleware('verifiedPhone')->group(function () {
+                Route::delete("carts/trash",[CartController::class,'trash'])->name('carts.trash');
                 Route::resource("carts",CartController::class)->only([
                     'index','store','destroy'
                 ]);
