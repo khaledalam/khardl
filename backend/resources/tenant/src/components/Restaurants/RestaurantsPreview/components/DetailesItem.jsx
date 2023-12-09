@@ -9,6 +9,7 @@ import AxiosInstance from "../../../../axios/axios";
 import {toast} from "react-toastify";
 
 const DetailesItem = ({
+  itemId,
   onClose,
   description,
   image,
@@ -104,7 +105,7 @@ const DetailesItem = ({
     const handleAddToCart = async () => {
         try {
             const response = await AxiosInstance.post(`/carts`, {
-                item_id : props.id,
+                item_id : itemId,
                 quantity : count,
                 branch_id: branch_id
             });
@@ -112,7 +113,6 @@ const DetailesItem = ({
             console.log("response " , response)
 
             if (response?.data) {
-                setIsAdded(true);
                 toast.success(`${t('Item added to cart')}`);
             }
         } catch (error) {

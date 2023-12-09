@@ -52,7 +52,7 @@ class CartRepository
         ],[
             'cart_id' => $this->cart->id,
             'price' =>$item->price,
-            'total' =>$item->price,
+            'total' =>$item->price * $request['quantity'] ,
             'quantity' => $request['quantity'],
 
         ]);
