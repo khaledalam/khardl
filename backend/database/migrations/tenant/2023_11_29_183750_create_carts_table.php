@@ -14,13 +14,11 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unique(); 
-            $table->unsignedBigInteger('payment_method_id')->nullable();
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->decimal('total', 8, 2)->default(0);
-            $table->enum('delivery_type', ['delivery','receive_from_branch']);
 
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('payment_method_id')->references('id')->on('payment_methods')->onDelete('cascade');
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->timestamps();
         });

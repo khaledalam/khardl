@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
+use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
+
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\OrderRepository;
+use App\Repositories\API\OrderRepository;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
-use App\Models\Tenant\Order;
 
 class OrderController extends BaseRepositoryController
 {

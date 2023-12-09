@@ -4,14 +4,15 @@ import {useTranslation} from "react-i18next";
 import AxiosInstance from "../../axios/axios";
 import Footer from "../Footer/Footer";
 import './Cart.css'
-
+import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const Cart = () => {
 
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [paymentMethod, setPaymentMethod] = useState('cc');
-
+    const navigate = useNavigate()
     const {t} = useTranslation();
     const Language = useSelector((state) => state.languageMode.languageMode);
 
@@ -39,8 +40,28 @@ const Cart = () => {
     };
 
     const handlePlaceOrder = async () => {
-        if (!confirm(t('Are You sure you want to place the order?'))) {
-            return;
+        
+        if (confirm(t('Are You sure you want to place the order?'))) {
+            try {
+                setLoading(true);
+                const cartResponse = await AxiosInstance.post(`/orders`,{
+                    payment_method: 'Cash on delivery',
+
+                    // TODO @todo more info 
+                    shipping_address: '',
+                    order_notes: '',
+                    delivery_type:  ''
+                });
+
+                if (cartResponse.data) {
+                    toast.success(`${t('Order has been created successfully')}`);
+                    navigate('/');
+                }
+            } catch (error) {
+                toast.error(`${t('Failed to processed the checkout')}`)
+            } finally {
+                setLoading(false);
+            }
         }
 
 
