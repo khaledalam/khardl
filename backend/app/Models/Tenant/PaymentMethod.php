@@ -15,13 +15,13 @@ class PaymentMethod extends Model
         'name',
         'description',
         'icon',
-        'is_active'
+    
     ];
 
     public $translatable = ['description'];
 
-    const CASH_ON_DELIVERY = 'Cash on delivery';
-    const CREDIT_CARD = 'Credit card';
+    const CASH_ON_DELIVERY = 'Cash on Delivery';
+    const CREDIT_CARD = 'Credit Card';
     public function orders()
     {
         return $this->hasMany(Order::class);
