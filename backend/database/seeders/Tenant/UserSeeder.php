@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
 
     public const RESTAURANT_CUSTOMER_USER_ID = 3;
     public const RESTAURANT_WORKER_USER_ID = 4;
-    public const RESTAURANT_WORKER_B_USER_ID = 4;
+    public const RESTAURANT_WORKER_B_USER_ID = 5;
 
     /**
      * Run the database seeds.
