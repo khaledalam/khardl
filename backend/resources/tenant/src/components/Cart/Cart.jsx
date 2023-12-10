@@ -93,6 +93,21 @@ const Cart = () => {
         setCartItems(updatedCart);
     };
 
+
+    const handleEmptyCart = async () => {
+        if (loading)return;
+
+        if (!confirm(t("Are you sure to empty cart items?"))) {
+           return;
+        }
+
+        setLoading(true);
+        await AxiosInstance.delete(`/carts/trash`, {})
+            .finally(async () => {
+                setLoading(false);
+                await fetchCartData().then(r => null);
+            });
+    }
     return (
         <div className="cart-page">
 
@@ -196,6 +211,13 @@ const Cart = () => {
                                         onClick={() => handlePlaceOrder()}
                                         className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
                                         {paymentMethod === 'cc' ? <span>🛍️ {t('Checkout')} {getTotalPrice()} {t('SAR')}</span> : <span>🛍️ {t('Place Order')}</span>}
+                                    </button>
+
+                                    <button
+                                        disabled={cartItems?.length < 1}
+                                        onClick={() => handleEmptyCart()}
+                                        className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                        <span>🗑️ {t('Empty Cart')}</span>
                                     </button>
                                 </div>
                             </div>
