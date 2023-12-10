@@ -10,28 +10,29 @@ use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\DownloadController;
 use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
 use App\Http\Controllers\API\Tenant\ItemController;
 use App\Http\Controllers\API\Tenant\OrderController;
-use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
+use App\Packages\TapPayment\Controllers\FileController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Tenant\Auth\LoginController;
 use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+use App\Packages\TapPayment\Controllers\BusinessController;
+use App\Http\Controllers\API\Tenant\Customer\CartController;
 use App\Http\Controllers\API\Tenant\CustomerStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
+use App\Packages\TapPayment\Controllers\SubscriptionController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
-use App\Http\Controllers\API\Tenant\Customer\CartController;
-use App\Packages\TapPayment\Controllers\BusinessController;
-use App\Packages\TapPayment\Controllers\FileController;
-use App\Packages\TapPayment\Controllers\SubscriptionController;
+use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +90,12 @@ Route::group([
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
             Route::post('/payment', [TapController::class, 'payment'])->middleware('permission:can_control_payment')->name('tap.payment');
+            Route::get('/download/pdf',[DownloadController::class,'downloadPDF'])
+            ->name("download.pdf");
+            Route::group(['prefix'=>'/branches'], function(){
+                // Route::get('/{branch}',[RestaurantController::class, 'branch'])->name('restaurant.branch');
+                Route::get('{branch}/orders/{order}',[RestaurantController::class, 'branchOrders'])->name('restaurant.branch.orders');
+            });
             Route::middleware('restaurant')->group(function () {
 
                 // TAP Create Business
@@ -106,6 +113,7 @@ Route::group([
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::get('/customers-data', [RestaurantController::class, 'customers_data'])->name('restaurant.customers_data');
                 Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
+
 
                 Route::get('/orders-all', [RestaurantController::class, 'orders_all'])->name('restaurant.orders_all');
                 Route::get('/orders-add', [RestaurantController::class, 'orders_add'])->name('restaurant.orders_add');

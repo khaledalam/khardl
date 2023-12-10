@@ -59,5 +59,8 @@ class Branch extends Model
         return $this->belongsToMany(PaymentMethod::class,'branches_payment_methods')
         ->wherePivot('is_active',true);
     }
+    public function orders(){
+        return $this->belongsToMany(Order::class);
+    }
 
 }

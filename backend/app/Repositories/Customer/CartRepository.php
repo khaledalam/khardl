@@ -17,7 +17,7 @@ class CartRepository
 {
     /** @var Cart */
     public $cart;
-
+    const VAT_PERCENTAGE = 15;
     use APIResponseTrait;
 
     public  function initiate()
@@ -98,10 +98,28 @@ class CartRepository
         // return $this->cart->discount;
     }
 
-    public function tax()
+    public function subTotal()
     {
-        return 0;
+        return $this->cart->items()
+            ->select('price', 'quantity')
+            ->cursor()
+            ->reduce(function ($total, $item) {
+                return $total + $item->price * $item->quantity;
+            }, 0);
     }
+    public function tax($subTotal = null)
+    {
+       
+        $vat = self::VAT_PERCENTAGE;
+
+        return number_format((($subTotal ?? $this->subTotal() - $this->discount()) * $vat) / 100 , 2, '.', '');
+    }
+    public function total($subTotal = null)
+    {
+        $subTotal = $subTotal ?? $this->subTotal();
+        return number_format($subTotal - $this->discount() + $this->tax($subTotal), 2, '.', '');
+    }
+
     public function branch()
     {
         return $this->cart->branch;
@@ -112,15 +130,6 @@ class CartRepository
     }
    
 
-    public function subTotal()
-    {
-        return $this->cart->items()
-            ->select('price', 'quantity')
-            ->cursor()
-            ->reduce(function ($total, $item) {
-                return $total + $item->price * $item->quantity;
-            }, 0);
-    }
     public function clone_to_order_items($order_id):void {
         $this->cart->items->map(function($cart_item)use($order_id){
             OrderRepository::clone_cart_items(
@@ -134,11 +143,7 @@ class CartRepository
         });
     }
 
-    public function total()
-    {
-        return number_format($this->subTotal() - $this->discount() + $this->tax(), 2, '.', '');
-    }
-
+   
 
     public function items()
     {

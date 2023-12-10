@@ -48,7 +48,6 @@ const Cart = () => {
         
         if (confirm(t('Are You sure you want to place the order?'))) {
             try {
-                setLoading(true);
                 const cartResponse = await AxiosInstance.post(`/orders`,{
                     payment_method: paymentMethod,
 
@@ -64,8 +63,6 @@ const Cart = () => {
                 }
             } catch (error) {
                 toast.error(`${t('Failed to processed the checkout')}`)
-            } finally {
-                setLoading(false);
             }
         }
 

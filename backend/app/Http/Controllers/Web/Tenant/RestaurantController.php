@@ -85,6 +85,20 @@ class RestaurantController extends BaseController
             compact('user'));
     }
 
+    public function branchOrders(Branch $branch,Order $order){
+   
+        $user = Auth::user();
+    
+        if($branch->id != $order->branch->id){
+            return abort(404);
+        }
+        $order->load('user','items');
+        
+        return view('restaurant.orders.show',
+            compact('user','order'));
+    }
+    
+
     public function products_out_of_stock(){
         /** @var RestaurantUser $user */
         $user = Auth::user();

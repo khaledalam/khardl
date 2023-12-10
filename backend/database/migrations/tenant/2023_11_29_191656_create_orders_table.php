@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('payment_method_id')->nullable();
             $table->decimal('total', 8, 2)->default(0);
+            $table->decimal('subtotal', 8, 2)->default(0);
+            $table->integer('vat')->default(15);
             $table->enum('status',['accepted','cancelled','pending'])->default('pending');
             $table->string('payment_status')->default('pending');
             $table->text('shipping_address')->nullable();

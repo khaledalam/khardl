@@ -114,7 +114,7 @@
                                             <th class="min-w-100px">Order ID</th>
                                             <th class="min-w-175px">Customer</th>
                                             <th class="text-end min-w-70px">Delivery Type</th>
-                                            <th class="text-end min-w-70px">Status delivery</th>
+                                            <th class="text-end min-w-70px">Branch Name</th>
                                             <th class="text-end min-w-70px">Status Payment</th>
                                             <th class="text-end min-w-100px">Total</th>
                                             <th class="text-end min-w-100px">Date Added</th>
@@ -139,7 +139,7 @@
                                                     <!--end::Checkbox-->
                                                     <!--begin::Order ID=-->
                                                     <td data-kt-ecommerce-order-filter="order_id">
-                                                        <a href="./show.html" class="text-gray-800 text-hover-khardl fw-bolder">{{$order->id}}</a>
+                                                        <a href="{{route('restaurant.branch.orders',['branch'=>$order->branch->id,'order'=>$order->id])}}" class="text-gray-800 text-hover-khardl fw-bolder">{{$order->id}}</a>
                                                     </td>
                                                     <!--end::Order ID=-->
                                                     <!--begin::Customer=-->
@@ -171,9 +171,9 @@
                                                       
                                                         <!--end::Badges-->
                                                     </td>
-                                                    <td class="text-end pe-0" data-order="Refunded">
+                                                    <td class="text-end pe-0" >
                                                         <!--begin::Badges-->
-                                                        <div class="badge badge-light-info">-</div>
+                                                        <div class="fw-bolder"> {{$order->branch->name}}</div>
                                                       
                                                         <!--end::Badges-->
                                                     </td>
@@ -223,7 +223,7 @@
                                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                             <!--begin::Menu item-->
                                                             <div class="menu-item px-3">
-                                                                <a href="./show.html" class="menu-link px-3">View</a>
+                                                                <a  href="{{route('restaurant.branch.orders',['branch'=>$order->branch->id,'order'=>$order->id])}}" class="menu-link px-3">View</a>
                                                             </div>
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->

@@ -20,11 +20,13 @@ class OrderRepository
         DB::beginTransaction();
         try {
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){
+                $subtotal = $cart->subTotal();
                 $order = Order::create([
                     'user_id'=>Auth::id(),
                     'branch_id'=>$cart->branch()->id,
                     'payment_method_id'=> PaymentMethod::where('name',$request->payment_method)->first()->id,
-                    'total'=>$cart->total(),
+                    'total'=>$cart->total($subtotal),
+                    'subtotal' =>$subtotal,
                     'shipping_address'=>$request->shipping_address,
                     'order_notes'=>$request->order_notes,
                     // TODO @todo update 
