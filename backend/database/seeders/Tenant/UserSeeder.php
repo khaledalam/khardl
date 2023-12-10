@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
 
     public const RESTAURANT_CUSTOMER_USER_ID = 3;
     public const RESTAURANT_WORKER_USER_ID = 4;
+    public const RESTAURANT_WORKER_B_USER_ID = 4;
 
     /**
      * Run the database seeds.
@@ -37,6 +38,29 @@ class UserSeeder extends Seeder
         $user->assignRole('Worker');
         DB::table('permissions_worker')->insert([
             'user_id'=>self::RESTAURANT_WORKER_USER_ID,
+            'can_modify_and_see_other_workers'=>true,
+            'can_modify_working_time'=>true,
+            'can_modify_advertisements'=>true,
+            'can_edit_menu'=>true,
+            'can_control_payment'=>true,
+        ]);
+
+        $user = RestaurantUser::create([
+            'id' => self::RESTAURANT_WORKER_B_USER_ID,
+            'first_name' => "Worker B first",
+            'last_name' => "Worker B last",
+            'email' => "worker2@first.com",
+            'phone_verified_at' => now(),
+            'status'=> 'active',
+            'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
+            'remember_token' => Str::random(10),
+        ]);
+        $user->branch()->associate($branch);
+        $user->save();
+
+        $user->assignRole('Worker');
+        DB::table('permissions_worker')->insert([
+            'user_id'=>self::RESTAURANT_WORKER_B_USER_ID,
             'can_modify_and_see_other_workers'=>true,
             'can_modify_working_time'=>true,
             'can_modify_advertisements'=>true,

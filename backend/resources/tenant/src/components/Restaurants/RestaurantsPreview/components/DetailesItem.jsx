@@ -289,7 +289,7 @@ const DetailesItem = ({
                       {isLoggedIn && <>{t("Add to cart")} ({total * count} {t("SAR")})</>}
                         {!isLoggedIn && <>{t("login first")}</>}
                     </button>
-                      {goToCart && <button className={"p-1 px-3 bg-[var(--secondary)] text-[16px] text-black font-bold"}>{t('go to cart')}</button>}
+                      {goToCart && <button onClick={() => navigate('/cart')} className={"p-1 px-3 bg-[var(--secondary)] text-[16px] text-black font-bold"}>{t('go to cart')}</button>}
                   </div>
                 </div>
               </div>

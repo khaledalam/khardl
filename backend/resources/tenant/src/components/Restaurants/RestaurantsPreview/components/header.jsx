@@ -45,16 +45,12 @@ function Header() {
     const fetchCartData = async () => {
         try {
             const cartResponse = await AxiosInstance.get(`carts`);
-
             if (cartResponse.data) {
-                setCartItemsCount(cartResponse.data?.data?.length);
+                setCartItemsCount(cartResponse.data?.data?.items?.length);
             }
-
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
             console.log(error);
-        } finally {
-            setLoading(false);
         }
     };
 

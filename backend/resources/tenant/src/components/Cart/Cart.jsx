@@ -177,11 +177,10 @@ const Cart = () => {
                                                     checked={paymentMethod === method.name}
                                                     onChange={() => handlePaymentMethodChange(method)}
                                                     disabled={!method.pivot.is_active} // You can customize this based on your logic
-                                                />
-                                                {t(method.name)}
+                                                /> {t(method.name)}
                                                 </label>
                                         ))}
-                                      
+
                                     </div>
 
                                     <hr />
