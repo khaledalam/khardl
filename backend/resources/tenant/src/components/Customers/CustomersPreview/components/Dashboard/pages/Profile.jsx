@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiSearch } from 'react-icons/bi';
 import Maps from '../../../../../map';
 
 const Profile = () => {
    const { t } = useTranslation();
+
+    useEffect(() => {
+        console.log("Profile tab");
+
+
+    }, []);
 
    return (
       <div className="w-full bg-[var(--secondary)] py-6 px-4">
@@ -48,10 +54,10 @@ const Profile = () => {
                      {t("Location")}
                   </p>
                   <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]'></div>
-                  {/*                   
+                  {/*
                   <div className='relative py-4 px-8 w-[100%]'>
                      <Maps />
-                  </div> 
+                  </div>
                    */}
                </div>
             </div>

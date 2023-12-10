@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import FullOrders from '../components/Orders';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,12 @@ const Orders = () => {
    const idOrder = useSelector((state) => state.id.idOrder);
    const activeTab = useSelector((state) => state.tab.activeTab);
    const GlobalColor = useSelector((state) => state.button.GlobalColor);
+
+    useEffect(() => {
+        console.log("Orders page");
+
+
+    }, []);
 
    return (
       <div className="w-full bg-[var(--secondary)] py-6 px-4">

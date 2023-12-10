@@ -134,8 +134,6 @@ const Editor = () => {
             <div className={`px-[30px] text-xl`}>
                 {categoriesForBranch?.length > 0 ?
                     <>
-                        <h2>Categories:</h2>
-                        {console.log(categoriesForBranch)}
                         <Taps
                             contentClassName={`
         bg-[var(--secondary)] ${selectedCategory === `${t("Carousel")}` ? `flex justify-center`:''} text-xl

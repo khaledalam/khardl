@@ -11,7 +11,9 @@ const Cart = () => {
 
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [paymentMethod, setPaymentMethod] = useState('cc');
+    const [paymentMethod, setPaymentMethod] = useState(null);
+    const [paymentMethods, setPaymentMethods] = useState(null);
+
     const navigate = useNavigate()
     const {t} = useTranslation();
     const Language = useSelector((state) => state.languageMode.languageMode);
@@ -28,7 +30,8 @@ const Cart = () => {
 
             console.log("cart >>>", cartResponse.data)
             if (cartResponse.data) {
-                setCartItems(cartResponse.data?.data);
+                setCartItems(cartResponse.data?.data.items);
+                setPaymentMethods(cartResponse.data?.data.payment_methods)
             }
 
         } catch (error) {
@@ -38,16 +41,18 @@ const Cart = () => {
             setLoading(false);
         }
     };
-
+    const handlePaymentMethodChange = (method) => {
+        setPaymentMethod(method.name);
+    }
     const handlePlaceOrder = async () => {
-        
+
         if (confirm(t('Are You sure you want to place the order?'))) {
             try {
                 setLoading(true);
                 const cartResponse = await AxiosInstance.post(`/orders`,{
-                    payment_method: 'Cash on delivery',
+                    payment_method: paymentMethod,
 
-                    // TODO @todo more info 
+                    // TODO @todo more info
                     shipping_address: '',
                     order_notes: '',
                     delivery_type:  ''
@@ -163,33 +168,25 @@ const Cart = () => {
 
                                     <div className="payment-section my-4 flex flex-col">
                                         <h3 className={"mb-2"}>{t('Select Payment Method')}</h3>
-                                        <label>
-                                            <input
-                                                disabled={false} // @TODO: in /carts response should has additional Attribute(check branch enable CC or not) indicate if cc payment method allowed or not for the branch
-                                                type="radio"
-                                                name="paymentMethod"
-                                                value="cc"
-                                                checked={paymentMethod === 'cc'}
-                                                onChange={() => setPaymentMethod('cc')}
-                                            /> {t('Credit Card')}
-                                        </label>
-                                        <label>
-                                            <input
-                                                disabled={false} // @TODO: in /carts response should has additional Attribute(check branch enable COD or not) indicate if cod payment method allowed or not for the branch
-                                                type="radio"
-                                                name="paymentMethod"
-                                                value="cod"
-                                                checked={paymentMethod === 'cod'}
-                                                onChange={() => setPaymentMethod('cod')}
-                                            /> {t('Cash on Delivery')}
-                                        </label>
+                                        {paymentMethods.map((method) => (
+                                                <label key={method.id}>
+                                                <input
+                                                    type="radio"
+                                                    name="paymentMethod"
+                                                    value={method.name}
+                                                    checked={paymentMethod === method.name}
+                                                    onChange={() => handlePaymentMethodChange(method)}
+                                                    disabled={!method.pivot.is_active} // You can customize this based on your logic
+                                                /> {t(method.name)}
+                                                </label>
+                                        ))}
+
                                     </div>
 
                                     <hr />
 
                                     <div className={"my-4"}>
                                         <h3>{t('Total')}: {getTotalPrice()} {t('SAR')} <small><i>({t('Inclusive VAT')})</i></small></h3>
-                                        <small><i>{t('Vat')}: {getTotalPrice()} {t('SAR')}</i></small>
                                     </div>
 
                                     <hr />

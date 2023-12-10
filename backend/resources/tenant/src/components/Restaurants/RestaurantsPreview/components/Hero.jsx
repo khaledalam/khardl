@@ -9,14 +9,17 @@ import 'swiper/css/pagination';
 
 function Hero() {
 
-    const styleData = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
+    const styleData = useSelector((state) => state.styleDataRestaurant?.styleDataRestaurant);
 
+    if (!styleData) {
+        return;
+    }
 
     const image = styleData?.banner_image || sessionStorage.getItem('previewImage');
     const shapeImageShape = styleData?.images_style || sessionStorage.getItem('shapeImageShape');
     const selectBanner = styleData?.banner_style || sessionStorage.getItem('selectBanner');
     const images = styleData?.banner_images || JSON.parse(sessionStorage.getItem('images'));
-    const [uploadedImages, setUploadedImages] = useState(images?.image);
+    const [uploadedImages, setUploadedImages] = useState(images);
 
     const dispatch = useDispatch();
     const handleImageChange = event => {
@@ -26,20 +29,21 @@ function Hero() {
         }
     };
 
+
     return (
         <div className='w-[100%]'>
             {selectBanner === "Slider" || selectBanner === "سلايدر" ?
                 <Swiper modules={[Pagination]} pagination={{ clickable: true }} slideClass="swiper-slide">
-                    {[...Array(uploadedImages.length)].map((_, index) => (
+                    {[...Array(uploadedImages?.length)].map((_, index) => (
                         <SwiperSlide key={index}>
                             <div
-                                className={`h-[280px] rounded-md bg-center bg-cover shadow-md`}
-                                style={
-                                    shapeImageShape === '14px'
-                                        ? { backgroundImage: `url(${uploadedImages[index]})`, margin: '12px', borderRadius: shapeImageShape }
-                                        : { backgroundImage: `url(${uploadedImages[index]})`, color: '#fff', borderRadius: shapeImageShape }
-                                }
-                            ></div>
+    className={`h-[280px] rounded-md bg-center bg-cover shadow-md`}
+    style={
+        shapeImageShape === '14px'
+            ? {backgroundImage: `url(${uploadedImages[index]})`, margin: '12px', borderRadius: shapeImageShape}
+            : {backgroundImage: `url(${uploadedImages[index]})`, color: '#fff', borderRadius: shapeImageShape}
+    }
+    />
                         </SwiperSlide>
                     ))}
                 </Swiper>
@@ -51,7 +55,7 @@ function Hero() {
                     ></div>
                 ) : (
                     <>
-                        <input type="file" accept="image/*" id="image" onChange={handleImageChange} className="hidden" />
+                        <input type="file" accept="image/*" id="image" onChange={() => handleImageChange()} className="hidden" />
                         <label
                             htmlFor="image"
                             className={`h-[280px] bg-slate-600 hover:bg-slate-800 text-white shadow-md flex flex-col items-center justify-center cursor-pointer`}

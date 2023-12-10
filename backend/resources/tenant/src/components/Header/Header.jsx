@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Logo from '../../assets/Logo.webp'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '../Button'
 import { useSelector, useDispatch } from 'react-redux'
@@ -246,13 +245,13 @@ const Header = () => {
                                  title={t('Create an account')}
                                  link='/register'
                                  onClick={() => dispatch(setIsOpen(false))}
-                                 classContainer='!w-100 !px-[25px]'
+                                 classContainer='!w-100 !px-[16px] !font-medium'
                               />
                               <Button
                                  title={t('Login')}
                                  link='/login'
                                  onClick={() => dispatch(setIsOpen(false))}
-                                 classContainer='!w-100 !px-[16px] !font-medium'
+                                 classContainer='!w-100 !px-[16px] !font-medium !bg-[var(--secondary)]'
                               />
                            </>
                         )}

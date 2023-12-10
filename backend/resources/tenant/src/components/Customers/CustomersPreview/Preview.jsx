@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { getSelectedAlign } from '../../../redux/editor/alignSlice';
 import ResizeDetector from 'react-resize-detector';
 import { setDivWidth } from '../../../redux/editor/divWidthSlice';
-import Header from './components/header';
 import Dashboard from './components/Dashboard/Dashboard';
 import 'babel-polyfill'
 import AxiosInstance from "../../../axios/axios";
@@ -95,7 +94,6 @@ const Preview = () => {
       }}>
 
       <ResizeDetector onResize={handleResize} />
-      <Header />
       <Dashboard />
     </div>
   );
