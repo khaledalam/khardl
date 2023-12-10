@@ -143,7 +143,10 @@ class CartRepository
     public function items()
     {
         $items = $this->cart->items->load(['item']);
-        return $this->sendResponse($items, '');
+        return $this->sendResponse([
+            'items'=>$items,
+            'payment_methods'=>$this->paymentMethods()
+        ], '');
     }
 
 
@@ -180,7 +183,7 @@ class CartRepository
     {
         $method = PaymentMethod::where('name',PaymentMethod::CASH_ON_DELIVERY)->first();
         if($method){
-            return $this->cart->branch->payment_methods->contains('id',$method->id);
+            return $this->cart->branch->active_payment_methods->contains('id',$method->id);
         }
         return false;
     }
@@ -190,7 +193,7 @@ class CartRepository
     {
         $method = PaymentMethod::where('name',PaymentMethod::CREDIT_CARD)->first();
         if($method){
-            return $this->cart->branch->payment_methods->contains('id',$method->id);
+            return $this->cart->branch->active_payment_methods->contains('id',$method->id);
         }
         return false;
     }
@@ -199,7 +202,7 @@ class CartRepository
     {
         $method = PaymentMethod::where('name',$name)->first();
         if($method){
-            return $this->cart->branch->payment_methods->contains('id',$method->id);
+            return $this->cart->branch->active_payment_methods->contains('id',$method->id);
         }
         return false;
     }

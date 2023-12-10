@@ -23,12 +23,10 @@ class PaymentMethodSeeder extends Seeder
         PaymentMethod::create([
             'id'=> self::PAYMENT_METHOD_COD,
             'name'=> PaymentMethod::CASH_ON_DELIVERY,
-            'is_active'=>true,
         ]);
         PaymentMethod::create([
             'id'=> self::PAYMENT_METHOD_CC,
             'name'=>PaymentMethod::CREDIT_CARD,
-            'is_active'=>true,
         ]);
      
     }
