@@ -303,6 +303,9 @@
     "Remove": "Remove",
     "Vat": "Vat",
     "Select Payment Method": "Select Payment Method",
+    "Select Delivery Type": "Select Delivery Type",
+    "PICKUP": "Pickup",
+    "PICKUP By Car": "Pickup By Car",
     "Inclusive VAT": "Inclusive VAT",
     "Credit Card": "Credit Card",
     "Cash on Delivery": "Cash on Delivery",
@@ -310,7 +313,6 @@
     "Are You sure you want to place the order?": "Are You sure you want to place the order?",
     "Are you sure to empty cart items?": "Are you sure to empty cart items?",
     "Order has been created successfully": "Order has been created successfully",
-    "Failed to processed the checkout": "Failed to processed the checkout"
-
-
+    "Failed to processed the checkout": "Failed to processed the checkout",
+    "free": "Free"
 }

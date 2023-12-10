@@ -1,6 +1,6 @@
 {
-    "/js/central.js": "/js/central.js?id=f0b133e18249ebeee6a071631ad805de",
-    "/js/tenant.js": "/js/tenant.js?id=f0fb9cbb03270b9e80debc9910a32777",
+    "/js/central.js": "/js/central.js?id=3c6bb24bf6ef874034e51bcf9ecd1265",
+    "/js/tenant.js": "/js/tenant.js?id=1647a2e606375effef94b2e04c726782",
     "/css/index.css": "/css/index.css?id=5e1634f1c77446bcc82004f772250c95",
     "/css/app.css": "/css/app.css?id=8583e06b9bdf65028a7162e681aece53",
     "/CustomerControlpanel/details.html": "/CustomerControlpanel/details.html?id=402baa34b21b29ab79af7886673c3a35",
@@ -4178,11 +4178,7 @@
     "/media/technology-logos/Html5.png": "/media/technology-logos/Html5.png?id=b4a3ff7e36f190b0c7eb545f6154cfac",
     "/media/technology-logos/React.png": "/media/technology-logos/React.png?id=66d79d92233f04e128ea676dea1d93e0",
     "/media/technology-logos/VueJS.png": "/media/technology-logos/VueJS.png?id=d3e5fefbe4df2bd095731f8de30c9438",
-<<<<<<< HEAD
-    "/mix-manifest.json": "/mix-manifest.json?id=4bb1937a2a934ab2573a3aa65110fb79",
-=======
-    "/mix-manifest.json": "/mix-manifest.json?id=c2818185ba64129203b2669fe4f18e8d",
->>>>>>> production
+    "/mix-manifest.json": "/mix-manifest.json?id=b8f81e8694b01dda0a708df2990f03ac",
     "/plugins/custom/ckeditor/ckeditor-balloon-block.bundle.js": "/plugins/custom/ckeditor/ckeditor-balloon-block.bundle.js?id=4204959f1ca39a78058b2d5eff984fcf",
     "/plugins/custom/ckeditor/ckeditor-balloon.bundle.js": "/plugins/custom/ckeditor/ckeditor-balloon.bundle.js?id=2e343a19cee50dcb209ab53f8c9f5177",
     "/plugins/custom/ckeditor/ckeditor-classic.bundle.js": "/plugins/custom/ckeditor/ckeditor-classic.bundle.js?id=c67be7926c65ac51375d74f9ea117f7f",

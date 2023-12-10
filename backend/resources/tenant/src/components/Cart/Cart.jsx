@@ -13,6 +13,8 @@ const Cart = () => {
     const [loading, setLoading] = useState(true);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [paymentMethods, setPaymentMethods] = useState(null);
+    const [deliveryType, setDeliveryType] = useState(null);
+    const [deliveryTypes, setDeliveryTypes] = useState(null);
 
     const navigate = useNavigate()
     const {t} = useTranslation();
@@ -31,7 +33,8 @@ const Cart = () => {
             console.log("cart >>>", cartResponse.data)
             if (cartResponse.data) {
                 setCartItems(cartResponse.data?.data.items);
-                setPaymentMethods(cartResponse.data?.data.payment_methods)
+                setPaymentMethods(cartResponse.data?.data?.payment_methods)
+                setDeliveryTypes(cartResponse.data?.data?.delivery_types)
             }
 
         } catch (error) {
@@ -180,20 +183,38 @@ const Cart = () => {
                                     ))}
                                 </ul>
                                 <div className="cart-summary">
-
                                     <div className="payment-section my-4 flex flex-col">
                                         <h3 className={"mb-2"}>{t('Select Payment Method')}</h3>
-                                        {paymentMethods.map((method) => (
+                                        {paymentMethods?.map((method) => (
                                                 <label key={method.id}>
+                                                    <input
+                                                        type="radio"
+                                                        name="paymentMethod"
+                                                        value={method.name}
+                                                        checked={paymentMethod === method.name}
+                                                        onChange={() => handlePaymentMethodChange(method)}
+                                                        disabled={!method.pivot.is_active} // You can customize this based on your logic
+                                                    /> {t(method.name)}
+                                                </label>
+                                        ))}
+
+                                    </div>
+
+                                    <hr />
+
+                                    <div className="payment-section my-4 flex flex-col">
+                                        <h3 className={"mb-2"}>{t('Select Delivery Type')}</h3>
+                                        {deliveryTypes?.map((type) => (
+                                            <label key={type.id}>
                                                 <input
                                                     type="radio"
-                                                    name="paymentMethod"
-                                                    value={method.name}
-                                                    checked={paymentMethod === method.name}
-                                                    onChange={() => handlePaymentMethodChange(method)}
-                                                    disabled={!method.pivot.is_active} // You can customize this based on your logic
-                                                /> {t(method.name)}
-                                                </label>
+                                                    name="deliveryType"
+                                                    value={type.name}
+                                                    checked={deliveryType === type.name}
+                                                    onChange={() => handleDeliveryTypeChange(type)}
+                                                    disabled={!type.pivot.is_active} // You can customize this based on your logic
+                                                /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free')})</small>
+                                            </label>
                                         ))}
 
                                     </div>

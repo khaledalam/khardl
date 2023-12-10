@@ -18,6 +18,7 @@ class BranchSeeder extends Seeder
      */
     public function run(): void
     {
+        // This branch has pickup and delivery
         $currentDateTime = Carbon::now();
         $branch = Branch::create([
             'id' => self::BRANCH_ID,
@@ -43,8 +44,16 @@ class BranchSeeder extends Seeder
         $branch->payment_methods()->sync([
             PaymentMethodSeeder::PAYMENT_METHOD_COD
         ]);
+        $branch->delivery_types()->sync([
+            DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY
+        ]);
+        $branch->delivery_types()->sync([
+            DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
+        ]);
 
-        $branch = Branch::create([
+
+        // This branch has pickup only
+        $branch2 = Branch::create([
             'id' => self::BRANCH_B_ID,
             'name' => 'Branch 2',
             'lat' => '27.7',
@@ -65,8 +74,11 @@ class BranchSeeder extends Seeder
             'friday_open' => $currentDateTime->format('H:i'),
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
         ]);
-        $branch->payment_methods()->sync([
+        $branch2->payment_methods()->sync([
             PaymentMethodSeeder::PAYMENT_METHOD_CC
+        ]);
+        $branch2->delivery_types()->sync([
+            DeliveryTypesSeeder::DELIVERY_TYPE_B_PICKUP
         ]);
 
     }
