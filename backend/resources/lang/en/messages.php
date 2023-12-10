@@ -293,7 +293,14 @@ return [
     "cash"=>"Cash",
     "Cash on Delivery"=>"Cash on Delivery",
     'Credit Card'=>"Credit Card",
-    "Delivery"=>"Delivery"
+    "Delivery"=>"Delivery",
+    'payment-address'=>'Payment Address',
+    'shipping-address'=>'Shipping Address',
+    'preparations'=>'Preparations',
+    'yes'=>'Yes',
+    'no'=>'No',
+    'are-you-sure-you-want-to-approve-order-status'=>'Are you sire you want to approve order status',
+    'are-you-sure-you-want-to-cancel-order-status'=>'Are you sire you want to cancel order status',
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

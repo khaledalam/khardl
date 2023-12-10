@@ -93,6 +93,8 @@ return [
     'deny' => 'ارفض',
     'yes-proceed' => '.نعم ، تابع',
     'no-cancel' => '.لا ، إلغاء',
+    'yes'=>'نعم',
+    'no'=>'لا',
     'select-an-option' => 'حدد اختيارا',
     'both' => 'كلاهما',
     'delivery-company-contract' => 'عقد شركة التوصيل',
@@ -291,7 +293,12 @@ return [
     "cash"=>"كاش",
     "Cash on Delivery"=>"الدفع عن التوصيل",
     'Credit Card'=>"بطاقة الكترونية",
-    "Delivery"=>"توصيل"
+    "Delivery"=>"توصيل",
+    'payment-address'=>'عنوان الدفع',
+    'shipping-address'=>'عنوان الشحن',
+    'preparations'=>'تجهيزات الطلب',
+    'are-you-sure-you-want-to-approve-order-status'=>'هل انت متأكد من تأكيد حالة الطلب',
+    'are-you-sure-you-want-to-cancel-order-status'=>'هل انت متأكد من الغاء الطلب ',
 ];
 
 

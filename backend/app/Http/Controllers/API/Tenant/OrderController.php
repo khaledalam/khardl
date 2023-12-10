@@ -8,6 +8,7 @@ use App\Traits\APIResponseTrait;
 
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\API\OrderRepository;
+use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
 
 class OrderController extends BaseRepositoryController
@@ -16,8 +17,11 @@ class OrderController extends BaseRepositoryController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->default_repository = new OrderRepository();
+            if(Auth::user()->isWorker()){
+                $this->default_repository = new OrderRepository();
+            }
             return $next($request);
+           
         });
     }
     public function updateStatus($order,Request $request){
@@ -26,7 +30,9 @@ class OrderController extends BaseRepositoryController
         ]);
         $user = Auth::user();
         $order = Order::
-        where('branch_id',$user->branch->id)
+        when($user->isWorker(), function (Builder $query, string $role)use($user) {
+            $query ->where('branch_id',$user->branch->id);
+        })
         ->findOrFail($order);
         $order->update(['status'=>$request->status]);
         return $this->sendResponse(null, __('Order has been updated successfully.'));

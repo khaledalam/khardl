@@ -94,7 +94,8 @@ Route::group([
             ->name("download.pdf");
             Route::group(['prefix'=>'/branches'], function(){
                 // Route::get('/{branch}',[RestaurantController::class, 'branch'])->name('restaurant.branch');
-                Route::get('{branch}/orders/{order}',[RestaurantController::class, 'branchOrders'])->name('restaurant.branch.orders');
+                Route::get('/orders/{order}',[RestaurantController::class, 'branchOrders'])->name('restaurant.branch.order');
+                Route::put('/orders/{order}/status',[OrderController::class,'updateStatus'])->name('restaurant.branch.order.status');
             });
             Route::middleware('restaurant')->group(function () {
 
