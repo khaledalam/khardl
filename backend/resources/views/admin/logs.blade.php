@@ -26,9 +26,9 @@
                                   <!--begin::Select-->
                 <select id="usersDropdown" name="user_id" class="form-select form-select-sm border-body bg-body w-150px me-5">
                     <option value="all" {{ request('user_id') == 'all' ? 'selected' : '' }}>All</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>
-                            {{ $user->id }} | {{ $user->first_name }} {{ $user->last_name }}
+                    @foreach ($owners as $owner)
+                        <option value="{{ $user->id }}" {{ request('user_id') == $owner->id ? 'selected' : '' }}>
+                            {{ $owner->id }} | {{ $owner->first_name }} {{ $owner->last_name }}
                         </option>
                     @endforeach
                 </select>

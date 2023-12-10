@@ -5,6 +5,7 @@ namespace App\Repositories\PDF;
 use App\Models\Tenant;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\RestaurantUser;
+use App\Models\Tenant\RestaurantStyle;
 
 class CustomerPDF implements PdfPrintInterface
 {
@@ -19,10 +20,17 @@ class CustomerPDF implements PdfPrintInterface
     public function data()
     {
         return $this->restaurant->run(function(){
+            $logo = RestaurantStyle::first()->logo;
+            $data = [
+                'restaurant_name'=> $this->restaurant->restaurant_name,
+                'logo' =>($logo)?storage_path("app/public/".RestaurantStyle::STORAGE."/".basename($logo)): public_path('/img/logo.png')
+            ];
             if($this->id){
-                return [RestaurantUser::findOrFail($this->id)];
+                $data['customers'] = [RestaurantUser::findOrFail($this->id)];
+                return $data;
             }else{
-                return  RestaurantUser::customers()->orderBy('created_at','DESC')->get();
+                $data['customers'] =   RestaurantUser::customers()->orderBy('created_at','DESC')->get();
+                return $data;
             }
         });
        

@@ -80,10 +80,7 @@
           background-color: rgba(0, 0, 0, 0.05);
       }
       
-      /* Your additional styles */
-      body {
-          background-color: #f8f9fa;
-      }
+     
 
       .mt-5 {
           margin-top: 3rem;
@@ -98,12 +95,47 @@
           font-weight: 300;
           line-height: 1.2;
       }
+      .bottom-left {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: calc(100% - 200px); /* Adjust the width as needed */
+        pointer-events: none; /* Prevent the fixed element from blocking clicks */
+        z-index: 999; /* Ensure it's above other content */
+    }
+
+    .bottom-left img,
+    .bottom-left div {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .bottom-left img {
+        width: 30px; /* Adjust image width */
+        height: 30px; /* Adjust image height */
+        margin-right: 10px; /* Add margin between image and name */
+    }
+
+    .bottom-left div {
+        line-height: 30px; /* Adjust line height for vertical alignment */
+    }
+
+    .copyright-container {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 200px; /* Adjust the width as needed */
+        text-align: right;
+        padding: 10px;
+        font-size: 12px; /* Adjust font size */
+        color: #555; /* Adjust text color */
+    }
   </style>
 </head>
 
 <body class="bg-light">
 
-    @foreach($data as $customer)
+    @foreach($data['customers'] as $customer)
     <div class=" mt-5">
 
         <div class="mb-4">
@@ -127,7 +159,15 @@
             </table>
         </div>
 
- 
+        <div class="page-break"></div>
+        <div class="bottom-left">
+            <img src="{{ $data['logo'] }}" style="width: 20px; height: 20px;" />
+            <div class="">{{ $data['restaurant_name'] }}</div>
+        </div>
+
+        <div class="copyright-container">
+            All copyright reserved to khardl.com
+        </div>
     </div>
     @endforeach
 

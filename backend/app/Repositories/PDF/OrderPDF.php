@@ -4,6 +4,7 @@ namespace App\Repositories\PDF;
 
 use App\Models\Tenant;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\RestaurantStyle;
 
 class OrderPDF implements PdfPrintInterface
 {   
@@ -18,10 +19,17 @@ class OrderPDF implements PdfPrintInterface
     public function data()
     {
         return $this->restaurant->run(function(){
+            $logo = RestaurantStyle::first()->logo;
+            $data = [
+                'restaurant_name'=> $this->restaurant->restaurant_name,
+                'logo' =>($logo)?storage_path("app/public/".RestaurantStyle::STORAGE."/".basename($logo)): public_path('/img/logo.png')
+            ];
             if($this->id){
-                return [Order::with(['payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->findOrFail($this->id)];
+                $data['orders'] = [ Order::with(['payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->findOrFail($this->id)];
+                return $data;
             }else{
-                return Order::orderBy('created_at','DESC')->with(['payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->get();
+                $data['orders'] = Order::orderBy('created_at','DESC')->with(['payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->get();
+                return $data;
             }
         });
        
