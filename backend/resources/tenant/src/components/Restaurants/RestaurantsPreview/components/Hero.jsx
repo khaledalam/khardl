@@ -37,13 +37,13 @@ function Hero() {
                     {[...Array(uploadedImages?.length)].map((_, index) => (
                         <SwiperSlide key={index}>
                             <div
-                                className={`h-[280px] rounded-md bg-center bg-cover shadow-md`}
-                                style={
-                                    shapeImageShape === '14px'
-                                        ? { backgroundImage: `url(${uploadedImages[index]})`, margin: '12px', borderRadius: shapeImageShape }
-                                        : { backgroundImage: `url(${uploadedImages[index]})`, color: '#fff', borderRadius: shapeImageShape }
-                                }
-                            ></div>
+    className={`h-[280px] rounded-md bg-center bg-cover shadow-md`}
+    style={
+        shapeImageShape === '14px'
+            ? {backgroundImage: `url(${uploadedImages[index]})`, margin: '12px', borderRadius: shapeImageShape}
+            : {backgroundImage: `url(${uploadedImages[index]})`, color: '#fff', borderRadius: shapeImageShape}
+    }
+    />
                         </SwiperSlide>
                     ))}
                 </Swiper>

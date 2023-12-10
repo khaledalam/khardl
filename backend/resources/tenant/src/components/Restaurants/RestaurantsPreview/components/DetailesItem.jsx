@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiX } from "react-icons/fi";
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { useTranslation } from "react-i18next";
 import { addItemToCart } from '../../../../redux/editor/cartSlice';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import AxiosInstance from "../../../../axios/axios";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const DetailesItem = ({
   itemId,
@@ -29,17 +30,21 @@ const DetailesItem = ({
   const GlobalShape = sessionStorage.getItem('globalShape');
   const Language = sessionStorage.getItem('Language');
   const dispatch = useDispatch();
+    const navigate = useNavigate()
 
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
   const { t } = useTranslation();
   const [count, setCount] = useState(1);
-  const [items, setItems] = useState(
+    const [items, setItems] = useState(
     checkbox_input_names?.map((name, index) => ({
       value: name,
       isChecked: false,
       price: checkbox_input_prices[index]
     }))
   );
+    const [notes, setNotes] = useState("");
+    const [goToCart, setGoToCart] = useState(false);
 
     const [radioItems, setRadioItems] = useState(
         selection_input_names.map((name, index) => ({
@@ -107,16 +112,19 @@ const DetailesItem = ({
             const response = await AxiosInstance.post(`/carts`, {
                 item_id : itemId,
                 quantity : count,
-                branch_id: branch_id
+                branch_id: branch_id,
+                notes: notes
             });
 
             console.log("response " , response)
 
             if (response?.data) {
                 toast.success(`${t('Item added to cart')}`);
+                setGoToCart(true);
             }
         } catch (error) {
             toast.error(`${t('Failed')}`)
+            setGoToCart(false);
         }
         dispatch(addItemToCart("props.description"));
     };
@@ -249,7 +257,7 @@ const DetailesItem = ({
                   <div className="border-b border-ternary-light my-2 mx-10 p-4">
                     <div className="">
                       <div className="text-[15px] font-semibold mb-2">{t("feedback")}</div>
-                      <textarea className="w-[100%] bg-[var(--secondary)]" placeholder={t("")} />
+                      <textarea className="w-[100%] bg-[var(--secondary)] p-1" placeholder={t("feedback")} value={notes} onChange={e => setNotes(e.target.value)}/>
                     </div>
                   </div>
                   <div className="flex justify-between items-center my-2 mx-10 p-4">
@@ -274,12 +282,14 @@ const DetailesItem = ({
                   </div>
                   <div className="flex justify-center items-center my-4 pb-8">
                     <button
-                      className="p-1 px-10 text-[16px] text-black font-bold bg-[var(--primary)]"
+                      className={"p-1 px-10 text-[16px] text-black font-bold " + isLoggedIn ? ' bg-[var(--primary)] ' : ' bg-[var(--secondary)] '}
                       style={{ borderRadius: GlobalShape, backgroundColor: GlobalColor }}
-                      onClick={() => handleAddToCart()}
+                      onClick={() => isLoggedIn ? handleAddToCart() : navigate('/login')}
                     >
-                      {t("Add to cart")} ({total * count} {t("SAR")})
+                      {isLoggedIn && <>{t("Add to cart")} ({total * count} {t("SAR")})</>}
+                        {!isLoggedIn && <>{t("login first")}</>}
                     </button>
+                      {goToCart && <button className={"p-1 px-3 bg-[var(--secondary)] text-[16px] text-black font-bold"}>{t('go to cart')}</button>}
                   </div>
                 </div>
               </div>

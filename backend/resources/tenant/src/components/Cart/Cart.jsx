@@ -45,14 +45,14 @@ const Cart = () => {
         setPaymentMethod(method.name);
     }
     const handlePlaceOrder = async () => {
-        
+
         if (confirm(t('Are You sure you want to place the order?'))) {
             try {
                 setLoading(true);
                 const cartResponse = await AxiosInstance.post(`/orders`,{
                     payment_method: paymentMethod,
 
-                    // TODO @todo more info 
+                    // TODO @todo more info
                     shipping_address: '',
                     order_notes: '',
                     delivery_type:  ''
@@ -188,7 +188,6 @@ const Cart = () => {
 
                                     <div className={"my-4"}>
                                         <h3>{t('Total')}: {getTotalPrice()} {t('SAR')} <small><i>({t('Inclusive VAT')})</i></small></h3>
-                                        <small><i>{t('Vat')}: {getTotalPrice()} {t('SAR')}</i></small>
                                     </div>
 
                                     <hr />

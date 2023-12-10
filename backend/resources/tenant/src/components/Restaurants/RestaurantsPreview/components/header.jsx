@@ -24,11 +24,12 @@ function Header() {
     const [isOpenModel2, setIsOpenModel2] = useState(null);
     const [showDetailesItem, setShowDetailesItem] = useState(false);
 
+    const [cartItemsCount, setCartItemsCount] = useState(0);
+
 
     const dispatch = useDispatch()
     const { t } = useTranslation()
     const { setStatusCode } = useAuthContext()
-    const cartItems = useSelector((state) => state.cart.items);
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
     const navigate = useNavigate()
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
@@ -37,7 +38,25 @@ function Header() {
 
     useEffect(() => {
         fetchData().then(r => null);
+        fetchCartData().then(r => null);
     }, []);
+
+
+    const fetchCartData = async () => {
+        try {
+            const cartResponse = await AxiosInstance.get(`carts`);
+
+            if (cartResponse.data) {
+                setCartItemsCount(cartResponse.data?.data?.length);
+            }
+
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleModelClick2 = buttonId => {
         setIsOpenModel2(buttonId);
@@ -68,12 +87,6 @@ function Header() {
             setShowDetailesItem(false);
         }
     }
-    const showCartItems = async () =>{
-        const cartItems = await AxiosInstance.get(`carts`)
-        if (cartItems.data) {
-            console.log(data);
-        }
-    };
 
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
@@ -179,7 +192,7 @@ function Header() {
                     <LiaShoppingCartSolid size={26} />
                     <span
                         className='text-center flex items-center justify-center absolute top-[-7px] right-[-6px] text-[10px] text-bold h-[20px] w-[20px] rounded-full bg-red-500 text-white'>
-                        <div>{cartItems.length}</div>
+                        <div>{cartItemsCount}</div>
                     </span>
                 </button>
                 <button
@@ -206,9 +219,9 @@ function Header() {
                         onClick={() => navigate('/')}
                         classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                         style={{
-                            border: `1px solid ${buttons[0]?.color || ''}`,
+                            border: `1px solid ${buttons[1]?.color || ''}`,
                             backgroundColor: 'transparent',
-                            borderRadius: buttons[0]?.shape || '',
+                            borderRadius: buttons[1]?.shape || '',
                         }}
                     />
                     {isLoggedIn ? (
@@ -218,9 +231,9 @@ function Header() {
                                 title={t('Dashboard')}
                                 classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                                 style={{
-                                    border: `1px solid ${buttons[0]?.color || ''}`,
+                                    border: `1px solid ${buttons[1]?.color || ''}`,
                                     backgroundColor: 'transparent',
-                                    borderRadius: buttons[0]?.shape || '',
+                                    borderRadius: buttons[1]?.shape || '',
                                 }}
                             />
                             <Button
@@ -228,9 +241,9 @@ function Header() {
                                 onClick={handleLogout}
                                 classContainer='!w-100 !px-[16px] !font-medium !bg-[var(--danger)]'
                                 style={{
-                                    border: `1px solid ${buttons[0]?.color || ''}`,
+                                    border: `1px solid ${buttons[1]?.color || ''}`,
                                     backgroundColor: 'transparent',
-                                    borderRadius: buttons[0]?.shape || '',
+                                    borderRadius: buttons[1]?.shape || '',
                                 }}
                             />
                         </>
@@ -240,11 +253,11 @@ function Header() {
                                 title={t('Create an account')}
                                 link='/register'
                                 onClick={() => dispatch(setIsOpen(false))}
-                                classContainer='!w-100 !px-[25px]'
+                                classContainer='!w-100 !px-[16px] !font-medium'
                                 style={{
-                                    border: `1px solid ${buttons[0]?.color || ''}`,
+                                    border: `1px solid ${buttons[1]?.color || ''}`,
                                     backgroundColor: 'transparent',
-                                    borderRadius: buttons[0]?.shape || '',
+                                    borderRadius: buttons[1]?.shape || '',
                                 }}
                             />
                             <Button
@@ -253,9 +266,9 @@ function Header() {
                                 onClick={() => dispatch(setIsOpen(false))}
                                 classContainer='!w-100 !px-[16px] !font-medium'
                                 style={{
-                                    border: `1px solid ${buttons[0]?.color || ''}`,
+                                    border: `1px solid ${buttons[1]?.color || ''}`,
                                     backgroundColor: 'transparent',
-                                    borderRadius: buttons[0]?.shape || '',
+                                    borderRadius: buttons[1]?.shape || '',
                                 }}
                             />
                         </>

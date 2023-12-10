@@ -9,6 +9,7 @@ const DetailesItem = ({ onClose }) => {
   const GlobalShape = sessionStorage.getItem('globalShape');
   const GlobalColor = sessionStorage.getItem('globalColor');
     const {branches} = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
+    const Language = useSelector((state) => state.languageMode.languageMode)
 
     const branchesSelectRef = useRef(null);
 
@@ -69,17 +70,21 @@ const DetailesItem = ({ onClose }) => {
               <div className="modal-wrapper flex items-center z-[50]">
                   <div className="modal max-w-md min-w-[480px] bg-white overflow-y-auto mx-5 xl:max-w-xl lg:max-w-xl md:max-w-xl max-h-screen shadow-lg flex-row rounded-lg ">
                       <div className="modal-header grid grid-cols-1 p-5 items-center border-b border-ternary-light">
-                          {isLoggedIn && <div className="text-center">
+                          <div className="text-center">
                               <h5
                                   className="text-center text-black font-bold text-lg">
                                   {t('Your default branch')}
                               </h5>
-                              {selectedBranch?.name ? <pre className={"border my-2 text-left p-2"} style={{direction: 'ltr'}}>
+                              {selectedBranch?.name ? <pre className={"border my-2 text-left p-2"} style={{
+                                  direction: Language == 'en' ? 'ltr ' : 'rtl',
+                                  textAlign: Language == 'en' ? 'left ' : 'right'
+                              }}>
                                   {t('Name')}: {selectedBranch?.name}<br />
                                   Lat: {selectedBranch?.lat} &nbsp; Lng: {selectedBranch?.lng}<br />
-                                  {t('Delivery Availability')}: {t(selectedBranch?.delivery_availability ? 'Yes' : 'No')}
+                                  {t('Delivery Availability')}: {t(selectedBranch?.delivery_availability ? 'Yes' : 'No')}<br />
+                                      {t('Preparation time delivery')}: {selectedBranch?.preparation_time_delivery || t('not set')}
                               </pre> : <span className={""}>{t('No default branch selected')}</span>}
-                          </div> }
+                          </div>
 
                           <hr className={"my-5"} />
 
