@@ -83,5 +83,6 @@ class UserSeeder extends Seeder
         $user->branch()->associate($branch);
         $user->save();
 
+
     }
 }
