@@ -113,7 +113,7 @@
                                             </th>
                                             <th class="min-w-100px">Order ID</th>
                                             <th class="min-w-175px">Customer</th>
-                                            <th class="text-end min-w-70px">Delivery Type</th>
+                                            {{-- <th class="text-end min-w-70px">Delivery Type</th> --}}
                                             <th class="text-end min-w-70px">Branch Name</th>
                                             <th class="text-end min-w-70px">Status</th>
                                             <th class="text-end min-w-100px">Total</th>
@@ -161,16 +161,16 @@
                                                     </td>
                                                     <!--end::Customer=-->
                                                     <!--begin::Status=-->
-                                                    <td class="text-end pe-0" data-order="Refunded">
+                                                    {{-- <td class="text-end pe-0" data-order="Refunded">
                                                         <!--begin::Badges-->
-                                                        @if($order->delivery_type = 'delivery')
+                                                        @if($order->delivery_type->name = 'delivery')
                                                             <div class="badge badge-light-info">{{__("messages.delivery")}}</div>
                                                         @elseif($order->delivery_type = 'receive_from_branch')
                                                             <div class="badge badge-light">{{__("messages.receive_from_branch")}}</div>
                                                         @endif
                                                       
                                                         <!--end::Badges-->
-                                                    </td>
+                                                    </td> --}}
                                                     <td class="text-end pe-0" >
                                                         <!--begin::Badges-->
                                                         <div class="fw-bolder"> {{$order->branch->name}}</div>

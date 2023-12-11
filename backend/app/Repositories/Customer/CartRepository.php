@@ -9,6 +9,7 @@ use App\Models\Tenant\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
+use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\PaymentMethod;
 use App\Traits\APIResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -212,6 +213,15 @@ class CartRepository
         $method = PaymentMethod::where('name',$name)->first();
         if($method){
             return $this->cart->branch->payment_methods->contains('id',$method->id);
+        }
+        return false;
+    }
+
+    public function hasDelivery($type)
+    {
+        $type = DeliveryType::where('name',$type)->first();
+        if($type){
+            return $this->cart->branch->delivery_types->contains('id',$type->id);
         }
         return false;
     }

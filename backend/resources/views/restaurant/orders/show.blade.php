@@ -118,7 +118,7 @@
                                                      </span>
                                                      <!--end::Svg Icon-->{{__('messages.shipping-method')}}</div>
                                                  </td>
-                                                 <td class="fw-bolder text-end">{{__('messages. '.$order->delivery_type_name)}}</td>
+                                                 <td class="fw-bolder text-end">{{__('messages.'.$order->delivery_type->name)}}</td>
                                              </tr>
                                              <!--end::Date-->
                                          </tbody>
@@ -131,7 +131,7 @@
                          </div>
                          <!--end::Order details-->
                          <!--begin::Customer details-->
-                         <div class="card card-flush py-4 flex-row-fluid">
+                        <div class="card card-flush py-4 flex-row-fluid">
                              <!--begin::Card header-->
                              <div class="card-header">
                                  <div class="card-title">
@@ -528,13 +528,13 @@
                                                              <!--begin::VAT-->
                                                              <tr>
                                                                  <td colspan="4" class="text-end">{{__('messages.vat')}} ({{$order->vat}}%)</td>
-                                                                 <td class="text-end">{{$order->total - $order->subtotal}}</td>
+                                                                 <td class="text-end">{{$order->total - ($order->subtotal  + $order->delivery_type->cost)}}</td>
                                                              </tr>
                                                              <!--end::VAT-->
                                                              <!--begin::Shipping-->
                                                              <tr>
                                                                  <td colspan="4" class="text-end">{{__('messages.shipping-rate')}}</td>
-                                                                 <td class="text-end">TODO</td>
+                                                                 <td class="text-end">{{$order->delivery_type->cost}}</td>
                                                              </tr>
                                                              <!--end::Shipping-->
                                                              <!--begin::Shipping-->

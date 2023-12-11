@@ -26,6 +26,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'payment_method'=>'required',
+            'delivery_type'=>'required',
             'shipping_address'=>'nullable',
             'order_notes'=>'nullable',
             'cart'=>'nullable'
@@ -42,7 +43,9 @@ class OrderRequest extends FormRequest
             if(!$cart->hasPayment($this->payment_method)){
                 $validator->errors()->add('payment_method', __('Invalid payment method'));
             }
-            
+            if(!$cart->hasDelivery($this->delivery_type)){
+                $validator->errors()->add('delivery_type', __('Invalid Delivery Type'));
+            }
         });
     }
 

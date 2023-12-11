@@ -160,7 +160,7 @@
                         <td>{{ $order->branch->name }}</td>
                         <td>{{ $order->payment_method->name }}</td>
                         <td>{{ $order->total }}</td>
-                        <td>{{ $order->delivery_type_name }}</td>
+                        <td>{{ $order->delivery_type->name }}</td>
                         <td>{{ $order->status }}</td>
                     </tr>
                 </tbody>
