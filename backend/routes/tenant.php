@@ -215,7 +215,7 @@ Route::group([
                     'index','store','destroy'
                 ]);
                 Route::resource("orders",CustomerOrderController::class)->only([
-                    'store'
+                    'store', 'index'
                 ]);
             });
 

@@ -314,7 +314,8 @@ return [
     'pick-up-by-car'=>"Pick up by Car",
     "Delivery"=>"Delivery",
     "PICKUP"=>'PICKUP',
-    'PICKUP By Car'=>'PICKUP By Car'
+    'PICKUP By Car'=>'PICKUP By Car',
+    'pick-up-from-the-restaurant-car' => 'Pick up from the restaurant with car'
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

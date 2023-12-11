@@ -73,7 +73,7 @@ class BranchSeeder extends Seeder
             'friday_open' => $currentDateTime->format('H:i'),
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
         ]);
-      
+
       $branch2->delivery_types()->sync([
           DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY,
           DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP,

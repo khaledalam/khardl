@@ -310,7 +310,8 @@ return [
     'pick-up-from-the-restaurant'=>'الاستلام من المطعم',
     'pick-up-by-car'=>"استلام بواسطة السيارة",
     "PICKUP"=>'التقاط الطلب',
-    'PICKUP By Car'=>'التقاط الطلب بالسيارة'
+    'PICKUP By Car'=>'التقاط الطلب بالسيارة',
+    'pick-up-from-the-restaurant-car' => 'الاستلام من المطعم بالسياره'
 ];
 
 

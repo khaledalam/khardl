@@ -22,6 +22,10 @@ class OrderController
     {
         return $this->order->create($request,$this->cart);
     }
-  
+
+    public function index(){
+        return $this->sendResponse($this->order, '');
+    }
+
 
 }
