@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('branches_payment_methods', function (Blueprint $table) {
             $table->unsignedBigInteger('payment_method_id');
             $table->unsignedBigInteger('branch_id');
-            $table->boolean('is_active')->default(true);
 
             $table->foreign('payment_method_id')->references('id')->on('payment_methods')->onDelete('cascade');
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');

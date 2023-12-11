@@ -180,17 +180,23 @@
 
                                             <!--end::Stat-->
                                         </div>
+                                        
                                         <!--end::Stats-->
                                     </div>
                                     <!--end::Body-->
                                     <!--begin::Footer-->
-                                    <div class="d-flex flex-stack mt-auto bd-highlight">
+                                    
+                                    <div class="d-flex align-items-center">
                                         @if ($branch->is_primary)
                                             <div
-                                                class="border border-gray-300 border-dashed rounded min-w-50px w-50 py-2 px-4 mb-3">
+                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                 <a href="#" class="fs-6 text-700 fw-bolder">{{ __('messages.edit-site') }}</a>
                                             </div>
                                         @endif
+                                            <div
+                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">
+                                                <a href="{{route('restaurant.settings.branch',['branch'=>$branch->id])}}" class="fs-6 text-700 fw-bolder">{{ __('messages.settings') }}</a>
+                                            </div>
                                         <div>
                                             <!--begin::Actions-->
                                             {{-- <a href="demo1/dist/apps/projects/project.html"

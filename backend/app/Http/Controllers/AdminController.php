@@ -451,7 +451,7 @@ class AdminController extends Controller
 
     public function logs(Request $request)
     {
-        $user = Auth::user();
+        
         $query = DB::table('logs')->orderBy('created_at', 'desc');
 
         if ($request->filled('user_id')) {
@@ -466,11 +466,11 @@ class AdminController extends Controller
             }
         }
 
-        $users = User::where('role', 10)->get();
-
+        $owners = User::get();
+        $user = Auth::user();
         $logs = $query->paginate(25);
 
-        return view('admin.logs', compact('user', 'logs', 'users'));
+        return view('admin.logs', compact('user', 'logs', 'owners'));
     }
 
 

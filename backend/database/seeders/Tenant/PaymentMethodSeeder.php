@@ -28,6 +28,6 @@ class PaymentMethodSeeder extends Seeder
             'id'=> self::PAYMENT_METHOD_CC,
             'name'=>PaymentMethod::CREDIT_CARD,
         ]);
-     
+
     }
 }

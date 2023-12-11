@@ -9,6 +9,7 @@ use App\Models\Tenant\CartItem;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
+use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\PaymentMethod;
 use App\Traits\APIResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -17,7 +18,7 @@ class CartRepository
 {
     /** @var Cart */
     public $cart;
-
+    const VAT_PERCENTAGE = 15;
     use APIResponseTrait;
 
     public  function initiate()
@@ -98,20 +99,6 @@ class CartRepository
         // return $this->cart->discount;
     }
 
-    public function tax()
-    {
-        return 0;
-    }
-    public function branch()
-    {
-        return $this->cart->branch;
-    }
-    public function updatePaymentMethod($payment_method_id):void{
-        $this->cart->payment_method_id = $payment_method_id;
-        $this->cart->save();
-    }
-   
-
     public function subTotal()
     {
         return $this->cart->items()
@@ -121,6 +108,29 @@ class CartRepository
                 return $total + $item->price * $item->quantity;
             }, 0);
     }
+    public function tax($subTotal = null)
+    {
+       
+        $vat = self::VAT_PERCENTAGE;
+
+        return number_format((($subTotal ?? $this->subTotal() - $this->discount()) * $vat) / 100 , 2, '.', '');
+    }
+    public function total($subTotal = null)
+    {
+        $subTotal = $subTotal ?? $this->subTotal();
+        return number_format($subTotal - $this->discount() + $this->tax($subTotal), 2, '.', '');
+    }
+
+    public function branch()
+    {
+        return $this->cart->branch;
+    }
+    public function updatePaymentMethod($payment_method_id):void{
+        $this->cart->payment_method_id = $payment_method_id;
+        $this->cart->save();
+    }
+
+
     public function clone_to_order_items($order_id):void {
         $this->cart->items->map(function($cart_item)use($order_id){
             OrderRepository::clone_cart_items(
@@ -134,18 +144,15 @@ class CartRepository
         });
     }
 
-    public function total()
-    {
-        return number_format($this->subTotal() - $this->discount() + $this->tax(), 2, '.', '');
-    }
-
+   
 
     public function items()
     {
         $items = $this->cart->items->load(['item']);
         return $this->sendResponse([
-            'items'=>$items,
-            'payment_methods'=>$this->paymentMethods()
+            'items' => $items,
+            'payment_methods' => $this->paymentMethods(),
+            'delivery_types' => $this->deliveryTypes()
         ], '');
     }
 
@@ -157,9 +164,12 @@ class CartRepository
 
 
     public function paymentMethods(){
-        return $this->cart->branch->payment_methods;
+        return $this->cart?->branch?->payment_methods;
     }
 
+    public function deliveryTypes(){
+        return $this->cart?->branch?->delivery_types;
+    }
 
 
     public function hasItems():bool{
@@ -183,7 +193,7 @@ class CartRepository
     {
         $method = PaymentMethod::where('name',PaymentMethod::CASH_ON_DELIVERY)->first();
         if($method){
-            return $this->cart->branch->active_payment_methods->contains('id',$method->id);
+            return $this->cart->branch->payment_methods->contains('id',$method->id);
         }
         return false;
     }
@@ -193,16 +203,25 @@ class CartRepository
     {
         $method = PaymentMethod::where('name',PaymentMethod::CREDIT_CARD)->first();
         if($method){
-            return $this->cart->branch->active_payment_methods->contains('id',$method->id);
+            return $this->cart->branch->payment_methods->contains('id',$method->id);
         }
         return false;
     }
-   
+
     public function hasPayment($name)
     {
         $method = PaymentMethod::where('name',$name)->first();
         if($method){
-            return $this->cart->branch->active_payment_methods->contains('id',$method->id);
+            return $this->cart->branch->payment_methods->contains('id',$method->id);
+        }
+        return false;
+    }
+
+    public function hasDelivery($type)
+    {
+        $type = DeliveryType::where('name',$type)->first();
+        if($type){
+            return $this->cart->branch->delivery_types->contains('id',$type->id);
         }
         return false;
     }

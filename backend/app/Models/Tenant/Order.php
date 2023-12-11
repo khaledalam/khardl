@@ -20,10 +20,12 @@ class Order extends Model
         'payment_status',
         'shipping_address',
         'order_notes',
-        'delivery_type'
+        'delivery_type_id',
+        'vat',
+        'subtotal'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
-
+    
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);
@@ -44,7 +46,13 @@ class Order extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
+    public function delivery_type()
+    {
+        return $this->belongsTo(DeliveryType::class);
+    }
+    
     public function items(){
         return $this->hasMany(OrderItem::class);
     }
+   
 }

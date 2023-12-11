@@ -966,6 +966,9 @@ video {
 .ms-6 {
   margin-inline-start: 1.5rem;
 }
+.ms-auto {
+  margin-inline-start: auto;
+}
 .mt-0 {
   margin-top: 0px;
 }
@@ -2168,6 +2171,9 @@ video {
 .ps-14 {
   padding-inline-start: 3.5rem;
 }
+.ps-3 {
+  padding-inline-start: 0.75rem;
+}
 .ps-4 {
   padding-inline-start: 1rem;
 }
@@ -2487,6 +2493,9 @@ video {
 }
 .opacity-0 {
   opacity: 0;
+}
+.opacity-10 {
+  opacity: 0.1;
 }
 .opacity-25 {
   opacity: 0.25;

@@ -301,12 +301,20 @@
     "Yes": "نعم",
     "Your Cart": "السله",
     "Checkout": "الدفع",
+    "Empty Cart": "تفريغ السله",
     "Remove": "حذف",
     "Vat": "ضريبة القيمة المضافة",
     "Select Payment Method": "اختر وسيله الدفع",
+    "Select Delivery Type": "اختر نوع التوصيل",
+    "PICKUP": "التقاط الطلب",
+    "PICKUP By Car": "التقاط الطلب في السياره",
     "Inclusive VAT": "شاملة ضريبة القيمة المضافة",
     "Credit Card": "بطاقة إئتمان",
     "Cash on Delivery": "الدفع عند الاستلام",
     "Place Order": "تقديم الطلب",
-    "Are You sure you want to place the order?": "هل تريد ارسال الطلب؟"
+    "Are You sure you want to place the order?": "هل تريد ارسال الطلب؟",
+    "Are you sure to empty cart items?": "هل انت متاكد من حذف جميع عناصر السله؟",
+    "Order has been created successfully": "تم انشاء الطلب بنجاح",
+    "Failed to processed the checkout": "فشل في اكتمال عمله الدفع",
+    "free": "مجانا"
 }
