@@ -9,6 +9,7 @@ use App\Models\Tenant\Branch;
 use App\Models\Tenant\Category;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -68,6 +69,25 @@ class RestaurantController extends BaseController
         return view('restaurant.settings',
             compact('user'));
     }
+    public function settingsBranch(Branch $branch){
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+        $payment_methods = $branch->payment_methods->pluck('id','name');
+
+        return view('restaurant.settings_branch',
+            compact('user','branch','payment_methods'));
+    }
+    public function updateSettingsBranch(Branch $branch,Request $request){
+        $methods = null;
+        foreach($request->payment_methods ?? [] as $method){
+            $methods [] = PaymentMethod::where('name',$method)->first()->id;
+        }
+        $branch->payment_methods()->sync($methods);
+        return redirect()->back()->with('success', __('Branch settings successfully updated.'));
+    
+    }
+    
+    
 
     public function orders_all(){
         /** @var RestaurantUser $user */
@@ -589,7 +609,8 @@ class RestaurantController extends BaseController
             'can_modify_working_time',
             'can_modify_advertisements',
             'can_edit_menu',
-            'can_control_payment'
+            'can_control_payment',
+  
         ];
 
         $insertData = [];

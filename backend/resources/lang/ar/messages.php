@@ -289,7 +289,7 @@ return [
     'discount'=>'الخصم',
     'vat'=>'ضريبة القيمة المضافة',
     'grand-total'=>'المجموع الاجمالي',
-    "online"=>"اونلاين",
+    "online"=>"الكتروني",
     "cash"=>"كاش",
     "Cash on Delivery"=>"الدفع عن التوصيل",
     'Credit Card'=>"بطاقة الكترونية",
@@ -299,6 +299,15 @@ return [
     'preparations'=>'تجهيزات الطلب',
     'are-you-sure-you-want-to-approve-order-status'=>'هل انت متأكد من تأكيد حالة الطلب',
     'are-you-sure-you-want-to-cancel-order-status'=>'هل انت متأكد من الغاء الطلب ',
+    'customer-payment-methods'=>'طرق دفع الزبائن',
+    'online-payment'=>'دفع الالكتروني',
+    'visa'=>'خدمة فيزا',
+    'master-card'=>'خدمة ماستر ائتمان',
+    'mada'=>'خدمة مدي',
+    'apple-pay'=>' خدمة ابل باي',
+    'payment-by-bank-card-upon-delivery'=>'الدفع عن طريق البطاقات المصرفية عند التسليم',
+    'customer-reception-methods'=>'طرق استقبال طلبات العملاء',
+    'pick-up-from-the-restaurant'=>'الاستلام من المطعم',
 ];
 
 

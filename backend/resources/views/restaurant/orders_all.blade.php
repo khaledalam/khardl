@@ -232,9 +232,9 @@
                                                             </div>
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->
-                                                            <div class="menu-item px-3">
+                                                            {{-- <div class="menu-item px-3">
                                                                 <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
-                                                            </div>
+                                                            </div> --}}
                                                             @if($order->status == 'pending')
                                                                 <div class="menu-item px-3">
                                                                     <a href="#" onclick="showConfirmation('accepted',{{$order->id}})" class="menu-link px-3" >{{__('messages.approve')}}</a>

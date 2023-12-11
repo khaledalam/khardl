@@ -301,6 +301,17 @@ return [
     'no'=>'No',
     'are-you-sure-you-want-to-approve-order-status'=>'Are you sire you want to approve order status',
     'are-you-sure-you-want-to-cancel-order-status'=>'Are you sire you want to cancel order status',
+    'customer-payment-methods'=>'Customer payment methods',
+    'online-payment'=>'Online payment',
+    'visa'=>'Visa',
+    'master-card'=>'Master card',
+    'mada'=>'Mada',
+    'apple-pay'=>'apple pay',
+
+    'payment-by-bank-card-upon-delivery'=>'Payment by bank card upon delivery',
+    'customer-reception-methods'=>'Customer reception methods',
+    'pick-up-from-the-restaurant'=>'Pick up from the restaurant',
+
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

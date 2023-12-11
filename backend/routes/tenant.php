@@ -96,6 +96,8 @@ Route::group([
                 // Route::get('/{branch}',[RestaurantController::class, 'branch'])->name('restaurant.branch');
                 Route::get('/orders/{order}',[RestaurantController::class, 'branchOrders'])->name('restaurant.branch.order');
                 Route::put('/orders/{order}/status',[OrderController::class,'updateStatus'])->name('restaurant.branch.order.status');
+                // Route::delete('/orders/{order}',[OrderController::class,'destroy'])->name('restaurant.branch.order.destroy');
+
             });
             Route::middleware('restaurant')->group(function () {
 
@@ -114,6 +116,9 @@ Route::group([
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::get('/customers-data', [RestaurantController::class, 'customers_data'])->name('restaurant.customers_data');
                 Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
+                Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
+                Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
+
 
 
                 Route::get('/orders-all', [RestaurantController::class, 'orders_all'])->name('restaurant.orders_all');

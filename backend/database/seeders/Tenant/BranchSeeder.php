@@ -66,7 +66,8 @@ class BranchSeeder extends Seeder
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
         ]);
         $branch->payment_methods()->sync([
-            PaymentMethodSeeder::PAYMENT_METHOD_CC
+            // PaymentMethodSeeder::PAYMENT_METHOD_CC
+            PaymentMethodSeeder::PAYMENT_METHOD_COD
         ]);
 
     }
