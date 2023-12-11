@@ -20,8 +20,8 @@ class Category extends Model
     ];
 
     public $translatable = ['name'];
-   
-   
+
+
     /**
      * Retrieve branch (if exists).
      */
@@ -38,6 +38,6 @@ class Category extends Model
     }
     public function items()
     {
-        return $this->hasMany(Item::class)->where('availability', true);
+        return $this->hasMany(Item::class); //->where('availability', true);
     }
 }
