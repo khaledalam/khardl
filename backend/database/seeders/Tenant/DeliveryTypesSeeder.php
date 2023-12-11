@@ -14,7 +14,7 @@ class DeliveryTypesSeeder extends Seeder
     public const DELIVERY_TYPE_PICKUP = 2;
     public const DELIVERY_TYPE_PICKUPـ_BY_CAR = 3;
 
-    public const DELIVERY_TYPE_B_PICKUP = 3;
+    public const DELIVERY_TYPE_B_PICKUP = 4;
 
     public function run(): void
     {
