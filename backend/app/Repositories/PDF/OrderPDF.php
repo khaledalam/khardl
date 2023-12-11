@@ -2,6 +2,7 @@
 
 namespace App\Repositories\PDF;
 
+use Carbon\Carbon;
 use App\Models\Tenant;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\RestaurantStyle;
@@ -39,8 +40,8 @@ class OrderPDF implements PdfPrintInterface
     }
     public function fileName():string {
         if($this->id){
-            return "{$this->restaurant->restaurant_name}-order-$this->id.pdf";
+            return "{$this->restaurant->restaurant_name}-order-$this->id ".Carbon::now()->format('d-m-Y h:i a').".pdf";
         }
-        return "{$this->restaurant->restaurant_name}-orders.pdf";
+        return "{$this->restaurant->restaurant_name}-orders ".Carbon::now()->format('d-m-Y h:i a').".pdf";
     }
 }
