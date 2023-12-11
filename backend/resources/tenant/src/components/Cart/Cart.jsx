@@ -54,11 +54,12 @@ const Cart = () => {
         if (loading)return;
         setLoading(true);
 
-
         setDeliveryType(type.name);
 
-        const cartResponse = await AxiosInstance.get(`deliveryType` ).then(e => {
+        await AxiosInstance.get(`deliveryType` ).then(e => {
             setDeliveryCost(type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free'));
+        }).finally(r => {
+            setLoading(false);
         });
 
 
