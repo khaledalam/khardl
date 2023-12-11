@@ -48,6 +48,7 @@ class BranchSeeder extends Seeder
             DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY,
             DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
         ]);
+     
 
 
         // This branch has pickup only
@@ -74,8 +75,9 @@ class BranchSeeder extends Seeder
         ]);
 
       $branch2->delivery_types()->sync([
-          DeliveryTypesSeeder::DELIVERY_TYPE_B_DELIVERY,
-          DeliveryTypesSeeder::DELIVERY_TYPE_B_PICKUP,
+          DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY,
+          DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP,
+          DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP_BY_CAR,
       ]);
       $branch2->payment_methods()->sync([
           PaymentMethodSeeder::PAYMENT_METHOD_COD

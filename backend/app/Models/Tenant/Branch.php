@@ -59,12 +59,8 @@ class Branch extends Model
         return $this->belongsToMany(Order::class);
     }
     public function delivery_types(){
-        return $this->belongsToMany(DeliveryType::class,'branches_delivery_types')
-            ->withPivot('is_active');
+        return $this->belongsToMany(DeliveryType::class,'branches_delivery_types');
     }
-    public function active_delivery_types(){
-        return $this->belongsToMany(DeliveryType::class,'branches_delivery_types')
-            ->wherePivot('is_active',true);
-    }
+  
 
 }

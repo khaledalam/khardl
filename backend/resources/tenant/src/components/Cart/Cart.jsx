@@ -70,11 +70,12 @@ const Cart = () => {
             try {
                 const cartResponse = await AxiosInstance.post(`/orders`,{
                     payment_method: paymentMethod,
+                    delivery_type: deliveryType,
 
                     // TODO @todo more info
                     shipping_address: '',
                     order_notes: '',
-                    delivery_type:  ''
+
                 });
 
                 if (cartResponse.data) {
@@ -207,7 +208,6 @@ const Cart = () => {
                                                         value={method.name}
                                                         checked={paymentMethod === method.name}
                                                         onChange={() => handlePaymentMethodChange(method)}
-                                                        disabled={!method.pivot.is_active} // You can customize this based on your logic
                                                     /> {t(method.name)}
                                                 </label>
                                         ))}
@@ -226,8 +226,7 @@ const Cart = () => {
                                                     value={type.name}
                                                     checked={deliveryType === type.name}
                                                     onChange={() => handleDeliveryTypeChange(type)}
-                                                    disabled={!type.pivot.is_active} // You can customize this based on your logic
-                                                /> {t(type?.name)} <small>({type?.cost > 0 ? deliveryCost : t('free')})</small>
+                                                /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free')})</small>
                                             </label>
                                         ))}
 

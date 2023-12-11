@@ -311,8 +311,11 @@ return [
     'payment-by-bank-card-upon-delivery'=>'Payment by bank card upon delivery',
     'customer-reception-methods'=>'Customer reception methods',
     'pick-up-from-the-restaurant'=>'Pick up from the restaurant',
+    'pick-up-by-car'=>"Pick up by Car",
+    "Delivery"=>"Delivery",
+    "PICKUP"=>'PICKUP',
+    'PICKUP By Car'=>'PICKUP By Car',
     'pick-up-from-the-restaurant-car' => 'Pick up from the restaurant with car'
-
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

@@ -12,10 +12,8 @@ class Cart extends Model
 
     protected $fillable = [
         'user_id',
-        'payment_method_id',
         'branch_id',
         'total',
-        'delivery_type'
 
     ];
 

@@ -20,7 +20,7 @@ class Order extends Model
         'payment_status',
         'shipping_address',
         'order_notes',
-        'delivery_type',
+        'delivery_type_id',
         'vat',
         'subtotal'
     ];
@@ -46,10 +46,13 @@ class Order extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
+    public function delivery_type()
+    {
+        return $this->belongsTo(DeliveryType::class);
+    }
+    
     public function items(){
         return $this->hasMany(OrderItem::class);
     }
-    public function getDeliveryTypeNameAttribute(){
-        return ucfirst(str_replace('_', ' ', $this->attributes['delivery_type']));
-    }
+   
 }

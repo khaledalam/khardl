@@ -5,6 +5,7 @@ namespace Database\Seeders\Tenant;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\Branch;
+use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Setting;
 use Illuminate\Database\Seeder;
 use App\Models\Tenant\OrderItem;
@@ -31,7 +32,7 @@ class OrderSeeder extends Seeder
                 'status'=>$status[array_rand($status)],
                 "payment_method_id"=>PaymentMethod::inRandomOrder()->first()->id,
                 'payment_status'=>"pending",
-                'delivery_type'=>"receive_from_branch",
+                'delivery_type_id'=>DeliveryType::inRandomOrder()->first()->id,
                 'shipping_address'=>fake()->address(),
             ]);
             for ($j = 0; $j < 3; $j++) {

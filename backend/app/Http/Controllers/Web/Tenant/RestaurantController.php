@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\Category;
+use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\PaymentMethod;
@@ -82,20 +83,18 @@ class RestaurantController extends BaseController
 
 
     public function updateSettingsBranch(Branch $branch,Request $request){
-        $methods = null;
-        $types = null;
+        $payment_methods = null;
+        $delivery_types = null;
         foreach($request->payment_methods ?? [] as $method){
-            $methods [] = PaymentMethod::where('name',$method)->first()->id;
+            $payment_methods [] = PaymentMethod::where('name',$method)->first()->id;
         }
-        $branch->payment_methods()->sync($methods);
-
-
-        foreach($request->reception_methods ?? [] as $method){
-            $types [] = DeliveryType::where('name',$method)->first()->id;
+        foreach($request->delivery_types ?? [] as $method){
+            $delivery_types [] = DeliveryType::where('name',$method)->first()->id;
         }
-        $branch->payment_methods()->sync($methods);
-        $branch->delivery_types()->sync($types);
-        return redirect()->back()->with('success', __('Branch settings successfully updated.'));
+        $branch->payment_methods()->sync($payment_methods);
+        $branch->delivery_types()->sync($delivery_types);
+
+      return redirect()->back()->with('success', __('Branch settings successfully updated.'));
 
     }
 
@@ -122,7 +121,6 @@ class RestaurantController extends BaseController
 
         $user = Auth::user();
         $order->load('user','items');
-
         return view('restaurant.orders.show',
             compact('user','order'));
     }
