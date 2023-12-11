@@ -20,10 +20,12 @@ class Order extends Model
         'payment_status',
         'shipping_address',
         'order_notes',
-        'delivery_type'
+        'delivery_type',
+        'vat',
+        'subtotal'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
-
+    
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);
@@ -46,5 +48,8 @@ class Order extends Model
     }
     public function items(){
         return $this->hasMany(OrderItem::class);
+    }
+    public function getDeliveryTypeNameAttribute(){
+        return ucfirst(str_replace('_', ' ', $this->attributes['delivery_type']));
     }
 }
