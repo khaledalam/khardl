@@ -115,7 +115,7 @@
                                             <th class="min-w-175px">Customer</th>
                                             <th class="text-end min-w-70px">Delivery Type</th>
                                             <th class="text-end min-w-70px">Branch Name</th>
-                                            <th class="text-end min-w-70px">Status Payment</th>
+                                            <th class="text-end min-w-70px">Status</th>
                                             <th class="text-end min-w-100px">Total</th>
                                             <th class="text-end min-w-100px">Date Added</th>
                                             <th class="text-end min-w-100px">Date Modified</th>
@@ -181,11 +181,11 @@
                                                     <!--begin::Status=-->
                                                     <td class="text-end pe-0" data-order="Refunded">
                                                         <!--begin::Badges-->
-                                                        @if($order->payment_status = 'pending')
+                                                        @if($order->status == 'pending')
                                                         <div class="badge badge-light-warning">{{__("messages.pending")}}</div>
-                                                        @elseif($order->payment_status = 'cancelled')
+                                                        @elseif($order->status == 'cancelled')
                                                             <div class="badge badge-danger">{{__("messages.cancelled")}}</div>
-                                                        @elseif($order->payment_status = 'accepted')
+                                                        @elseif($order->status == 'accepted')
                                                             <div class="badge badge-success">{{__("messages.accepted")}}</div>
                                                         @endif
                                                       
@@ -235,6 +235,18 @@
                                                             <div class="menu-item px-3">
                                                                 <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
                                                             </div>
+                                                            @if($order->status == 'pending')
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" onclick="showConfirmation('accepted',{{$order->id}})" class="menu-link px-3" >{{__('messages.approve')}}</a>
+                                                                </div>
+                                                                
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" onclick="showConfirmation('cancelled',{{$order->id}})" class="menu-link px-3" >{{__('messages.cancel')}}</a>
+                                                                </div>
+                                                                
+                                                                
+                                                            @endif
+                                                            
                                                             <!--end::Menu item-->
                                                         </div>
                                                         <!--end::Menu-->
@@ -247,6 +259,34 @@
                                         <!--end::Table body-->
                                     </table>
                                     <!--end::Table-->
+                                    <form id="approve-form"  method="POST" style="display: inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="status" id="orderStatus" >
+                                    </form>
+                                    <script>
+                                        function showConfirmation(status,orderId) {
+                                            event.preventDefault();
+
+                                            Swal.fire({
+                                                title: '{{ __('messages.confirm-approval') }}',
+                                                text: (status == 'accepted')?'{{ __('messages.are-you-sure-you-want-to-approve-order-status')}}':'{{ __('messages.are-you-sure-you-want-to-cancel-order-status')}}',
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonText: '{{ __('messages.yes') }}',
+                                                cancelButtonText: '{{ __('messages.no') }}'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    
+                                                    document.getElementById('orderStatus').setAttribute('value',status);
+                                                    var form = document.getElementById('approve-form');
+                                                    form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
+                                                    form.submit();
+                                                  
+                                                }
+                                            });
+                                        }
+                                    </script>
                                     {{ $orders->links('pagination::bootstrap-4') }}
                                 </div>
                                 <!--end::Card body-->

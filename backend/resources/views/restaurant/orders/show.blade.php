@@ -101,7 +101,7 @@
                                                      </span>
                                                      <!--end::Svg Icon-->{{__('messages.payment-method')}}</div>
                                                  </td>
-                                                 <td class="fw-bolder text-end">{{__('messages'.$order->payment_method->name)}}
+                                                 <td class="fw-bolder text-end">{{__('messages.'.$order->payment_method->name)}}
                                                  <img src="assets/media/svg/card-logos/visa.svg" class="w-50px ms-2" /></td>
                                              </tr>
                                              <!--end::Payment method-->
@@ -118,7 +118,7 @@
                                                      </span>
                                                      <!--end::Svg Icon-->{{__('messages.shipping-method')}}</div>
                                                  </td>
-                                                 <td class="fw-bolder text-end">{{__('messages'.$order->delivery_type_name)}}</td>
+                                                 <td class="fw-bolder text-end">{{__('messages. '.$order->delivery_type_name)}}</td>
                                              </tr>
                                              <!--end::Date-->
                                          </tbody>

@@ -25,6 +25,7 @@ class OrderController extends BaseRepositoryController
         });
     }
     public function updateStatus($order,Request $request){
+    
         $request->validate([
             'status' => 'required|in:accepted,cancelled,pending',
         ]);
@@ -35,7 +36,10 @@ class OrderController extends BaseRepositoryController
         })
         ->findOrFail($order);
         $order->update(['status'=>$request->status]);
-        return $this->sendResponse(null, __('Order has been updated successfully.'));
+        if ($request->expectsJson()) {
+            return $this->sendResponse(null, __('Order has been updated successfully.'));
+        }
+        return redirect()->back()->with('success',__('Order has been updated successfully.'));
     }
    
 }
