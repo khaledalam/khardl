@@ -64,7 +64,6 @@ Route::group([
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
-    Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
@@ -163,7 +162,7 @@ Route::group([
             }catch(Exception $e){
                 return redirect()->back()->with('error',__('File not exists !'));
             }
-            
+
         })
         ->where('path', '(.*)')
         ->name("download.file");
@@ -185,6 +184,12 @@ Route::group([
                 }
             });
         }
+
+        Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
+        Route::get('/cart', static function () {
+            return view('tenant');
+        })->name('cart');
+
 
         Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
 
@@ -229,7 +234,7 @@ Route::group([
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
-    
+
 
 });
 

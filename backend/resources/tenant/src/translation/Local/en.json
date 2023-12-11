@@ -239,6 +239,8 @@
    "View product details": "View product details",
    "Quantity": "Quantity",
    "Add to cart": "Add to cart",
+    "login first": "Login first",
+    "go to cart": "Go to cart",
    "Selected": "Selected",
    "Cancel":"Cancel",
    "Login Description": "Log in with a valid local phone number",
@@ -291,18 +293,26 @@
     "No default branch selected": "No default branch selected",
     "Name": "Name",
     "Delivery Availability": "Delivery Availability",
+    "not set": "Not set",
+    "Preparation time delivery": "Preparation time delivery",
     "No": "No",
     "Yes": "Yes",
     "Your Cart": "Your Cart",
     "Checkout": "Checkout",
+    "Empty Cart": "Empty Cart",
     "Remove": "Remove",
     "Vat": "Vat",
     "Select Payment Method": "Select Payment Method",
+    "Select Delivery Type": "Select Delivery Type",
+    "PICKUP": "Pickup",
+    "PICKUP By Car": "Pickup By Car",
     "Inclusive VAT": "Inclusive VAT",
     "Credit Card": "Credit Card",
     "Cash on Delivery": "Cash on Delivery",
     "Place Order": "Place Order",
-    "Are You sure you want to place the order?": "Are You sure you want to place the order?"
-
-
+    "Are You sure you want to place the order?": "Are You sure you want to place the order?",
+    "Are you sure to empty cart items?": "Are you sure to empty cart items?",
+    "Order has been created successfully": "Order has been created successfully",
+    "Failed to processed the checkout": "Failed to processed the checkout",
+    "free": "Free"
 }

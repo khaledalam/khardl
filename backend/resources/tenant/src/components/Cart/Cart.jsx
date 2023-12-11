@@ -13,6 +13,8 @@ const Cart = () => {
     const [loading, setLoading] = useState(true);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [paymentMethods, setPaymentMethods] = useState(null);
+    const [deliveryType, setDeliveryType] = useState(null);
+    const [deliveryTypes, setDeliveryTypes] = useState(null);
 
     const navigate = useNavigate()
     const {t} = useTranslation();
@@ -31,7 +33,8 @@ const Cart = () => {
             console.log("cart >>>", cartResponse.data)
             if (cartResponse.data) {
                 setCartItems(cartResponse.data?.data.items);
-                setPaymentMethods(cartResponse.data?.data.payment_methods)
+                setPaymentMethods(cartResponse.data?.data?.payment_methods)
+                setDeliveryTypes(cartResponse.data?.data?.delivery_types)
             }
 
         } catch (error) {
@@ -45,13 +48,13 @@ const Cart = () => {
         setPaymentMethod(method.name);
     }
     const handlePlaceOrder = async () => {
-        
+
         if (confirm(t('Are You sure you want to place the order?'))) {
             try {
                 const cartResponse = await AxiosInstance.post(`/orders`,{
                     payment_method: paymentMethod,
 
-                    // TODO @todo more info 
+                    // TODO @todo more info
                     shipping_address: '',
                     order_notes: '',
                     delivery_type:  ''
@@ -90,6 +93,21 @@ const Cart = () => {
         setCartItems(updatedCart);
     };
 
+
+    const handleEmptyCart = async () => {
+        if (loading)return;
+
+        if (!confirm(t("Are you sure to empty cart items?"))) {
+           return;
+        }
+
+        setLoading(true);
+        await AxiosInstance.delete(`/carts/trash`, {})
+            .finally(async () => {
+                setLoading(false);
+                await fetchCartData().then(r => null);
+            });
+    }
     return (
         <div className="cart-page">
 
@@ -162,29 +180,46 @@ const Cart = () => {
                                     ))}
                                 </ul>
                                 <div className="cart-summary">
-
                                     <div className="payment-section my-4 flex flex-col">
                                         <h3 className={"mb-2"}>{t('Select Payment Method')}</h3>
-                                        {paymentMethods.map((method) => (
+                                        {paymentMethods?.map((method) => (
                                                 <label key={method.id}>
-                                                <input
-                                                    type="radio"
-                                                    name="paymentMethod"
-                                                    value={method.name}
-                                                    checked={paymentMethod === method.name}
-                                                    onChange={() => handlePaymentMethodChange(method)}
-                                                />
-                                                {t(method.name)}
+                                                    <input
+                                                        type="radio"
+                                                        name="paymentMethod"
+                                                        value={method.name}
+                                                        checked={paymentMethod === method.name}
+                                                        onChange={() => handlePaymentMethodChange(method)}
+                                                        disabled={!method.pivot.is_active} // You can customize this based on your logic
+                                                    /> {t(method.name)}
                                                 </label>
                                         ))}
-                                      
+
+                                    </div>
+
+                                    <hr />
+
+                                    <div className="payment-section my-4 flex flex-col">
+                                        <h3 className={"mb-2"}>{t('Select Delivery Type')}</h3>
+                                        {deliveryTypes?.map((type) => (
+                                            <label key={type.id}>
+                                                <input
+                                                    type="radio"
+                                                    name="deliveryType"
+                                                    value={type.name}
+                                                    checked={deliveryType === type.name}
+                                                    onChange={() => handleDeliveryTypeChange(type)}
+                                                    disabled={!type.pivot.is_active} // You can customize this based on your logic
+                                                /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free')})</small>
+                                            </label>
+                                        ))}
+
                                     </div>
 
                                     <hr />
 
                                     <div className={"my-4"}>
                                         <h3>{t('Total')}: {getTotalPrice()} {t('SAR')} <small><i>({t('Inclusive VAT')})</i></small></h3>
-                                        <small><i>{t('Vat')}: {getTotalPrice()} {t('SAR')}</i></small>
                                     </div>
 
                                     <hr />
@@ -194,6 +229,13 @@ const Cart = () => {
                                         onClick={() => handlePlaceOrder()}
                                         className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
                                         {paymentMethod === 'cc' ? <span>🛍️ {t('Checkout')} {getTotalPrice()} {t('SAR')}</span> : <span>🛍️ {t('Place Order')}</span>}
+                                    </button>
+
+                                    <button
+                                        disabled={cartItems?.length < 1}
+                                        onClick={() => handleEmptyCart()}
+                                        className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                        <span>🗑️ {t('Empty Cart')}</span>
                                     </button>
                                 </div>
                             </div>

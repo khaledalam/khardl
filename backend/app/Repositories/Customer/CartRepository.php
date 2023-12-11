@@ -128,7 +128,7 @@ class CartRepository
         $this->cart->payment_method_id = $payment_method_id;
         $this->cart->save();
     }
-   
+
 
     public function clone_to_order_items($order_id):void {
         $this->cart->items->map(function($cart_item)use($order_id){
@@ -149,8 +149,9 @@ class CartRepository
     {
         $items = $this->cart->items->load(['item']);
         return $this->sendResponse([
-            'items'=>$items,
-            'payment_methods'=>$this->paymentMethods()
+            'items' => $items,
+            'payment_methods' => $this->paymentMethods(),
+            'delivery_types' => $this->deliveryTypes()
         ], '');
     }
 
@@ -162,9 +163,12 @@ class CartRepository
 
 
     public function paymentMethods(){
-        return $this->cart->branch->payment_methods;
+        return $this->cart?->branch?->payment_methods;
     }
 
+    public function deliveryTypes(){
+        return $this->cart?->branch?->delivery_types;
+    }
 
 
     public function hasItems():bool{
@@ -202,7 +206,7 @@ class CartRepository
         }
         return false;
     }
-   
+
     public function hasPayment($name)
     {
         $method = PaymentMethod::where('name',$name)->first();

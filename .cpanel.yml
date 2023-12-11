@@ -2,4 +2,6 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/khardl5/public_html/
-    - /bin/cp * $DEPLOYPATH
+    - /bin/cp -R * $DEPLOYPATH
+    - php /home/khardl5/public_html/backend/artisan migrate:fresh --seed
+    - php /home/khardl5/public_html/backend/artisan create:tenant

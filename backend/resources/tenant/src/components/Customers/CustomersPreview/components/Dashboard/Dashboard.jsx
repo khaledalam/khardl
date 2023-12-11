@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import TapPage from "./components/TapPage";
 import Dashboard from './pages/Dashboard';
 import Orders from './pages/Orders';

@@ -1946,10 +1946,6 @@ video {
   padding-left: 16px !important;
   padding-right: 16px !important;
 }
-.\!px-\[25px\] {
-  padding-left: 25px !important;
-  padding-right: 25px !important;
-}
 .\!px-\[70px\] {
   padding-left: 70px !important;
   padding-right: 70px !important;
@@ -5329,10 +5325,6 @@ video {
 .\!px-\[16px\] {
   padding-left: 16px !important;
   padding-right: 16px !important;
-}
-.\!px-\[25px\] {
-  padding-left: 25px !important;
-  padding-right: 25px !important;
 }
 .\!px-\[70px\] {
   padding-left: 70px !important;

@@ -27,7 +27,7 @@ class LoginController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
         $credentials = request(['email', 'password']);
-    
+
         if (!Auth::attempt($credentials) ||  !Auth::user()->isWorker()) {
             return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
@@ -52,7 +52,7 @@ class LoginController extends BaseController
             'access_token' => $token,
         ];
 
-    
+
         return $this->sendResponse($data, 'User logged in successfully.');
     }
     public function logout(Request $request)

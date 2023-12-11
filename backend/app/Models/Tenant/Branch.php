@@ -42,7 +42,7 @@ class Branch extends Model
         'delivery_availability',
         'preparation_time_delivery'
     ];
-   
+
 
     // public $translatable = ['name'];
     public function workers(){
@@ -57,6 +57,14 @@ class Branch extends Model
   
     public function orders(){
         return $this->belongsToMany(Order::class);
+    }
+    public function delivery_types(){
+        return $this->belongsToMany(DeliveryType::class,'branches_delivery_types')
+            ->withPivot('is_active');
+    }
+    public function active_delivery_types(){
+        return $this->belongsToMany(DeliveryType::class,'branches_delivery_types')
+            ->wherePivot('is_active',true);
     }
 
 }

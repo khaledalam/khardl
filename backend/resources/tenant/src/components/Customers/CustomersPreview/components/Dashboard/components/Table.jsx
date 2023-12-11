@@ -54,7 +54,6 @@ export function SelectColumnFilter({
         const options = new Set();
         preFilteredRows.forEach((row) => {
             options.add(row.values[id]);
-            console.log(row.values[id]);
         });
         return [...options.values()];
     }, [id, preFilteredRows]);

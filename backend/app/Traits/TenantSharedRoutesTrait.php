@@ -50,7 +50,6 @@ trait TenantSharedRoutesTrait
                 '/site-editor/customers'=>"customers.site_editor",
                 '/site-editor/customers/preview'=>"customers.site_editor.preview",
                 '/site-editor'=>'site_editor',
-                '/cart' => 'cart'
             ],
             'middleware'=>[
                 'auth',

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useTranslation } from 'react-i18next';
 import FullOrders from '../components/Orders';
 import { useSelector } from 'react-redux';
+import AxiosInstance from "../../../../../../axios/axios";
 
 const Orders = () => {
    const { t } = useTranslation();

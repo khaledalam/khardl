@@ -89,7 +89,7 @@ class RestaurantStyleController extends Controller
             ];
 
             // get branches of restaurant
-            $data['branches'] = Branch::all(['name', 'id', 'lat', 'lng', 'delivery_availability']);
+            $data['branches'] = Branch::all(['name', 'id', 'lat', 'lng', 'delivery_availability', 'preparation_time_delivery']);
         }
 
         return $this->sendResponse($data, __('Restaurant style fetched successfully.'));

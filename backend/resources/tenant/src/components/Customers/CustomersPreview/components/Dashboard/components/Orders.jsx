@@ -6,6 +6,7 @@ import Statusbutton from "./Statusbutton";
 import StatusShape from "./StatusShape";
 import OrderDetail from '../pages/OrderDetail';
 import { OrdersCustomer } from '../../../../../../data/data';
+import AxiosInstance from "../../../../../../axios/axios";
 
 function Orders() {
     const { t } = useTranslation();
@@ -67,6 +68,11 @@ function Orders() {
     ];
 
     useEffect(() => {
+
+        console.log("Orders tab");
+
+        fetchOrdersData().then(r => null);
+
         const newData = activeTab === "Dashboard"
             ? [...OrdersCustomer].sort((a, b) => {
                 const dateA = new Date(a.DateAdded);
@@ -76,6 +82,26 @@ function Orders() {
             : OrdersCustomer;
         setData(newData);
     }, []);
+
+
+
+    const fetchOrdersData = async () => {
+        try {
+            const ordersResponse = await AxiosInstance.get(`orders?items&item`)
+
+            console.log(ordersResponse)
+            if (ordersResponse.data) {
+
+
+            } else {
+            }
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
+    };
+
+
 
     return (
         <div>
