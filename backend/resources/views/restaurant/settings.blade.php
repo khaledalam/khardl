@@ -87,43 +87,6 @@
                                                 <!--end::Label-->
                                             </label>
                                             <!--end::Option-->
-                                            <!--begin::Option-->
-                                            <div class="separator separator-dashed my-6"></div>
-                                            <!--end::Option-->
-                                            <div style="margin-top: 50px !important;">
-                                                <span class="text-active-gray-900" style="font-size: 18px !important;">Customer reception methods</span>
-                                            </div>
-
-                                            <div class="separator separator-dashed my-6"></div>
-
-                                            <!--begin::Option-->
-                                            <label class="form-check form-check-custom form-check-solid align-items-start">
-                                                <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="email-preferences[]" checked="checked" value="1" />
-                                                <!--end::Input-->
-                                                <!--begin::Label-->
-                                                <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">Delivery</span>
-													</span>
-                                                <!--end::Label-->
-                                            </label>
-                                            <!--end::Option-->
-                                            <!--begin::Option-->
-                                            <div class="separator separator-dashed my-6"></div>
-                                            <!--end::Option-->
-                                            <!--begin::Option-->
-                                            <label class="form-check form-check-custom form-check-solid align-items-start">
-                                                <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="email-preferences[]" value="1" />
-                                                <!--end::Input-->
-                                                <!--begin::Label-->
-                                                <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">Pick up from the restaurant</span>
-													</span>
-                                                <!--end::Label-->
-                                            </label>
-                                            <!--end::Option-->
-                                            <!--begin::Option-->
 
                                         </div>
                                         <!--end::Card body-->

@@ -311,6 +311,7 @@ return [
     'payment-by-bank-card-upon-delivery'=>'Payment by bank card upon delivery',
     'customer-reception-methods'=>'Customer reception methods',
     'pick-up-from-the-restaurant'=>'Pick up from the restaurant',
+    'pick-up-from-the-restaurant-car' => 'Pick up from the restaurant with car'
 
 ];
 

@@ -101,7 +101,7 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="email-preferences[]"  value="1" />
+                                                <input class="form-check-input me-3" type="checkbox" name="reception_methods[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY] ?? false)?'checked':''}} />
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
@@ -116,11 +116,26 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="email-preferences[]" value="1" />
+                                                <input class="form-check-input me-3" type="checkbox" name="reception_methods[]" value="{{\App\Models\Tenant\DeliveryType::PICKUP}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP] ?? false)?'checked':''}}/>
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
 														<span class="fw-bolder fs-5 mb-0">{{__('messages.pick-up-from-the-restaurant')}}</span>
+													</span>
+                                                <!--end::Label-->
+                                            </label>
+                                            <!--end::Option-->
+                                            <!--begin::Option-->
+                                            <div class="separator separator-dashed my-6"></div>
+                                            <!--end::Option-->
+                                            <!--begin::Option-->
+                                            <label class="form-check form-check-custom form-check-solid align-items-start">
+                                                <!--begin::Input-->
+                                                <input class="form-check-input me-3" type="checkbox" name="reception_methods[]" value="{{\App\Models\Tenant\DeliveryType::PICKUP_BY_CAR}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP_BY_CAR] ?? false)?'checked':''}}/>
+                                                <!--end::Input-->
+                                                <!--begin::Label-->
+                                                <span class="form-check-label d-flex flex-column align-items-start">
+														<span class="fw-bolder fs-5 mb-0">{{__('messages.pick-up-from-the-restaurant-car')}}</span>
 													</span>
                                                 <!--end::Label-->
                                             </label>

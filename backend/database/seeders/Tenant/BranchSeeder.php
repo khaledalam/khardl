@@ -45,9 +45,7 @@ class BranchSeeder extends Seeder
             PaymentMethodSeeder::PAYMENT_METHOD_COD
         ]);
         $branch->delivery_types()->sync([
-            DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY
-        ]);
-        $branch->delivery_types()->sync([
+            DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY,
             DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
         ]);
 
@@ -74,10 +72,9 @@ class BranchSeeder extends Seeder
             'friday_open' => $currentDateTime->format('H:i'),
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
         ]);
-      
+
       $branch2->delivery_types()->sync([
-          DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY,
-          DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP,
+          DeliveryTypesSeeder::DELIVERY_TYPE_B_DELIVERY,
           DeliveryTypesSeeder::DELIVERY_TYPE_B_PICKUP,
       ]);
       $branch2->payment_methods()->sync([

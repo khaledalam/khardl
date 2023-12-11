@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Tenant;
 
 use App\Http\Controllers\Web\BaseController;
+use App\Models\Tenant\DeliveryType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
@@ -73,21 +74,33 @@ class RestaurantController extends BaseController
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $payment_methods = $branch->payment_methods->pluck('id','name');
+        $delivery_types = $branch->delivery_types->pluck('id','name');
 
         return view('restaurant.settings_branch',
-            compact('user','branch','payment_methods'));
+            compact('user','branch','payment_methods', 'delivery_types'));
     }
+
+
     public function updateSettingsBranch(Branch $branch,Request $request){
         $methods = null;
+        $types = null;
         foreach($request->payment_methods ?? [] as $method){
             $methods [] = PaymentMethod::where('name',$method)->first()->id;
         }
         $branch->payment_methods()->sync($methods);
+
+
+        foreach($request->reception_methods ?? [] as $method){
+            $types [] = DeliveryType::where('name',$method)->first()->id;
+        }
+        $branch->payment_methods()->sync($methods);
+        $branch->delivery_types()->sync($types);
         return redirect()->back()->with('success', __('Branch settings successfully updated.'));
-    
+
     }
-    
-    
+
+
+
 
     public function orders_all(){
         /** @var RestaurantUser $user */
@@ -106,14 +119,14 @@ class RestaurantController extends BaseController
     }
 
     public function branchOrders(Order $order){
-   
+
         $user = Auth::user();
         $order->load('user','items');
-        
+
         return view('restaurant.orders.show',
             compact('user','order'));
     }
-    
+
 
     public function products_out_of_stock(){
         /** @var RestaurantUser $user */
@@ -610,7 +623,7 @@ class RestaurantController extends BaseController
             'can_modify_advertisements',
             'can_edit_menu',
             'can_control_payment',
-  
+
         ];
 
         $insertData = [];

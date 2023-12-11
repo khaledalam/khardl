@@ -16,6 +16,8 @@ const Cart = () => {
     const [deliveryType, setDeliveryType] = useState(null);
     const [deliveryTypes, setDeliveryTypes] = useState(null);
 
+    const [deliveryCost, setDeliveryCost] = useState("?");
+
     const navigate = useNavigate()
     const {t} = useTranslation();
     const Language = useSelector((state) => state.languageMode.languageMode);
@@ -47,6 +49,21 @@ const Cart = () => {
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method.name);
     }
+
+    const handleDeliveryTypeChange = async (type) => {
+        if (loading)return;
+        setLoading(true);
+
+
+        setDeliveryType(type.name);
+
+        const cartResponse = await AxiosInstance.get(`deliveryType` ).then(e => {
+            setDeliveryCost(type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free'));
+        });
+
+
+    }
+
     const handlePlaceOrder = async () => {
 
         if (confirm(t('Are You sure you want to place the order?'))) {
@@ -210,7 +227,7 @@ const Cart = () => {
                                                     checked={deliveryType === type.name}
                                                     onChange={() => handleDeliveryTypeChange(type)}
                                                     disabled={!type.pivot.is_active} // You can customize this based on your logic
-                                                /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free')})</small>
+                                                /> {t(type?.name)} <small>({type?.cost > 0 ? deliveryCost : t('free')})</small>
                                             </label>
                                         ))}
 

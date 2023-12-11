@@ -308,6 +308,7 @@ return [
     'payment-by-bank-card-upon-delivery'=>'الدفع عن طريق البطاقات المصرفية عند التسليم',
     'customer-reception-methods'=>'طرق استقبال طلبات العملاء',
     'pick-up-from-the-restaurant'=>'الاستلام من المطعم',
+    'pick-up-from-the-restaurant-car' => 'الاستلام من المطعم بالسياره'
 ];
 
 

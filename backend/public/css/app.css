@@ -1020,6 +1020,9 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.ms-auto {
+  margin-inline-start: auto;
+}
 .block {
   display: block;
 }
@@ -2228,6 +2231,9 @@ video {
 .pt-\[80px\] {
   padding-top: 80px;
 }
+.ps-3 {
+  padding-inline-start: 0.75rem;
+}
 .text-left {
   text-align: left;
 }
@@ -2493,6 +2499,9 @@ video {
 }
 .opacity-50 {
   opacity: 0.5;
+}
+.opacity-10 {
+  opacity: 0.1;
 }
 .\!shadow-\[0_0px_2px_var\(--Forth\)\] {
   --tw-shadow: 0 0px 2px var(--Forth) !important;
