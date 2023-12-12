@@ -21,6 +21,7 @@ class Category extends Model
     ];
 
     public $translatable = ['name'];
+  
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
@@ -46,6 +47,6 @@ class Category extends Model
     }
     public function items()
     {
-        return $this->hasMany(Item::class)->where('availability', true);
+        return $this->hasMany(Item::class); //->where('availability', true);
     }
 }
