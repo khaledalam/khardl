@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use Carbon\Carbon;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +26,14 @@ class Order extends Model
         'subtotal'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
-    
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+    public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);
