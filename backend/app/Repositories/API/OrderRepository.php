@@ -15,7 +15,7 @@ class OrderRepository extends DefaultRepositoryPattern
     public function __construct()
     {
         $user= Auth::user();
-        $this->model = Order::where('branch_id',$user->branch->id);
+        $this->model = Order::where('branch_id',$user->branch->id)->where('status','!=','cancelled');
         $this->resource = new OrderResource(new Order());
     }
     

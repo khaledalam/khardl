@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\Category;
-use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\PaymentMethod;

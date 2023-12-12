@@ -196,17 +196,17 @@
 
                                                     <!--begin::Total=-->
                                                     <td class="text-end pe-0">
-                                                        <span class="fw-bolder">{{$order->total}}</span>
+                                                    <span class="fw-bolder">{{$order->total}}</span>
                                                     </td>
                                                     <!--end::Total=-->
                                                     <!--begin::Date Added=-->
                                                     <td class="text-end" data-order="2022-03-22">
-                                                        <span class="fw-bolder">{{$order->created_at->format('m/d/Y')}}</span>
+                                                        <span class="fw-bolder">{{$order->created_at}}</span>
                                                     </td>
                                                     <!--end::Date Added=-->
                                                     <!--begin::Date Modified=-->
                                                     <td class="text-end" data-order="2022-03-29">
-                                                        <span class="fw-bolder">{{$order->updated_at->format('m/d/Y')}}</span>
+                                                        <span class="fw-bolder">{{$order->updated_at}}</span>
                                                     </td>
                                                     <!--end::Date Modified=-->
                                                     <!--begin::Action=-->

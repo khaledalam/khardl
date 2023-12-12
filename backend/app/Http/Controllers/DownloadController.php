@@ -12,17 +12,21 @@ use Illuminate\Support\Facades\File;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\PDF\PdfPrintInterface;
+use Carbon\Carbon;
 
 class DownloadController extends Controller
 {
     public function download($path,Request $request){
         try{
+
             if (Storage::disk('private')->exists($path)) {
                 $storage_path = storage_path("app/private/$path");
                 if (File::isFile($storage_path)) {
+                 
                     if($request->has('fileName')){
                         $extension = pathinfo($storage_path, PATHINFO_EXTENSION);
-                        $fileName = $request->fileName.'.'.$extension;
+                       
+                        $fileName = $request->fileName.' '.Carbon::now()->format('d-m-Y h:i a').'.'.$extension;
                         return response()->download($storage_path,$fileName);
                     }
                     return response()->download($storage_path);
@@ -30,7 +34,7 @@ class DownloadController extends Controller
                     $zip = new ZipArchive;
                     $zipFileName = 'files.zip';
                     if($request->has('fileName')){
-                        $zipFileName = $request->fileName.'.zip';
+                        $zipFileName = $request->fileName.' '.Carbon::now()->format('d-m-Y h:i a').'.zip';
                     }
                     $zip_path = $storage_path.'/'.$zipFileName;
                     if ($zip->open($zip_path, ZipArchive::CREATE) === TRUE) {
