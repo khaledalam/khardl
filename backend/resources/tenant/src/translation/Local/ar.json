@@ -315,6 +315,9 @@
     "Are You sure you want to place the order?": "هل تريد ارسال الطلب؟",
     "Are you sure to empty cart items?": "هل انت متاكد من حذف جميع عناصر السله؟",
     "Order has been created successfully": "تم انشاء الطلب بنجاح",
-    "Failed to processed the checkout": "فشل في اكتمال عمله الدفع",
-    "free": "مجانا"
+    "Failed to processed the checkout": "فشل في اكتمال عمليه الدفع",
+    "free": "مجانا",
+    "Item removed from cart":"تم حذف المنتح",
+    "Item added to cart":"تم اضافة المنتج",
+    "Not available":"غير متاح"
 }

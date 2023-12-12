@@ -130,6 +130,7 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+    
     'attributes' => [
         'address'               => 'العنوان',
         'age'                   => 'العمر',
@@ -171,6 +172,8 @@ return [
         'c_password'              => 'تأكيد كلمة المرور',
         'terms_and_policies'              => 'شروط الاستخدام ',
         'restaurant_name'              => 'اسم المطعم',
+        'payment_method'        =>'وسيلة الدفع',
+        'delivery_type'=>"نوع التوصيل"
 
     ],
 ];
