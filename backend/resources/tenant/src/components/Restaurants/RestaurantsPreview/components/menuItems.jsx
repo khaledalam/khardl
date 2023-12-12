@@ -20,14 +20,20 @@ function MenuItems({items}) {
             description={item.description}
             calories={item.calories}
             image={item.photo}
-            selection_input_names={item.selection_input_names}
-            selection_input_prices={item.selection_input_prices}
+            
             checkbox_required={item.checkbox_required}
             checkbox_input_titles={item.checkbox_input_titles}
             checkbox_input_names={item.checkbox_input_names}
             checkbox_input_prices={item.checkbox_input_prices}
-            dropdown_input_names={item.dropdown_input_names}
+            
+            selection_required={item.selection_required}
             selection_input_titles={item.selection_input_titles}
+            selection_input_names={item.selection_input_names}
+            selection_input_prices={item.selection_input_prices}
+
+            dropdown_required={item.dropdown_required}
+            dropdown_input_titles={item.dropdown_input_titles}
+            dropdown_input_names={item.dropdown_input_names}
           />
         ))
         }

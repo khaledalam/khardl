@@ -86,14 +86,22 @@ function Card(props) {
           image={props.image}
           calories={props.calories || []}
           price={props.price}
-          selection_input_titles={props.selection_input_titles || []}
-          selection_input_names={props.selection_input_names || []}
-          selection_input_prices={props.selection_input_prices || []}
+
           checkbox_required={props.checkbox_required || []}
           checkbox_input_titles={props.checkbox_input_titles || []}
           checkbox_input_names={props.checkbox_input_names || []}
           checkbox_input_prices={props.checkbox_input_prices || []}
+          
+          selection_required={props.selection_required || []}
+          selection_input_titles={props.selection_input_titles || []}
+          selection_input_names={props.selection_input_names || []}
+          selection_input_prices={props.selection_input_prices || []}
+
+          dropdown_required={props.dropdown_required || []}
+          dropdown_input_titles={props.dropdown_input_titles || []}
           dropdown_input_names={props.dropdown_input_names || []}
+
+    
         />
       ) : null}
       {/*{showDetailesItem ? showMeDetailesItem : null}*/}
