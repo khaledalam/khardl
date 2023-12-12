@@ -50,7 +50,7 @@
                                     @foreach ($orders as $order)
                                     
                                         <tr>
-                                            <td class="ps-9">{{ $order->created_at) }}</td>
+                                            <td class="ps-9">{{ $order->created_at }}</td>
                                             <td class="ps-0">{{ $order->id }}</td>
                                             <td class="ps-0">{{ $order->status }}</td>
                                             <td class="ps-0">{{ $order->branch->name }}</td>
