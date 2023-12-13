@@ -790,7 +790,7 @@
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
                     <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ${optionCount}">
-                    <input type="text"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
+                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -798,7 +798,7 @@
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
                     <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ${optionCount}">
-                    <input type="text"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
+                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -879,7 +879,7 @@
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
                     <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ${optionCount}">
-                    <input type="text"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
+                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;  }
@@ -887,7 +887,7 @@
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
                     <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ${optionCount}">
-                    <input type="text"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
+                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;

@@ -16,7 +16,9 @@ class CategoryRepository extends DefaultRepositoryPattern
         // check is request coming from sancum
         $this->model = Category::when(request()->bearerToken(), function ($query) use ($user) {
             return $query->where('branch_id',$user->branch->id);
-        });
+        })
+        ->orderBy('created_at','DESC')
+        ->orderBy('updated_at','DESC');
      
         $this->resource = new CategoryResource(new Category());
     }

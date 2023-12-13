@@ -35,6 +35,8 @@ const DetailesItem = ({
   const GlobalColor = sessionStorage.getItem('globalColor');
   const GlobalShape = sessionStorage.getItem('globalShape');
   const Language = sessionStorage.getItem('Language');
+  const [total, setTotal] = useState(parseFloat(price));
+
 
   const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -43,14 +45,19 @@ const DetailesItem = ({
 
   const { t } = useTranslation();
   const [count, setCount] = useState(1);
-  const [items, setItems] = useState(
+  const [checkboxTotalPrice,setCheckboxTotalPrice] = useState(0);
+  const [radioTotalPrice,setRadioTotalPrice] = useState(0);
+  const [selectedCheckbox,setSelectedCheckbox] = useState([]);
+  const [selectedRadio,setSelectedRadio] = useState([]);
+  const [selectedDropdown,setSelectedDropdown] = useState([]);
+
+  const [checkboxItems, setCheckboxItems] = useState(
     Object.keys(checkbox_input_names).map((key) => {
       const namesArray = checkbox_input_names[key];
       const pricesArray = checkbox_input_prices[key];
     
       return namesArray.map((name, index) => ({
         value: name,
-        isChecked: false,
         price: pricesArray[index]
       }));
     })
@@ -62,7 +69,6 @@ const DetailesItem = ({
     
       return namesArray.map((name, index) => ({
         value: name,
-        isChecked: index === 0,
         price: pricesArray[index]
       }));
     })
@@ -81,46 +87,119 @@ const DetailesItem = ({
 
   
 
-  useEffect(() => {
-    const requiredCheckboxes = Math.max(checkbox_required, 0);
-    const updatedItems = [...items];
+  // useEffect(() => {
+  //   const requiredCheckboxes = Math.max(checkbox_required, 0);
+  //   const updatedItems = [...items];
 
-    for (let i = 0; i < requiredCheckboxes; i++) {
-      if (i < updatedItems.length) {
-        updatedItems[i].isChecked = true;
-      }
-    }
-    setItems(updatedItems);
-  }, [checkbox_required]);
+  //   for (let i = 0; i < requiredCheckboxes; i++) {
+  //     if (i < updatedItems.length) {
+  //       updatedItems[i].isChecked = true;
+  //     }
+  //   }
+  //   setItems(updatedItems);
+  // }, [checkbox_required]);
 
 
     const branch_id = localStorage.getItem('selected_branch_id');
 
-  const handleCheckboxChange = (index) => {
-    const updatedItems = [...items];
-    updatedItems[index].isChecked = !updatedItems[index].isChecked;
-    setItems(updatedItems);
-  };
+  const handleCheckboxChange = (checkbox_index,index,event) => {
+  
+    let isChecked = event.target.checked;
 
-    const handleRadioChange = (index) => {
-    const updatedRadioItems = [...radioItems];
-    updatedRadioItems.forEach((item, i) => {
-      item.isChecked = i === index;
+    setSelectedCheckbox((prevSelectedCheckbox) => {
+ 
+      if (isChecked) {
+        const updatedCheckbox = [...prevSelectedCheckbox];
+        updatedCheckbox[checkbox_index] = {
+          ...(updatedCheckbox[checkbox_index] || {}),
+          [index]: [checkbox_index, index],
+        };
+        return updatedCheckbox;
+      } else {
+
+        const updatedCheckbox = [...prevSelectedCheckbox];
+        const { [index]: removedIndex, ...rest } = updatedCheckbox[checkbox_index] || {};
+        if (Object.keys(rest).length === 0) {
+          delete updatedCheckbox[checkbox_index];
+        } else {
+          updatedCheckbox[checkbox_index] = rest;
+        }
+        return updatedCheckbox;
+      }
     });
-    setRadioItems(updatedRadioItems);
   };
 
-  const totalCheckbox = items.reduce((accumulator, currentItem) => {
-    if (currentItem.isChecked) {
-      return accumulator + currentItem.price;
+  const handleRadioChange = (selection_index,index) => {
+      setSelectedRadio((prevSelectedRadio) => {
+        const updatedRadio = [...prevSelectedRadio];
+        updatedRadio[selection_index] = {
+          [index]: [selection_index, index],
+        };
+        return updatedRadio;
+      });
+  };
+  const handleDropdownChange =  (dropdown_index,event) => {
+    setSelectedDropdown((prevSelectedDropdown) => {
+      const index = parseInt(event.target.value,10);
+      const updatedDropdown = [...prevSelectedDropdown];
+      updatedDropdown[dropdown_index] = {
+        [index]: [dropdown_index, index],
+      };
+      return updatedDropdown;
+    });
+};
+
+  // const totalCheckbox = checkboxItems.reduce((accumulator, currentItem) => {
+  //   if (currentItem.isChecked) {
+  //     return accumulator + currentItem.price;
+  //   }
+  //   return accumulator;
+  // }, 0);
+
+  // const selectedRadioItem = radioItems.find((item) => item.isChecked);
+  // const totalRadio = selectedRadioItem ? selectedRadioItem.price : 0;
+
+   // + totalCheckbox + totalRadio;
+
+   useEffect(() => {
+    // Calculate the total based on selectedCheckbox changes
+
+
+
+    let newTotal = total; 
+    for (const i in selectedCheckbox) {
+      for (const j in selectedCheckbox[i]) {
+        const [checkbox_index, index] = selectedCheckbox[i][j];
+        const price = checkboxItems[checkbox_index][index].price;
+        newTotal += parseFloat(price);
+      }
     }
-    return accumulator;
-  }, 0);
+    const total_new = newTotal;
 
-  const selectedRadioItem = radioItems.find((item) => item.isChecked);
-  const totalRadio = selectedRadioItem ? selectedRadioItem.price : 0;
+    setTotal(newTotal - checkboxTotalPrice);
+    setCheckboxTotalPrice(total_new - total);
+  
 
-  const total = price + totalCheckbox + totalRadio;
+    // Update the total state
+   
+  }, [selectedCheckbox]);
+
+  useEffect(() => {
+    // Calculate the total based on selectedCheckbox changes
+    let newTotal = total; 
+    for (const i in selectedRadio) {
+      for (const j in selectedRadio[i]) {
+        const [selection_index, index] = selectedRadio[i][j];
+        const price = radioItems[selection_index][index].price;
+        newTotal += parseFloat(price);
+      }
+    }
+    const total_new = newTotal;
+
+    setTotal(newTotal - radioTotalPrice);
+    setRadioTotalPrice(total_new - total);
+
+  }, [selectedRadio]);
 
   const increment = (e) => {
     e.preventDefault();
@@ -134,8 +213,15 @@ const DetailesItem = ({
     }
   };
 
+
     const handleAddToCart = async () => {
         try {
+            // check required options
+          console.log("results");
+          console.log(selectedCheckbox);
+          console.log(selectedRadio);
+          console.log(selectedDropdown);
+          
             const response = await AxiosInstance.post(`/carts`, {
                 item_id : itemId,
                 quantity : count,
@@ -211,14 +297,14 @@ const DetailesItem = ({
                     <div className="text-[16px] font-semibold">{title}</div>
                     <div className="flex justify-between items-center">
                       <div>
-                        {items[checkbox_index].map((item, index) => (
+                        {checkboxItems[checkbox_index].map((item, index) => (
                           <div key={`checkbox ${checkbox_index} ${index}`} className="flex justify-start items-center gap-2">
                             <input
                               id={`checkbox-${index}`}
                               type="checkbox"
                               value=""
-                              checked={item.isChecked}
-                              onChange={() => handleCheckboxChange(index)}
+                    
+                              onChange={(e) => handleCheckboxChange(checkbox_index,index,e)}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2"
                             />
                             <label
@@ -231,7 +317,7 @@ const DetailesItem = ({
                         ))}
                       </div>
                       <div className="flex  flex-col items-center">
-                        {items[checkbox_index].map((item, index) => (
+                        {checkboxItems[checkbox_index].map((item, index) => (
                           <div key={`checkboxPrice ${checkbox_index} ${index}`} className="text-[14px]">{item.price} {t("SAR")}</div>
                         ))}
                       </div>
@@ -249,8 +335,8 @@ const DetailesItem = ({
                             <input
                               id={`radio-${index}`}
                               type="radio"
-                              checked={item.isChecked}
-                              onChange={() => handleRadioChange(index)}
+                              name={`radio${selection_index}`}
+                              onChange={(e) => handleRadioChange(selection_index,index,e)}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                             />
                             <label
@@ -273,10 +359,14 @@ const DetailesItem = ({
                   {dropdown_input_titles.map((title,dropdown_index)=> (
                   <div  key={`dropdownTitle ${dropdown_index}`}   className="border-b border-ternary-light mx-10 p-3 ">
                     <div className="">
+                    <div className="text-[16px] font-semibold ">{title}</div>
                       <div className='relative w-[100%] my-2'>
-                        <select className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
+                        <select  onChange={(e) => handleDropdownChange(dropdown_index,e)}  className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
+                        <option className="bg-white text-black"  
+                            key={`dropdown default`} defaultValue></option>
                           {dropdownItems[dropdown_index]?.map((item, index) => (
-                            <option className="bg-white text-black"  key={`dropdown ${dropdown_index} ${index}`} >{item.value}</option>
+                            <option className="bg-white text-black"  
+                            key={`dropdown ${dropdown_index} ${index}`} value={index}>{item.value}</option>
                           ))}
                         </select>
                         <MdKeyboardArrowDown className={`absolute top-1/2 ${Language == "en" ? "right-4" : "left-4"} transform -translate-y-1/2 text-black`} />
