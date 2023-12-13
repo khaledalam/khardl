@@ -293,7 +293,6 @@ return [
     "cash"=>"Cash",
     "Cash on Delivery"=>"Cash on Delivery",
     'Credit Card'=>"Credit Card",
-    "Delivery"=>"Delivery",
     'payment-address'=>'Payment Address',
     'shipping-address'=>'Shipping Address',
     'preparations'=>'Preparations',

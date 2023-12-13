@@ -29,6 +29,7 @@ class UserSeeder extends Seeder
             'email' => "worker@first.com",
             'phone_verified_at' => now(),
             'status'=> 'active',
+            'address' => 'test address',
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
@@ -52,6 +53,7 @@ class UserSeeder extends Seeder
             'email' => "worker2@first.com",
             'phone_verified_at' => now(),
             'status'=> 'active',
+            'address' => 'test address',
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
@@ -76,6 +78,7 @@ class UserSeeder extends Seeder
             'phone' => '966123456789',
             'phone_verified_at' => now(),
             'status'=> 'active',
+            'address' => 'test address',
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);

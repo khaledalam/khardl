@@ -279,5 +279,9 @@
    "Thin": "رفيع",
     "Choose Site Editor": "اختر محرر الموقع",
     "Restaurant Editor": "محرر موقع المطعم",
-    "Customer Editor": "محرر موقع العميل"
+    "Customer Editor": "محرر موقع العميل",
+    "building number": "رقم المبني",
+    "street": "اسم الشارع",
+    "area": "اسم المنطقه",
+    "city": "المدينه"
 }

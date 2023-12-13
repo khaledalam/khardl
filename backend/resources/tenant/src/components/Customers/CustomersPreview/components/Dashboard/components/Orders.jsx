@@ -10,14 +10,51 @@ import AxiosInstance from "../../../../../../axios/axios";
 
 function Orders() {
     const { t } = useTranslation();
+    const [loading, setLoading] = useState(false);
+    const [orders, setOrders] = useState([]);
+
+    const Language = useSelector((state) => state.languageMode.languageMode);
     const orderShow = useSelector((state) => state.order.orderShow);
     const idOrder = useSelector((state) => state.id.idOrder);
     const activeTab = useSelector((state) => state.tab.activeTab);
-    const Language = useSelector((state) => state.languageMode.languageMode);
-    const shapeImageShape = useSelector(state => state.shapeImage.shapeImageShape);
     const GlobalColor = useSelector((state) => state.button.GlobalColor);
+    const shapeImageShape = useSelector(state => state.shapeImage.shapeImageShape);
     const GlobalShape = useSelector((state) => state.button.GlobalShape);
-    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetchOrdersData().then(r => null);
+
+        const newData = activeTab === "Dashboard"
+            ? [...OrdersCustomer].sort((a, b) => {
+                const dateA = new Date(a.DateAdded);
+                const dateB = new Date(b.DateAdded);
+                return dateB - dateA;
+            }).slice(0, 3)
+            : OrdersCustomer;
+        setOrders(newData);
+
+    }, []);
+
+
+    const fetchOrdersData = async () => {
+        if (loading) return;
+        setLoading(true);
+
+        try {
+            const ordersResponse = await AxiosInstance.get(`orders?items&item`);
+
+            console.log("ordersResponse >>>", ordersResponse.data)
+            if (ordersResponse.data) {
+                setOrders(ordersResponse?.data?.data);
+            }
+
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const columns = [
         {
@@ -67,39 +104,6 @@ function Orders() {
         }
     ];
 
-    useEffect(() => {
-
-        console.log("Orders tab");
-
-        fetchOrdersData().then(r => null);
-
-        const newData = activeTab === "Dashboard"
-            ? [...OrdersCustomer].sort((a, b) => {
-                const dateA = new Date(a.DateAdded);
-                const dateB = new Date(b.DateAdded);
-                return dateB - dateA;
-            }).slice(0, 3)
-            : OrdersCustomer;
-        setData(newData);
-    }, []);
-
-
-
-    const fetchOrdersData = async () => {
-        try {
-            const ordersResponse = await AxiosInstance.get(`orders?items&item`)
-
-            console.log(ordersResponse)
-            if (ordersResponse.data) {
-
-
-            } else {
-            }
-        } catch (error) {
-            // toast.error(`${t('Failed to send verification code')}`)
-            console.log(error);
-        }
-    };
 
 
 
@@ -116,10 +120,10 @@ function Orders() {
                 <OrderDetail />
             )}
             {(orderShow === false && activeTab === "Dashboard") && (
-                <Table columns={columns} data={data} />
+                <Table columns={columns} data={orders} />
             )}
             {(orderShow === false && activeTab === "Orders") && (
-                <Table columns={columns} data={data} />
+                <Table columns={columns} data={orders} />
             )}
         </div>
     )
