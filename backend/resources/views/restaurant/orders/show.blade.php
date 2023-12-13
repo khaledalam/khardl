@@ -362,7 +362,7 @@
                                              <!--begin::Body-->
                                              <div class="card-body pt-5">
                                                 TODO
-                                                 {{-- <!--begin::Timeline-->
+                                                 <!--begin::Timeline-->
                                                  <div class="timeline-label">
                                                      
                                                      <!--begin::Item-->
@@ -447,7 +447,7 @@
                                                      </div>
                                                      <!--end::Item-->
                                                  </div>
-                                                 <!--end::Timeline--> --}}
+                                                 <!--end::Timeline-->
                                              </div>
                                              <!--end: Card Body-->
                                          </div>
