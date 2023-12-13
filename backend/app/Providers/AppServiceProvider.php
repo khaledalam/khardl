@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Http\Request;
 use App\Repositories\PDF\OrderPDF;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\PDF\PdfPrintInterface;
@@ -36,10 +37,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+        $user = Auth::user();
         View::share('link', request()->segment(1));
         View::share('admin_link', request()->segment(2));
+        View::share('user', $user);
 
     }
 }
-    

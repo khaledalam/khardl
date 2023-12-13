@@ -32,7 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'restaurant_name',
         'verification_code',
         'last_login',
-
+        'address'
     ];
     const STORAGE ="user_files";
     /**
@@ -78,7 +78,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-   
+
 
     public function traderRegistrationRequirement()
     {

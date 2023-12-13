@@ -21,7 +21,7 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-      
+
         $status = ['accepted','cancelled','pending'];
         for($i=0;$i<11;$i++){
             $order = Order::create([
@@ -44,6 +44,7 @@ class OrderSeeder extends Seeder
                     'quantity' => $quantity,
                     'price' => $item->price,
                     'total' => $item->price * $quantity,
+                     'notes' => $item->notes
                 ]);
             }
 

@@ -5,7 +5,7 @@
 }
 
 .cart-content {
-    width: 600px;
+    width: 650px;
     margin-bottom: 70px;
     margin-top: 60px;
     display: flex;
@@ -24,20 +24,27 @@ h2 {
 
 .cart-items {
     list-style: none;
-    padding: 0;
+    padding: 5px;
 }
 
 .cart-items li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd;
     padding: 10px 0;
+    margin-bottom: 5px;
+}
+
+.cart-item-notes {
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    display: flex;
     margin-bottom: 10px;
 }
 
 .cart-items span {
     margin-right: 10px;
+    padding-bottom: 10px;
 }
 
 .cart-items input {

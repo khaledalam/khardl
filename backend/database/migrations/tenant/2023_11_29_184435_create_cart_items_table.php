@@ -23,6 +23,9 @@ return new class extends Migration
             $table->json("selection_options")->nullable();
             $table->json("dropdown_options")->nullable();
             
+            $table->string('notes')->nullable();
+
+
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->timestamps();
