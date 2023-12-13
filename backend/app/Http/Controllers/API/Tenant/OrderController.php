@@ -11,7 +11,7 @@ use App\Repositories\API\OrderRepository;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
 
-class OrderController extends BaseRepositoryController
+class  OrderController extends BaseRepositoryController
 {
     use APIResponseTrait;
     public function __construct()
@@ -21,11 +21,11 @@ class OrderController extends BaseRepositoryController
                 $this->default_repository = new OrderRepository();
             }
             return $next($request);
-           
+
         });
     }
     public function updateStatus($order,Request $request){
-    
+
         $request->validate([
             'status' => 'required|in:accepted,cancelled,pending',
         ]);
@@ -41,5 +41,5 @@ class OrderController extends BaseRepositoryController
         }
         return redirect()->back()->with('success',__('Order has been updated successfully.'));
     }
-   
+
 }

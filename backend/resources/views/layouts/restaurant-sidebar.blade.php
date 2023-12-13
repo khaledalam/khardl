@@ -231,6 +231,7 @@
                            </a>
                         </div>
 
+
                         <!-- Orders -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? 'show' : '' }}">
                                 <span class="menu-link">

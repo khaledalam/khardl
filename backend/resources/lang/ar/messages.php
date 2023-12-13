@@ -276,11 +276,10 @@ return [
     'customer-details'=>'بيانات الزبون',
     "customer"=>"الزبون",
     "documents"=>"الملفات",
-    'invoice'=>'الفاتورة',
     'shipping'=>'الشحن',
     'order'=>"الطلب",
     'product'=>'المنج',
-    'id'=>'المعرف',
+    'id'=>'رقم المعرف',
     'QTY'=>'الكمية',
     'unit_price'=>'سعر الواحدة',
     'total'=>"المجموع",
@@ -313,7 +312,12 @@ return [
     'PICKUP By Car'=>'التقاط الطلب بالسيارة',
     'pick-up-from-the-restaurant-car' => 'الاستلام من المطعم بالسياره',
     'flat-rate' => 'نسبه ثابته',
-    'Halala' => 'هللة'
+    'Halala' => 'هللة',
+    "branch"=> 'اسم الفرع',
+    "NA" => 'لا يوجد',
+    "notes" => "ملاحظات",
+    "in-preparations" => "قيد التحضيز",
+    "not-in-preparations" => "ليس قيد التحضيز"
 
 ];
 
