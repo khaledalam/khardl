@@ -320,5 +320,10 @@
     "Notes item": "Item notes",
     "Notes order": "Order Notes",
     "Address": "Address",
-    "Change My Address": "Change my address"
+    "Change My Address": "Change my address",
+    "Profile updated successfully": "Profile updated successfully",
+    "building number": "Building number",
+    "street": "Street name",
+    "area": "Area name",
+    "city": "City"
 }
