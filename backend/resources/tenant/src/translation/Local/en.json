@@ -317,5 +317,8 @@
     "free": "Free",
     "Notes": "Notes",
     "N/A": "N/A",
-    "Notes item": "Item notes"
+    "Notes item": "Item notes",
+    "Notes order": "Order Notes",
+    "Address": "Address",
+    "Change My Address": "Change my address"
 }

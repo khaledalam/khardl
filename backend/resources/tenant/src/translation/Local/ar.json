@@ -319,5 +319,8 @@
     "free": "مجانا",
     "Notes": "ملاحظات",
     "N/A": "لا يوجد",
-    "Notes item": "ملاحظات العنصر"
+    "Notes item": "ملاحظات العنصر",
+    "Notes order": "ملاحظات الطلب",
+    "Address": "العنوان",
+    "Change My Address": "غير عنواني"
 }

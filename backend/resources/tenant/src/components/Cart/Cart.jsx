@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {useTranslation} from "react-i18next";
 import AxiosInstance from "../../axios/axios";
-import Footer from "../Footer/Footer";
 import './Cart.css'
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
@@ -10,7 +9,7 @@ import {toast} from "react-toastify";
 const Cart = () => {
 
     const [cartItems, setCartItems] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [paymentMethods, setPaymentMethods] = useState(null);
     const [deliveryType, setDeliveryType] = useState(null);
@@ -24,6 +23,7 @@ const Cart = () => {
     const navigate = useNavigate()
     const {t} = useTranslation();
     const Language = useSelector((state) => state.languageMode.languageMode);
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
 
     useEffect(() => {
@@ -32,6 +32,9 @@ const Cart = () => {
 
 
     const fetchCartData = async () => {
+        if (loading) return;
+        setLoading(true);
+
         try {
             const cartResponse = await AxiosInstance.get(`carts`);
 
@@ -49,6 +52,7 @@ const Cart = () => {
             setLoading(false);
         }
     };
+
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method.name);
     }
@@ -64,13 +68,14 @@ const Cart = () => {
         }).finally(r => {
             setLoading(false);
         });
-
-
     }
 
     const handlePlaceOrder = async () => {
-
         if (confirm(t('Are You sure you want to place the order?'))) {
+
+            if (loading) return;
+            setLoading(true);
+
             try {
                 const cartResponse = await AxiosInstance.post(`/orders`,{
                     payment_method: paymentMethod,
@@ -79,30 +84,35 @@ const Cart = () => {
 
                     // TODO @todo more info
                     shipping_address: '',
-                });
-
-                if (cartResponse.data) {
-                    toast.success(`${t('Order has been created successfully')}`);
-                    navigate('/');
-                }
+                })
+                    .then( r => {
+                        if (cartResponse.data) {
+                            toast.success(`${t('Order has been created successfully')}`);
+                            navigate('/');
+                        }
+                    })
+                    .finally( r => {
+                        setLoading(false);
+                    });
             } catch (error) {
                 toast.error(`${t('Failed to processed the checkout')}`)
             }
         }
-
-
     }
 
     const getTotalPrice = () => {
         return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
-    const handleRemoveItem = (itemId) => {
+    const handleRemoveItem = async (itemId) => {
         setLoading(true);
 
-
-        const updatedCart = cartItems.filter(item => item.id !== itemId);
-        setCartItems(updatedCart);
+        await AxiosInstance.post(`/cart/items/delete`,{
+            items_id: itemId
+        }).finally( r => {
+            setLoading(false);
+        });
+        fetchCartData().then(r => null);
     };
 
     const handleQuantityChange = (itemId, newQuantity) => {
@@ -129,6 +139,13 @@ const Cart = () => {
                 await fetchCartData().then(r => null);
             });
     }
+
+    if (!isLoggedIn) {
+        confirm('You need to login first');
+        navigate('/login')
+        return;
+    }
+
     return (
         <div className="cart-page">
 
@@ -173,8 +190,8 @@ const Cart = () => {
                             <div>
                                 <ul className="cart-items">
                                     {cartItems.map(it => (
-                                        <>
-                                        <li key={it?.item_id}>
+                                        <div key={it?.item_id}>
+                                        <li>
                                             <img style={{
                                                 border: '1px solid var(--primary)',
                                                 borderRadius: '15%'
@@ -199,8 +216,8 @@ const Cart = () => {
                                                 className="p-[6px] text-black shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-1"
                                                 onClick={() => handleRemoveItem(it?.item_id)}>❌ {t('Remove')}</button><br />
                                         </li>
-                                        <span className={"cart-item-notes"}>{t('Notes item')}: {it?.notes || t('N/A')}</span>
-                                        </>
+                                            <span className={"flex cart-item-notes"}>{t('Notes item')}:<small>{it?.notes || t('N/A')}</small></span>
+                                        </div>
                                     ))}
                                 </ul>
                                 <div className="cart-summary">
@@ -240,21 +257,32 @@ const Cart = () => {
 
                                     <hr />
 
+                                    <div className="my-4">
+                                        <div className="text-[15px] font-semibold mb-2">{t("Address")}</div>
+                                        <input className="w-[100%] p-1 my-1" style={{color: 'gray'}} value={"address from profile"} disabled={true} readOnly={true}/>
+                                        <button
+                                            disabled={loading}
+                                            onClick={() => navigate('/dashboard#Profile')}
+                                            className={"text-[13px] text-black p-2 my-3 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                            <span>📍{t('Change My Address')} </span>
+                                        </button>
+                                    </div>
+
+                                    <hr />
+
+                                    <div className="my-4">
+                                        <div className="text-[15px] font-semibold mb-2">{t("Notes order")}</div>
+                                        <textarea className="border w-[100%] p-1" placeholder={t("Notes order")} value={notes} onChange={e => setNotes(e.target.value)}/>
+                                    </div>
+
+                                    <hr />
+
                                     <div className={"my-4"}>
                                         <h3>{t('Total')}: {getTotalPrice()} {t('SAR')} <small><i>({t('Inclusive VAT')})</i></small></h3>
                                     </div>
 
                                     <hr />
 
-                                    <div className={"my-4"}>
-                                        <div className="border-b border-ternary-light my-2 mx-10 p-4">
-                                            <div className="">
-                                                <div className="text-[15px] font-semibold mb-2">{t("Notes")}</div>
-                                                <textarea className="w-[100%] bg-[var(--secondary)] p-1" placeholder={t("Notes")} value={notes} onChange={e => setNotes(e.target.value)}/>
-                                            </div>
-                                        </div>                                    </div>
-
-                                    <hr />
 
                                     <button
                                         disabled={loading}
