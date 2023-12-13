@@ -314,7 +314,10 @@ return [
     "Delivery"=>"Delivery",
     "PICKUP"=>'PICKUP',
     'PICKUP By Car'=>'PICKUP By Car',
-    'pick-up-from-the-restaurant-car' => 'Pick up from the restaurant with car'
+    'pick-up-from-the-restaurant-car' => 'Pick up from the restaurant with car',
+    'flat-rate' => 'Flat Rate',
+    'Halala' => 'Halala'
+
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

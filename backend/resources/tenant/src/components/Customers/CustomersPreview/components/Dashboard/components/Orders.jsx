@@ -11,7 +11,7 @@ import AxiosInstance from "../../../../../../axios/axios";
 function Orders() {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState(null);
 
     const Language = useSelector((state) => state.languageMode.languageMode);
     const orderShow = useSelector((state) => state.order.orderShow);
@@ -24,14 +24,14 @@ function Orders() {
     useEffect(() => {
         fetchOrdersData().then(r => null);
 
-        const newData = activeTab === "Dashboard"
-            ? [...OrdersCustomer].sort((a, b) => {
-                const dateA = new Date(a.DateAdded);
-                const dateB = new Date(b.DateAdded);
-                return dateB - dateA;
-            }).slice(0, 3)
-            : OrdersCustomer;
-        setOrders(newData);
+        // const newData = activeTab === "Dashboard"
+        //     ? [...OrdersCustomer].sort((a, b) => {
+        //         const dateA = new Date(a.DateAdded);
+        //         const dateB = new Date(b.DateAdded);
+        //         return dateB - dateA;
+        //     }).slice(0, 3)
+        //     : OrdersCustomer;
+        // setOrders(newData);
 
     }, []);
 
@@ -43,9 +43,9 @@ function Orders() {
         try {
             const ordersResponse = await AxiosInstance.get(`orders?items&item`);
 
-            console.log("ordersResponse >>>", ordersResponse.data)
+            console.log("ordersResponse >>>", ordersResponse?.data?.data)
             if (ordersResponse.data) {
-                setOrders(ordersResponse?.data?.data);
+                setOrders(Object.values(ordersResponse?.data?.data));
             }
 
 
@@ -105,6 +105,10 @@ function Orders() {
     ];
 
 
+
+    if (!orders) {
+        return;
+    }
 
 
     return (

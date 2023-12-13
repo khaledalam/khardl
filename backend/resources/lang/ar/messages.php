@@ -311,7 +311,10 @@ return [
     'pick-up-by-car'=>"استلام بواسطة السيارة",
     "PICKUP"=>'التقاط الطلب',
     'PICKUP By Car'=>'التقاط الطلب بالسيارة',
-    'pick-up-from-the-restaurant-car' => 'الاستلام من المطعم بالسياره'
+    'pick-up-from-the-restaurant-car' => 'الاستلام من المطعم بالسياره',
+    'flat-rate' => 'نسبه ثابته',
+    'Halala' => 'هللة'
+
 ];
 
 
