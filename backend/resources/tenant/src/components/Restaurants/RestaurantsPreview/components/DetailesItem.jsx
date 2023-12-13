@@ -16,19 +16,26 @@ const DetailesItem = ({
   image,
   calories,
   price,
-  selection_input_titles,
-  selection_input_names,
-  selection_input_prices,
+
   checkbox_required,
   checkbox_input_titles,
   checkbox_input_names,
   checkbox_input_prices,
+
+  selection_required,
+  selection_input_titles,
+  selection_input_names,
+  selection_input_prices,
+
+  dropdown_required,
+  dropdown_input_titles,
   dropdown_input_names,
 }) => {
   const shapeImageShape = sessionStorage.getItem('shapeImageShape');
   const GlobalColor = sessionStorage.getItem('globalColor');
   const GlobalShape = sessionStorage.getItem('globalShape');
   const Language = sessionStorage.getItem('Language');
+
   const dispatch = useDispatch();
     const navigate = useNavigate()
 
@@ -36,23 +43,43 @@ const DetailesItem = ({
 
   const { t } = useTranslation();
   const [count, setCount] = useState(1);
-    const [items, setItems] = useState(
-    checkbox_input_names?.map((name, index) => ({
-      value: name,
-      isChecked: false,
-      price: checkbox_input_prices[index]
-    }))
+  const [items, setItems] = useState(
+    Object.keys(checkbox_input_names).map((key) => {
+      const namesArray = checkbox_input_names[key];
+      const pricesArray = checkbox_input_prices[key];
+    
+      return namesArray.map((name, index) => ({
+        value: name,
+        isChecked: false,
+        price: pricesArray[index]
+      }));
+    })
   );
-    const [notes, setNotes] = useState("");
-    const [goToCart, setGoToCart] = useState(false);
+  const [radioItems, setRadioItems] = useState(
+    Object.keys(selection_input_names).map((key) => {
+      const namesArray = selection_input_names[key];
+      const pricesArray = selection_input_prices[key];
+    
+      return namesArray.map((name, index) => ({
+        value: name,
+        isChecked: index === 0,
+        price: pricesArray[index]
+      }));
+    })
+  );
+  const [dropdownItems, setDropdownItems] = useState(
+    Object.keys(dropdown_input_names).map((key) => {
+      const namesArray = dropdown_input_names[key];
+    
+      return namesArray.map((name, index) => ({
+        value: name,
+      }));
+    })
+  );
+  const [notes, setNotes] = useState("");
+  const [goToCart, setGoToCart] = useState(false);
 
-    const [radioItems, setRadioItems] = useState(
-        selection_input_names.map((name, index) => ({
-            value: name,
-            isChecked: index === 0,
-            price: selection_input_prices[index]
-        }))
-    );
+  
 
   useEffect(() => {
     const requiredCheckboxes = Math.max(checkbox_required, 0);
@@ -179,12 +206,13 @@ const DetailesItem = ({
                       style={{ borderRadius: GlobalShape, backgroundColor: GlobalColor }}
                     >{price} {t("SAR")}</div>
                   </div>
-                  <div className="border-b border-ternary-light my-2 mx-10 p-4">
-                    <div className="text-[16px] font-semibold">{checkbox_input_titles}</div>
+                  {checkbox_input_titles.map((title,checkbox_index)=> (
+                    <div key={`checkboxTitle ${checkbox_index}`} className="border-b border-ternary-light my-2 mx-10 p-4">
+                    <div className="text-[16px] font-semibold">{title}</div>
                     <div className="flex justify-between items-center">
                       <div>
-                        {items.map((item, index) => (
-                          <div key={index} className="flex justify-start items-center gap-2">
+                        {items[checkbox_index].map((item, index) => (
+                          <div key={`checkbox ${checkbox_index} ${index}`} className="flex justify-start items-center gap-2">
                             <input
                               id={`checkbox-${index}`}
                               type="checkbox"
@@ -203,19 +231,21 @@ const DetailesItem = ({
                         ))}
                       </div>
                       <div className="flex  flex-col items-center">
-                        {items.map((item, index) => (
-                          <div key={index} className="text-[14px]">{item.price} {t("SAR")}</div>
+                        {items[checkbox_index].map((item, index) => (
+                          <div key={`checkboxPrice ${checkbox_index} ${index}`} className="text-[14px]">{item.price} {t("SAR")}</div>
                         ))}
                       </div>
                     </div>
                   </div>
-                    {radioItems.length > 0 &&
-                  <div className="border-b border-ternary-light mx-10 p-4">
-                    <div className="text-[16px] font-semibold ">{selection_input_titles}</div>
+                  ))}
+                  
+                    {selection_input_titles.map((title,selection_index)=> (
+                  <div   key={`selectionTitle ${selection_index}`}  className="border-b border-ternary-light mx-10 p-4">
+                    <div className="text-[16px] font-semibold ">{title}</div>
                     <div className="flex justify-between items-center">
                       <div>
-                        {radioItems?.map((item, index) => (
-                          <div key={index} className="flex justify-start items-center gap-2">
+                        {radioItems[selection_index]?.map((item, index) => (
+                          <div key={`selection ${selection_index} ${index}`} className="flex justify-start items-center gap-2">
                             <input
                               id={`radio-${index}`}
                               type="radio"
@@ -233,26 +263,26 @@ const DetailesItem = ({
                         ))}
                       </div>
                       <div className="flex  flex-col items-center">
-                        {radioItems?.map((item, index) => (
-                          <div key={index} className="text-[14px]">{item.price} {t("SAR")}</div>
+                        {radioItems[selection_index]?.map((item, index) => (
+                          <div key={`selectionPrice ${selection_index} ${index}`} className="text-[14px]">{item.price} {t("SAR")}</div>
                         ))}
                       </div>
                     </div>
-                  </div>}
+                  </div>))}
 
-                    {dropdown_input_names.length > 0 &&
-                  <div className="border-b border-ternary-light mx-10 p-3 ">
+                  {dropdown_input_titles.map((title,dropdown_index)=> (
+                  <div  key={`dropdownTitle ${dropdown_index}`}   className="border-b border-ternary-light mx-10 p-3 ">
                     <div className="">
                       <div className='relative w-[100%] my-2'>
                         <select className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
-                          {dropdown_input_names?.map((cook, index) => (
-                            <option className="bg-white text-black" key={index}>{cook}</option>
+                          {dropdownItems[dropdown_index]?.map((item, index) => (
+                            <option className="bg-white text-black"  key={`dropdown ${dropdown_index} ${index}`} >{item.value}</option>
                           ))}
                         </select>
                         <MdKeyboardArrowDown className={`absolute top-1/2 ${Language == "en" ? "right-4" : "left-4"} transform -translate-y-1/2 text-black`} />
                       </div>
                     </div>
-                  </div>}
+                  </div>))}
 
                   <div className="border-b border-ternary-light my-2 mx-10 p-4">
                     <div className="">

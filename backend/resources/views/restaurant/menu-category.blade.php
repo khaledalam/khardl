@@ -166,7 +166,7 @@
                                                  </td>
                                                 <td>
                                                      <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                    title="Melody Macy">
+                                                    title="{{$item->description}}">
                                                     <img alt="Pic" src="{{$item->photo}}" />
                                                 </div>
                                                 </td>
@@ -732,7 +732,7 @@
         const checkboxesContainer = document.getElementById('checkboxes');
         const addCheckboxButton = document.getElementById('addCheckbox');
 
-        let checkboxCount = 0;
+        let checkboxCount = -1;
 
         function createCheckbox() {
             checkboxCount++;
@@ -822,7 +822,7 @@
         const selectionsContainer = document.getElementById('selections');
         const addSelectionButton = document.getElementById('addSelection');
 
-        let selectionCount = 0;
+        let selectionCount = -1;
 
         function createSelection() {
             selectionCount++;
@@ -910,7 +910,7 @@
         const dropdownsContainer = document.getElementById('dropdowns');
         const addDropdownButton = document.getElementById('addDropdown');
 
-        let dropdownCount = 0;
+        let dropdownCount = -1;
 
         function createDropdown() {
             dropdownCount++;

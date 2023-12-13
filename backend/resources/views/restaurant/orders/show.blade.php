@@ -84,7 +84,7 @@
                                                      </span>
                                                      <!--end::Svg Icon-->{{__('messages.date-added')}}</div>
                                                  </td>
-                                                 <td class="fw-bolder text-end">{{$order->created_at)}}</td>
+                                                 <td class="fw-bolder text-end">{{$order->created_at}}</td>
                                              </tr>
                                              <!--end::Date-->
                                              <!--begin::Payment method-->

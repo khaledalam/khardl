@@ -95,7 +95,7 @@ const Cart = () => {
                         setLoading(false);
                     });
             } catch (error) {
-                toast.error(`${t('Failed to processed the checkout')}`)
+                toast.error(error.response.data.message);
             }
         }
     }
@@ -104,15 +104,21 @@ const Cart = () => {
         return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
-    const handleRemoveItem = async (itemId) => {
-        setLoading(true);
+    const handleRemoveItem =  async (itemId) => {
 
-        await AxiosInstance.post(`/cart/items/delete`,{
-            items_id: itemId
-        }).finally( r => {
-            setLoading(false);
-        });
-        fetchCartData().then(r => null);
+        try {
+            setLoading(true);
+                const response = await AxiosInstance.delete(`/carts/`+itemId, {
+            });
+            if (response?.data) {
+                const updatedCart = cartItems.filter(item => item.item.id != itemId);
+                setCartItems(updatedCart);
+                toast.success(`${t('Item removed from cart')}`)
+            }
+        }catch(error){
+
+        }
+        setLoading(false);
     };
 
     const handleQuantityChange = (itemId, newQuantity) => {
@@ -196,7 +202,12 @@ const Cart = () => {
                                                 border: '1px solid var(--primary)',
                                                 borderRadius: '15%'
                                             }} src={it?.item?.photo} width={80} height={80}/>
-                                            <span>{Language === "en" ? it?.item?.description?.en : it?.item?.description?.ar}</span>
+                                            <span>{Language === "en" ? it?.item?.description?.en : it?.item?.description?.ar}
+                                            <br />
+                                            {!it.item.availability ? (
+                                                <span className=' !text-[10px] !bg-[var(--danger)] !px-[6px] !py-[6px] rounded-[16px] !text-white'> {t('Not available')} </span>
+                                            ) : null}
+                                            </span>
                                             <span>{it?.price} {t('SAR')}</span>
                                             <span>
                       <label htmlFor={`quantity-${it?.item_id}`}>{t('Quantity')}: </label>

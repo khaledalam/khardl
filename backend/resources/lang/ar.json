@@ -6,5 +6,8 @@
     "Second Item":"الوجبة الثانيه",
     "online":"اونلاين",
     "cash":"كاش",
-    "Cash on Delivery":"الدفع عن التوصيل"
+    "Cash on Delivery":"الدفع عن التوصيل",
+    "(and :count more error)":"وخطأ اخر",
+    "(and :count more errors)":"و :count اخطاء اخري",
+    ":name is not available":":name غير متاح"
 }
