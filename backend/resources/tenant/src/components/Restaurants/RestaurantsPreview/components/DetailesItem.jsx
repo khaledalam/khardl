@@ -49,6 +49,7 @@ const DetailesItem = ({
   const [radioTotalPrice,setRadioTotalPrice] = useState(0);
   const [selectedCheckbox,setSelectedCheckbox] = useState([]);
   const [selectedRadio,setSelectedRadio] = useState([]);
+  const [selectedDropdown,setSelectedDropdown] = useState([]);
 
   const [checkboxItems, setCheckboxItems] = useState(
     Object.keys(checkbox_input_names).map((key) => {
@@ -128,7 +129,7 @@ const DetailesItem = ({
     });
   };
 
-    const handleRadioChange = (selection_index,index) => {
+  const handleRadioChange = (selection_index,index) => {
       setSelectedRadio((prevSelectedRadio) => {
         const updatedRadio = [...prevSelectedRadio];
         updatedRadio[selection_index] = {
@@ -137,6 +138,16 @@ const DetailesItem = ({
         return updatedRadio;
       });
   };
+  const handleDropdownChange =  (dropdown_index,event) => {
+    setSelectedDropdown((prevSelectedDropdown) => {
+      const index = parseInt(event.target.value,10);
+      const updatedDropdown = [...prevSelectedDropdown];
+      updatedDropdown[dropdown_index] = {
+        [index]: [dropdown_index, index],
+      };
+      return updatedDropdown;
+    });
+};
 
   // const totalCheckbox = checkboxItems.reduce((accumulator, currentItem) => {
   //   if (currentItem.isChecked) {
@@ -206,8 +217,11 @@ const DetailesItem = ({
     const handleAddToCart = async () => {
         try {
             // check required options
-           
-            return ;
+          console.log("results");
+          console.log(selectedCheckbox);
+          console.log(selectedRadio);
+          console.log(selectedDropdown);
+          
             const response = await AxiosInstance.post(`/carts`, {
                 item_id : itemId,
                 quantity : count,
@@ -345,10 +359,14 @@ const DetailesItem = ({
                   {dropdown_input_titles.map((title,dropdown_index)=> (
                   <div  key={`dropdownTitle ${dropdown_index}`}   className="border-b border-ternary-light mx-10 p-3 ">
                     <div className="">
+                    <div className="text-[16px] font-semibold ">{title}</div>
                       <div className='relative w-[100%] my-2'>
-                        <select className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
+                        <select  onChange={(e) => handleDropdownChange(dropdown_index,e)}  className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
+                        <option className="bg-white text-black"  
+                            key={`dropdown default`} defaultValue></option>
                           {dropdownItems[dropdown_index]?.map((item, index) => (
-                            <option className="bg-white text-black"  key={`dropdown ${dropdown_index} ${index}`} >{item.value}</option>
+                            <option className="bg-white text-black"  
+                            key={`dropdown ${dropdown_index} ${index}`} value={index}>{item.value}</option>
                           ))}
                         </select>
                         <MdKeyboardArrowDown className={`absolute top-1/2 ${Language == "en" ? "right-4" : "left-4"} transform -translate-y-1/2 text-black`} />

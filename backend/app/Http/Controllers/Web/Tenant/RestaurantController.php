@@ -432,6 +432,7 @@ class RestaurantController extends BaseController
         // }
 
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
+       // TODO @todo validate the coming request
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
@@ -445,7 +446,7 @@ class RestaurantController extends BaseController
             $photoFile->storeAs('items', $filename, 'public');
 
             DB::beginTransaction();
-
+            
             try {
                 $itemData = [
                     'photo' => tenant_asset('items/'.$filename),
