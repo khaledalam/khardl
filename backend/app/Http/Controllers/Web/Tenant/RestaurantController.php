@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Tenant;
 
 use App\Http\Controllers\Web\BaseController;
 use App\Models\Tenant\DeliveryType;
+use App\Models\Tenant\OrderStatusLogs;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
@@ -120,8 +121,11 @@ class RestaurantController extends BaseController
 
         $user = Auth::user();
         $order->load('user','items');
+
+        $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
+
         return view('restaurant.orders.show',
-            compact('user','order'));
+            compact('user','order', 'orderStatusLogs'));
     }
 
 
@@ -395,7 +399,10 @@ class RestaurantController extends BaseController
         $items = Item::
         where('user_id', $user->id)
         ->where('category_id', $selectedCategory->id)
-        ->where('branch_id', $branchId)->get();
+        ->where('branch_id', $branchId)
+        ->orderBy('created_at','DESC')
+        ->orderBy('updated_at','DESC')
+        ->get();
 
         return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
     }
@@ -429,6 +436,7 @@ class RestaurantController extends BaseController
         // }
 
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
+       // TODO @todo validate the coming request
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
@@ -449,18 +457,18 @@ class RestaurantController extends BaseController
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'description' =>trans_json( $request->input('description_en'), $request->input('description_ar')),
-                    'checkbox_required' => json_encode($request->input('checkbox_required')),
-                    'checkbox_input_titles' =>json_encode( $request->input('checkboxInputTitle')),
-                    'checkbox_input_maximum_choices' =>json_encode( $request->input('checkboxInputMaximumChoice')),
-                    'checkbox_input_names' => json_encode($request->input('checkboxInputName')),
-                    'checkbox_input_prices' =>json_encode( $request->input('checkboxInputPrice')),
-                    'selection_required' => json_encode($request->input('selection_required')),
-                    'selection_input_names' => json_encode( $request->input('selectionInputName')),
-                    'selection_input_prices' =>json_encode( $request->input('selectionInputPrice')),
-                    'selection_input_titles' => json_encode($request->input('selectionInputTitle')),
-                    'dropdown_required' =>json_encode($request->input('dropdown_required')),
-                    'dropdown_input_titles' => json_encode($request->input('dropdownInputTitle')),
-                    'dropdown_input_names' => json_encode($request->input('dropdownInputName')),
+                    'checkbox_required' => $request->input('checkbox_required'),
+                    'checkbox_input_titles' =>$request->input('checkboxInputTitle'),
+                    'checkbox_input_maximum_choices' =>$request->input('checkboxInputMaximumChoice'),
+                    'checkbox_input_names' => $request->input('checkboxInputName'),
+                    'checkbox_input_prices' =>$request->input('checkboxInputPrice'),
+                    'selection_required' => $request->input('selection_required'),
+                    'selection_input_names' => $request->input('selectionInputName'),
+                    'selection_input_prices' =>$request->input('selectionInputPrice'),
+                    'selection_input_titles' => $request->input('selectionInputTitle'),
+                    'dropdown_required' =>$request->input('dropdown_required'),
+                    'dropdown_input_titles' => $request->input('dropdownInputTitle'),
+                    'dropdown_input_names' => $request->input('dropdownInputName'),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
                     'availability'=>($request->input('availability'))?true:false,

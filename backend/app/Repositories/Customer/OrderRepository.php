@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Customer;
 
+use App\Models\Tenant\OrderStatusLogs;
 use Exception;
 use App\Models\Tenant\Order;
 use App\Traits\APIResponseTrait;
@@ -23,7 +24,7 @@ class OrderRepository
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){
                 $subtotal = $cart->subTotal();
                 $delivery = DeliveryType::where('name',$request->delivery_type)->first();
-                
+
                 $order = Order::create([
                     'user_id'=>Auth::id(),
                     'branch_id'=>$cart->branch()->id,
@@ -34,12 +35,19 @@ class OrderRepository
                     'subtotal' =>$subtotal,
                     'shipping_address'=>$request->shipping_address,
                     'order_notes'=>$request->order_notes,
-                    // TODO @todo update 
+                    // TODO @todo update
                     'payment_status'=>'pending',
-                    'status'=>'pending',
-                  
-                    
+                    'status'=> Order::PENDING,
+
+
                 ]);
+
+                $statusLog = new OrderStatusLogs();
+                $statusLog->order_id = $order->id;
+                $statusLog->status = Order::PENDING;
+                $statusLog->notes = 'Order Notes: ' . $request->order_notes;
+                $statusLog->saveOrFail();
+
                 $cart->clone_to_order_items($order->id);
                 $cart->trash();
                 DB::commit();
@@ -53,7 +61,7 @@ class OrderRepository
             logger($e->getMessage());
         }
         return $this->sendError('Fail', __('The order failed to complete'));
-       
+
     }
     public static function clone_cart_items(
         $order_id,
@@ -61,7 +69,8 @@ class OrderRepository
         $quantity,
         $price,
         $options_price,
-        $total
+        $total,
+        $notes
     ){
         OrderItem::create([
             'order_id'=>$order_id,
@@ -70,6 +79,7 @@ class OrderRepository
             'price'=>$price,
             'options_price'=>$options_price,
             'total'=>$total,
+            'notes' => $notes
         ]);
     }
 }

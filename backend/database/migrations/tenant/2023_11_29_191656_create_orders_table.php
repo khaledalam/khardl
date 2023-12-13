@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Tenant\Order;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->decimal('subtotal', 8, 2)->default(0);
             $table->decimal('delivery_cost', 8, 2)->default(0);
             $table->integer('vat')->default(15);
-            $table->enum('status',['accepted','cancelled','pending'])->default('pending');
+            $table->enum('status',Order::STATUS)->default(Order::PENDING);
             $table->string('payment_status')->default('pending');
             $table->text('shipping_address')->nullable();
             $table->text('order_notes')->nullable();

@@ -315,6 +315,20 @@
     "Are You sure you want to place the order?": "هل تريد ارسال الطلب؟",
     "Are you sure to empty cart items?": "هل انت متاكد من حذف جميع عناصر السله؟",
     "Order has been created successfully": "تم انشاء الطلب بنجاح",
-    "Failed to processed the checkout": "فشل في اكتمال عمله الدفع",
-    "free": "مجانا"
+    "Notes": "ملاحظات",
+    "N/A": "لا يوجد",
+    "Notes item": "ملاحظات العنصر",
+    "Notes order": "ملاحظات الطلب",
+    "Address": "العنوان",
+    "Change My Address": "غير عنواني",
+    "Failed to processed the checkout": "فشل في اكتمال عمليه الدفع",
+    "free": "مجانا",
+    "Item removed from cart":"تم حذف المنتح",
+    "Item added to cart":"تم اضافة المنتج",
+    "Not available":"غير متاح",
+    "Profile updated successfully": "تم حفظ تعديلات الملف الشخصي بنجاح",
+    "building number": "رقم المبني",
+    "street": "اسم الشارع",
+    "area": "اسم المنطقه",
+    "city": "المدينه"
 }

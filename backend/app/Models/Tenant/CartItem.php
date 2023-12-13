@@ -15,7 +15,8 @@ class CartItem extends Model
         'quantity',
         'options_price',
         'total',
-        'price'
+        'price',
+        'notes'
     ];
 
     public function cart()

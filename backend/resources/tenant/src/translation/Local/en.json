@@ -314,5 +314,16 @@
     "Are you sure to empty cart items?": "Are you sure to empty cart items?",
     "Order has been created successfully": "Order has been created successfully",
     "Failed to processed the checkout": "Failed to processed the checkout",
-    "free": "Free"
+    "free": "Free",
+    "Notes": "Notes",
+    "N/A": "N/A",
+    "Notes item": "Item notes",
+    "Notes order": "Order Notes",
+    "Address": "Address",
+    "Change My Address": "Change my address",
+    "Profile updated successfully": "Profile updated successfully",
+    "building number": "Building number",
+    "street": "Street name",
+    "area": "Area name",
+    "city": "City"
 }

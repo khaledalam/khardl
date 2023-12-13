@@ -123,7 +123,7 @@ return [
     'commercial-registration' => 'التسجيل التجاري',
     'tax-number' => 'الرقم الضريبي',
     'bank-certificate' => 'شهادة بنكية',
-    'accepted' => 'قبلت',
+    'accepted' => 'تم القبول',
     'status-must-be-active' => 'يجب أن تكون الحالة نشطة',
     'date' => 'التاريخ',
     'order-id' => 'معرف الطلب',
@@ -276,11 +276,10 @@ return [
     'customer-details'=>'بيانات الزبون',
     "customer"=>"الزبون",
     "documents"=>"الملفات",
-    'invoice'=>'الفاتورة',
     'shipping'=>'الشحن',
     'order'=>"الطلب",
     'product'=>'المنج',
-    'id'=>'المعرف',
+    'id'=>'رقم المعرف',
     'QTY'=>'الكمية',
     'unit_price'=>'سعر الواحدة',
     'total'=>"المجموع",
@@ -299,6 +298,7 @@ return [
     'preparations'=>'تجهيزات الطلب',
     'are-you-sure-you-want-to-approve-order-status'=>'هل انت متأكد من تأكيد حالة الطلب',
     'are-you-sure-you-want-to-cancel-order-status'=>'هل انت متأكد من الغاء الطلب ',
+    'are-you-sure-you-want-to-change-order-status'=>'هل انت متأكد من تغير حالة الطلب ',
     'customer-payment-methods'=>'طرق دفع الزبائن',
     'online-payment'=>'دفع الالكتروني',
     'visa'=>'خدمة فيزا',
@@ -311,7 +311,18 @@ return [
     'pick-up-by-car'=>"استلام بواسطة السيارة",
     "PICKUP"=>'التقاط الطلب',
     'PICKUP By Car'=>'التقاط الطلب بالسيارة',
-    'pick-up-from-the-restaurant-car' => 'الاستلام من المطعم بالسياره'
+    'pick-up-from-the-restaurant-car' => 'الاستلام من المطعم بالسياره',
+    'flat-rate' => 'نسبه ثابته',
+    'Halala' => 'هللة',
+    "branch"=> 'اسم الفرع',
+    "NA" => 'لا يوجد',
+    "notes" => "ملاحظات",
+    "in-preparations" => "قيد التحضيز",
+    "not-in-preparations" => "ليس قيد التحضيز",
+    'status'=>"حالة الطلب",
+    'completed'=>'مكتمل',
+    'ready'=>"جاهز"
+
 ];
 
 

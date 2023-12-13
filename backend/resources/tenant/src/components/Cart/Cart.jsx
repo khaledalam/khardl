@@ -2,25 +2,28 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {useTranslation} from "react-i18next";
 import AxiosInstance from "../../axios/axios";
-import Footer from "../Footer/Footer";
 import './Cart.css'
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 
 const Cart = () => {
-
     const [cartItems, setCartItems] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [paymentMethods, setPaymentMethods] = useState(null);
     const [deliveryType, setDeliveryType] = useState(null);
+    const [address, setAddress] = useState(null);
     const [deliveryTypes, setDeliveryTypes] = useState(null);
+
+    // order notes
+    const [notes, setNotes] = useState("");
 
     const [deliveryCost, setDeliveryCost] = useState("?");
 
     const navigate = useNavigate()
     const {t} = useTranslation();
     const Language = useSelector((state) => state.languageMode.languageMode);
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
 
     useEffect(() => {
@@ -29,6 +32,9 @@ const Cart = () => {
 
 
     const fetchCartData = async () => {
+        if (loading) return;
+        setLoading(true);
+
         try {
             const cartResponse = await AxiosInstance.get(`carts`);
 
@@ -37,6 +43,7 @@ const Cart = () => {
                 setCartItems(cartResponse.data?.data.items);
                 setPaymentMethods(cartResponse.data?.data?.payment_methods)
                 setDeliveryTypes(cartResponse.data?.data?.delivery_types)
+                setAddress(cartResponse.data?.data?.address ?? t('N/A'));
             }
 
         } catch (error) {
@@ -46,6 +53,7 @@ const Cart = () => {
             setLoading(false);
         }
     };
+
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method.name);
     }
@@ -61,55 +69,78 @@ const Cart = () => {
         }).finally(r => {
             setLoading(false);
         });
-
-
     }
 
     const handlePlaceOrder = async () => {
-
         if (confirm(t('Are You sure you want to place the order?'))) {
+
+            if (loading) return;
+            setLoading(true);
+
             try {
                 const cartResponse = await AxiosInstance.post(`/orders`,{
                     payment_method: paymentMethod,
                     delivery_type: deliveryType,
+                    notes: notes,
 
                     // TODO @todo more info
                     shipping_address: '',
-                    order_notes: '',
-
-                });
-
-                if (cartResponse.data) {
-                    toast.success(`${t('Order has been created successfully')}`);
-                    navigate('/');
-                }
+                })
+                    .then( r => {
+                        if (cartResponse.data) {
+                            toast.success(`${t('Order has been created successfully')}`);
+                            navigate('/');
+                        }
+                    })
+                    .finally( r => {
+                        setLoading(false);
+                    });
             } catch (error) {
-                toast.error(`${t('Failed to processed the checkout')}`)
+                toast.error(error.response.data.message);
             }
         }
-
-
     }
 
     const getTotalPrice = () => {
         return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
-    const handleRemoveItem = (itemId) => {
-        setLoading(true);
+    const handleRemoveItem =  async (itemId) => {
 
+        if (loading) return;
+        try {
+            setLoading(true);
+                const response = await AxiosInstance.delete(`/carts/`+itemId, {
+            });
+            if (response?.data) {
+                const updatedCart = cartItems.filter(item => item.item.id != itemId);
+                setCartItems(updatedCart);
+                toast.success(`${t('Item removed from cart')}`)
+            }
+        }catch(error){
 
-        const updatedCart = cartItems.filter(item => item.id !== itemId);
-        setCartItems(updatedCart);
+        }
+        setLoading(false);
     };
 
-    const handleQuantityChange = (itemId, newQuantity) => {
-        setLoading(true);
+    const handleQuantityChange = async (item, newQuantity) => {
+        if (loading) return;
+        try {
+            setLoading(true);
+            await AxiosInstance.post(`/carts`, {
+                item_id : item?.item_id,
+                quantity : newQuantity,
+                branch_id: item?.item?.branch_id,
+                notes: item?.notes
+            }).then (e => {
+                toast.success(`${t('Item quantity updated')}`)
+            }) .finally(async () => {
+                await fetchCartData().then(r => null);
+            });
+        }catch(error){
 
-        const updatedCart = cartItems.map(item =>
-            item.id === itemId ? {...item, quantity: newQuantity} : item
-        );
-        setCartItems(updatedCart);
+        }
+        setLoading(false);
     };
 
 
@@ -120,13 +151,24 @@ const Cart = () => {
            return;
         }
 
+        try{
         setLoading(true);
         await AxiosInstance.delete(`/carts/trash`, {})
             .finally(async () => {
-                setLoading(false);
                 await fetchCartData().then(r => null);
             });
+        } catch(error){
+
+        }
+        setLoading(false);
     }
+
+    if (!isLoggedIn) {
+        confirm('You need to login first');
+        navigate('/login')
+        return;
+    }
+
     return (
         <div className="cart-page">
 
@@ -171,12 +213,18 @@ const Cart = () => {
                             <div>
                                 <ul className="cart-items">
                                     {cartItems.map(it => (
-                                        <li key={it?.item_id}>
+                                        <div key={it?.item_id}>
+                                        <li>
                                             <img style={{
                                                 border: '1px solid var(--primary)',
                                                 borderRadius: '15%'
                                             }} src={it?.item?.photo} width={80} height={80}/>
-                                            <span>{Language === "en" ? it?.item?.description?.en : it?.item?.description?.ar}</span>
+                                            <span>{Language === "en" ? it?.item?.description?.en : it?.item?.description?.ar}
+                                            <br />
+                                            {!it.item.availability ? (
+                                                <span className=' !text-[10px] !bg-[var(--danger)] !px-[6px] !py-[6px] rounded-[16px] !text-white'> {t('Not available')} </span>
+                                            ) : null}
+                                            </span>
                                             <span>{it?.price} {t('SAR')}</span>
                                             <span>
                       <label htmlFor={`quantity-${it?.item_id}`}>{t('Quantity')}: </label>
@@ -186,7 +234,7 @@ const Cart = () => {
                           type="number"
                           min="1"
                           value={it?.quantity}
-                          onChange={(e) => handleQuantityChange(it?.item_id, parseInt(e.target.value))}
+                          onChange={(e) => handleQuantityChange(it, parseInt(e.target.value))}
                       />
                     </span>
 
@@ -194,13 +242,15 @@ const Cart = () => {
                                             <button
                                                 disabled={loading}
                                                 className="p-[6px] text-black shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-1"
-                                                onClick={() => handleRemoveItem(it?.item_id)}>❌ {t('Remove')}</button>
+                                                onClick={() => handleRemoveItem(it?.item_id)}>❌ {t('Remove')}</button><br />
                                         </li>
+                                            <span className={"flex cart-item-notes"}>{t('Notes item')}: <pre>{it?.notes || t('N/A')}</pre></span>
+                                        </div>
                                     ))}
                                 </ul>
                                 <div className="cart-summary">
                                     <div className="payment-section my-4 flex flex-col">
-                                        <h3 className={"mb-2"}>{t('Select Payment Method')}</h3>
+                                        <h3 className={"mb-2"}>{t('Select Payment Method')} <span style={{color: 'red'}}>*</span></h3>
                                         {paymentMethods?.map((method) => (
                                                 <label key={method.id}>
                                                     <input
@@ -218,7 +268,7 @@ const Cart = () => {
                                     <hr />
 
                                     <div className="payment-section my-4 flex flex-col">
-                                        <h3 className={"mb-2"}>{t('Select Delivery Type')}</h3>
+                                        <h3 className={"mb-2"}>{t('Select Delivery Type')} <span style={{color: 'red'}}>*</span></h3>
                                         {deliveryTypes?.map((type) => (
                                             <label key={type.id}>
                                                 <input
@@ -235,11 +285,32 @@ const Cart = () => {
 
                                     <hr />
 
+                                    <div className="my-4">
+                                        <div className="text-[15px] font-semibold mb-2">{t("Address")} TODO</div>
+                                        <input className="w-[100%] p-1 my-1" style={{color: 'gray'}} value={address} disabled={true} readOnly={true}/>
+                                        <button
+                                            disabled={loading}
+                                            onClick={() => navigate('/dashboard#Profile')}
+                                            className={"text-[13px] text-black p-2 my-3 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                            <span>📍{t('Change My Address')} </span>
+                                        </button>
+                                    </div>
+
+                                    <hr />
+
+                                    <div className="my-4">
+                                        <div className="text-[15px] font-semibold mb-2">{t("Notes order")}</div>
+                                        <textarea className="border w-[100%] p-1" placeholder={t("Notes order")} value={notes} onChange={e => setNotes(e.target.value)}/>
+                                    </div>
+
+                                    <hr />
+
                                     <div className={"my-4"}>
                                         <h3>{t('Total')}: {getTotalPrice()} {t('SAR')} <small><i>({t('Inclusive VAT')})</i></small></h3>
                                     </div>
 
                                     <hr />
+
 
                                     <button
                                         disabled={loading}
@@ -261,37 +332,6 @@ const Cart = () => {
         </div>
     );
 
-    const divWidth = useSelector((state) => state.divWidth.value);
-    const divRef = useRef(null);
-    const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
-    const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
-    const selectedAlignText = useSelector((state) => state.alignText?.selectedAlignText);
-
-    const [cart, setCart] = useState([]);
-
-
-    return (
-        <div ref={divRef} className="w-[100%] bg-white h-[85vh] overflow-y-auto" style={{
-            fontFamily: `${selectedFontFamily}`,
-            fontWeight: `${selectedFontWeight}`,
-            fontSize: `${selectedFontFamily}`
-        }}>
-            <div className={`mt-[30px] mb-[50px] ${divWidth >= 744 ? "mx-[40px]" : ""}`}>
-                <div>
-                    <div>
-                        <div className={`px-[30px] text-xl`}>
-                            {cart?.length > 0 ?
-                                <>
-                                    <h2>Cart Items:</h2>
-                                </>
-                                : <h2>No Items in cart yet!</h2>}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Footer/>
-        </div>
-    );
 };
 
 export default Cart;

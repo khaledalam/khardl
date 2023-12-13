@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'suspended', 'inactive'])->default('active');
             $table->timestamp('last_login')->nullable();
             $table->string('msegat_id_verification')->nullable();
+            $table->string('address')->nullable();
             $table->boolean("tap_verified")->default(false);
             $table->foreignIdFor(Branch::class)->nullable()->constrained()->onDelete('set null');
             $table->rememberToken();

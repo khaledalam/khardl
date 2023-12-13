@@ -119,7 +119,6 @@ Route::group([
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
 
 
-
                 Route::get('/orders-all', [RestaurantController::class, 'orders_all'])->name('restaurant.orders_all');
                 Route::get('/orders-add', [RestaurantController::class, 'orders_add'])->name('restaurant.orders_add');
                 Route::get('/products-out-of-stock', [RestaurantController::class, 'products_out_of_stock'])->name('restaurant.products_out_of_stock');
@@ -141,7 +140,6 @@ Route::group([
                         })->name($name);
                     }
                 });
-
             });
             Route::middleware('worker')->group(function () {
 
@@ -208,6 +206,9 @@ Route::group([
             });
 
 
+            Route::get('/user', [CustomerOrderController::class, 'user'])->name('customer.user');
+            Route::post('/user', [CustomerOrderController::class, 'updateUser'])->name('customer.save.user');
+
 
             Route::middleware('verifiedPhone')->group(function () {
                 Route::delete("carts/trash",[CartController::class,'trash'])->name('carts.trash');
@@ -253,6 +254,8 @@ Route::prefix('api')->middleware([
         Route::apiResource('orders',OrderController::class)->only([
             'index'
         ]);
+        Route::get('orders/{order}/logs',[OrderController::class,'logs']);
+
         Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
         Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
         Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);

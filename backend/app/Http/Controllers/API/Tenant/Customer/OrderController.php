@@ -6,6 +6,9 @@ use App\Traits\APIResponseTrait;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 class OrderController
 {
@@ -26,6 +29,43 @@ class OrderController
     public function index(){
         return $this->sendResponse($this->order, '');
     }
+
+    public function user(){
+        $user = Auth::user();
+
+        return $this->sendResponse([
+            'firstName' => $user?->first_name,
+            'lastName' => $user?->last_name,
+            'phone' => $user?->phone,
+            'address' => $user?->address
+
+        ], '');
+    }
+
+    public function updateUser(Request $request){
+        $validatedData = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+        ]);
+
+        $user = Auth::user();
+
+
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+
+        $user->save();
+
+        return $this->sendResponse([
+            'ok' => true
+        ], '');
+    }
+
+
 
 
 }

@@ -166,7 +166,7 @@
                                                  </td>
                                                 <td>
                                                      <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                    title="Melody Macy">
+                                                    title="{{$item->description}}">
                                                     <img alt="Pic" src="{{$item->photo}}" />
                                                 </div>
                                                 </td>
@@ -732,7 +732,7 @@
         const checkboxesContainer = document.getElementById('checkboxes');
         const addCheckboxButton = document.getElementById('addCheckbox');
 
-        let checkboxCount = 0;
+        let checkboxCount = -1;
 
         function createCheckbox() {
             checkboxCount++;
@@ -790,7 +790,7 @@
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
                     <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ${optionCount}">
-                    <input type="text"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
+                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -798,7 +798,7 @@
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
                     <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ${optionCount}">
-                    <input type="text"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
+                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -822,7 +822,7 @@
         const selectionsContainer = document.getElementById('selections');
         const addSelectionButton = document.getElementById('addSelection');
 
-        let selectionCount = 0;
+        let selectionCount = -1;
 
         function createSelection() {
             selectionCount++;
@@ -879,7 +879,7 @@
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
                     <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ${optionCount}">
-                    <input type="text"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
+                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;  }
@@ -887,7 +887,7 @@
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
                     <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ${optionCount}">
-                    <input type="text"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
+                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;
@@ -910,7 +910,7 @@
         const dropdownsContainer = document.getElementById('dropdowns');
         const addDropdownButton = document.getElementById('addDropdown');
 
-        let dropdownCount = 0;
+        let dropdownCount = -1;
 
         function createDropdown() {
             dropdownCount++;

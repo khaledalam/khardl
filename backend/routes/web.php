@@ -211,9 +211,11 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/download/pdf',[DownloadController::class,'downloadPDF'])
                     ->name("download.pdf");
                     Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('toggle-status');
-                    
+
+                    Route::get('/revenue', [AdminController::class, 'revenue'])->name('revenue');
+
                 });
-                
+
             });
 
         });

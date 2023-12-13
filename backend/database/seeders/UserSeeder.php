@@ -28,6 +28,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'status'=> 'active',
             'phone'=>'966123456789',
+            'address' => 'test address',
             'position'=>"Super Admin",
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
@@ -54,6 +55,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'status'=> 'active',
             'phone'=>'966123456789',
+            'address' => 'test address',
             'position'=>"Restaurant Owner",
             'restaurant_name' => 'first',
             'password' => bcrypt('password'),
@@ -77,7 +79,7 @@ class UserSeeder extends Seeder
         \DB::table('permissions')->insert([
             'user_id'=> self::SUPER_ADMIN_USER_ID,
             'can_access_dashboard'=> true, //  TODO @todo not yet
-            'can_access_restaurants'=> true, 
+            'can_access_restaurants'=> true,
             'can_view_restaurants'=> true,
             'can_delete_restaurants'=> true, // TODO @todo not yet
             'can_approve_restaurants'=> true,
