@@ -38,7 +38,7 @@ class CartRepository
             return $this->sendError('Fail', __('Cannot add item from different branch.'));
         }
         $item = Item::findOrFail($request->item_id);
-        $this->createCartItem($item,$request->validated());
+        $this->createCartItem($item, $request->validated());
         return $this->sendResponse(null, __('The meal has been added successfully.'));
     }
     public function update($request)
@@ -55,6 +55,7 @@ class CartRepository
             'price' =>$item->price,
             'total' =>$item->price * $request['quantity'] ,
             'quantity' => $request['quantity'],
+            'notes' => $request['notes']
 
         ]);
     }
@@ -110,7 +111,7 @@ class CartRepository
     }
     public function tax($subTotal = null)
     {
-       
+
         $vat = self::VAT_PERCENTAGE;
 
         return number_format((($subTotal ?? $this->subTotal() - $this->discount()) * $vat) / 100 , 2, '.', '');
@@ -140,11 +141,12 @@ class CartRepository
                 price : $cart_item->price,
                 options_price : 0,
                 total :  $cart_item->total,
+                notes: $cart_item->notes
             );
         });
     }
 
-   
+
 
     public function items()
     {

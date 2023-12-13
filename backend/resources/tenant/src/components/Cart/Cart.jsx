@@ -16,6 +16,9 @@ const Cart = () => {
     const [deliveryType, setDeliveryType] = useState(null);
     const [deliveryTypes, setDeliveryTypes] = useState(null);
 
+    // order notes
+    const [notes, setNotes] = useState("");
+
     const [deliveryCost, setDeliveryCost] = useState("?");
 
     const navigate = useNavigate()
@@ -72,11 +75,10 @@ const Cart = () => {
                 const cartResponse = await AxiosInstance.post(`/orders`,{
                     payment_method: paymentMethod,
                     delivery_type: deliveryType,
+                    notes: notes,
 
                     // TODO @todo more info
                     shipping_address: '',
-                    order_notes: '',
-
                 });
 
                 if (cartResponse.data) {
@@ -171,6 +173,7 @@ const Cart = () => {
                             <div>
                                 <ul className="cart-items">
                                     {cartItems.map(it => (
+                                        <>
                                         <li key={it?.item_id}>
                                             <img style={{
                                                 border: '1px solid var(--primary)',
@@ -194,13 +197,15 @@ const Cart = () => {
                                             <button
                                                 disabled={loading}
                                                 className="p-[6px] text-black shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-1"
-                                                onClick={() => handleRemoveItem(it?.item_id)}>❌ {t('Remove')}</button>
+                                                onClick={() => handleRemoveItem(it?.item_id)}>❌ {t('Remove')}</button><br />
                                         </li>
+                                        <span className={"cart-item-notes"}>{t('Notes item')}: {it?.notes || t('N/A')}</span>
+                                        </>
                                     ))}
                                 </ul>
                                 <div className="cart-summary">
                                     <div className="payment-section my-4 flex flex-col">
-                                        <h3 className={"mb-2"}>{t('Select Payment Method')}</h3>
+                                        <h3 className={"mb-2"}>{t('Select Payment Method')} <span style={{color: 'red'}}>*</span></h3>
                                         {paymentMethods?.map((method) => (
                                                 <label key={method.id}>
                                                     <input
@@ -218,7 +223,7 @@ const Cart = () => {
                                     <hr />
 
                                     <div className="payment-section my-4 flex flex-col">
-                                        <h3 className={"mb-2"}>{t('Select Delivery Type')}</h3>
+                                        <h3 className={"mb-2"}>{t('Select Delivery Type')} <span style={{color: 'red'}}>*</span></h3>
                                         {deliveryTypes?.map((type) => (
                                             <label key={type.id}>
                                                 <input
@@ -238,6 +243,16 @@ const Cart = () => {
                                     <div className={"my-4"}>
                                         <h3>{t('Total')}: {getTotalPrice()} {t('SAR')} <small><i>({t('Inclusive VAT')})</i></small></h3>
                                     </div>
+
+                                    <hr />
+
+                                    <div className={"my-4"}>
+                                        <div className="border-b border-ternary-light my-2 mx-10 p-4">
+                                            <div className="">
+                                                <div className="text-[15px] font-semibold mb-2">{t("Notes")}</div>
+                                                <textarea className="w-[100%] bg-[var(--secondary)] p-1" placeholder={t("Notes")} value={notes} onChange={e => setNotes(e.target.value)}/>
+                                            </div>
+                                        </div>                                    </div>
 
                                     <hr />
 
@@ -261,37 +276,6 @@ const Cart = () => {
         </div>
     );
 
-    const divWidth = useSelector((state) => state.divWidth.value);
-    const divRef = useRef(null);
-    const selectedFontFamily = useSelector((state) => state.fonts.selectedFontFamily);
-    const selectedFontWeight = useSelector((state) => state.fonts.selectedFontWeight);
-    const selectedAlignText = useSelector((state) => state.alignText?.selectedAlignText);
-
-    const [cart, setCart] = useState([]);
-
-
-    return (
-        <div ref={divRef} className="w-[100%] bg-white h-[85vh] overflow-y-auto" style={{
-            fontFamily: `${selectedFontFamily}`,
-            fontWeight: `${selectedFontWeight}`,
-            fontSize: `${selectedFontFamily}`
-        }}>
-            <div className={`mt-[30px] mb-[50px] ${divWidth >= 744 ? "mx-[40px]" : ""}`}>
-                <div>
-                    <div>
-                        <div className={`px-[30px] text-xl`}>
-                            {cart?.length > 0 ?
-                                <>
-                                    <h2>Cart Items:</h2>
-                                </>
-                                : <h2>No Items in cart yet!</h2>}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Footer/>
-        </div>
-    );
 };
 
 export default Cart;

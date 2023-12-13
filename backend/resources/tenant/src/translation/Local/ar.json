@@ -316,5 +316,8 @@
     "Are you sure to empty cart items?": "هل انت متاكد من حذف جميع عناصر السله؟",
     "Order has been created successfully": "تم انشاء الطلب بنجاح",
     "Failed to processed the checkout": "فشل في اكتمال عمله الدفع",
-    "free": "مجانا"
+    "free": "مجانا",
+    "Notes": "ملاحظات",
+    "N/A": "لا يوجد",
+    "Notes item": "ملاحظات العنصر"
 }

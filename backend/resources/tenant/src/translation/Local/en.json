@@ -314,5 +314,8 @@
     "Are you sure to empty cart items?": "Are you sure to empty cart items?",
     "Order has been created successfully": "Order has been created successfully",
     "Failed to processed the checkout": "Failed to processed the checkout",
-    "free": "Free"
+    "free": "Free",
+    "Notes": "Notes",
+    "N/A": "N/A",
+    "Notes item": "Item notes"
 }
