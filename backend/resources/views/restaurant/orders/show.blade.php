@@ -41,13 +41,19 @@
                          <!--end::Button-->
                          <!--begin::Button-->
                          <a href="#" class="btn btn-active-light-khardl btn-sm">Edit Order</a>
-                         @if($order->status == 'accepted')
-                         <a href="#"  class="btn btn-light-success btn-sm" >{{__("messages.accepted")}}</a>
-                         @elseif($order->status == 'pending')
+                         @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
+                         <a href="#"  class="btn btn-light-primary btn-sm" >{{__("messages.accepted")}}</a>
+                         @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
                          <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>    
 
-                         @elseif($order->status == 'cancelled')
+                         @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
                          <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>    
+                         @elseif($order->status ==  \App\Models\Tenant\Order::READY)
+                         <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>    
+
+                         @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
+                         <a href="#"  class="btn btn-light-success btn-sm">{{__("messages.completed")}}</a>    
+                         
 
                          @endif
                         

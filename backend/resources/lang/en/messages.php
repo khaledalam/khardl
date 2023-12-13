@@ -298,8 +298,9 @@ return [
     'preparations'=>'Preparations',
     'yes'=>'Yes',
     'no'=>'No',
-    'are-you-sure-you-want-to-approve-order-status'=>'Are you sire you want to approve order status',
-    'are-you-sure-you-want-to-cancel-order-status'=>'Are you sire you want to cancel order status',
+    'are-you-sure-you-want-to-approve-order-status'=>'Are you sure you want to approve order status',
+    'are-you-sure-you-want-to-cancel-order-status'=>'Are you sure you want to cancel order status',
+    'are-you-sure-you-want-to-change-order-status'=>'Are you sure you want to change order status',
     'customer-payment-methods'=>'Customer payment methods',
     'online-payment'=>'Online payment',
     'visa'=>'Visa',
@@ -316,7 +317,10 @@ return [
     'PICKUP By Car'=>'PICKUP By Car',
     'pick-up-from-the-restaurant-car' => 'Pick up from the restaurant with car',
     'flat-rate' => 'Flat Rate',
-    'Halala' => 'Halala'
+    'Halala' => 'Halala',
+    'status'=>"Status",
+    'completed'=>'Completed',
+    'ready'=>"Ready"
 
 ];
 

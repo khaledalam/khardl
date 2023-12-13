@@ -26,6 +26,18 @@ class Order extends Model
         'subtotal'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
+    const STATUS = [
+        'accepted',
+        'cancelled',
+        'pending',
+        'completed',
+        'ready'
+    ];
+    const ACCEPTED = 'accepted';
+    const CANCELLED = 'cancelled';
+    const PENDING = 'pending';
+    const COMPLETED = 'completed';
+    const READY = 'ready';
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
