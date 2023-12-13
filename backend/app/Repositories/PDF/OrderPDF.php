@@ -40,8 +40,8 @@ class OrderPDF implements PdfPrintInterface
     }
     public function fileName():string {
         if($this->id){
-            return "{$this->restaurant->restaurant_name}-order-$this->id ".Carbon::now()->format('d-m-Y h:i a').".pdf";
+            return "{$this->restaurant->restaurant_name} - order-$this->id ".Carbon::now()->format('d-m-Y h:i a').".pdf";
         }
-        return "{$this->restaurant->restaurant_name}-orders ".Carbon::now()->format('d-m-Y h:i a').".pdf";
+        return "{$this->restaurant->restaurant_name} - orders ".Carbon::now()->format('d-m-Y h:i a').".pdf";
     }
 }

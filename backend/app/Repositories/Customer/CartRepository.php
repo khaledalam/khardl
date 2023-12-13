@@ -146,7 +146,7 @@ class CartRepository
 
    
 
-    public function items()
+    public function data()
     {
         $items = $this->cart->items->load(['item']);
         return $this->sendResponse([
@@ -154,6 +154,11 @@ class CartRepository
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes()
         ], '');
+    }
+    public function items()
+    {
+        $items = $this->cart->items->load(['item']);
+        return $items;
     }
 
 
@@ -181,9 +186,11 @@ class CartRepository
             $this->cart->branch_id = $branch_id;
             $this->cart->save();
             return true;
-        }
-        // check if cart has branch id
-        else if($this->cart->branch_id == $branch_id){
+        } else if($this->cart->branch_id == $branch_id){ // check if cart has branch id
+            return true;
+        }else if (!$this->hasItems()){ // if cart has no items we can switch to that branch
+            $this->cart->branch_id = $branch_id;
+            $this->cart->save();
             return true;
         }
         return false;

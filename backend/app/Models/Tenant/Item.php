@@ -34,6 +34,20 @@ class Item extends Model
         'availability'
     ];
     public $translatable = ['description'];
+    protected $casts = [
+        'checkbox_required' => 'array',
+        'checkbox_input_titles'=> 'array',
+        'checkbox_input_maximum_choices'=> 'array',
+        'checkbox_input_names'=> 'array',
+        'checkbox_input_prices'=> 'array',
+        'selection_required'=> 'array',
+        'selection_input_names'=> 'array',
+        'selection_input_prices'=> 'array',
+        'selection_input_titles'=> 'array',
+        'dropdown_required'=> 'array',
+        'dropdown_input_titles'=> 'array',
+        'dropdown_input_names'=> 'array',
+    ];
     const STORAGE = "items";
     const STORAGE_SEEDER = "seeders/items";
     

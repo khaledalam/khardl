@@ -39,13 +39,22 @@ class OrderRequest extends FormRequest
         $validator->after(function ($validator) use($cart){
             if(!$cart->hasItems()){
                 $validator->errors()->add('cart', __('Cart is empty'));
+                return ;
             }
             if(!$cart->hasPayment($this->payment_method)){
                 $validator->errors()->add('payment_method', __('Invalid payment method'));
+                return ;
             }
             if(!$cart->hasDelivery($this->delivery_type)){
                 $validator->errors()->add('delivery_type', __('Invalid Delivery Type'));
+                return ;
             }
+            $cart->items()->map(function($cart_item)use($validator){
+                if(!$cart_item->item->availability){
+                    $validator->errors()->add('cart', __(':name is not available',['name'=>$cart_item->item->description]));
+                    return ;
+                }
+            });
         });
     }
 

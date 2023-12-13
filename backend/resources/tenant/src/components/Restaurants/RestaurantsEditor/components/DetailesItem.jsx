@@ -14,13 +14,19 @@ const DetailesItem = ({
   image,
   calories,
   price,
-  selection_input_titles,
-  selection_input_names,
-  selection_input_prices,
+
   checkbox_required,
   checkbox_input_titles,
   checkbox_input_names,
   checkbox_input_prices,
+
+  selection_required,
+  selection_input_titles,
+  selection_input_names,
+  selection_input_prices,
+
+  dropdown_required,
+  dropdown_input_titles,
   dropdown_input_names,
 }) => {
   const shapeImageShape = useSelector(state => state.shapeImage.shapeImageShape);
