@@ -121,13 +121,23 @@ const Cart = () => {
         setLoading(false);
     };
 
-    const handleQuantityChange = (itemId, newQuantity) => {
-        setLoading(true);
+    const handleQuantityChange = async (item, newQuantity) => {
+        try {
+            setLoading(true);
+            await AxiosInstance.post(`/carts`, {
+                item_id : item?.item_id,
+                quantity : newQuantity,
+                branch_id: item?.item?.branch_id,
+                notes: item?.notes
+            }).then (e => {
+                toast.success(`${t('Item quantity updated')}`)
+            }) .finally(async () => {
+                await fetchCartData().then(r => null);
+            });
+        }catch(error){
 
-        const updatedCart = cartItems.map(item =>
-            item.id === itemId ? {...item, quantity: newQuantity} : item
-        );
-        setCartItems(updatedCart);
+        }
+        setLoading(false);
     };
 
 
@@ -138,12 +148,16 @@ const Cart = () => {
            return;
         }
 
+        try{
         setLoading(true);
         await AxiosInstance.delete(`/carts/trash`, {})
             .finally(async () => {
-                setLoading(false);
                 await fetchCartData().then(r => null);
             });
+        } catch(error){
+
+        }
+        setLoading(false);
     }
 
     if (!isLoggedIn) {
@@ -217,7 +231,7 @@ const Cart = () => {
                           type="number"
                           min="1"
                           value={it?.quantity}
-                          onChange={(e) => handleQuantityChange(it?.item_id, parseInt(e.target.value))}
+                          onChange={(e) => handleQuantityChange(it, parseInt(e.target.value))}
                       />
                     </span>
 
