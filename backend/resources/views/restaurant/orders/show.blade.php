@@ -4,6 +4,11 @@
 
 @section('content')
 
+    <style>
+        .timeline-label:before{
+            right: 1px !important;
+        }
+    </style>
 
   <!--begin::Content-->
   <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -42,15 +47,15 @@
                          <!--begin::Button-->
                          <a href="#" class="btn btn-active-light-khardl btn-sm">Edit Order</a>
                          @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                         <a href="#"  class="btn btn-light-primary btn-sm" >{{__("messages.accepted")}}</a>
+                         <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
-                         <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>  
+                         <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
-                         <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>    
+                         <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::READY)
-                         <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>    
+                         <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
-                         <a href="#"  class="btn btn-light-success btn-sm">{{__("messages.completed")}}</a> 
+                         <a href="#"  class="btn btn-light-success btn-sm">{{__("messages.completed")}}</a>
                          @endif
 
                          <!--end::Button-->
@@ -375,90 +380,65 @@
                                                  @else
                                                      <h3 class="btn btn-light-danger btn-sm">{{__('messages.not-in-preparations')}}</h3>
                                                  @endif
-                                                 {{-- <!--begin::Timeline-->
+
+                                                 <hr />
+
+                                                 <a href="#" onclick="showConfirmation({{$order->id}})" class="btn btn-info menu-link px-3" >{{__('messages.status')}}</a>
+
+                                                     <hr />
+
+
                                                  <div class="timeline-label">
 
                                                      <!--begin::Item-->
-                                                     <div class="timeline-item">
-                                                         <!--begin::Badge-->
-                                                         <div class="timeline-badge">
-                                                             <i class="fa fa-genderless text-info fs-1"></i>
-                                                         </div>
-                                                         <!--end::Badge-->
-                                                         <!--begin::Content-->
-                                                         <div class="d-block">
-                                                             <div>
-                                                                 <p class="fw-bolder text-gray-800 ps-3">Payment status
-                                                                 </p>
-                                                             </div>
+{{--                                                     <div class="timeline-item">--}}
+{{--                                                         <!--begin::Badge-->--}}
+{{--                                                         <div class="timeline-badge">--}}
+{{--                                                             <i class="fa fa-genderless text-info fs-1"></i>--}}
+{{--                                                         </div>--}}
+{{--                                                         <!--end::Badge-->--}}
+{{--                                                         <!--begin::Content-->--}}
+{{--                                                         <div class="d-block">--}}
+{{--                                                             <div>--}}
+{{--                                                                 <p class="fw-bolder text-gray-800 ps-3">Payment status--}}
+{{--                                                                 </p>--}}
+{{--                                                             </div>--}}
 
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">
-                                                                 <span class="badge badge-light-danger">Paid</span>
-                                                             </div>
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">
-                                                                 <span class="badge badge-light-warning my-5">Payment when recieving</span>
-                                                             </div>
-                                                         </div>
-                                                         <!--end::Content-->
-                                                     </div>
-                                                     <!--end::Item-->
-                                                     <!--begin::Item-->
-                                                     <div class="timeline-item">
-                                                         <!--begin::Badge-->
-                                                         <div class="timeline-badge">
-                                                             <i class="fa fa-genderless text-success fs-1"></i>
-                                                         </div>
-                                                         <!--end::Badge-->
-                                                         <!--begin::Content-->
-                                                         <div class="d-block">
-                                                             <div>
-                                                                 <p class="fw-bolder text-gray-800 ps-3">Order ready for delivery
-                                                                 </p>
-                                                             </div>
+{{--                                                             <div class="fw-mormal timeline-content text-muted ps-3">--}}
+{{--                                                                 <span class="badge badge-light-danger">Paid</span>--}}
+{{--                                                             </div>--}}
+{{--                                                             <div class="fw-mormal timeline-content text-muted ps-3">--}}
+{{--                                                                 <span class="badge badge-light-warning my-5">Payment when recieving</span>--}}
+{{--                                                             </div>--}}
+{{--                                                         </div>--}}
+{{--                                                         <!--end::Content-->--}}
+{{--                                                     </div>--}}
+{{--                                                     <!--end::Item-->--}}
 
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">
-                                                                 <button class="btn btn-sm btn-success">Ready for delivery</button>
+                                                     @foreach($orderStatusLogs as $log)
+                                                         <!--begin::Item-->
+                                                         <div class="timeline-item">
+                                                             <!--begin::Badge-->
+                                                             <div class="timeline-badge">
+                                                                 <i class="fa fa-genderless {{$log->class_name}} fs-1"></i>
                                                              </div>
-                                                         </div>
-                                                         <!--end::Content-->
-                                                     </div>
-                                                     <!--end::Item-->
-                                                     <!--begin::Item-->
-                                                     <div class="timeline-item">
-                                                         <!--begin::Badge-->
-                                                         <div class="timeline-badge">
-                                                             <i class="fa fa-genderless text-danger fs-1"></i>
-                                                         </div>
-                                                         <!--end::Badge-->
-                                                         <!--begin::Desc-->
-                                                         <div class="d-block">
-                                                             <div>
-                                                                 <p class="fw-bolder text-gray-800 ps-3">On the way to the client</p>
-                                                             </div>
+                                                             <!--end::Badge-->
+                                                             <!--begin::Content-->
+                                                             <div class="d-block">
+                                                                 <div>
+                                                                     <p class="fw-bolder text-gray-800 ps-3">{{strtoupper($log->status)}}</p>
+                                                                 </div>
+                                                                 <div class="fw-mormal timeline-content text-muted ps-3">
+                                                                     {{$log->created_at}} <span>({{\Carbon\Carbon::parse($log->created_at)->diffForHumans()}})</span>
+                                                                     {{strtoupper($log->notes)}}
+                                                                 </div>
 
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                                                         </div>
-                                                         <!--end::Desc-->
-                                                     </div>
-                                                     <!--end::Item-->
-                                                     <!--begin::Item-->
-                                                     <div class="timeline-item">
-                                                         <!--begin::Badge-->
-                                                         <div class="timeline-badge">
-                                                             <i class="fa fa-genderless text-khardl fs-1"></i>
-                                                         </div>
-                                                         <!--end::Badge-->
-                                                         <!--begin::Desc-->
-                                                         <div class="d-block">
-                                                             <div>
-                                                                 <p class="fw-bolder text-gray-800 ps-3">Delivered</p>
                                                              </div>
-
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                                                             <!--end::Content-->
                                                          </div>
-                                                         <!--end::Desc-->
-                                                     </div>
-                                                     <!--end::Item-->
+                                                         <!--end::Item-->
+                                                     @endforeach
+
                                                  </div>
                                                  <!--end::Timeline-->
                                              </div>
@@ -476,7 +456,7 @@
                                                      <h2>{{__('messages.order')}} #{{$order->id}}
 
                                                          @if($order->status == 'accepted')
-                                                             <a href="#"  class="btn btn-light-success btn-sm" >{{__("messages.accepted")}}</a>
+                                                             <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
                                                          @elseif($order->status == 'pending')
                                                              <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
                                                          @elseif($order->status == 'cancelled')
@@ -593,5 +573,36 @@
          <!--end::Post-->
 
  </div>
+  <form id="approve-form"  method="POST" style="display: inline">
+      @csrf
+      @method('PUT')
+      <input type="hidden" name="status" id="orderStatus" >
+  </form>
+  <script>
+      function showConfirmation(orderId) {
+          event.preventDefault();
+          const statusOptions = @json(array_combine(\App\Models\Tenant\Order::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\Order::STATUS)));
+
+          Swal.fire({
+              text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
+              icon: 'warning',
+              input: 'select',
+              showCancelButton: true,
+              inputOptions: statusOptions,
+              inputPlaceholder: 'Select an option',
+              confirmButtonText: '{{ __('messages.yes') }}',
+              cancelButtonText: '{{ __('messages.no') }}'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  const selectedStatus = result.value;
+                  document.getElementById('orderStatus').setAttribute('value',selectedStatus);
+                  var form = document.getElementById('approve-form');
+                  form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
+                  form.submit();
+
+              }
+          });
+      }
+  </script>
  <!--end::Content-->
 @endsection

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Tenant;
 
 use App\Models\Tenant\Order;
+use App\Models\Tenant\OrderStatusLogs;
+use Faker\Provider\id_ID\Color;
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
 
@@ -26,6 +28,14 @@ class  OrderController extends BaseRepositoryController
 
         });
     }
+
+    public function logs($order, Request $request){
+
+        $orderStatusLogs = OrderStatusLogs::all()->where('order_id', '=', $order)->sortByDesc("created_at");
+
+        return $this->sendResponse($orderStatusLogs, 'Order status logs fetched');
+    }
+
     public function updateStatus($order,Request $request){
 
         $request->validate([
@@ -41,6 +51,30 @@ class  OrderController extends BaseRepositoryController
         if ($request->expectsJson()) {
             return $this->sendResponse(null, __('Order has been updated successfully.'));
         }
+
+        $statusLog = new OrderStatusLogs();
+        $statusLog->order_id = $order->id;
+        $statusLog->status = $request->status;
+        switch ($request->status) {
+            case Order::PENDING:
+                $statusLog->class_name = 'text-warning';
+                break;
+            case Order::ACCEPTED:
+                $statusLog->class_name = 'text-success';
+                break;
+            case Order::READY:
+                $statusLog->class_name = 'text-info';
+                break;
+            case Order::CANCELLED:
+                $statusLog->class_name = 'text-danger';
+                break;
+            case Order::COMPLETED:
+                $statusLog->class_name = 'text-primary';
+                break;
+        }
+        $statusLog->notes = $request->notes ?? null;
+        $statusLog->saveOrFail();
+
         return redirect()->back()->with('success',__('Order has been updated successfully.'));
     }
 
