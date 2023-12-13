@@ -26,6 +26,14 @@ const CustomerDashboard = () => {
     dispatch(setActiveTab(tabName));
   };
 
+  if (window.location.href.indexOf('#Profile') > -1) {
+      handleTabClick("Profile")
+  } else if (window.location.href.indexOf('#Dashboard') > -1) {
+      handleTabClick("Dashboard")
+  } else if (window.location.href.indexOf('#Orders') > -1) {
+      handleTabClick("Orders")
+  }
+
   return (
     <div className="flex justify-between items-start bg-white shadow-lg">
       <aside

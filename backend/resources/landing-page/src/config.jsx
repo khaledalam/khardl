@@ -1,8 +1,9 @@
 // development
-// export const API_ENDPOINT = 'http://khardl:8000';
+export const API_ENDPOINT =
+    window.location.href.indexOf('khardl.com') > -1
+        ? 'https://khardl.com'  // Local
+        : 'http://khardl:8000'; // Live
 
-// live
-export const API_ENDPOINT = 'https://khardl.com';
 
 export const HTTP_OK            = 200;
 export const HTTP_CREATED              = 201;
@@ -21,6 +22,3 @@ export const HTTP_ACCEPTED             = 205;
 export const HTTP_NOT_ACCEPTED         = 206;
 export const HTTP_BLOCKED              = 207;
 
-// live
-// exportexport export const API_ENDPOINT = 'https://khardl.com/api';
-// exportexport export const WEBSITE_URL = 'https://khardl.com';

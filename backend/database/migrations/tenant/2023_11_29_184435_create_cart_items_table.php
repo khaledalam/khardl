@@ -19,8 +19,9 @@ return new class extends Migration
             $table->float('options_price',8,2)->default(0);
             $table->float('total',8,2)->default(0);
             $table->integer('quantity');
+            $table->string('notes')->nullable();
 
-            
+
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->timestamps();

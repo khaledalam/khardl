@@ -1,17 +1,36 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useTranslation } from 'react-i18next';
-import { BiSearch } from 'react-icons/bi';
 import Maps from '../../../../../map';
+import AxiosInstance from "../../../../../../axios/axios";
 
 const Profile = () => {
    const { t } = useTranslation();
+    const [loading, setLoading] = useState(false);
+    const [address, setAddress] = useState(null);
 
     useEffect(() => {
-        console.log("Profile tab");
-
-
+        fetchProfileData().then(r => null);
     }, []);
 
+
+    const fetchProfileData = async () => {
+        if (loading) return;
+        setLoading(true);
+
+        try {
+            const profileResponse = await AxiosInstance.get(`user`);
+
+            console.log("profileResponse >>>", profileResponse.data)
+            if (profileResponse.data) {
+                setAddress(profileResponse.data?.address ?? t('N/A'));
+            }
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
    return (
       <div className="w-full bg-[var(--secondary)] py-6 px-4">
          <p className='mb-6 font-bold'>{t("Profile")}</p>
@@ -21,7 +40,7 @@ const Profile = () => {
                   <p className='font-bold pb-4 px-6'>
                      {t("Profile Details")}
                   </p>
-                  <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]'></div>
+                  <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]'/>
                   <div className='py-4 px-8'>
                      <p className='mb-2 mx-2'>{t("First name")}</p>
                      <div className="w-[100%]">
@@ -53,7 +72,21 @@ const Profile = () => {
                   <p className='font-bold pb-4 px-6'>
                      {t("Location")}
                   </p>
-                  <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]'></div>
+
+                   <div className='py-4 px-8'>
+                      <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]'/>
+                       <p className='mb-2 mt-4 mx-2'>{t("Address")}</p>
+                        <div className="w-[100%]">
+                            <input
+                                type="text"
+                                value={address}
+                                onChange={e => setAddress(e.target.value)}
+                                className="text-[14px] bg-[var(--secondary)] w-[100%] py-3 rounded-full px-4 appearance-none"
+                                placeholder={`${t("Address")}`}
+                            />
+                        </div>
+                   </div>
+
                   <div className='relative py-4 px-8 w-[100%]'>
                      <Maps />
                   </div>
