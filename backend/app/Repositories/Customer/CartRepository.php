@@ -154,7 +154,8 @@ class CartRepository
         return $this->sendResponse([
             'items' => $items,
             'payment_methods' => $this->paymentMethods(),
-            'delivery_types' => $this->deliveryTypes()
+            'delivery_types' => $this->deliveryTypes(),
+            'address' => $this->cart->user()->firstOrFail()?->address
         ], '');
     }
     public function items()

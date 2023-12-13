@@ -7,12 +7,12 @@ import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 
 const Cart = () => {
-
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [paymentMethods, setPaymentMethods] = useState(null);
     const [deliveryType, setDeliveryType] = useState(null);
+    const [address, setAddress] = useState(null);
     const [deliveryTypes, setDeliveryTypes] = useState(null);
 
     // order notes
@@ -43,6 +43,7 @@ const Cart = () => {
                 setCartItems(cartResponse.data?.data.items);
                 setPaymentMethods(cartResponse.data?.data?.payment_methods)
                 setDeliveryTypes(cartResponse.data?.data?.delivery_types)
+                setAddress(cartResponse.data?.data?.address ?? t('N/A'));
             }
 
         } catch (error) {
@@ -106,6 +107,7 @@ const Cart = () => {
 
     const handleRemoveItem =  async (itemId) => {
 
+        if (loading) return;
         try {
             setLoading(true);
                 const response = await AxiosInstance.delete(`/carts/`+itemId, {
@@ -122,6 +124,7 @@ const Cart = () => {
     };
 
     const handleQuantityChange = async (item, newQuantity) => {
+        if (loading) return;
         try {
             setLoading(true);
             await AxiosInstance.post(`/carts`, {
@@ -241,7 +244,7 @@ const Cart = () => {
                                                 className="p-[6px] text-black shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-1"
                                                 onClick={() => handleRemoveItem(it?.item_id)}>❌ {t('Remove')}</button><br />
                                         </li>
-                                            <span className={"flex cart-item-notes"}>{t('Notes item')}:<small>{it?.notes || t('N/A')}</small></span>
+                                            <span className={"flex cart-item-notes"}>{t('Notes item')}: <pre>{it?.notes || t('N/A')}</pre></span>
                                         </div>
                                     ))}
                                 </ul>
@@ -283,8 +286,8 @@ const Cart = () => {
                                     <hr />
 
                                     <div className="my-4">
-                                        <div className="text-[15px] font-semibold mb-2">{t("Address")}</div>
-                                        <input className="w-[100%] p-1 my-1" style={{color: 'gray'}} value={"address from profile"} disabled={true} readOnly={true}/>
+                                        <div className="text-[15px] font-semibold mb-2">{t("Address")} TODO</div>
+                                        <input className="w-[100%] p-1 my-1" style={{color: 'gray'}} value={address} disabled={true} readOnly={true}/>
                                         <button
                                             disabled={loading}
                                             onClick={() => navigate('/dashboard#Profile')}
