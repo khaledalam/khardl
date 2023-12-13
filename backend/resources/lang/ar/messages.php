@@ -123,7 +123,7 @@ return [
     'commercial-registration' => 'التسجيل التجاري',
     'tax-number' => 'الرقم الضريبي',
     'bank-certificate' => 'شهادة بنكية',
-    'accepted' => 'قبلت',
+    'accepted' => 'تم القبول',
     'status-must-be-active' => 'يجب أن تكون الحالة نشطة',
     'date' => 'التاريخ',
     'order-id' => 'معرف الطلب',
@@ -298,6 +298,7 @@ return [
     'preparations'=>'تجهيزات الطلب',
     'are-you-sure-you-want-to-approve-order-status'=>'هل انت متأكد من تأكيد حالة الطلب',
     'are-you-sure-you-want-to-cancel-order-status'=>'هل انت متأكد من الغاء الطلب ',
+    'are-you-sure-you-want-to-change-order-status'=>'هل انت متأكد من تغير حالة الطلب ',
     'customer-payment-methods'=>'طرق دفع الزبائن',
     'online-payment'=>'دفع الالكتروني',
     'visa'=>'خدمة فيزا',
@@ -317,7 +318,10 @@ return [
     "NA" => 'لا يوجد',
     "notes" => "ملاحظات",
     "in-preparations" => "قيد التحضيز",
-    "not-in-preparations" => "ليس قيد التحضيز"
+    "not-in-preparations" => "ليس قيد التحضيز",
+    'status'=>"حالة الطلب",
+    'completed'=>'مكتمل',
+    'ready'=>"جاهز"
 
 ];
 

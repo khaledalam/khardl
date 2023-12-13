@@ -41,16 +41,16 @@
                          <!--end::Button-->
                          <!--begin::Button-->
                          <a href="#" class="btn btn-active-light-khardl btn-sm">Edit Order</a>
-                         @if($order->status == 'accepted')
-                            <a href="#"  class="btn btn-light-success btn-sm" >{{__("messages.accepted")}}</a>
-                         @elseif($order->status == 'pending')
-                            <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
-                         @elseif($order->status == 'cancelled')
-                            <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
-                         @elseif($order->status == 'ready')
-                            <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
-                        @elseif($order->status == 'completed')
-                             <a href="#"  class="btn btn-light-secondary btn-sm">{{__("messages.completed")}}</a>
+                         @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
+                         <a href="#"  class="btn btn-light-primary btn-sm" >{{__("messages.accepted")}}</a>
+                         @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
+                         <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>  
+                         @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
+                         <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>    
+                         @elseif($order->status ==  \App\Models\Tenant\Order::READY)
+                         <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>    
+                         @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
+                         <a href="#"  class="btn btn-light-success btn-sm">{{__("messages.completed")}}</a> 
                          @endif
 
                          <!--end::Button-->
@@ -370,7 +370,7 @@
                                              <!--end::Header-->
                                              <!--begin::Body-->
                                              <div class="card-body pt-5">
-                                                 @if($order->status == 'accepted')
+                                                 @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
                                                      <h3 class="btn btn-light-success btn-sm">{{__('messages.in-preparations')}}</h3>
                                                  @else
                                                      <h3 class="btn btn-light-danger btn-sm">{{__('messages.not-in-preparations')}}</h3>
@@ -460,7 +460,7 @@
                                                      </div>
                                                      <!--end::Item-->
                                                  </div>
-                                                 <!--end::Timeline--> --}}
+                                                 <!--end::Timeline-->
                                              </div>
                                              <!--end: Card Body-->
                                          </div>

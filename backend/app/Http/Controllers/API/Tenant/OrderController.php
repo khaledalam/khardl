@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\API\OrderRepository;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
+use Illuminate\Validation\Rule;
+
 
 class  OrderController extends BaseRepositoryController
 {
@@ -27,7 +29,7 @@ class  OrderController extends BaseRepositoryController
     public function updateStatus($order,Request $request){
 
         $request->validate([
-            'status' => 'required|in:accepted,cancelled,pending',
+            'status' => ['required',Rule::in(Order::STATUS)],
         ]);
         $user = Auth::user();
         $order = Order::

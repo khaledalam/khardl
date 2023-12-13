@@ -297,8 +297,9 @@ return [
     'preparations'=>'Preparations',
     'yes'=>'Yes',
     'no'=>'No',
-    'are-you-sure-you-want-to-approve-order-status'=>'Are you sire you want to approve order status',
-    'are-you-sure-you-want-to-cancel-order-status'=>'Are you sire you want to cancel order status',
+    'are-you-sure-you-want-to-approve-order-status'=>'Are you sure you want to approve order status',
+    'are-you-sure-you-want-to-cancel-order-status'=>'Are you sure you want to cancel order status',
+    'are-you-sure-you-want-to-change-order-status'=>'Are you sure you want to change order status',
     'customer-payment-methods'=>'Customer payment methods',
     'online-payment'=>'Online payment',
     'visa'=>'Visa',
@@ -319,7 +320,10 @@ return [
     "NA" => "Not set",
     "notes" => "Notes",
     "in-preparations" => "In preparations",
-    "not-in-preparations" => "Not in preparations"
+    "not-in-preparations" => "Not in preparations",
+    'status'=>"Status",
+    'completed'=>'Completed',
+    'ready'=>"Ready"
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',
