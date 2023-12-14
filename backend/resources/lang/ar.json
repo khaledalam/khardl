@@ -9,5 +9,7 @@
     "Cash on Delivery":"الدفع عن التوصيل",
     "(and :count more error)":"وخطأ اخر",
     "(and :count more errors)":"و :count اخطاء اخري",
-    ":name is not available":":name غير متاح"
+    ":name is not available":":name غير متاح",
+    ":option is required":":option مطلوب",
+    "Maximum :option options is ":"يجب اختيار :option بحد اقصي "
 }

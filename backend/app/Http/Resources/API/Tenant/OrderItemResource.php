@@ -19,7 +19,13 @@ class OrderItemResource extends JsonResource
             'quantity' => $this->price,
             'price' => $this->price,
             'total' => $this->total,
-            'quantity'=>$this->quantity
+            'quantity'=>$this->quantity,
+            
+            'notes'=>$this->notes,
+            'options_price'=>$this->options_price,
+            'checkbox_options'=>$this->checkbox_options,
+            'selection_options'=>$this->selection_options,
+            'dropdown_options'=>$this->dropdown_options,
         ];
         if ($request->has('item')) {
             $data['item'] = new ItemResource($this->item);
