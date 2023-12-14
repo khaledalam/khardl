@@ -16,7 +16,15 @@ class CartItem extends Model
         'options_price',
         'total',
         'price',
-        'notes'
+        'notes',
+        'checkbox_options',
+        'selection_options',
+        'dropdown_options'
+    ];
+    protected $casts = [
+        'checkbox_options' => 'array',
+        'selection_options' => 'array',
+        'dropdown_options' => 'array',
     ];
 
     public function cart()

@@ -623,7 +623,6 @@
         // script.js
         const addCategoryButton = document.getElementById("addCategoryButton");
         const categoryForm = document.getElementById("categoryForm");
-        const categoryInputForm = document.getElementById("categoryInputForm");
         const categoryNameInput = document.getElementById("categoryName");
         const categoryList = document.getElementById("categoryList");
     
@@ -632,37 +631,7 @@
             categoryNameInput.focus();
         });
     
-        categoryInputForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-    
-            const categoryName = categoryNameInput.value;
-            if (categoryName.trim() !== "") {
-                const listItem = document.createElement("li");
-    
-                const listItemContent = document.createElement("div");
-                listItemContent.classList.add("d-flex", "justify-content-between", "align-items-center");
-    
-                const categoryNameSpan = document.createElement("span");
-                categoryNameSpan.textContent = categoryName;
-    
-                const deleteButton = document.createElement("button");
-                deleteButton.classList.add("btn", "btn-sm", "btn-danger", "delete-btn");
-                deleteButton.innerHTML = '<i class="bi bi-trash"></i>'; // You can replace this with your actual icon
-    
-                listItemContent.appendChild(categoryNameSpan);
-                listItemContent.appendChild(deleteButton);
-    
-                listItem.appendChild(listItemContent);
-                categoryList.appendChild(listItem);
-    
-                categoryNameInput.value = "";
-                categoryForm.style.display = "none";
-    
-                deleteButton.addEventListener("click", () => {
-                    listItem.remove();
-                });
-            }
-        });
+     
     
     </script>
 
@@ -670,7 +639,7 @@
 <!-- Category sidebar -->
 <script>
     const sectionsList = document.getElementById('sections-list');
-    const addSectionButton = document.getElementById('add-section');
+   
 
     // Function to toggle between edit and save modes for a section
     function toggleEditSave(section) {
@@ -696,34 +665,9 @@
         }
     }
 
-    // Function to add a new section
-    function addNewSection() {
-        const section = document.createElement('li');
-        section.className = 'section-item';
-
-        const sectionTitle = document.createElement('span');
-        sectionTitle.className = 'menu-title fw-bolder';
-        sectionTitle.textContent = 'New Section';
-
-        const editButton = document.createElement('span');
-        editButton.className = 'edit-button';
-        editButton.innerHTML = '<i class="fas fa-edit" style="color:#00a0f7;"></i>';
-        editButton.addEventListener('click', () => toggleEditSave(section));
-
-        const deleteButton = document.createElement('span');
-        deleteButton.className = 'delete-button';
-        deleteButton.innerHTML = '<i class="fas fa-trash" style="color:red;"></i>';
-        deleteButton.addEventListener('click', () => deleteSection(section));
-
-        section.appendChild(sectionTitle);
-        section.appendChild(editButton);
-        section.appendChild(deleteButton);
-
-        sectionsList.appendChild(section);
-    }
-
+    
     // Add event listener for the "Add New Section" button
-    addSectionButton.addEventListener('click', addNewSection);
+
 </script>
 
 
@@ -743,18 +687,19 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">Checkbox buttons ${checkboxCount}</span>
+                            <span class="">Checkbox buttons </span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <input type="checkbox" name="checkbox_required[]" id=""> required
+                            <input type="hidden" name="checkbox_required[${checkboxCount}]" value="false" />
+                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" id="" > required
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${checkboxCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-75" name="checkboxInputTitle[]" placeholder="title ${checkboxCount}">
-                            <input type="number" required class="form-control form-control-solid mx-3 w-25" name="checkboxInputMaximumChoice[]" placeholder="max ${checkboxCount}">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-75" name="checkboxInputTitle[]" placeholder="title ">
+                            <input type="number" required class="form-control form-control-solid mx-3 w-25" name="checkboxInputMaximumChoice[]" placeholder="max ">
                             <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
@@ -771,7 +716,18 @@
             deleteCheckboxButton.addEventListener('click', () => {
                 checkboxesContainer.removeChild(checkboxDiv);
             });
+            const hiddenInput = checkboxDiv.querySelector(`input[name="checkbox_required_input[${checkboxCount}]"]`);
 
+            hiddenInput.addEventListener('change', function() {
+                // Get the corresponding hidden input's name before redeclaring hiddenInput
+                const hiddenInputName = hiddenInput.name.replace('_input', '');
+
+                // Now redeclare hiddenInput to get the correct hidden input element
+                const actualHiddenInput = document.querySelector(`input[name="${hiddenInputName}"]`);
+
+                // Update the value of the hidden input based on the checkbox state
+                actualHiddenInput.value = hiddenInput.checked ? 'true' : 'false';
+            });
             const addOptionButton = checkboxDiv.querySelector('.add-option');
             addOptionButton.addEventListener('click', () => {
                 createCheckBoxOption(checkboxDiv);
@@ -789,16 +745,16 @@
             if(isDeletable){
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ${optionCount}">
-                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
+                    <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ">
+                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
             }else {
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ${optionCount}">
-                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price ${optionCount}">
+                    <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ">
+                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -833,17 +789,19 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">Selection buttons ${selectionCount}</span>
+                            <span class="">Selection buttons </span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <input type="checkbox" name="selection_required[]" id=""> required
+                            
+                            <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
+                            <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" > required
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${selectionCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitle[]" placeholder="title ${selectionCount}">
+                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitle[]" placeholder="title">
                             <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
@@ -860,7 +818,18 @@
             deleteSelectionButton.addEventListener('click', () => {
                 selectionsContainer.removeChild(selectionDiv);
             });
+            const hiddenInput = selectionDiv.querySelector(`input[name="selection_required_input[${selectionCount}]"]`);
 
+            hiddenInput.addEventListener('change', function() {
+                // Get the corresponding hidden input's name before redeclaring hiddenInput
+                const hiddenInputName = hiddenInput.name.replace('_input', '');
+
+                // Now redeclare hiddenInput to get the correct hidden input element
+                const actualHiddenInput = document.querySelector(`input[name="${hiddenInputName}"]`);
+
+                // Update the value of the hidden input based on the checkbox state
+                actualHiddenInput.value = hiddenInput.checked ? 'true' : 'false';
+            });
             const addOptionButton = selectionDiv.querySelector('.add-option');
             addOptionButton.addEventListener('click', () => {
                 createSelectionOption(selectionDiv, selectionCount); // Pass the selectionCount
@@ -878,16 +847,16 @@
             if(isDeletable){
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ${optionCount}">
-                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
+                    <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ">
+                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;  }
             else {
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ${optionCount}">
-                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price ${optionCount}">
+                    <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ">
+                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;
@@ -921,17 +890,19 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">Dropdown buttons ${dropdownCount}</span>
+                            <span class="">Dropdown buttons </span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <input type="checkbox"  name="dropdown_required[]" id=""> required
+                            
+                            <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
+                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" > required
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${dropdownCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitle[]" placeholder="title ${dropdownCount}">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitle[]" placeholder="title">
                             <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
@@ -948,7 +919,18 @@
             deleteDropdownButton.addEventListener('click', () => {
                 dropdownsContainer.removeChild(dropdownDiv);
             });
+            const hiddenInput = dropdownDiv.querySelector(`input[name="dropdown_required_input[${dropdownCount}]"]`);
 
+            hiddenInput.addEventListener('change', function() {
+                // Get the corresponding hidden input's name before redeclaring hiddenInput
+                const hiddenInputName = hiddenInput.name.replace('_input', '');
+
+                // Now redeclare hiddenInput to get the correct hidden input element
+                const actualHiddenInput = document.querySelector(`input[name="${hiddenInputName}"]`);
+
+                // Update the value of the hidden input based on the checkbox state
+                actualHiddenInput.value = hiddenInput.checked ? 'true' : 'false';
+            });
             const addOptionButton = dropdownDiv.querySelector('.add-option');
             addOptionButton.addEventListener('click', () => {
                 createDropdownOption(dropdownDiv);
@@ -966,14 +948,14 @@
             if(isDeletable){
             optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Option ${optionCount}">
+                        <input type="text"  required name="dropdownInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Option">
     
                         <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>
             `; }else {
                 optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Option ${optionCount}">
+                        <input type="text"  required name="dropdownInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Option">
     
                         <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>

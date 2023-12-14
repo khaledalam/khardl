@@ -437,6 +437,7 @@ class RestaurantController extends BaseController
 
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
        // TODO @todo validate the coming request
+     
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
@@ -457,18 +458,18 @@ class RestaurantController extends BaseController
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'description' =>trans_json( $request->input('description_en'), $request->input('description_ar')),
-                    'checkbox_required' => $request->input('checkbox_required'),
+                    'checkbox_required' => ( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
                     'checkbox_input_titles' =>$request->input('checkboxInputTitle'),
                     'checkbox_input_maximum_choices' =>$request->input('checkboxInputMaximumChoice'),
-                    'checkbox_input_names' => $request->input('checkboxInputName'),
-                    'checkbox_input_prices' =>$request->input('checkboxInputPrice'),
-                    'selection_required' => $request->input('selection_required'),
-                    'selection_input_names' => $request->input('selectionInputName'),
-                    'selection_input_prices' =>$request->input('selectionInputPrice'),
+                    'checkbox_input_names' => ($request->input('checkboxInputName') )? array_values($request->input('checkboxInputName')) : null,
+                    'checkbox_input_prices' =>($request->input('checkboxInputPrice') )? array_values($request->input('checkboxInputPrice')) : null,
+                    'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
+                    'selection_input_names' =>($request->input('selectionInputName') )? array_values($request->input('selectionInputName')) : null, 
+                    'selection_input_prices' =>($request->input('selectionInputPrice') )? array_values($request->input('selectionInputPrice')) : null,
                     'selection_input_titles' => $request->input('selectionInputTitle'),
-                    'dropdown_required' =>$request->input('dropdown_required'),
+                    'dropdown_required' =>( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
                     'dropdown_input_titles' => $request->input('dropdownInputTitle'),
-                    'dropdown_input_names' => $request->input('dropdownInputName'),
+                    'dropdown_input_names' =>($request->input('dropdownInputName') )? array_values($request->input('dropdownInputName')) : null,
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
                     'availability'=>($request->input('availability'))?true:false,
