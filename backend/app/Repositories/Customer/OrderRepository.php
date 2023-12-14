@@ -70,7 +70,10 @@ class OrderRepository
         $price,
         $options_price,
         $total,
-        $notes
+        $notes,
+        $checkbox_options,
+        $selection_options,
+        $dropdown_options
     ){
         OrderItem::create([
             'order_id'=>$order_id,
@@ -78,6 +81,9 @@ class OrderRepository
             'quantity'=>$quantity,
             'price'=>$price,
             'options_price'=>$options_price,
+            'checkbox_options'=>$checkbox_options,
+            'selection_options'=>$selection_options,
+            'dropdown_options'=>$dropdown_options,
             'total'=>$total,
             'notes' => $notes
         ]);

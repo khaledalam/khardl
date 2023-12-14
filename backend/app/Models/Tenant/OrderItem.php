@@ -17,9 +17,16 @@ class OrderItem extends Model
         'price',
         'options_price',
         'total',
-        'notes'
+        'notes',
+        'checkbox_options',
+        'selection_options',
+        'dropdown_options'
     ];
-
+    protected $casts = [
+        'checkbox_options' => 'array',
+        'selection_options' => 'array',
+        'dropdown_options' => 'array',
+    ];
     // protected $casts = [
     //     'extras' => 'array', // Cast the JSON extras column to an array
     // ];

@@ -221,12 +221,15 @@ const DetailesItem = ({
           console.log(selectedCheckbox);
           console.log(selectedRadio);
           console.log(selectedDropdown);
-          
+    
             const response = await AxiosInstance.post(`/carts`, {
                 item_id : itemId,
                 quantity : count,
                 branch_id: branch_id,
-                notes: notes
+                notes: notes,
+                selectedCheckbox: selectedCheckbox,
+                selectedRadio: selectedRadio,
+                selectedDropdown: selectedDropdown
             });
 
             console.log("response " , response)
@@ -236,8 +239,8 @@ const DetailesItem = ({
                 setGoToCart(true);
             }
         } catch (error) {
-            toast.error(`${t('Failed')}`)
-            setGoToCart(false);
+          toast.error(error.response.data.message);
+          setGoToCart(false);
         }
         dispatch(addItemToCart("props.description"));
     };
