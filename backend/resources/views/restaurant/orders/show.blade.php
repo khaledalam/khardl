@@ -431,6 +431,7 @@
                                                                  <div class="fw-mormal timeline-content text-muted ps-3">
                                                                      {{$log->created_at}} <span>({{\Carbon\Carbon::parse($log->created_at)->diffForHumans()}})</span>
                                                                      {{strtoupper($log->notes)}}
+                                                                     
                                                                  </div>
 
                                                              </div>
@@ -482,7 +483,8 @@
                                                                  {{-- <th class="min-w-100px text-end">SKU</th> --}}
                                                                  <th class="min-w-100px text-end">{{__('messages.id')}}</th>
                                                                  <th class="min-w-70px text-end">{{__('messages.QTY')}}</th>
-                                                                 <th class="min-w-100px text-end">{{__('messages.unit_price')}}</th>
+                                                                 <th class="min-w-100px text-end">{{__('messages.unit-price')}}</th>
+                                                                 <th class="min-w-100px text-end">{{__('messages.options-price')}}</th>
                                                                  <th class="min-w-100px text-end">{{__('messages.total')}}</th>
                                                              </tr>
                                                          </thead>
@@ -504,8 +506,43 @@
                                                                                 <div class="ms-5">
                                                                                     <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->description}}</a>
                                                                                     <div class="fs-7 text-muted">{{__('messages.notes')}}: {{$order_item->notes ?? __('messages.NA')}}</div>
+                                                                                   
                                                                                 </div>
+                                                                                
                                                                                 <!--end::Title-->
+                                                                            </div>
+                                                                            <div class="text-muted">
+                                                                                @if($order_item->checkbox_options)
+                                                                                    @foreach($order_item->checkbox_options as $option => $value) 
+                                                                                        <ul class="list-group" style="border-radius: 0;">
+                                                                                            <li class="list-group-item" style="width: 100%; overflow: hidden;">
+                                                                                                <span >{{ $option }}</span>: 
+                                                                                                <i >{{ implode(', ', array_column($value, 0)) }}</span>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    @endforeach
+                                                                            
+                                                                                @endif
+                                                                                @if($order_item->selection_options)
+                                                                                @foreach($order_item->selection_options as $option => $value) 
+                                                                                <ul class="list-group" style="border-radius: 0;">
+                                                                                    <li class="list-group-item" style="width: 100%; overflow: hidden;">
+                                                                                        <span >{{ $option }}</span>: 
+                                                                                        <i >{{ $value[0] }}</span>
+                                                                                    </li>
+                                                                                </ul>
+                                                                                @endforeach
+                                                                                @endif
+                                                                                @if($order_item->dropdown_options)
+                                                                                @foreach($order_item->dropdown_options as $option => $value) 
+                                                                                    <ul class="list-group" style="border-radius: 0;">
+                                                                                        <li class="list-group-item" style="width: 100%; overflow: hidden;">
+                                                                                            <span >{{ $option }}</span>: 
+                                                                                            <i >{{ $value }}</span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                @endforeach
+                                                                                @endif
                                                                             </div>
                                                                         </td>
                                                                         <!--end::Product-->
@@ -518,8 +555,11 @@
                                                                         <!--begin::Price-->
                                                                         <td class="text-end">{{$order_item->price}}</td>
                                                                         <!--end::Price-->
+                                                                        <!--begin::Price-->
+                                                                        <td class="text-end">{{$order_item->options_price}}</td>
+                                                                        <!--end::Price-->
                                                                         <!--begin::Total-->
-                                                                        <td class="text-end">{{$order_item->total}}</td>
+                                                                        <td class="text-end">{{$order_item->total}}  </td>
                                                                         <!--end::Total-->
                                                                     </tr>
                                                                 @endforeach
@@ -546,7 +586,8 @@
                                                              <!--begin::Grand total-->
                                                              <tr>
                                                                  <td colspan="4" class="fs-3 text-dark text-end">{{__('messages.grand-total')}}</td>
-                                                                 <td class="text-dark fs-3 fw-boldest text-end">{{$order->total}}</td>
+                                                                 <td class="text-dark fs-3 fw-boldest text-end">{{$order->total }} </td>
+                                                                 <td> <i> {{App\Repositories\Customer\CartRepository::VAT_PERCENTAGE }} % <br> {{__('messages.inclusive-VAT')}}</i></td>
                                                              </tr>
                                                              <!--end::Grand total-->
                                                          </tbody>

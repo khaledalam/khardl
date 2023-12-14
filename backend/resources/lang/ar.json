@@ -11,5 +11,5 @@
     "(and :count more errors)":"و :count اخطاء اخري",
     ":name is not available":":name غير متاح",
     ":option is required":":option مطلوب",
-    "Maximum :option is ":"يجب اختيار :option بحد اقصي "
+    "Maximum :option options is ":"يجب اختيار :option بحد اقصي "
 }

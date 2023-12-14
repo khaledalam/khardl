@@ -71,7 +71,7 @@ class AddItemToCartRequest extends FormRequest
                 return false;
             }
             if(isset($this->selectedCheckbox[$key]) && (count($this->selectedCheckbox[$key]) > (int)$item->checkbox_input_maximum_choices[$key])){
-                $validator->errors()->add('selectedCheckbox', __('Maximum :option is ',['option'=>$item->checkbox_input_titles[$key]]).$item->checkbox_input_maximum_choices[$key]);
+                $validator->errors()->add('selectedCheckbox', __('Maximum :option options is ',['option'=>$item->checkbox_input_titles[$key]]).$item->checkbox_input_maximum_choices[$key]);
                 return false;
             }
         }

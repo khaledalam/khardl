@@ -66,7 +66,7 @@ class CartRepository
         ],[
             'cart_id' => $this->cart->id,
             'price' =>$item->price,
-            'total' =>$item->price * $request['quantity'] ,
+            'total' =>($item->price + $options_price) * $request['quantity'] ,
             'quantity' => $request['quantity'],
             'notes' => $request['notes'],
             'options_price'=>$options_price,
@@ -147,12 +147,7 @@ class CartRepository
 
     public function subTotal()
     {
-        return $this->cart->items()
-            ->select('price', 'quantity','options_price')
-            ->cursor()
-            ->reduce(function ($total, $item) {
-                return $total + (($item->price + $item->options_price) * $item->quantity);
-            }, 0);
+        return $this->cart->items->sum('total');
     }
     public function tax($subTotal = null)
     {
