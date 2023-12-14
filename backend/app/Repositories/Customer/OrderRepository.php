@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Customer;
 
+use App\Models\Tenant\OrderStatusLogs;
 use Exception;
 use App\Models\Tenant\Order;
 use App\Traits\APIResponseTrait;
@@ -36,10 +37,17 @@ class OrderRepository
                     'order_notes'=>$request->order_notes,
                     // TODO @todo update
                     'payment_status'=>'pending',
-                    'status'=>'pending',
+                    'status'=> Order::PENDING,
 
 
                 ]);
+
+                $statusLog = new OrderStatusLogs();
+                $statusLog->order_id = $order->id;
+                $statusLog->status = Order::PENDING;
+                $statusLog->notes = 'Order Notes: ' . $request->order_notes;
+                $statusLog->saveOrFail();
+
                 $cart->clone_to_order_items($order->id);
                 $cart->trash();
                 DB::commit();

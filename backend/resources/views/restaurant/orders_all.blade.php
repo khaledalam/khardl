@@ -168,13 +168,13 @@
                                                         @elseif($order->delivery_type = 'receive_from_branch')
                                                             <div class="badge badge-light">{{__("messages.receive_from_branch")}}</div>
                                                         @endif
-                                                      
+
                                                         <!--end::Badges-->
                                                     </td> --}}
                                                     <td class="text-end pe-0" >
                                                         <!--begin::Badges-->
                                                         <div class="fw-bolder"> {{$order->branch->name}}</div>
-                                                      
+
                                                         <!--end::Badges-->
                                                     </td>
                                                     <!--end::Status=-->
@@ -184,19 +184,16 @@
                                                         @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
                                                             <a href="#"  class="badge badge-primary " >{{__("messages.accepted")}}</a>
                                                         @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
-                                                            <a href="#"  class="badge badge-warning ">{{__("messages.pending")}}</a>    
-                               
+                                                            <a href="#"  class="badge badge-warning ">{{__("messages.pending")}}</a>
                                                         @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
-                                                            <a href="#"  class="badge badge-danger ">{{__("messages.cancelled")}}</a>    
+                                                            <a href="#"  class="badge badge-danger ">{{__("messages.cancelled")}}</a>
                                                         @elseif($order->status ==  \App\Models\Tenant\Order::READY)
-                                                            <a href="#"  class="badge badge-info ">{{__("messages.ready")}}</a>    
-                               
+                                                            <a href="#"  class="badge badge-info ">{{__("messages.ready")}}</a>
+
                                                         @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
-                                                            <a href="#"  class="badge badge-success ">{{__("messages.completed")}}</a>    
-                                                        
-                               
+                                                            <a href="#"  class="badge badge-success ">{{__("messages.completed")}}</a>
                                                         @endif
-                                                      
+
                                                         <!--end::Badges-->
                                                     </td>
                                                     <!--end::Status=-->
@@ -236,7 +233,7 @@
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->
                                                             <div class="menu-item px-3">
-                                                                <a href="../../demo1/dist/apps/ecommerce/sales/edit-order.html" class="menu-link px-3">Edit</a>
+                                                                <a href="#" class="menu-link px-3">Edit</a>
                                                             </div>
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->
@@ -246,7 +243,7 @@
                                                             <div class="menu-item px-3">
                                                                 <a href="#" onclick="showConfirmation({{$order->id}})" class="menu-link px-3" >{{__('messages.status')}}</a>
                                                             </div>
-                                                            
+
                                                             <!--end::Menu item-->
                                                         </div>
                                                         <!--end::Menu-->
@@ -268,7 +265,7 @@
                                         function showConfirmation(orderId) {
                                             event.preventDefault();
                                             const statusOptions = @json(array_combine(\App\Models\Tenant\Order::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\Order::STATUS)));
-                                           
+
                                             Swal.fire({
                                                 text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
                                                 icon: 'warning',
@@ -285,7 +282,7 @@
                                                     var form = document.getElementById('approve-form');
                                                     form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
                                                     form.submit();
-                                                  
+
                                                 }
                                             });
                                         }
@@ -300,11 +297,11 @@
                     </div>
                     <!--end::Post-->
 
-                 
+
 
                 </div>
                 <!--end::Content-->
-               
+
             </div>
             <!--end::Wrapper-->
         </div>
@@ -456,7 +453,7 @@
         <!--end::Modal dialog-->
     </div>
     <!--end::Modal - New Target-->
- 
+
 
 @push('scripts')
     <script src="{{ global_asset('assets/js/custom/apps/ecommerce/sales/listing.js')}}"></script>

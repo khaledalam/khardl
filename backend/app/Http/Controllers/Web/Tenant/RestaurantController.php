@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Tenant;
 
 use App\Http\Controllers\Web\BaseController;
 use App\Models\Tenant\DeliveryType;
+use App\Models\Tenant\OrderStatusLogs;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
@@ -120,8 +121,11 @@ class RestaurantController extends BaseController
 
         $user = Auth::user();
         $order->load('user','items');
+
+        $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
+
         return view('restaurant.orders.show',
-            compact('user','order'));
+            compact('user','order', 'orderStatusLogs'));
     }
 
 
@@ -399,7 +403,7 @@ class RestaurantController extends BaseController
         ->orderBy('created_at','DESC')
         ->orderBy('updated_at','DESC')
         ->get();
-        
+
         return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
     }
 
@@ -446,7 +450,7 @@ class RestaurantController extends BaseController
             $photoFile->storeAs('items', $filename, 'public');
 
             DB::beginTransaction();
-            
+
             try {
                 $itemData = [
                     'photo' => tenant_asset('items/'.$filename),

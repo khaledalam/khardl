@@ -254,6 +254,8 @@ Route::prefix('api')->middleware([
         Route::apiResource('orders',OrderController::class)->only([
             'index'
         ]);
+        Route::get('orders/{order}/logs',[OrderController::class,'logs']);
+
         Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
         Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
         Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);

@@ -276,7 +276,6 @@ return [
     'customer-details'=>'Customer Details',
     "customer"=>"Customer",
     "documents"=>"Documents",
-    'invoice'=>'Invoice',
     'shipping'=>'Shipping',
     'order'=>"Order",
     'product'=>'Product',
@@ -307,21 +306,24 @@ return [
     'master-card'=>'Master card',
     'mada'=>'Mada',
     'apple-pay'=>'apple pay',
-
     'payment-by-bank-card-upon-delivery'=>'Payment by bank card upon delivery',
     'customer-reception-methods'=>'Customer reception methods',
     'pick-up-from-the-restaurant'=>'Pick up from the restaurant',
     'pick-up-by-car'=>"Pick up by Car",
     "Delivery"=>"Delivery",
     "PICKUP"=>'PICKUP',
-    'PICKUP By Car'=>'PICKUP By Car',
+    'PICKUP By Car'=>'Pickup By Car',
     'pick-up-from-the-restaurant-car' => 'Pick up from the restaurant with car',
     'flat-rate' => 'Flat Rate',
     'Halala' => 'Halala',
+    "branch"=> 'Branch Name',
+    "NA" => "Not set",
+    "notes" => "Notes",
+    "in-preparations" => "In preparations",
+    "not-in-preparations" => "Not in preparations",
     'status'=>"Status",
     'completed'=>'Completed',
     'ready'=>"Ready"
-
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

@@ -4,6 +4,11 @@
 
 @section('content')
 
+    <style>
+        .timeline-label:before{
+            right: 1px !important;
+        }
+    </style>
 
   <!--begin::Content-->
   <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -22,7 +27,7 @@
                                  <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_summary">{{__('messages.order-summary')}}</a>
                              </li>
                              <!--end:::Tab item-->
-                             
+
                          </ul>
                          <!--end:::Tabs-->
                          <!--begin::Button-->
@@ -42,21 +47,17 @@
                          <!--begin::Button-->
                          <a href="#" class="btn btn-active-light-khardl btn-sm">Edit Order</a>
                          @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                         <a href="#"  class="btn btn-light-primary btn-sm" >{{__("messages.accepted")}}</a>
+                         <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
-                         <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>    
-
+                         <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
-                         <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>    
+                         <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::READY)
-                         <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>    
-
+                         <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
-                         <a href="#"  class="btn btn-light-success btn-sm">{{__("messages.completed")}}</a>    
-                         
-
+                         <a href="#"  class="btn btn-light-success btn-sm">{{__("messages.completed")}}</a>
                          @endif
-                        
+
                          <!--end::Button-->
                      </div>
                      <!--begin::Order summary-->
@@ -77,6 +78,21 @@
                                      <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
                                          <!--begin::Table body-->
                                          <tbody class="fw-bold text-gray-600">
+                                             <!--begin::Branch-->
+                                             <tr>
+                                                 <td class="text-muted">
+                                                     <div class="d-flex align-items-center">
+                                                         <span class="svg-icon svg-icon-2 me-2">
+                                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                                                                 <path opacity="0.3" d="M19 3.40002C18.4 3.40002 18 3.80002 18 4.40002V8.40002H14V4.40002C14 3.80002 13.6 3.40002 13 3.40002C12.4 3.40002 12 3.80002 12 4.40002V8.40002H8V4.40002C8 3.80002 7.6 3.40002 7 3.40002C6.4 3.40002 6 3.80002 6 4.40002V8.40002H2V4.40002C2 3.80002 1.6 3.40002 1 3.40002C0.4 3.40002 0 3.80002 0 4.40002V19.4C0 20 0.4 20.4 1 20.4H19C19.6 20.4 20 20 20 19.4V4.40002C20 3.80002 19.6 3.40002 19 3.40002ZM18 10.4V13.4H14V10.4H18ZM12 10.4V13.4H8V10.4H12ZM12 15.4V18.4H8V15.4H12ZM6 10.4V13.4H2V10.4H6ZM2 15.4H6V18.4H2V15.4ZM14 18.4V15.4H18V18.4H14Z" fill="currentColor" />
+                                                                 <path d="M19 0.400024H1C0.4 0.400024 0 0.800024 0 1.40002V4.40002C0 5.00002 0.4 5.40002 1 5.40002H19C19.6 5.40002 20 5.00002 20 4.40002V1.40002C20 0.800024 19.6 0.400024 19 0.400024Z" fill="currentColor" />
+                                                             </svg>
+                                                         </span>
+                                                         <!--end::Svg Icon-->{{__('messages.branch')}}</div>
+                                                 </td>
+                                                 <td class="fw-bolder text-end">{{$order->branch->name}}</td>
+                                             </tr>
+                                             <!--end::Branch-->
                                              <!--begin::Date-->
                                              <tr>
                                                  <td class="text-muted">
@@ -107,8 +123,10 @@
                                                      </span>
                                                      <!--end::Svg Icon-->{{__('messages.payment-method')}}</div>
                                                  </td>
-                                                 <td class="fw-bolder text-end">{{__('messages.'.$order->payment_method->name)}}
-                                                 <img src="assets/media/svg/card-logos/visa.svg" class="w-50px ms-2" /></td>
+                                                 <td class="fw-bolder text-end">
+                                                     {{__('messages.'.$order->payment_method->name)}}
+                                                     <svg width="24px" height="24px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg"><title>Visa icon</title><path d="M17.445 8.623c-.387-.146-.99-.301-1.74-.301-1.92 0-3.275.968-3.285 2.355-.012 1.02.964 1.594 1.701 1.936.757.35 1.01.57 1.008.885-.005.477-.605.693-1.162.693-.766 0-1.186-.107-1.831-.375l-.239-.111-.271 1.598c.466.195 1.306.362 2.175.375 2.041 0 3.375-.961 3.391-2.439.016-.813-.51-1.43-1.621-1.938-.674-.33-1.094-.551-1.094-.886 0-.296.359-.612 1.109-.612.645-.01 1.096.129 1.455.273l.18.081.271-1.544-.047.01zm4.983-.17h-1.5c-.467 0-.816.127-1.021.591l-2.885 6.534h2.041l.408-1.07 2.49.002c.061.25.24 1.068.24 1.068H24l-1.572-7.125zM9.66 8.393h1.943l-1.215 7.129H8.444L9.66 8.391v.002zm-4.939 3.929l.202.99 1.901-4.859h2.059l-3.061 7.115H3.768l-1.68-6.026c-.035-.103-.078-.173-.18-.237C1.34 9.008.705 8.766 0 8.598l.025-.15h3.131c.424.016.766.15.883.604l.682 3.273v-.003zm15.308.727l.775-1.994c-.01.02.16-.412.258-.68l.133.615.449 2.057h-1.615v.002z"/></svg>
+                                                 </td>
                                              </tr>
                                              <!--end::Payment method-->
                                              <!--begin::Date-->
@@ -169,15 +187,26 @@
                                                      <div class="d-flex align-items-center justify-content-end">
                                                          <!--begin:: Avatar -->
                                                          <div class="symbol symbol-circle symbol-25px overflow-hidden me-3">
-                                                             <a href="demo1/dist/apps/ecommerce/customers/details.html">
-                                                                 <div class="symbol-label">
-                                                                     <img src="assets/media/avatars/300-23.jpg" alt="Photo" class="w-100" />
-                                                                 </div>
-                                                             </a>
+                                                             <div class="symbol-label">
+{{--                                                                 <img src="" alt="photo {{$order->user->fullName}}" class="w-100" />--}}
+                                                                 <svg
+                                                                     width="24"
+                                                                     height="24"
+                                                                     viewBox="0 0 24 24"
+                                                                     stroke="#212b36"
+                                                                     stroke-width="2"
+                                                                     stroke-linecap="round"
+                                                                     stroke-linejoin="round"
+                                                                     fill="none"
+                                                                 >
+                                                                     <circle cx="12" cy="8" r="5" />
+                                                                     <path d="M3,21 h18 C 21,12 3,12 3,21"/>
+                                                                 </svg>
+                                                             </div>
                                                          </div>
                                                          <!--end::Avatar-->
                                                          <!--begin::Name-->
-                                                         <a href="demo1/dist/apps/ecommerce/customers/details.html" class="text-gray-600 text-hover-khardl">{{$order->user->fullName}}</a>
+                                                         <span class="text-gray-600 text-hover-khardl">{{$order->user->fullName}}</span>
                                                          <!--end::Name-->
                                                      </div>
                                                  </td>
@@ -194,10 +223,11 @@
                                                              <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor" />
                                                          </svg>
                                                      </span>
-                                                     <!--end::Svg Icon-->{{__('messages.email')}}</div>
+                                                     <!--end::Svg Icon-->
+                                                         {{__('messages.email')}}</div>
                                                  </td>
                                                  <td class="fw-bolder text-end">
-                                                     <a href="demo1/dist/apps/user-management/users/view.html" class="text-gray-600 text-hover-khardl">{{$order->user->email}}</a>
+                                                     <a href="mailto:{{$order->user->email}}" class="text-gray-600 text-hover-khardl">{{$order->user->email}}</a>
                                                  </td>
                                              </tr>
                                              <!--end::Payment method-->
@@ -214,7 +244,9 @@
                                                      </span>
                                                      <!--end::Svg Icon-->{{__('messages.phone')}}</div>
                                                  </td>
-                                                 <td class="fw-bolder text-end">{{$order->user->phone}}</td>
+                                                 <td class="fw-bolder text-end">
+                                                     <a href="tel:{{$order->user->phone}}" class="text-gray-600 text-hover-khardl">{{$order->user->phone}}</a>
+                                                 </td>
                                              </tr>
                                              <!--end::Date-->
                                          </tbody>
@@ -282,7 +314,7 @@
                                              </tr>
                                              <!--end::Shipping-->
                                              <!--begin::Rewards-->
-                                            
+
                                              <!--end::Rewards-->
                                          </tbody>
                                          <!--end::Table body-->
@@ -302,36 +334,12 @@
                              <!--begin::Orders-->
                              <div class="d-flex flex-column gap-7 gap-lg-10">
                                  <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
-                                     <!--begin::Payment address-->
-                                     <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
-                                         <!--begin::Background-->
-                                         <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
-                                             <img src="assets/media/icons/duotune/ecommerce/ecm001.svg" class="w-175px" />
-                                         </div>
-                                         <!--end::Background-->
-                                         <!--begin::Card header-->
-                                         <div class="card-header">
-                                             <div class="card-title">
-                                                 <h2>{{__("messages.payment-address")}}</h2>
-                                             </div>
-                                         </div>
-                                         <!--end::Card header-->
-                                         <!--begin::Card body-->
-                                         <div class="card-body pt-0">
-                                        {{-- Unit 1/23 Hastings Road,
-                                         <br />Melbourne 3000,
-                                         <br />Victoria,
-                                         <br />Australia. --}}
-                                         TODO
-                                        </div>
-                                         <!--end::Card body-->
-                                     </div>
-                                     <!--end::Payment address-->
+
                                      <!--begin::Shipping address-->
                                      <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
                                          <!--begin::Background-->
                                          <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
-                                             <img src="assets/media/icons/duotune/ecommerce/ecm006.svg" class="w-175px" />
+                                             <img src="#" class="w-175px" />
                                          </div>
                                          <!--end::Background-->
                                          <!--begin::Card header-->
@@ -347,7 +355,7 @@
                                          <br />Melbourne 3000,
                                          <br />Victoria,
                                          <br />Australia. --}}
-                                         TODO
+                                             <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 10c-1.104 0-2-.896-2-2s.896-2 2-2 2 .896 2 2-.896 2-2 2m0-5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m-7 2.602c0-3.517 3.271-6.602 7-6.602s7 3.085 7 6.602c0 3.455-2.563 7.543-7 14.527-4.489-7.073-7-11.072-7-14.527m7-7.602c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602"/></svg> {{$order->user->address}}
                                         </div>
                                          <!--end::Card body-->
                                      </div>
@@ -367,91 +375,70 @@
                                              <!--end::Header-->
                                              <!--begin::Body-->
                                              <div class="card-body pt-5">
-                                                TODO
-                                                 <!--begin::Timeline-->
+                                                 @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
+                                                     <h3 class="btn btn-light-success btn-sm">{{__('messages.in-preparations')}}</h3>
+                                                 @else
+                                                     <h3 class="btn btn-light-danger btn-sm">{{__('messages.not-in-preparations')}}</h3>
+                                                 @endif
+
+                                                 <hr />
+
+                                                 <a href="#" onclick="showConfirmation({{$order->id}})" class="btn btn-info menu-link px-3" >{{__('messages.status')}}</a>
+
+                                                     <hr />
+
+
                                                  <div class="timeline-label">
-                                                     
+
                                                      <!--begin::Item-->
-                                                     <div class="timeline-item">
-                                                         <!--begin::Badge-->
-                                                         <div class="timeline-badge">
-                                                             <i class="fa fa-genderless text-info fs-1"></i>
-                                                         </div>
-                                                         <!--end::Badge-->
-                                                         <!--begin::Content-->
-                                                         <div class="d-block">
-                                                             <div>
-                                                                 <p class="fw-bolder text-gray-800 ps-3">Payment status
-                                                                 </p>
+{{--                                                     <div class="timeline-item">--}}
+{{--                                                         <!--begin::Badge-->--}}
+{{--                                                         <div class="timeline-badge">--}}
+{{--                                                             <i class="fa fa-genderless text-info fs-1"></i>--}}
+{{--                                                         </div>--}}
+{{--                                                         <!--end::Badge-->--}}
+{{--                                                         <!--begin::Content-->--}}
+{{--                                                         <div class="d-block">--}}
+{{--                                                             <div>--}}
+{{--                                                                 <p class="fw-bolder text-gray-800 ps-3">Payment status--}}
+{{--                                                                 </p>--}}
+{{--                                                             </div>--}}
+
+{{--                                                             <div class="fw-mormal timeline-content text-muted ps-3">--}}
+{{--                                                                 <span class="badge badge-light-danger">Paid</span>--}}
+{{--                                                             </div>--}}
+{{--                                                             <div class="fw-mormal timeline-content text-muted ps-3">--}}
+{{--                                                                 <span class="badge badge-light-warning my-5">Payment when recieving</span>--}}
+{{--                                                             </div>--}}
+{{--                                                         </div>--}}
+{{--                                                         <!--end::Content-->--}}
+{{--                                                     </div>--}}
+{{--                                                     <!--end::Item-->--}}
+
+                                                     @foreach($orderStatusLogs as $log)
+                                                         <!--begin::Item-->
+                                                         <div class="timeline-item">
+                                                             <!--begin::Badge-->
+                                                             <div class="timeline-badge">
+                                                                 <i class="fa fa-genderless {{$log->class_name}} fs-1"></i>
                                                              </div>
-                                                             
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">
-                                                                 <span class="badge badge-light-danger">Paid</span>
+                                                             <!--end::Badge-->
+                                                             <!--begin::Content-->
+                                                             <div class="d-block">
+                                                                 <div>
+                                                                     <p class="fw-bolder text-gray-800 ps-3">{{strtoupper($log->status)}}</p>
+                                                                 </div>
+                                                                 <div class="fw-mormal timeline-content text-muted ps-3">
+                                                                     {{$log->created_at}} <span>({{\Carbon\Carbon::parse($log->created_at)->diffForHumans()}})</span>
+                                                                     {{strtoupper($log->notes)}}
+                                                                 </div>
+
                                                              </div>
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">
-                                                                 <span class="badge badge-light-warning my-5">Payment when recieving</span>
-                                                             </div>
+                                                             <!--end::Content-->
                                                          </div>
-                                                         <!--end::Content-->
-                                                     </div>
-                                                     <!--end::Item-->
-                                                     <!--begin::Item-->
-                                                     <div class="timeline-item">
-                                                         <!--begin::Badge-->
-                                                         <div class="timeline-badge">
-                                                             <i class="fa fa-genderless text-success fs-1"></i>
-                                                         </div>
-                                                         <!--end::Badge-->
-                                                         <!--begin::Content-->
-                                                         <div class="d-block">
-                                                             <div>
-                                                                 <p class="fw-bolder text-gray-800 ps-3">Order ready for delivery
-                                                                 </p>
-                                                             </div>
-                                                             
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">
-                                                                 <button class="btn btn-sm btn-success">Ready for delivery</button>
-                                                             </div>
-                                                         </div>
-                                                         <!--end::Content-->
-                                                     </div>
-                                                     <!--end::Item-->
-                                                     <!--begin::Item-->
-                                                     <div class="timeline-item">
-                                                         <!--begin::Badge-->
-                                                         <div class="timeline-badge">
-                                                             <i class="fa fa-genderless text-danger fs-1"></i>
-                                                         </div>
-                                                         <!--end::Badge-->
-                                                         <!--begin::Desc-->
-                                                         <div class="d-block">
-                                                             <div>
-                                                                 <p class="fw-bolder text-gray-800 ps-3">On the way to the client</p>
-                                                             </div>
-                                                             
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                                                         </div>
-                                                         <!--end::Desc-->
-                                                     </div>
-                                                     <!--end::Item-->
-                                                     <!--begin::Item-->
-                                                     <div class="timeline-item">
-                                                         <!--begin::Badge-->
-                                                         <div class="timeline-badge">
-                                                             <i class="fa fa-genderless text-khardl fs-1"></i>
-                                                         </div>
-                                                         <!--end::Badge-->
-                                                         <!--begin::Desc-->
-                                                         <div class="d-block">
-                                                             <div>
-                                                                 <p class="fw-bolder text-gray-800 ps-3">Delivered</p>
-                                                             </div>
-                                                             
-                                                             <div class="fw-mormal timeline-content text-muted ps-3">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                                                         </div>
-                                                         <!--end::Desc-->
-                                                     </div>
-                                                     <!--end::Item-->
+                                                         <!--end::Item-->
+                                                     @endforeach
+
                                                  </div>
                                                  <!--end::Timeline-->
                                              </div>
@@ -466,7 +453,20 @@
                                              <!--begin::Card header-->
                                              <div class="card-header">
                                                  <div class="card-title">
-                                                     <h2>{{__('messages.order')}} #{{$order->id}}</h2>
+                                                     <h2>{{__('messages.order')}} #{{$order->id}}
+
+                                                         @if($order->status == 'accepted')
+                                                             <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
+                                                         @elseif($order->status == 'pending')
+                                                             <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
+                                                         @elseif($order->status == 'cancelled')
+                                                             <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
+                                                         @elseif($order->status == 'ready')
+                                                             <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
+                                                         @elseif($order->status == 'completed')
+                                                             <a href="#"  class="btn btn-light-secondary btn-sm">{{__("messages.completed")}}</a>
+                                                         @endif
+                                                     </h2>
                                                  </div>
                                              </div>
                                              <!--end::Card header-->
@@ -496,14 +496,14 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center">
                                                                                 <!--begin::Thumbnail-->
-                                                                                <a href="demo1/dist/apps/ecommerce/catalog/edit-product.html" class="symbol symbol-50px">
+                                                                                <a href="#" class="symbol symbol-50px">
                                                                                     <span class="symbol-label" style="background-image:url({{$order_item->item->photo}});"></span>
                                                                                 </a>
                                                                                 <!--end::Thumbnail-->
                                                                                 <!--begin::Title-->
                                                                                 <div class="ms-5">
-                                                                                    <a href="demo1/dist/apps/ecommerce/catalog/edit-product.html" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->description}}</a>
-                                                                                    <div class="fs-7 text-muted">Delivery Date: TODO</div>
+                                                                                    <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->description}}</a>
+                                                                                    <div class="fs-7 text-muted">{{__('messages.notes')}}: {{$order_item->notes ?? __('messages.NA')}}</div>
                                                                                 </div>
                                                                                 <!--end::Title-->
                                                                             </div>
@@ -523,7 +523,7 @@
                                                                         <!--end::Total-->
                                                                     </tr>
                                                                 @endforeach
-                                                             
+
                                                              <!--end::Products-->
                                                              <!--begin::Subtotal-->
                                                              <tr>
@@ -531,12 +531,6 @@
                                                                  <td class="text-end">{{$order->subtotal}}</td>
                                                              </tr>
                                                              <!--end::Subtotal-->
-                                                             <!--begin::VAT-->
-                                                             <tr>
-                                                                 <td colspan="4" class="text-end">{{__('messages.vat')}} ({{$order->vat}}%)</td>
-                                                                 <td class="text-end">{{$order->total - ($order->subtotal  + $order->delivery_type->cost)}}</td>
-                                                             </tr>
-                                                             <!--end::VAT-->
                                                              <!--begin::Shipping-->
                                                              <tr>
                                                                  <td colspan="4" class="text-end">{{__('messages.shipping-rate')}}</td>
@@ -577,7 +571,38 @@
              <!--end::Container-->
          </div>
          <!--end::Post-->
-     
+
  </div>
+  <form id="approve-form"  method="POST" style="display: inline">
+      @csrf
+      @method('PUT')
+      <input type="hidden" name="status" id="orderStatus" >
+  </form>
+  <script>
+      function showConfirmation(orderId) {
+          event.preventDefault();
+          const statusOptions = @json(array_combine(\App\Models\Tenant\Order::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\Order::STATUS)));
+
+          Swal.fire({
+              text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
+              icon: 'warning',
+              input: 'select',
+              showCancelButton: true,
+              inputOptions: statusOptions,
+              inputPlaceholder: 'Select an option',
+              confirmButtonText: '{{ __('messages.yes') }}',
+              cancelButtonText: '{{ __('messages.no') }}'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  const selectedStatus = result.value;
+                  document.getElementById('orderStatus').setAttribute('value',selectedStatus);
+                  var form = document.getElementById('approve-form');
+                  form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
+                  form.submit();
+
+              }
+          });
+      }
+  </script>
  <!--end::Content-->
 @endsection
