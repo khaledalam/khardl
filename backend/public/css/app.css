@@ -1961,6 +1961,10 @@ video {
   padding-left: 16px !important;
   padding-right: 16px !important;
 }
+.\!px-\[6px\] {
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
 .\!px-\[70px\] {
   padding-left: 70px !important;
   padding-right: 70px !important;
@@ -2104,10 +2108,6 @@ video {
 .py-\[80px\] {
   padding-top: 80px;
   padding-bottom: 80px;
-}
-.\!px-\[6px\] {
-  padding-left: 6px !important;
-  padding-right: 6px !important;
 }
 .pb-0 {
   padding-bottom: 0px;
@@ -2256,6 +2256,9 @@ video {
 .align-middle {
   vertical-align: middle;
 }
+.\!text-\[10px\] {
+  font-size: 10px !important;
+}
 .\!text-\[14px\] {
   font-size: 14px !important;
 }
@@ -2334,9 +2337,6 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-.\!text-\[10px\] {
-  font-size: 10px !important;
 }
 .\!font-medium {
   font-weight: 500 !important;
