@@ -47,17 +47,62 @@ class CartRepository
     }
 
     public function createCartItem($item,$request):CartItem
-    {
+    {   
+        $checkbox_options = null;
+        $selection_options = null;
+        $dropdown_options = null;
+        $options_price = 0;
+        if($request['selectedCheckbox'] ?? false){
+            $options_price += $this->loopingTroughCheckboxOptions($item,$request['selectedCheckbox'],$checkbox_options);
+        }
+        if($request['selectedRadio'] ?? false){
+            $options_price += $this->loopingTroughSelectionOptions($item,$request['selectedRadio'],$selection_options);
+        }
+        if($request['selectedDropdown'] ?? false){
+            $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
+        }
         return CartItem::updateOrCreate([
             'item_id' => $item->id,
         ],[
             'cart_id' => $this->cart->id,
             'price' =>$item->price,
-            'total' =>$item->price * $request['quantity'] ,
+            'total' =>($item->price + $options_price) * $request['quantity'] ,
             'quantity' => $request['quantity'],
-            'notes' => $request['notes']
-
+            'notes' => $request['notes'],
+            'options_price'=>$options_price,
+            'checkbox_options'=>$checkbox_options,
+            'selection_options'=>$selection_options,
+            'dropdown_options'=>$dropdown_options,
         ]);
+    }
+    public function loopingTroughCheckboxOptions($item,$options,&$updatedOptions){
+        $totalPrice = 0;
+        foreach($options as $i=>$option){
+            foreach($option as $j=>$sub_option){
+                $updatedOptions [$item->checkbox_input_titles[$i]][] = [$item->checkbox_input_names[$i][$j],$item->checkbox_input_prices[$i][$j]];
+                $totalPrice += (float) $item->checkbox_input_prices[$i][$j];
+            }   
+        } 
+        return  $totalPrice;
+    }
+    public function loopingTroughSelectionOptions($item,$options,&$updatedOptions){
+        $totalPrice = 0;
+        foreach($options as $i=>$option){
+            if($option)
+                foreach($option as $j=>$sub_option){
+                    $updatedOptions [$item->selection_input_titles[$i]] = [$item->selection_input_names[$i][$j],$item->selection_input_prices[$i][$j]];
+                    $totalPrice += (float) $item->selection_input_prices[$i][$j];
+                }   
+        } 
+        return  $totalPrice;
+    }
+    public function loopingTroughDropdownOptions($item,$options,&$updatedOptions){
+        foreach($options as $i=>$option){
+            if($option)
+                foreach($option as $j=>$sub_option){
+                    $updatedOptions [$item->dropdown_input_titles[$i]] = $item->dropdown_input_names[$i][$j];
+                }   
+        } 
     }
     public function updateCartItem(CartItem $cartItem, $request)
     {
@@ -102,12 +147,7 @@ class CartRepository
 
     public function subTotal()
     {
-        return $this->cart->items()
-            ->select('price', 'quantity')
-            ->cursor()
-            ->reduce(function ($total, $item) {
-                return $total + $item->price * $item->quantity;
-            }, 0);
+        return $this->cart->items->sum('total');
     }
     public function tax($subTotal = null)
     {
@@ -139,9 +179,12 @@ class CartRepository
                 item_id : $cart_item->item_id,
                 quantity : $cart_item->quantity,
                 price : $cart_item->price,
-                options_price : 0,
+                options_price : $cart_item->options_price,
                 total :  $cart_item->total,
-                notes: $cart_item->notes
+                notes: $cart_item->notes,
+                checkbox_options:$cart_item->checkbox_options,
+                selection_options:$cart_item->selection_options,
+                dropdown_options:$cart_item->dropdown_options,
             );
         });
     }

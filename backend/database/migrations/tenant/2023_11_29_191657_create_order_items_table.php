@@ -20,7 +20,11 @@ return new class extends Migration
             $table->float('options_price',8,2)->default(0);
             $table->float('total',8,2)->default(0);
             $table->string('notes')->nullable();
-
+           
+            $table->json("checkbox_options")->nullable();
+            $table->json("selection_options")->nullable();
+            $table->json("dropdown_options")->nullable();
+            
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
 

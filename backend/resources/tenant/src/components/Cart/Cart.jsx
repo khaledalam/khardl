@@ -239,7 +239,9 @@ const Cart = () => {
                       />
                     </span>
 
-                                            <span>{t('Total')}: {it?.price * it?.quantity} {t('SAR')}</span>
+                                            <span>{t('Total')}: {it?.price * it?.quantity} {t('SAR')} {it.options_price > 0 && 
+                                                <i> + {it.options_price} {t('SAR')}  ({t('Options')})</i>
+                                            }</span>
                                             <button
                                                 disabled={loading}
                                                 className="p-[6px] text-black shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-1"
