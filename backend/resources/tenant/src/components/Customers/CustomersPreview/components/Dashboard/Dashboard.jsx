@@ -26,6 +26,8 @@ const CustomerDashboard = () => {
     dispatch(setActiveTab(tabName));
   };
 
+  // const orderId = new URLSearchParams(window.location.search).get('OrderId');
+
   if (window.location.href.indexOf('#Profile') > -1) {
       handleTabClick("Profile")
   } else if (window.location.href.indexOf('#Dashboard') > -1) {
@@ -33,6 +35,16 @@ const CustomerDashboard = () => {
   } else if (window.location.href.indexOf('#Orders') > -1) {
       handleTabClick("Orders")
   }
+  // else if (orderId) {
+  //     handleTabClick("Orders");
+  //
+  //     setTimeout(() => {
+  //         dispatch(setOrderShow(true));
+  //         dispatch(setIdOrder(orderId));
+  //     }, 3000);
+  //
+  //     // handleOrderClick(true);
+  // }
 
   return (
     <div className="flex justify-between items-start bg-white shadow-lg">

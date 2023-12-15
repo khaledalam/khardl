@@ -60,6 +60,11 @@ const Supports = () => {
             </a>
           </div>
           </div>
+
+
+            <hr className={"my-5"} />
+
+            <span className={"flex text-center w-100"}>Test</span>
         </div>
       }
       <div

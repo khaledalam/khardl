@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\Tenant;
 
+use App\Models\Tenant\DeliveryType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,9 @@ class OrderResource extends JsonResource
             'payment_method'=>$this->payment_method->name,
             'payment_status'=>$this->payment_status,
             'shipping_address'=>$this->shipping_address,
+            'delivery_cost'=> DeliveryType::where('id','=', $this->delivery_type_id)->first()?->cost,
             'order_notes'=>$this->order_notes,
+            'platform_fee' => '',
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
 

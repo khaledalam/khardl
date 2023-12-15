@@ -266,7 +266,7 @@
    "Status": "Status",
    "Total": "Total",
    "Date Added": "Date Added",
-   "Actions": "Display Product",
+   "Actions": "Display Order",
    "Order Details": "Order Details",
    "page": "page",
    "of": "of",
@@ -325,5 +325,12 @@
     "building number": "Building number",
     "street": "Street name",
     "area": "Area name",
-    "city": "City"
+    "city": "City",
+    "additional": "Additional",
+    "price": "Price",
+    "other products": "Other Products",
+    "platform fee": "Platform Fee",
+    "N/A": "N/A"
+
+
 }

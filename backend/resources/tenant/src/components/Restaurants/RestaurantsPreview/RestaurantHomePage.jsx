@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router";
-import Header from './components/header';
 import Hero from './components/Hero';
 import Footer from './components/footer';
 import { Taps, Tap } from "./components/Taps";
@@ -48,23 +46,15 @@ const RestaurantHomePage = () => {
         fetchData().then(r => null);
     }, []);
 
-    useEffect(() => {
-      if (branches.length > 0) {
-        const foundBranch = branches.find((branch) => branch.branch_id === parseInt(branch_id));
-        if (foundBranch) {
-          setBranch(foundBranch);
-        }
-      }
-    }, [branch_id, branches]);
-
 
     if (!styleDataRestaurant){
         return;
     }
+
     const categoriesForBranch = categories.filter(category => category.branch.id == branch_id);
 
     return (
-      <div className="w-[100%] bg-white" style={{fontFamily: `${styleDataRestaurant?.font_family}`}}>
+      <div className="w-[100%] bg-white" style={{fontFamily: `${styleDataRestaurant?.font_family}` ,fontWeight: `${styleDataRestaurant?.font_type}`,fontSize:`${styleDataRestaurant?.font_size}`}}>
           <div className=''>
         <div className={`${styleDataRestaurant?.logo_alignment === "Center" ? "justify-center" : ""}
         ${styleDataRestaurant?.logo_alignment === "Left" && Language === "en" ? "justify-start" : styleDataRestaurant?.logo_alignment === "Left" ? "justify-end":""}
@@ -92,12 +82,12 @@ const RestaurantHomePage = () => {
                 contentClassName={`
         bg-[var(--secondary)] mb-5 ${styleDataRestaurant?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
         ${styleDataRestaurant?.category_style === "Right" || styleDataRestaurant?.category_style === "Left" ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
-                {categoriesForBranch.map((category, i) => (
+                {categoriesForBranch?.map((category, i) => (
                   <Tap
                       key={i}
                     component={
                         category?.items?.length > 0
-                            ? <MenuItems items={category?.items} />
+                            ? <MenuItems items={category?.items?.filter(item => item?.availability == '1')} /> // only availabile items
                              : <h2 style={{color: 'var(--primary)'}}>{t("No items in this category")}</h2>
                     }
                     contentClassName="text-black">

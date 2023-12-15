@@ -25,10 +25,12 @@ class OrderRepository
                 $subtotal = $cart->subTotal();
                 $delivery = DeliveryType::where('name',$request->delivery_type)->first();
 
+                $paymentMethod = PaymentMethod::where('name',$request->payment_method)?->first();
+
                 $order = Order::create([
                     'user_id'=>Auth::id(),
                     'branch_id'=>$cart->branch()->id,
-                    'payment_method_id'=> PaymentMethod::where('name',$request->payment_method)->first()->id,
+                    'payment_method_id'=> $paymentMethod?->id,
                     'delivery_type_id'=> $delivery->id,
                     'total'=>$cart->total($subtotal)  + $delivery->cost,
                     'delivery_cost'=> $delivery->cost,
@@ -38,7 +40,6 @@ class OrderRepository
                     // TODO @todo update
                     'payment_status'=>'pending',
                     'status'=> Order::PENDING,
-
 
                 ]);
 
@@ -51,7 +52,7 @@ class OrderRepository
                 $cart->clone_to_order_items($order->id);
                 $cart->trash();
                 DB::commit();
-                return $this->sendResponse(null, __('The order been created successfully.'));
+                return $this->sendResponse($order, __('The order been created successfully.'));
 
             }else if ($cart->hasPaymentCreditCard($request->payment_method)){
                 // TODO @todo not yet

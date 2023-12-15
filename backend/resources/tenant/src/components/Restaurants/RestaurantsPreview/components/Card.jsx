@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import DetailesItem from './DetailesItem';
 import { useTranslation } from "react-i18next";
-import { addItemToCart } from '../../../../redux/editor/cartSlice';
-import {toast} from "react-toastify";
-
-import AxiosInstance from "../../../../axios/axios";
 import {globalColor, globalShape} from "../../../../redux/editor/buttonSlice";
 function Card(props) {
     const shapeImageShape = useSelector(state => state.shapeImage.shapeImageShape);
@@ -91,7 +87,7 @@ function Card(props) {
           checkbox_input_titles={props.checkbox_input_titles || []}
           checkbox_input_names={props.checkbox_input_names || []}
           checkbox_input_prices={props.checkbox_input_prices || []}
-          
+
           selection_required={props.selection_required || []}
           selection_input_titles={props.selection_input_titles || []}
           selection_input_names={props.selection_input_names || []}
@@ -101,7 +97,7 @@ function Card(props) {
           dropdown_input_titles={props.dropdown_input_titles || []}
           dropdown_input_names={props.dropdown_input_names || []}
 
-    
+
         />
       ) : null}
       {/*{showDetailesItem ? showMeDetailesItem : null}*/}
