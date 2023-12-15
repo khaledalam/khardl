@@ -325,5 +325,7 @@
     "building number": "Building number",
     "street": "Street name",
     "area": "Area name",
-    "city": "City"
+    "city": "City",
+    "Delivery cost": "Delivery cost"
+
 }

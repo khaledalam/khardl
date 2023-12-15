@@ -18,7 +18,7 @@ const Cart = () => {
     // order notes
     const [notes, setNotes] = useState("");
 
-    const [deliveryCost, setDeliveryCost] = useState("?");
+    const [deliveryCost, setDeliveryCost] = useState(0);
 
     const navigate = useNavigate()
     const {t} = useTranslation();
@@ -62,13 +62,16 @@ const Cart = () => {
         if (loading)return;
         setLoading(true);
 
+        console.log(type?.cost)
         setDeliveryType(type.name);
+        setDeliveryCost(type?.cost);
 
-        await AxiosInstance.get(`deliveryType` ).then(e => {
-            setDeliveryCost(type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free'));
-        }).finally(r => {
-            setLoading(false);
-        });
+        // await AxiosInstance.get(`deliveryType` ).then(e => {
+        //     setDeliveryCost(type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free'));
+        // }).finally(r => {
+        //
+        // });
+        setLoading(false);
     }
 
     const handlePlaceOrder = async () => {
@@ -82,9 +85,6 @@ const Cart = () => {
                     payment_method: paymentMethod,
                     delivery_type: deliveryType,
                     notes: notes,
-
-                    // TODO @todo more info
-                    shipping_address: '',
                 })
                     .then( r => {
                         if (cartResponse.data) {
@@ -102,7 +102,8 @@ const Cart = () => {
     }
 
     const getTotalPrice = () => {
-        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+            + deliveryCost;
     };
 
     const handleRemoveItem =  async (itemId) => {
@@ -286,7 +287,7 @@ const Cart = () => {
                                     <hr />
 
                                     <div className="my-4">
-                                        <div className="text-[15px] font-semibold mb-2">{t("Address")} TODO</div>
+                                        <div className="text-[15px] font-semibold mb-2">{t("Address")} <span style={{color: 'red'}}>*</span></div>
                                         <input className="w-[100%] p-1 my-1" style={{color: 'gray'}} value={address} disabled={true} readOnly={true}/>
                                         <button
                                             disabled={loading}
@@ -305,7 +306,12 @@ const Cart = () => {
 
                                     <hr />
 
-                                    <div className={"my-4"}>
+                                    {deliveryCost > 0 &&
+                                    <div className={"my-2"}>
+                                        <h3>{t('Delivery cost')}: {deliveryCost} {t('SAR')}</h3>
+                                    </div>}
+
+                                    <div className={"my-2"}>
                                         <h3>{t('Total')}: {getTotalPrice()} {t('SAR')} <small><i>({t('Inclusive VAT')})</i></small></h3>
                                     </div>
 

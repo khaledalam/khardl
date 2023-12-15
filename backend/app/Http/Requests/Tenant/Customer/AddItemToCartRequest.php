@@ -28,7 +28,7 @@ class AddItemToCartRequest extends FormRequest
             'item_id' => 'required|int',
             'quantity' => 'required|int|min:1',
             'branch_id'=>'required|int',
-            'notes' => 'string'
+            'notes' => 'nullable|string'
         ];
     }
 
