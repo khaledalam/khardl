@@ -12,7 +12,7 @@ function Dropdown({ title, options, selectedValue, onSelect }) {
             <div className={`p-4 py-2 ${isOpen ? "pb-0" : ""}`}>
                 <Shape
                     component={
-                        <div className={`flex justify-between items-center gap-2 p-0`}>
+                        <div className={`flex justify-between items-center gap-2 p-0 text-black`}>
                             <div className='text-[16px] font-semibold'>{title}</div>
                             <span className="flex-shrink-0">
                                 {isOpen ? (
@@ -34,7 +34,7 @@ function Dropdown({ title, options, selectedValue, onSelect }) {
                         <div
                             key={option}
                             onClick={() => {
-                                onSelect(option); 
+                                onSelect(option);
                             }}
                             className={`py-1 px-4 ${option === selectedValue ? "bg-[var(--primary)] text-white" : ""}
                             ${option === "Tabs" || option === "Slider" ? "rounded-t-xl" : "" }

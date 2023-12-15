@@ -162,10 +162,10 @@ function Header() {
                     }}
                 >
                     <LiaShoppingCartSolid size={26} />
-                    <button
+                    <span
                         className='absolute top-[-7px] right-[-6px] text-[10px] text-bold h-[20px] w-[20px] rounded-full bg-red-500 text-white'>
                         <div>{cartItems.length}</div>
-                    </button>
+                    </span>
                 </button>
                 {renderButton(buttons[2], <div></div>, true)}
                 {isOpen !== null && (

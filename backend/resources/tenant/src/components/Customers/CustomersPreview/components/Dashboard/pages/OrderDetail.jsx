@@ -6,22 +6,37 @@ import StatusShape from '../components/StatusShape';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 
-function OrderDetail() {
+function OrderDetail(props) {
+    const {orders} = props;
     const { t } = useTranslation();
-    const [order, setOrder] = useState([]);
+    const [order, setOrder] = useState(null);
     const dispatch = useDispatch();
-    const handleOrderClick = (stutes) => {
-        dispatch(setOrderShow(stutes));
-    };
+
     const idOrder = useSelector((state) => state.id.idOrder);
     const Language = useSelector((state) => state.languageMode.languageMode);
     const shapeImageShape = useSelector(state => state.shapeImage.shapeImageShape);
-    const totalPrice = order.items?.reduce((total, item) => total + (item.price || 0), 0);
 
     useEffect(() => {
-        const selectedOrder = OrdersCustomer.find(order => order.id === idOrder);
+        const selectedOrder = orders.find(order => order?.id == idOrder);
         setOrder(selectedOrder);
     }, [order])
+
+
+    console.log("OrderDetail idOrder", idOrder);
+    console.log("OrderDetail order",   order);
+
+    if (!order || !orders) {
+        return;
+    }
+
+
+    console.log("OrderDetail order items",   order?.items);
+
+    const handleOrderClick = (stutes) => {
+        dispatch(setOrderShow(stutes));
+    };
+    const totalPrice = order?.items?.reduce((total, item) => total + (item.price || 0), 0);
+
 
     return (
         <div className='flex flex-col items-start gap-y-4'>
@@ -36,46 +51,46 @@ function OrderDetail() {
                 </button>
             </div>
             <div className='flex justify-start items-center gap-3'>
-                <div className="font-bold">(#{order.OrderID})</div>
-                <StatusShape text={order.Status} />
+                <div className="font-bold">(#{order?.id})</div>
+                <StatusShape text={order?.status} />
             </div>
             <div className='w-[100%] bg-white drop-shadow-md rounded-md p-6 py-8'>
                 <div className={`w-[100%] h-[220px] rounded-[4px]  bg-center bg-cover shadow-md`}
-                    style={{ backgroundImage: `url(${order.image})`, borderRadius: shapeImageShape }}>
+                    style={{ backgroundImage: `url(${order?.items[0]?.item?.photo})`, borderRadius: shapeImageShape }}>
                 </div>
                 <div className='grid grid-cols-2 px-6 mt-4'>
                     <div className='flex flex-col items-start justify-start text-start'>
                         <p className='font-bold'>
-                            {t("Product")} ({order.number_of_orders})
+                            {t("Products")} ({order?.items?.length})
                         </p>
                         <div className='mt-2 flex flex-col gap-4'>
-                            {order.items?.map((item, index) => (
-                                <div>
-                                    <div className='mt-2 flex justify-start items-start gap-12 min-w-[250px]' key={index}>
-                                        <p className=''>{item.name}</p>
-                                        <p className=''>x{item.number}</p>
-                                        <p className='font-bold'>{item.price}</p>
+                            {order?.items?.map((item, index) => (
+                                <div key={index}>
+                                    <div className='mt-2 flex justify-start items-start gap-12 min-w-[250px]'>
+                                        <p className=''>{t('Name')}: {item?.item?.description}</p>
+                                        <p className=''>{t('Quantity')}: {item?.quantity}</p>
+                                        <p className='font-bold'>{t('price')}: {item.price} {t('SAR')}</p>
                                     </div>
-                                    <p className=''>{item.additions}</p>
+                                    <p className=''>{t('additional')}: {order?.items?.length - 1}</p>
+                                    <div
+                                        className={`w-[40px] h-[40px] rounded-[4px]  bg-center bg-cover shadow-md`}
+                                        style={{ backgroundImage: `url(${item?.item?.photo})`, borderRadius: shapeImageShape }}>
+                                    </div>
                                 </div>
                             ))}
                         </div>
-                        <div className='mt-4 flex justify-start items-start gap-3 flex-wrap'>
-                            {order.items?.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className={`w-[40px] h-[40px] rounded-[4px]  bg-center bg-cover shadow-md`}
-                                    style={{ backgroundImage: `url(${item.image})`, borderRadius: shapeImageShape }}>
-                                </div>
-                            ))}
-                        </div>
+                        {/*<div className='mt-4 flex justify-start items-start gap-3 flex-wrap'>*/}
+                        {/*    {order?.items?.map((item, index) => (*/}
+                        {/*        */}
+                        {/*    ))}*/}
+                        {/*</div>*/}
                     </div>
                     <div className='flex flex-col items-start justify-start text-start'>
                         <p className='font-bold'>
                             {t("Delivery Details")}
                         </p>
                         <p className='mt-2'>
-                            {order.address}
+                            {order?.shipping_address}
                         </p>
                     </div>
                 </div>
@@ -86,24 +101,28 @@ function OrderDetail() {
                             {t("Summary")}
                         </p>
                         <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
-                            <p className=''>{t("Delivery")}</p>
-                            <p className=''>{order.delivary_price}</p>
+                            <p className=''>{t("Notes")}</p>
+                            <p className=''>{order?.order_notes || t('N/A')}</p>
                         </div>
                         <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
-                            <p className=''>{t("Services")}</p>
-                            <p className=''>{order.services_price}</p>
+                            <p className=''>{t("Delivery")}</p>
+                            <p className=''>{order?.delivery_cost || t('free')} {t('SAR')}</p>
+                        </div>
+                        <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
+                            <p className=''>{t("platform fee")}</p>
+                            <p className=''>{order?.platform_fee || 0} {t('SAR')}</p>
                         </div>
                         <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
                             <p className=''>{t("Products")}</p>
                             <p className=''>
-                                {totalPrice}
+                                {order?.total} {t('SAR')}
                             </p>
                         </div>
                         <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
                             <p className='font-bold'>{t("Total")}</p>
-                            <p className='font-bold'>{totalPrice + order.delivary_price + order.services_price}</p>
+                            <p className='font-bold'>{order?.total} {t('SAR')}</p>
                         </div>
-                        <p className='mt-2'>{t("(Paid with Cash)")}</p>
+                        <p className='mt-2'>({t(order?.payment_method)})</p>
                     </div>
                 </div>
             </div>

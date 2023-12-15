@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Tenant;
 
 use App\Models\Tenant\Order;
 use App\Models\Tenant\OrderStatusLogs;
+use App\Repositories\API\CustomerOrderRepository;
 use Faker\Provider\id_ID\Color;
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
@@ -21,8 +22,12 @@ class  OrderController extends BaseRepositoryController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if(Auth::user()->isWorker()){
+            if(Auth::user()?->isWorker()){
                 $this->default_repository = new OrderRepository();
+            } else if (!Auth::user()?->isWorker() && !Auth::user()?->isRestaurantOwner()) {
+                // customer get his orders
+                $this->default_repository = new CustomerOrderRepository();
+
             }
             return $next($request);
 
