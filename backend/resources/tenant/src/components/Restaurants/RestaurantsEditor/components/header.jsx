@@ -9,6 +9,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { LiaShoppingCartSolid } from 'react-icons/lia';
 import { globalColor } from '../../../../redux/editor/buttonSlice';
 import Login from './Login';
+import {useTranslation} from "react-i18next";
 
 function Header() {
     const buttons = useSelector(selectButtons);
@@ -19,15 +20,11 @@ function Header() {
     const [showDetailesItem, setShowDetailesItem] = useState(false);
     const [isMenuOpen, setMenuOpen] = useState(false);
     const divWidth = useSelector((state) => state.divWidth.value);
-
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant);
 
+    const { t } = useTranslation();
+
     if (!styleDataRestaurant) return;
-
-    console.log("styleDataRestaurant >> ", styleDataRestaurant);
-    console.log("buttons >> ", buttons);
-
-
 
     function showMeDetailesItem() {
         if (!showDetailesItem) {
@@ -46,6 +43,8 @@ function Header() {
         setMenuOpen(!isMenuOpen);
     };
     const renderButton = (button, component, fill) => {
+        const { t } = useTranslation();
+
         const buttonStyle = {
             border: `1px solid ${button?.color}`,
             borderRadius: button?.shape,
@@ -62,11 +61,11 @@ function Header() {
                             className='p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                             onClick={showMeDetailesItem}
                         >
-                            {button?.text}
+                            {t(button?.text)}
                         </button>
                         {button?.id === isOpen &&
                             <Toolbar
-                                selectedText={button?.text}
+                                selectedText={t(button?.text)}
                                 selectedColor={button?.color}
                                 selectedShape={button?.shape}
                                 buttonId={button?.id}
@@ -97,18 +96,18 @@ function Header() {
                             {component}
                             {button.id === isOpenModel ? (
                                 <Model
-                                    selectedText={button.text}
+                                    selectedText={t(button.text)}
                                     selectedColor={button.color}
                                     selectedShape={button.shape}
                                     buttonId={button.id}
                                 />
                             ) : <div></div>}
-                            {button.text}
+                            {t(button.text)} <small>(test branch)</small>
                         </button>
                         {button.id === isOpen ? (
                             <div>
                                 <Toolbar
-                                    selectedText={button.text}
+                                    selectedText={t(button.text)}
                                     selectedColor={button.color}
                                     selectedShape={button.shape}
                                     buttonId={button.id}
@@ -149,8 +148,8 @@ function Header() {
                 </div>
                 <div className={`${divWidth >= 800 ? "flex items-center justify-between gap-2" : (isMenuOpen ? 'block' : 'hidden')}`}>
                     <div className={`${divWidth <= 800 ? "flex-col mt-16" : ""} flex gap-2`}>
-                        {renderButton(buttons[0], <MdOutlineDeliveryDining size={20} />)}
                         {renderButton(buttons[1], <MdOutlineDoneAll size={20} />)}
+                        {renderButton(buttons[0], <MdOutlineDeliveryDining size={20} />)}
                     </div>
                 </div>
             </div>
