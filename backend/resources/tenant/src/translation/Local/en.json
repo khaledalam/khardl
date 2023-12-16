@@ -326,11 +326,10 @@
     "street": "Street name",
     "area": "Area name",
     "city": "City",
+    "Delivery cost": "Delivery cost",
     "additional": "Additional",
     "price": "Price",
     "other products": "Other Products",
-    "platform fee": "Platform Fee",
-    "N/A": "N/A"
-
+    "platform fee": "Platform Fee"
 
 }

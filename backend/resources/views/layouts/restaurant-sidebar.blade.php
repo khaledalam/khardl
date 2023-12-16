@@ -15,7 +15,7 @@
     <meta property="og:title" content="Kardl" />
     <meta property="og:url" content="Kardl.com" />
     <meta property="og:site_name" content="Kardl" />
-    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+    <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
     <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Fonts-->
     <!--end::Fonts-->

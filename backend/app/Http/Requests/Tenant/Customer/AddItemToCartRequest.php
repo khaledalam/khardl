@@ -10,7 +10,7 @@ class AddItemToCartRequest extends FormRequest
 {
 
     protected $stopOnFirstFailure = true;
-    
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -43,21 +43,21 @@ class AddItemToCartRequest extends FormRequest
     {
         $item = Item::findOrFail($this->item_id);
         $validator->after(function ($validator)use($item) {
-            
+
             if($item->checkbox_required){
                 if(!$this->validateCheckboxOptions($validator,$item)){
                     return ;
-                }   
+                }
             }
             if($item->selection_required){
                 if(!$this->validateRadioOptions($validator,$item)){
                     return ;
-                }  
+                }
             }
             if($item->dropdown_required){
                 if(!$this->validateDropdownOptions($validator,$item)){
                     return ;
-                }  
+                }
             }
         });
     }
@@ -65,7 +65,7 @@ class AddItemToCartRequest extends FormRequest
     public function validateCheckboxOptions($validator,$item){
 
         foreach($item->checkbox_required as $key=>$option){
-           
+
             if($option == 'true' && !isset($this->selectedCheckbox[$key])  ) {
                 $validator->errors()->add('selectedCheckbox', __(':option is required',['option'=>$item->checkbox_input_titles[$key]]));
                 return false;

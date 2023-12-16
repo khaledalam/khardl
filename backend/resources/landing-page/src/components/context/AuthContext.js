@@ -25,7 +25,6 @@ export const AuthContextProvider = (props) => {
          console.log(response)
          setStatusCode(response?.status)
          dispatch(changeLogState(response?.data?.is_loggedin || false))
-         console.log('hi from AuthContext')
       } catch (err) {
          console.log(err)
          setStatusCode(err?.response?.status)
