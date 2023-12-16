@@ -1,6 +1,5 @@
-
 import React, {useEffect, useState} from 'react';
-import { MdOutlineDoneAll } from 'react-icons/md';
+import {MdOutlineDeliveryDining, MdOutlineDoneAll} from 'react-icons/md';
 import { LiaShoppingCartSolid } from 'react-icons/lia';
 import {useDispatch, useSelector} from 'react-redux';
 import Model from './Model';
@@ -115,6 +114,8 @@ function Header() {
 
     const buttons = styleDataRestaurant?.buttons || JSON.parse(sessionStorage.getItem('buttons'));
 
+    console.log(buttons);
+
     let selectedBranch = styleDataRestaurant?.branches.filter(b => b?.id == localStorage.getItem('selected_branch_id'));
     if (selectedBranch.length > 0) {
         selectedBranch = selectedBranch[0];
@@ -139,7 +140,6 @@ function Header() {
 
                 <div className={`lg:flex items-center justify-between gap-2 ${isMenuOpen ? 'block' : 'hidden'}`}>
                     <div className='flex max-lg:flex-col max-lg:mt-14 gap-2'>
-
                         {isOpenModel1 !== null && (
                             <span
                                 onClick={() => setIsOpenModel1(null)}
@@ -154,7 +154,7 @@ function Header() {
                             style={{
                                 border: `1px solid ${buttons[1]?.color || ''}`,
                                 backgroundcolor: 'transparent',
-                                borderradius: buttons[1]?.shape || '',
+                                borderRadius: buttons[1]?.shape || '',
                             }}
                         >
                             <MdOutlineDoneAll size={20} />
@@ -191,13 +191,18 @@ function Header() {
                         <div>{cartItemsCount}</div>
                     </span>
                 </button>
-                <button
-                    className='p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
-                    style={{ background: `${buttons[2]?.color || ''}`, borderRadius: buttons[2]?.shape || '' }}
+
+                <span
+                    className='relative p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
+                    style={{
+                        border: `1px solid ${buttons[2]?.color || ''}`,
+                        backgroundcolor: 'transparent',
+                        borderRadius: buttons[2]?.shape || '',
+                    }}
                     onClick={showMeDetailesItem}
-                    >
-                    {t(buttons[2]?.text) || ''} <small>({selectedBranch?.name})</small>
-                </button>
+                >
+                    <MdOutlineDeliveryDining size={20} /> {t(buttons[2]?.text) || ''} <small>({selectedBranch?.name})</small>
+                </span>
                 {showDetailesItem &&
                     <Login
                         onClose={showMeDetailesItem}
@@ -277,4 +282,3 @@ function Header() {
 }
 
 export default Header;
-

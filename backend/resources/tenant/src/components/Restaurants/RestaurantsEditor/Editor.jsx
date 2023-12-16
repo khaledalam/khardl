@@ -11,6 +11,8 @@ import Logo from './components/Logo';
 import ResizeDetector from 'react-resize-detector';
 import { setDivWidth } from '../../../redux/editor/divWidthSlice';
 import AxiosInstance from "../../../axios/axios";
+import {getSelectedAlign} from "../../../redux/editor/alignSlice";
+import {getSelectedCategory} from "../../../redux/editor/categorySlice";
 
 const Editor = () => {
     const branch_id = localStorage.getItem('selected_branch_id');
@@ -24,9 +26,9 @@ const Editor = () => {
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
 
   const dispatch = useDispatch();
-    const selectedCategory = sessionStorage.getItem('selectedCategory');
-    const selectedAlign = sessionStorage.getItem('selectedAlign');
-    const Language = sessionStorage.getItem('Language');
+    const selectedCategory = sessionStorage.getItem('selectedCategory') || useSelector(getSelectedCategory);;
+    const selectedAlign = sessionStorage.getItem('selectedAlign') || useSelector(getSelectedAlign);
+    const Language = sessionStorage.getItem('Language') || useSelector((state) => state.languageMode.languageMode);;
     const { t } = useTranslation();
 
 

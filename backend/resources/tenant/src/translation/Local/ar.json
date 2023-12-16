@@ -268,7 +268,7 @@
    "Status": "حالة الطلب",
    "Total": "المجموع",
    "Date Added": "تاريخ الطلب",
-   "Actions": "عرض المنتج",
+   "Actions": "عرض الطلب",
    "Order Details": "تفاصيل الطلب",
    "page": "صفحة",
    "of": "من",
@@ -335,8 +335,7 @@
     "additional": "اضافات",
     "price": "السعر",
     "other products": "منتجات اخري",
-    "platform fee": "عموله المنصه",
-    "N/A": "لايوجد"
+    "platform fee": "عموله المنصه"
 
 }
 
