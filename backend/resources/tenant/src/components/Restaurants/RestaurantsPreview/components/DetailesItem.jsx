@@ -7,8 +7,13 @@ import { addItemToCart } from '../../../../redux/editor/cartSlice';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import AxiosInstance from "../../../../axios/axios";
 import {toast} from "react-toastify";
-import {useNavigate} from "react-router-dom";
+import { useForm } from 'react-hook-form'
+import MainText from "../../../MainText";
+import { Link  , useNavigate} from "react-router-dom";
+import { PREFIX_KEY ,HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../../../config";
 
+import { changeLogState, changeUserState } from "../../../../redux/auth/authSlice";
+import { useAuthContext } from "../../../context/AuthContext";
 const DetailesItem = ({
   itemId,
   onClose,
@@ -35,14 +40,65 @@ const DetailesItem = ({
   const GlobalColor = sessionStorage.getItem('globalColor');
   const GlobalShape = sessionStorage.getItem('globalShape');
   const Language = sessionStorage.getItem('Language');
+  const { setStatusCode } = useAuthContext()
   const [total, setTotal] = useState(parseFloat(price));
-
+  const [spinner, setSpinner] = useState(false)
 
   const dispatch = useDispatch();
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm()
+   const onSubmit = async (data) => {
+    try {
+       setSpinner(true)
+       const response = await AxiosInstance.post(`/login`, {
+         phone: data.phone,
 
+         // remember_me: data.remember_me, // used only in API token-based
+       });
+
+       if (response?.data?.success) {
+          const responseData = await response?.data;
+          console.log(responseData)
+           localStorage.setItem(
+             'user-info',
+             JSON.stringify(responseData.data)
+          )
+          if (responseData.data.user.status === 'inactive') {
+             sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)
+             setStatusCode(HTTP_NOT_VERIFIED)
+             navigate('/verification-phone')
+          }else if (
+             responseData.data.user.status === 'active'
+          ) {
+             setStatusCode(HTTP_OK)
+          } else {
+             navigate('/error')
+          }
+           dispatch(changeLogState(true))
+           dispatch(changeUserState(responseData?.data?.user || null))
+
+          dispatch(setIsOpen(false))
+          toast.success(`${t('You have been logged in successfully')}`)
+       } else {
+           console.log("response?.data?.success false")
+          setSpinner(false)
+          throw new Error(`${t('Login failed')}`)
+       }
+    } catch (error) {
+       setSpinner(false)
+       dispatch(changeLogState(false))
+        dispatch(changeUserState(null))
+
+        setStatusCode(HTTP_NOT_AUTHENTICATED)
+        toast.error(`${t(error.response.data.message)}`);
+    }
+ }
   const { t } = useTranslation();
   const [count, setCount] = useState(1);
   const [checkboxTotalPrice,setCheckboxTotalPrice] = useState(0);
@@ -248,6 +304,7 @@ const DetailesItem = ({
 
     return (
     <>
+    { isLoggedIn ? 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -261,7 +318,7 @@ const DetailesItem = ({
         <div className="bg-[#000000]  bg-opacity-50 fixed inset-0 w-full h-full z-20"/>
         <main className="flex  flex-col items-center justify-center h-full w-full">
           <div className="modal-wrapper flex items-center z-[50]">
-            <div className="modal max-w-md min-w-[480px] h-[95vh] bg-white overflow-y-auto mx-5 xl:max-w-xl lg:max-w-xl md:max-w-xl max-h-screen shadow-lg flex-row rounded-lg">
+            <div className="modal max-w-md min-w-[480px]  bg-white overflow-y-auto mx-5 xl:max-w-xl lg:max-w-xl md:max-w-xl max-h-screen shadow-lg flex-row rounded-lg">
               <div className="modal-header grid grid-cols-2 p-5 items-center border-b border-ternary-light">
                 <div className="text-center">
                   <h5
@@ -431,6 +488,97 @@ const DetailesItem = ({
           </div>
         </main>
       </motion.div>
+      : 
+      <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="font-general-medium fixed inset-0 z-[99] transition-all duration-500"
+    >
+      <button
+  onClick={onClose}
+  className="w-full  fixed inset-0 z-30 transition-all duration-500"
+  />
+      <div className="bg-[#000000]  bg-opacity-50 fixed inset-0 w-full  z-20"/>
+      <main className="flex  flex-col items-center justify-center  w-full">
+        <div className="modal-wrapper flex items-center z-[50] mt-[60px]">
+          <div className="modal max-w-md min-w-[480px]  bg-white overflow-y-auto mx-5 xl:max-w-xl lg:max-w-xl md:max-w-xl max-h-screen shadow-lg flex-row rounded-lg">
+            <div className="modal-header grid grid-cols-2 p-5 items-center border-b border-ternary-light">
+              <div className="text-center">
+                <h5
+                  className="text-center text-black font-bold text-lg">
+                 {t('Login')}
+                </h5>
+              </div>
+              <button
+                onClick={onClose}
+                className="font-bold col-end-7"
+              >
+                <FiX className="text-2xl" />
+              </button>
+            </div>
+            <div className="modal-body p-5 w-full ">
+            <MainText
+                        Title={t('Login')}
+                        classTitle='!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]'
+                    />
+            <div className='w-[100%] flex items-center justify-center mt-4'>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className='w-[100%] flex flex-col gap-[14px] px-[15px]'
+                >
+                  {/* Input 1 */}
+
+                
+                  <div>
+                      <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
+                        {t('Phone')} 
+                      </h4>
+                      <input
+                        type='tel'
+                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
+                        placeholder={'e.g. +966 582936628'}
+                        {...register('phone', {
+                            required: true,
+                        })}
+                        minLength={9}
+                        maxLength={13}
+                      />
+                      {errors.phone && (
+                        <span className='text-red-500 text-xs mt-1 ms-2'>
+                            { t('Phone Error') }
+                        </span>
+                      )}
+
+                  </div>
+                    
+                    <div className='flex flex-col justify-center items-center mt-4 mb-10'>
+                                 <button
+                            type='submit'
+                            className={`font-bold bg-[var(--primary)] flex justify-center items-center gap-[3px] rounded-full transition-all delay-100  py-2 px-6 text-[18px] leading-6`}
+                          >
+                            {t('Login')}
+                          </button>
+                          <p className='text-sm font-semibold  mt-1'>
+                            {t("Don't have an account?")}
+                            <Link to='/register'>
+                                <input
+                                  type='submit'
+                                  className='hover:bg-[#d6eb16] text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md '
+                                  value={t('Create an account')}
+                                />
+                            </Link>
+                          </p>
+                      </div>
+                </form>
+
+                </div>     
+            </div>
+          </div>
+        </div>
+      </main>
+    </motion.div>
+      }
     </>
   );
 };

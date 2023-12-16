@@ -8,6 +8,7 @@ use App\Models\Tenant;
 use Database\Seeders\UserSeeder;
 use Illuminate\Console\Command;
 use Database\Seeders\TenantActionSeeder;
+use Exception;
 use Illuminate\Database\UniqueConstraintViolationException;
 
 class RegisterNewTenant extends Command

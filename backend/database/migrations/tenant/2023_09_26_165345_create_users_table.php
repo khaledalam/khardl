@@ -16,9 +16,9 @@ return new class extends Migration
             $table->id(); // Big auto-incrementing ID
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('phone')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('password')->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->timestamp('phone_verified_at')->nullable();
             $table->enum('status', ['active', 'suspended', 'inactive'])->default('active');
             $table->timestamp('last_login')->nullable();
