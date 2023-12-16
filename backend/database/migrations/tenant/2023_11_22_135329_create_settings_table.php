@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_live')->default(false);
+            $table->float('delivery_fee')->default(0);
         });
     }
 

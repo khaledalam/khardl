@@ -10,7 +10,8 @@ class Setting extends Model
     use HasFactory;
     protected $table= "settings";
     protected $fillable =[
-        'is_live'
+        'is_live',
+        'delivery_fee'
     ];
     public $timestamps = false;
 

@@ -321,9 +321,11 @@ return [
     "notes" => "ملاحظات",
     "in-preparations" => "قيد التحضيز",
     "not-in-preparations" => "ليس قيد التحضيز",
-    'status'=>"حالة الطلب",
     'completed'=>'مكتمل',
-    'ready'=>"جاهز"
+    'ready'=>"جاهز",
+    'delivery-fee' => "عموله التوصيل",
+    "e.g." => "علي سبيل المثال"
+
 
 ];
 

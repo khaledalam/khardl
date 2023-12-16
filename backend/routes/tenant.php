@@ -115,6 +115,7 @@ Route::group([
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::get('/customers-data', [RestaurantController::class, 'customers_data'])->name('restaurant.customers_data');
                 Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
+                Route::post('/update-settings', [RestaurantController::class, 'upadteSettings'])->name('restaurant.update.settings');
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
 

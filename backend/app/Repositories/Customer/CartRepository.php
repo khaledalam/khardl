@@ -6,6 +6,7 @@ namespace App\Repositories\Customer;
 use App\Models\Tenant\Cart;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\CartItem;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
@@ -193,11 +194,13 @@ class CartRepository
 
     public function data()
     {
+        $settings = Setting::all()->firstOrFail();
         $items = $this->cart->items->load(['item']);
         return $this->sendResponse([
             'items' => $items,
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
+            'delivery_fee' => $settings['delivery_fee'],
             'address' => $this->cart->user()->firstOrFail()?->address
         ], '');
     }

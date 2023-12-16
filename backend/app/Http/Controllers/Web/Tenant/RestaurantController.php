@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Tenant;
 use App\Http\Controllers\Web\BaseController;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\OrderStatusLogs;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
@@ -68,9 +69,33 @@ class RestaurantController extends BaseController
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
+        $settings = Setting::all()->firstOrFail();
+
         return view('restaurant.settings',
-            compact('user'));
+            compact('user', 'settings'));
     }
+
+    public function upadteSettings(Request $request){
+
+        $request->validate([
+            'delivery_fee' => 'required|numeric|min:0'
+        ]);
+
+        $settings = Setting::all()->firstOrFail();
+
+        $settings->delivery_fee = $request->delivery_fee;
+        $settings->save();
+
+        $delivery = DeliveryType::where('name', DeliveryType::DELIVERY)->first();
+
+        if ($delivery) {
+            $delivery->cost = $settings->delivery_fee;
+            $delivery->save();
+        }
+
+        return redirect()->back()->with('success', __('Restaurant settings successfully updated.'));
+    }
+
     public function settingsBranch(Branch $branch){
         /** @var RestaurantUser $user */
         $user = Auth::user();
@@ -80,7 +105,6 @@ class RestaurantController extends BaseController
         return view('restaurant.settings_branch',
             compact('user','branch','payment_methods', 'delivery_types'));
     }
-
 
     public function updateSettingsBranch(Branch $branch,Request $request){
         $payment_methods = null;

@@ -323,9 +323,10 @@ return [
     "notes" => "Notes",
     "in-preparations" => "In preparations",
     "not-in-preparations" => "Not in preparations",
-    'status'=>"Status",
     'completed'=>'Completed',
-    'ready'=>"Ready"
+    'ready'=>"Ready",
+    'delivery-fee' => "Delivery fee",
+    "e.g." => "e.g."
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',
