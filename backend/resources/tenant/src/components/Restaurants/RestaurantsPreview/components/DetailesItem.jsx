@@ -297,7 +297,9 @@ const DetailesItem = ({
                   </div>
                   {checkbox_input_titles.map((title,checkbox_index)=> (
                     <div key={`checkboxTitle ${checkbox_index}`} className="border-b border-ternary-light my-2 mx-10 p-4">
-                    <div className="text-[16px] font-semibold">{title}</div>
+                    <div className="text-[16px] font-semibold">
+                    {title}{ checkbox_required[checkbox_index] == 'true' && <span className="text-red-500">*</span>}
+                    </div>
                     <div className="flex justify-between items-center">
                       <div>
                         {checkboxItems[checkbox_index].map((item, index) => (
@@ -321,7 +323,10 @@ const DetailesItem = ({
                       </div>
                       <div className="flex  flex-col items-center">
                         {checkboxItems[checkbox_index].map((item, index) => (
-                          <div key={`checkboxPrice ${checkbox_index} ${index}`} className="text-[14px]">{item.price} {t("SAR")}</div>
+                          <div key={`checkboxPrice ${checkbox_index} ${index}`} className="text-[14px]">
+                        
+                            {item.price == 0 ? t("Free") : `${item.price} ${t("SAR")}`}
+                            </div>
                         ))}
                       </div>
                     </div>
@@ -330,7 +335,9 @@ const DetailesItem = ({
 
                     {selection_input_titles.map((title,selection_index)=> (
                   <div   key={`selectionTitle ${selection_index}`}  className="border-b border-ternary-light mx-10 p-4">
-                    <div className="text-[16px] font-semibold ">{title}</div>
+                    <div className="text-[16px] font-semibold ">
+                    {title}{ selection_required[selection_index] == 'true' && <span className="text-red-500">*</span>}
+                    </div>
                     <div className="flex justify-between items-center">
                       <div>
                         {radioItems[selection_index]?.map((item, index) => (
@@ -353,7 +360,9 @@ const DetailesItem = ({
                       </div>
                       <div className="flex  flex-col items-center">
                         {radioItems[selection_index]?.map((item, index) => (
-                          <div key={`selectionPrice ${selection_index} ${index}`} className="text-[14px]">{item.price} {t("SAR")}</div>
+                          <div key={`selectionPrice ${selection_index} ${index}`} className="text-[14px]">
+                              {item.price == 0 ? t("Free") : `${item.price} ${t("SAR")}`}
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -362,7 +371,9 @@ const DetailesItem = ({
                   {dropdown_input_titles.map((title,dropdown_index)=> (
                   <div  key={`dropdownTitle ${dropdown_index}`}   className="border-b border-ternary-light mx-10 p-3 ">
                     <div className="">
-                    <div className="text-[16px] font-semibold ">{title}</div>
+                    <div className="text-[16px] font-semibold ">
+                    {title}{ selection_required[dropdown_index] == 'true' && <span className="text-red-500">*</span>}
+                    </div>
                       <div className='relative w-[100%] my-2'>
                         <select  onChange={(e) => handleDropdownChange(dropdown_index,e)}  className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
                         <option className="bg-white text-black"
