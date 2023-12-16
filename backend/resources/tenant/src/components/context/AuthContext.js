@@ -30,11 +30,8 @@ export const AuthContextProvider = (props) => {
           if (statusCode === HTTP_NOT_VERIFIED && response?.data?.phone) {
               sessionStorage.setItem(PREFIX_KEY + 'phone', response?.data?.phone)
           }
-
           dispatch(changeLogState(response?.data?.is_loggedin || false))
           dispatch(changeUserState(response?.data?.user || null))
-
-          console.log('hi from AuthContext')
       } catch (err) {
          console.log(err)
          setStatusCode(err?.response?.status)

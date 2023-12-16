@@ -11,8 +11,8 @@
     <meta property="og:title" content="" />
     <meta property="og:url" content="#/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
-    <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="{{ global_asset('assets/media/logos/favicon.ico')}}"/>
+    <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
+    <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     @if(app()->getLocale() === 'ar')
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
