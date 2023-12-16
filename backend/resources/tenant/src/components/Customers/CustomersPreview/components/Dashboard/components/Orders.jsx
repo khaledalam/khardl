@@ -24,15 +24,6 @@ function Orders() {
     useEffect(() => {
         fetchOrdersData().then(r => null);
 
-        // const newData = activeTab === "Dashboard"
-        //     ? [...OrdersCustomer].sort((a, b) => {
-        //         const dateA = new Date(a.DateAdded);
-        //         const dateB = new Date(b.DateAdded);
-        //         return dateB - dateA;
-        //     }).slice(0, 3)
-        //     : OrdersCustomer;
-        // setOrders(newData);
-
     }, []);
 
 
@@ -61,38 +52,38 @@ function Orders() {
             Header: `${t("Order ID")}`,
             accessor: "OrderID",
             Cell: ({ row }) => (
-                <div>#{row.original.OrderID}</div>
+                <div>#{row.original.id}</div>
             ),
         },
         {
-            Header: `${t("Product")}`,
-            accessor: "Product",
+            Header: `${t("Products")}`,
+            accessor: "Products",
             Cell: ({ row }) => (
                 <div className='flex justify-start items-center gap-3 '>
                     <div className={`w-[40px] h-[40px] rounded-[4px] bg-center bg-cover shadow-md`}
-                        style={{ backgroundImage: `url(${row.original.image})`, borderRadius: shapeImageShape }}>
+                        style={{ backgroundImage: `url(${row.original?.items[0]?.item?.photo})`, borderRadius: shapeImageShape }}>
                     </div>
                     <div className={`truncate w-[4rem] ${Language == "en" ? 'rtl' : 'ltr'}`}>
-                        {row.original.Product}
+                        {row.original?.items[0]?.item?.description} {row.original?.items?.length > 1 ? <span><br />{t('and')} {row.original?.items?.length - 1} {t('other products')}</span> : null}
                     </div>
                 </div>
             ),
         },
         {
             Header: `${t("Status")}`,
-            accessor: "Status",
+            accessor: "status",
             Cell: ({ row }) => (
-                <StatusShape text={row.original.Status} />
+                <StatusShape text={row.original.status} />
             ),
             Filter: SelectColumnFilter,
         },
         {
             Header: `${t("Total")}`,
-            accessor: "Total",
+            accessor: "total",
         },
         {
             Header: `${t("Date Added")}`,
-            accessor: "DateAdded",
+            accessor: "created_at",
             Filter: SelectColumnFilter,
         },
         {
@@ -121,7 +112,7 @@ function Orders() {
                 </p>
             </div>
             {(orderShow === true && idOrder !== null) && (
-                <OrderDetail />
+                <OrderDetail orders={orders} />
             )}
             {(orderShow === false && activeTab === "Dashboard") && (
                 <Table columns={columns} data={orders} />

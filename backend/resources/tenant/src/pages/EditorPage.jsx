@@ -47,7 +47,7 @@ const EditorPage = () => {
              {position === 'absolute' ? (
             <div className={`fixed gap-2 z-[99999999999]`}>
                <div className={`fixed top-0 w-[100%]`}>
-                  <Header />
+                  {/*<Header />*/}
                </div>
                <button
                   onClick={toggleDrawer}
@@ -72,7 +72,7 @@ const EditorPage = () => {
          ) : (
             <>
                <div className={`fixed top-0 w-[100%]`}>
-                  <Header />
+                  {/*<Header />*/}
                </div>
                <Sidebar />
             </>

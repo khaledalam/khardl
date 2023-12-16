@@ -55,7 +55,7 @@ const DetailesItem = ({
     Object.keys(checkbox_input_names).map((key) => {
       const namesArray = checkbox_input_names[key];
       const pricesArray = checkbox_input_prices[key];
-    
+
       return namesArray.map((name, index) => ({
         value: name,
         price: pricesArray[index]
@@ -66,7 +66,7 @@ const DetailesItem = ({
     Object.keys(selection_input_names).map((key) => {
       const namesArray = selection_input_names[key];
       const pricesArray = selection_input_prices[key];
-    
+
       return namesArray.map((name, index) => ({
         value: name,
         price: pricesArray[index]
@@ -76,7 +76,7 @@ const DetailesItem = ({
   const [dropdownItems, setDropdownItems] = useState(
     Object.keys(dropdown_input_names).map((key) => {
       const namesArray = dropdown_input_names[key];
-    
+
       return namesArray.map((name, index) => ({
         value: name,
       }));
@@ -85,7 +85,7 @@ const DetailesItem = ({
   const [notes, setNotes] = useState("");
   const [goToCart, setGoToCart] = useState(false);
 
-  
+
 
   // useEffect(() => {
   //   const requiredCheckboxes = Math.max(checkbox_required, 0);
@@ -103,11 +103,11 @@ const DetailesItem = ({
     const branch_id = localStorage.getItem('selected_branch_id');
 
   const handleCheckboxChange = (checkbox_index,index,event) => {
-  
+
     let isChecked = event.target.checked;
 
     setSelectedCheckbox((prevSelectedCheckbox) => {
- 
+
       if (isChecked) {
         const updatedCheckbox = [...prevSelectedCheckbox];
         updatedCheckbox[checkbox_index] = {
@@ -166,7 +166,7 @@ const DetailesItem = ({
 
 
 
-    let newTotal = total; 
+    let newTotal = total;
     for (const i in selectedCheckbox) {
       for (const j in selectedCheckbox[i]) {
         const [checkbox_index, index] = selectedCheckbox[i][j];
@@ -178,15 +178,15 @@ const DetailesItem = ({
 
     setTotal(newTotal - checkboxTotalPrice);
     setCheckboxTotalPrice(total_new - total);
-  
+
 
     // Update the total state
-   
+
   }, [selectedCheckbox]);
 
   useEffect(() => {
     // Calculate the total based on selectedCheckbox changes
-    let newTotal = total; 
+    let newTotal = total;
     for (const i in selectedRadio) {
       for (const j in selectedRadio[i]) {
         const [selection_index, index] = selectedRadio[i][j];
@@ -221,7 +221,7 @@ const DetailesItem = ({
           console.log(selectedCheckbox);
           console.log(selectedRadio);
           console.log(selectedDropdown);
-    
+
             const response = await AxiosInstance.post(`/carts`, {
                 item_id : itemId,
                 quantity : count,
@@ -306,7 +306,7 @@ const DetailesItem = ({
                               id={`checkbox-${index}`}
                               type="checkbox"
                               value=""
-                    
+
                               onChange={(e) => handleCheckboxChange(checkbox_index,index,e)}
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2"
                             />
@@ -327,7 +327,7 @@ const DetailesItem = ({
                     </div>
                   </div>
                   ))}
-                  
+
                     {selection_input_titles.map((title,selection_index)=> (
                   <div   key={`selectionTitle ${selection_index}`}  className="border-b border-ternary-light mx-10 p-4">
                     <div className="text-[16px] font-semibold ">{title}</div>
@@ -365,10 +365,10 @@ const DetailesItem = ({
                     <div className="text-[16px] font-semibold ">{title}</div>
                       <div className='relative w-[100%] my-2'>
                         <select  onChange={(e) => handleDropdownChange(dropdown_index,e)}  className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
-                        <option className="bg-white text-black"  
+                        <option className="bg-white text-black"
                             key={`dropdown default`} defaultValue></option>
                           {dropdownItems[dropdown_index]?.map((item, index) => (
-                            <option className="bg-white text-black"  
+                            <option className="bg-white text-black"
                             key={`dropdown ${dropdown_index} ${index}`} value={index}>{item.value}</option>
                           ))}
                         </select>

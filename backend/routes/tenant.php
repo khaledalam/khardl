@@ -224,6 +224,7 @@ Route::group([
         });
 
         Route::get('categories',[CategoryController::class,'index']);
+        Route::get('orders',[OrderController::class,'index']);
 
         Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class,'asset'])
         ->where('path', '(.*)')

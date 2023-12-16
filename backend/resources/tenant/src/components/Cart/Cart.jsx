@@ -85,18 +85,16 @@ const Cart = () => {
                     payment_method: paymentMethod,
                     delivery_type: deliveryType,
                     notes: notes,
-                })
-                    .then( r => {
-                        if (cartResponse.data) {
-                            toast.success(`${t('Order has been created successfully')}`);
-                            navigate('/');
-                        }
-                    })
-                    .finally( r => {
-                        setLoading(false);
-                    });
+                });
+                if (cartResponse.data) {
+                    toast.success(`${t('Order has been created successfully')}`);
+                    navigate(`/dashboard#orders`);
+                    // navigate(`/dashboard?OrderId=${cartResponse.data?.order?.id}#orders`);
+                }
+                setLoading(false);
             } catch (error) {
                 toast.error(error.response.data.message);
+                setLoading(false);
             }
         }
     }
@@ -239,7 +237,7 @@ const Cart = () => {
                       />
                     </span>
 
-                                            <span>{t('Total')}: {it?.price * it?.quantity} {t('SAR')} {it.options_price > 0 && 
+                                            <span>{t('Total')}: {it?.price * it?.quantity} {t('SAR')} {it.options_price > 0 &&
                                                 <i> + {it.options_price} {t('SAR')}  ({t('Options')})</i>
                                             }</span>
                                             <button

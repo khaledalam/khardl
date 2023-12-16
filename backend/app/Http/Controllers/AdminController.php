@@ -308,7 +308,6 @@ class AdminController extends Controller
         });
         Mail::to($restaurant->user->email)->send(new ApprovedRestaurant($restaurant->user,$restaurant));
 
-
         Log::create([
             'user_id' => Auth::id(),
             'action' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['id'=>$restaurant->id])."> $restaurant->id </a>",
