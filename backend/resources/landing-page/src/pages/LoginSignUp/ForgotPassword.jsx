@@ -1,17 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Logo from '../../assets/Logo.webp'
 import ContactUsCover from '../../assets/ContactUsCover.webp'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
-import {API_ENDPOINT} from "../../config";
 import AxiosInstance from "../../axios/axios";
-// import { useApiContext } from '../context'
+import {CgSpinner} from "react-icons/cg";
 
 const ForgotPassword = () => {
    const { t } = useTranslation()
    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+
    const {
       register,
       handleSubmit,
@@ -20,6 +21,9 @@ const ForgotPassword = () => {
 
    // **API POST REQUEST**
    const onSubmit = async (data) => {
+       if (loading) return;
+       setLoading(true);
+
       try {
          const response = await AxiosInstance.post(`/password/forgot`, {
            email: data.email
@@ -38,6 +42,7 @@ const ForgotPassword = () => {
       } catch (error) {
          toast.error(`${t('Failed to send verification code')}`)
       }
+      setLoading(false);
    }
    /////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,6 +72,7 @@ const ForgotPassword = () => {
                         className='px-8 pt-2 pb-2 bg-white rounded'
                      >
                         <div className='mb-6 text-center'>
+                            {loading && <CgSpinner />}
                            <label
                               className='block mb-4 text-sm text-start font-bold text-gray-700'
                               htmlFor='email'
@@ -87,6 +93,7 @@ const ForgotPassword = () => {
                         </div>
                         <div className='text-center'>
                            <button
+                               disabled={loading}
                               type='submit'
                               className={`hover:bg-[#d6eb16] w-fit font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px]`}
                            >
