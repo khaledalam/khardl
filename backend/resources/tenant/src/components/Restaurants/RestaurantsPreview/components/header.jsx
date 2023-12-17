@@ -215,7 +215,7 @@ function Header() {
                 <Languages />
                 <div className='relative flex items-center gap-2 justify-center'>
                     <Button
-                        title={t('Homepage')}
+                        title={"🏠"}
                         link='/'
                         onClick={() => navigate('/')}
                         classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
