@@ -17,7 +17,7 @@ const Protected = (props) => {
             //     navigate("/login");
             // }
         }
-        if (!localStorage.getItem('user-info') && props.Cmp != ForgotPassword) {
+        if (!localStorage.getItem('user-info') && props.Cmp !== ForgotPassword) {
             navigate("/login");
         }
     }, []);
