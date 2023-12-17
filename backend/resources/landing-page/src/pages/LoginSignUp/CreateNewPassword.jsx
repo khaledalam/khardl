@@ -22,6 +22,9 @@ const CreateNewPassword = () => {
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
    let user_email = sessionStorage.getItem('email')
+   if(!user_email) {
+      navigate("/reset-password");
+   }
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)

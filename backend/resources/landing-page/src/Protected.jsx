@@ -8,10 +8,11 @@ const Protected = (props) => {
     let Cmp = props.Cmp;
     const navigate = useNavigate();
     useEffect(() => {
-        if (!sessionStorage.getItem('email')) {
+        if (sessionStorage.getItem('email')) {
 
-            if (props.Cmp === CreateNewPassword) {
-                navigate("/reset-password");
+           
+            if (props.Cmp === ForgotPassword) {
+                navigate("/create-new-password");
             }
             // else {
             //     navigate("/login");
