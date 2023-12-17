@@ -7,9 +7,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-toastify'
-import {PREFIX_KEY,HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";
 import { useSelector } from 'react-redux'
-import { setIsOpen } from '../../redux/features/drawerSlice'
 import AxiosInstance from "../../axios/axios";
 
 const LoginTrial = () => {

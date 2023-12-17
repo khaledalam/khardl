@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { GrPowerReset } from 'react-icons/gr'
 import { useAuthContext } from '../../components/context/AuthContext'
-import {HTTP_NOT_ACCEPTED, PREFIX_KEY} from "../../config";
+import {HTTP_OK, PREFIX_KEY} from "../../config";
 import AxiosInstance from "../../axios/axios";
 
 const VerificationPhone = () => {
@@ -71,7 +71,7 @@ const VerificationPhone = () => {
           console.log(response.data)
 
          if (response.data) {
-            setStatusCode(HTTP_NOT_ACCEPTED)
+            setStatusCode(HTTP_OK)
             navigate('/')
             toast.success(`${t('The code has been verified successfully')}`)
          } else {

@@ -14,6 +14,7 @@ import { PREFIX_KEY ,HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK} from ".
 
 import { changeLogState, changeUserState } from "../../../../redux/auth/authSlice";
 import { useAuthContext } from "../../../context/AuthContext";
+import {setIsOpen} from "../../../../redux/features/drawerSlice";
 const DetailesItem = ({
   itemId,
   onClose,
@@ -62,13 +63,20 @@ const DetailesItem = ({
          // remember_me: data.remember_me, // used only in API token-based
        });
 
-       if (response?.data?.success) {
+        console.log("response: ", response)
+
+
+        if (response?.data?.success) {
+
           const responseData = await response?.data;
           console.log(responseData)
            localStorage.setItem(
              'user-info',
              JSON.stringify(responseData.data)
-          )
+          );
+
+          console.log('>>> herer ', responseData.data.user.status);
+
           if (responseData.data.user.status === 'inactive') {
              sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)
              setStatusCode(HTTP_NOT_VERIFIED)
@@ -76,7 +84,9 @@ const DetailesItem = ({
           }else if (
              responseData.data.user.status === 'active'
           ) {
-             setStatusCode(HTTP_OK)
+              sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)
+             setStatusCode(HTTP_OK);
+              navigate('/verification-phone')
           } else {
              navigate('/error')
           }
@@ -91,12 +101,14 @@ const DetailesItem = ({
           throw new Error(`${t('Login failed')}`)
        }
     } catch (error) {
+        console.log("error: ", error);
+
        setSpinner(false)
        dispatch(changeLogState(false))
         dispatch(changeUserState(null))
 
         setStatusCode(HTTP_NOT_AUTHENTICATED)
-        toast.error(`${t(error.response.data.message)}`);
+        toast.error(`${t(error.response?.data?.message)}`);
     }
  }
   const { t } = useTranslation();
@@ -295,7 +307,9 @@ const DetailesItem = ({
                 setGoToCart(true);
             }
         } catch (error) {
-          toast.error(error.response.data.message);
+            console.log(error);
+
+          toast.error(error.response?.data?.message);
           setGoToCart(false);
         }
         dispatch(addItemToCart("props.description"));
@@ -304,7 +318,7 @@ const DetailesItem = ({
 
     return (
     <>
-    { isLoggedIn ? 
+    { isLoggedIn ?
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -381,7 +395,7 @@ const DetailesItem = ({
                       <div className="flex  flex-col items-center">
                         {checkboxItems[checkbox_index].map((item, index) => (
                           <div key={`checkboxPrice ${checkbox_index} ${index}`} className="text-[14px]">
-                        
+
                             {item.price == 0 ? t("Free") : `${item.price} ${t("SAR")}`}
                             </div>
                         ))}
@@ -488,7 +502,7 @@ const DetailesItem = ({
           </div>
         </main>
       </motion.div>
-      : 
+      :
       <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -529,10 +543,10 @@ const DetailesItem = ({
                 >
                   {/* Input 1 */}
 
-                
+
                   <div>
                       <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                        {t('Phone')} 
+                        {t('Phone')}
                       </h4>
                       <input
                         type='tel'
@@ -551,7 +565,7 @@ const DetailesItem = ({
                       )}
 
                   </div>
-                    
+
                     <div className='flex flex-col justify-center items-center mt-4 mb-10'>
                                  <button
                             type='submit'
@@ -572,7 +586,7 @@ const DetailesItem = ({
                       </div>
                 </form>
 
-                </div>     
+                </div>
             </div>
           </div>
         </div>
