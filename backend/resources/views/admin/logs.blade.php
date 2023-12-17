@@ -49,6 +49,7 @@
                     <option value="Has downloaded a bank certificate contract file" {{ request('action') == 'Has downloaded a bank certificate contract file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-bank-cerificate-file') }}</option>
                     <option value="Has deleted a restaurant" {{ request('action') == 'Has deleted a restaurant' ? 'selected' : '' }}>{{ __('messages.has-deleted-a-restaurant') }}</option>
                     <option value="Has deleted an user" {{ request('action') == 'Has deleted an user' ? 'selected' : '' }}>{{ __('messages.has-deleted-an-user') }}</option>
+                    <option value="Has created new restaurant" {{ request('action') == 'Has created new restaurant' ? 'selected' : '' }}>{{ __('messages.has-created-new-restaurant') }}</option>
                 </select>
 
                                   <!--end::Select-->

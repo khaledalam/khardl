@@ -326,7 +326,8 @@ return [
     'completed'=>'Completed',
     'ready'=>"Ready",
     'delivery-fee' => "Delivery fee",
-    "e.g." => "e.g."
+    "e.g." => "e.g.",
+    'has-created-new-restaurant'=> 'Has created new restaurant'
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',
