@@ -14,9 +14,9 @@ const Cart = () => {
     const [deliveryType, setDeliveryType] = useState(null);
     const [address, setAddress] = useState(null);
     const [deliveryTypes, setDeliveryTypes] = useState(null);
-
-    // order notes
     const [notes, setNotes] = useState("");
+    const [couponCode, setCouponCode] = useState("");
+    const [couponDiscountValue, setCouponDiscountValue] = useState(0);
 
     const [deliveryCost, setDeliveryCost] = useState(0);
 
@@ -80,6 +80,7 @@ const Cart = () => {
                     payment_method: paymentMethod,
                     delivery_type: deliveryType,
                     notes: notes,
+                    couponCode: couponCode
                 });
                 if (cartResponse.data) {
                     toast.success(`${t('Order has been created successfully')}`);
@@ -160,6 +161,10 @@ const Cart = () => {
         confirm('You need to login first');
         navigate('/login')
         return;
+    }
+
+    const handleValidateCoupon = async () => {
+
     }
 
     return (
@@ -294,6 +299,19 @@ const Cart = () => {
                                     <hr />
 
                                     <div className="my-4">
+                                        <div className="text-[15px] font-semibold mb-2">{t("Coupon")}</div>
+                                        <input className="border w-[100%] p-1" placeholder={t("Coupon")} value={couponCode} onChange={e => setCouponCode(e.target.value)}/>
+                                        <button
+                                            disabled={loading}
+                                            onClick={() => handleValidateCoupon()}
+                                            className={"text-[13px] text-black p-2 my-3 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                            <span>🏷️ {t('Validate coupon')} </span>
+                                        </button>
+                                    </div>
+
+                                    <hr />
+
+                                    <div className="my-4">
                                         <div className="text-[15px] font-semibold mb-2">{t("Notes order")}</div>
                                         <textarea className="border w-[100%] p-1" placeholder={t("Notes order")} value={notes} onChange={e => setNotes(e.target.value)}/>
                                     </div>
@@ -304,6 +322,13 @@ const Cart = () => {
                                     <div className={"my-2"}>
                                         <h3>{t('Delivery cost')}: {deliveryCost} {t('SAR')}</h3>
                                     </div>}
+
+                                    {couponDiscountValue > 0 &&
+                                    <div className={"my-2"}>
+                                        <h3>{t('Coupon cost')}: {couponDiscountValue} {t('SAR')}</h3>
+                                    </div>}
+
+
 
                                     <div className={"my-2"}>
                                         <h3>{t('Total')}: {getTotalPrice()} {t('SAR')} <small><i>({t('Inclusive VAT')})</i></small></h3>

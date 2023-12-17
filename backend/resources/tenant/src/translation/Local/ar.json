@@ -337,6 +337,9 @@
     "price": "السعر",
     "other products": "منتجات اخري",
     "platform fee": "عموله المنصه",
-    "Halala": "هلله"
+    "Halala": "هلله",
+    "Coupon": "كود الخصم",
+    "Coupon cost": "قيمه تخفيض كود الخصم",
+    "Validate coupon": "تحقق من كود الخصم"
 }
 
