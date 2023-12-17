@@ -40,14 +40,17 @@ class Msegat
 
     }
     public static function sendOTP(string $number){
-//        return [
-//            'http_code'=>ResponseHelper::HTTP_OK,
-//            'message'=> [
-//                'code'=>1,
-//                "message" => "Success",
-//                "id" => 1234
-//            ]
-//        ];
+        if(env("APP_ENV") == 'local'){
+            return [
+                'http_code'=>ResponseHelper::HTTP_OK,
+                'message'=> [
+                    'code'=>1,
+                    "message" => "Success",
+                    "id" => 1234
+                ]
+            ];
+        }
+       
         return self::send("sendOTPCode.php",[
             'number'=> $number,
             'lang'=>env('MSEGAT_LANG','En')
@@ -63,13 +66,15 @@ class Msegat
         ]);
     }
     public static function verifyOTP(string $otp,?int $id){
-        return [
-            'http_code'=>ResponseHelper::HTTP_OK,
-            'message'=> [
-                'code'=>1,
-                "message" => "Success",
-            ]
-        ];
+        if(env("APP_ENV") == 'local'){
+            return [
+                'http_code'=>ResponseHelper::HTTP_OK,
+                'message'=> [
+                    'code'=>1,
+                    "message" => "Success",
+                ]
+            ];
+        }
         return self::send("verifyOTPCode.php",[
             'code'=>$otp,
             "id"=>$id,

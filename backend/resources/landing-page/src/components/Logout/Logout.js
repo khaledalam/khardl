@@ -24,6 +24,7 @@ const Logout = () => {
             .then(() => {
                if (status === 'succeeded') {
                   setStatusCode(HTTP_NOT_AUTHENTICATED)
+                  sessionStorage.removeItem('email');
                   navigate('/login', { replace: true })
                   toast.success('Logged out successfully')
                }

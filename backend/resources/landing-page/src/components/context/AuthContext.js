@@ -25,8 +25,13 @@ export const AuthContextProvider = (props) => {
          console.log(response)
          setStatusCode(response?.status)
          dispatch(changeLogState(response?.data?.is_loggedin || false))
+         console.log(sessionStorage.getItem('email'));
+         if(!response?.data?.is_loggedin){
+            sessionStorage.removeItem('email');
+         }
       } catch (err) {
-         console.log(err)
+         sessionStorage.removeItem('email');
+         console.log(sessionStorage.getItem('email'));
          setStatusCode(err?.response?.status)
          dispatch(changeLogState(err.response?.data?.is_loggedin || false))
       } finally {
