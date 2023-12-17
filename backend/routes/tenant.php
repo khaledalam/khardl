@@ -20,7 +20,7 @@ use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Controllers\Web\Tenant\Auth\LoginController;
+use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Packages\TapPayment\Controllers\BusinessController;
@@ -57,7 +57,7 @@ Route::group([
     Route::get('login-trial', static function() {
         return view("tenant");
     })->name("login-trial")->middleware(['guest','restaurantNotLive']);
-    Route::post('login', [LoginController::class, 'login'])->name('tenant_login');
+    Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
 
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
@@ -115,6 +115,7 @@ Route::group([
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::get('/customers-data', [RestaurantController::class, 'customers_data'])->name('restaurant.customers_data');
                 Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
+                Route::post('/update-settings', [RestaurantController::class, 'upadteSettings'])->name('restaurant.update.settings');
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
 

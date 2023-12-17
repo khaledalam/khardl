@@ -19,7 +19,7 @@ class DeliveryTypesSeeder extends Seeder
         DeliveryType::create([
             'id' => self::DELIVERY_TYPE_DELIVERY,
             'name' => DeliveryType::DELIVERY,
-            'cost' => 19.5
+            'cost' => 50
         ]);
         DeliveryType::create([
             'id' => self::DELIVERY_TYPE_PICKUP,

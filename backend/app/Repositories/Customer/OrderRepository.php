@@ -3,6 +3,7 @@
 namespace App\Repositories\Customer;
 
 use App\Models\Tenant\OrderStatusLogs;
+use App\Models\Tenant\Setting;
 use Exception;
 use App\Models\Tenant\Order;
 use App\Traits\APIResponseTrait;
@@ -32,8 +33,7 @@ class OrderRepository
                     'branch_id'=>$cart->branch()->id,
                     'payment_method_id'=> $paymentMethod?->id,
                     'delivery_type_id'=> $delivery->id,
-                    'total'=>$cart->total($subtotal)  + $delivery->cost,
-                    'delivery_cost'=> $delivery->cost,
+                    'total' => $cart->total($subtotal)  + $delivery->cost,
                     'subtotal' =>$subtotal,
                     'shipping_address'=>$request->shipping_address,
                     'order_notes'=>$request->order_notes,

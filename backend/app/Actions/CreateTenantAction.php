@@ -14,6 +14,7 @@ class CreateTenantAction
         User $user): Tenant
        
     {
+      
         $tenant = Tenant::create([
             'user_id'=> $user->id,
             'ready' => true,

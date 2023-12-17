@@ -40,10 +40,10 @@
                                             <label class="form-label">{{ __('messages.flat-rate')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="first_name" class="form-control mb-2" required placeholder="{{ __('messages.flat-rate')}} in {{__('Halala')}}" value="" />
+                                            <input type="text" name="first_name" class="form-control mb-2" required placeholder="{{ __('messages.flat-rate')}} in {{__('messages.Halala')}}" value="" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">e.g. 700 {{__('Halala')}}</div>
+                                            <div class="text-muted fs-7">{{__("e.g.")}} 700 {{__('messages.Halala')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->

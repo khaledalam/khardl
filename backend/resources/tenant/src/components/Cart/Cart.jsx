@@ -66,11 +66,6 @@ const Cart = () => {
         setDeliveryType(type.name);
         setDeliveryCost(type?.cost);
 
-        // await AxiosInstance.get(`deliveryType` ).then(e => {
-        //     setDeliveryCost(type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free'));
-        // }).finally(r => {
-        //
-        // });
         setLoading(false);
     }
 
@@ -100,8 +95,7 @@ const Cart = () => {
     }
 
     const getTotalPrice = () => {
-        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
-            + deliveryCost;
+        return parseFloat(cartItems.reduce((total, item) => total + item.price * item.quantity, 0)) + (deliveryCost / 100);
     };
 
     const handleRemoveItem =  async (itemId) => {
@@ -278,7 +272,7 @@ const Cart = () => {
                                                     value={type.name}
                                                     checked={deliveryType === type.name}
                                                     onChange={() => handleDeliveryTypeChange(type)}
-                                                /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('SAR')}</> : t('free')})</small>
+                                                /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('Halala')}</> : t('free')})</small>
                                             </label>
                                         ))}
 
