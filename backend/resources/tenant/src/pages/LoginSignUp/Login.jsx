@@ -41,8 +41,8 @@ const Login = () => {
       try {
          setSpinner(true)
          const response = await AxiosInstance.post(`/login`, {
-           email: data.email,
-           password: data.password,
+           phone: data.phone,
+
            // remember_me: data.remember_me, // used only in API token-based
          });
 
@@ -109,25 +109,30 @@ const Login = () => {
                            >
                               {/* Input 1 */}
 
+                            
                               <div>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                    {t('Email')}
+                                    {t('Phone')} 
                                  </h4>
                                  <input
-                                    type='email'
-                                    className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                    placeholder={t('Email')}
-                                    {...register('email', { required: true })}
+                                    type='tel'
+                                    className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
+                                    placeholder={'e.g. +966 582936628'}
+                                    {...register('phone', {
+                                       required: true,
+                                    })}
+                                    minLength={9}
+                                    maxLength={13}
                                  />
-                                 {errors.email && (
+                                 {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {t('Email Error')}
+                                       { t('Phone Error') }
                                     </span>
                                  )}
                               </div>
 
                               {/* Input 2 */}
-                              <div className='relative'>
+                              {/* <div className='relative'>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                     {t('Password')}
                                  </h4>
@@ -165,29 +170,9 @@ const Login = () => {
                                        />
                                     )}
                                  </div>
-                              </div>
+                              </div> */}
 
-                              <div className='flex justify-between items-center'>
-                                 {/*<div className='flex justify-between items-center gap-2'>*/}
-                                 {/*   <input*/}
-                                 {/*      id={`checkbox-1`}*/}
-                                 {/*      type='checkbox'*/}
-                                 {/*      {...register('remember_me')}*/}
-                                 {/*      className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'*/}
-                                 {/*   />*/}
-                                 {/*   <label*/}
-                                 {/*      htmlFor={`checkbox-1`}*/}
-                                 {/*      className='text-sm font-medium text-gray-900'*/}
-                                 {/*   >*/}
-                                 {/*      {t('remember me')}*/}
-                                 {/*   </label>*/}
-                                 {/*</div>*/}
-                                 <Link to='/reset-password'>
-                                    <label className='text-[14px] text-[var(--primary)] cursor-pointer'>
-                                       {t('Forgot your password?')}
-                                    </label>
-                                 </Link>
-                              </div>
+                           
                               <div className='flex flex-col justify-center items-center mt-4 mb-10'>
                                  <button
                                     type='submit'

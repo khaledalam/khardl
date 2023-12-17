@@ -10,7 +10,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class CustomerRegisterRequest extends FormRequest
+class CustomerLoginRequest extends FormRequest
 {
     public function authorize(){
         return true;
@@ -19,13 +19,7 @@ class CustomerRegisterRequest extends FormRequest
     {
 
         return [
-            'first_name' => 'required|string|min:3|max:255',
-            'last_name' => 'required|string|min:3|max:255',
-            'email' => 'nullable|string|email|min:10|max:255|unique:users',
-            // 'password' => 'required|string|min:6|max:255',
-            // 'c_password' => 'required|same:password',
-            'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users',
-            'terms_and_policies' => 'accepted',
+            'phone' => 'required|exists:users',
         ];
     }
 

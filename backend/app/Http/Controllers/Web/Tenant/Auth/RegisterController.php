@@ -57,7 +57,7 @@ class RegisterController extends BaseController
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'phone' => 'required|string|unique:users',
-            'email' => 'required|email|unique:users',
+            'email' => 'nullable|email|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'c_password' => 'required|same:password',
         ]);
@@ -91,7 +91,7 @@ class RegisterController extends BaseController
     public function register(CustomerRegisterRequest $request)
     {
         $input = $request->validated();
-        $input['password'] = Hash::make($input['password']);
+        // $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
         $user = RestaurantUser::create($input);
 

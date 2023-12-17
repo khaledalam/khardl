@@ -44,8 +44,6 @@ const Register = () => {
             last_name: data.last_name,
             email: data.email,
             phone: data.phone,
-            password: data.password,
-            c_password: data.c_password,
             terms_and_policies: data.terms_and_policies,
          });
          console.log(response.data);
@@ -97,7 +95,7 @@ const Register = () => {
                                  {/* First Input */}
                                  <div className='w-[100%]'>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                       {t('First name')}
+                                       {t('First name')} <span className="text-red-500">*</span>
                                     </h4>
                                     <input
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
@@ -115,7 +113,7 @@ const Register = () => {
                                  {/* Input 2 */}
                                  <div className='w-[100%]'>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                       {t('Last name')}
+                                       {t('Last name')} <span className="text-red-500">*</span>
                                     </h4>
                                     <input
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
@@ -134,25 +132,7 @@ const Register = () => {
                               {/* Input 5 */}
                               <div>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                    {t('Email')}
-                                 </h4>
-                                 <input
-                                    type='email'
-                                    className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                    placeholder={t('Email')}
-                                    {...register('email', { required: true })}
-                                 />
-                                 {errors.email && (
-                                    <span className='text-red-500 text-xs mt-1 ms-2'>
-                                        {errors.email.message ||   t('Email Error') }
-                                    </span>
-                                 )}
-                              </div>
-
-                              {/* Input 6 */}
-                              <div>
-                                 <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                    {t('Phone')}
+                                    {t('Phone')} <span className="text-red-500">*</span>
                                  </h4>
                                  <input
                                     type='tel'
@@ -170,9 +150,28 @@ const Register = () => {
                                     </span>
                                  )}
                               </div>
+                              
 
+                              {/* Input 6 */}
+                            
+                              <div>
+                                 <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
+                                    {t('Email')}
+                                 </h4>
+                                 <input
+                                    type='email'
+                                    className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                    placeholder={t('Email')}
+                                    {...register('email', { required: false })}
+                                 />
+                                 {errors.email && (
+                                    <span className='text-red-500 text-xs mt-1 ms-2'>
+                                        {errors.email.message ||   t('Email Error') }
+                                    </span>
+                                 )}
+                              </div>
                               {/* Input 7 */}
-                              <div className='relative'>
+                              {/* <div className='relative'>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                     {t('Password')}
                                  </h4>
@@ -209,10 +208,10 @@ const Register = () => {
                                        />
                                     )}
                                  </div>
-                              </div>
+                              </div> */}
 
                               {/* Input 8 */}
-                              <div className='relative'>
+                              {/* <div className='relative'>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                     {t('Confirm password')}
                                  </h4>
@@ -249,7 +248,7 @@ const Register = () => {
                                        />
                                     )}
                                  </div>
-                              </div>
+                              </div> */}
 
                               <div className='flex justify-start items-center gap-2'>
                                  <input
