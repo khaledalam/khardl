@@ -331,5 +331,8 @@
     "price": "Price",
     "other products": "Other Products",
     "platform fee": "Platform Fee",
-    "Halala": "Halala"
+    "Halala": "Halala",
+    "Coupon": "Coupon",
+    "Coupon cost": "Coupon cost",
+    "Validate coupon": "Validate coupon"
 }

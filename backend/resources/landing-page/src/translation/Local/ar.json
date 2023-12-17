@@ -286,5 +286,9 @@
     "city": "المدينه",
     "Delivery cost": "تكلفه التوصيل",
     "additional": "اضافات",
-    "Halala": "هلله"
+    "Halala": "هلله",
+    "Coupon": "كود الخصم",
+    "Coupon cost": "قيمه تخفيض كود الخصم",
+    "Validate coupon": "تحقق من كود الخصم"
+
 }
