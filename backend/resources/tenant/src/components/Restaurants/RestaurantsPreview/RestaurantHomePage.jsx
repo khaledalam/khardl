@@ -14,12 +14,10 @@ const RestaurantHomePage = () => {
     const Language = sessionStorage.getItem('Language') || 'en';
 
     const { t } = useTranslation();
-    const [branch, setBranch] = useState([]);
-    const [branches, setBranches] = useState([]);
     const [categories, setCategories] = useState([]);
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
 
-    const branch_id = localStorage.getItem('selected_branch_id');
+    let branch_id = localStorage.getItem('selected_branch_id');
 
     const fetchData = async () => {
         try {
@@ -29,8 +27,9 @@ const RestaurantHomePage = () => {
             if (restaurantCategoriesResponse.data) {
                 setCategories(restaurantCategoriesResponse.data?.data);
 
-                if (!branch) {
-                    setBranch(restaurantCategoriesResponse.data?.data[0]?.branch?.id)
+                if (!branch_id) {
+                  localStorage.setItem('selected_branch_id',restaurantCategoriesResponse.data?.data[0]?.branch?.id)
+                  branch_id = localStorage.getItem('selected_branch_id');
                 }
             }
 
@@ -50,6 +49,7 @@ const RestaurantHomePage = () => {
     if (!styleDataRestaurant){
         return;
     }
+    console.log(branch_id);
 
     const categoriesForBranch = categories.filter(category => category.branch.id == branch_id);
 

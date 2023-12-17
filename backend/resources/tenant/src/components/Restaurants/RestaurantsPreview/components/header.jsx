@@ -24,6 +24,7 @@ function Header() {
     const [showDetailesItem, setShowDetailesItem] = useState(false);
 
     const [cartItemsCount, setCartItemsCount] = useState(0);
+    const [selectedBranch, setSelectedBranch] = useState(0);
 
 
     const dispatch = useDispatch()
@@ -38,8 +39,15 @@ function Header() {
     useEffect(() => {
         fetchData().then(r => null);
         fetchCartData().then(r => null);
+        
     }, []);
-
+    useEffect(() => {
+        let selectedBranchButton = styleDataRestaurant?.branches.filter(b => b?.id == localStorage.getItem('selected_branch_id'));
+        if (selectedBranchButton.length > 0) {
+            selectedBranchButton = selectedBranchButton[0];
+        }
+        setSelectedBranch(selectedBranchButton);
+    }, [selectedBranch]);
 
     const fetchCartData = async () => {
         try {
@@ -116,10 +124,10 @@ function Header() {
 
     console.log(buttons);
 
-    let selectedBranch = styleDataRestaurant?.branches.filter(b => b?.id == localStorage.getItem('selected_branch_id'));
-    if (selectedBranch.length > 0) {
-        selectedBranch = selectedBranch[0];
-    }
+    
+
+    
+   
 
     return (
         <div className={`flex items-start justify-between p-[12px] px-8 bg-[var(--secondary)]`}>
@@ -201,7 +209,7 @@ function Header() {
                     }}
                     onClick={showMeDetailesItem}
                 >
-                    <MdOutlineDeliveryDining size={20} /> {t(buttons[2]?.text) || ''} <small>({selectedBranch?.name})</small>
+                    <MdOutlineDeliveryDining size={20} /> {t(buttons[2]?.text) || ''} <small>({selectedBranch?.name || '⏳' })</small>
                 </span>
                 {showDetailesItem &&
                     <Login
