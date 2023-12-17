@@ -20,7 +20,7 @@ use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
-use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
+use App\Http\Controllers\Web\Tenant\Auth\LoginController;
 use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Packages\TapPayment\Controllers\BusinessController;
@@ -30,6 +30,7 @@ use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
+use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
@@ -58,7 +59,7 @@ Route::group([
         return view("tenant");
     })->name("login-trial")->middleware(['guest','restaurantNotLive']);
     Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
-
+    Route::post('login-admins', [LoginController::class, 'login']);
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
@@ -248,6 +249,7 @@ Route::prefix('api')->middleware([
     // API
 
     Route::post('login', [APILoginController::class, 'login']);
+   
 
     Route::middleware('auth:sanctum')->group(function(){
         Route::apiResource('categories',CategoryController::class)->only([

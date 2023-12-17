@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import Footer from './components/Footer/Footer'
 import Login from './pages/LoginSignUp/Login'
+import LoginAdmin from './pages/LoginSignUp/LoginAdmin'
 import LoginTrial from './pages/LoginSignUp/LoginTrial'
 import Register from './pages/LoginSignUp/Register'
 import VerificationPhone from './pages/LoginSignUp/VerificationPhone'
@@ -107,6 +108,7 @@ const App = () => {
                    <Route element={<Layout />}>
                      <Route path='/login' element={<Login />} />
                      <Route path='/register' element={<Register />} />
+                     <Route path='/login-admins' element={<LoginAdmin />} />
                   </Route>
 
                   {/*Editor*/}
