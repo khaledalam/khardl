@@ -42,9 +42,7 @@ const CreateNewPassword = () => {
              c_password: data.confirm_password,
              token: data.token
          })
-         if (response.data) {
-            const responseData = await response.json()
-            console.log(responseData)
+         if (response.data.success) {
             sessionStorage.removeItem('email')
             navigate('/login')
             toast.success(`${t('The password has been reset successfully')}`)
