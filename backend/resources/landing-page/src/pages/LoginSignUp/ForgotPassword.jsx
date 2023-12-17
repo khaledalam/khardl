@@ -28,14 +28,16 @@ const ForgotPassword = () => {
          const response = await AxiosInstance.post(`/password/forgot`, {
            email: data.email
          })
-         if (response.data) {
-            const responseData = await response.json()
-            console.log(responseData)
+         console.log("=>>>" , response?.data);
+         console.log(response?.data?.success);
+         if (response.data.success) {
+            
             sessionStorage.setItem('email', data.email)
-            navigate('/create-new-password')
+            
             toast.success(
                `${t('The verification code has been sent to your email')}`
             )
+            navigate('/create-new-password')
          } else {
             throw new Error(`${t('Failed to send verification code')}`)
          }
@@ -72,7 +74,7 @@ const ForgotPassword = () => {
                         className='px-8 pt-2 pb-2 bg-white rounded'
                      >
                         <div className='mb-6 text-center'>
-                            {loading && <CgSpinner />}
+                        
                            <label
                               className='block mb-4 text-sm text-start font-bold text-gray-700'
                               htmlFor='email'
@@ -97,7 +99,8 @@ const ForgotPassword = () => {
                               type='submit'
                               className={`hover:bg-[#d6eb16] w-fit font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px]`}
                            >
-                              {t('Send verification code')}
+                               <span>{loading && <CgSpinner />} {t('Send verification code')}</span>
+                             
                            </button>
                         </div>
                      </form>
