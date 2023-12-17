@@ -14,6 +14,7 @@ const useAxiosAuth = () => {
        '/register/:url',
       '/reset-password',
       '/create-new-password',
+      '/login-admins'
    ].includes(location.pathname)
 
    const axiosAuth = axios.create({

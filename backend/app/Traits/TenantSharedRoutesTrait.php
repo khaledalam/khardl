@@ -34,7 +34,8 @@ trait TenantSharedRoutesTrait
         return [
             'routes'=>[
                 'register'=>'register',
-                'login'=>'login'
+                'login'=>'login',
+                'login-admins'=>'login-admins'
             ],
             'middleware'=>[
                 'guest',
