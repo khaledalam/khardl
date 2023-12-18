@@ -135,12 +135,13 @@ const Register = () => {
                                     {t('Phone')} <span className="text-red-500">*</span>
                                  </h4>
                                  <input
-                                    type='tel'
+                                    type='number'
                                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                                    placeholder={'e.g. +966 582936628'}
+                                    placeholder={ t('e.g.') + ' +966 123456789'}
                                     {...register('phone', {
                                        required: true,
                                     })}
+                                    style={{direction:'ltr'}}
                                     minLength={9}
                                     maxLength={13}
                                  />
