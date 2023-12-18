@@ -21,8 +21,10 @@ const CreateNewPassword = () => {
    const [openEyePassword, setOpenEyePassword] = useState(false)
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
-   let user_email = sessionStorage.getItem(PREFIX_KEY + 'email')
-
+   let user_email = sessionStorage.getItem('email')
+   if(!user_email) {
+      navigate("/reset-password");
+   }
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
    }
@@ -39,11 +41,10 @@ const CreateNewPassword = () => {
              c_password: data.confirm_password,
              token: data.token
          })
-         if (response.data) {
-            const responseData = await response.json()
-            console.log(responseData)
-            sessionStorage.removeItem(PREFIX_KEY + 'email')
-            navigate('/login')
+         if (response.data.success) {
+          
+            sessionStorage.removeItem( 'email')
+            navigate('/login-admins')
             toast.success(`${t('The password has been reset successfully')}`)
          } else {
             throw new Error(`${t('Password reset failed')}`)

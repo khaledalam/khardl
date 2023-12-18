@@ -7,19 +7,16 @@ import { useTranslation } from "react-i18next";
 import Logo from './components/Logo';
 import AxiosInstance from "../../../axios/axios";
 import {useDispatch, useSelector} from "react-redux";
-import { changeStyleDataRestaurant } from '../../../redux/editor/styleDataRestaurantSlice';
 
 
-const RestaurantHomePage = () => {
+const RestaurantHomePage = (props) => {
     const Language = sessionStorage.getItem('Language') || 'en';
-
     const { t } = useTranslation();
-    const [branch, setBranch] = useState([]);
-    const [branches, setBranches] = useState([]);
     const [categories, setCategories] = useState([]);
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
 
-    const branch_id = localStorage.getItem('selected_branch_id');
+
+    let branch_id = localStorage.getItem('selected_branch_id');
 
     const fetchData = async () => {
         try {
@@ -29,8 +26,11 @@ const RestaurantHomePage = () => {
             if (restaurantCategoriesResponse.data) {
                 setCategories(restaurantCategoriesResponse.data?.data);
 
-                if (!branch) {
-                    setBranch(restaurantCategoriesResponse.data?.data[0]?.branch?.id)
+                console.log(">> branch_id >>", branch_id);
+
+                if (!branch_id) {
+                    branch_id = restaurantCategoriesResponse.data?.data[0]?.branch?.id;
+                    localStorage.setItem('selected_branch_id',branch_id)
                 }
             }
 
@@ -50,6 +50,7 @@ const RestaurantHomePage = () => {
     if (!styleDataRestaurant){
         return;
     }
+    console.log(branch_id);
 
     const categoriesForBranch = categories.filter(category => category.branch.id == branch_id);
 
@@ -74,7 +75,7 @@ const RestaurantHomePage = () => {
         <div>
           <div>
             <div className={`px-[30px] text-xl `} style={{
-                minWidth: '650px',
+                minWidth: 'min(100vw, 650px)',
                 marginBottom: '200px'
             }}>
                 {categoriesForBranch?.length > 0 ?

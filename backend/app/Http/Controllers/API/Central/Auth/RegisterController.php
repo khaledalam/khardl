@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Central\Auth;
 
+use App\Models\Log;
 use App\Models\User;
 use App\Models\Promoter;
 use App\Models\Restaurant;
@@ -45,6 +46,11 @@ class RegisterController extends BaseController
     public function stepTwo(Request $request)
     {
 
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'Has created new restaurant'
+        ]);
+        dd(1);
         $request->validate([
             'commercial_registration' => 'required|mimes:pdf|max:2048',
             'tax_registration_certificate' => 'required|mimes:pdf|max:2048',
@@ -101,6 +107,10 @@ class RegisterController extends BaseController
             user: $user,
             domain: $user->restaurant_name
         );
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'Has created new restaurant'
+        ]);
         return $this->sendResponse(['url'=>$tenant->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID)], 'User complete register step two successfully.');
     }
 

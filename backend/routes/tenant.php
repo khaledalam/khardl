@@ -31,7 +31,7 @@ use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
-use App\Http\Controllers\Web\Tenant\Auth\ResetPasswordController;
+use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 

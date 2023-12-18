@@ -26,6 +26,7 @@ class ResetPasswordController extends BaseController
 
         $today = Carbon::today();
 
+        
         $attempts = DB::table('password_reset_tokens')
             ->where('email', $request->email)
             ->where('token', $request->token)
@@ -36,8 +37,11 @@ class ResetPasswordController extends BaseController
         }
 
         $token = rand(100000, 999999);
-
-        DB::table('password_reset_tokens')->insert([
+     
+        DB::table('password_reset_tokens')
+        ->updateOrInsert([
+            'email' => $request->email,
+        ],[
             'email' => $request->email,
             'token' => $token,
             'created_at' => now()
@@ -49,7 +53,7 @@ class ResetPasswordController extends BaseController
             $message->to($request->email);
             $message->subject('Password Reset Request');
         });
-        return $this->sendResponse(null, 'Reset email sent.');
+        return $this->sendResponse(true, 'Reset email sent.');
     }
     public function reset(Request $request): JsonResponse
     {

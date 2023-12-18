@@ -78,7 +78,7 @@ const App = () => {
                   <Route path='/logout' element={<Logout />} />
                   <Route
                      path='/reset-password'
-                     element={<Protected Cmp={ForgotPassword} />}
+                     element={<ForgotPassword/>}
                   />
                   <Route
                      path='/create-new-password'
