@@ -1037,6 +1037,9 @@ video {
 .grid {
   display: grid;
 }
+.inline-grid {
+  display: inline-grid;
+}
 .contents {
   display: contents;
 }
@@ -1566,6 +1569,9 @@ video {
 }
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+.overflow-x-scroll {
+  overflow-x: scroll;
 }
 .truncate {
   overflow: hidden;
@@ -3253,6 +3259,10 @@ video {
   }
 }
 @media (min-width: 768px) {
+
+  .md\:flex {
+    display: flex;
+  }
 
   .md\:max-w-xl {
     max-width: 36rem;
@@ -4433,6 +4443,9 @@ video {
 .grid {
   display: grid;
 }
+.inline-grid {
+  display: inline-grid;
+}
 .contents {
   display: contents;
 }
@@ -4962,6 +4975,9 @@ video {
 }
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+.overflow-x-scroll {
+  overflow-x: scroll;
 }
 .truncate {
   overflow: hidden;
@@ -6649,6 +6665,10 @@ video {
   }
 }
 @media (min-width: 768px) {
+
+  .md\:flex {
+    display: flex;
+  }
 
   .md\:max-w-xl {
     max-width: 36rem;
