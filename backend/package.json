@@ -747,7 +747,6 @@
         "react-is": "^17.0.2",
         "react-refresh": "^0.11.0",
         "react-router": "^6.15.0",
-        "react-sidebar": "^3.0.2",
         "read-cache": "^1.0.0",
         "readable-stream": "^3.6.2",
         "readdirp": "^3.6.0",
