@@ -5,6 +5,7 @@ namespace App\Http\Requests\Tenant;
 use App\Models\User;
 use App\Utils\ResponseHelper;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\App;
 use App\Rules\PhoneIsAlreadyRegistered;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -47,5 +48,11 @@ class CustomerRegisterRequest extends FormRequest
                 $this->merge(['phone' => $cleanedPhone]);
             }
         }
+    }
+    public function messages()
+    {
+        return [
+            'phone.unique'=>__("Please use this phone to login in into your account")
+        ];
     }
 }

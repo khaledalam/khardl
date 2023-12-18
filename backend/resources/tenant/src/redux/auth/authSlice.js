@@ -13,12 +13,12 @@ export const logout = createAsyncThunk('auth/logout', async ({ method }) => {
 })
 
 export const getIsLoggedIn = () => {
-    console.log("getIsLoggedIn", JSON.parse(localStorage.getItem('user-info'))?.user?.email)
-   return (JSON.parse(localStorage.getItem('user-info'))?.user?.email?.length > 0 || false);
+    console.log("getIsLoggedIn", JSON.parse(localStorage.getItem('user-info'))?.user?.phone)
+   return (JSON.parse(localStorage.getItem('user-info'))?.user?.phone?.length > 0 || false);
 }
 
 export const getUser = () => {
-    console.log("getIsLoggedIn", JSON.parse(localStorage.getItem('user-info'))?.user)
+    console.log("get user", JSON.parse(localStorage.getItem('user-info'))?.user)
     return (JSON.parse(localStorage.getItem('user-info'))?.user || false);
 }
 

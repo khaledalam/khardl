@@ -76,10 +76,18 @@ function CompleteRegistration() {
             toast.success(
                `${t('Account creation has been completed successfully')}`
             )
+            toast.info(
+               `${t('You will be redirect to your new restaurant in 3 sec ...')}`
+            )
+            setTimeout(() => {
+               setStatusCode(200)
+            
+               window.open(responseData.data.url, '_blank', 'noopener,noreferrer')
+               navigate('/');
+            }, 5000);
 
-            window.open(responseData.data.url, '_blank', 'noopener,noreferrer')
-            setStatusCode(200)
-            navigate('/');
+           
+            
          } else {
             throw new Error(`${t('Account creation failed to complete')}`)
          }

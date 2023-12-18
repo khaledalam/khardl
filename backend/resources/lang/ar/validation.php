@@ -173,7 +173,7 @@ return [
         'terms_and_policies'              => 'شروط الاستخدام ',
         'restaurant_name'              => 'اسم المطعم',
         'payment_method'        =>'وسيلة الدفع',
-        'delivery_type'=>"نوع التوصيل"
-
+        'delivery_type'=>"نوع التوصيل",
+        "Please use this phone to login in into your account"=>"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول"
     ],
 ];

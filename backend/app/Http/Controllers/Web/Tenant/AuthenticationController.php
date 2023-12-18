@@ -35,6 +35,7 @@ class AuthenticationController extends Controller
             }
             return ResponseHelper::response([
                 'message' => 'User is authenticated',
+                'phone'=>$user->phone,
                 'is_loggedin' => true
             ], ResponseHelper::HTTP_OK);
         }

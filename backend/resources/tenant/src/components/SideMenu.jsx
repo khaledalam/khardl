@@ -3,7 +3,7 @@ import {MenuContext} from "react-flexible-sliding-menu";
 import Languages from "./Languages";
 import Button from "./Button";
 import {setIsOpen} from "../redux/features/drawerSlice";
-import {useSelector} from "react-redux";
+import {useSelector , useDispatch} from "react-redux";
 import {logout} from "../redux/auth/authSlice";
 import {HTTP_NOT_AUTHENTICATED} from "../config";
 import {toast} from "react-toastify";
@@ -18,8 +18,12 @@ import Login from "./Restaurants/RestaurantsPreview/components/Login";
 export const SideMenu = () => {
     const { closeMenu } = useContext(MenuContext);
     const { t } = useTranslation();
+    const dispatch = useDispatch()
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const user = useSelector((state) => state.auth.user);
+    
+    console.log("user ---> " , user);
     const navigate = useNavigate();
     const { setStatusCode } = useAuthContext();
     const [showDetailesItem, setShowDetailesItem] = useState(false);
@@ -43,7 +47,6 @@ export const SideMenu = () => {
             await dispatch(logout({ method: 'POST' })).unwrap()
                 .then(res => {
                     setStatusCode(HTTP_NOT_AUTHENTICATED)
-                    setStatusCode(HTTP_NOT_AUTHENTICATED)
                     navigate('/login', { replace: true })
                     toast.success('Logged out successfully')
                 })
@@ -55,10 +58,7 @@ export const SideMenu = () => {
     }
 
 
-    const toggleInnerMenu = () => {
-        setMenuOpen(!isMenuOpen);
-    };
-
+   
 
     function showMeDetailesItem() {
         if (!showDetailesItem) {
@@ -82,6 +82,7 @@ export const SideMenu = () => {
 
     console.log(" >>> branch ", selectedBranch );
     console.log(" >>> branch id ", branch_id );
+    const title_dashboard =<span __html={<small> {t('Dashboard')} {user?.phone || ''}</small>} /> 
 
     return (
         <div className="Menu flex flex-col h-[100vh] justify-center">
@@ -176,6 +177,7 @@ export const SideMenu = () => {
                     <>
                         <Button
                             onClick={redirectToDashboard}
+     
                             title={t('Dashboard')}
                             classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                             style={{
@@ -183,7 +185,10 @@ export const SideMenu = () => {
                                 backgroundColor: 'transparent',
                                 borderRadius: buttons[1]?.shape || '0px',
                             }}
-                        />
+                        >
+                           
+                        </Button>
+                        
                         <Button
                             title={t('Logout')}
                             onClick={handleLogout}
@@ -209,8 +214,19 @@ export const SideMenu = () => {
                             }}
                         />
                         <Button
-                            title={t('Login')}
+                            title={t('Login as Customer')}
                             link='/login'
+                            onClick={() => dispatch(setIsOpen(false))}
+                            classContainer='!w-100 !px-[16px] !font-medium'
+                            style={{
+                                border: `1px solid ${buttons[1]?.color || 'black'}`,
+                                backgroundColor: 'transparent',
+                                borderRadius: buttons[1]?.shape || '0px',
+                            }}
+                        />
+                         <Button
+                            title={t('Management Area')}
+                            link='/login-admins'
                             onClick={() => dispatch(setIsOpen(false))}
                             classContainer='!w-100 !px-[16px] !font-medium'
                             style={{

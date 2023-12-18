@@ -8,6 +8,11 @@
         .timeline-label:before{
             right: 1px !important;
         }
+        .timeline-label{
+            overflow-y: scroll;
+            height: 400px;
+        }
+       
     </style>
 
   <!--begin::Content-->

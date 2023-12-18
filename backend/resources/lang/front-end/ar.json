@@ -341,6 +341,9 @@
     "Coupon": "كود الخصم",
     "Coupon cost": "قيمه تخفيض كود الخصم",
     "Validate coupon": "تحقق من كود الخصم",
-    "e.g.":"علي سبيل المثال"
+    "e.g.":"علي سبيل المثال",
+    "You will be redirect to your new restaurant in 3 sec ...":"سيتم توجيهك الي رابط مطعمك الجديد في خلال ٣ ثوان",
+    "Management Area":"دخول الادارة",
+    "Login as Customer":"تسجيل الدخول كعميل"
 }
 
