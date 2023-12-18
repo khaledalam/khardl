@@ -121,7 +121,7 @@ const Login = () => {
                                     {...register('phone', {
                                        required: true,
                                     })}
-                                     minLength={10}
+                                    minLength={9}
                                     maxLength={13}
                                  />
                                  {errors.phone && (

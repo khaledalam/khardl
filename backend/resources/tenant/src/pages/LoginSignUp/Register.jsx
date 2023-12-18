@@ -141,7 +141,7 @@ const Register = () => {
                                     {...register('phone', {
                                        required: true,
                                     })}
-                                     minLength={10}
+                                    minLength={9}
                                     maxLength={13}
                                  />
                                  {errors.phone && (
@@ -250,35 +250,7 @@ const Register = () => {
                                  </div>
                               </div> */}
 
-                              <div className='flex justify-start items-center gap-2'>
-                                 <input
-                                    id={`checkbox-1`}
-                                    type='checkbox'
-                                    {...register('terms_and_policies', {
-                                       required: true,
-                                    })}
-                                    className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'
-                                 />
-                                 <label
-                                    htmlFor={`checkbox-1`}
-                                    className='text-sm font-medium text-gray-900'
-                                 >
-                                    {t('Approval')}
-                                    <Link
-                                       to='/policies'
-                                       className='text-[var(--primary)]'
-                                    >
-                                       {t('terms_and_policies')}
-                                    </Link>
-                                    {t('and')}
-                                    <Link
-                                       to='/privacy'
-                                       className='text-[var(--primary)]'
-                                    >
-                                       {t('Privacy')}
-                                    </Link>
-                                 </label>
-                              </div>
+                              
                               {errors.terms_and_policies && (
                                  <span className='text-red-500 text-xs mt-1 ms-2'>
                                  {errors.terms_and_policies.message ||   t('Approval Error') }
