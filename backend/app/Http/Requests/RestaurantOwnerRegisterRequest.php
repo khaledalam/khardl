@@ -29,17 +29,18 @@ class RestaurantOwnerRegisterRequest extends FormRequest
             'position' => 'required|string|min:3|max:255',
             'password' => 'required|string|min:6|max:255',
             'c_password' => 'required|same:password',
-            'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users',
+            'phone' => 'required|regex:/^(966)?\d{10}$/|unique:users',
             'terms_and_policies' => 'accepted',
             'restaurant_name' => ['required','string','min:3','max:255',new UniqueSubdomain()],
         ];
     }
     protected function prepareForValidation()
     {
+
         if ($this->phone) {
             // Remove any non-digit characters
             $cleanedPhone = preg_replace('/\D/', '', $this->phone);
-            if (strlen($cleanedPhone) === 9) {
+            if (strlen($cleanedPhone) === 10) {
                 // If it's 9 digits, merge with '966'
                 $this->merge(['phone' => '966' . $cleanedPhone]);
             } elseif (strlen($cleanedPhone) === 12 && substr($cleanedPhone, 0, 3) === '966') {

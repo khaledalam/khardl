@@ -26,10 +26,11 @@ class CustomerLoginRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+
         if ($this->phone) {
             // Remove any non-digit characters
             $cleanedPhone = preg_replace('/\D/', '', $this->phone);
-            if (strlen($cleanedPhone) === 9) {
+            if (strlen($cleanedPhone) === 10) {
                 // If it's 9 digits, merge with '966'
                 $this->merge(['phone' => '966' . $cleanedPhone]);
             } elseif (strlen($cleanedPhone) === 12 && substr($cleanedPhone, 0, 3) === '966') {

@@ -555,7 +555,7 @@ const DetailesItem = ({
                         {...register('phone', {
                             required: true,
                         })}
-                        minLength={9}
+                         minLength={10}
                         maxLength={13}
                       />
                       {errors.phone && (
