@@ -24,7 +24,6 @@ function Header() {
     const [showDetailesItem, setShowDetailesItem] = useState(false);
 
     const [cartItemsCount, setCartItemsCount] = useState(0);
-    const [selectedBranch, setSelectedBranch] = useState(0);
 
 
     const dispatch = useDispatch()
@@ -39,15 +38,8 @@ function Header() {
     useEffect(() => {
         fetchData().then(r => null);
         fetchCartData().then(r => null);
-        
     }, []);
-    useEffect(() => {
-        let selectedBranchButton = styleDataRestaurant?.branches.filter(b => b?.id == localStorage.getItem('selected_branch_id'));
-        if (selectedBranchButton.length > 0) {
-            selectedBranchButton = selectedBranchButton[0];
-        }
-        setSelectedBranch(selectedBranchButton);
-    }, [selectedBranch]);
+
 
     const fetchCartData = async () => {
         try {
@@ -82,7 +74,10 @@ function Header() {
             // toast.error(`${t('Failed to send verification code')}`)
             console.log(error);
         }
+
     };
+
+
     function showMeDetailesItem() {
         if (!showDetailesItem) {
             setShowDetailesItem(true);
@@ -120,14 +115,22 @@ function Header() {
 
     if (!styleDataRestaurant) return;
 
+
+    let branch_id = localStorage.getItem('selected_branch_id');
+
+    if (!branch_id) {
+        branch_id = styleDataRestaurant?.branches[0]?.id;
+    }
+
     const buttons = styleDataRestaurant?.buttons || JSON.parse(sessionStorage.getItem('buttons'));
 
-    console.log(buttons);
+    let selectedBranch = styleDataRestaurant?.branches.filter(b => b?.id == branch_id);
+    if (selectedBranch.length > 0) {
+        selectedBranch = selectedBranch[0];
+    }
 
-    
-
-    
-   
+    console.log(" >>> branch ", selectedBranch );
+    console.log(" >>> branch id ", branch_id );
 
     return (
         <div className={`flex items-start justify-between p-[12px] px-8 bg-[var(--secondary)]`}>
@@ -160,9 +163,9 @@ function Header() {
                             className='relative p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                             onClick={handleModelClick2}
                             style={{
-                                border: `1px solid ${buttons[1]?.color || ''}`,
-                                backgroundcolor: 'transparent',
-                                borderRadius: buttons[1]?.shape || '',
+                                border: `1px solid ${buttons[1]?.color || 'black'}`,
+                                backgroundColor: 'transparent',
+                                borderRadius: buttons[1]?.shape || '0px',
                             }}
                         >
                             <MdOutlineDoneAll size={20} />
@@ -171,7 +174,7 @@ function Header() {
                                     buttonId={2}
                                 />
                             ) : <div></div>}
-                            <div>{t(buttons[1]?.text) || ''}</div>
+                            <div>{t(buttons[1]?.text) || t('receipt')}</div>
                         </span>
                         {isOpenModel2 !== null && (
                             <span
@@ -203,13 +206,13 @@ function Header() {
                 <span
                     className='relative p-[6px] px-4 flex items-center justify-center gap-1 font-semibold'
                     style={{
-                        border: `1px solid ${buttons[2]?.color || ''}`,
-                        backgroundcolor: 'transparent',
-                        borderRadius: buttons[2]?.shape || '',
+                        border: `1px solid ${buttons[2]?.color || 'black'}`,
+                        backgroundColor: 'transparent',
+                        borderRadius: buttons[2]?.shape || '0px',
                     }}
                     onClick={showMeDetailesItem}
                 >
-                    <MdOutlineDeliveryDining size={20} /> {t(buttons[2]?.text) || ''} <small>({selectedBranch?.name || '⏳' })</small>
+                    <MdOutlineDeliveryDining size={20} /> {t(buttons[2]?.text) || t('delivery')} <small>({selectedBranch?.name ? selectedBranch?.name : '⏳' })</small>
                 </span>
                 {showDetailesItem &&
                     <Login
@@ -228,9 +231,9 @@ function Header() {
                         onClick={() => navigate('/')}
                         classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                         style={{
-                            border: `1px solid ${buttons[1]?.color || ''}`,
+                            border: `1px solid ${buttons[1]?.color || 'black'}`,
                             backgroundColor: 'transparent',
-                            borderRadius: buttons[1]?.shape || '',
+                            borderRadius: buttons[1]?.shape || '0px',
                         }}
                     />
                     {isLoggedIn ? (
@@ -240,9 +243,9 @@ function Header() {
                                 title={t('Dashboard')}
                                 classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
                                 style={{
-                                    border: `1px solid ${buttons[1]?.color || ''}`,
+                                    border: `1px solid ${buttons[1]?.color || 'black'}`,
                                     backgroundColor: 'transparent',
-                                    borderRadius: buttons[1]?.shape || '',
+                                    borderRadius: buttons[1]?.shape || '0px',
                                 }}
                             />
                             <Button
@@ -250,9 +253,9 @@ function Header() {
                                 onClick={handleLogout}
                                 classContainer='!w-100 !px-[16px] !font-medium !bg-[var(--danger)]'
                                 style={{
-                                    border: `1px solid ${buttons[1]?.color || ''}`,
+                                    border: `1px solid ${buttons[1]?.color || 'black'}`,
                                     backgroundColor: 'transparent',
-                                    borderRadius: buttons[1]?.shape || '',
+                                    borderRadius: buttons[1]?.shape || '0px',
                                 }}
                             />
                         </>
@@ -264,9 +267,9 @@ function Header() {
                                 onClick={() => dispatch(setIsOpen(false))}
                                 classContainer='!w-100 !px-[16px] !font-medium'
                                 style={{
-                                    border: `1px solid ${buttons[1]?.color || ''}`,
+                                    border: `1px solid ${buttons[1]?.color || 'black'}`,
                                     backgroundColor: 'transparent',
-                                    borderRadius: buttons[1]?.shape || '',
+                                    borderRadius: buttons[1]?.shape || '0px',
                                 }}
                             />
                             <Button
@@ -275,9 +278,9 @@ function Header() {
                                 onClick={() => dispatch(setIsOpen(false))}
                                 classContainer='!w-100 !px-[16px] !font-medium'
                                 style={{
-                                    border: `1px solid ${buttons[1]?.color || ''}`,
+                                    border: `1px solid ${buttons[1]?.color || 'black'}`,
                                     backgroundColor: 'transparent',
-                                    borderRadius: buttons[1]?.shape || '',
+                                    borderRadius: buttons[1]?.shape || '0px',
                                 }}
                             />
                         </>

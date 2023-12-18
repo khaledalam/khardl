@@ -7,29 +7,31 @@ import { useTranslation } from "react-i18next";
 import Logo from './components/Logo';
 import AxiosInstance from "../../../axios/axios";
 import {useDispatch, useSelector} from "react-redux";
-import { changeStyleDataRestaurant } from '../../../redux/editor/styleDataRestaurantSlice';
 
 
 const RestaurantHomePage = () => {
     const Language = sessionStorage.getItem('Language') || 'en';
-
     const { t } = useTranslation();
     const [categories, setCategories] = useState([]);
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
+    const [branchIdState, setBranchIdState] = useState(null);
 
     let branch_id = localStorage.getItem('selected_branch_id');
 
     const fetchData = async () => {
         try {
-            const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch&selected_branch_id=${branch_id}`);
+            const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch`);
 
             console.log("editor rest restaurantCategoriesResponse >>>", restaurantCategoriesResponse.data)
             if (restaurantCategoriesResponse.data) {
                 setCategories(restaurantCategoriesResponse.data?.data);
 
+                console.log(">> >>", branch_id);
+
                 if (!branch_id) {
-                  localStorage.setItem('selected_branch_id',restaurantCategoriesResponse.data?.data[0]?.branch?.id)
-                  branch_id = localStorage.getItem('selected_branch_id');
+                    branch_id = restaurantCategoriesResponse.data?.data[0]?.branch?.id;
+                    localStorage.setItem('selected_branch_id',branch_id)
+                    setBranchIdState(branch_id);
                 }
             }
 
