@@ -500,6 +500,9 @@
  
     document.getElementById('category-submit').addEventListener('submit', function (e) {
         e.preventDefault();
+        var submitButton = document.querySelector('#saveCategoryBtn');
+        submitButton.disabled = true;
+        
         var inputValue = document.querySelector('input[name=name_ar]').value.trim();
         if (inputValue === '') {
             alert('Please fill in the input in (Arabic) tab.');
@@ -512,6 +515,7 @@
             return ;
         }
         document.getElementById('category-submit').submit();
+        submitButton.disabled = true;
 
        
 

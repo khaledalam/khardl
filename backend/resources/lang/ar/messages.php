@@ -325,7 +325,8 @@ return [
     'ready'=>"جاهز",
     'delivery-fee' => "عموله التوصيل",
     "e.g." => "علي سبيل المثال",
-    'has-created-new-restaurant'=> 'قام بانشاء مطعم جديد'
+    'has-created-new-restaurant'=> 'قام بانشاء مطعم جديد',
+    "clear"=>"مسح"
 
 ];
 
