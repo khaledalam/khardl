@@ -25,7 +25,6 @@ class CustomerRegisterRequest extends FormRequest
             // 'password' => 'required|string|min:6|max:255',
             // 'c_password' => 'required|same:password',
             'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users',
-            'terms_and_policies' => 'accepted',
         ];
     }
 
