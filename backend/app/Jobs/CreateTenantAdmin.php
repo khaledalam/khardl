@@ -14,7 +14,7 @@ class CreateTenantAdmin implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public const RESTAURANT_OWNER_USER_ID = 5;
+    public const RESTAURANT_OWNER_USER_ID = 1;
 
 
     /** @var Tenant */

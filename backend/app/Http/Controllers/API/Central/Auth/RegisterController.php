@@ -27,7 +27,6 @@ class RegisterController extends BaseController
 {
     public function register(RestaurantOwnerRegisterRequest $request): JsonResponse
     {
-       
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
@@ -46,11 +45,6 @@ class RegisterController extends BaseController
     public function stepTwo(Request $request)
     {
 
-        Log::create([
-            'user_id' => Auth::id(),
-            'action' => 'Has created new restaurant'
-        ]);
-        dd(1);
         $request->validate([
             'commercial_registration' => 'required|mimes:pdf|max:2048',
             'tax_registration_certificate' => 'required|mimes:pdf|max:2048',
