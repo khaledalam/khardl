@@ -674,6 +674,12 @@ video {
 .top-\[8px\] {
   top: 8px;
 }
+.left-\[0\] {
+  left: 0;
+}
+.top-\[0\] {
+  top: 0;
+}
 .z-0 {
   z-index: 0;
 }

@@ -9,29 +9,28 @@ import AxiosInstance from "../../../axios/axios";
 import {useDispatch, useSelector} from "react-redux";
 
 
-const RestaurantHomePage = () => {
+const RestaurantHomePage = (props) => {
     const Language = sessionStorage.getItem('Language') || 'en';
     const { t } = useTranslation();
     const [categories, setCategories] = useState([]);
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
-    const [branchIdState, setBranchIdState] = useState(null);
+
 
     let branch_id = localStorage.getItem('selected_branch_id');
 
     const fetchData = async () => {
         try {
-            const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch`);
+            const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch&selected_branch_id=${branch_id}`);
 
             console.log("editor rest restaurantCategoriesResponse >>>", restaurantCategoriesResponse.data)
             if (restaurantCategoriesResponse.data) {
                 setCategories(restaurantCategoriesResponse.data?.data);
 
-                console.log(">> >>", branch_id);
+                console.log(">> branch_id >>", branch_id);
 
                 if (!branch_id) {
                     branch_id = restaurantCategoriesResponse.data?.data[0]?.branch?.id;
                     localStorage.setItem('selected_branch_id',branch_id)
-                    setBranchIdState(branch_id);
                 }
             }
 
@@ -76,7 +75,7 @@ const RestaurantHomePage = () => {
         <div>
           <div>
             <div className={`px-[30px] text-xl `} style={{
-                minWidth: '650px',
+                minWidth: 'min(100vw, 650px)',
                 marginBottom: '200px'
             }}>
                 {categoriesForBranch?.length > 0 ?

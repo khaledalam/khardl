@@ -44,7 +44,7 @@ export function Taps({ children, contentClassName = "" }) {
     ${selectedAlignText === "Right" || selectedAlignText === "Left" ? 'h-fit mt-4 ' : ''}
     ${selectedCategory === "Tabs" ? 'flex' : ''}
       ${contentClassName}`}
-      style={{borderRadius: GlobalShape}}
+      style={{borderRadius: GlobalShape, overflowX: 'scroll'}}
       >
         {selectedCategory === `${t("Carousel")}` ?
           <button
@@ -146,8 +146,7 @@ export function Tap({ children, activeTap, currentTap, setActiveTap, contentClas
         </div>
         :
         <div
-          className={`px-4 cursor-pointer
-     text-[18px] max-[600px]:text-[15px]
+          className={`px-4 cursor-pointer text-[18px] max-[600px]:text-[15px]
      ${(selectedCategory === `${t("Tabs")}` || selectedCategory === `${t("Carousel")}`) ? "mx-1" : "" }
      ${activeTap === currentTap && (selectedCategory === `${t("Tabs")}` || selectedCategory === `${t("Carousel")}`) ? `font-bold` : ""}
      ${activeTap === currentTap && (selectedCategory === `${t("Right")}` || selectedCategory === `${t("Left")}`) ? `w-[100%] rounded-md py-[6px] font-bold` : "py-[4px] px-[28px] my-2"}
@@ -155,13 +154,16 @@ export function Tap({ children, activeTap, currentTap, setActiveTap, contentClas
           style={activeTap === currentTap ?
               {
                 background: Color,
-                borderRadius: GlobalShape
+                borderRadius: GlobalShape,
+                  width: 'max-content'
               }
             :
             {
             borderRadius: GlobalShape,
-            border:`0.5px solid ${Color}`
-          } }
+            border:`0.5px solid ${Color}`,
+                width: 'max-content'
+
+            } }
           onClick={() => setActiveTap(currentTap)}
         >
           {children}

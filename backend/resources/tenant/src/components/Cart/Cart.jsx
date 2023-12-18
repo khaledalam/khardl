@@ -248,65 +248,76 @@ const Cart = () => {
                                         </div>
                                     ))}
                                 </ul>
+
                                 <div className="cart-summary">
-                                    <div className="payment-section my-4 flex flex-col">
-                                        <h3 className={"mb-2"}>{t('Select Payment Method')} <span style={{color: 'red'}}>*</span></h3>
-                                        {paymentMethods?.map((method) => (
-                                                <label key={method.id}>
+
+                                    {/* Payment Method and Delivery Type */}
+                                    <div className={"flex justify-around"}>
+
+                                        <div className="payment-section my-4 flex flex-col">
+                                            <h3 className={"mb-2"}>{t('Select Payment Method')} <span style={{color: 'red'}}>*</span></h3>
+                                            {paymentMethods?.map((method) => (
+                                                    <label key={method.id}>
+                                                        <input
+                                                            type="radio"
+                                                            name="paymentMethod"
+                                                            value={method.name}
+                                                            checked={paymentMethod === method.name}
+                                                            onChange={() => handlePaymentMethodChange(method)}
+                                                        /> {t(method.name)}
+                                                    </label>
+                                            ))}
+
+                                        </div>
+
+                                        {/*<hr />*/}
+
+                                        <div className="payment-section my-4 flex flex-col">
+                                            <h3 className={"mb-2"}>{t('Select Delivery Type')} <span style={{color: 'red'}}>*</span></h3>
+                                            {deliveryTypes?.map((type) => (
+                                                <label key={type.id}>
                                                     <input
                                                         type="radio"
-                                                        name="paymentMethod"
-                                                        value={method.name}
-                                                        checked={paymentMethod === method.name}
-                                                        onChange={() => handlePaymentMethodChange(method)}
-                                                    /> {t(method.name)}
+                                                        name="deliveryType"
+                                                        value={type.name}
+                                                        checked={deliveryType === type.name}
+                                                        onChange={() => handleDeliveryTypeChange(type)}
+                                                    /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('Halala')}</> : t('free')})</small>
                                                 </label>
-                                        ))}
+                                            ))}
+
+                                        </div>
 
                                     </div>
 
                                     <hr />
 
-                                    <div className="payment-section my-4 flex flex-col">
-                                        <h3 className={"mb-2"}>{t('Select Delivery Type')} <span style={{color: 'red'}}>*</span></h3>
-                                        {deliveryTypes?.map((type) => (
-                                            <label key={type.id}>
-                                                <input
-                                                    type="radio"
-                                                    name="deliveryType"
-                                                    value={type.name}
-                                                    checked={deliveryType === type.name}
-                                                    onChange={() => handleDeliveryTypeChange(type)}
-                                                /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('Halala')}</> : t('free')})</small>
-                                            </label>
-                                        ))}
+                                    <div className={"flex justify-around"}>
 
-                                    </div>
+                                        <div className="my-4">
+                                            <div className="text-[15px] font-semibold mb-2">{t("Address")} <span style={{color: 'red'}}>*</span></div>
+                                            <input className="w-[100%] p-1 my-1" style={{color: 'gray'}} value={address} disabled={true} readOnly={true}/>
+                                            <button
+                                                disabled={loading}
+                                                onClick={() => navigate('/dashboard#Profile')}
+                                                className={"text-[13px] text-black p-2 my-3 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                                <span>📍{t('Change My Address')} </span>
+                                            </button>
+                                        </div>
 
-                                    <hr />
+                                        {/*<hr />*/}
 
-                                    <div className="my-4">
-                                        <div className="text-[15px] font-semibold mb-2">{t("Address")} <span style={{color: 'red'}}>*</span></div>
-                                        <input className="w-[100%] p-1 my-1" style={{color: 'gray'}} value={address} disabled={true} readOnly={true}/>
-                                        <button
-                                            disabled={loading}
-                                            onClick={() => navigate('/dashboard#Profile')}
-                                            className={"text-[13px] text-black p-2 my-3 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
-                                            <span>📍{t('Change My Address')} </span>
-                                        </button>
-                                    </div>
+                                        <div className="my-4">
+                                            <div className="text-[15px] font-semibold mb-2">{t("Coupon")}</div>
+                                            <input className="border w-[100%] p-1" placeholder={t("Coupon")} value={couponCode} onChange={e => setCouponCode(e.target.value)}/>
+                                            <button
+                                                disabled={loading}
+                                                onClick={() => handleValidateCoupon()}
+                                                className={"text-[13px] text-black p-2 my-3 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                                <span>🏷️ {t('Validate coupon')} </span>
+                                            </button>
+                                        </div>
 
-                                    <hr />
-
-                                    <div className="my-4">
-                                        <div className="text-[15px] font-semibold mb-2">{t("Coupon")}</div>
-                                        <input className="border w-[100%] p-1" placeholder={t("Coupon")} value={couponCode} onChange={e => setCouponCode(e.target.value)}/>
-                                        <button
-                                            disabled={loading}
-                                            onClick={() => handleValidateCoupon()}
-                                            className={"text-[13px] text-black p-2 my-3 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
-                                            <span>🏷️ {t('Validate coupon')} </span>
-                                        </button>
                                     </div>
 
                                     <hr />
@@ -337,19 +348,24 @@ const Cart = () => {
                                     <hr />
 
 
-                                    <button
-                                        disabled={loading}
-                                        onClick={() => handlePlaceOrder()}
-                                        className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
-                                        {paymentMethod === 'cc' ? <span>🛍️ {t('Checkout')} {getTotalPrice()} {t('SAR')}</span> : <span>🛍️ {t('Place Order')}</span>}
-                                    </button>
+                                    <div className={"flex justify-around"}>
 
-                                    <button
-                                        disabled={cartItems?.length < 1}
-                                        onClick={() => handleEmptyCart()}
-                                        className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
-                                        <span>🗑️ {t('Empty Cart')}</span>
-                                    </button>
+                                        <button
+                                            disabled={loading}
+                                            onClick={() => handlePlaceOrder()}
+                                            className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                            {paymentMethod === 'cc' ? <span>🛍️ {t('Checkout')} {getTotalPrice()} {t('SAR')}</span> : <span>🛍️ {t('Place Order')}</span>}
+                                        </button>
+
+                                        <button
+                                            disabled={cartItems?.length < 1}
+                                            onClick={() => handleEmptyCart()}
+                                            className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
+                                            <span>🗑️ {t('Empty Cart')}</span>
+                                        </button>
+
+                                    </div>
+
                                 </div>
                             </div>
                     )}

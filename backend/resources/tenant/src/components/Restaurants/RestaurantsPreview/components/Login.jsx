@@ -80,7 +80,6 @@ const DetailesItem = ({ onClose }) => {
                                   textAlign: Language == 'en' ? 'left ' : 'right'
                               }}>
                                   {t('Name')}: {selectedBranch?.name}<br />
-                                  Lat: {selectedBranch?.lat} &nbsp; Lng: {selectedBranch?.lng}<br />
                                   {t('Delivery Availability')}: {t(selectedBranch?.delivery_availability ? 'Yes' : 'No')}<br />
                                       {t('Preparation time delivery')}: {selectedBranch?.preparation_time_delivery || t('not set')}
                               </pre> : <span className={""}>{t('No default branch selected')}</span>}
