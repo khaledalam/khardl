@@ -71,8 +71,8 @@ const App = () => {
    return (
        <MenuProvider MenuComponent={SideMenu}
                      direction={Language == 'en' ? 'left' : 'right'}
-                     animation={'push'} // 'slide' │ 'push' │ 'reveal'
-                     width={'250px'}
+                     animation={'slide'} // 'slide' │ 'push' │ 'reveal'
+                     width={'25vw'}
 
        >
           <div

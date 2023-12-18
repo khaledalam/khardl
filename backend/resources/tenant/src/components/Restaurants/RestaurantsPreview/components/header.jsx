@@ -108,10 +108,7 @@ function Header() {
                     fontSize: '17px',
                     fontWeight: 'bold',
                     padding: '5px 15px'
-                }}>{!isSideMenuOpen
-                    ? "☰"
-                    : "✖"
-                }</button>
+                }}>☰{/*{!isSideMenuOpen ? "☰" : "✖"}*/}</button>
 
             </div>
 
