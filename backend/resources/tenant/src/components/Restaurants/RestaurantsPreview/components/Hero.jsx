@@ -50,7 +50,7 @@ function Hero() {
                 :
                 image ? (
                     <div
-                        className={`relative h-[280px] bg-center bg-cover shadow-md bg-slate-600`}
+                        className={`relative h-[280px] bg-center bg-cover shadow-md`}
                         style={shapeImageShape === "14px" ? { backgroundImage: `url(${image})`, margin: "12px", borderRadius: shapeImageShape } : { backgroundImage: `url(${image})`, color: '#fff', borderRadius: shapeImageShape }}
                     ></div>
                 ) : (
