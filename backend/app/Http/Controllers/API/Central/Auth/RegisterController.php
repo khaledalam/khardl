@@ -27,7 +27,6 @@ class RegisterController extends BaseController
 {
     public function register(RestaurantOwnerRegisterRequest $request): JsonResponse
     {
-       dd(1);
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
