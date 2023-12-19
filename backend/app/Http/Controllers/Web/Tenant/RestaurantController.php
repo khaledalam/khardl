@@ -148,9 +148,9 @@ class RestaurantController extends BaseController
         $order->load('user','items');
 
         $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
-
+        $locale = app()->getLocale();
         return view('restaurant.orders.show',
-            compact('user','order', 'orderStatusLogs'));
+            compact('user','order','locale','orderStatusLogs'));
     }
 
 
@@ -467,6 +467,23 @@ class RestaurantController extends BaseController
 
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
        // TODO @todo validate the coming request
+        // dd([
+            // $request->checkboxInputNameEn,
+            // $request->checkboxInputNameAr,
+            
+            // 'checkbox_required' => ( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
+            // 'checkbox_input_titles' =>array_map(null,$request->checkboxInputTitleEn,$request->checkboxInputTitleAr),
+            // 'checkbox_input_maximum_choices' =>$request->input('checkboxInputMaximumChoice'),
+            // 'checkbox_input_names' => ($request->input('checkboxInputNameAr') )?  array_map(null,$request->checkboxInputNameEn,$request->checkboxInputNameAr) : null,
+            // 'checkbox_input_prices' =>($request->input('checkboxInputPrice') )? array_values($request->input('checkboxInputPrice')) : null,
+            // 'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
+            // 'selection_input_names' =>($request->input('selectionInputNameAr') )? array_map(null,$request->selectionInputNameEn,$request->selectionInputNameAr) : null, 
+            // 'selection_input_prices' =>($request->input('selectionInputPrice') )? array_values($request->input('selectionInputPrice')) : null,
+            // 'selection_input_titles' => array_map(null,$request->selectionInputTitleEn,$request->selectionInputTitleAr),
+            // 'dropdown_required' =>( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
+            // 'dropdown_input_titles' => array_map(null,$request->dropdownInputTitleEn,$request->dropdownInputTitleAr),
+            // 'dropdown_input_names' =>($request->input('dropdownInputNameAr') )?array_map(null,$request->dropdownInputNameEn,$request->dropdownInputNameAr): null,
+        // ]);
      
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
@@ -488,18 +505,18 @@ class RestaurantController extends BaseController
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
                     'description' =>trans_json( $request->input('description_en'), $request->input('description_ar')),
-                    'checkbox_required' => ( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
-                    'checkbox_input_titles' =>$request->input('checkboxInputTitle'),
-                    'checkbox_input_maximum_choices' =>$request->input('checkboxInputMaximumChoice'),
-                    'checkbox_input_names' => ($request->input('checkboxInputName') )? array_values($request->input('checkboxInputName')) : null,
-                    'checkbox_input_prices' =>($request->input('checkboxInputPrice') )? array_values($request->input('checkboxInputPrice')) : null,
+                    'checkbox_required' =>( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
+                    'checkbox_input_titles' =>($request->checkboxInputTitleEn)?array_map(null, $request->checkboxInputTitleEn,  $request->checkboxInputTitleAr):null,
+                    'checkbox_input_maximum_choices' => $request->input('checkboxInputMaximumChoice'),
+                    'checkbox_input_names' => $this->processOptions($request, 'checkboxInputNameEn', 'checkboxInputNameAr'),
+                    'checkbox_input_prices' => $request->input('checkboxInputPrice') ? array_values($request->input('checkboxInputPrice')) : null,
                     'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
-                    'selection_input_names' =>($request->input('selectionInputName') )? array_values($request->input('selectionInputName')) : null, 
-                    'selection_input_prices' =>($request->input('selectionInputPrice') )? array_values($request->input('selectionInputPrice')) : null,
-                    'selection_input_titles' => $request->input('selectionInputTitle'),
-                    'dropdown_required' =>( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
-                    'dropdown_input_titles' => $request->input('dropdownInputTitle'),
-                    'dropdown_input_names' =>($request->input('dropdownInputName') )? array_values($request->input('dropdownInputName')) : null,
+                    'selection_input_names' => $this->processOptions($request, 'selectionInputNameEn', 'selectionInputNameAr'),
+                    'selection_input_prices' => $request->input('selectionInputPrice') ? array_values($request->input('selectionInputPrice')) : null,
+                    'selection_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->selectionInputTitleEn,  $request->selectionInputTitleAr):null, 
+                    'dropdown_required' => ( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
+                    'dropdown_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->dropdownInputTitleEn,  $request->dropdownInputTitleAr):null,
+                    'dropdown_input_names' => $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr'),                
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
                     'availability'=>($request->input('availability'))?true:false,
@@ -512,6 +529,7 @@ class RestaurantController extends BaseController
 
                 return redirect()->back()->with('success', 'Item successfully added.');
             } catch (\Exception $e) {
+                dd(1);
                 logger($e->getMessage());
                 DB::rollback();
                 return redirect()->back()->with('error', $e->getMessage());
@@ -519,6 +537,15 @@ class RestaurantController extends BaseController
         }
     }
 
+    function processOptions($request, $enKey, $arKey) {
+        return $request->input($arKey)
+            ? array_map(function($en,$ar){
+                return array_map(function ($en, $ar) {
+                    return [$en, $ar];
+                }, $en, $ar);
+            }, $request->$enKey, $request->$arKey)
+            : null;
+    }
     public function deleteCategory($id){
         $user = Auth::user();
 

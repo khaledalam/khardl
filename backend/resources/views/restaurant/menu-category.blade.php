@@ -700,7 +700,9 @@
 
                     <div id="inputContainer${checkboxCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-75" name="checkboxInputTitle[]" placeholder="title ">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-75" name="checkboxInputTitleEn[]" placeholder="Title in english ">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-75" name="checkboxInputTitleAr[]" placeholder="العنوان بالعربية">
+
                             <input type="number" required class="form-control form-control-solid mx-3 w-25" name="checkboxInputMaximumChoice[]" placeholder="max ">
                             <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
@@ -747,7 +749,9 @@
             if(isDeletable){
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ">
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Name in english ">
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="الاسم بالعربية ">
+
                     <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
@@ -755,7 +759,9 @@
             }else {
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="name ">
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="الاسم بالعربية ">
+
                     <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
@@ -803,7 +809,9 @@
 
                     <div id="inputContainer${selectionCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitle[]" placeholder="title">
+                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="Title in english ">
+                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="العنوان بالعربية">
+
                             <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
@@ -849,7 +857,9 @@
             if(isDeletable){
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ">
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="الاسم بالعربية ">
+
                     <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
@@ -857,7 +867,9 @@
             else {
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="name ">
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="الاسم بالعربية ">
+
                     <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
@@ -904,7 +916,9 @@
 
                     <div id="inputContainer${dropdownCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitle[]" placeholder="title">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="Title in english ">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="العنوان بالعربية">
+
                             <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
@@ -950,14 +964,18 @@
             if(isDeletable){
             optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Option">
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Name in english ">
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="الاسم بالعربية ">
+
     
                         <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>
             `; }else {
                 optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputName[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Option">
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="الاسم بالعربية ">
+
     
                         <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>

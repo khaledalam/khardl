@@ -40,7 +40,7 @@ const DetailesItem = ({
   const shapeImageShape = sessionStorage.getItem('shapeImageShape');
   const GlobalColor = sessionStorage.getItem('globalColor');
   const GlobalShape = sessionStorage.getItem('globalShape');
-  const Language = sessionStorage.getItem('Language');
+  const Language = useSelector((state) => state.languageMode.languageMode);
   const { setStatusCode } = useAuthContext()
   const [total, setTotal] = useState(parseFloat(price));
   const [spinner, setSpinner] = useState(false)
@@ -289,7 +289,7 @@ const DetailesItem = ({
           console.log(selectedCheckbox);
           console.log(selectedRadio);
           console.log(selectedDropdown);
-
+          
             const response = await AxiosInstance.post(`/carts`, {
                 item_id : itemId,
                 quantity : count,
@@ -369,7 +369,8 @@ const DetailesItem = ({
                   {checkbox_input_titles.map((title,checkbox_index)=> (
                     <div key={`checkboxTitle ${checkbox_index}`} className="border-b border-ternary-light my-2 mx-10 p-4">
                     <div className="text-[16px] font-semibold">
-                    {title}{ checkbox_required[checkbox_index] == 'true' && <span className="text-red-500">*</span>}
+                    {Language == 'en'?title[0]:title[1]}
+                    { checkbox_required[checkbox_index] == 'true' && <span className="text-red-500">*</span>}
                     </div>
                     <div className="flex justify-between items-center">
                       <div>
@@ -387,7 +388,7 @@ const DetailesItem = ({
                               htmlFor={`checkbox-${index}`}
                               className="text-sm font-medium text-gray-900"
                             >
-                              {item.value}
+                                {Language == 'en'?item.value[0]:item.value[1]}
                             </label>
                           </div>
                         ))}
@@ -407,7 +408,7 @@ const DetailesItem = ({
                     {selection_input_titles.map((title,selection_index)=> (
                   <div   key={`selectionTitle ${selection_index}`}  className="border-b border-ternary-light mx-10 p-4">
                     <div className="text-[16px] font-semibold ">
-                    {title}{ selection_required[selection_index] == 'true' && <span className="text-red-500">*</span>}
+                    {Language == 'en'?title[0]:title[1]}{ selection_required[selection_index] == 'true' && <span className="text-red-500">*</span>}
                     </div>
                     <div className="flex justify-between items-center">
                       <div>
@@ -424,7 +425,7 @@ const DetailesItem = ({
                               htmlFor={`radio-${index}`}
                               className="text-sm font-medium text-gray-900"
                             >
-                              {item.value}
+                              {Language == 'en'?item.value[0]:item.value[1]}
                             </label>
                           </div>
                         ))}
@@ -443,7 +444,7 @@ const DetailesItem = ({
                   <div  key={`dropdownTitle ${dropdown_index}`}   className="border-b border-ternary-light mx-10 p-3 ">
                     <div className="">
                     <div className="text-[16px] font-semibold ">
-                    {title}{ dropdown_required[dropdown_index] == 'true' && <span className="text-red-500">*</span>}
+                    {Language == 'en'?title[0]:title[1]}{ dropdown_required[dropdown_index] == 'true' && <span className="text-red-500">*</span>}
                     </div>
                       <div className='relative w-[100%] my-2'>
                         <select  onChange={(e) => handleDropdownChange(dropdown_index,e)}  className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
@@ -451,7 +452,7 @@ const DetailesItem = ({
                             key={`dropdown default`} defaultValue></option>
                           {dropdownItems[dropdown_index]?.map((item, index) => (
                             <option className="bg-white text-black"
-                            key={`dropdown ${dropdown_index} ${index}`} value={index}>{item.value}</option>
+                            key={`dropdown ${dropdown_index} ${index}`} value={index}> {Language == 'en'?item.value[0]:item.value[1]}</option>
                           ))}
                         </select>
                         <MdKeyboardArrowDown className={`absolute top-1/2 ${Language == "en" ? "right-4" : "left-4"} transform -translate-y-1/2 text-black`} />

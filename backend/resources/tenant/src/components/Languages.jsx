@@ -32,3 +32,25 @@ function Languages() {
 }
 
 export default React.memo(Languages);
+[
+  [
+      [
+          "c1 value 1 en",
+          "c1 value 2 en"
+      ],
+      [
+          "c1 value 1 ar",
+          "c1 value 2 ar"
+      ]
+  ],
+  [
+      [
+          "c2 value 1 en",
+          "c2  value 2 en"
+      ],
+      [
+          "c2  value 1 ar",
+          "c2  value 2 ar"
+      ]
+  ]
+]
