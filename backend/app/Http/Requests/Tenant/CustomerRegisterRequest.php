@@ -5,6 +5,7 @@ namespace App\Http\Requests\Tenant;
 use App\Models\User;
 use App\Utils\ResponseHelper;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\App;
 use App\Rules\PhoneIsAlreadyRegistered;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
@@ -25,23 +26,33 @@ class CustomerRegisterRequest extends FormRequest
             // 'password' => 'required|string|min:6|max:255',
             // 'c_password' => 'required|same:password',
             'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users',
-            'terms_and_policies' => 'accepted',
         ];
     }
 
 
     protected function prepareForValidation()
     {
+
         if ($this->phone) {
             // Remove any non-digit characters
             $cleanedPhone = preg_replace('/\D/', '', $this->phone);
+
             if (strlen($cleanedPhone) === 9) {
+                // If it's 10 digits, merge with '966'
+                $this->merge(['phone' => '966' .$cleanedPhone]);
+            }else if((strlen($cleanedPhone) === 10) && $cleanedPhone[0] == "0") {
                 // If it's 9 digits, merge with '966'
-                $this->merge(['phone' => '966' . $cleanedPhone]);
+                $this->merge(['phone' => '966' . substr($cleanedPhone,1)]);
             } elseif (strlen($cleanedPhone) === 12 && substr($cleanedPhone, 0, 3) === '966') {
                 // If it's 12 digits and starts with '966', keep it
                 $this->merge(['phone' => $cleanedPhone]);
             }
         }
+    }
+    public function messages()
+    {
+        return [
+            'phone.unique'=>__("Please use this phone to login in into your account")
+        ];
     }
 }

@@ -17,13 +17,12 @@
                               <!--begin::Sticky aside-->
                               <div class="card card-flush mb-0" data-kt-sticky="true" data-kt-sticky-name="inbox-aside-sticky" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
                                   <!--begin::Aside content-->
-                                  <div class="card-body">
+                                  <div class="card-body" style="overflow-y: scroll;height: 60vh;">
                                       <!--begin::Button-->
-{{--                                      <p class="btn btn-khardl text-uppercase w-100 mb-10">--}}
-{{--                                          <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">--}}
-{{--                                            {{ __('messages.all-categories') }}--}}
-{{--                                          </a>--}}
-{{--                                      </p>--}}
+                                     <p class="text-center text-uppercase w-100 mb-10">
+                                         <span>{{$branch->name}}</span>
+                                    </p>
+
                                       <!--end::Button-->
                                       <!--begin::Menu-->
                                       <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
@@ -500,6 +499,9 @@
  
     document.getElementById('category-submit').addEventListener('submit', function (e) {
         e.preventDefault();
+        var submitButton = document.querySelector('#saveCategoryBtn');
+        submitButton.disabled = true;
+        
         var inputValue = document.querySelector('input[name=name_ar]').value.trim();
         if (inputValue === '') {
             alert('Please fill in the input in (Arabic) tab.');
@@ -512,6 +514,7 @@
             return ;
         }
         document.getElementById('category-submit').submit();
+        submitButton.disabled = true;
 
        
 

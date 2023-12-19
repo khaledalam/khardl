@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-const Privacy = () => {
+const Privacy = ({
+    onClose
+}) => {
     const Language = useSelector((state) => state.languageMode.languageMode);
 
     return (
@@ -19,14 +21,14 @@ const Privacy = () => {
                     <div className="container ">
                         <header className="grid grid-cols-3 max-md:block  mb-4 items-center font-bold text-[20px] text-[var(--primary)]">
                             <div className="">
-                                <Link to="/register" className="flex items-center gap-1 max-md:gap-0 ">
+                                <button onClick={onClose} className="flex items-center gap-1 max-md:gap-0 ">
                                     {Language === "en" ?
                                         <span><MdOutlineKeyboardArrowLeft size={26} /></span>
                                         :
                                         <span><MdOutlineKeyboardArrowRight size={26} /></span>
                                     }
                                     <span className='max-md:!font-normal max-md:text-[18px]'>{Language === "en" ? "Back" : "الرجوع"}</span>
-                                </Link>
+                                </button>
                             </div>
                             <h1 className="text-center max-sm:text-xl ">Privacy Policy for Khardl</h1>
                         </header>
@@ -145,14 +147,14 @@ const Privacy = () => {
                     <div className="container">
                         <header className="grid grid-cols-3 mb-4 max-md:block items-center font-bold text-[22px] text-[var(--primary)]">
                             <div className="blog-goBack">
-                                <Link to="/register" className="flex items-center gap-1 max-md:gap-0 ">
+                            <button onClick={onClose} className="flex items-center gap-1 max-md:gap-0 ">
                                     {Language === "en" ?
                                         <span><MdOutlineKeyboardArrowLeft size={26} /></span>
                                         :
                                         <span><MdOutlineKeyboardArrowRight size={26} /></span>
                                     }
                                     <span className='max-md:!font-normal max-md:text-[18px]'>{Language === "en" ? "Back" : "الرجوع"}</span>
-                                </Link>
+                                </button>
                             </div>
                             <h1 className="blog-title text-center max-sm:text-xl ">
                                 <p>سياسة الخصوصية لـKhardl</p>

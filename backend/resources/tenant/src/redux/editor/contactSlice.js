@@ -4,8 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     icons: [
         { id: 1, name: 'Whatsapp', icon: 'BsWhatsapp', color: 'Whatsapp', Link: '' },
-        { id: 2, name: 'Messenger', icon: 'BsMessenger', color: 'Messenger', Link: '' },
-        { id: 3, name: 'Twitter', icon: 'BsTwitter', color: 'Twitter', Link: '' },
+      
     ],
     more_icons: [
         { id: 4, name: 'Telegram', icon: 'BsTelegram', color: 'Telegram', Link: '' },

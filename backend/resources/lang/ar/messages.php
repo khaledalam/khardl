@@ -324,8 +324,10 @@ return [
     'completed'=>'مكتمل',
     'ready'=>"جاهز",
     'delivery-fee' => "عموله التوصيل",
-    "e.g." => "علي سبيل المثال"
-
+    "e.g." => "علي سبيل المثال",
+    'has-created-new-restaurant'=> 'قام بانشاء مطعم جديد',
+    "clear"=>"مسح",
+    "Please-use-this-phone-to-login-in-into-your-account"=>"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول"
 
 ];
 

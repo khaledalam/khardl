@@ -28,6 +28,8 @@ import Privacy from "../../landing-page/src/pages/TermsPoliciesPrivacy/Privacy";
 import Cart from "./components/Cart/Cart";
 import RestaurantHomePage from "./components/Restaurants/RestaurantsPreview/RestaurantHomePage";
 import Header from "./components/Restaurants/RestaurantsPreview/components/header";
+import {SideMenu} from "./components/SideMenu";
+import MenuProvider from 'react-flexible-sliding-menu';
 
 const App = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
@@ -67,83 +69,90 @@ const App = () => {
 
 
    return (
-      <div
-         className='relative'
-         style={{
-            '::selection': {
-               backgroundColor: '#000000',
-               color: '#ffffff',
-            },
-            direction,
-            fontFamily,
-         }}
-      >
-         <div>
-            <ToastContainer theme='colored'/>
-            {showHeader && <Header />}
-            <Supports />
-            <ScrollUp />
-            <div>
-               <Routes>
-                  {/* Public Routes */}
-                  <Route path='/' element={<RestaurantHomePage />} />
-                  <Route path='/logout' element={<Logout />} />
-                  <Route
-                     path='/reset-password'
-                     element={<Protected Cmp={ForgotPassword} />}
-                  />
-                  <Route
-                     path='/create-new-password'
-                     element={<Protected Cmp={CreateNewPassword} />}
-                  />
+       <MenuProvider MenuComponent={SideMenu}
+                     direction={Language == 'en' ? 'left' : 'right'}
+                     animation={'slide'} // 'slide' │ 'push' │ 'reveal'
+                     width={'25vw'}
 
-                   <Route path='/policies' element={<TermsPolicies />} />
-                   <Route path='/privacy' element={<Privacy />} />
-                   {/*<Route path='/advantages' element={<Advantages />} />*/}
-                   {/*<Route path='/services' element={<Services />} />*/}
-                   {/*<Route path='/prices' element={<Prices />} />*/}
-                   {/*<Route path='/fqa' element={<FQA />} />*/}
-                   <Route path='/login-trial' element={<LoginTrial />} />
-
-                   <Route element={<Layout />}>
-                     <Route path='/login' element={<Login />} />
-                     <Route path='/register' element={<Register />} />
-                     <Route path='/login-admins' element={<LoginAdmin />} />
-                  </Route>
-
-                  {/*Editor*/}
-                  <Route element={<PrivateRoute />}>
-                     <Route
-                        path='/verification-phone'
-                        element={<VerificationPhone />}
-                     />
-                     <Route path='/site-editor' element={<EditorSwitcher />} />
-
-                      <Route path='/cart' element={<Cart />} />
-
+       >
+          <div
+             className='relative'
+             style={{
+                '::selection': {
+                   backgroundColor: '#000000',
+                   color: '#ffffff',
+                },
+                direction,
+                fontFamily,
+             }}
+          >
+             <div>
+                <ToastContainer theme='colored'/>
+                {showHeader && <Header />}
+                <Supports />
+                <ScrollUp />
+                <div>
+                   <Routes>
+                      {/* Public Routes */}
+                      <Route path='/' element={<RestaurantHomePage />} />
+                      <Route path='/logout' element={<Logout />} />
                       <Route
-                        path='/site-editor/restaurants'
-                        element={<EditorPage />}
-                     />
-                      {/*/site-editor/customers/preview*/}
-                     <Route
-                        path='/dashboard'
-                        element={<CustomersPreview />}
-                     />
-                     <Route
-                        path='/site-editor/customers'
-                        element={<EditorPage />}
-                     />
-                  </Route>
-               </Routes>
-            </div>
-            {showFooter && !loading && (
-               <div className='p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] '>
-                  <Footer />
-               </div>
-            )}
-         </div>
-      </div>
+                         path='/reset-password'
+                         element={<ForgotPassword  />}
+                      />
+                      <Route
+                         path='/create-new-password'
+                         element={<Protected Cmp={CreateNewPassword} />}
+                      />
+
+                       <Route path='/policies' element={<TermsPolicies />} />
+                       <Route path='/privacy' element={<Privacy />} />
+                       {/*<Route path='/advantages' element={<Advantages />} />*/}
+                       {/*<Route path='/services' element={<Services />} />*/}
+                       {/*<Route path='/prices' element={<Prices />} />*/}
+                       {/*<Route path='/fqa' element={<FQA />} />*/}
+                       <Route path='/login-trial' element={<LoginTrial />} />
+
+                       <Route element={<Layout />}>
+                         <Route path='/login' element={<Login />} />
+                         <Route path='/register' element={<Register />} />
+                         <Route path='/login-admins' element={<LoginAdmin />} />
+                      </Route>
+
+                      {/*Editor*/}
+                      <Route element={<PrivateRoute />}>
+                         <Route
+                            path='/verification-phone'
+                            element={<VerificationPhone />}
+                         />
+                         <Route path='/site-editor' element={<EditorSwitcher />} />
+
+                          <Route path='/cart' element={<Cart />} />
+
+                          <Route
+                            path='/site-editor/restaurants'
+                            element={<EditorPage />}
+                         />
+                          {/*/site-editor/customers/preview*/}
+                         <Route
+                            path='/dashboard'
+                            element={<CustomersPreview />}
+                         />
+                         <Route
+                            path='/site-editor/customers'
+                            element={<EditorPage />}
+                         />
+                      </Route>
+                   </Routes>
+                </div>
+                {showFooter && !loading && (
+                   <div className='p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] '>
+                      <Footer />
+                   </div>
+                )}
+             </div>
+          </div>
+       </MenuProvider>
    )
 }
 

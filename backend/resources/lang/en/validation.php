@@ -166,6 +166,8 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        "Please use this phone to login in into your account"=>"Please use this phone to login in into your account"
+
     ],
 
     /*

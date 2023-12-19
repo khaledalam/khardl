@@ -23,6 +23,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     protected $primaryKey = 'id';
     protected $guard_name = 'web';
     protected $fillable = [
+        'id',
         'first_name',
         'last_name',
         'email',
@@ -65,6 +66,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function isWorker(){
         return $this->hasRole("Worker");
     }
+    
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;

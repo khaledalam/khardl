@@ -443,7 +443,7 @@ const DetailesItem = ({
                   <div  key={`dropdownTitle ${dropdown_index}`}   className="border-b border-ternary-light mx-10 p-3 ">
                     <div className="">
                     <div className="text-[16px] font-semibold ">
-                    {title}{ selection_required[dropdown_index] == 'true' && <span className="text-red-500">*</span>}
+                    {title}{ dropdown_required[dropdown_index] == 'true' && <span className="text-red-500">*</span>}
                     </div>
                       <div className='relative w-[100%] my-2'>
                         <select  onChange={(e) => handleDropdownChange(dropdown_index,e)}  className='text-[14px] bg-[var(--secondary)]  w-[100%] p-1 rounded-full px-4 appearance-none'>
@@ -551,10 +551,11 @@ const DetailesItem = ({
                       <input
                         type='tel'
                         className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                        placeholder={'e.g. +966 582936628'}
+                        placeholder={ t('e.g.') + ' +966 123456789'}
                         {...register('phone', {
                             required: true,
                         })}
+                        style={{direction:'ltr'}}
                         minLength={9}
                         maxLength={13}
                       />

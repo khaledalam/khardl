@@ -17,7 +17,7 @@ use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
-use App\Http\Controllers\Web\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 
 
 
