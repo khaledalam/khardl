@@ -41956,6 +41956,7 @@ code:not([class*="language-"]) {
     background-color: #2b2b40;
 }
 .timeline-label .timeline-item {
+    margin-left:15px;
     display: flex;
     align-items: flex-start;
     position: relative;

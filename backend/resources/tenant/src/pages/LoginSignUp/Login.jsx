@@ -51,7 +51,7 @@ const Login = () => {
             console.log(responseData)
              localStorage.setItem(
                'user-info',
-               JSON.stringify(responseData.data)
+               JSON.stringify(responseData.data.user)
             )
             if (responseData.data.user.status === 'inactive') {
                sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)

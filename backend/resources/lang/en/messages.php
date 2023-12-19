@@ -327,7 +327,10 @@ return [
     'ready'=>"Ready",
     'delivery-fee' => "Delivery fee",
     "e.g." => "e.g.",
-    'has-created-new-restaurant'=> 'Has created new restaurant'
+    'has-created-new-restaurant'=> 'Has created new restaurant',
+    "clear"=>"Clear",
+    "Please-use-this-phone-to-login-in-into-your-account"=>"Please use this phone to login in into your account"
+
 ];
 
 //    'advertisement-modification' => 'Advertisement modification',

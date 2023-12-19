@@ -20,11 +20,13 @@
                                   <!--begin::Aside content-->
                                   <div class="card-body">
                                       <!--begin::Button-->
-                                      <p class="btn btn-primary text-uppercase w-100 mb-10">
-                                          <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">
-                                            {{ __('messages.all-categories') }}
-                                          </a>
-                                      </p>
+                                      <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">
+                                        <p class="btn btn-primary text-uppercase w-100 mb-10">
+                                            
+                                                {{ __('messages.all-categories') }}
+                                        
+                                        </p>
+                                    </a>
                                       <!--end::Button-->
                                       <!--begin::Menu-->
                                       <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
@@ -399,10 +401,10 @@
 
                         <!--begin::Actions-->
                         <div class="text-center">
-                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset</button>
+                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('messages.clear')}}</button>
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
+                                <span class="indicator-label">{{__('messages.submit')}}</span>
+                                <span class="indicator-progress" id="waiting-item">Please wait...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
@@ -975,6 +977,9 @@
 
         document.getElementById('category-submit').addEventListener('submit', function (e) {
             e.preventDefault();
+            var submitButton = document.querySelector('#saveCategoryBtn');
+            submitButton.disabled = true;
+        
             var inputValue = document.querySelector('input[name=name_ar]').value.trim();
             if (inputValue === '') {
                 alert('Please fill in the input in (Arabic) tab.');
@@ -987,13 +992,18 @@
                 return ;
             }
             document.getElementById('category-submit').submit();
-
+            submitButton.disabled = false;
         
 
         });
 
         document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
             e.preventDefault();
+            var submitButton = document.querySelector('#kt_modal_new_target_submit');
+            submitButton.disabled = true;
+        
+            var waiting = document.querySelector('#waiting-item');
+            waiting.style.display = 'block';
             var inputValue = document.querySelector('textarea[name=description_ar]').value.trim();
             if (inputValue === '') {
                 alert('Please fill in the input in (Arabic) tab.');
@@ -1006,7 +1016,7 @@
                 return ;
             }
             document.getElementById('kt_modal_new_target_form').submit();
-
+            submitButton.disabled = false;
         
 
         });

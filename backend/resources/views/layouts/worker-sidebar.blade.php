@@ -160,7 +160,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <a href="{{route('restaurant.branches')}}">
-                                        <span class="menu-title">Branches</span>
+                                        <span class="menu-title">{{__('messages.branches')}}</span>
                                     </a>
                                 </span>
                                 </div>
@@ -179,7 +179,7 @@
                                     <!--end::Svg Icon-->
                                 </span>
                                 <a href="{{route('restaurant.menu',['branchId' => $user->branch->id])}}">
-                                    <span class="menu-title">Menu</span>
+                                    <span class="menu-title">{{__('messages.menu')}}</span>
                                 </a>
                             </span>
                           </div>
@@ -197,7 +197,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <a href="#">
-                                        <span class="menu-title">Promotions</span>
+                                        <span class="menu-title">{{__('messages.promotions')}}</span>
                                     </a>
                                 </span>
 
@@ -216,7 +216,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">Staff</span>
+                                    <span class="menu-title">{{ __('messages.supports')}}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -225,7 +225,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">All Staff</span>
+                                            <span class="menu-title">{{ __('messages.all-supports')}}</span>
                                         </a>
                                     </div>
                                     <div class="menu-item">
@@ -233,7 +233,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">Add Staff</span>
+                                            <span class="menu-title">{{ __('messages.add-supports')}}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -251,7 +251,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <a href="{{route('tap.payments')}}">
-                                        <span class="menu-title">Payments</span>
+                                        <span class="menu-title">{{__('messages.payments')}}</span>
                                     </a>
                                 </span>
                             </div>
