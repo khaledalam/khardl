@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
-use App\Http\Controllers\Web\BaseController;
-use App\Models\Tenant\DeliveryType;
-use App\Models\Tenant\OrderStatusLogs;
-use App\Models\Tenant\Setting;
+use App\Models\Tenant\Item;
 use Illuminate\Support\Str;
+use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
-use App\Models\Tenant\Category;
-use App\Models\Tenant\Item;
-use App\Models\Tenant\Order;
-use App\Models\Tenant\PaymentMethod;
-use App\Models\Tenant\RestaurantUser;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Carbon;
+use App\Models\Tenant\Category;
 use Illuminate\Support\Facades\DB;
+use App\Models\Tenant\DeliveryType;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Tenant\RestaurantUser;
+use App\Models\Tenant\OrderStatusLogs;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Web\BaseController;
+use App\Http\Requests\RegisterWorkerRequest;
 use Illuminate\Contracts\Database\Query\Builder;
 
 class RestaurantController extends BaseController
@@ -630,25 +631,14 @@ class RestaurantController extends BaseController
         return view('restaurant.add-worker', compact('user', 'branchId'));
     }
 
-    public function generateWorker(Request $request, $branchId)
+    public function generateWorker(RegisterWorkerRequest $request, $branchId)
     {
-
-        $existingUser = RestaurantUser::where('email', $request['email'])->first();
-        if ($existingUser) {
-            if(app()->getLocale() === 'en')
-                return redirect()->back()->with('error', 'Email is already registered.');
-            else
-                return redirect()->back()->with('error', 'عنوان البريد الإلكترونى هذا مسجل بالفعل');
-
-        }
-
-        $user = new RestaurantUser();
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->branch_id = $branchId;
-        $user->phone = $request->phone;
+    
+        $input = $request->validated();
+        $input['password'] = Hash::make($input['password']);
+        $input['phone_verified_at'] = null;
+        $input['branch_id']= $branchId;
+        $user = RestaurantUser::create($input);
 
         $user->save();
         $user->assignRole('Worker');

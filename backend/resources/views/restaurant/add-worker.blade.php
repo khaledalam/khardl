@@ -37,7 +37,7 @@
                                                 <label class="required form-label">{{ __('messages.first-name')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('messages.first-name')}}" value="" />
+                                                <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('messages.first-name')}}" value="{{old('first_name')}}" />
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">{{ __('messages.first-name')}} {{ __('messages.is-required')}}</div>
@@ -50,7 +50,7 @@
                                                 <label class="required form-label">{{ __('messages.last-name')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('messages.last-name')}}" value="" />
+                                                <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('messages.last-name')}}" value="{{old('last_name')}}" />
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">{{ __('messages.last-name')}} {{ __('messages.is-required')}}</div>
@@ -63,7 +63,7 @@
                                                 <label class="required form-label">{{ __('messages.email')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('messages.email')}}" value="" />
+                                                <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('messages.email')}}" value="{{old('email')}}" />
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">{{ __('messages.email')}}.</div>
@@ -77,7 +77,7 @@
                                                 <label class="required form-label">{{ __('messages.password')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('messages.password')}}" value="" />
+                                                <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('messages.password')}}" value="{{old('password')}}" />
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">{{ __('messages.password')}} {{ __('messages.is-required')}}</div>
@@ -91,7 +91,7 @@
                                                 <label class="required form-label">{{ __('messages.phone-number')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone_number') is-invalid @enderror" value="{{ old('phone_number') }}" name="phone_number" id="phone_number" placeholder="05XXXXXXXX" required>
+                                                <input type="tel" minlength="9" maxlength="13" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="+966 123456789" required>
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">{{ __('messages.phone-number')}} {{ __('messages.is-required')}}</div>

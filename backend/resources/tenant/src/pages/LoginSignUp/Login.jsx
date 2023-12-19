@@ -117,7 +117,7 @@ const Login = () => {
                                  <input
                                     type='tel'
                                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                                    placeholder={'e.g. +966 582936628'}
+                                    placeholder={'e.g. +966 123456789'}
                                     {...register('phone', {
                                        required: true,
                                     })}
