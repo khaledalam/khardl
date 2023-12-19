@@ -12,5 +12,6 @@
     ":name is not available":":name غير متاح",
     ":option is required":":option مطلوب",
     "Maximum :option options is ":"يجب اختيار :option بحد اقصي ",
-    "Please use this phone to login in into your account":"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول"
+    "Please use this phone to login in into your account":"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول",
+    "This email is already registered with different phone": "تم استخدام هذا البريد مع رقم هاتف مختلف"
 }

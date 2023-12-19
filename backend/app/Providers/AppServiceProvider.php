@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Http\Request;
 use App\Repositories\PDF\OrderPDF;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\PDF\PdfPrintInterface;
@@ -23,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
             return (new CartRepository)->initiate();
         });
         $this->app->bind(PdfPrintInterface::class,function(){
-            $request =request()->all();
+            $request =request()?->all();
             return match($request['type']){
                 'order'=> new OrderPDF($request['tenant_id'],$request['id'] ?? null),
                 'customer'=> new CustomerPDF($request['tenant_id'],$request['id'] ?? null),
@@ -41,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         View::share('link', request()->segment(1));
         View::share('admin_link', request()->segment(2));
         View::share('user', $user);
+        Schema::defaultStringLength(250);
 
     }
 }
