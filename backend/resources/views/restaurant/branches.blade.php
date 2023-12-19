@@ -4,8 +4,12 @@
 
 @section('content')
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0
-   &libraries=places"></script>
+    <style>
+        div.pac-container {
+            z-index: 99999999999 !important;
+        }
+    </style>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0&libraries=places"></script>
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -180,12 +184,12 @@
 
                                             <!--end::Stat-->
                                         </div>
-                                        
+
                                         <!--end::Stats-->
                                     </div>
                                     <!--end::Body-->
                                     <!--begin::Footer-->
-                                    
+
                                     <div class="d-flex align-items-center">
                                         @if ($branch->is_primary)
                                             <div
@@ -608,9 +612,12 @@
                 <!--begin::Col-->
                 <div class="col-md-12 fv-row">
                     <label class="required fs-6 fw-bold mb-2">{{ __('messages.location-branch') }}</label>
-                    <!--begin::Input-->
-                    <div style="width: 100%; height: 250px;" id="map"></div>
+                    <input id="pac-input-new_branch" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}">
+                    <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
                     <input type="hidden" value="{{ old('location') }}" id="location" name="location">
+                    <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
+                    <input type="hidden" id="lng-new_branch" name="lng-new_branch" />
+
                     <!--end::Input-->
                 </div>
                 <!--end::Col-->
@@ -827,166 +834,162 @@
     <!--end::Scrolltop-->
 
     <script>
-        let maps = {}; // Store maps in an object
-        let markers = {}; // Store markers in an object
 
-        function initializeMap(branchId, lat, lng) {
-          const latLng = new google.maps.LatLng(lat, lng);
+        document.addEventListener("DOMContentLoaded", (event) => {
+            let maps = {}; // Store maps in an object
+            let markers = {}; // Store markers in an object
 
-          const map = new google.maps.Map(document.getElementById('map' + branchId), {
-            center: latLng,
-            zoom: 8,
-          });
-          const input = document.getElementById("pac-input"+ branchId);
-          const options = {
-                fields: ["formatted_address", "geometry", "name"],
-                strictBounds: false,
-            };
-          const autocomplete = new google.maps.places.Autocomplete(input, options);
-          autocomplete.bindTo("bounds", map);
-
-          const marker = new google.maps.Marker({
-            position: latLng,
-            map: map,
-            draggable: true,
-          });
-
-          markers[branchId] = marker; // Store the marker for this branch
-          maps[branchId] = map; // Store the map for this branch
-
-          google.maps.event.addListener(marker, 'dragend', function () {
-            updateLocationInput(marker.getPosition(), branchId);
-          });
-
-          // Add a click event listener to the map
-          google.maps.event.addListener(map, 'click', function (event) {
-            marker.setPosition(event.latLng);
-            updateLocationInput(event.latLng, branchId);
-          });
-          autocomplete.addListener("place_changed", () => {
-                // infowindow.close();
-                marker.setVisible(false);
-
-                const place = autocomplete.getPlace();
-
-                if (!place.geometry || !place.geometry.location) {
-                // User entered the name of a Place that was not suggested and
-                // pressed the Enter key, or the Place Details request failed.
-                window.alert("No details available for input: '" + place.name + "'");
-                return;
-                }
-                const lat = place.geometry.location.lat();
-                const lng = place.geometry.location.lng();
-                selectedPlacePosition = new google.maps.LatLng(lat, lng);
-                updateLocationInput(selectedPlacePosition, branchId);
-                // If the place has a geometry, then present it on a map.
-                if (place.geometry.viewport) {
-                    map.fitBounds(place.geometry.viewport);
-                } else {
-                    map.setCenter(place.geometry.location);
-                    map.setZoom(17);
-                }
-
-                marker.setPosition(place.geometry.location);
-                marker.setVisible(true);
-                // infowindow.open(map, marker);
-            });
-        }
-
-        function updateLocationInput(latLng, branchId) {
-          const latInput = document.getElementById('lat' + branchId);
-          const lngInput = document.getElementById('lng' + branchId);
-          latInput.value = latLng.lat();
-          lngInput.value = latLng.lng();
-        }
-
-        function updateLocation(branchId) {
-            const marker = markers[branchId];
-            const latInput = document.getElementById('lat' + branchId);
-            const lngInput = document.getElementById('lng' + branchId);
-            const lat = parseFloat(latInput.value);
-            const lng = parseFloat(lngInput.value);
-
-            if (!isNaN(lat) && !isNaN(lng)) {
+            function initializeMap(branchId, lat, lng) {
                 const latLng = new google.maps.LatLng(lat, lng);
-                marker.setPosition(latLng);
-                maps[branchId].setCenter(latLng);
 
-                $.ajax({
-                url: '/branches/update-location/' + branchId,
-                method: 'POST',
-                data: {
-                    lat: lat,
-                    lng: lng,
-                },
-                success: function (response) {
-                    console.log('Location updated successfully:');
-                },
-                error: function (error) {
-                    console.error('Error updating location:', error);
-                },
+                const map = new google.maps.Map(document.getElementById('map' + branchId), {
+                    center: latLng,
+                    zoom: 8,
                 });
+
+                const input = document.getElementById("pac-input" + branchId);
+
+                const options = {
+                    fields: ["formatted_address", "geometry", "name"],
+                    strictBounds: false,
+                };
+                const autocomplete = new google.maps.places.Autocomplete(input, options);
+                autocomplete.bindTo("bounds", map);
+
+                const marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    draggable: true,
+                });
+
+                markers[branchId] = marker; // Store the marker for this branch
+                maps[branchId] = map; // Store the map for this branch
+
+                google.maps.event.addListener(marker, 'dragend', function () {
+                    updateLocationInput(marker.getPosition(), branchId);
+                });
+
+                // Add a click event listener to the map
+                google.maps.event.addListener(map, 'click', function (event) {
+                    marker.setPosition(event.latLng);
+                    updateLocationInput(event.latLng, branchId);
+                });
+                autocomplete.addListener("place_changed", () => {
+                    console.log('change location')
+                    // infowindow.close();
+                    marker.setVisible(false);
+
+                    const place = autocomplete.getPlace();
+
+                    if (!place.geometry || !place.geometry.location) {
+                        // User entered the name of a Place that was not suggested and
+                        // pressed the Enter key, or the Place Details request failed.
+                        window.alert("No details available for input: '" + place.name + "'");
+                        return;
+                    }
+                    const lat = place.geometry.location.lat();
+                    const lng = place.geometry.location.lng();
+                    selectedPlacePosition = new google.maps.LatLng(lat, lng);
+                    updateLocationInput(selectedPlacePosition, branchId);
+                    // If the place has a geometry, then present it on a map.
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    } else {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);
+                    }
+
+                    marker.setPosition(place.geometry.location);
+                    marker.setVisible(true);
+                    // infowindow.open(map, marker);
+                });
+
+                console.log("ok")
             }
+
+            function updateLocationInput(latLng, branchId) {
+                const latInput = document.getElementById('lat' + branchId);
+                const lngInput = document.getElementById('lng' + branchId);
+                latInput.value = latLng.lat();
+                lngInput.value = latLng.lng();
+            }
+
+            function updateLocation(branchId) {
+                const marker = markers[branchId];
+                const latInput = document.getElementById('lat' + branchId);
+                const lngInput = document.getElementById('lng' + branchId);
+                const lat = parseFloat(latInput.value);
+                const lng = parseFloat(lngInput.value);
+
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    const latLng = new google.maps.LatLng(lat, lng);
+                    marker.setPosition(latLng);
+                    maps[branchId].setCenter(latLng);
+
+                    $.ajax({
+                        url: '/branches/update-location/' + branchId,
+                        method: 'POST',
+                        data: {
+                            lat: lat,
+                            lng: lng,
+                        },
+                        success: function (response) {
+                            console.log('Location updated successfully:');
+                        },
+                        error: function (error) {
+                            console.error('Error updating location:', error);
+                        },
+                    });
+                }
             }
 
 
-        // Initialize the maps for each branch
-        @foreach ($branches as $branch)
-          initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
-        @endforeach
-      </script>
+            // Initialize the maps for each branch
+            @foreach ($branches as $branch)
+            initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
+            @endforeach
 
 
-    <script>
+            // New branch popup
+            const centerCoords = {lat: 24.7136, lng: 46.6753}; // Default center coordinates
+            initializeMap('-new_branch', centerCoords?.lat, centerCoords?.lng);
 
+            // Check if the old('location') is not null
+            const locationValue = "{{ old('location') }}";
+            if (locationValue !== null && locationValue !== '') {
+                const locationArray = locationValue.split(' ');
+                if (locationArray.length === 2) {
+                    // Update the center coordinates based on the old('location')
+                    centerCoords.lat = parseFloat(locationArray[0]);
+                    centerCoords.lng = parseFloat(locationArray[1]);
 
+                    document.getElementById('lat-new_branch').value = centerCoords.lat;
+                    document.getElementById('lng-new_branch').value = centerCoords.lat;
 
-        const mapElement = document.getElementById('map');
-        const centerCoords = { lat: 24.7136, lng: 46.6753 }; // Default center coordinates
-
-        // Check if the old('location') is not null
-        const locationValue = "{{ old('location') }}";
-        if (locationValue !== null && locationValue !== '') {
-            const locationArray = locationValue.split(' ');
-            if (locationArray.length === 2) {
-                // Update the center coordinates based on the old('location')
-                centerCoords.lat = parseFloat(locationArray[0]);
-                centerCoords.lng = parseFloat(locationArray[1]);
+                    console.log(document.getElementById('lat-new_branch').value);
+                }
             }
-        }
 
-        const map = new google.maps.Map(mapElement, {
-            center: centerCoords,
-            zoom: 10, // Set an appropriate zoom level
+
+            const locationInput = document.getElementById('location');
+
+            google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
+                // If a marker exists, remove it
+                if (markers['-new_branch']) {
+                    markers['-new_branch'].setMap(null);
+                }
+
+                // Create a new marker at the clicked location
+                marker = new google.maps.Marker({
+                    map: maps['-new_branch'],
+                    position: event.latLng,
+                });
+
+                // Update the hidden input with the clicked location's latitude and longitude
+                locationInput.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
+            });
+
         });
-
-
-
-        const locationInput = document.getElementById('location');
-        const geocoder = new google.maps.Geocoder();
-
-        let marker; // To store the dropped pin
-
-        // Create a PlacesService instance for autocomplete
-
-        // Listen for a place selection
-
-        google.maps.event.addListener(map, 'click', function (event) {
-        // If a marker exists, remove it
-        if (marker) {
-            marker.setMap(null);
-        }
-
-        // Create a new marker at the clicked location
-        marker = new google.maps.Marker({
-            map: map,
-            position: event.latLng,
-        });
-
-        // Update the hidden input with the clicked location's latitude and longitude
-        locationInput.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
-    });
-
 
 
     </script>
