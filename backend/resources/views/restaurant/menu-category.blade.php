@@ -1010,7 +1010,6 @@
                 return ;
             }
             document.getElementById('category-submit').submit();
-            submitButton.disabled = false;
         
 
         });
@@ -1018,8 +1017,9 @@
         document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
             e.preventDefault();
             var submitButton = document.querySelector('#kt_modal_new_target_submit');
-            submitButton.disabled = true;
         
+            submitButton.disabled = true;
+          
             var waiting = document.querySelector('#waiting-item');
             waiting.style.display = 'block';
             var inputValue = document.querySelector('textarea[name=description_ar]').value.trim();
@@ -1034,7 +1034,7 @@
                 return ;
             }
             document.getElementById('kt_modal_new_target_form').submit();
-            submitButton.disabled = false;
+            
         
 
         });

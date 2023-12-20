@@ -514,7 +514,6 @@
             return ;
         }
         document.getElementById('category-submit').submit();
-        submitButton.disabled = true;
 
        
 
