@@ -63,33 +63,35 @@ class AddItemToCartRequest extends FormRequest
     }
 
     public function validateCheckboxOptions($validator,$item){
-
+        $locale =  app()->getLocale();
         foreach($item->checkbox_required as $key=>$option){
-
             if($option == 'true' && !isset($this->selectedCheckbox[$key])  ) {
-                $validator->errors()->add('selectedCheckbox', __(':option is required',['option'=>$item->checkbox_input_titles[$key]]));
+                $validator->errors()->add('selectedCheckbox', __(':option is required',['option'=>($locale == 'en' )?$item->checkbox_input_titles[$key][0]:$item->checkbox_input_titles[$key][1]]));
                 return false;
             }
             if(isset($this->selectedCheckbox[$key]) && (count($this->selectedCheckbox[$key]) > (int)$item->checkbox_input_maximum_choices[$key])){
-                $validator->errors()->add('selectedCheckbox', __('Maximum :option options is ',['option'=>$item->checkbox_input_titles[$key]]).$item->checkbox_input_maximum_choices[$key]);
+                $validator->errors()->add('selectedCheckbox', __('Maximum :option options is ',['option'=>($locale == 'en' )?$item->checkbox_input_titles[$key][0]:$item->checkbox_input_titles[$key][1]]).$item->checkbox_input_maximum_choices[$key]);
                 return false;
             }
         }
         return true;
     }
+    
     public function validateRadioOptions($validator,$item){
+        $locale =  app()->getLocale();
         foreach($item->selection_required as $key=>$option){
             if($option == 'true' && !isset($this->selectedRadio[$key])) {
-                $validator->errors()->add('selectedRadio', __(':option is required',['option'=>$item->selection_input_titles[$key]]));
+                $validator->errors()->add('selectedRadio', __(':option is required',['option'=>($locale == 'en' )?$item->selection_input_titles[$key][0]:$item->selection_input_titles[$key][1]]));
                 return false;
             }
         }
         return true;
     }
      public function validateDropdownOptions($validator,$item){
+        $locale =  app()->getLocale();
         foreach($item->dropdown_required as $key=>$option){
             if($option == 'true' && !isset($this->selectedDropdown[$key]) ?? false) {
-                $validator->errors()->add('selectedDropdown',__(':option is required',['option'=>$item->dropdown_input_titles[$key]]));
+                $validator->errors()->add('selectedDropdown',__(':option is required',['option'=>($locale == 'en' )?$item->dropdown_input_titles[$key][0]:$item->dropdown_input_titles[$key][1]]));
                 return false;
             }
         }

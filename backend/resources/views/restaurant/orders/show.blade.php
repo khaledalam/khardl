@@ -517,37 +517,45 @@
                                                                                 <!--end::Title-->
                                                                             </div>
                                                                             <div class="text-muted">
+
                                                                                 @if($order_item->checkbox_options)
-                                                                                    @foreach($order_item->checkbox_options as $option => $value) 
+                                                                                    @foreach($order_item->checkbox_options as $value) 
+                                                                                        <?php $option = array_keys($value); ?>
+
                                                                                         <ul class="list-group" style="border-radius: 0;">
                                                                                             <li class="list-group-item" style="width: 100%; overflow: hidden;">
-                                                                                                <span >{{ $option }}</span>: 
-                                                                                                <i >{{ implode(', ', array_column($value, 0)) }}</span>
+                                                                                             
+                                                                                                <span >{{ ($locale == 'ar')?$option[0]:$option[1] }}</span>: 
+                                                                                                <i >{{ implode(', ', array_column(($locale == 'ar')?$value[$option[0]]:$value[$option[1]], 0)) }}</span>
                                                                                             </li>
                                                                                         </ul>
                                                                                     @endforeach
                                                                             
                                                                                 @endif
                                                                                 @if($order_item->selection_options)
-                                                                                @foreach($order_item->selection_options as $option => $value) 
+                                                                                @foreach($order_item->selection_options as $value) 
+                                                                                <?php $option = array_keys($value); ?>
                                                                                 <ul class="list-group" style="border-radius: 0;">
                                                                                     <li class="list-group-item" style="width: 100%; overflow: hidden;">
-                                                                                        <span >{{ $option }}</span>: 
-                                                                                        <i >{{ $value[0] }}</span>
+                                                                                        <span >{{ ($locale == 'ar')?$option[0]:$option[1] }}</span>: 
+                                                                                        
+                                                                                        <i >{{ ($locale == 'ar')?$value[$option[0]][0]:$value[$option[1]][0] }}</span>
                                                                                     </li>
                                                                                 </ul>
                                                                                 @endforeach
                                                                                 @endif
                                                                                 @if($order_item->dropdown_options)
-                                                                                @foreach($order_item->dropdown_options as $option => $value) 
+                                                                                @foreach($order_item->dropdown_options as $value)
+                                                                                <?php $option = array_keys($value); ?> 
                                                                                     <ul class="list-group" style="border-radius: 0;">
                                                                                         <li class="list-group-item" style="width: 100%; overflow: hidden;">
-                                                                                            <span >{{ $option }}</span>: 
-                                                                                            <i >{{ $value }}</span>
+                                                                                            <span >{{ ($locale == 'ar')?$option[0]:$option[1] }}</span>: 
+                                                                                            <i >{{ ($locale == 'ar')?$value[$option[0]]:$value[$option[1]]}}</span>
+
                                                                                         </li>
                                                                                     </ul>
                                                                                 @endforeach
-                                                                                @endif
+                                                                                @endif 
                                                                             </div>
                                                                         </td>
                                                                         <!--end::Product-->
