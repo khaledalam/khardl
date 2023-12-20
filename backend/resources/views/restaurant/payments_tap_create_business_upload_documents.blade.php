@@ -25,7 +25,7 @@
                 <input id="business_log" accept="{{($name == 'business_logo')?'.gif':'.pdf'}},.jpeg,.png" type="file" class="form-control form-control-solid" name="{{$name}}" />
                 <pre class="mx-3"><small><i>Accept: {{($name == 'business_logo')?'GIF':'PDF'}}, JPEG, PNG. size <= 8 MG</i></small></pre>
                 @if ($tap_files)
-                    <a href="{{ route('admin.download.file', ['path' => $tap_files->{$name.'_path'}]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                    <a href="{{ route('download.file', ['path' => $tap_files->{$name.'_path'}]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                 @endif
             </div>
            

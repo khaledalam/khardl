@@ -54,6 +54,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'status'=> 'active',
             'address' => 'test address',
+            'phone'=>'966222222222',
             'position'=>"Restaurant Owner",
             'restaurant_name' => 'first',
             'password' => bcrypt('password'),
