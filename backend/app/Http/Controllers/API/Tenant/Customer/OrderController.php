@@ -47,8 +47,11 @@ class OrderController
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
+            'address' => 'nullable|string|max:255',
+            // 'lat' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'], 
+            // 'lng' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
         ]);
+
 
         $user = Auth::user();
 
@@ -57,6 +60,8 @@ class OrderController
         $user->last_name = $request->last_name;
         $user->phone = $request->phone;
         $user->address = $request->address;
+        $user->lat = $request->lat;
+        $user->lng = $request->lng;
 
         $user->save();
 
