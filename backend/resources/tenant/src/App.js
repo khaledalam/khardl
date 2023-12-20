@@ -48,6 +48,7 @@ const App = () => {
        '/site-editor/restaurants',
        '/site-editor/customers',
       '/login',
+       '/login-admins',
       '/login-trial',
        '/register',
        '/register/:url',
