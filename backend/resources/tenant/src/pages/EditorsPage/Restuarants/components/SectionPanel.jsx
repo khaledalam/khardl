@@ -2,6 +2,8 @@ import React, {Fragment, useCallback, useState} from "react"
 import PrimarySelect from "./PrimarySelect"
 import LogoAlignment from "./LogoAlignment"
 import CategoryAlign from "./CategoryAlign"
+import SocialMediaCollection from "./SocialMediaCollection"
+import {IoAdd} from "react-icons/io5"
 
 const SectionPanel = () => {
   const [position, setPosition] = useState("Fixed")
@@ -57,6 +59,25 @@ const SectionPanel = () => {
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Category Details</h2>
         <CategoryAlign label={"Type"} />
+        <div className='mt-3'>
+          <PrimarySelect
+            label={"Content"}
+            defaultValue={content}
+            handleChange={(value) => setContent(value)}
+            options={[
+              {value: "left", text: "Left"},
+              {value: "center", text: "Center"},
+              {value: "right", text: "Right"},
+            ]}
+          />
+        </div>
+      </div>
+      <div className='py-4 border-b border-neutral-300 '>
+        <div className='flex items-center justify-between p-2 w-[70%] mb-4 '>
+          <h2 className='font-bold text-lg '>Social Media</h2>
+          <IoAdd size={25} />
+        </div>
+        <SocialMediaCollection />
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}

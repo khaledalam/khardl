@@ -2234,6 +2234,9 @@ details.collapse summary::-webkit-details-marker {
 .input[list]::-webkit-calendar-picker-indicator {
   line-height: 1em;
 }
+.input-bordered {
+  border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+}
 .input:focus,
   .input:focus-within {
   box-shadow: none;
@@ -4006,6 +4009,9 @@ details.collapse summary::-webkit-details-marker {
 .h-full {
   height: 100%;
 }
+.h-\[35px\] {
+  height: 35px;
+}
 .max-h-screen {
   max-height: 100vh;
 }
@@ -4142,6 +4148,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-\[42\%\] {
   width: 42%;
+}
+.w-\[35px\] {
+  width: 35px;
 }
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
@@ -8696,6 +8705,9 @@ details.collapse summary::-webkit-details-marker {
 .input[list]::-webkit-calendar-picker-indicator {
   line-height: 1em;
 }
+.input-bordered {
+  border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+}
 .input:focus,
   .input:focus-within {
   box-shadow: none;
@@ -10468,6 +10480,9 @@ details.collapse summary::-webkit-details-marker {
 .h-full {
   height: 100%;
 }
+.h-\[35px\] {
+  height: 35px;
+}
 .max-h-screen {
   max-height: 100vh;
 }
@@ -10604,6 +10619,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-\[42\%\] {
   width: 42%;
+}
+.w-\[35px\] {
+  width: 35px;
 }
 .\!min-w-\[18\%\] {
   min-width: 18% !important;

@@ -1,8 +1,8 @@
 {
     "/js/central.js": "/js/central.js?id=fed7be428b9bcafc3abdadd3e2c736bb",
-    "/js/tenant.js": "/js/tenant.js?id=5360cc31725b38343dfa01e449ca0c8a",
-    "/css/index.css": "/css/index.css?id=cbd63e24ffbcfcd8c7afe498074fae3b",
-    "/css/app.css": "/css/app.css?id=bcd169709e582213e7cf70c657e17caf",
+    "/js/tenant.js": "/js/tenant.js?id=0996cf29f96bafe87c9d6f7ccd8abeb6",
+    "/css/index.css": "/css/index.css?id=4964aa1646f87ccdad1c5ee873ef49e9",
+    "/css/app.css": "/css/app.css?id=da7fdea2bfdf967344722abca6ce1391",
     "/CustomerControlpanel/details.html": "/CustomerControlpanel/details.html?id=402baa34b21b29ab79af7886673c3a35",
     "/CustomerControlpanel/listing.html": "/CustomerControlpanel/listing.html?id=311af92cf9cbc149dcffc714ba397a8d",
     "/CustomerControlpanel/profile.html": "/CustomerControlpanel/profile.html?id=a35706ca543e8b6d6e6827234695169d",
@@ -4176,7 +4176,7 @@
     "/media/technology-logos/Html5.png": "/media/technology-logos/Html5.png?id=b4a3ff7e36f190b0c7eb545f6154cfac",
     "/media/technology-logos/React.png": "/media/technology-logos/React.png?id=66d79d92233f04e128ea676dea1d93e0",
     "/media/technology-logos/VueJS.png": "/media/technology-logos/VueJS.png?id=d3e5fefbe4df2bd095731f8de30c9438",
-    "/mix-manifest.json": "/mix-manifest.json?id=63cb72278f03149f12eccb42ae16499b",
+    "/mix-manifest.json": "/mix-manifest.json?id=9c4e6bdfc462664b41c852280dc9cef4",
     "/plugins/custom/ckeditor/ckeditor-balloon-block.bundle.js": "/plugins/custom/ckeditor/ckeditor-balloon-block.bundle.js?id=4204959f1ca39a78058b2d5eff984fcf",
     "/plugins/custom/ckeditor/ckeditor-balloon.bundle.js": "/plugins/custom/ckeditor/ckeditor-balloon.bundle.js?id=2e343a19cee50dcb209ab53f8c9f5177",
     "/plugins/custom/ckeditor/ckeditor-classic.bundle.js": "/plugins/custom/ckeditor/ckeditor-classic.bundle.js?id=c67be7926c65ac51375d74f9ea117f7f",
@@ -4377,5 +4377,13 @@
     "/static/js/483.1448968e.chunk.js.map": "/static/js/483.1448968e.chunk.js.map?id=dd970c783fc4cff02cb2dea32e23c942",
     "/static/js/main.d3d127bb.js": "/static/js/main.d3d127bb.js?id=2482ea592fc44a12e0e4e4e8bfe6d539",
     "/static/js/main.d3d127bb.js.LICENSE.txt": "/static/js/main.d3d127bb.js.LICENSE.txt?id=d4736f9ca4b5e2223a5e00f1ae8a2b66",
-    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47"
+    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47",
+    "/images/ImgInstagram.svg": "/images/ImgInstagram.svg?id=837553c72ab0fc736cae27e93fec8ef0",
+    "/images/Linkedin.svg": "/images/Linkedin.svg?id=0d3f1414ee5b5e6da8d026257b37c670",
+    "/images/Msgner.svg": "/images/Msgner.svg?id=c0c2bebe942631ccf88574e2f3103eb8",
+    "/images/Tiktok.svg": "/images/Tiktok.svg?id=4423f44f15eb2b582e79ca9a07e3c9b7",
+    "/images/Xtwitter.svg": "/images/Xtwitter.svg?id=8b4753b39e71c212e8a2bf2273118202",
+    "/images/imgFB.svg": "/images/imgFB.svg?id=b27904153a689bcfb5b37be4e0549f38",
+    "/images/imgTelgram.svg": "/images/imgTelgram.svg?id=49453ef48979844f21534ad3c16406e6",
+    "/images/imgYoutube.svg": "/images/imgYoutube.svg?id=9f0fbb3b3a917ed4444afe43a5179ed5"
 }
