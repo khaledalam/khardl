@@ -27,9 +27,11 @@ const SectionPanel = () => {
           ]}
         />
       </div>
-      <div className='py-4 border-b border-neutral-300 flex items-center gap-4'>
-        <h2 className='font-bold text-lg mb-4'>Logo</h2>
-        <LogoAlignment />
+      <div className='py-4 border-b border-neutral-300'>
+        <div className='flex items-center justify-between w-[70%] px-2'>
+          <h2 className='font-bold text-lg'>Logo</h2>
+          <LogoAlignment />
+        </div>
       </div>
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Banner</h2>
@@ -97,11 +99,15 @@ const SectionPanel = () => {
 
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Phone Number</h2>
-        <PhoneInput
-          country={"ae"}
-          value={phoneNumber}
-          onChange={(phone) => setPhoneNumber(phone)}
-        />{" "}
+        <div className='w-[70%]'>
+          <PhoneInput
+            country={"sa"}
+            value={phoneNumber}
+            onChange={(phone) => setPhoneNumber(phone)}
+            containerClass='!w-full'
+            inputClass='!w-full !h-[48px] !text-[1rem]'
+          />{" "}
+        </div>
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}
