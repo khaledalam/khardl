@@ -617,7 +617,6 @@
                     <input type="hidden" value="{{ old('location') }}" id="location" name="location">
                     <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
                     <input type="hidden" id="lng-new_branch" name="lng-new_branch" />
-
                     <!--end::Input-->
                 </div>
                 <!--end::Col-->
@@ -677,13 +676,13 @@
                         <div class="tab-pane fade show active" id="kt_tab_pane_8" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_open"  required />
+                                    <label for="saturday_open">{{ __('messages.from') }} </label>
+                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_open" id="saturday_open"  required />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_close"  required />
+                                    <label for="saturday_close">{{ __('messages.to') }} </label>
+                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_close" id="saturday_close"  required />
 
                                 </div>
                             </div>
@@ -692,13 +691,13 @@
                         <div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_open"  required />
+                                    <label for="sunday_open">{{ __('messages.from') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_open" id="sunday_open"  required />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_close"  required />
+                                    <label for="sunday_close">{{ __('messages.to') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_close" id="sunday_close"  required />
 
                                 </div>
                             </div>
@@ -707,13 +706,13 @@
                         <div class="tab-pane fade" id="kt_tab_pane_10" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_open"  required />
+                                    <label for="monday_open">{{ __('messages.from') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_open" id="monday_open"  required />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_close"  required />
+                                    <label for="monday_close">{{ __('messages.to') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_close" id="monday_close"  required />
 
                                 </div>
                             </div>
@@ -722,14 +721,13 @@
                         <div class="tab-pane fade" id="kt_tab_pane_11" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_open"  required />
+                                    <label for="tuesday_open">{{ __('messages.from') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_open" id="tuesday_open"  required />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_close"  required />
-
+                                    <label for="tuesday_close">{{ __('messages.to') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_close" id="tuesday_close"  required />
                                 </div>
                             </div>
                         </div>
@@ -737,14 +735,13 @@
                         <div class="tab-pane fade" id="kt_tab_pane_12" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_open"  required />
+                                    <label for="wednesday_open">{{ __('messages.from') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_open" id="wednesday_open" required />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_close"  required />
-
+                                    <label for="wednesday_close">{{ __('messages.to') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_close" id="wednesday_close" required />
                                 </div>
                             </div>
                         </div>
@@ -752,14 +749,13 @@
                         <div class="tab-pane fade" id="kt_tab_pane_13" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_open"  required />
+                                    <label for="thursday_open">{{ __('messages.from') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_open" id="thursday_open"  required />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_close"  required />
-
+                                    <label for="thursday_close">{{ __('messages.to') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_close" id="thursday_close" required />
                                 </div>
                             </div>
                         </div>
@@ -767,26 +763,21 @@
                         <div class="tab-pane fade" id="kt_tab_pane_14" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_open" required />
+                                    <label for="friday_open">{{ __('messages.from') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_open" id="friday_open" required />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_close"  required />
-
+                                    <label for="friday_close">{{ __('messages.to') }} </label>
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_close" id="friday_close" required />
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
                 <!--end::Col-->
-
             </div>
             <!--end::Input group-->
-
 
 
                 <!--begin::Actions-->
