@@ -213,6 +213,7 @@
                            </a>
                         </div>
                         <!-- menu -->
+                        @if(\App\Models\Tenant\Branch::first())
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.menu',['branchId' => \App\Models\Tenant\Branch::where('is_primary',true)->first()->id])}}">
                                 <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
@@ -229,6 +230,7 @@
                                 </span>
                              </a>
                           </div>
+                          @endif
                         <!-- menu -->
 
                         <!-- Orders -->

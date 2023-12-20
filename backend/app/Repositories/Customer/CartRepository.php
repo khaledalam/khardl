@@ -62,6 +62,7 @@ class CartRepository
         if($request['selectedDropdown'] ?? false){
             $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
+       
         return CartItem::updateOrCreate([
             'item_id' => $item->id,
         ],[
@@ -80,7 +81,9 @@ class CartRepository
         $totalPrice = 0;
         foreach($options as $i=>$option){
             foreach($option as $j=>$sub_option){
-                $updatedOptions [$item->checkbox_input_titles[$i]][] = [$item->checkbox_input_names[$i][$j],$item->checkbox_input_prices[$i][$j]];
+                $updatedOptions [$i][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$j][0],$item->checkbox_input_prices[$i][$j]];
+                $updatedOptions [$i][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$j][1],$item->checkbox_input_prices[$i][$j]];
+           
                 $totalPrice += (float) $item->checkbox_input_prices[$i][$j];
             }   
         } 
@@ -91,7 +94,9 @@ class CartRepository
         foreach($options as $i=>$option){
             if($option)
                 foreach($option as $j=>$sub_option){
-                    $updatedOptions [$item->selection_input_titles[$i]] = [$item->selection_input_names[$i][$j],$item->selection_input_prices[$i][$j]];
+                    $updatedOptions [$i][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$j][0],$item->selection_input_prices[$i][$j]];
+                    $updatedOptions [$i][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$j][1],$item->selection_input_prices[$i][$j]];
+
                     $totalPrice += (float) $item->selection_input_prices[$i][$j];
                 }   
         } 
@@ -101,7 +106,9 @@ class CartRepository
         foreach($options as $i=>$option){
             if($option)
                 foreach($option as $j=>$sub_option){
-                    $updatedOptions [$item->dropdown_input_titles[$i]] = $item->dropdown_input_names[$i][$j];
+                    $updatedOptions [$i][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$j][0];
+                    $updatedOptions [$i][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$j][1];
+
                 }   
         } 
     }
