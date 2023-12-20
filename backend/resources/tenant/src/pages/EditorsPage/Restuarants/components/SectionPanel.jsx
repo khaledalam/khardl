@@ -4,11 +4,13 @@ import LogoAlignment from "./LogoAlignment"
 import CategoryAlign from "./CategoryAlign"
 import SocialMediaCollection from "./SocialMediaCollection"
 import {IoAdd} from "react-icons/io5"
+import PhoneInput from "react-phone-input-2"
 
 const SectionPanel = () => {
   const [position, setPosition] = useState("Fixed")
   const [banner, setBanner] = useState("One-Page")
   const [content, setContent] = useState("Center")
+  const [phoneNumber, setPhoneNumber] = useState("")
 
   return (
     <div className='p-2 w-full'>
@@ -72,12 +74,34 @@ const SectionPanel = () => {
           />
         </div>
       </div>
+
       <div className='py-4 border-b border-neutral-300 '>
         <div className='flex items-center justify-between p-2 w-[70%] mb-4 '>
           <h2 className='font-bold text-lg '>Social Media</h2>
           <IoAdd size={25} />
         </div>
         <SocialMediaCollection />
+        <div className='mt-3'>
+          <PrimarySelect
+            label={"Content"}
+            defaultValue={content}
+            handleChange={(value) => setContent(value)}
+            options={[
+              {value: "left", text: "Left"},
+              {value: "center", text: "Center"},
+              {value: "right", text: "Right"},
+            ]}
+          />
+        </div>
+      </div>
+
+      <div className='py-4 border-b border-neutral-300'>
+        <h2 className='font-bold text-lg mb-4'>Phone Number</h2>
+        <PhoneInput
+          country={"ae"}
+          value={phoneNumber}
+          onChange={(phone) => setPhoneNumber(phone)}
+        />{" "}
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}

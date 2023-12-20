@@ -55,7 +55,7 @@ const SidebarEditor = () => {
           {btnList.map((item, idx) => (
             <Fragment key={item.id}>
               <button
-                className={`btn w-[42%] h-[30px]  ${
+                className={`btn w-[44%] h-[30px]  ${
                   item.name === activeTab
                     ? " bg-white hover:bg-white"
                     : "bg-neutral-100 hover:bg-neutral-100 text-neutral-300"
