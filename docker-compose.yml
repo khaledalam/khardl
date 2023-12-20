@@ -3,7 +3,7 @@ version: '3'
 # khardl
 services:
     khardl_db:
-        platform: 'linux/amd64'
+#        platform: 'linux/amd64'
         container_name: khardl_db
         image: mariadb
         restart: unless-stopped
