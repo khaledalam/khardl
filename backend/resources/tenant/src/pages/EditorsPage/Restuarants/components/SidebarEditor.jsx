@@ -14,16 +14,23 @@ const btnList = [
 
 const SidebarEditor = () => {
   const [active, setActive] = useState("Section")
+  const [dropdownValue, setDropdownValue] = useState("Template 1")
 
   const handleActiveTab = useCallback((value) => {
     setActive(value)
   }, [])
+
+  const handleChange = useCallback((value) => {
+    setDropdownValue(value)
+  }, [])
+
   return (
     <div className='h-full w-full pt-4 px-2'>
       <div className='w-full flex items-center gap-2'>
         <div className='bg-neutral-100 w-[45%] laptopXL:w-[40%] p-2 rounded-2xl'>
           <PrimaryDropDown
-            defaultValue={"Template 1"}
+            handleChange={handleChange}
+            defaultValue={dropdownValue}
             dropdownList={[
               {
                 text: "Template 1",
