@@ -25,7 +25,7 @@
                                 <!--begin::Image-->
 
                                     <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
-                                        <input id="pac-input" class="form-control" type="text" placeholder="Search for place">
+                                        <input id="pac-input" class="form-control" type="text" placeholder="{{__('messages.search-for-place')}}">
                                         <div id="map{{ $branch->id }}" style="width: 100%; height: 90%; border:0;"></div>
                                             <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
                                                 @csrf

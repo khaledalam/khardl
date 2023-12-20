@@ -26,6 +26,7 @@ class OrderResource extends JsonResource
             'delivery_cost'=> DeliveryType::where('id','=', $this->delivery_type_id)->first()?->cost,
             'order_notes'=>$this->order_notes,
             'platform_fee' => '',
+            'delivery_type' => DeliveryType::where('id','=', $this->delivery_type_id)->first(),
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
 
