@@ -4125,6 +4125,24 @@ details.collapse summary::-webkit-details-marker {
 .w-full {
   width: 100%;
 }
+.w-1 {
+  width: 0.25rem;
+}
+.w-\[70\%\] {
+  width: 70%;
+}
+.w-1\/3 {
+  width: 33.333333%;
+}
+.w-2 {
+  width: 0.5rem;
+}
+.w-\[2px\] {
+  width: 2px;
+}
+.w-\[42\%\] {
+  width: 42%;
+}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }
@@ -4809,6 +4827,14 @@ details.collapse summary::-webkit-details-marker {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.bg-neutral-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(115 115 115 / var(--tw-bg-opacity));
+}
+.bg-neutral-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(163 163 163 / var(--tw-bg-opacity));
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
@@ -10550,6 +10576,24 @@ details.collapse summary::-webkit-details-marker {
 .w-full {
   width: 100%;
 }
+.w-1 {
+  width: 0.25rem;
+}
+.w-\[70\%\] {
+  width: 70%;
+}
+.w-1\/3 {
+  width: 33.333333%;
+}
+.w-2 {
+  width: 0.5rem;
+}
+.w-\[2px\] {
+  width: 2px;
+}
+.w-\[42\%\] {
+  width: 42%;
+}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }
@@ -11234,6 +11278,14 @@ details.collapse summary::-webkit-details-marker {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.bg-neutral-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(115 115 115 / var(--tw-bg-opacity));
+}
+.bg-neutral-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(163 163 163 / var(--tw-bg-opacity));
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
