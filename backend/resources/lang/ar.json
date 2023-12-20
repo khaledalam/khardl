@@ -13,5 +13,6 @@
     ":option is required":":option مطلوب",
     "Maximum :option options is ":"يجب اختيار :option بحد اقصي ",
     "Please use this phone to login in into your account":"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول",
-    "Please update your location before place an order":"من فضلك قم بتحديث موقعك الحالي قبل اي طلب جديد"
+    "Please update your location before place an order":"من فضلك قم بتحديث موقعك الحالي قبل اي طلب جديد",
+    "This email is already registered with different phone": "تم استخدام هذا البريد مع رقم هاتف مختلف"
 }

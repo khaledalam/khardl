@@ -48,6 +48,7 @@ const App = () => {
        '/site-editor/restaurants',
        '/site-editor/customers',
       '/login',
+       '/login-admins',
       '/login-trial',
        '/register',
        '/register/:url',
@@ -72,7 +73,7 @@ const App = () => {
        <MenuProvider MenuComponent={SideMenu}
                      direction={Language == 'en' ? 'left' : 'right'}
                      animation={'slide'} // 'slide' │ 'push' │ 'reveal'
-                     width={'25vw'}
+                     width={'40vw'}
 
        >
           <div

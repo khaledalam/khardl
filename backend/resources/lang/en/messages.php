@@ -329,7 +329,9 @@ return [
     "e.g." => "e.g.",
     'has-created-new-restaurant'=> 'Has created new restaurant',
     "clear"=>"Clear",
-    "Please-use-this-phone-to-login-in-into-your-account"=>"Please use this phone to login in into your account"
+    "Please-use-this-phone-to-login-in-into-your-account"=>"Please use this phone to login in into your account",
+    "This email is already registered with different phone"=> "This email is already registered with different phone"
+
 
 ];
 

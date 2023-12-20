@@ -130,7 +130,7 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-    
+
     'attributes' => [
         'address'               => 'العنوان',
         'age'                   => 'العمر',
@@ -174,6 +174,8 @@ return [
         'restaurant_name'              => 'اسم المطعم',
         'payment_method'        =>'وسيلة الدفع',
         'delivery_type'=>"نوع التوصيل",
-        "Please use this phone to login in into your account"=>"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول"
+        "Please use this phone to login in into your account"=>"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول",
+        "This email is already registered with different phone" => "تم استخدام هذا البريد مع رقم هاتف مختلف"
+
     ],
 ];
