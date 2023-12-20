@@ -33,15 +33,30 @@ const SectionPanel = () => {
           defaultValue={banner}
           handleChange={(value) => setBanner(value)}
           options={[
+            {value: "slider", text: "Slider"},
             {value: "one-page", text: "One-Page"},
-            {value: "two-page", text: "Two-Page"},
-            {value: "three-page", text: "Three-Page"},
           ]}
         />
       </div>
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Category</h2>
-        <CategoryAlign />
+        <CategoryAlign label={"Type"} />
+        <div className='mt-3'>
+          <PrimarySelect
+            label={"Content"}
+            defaultValue={content}
+            handleChange={(value) => setContent(value)}
+            options={[
+              {value: "left", text: "Left"},
+              {value: "center", text: "Center"},
+              {value: "right", text: "Right"},
+            ]}
+          />
+        </div>
+      </div>
+      <div className='py-4 border-b border-neutral-300'>
+        <h2 className='font-bold text-lg mb-4'>Category Details</h2>
+        <CategoryAlign label={"Type"} />
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}

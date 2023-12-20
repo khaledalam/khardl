@@ -51,19 +51,21 @@ const SidebarEditor = () => {
             ]}
           />
         </div>
-        <div className='bg-neutral-100 p-2 w-[55%] laptopXL:w-[60%] flex items-center gap-[0.25rem] rounded-2xl'>
-          {btnList.map((item) => (
-            <button
-              className={`btn w-1/2 h-[30px]  ${
-                item.name === activeTab
-                  ? " bg-white hover:bg-white"
-                  : "bg-neutral-100 hover:bg-neutral-100 text-neutral-300"
-              }`}
-              key={item.id}
-              onClick={() => handleActiveTab(item.name)}
-            >
-              {item.name}
-            </button>
+        <div className='bg-neutral-100 p-2 w-[55%] laptopXL:w-[60%] flex items-center  justify-between  rounded-2xl'>
+          {btnList.map((item, idx) => (
+            <Fragment key={item.id}>
+              <button
+                className={`btn w-[42%] h-[30px]  ${
+                  item.name === activeTab
+                    ? " bg-white hover:bg-white"
+                    : "bg-neutral-100 hover:bg-neutral-100 text-neutral-300"
+                }`}
+                onClick={() => handleActiveTab(item.name)}
+              >
+                {item.name}
+              </button>
+              {idx === 0 && <div className='h-8 w-[2px] bg-neutral-400'></div>}
+            </Fragment>
           ))}
         </div>
       </div>
