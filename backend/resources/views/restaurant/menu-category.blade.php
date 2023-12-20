@@ -83,19 +83,26 @@
                                                 <div id="categoryForm" class="mt-2" style="display: none !important;" >
                                                     <ul class="nav nav-tabs" id="languageTabs">
                                                         <li class="nav-item">
-                                                            <a class="nav-link active" id="en-tab" data-bs-toggle="tab" href="#en">English</a>
+                                                            <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('messages.english')}}</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="ar-tab" data-bs-toggle="tab" href="#ar">Arabic</a>
+                                                            <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('messages.arabic')}}</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('messages.logo')}}</a>
                                                         </li>
                                                     </ul>
                                                     <div class="tab-content mt-3">
-                                                        <input type="image" />
                                                         <div class="tab-pane fade show active" id="en">
                                                             <input type="text" class="form-control" placeholder="Enter text in English" name="name_en">
                                                         </div>
                                                         <div class="tab-pane fade" id="ar">
                                                             <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية" name="name_ar">
+                                                        </div>
+                                                        <div class="tab-pane fade" id="logo">
+                                                            <label for="">{{__('messages.category-logo')}}</label>
+                                                            <input type="file" class="form-control form-control-solid"
+                                                                   placeholder="Enter product image" id="new_category_photo" name="new_category_photo" />
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-center">
@@ -306,7 +313,7 @@
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
-                            <h1 class="mb-3">Create New Items</h1>
+                            <h1 class="mb-3">{{__('messages.create-new-items')}}</h1>
                             <!--end::Title-->
                         </div>
                         <!--end::Heading-->
@@ -314,7 +321,7 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">Item photo</span>
+                                <span class="required">{{__('messages.item-photo')}}</span>
                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
                             </label>
                             <!--end::Label-->
@@ -327,7 +334,7 @@
                             <!--begin::Label-->
                             <div class="d-flex justify-content-between align-items-center">
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">Item availability</span>
+                                    <span class="required">{{__('messages.item-availability')}}</span>
                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
                                 </label>
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">

@@ -329,10 +329,16 @@ return [
     "e.g." => "e.g.",
     'has-created-new-restaurant'=> 'Has created new restaurant',
     "clear"=>"Clear",
+    'advertisement-modification' => 'Advertisement modification',
     "Please-use-this-phone-to-login-in-into-your-account"=>"Please use this phone to login in into your account",
-    "This email is already registered with different phone"=> "This email is already registered with different phone"
+    "This email is already registered with different phone"=> "This email is already registered with different phone",
+    "item-photo" => "Product photo",
+    "create-new-items" => "Create new product",
+    "item-availability" => "Product availability",
+    "category-logo" => "Category logo",
+    "logo" => "Logo"
+
+
 
 
 ];
-
-//    'advertisement-modification' => 'Advertisement modification',

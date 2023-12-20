@@ -325,11 +325,15 @@ return [
     'ready'=>"جاهز",
     'delivery-fee' => "عموله التوصيل",
     "e.g." => "علي سبيل المثال",
+    'advertisement-modification' => 'تحرير العروض',
     'has-created-new-restaurant'=> 'قام بانشاء مطعم جديد',
     "clear"=>"مسح",
-    "Please-use-this-phone-to-login-in-into-your-account"=>"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول"
+    "Please-use-this-phone-to-login-in-into-your-account"=>"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول",
+    "item-photo" => "صوره المنتج",
+    "create-new-items" => "انشاء منتج جديد",
+    "item-availability" => "اتاحه المنتج",
+    "category-logo" => "شعار الصنف",
+    "logo" => "شعار"
 
 ];
 
-
-//    'advertisement-modification' => 'تحرير العروض',

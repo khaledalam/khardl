@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Tenant;
 
 use App\Models\Tenant\Item;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
@@ -440,7 +441,28 @@ class RestaurantController extends BaseController
 
     public function addCategory(Request $request, $branchId){
 
+        $validator = Validator::make($request->all(), [
+            'name_en' => 'required|string',
+            'name_ar' => 'required|string',
+            'new_category_photo' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
         $userId = Auth::user()->id;
+
+
+        $photoFile = $request->file('new_category_photo');
+
+        if ($photoFile) {
+            $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+            while (Storage::disk('public')->exists('categories/' . $filename)) {
+                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+            }
+            $photoFile->storeAs('categories', $filename, 'public');
+        }
 
         // if($userId != DB::table('branches')->where('id', $branchId)->value('user_id')){
         //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
@@ -450,6 +472,7 @@ class RestaurantController extends BaseController
         //     return;
         Category::create([
             'name' =>trans_json( $request->input('name_en'), $request->input('name_ar')),
+            'photo' => $filename ? tenant_asset('categories/'.$filename) : null,
             'user_id' => $userId,
             'branch_id' => $branchId,
             'created_at' => now(),
@@ -470,21 +493,21 @@ class RestaurantController extends BaseController
         // dd([
             // $request->checkboxInputNameEn,
             // $request->checkboxInputNameAr,
-            
+
             // 'checkbox_required' => ( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
             // 'checkbox_input_titles' =>array_map(null,$request->checkboxInputTitleEn,$request->checkboxInputTitleAr),
             // 'checkbox_input_maximum_choices' =>$request->input('checkboxInputMaximumChoice'),
             // 'checkbox_input_names' => ($request->input('checkboxInputNameAr') )?  array_map(null,$request->checkboxInputNameEn,$request->checkboxInputNameAr) : null,
             // 'checkbox_input_prices' =>($request->input('checkboxInputPrice') )? array_values($request->input('checkboxInputPrice')) : null,
             // 'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
-            // 'selection_input_names' =>($request->input('selectionInputNameAr') )? array_map(null,$request->selectionInputNameEn,$request->selectionInputNameAr) : null, 
+            // 'selection_input_names' =>($request->input('selectionInputNameAr') )? array_map(null,$request->selectionInputNameEn,$request->selectionInputNameAr) : null,
             // 'selection_input_prices' =>($request->input('selectionInputPrice') )? array_values($request->input('selectionInputPrice')) : null,
             // 'selection_input_titles' => array_map(null,$request->selectionInputTitleEn,$request->selectionInputTitleAr),
             // 'dropdown_required' =>( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
             // 'dropdown_input_titles' => array_map(null,$request->dropdownInputTitleEn,$request->dropdownInputTitleAr),
             // 'dropdown_input_names' =>($request->input('dropdownInputNameAr') )?array_map(null,$request->dropdownInputNameEn,$request->dropdownInputNameAr): null,
         // ]);
-     
+
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
 
             $photoFile = $request->file('photo');
@@ -513,10 +536,10 @@ class RestaurantController extends BaseController
                     'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
                     'selection_input_names' => $this->processOptions($request, 'selectionInputNameEn', 'selectionInputNameAr'),
                     'selection_input_prices' => $request->input('selectionInputPrice') ? array_values($request->input('selectionInputPrice')) : null,
-                    'selection_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->selectionInputTitleEn,  $request->selectionInputTitleAr):null, 
+                    'selection_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->selectionInputTitleEn,  $request->selectionInputTitleAr):null,
                     'dropdown_required' => ( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
                     'dropdown_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->dropdownInputTitleEn,  $request->dropdownInputTitleAr):null,
-                    'dropdown_input_names' => $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr'),                
+                    'dropdown_input_names' => $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr'),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
                     'availability'=>($request->input('availability'))?true:false,
@@ -660,7 +683,7 @@ class RestaurantController extends BaseController
 
     public function generateWorker(RegisterWorkerRequest $request, $branchId)
     {
-    
+
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['phone_verified_at'] = null;
