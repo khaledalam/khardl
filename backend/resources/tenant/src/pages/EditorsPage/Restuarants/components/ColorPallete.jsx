@@ -2,10 +2,7 @@ import React, {useState} from "react"
 import {ChromePicker} from "react-color"
 import {IoIosClose} from "react-icons/io"
 
-const ColorPallete = ({defaultColor}) => {
-  const [color, setColor] = useState(defaultColor)
-  const handleChange = (color) => setColor(color)
-
+const ColorPallete = ({color, handleColorChange, modalId}) => {
   console.log("colorPalette", color)
 
   return (
@@ -18,12 +15,15 @@ const ColorPallete = ({defaultColor}) => {
         <span className='tracking-wide'>{color.hex}</span>
         <IoIosClose
           size={24}
-          onClick={() => document.getElementById("color_modal").showModal()}
+          onClick={() => document.getElementById(modalId).showModal()}
         />
       </button>
-      <dialog id='color_modal' className='modal'>
+      <dialog id={modalId} className='modal'>
         <div className='modal-box w-[300px] flex items-center justify-center'>
-          <ChromePicker color={color} onChangeComplete={handleChange} />
+          <ChromePicker
+            color={color}
+            onChangeComplete={(color) => handleColorChange(color)}
+          />
         </div>
         <form method='dialog' className='modal-backdrop'>
           <button>close</button>

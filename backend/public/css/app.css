@@ -5489,6 +5489,9 @@ details.collapse summary::-webkit-details-marker {
   font-size: 0.75rem;
   line-height: 1rem;
 }
+.text-\[1rem\] {
+  font-size: 1rem;
+}
 .\!font-medium {
   font-weight: 500 !important;
 }
@@ -6628,6 +6631,15 @@ details.collapse summary::-webkit-details-marker {
 
   .laptopXL\:flex-\[75\%\] {
     flex: 75%;
+  }
+
+  .laptopXL\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .laptopXL\:text-\[1rem\] {
+    font-size: 1rem;
   }
 }
 
