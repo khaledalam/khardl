@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->json('name');
+            $table->string('photo')->nullable();
 
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('user_id');
