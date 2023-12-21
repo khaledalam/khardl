@@ -11,6 +11,7 @@ use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RestaurantLive;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\LanguageManager;
+use App\Http\Middleware\LocalizationApi;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\CheckPermissions;
 use Illuminate\Auth\Middleware\Authorize;
@@ -137,7 +138,7 @@ class Kernel extends HttpKernel
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
         'notBlocked'=> EnsureUserIsNotBlocked::class,
         'role' => RoleMiddleware::class,
-
+        "trans_api"=>LocalizationApi::class,
     ];
 
 }
