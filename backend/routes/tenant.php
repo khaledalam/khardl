@@ -89,7 +89,6 @@ Route::group([
             Route::delete('/category/{id}/delete-item', [RestaurantController::class, 'deleteItem'])->middleware('permission:can_edit_menu')->name('restaurant.delete-item');
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
-            Route::post('/payment', [TapController::class, 'payment'])->middleware('permission:can_control_payment')->name('tap.payment');
             Route::get('/download/pdf',[DownloadController::class,'downloadPDF'])
             ->name("download.pdf");
             Route::group(['prefix'=>'/branches'], function(){
@@ -103,12 +102,12 @@ Route::group([
 
                 // TAP Create Business
                 // Step 1:
-                Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get');
-                Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents');
+                Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get')->middleware('isBusinessSubmitted');
+                Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents')->middleware('isBusinessSubmitted');
 
                 // Step 2:
-                Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get');
-                Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents');
+                Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get')->middleware('isBusinessFilesSubmitted');
+                Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
@@ -277,7 +276,7 @@ Route::prefix('api')->middleware([
         Route::apiResource('files', FileController::class)->only([
             'store','show'
         ]);
-        Route::apiResource('webhook-tap-actions','tap-payment');
+        Route::webhooks('webhook-tap-actions','tap-payment');
     });
 
 

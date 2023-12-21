@@ -18,7 +18,7 @@ class Tap
                 unset($data['file']);
                 $response = Http::withToken($secret_key)
                 ->attach('file',$file,$name)
-                ->$method($prefix_url.$url,$data);
+                ->post($prefix_url.$url,$data);
             }else {
                 $response = Http::withToken($secret_key)
                 ->$method($prefix_url.$url,$data);
@@ -35,11 +35,20 @@ class Tap
         }catch(\Exception $e){
            logger($e->getMessage());
         }
-        $response = json_decode($response->getBody(), true);
+        $response = json_decode((isset($response))?$response->getBody():'', true);
+        if(isset($response['errors'][0])){
+            if(isset($response['errors'][0]['description'])){
+                $errors =  $response['errors'][0]['description'];
+            }else if (isset($response['errors'][0]['message'])){
+                $errors =  $response['errors'][0]['message'];
+            }
+        }else { 
+            $errors =  __("Failed to complete the process, please try again or contact Support Team");
+        }
         return [
             'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
             'gateway_code'=> (isset($response['errors'][0]['code']))?$response['errors'][0]['code']: ResponseHelper::HTTP_BAD_REQUEST,
-            'message'=> (isset($response['errors'][0]['description']))?$response['errors'][0]['description']: __("Error Occur")
+            'message'=>  $errors
         ];
     }
 

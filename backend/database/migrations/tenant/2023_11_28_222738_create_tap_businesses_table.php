@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('tap_businesses', function (Blueprint $table) {
             $table->id();
+            $table->json("data");
+            $table->string("business_id");
+            $table->string("destination_id");
+            $table->string("entity_id");
+            $table->string("wallet_id");
+            $table->string("status");
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
