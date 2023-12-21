@@ -36,6 +36,7 @@
                                                 <!--begin::Inbox-->
                                                 <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
                                                     <span class="menu-link @if ($category->id === $selectedCategory->id) active @endif">
+                                                        <img src="{{ $category->photo }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
                                                         <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
                                                         {{-- <span class="badge badge-light-success">3</span> --}}

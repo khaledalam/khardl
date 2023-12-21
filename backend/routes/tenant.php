@@ -249,7 +249,7 @@ Route::prefix('api')->middleware([
     // API
 
     Route::post('login', [APILoginController::class, 'login']);
-   
+
 
     Route::middleware('auth:sanctum')->group(function(){
         Route::apiResource('categories',CategoryController::class)->only([
