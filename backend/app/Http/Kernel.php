@@ -21,6 +21,7 @@ use App\Http\Middleware\NonAdminMiddleware;
 use App\Http\Middleware\RestaurantOrWorker;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Middleware\EnsurePhoneVerified;
+use App\Http\Middleware\IsBusinessSubmitted;
 use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Http\Middleware\EnsureUserIsNotActive;
 use App\Http\Middleware\EnsurePhoneNotVerified;
@@ -138,7 +139,8 @@ class Kernel extends HttpKernel
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
         'notBlocked'=> EnsureUserIsNotBlocked::class,
         'role' => RoleMiddleware::class,
-        'isBusinessFilesSubmitted'=>IsBusinessFilesSubmitted::class
+        'isBusinessFilesSubmitted'=>IsBusinessFilesSubmitted::class,
+        'isBusinessSubmitted'=>IsBusinessSubmitted::class
 
     ];
 

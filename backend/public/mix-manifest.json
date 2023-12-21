@@ -1,6 +1,10 @@
 {
     "/js/central.js": "/js/central.js?id=cd564f83ef2a47b4414601f333cb2ecf",
+<<<<<<< Updated upstream
     "/js/tenant.js": "/js/tenant.js?id=09b5ee6563b196c2abfad32f8ff5a750",
+=======
+    "/js/tenant.js": "/js/tenant.js?id=b2a27dad81e60d517dca2d10ee81a325",
+>>>>>>> Stashed changes
     "/css/index.css": "/css/index.css?id=d04632a836bb4826f603b0716db0aa59",
     "/css/app.css": "/css/app.css?id=eb7cf077b2f3eab7383dda6338e417a5",
     "/CustomerControlpanel/details.html": "/CustomerControlpanel/details.html?id=402baa34b21b29ab79af7886673c3a35",

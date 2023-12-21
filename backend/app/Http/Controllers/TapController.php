@@ -20,7 +20,8 @@ class TapController extends Controller
     public function payments()
     {
         $user = Auth::user();
-        return view('restaurant.payments', compact('user'));
+        $business = TapBusiness::first();
+        return view('restaurant.payments', compact('user','business'));
     }
 
     public function payments_upload_tap_documents_get()
@@ -92,7 +93,7 @@ class TapController extends Controller
         $business = Business::create($data);
         if($business['http_code'] != ResponseHelper::HTTP_OK){
             return redirect()->back()
-            ->with('errors', [
+            ->withErrors([
                 __('Failed to create business'),
                 $business['message']
             ])
@@ -103,11 +104,14 @@ class TapController extends Controller
             'data'=>$data,
             'business_id'=>$business['message']['id'],
             "destination_id"=>$business['message']['destination_id'],
+            "status"=>$business['message']['status'],
+            "entity_id"=>$business['message']['entity']['id'],
+            "wallet_id"=>$business['message']['entity']['wallets'][0]['id'],
             'user_id'=>Auth::id()
         ]);
       
-        return redirect()->back()->with('success', __('New Business has been created successfully.'));
-
+        return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
+        
     }
 
 }

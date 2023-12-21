@@ -2,13 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Tenant\Tap\TapBusiness;
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\Tenant\Tap\TapBusinessFile;
+use App\Models\Tenant\Tap\TapBusiness;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsBusinessFilesSubmitted
+class IsBusinessSubmitted
 {
     /**
      * Handle an incoming request.
@@ -17,8 +16,8 @@ class IsBusinessFilesSubmitted
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!TapBusinessFile::first() || TapBusiness::first()){
-            return redirect()->route("tap.payments_upload_tap_documents_get");
+        if(TapBusiness::first()){
+            return redirect()->route("restaurant.summary");
         }
         return $next($request);
     }

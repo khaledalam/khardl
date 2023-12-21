@@ -35,11 +35,11 @@ class Tap
         }catch(\Exception $e){
            logger($e->getMessage());
         }
-        $response = json_decode((isset($response))?$response->getBody():[], true);
+        $response = json_decode((isset($response))?$response->getBody():'', true);
         return [
             'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
             'gateway_code'=> (isset($response['errors'][0]['code']))?$response['errors'][0]['code']: ResponseHelper::HTTP_BAD_REQUEST,
-            'message'=> (isset($response['errors'][0]['description']))?$response['errors'][0]['description']: __("Error Occur")
+            'message'=> (isset($response['errors'][0]['description']))?$response['errors'][0]['description']: __("Failed to complete the process, please contact Team support")
         ];
     }
 

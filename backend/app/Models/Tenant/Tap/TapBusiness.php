@@ -12,7 +12,10 @@ class TapBusiness extends Model
         'data',
         'business_id',
         'user_id',
-        'destination_id'
+        'destination_id',
+        "status",
+        'wallet_id',
+        'entity_id'
     ];
     protected $casts =[
         'data'=>'array'
