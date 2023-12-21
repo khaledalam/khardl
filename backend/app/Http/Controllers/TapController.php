@@ -90,6 +90,23 @@ class TapController extends Controller
     public function payments_submit_tap_documents(CreateBusinessRequest $request)
     { 
         $data = $request->validated();
+        $files = TapBusinessFile::first();
+        $types = [
+            'business_logo_id',
+            'customer_signature_id',
+            'dispute_evidence_id',
+            'pci_document_id',
+            'tax_document_user_upload_id',
+        ];
+        foreach($types as $id){
+            $data['entity']['documents'][] = [
+                'type'=>"License",
+                "files"=> [
+                    $files->{$id}
+                ]
+            ];
+        }
+     
         $business = Business::create($data);
         if($business['http_code'] != ResponseHelper::HTTP_OK){
             return redirect()->back()
