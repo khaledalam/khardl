@@ -1,6 +1,8 @@
 import React, {useState} from "react"
 import PrimarySelect from "./PrimarySelect"
 import ColorPallete from "./ColorPallete"
+import PrimaryNumberCount from "./PrimaryNumberCount"
+import LogoAlignment from "./LogoAlignment"
 
 const EditPanel = () => {
   const [logoShape, setLogoShape] = useState("Rounded")
@@ -13,6 +15,7 @@ const EditPanel = () => {
   })
   const [headerColor, setHeaderColor] = useState({hex: "#ffffff"})
   const [footerColor, setFooterColor] = useState({hex: "#ffffff"})
+  const [textColor, setTextColor] = useState({hex: "#ef1515"})
 
   return (
     <div className='w-full h-full'>
@@ -170,6 +173,28 @@ const EditPanel = () => {
                 {value: "Bold", text: "Bold"},
                 {value: "Extra Bold", text: "Extra Bold"},
               ]}
+            />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              Size
+            </h3>
+            <PrimaryNumberCount defaultValue={14} />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              Alignment
+            </h3>
+            <LogoAlignment iconSize={20} widthStyle={"w-[50%]"} />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              Color
+            </h3>
+            <ColorPallete
+              modalId={"text_color"}
+              color={textColor}
+              handleColorChange={(color) => setTextColor(color)}
             />
           </div>
         </div>
