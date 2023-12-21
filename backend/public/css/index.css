@@ -6599,6 +6599,10 @@ details.collapse summary::-webkit-details-marker {
     width: 60%;
   }
 
+  .laptopXL\:w-\[25\%\] {
+    width: 25%;
+  }
+
   .laptopXL\:flex-\[25\%\] {
     flex: 25%;
   }
@@ -13211,6 +13215,10 @@ details.collapse summary::-webkit-details-marker {
 
   .laptopXL\:w-\[60\%\] {
     width: 60%;
+  }
+
+  .laptopXL\:w-\[25\%\] {
+    width: 25%;
   }
 
   .laptopXL\:flex-\[25\%\] {

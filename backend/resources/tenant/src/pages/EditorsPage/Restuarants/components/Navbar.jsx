@@ -27,7 +27,7 @@ const Navbar = () => {
             aria-label='close sidebar'
             className='drawer-overlay'
           ></label>
-          <div className='menu p-4 w-[25%] min-h-full bg-white text-base-content'>
+          <div className='menu p-4 laptopXL:w-[25%] w-[30%] min-h-full bg-white text-base-content'>
             {/* Sidebar content here */}
             <OuterSidebarNav />
           </div>

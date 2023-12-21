@@ -6658,6 +6658,10 @@ details.collapse summary::-webkit-details-marker {
     width: 60%;
   }
 
+  .laptopXL\:w-\[25\%\] {
+    width: 25%;
+  }
+
   .laptopXL\:flex-\[25\%\] {
     flex: 25%;
   }
