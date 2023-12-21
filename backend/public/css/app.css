@@ -4128,8 +4128,14 @@ details.collapse summary::-webkit-details-marker {
 .h-\[50px\] {
   height: 50px;
 }
+.h-\[60px\] {
+  height: 60px;
+}
 .h-\[70px\] {
   height: 70px;
+}
+.h-\[75px\] {
+  height: 75px;
 }
 .h-\[80px\] {
   height: 80px;
@@ -4161,12 +4167,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .h-full {
   height: 100%;
-}
-.h-\[75px\] {
-  height: 75px;
-}
-.h-\[60px\] {
-  height: 60px;
 }
 .max-h-screen {
   max-height: 100vh;
@@ -4286,6 +4286,9 @@ details.collapse summary::-webkit-details-marker {
 .w-\[50\%\] {
   width: 50%;
 }
+.w-\[50px\] {
+  width: 50px;
+}
 .w-\[55\%\] {
   width: 55%;
 }
@@ -4298,8 +4301,8 @@ details.collapse summary::-webkit-details-marker {
 .w-\[70\%\] {
   width: 70%;
 }
-.w-\[70px\] {
-  width: 70px;
+.w-\[75px\] {
+  width: 75px;
 }
 .w-\[80\%\] {
   width: 80%;
@@ -4319,12 +4322,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-full {
   width: 100%;
-}
-.w-\[50px\] {
-  width: 50px;
-}
-.w-\[75px\] {
-  width: 75px;
 }
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
@@ -4431,11 +4428,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .rotate-180 {
   --tw-rotate: 180deg;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-.scale-0 {
-  --tw-scale-x: 0;
-  --tw-scale-y: 0;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .scale-100 {
@@ -4922,6 +4914,10 @@ details.collapse summary::-webkit-details-marker {
 .bg-\[\#C0D12325\] {
   background-color: #C0D12325;
 }
+.bg-\[\#F2FF00\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 255 0 / var(--tw-bg-opacity));
+}
 .bg-\[\#b8cb0aa4\] {
   background-color: #b8cb0aa4;
 }
@@ -5011,10 +5007,6 @@ details.collapse summary::-webkit-details-marker {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-.bg-\[\#F2FF00\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(242 255 0 / var(--tw-bg-opacity));
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
@@ -5859,16 +5851,6 @@ details.collapse summary::-webkit-details-marker {
   --tw-rotate: 180deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-.hover\:scale-100:hover {
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-.hover\:scale-150:hover {
-  --tw-scale-x: 1.5;
-  --tw-scale-y: 1.5;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
 .hover\:scale-125:hover {
   --tw-scale-x: 1.25;
   --tw-scale-y: 1.25;
@@ -5910,6 +5892,10 @@ details.collapse summary::-webkit-details-marker {
 .hover\:bg-\[\#E4405F\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(228 64 95 / var(--tw-bg-opacity));
+}
+.hover\:bg-\[\#F2FF00\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 255 0 / var(--tw-bg-opacity));
 }
 .hover\:bg-\[\#FF0000\]:hover {
   --tw-bg-opacity: 1;
@@ -5953,10 +5939,6 @@ details.collapse summary::-webkit-details-marker {
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-.hover\:bg-\[\#F2FF00\]:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(242 255 0 / var(--tw-bg-opacity));
 }
 .hover\:text-blue-300:hover {
   --tw-text-opacity: 1;
@@ -6011,6 +5993,10 @@ details.collapse summary::-webkit-details-marker {
 .focus-visible\:ring-opacity-50:focus-visible {
   --tw-ring-opacity: 0.5;
 }
+.active\:bg-\[\#F2FF00\]:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 255 0 / var(--tw-bg-opacity));
+}
 .active\:bg-gray-100:active {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -6026,10 +6012,6 @@ details.collapse summary::-webkit-details-marker {
 .active\:bg-white:active {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-.active\:bg-\[\#F2FF00\]:active {
-  --tw-bg-opacity: 1;
-  background-color: rgb(242 255 0 / var(--tw-bg-opacity));
 }
 .active\:text-gray-500:active {
   --tw-text-opacity: 1;
