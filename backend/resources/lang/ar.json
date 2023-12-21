@@ -14,5 +14,10 @@
     "Maximum :option options is ":"يجب اختيار :option بحد اقصي ",
     "Please use this phone to login in into your account":"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول",
     "Please update your location before place an order":"من فضلك قم بتحديث موقعك الحالي قبل اي طلب جديد",
-    "This email is already registered with different phone": "تم استخدام هذا البريد مع رقم هاتف مختلف"
+    "This email is already registered with different phone": "تم استخدام هذا البريد مع رقم هاتف مختلف",
+    "User logged in successfully.":"تم تسجيل الدخول بنجاح",
+    "Item has been updated successfully.":"تم تحديث المنتج بنجاح",
+    "Branch has been updated successfully.":"تم تحديث بيانات الفرع بنجاح",
+    "Order has been updated successfully.":"تم تحديث بيانات الطلب",
+    "Order status logs fetched":"تم جمع حالات الطلب المتاحة"
 }
