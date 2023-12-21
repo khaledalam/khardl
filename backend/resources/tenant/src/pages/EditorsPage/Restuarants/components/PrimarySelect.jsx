@@ -1,25 +1,33 @@
 import React, {useCallback, useState} from "react"
 import {BiChevronDown} from "react-icons/bi"
 
-const PrimarySelect = ({defaultValue, options, handleChange, label}) => {
+const PrimarySelect = ({
+  defaultValue,
+  options,
+  handleChange,
+  label,
+  widthStyle,
+}) => {
   const [isOpen, setisOpen] = useState(false)
 
   const handleDropdown = useCallback(() => {
     setisOpen((prev) => !prev)
   }, [])
   return (
-    <div className='flex flex-col gap-2'>
+    <div
+      className={`flex flex-col gap-2 ${widthStyle ? widthStyle : "w-[70%]"}`}
+    >
       {label && (
         <label className='text-[14px] font-normal text-neutral-700'>
           {label}
         </label>
       )}
-      <div className='dropdown w-[70%]'>
+      <div className={`dropdown w-full`}>
         <div
           tabIndex={0}
           role='button'
           onClick={() => handleDropdown()}
-          className='btn h-[30px] flex items-center justify-between px-2  bg-neutral-200 active:bg-neutral-200 hover:bg-neutral-200'
+          className='btn h-[30px] flex items-center justify-between px-2  bg-neutral-100 active:bg-neutral-100 hover:bg-neutral-100'
         >
           <span className=''>{defaultValue}</span>
           <span className=''>

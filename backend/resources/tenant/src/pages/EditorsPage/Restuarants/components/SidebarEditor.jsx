@@ -32,7 +32,7 @@ const SidebarEditor = () => {
   }, [])
 
   return (
-    <div className='h-full w-full pt-4 px-2'>
+    <div className='h-full w-full flex flex-col pt-4 px-2'>
       <div className='w-full flex items-center gap-2 border-b border-neutral-300 pb-4'>
         <div className='bg-neutral-100 w-[45%] laptopXL:w-[40%] p-2 rounded-2xl'>
           <PrimaryDropDown
@@ -69,7 +69,7 @@ const SidebarEditor = () => {
           ))}
         </div>
       </div>
-      <div className=''>
+      <div className='flex-1 overflow-y-scroll hide-scroll'>
         {activeTab === TABS.section ? (
           <SectionPanel />
         ) : activeTab === TABS.edit ? (
