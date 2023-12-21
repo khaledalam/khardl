@@ -243,7 +243,8 @@ Route::group([
 
 Route::prefix('api')->middleware([
     'api',
-    'tenant'
+    'tenant',
+    "trans_api"
 ])->group(function () {
     // API
 

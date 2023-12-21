@@ -329,6 +329,7 @@ return [
     "e.g." => "e.g.",
     'has-created-new-restaurant'=> 'Has created new restaurant',
     "clear"=>"Clear",
+    'advertisement-modification' => 'Advertisement modification',
     "Please-use-this-phone-to-login-in-into-your-account"=>"Please use this phone to login in into your account",
     "This email is already registered with different phone"=> "This email is already registered with different phone",
     "Name (English)"=>"Name (English)",
@@ -362,8 +363,12 @@ return [
     "Enter Brand Name (EN)"=>"Enter Brand Name (EN)",
     "Enter Brand Name (AR)"=>"Enter Brand Name (AR)",
     "Mr"=>"Mr",
-    "STEP 2 → Submit Create TAP Business Account"=>"STEP 2 → Submit Create TAP Business Account"
+    "STEP 2 → Submit Create TAP Business Account"=>"STEP 2 → Submit Create TAP Business Account",
+    "item-photo" => "Product photo",
+    "create-new-items" => "Create new product",
+    "item-availability" => "Product availability",
+    "category-logo" => "Category logo",
+    "logo" => "Logo"
+
 
 ];
-
-//    'advertisement-modification' => 'Advertisement modification',

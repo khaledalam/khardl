@@ -325,6 +325,7 @@ return [
     'ready'=>"جاهز",
     'delivery-fee' => "عموله التوصيل",
     "e.g." => "علي سبيل المثال",
+    'advertisement-modification' => 'تحرير العروض',
     'has-created-new-restaurant'=> 'قام بانشاء مطعم جديد',
     "clear"=>"مسح",
     "Please-use-this-phone-to-login-in-into-your-account"=>"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول",
@@ -359,8 +360,11 @@ return [
     "Enter Brand Name (EN)"=>"اكتب اسم العلامة التجارية بالانجليزية",
     "Enter Brand Name (AR)"=>"اكتب اسم العلامة التجارية بالعربية",
     "Mr"=>"السيد",
-    "STEP 2 → Submit Create TAP Business Account"=>"الخطوة الثانية - انشاء سجل تجاري مع بوابة دفع TAP"
+    "STEP 2 → Submit Create TAP Business Account"=>"الخطوة الثانية - انشاء سجل تجاري مع بوابة دفع TAP",
+    "item-photo" => "صوره المنتج",
+    "create-new-items" => "انشاء منتج جديد",
+    "item-availability" => "اتاحه المنتج",
+    "category-logo" => "شعار الصنف",
+    "logo" => "شعار"
 ];
 
-
-//    'advertisement-modification' => 'تحرير العروض',
