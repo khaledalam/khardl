@@ -3960,6 +3960,9 @@ details.collapse summary::-webkit-details-marker {
 .\!h-\[12px\] {
   height: 12px !important;
 }
+.\!h-\[48px\] {
+  height: 48px !important;
+}
 .\!h-\[8px\] {
   height: 8px !important;
 }
@@ -4057,12 +4060,6 @@ details.collapse summary::-webkit-details-marker {
 .h-full {
   height: 100%;
 }
-.\!h-\[50px\] {
-  height: 50px !important;
-}
-.\!h-\[48px\] {
-  height: 48px !important;
-}
 .max-h-screen {
   max-height: 100vh;
 }
@@ -4078,6 +4075,9 @@ details.collapse summary::-webkit-details-marker {
 .\!w-fit {
   width: -moz-fit-content !important;
   width: fit-content !important;
+}
+.\!w-full {
+  width: 100% !important;
 }
 .w-10 {
   width: 2.5rem;
@@ -4193,9 +4193,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-full {
   width: 100%;
-}
-.\!w-full {
-  width: 100% !important;
 }
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
@@ -5275,6 +5272,9 @@ details.collapse summary::-webkit-details-marker {
 .\!text-\[18px\] {
   font-size: 18px !important;
 }
+.\!text-\[1rem\] {
+  font-size: 1rem !important;
+}
 .\!text-\[28px\] {
   font-size: 28px !important;
 }
@@ -5344,9 +5344,6 @@ details.collapse summary::-webkit-details-marker {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-.\!text-\[1rem\] {
-  font-size: 1rem !important;
 }
 .\!font-medium {
   font-weight: 500 !important;

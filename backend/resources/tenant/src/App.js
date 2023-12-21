@@ -39,9 +39,12 @@ const App = () => {
   const fontFamily = "cairo, sans-serif"
   const location = useLocation()
   const {loading} = useAuthContext()
-  const showHeader = !["/policies", "/login-trial", "/privacy"].includes(
-    location.pathname
-  )
+  const showHeader = ![
+    "/policies",
+    "/login-trial",
+    "/privacy",
+    "/site-editor/restaurants",
+  ].includes(location.pathname)
   const showFooter = ![
     "/",
     "/site-editor/restaurants",
@@ -86,7 +89,7 @@ const App = () => {
         }}
       >
         <div>
-          <ToastContainer theme='colored' /> {/* {showHeader && <Header />} */}{" "}
+          <ToastContainer theme='colored' /> {showHeader && <Header />}{" "}
           <Supports />
           <ScrollUp />
           <div>
