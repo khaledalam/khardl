@@ -38,7 +38,7 @@ class  OrderController extends BaseRepositoryController
 
         $orderStatusLogs = OrderStatusLogs::all()->where('order_id', '=', $order)->sortByDesc("created_at");
 
-        return $this->sendResponse($orderStatusLogs, 'Order status logs fetched');
+        return $this->sendResponse($orderStatusLogs, __('Order status logs fetched'));
     }
 
     public function updateStatus($order,Request $request){
@@ -53,10 +53,6 @@ class  OrderController extends BaseRepositoryController
         })
         ->findOrFail($order);
         $order->update(['status'=>$request->status]);
-        if ($request->expectsJson()) {
-            return $this->sendResponse(null, __('Order has been updated successfully.'));
-        }
-
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
@@ -80,6 +76,11 @@ class  OrderController extends BaseRepositoryController
         $statusLog->notes = $request->notes ?? null;
         $statusLog->saveOrFail();
 
+        if ($request->expectsJson()) {
+            return $this->sendResponse(null, __('Order has been updated successfully.'));
+        }
+
+        
         return redirect()->back()->with('success',__('Order has been updated successfully.'));
     }
 

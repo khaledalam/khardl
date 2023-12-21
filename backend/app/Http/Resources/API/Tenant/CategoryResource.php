@@ -14,6 +14,7 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        
         $data = [
             'id' => $this->id,
             'name' => $this->name,
@@ -29,6 +30,9 @@ class CategoryResource extends JsonResource
         }
         if ($request->has('items')) {
             $data['items'] = ItemResource::collection($this->items);
+        }
+        if ($request->has('lang')) {
+             $data['sd']=   $request->lang;
         }
         return $data;
     }

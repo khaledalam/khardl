@@ -22,9 +22,9 @@
                                       <!--begin::Button-->
                                       <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">
                                         <p class="btn btn-primary text-uppercase w-100 mb-10">
-                                            
+
                                                 {{ __('messages.all-categories') }}
-                                        
+
                                         </p>
                                     </a>
                                       <!--end::Button-->
@@ -78,23 +78,30 @@
                                                   <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('messages.add-new-category') }}</button>
                                               </span>
                                               <!--end::Add label-->
-                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit">
+                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
                                                 @csrf
                                                 <div id="categoryForm" class="mt-2" style="display: none !important;" >
                                                     <ul class="nav nav-tabs" id="languageTabs">
                                                         <li class="nav-item">
-                                                            <a class="nav-link active" id="en-tab" data-bs-toggle="tab" href="#en">English</a>
+                                                            <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('messages.english')}}</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="ar-tab" data-bs-toggle="tab" href="#ar">Arabic</a>
+                                                            <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('messages.arabic')}}</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('messages.logo')}}</a>
                                                         </li>
                                                     </ul>
                                                     <div class="tab-content mt-3">
                                                         <div class="tab-pane fade show active" id="en">
-                                                            <input type="text" class="form-control" placeholder="Enter text in English"   name="name_en">
+                                                            <input type="text" class="form-control" placeholder="Enter text in English" name="name_en">
                                                         </div>
                                                         <div class="tab-pane fade" id="ar">
-                                                            <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية"   name="name_ar">
+                                                            <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية" name="name_ar">
+                                                        </div>
+                                                        <div class="tab-pane fade" id="logo">
+                                                            <label>{{__('messages.category-logo')}}</label>
+                                                            <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" />
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-center">
@@ -172,7 +179,7 @@
                                                     <img alt="Pic" src="{{$item->photo}}" />
                                                 </div>
                                                 </td>
-                                               
+
                                                  <!--begin::Title-->
                                                  <td  class="text-center">
                                                     <div class="text-dark">
@@ -186,7 +193,7 @@
                                                       <span class="text-gray fw-bold fs-17">{{$item->price}}</span>
                                                   </td>
                                                   <!--end::Author-->
-                                                 
+
                                                   <!--end::Title-->
                                                   <!--begin::Date-->
                                                   <td class="text-center">
@@ -305,7 +312,7 @@
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
-                            <h1 class="mb-3">Create New Items</h1>
+                            <h1 class="mb-3">{{__('messages.create-new-items')}}</h1>
                             <!--end::Title-->
                         </div>
                         <!--end::Heading-->
@@ -313,7 +320,7 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">Item photo</span>
+                                <span class="required">{{__('messages.item-photo')}}</span>
                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
                             </label>
                             <!--end::Label-->
@@ -326,14 +333,14 @@
                             <!--begin::Label-->
                             <div class="d-flex justify-content-between align-items-center">
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">Item availability</span>
+                                    <span class="required">{{__('messages.item-availability')}}</span>
                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
                                 </label>
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <input type="checkbox" name="availability" checked value="1"> 
+                                    <input type="checkbox" name="availability" checked value="1">
                                 </label>
                             </div>
-                     
+
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -383,12 +390,12 @@
                         <!--end::Input group-->
 
 
-                       
+
                         <div id="checkboxes">
                             <!-- Checkbox elements will be dynamically added here -->
-                            
+
                         </div>
-                        
+
 
                         <div id="selections">
                             <!-- Checkbox elements will be dynamically added here -->
@@ -519,7 +526,7 @@
                                 <input class="form-control form-control-solid ps-12" />
                             </div>
                             <!--end::Col-->
-                            
+
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -533,9 +540,9 @@
 
                         <div id="checkboxes">
                             <!-- Checkbox elements will be dynamically added here -->
-                            
+
                         </div>
-                        
+
 
                         <div id="selections">
                             <!-- Checkbox elements will be dynamically added here -->
@@ -618,7 +625,7 @@
                     });
       </script>
 
-  
+
     <!--begin::Javascript-->
     <script>
         var hostUrl = "assets/";
@@ -627,21 +634,21 @@
         const categoryForm = document.getElementById("categoryForm");
         const categoryNameInput = document.getElementById("categoryName");
         const categoryList = document.getElementById("categoryList");
-    
+
         addCategoryButton.addEventListener("click", () => {
             categoryForm.style.display = "block";
             categoryNameInput.focus();
         });
-    
-     
-    
+
+
+
     </script>
 
 
 <!-- Category sidebar -->
 <script>
     const sectionsList = document.getElementById('sections-list');
-   
+
 
     // Function to toggle between edit and save modes for a section
     function toggleEditSave(section) {
@@ -667,7 +674,7 @@
         }
     }
 
-    
+
     // Add event listener for the "Add New Section" button
 
 </script>
@@ -772,7 +779,7 @@
                     optionsDiv.removeChild(optionDiv);
                 });
             }
-           
+
 
 
             optionsDiv.appendChild(optionDiv);
@@ -800,7 +807,7 @@
                             <span class="">Selection buttons </span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            
+
                             <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
                             <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" > required
                         </label>
@@ -887,7 +894,7 @@
 
         addSelectionButton.addEventListener('click', createSelection);
     </script>
-    
+
     <!-- Dropdown -->
     <script>
         const dropdownsContainer = document.getElementById('dropdowns');
@@ -907,7 +914,7 @@
                             <span class="">Dropdown buttons </span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            
+
                             <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
                             <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" > required
                         </label>
@@ -967,7 +974,7 @@
                         <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Name in english ">
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="الاسم بالعربية ">
 
-    
+
                         <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>
             `; }else {
@@ -976,10 +983,10 @@
                         <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="الاسم بالعربية ">
 
-    
+
                         <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>
-            `; 
+            `;
             const deleteOptionButton = optionDiv.querySelector('.delete-option');
             deleteOptionButton.addEventListener('click', () => {
                 optionsDiv.removeChild(optionDiv);
@@ -987,7 +994,6 @@
 
             }
 
-          
             optionsDiv.appendChild(optionDiv);
         }
 
@@ -997,7 +1003,7 @@
             e.preventDefault();
             var submitButton = document.querySelector('#saveCategoryBtn');
             submitButton.disabled = true;
-        
+
             var inputValue = document.querySelector('input[name=name_ar]').value.trim();
             if (inputValue === '') {
                 alert('Please fill in the input in (Arabic) tab.');
@@ -1006,20 +1012,18 @@
             var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
             console.log(inputValueAR);
             if (inputValueAR === '') {
-                alert('Please fill in the input in the (English) tab .');
+                alert('Please fill in the input in the (English) tab.');
                 return ;
             }
             document.getElementById('category-submit').submit();
-        
-
         });
 
         document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
             e.preventDefault();
             var submitButton = document.querySelector('#kt_modal_new_target_submit');
-        
+
             submitButton.disabled = true;
-          
+
             var waiting = document.querySelector('#waiting-item');
             waiting.style.display = 'block';
             var inputValue = document.querySelector('textarea[name=description_ar]').value.trim();
@@ -1034,8 +1038,8 @@
                 return ;
             }
             document.getElementById('kt_modal_new_target_form').submit();
-            
-        
+
+
 
         });
     </script>
@@ -1047,11 +1051,11 @@
         .transform-270 {
             transform: rotate(270deg);
             transform-origin: right top;
-        } 
+        }
         .transform-90 {
             transform: rotate(90deg);
             transform-origin: left top;
-        } 
+        }
     </style>
       <!--end::Content-->
 @endsection

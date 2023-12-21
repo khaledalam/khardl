@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant\Tap\TapBusiness;
 use App\Models\User;
+use LVR\CountryCode\Two;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\Tap\TapBusinessFile;
+use App\Packages\TapPayment\Business\Business;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Packages\TapPayment\Controllers\FileController;
+use App\Packages\TapPayment\Requests\CreateBusinessRequest;
 
 class TapController extends Controller
 {
     public function payments()
     {
         $user = Auth::user();
-        return view('restaurant.payments', compact('user'));
+        $business = TapBusiness::first();
+        return view('restaurant.payments', compact('user','business'));
     }
 
     public function payments_upload_tap_documents_get()
@@ -37,7 +42,7 @@ class TapController extends Controller
     public function payments_upload_tap_documents(Request $request)
     {
         // @TODO: handle upload tap documents logic here...
-     
+       
         $validationRules = [
             'business_logo' => 'required|mimes:jpeg,png,gif|file|max:8192',
             'customer_signature' => 'required|mimes:gif,jpeg,png,pdf|file|max:8192',
@@ -48,7 +53,7 @@ class TapController extends Controller
         ];
        
         $request->validate($validationRules);
-
+      
         // Iterate through the keys
         $files = ['id'=>1];
         foreach ($validationRules as $key => $rule) {
@@ -69,7 +74,7 @@ class TapController extends Controller
             'id'=>1
         ],$files);
     
-        return redirect()->back()->with('success', 'Files successfully added.');
+        return redirect()->back()->with('success', __('Files successfully added.'));
 
     }
 
@@ -82,150 +87,48 @@ class TapController extends Controller
         return view('restaurant.payments_tap_create_business_submit_documents', compact('user'));
     }
 
-    public function payments_submit_tap_documents(Request $request)
-    {
-        // @TODO: handle submit tap documents logic here...
-        $user = Auth::user();
-
-        return response()->json(['test' => 'ok']);
-    }
-
-
-    public function payment(Request $request)
-    {
-        $payment = [
-            "amount" => $request['amount'],
-            "description" =>  '',
-            "currency" => 'SAR',
-            "receipt" => [
-                "email" => true,
-                "sms" => true
-            ],
-            "customer"=> [
-                "first_name"=> Auth::user()->first_name,
-                "last_name"=> Auth::user()->last_name,
-                "email"=> Auth::user()->email,
-                "phone"=> [
-                    "country_code" => 'SA',
-                    "number" => Auth::user()->phone_number
-                ]
-            ],
-            "source"=> [
-                "id"=> "src_all"
-            ],
-            "redirect"=> [
-                "url"=> route('tap.callback')
-            ]
+    public function payments_submit_tap_documents(CreateBusinessRequest $request)
+    { 
+        $data = $request->validated();
+        $files = TapBusinessFile::first();
+        $types = [
+            'business_logo_id',
+            'customer_signature_id',
+            'dispute_evidence_id',
+            'pci_document_id',
+            'tax_document_user_upload_id',
         ];
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.tap.company/v2/charges",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => json_encode($payment),
-        CURLOPT_HTTPHEADER => array(
-            "authorization: Bearer sk_test_XKokBfNWv6FIYuTMg5sLPjhJ", // SECRET API KEY
-            "content-type: application/json"
-        ),
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        $response = json_decode($response);
-
-        return redirect($response->transaction->url);
-    }
-
-    public function callback(Request $request)
-    {
-        $input = $request->all();
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.tap.company/v2/charges/".$input['tap_id'],
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_POSTFIELDS => "{}",
-        CURLOPT_HTTPHEADER => array(
-                "authorization: Bearer sk_test_XKokBfNWv6FIYuTMg5sLPjhJ" // SECRET API KEY
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        $responseTap = json_decode($response);
-
-        if ($responseTap->status == 'CAPTURED' && $responseTap->currency == "SAR") {
-
-            $user = Auth::user();
-
-            $pointsToAdd = $this->calculatePoints($responseTap->amount, $responseTap->currency);
-
-            $userToSave = User::find($user->id);
-            $userToSave->points += $pointsToAdd;
-            $userToSave->total_points += $pointsToAdd;
-            $userToSave->save();
-
-            DB::table('orders')->insert([
-                'order_id' => $responseTap->id,
-                'user_id' => $user->id,
-                'product_detail' => 'Points: ' . $pointsToAdd,
-                'buyer_email' => $user->email,
-                'restaurant_name' => $user->restaurant_name,
-                'status' => 'COMPLETED',
-                'date' => now(),
-                'price' => $responseTap->amount,
-            ]);
-
-            return redirect()->route('tap.form')->with('success', 'Payment Successfully Made.');
-
+        foreach($types as $id){
+            $data['entity']['documents'][] = [
+                'type'=>"License",
+                "files"=> [
+                    $files->{$id}
+                ]
+            ];
         }
-
-
-
-        return redirect()->route('tap.form')->with('error','Something Went Wrong.');
-    }
-
-    protected function calculatePoints($amount, $currency)
-    {
-        if($currency == "SAR"){
-            if ($amount == 116.1) {
-                return 90;
-            } elseif ($amount == 387) {
-                return 300;
-            } elseif ($amount == 654.5) {
-                return 550;
-            } elseif ($amount == 742.50) {
-                return 750;
-            } elseif ($amount == 950.4) {
-                return 990;
-            } elseif ($amount == 1395) {
-                return 1500;
-            } elseif ($amount == 2640) {
-                return 3000;
-            } elseif ($amount == 4400) {
-                return 5500;
-            } elseif ($amount == 4550) {
-                return 7000;
-            }
+     
+        $business = Business::create($data);
+        if($business['http_code'] != ResponseHelper::HTTP_OK){
+            return redirect()->back()
+            ->withErrors([
+                __('Failed to create business'),
+                $business['message']
+            ])
+            ->withInput($request->input());
         }
-
-        return 0;
+       
+        TapBusiness::create([
+            'data'=>$data,
+            'business_id'=>$business['message']['id'],
+            "destination_id"=>$business['message']['destination_id'],
+            "status"=>$business['message']['status'],
+            "entity_id"=>$business['message']['entity']['id'],
+            "wallet_id"=>$business['message']['entity']['wallets'][0]['id'],
+            'user_id'=>Auth::id()
+        ]);
+      
+        return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
+        
     }
+
 }
