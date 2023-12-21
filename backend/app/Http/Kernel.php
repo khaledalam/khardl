@@ -11,6 +11,7 @@ use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RestaurantLive;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\LanguageManager;
+use App\Http\Middleware\LocalizationApi;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\CheckPermissions;
 use Illuminate\Auth\Middleware\Authorize;
@@ -21,6 +22,7 @@ use App\Http\Middleware\NonAdminMiddleware;
 use App\Http\Middleware\RestaurantOrWorker;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Middleware\EnsurePhoneVerified;
+use App\Http\Middleware\IsBusinessSubmitted;
 use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Http\Middleware\EnsureUserIsNotActive;
 use App\Http\Middleware\EnsurePhoneNotVerified;
@@ -30,6 +32,7 @@ use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
+use App\Http\Middleware\IsBusinessFilesSubmitted;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -137,7 +140,9 @@ class Kernel extends HttpKernel
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
         'notBlocked'=> EnsureUserIsNotBlocked::class,
         'role' => RoleMiddleware::class,
-
+        'isBusinessFilesSubmitted'=>IsBusinessFilesSubmitted::class,
+        'isBusinessSubmitted'=>IsBusinessSubmitted::class,
+        "trans_api"=>LocalizationApi::class,
     ];
 
 }

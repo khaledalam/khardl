@@ -58,6 +58,6 @@ class LoginController extends BaseController
             'user'=>$user
         ];
 
-        return $this->sendResponse($data, 'User logged in successfully.');
+        return $this->sendResponse($data, __('User logged in successfully.'));
     }
 }

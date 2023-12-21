@@ -8,14 +8,23 @@
         {{ session('success') }}
       </div>
     @endif
-    @if ($user->submitedTapDocuments == 0)
-        <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content1">
-            <h2 class="text-center pt-5">Create TAP <a href="{{route('tap.payments_upload_tap_documents_get')}}"><u>business account</u></a> first to access this page content!</h2>
-        </div>
-    @elseif ($user->submitedTapDocuments == 1)
-          <div class="alert alert-success">
-            Your TAP account is approved. Congratulations!
-          </div>
+    @if ($business)
+        @if($business->status == 'Active')
+            <div class="alert alert-success">
+                {{__('Your TAP account is approved. Congratulations!')}}
+                <br>
+                <span>{{__('Business ID #')}}<strong>{{$business->business_id}}</strong></span>
+                <span>{{__('Destination ID #')}}<strong>{{$business->destination_id}}</strong></span>
+            </div> 
+        @else
+            <div class="alert alert-success">
+                {{__('Your TAP account is pending.')}}
+            </div> 
+        @endif
+    @else
+    <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content1">
+        <h2 class="text-center pt-5">Create TAP <a href="{{route('tap.payments_upload_tap_documents_get')}}"><u>business account</u></a> first to access this page content!</h2>
+    </div>
 
 
         <!--begin::Content-->

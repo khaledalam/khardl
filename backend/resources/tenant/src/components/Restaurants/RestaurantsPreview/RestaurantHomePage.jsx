@@ -81,7 +81,7 @@ const RestaurantHomePage = (props) => {
                 {categoriesForBranch?.length > 0 ?
                     <Taps
                 contentClassName={`
-        bg-[var(--secondary)] mb-5 ${styleDataRestaurant?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
+        bg-[var(--secondary)] text-center mb-5 ${styleDataRestaurant?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
         ${styleDataRestaurant?.category_style === "Right" || styleDataRestaurant?.category_style === "Left" ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
                 {categoriesForBranch?.map((category, i) => (
                   <Tap
@@ -92,7 +92,11 @@ const RestaurantHomePage = (props) => {
                              : <h2 style={{color: 'var(--primary)'}}>{t("No items in this category")}</h2>
                     }
                     contentClassName="text-black">
-                    {category?.name}
+                      <img src={category?.photo} height={50} className="flex" style={{
+                          height: '50px',
+                          width: '50px',
+                          borderRadius: '50%'
+                      }}/> {category?.name}
                   </Tap>
                 ))}
               </Taps> : <h2>No categories yet!</h2>}

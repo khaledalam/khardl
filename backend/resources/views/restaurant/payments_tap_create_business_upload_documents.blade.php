@@ -25,7 +25,7 @@
                 <input id="business_log" accept="{{($name == 'business_logo')?'.gif':'.pdf'}},.jpeg,.png" type="file" class="form-control form-control-solid" name="{{$name}}" />
                 <pre class="mx-3"><small><i>Accept: {{($name == 'business_logo')?'GIF':'PDF'}}, JPEG, PNG. size <= 8 MG</i></small></pre>
                 @if ($tap_files)
-                    <a href="{{ route('admin.download.file', ['path' => $tap_files->{$name.'_path'}]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
+                    <a href="{{ route('download.file', ['path' => $tap_files->{$name.'_path'}]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                 @endif
             </div>
            
@@ -35,7 +35,7 @@
         <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset ↻</button>
         <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
             <span class="indicator-label">Upload ⬆</span>
-            <span class="indicator-progress">Please wait...
+            <span class="indicator-progress" id="waiting-item">Please wait...
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
         @if($tap_files)
@@ -47,5 +47,16 @@
         <!--end::Post-->
     </div>
     <!--end::Content-->
+    <script>
+        document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var submitButton = document.querySelector('#kt_modal_new_target_submit');
+        
+            submitButton.disabled = true;
+            var waiting = document.querySelector('#waiting-item');
+            waiting.style.display = 'block';
+            document.getElementById('kt_modal_new_target_form').submit();
 
+        });
+    </script>
 @endsection

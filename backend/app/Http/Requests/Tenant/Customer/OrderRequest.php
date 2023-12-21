@@ -4,6 +4,7 @@ namespace App\Http\Requests\Tenant\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Repositories\Customer\CartRepository;
+use Illuminate\Support\Facades\Auth;
 
 class OrderRequest extends FormRequest
 {
@@ -29,7 +30,8 @@ class OrderRequest extends FormRequest
             'delivery_type'=>'required',
             'shipping_address'=>'nullable',
             'order_notes'=>'nullable',
-            'cart'=>'nullable'
+            'cart'=>'nullable',
+            'address'=>'nullable'
         ];
     }
     public function withValidator($validator)
@@ -37,6 +39,12 @@ class OrderRequest extends FormRequest
         $cart = CartRepository::get();
 
         $validator->after(function ($validator) use($cart){
+            $user = Auth::user();
+            // if(!$user->lat && !$user->lng){
+            if(!$user->address){
+                $validator->errors()->add('address', __('Please update your location before place an order'));
+                return ;
+            }
             if(!$cart->hasItems()){
                 $validator->errors()->add('cart', __('Cart is empty'));
                 return ;
@@ -57,6 +65,7 @@ class OrderRequest extends FormRequest
             });
         });
     }
+
 
   
 }
