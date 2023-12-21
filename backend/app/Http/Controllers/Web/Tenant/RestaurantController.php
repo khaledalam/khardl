@@ -441,21 +441,23 @@ class RestaurantController extends BaseController
 
     public function addCategory(Request $request, $branchId){
 
+
         $validator = Validator::make($request->all(), [
             'name_en' => 'required|string',
             'name_ar' => 'required|string',
-            'new_category_photo' => 'nullable|string',
+            'new_category_photo' => 'nullable',
         ]);
+
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $userId = Auth::user()->id;
+        $userId = Auth::user()?->id;
 
+        $photoFile = $request->file('photo');
 
-        $photoFile = $request->file('new_category_photo');
-
+        $filename = null;
         if ($photoFile) {
             $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
             while (Storage::disk('public')->exists('categories/' . $filename)) {
@@ -552,7 +554,6 @@ class RestaurantController extends BaseController
 
                 return redirect()->back()->with('success', 'Item successfully added.');
             } catch (\Exception $e) {
-                dd(1);
                 logger($e->getMessage());
                 DB::rollback();
                 return redirect()->back()->with('error', $e->getMessage());
