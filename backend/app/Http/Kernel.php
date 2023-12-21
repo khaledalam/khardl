@@ -30,6 +30,7 @@ use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Session\Middleware\StartSession;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
+use App\Http\Middleware\IsBusinessFilesSubmitted;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -137,6 +138,7 @@ class Kernel extends HttpKernel
         'notAccepted'=> EnsureTraderRegistrationIsNotComplete::class,
         'notBlocked'=> EnsureUserIsNotBlocked::class,
         'role' => RoleMiddleware::class,
+        'isBusinessFilesSubmitted'=>IsBusinessFilesSubmitted::class
 
     ];
 

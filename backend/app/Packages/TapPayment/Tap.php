@@ -18,7 +18,7 @@ class Tap
                 unset($data['file']);
                 $response = Http::withToken($secret_key)
                 ->attach('file',$file,$name)
-                ->$method($prefix_url.$url,$data);
+                ->post($prefix_url.$url,$data);
             }else {
                 $response = Http::withToken($secret_key)
                 ->$method($prefix_url.$url,$data);
@@ -35,7 +35,7 @@ class Tap
         }catch(\Exception $e){
            logger($e->getMessage());
         }
-        $response = json_decode($response->getBody(), true);
+        $response = json_decode((isset($response))?$response->getBody():[], true);
         return [
             'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
             'gateway_code'=> (isset($response['errors'][0]['code']))?$response['errors'][0]['code']: ResponseHelper::HTTP_BAD_REQUEST,
