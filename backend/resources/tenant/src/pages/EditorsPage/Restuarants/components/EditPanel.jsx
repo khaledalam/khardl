@@ -4,6 +4,8 @@ import ColorPallete from "./ColorPallete"
 
 const EditPanel = () => {
   const [logoShape, setLogoShape] = useState("Rounded")
+  const [fontFamily, setfontFamily] = useState("Inter")
+  const [weight, setWeight] = useState("Thin")
   const [pageColor, setPageColor] = useState({hex: "#ffffff"})
   const [categoryAnimeColor, setCategoryAnimeColor] = useState({hex: "#ffffff"})
   const [categoryDetailColor, setCategoryDetailColor] = useState({
@@ -128,6 +130,46 @@ const EditPanel = () => {
               modalId={"footer_modal"}
               color={footerColor}
               handleColorChange={(color) => setFooterColor(color)}
+            />
+          </div>
+        </div>
+      </div>
+      {/* Text */}
+      <div className='py-4 border-b border-neutral-300 px-2'>
+        <h2 className='font-bold text-lg mb-4'>Text</h2>
+        <div className='flex flex-col gap-4'>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              Font
+            </h3>
+            <PrimarySelect
+              widthStyle={"w-[50%]"}
+              defaultValue={fontFamily}
+              handleChange={(value) => setfontFamily(value)}
+              options={[
+                {value: "Poppins", text: "Poppins"},
+                {value: "Roboto", text: "Roboto"},
+              ]}
+            />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              Weight
+            </h3>
+            <PrimarySelect
+              widthStyle={"w-[50%]"}
+              defaultValue={weight}
+              handleChange={(value) => setWeight(value)}
+              options={[
+                {value: "Thin", text: "Thin"},
+                {value: "Extra light", text: "Extra light"},
+                {value: "Light", text: "Light"},
+                {value: "Regular", text: "Regular"},
+                {value: "Medium", text: "Medium"},
+                {value: "Semi Bold", text: "Semi Bold"},
+                {value: "Bold", text: "Bold"},
+                {value: "Extra Bold", text: "Extra Bold"},
+              ]}
             />
           </div>
         </div>
