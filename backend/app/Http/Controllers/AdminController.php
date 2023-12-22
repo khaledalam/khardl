@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendApprovedRestaurantEmailJob;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use Carbon\Carbon;
@@ -242,8 +243,8 @@ class AdminController extends Controller
         $restaurants = $query->get();
         if ($request->has('search')) {
             $search = $request->input('search');
-           
-          
+
+
             $query->Where('restaurant_name','like', '%' . $search . '%');
             $query->whereHas('primary_domain', static function($query1) use ($search) {
                 $query1->OrWhere('domain', 'like', '%' . $search . '%');
@@ -306,7 +307,8 @@ class AdminController extends Controller
         $restaurant->run(static function(){
             Setting::first()->update(['is_live'=>true]);
         });
-        Mail::to($restaurant->user->email)->send(new ApprovedRestaurant($restaurant->user,$restaurant));
+
+        Mail::to($restaurant->user->email)->send(new SendApprovedRestaurantEmailJob(new ApprovedRestaurant($restaurant->user, $restaurant)));
 
         Log::create([
             'user_id' => Auth::id(),
@@ -589,7 +591,8 @@ class AdminController extends Controller
     public function denyUser(Request $request, $id)
     {
         $user = User::find($id);
-        $selectedOption = $request->input('option');
+        $selectedOption = $request->input('options');
+
         if($selectedOption == null){
             return redirect()->back()->with('error', 'You have to select one option at least!');
         }
@@ -609,7 +612,7 @@ class AdminController extends Controller
             $user->save();
         }
 
-        Mail::to($user->email)->send(new DeniedEmail($user, $selectedOption));
+        Mail::to($user->email)->queue(new DeniedEmail($user, $selectedOption));
 
         Log::create([
             'user_id' => Auth::id(),

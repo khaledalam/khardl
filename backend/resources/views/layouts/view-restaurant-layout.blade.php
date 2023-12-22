@@ -213,19 +213,19 @@
                                                                 confirmButtonText: '{{ __('messages.yes-proceed') }}',
                                                                 cancelButtonText: '{{ __('messages.no-cancel') }}',
                                                                 html: `
-                                                                    <div class="form-check">
+                                                                    <div class="form-check my-2">
                                                                         <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="option1">
                                                                         <label class="form-check-label" for="option1">{{ __('messages.commercial-registration-number') }}</label>
                                                                     </div>
-                                                                    <div class="form-check">
+                                                                    <div class="form-check my-2">
                                                                         <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="option2">
                                                                         <label class="form-check-label" for="option2">{{ __('messages.delivery-company-contract') }}</label>
                                                                     </div>
-                                                                    <div class="form-check">
+                                                                    <div class="form-check my-2">
                                                                         <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="option3">
                                                                         <label class="form-check-label" for="option3">{{ __('messages.tax-number') }}</label>
                                                                     </div>
-                                                                    <div class="form-check">
+                                                                    <div class="form-check my-2">
                                                                         <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="option4">
                                                                         <label class="form-check-label" for="option4">{{ __('messages.bank-certificate') }}</label>
                                                                     </div>
