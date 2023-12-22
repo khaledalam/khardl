@@ -58,7 +58,7 @@ const MainBoardEditor = () => {
   ]
 
   return (
-    <div className='w-full h-full p-4 flex flex-col gap-6'>
+    <div className='w-full p-4 flex flex-col gap-6'>
       {/* Header cart */}
       <div className='w-full min-h-[85px] bg-white rounded-xl flex items-center justify-center'>
         <div className='w-[40px] h-[40px] rounded-sm p-2 bg-neutral-100 relative'>
@@ -150,7 +150,7 @@ const MainBoardEditor = () => {
           />
         </div>
       </div>
-      <div className='w-full min-h-[70px] bg-white rounded-xl flex items-center justify-center mb-4'>
+      <div className='w-full min-h-[70px] bg-white rounded-xl flex items-center justify-center'>
         <h3 className='font-semibold text-lg'>000000111</h3>
       </div>
     </div>

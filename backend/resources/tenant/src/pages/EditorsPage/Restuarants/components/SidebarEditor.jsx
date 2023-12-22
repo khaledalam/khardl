@@ -9,14 +9,14 @@ const btnList = [
     name: "Section",
   },
   {
-    id: "Edit",
-    name: "Edit",
+    id: "General",
+    name: "General",
   },
 ]
 
 const TABS = {
   section: "Section",
-  edit: "Edit",
+  general: "General",
 }
 
 const SidebarEditor = () => {
@@ -72,7 +72,7 @@ const SidebarEditor = () => {
       <div className='flex-1 overflow-y-scroll hide-scroll'>
         {activeTab === TABS.section ? (
           <SectionPanel />
-        ) : activeTab === TABS.edit ? (
+        ) : activeTab === TABS.general ? (
           <EditPanel />
         ) : (
           <Fragment />
