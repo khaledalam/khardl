@@ -55,90 +55,6 @@ const MainBoardEditor = () => {
       caloryInfo: "142 Calories",
       amount: "875.000",
     },
-    {
-      name: "Chicken Special",
-      imgSrc: chickenImg,
-      caloryInfo: "142 Calories",
-      amount: "495.000",
-    },
-    {
-      name: "Drink",
-      imgSrc: drinkImg,
-      caloryInfo: "72 Calories",
-      amount: "475.000",
-    },
-    {
-      name: "Burger Special",
-      imgSrc: burgerImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      name: "Chicken Special",
-      imgSrc: chickenImg,
-      caloryInfo: "142 Calories",
-      amount: "495.000",
-    },
-    {
-      name: "Drink",
-      imgSrc: drinkImg,
-      caloryInfo: "72 Calories",
-      amount: "475.000",
-    },
-    {
-      name: "Burger Special",
-      imgSrc: burgerImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      name: "Chicken Special",
-      imgSrc: chickenImg,
-      caloryInfo: "142 Calories",
-      amount: "495.000",
-    },
-    {
-      name: "Drink",
-      imgSrc: drinkImg,
-      caloryInfo: "72 Calories",
-      amount: "475.000",
-    },
-    {
-      name: "Burger Special",
-      imgSrc: burgerImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      name: "Chicken Special",
-      imgSrc: chickenImg,
-      caloryInfo: "142 Calories",
-      amount: "495.000",
-    },
-    {
-      name: "Drink",
-      imgSrc: drinkImg,
-      caloryInfo: "72 Calories",
-      amount: "475.000",
-    },
-    {
-      name: "Burger Special",
-      imgSrc: burgerImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      name: "Chicken Special",
-      imgSrc: chickenImg,
-      caloryInfo: "142 Calories",
-      amount: "495.000",
-    },
-    {
-      name: "Drink",
-      imgSrc: drinkImg,
-      caloryInfo: "72 Calories",
-      amount: "475.000",
-    },
   ]
 
   return (
@@ -225,7 +141,7 @@ const MainBoardEditor = () => {
       </div>
       {/* social media */}
 
-      <div className='w-full min-h-[85px] bg-white rounded-xl flex items-center justify-center'>
+      <div className='w-full min-h-[70px] bg-white rounded-xl flex items-center justify-center'>
         <div className='w-[30px] h-[30px] rounded-full relative'>
           <img
             src={WhatsappIcon}
@@ -233,6 +149,9 @@ const MainBoardEditor = () => {
             className='w-full h-full object-cover'
           />
         </div>
+      </div>
+      <div className='w-full min-h-[70px] bg-white rounded-xl flex items-center justify-center mb-4'>
+        <h3 className='font-semibold text-lg'>000000111</h3>
       </div>
     </div>
   )

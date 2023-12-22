@@ -4210,6 +4210,12 @@ details.collapse summary::-webkit-details-marker {
 .min-h-\[85px\] {
   min-height: 85px;
 }
+.min-h-\[80px\] {
+  min-height: 80px;
+}
+.min-h-\[70px\] {
+  min-height: 70px;
+}
 .\!w-\[50px\] {
   width: 50px !important;
 }
