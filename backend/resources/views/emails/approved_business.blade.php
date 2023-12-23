@@ -47,7 +47,7 @@
                                                 We appreciate your partnership and look forward to continuing our collaboration.
                                             </p>
                                             <p>
-                                                To proceed with the next steps, we invite you to purchase your new subscription by following this {{$subscription_url}}. Our team is ready to assist you throughout the process and answer any questions you may have.
+                                                To proceed with the next steps, we invite you to purchase your new subscription by following this url <a href="{{$subscription_url}}">here</a> . Our team is ready to assist you throughout the process and answer any questions you may have.
                                             </p>
                                             <p>
                                                 Thank you for choosing our services. We value your business and are committed to providing you with the best experience.

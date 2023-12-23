@@ -136,8 +136,7 @@ class TapController extends Controller
         if($business['message']['status'] == 'Active'){
             $user->tap_verified = true;
             $user->save();
-              // Mail::to($user->email)->send(new ApprovedBusiness($user));
-        // dd(1);
+            Mail::to($user->email)->send(new ApprovedBusiness($user));
         }
       
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
