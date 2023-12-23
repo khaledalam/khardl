@@ -11,7 +11,7 @@
          <div id="kt_content_container" class="container-xxl">
              <!--begin::Row-->
              <div class="row g-5 g-xl-10 mb-xl-10">
-                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
+                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-2 mb-md-5 mb-xl-10">
                      <!--begin::Card widget 4-->
                      <div class="card card-flush mb-2">
                          <!--begin::Header-->
@@ -136,7 +136,7 @@
                      </div>
                      <!--end::Card widget 5-->
                  </div>
-                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
+                 <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-4 mb-md-5 mb-xl-10">
                      <!--begin::Card widget 6-->
                      <div class="card card-flush h-md-50 mb-5 mb-xl-10">
                          <!--begin::Header-->
