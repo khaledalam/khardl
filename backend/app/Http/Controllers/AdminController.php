@@ -317,10 +317,9 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Restaurant is already approved');
         }
 
-        sleep(5);
+        Mail::to($restaurant->user->email)->send(new ApprovedRestaurant($restaurant->user,$restaurant));
 
-
-        Mail::to($restaurant->user->email)->send(new SendApprovedRestaurantEmailJob(new ApprovedRestaurant($restaurant->user, $restaurant)));
+//        Mail::to($restaurant->user->email)->send(new SendApprovedRestaurantEmailJob(new ApprovedRestaurant($restaurant->user, $restaurant)));
 
         Log::create([
             'user_id' => Auth::id(),

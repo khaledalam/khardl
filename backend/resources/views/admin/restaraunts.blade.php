@@ -137,7 +137,7 @@
                             @elseif ($restaurant?->user?->isBlocked())
                                 <span class="badge badge-danger fw-bolder">{{ __('messages.blocked')}}</span>
                             @else
-                            <span class="badge badge-light-danger fw-bolder">{{ __('messages.not_live')}}</span>
+                                <span class="badge badge-light-danger fw-bolder">{{ __('messages.not_live')}}</span>
                             @endif
                         </a>
 

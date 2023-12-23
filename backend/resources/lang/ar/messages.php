@@ -367,6 +367,7 @@ return [
     "category-logo" => "شعار الصنف",
     "logo" => "شعار",
     "others" => "اخري",
-    "blocked" => "محظور"
+    "blocked" => "محظور",
+    "blocked-user" => "تم حظر هدا الحساب"
 ];
 

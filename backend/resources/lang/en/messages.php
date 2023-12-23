@@ -370,7 +370,8 @@ return [
     "category-logo" => "Category logo",
     "logo" => "Logo",
     'others' => "Others",
-    "blocked" => "Blocked"
+    "blocked" => "Blocked",
+    "blocked-user" => "User is blocked"
 
 
 ];
