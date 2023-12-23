@@ -371,7 +371,8 @@ return [
     "logo" => "Logo",
     'others' => "Others",
     "blocked" => "Blocked",
-    "blocked-user" => "User is blocked"
+    "blocked-user" => "User is blocked",
+    "Bank Account"=>"Bank Account"
 
 
 ];

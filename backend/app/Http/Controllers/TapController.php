@@ -106,7 +106,6 @@ class TapController extends Controller
                 ]
             ];
         }
-     
         $business = Business::create($data);
         if($business['http_code'] != ResponseHelper::HTTP_OK){
             return redirect()->back()

@@ -156,17 +156,17 @@
                 <!--end::Input group--> --}}
 
                 <!--begin::Input group-->
-                {{-- <div class="d-flex flex-column mb-8 fv-row">
+                <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                        <span class="">Bank Account</span>
+                        <span class="">{{__('messages.Bank Account')}}</span>
                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="The official documents related to the business."></i>
                     </label>
                     <!--end::Label-->
-                    <input id="bank_account_iban" type="text" class="form-control form-control-solid" placeholder="IBAN e.g. INBNK00045545555555555555" name="bank_account_iban" /><br />
-                    <input id="bank_account_swift_code" type="text" class="form-control form-control-solid" placeholder="SWIFT code e.g. SWFT12345678909836435647" name="bank_account_swift_code" /><br />
-                    <input id="bank_account_number" type="text" class="form-control form-control-solid" placeholder="Account Number e.g. DFGHGFVB876215bsdjhkn" name="bank_account_number" />
-                </div> --}}
+                    <input id="bank_account_iban" type="text" class="form-control form-control-solid" placeholder="IBAN e.g. INBNK00045545555555555555" name="entity[bank_account][iban]"  value="{{old('entity.bank_account.iban')}}"/><br />
+                    <input id="bank_account_swift_code" type="text" class="form-control form-control-solid" placeholder="SWIFT code e.g. SWFT12345678909836435647" name="entity[bank_account][swift_code]"  value="{{old('entity.bank_account.swift_code')}}" /><br />
+                    <input id="bank_account_number" type="text" class="form-control form-control-solid" placeholder="Account Number e.g. DFGHGFVB876215bsdjhkn" name="entity[bank_account][account_number]" value="{{old('entity.bank_account.account_number')}}" />
+                </div>
                 <!--end::Input group-->
 
 

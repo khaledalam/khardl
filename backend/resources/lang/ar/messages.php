@@ -368,6 +368,8 @@ return [
     "logo" => "شعار",
     "others" => "اخري",
     "blocked" => "محظور",
-    "blocked-user" => "تم حظر هدا الحساب"
+    "blocked-user" => "تم حظر هدا الحساب",
+    "Title"=>"اللقب",
+    "Bank Account"=>"الحساب البنكي"
 ];
 
