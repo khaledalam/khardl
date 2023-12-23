@@ -52,7 +52,7 @@ const restuarantEditorSlice = createSlice({
       },
       {id: 9, name: "TikTok", icon: "BsTiktok", color: "TikTok", Link: ""},
     ],
-    selectedIcons: [
+    selectedSocialIcons: [
       {
         id: 1,
         name: "Whatsapp",
@@ -76,8 +76,64 @@ const restuarantEditorSlice = createSlice({
     text_color: "#ffffff",
   },
   reducers: {
-    selectAlign: (state, action) => {
-      state.selectedAlign = action.payload
+    headerPosition: (state, action) => {
+      state.headerPosition = action.payload
+    },
+    logoAlignment: (state, action) => {
+      state.logo_alignment = action.payload
+    },
+    logoShape: (state, action) => {
+      state.logo_shape = action.payload
+    },
+    categoryType: (state, action) => {
+      state.category_type = action.payload
+    },
+    categoryAlignment: (state, action) => {
+      state.category_alignment = action.payload
+    },
+
+    categoryHoverColor: (state, action) => {
+      state.category_hover_color = action.payload
+    },
+    categoryShape: (state, action) => {
+      state.category_shape = action.payload
+    },
+    categoryDetailType: (state, action) => {
+      state.categoryDetail_type = action.payload
+    },
+    categoryDetailAlignment: (state, action) => {
+      state.categoryDetail_alignment = action.payload
+    },
+
+    categoryDetailCartColor: (state, action) => {
+      state.categoryDetail_cart_color = action.payload
+    },
+    categoryDetailShape: (state, action) => {
+      state.categoryDetail_shape = action.payload
+    },
+    socialMediaIcons: (state, action) => {
+      state.socialMediaIcons = action.payload
+    },
+    selectedSocialMediaIcons: (state, action) => {
+      state.selectedSocialIcons = action.payload
+    },
+    phoneNumber: (state, action) => {
+      state.phoneNumber = action.payload
+    },
+    phoneNumberAlignment: (state, action) => {
+      state.phoneNumber_alignment = action.payload
+    },
+    pageColor: (state, action) => {
+      state.page_color = action.payload
+    },
+    priceColor: (state, action) => {
+      state.price_color = action.payload
+    },
+    headerColor: (state, action) => {
+      state.header_color = action.payload
+    },
+    footerColor: (state, action) => {
+      state.footer_color = action.payload
     },
   },
 })
