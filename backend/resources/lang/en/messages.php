@@ -19,11 +19,11 @@ return [
     'sign-out' => 'Sign Out',
     'about' => 'About',
     'support' => 'Support',
-    'pending' => 'Pending',
+    'pending' => 'pending',
     'active' => 'Active',
     'denied' => 'Denied',
     'total-orders' => 'Total Orders',
-    'cancelled' => 'Cancelled',
+    'cancelled' => 'cancelled',
     'sar' => 'SAR',
     'average-daily-sales' => 'Average Daily Sales',
     'new-customers-this-month' => 'New Customers This Month',
@@ -124,7 +124,7 @@ return [
     'commercial-registration' => 'Commercial registration',
     'tax-number' => 'Tax number',
     'bank-certificate' => 'Bank certificate',
-    'accepted' => 'Accepted',
+    'accepted' => 'accepted',
     'status-must-be-active' => 'Status must be active',
     'date' => 'Date',
     'order-id' => 'Order ID',
@@ -323,8 +323,8 @@ return [
     "notes" => "Notes",
     "in-preparations" => "In preparations",
     "not-in-preparations" => "Not in preparations",
-    'completed'=>'Completed',
-    'ready'=>"Ready",
+    'completed'=>'completed',
+    'ready'=>"ready",
     'delivery-fee' => "Delivery fee",
     "e.g." => "e.g.",
     'has-created-new-restaurant'=> 'Has created new restaurant',
@@ -368,7 +368,8 @@ return [
     "create-new-items" => "Create new product",
     "item-availability" => "Product availability",
     "category-logo" => "Category logo",
-    "logo" => "Logo"
+    "logo" => "Logo",
+    "Bank Account"=>"Bank Account"
 
 
 ];

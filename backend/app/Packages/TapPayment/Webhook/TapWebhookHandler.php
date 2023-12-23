@@ -10,6 +10,8 @@ class TapWebhookHandler extends ProcessWebhookJob
     {
         logger($this->webhookCall);
         $data = json_decode($this->webhookCall, true)['payload'];
+        // TODO @todo 
+        // check if business is active change the user status to be tap_verified = true
         logger($data);
        
     }

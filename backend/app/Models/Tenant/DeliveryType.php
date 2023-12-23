@@ -16,7 +16,7 @@ class DeliveryType extends Model
         'icon',
         'cost'
     ];
-
+    
     public $translatable = ['description'];
 
     const DELIVERY = 'Delivery';
