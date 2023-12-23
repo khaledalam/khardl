@@ -14,7 +14,7 @@ class CreateBusinessRequest  extends FormRequest
      */
     public function rules()
     {
-
+       
         return [
             'name.en' => 'required|string',
             'name.ar' => 'nullable|string',
@@ -29,10 +29,10 @@ class CreateBusinessRequest  extends FormRequest
             'entity.not_for_profit' => 'nullable|boolean',
             'entity.country' => ['required','string', new Two],
             'entity.tax_number' => 'nullable|string',
-            'entity.bank_account' => 'nullable|array',
-            'entity.bank_account.iban' => 'required_with:entity.bank_account|string',
-            'entity.bank_account.swift_code' => 'required_with:entity.bank_account|string',
-            'entity.bank_account.account_number' => 'required_with:entity.bank_account|string',
+            'entity.bank_account' => 'required|array',
+            'entity.bank_account.iban' => 'required|string',
+            'entity.bank_account.swift_code' => 'required|string',
+            'entity.bank_account.account_number' => 'required|string',
             'entity.billing_address' => 'nullable|array',
             'entity.billing_address.recipient_name' => 'nullable|string',
             'entity.billing_address.address_1' => 'nullable|string',
