@@ -170,14 +170,27 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             @if($user?->hasPermission('can_approve_restaurants'))
                                                 <a onclick="showConfirmation()" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3" >{{ __('messages.approve')}}</a>
-                                                <form id="approve-form" action="{{ route('admin.restaurant.activate', ['restaurant' => $restaurant->id]) }}" method="POST" style="display: inline">
+                                                <form id="approve-form" data-loading="false" action="{{ route('admin.restaurant.activate', ['restaurant' => $restaurant->id]) }}" method="POST" style="display: inline">
                                                     @csrf
                                                     @method('PUT')
 
                                                 </form>
                                                 <script>
+
+                                                    document.addEventListener("DOMContentLoaded", function(){
+
+                                                        document.getElementById('approve-form').submit(function (e) {
+                                                            console.log('hererere')
+                                                        });
+                                                    });
+
                                                     function showConfirmation() {
                                                         event.preventDefault();
+
+                                                        if (document.getElementById('approve-form').dataset.loading === "true"){
+                                                            Swal.fire('Action is already in progress!', '', 'danger')
+                                                            return;
+                                                        }
 
                                                         Swal.fire({
                                                             title: '{{ __('messages.confirm-approval') }}',
@@ -188,9 +201,10 @@
                                                             cancelButtonText: '{{ __('messages.cancel') }}'
                                                         }).then((result) => {
                                                             if (result.isConfirmed) {
+                                                                document.getElementById('approve-form').dataset.loading = "true";
                                                                 document.getElementById('approve-form').submit();
                                                             }
-                                                        });
+                                                        })
                                                     }
                                                 </script>
                                             @endif
@@ -206,6 +220,11 @@
                                                     confirmButtons.forEach(function(button) {
                                                         button.addEventListener('click', function(event) {
                                                             event.preventDefault();
+
+                                                            if (document.getElementById('approve-form').dataset.loading === "true"){
+                                                                Swal.fire('Action is already in progress!', '', 'danger')
+                                                                return;
+                                                            }
 
                                                             Swal.fire({
                                                                 title: "{{ __('messages.you-wont-be-able-to-undo-this') }}",

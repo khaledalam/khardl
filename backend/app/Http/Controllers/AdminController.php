@@ -308,7 +308,7 @@ class AdminController extends Controller
             Setting::first()->update(['is_live'=>true]);
         });
 
-        Mail::to($restaurant->user->email)->send(new SendApprovedRestaurantEmailJob(new ApprovedRestaurant($restaurant->user, $restaurant)));
+//        Mail::to($restaurant->user->email)->send(new SendApprovedRestaurantEmailJob(new ApprovedRestaurant($restaurant->user, $restaurant)));
 
         Log::create([
             'user_id' => Auth::id(),
