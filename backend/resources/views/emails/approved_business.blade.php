@@ -20,7 +20,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
-    <title>Denied</title>
+    <title>Approved Business</title>
 </head>
 
 <body>
@@ -36,26 +36,27 @@
                                 <div class="card-body mx-md-4 pb-5">
                                     <div class="text-center">
                                         <div class="logo">
-                                            <img src="{{ global_asset('img/logo.png') }}" style="width: 185px;"
+                                            <img src="{{ $restaurant_logo }}" style="width: 185px;"
                                                 alt="logo">
                                                 
                                         </div>
-                                        <h4 style="font-weight: 700;color: green" class="mt-4 mb-4 pb-1">APPROVED</h4>
-                                        <p style="text-align: left;"><b>Dear {{ $user->first_name }},</b><br>
-
-                    
+                                       
+                                        <p style="text-align: left;"><b>Dear {{ $user->first_name }}</b><br>
                                             <p>
-                                                We are pleased to inform you that your restaurant has been approved and is now live on our platform.
-                                                Users can access your restaurant at the following URL: <a href="{{$url}}">{{$restaurant->restaurant_name}}</a>.
+                                                We are delighted to inform you that your business request with reference {{$business->business_id}} has been successfully approved!
+                                                We appreciate your partnership and look forward to continuing our collaboration.
                                             </p>
-                                        
                                             <p>
-                                                Thank you for choosing our platform. If you have any questions or need further assistance, feel free to contact us.
+                                                To proceed with the next steps, we invite you to purchase your new subscription by following this url <a href="{{$subscription_url}}">here</a> . Our team is ready to assist you throughout the process and answer any questions you may have.
                                             </p>
+                                            <p>
+                                                Thank you for choosing our services. We value your business and are committed to providing you with the best experience.
+                                            </p>
+                                            
                                         
                                             <p>
                                                 Best regards,<br>
-                                                Khardl
+                                                {{$restaurant_name}}
                                             </p>
                                         <br>
                                         <br>

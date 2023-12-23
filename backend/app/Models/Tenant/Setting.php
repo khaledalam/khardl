@@ -11,7 +11,8 @@ class Setting extends Model
     protected $table= "settings";
     protected $fillable =[
         'is_live',
-        'delivery_fee'
+        'delivery_fee',
+        'restaurant_name'
     ];
     public $timestamps = false;
 

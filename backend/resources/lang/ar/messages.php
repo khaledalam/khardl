@@ -366,6 +366,9 @@ return [
     "item-availability" => "اتاحه المنتج",
     "category-logo" => "شعار الصنف",
     "logo" => "شعار",
+    "others" => "اخري",
+    "blocked" => "محظور",
+    "blocked-user" => "تم حظر هدا الحساب",
     "Title"=>"اللقب",
     "Bank Account"=>"الحساب البنكي"
 ];

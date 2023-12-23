@@ -11,11 +11,12 @@ class SettingSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run($assets,$restaurant_name): void
     {
         Setting::create([
             'is_live' => false,
-            'delivery_fee' => 0
+            'delivery_fee' => 0,
+            'restaurant_name'=>$restaurant_name
         ]);
     }
 }

@@ -369,6 +369,9 @@ return [
     "item-availability" => "Product availability",
     "category-logo" => "Category logo",
     "logo" => "Logo",
+    'others' => "Others",
+    "blocked" => "Blocked",
+    "blocked-user" => "User is blocked",
     "Bank Account"=>"Bank Account"
 
 
