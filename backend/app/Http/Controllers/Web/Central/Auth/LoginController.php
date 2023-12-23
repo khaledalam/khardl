@@ -54,19 +54,19 @@ class LoginController extends BaseController
             'remember_me' => 'nullable|boolean',
         ]);
 
-        
+
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
             return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
-       
+
 
 
         $user = Auth::user();
         if($user->isBlocked() ){
             Auth::logout();
-            return $this->sendError('Unauthorized.', ['error' => 'Inactive User']);
+            return $this->sendError('Unauthorized.', ['error' => __('messages.blocked-user')]);
         }elseif(!$user->isActive()){
             $register = new RegisterController();
             $register->sendVerificationCode($request);
@@ -84,7 +84,7 @@ class LoginController extends BaseController
                 $data['step2_status'] = 'completed';
             }
         }
-     
+
 
         return $this->sendResponse($data, __('User logged in successfully.'));
     }

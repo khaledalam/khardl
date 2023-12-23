@@ -34,7 +34,10 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'last_login',
         'address'
     ];
-    const STORAGE ="user_files";
+    public const STORAGE = "user_files";
+    public const STATUS_BLOCKED = "blocked";
+    public const STATUS_ACTIVE = "active";
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -62,11 +65,13 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function isRestaurantOwner(){
         return $this->hasRole("Restaurant Owner");
     }
+
     public function isBlocked(){
-        return $this->status == 'blocked';
+        return $this->status === self::STATUS_BLOCKED;
     }
+
     public function isActive(){
-        return $this->status == 'active';
+        return $this->status === self::STATUS_ACTIVE;
     }
     public function getFullNameAttribute()
     {

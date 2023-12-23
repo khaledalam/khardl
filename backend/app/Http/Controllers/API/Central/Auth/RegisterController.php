@@ -133,7 +133,7 @@ class RegisterController extends BaseController
         $user->generateVerificationCode();
 
         // Send the email with the verification code
-        Mail::send('emails.verify', ['code' => $user->verification_code, 'name' => "$user->first_name $user->last_name"], function($message) use ($request) {
+        Mail::send('emails.verify', ['code' => $user->verification_code, 'name' => "$user->first_name $user->last_name"], static function($message) use ($request) {
             $message->to($request->email);
             $message->subject('Email Verification Code');
         });
