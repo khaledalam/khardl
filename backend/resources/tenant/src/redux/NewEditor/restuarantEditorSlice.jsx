@@ -135,9 +135,46 @@ const restuarantEditorSlice = createSlice({
     footerColor: (state, action) => {
       state.footer_color = action.payload
     },
+    textFontFamily: (state, action) => {
+      state.text_fontFamily = action.payload
+    },
+    textFontSize: (state, action) => {
+      state.text_fontSize = action.payload
+    },
+    textFontWeight: (state, action) => {
+      state.text_fontWeight = action.payload
+    },
+    textAlignment: (state, action) => {
+      state.text_alignment = action.payload
+    },
+    textColor: (state, action) => {
+      state.text_color = action.payload
+    },
   },
 })
 
-export const {selectAlign} = restuarantEditorSlice.actions
-export const getSelectedAlign = (state) => state.align.selectedAlign
+export const {
+  headerPosition,
+  logoAlignment,
+  logoShape,
+  categoryType,
+  categoryHoverColor,
+  categoryShape,
+  categoryAlignment,
+  categoryDetailType,
+  categoryDetailAlignment,
+  categoryDetailCartColor,
+  categoryDetailShape,
+  socialMediaIcons,
+  selectedSocialMediaIcons,
+  pageColor,
+  priceColor,
+  headerColor,
+  footerColor,
+  textFontFamily,
+  textFontWeight,
+  textFontSize,
+  textAlignment,
+  textColor,
+} = restuarantEditorSlice.actions
 export default restuarantEditorSlice.reducer
