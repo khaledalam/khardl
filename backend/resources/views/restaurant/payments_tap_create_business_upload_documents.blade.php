@@ -35,7 +35,7 @@
         <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset ↻</button>
         <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
             <span class="indicator-label">Upload ⬆</span>
-            <span class="indicator-progress">Please wait...
+            <span class="indicator-progress" id="waiting-item">Please wait...
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
         @if($tap_files)
@@ -47,5 +47,16 @@
         <!--end::Post-->
     </div>
     <!--end::Content-->
+    <script>
+        document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var submitButton = document.querySelector('#kt_modal_new_target_submit');
+        
+            submitButton.disabled = true;
+            var waiting = document.querySelector('#waiting-item');
+            waiting.style.display = 'block';
+            document.getElementById('kt_modal_new_target_form').submit();
 
+        });
+    </script>
 @endsection

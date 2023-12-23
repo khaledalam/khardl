@@ -17,11 +17,12 @@ class Category extends Model
     protected $fillable = [
         'name',
         'branch_id',
-        'user_id'
+        'user_id',
+        'photo'
     ];
 
     public $translatable = ['name'];
-  
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
@@ -30,7 +31,7 @@ class Category extends Model
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
-   
+
     /**
      * Retrieve branch (if exists).
      */
@@ -49,4 +50,5 @@ class Category extends Model
     {
         return $this->hasMany(Item::class); //->where('availability', true);
     }
+
 }

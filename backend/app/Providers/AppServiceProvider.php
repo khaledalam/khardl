@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Tenant\Tap\TapBusiness;
 use Illuminate\Http\Request;
 use App\Repositories\PDF\OrderPDF;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         $user = Auth::user();
         View::share('link', request()->segment(1));
         View::share('admin_link', request()->segment(2));
+    
         View::share('user', $user);
         Schema::defaultStringLength(250);
 

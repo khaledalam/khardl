@@ -14,6 +14,7 @@ class CreateBusinessRequest  extends FormRequest
      */
     public function rules()
     {
+
         return [
             'name.en' => 'required|string',
             'name.ar' => 'nullable|string',
@@ -21,17 +22,17 @@ class CreateBusinessRequest  extends FormRequest
             'entity' => 'required',
             'entity.legal_name.en' => 'required|string',
             'entity.legal_name.ar' => 'nullable|string',
-            'entity.is_licensed' => 'required|string',
-            'entity.license' => 'required|array',
-            'entity.license.type' => 'required|string|in:Commercial Registration,Commercial License',
-            'entity.license.number' => 'required|string',
-            'entity.not_for_profit' => 'required|boolean',
+            'entity.is_licensed' => 'required|boolean',
+            'entity.license' => 'nullable|array',
+            'entity.license.type' => 'required_with:entity.license|string|in:Commercial Registration,Commercial License',
+            'entity.license.number' => 'required_with:entity.license|string',
+            'entity.not_for_profit' => 'nullable|boolean',
             'entity.country' => ['required','string', new Two],
-            'entity.tax_number' => 'required|string',
-            'entity.bank_account' => 'required|array',
-            'entity.bank_account.iban' => 'required|string',
-            'entity.bank_account.swift_code' => 'required|string',
-            'entity.bank_account.account_number' => 'required|string',
+            'entity.tax_number' => 'nullable|string',
+            'entity.bank_account' => 'nullable|array',
+            'entity.bank_account.iban' => 'required_with:entity.bank_account|string',
+            'entity.bank_account.swift_code' => 'required_with:entity.bank_account|string',
+            'entity.bank_account.account_number' => 'required_with:entity.bank_account|string',
             'entity.billing_address' => 'nullable|array',
             'entity.billing_address.recipient_name' => 'nullable|string',
             'entity.billing_address.address_1' => 'nullable|string',
@@ -60,9 +61,9 @@ class CreateBusinessRequest  extends FormRequest
             'contact_person.contact_info.primary.phone' => 'required|array',
             'contact_person.contact_info.primary.phone.country_code' => 'required|string',
             'contact_person.contact_info.primary.phone.number' => 'required|string',
-            'contact_person.nationality' => ['required','string',new Two],
-            'contact_person.date_of_birth' => 'required|date_format:Y-m-d',
-            'contact_person.is_authorized' => 'required|boolean',
+            'contact_person.nationality' => ['nullable','string',new Two],
+            'contact_person.date_of_birth' => 'nullable|date_format:Y-m-d',
+            'contact_person.is_authorized' => 'nullable|boolean',
             'contact_person.authorization' => 'nullable|array',
             'contact_person.authorization.name.title' => 'nullable|string',
             'contact_person.authorization.name.first' => 'nullable|string',
@@ -94,8 +95,19 @@ class CreateBusinessRequest  extends FormRequest
             'brands.*.content.tag_line.ar' => 'nullable|string',
             'brands.*.content.about.en' => 'nullable|string',
             'brands.*.content.about.ar' => 'nullable|string',
-      
         ];
+    }
+    function prepareForValidation()
+    {
+        $this->merge(['entity'=>array_merge($this->entity,[
+            'is_licensed'=>(isset($this->entity['is_licensed']))?true:false
+        ])]);
+    }
+    protected function passedValidation(): void
+    {
+        $this->merge([
+            "type"=>'ind',
+        ]);
     }
     
 }

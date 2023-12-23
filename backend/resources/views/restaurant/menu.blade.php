@@ -32,6 +32,7 @@
                                                 <!--begin::Inbox-->
                                                 <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
                                                     <span class="menu-link">
+                                                        <img src="{{ $category->photo }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
                                                         <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
                                                     </span>
@@ -58,25 +59,33 @@
                                                   <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('messages.add-new-category') }}</button>
                                               </span>
                                               <!--end::Add label-->
-                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" >
+                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit"  enctype="multipart/form-data">
                                                 @csrf
-                                               
-                                            
+
+
                                                 <div id="categoryForm" class="mt-2" style="display: none !important;" >
                                                     <ul class="nav nav-tabs" id="languageTabs">
                                                         <li class="nav-item">
-                                                            <a class="nav-link active" id="en-tab" data-bs-toggle="tab" href="#en">English</a>
+                                                            <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('messages.english')}}</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="ar-tab" data-bs-toggle="tab" href="#ar">Arabic</a>
+                                                            <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('messages.arabic')}}</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('messages.logo')}}</a>
                                                         </li>
                                                     </ul>
                                                     <div class="tab-content mt-3">
                                                         <div class="tab-pane fade show active" id="en">
-                                                            <input type="text" class="form-control" placeholder="Enter text in English"   name="name_en">
+                                                            <input type="text" class="form-control" placeholder="Enter text in English" name="name_en">
                                                         </div>
                                                         <div class="tab-pane fade" id="ar">
-                                                            <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية"   name="name_ar">
+                                                            <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية" name="name_ar">
+                                                        </div>
+                                                        <div class="tab-pane fade" id="logo">
+                                                            <label>{{__('messages.category-logo')}}</label>
+                                                            <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" />
+                                                        </div>
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-center">
@@ -253,7 +262,7 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
                     <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="#" id="myForm">
+                    <form id="kt_modal_new_target_form" class="form" action="#" id="myForm" enctype="multipart/form-data">
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
@@ -442,7 +451,7 @@
             }
         });
 
-       
+
     </script>
 
     <script>
@@ -496,12 +505,12 @@
         inputContainer3.appendChild(newInput);
     });
 
- 
+
     document.getElementById('category-submit').addEventListener('submit', function (e) {
         e.preventDefault();
         var submitButton = document.querySelector('#saveCategoryBtn');
         submitButton.disabled = true;
-        
+
         var inputValue = document.querySelector('input[name=name_ar]').value.trim();
         if (inputValue === '') {
             alert('Please fill in the input in (Arabic) tab.');
@@ -515,7 +524,7 @@
         }
         document.getElementById('category-submit').submit();
 
-       
+
 
     });
 </script>

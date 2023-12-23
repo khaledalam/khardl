@@ -226,6 +226,23 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         return Redirect::back();
     })->name('change.language');
 
+
+    Route::get('/delivery-webhook', static function () {
+        return response()->json([
+            'status' => 'under construction',
+            '_get' => $_GET,
+        ]);
+
+    })->name('delivery.webhook');
+
+    Route::post('/delivery-webhook', static function () {
+        return response()->json([
+            'status' => 'under construction',
+            '_post' => $_POST
+        ]);
+
+    })->name('delivery.webhook-post');
+
 });
 //-----------------------------------------------------------------------------------------------------------------------
 
