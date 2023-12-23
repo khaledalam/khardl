@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class TapBusiness extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'data',
+        'business_id',
+        'user_id',
+        'destination_id',
+        "status",
+        'wallet_id',
+        'entity_id'
+    ];
+    protected $casts =[
+        'data'=>'array'
+    ];
 }

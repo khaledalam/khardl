@@ -36,6 +36,7 @@
                                                 <!--begin::Inbox-->
                                                 <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
                                                     <span class="menu-link @if ($category->id === $selectedCategory->id) active @endif">
+                                                        <img src="{{ $category->photo }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
                                                         <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
                                                         {{-- <span class="badge badge-light-success">3</span> --}}
@@ -78,7 +79,7 @@
                                                   <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('messages.add-new-category') }}</button>
                                               </span>
                                               <!--end::Add label-->
-                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit">
+                                              <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
                                                 @csrf
                                                 <div id="categoryForm" class="mt-2" style="display: none !important;" >
                                                     <ul class="nav nav-tabs" id="languageTabs">
@@ -100,9 +101,8 @@
                                                             <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية" name="name_ar">
                                                         </div>
                                                         <div class="tab-pane fade" id="logo">
-                                                            <label for="">{{__('messages.category-logo')}}</label>
-                                                            <input type="file" class="form-control form-control-solid"
-                                                                   placeholder="Enter product image" id="new_category_photo" name="new_category_photo" />
+                                                            <label>{{__('messages.category-logo')}}</label>
+                                                            <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" />
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-center">
@@ -995,7 +995,6 @@
 
             }
 
-
             optionsDiv.appendChild(optionDiv);
         }
 
@@ -1014,12 +1013,10 @@
             var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
             console.log(inputValueAR);
             if (inputValueAR === '') {
-                alert('Please fill in the input in the (English) tab .');
+                alert('Please fill in the input in the (English) tab.');
                 return ;
             }
             document.getElementById('category-submit').submit();
-
-
         });
 
         document.getElementById('kt_modal_new_target_form').addEventListener('submit', function (e) {

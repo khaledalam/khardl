@@ -17,9 +17,9 @@ class CategoryResource extends JsonResource
         $data = [
             'id' => $this->id,
             'name' => $this->name,
+            'photo' => $this->photo ?? global_asset('img/category-icon.png'),
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
-
         ];
         if ($request->has('branch')) {
             $data['branch'] = $this->branch;
@@ -29,6 +29,9 @@ class CategoryResource extends JsonResource
         }
         if ($request->has('items')) {
             $data['items'] = ItemResource::collection($this->items);
+        }
+        if ($request->has('lang')) {
+             $data['sd']=   $request->lang;
         }
         return $data;
     }
