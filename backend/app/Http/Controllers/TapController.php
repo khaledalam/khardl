@@ -106,6 +106,7 @@ class TapController extends Controller
                 ]
             ];
         }
+        $user = Auth::user();
         $business = Business::create($data);
         if($business['http_code'] != ResponseHelper::HTTP_OK){
             return redirect()->back()
@@ -123,8 +124,12 @@ class TapController extends Controller
             "status"=>$business['message']['status'],
             "entity_id"=>$business['message']['entity']['id'],
             "wallet_id"=>$business['message']['entity']['wallets'][0]['id'],
-            'user_id'=>Auth::id()
+            'user_id'=>$user->id
         ]);
+        if($business['message']['status'] == 'Active'){
+            $user->tap_verified = true;
+            $user->save();
+        }
       
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
         
