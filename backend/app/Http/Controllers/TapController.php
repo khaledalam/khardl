@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tenant\Tap\TapBusiness;
+use App\Mail\ApprovedBusiness;
 use App\Models\User;
 use LVR\CountryCode\Two;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Tenant\Tap\TapBusiness;
 use App\Models\Tenant\Tap\TapBusinessFile;
 use App\Packages\TapPayment\Business\Business;
 use App\Packages\TapPayment\File\File as TapFileAPI;
@@ -89,6 +91,10 @@ class TapController extends Controller
 
     public function payments_submit_tap_documents(CreateBusinessRequest $request)
     { 
+       
+
+        $user= Auth::user();
+       
         $data = $request->validated();
         $files = TapBusinessFile::first();
         $types = [
@@ -124,8 +130,10 @@ class TapController extends Controller
             "status"=>$business['message']['status'],
             "entity_id"=>$business['message']['entity']['id'],
             "wallet_id"=>$business['message']['entity']['wallets'][0]['id'],
-            'user_id'=>Auth::id()
+            'user_id'=>$user->id
         ]);
+        // Mail::to($user->email)->send(new ApprovedBusiness($user));
+        // dd(1);
       
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
         

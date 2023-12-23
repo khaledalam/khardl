@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Central\Auth;
 
+use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\BaseController;
 use App\Models\Tenant\RestaurantUser;
@@ -66,6 +67,9 @@ class LoginController extends BaseController
         if($user->isBlocked() ){
             Auth::logout();
             return $this->sendError('Unauthorized.', ['error' => 'Inactive User']);
+        }elseif(!$user->isActive()){
+            $register = new RegisterController();
+            $register->sendVerificationCode($request);
         }
         // @TODO: uncomment if need!
         $data = [
