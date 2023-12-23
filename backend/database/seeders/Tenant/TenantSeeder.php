@@ -15,10 +15,10 @@ class TenantSeeder extends Seeder
      */
     public function run()
     {
-
+        $restaurant_name = Tenant::latest()->first()->restaurant_name;
         $assets = tenant_route(
         // subdomain
-            CreateTenantAction::generateSubdomain(Tenant::latest()->first()->restaurant_name)
+            CreateTenantAction::generateSubdomain($restaurant_name)
         // domain
             .'.'.config("tenancy.central_domains")[0]
         // route
@@ -44,7 +44,8 @@ class TenantSeeder extends Seeder
 
             OrderSeeder::class,
         ],false,[
-            'assets'=>$assets
+            'assets'=>$assets,
+            'restaurant_name'=>$restaurant_name
         ]);
 
     }

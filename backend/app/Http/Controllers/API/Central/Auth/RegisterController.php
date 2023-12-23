@@ -170,7 +170,7 @@ class RegisterController extends BaseController
         if ($user->checkVerificationCode($request->code)) {
             $user->email_verified_at = now();
             $user->status = 'active';
-            $user->verification_code = null; // Clear the verification code
+            $user->verification_code = $request->code; // Clear the verification code
             $user->save();
 
             return $this->sendResponse(null, 'Email verified successfully!');
