@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendApprovedRestaurantEmailJob;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use Carbon\Carbon;
@@ -242,8 +243,8 @@ class AdminController extends Controller
         $restaurants = $query->get();
         if ($request->has('search')) {
             $search = $request->input('search');
-           
-          
+
+
             $query->Where('restaurant_name','like', '%' . $search . '%');
             $query->whereHas('primary_domain', static function($query1) use ($search) {
                 $query1->OrWhere('domain', 'like', '%' . $search . '%');
@@ -301,12 +302,24 @@ class AdminController extends Controller
         return view('admin.view-restaurant', compact('restaurant','widget','user','logo','is_live','owner'));
 
     }
-    public function activateRestaurant(Tenant $restaurant){
 
-        $restaurant->run(static function(){
-            Setting::first()->update(['is_live'=>true]);
+    public function activateRestaurant(Tenant $restaurant){
+        $error = false;
+        $restaurant->run(static function() use (&$error){
+            if (Setting::first()->is_live) {
+                $error = true;
+            } else {
+                Setting::first()->update(['is_live' => true]);
+            }
         });
+
+        if ($error) {
+            return redirect()->back()->with('error', 'Restaurant is already approved');
+        }
+
         Mail::to($restaurant->user->email)->send(new ApprovedRestaurant($restaurant->user,$restaurant));
+
+//        Mail::to($restaurant->user->email)->send(new SendApprovedRestaurantEmailJob(new ApprovedRestaurant($restaurant->user, $restaurant)));
 
         Log::create([
             'user_id' => Auth::id(),
@@ -588,44 +601,41 @@ class AdminController extends Controller
 
     public function denyUser(Request $request, $id)
     {
-        $user = User::find($id);
-        $selectedOption = $request->input('option');
+        $user = User::find(
+            Tenant::findOrFail($id)?->user_id
+        );
+
+        if (!$user) {
+            return redirect()->back()->with('error', __('Invalid user'));
+        }
+
+        $selectedOption = $request->input('options');
+
         if($selectedOption == null){
             return redirect()->back()->with('error', 'You have to select one option at least!');
         }
 
+        if ($user?->email == env('SUPER_MASTER_ADMIN_EMAIL')) {
+            return redirect()->back()->with('error', __('Super master admin can not blocked'));
+        }
+
         if ($user) {
-            $user->isApproved = 2;
-            if($selectedOption == 'option1'){
-                $user->commercial_registration_pdf = null;
-            }
-            else if($selectedOption == 'option2'){
-                $user->signed_contract_delivery_company	= null;
-            }
-            else{
-                $user->commercial_registration_pdf = null;
-                $user->signed_contract_delivery_company	= null;
-            }
+            $user->status = User::STATUS_BLOCKED;
             $user->save();
         }
 
-        Mail::to($user->email)->send(new DeniedEmail($user, $selectedOption));
+        Mail::to($user->email)->queue(new DeniedEmail($user, $selectedOption));
 
         Log::create([
             'user_id' => Auth::id(),
             'action' => 'Has denied an user with an ID of: ' . $id,
+            'reason' => $selectedOption
         ]);
 
-        if(app()->getLocale() === 'en')
-            return redirect()->back()->with([
-                'success' => 'User denied successfully',
-                'user' => Auth::user()
-            ]);
-        else
-            return redirect()->back()->with([
-                'success' => 'User denied successfully',
-                'user' => Auth::user()
-            ]);
+        return redirect()->back()->with([
+            'success' => 'User denied successfully',
+            'user' => Auth::user()
+        ]);
     }
 
     public function downloadCommercialRegistration($filename){
