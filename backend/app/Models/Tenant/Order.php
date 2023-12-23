@@ -46,17 +46,39 @@ class Order extends Model
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
+    /* Start Scopes */
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', self::COMPLETED);
+    }
+    public function scopePending($query)
+    {
+        return $query->where('status', self::PENDING);
+    }
+    public function scopeAccepted($query)
+    {
+        return $query->where('status', self::ACCEPTED);
+    }
+    public function scopeCancelled($query)
+    {
+        return $query->where('status', self::CANCELLED);
+    }
+    public function scopeReady($query)
+    {
+        return $query->where('status', self::READY);
+    }
+    /* End Scoped */
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);
     }
-  
-    
+
+
     public function branch()
     {
         return $this->belongsTo(Branch::class);
     }
-    
+
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity', 'price_at_order_time')->withTimestamps();
@@ -70,9 +92,9 @@ class Order extends Model
     {
         return $this->belongsTo(DeliveryType::class);
     }
-    
+
     public function items(){
         return $this->hasMany(OrderItem::class);
     }
-   
+
 }
