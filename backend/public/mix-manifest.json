@@ -2179,6 +2179,7 @@
     "/images/bgRegistration.webp": "/images/bgRegistration.webp?id=ce77e0f4b28be9617a87e1999988305b",
     "/images/bikeDeliveryIcon.svg": "/images/bikeDeliveryIcon.svg?id=b22b708d97c2315d6edc52eda05fd649",
     "/images/burger.png": "/images/burger.png?id=c80308a42167940f6b17964137c5fe18",
+    "/images/cartBoldIcon.svg": "/images/cartBoldIcon.svg?id=12390f60a3cbd807a233f656c5b1ede9",
     "/images/chicken.png": "/images/chicken.png?id=fcd64c4bfc363c1c1278d2da4e96c3d5",
     "/images/drink.png": "/images/drink.png?id=f220a62b555d127a38670829af72e2e3",
     "/images/driversApp.webp": "/images/driversApp.webp?id=5a905473a5483281ea83761f35522681",
@@ -2199,6 +2200,7 @@
     "/images/shopIcon.svg": "/images/shopIcon.svg?id=7ae1cad8c9d52ce81f546d788425f32b",
     "/images/timer.png": "/images/timer.png?id=a55a8fae43a69f91ba95c318aa939bf9",
     "/images/unitedKingdom.png": "/images/unitedKingdom.png?id=332efd862fe5195a56afe034b15e3d94",
+    "/images/whatsappImg.svg": "/images/whatsappImg.svg?id=5777511838c114f9932fdb2576463869",
     "/img/Capture.PNG": "/img/Capture.PNG?id=2fd85373cb461633e6d23c5eb0daedb6",
     "/img/blur-coffee-cafe-shop-restaurant-with-bokeh-background-xd.jpg": "/img/blur-coffee-cafe-shop-restaurant-with-bokeh-background-xd.jpg?id=7a35f5bc76176d61df704b7739a06457",
     "/img/company1.png": "/img/company1.png?id=784582a472fea616773e5b5ad4261473",
@@ -4194,7 +4196,7 @@
     "/media/technology-logos/Html5.png": "/media/technology-logos/Html5.png?id=b4a3ff7e36f190b0c7eb545f6154cfac",
     "/media/technology-logos/React.png": "/media/technology-logos/React.png?id=66d79d92233f04e128ea676dea1d93e0",
     "/media/technology-logos/VueJS.png": "/media/technology-logos/VueJS.png?id=d3e5fefbe4df2bd095731f8de30c9438",
-    "/mix-manifest.json": "/mix-manifest.json?id=0cd7e9820d3c2b257eac779167116a68",
+    "/mix-manifest.json": "/mix-manifest.json?id=8f57fea9359ce3d6431c955c48bed021",
     "/plugins/custom/ckeditor/ckeditor-balloon-block.bundle.js": "/plugins/custom/ckeditor/ckeditor-balloon-block.bundle.js?id=4204959f1ca39a78058b2d5eff984fcf",
     "/plugins/custom/ckeditor/ckeditor-balloon.bundle.js": "/plugins/custom/ckeditor/ckeditor-balloon.bundle.js?id=2e343a19cee50dcb209ab53f8c9f5177",
     "/plugins/custom/ckeditor/ckeditor-classic.bundle.js": "/plugins/custom/ckeditor/ckeditor-classic.bundle.js?id=c67be7926c65ac51375d74f9ea117f7f",
@@ -4395,6 +4397,5 @@
     "/static/js/483.1448968e.chunk.js.map": "/static/js/483.1448968e.chunk.js.map?id=dd970c783fc4cff02cb2dea32e23c942",
     "/static/js/main.d3d127bb.js": "/static/js/main.d3d127bb.js?id=2482ea592fc44a12e0e4e4e8bfe6d539",
     "/static/js/main.d3d127bb.js.LICENSE.txt": "/static/js/main.d3d127bb.js.LICENSE.txt?id=d4736f9ca4b5e2223a5e00f1ae8a2b66",
-    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47",
-    "/images/whatsappImg.svg": "/images/whatsappImg.svg?id=5777511838c114f9932fdb2576463869"
+    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47"
 }

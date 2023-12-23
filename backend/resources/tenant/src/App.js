@@ -127,6 +127,10 @@ const App = () => {
                   path='/site-editor/restaurants'
                   element={<RestuarantEditor />}
                 />{" "}
+                {/* <Route
+                                                          path='/site-editor/restaurants'
+                                                          element={<EditorPage />}
+                                                        />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
                 <Route path='/dashboard' element={<CustomersPreview />} />{" "}
                 <Route path='/site-editor/customers' element={<EditorPage />} />{" "}

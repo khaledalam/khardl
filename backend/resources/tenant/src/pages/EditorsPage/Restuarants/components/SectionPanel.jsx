@@ -23,7 +23,6 @@ const SectionPanel = () => {
           options={[
             {value: "fixed", text: "Fixed"},
             {value: "relative", text: "Relative"},
-            {value: "absolute", text: "Absolute"},
           ]}
         />
       </div>

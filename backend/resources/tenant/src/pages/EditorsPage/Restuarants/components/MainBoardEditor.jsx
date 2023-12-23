@@ -4,10 +4,10 @@ import pastaImg from "../../../../assets/pasta.png"
 import burgerImg from "../../../../assets/burger.png"
 import chickenImg from "../../../../assets/chicken.png"
 import drinkImg from "../../../../assets/drink.png"
-import cartHeaderImg from "../../../../assets/headerCartIcon.svg"
+import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
 import ImageIcon from "../../../../assets/imageIcon.svg"
 import WhatsappIcon from "../../../../assets/whatsappImg.svg"
-import {IoCloseOutline} from "react-icons/io5"
+import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
 import CategoryItem from "./CategoryItem"
 import ProductItem from "./ProductItem"
 
@@ -60,17 +60,21 @@ const MainBoardEditor = () => {
   return (
     <div className='w-full p-4 flex flex-col gap-6'>
       {/* Header cart */}
-      <div className='w-full min-h-[85px] bg-white rounded-xl flex items-center justify-center'>
-        <div className='w-[40px] h-[40px] rounded-sm p-2 bg-neutral-100 relative'>
-          <img
-            src={cartHeaderImg}
-            alt={"cart"}
-            className='w-full h-full object-cover'
-          />
-          {false && (
-            <div className='absolute top-[-0.8rem] right-[-1rem]'>
-              <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
-                <span className='text-red-500 text-xs'>0</span>
+      <div className='w-full min-h-[85px] bg-white rounded-xl flex items-center justify-between px-2'>
+        <label htmlFor='my-drawer' aria-label='close sidebar'>
+          <div className='btn hover:bg-neutral-100 flex items-center gap-3'>
+            <IoMenuOutline size={40} className='text-neutral-400' />
+            <span className='font-normal text-sm'>
+              Show Navigation Bar To Edit
+            </span>
+          </div>
+        </label>
+        <div className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center'>
+          <img src={cartHeaderImg} alt={"cart"} className='' />
+          {true && (
+            <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
+              <div className='w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
+                <span className='text-white font-bold text-xs'>0</span>
               </div>
             </div>
           )}
@@ -78,7 +82,7 @@ const MainBoardEditor = () => {
       </div>
       {/* logo */}
       <div className='w-full min-h-[100px] bg-white rounded-xl flex items-center justify-center '>
-        <div className='w-[60px] h-[60px] rounded-sm p-2 bg-neutral-100 relative'>
+        <div className='w-[60px] h-[60px] rounded-lg p-2 bg-neutral-100 relative'>
           <img
             src={ImageIcon}
             alt={""}
@@ -95,7 +99,7 @@ const MainBoardEditor = () => {
       </div>
       {/* banner */}
       <div className='w-full min-h-[180px] bg-white rounded-xl flex items-center justify-center'>
-        <div className='w-[100px] h-[95px] rounded-sm p-2 bg-neutral-100 relative'>
+        <div className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'>
           <img
             src={ImageIcon}
             alt={""}
