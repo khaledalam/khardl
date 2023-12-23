@@ -368,7 +368,9 @@ return [
     "create-new-items" => "Create new product",
     "item-availability" => "Product availability",
     "category-logo" => "Category logo",
-    "logo" => "Logo"
+    "logo" => "Logo",
+    'others' => "Others",
+    "blocked" => "Blocked"
 
 
 ];

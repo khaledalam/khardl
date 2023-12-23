@@ -166,7 +166,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                        @elseif (!$is_live)
+                                        @elseif (!$is_live && !$restaurant?->user?->isBlocked())
                                         <div class="d-flex justify-content-between align-items-center">
                                             @if($user?->hasPermission('can_approve_restaurants'))
                                                 <a onclick="showConfirmation()" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3" >{{ __('messages.approve')}}</a>
@@ -176,14 +176,6 @@
 
                                                 </form>
                                                 <script>
-
-                                                    document.addEventListener("DOMContentLoaded", function(){
-
-                                                        document.getElementById('approve-form').submit(function (e) {
-                                                            console.log('hererere')
-                                                        });
-                                                    });
-
                                                     function showConfirmation() {
                                                         event.preventDefault();
 
@@ -233,20 +225,24 @@
                                                                 cancelButtonText: '{{ __('messages.no-cancel') }}',
                                                                 html: `
                                                                     <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="option1">
+                                                                        <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="commercial-registration-number">
                                                                         <label class="form-check-label" for="option1">{{ __('messages.commercial-registration-number') }}</label>
                                                                     </div>
                                                                     <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="option2">
+                                                                        <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="delivery-company-contract">
                                                                         <label class="form-check-label" for="option2">{{ __('messages.delivery-company-contract') }}</label>
                                                                     </div>
                                                                     <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="option3">
+                                                                        <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="tax-number">
                                                                         <label class="form-check-label" for="option3">{{ __('messages.tax-number') }}</label>
                                                                     </div>
                                                                     <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="option4">
+                                                                        <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="bank-certificate">
                                                                         <label class="form-check-label" for="option4">{{ __('messages.bank-certificate') }}</label>
+                                                                    </div>
+                                                                    <div class="form-check my-2">
+                                                                        <input type="checkbox" class="form-check-input" id="option5" name="options[]" value="others">
+                                                                        <label class="form-check-label" for="option5">{{ __('messages.others') }}</label>
                                                                     </div>
                                                                 `,
                                                                 preConfirm: function() {
@@ -277,6 +273,10 @@
 
 
                                         </div>
+                                        @elseif ($restaurant?->user?->isBlocked())
+                                            <div class="d-flex justify-content-left w-100 mt-auto mb-2">
+                                                <span class="badge badge-danger p-2 fs-6">{{ __('messages.blocked')}}</span>
+                                            </div>
                                         @endif
                                         <!--end::Progress-->
                                     </div>

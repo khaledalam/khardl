@@ -365,6 +365,8 @@ return [
     "create-new-items" => "انشاء منتج جديد",
     "item-availability" => "اتاحه المنتج",
     "category-logo" => "شعار الصنف",
-    "logo" => "شعار"
+    "logo" => "شعار",
+    "others" => "اخري",
+    "blocked" => "محظور"
 ];
 
