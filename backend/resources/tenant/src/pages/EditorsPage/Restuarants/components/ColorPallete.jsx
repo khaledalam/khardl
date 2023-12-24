@@ -9,10 +9,10 @@ const ColorPallete = ({color, handleColorChange, modalId}) => {
     <div className='w-[50%]'>
       <button className='btn hover:bg-neutral-100 w-full h-[40px] flex items-center justify-between p-1 px-2'>
         <div
-          style={{backgroundColor: color.hex}}
+          style={{backgroundColor: color}}
           className={`w-7 h-7 rounded-lg`}
         ></div>
-        <span className='tracking-wide'>{color.hex}</span>
+        <span className='tracking-wide'>{color}</span>
         <IoIosClose
           size={24}
           onClick={() => document.getElementById(modalId).showModal()}
@@ -22,7 +22,7 @@ const ColorPallete = ({color, handleColorChange, modalId}) => {
         <div className='modal-box w-[300px] flex items-center justify-center'>
           <ChromePicker
             color={color}
-            onChangeComplete={(color) => handleColorChange(color)}
+            onChangeComplete={(color) => handleColorChange(color.hex)}
           />
         </div>
         <form method='dialog' className='modal-backdrop'>

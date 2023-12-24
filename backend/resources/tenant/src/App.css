@@ -12,6 +12,20 @@
 
 } */
 
+html {
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2rem #eee;
+}
+
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -76,4 +90,20 @@
 .hamburger input:checked + svg .line-top-bottom {
   stroke-dasharray: 20 300;
   stroke-dashoffset: -32.42;
+}
+
+.custom-underline {
+  position: relative;
+}
+
+.custom-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -0.8rem;
+  left: 0;
+  right: 0;
+  height: 12.15px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='12' viewBox='0 0 88 12' fill='none'%3E%3Cpath d='M1.18004 8.89765L1.33766 8.86216C7.13403 7.55692 10.0322 6.9043 12.9595 6.42534C14.85 6.11603 16.749 5.86109 18.6541 5.66086C21.6041 5.35082 24.5718 5.21597 30.5072 4.94627V4.94627L43.5433 4.35375L59.5592 3.62581L72.5954 3.0333L81.8181 3.85891L86.9346 5' stroke='%232A6E4F' stroke-width='5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }

@@ -32,6 +32,7 @@ import Header from "./components/Restaurants/RestaurantsPreview/components/heade
 import {SideMenu} from "./components/SideMenu"
 import MenuProvider from "react-flexible-sliding-menu"
 import {RestuarantEditor} from "./pages/EditorsPage"
+import {RestuarantHomePage} from "./pages/RestuarantPage"
 
 const App = () => {
   const Language = useSelector((state) => state.languageMode.languageMode)
@@ -44,6 +45,7 @@ const App = () => {
     "/login-trial",
     "/privacy",
     "/site-editor/restaurants",
+    "/",
   ].includes(location.pathname)
   const showFooter = ![
     "/",
@@ -96,7 +98,7 @@ const App = () => {
             <Routes>
               {" "}
               {/* Public Routes */}{" "}
-              <Route path='/' element={<RestaurantHomePage />} />{" "}
+              <Route path='/' element={<RestuarantHomePage />} />{" "}
               <Route path='/logout' element={<Logout />} />{" "}
               <Route path='/reset-password' element={<ForgotPassword />} />{" "}
               <Route
@@ -128,9 +130,9 @@ const App = () => {
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                          path='/site-editor/restaurants'
-                                                          element={<EditorPage />}
-                                                        />{" "} */}{" "}
+                                                                                                                      path='/site-editor/restaurants'
+                                                                                                                      element={<EditorPage />}
+                                                                                                                    />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
                 <Route path='/dashboard' element={<CustomersPreview />} />{" "}
                 <Route path='/site-editor/customers' element={<EditorPage />} />{" "}

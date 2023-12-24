@@ -3,19 +3,41 @@ import PrimarySelect from "./PrimarySelect"
 import ColorPallete from "./ColorPallete"
 import PrimaryNumberCount from "./PrimaryNumberCount"
 import LogoAlignment from "./LogoAlignment"
+import {useSelector, useDispatch} from "react-redux"
+import {
+  pageColor,
+  pageCategoryColor,
+  categoryHoverColor,
+  categoryDetailCartColor,
+  headerColor,
+  footerColor,
+  priceColor,
+} from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const EditPanel = () => {
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  )
+  const {
+    page_color,
+    page_category_color,
+    category_hover_color,
+    categoryDetail_cart_color,
+    header_color,
+    footer_color,
+    price_color,
+  } = restuarantEditorStyle
+  const dispatch = useDispatch()
+
   const [logoShape, setLogoShape] = useState("Rounded")
   const [fontFamily, setfontFamily] = useState("Inter")
   const [weight, setWeight] = useState("Thin")
-  const [pageColor, setPageColor] = useState({hex: "#ffffff"})
-  const [categoryAnimeColor, setCategoryAnimeColor] = useState({hex: "#ffffff"})
-  const [categoryDetailColor, setCategoryDetailColor] = useState({
-    hex: "#ffffff",
-  })
-  const [headerColor, setHeaderColor] = useState({hex: "#ffffff"})
-  const [footerColor, setFooterColor] = useState({hex: "#ffffff"})
-  const [textColor, setTextColor] = useState({hex: "#ef1515"})
+  // const [pageColor, setPageColor] = useState({hex: "#ffffff"})
+  const [categoryAnimeColor, setCategoryAnimeColor] = useState("#ffffff")
+  const [categoryDetailColor, setCategoryDetailColor] = useState("#ffffff")
+  const [headerColor, setHeaderColor] = useState("#ffffff")
+  const [footerColor, setFooterColor] = useState("#ffffff")
+  const [textColor, setTextColor] = useState("#ffffff")
 
   return (
     <div className='w-full h-full'>
@@ -91,8 +113,18 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"page-modal"}
-              color={pageColor}
-              handleColorChange={(color) => setPageColor(color)}
+              color={page_color}
+              handleColorChange={(color) => dispatch(pageColor(color))}
+            />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              Page Category
+            </h3>
+            <ColorPallete
+              modalId={"page_category"}
+              color={page_category_color}
+              handleColorChange={(color) => dispatch(pageCategoryColor(color))}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
@@ -101,8 +133,8 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"categoryAnimation"}
-              color={categoryAnimeColor}
-              handleColorChange={(color) => setCategoryAnimeColor(color)}
+              color={category_hover_color}
+              handleColorChange={(color) => dispatch(categoryHoverColor(color))}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
@@ -111,8 +143,20 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"categoryDetails"}
-              color={categoryDetailColor}
-              handleColorChange={(color) => setCategoryDetailColor(color)}
+              color={categoryDetail_cart_color}
+              handleColorChange={(color) =>
+                dispatch(categoryDetailCartColor(color))
+              }
+            />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              Price
+            </h3>
+            <ColorPallete
+              modalId={"price"}
+              color={price_color}
+              handleColorChange={(color) => dispatch(priceColor(color))}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
@@ -121,8 +165,8 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"header"}
-              color={headerColor}
-              handleColorChange={(color) => setHeaderColor(color)}
+              color={header_color}
+              handleColorChange={(color) => dispatch(headerColor(color))}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
@@ -131,8 +175,8 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"footer_modal"}
-              color={footerColor}
-              handleColorChange={(color) => setFooterColor(color)}
+              color={footer_color}
+              handleColorChange={(color) => dispatch(footerColor(color))}
             />
           </div>
         </div>

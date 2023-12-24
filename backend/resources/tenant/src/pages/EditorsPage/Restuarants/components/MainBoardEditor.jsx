@@ -10,9 +10,16 @@ import WhatsappIcon from "../../../../assets/whatsappImg.svg"
 import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
 import CategoryItem from "./CategoryItem"
 import ProductItem from "./ProductItem"
+import {useSelector, useDispatch} from "react-redux"
 
 const MainBoardEditor = () => {
   const [activeItem, setActiveItem] = useState({name: "", imgSrc: ""})
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  )
+  const {page_color, page_category_color, category_hover_color} =
+    restuarantEditorStyle
+  console.log("restuarantEditorStyle", restuarantEditorStyle)
   const categoryList = [
     {
       name: "Pizza",
@@ -81,7 +88,10 @@ const MainBoardEditor = () => {
         </div>
       </div>
       {/* logo */}
-      <div className='w-full min-h-[100px] bg-white rounded-xl flex items-center justify-center '>
+      <div
+        style={{backgroundColor: page_color}}
+        className={`w-full min-h-[100px]    rounded-xl flex items-center justify-center `}
+      >
         <div className='w-[60px] h-[60px] rounded-lg p-2 bg-neutral-100 relative'>
           <img
             src={ImageIcon}
@@ -98,7 +108,10 @@ const MainBoardEditor = () => {
         </div>
       </div>
       {/* banner */}
-      <div className='w-full min-h-[180px] bg-white rounded-xl flex items-center justify-center'>
+      <div
+        style={{backgroundColor: page_color}}
+        className={`w-full min-h-[180px]   rounded-xl flex items-center justify-center`}
+      >
         <div className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'>
           <img
             src={ImageIcon}
@@ -115,7 +128,10 @@ const MainBoardEditor = () => {
         </div>
       </div>
       {/* Category */}
-      <div className='w-full min-h-[180px] bg-white rounded-xl flex items-center justify-center'>
+      <div
+        style={{backgroundColor: page_category_color}}
+        className={`w-full min-h-[180px]  rounded-xl flex items-center justify-center`}
+      >
         <div className='flex items-center gap-6'>
           {categoryList.map((category, i) => (
             <CategoryItem
@@ -124,14 +140,17 @@ const MainBoardEditor = () => {
               name={category.name}
               imgSrc={category.imgSrc}
               alt={category.name}
+              hoverColor={category_hover_color}
               onClick={() => setActiveItem(category)}
             />
           ))}
         </div>
       </div>
       {/* Products */}
-      <div className='w-full h-fit bg-white rounded-xl flex items-center justify-center mx-auto'>
-        <div className='flex items-center gap-6 h-fit   flex-wrap py-4 px-2'>
+      <div
+        className={`w-full h-fit bg-white rounded-xl flex items-center justify-center mx-auto`}
+      >
+        <div className={`flex items-center gap-6 h-fit   flex-wrap py-4 px-2`}>
           {productList.map((product, i) => (
             <ProductItem
               key={i}
@@ -145,7 +164,9 @@ const MainBoardEditor = () => {
       </div>
       {/* social media */}
 
-      <div className='w-full min-h-[70px] bg-white rounded-xl flex items-center justify-center'>
+      <div
+        className={`w-full min-h-[70px] bg-white rounded-xl flex items-center justify-center`}
+      >
         <div className='w-[30px] h-[30px] rounded-full relative'>
           <img
             src={WhatsappIcon}

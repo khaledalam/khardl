@@ -13,12 +13,12 @@ const restuarantEditorSlice = createSlice({
     category_type: "stack",
     category_alignment: "center",
     category_shape: "rounded",
-    category_hover_color: "#ffffff",
+    category_hover_color: "#F2FF00",
 
     categoryDetail_type: "stack",
     categoryDetail_alignment: "center",
     categoryDetail_shape: "rounded",
-    categoryDetail_cart_color: "#ffffff",
+    categoryDetail_cart_color: "#F2FF00",
 
     socialMediaIcons: [
       {
@@ -65,6 +65,7 @@ const restuarantEditorSlice = createSlice({
     phoneNumber_alignment: "center",
 
     page_color: "#ffffff",
+    page_category_color: "#ffffff",
     header_color: "#ffffff",
     footer_color: "#ffffff",
     price_color: "#ffffff",
@@ -126,6 +127,9 @@ const restuarantEditorSlice = createSlice({
     pageColor: (state, action) => {
       state.page_color = action.payload
     },
+    pageCategoryColor: (state, action) => {
+      state.page_category_color = action.payload
+    },
     priceColor: (state, action) => {
       state.price_color = action.payload
     },
@@ -168,6 +172,7 @@ export const {
   socialMediaIcons,
   selectedSocialMediaIcons,
   pageColor,
+  pageCategoryColor,
   priceColor,
   headerColor,
   footerColor,

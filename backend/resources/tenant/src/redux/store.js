@@ -53,7 +53,7 @@ const store = configureStore({
     order: OrderShowReducer,
     auth: authReducer,
     styleDataRestaurant: styleDataRestaurantReducer,
-    restuarantEditorSlice: restuarantEditorReducer,
+    restuarantEditorStyle: restuarantEditorReducer,
   },
 })
 
