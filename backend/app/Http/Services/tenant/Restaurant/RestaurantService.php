@@ -20,6 +20,7 @@ class RestaurantService
         $orders = Order::query();
         $allOrders = $orders->get();
         $completedOrders = $orders->completed();
+        $totalPriceThisMonth = $this->getTotalPriceThisMonth(clone $completedOrders);
         $total = $allOrders->count();
         $ordersStatuses = $allOrders->groupBy('status');
         $pending = $this->getOrderStatusCount($ordersStatuses, Order::PENDING);
@@ -47,31 +48,52 @@ class RestaurantService
             'dailySales',
             'percentageChange',
             'noOfUsersThisMonth',
-            'chart1'
+            'chart1',
+            'totalPriceThisMonth'
         ));
     }
-    private function chart(){
+    private function chart()
+    {
         $chart_options = [
             'chart_title' => 'Completed orders by week',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Tenant\Order',
             'group_by_field' => 'created_at',
             'group_by_period' => 'day',
-            'chart_type' => 'bar',
+            'chart_type' => 'line',
             'aggregate_field' => 'total',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
-            'filter_days'           => 8,
-            /* 'where_raw' => 'status = "completed"' */
+            'filter_days' => 8,
+            'chart_color' => '194, 218, 8',
+            'where_raw' => 'status = "completed"'
         ];
         return new LaravelChart($chart_options);
     }
-    private function getNumberOfUsersThisMonth(){
-        $currentMonth = Carbon::now()->format('m');
-        $currentYear = Carbon::now()->format('Y');
-        return User::whereYear('created_at', $currentYear)
-        ->whereMonth('created_at', $currentMonth)
-        ->count();
+    private function getCurrentMonthAndYear()
+    {
+        return [
+            'month' => Carbon::now()->format('m'),
+            'year' => Carbon::now()->format('Y'),
+        ];
+    }
+
+    private function getNumberOfUsersThisMonth()
+    {
+        $currentDate = $this->getCurrentMonthAndYear();
+
+        return User::whereYear('created_at', $currentDate['year'])
+            ->whereMonth('created_at', $currentDate['month'])
+            ->count();
+    }
+
+    private function getTotalPriceThisMonth($completedOrders)
+    {
+        $currentDate = $this->getCurrentMonthAndYear();
+
+        return $completedOrders->whereYear('created_at', $currentDate['year'])
+            ->whereMonth('created_at', $currentDate['month'])
+            ->sum('total');
     }
     private function getOrderStatusCount($ordersStatuses, $status)
     {

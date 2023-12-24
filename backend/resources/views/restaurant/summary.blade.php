@@ -209,7 +209,7 @@
                      <!--begin::Chart widget 3-->
                      <div class="card card-flush overflow-hidden h-md-100">
                          <!--begin::Header-->
-                         <div class="card-header py-5">
+                         <div class="card-header">
                              <!--begin::Title-->
                              <h3 class="card-title align-items-start flex-column">
                                  <span class="card-label fw-bolder text-dark">Sales This Months</span>
@@ -218,14 +218,14 @@
                          </div>
                          <!--end::Header-->
                          <!--begin::Card body-->
-                         <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
+                         <div class="card-body d-flex pt-0 justify-content-between flex-column pb-1 px-0">
                              <!--begin::Statistics-->
                              <div class="px-9 mb-5">
                                  <!--begin::Statistics-->
                                  <div class="d-flex mb-2">
-                                     <span class="fs-4 fw-bold text-gray-400 me-1">$</span>
+                                     <span class="fs-4 fw-bold text-gray-400 me-1">SAR</span>
                                      <span
-                                         class="fs-2hx fw-bolder text-gray-800 me-2 lh-1 ls-n2">14,094</span>
+                                         class="fs-2hx fw-bolder text-gray-800 me-2 lh-1 ls-n2">{{ $totalPriceThisMonth }}</span>
                                  </div>
                                  <!--end::Statistics-->
                              </div>
@@ -234,7 +234,7 @@
                                 <div class="row justify-content-center">
                                     <div class="col-md-12">
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body p-0">
                                                 <h1>{{ $chart1->options['chart_title'] }}</h1>
                                                 {!! $chart1->renderHtml() !!}
                                             </div>
