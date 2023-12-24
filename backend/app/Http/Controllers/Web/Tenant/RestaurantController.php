@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
+use App\Http\Services\tenant\Restaurant\RestaurantService;
 use App\Models\Tenant\Item;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -25,13 +26,12 @@ use Illuminate\Contracts\Database\Query\Builder;
 
 class RestaurantController extends BaseController
 {
+    public function __construct(
+        private RestaurantService $restaurantService
+      ) {
+      }
     public function index(){
-
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-        $branches = Branch::all();
-
-        return view('restaurant.summary', compact('user', 'branches'));
+        return $this->restaurantService->index();
     }
 
     public function services(){

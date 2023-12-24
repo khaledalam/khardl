@@ -12,7 +12,7 @@
             overflow-y: scroll;
             height: 400px;
         }
-       
+
     </style>
 
   <!--begin::Content-->
@@ -436,7 +436,7 @@
                                                                  <div class="fw-mormal timeline-content text-muted ps-3">
                                                                      {{$log->created_at}} <span>({{\Carbon\Carbon::parse($log->created_at)->diffForHumans()}})</span>
                                                                      {{strtoupper($log->notes)}}
-                                                                     
+
                                                                  </div>
 
                                                              </div>
@@ -461,15 +461,17 @@
                                                  <div class="card-title">
                                                      <h2>{{__('messages.order')}} #{{$order->id}}
 
-                                                         @if($order->status == 'accepted')
+                                                         @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
                                                              <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
-                                                         @elseif($order->status == 'pending')
+                                                         @elseif($order->status == \App\Models\Tenant\Order::PENDING)
                                                              <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
-                                                         @elseif($order->status == 'cancelled')
+                                                         @elseif($order->status == \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
+                                                             <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.received_by_restaurant")}}</a>
+                                                         @elseif($order->status == \App\Models\Tenant\Order::CANCELLED)
                                                              <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
-                                                         @elseif($order->status == 'ready')
+                                                         @elseif($order->status == \App\Models\Tenant\Order::READY)
                                                              <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
-                                                         @elseif($order->status == 'completed')
+                                                         @elseif($order->status == \App\Models\Tenant\Order::COMPLETED)
                                                              <a href="#"  class="btn btn-light-secondary btn-sm">{{__("messages.completed")}}</a>
                                                          @endif
                                                      </h2>
@@ -511,9 +513,9 @@
                                                                                 <div class="ms-5">
                                                                                     <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->name}}</a>
                                                                                     <div class="fs-7 text-muted">{{__('messages.notes')}}: {{$order_item->notes ?? __('messages.NA')}}</div>
-                                                                                   
+
                                                                                 </div>
-                                                                                
+
                                                                                 <!--end::Title-->
                                                                             </div>
                                                                             <div class="text-muted">
@@ -530,7 +532,7 @@
                                                                                             </li>
                                                                                         </ul>
                                                                                     @endforeach
-                                                                            
+
                                                                                 @endif
                                                                                 @if($order_item->selection_options)
                                                                                 @foreach($order_item->selection_options as $value) 
@@ -555,7 +557,7 @@
                                                                                         </li>
                                                                                     </ul>
                                                                                 @endforeach
-                                                                                @endif 
+                                                                                @endif
                                                                             </div>
                                                                         </td>
                                                                         <!--end::Product-->

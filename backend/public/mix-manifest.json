@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "/js/central.js": "/js/central.js?id=fed7be428b9bcafc3abdadd3e2c736bb",
     "/js/tenant.js": "/js/tenant.js?id=59e76c02fc3b5ab669c50fdee7ee81bf",
     "/css/index.css": "/css/index.css?id=d04632a836bb4826f603b0716db0aa59",
@@ -4356,4 +4357,10 @@
     "/static/js/main.d3d127bb.js": "/static/js/main.d3d127bb.js?id=2482ea592fc44a12e0e4e4e8bfe6d539",
     "/static/js/main.d3d127bb.js.LICENSE.txt": "/static/js/main.d3d127bb.js.LICENSE.txt?id=d4736f9ca4b5e2223a5e00f1ae8a2b66",
     "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47"
+=======
+    "/js/central.js": "/js/central.js",
+    "/js/tenant.js": "/js/tenant.js",
+    "/css/index.css": "/css/index.css",
+    "/css/app.css": "/css/app.css"
+>>>>>>> development
 }

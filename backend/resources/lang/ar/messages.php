@@ -24,6 +24,7 @@ return [
     'denied' => 'مرفوض',
     'total-orders' => 'إجمالي الطلبات',
     'cancelled' => 'ملغي',
+    'received_by_restaurant' => "تم الاستلام من جهه المطعم",
     'sar' => 'ريال',
     'average-daily-sales' => 'متوسط المبيعات اليومية',
     'new-customers-this-month' => 'إجمالي العملاء',
