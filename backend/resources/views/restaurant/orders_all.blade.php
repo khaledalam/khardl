@@ -118,7 +118,6 @@
                                             <th class="text-end min-w-70px">Status</th>
                                             <th class="text-end min-w-100px">Total</th>
                                             <th class="text-end min-w-100px">Date Added</th>
-                                            <th class="text-end min-w-100px">Date Modified</th>
                                             <th class="text-end min-w-100px"><div class="btn btn-sm btn-khardl"><a href="./add-order.html" class=" text-white">Add new</a></div>
                                             </th>
                                         </tr>
@@ -147,14 +146,14 @@
                                                         <div class="d-flex align-items-center">
                                                             <!--begin:: Avatar -->
                                                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                                                <a href="../../demo1/dist/apps/user-management/users/view.html">
+                                                                <a href="#">
                                                                     <div class="symbol-label fs-3 bg-light-success text-success">L</div>
                                                                 </a>
                                                             </div>
                                                             <!--end::Avatar-->
                                                             <div class="ms-5">
                                                                 <!--begin::Title-->
-                                                                <a href="../../demo1/dist/apps/user-management/users/view.html" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">{{$order->user->fullName}}</a>
+                                                                <a href="#" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">{{$order->user->fullName}}</a>
                                                                 <!--end::Title-->
                                                             </div>
                                                         </div>
@@ -182,16 +181,17 @@
                                                     <td class="text-end pe-0" data-order="Refunded">
                                                         <!--begin::Badges-->
                                                         @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                                                            <a href="#"  class="badge badge-primary " >{{__("messages.accepted")}}</a>
+                                                            <span class="badge badge-primary " >{{__("messages.accepted")}}</span>
                                                         @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
-                                                            <a href="#"  class="badge badge-warning ">{{__("messages.pending")}}</a>
+                                                            <span class="badge badge-secondary ">{{__("messages.pending")}}</span>
+                                                        @elseif($order->status ==  \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
+                                                            <span class="badge badge-warning ">{{__("messages.received_by_restaurant")}}</span>
                                                         @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
-                                                            <a href="#"  class="badge badge-danger ">{{__("messages.cancelled")}}</a>
+                                                            <span class="badge badge-danger ">{{__("messages.cancelled")}}</span>
                                                         @elseif($order->status ==  \App\Models\Tenant\Order::READY)
-                                                            <a href="#"  class="badge badge-info ">{{__("messages.ready")}}</a>
-
+                                                            <span class="badge badge-info ">{{__("messages.ready")}}</span>
                                                         @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
-                                                            <a href="#"  class="badge badge-success ">{{__("messages.completed")}}</a>
+                                                            <span class="badge badge-success ">{{__("messages.completed")}}</span>
                                                         @endif
 
                                                         <!--end::Badges-->
@@ -201,7 +201,7 @@
 
                                                     <!--begin::Total=-->
                                                     <td class="text-end pe-0">
-                                                    <span class="fw-bolder">{{$order->total}}</span>
+                                                    <span class="fw-bolder">{{$order->total}} {{__('messages.sar')}}</span>
                                                     </td>
                                                     <!--end::Total=-->
                                                     <!--begin::Date Added=-->
@@ -209,11 +209,6 @@
                                                         <span class="fw-bolder">{{$order->created_at}}</span>
                                                     </td>
                                                     <!--end::Date Added=-->
-                                                    <!--begin::Date Modified=-->
-                                                    <td class="text-end" data-order="2022-03-29">
-                                                        <span class="fw-bolder">{{$order->updated_at}}</span>
-                                                    </td>
-                                                    <!--end::Date Modified=-->
                                                     <!--begin::Action=-->
                                                     <td class="text-end">
                                                         <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions

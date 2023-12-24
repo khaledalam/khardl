@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
+        "laraveldaily/laravel-charts": "^0.2.3",
         "realrashid/sweet-alert": "^7.0",
         "spatie/laravel-permission": "^5.11",
         "spatie/laravel-translatable": "^6.5",

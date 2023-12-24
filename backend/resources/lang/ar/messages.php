@@ -24,6 +24,7 @@ return [
     'denied' => 'مرفوض',
     'total-orders' => 'إجمالي الطلبات',
     'cancelled' => 'ملغي',
+    'received_by_restaurant' => "تم الاستلام من جهه المطعم",
     'sar' => 'ريال',
     'average-daily-sales' => 'متوسط المبيعات اليومية',
     'new-customers-this-month' => 'إجمالي العملاء',
@@ -365,6 +366,11 @@ return [
     "create-new-items" => "انشاء منتج جديد",
     "item-availability" => "اتاحه المنتج",
     "category-logo" => "شعار الصنف",
-    "logo" => "شعار"
+    "logo" => "شعار",
+    "others" => "اخري",
+    "blocked" => "محظور",
+    "blocked-user" => "تم حظر هدا الحساب",
+    "Title"=>"اللقب",
+    "Bank Account"=>"الحساب البنكي"
 ];
 

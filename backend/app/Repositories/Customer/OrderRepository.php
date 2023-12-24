@@ -3,6 +3,7 @@
 namespace App\Repositories\Customer;
 
 use App\Models\Tenant\OrderStatusLogs;
+use App\Models\Tenant\Payment;
 use App\Models\Tenant\Setting;
 use Exception;
 use App\Models\Tenant\Order;
@@ -38,7 +39,7 @@ class OrderRepository
                     'shipping_address'=>$request->shipping_address,
                     'order_notes'=>$request->order_notes,
                     // TODO @todo update
-                    'payment_status'=>'pending',
+                    'payment_status' => Payment::PENDING,
                     'status'=> Order::PENDING,
 
                 ]);

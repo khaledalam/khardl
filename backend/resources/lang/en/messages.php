@@ -24,6 +24,7 @@ return [
     'denied' => 'Denied',
     'total-orders' => 'Total Orders',
     'cancelled' => 'cancelled',
+    "received_by_restaurant" => "received_by_restaurant",
     'sar' => 'SAR',
     'average-daily-sales' => 'Average Daily Sales',
     'new-customers-this-month' => 'New Customers This Month',
@@ -368,7 +369,11 @@ return [
     "create-new-items" => "Create new product",
     "item-availability" => "Product availability",
     "category-logo" => "Category logo",
-    "logo" => "Logo"
+    "logo" => "Logo",
+    'others' => "Others",
+    "blocked" => "Blocked",
+    "blocked-user" => "User is blocked",
+    "Bank Account"=>"Bank Account"
 
 
 ];
