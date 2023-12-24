@@ -34,6 +34,7 @@ use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
+use App\Packages\TapPayment\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -267,16 +268,23 @@ Route::prefix('api')->middleware([
         Route::post('logout', [APILoginController::class, 'logout']);
     });
     Route::prefix('tap')->group(function(){
-        Route::apiResource('businesses', BusinessController::class)->only([
-            'store','show'
-        ]);
-        Route::apiResource('subscriptions', SubscriptionController::class)->only([
-            'store','show'
-        ]);
-        Route::apiResource('files', FileController::class)->only([
-            'store','show'
-        ]);
         Route::webhooks('webhook-tap-actions','tap-payment');
+
+        // Only for testing tap api
+            Route::apiResource('businesses', BusinessController::class)->only([
+                'store','show'
+            ]);
+            Route::apiResource('subscriptions', SubscriptionController::class)->only([
+                'store','show'
+            ]);
+            Route::apiResource('files', FileController::class)->only([
+                'store','show'
+            ]);
+            Route::apiResource('customers', CustomerController::class)->only([
+                'store','show'
+            ]);
+        // -----
+      
     });
 
 

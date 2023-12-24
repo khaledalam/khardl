@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('msegat_id_verification')->nullable();
             $table->string('address')->nullable();
             $table->boolean("tap_verified")->default(false);
+            $table->string("tap_customer_id")->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
             $table->foreignIdFor(Branch::class)->nullable()->constrained()->onDelete('set null');

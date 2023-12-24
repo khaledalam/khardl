@@ -35,7 +35,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'address',
         'lat',
         'lng',
-        'branch_id'
+        'branch_id',
+        'msegat_id_verification',
+        'tap_customer_id',
+        'tap_verified'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     /**
