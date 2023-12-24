@@ -15,6 +15,7 @@ use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
 use App\Http\Controllers\API\Tenant\ItemController;
 use App\Http\Controllers\API\Tenant\OrderController;
+use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Packages\TapPayment\Controllers\FileController;
@@ -119,9 +120,11 @@ Route::group([
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
 
-
-                Route::get('/orders-all', [RestaurantController::class, 'orders_all'])->name('restaurant.orders_all');
-                Route::get('/orders-add', [RestaurantController::class, 'orders_add'])->name('restaurant.orders_add');
+                Route::controller(TenantOrderController::class)->group(function () {
+                    Route::get('orders-all', 'index')->name('restaurant.orders_all');
+                    Route::get('orders-add', 'create')->name('restaurant.orders_add');
+                    Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
+                  });
                 Route::get('/products-out-of-stock', [RestaurantController::class, 'products_out_of_stock'])->name('restaurant.products_out_of_stock');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 

@@ -10,7 +10,7 @@ class Item extends Model
 {
     use HasTranslations;
     protected $table = 'items';
-    
+
     protected $fillable = [
         'category_id',
         'branch_id',
@@ -36,21 +36,29 @@ class Item extends Model
     public $translatable = ['description'];
     protected $casts = [
         'checkbox_required' => 'array',
-        'checkbox_input_titles'=> 'array',
-        'checkbox_input_maximum_choices'=> 'array',
-        'checkbox_input_names'=> 'array',
-        'checkbox_input_prices'=> 'array',
-        'selection_required'=> 'array',
-        'selection_input_names'=> 'array',
-        'selection_input_prices'=> 'array',
-        'selection_input_titles'=> 'array',
-        'dropdown_required'=> 'array',
-        'dropdown_input_titles'=> 'array',
-        'dropdown_input_names'=> 'array',
+        'checkbox_input_titles' => 'array',
+        'checkbox_input_maximum_choices' => 'array',
+        'checkbox_input_names' => 'array',
+        'checkbox_input_prices' => 'array',
+        'selection_required' => 'array',
+        'selection_input_names' => 'array',
+        'selection_input_prices' => 'array',
+        'selection_input_titles' => 'array',
+        'dropdown_required' => 'array',
+        'dropdown_input_titles' => 'array',
+        'dropdown_input_names' => 'array',
     ];
     const STORAGE = "items";
     const STORAGE_SEEDER = "seeders/items";
-    
+    /* Start Scopes */
+    public function scopeWhenSearch($query, $search)
+    {
+        //TODO: Why case sensitive is enabled ?
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('description', 'LIKE', '%'.$search.'%');
+        });
+    }
+    /* End Scopes */
 
 }
 
