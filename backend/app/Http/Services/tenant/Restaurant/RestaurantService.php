@@ -84,6 +84,8 @@ class RestaurantService
             'aggregate_field' => 'total',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
+            'filter_days' => 4 * 30,//Last 4 months
+            'chart_color' => '0, 158, 247',
             'where_raw' => 'status = "completed"'
         ];
         return new LaravelChart($chart_options);
