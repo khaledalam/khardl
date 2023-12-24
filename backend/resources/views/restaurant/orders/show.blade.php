@@ -509,7 +509,7 @@
                                                                                 <!--end::Thumbnail-->
                                                                                 <!--begin::Title-->
                                                                                 <div class="ms-5">
-                                                                                    <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->description}}</a>
+                                                                                    <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->name}}</a>
                                                                                     <div class="fs-7 text-muted">{{__('messages.notes')}}: {{$order_item->notes ?? __('messages.NA')}}</div>
                                                                                    
                                                                                 </div>
