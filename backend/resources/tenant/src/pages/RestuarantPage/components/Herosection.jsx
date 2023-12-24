@@ -39,7 +39,7 @@ const Herosection = () => {
           <img
             src={imgLogo}
             alt='logo'
-            className='w-full h-full object-contain'
+            className='w-full h-full object-contain rounded-xl'
           />
         </div>
         <div className='w-5/6 laptopXL:w-[75%]'>
