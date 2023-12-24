@@ -176,33 +176,42 @@
                          </div>
                          <!--end::Header-->
                          <!--begin::Card body-->
-                         <div class="card-body d-flex align-items-end px-0 pb-0">
-                             <!--begin::Chart-->
-                             <div id="kt_card_widget_6_chart" class="w-100" style="height: 80px"></div>
-                             <!--end::Chart-->
-                         </div>
+                         <div class="container mt-4 py-2 px-4 bg-white">
+                            <div class="row justify-content-center">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body p-0">
+                                            <h1>{{ $profitLast4Months->options['chart_title'] }}</h1>
+                                            {!! $profitLast4Months->renderHtml() !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card card-flush">
+                                        <!--begin::Header-->
+                                        <div class="card-header pt-5">
+                                            <!--begin::Title-->
+                                            <div class="card-title d-flex flex-column">
+                                                <!--begin::Amount-->
+                                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{ $noOfUsersThisMonth }}</span>
+                                                <!--end::Amount-->
+                                                <!--begin::Subtitle-->
+                                                <span class="text-gray-400 pt-1 fw-bold fs-6">New Customers This
+                                                    Month</span>
+                                                <!--end::Subtitle-->
+                                            </div>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Header-->
+                                    </div>
+                                    <!--end::Card widget 7-->
+                                </div>
+                            </div>
+                        </div>
                          <!--end::Card body-->
                      </div>
                      <!--end::Card widget 6-->
                      <!--begin::Card widget 7-->
-                     <div class="card card-flush">
-                         <!--begin::Header-->
-                         <div class="card-header pt-5">
-                             <!--begin::Title-->
-                             <div class="card-title d-flex flex-column">
-                                 <!--begin::Amount-->
-                                 <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{ $noOfUsersThisMonth }}</span>
-                                 <!--end::Amount-->
-                                 <!--begin::Subtitle-->
-                                 <span class="text-gray-400 pt-1 fw-bold fs-6">New Customers This
-                                     Month</span>
-                                 <!--end::Subtitle-->
-                             </div>
-                             <!--end::Title-->
-                         </div>
-                         <!--end::Header-->
-                     </div>
-                     <!--end::Card widget 7-->
                  </div>
                  <!--begin::Col-->
                  <div class="col-lg-12 col-xl-12 col-xxl-6 mb-5 mb-xl-0">
@@ -235,8 +244,8 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-body p-0">
-                                                <h1>{{ $chart1->options['chart_title'] }}</h1>
-                                                {!! $chart1->renderHtml() !!}
+                                                <h1>{{ $profitLast7Days->options['chart_title'] }}</h1>
+                                                {!! $profitLast7Days->renderHtml() !!}
                                             </div>
                                         </div>
                                     </div>
@@ -473,6 +482,7 @@
      <!--end::Post-->
      </div>
      <!--end::Content-->
-    {!! $chart1->renderChartJsLibrary() !!}
-    {!! $chart1->renderJs() !!}
+    {!! $profitLast7Days->renderChartJsLibrary() !!}
+    {!! $profitLast7Days->renderJs() !!}
+    {!! $profitLast4Months->renderJs() !!}
 @endsection
