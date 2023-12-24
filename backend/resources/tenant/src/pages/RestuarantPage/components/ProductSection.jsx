@@ -17,6 +17,7 @@ const ProductSection = () => {
               {productSection.productList.map((product, i) => (
                 <ProductItem
                   key={i}
+                  id={product.name + i}
                   name={product.name}
                   imgSrc={product.imgSrc}
                   amount={product.amount}
