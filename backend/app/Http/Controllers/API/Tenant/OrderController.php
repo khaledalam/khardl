@@ -52,13 +52,16 @@ class  OrderController extends BaseRepositoryController
             $query ->where('branch_id',$user->branch->id);
         })
         ->findOrFail($order);
-        $order->update(['status'=>$request->status]);
+        $order->update(['status' => $request->status]);
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
         switch ($request->status) {
             case Order::PENDING:
                 $statusLog->class_name = 'text-warning';
+                break;
+            case Order::RECEIVED_BY_RESTAURANT:
+                $statusLog->class_name = 'text-secondary';
                 break;
             case Order::ACCEPTED:
                 $statusLog->class_name = 'text-success';
@@ -76,12 +79,29 @@ class  OrderController extends BaseRepositoryController
         $statusLog->notes = $request->notes ?? null;
         $statusLog->saveOrFail();
 
+        // Handle register order to all delivery companies
+        if ($request->status == Order::RECEIVED_BY_RESTAURANT) {
+            $this->delivery_companies_register_order($order);
+        }
+
         if ($request->expectsJson()) {
             return $this->sendResponse(null, __('Order has been updated successfully.'));
         }
 
-        
+
         return redirect()->back()->with('success',__('Order has been updated successfully.'));
     }
+
+    private function delivery_companies_register_order(Order $order)
+    {
+
+        // @TODO
+
+
+        // Get all delivery companies that registered for this restaurant
+
+        // Send register order
+    }
+
 
 }

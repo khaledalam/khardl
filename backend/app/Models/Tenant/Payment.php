@@ -10,6 +10,8 @@ class Payment extends Model
 {
     protected $table = 'payments';
 
+    public const PENDING = 'pending';
+
     protected $fillable = [
         'order_id',
         'user_id',

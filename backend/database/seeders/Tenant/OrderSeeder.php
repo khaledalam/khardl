@@ -21,8 +21,7 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-
-        $status = ['accepted','cancelled','pending'];
+        $status = Order::STATUS;
         for($i=0;$i<11;$i++){
             $order = Order::create([
                 'user_id'=> RestaurantUser::find(UserSeeder::RESTAURANT_CUSTOMER_USER_ID)->id,
@@ -31,7 +30,7 @@ class OrderSeeder extends Seeder
                 'total'=> fake()->randomNumber(4, true),
                 'status'=>$status[array_rand($status)],
                 "payment_method_id"=>PaymentMethod::inRandomOrder()->first()->id,
-                'payment_status'=>"pending",
+                'payment_status' => Order::PENDING,
                 'delivery_type_id'=>DeliveryType::inRandomOrder()->first()->id,
                 'shipping_address'=>fake()->address(),
             ]);
