@@ -1,8 +1,8 @@
 {
     "/js/central.js": "/js/central.js?id=fed7be428b9bcafc3abdadd3e2c736bb",
-    "/js/tenant.js": "/js/tenant.js?id=28f95093d63f42b9b236072dcf83364d",
-    "/css/index.css": "/css/index.css?id=af7a0a653485052c81ecd1715ef1291a",
-    "/css/app.css": "/css/app.css?id=9cc9f358ad18f4539be5701e7d65705b",
+    "/js/tenant.js": "/js/tenant.js?id=c60ef790506d1dd515764e280d8448fe",
+    "/css/index.css": "/css/index.css?id=017f36456de6b9995dfc0fae753d21d2",
+    "/css/app.css": "/css/app.css?id=53cb16f77463f4b32352baf0e3b8093b",
     "/CustomerControlpanel/details.html": "/CustomerControlpanel/details.html?id=402baa34b21b29ab79af7886673c3a35",
     "/CustomerControlpanel/listing.html": "/CustomerControlpanel/listing.html?id=311af92cf9cbc149dcffc714ba397a8d",
     "/CustomerControlpanel/profile.html": "/CustomerControlpanel/profile.html?id=a35706ca543e8b6d6e6827234695169d",
@@ -4196,7 +4196,7 @@
     "/media/technology-logos/Html5.png": "/media/technology-logos/Html5.png?id=b4a3ff7e36f190b0c7eb545f6154cfac",
     "/media/technology-logos/React.png": "/media/technology-logos/React.png?id=66d79d92233f04e128ea676dea1d93e0",
     "/media/technology-logos/VueJS.png": "/media/technology-logos/VueJS.png?id=d3e5fefbe4df2bd095731f8de30c9438",
-    "/mix-manifest.json": "/mix-manifest.json?id=c1533d25f7db5a9c9bfd176cf32765c5",
+    "/mix-manifest.json": "/mix-manifest.json?id=40f053b2a12fab7144b20883cd35e58b",
     "/plugins/custom/ckeditor/ckeditor-balloon-block.bundle.js": "/plugins/custom/ckeditor/ckeditor-balloon-block.bundle.js?id=4204959f1ca39a78058b2d5eff984fcf",
     "/plugins/custom/ckeditor/ckeditor-balloon.bundle.js": "/plugins/custom/ckeditor/ckeditor-balloon.bundle.js?id=2e343a19cee50dcb209ab53f8c9f5177",
     "/plugins/custom/ckeditor/ckeditor-classic.bundle.js": "/plugins/custom/ckeditor/ckeditor-classic.bundle.js?id=c67be7926c65ac51375d74f9ea117f7f",
@@ -4402,5 +4402,6 @@
     "/images/khardl_Logo.png": "/images/khardl_Logo.png?id=7309d678794e6ec84df3fdd664446bbe",
     "/images/Line 122.svg": "/images/Line 122.svg?id=8715a9dc777dc8005136fbe92d1449e6",
     "/Linestroke.svg": "/Linestroke.svg?id=8715a9dc777dc8005136fbe92d1449e6",
-    "/images/cartWhiteIcon.svg": "/images/cartWhiteIcon.svg?id=2e04af333ec512eb9d922277bc4ec562"
+    "/images/cartWhiteIcon.svg": "/images/cartWhiteIcon.svg?id=2e04af333ec512eb9d922277bc4ec562",
+    "/images/hot-fire.svg": "/images/hot-fire.svg?id=2d7ac128512570f01a299aa8c46a3ba3"
 }
