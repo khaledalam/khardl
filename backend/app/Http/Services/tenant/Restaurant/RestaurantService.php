@@ -2,12 +2,14 @@
 
 namespace App\Http\Services\tenant\Restaurant;
 
+use App\Models\Tenant\OrderItem;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\Branch;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
+use Illuminate\Support\Facades\DB;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class RestaurantService
@@ -37,7 +39,7 @@ class RestaurantService
 
         $dailySales = number_format($dailySales, 2);
         $noOfUsersThisMonth = $this->getNumberOfUsersThisMonth();
-
+        $bestSellingItems = $this->bestSellingItems();
         return view('restaurant.summary', compact(
             'user',
             'branches',
@@ -51,8 +53,21 @@ class RestaurantService
             'noOfUsersThisMonth',
             'profitLast7Days',
             'totalPriceThisMonth',
-            'profitLast4Months'
+            'profitLast4Months',
+            'bestSellingItems'
         ));
+    }
+    private function bestSellingItems()
+    {
+        return OrderItem::with('item')
+            ->whereHas('order', function ($query) {
+                $query->whereMonth('created_at', now()->month);
+            })
+            ->select('item_id', DB::raw('SUM(quantity) as total_quantity'))
+            ->groupBy('item_id')
+            ->orderByDesc('total_quantity')
+            ->take(10)
+            ->get();
     }
     private function profitLast7Days()
     {
@@ -84,7 +99,7 @@ class RestaurantService
             'aggregate_field' => 'total',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
-            'filter_days' => 4 * 30,//Last 4 months
+            'filter_days' => 4 * 30, //Last 4 months
             'chart_color' => '0, 158, 247',
             'where_raw' => 'status = "completed"'
         ];
