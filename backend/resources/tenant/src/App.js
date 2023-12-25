@@ -33,6 +33,7 @@ import {SideMenu} from "./components/SideMenu"
 import MenuProvider from "react-flexible-sliding-menu"
 import {RestuarantEditor} from "./pages/EditorsPage"
 import {RestuarantHomePage} from "./pages/RestuarantPage"
+import OuterSidebarNav from "./pages/EditorsPage/Restuarants/components/OuterSidebarNav"
 
 const App = () => {
   const Language = useSelector((state) => state.languageMode.languageMode)
@@ -74,10 +75,10 @@ const App = () => {
 
   return (
     <MenuProvider
-      MenuComponent={SideMenu}
+      MenuComponent={OuterSidebarNav}
       direction={Language == "en" ? "left" : "right"}
       animation={"slide"} // 'slide' │ 'push' │ 'reveal'
-      width={"40vw"}
+      width={"25vw"}
     >
       <div
         className='relative'
@@ -130,9 +131,9 @@ const App = () => {
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                                                                                      path='/site-editor/restaurants'
-                                                                                                                      element={<EditorPage />}
-                                                                                                                    />{" "} */}{" "}
+                                                                                                                                                                                  path='/site-editor/restaurants'
+                                                                                                                                                                                  element={<EditorPage />}
+                                                                                                                                                                                />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
                 <Route path='/dashboard' element={<CustomersPreview />} />{" "}
                 <Route path='/site-editor/customers' element={<EditorPage />} />{" "}

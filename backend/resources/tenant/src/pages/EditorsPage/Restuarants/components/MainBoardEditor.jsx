@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {Fragment, useContext, useState} from "react"
 import pizzImg from "../../../../assets/pizza.png"
 import pastaImg from "../../../../assets/pasta.png"
 import burgerImg from "../../../../assets/burger.png"
@@ -11,14 +11,48 @@ import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
 import CategoryItem from "./CategoryItem"
 import ProductItem from "./ProductItem"
 import {useSelector, useDispatch} from "react-redux"
+import {MenuContext} from "react-flexible-sliding-menu"
 
 const MainBoardEditor = () => {
   const [activeItem, setActiveItem] = useState({name: "", imgSrc: ""})
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
-  const {page_color, page_category_color, category_hover_color} =
-    restuarantEditorStyle
+  const {toggleMenu} = useContext(MenuContext)
+
+  const toggleTheMenu = () => {
+    toggleMenu()
+  }
+  const {
+    page_color,
+    page_category_color,
+    category_hover_color,
+    category_type,
+    category_alignment,
+    category_shape,
+
+    categoryDetail_cart_color,
+    categoryDetail_type,
+    categoryDetail_alignment,
+    categoryDetail_shape,
+
+    price_color,
+    header_color,
+    banner_background_color,
+    footer_color,
+    headerPosition,
+    logo_alignment,
+    logo_shape,
+    banner_type,
+    banner_shape,
+    text_fontFamily,
+    text_fontWeight,
+    text_fontSize,
+    text_alignment,
+    phoneNumber,
+    phoneNumber_alignment,
+    text_color,
+  } = restuarantEditorStyle
   console.log("restuarantEditorStyle", restuarantEditorStyle)
   const categoryList = [
     {
@@ -65,17 +99,31 @@ const MainBoardEditor = () => {
   ]
 
   return (
-    <div className='w-full p-4 flex flex-col gap-6'>
+    <div
+      style={{backgroundColor: page_color}}
+      className='w-full p-4 flex flex-col gap-6'
+    >
       {/* Header cart */}
-      <div className='w-full min-h-[85px] bg-white rounded-xl flex items-center justify-between px-2'>
-        <label htmlFor='my-drawer' aria-label='close sidebar'>
-          <div className='btn hover:bg-neutral-100 flex items-center gap-3'>
-            <IoMenuOutline size={40} className='text-neutral-400' />
-            <span className='font-normal text-sm'>
-              Show Navigation Bar To Edit
-            </span>
-          </div>
-        </label>
+      <div
+        style={{
+          backgroundColor: header_color,
+          position: headerPosition,
+          top: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
+        }}
+        className='w-full min-h-[85px]   rounded-xl flex items-center justify-between px-2'
+      >
+        <div
+          onClick={toggleTheMenu}
+          className='btn hover:bg-neutral-100 flex items-center gap-3'
+        >
+          <IoMenuOutline size={40} className='text-neutral-400' />
+          <span className='font-normal text-sm'>
+            Show Navigation Bar To Edit
+          </span>
+        </div>
         <div className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center'>
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {true && (
@@ -90,12 +138,24 @@ const MainBoardEditor = () => {
       {/* logo */}
       <div
         style={{backgroundColor: page_color}}
-        className={`w-full min-h-[100px]    rounded-xl flex items-center justify-center `}
+        className={`w-full min-h-[100px]    rounded-xl flex ${
+          logo_alignment === "center"
+            ? "items-center justify-center"
+            : logo_alignment === "left"
+            ? "items-start justify-start"
+            : logo_alignment === "right"
+            ? "items-end justify-end"
+            : ""
+        } `}
       >
-        <div className='w-[60px] h-[60px] rounded-lg p-2 bg-neutral-100 relative'>
+        <div
+          style={{borderRadius: logo_shape === "sharp" ? "none" : logo_shape}}
+          className='w-[60px] h-[60px] p-2 bg-neutral-100 relative'
+        >
           <img
             src={ImageIcon}
             alt={""}
+            style={{borderRadius: logo_shape === "sharp" ? "none" : logo_shape}}
             className='w-full h-full object-cover'
           />
           {false && (
@@ -108,65 +168,109 @@ const MainBoardEditor = () => {
         </div>
       </div>
       {/* banner */}
-      <div
-        style={{backgroundColor: page_color}}
-        className={`w-full min-h-[180px]   rounded-xl flex items-center justify-center`}
-      >
-        <div className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'>
-          <img
-            src={ImageIcon}
-            alt={""}
-            className='w-full h-full object-cover'
-          />
-          {false && (
-            <div className='absolute top-[-0.8rem] right-[-1rem]'>
-              <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
-                <IoCloseOutline size={16} className='text-red-500' />
+      {banner_type === "slider" ? (
+        <div>slider</div>
+      ) : (
+        <div
+          style={{
+            backgroundColor: banner_background_color,
+            borderRadius: banner_shape === "sharp" ? "none" : banner_shape,
+          }}
+          className={`w-full min-h-[180px]   rounded-xl flex items-center justify-center`}
+        >
+          <div
+            style={{
+              borderRadius: banner_shape === "sharp" ? "none" : banner_shape,
+            }}
+            className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
+          >
+            <img
+              src={ImageIcon}
+              alt={""}
+              className='w-full h-full object-cover'
+            />
+            {false && (
+              <div className='absolute top-[-0.8rem] right-[-1rem]'>
+                <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
+                  <IoCloseOutline size={16} className='text-red-500' />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
       {/* Category */}
-      <div
-        style={{backgroundColor: page_category_color}}
-        className={`w-full min-h-[180px]  rounded-xl flex items-center justify-center`}
-      >
-        <div className='flex items-center gap-6'>
-          {categoryList.map((category, i) => (
-            <CategoryItem
-              key={i}
-              active={activeItem?.name === category.name}
-              name={category.name}
-              imgSrc={category.imgSrc}
-              alt={category.name}
-              hoverColor={category_hover_color}
-              onClick={() => setActiveItem(category)}
-            />
-          ))}
+      {category_type === "grid" ? (
+        <div> grid</div>
+      ) : (
+        <Fragment>
+          <div
+            style={{
+              backgroundColor: page_category_color,
+              borderRadius:
+                category_shape === "sharp" ? "none" : category_shape,
+            }}
+            className={`w-full min-h-[180px]  rounded-xl flex   ${
+              category_alignment === "center"
+                ? "items-center justify-center"
+                : category_alignment === "left"
+                ? "items-start justify-start"
+                : category_alignment === "right"
+                ? "items-end justify-end"
+                : ""
+            }`}
+          >
+            <div className='flex items-center gap-6'>
+              {categoryList.map((category, i) => (
+                <CategoryItem
+                  key={i}
+                  active={activeItem?.name === category.name}
+                  name={category.name}
+                  imgSrc={category.imgSrc}
+                  alt={category.name}
+                  hoverColor={category_hover_color}
+                  onClick={() => setActiveItem(category)}
+                  textColor={text_color}
+                />
+              ))}
+            </div>
+          </div>
+        </Fragment>
+      )}
+      {/* Products/ category details */}
+      {categoryDetail_type === "grid" ? (
+        <>grid cate</>
+      ) : (
+        <div
+          style={{
+            borderRadius:
+              categoryDetail_shape === "sharp" ? "none" : categoryDetail_shape,
+          }}
+          className={`w-full h-fit bg-white rounded-xl flex items-center justify-center mx-auto`}
+        >
+          <div
+            className={`flex items-center gap-6 h-fit   flex-wrap py-4 px-2`}
+          >
+            {productList.map((product, i) => (
+              <ProductItem
+                key={i}
+                id={product.name + i}
+                name={product.name}
+                imgSrc={product.imgSrc}
+                amount={product.amount}
+                caloryInfo={product.caloryInfo}
+                cartBgcolor={categoryDetail_cart_color}
+                amountColor={price_color}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-      {/* Products */}
-      <div
-        className={`w-full h-fit bg-white rounded-xl flex items-center justify-center mx-auto`}
-      >
-        <div className={`flex items-center gap-6 h-fit   flex-wrap py-4 px-2`}>
-          {productList.map((product, i) => (
-            <ProductItem
-              key={i}
-              id={product.name + i}
-              name={product.name}
-              imgSrc={product.imgSrc}
-              amount={product.amount}
-              caloryInfo={product.caloryInfo}
-            />
-          ))}
-        </div>
-      </div>
+      )}
       {/* social media */}
 
       <div
-        className={`w-full min-h-[70px] bg-white rounded-xl flex items-center justify-center`}
+        style={{backgroundColor: footer_color}}
+        className={`w-full min-h-[70px]  rounded-xl flex items-center justify-center`}
       >
         <div className='w-[30px] h-[30px] rounded-full relative'>
           <img
@@ -176,8 +280,19 @@ const MainBoardEditor = () => {
           />
         </div>
       </div>
-      <div className='w-full min-h-[70px] bg-white rounded-xl flex items-center justify-center'>
-        <h3 className='font-semibold text-lg'>000000111</h3>
+      <div
+        style={{backgroundColor: footer_color}}
+        className={`w-full min-h-[70px]  rounded-xl flex  ${
+          phoneNumber_alignment === "center"
+            ? "items-center justify-center"
+            : phoneNumber_alignment === "left"
+            ? "items-start justify-start"
+            : phoneNumber_alignment === "right"
+            ? "items-end justify-end"
+            : ""
+        }`}
+      >
+        <h3 className='font-semibold text-lg'>{phoneNumber}</h3>
       </div>
     </div>
   )

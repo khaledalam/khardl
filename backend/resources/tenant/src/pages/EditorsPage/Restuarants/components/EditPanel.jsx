@@ -7,11 +7,15 @@ import {useSelector, useDispatch} from "react-redux"
 import {
   pageColor,
   pageCategoryColor,
+  categoryShape,
+  logoShape,
   categoryHoverColor,
   categoryDetailCartColor,
+  categoryDetailShape,
   headerColor,
   footerColor,
   priceColor,
+  textColor,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const EditPanel = () => {
@@ -26,18 +30,16 @@ const EditPanel = () => {
     header_color,
     footer_color,
     price_color,
+    text_color,
   } = restuarantEditorStyle
   const dispatch = useDispatch()
 
   const [logoShape, setLogoShape] = useState("Rounded")
+  const [bannerShape, setbannerShape] = useState("Rounded")
+  const [categoryShape, setcategoryShape] = useState("Rounded")
+  const [categoryDetailShape, setcategoryDetailShape] = useState("Rounded")
   const [fontFamily, setfontFamily] = useState("Inter")
   const [weight, setWeight] = useState("Thin")
-  // const [pageColor, setPageColor] = useState({hex: "#ffffff"})
-  const [categoryAnimeColor, setCategoryAnimeColor] = useState("#ffffff")
-  const [categoryDetailColor, setCategoryDetailColor] = useState("#ffffff")
-  const [headerColor, setHeaderColor] = useState("#ffffff")
-  const [footerColor, setFooterColor] = useState("#ffffff")
-  const [textColor, setTextColor] = useState("#ffffff")
 
   return (
     <div className='w-full h-full'>
@@ -237,8 +239,8 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"text_color"}
-              color={textColor}
-              handleColorChange={(color) => setTextColor(color)}
+              color={text_color}
+              handleColorChange={(color) => dispatch(textColor(color))}
             />
           </div>
         </div>

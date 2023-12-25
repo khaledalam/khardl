@@ -1,18 +1,23 @@
-import React, {Fragment} from "react"
+import React, {Fragment, useContext} from "react"
 import cartHeaderImg from "../../../assets/cartBoldIcon.svg"
 import {IoMenuOutline} from "react-icons/io5"
-import OuterSidebarNav from "../../EditorsPage/Restuarants/components/OuterSidebarNav"
+import {MenuContext} from "react-flexible-sliding-menu"
 
 const NavbarRestuarant = () => {
+  const {toggleMenu} = useContext(MenuContext)
+  const toggleTheMenu = () => {
+    toggleMenu()
+  }
+
   return (
     <Fragment>
       <div className='w-full bg-white flex flex-row items-center justify-between px-12 py-2'>
-        <label
-          htmlFor='resNavHome'
-          className='w-[40px] h-[40px] drawer-button bg-[#2A6E4F] rounded-lg p-1 flex items-center justify-center'
+        <div
+          onClick={toggleTheMenu}
+          className='w-[40px] h-[40px]  bg-[#2A6E4F] rounded-lg p-1 flex items-center justify-center'
         >
           <IoMenuOutline size={38} className='text-white' />
-        </label>
+        </div>
         <div className='w-[50px] h-[50px] relative flex items-center justify-center'>
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {true && (
@@ -22,20 +27,6 @@ const NavbarRestuarant = () => {
               </div>
             </div>
           )}
-        </div>
-      </div>
-      <div className='drawer z-50'>
-        <input id='resNavHome' type='checkbox' className='drawer-toggle' />
-        <div className='drawer-side'>
-          <label
-            htmlFor='resNavHome'
-            aria-label='close sidebar'
-            className='drawer-overlay'
-          ></label>
-          <div className='menu p-4 laptopXL:w-[25%] w-[30%] min-h-full bg-white text-base-content'>
-            {/* Sidebar content here */}
-            <OuterSidebarNav id={"resNavHome"} />
-          </div>
         </div>
       </div>
     </Fragment>

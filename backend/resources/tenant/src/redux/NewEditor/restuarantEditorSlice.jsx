@@ -4,11 +4,11 @@ const restuarantEditorSlice = createSlice({
   name: "restuarantEditorSlice",
   initialState: {
     headerPosition: "relative",
-
     logo_alignment: "center",
     logo_shape: "rounded",
     banner_type: "one-page",
     banner_shape: "rounded",
+    banner_background_color: "green",
 
     category_type: "stack",
     category_alignment: "center",
@@ -20,51 +20,18 @@ const restuarantEditorSlice = createSlice({
     categoryDetail_shape: "rounded",
     categoryDetail_cart_color: "#F2FF00",
 
-    socialMediaIcons: [
-      {
-        id: 4,
-        name: "Telegram",
-        icon: "BsTelegram",
-        color: "Telegram",
-        Link: "",
-      },
-      {id: 5, name: "Youtube", icon: "FaYoutube", color: "Youtube", Link: ""},
-      {
-        id: 6,
-        name: "Instagram",
-        icon: "BsInstagram",
-        color: "Instagram",
-        Link: "",
-      },
-      {
-        id: 7,
-        name: "Facebook",
-        icon: "BsFacebook",
-        color: "Facebook",
-        Link: "",
-      },
-      {
-        id: 8,
-        name: "LinkedIn",
-        icon: "BsLinkedin",
-        color: "LinkedIn",
-        Link: "",
-      },
-      {id: 9, name: "TikTok", icon: "BsTiktok", color: "TikTok", Link: ""},
-    ],
     selectedSocialIcons: [
       {
         id: 1,
-        name: "Whatsapp",
-        icon: "BsWhatsapp",
-        color: "Whatsapp",
-        Link: "",
+        imgUrl: "",
+        link: "",
       },
     ],
     phoneNumber: "+96600000000",
     phoneNumber_alignment: "center",
 
     page_color: "#ffffff",
+    category_background_color: "#4466ff",
     page_category_color: "#ffffff",
     header_color: "#ffffff",
     footer_color: "#ffffff",
@@ -85,6 +52,15 @@ const restuarantEditorSlice = createSlice({
     },
     logoShape: (state, action) => {
       state.logo_shape = action.payload
+    },
+    bannerType: (state, action) => {
+      state.banner_type = action.payload
+    },
+    bannerShape: (state, action) => {
+      state.banner_shape = action.payload
+    },
+    bannerBgColor: (state, action) => {
+      state.banner_background_color = action.payload
     },
     categoryType: (state, action) => {
       state.category_type = action.payload
@@ -111,9 +87,6 @@ const restuarantEditorSlice = createSlice({
     },
     categoryDetailShape: (state, action) => {
       state.categoryDetail_shape = action.payload
-    },
-    socialMediaIcons: (state, action) => {
-      state.socialMediaIcons = action.payload
     },
     selectedSocialMediaIcons: (state, action) => {
       state.selectedSocialIcons = action.payload
@@ -181,5 +154,8 @@ export const {
   textFontSize,
   textAlignment,
   textColor,
+  bannerBgColor,
+  bannerType,
+  bannerShape,
 } = restuarantEditorSlice.actions
 export default restuarantEditorSlice.reducer
