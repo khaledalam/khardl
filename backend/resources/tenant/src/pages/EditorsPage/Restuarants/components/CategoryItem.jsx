@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import ImgBurger from "../../../../assets/burger.png"
 
 const CategoryItem = ({
   active,
@@ -45,7 +46,11 @@ const CategoryItem = ({
         }  flex items-center justify-center scale-100 hover:scale-125 transition-all duration-300   bg-neutral-100  `}
       >
         <div className='w-[50px] h-[50px] flex items-center justify-center'>
-          <img src={imgSrc} alt={alt} className='w-full h-full object-cover' />
+          <img
+            src={imgSrc ? imgSrc : ImgBurger}
+            alt={alt}
+            className='w-full h-full object-cover'
+          />
         </div>
       </div>
       <h3 style={{color: textColor}} className='text-sm font-normal'>

@@ -7,8 +7,15 @@ import burgerImg from "../../../assets/burger.png"
 import chickenImg from "../../../assets/chicken.png"
 import drinkImg from "../../../assets/drink.png"
 import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
+import {useDispatch, useSelector} from "react-redux"
+import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
 
-const Herosection = ({alignment}) => {
+const Herosection = ({alignment, categories}) => {
+  const dispatch = useDispatch()
+  const selectedCategory = useSelector(
+    (state) => state.categoryAPI.selected_category
+  )
+
   const categoryList = [
     {
       name: "Pizza",
@@ -53,14 +60,18 @@ const Herosection = ({alignment}) => {
       {alignment === "center" && (
         <div className='bg-[#2A6E4F] w-full flex items-center justify-center'>
           <div className='flex items-center  gap-8 my-5 '>
-            {categoryList.map((category, i) => (
+            {categories.map((category, i) => (
               <CategoryItem
                 key={i}
+                active={selectedCategory === category.name.toLowerCase()}
                 name={category.name}
                 imgSrc={category.imgSrc}
                 alt={category.name}
                 hoverColor={"red"}
                 textColor={"white"}
+                onClick={() =>
+                  dispatch(selectedCategoryAPI(category.name.toLowerCase()))
+                }
               />
             ))}
           </div>

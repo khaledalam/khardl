@@ -31,13 +31,13 @@ const ProductItem = ({
         <div className='flex items-center justify-between pt-2'>
           <div className='flex flex-col gap-2 pl-4'>
             <h3 className='font-bold text-[1rem]'>{name}</h3>
-            <p className='font-normal text-[12px]'>{caloryInfo}</p>
+            <p className='font-normal text-[13px]'>{caloryInfo}Kcal</p>
           </div>
-          <div className='w-[100px] h-[100px] mr-[-1.8rem]'>
+          <div className='w-[100px] h-[100px] mr-[-1.8rem] bg-neutral-100 rounded-full p-1'>
             <img
               src={imgSrc}
               alt='product'
-              className='w-full h-full object-contain'
+              className='w-full h-full object-cover rounded-full'
             />
           </div>
         </div>
@@ -76,11 +76,11 @@ const ProductItem = ({
             {/* <IoCloseCircleOutline size={22}/> */}
           </form>
           <div className='bg-white w-full rounded-t-[80px] h-[500px] '>
-            <div className='w-[216px] h-[182px] mt-[-5.8rem] mx-auto'>
+            <div className='w-[216px] h-[182px] mt-[-5.8rem] mx-auto bg-neutral-100 rounded-full p-1'>
               <img
                 src={imgSrc}
                 alt='product'
-                className='w-full h-full object-contain'
+                className='w-full h-full object-cover rounded-full'
               />
             </div>
             <div className='flex flex-col items-center justify-center gap-2'>
