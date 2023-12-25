@@ -2489,6 +2489,10 @@ video {
 .underline {
   text-decoration-line: underline;
 }
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .accent-black {
   accent-color: #000;
 }
@@ -5890,6 +5894,10 @@ video {
 }
 .underline {
   text-decoration-line: underline;
+}
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .accent-black {
   accent-color: #000;

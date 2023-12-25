@@ -3,6 +3,18 @@
 @section('title', __('messages.services'))
 
 @section('content')
+@push('styles')
+<link href="{{ global_asset('js/custom/creditCard/main.css')}}"rel="stylesheet" type="text/css" />
+
+@endpush
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
+<script src="https://secure.gosell.io/js/sdk/tap.min.js"></script>
+
+<script src="{{ global_asset('js/custom/creditCard/main.js')}}"></script>
+
+@endpush
+
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
         <div class="d-flex flex-column flex-root">
@@ -265,14 +277,41 @@
                                                             <!--end::Heading-->
 
                                                             <!--begin::Select-->
+                                                           
+                                                                    <!--end::Modal dialog-->
                                                             <div class=" d-flex justify-content-between w-75 ">
-                                                                <div>
-                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                </div>
+                                                                        <div>
+                                                                            <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                        </div>
                                                                 <div>
                                                                     <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
+                                                                <!--begin::Modal dialog-->
+                                                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                                    <!--begin::Modal content-->
+                                                                    <div class="modal-content rounded p-15">
+                                                                            <!--begin::Modal header-->
+                                                                            <div class="modal-header pb-0 border-0 ">
+                                                                                <h5 class="modal-title text-center">Subscribe to the branch package</h5>
+                                                                            </div>
+                                                                            <form id="form-container" method="post"  action="/charge">
+                                                                                <div id="element-container"></div>
+                                                                                <div id="error-handler" role="alert"></div>
+                                                                                <div id="success" style=" display: none;;position: relative;float: left;">
+                                                                                      Success! Your token is <span id="token"></span>
+                                                                                </div>
+                                                                                <button id="tap-btn">Submit</button>
+                                                                            </form>
+                                                                                <!--end:Form-->
+                                                                    </div>
+                                                                </div>
+                                                                        <!--end::Modal body-->
+                                                            </div>
+                                                                    <!--end::Modal content-->
+
                                                             <!--end::Select-->
                                                         </div>
                                                         <!--end::Option-->
@@ -671,19 +710,7 @@
         <!--end::Modal - Cancle branch-->
 
 
-        <!--begin::Javascript-->
-        <script>var hostUrl = "assets/";</script>
-        <!--begin::Global Javascript Bundle(used by all pages)-->
-        <script src="{{global_asset('assets/plugins/global/plugins.bundle.js')}}"></script>
-{{--        <script src="assets/js/scripts.bundle.js"></script>--}}
-        <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-{{--        <script src="assets/js/custom/apps/file-manager/list.js"></script>--}}
-{{--        <script src="assets/js/widgets.bundle.js"></script>--}}
-{{--        <script src="assets/js/custom/widgets.js"></script>--}}
-{{--        <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>--}}
-{{--        <script src="assets/js/custom/utilities/modals/create-app.js"></script>--}}
-{{--        <script src="assets/js/custom/utilities/modals/users-search.js"></script>--}}
-        <!--end::Page Custom Javascript-->
+      
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var myLink = document.getElementById("myLink");
@@ -730,8 +757,24 @@
             });
 
         </script>
+        
+        
         <!--end::Javascript-->
+        
+        <script>
+            function tapTokenHandler(token) {
+                // Insert the token ID into the form so it gets submitted to the server
+                var form = document.getElementById('payment-form');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'tapToken');
+                hiddenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenInput);
 
+                // Submit the form
+                // form.submit();
+            }
+        </script>
      </div>
      <!--end::Content-->
 @endsection

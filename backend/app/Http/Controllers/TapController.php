@@ -76,7 +76,7 @@ class TapController extends Controller
             'id'=>1
         ],$files);
     
-        return redirect()->back()->with('success', __('Files successfully added.'));
+        return redirect()->route("tap.payments_submit_tap_documents_get")->with('success', __('Files successfully added.'));
 
     }
 
