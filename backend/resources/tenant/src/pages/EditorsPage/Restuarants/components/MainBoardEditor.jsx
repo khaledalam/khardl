@@ -54,6 +54,9 @@ const MainBoardEditor = () => {
     text_color,
   } = restuarantEditorStyle
   console.log("restuarantEditorStyle", restuarantEditorStyle)
+
+  const [selectedCategory, setSelectedCategory] = useState("burger")
+
   const categoryList = [
     {
       name: "Pizza",
@@ -68,29 +71,91 @@ const MainBoardEditor = () => {
       imgSrc: burgerImg,
     },
     {
-      name: "chicken",
+      name: "Chicken",
       imgSrc: chickenImg,
     },
     {
-      name: "drink",
+      name: "Drink",
       imgSrc: drinkImg,
     },
   ]
 
   const productList = [
     {
+      category: "pizza",
       name: "Pizza Special",
       imgSrc: pizzImg,
       caloryInfo: "142 Calories",
       amount: "875.000",
     },
     {
+      category: "pizza",
+      name: "Pizza Special",
+      imgSrc: pizzImg,
+      caloryInfo: "142 Calories",
+      amount: "875.000",
+    },
+    {
+      category: "burger",
       name: "Burger Special",
       imgSrc: burgerImg,
       caloryInfo: "142 Calories",
       amount: "875.000",
     },
+    {
+      category: "burger",
+      name: "Burger Special",
+      imgSrc: burgerImg,
+      caloryInfo: "142 Calories",
+      amount: "875.000",
+    },
+    {
+      category: "pasta",
+      name: "Pasta Special",
+      imgSrc: pastaImg,
+      caloryInfo: "142 Calories",
+      amount: "875.000",
+    },
+    {
+      category: "pasta",
+      name: "Pasta Special",
+      imgSrc: pastaImg,
+      caloryInfo: "142 Calories",
+      amount: "875.000",
+    },
+    {
+      category: "chicken",
+      name: "Chicken Special",
+      imgSrc: chickenImg,
+      caloryInfo: "142 Calories",
+      amount: "875.000",
+    },
+    {
+      category: "chicken",
+      name: "Chicken Special",
+      imgSrc: chickenImg,
+      caloryInfo: "142 Calories",
+      amount: "875.000",
+    },
+    {
+      category: "drink",
+      name: "Drink Special",
+      imgSrc: drinkImg,
+      caloryInfo: "142 Calories",
+      amount: "875.000",
+    },
+    {
+      category: "drink",
+      name: "Drink Special",
+      imgSrc: drinkImg,
+      caloryInfo: "142 Calories",
+      amount: "875.000",
+    },
   ]
+
+  const filterProductList = productList.filter(
+    (product) => product.category === selectedCategory
+  )
 
   console.log("bannner shape", banner_shape)
 
@@ -203,7 +268,7 @@ const MainBoardEditor = () => {
           <div
             style={{
               backgroundColor: page_category_color,
-              borderRadius: category_shape === "sharp" ? 0 : 12,
+              // borderRadius: category_shape === "sharp" ? 0 : 12,
             }}
             className={`w-full min-h-[180px]  flex   ${
               category_alignment === "center"
@@ -219,13 +284,16 @@ const MainBoardEditor = () => {
               {categoryList.map((category, i) => (
                 <CategoryItem
                   key={i}
-                  active={activeItem?.name === category.name}
+                  active={selectedCategory === category.name.toLowerCase()}
                   name={category.name}
                   imgSrc={category.imgSrc}
                   alt={category.name}
                   hoverColor={category_hover_color}
-                  onClick={() => setActiveItem(category)}
+                  onClick={() =>
+                    setSelectedCategory(category.name.toLowerCase())
+                  }
                   textColor={text_color}
+                  shape={category_shape}
                 />
               ))}
             </div>
@@ -234,7 +302,40 @@ const MainBoardEditor = () => {
       )}
       {/* Products/ category details */}
       {categoryDetail_type === "grid" ? (
-        <>grid cate</>
+        <div
+          className={`w-full flex ${
+            categoryDetail_alignment === "center"
+              ? "items-center justify-center"
+              : categoryDetail_alignment === "left"
+              ? "items-center justify-start"
+              : categoryDetail_alignment === "right"
+              ? "items-center justify-end"
+              : ""
+          }
+        `}
+        >
+          <div className={`relative`}>
+            <h3 className='font-semibold text-[1.5rem] mb-4 relative capitalize'>
+              <span className='custom-underline'>{selectedCategory}</span>{" "}
+            </h3>
+
+            <div className={`flex flex-col gap-6 h-fit  py-4 px-2`}>
+              {filterProductList.map((product, i) => (
+                <ProductItem
+                  key={i}
+                  id={product.name + i}
+                  name={product.name}
+                  imgSrc={product.imgSrc}
+                  amount={product.amount}
+                  caloryInfo={product.caloryInfo}
+                  cartBgcolor={categoryDetail_cart_color}
+                  amountColor={price_color}
+                  shape={categoryDetail_shape}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       ) : (
         <div
           style={{
@@ -250,21 +351,28 @@ const MainBoardEditor = () => {
               : ""
           }  `}
         >
-          <div
-            className={`flex items-center gap-6 h-fit   flex-wrap py-4 px-2`}
-          >
-            {productList.map((product, i) => (
-              <ProductItem
-                key={i}
-                id={product.name + i}
-                name={product.name}
-                imgSrc={product.imgSrc}
-                amount={product.amount}
-                caloryInfo={product.caloryInfo}
-                cartBgcolor={categoryDetail_cart_color}
-                amountColor={price_color}
-              />
-            ))}
+          <div className='flex flex-col items-center justify-center'>
+            <h3 className='font-semibold text-[1.5rem] mb-4 relative capitalize'>
+              <span className='custom-underline'>{selectedCategory}</span>{" "}
+            </h3>
+
+            <div
+              className={`flex items-center gap-6 h-fit   flex-wrap py-4 px-2`}
+            >
+              {filterProductList.map((product, i) => (
+                <ProductItem
+                  key={i}
+                  id={product.name + i}
+                  name={product.name}
+                  imgSrc={product.imgSrc}
+                  amount={product.amount}
+                  caloryInfo={product.caloryInfo}
+                  cartBgcolor={categoryDetail_cart_color}
+                  amountColor={price_color}
+                  shape={categoryDetail_shape}
+                />
+              ))}
+            </div>
           </div>
         </div>
       )}

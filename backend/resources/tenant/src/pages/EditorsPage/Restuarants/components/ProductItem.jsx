@@ -16,12 +16,16 @@ const ProductItem = ({
   amount,
   cartBgcolor,
   amountColor,
+  shape,
 }) => {
   return (
     <Fragment>
       <div
-        style={{boxShadow: "4px 0px 10px 0px rgba(0, 0, 0, 0.25)"}}
-        className='w-[250px] min-h-[138px] rounded-2xl'
+        style={{
+          boxShadow: "4px 0px 10px 0px rgba(0, 0, 0, 0.25)",
+          borderRadius: shape === "sharp" ? 0 : 16,
+        }}
+        className='w-[250px] min-h-[138px]'
         onClick={() => document.getElementById(id).showModal()}
       >
         <div className='flex items-center justify-between pt-2'>

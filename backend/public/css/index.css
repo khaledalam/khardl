@@ -5643,6 +5643,9 @@ details.collapse summary::-webkit-details-marker {
 .uppercase {
   text-transform: uppercase;
 }
+.capitalize {
+  text-transform: capitalize;
+}
 .\!leading-8 {
   line-height: 2rem !important;
 }
@@ -12458,6 +12461,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .uppercase {
   text-transform: uppercase;
+}
+.capitalize {
+  text-transform: capitalize;
 }
 .\!leading-8 {
   line-height: 2rem !important;
