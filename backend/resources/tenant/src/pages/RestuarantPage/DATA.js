@@ -139,3 +139,26 @@ export const productSectionList = [
     ],
   },
 ]
+
+export const categoryList = [
+  {
+    name: "Pizza",
+    imgSrc: pizzImg,
+  },
+  {
+    name: "Pasta",
+    imgSrc: pastaImg,
+  },
+  {
+    name: "Burger",
+    imgSrc: burgerImg,
+  },
+  {
+    name: "Chicken",
+    imgSrc: chickenImg,
+  },
+  {
+    name: "Drink",
+    imgSrc: drinkImg,
+  },
+]

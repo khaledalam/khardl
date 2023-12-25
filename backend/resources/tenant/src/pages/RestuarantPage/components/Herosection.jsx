@@ -8,7 +8,7 @@ import chickenImg from "../../../assets/chicken.png"
 import drinkImg from "../../../assets/drink.png"
 import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
 
-const Herosection = () => {
+const Herosection = ({alignment}) => {
   const categoryList = [
     {
       name: "Pizza",
@@ -49,19 +49,23 @@ const Herosection = () => {
             className='w-full h-full object-contain'
           />
         </div>
-        <div className='flex items-center gap-8 mb-5'>
-          {categoryList.map((category, i) => (
-            <CategoryItem
-              key={i}
-              name={category.name}
-              imgSrc={category.imgSrc}
-              alt={category.name}
-              hoverColor={"red"}
-              textColor={"white"}
-            />
-          ))}
-        </div>
       </div>
+      {alignment === "center" && (
+        <div className='bg-[#2A6E4F] w-full flex items-center justify-center'>
+          <div className='flex items-center  gap-8 my-5 '>
+            {categoryList.map((category, i) => (
+              <CategoryItem
+                key={i}
+                name={category.name}
+                imgSrc={category.imgSrc}
+                alt={category.name}
+                hoverColor={"red"}
+                textColor={"white"}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

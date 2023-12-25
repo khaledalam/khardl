@@ -12,6 +12,7 @@ import CategoryItem from "./CategoryItem"
 import ProductItem from "./ProductItem"
 import {useSelector, useDispatch} from "react-redux"
 import {MenuContext} from "react-flexible-sliding-menu"
+import Slider from "./Slider"
 
 const MainBoardEditor = () => {
   const [activeItem, setActiveItem] = useState({name: "", imgSrc: ""})
@@ -230,7 +231,9 @@ const MainBoardEditor = () => {
       </div>
       {/* banner */}
       {banner_type === "slider" ? (
-        <div>slider</div>
+        <div className='w-full'>
+          <Slider />
+        </div>
       ) : (
         <div
           style={{
@@ -351,8 +354,8 @@ const MainBoardEditor = () => {
           }
         `}
         >
-          <div className={`relative`}>
-            <h3 className='font-semibold text-[1.5rem] mb-4 relative capitalize'>
+          <div className={``}>
+            <h3 className='font-semibold text-[1.5rem] text-center mb-4 relative capitalize'>
               <span className='custom-underline'>{selectedCategory}</span>{" "}
             </h3>
 

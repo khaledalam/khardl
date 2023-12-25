@@ -4512,6 +4512,18 @@ details.collapse summary::-webkit-details-marker {
 .flex-\[81\%\] {
   flex: 81%;
 }
+.flex-\[30\%\] {
+  flex: 30%;
+}
+.flex-\[70\%\] {
+  flex: 70%;
+}
+.flex-\[20\%\] {
+  flex: 20%;
+}
+.flex-\[80\%\] {
+  flex: 80%;
+}
 .flex-shrink-0 {
   flex-shrink: 0;
 }

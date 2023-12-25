@@ -12,6 +12,20 @@
 
 } */
 
+/* @font-face {
+  font-family: 'cairo';
+  src: url('./assets/fonts/Cairo-VariableFont_slnt,wght.ttf') format('truetype');
+  font-display: swap;
+
+} */
+
+/* @font-face {
+  font-family: 'cairo';
+  src: url('./assets/fonts/Cairo-VariableFont_slnt,wght.ttf') format('truetype');
+  font-display: swap;
+
+} */
+
 html {
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
