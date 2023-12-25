@@ -5,12 +5,38 @@ import CategoryAlign from "./CategoryAlign"
 import SocialMediaCollection from "./SocialMediaCollection"
 import {IoAdd} from "react-icons/io5"
 import PhoneInput from "react-phone-input-2"
+import {useSelector, useDispatch} from "react-redux"
+import {
+  bannerType,
+  categoryAlignment,
+  categoryDetailAlignment,
+  logoAlignment,
+  headerPosition as setHeaderPosition,
+  socialMediaIconsAlignment,
+  phoneNumber as setPhoneNumber,
+  phoneNumberAlignment,
+  categoryType,
+  categoryDetailType,
+} from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const SectionPanel = () => {
-  const [position, setPosition] = useState("Fixed")
-  const [banner, setBanner] = useState("One-Page")
-  const [content, setContent] = useState("Center")
-  const [phoneNumber, setPhoneNumber] = useState("")
+  const dispatch = useDispatch()
+  const restuarantEditorStyle = useSelector(
+    (state) => state.restuarantEditorStyle
+  )
+
+  const {
+    headerPosition,
+    logo_alignment,
+    banner_type,
+    category_alignment,
+    categoryDetail_alignment,
+    socialMediaIcons_alignment,
+    phoneNumber,
+    phoneNumber_alignment,
+    categoryDetail_type,
+    category_type,
+  } = restuarantEditorStyle
 
   return (
     <div className='p-2 w-full'>
@@ -18,8 +44,8 @@ const SectionPanel = () => {
         <h2 className='font-bold text-lg mb-4'>Header</h2>
         <PrimarySelect
           label={"Position"}
-          defaultValue={position}
-          handleChange={(value) => setPosition(value)}
+          defaultValue={headerPosition}
+          handleChange={(value) => dispatch(setHeaderPosition(value))}
           options={[
             {value: "fixed", text: "Fixed"},
             {value: "relative", text: "Relative"},
@@ -29,14 +55,17 @@ const SectionPanel = () => {
       <div className='py-4 border-b border-neutral-300'>
         <div className='flex items-center justify-between w-[70%] px-2'>
           <h2 className='font-bold text-lg'>Logo</h2>
-          <LogoAlignment />
+          <LogoAlignment
+            defaultValue={logo_alignment}
+            onChange={(value) => dispatch(logoAlignment(value))}
+          />
         </div>
       </div>
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Banner</h2>
         <PrimarySelect
-          defaultValue={banner}
-          handleChange={(value) => setBanner(value)}
+          defaultValue={banner_type}
+          handleChange={(value) => dispatch(bannerType(value))}
           options={[
             {value: "slider", text: "Slider"},
             {value: "one-page", text: "One-Page"},
@@ -45,12 +74,16 @@ const SectionPanel = () => {
       </div>
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Category</h2>
-        <CategoryAlign label={"Type"} />
+        <CategoryAlign
+          label={"Type"}
+          defaultValue={category_type}
+          onChange={(value) => dispatch(categoryType(value))}
+        />
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}
-            defaultValue={content}
-            handleChange={(value) => setContent(value)}
+            defaultValue={category_alignment}
+            handleChange={(value) => dispatch(categoryAlignment(value))}
             options={[
               {value: "left", text: "Left"},
               {value: "center", text: "Center"},
@@ -61,12 +94,16 @@ const SectionPanel = () => {
       </div>
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Category Details</h2>
-        <CategoryAlign label={"Type"} />
+        <CategoryAlign
+          label={"Type"}
+          defaultValue={categoryDetail_type}
+          onChange={(value) => dispatch(categoryDetailType(value))}
+        />
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}
-            defaultValue={content}
-            handleChange={(value) => setContent(value)}
+            defaultValue={categoryDetail_alignment}
+            handleChange={(value) => dispatch(categoryDetailAlignment(value))}
             options={[
               {value: "left", text: "Left"},
               {value: "center", text: "Center"},
@@ -85,8 +122,8 @@ const SectionPanel = () => {
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}
-            defaultValue={content}
-            handleChange={(value) => setContent(value)}
+            defaultValue={socialMediaIcons_alignment}
+            handleChange={(value) => dispatch(socialMediaIconsAlignment(value))}
             options={[
               {value: "left", text: "Left"},
               {value: "center", text: "Center"},
@@ -102,7 +139,7 @@ const SectionPanel = () => {
           <PhoneInput
             country={"sa"}
             value={phoneNumber}
-            onChange={(phone) => setPhoneNumber(phone)}
+            onChange={(phone) => dispatch(setPhoneNumber(phone))}
             containerClass='!w-full'
             inputClass='!w-full !h-[48px] !text-[1rem]'
           />{" "}
@@ -110,8 +147,8 @@ const SectionPanel = () => {
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}
-            defaultValue={content}
-            handleChange={(value) => setContent(value)}
+            defaultValue={phoneNumber_alignment}
+            handleChange={(value) => dispatch(phoneNumberAlignment(value))}
             options={[
               {value: "left", text: "Left"},
               {value: "center", text: "Center"},

@@ -5,8 +5,8 @@ import {
   PiAlignRightLight,
 } from "react-icons/pi"
 
-const LogoAlignment = ({iconSize, widthStyle}) => {
-  const [activeAlign, setActiveAlign] = useState("")
+const LogoAlignment = ({iconSize, widthStyle, defaultValue, onChange}) => {
+  const [activeAlign, setActiveAlign] = useState(defaultValue)
 
   const alignments = [
     {
@@ -25,6 +25,7 @@ const LogoAlignment = ({iconSize, widthStyle}) => {
 
   const handleActiveAlign = useCallback((position) => {
     setActiveAlign(position)
+    onChange(position)
   }, [])
   return (
     <div className={`${widthStyle ? widthStyle : ""}`}>

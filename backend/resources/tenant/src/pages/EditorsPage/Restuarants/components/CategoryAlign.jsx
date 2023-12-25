@@ -1,20 +1,23 @@
 import React, {Fragment, useCallback, useState} from "react"
 
-const CategoryAlign = ({label}) => {
-  const [activeTab, setActiveTab] = useState("Stack")
+const CategoryAlign = ({label, defaultValue, onChange}) => {
+  const [activeTab, setActiveTab] = useState(defaultValue)
   const btnList = [
     {
       id: "Stack",
+      value: "stack",
       name: "Stack",
     },
     {
       id: "Grid",
+      value: "grid",
       name: "Grid",
     },
   ]
 
   const handleActiveTab = useCallback((value) => {
     setActiveTab(value)
+    onChange(value)
   }, [])
 
   return (
@@ -29,11 +32,11 @@ const CategoryAlign = ({label}) => {
           <Fragment key={item.id}>
             <button
               className={`btn w-[42%] h-[30px]  ${
-                item.name === activeTab
+                item.value === activeTab
                   ? " bg-white hover:bg-white"
                   : "bg-neutral-100 hover:bg-neutral-100 text-neutral-300"
               }`}
-              onClick={() => handleActiveTab(item.name)}
+              onClick={() => handleActiveTab(item.value)}
             >
               {item.name}
             </button>

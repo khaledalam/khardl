@@ -85,18 +85,14 @@ const MainBoardEditor = () => {
       amount: "875.000",
     },
     {
-      name: "Pasta Special",
-      imgSrc: pastaImg,
-      caloryInfo: "142 Calories",
-      amount: "375.000",
-    },
-    {
       name: "Burger Special",
       imgSrc: burgerImg,
       caloryInfo: "142 Calories",
       amount: "875.000",
     },
   ]
+
+  console.log("bannner shape", banner_shape)
 
   return (
     <div
@@ -142,20 +138,20 @@ const MainBoardEditor = () => {
           logo_alignment === "center"
             ? "items-center justify-center"
             : logo_alignment === "left"
-            ? "items-start justify-start"
+            ? "items-center justify-start"
             : logo_alignment === "right"
-            ? "items-end justify-end"
+            ? "items-center justify-end"
             : ""
         } `}
       >
         <div
-          style={{borderRadius: logo_shape === "sharp" ? "none" : logo_shape}}
+          style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
           className='w-[60px] h-[60px] p-2 bg-neutral-100 relative'
         >
           <img
             src={ImageIcon}
             alt={""}
-            style={{borderRadius: logo_shape === "sharp" ? "none" : logo_shape}}
+            style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
             className='w-full h-full object-cover'
           />
           {false && (
@@ -174,13 +170,13 @@ const MainBoardEditor = () => {
         <div
           style={{
             backgroundColor: banner_background_color,
-            borderRadius: banner_shape === "sharp" ? "none" : banner_shape,
+            borderRadius: banner_shape === "sharp" ? 0 : 12,
           }}
-          className={`w-full min-h-[180px]   rounded-xl flex items-center justify-center`}
+          className={`w-full min-h-[180px]   flex items-center justify-center`}
         >
           <div
             style={{
-              borderRadius: banner_shape === "sharp" ? "none" : banner_shape,
+              borderRadius: banner_shape === "sharp" ? 0 : 12,
             }}
             className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
           >
@@ -207,16 +203,15 @@ const MainBoardEditor = () => {
           <div
             style={{
               backgroundColor: page_category_color,
-              borderRadius:
-                category_shape === "sharp" ? "none" : category_shape,
+              borderRadius: category_shape === "sharp" ? 0 : 12,
             }}
-            className={`w-full min-h-[180px]  rounded-xl flex   ${
+            className={`w-full min-h-[180px]  flex   ${
               category_alignment === "center"
                 ? "items-center justify-center"
                 : category_alignment === "left"
-                ? "items-start justify-start"
+                ? "items-center justify-start"
                 : category_alignment === "right"
-                ? "items-end justify-end"
+                ? "items-center justify-end"
                 : ""
             }`}
           >
@@ -243,10 +238,17 @@ const MainBoardEditor = () => {
       ) : (
         <div
           style={{
-            borderRadius:
-              categoryDetail_shape === "sharp" ? "none" : categoryDetail_shape,
+            borderRadius: categoryDetail_shape === "sharp" ? 0 : 12,
           }}
-          className={`w-full h-fit bg-white rounded-xl flex items-center justify-center mx-auto`}
+          className={`w-full h-fit bg-white   flex ${
+            categoryDetail_alignment === "center"
+              ? "items-center justify-center"
+              : categoryDetail_alignment === "left"
+              ? "items-center justify-start"
+              : categoryDetail_alignment === "right"
+              ? "items-center justify-end"
+              : ""
+          }  `}
         >
           <div
             className={`flex items-center gap-6 h-fit   flex-wrap py-4 px-2`}
@@ -286,9 +288,9 @@ const MainBoardEditor = () => {
           phoneNumber_alignment === "center"
             ? "items-center justify-center"
             : phoneNumber_alignment === "left"
-            ? "items-start justify-start"
+            ? "items-center justify-start"
             : phoneNumber_alignment === "right"
-            ? "items-end justify-end"
+            ? "items-center justify-end"
             : ""
         }`}
       >

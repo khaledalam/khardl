@@ -27,6 +27,7 @@ const restuarantEditorSlice = createSlice({
         link: "",
       },
     ],
+    socialMediaIcons_alignment: "center",
     phoneNumber: "+96600000000",
     phoneNumber_alignment: "center",
 
@@ -91,6 +92,9 @@ const restuarantEditorSlice = createSlice({
     selectedSocialMediaIcons: (state, action) => {
       state.selectedSocialIcons = action.payload
     },
+    socialMediaIconsAlignment: (state, action) => {
+      state.socialMediaIcons_alignment = action.payload
+    },
     phoneNumber: (state, action) => {
       state.phoneNumber = action.payload
     },
@@ -144,6 +148,7 @@ export const {
   categoryDetailShape,
   socialMediaIcons,
   selectedSocialMediaIcons,
+  socialMediaIconsAlignment,
   pageColor,
   pageCategoryColor,
   priceColor,
@@ -157,5 +162,7 @@ export const {
   bannerBgColor,
   bannerType,
   bannerShape,
+  phoneNumber,
+  phoneNumberAlignment,
 } = restuarantEditorSlice.actions
 export default restuarantEditorSlice.reducer

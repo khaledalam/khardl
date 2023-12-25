@@ -8,6 +8,8 @@ import {
   pageColor,
   pageCategoryColor,
   categoryShape,
+  bannerShape,
+  bannerBgColor,
   logoShape,
   categoryHoverColor,
   categoryDetailCartColor,
@@ -28,16 +30,17 @@ const EditPanel = () => {
     category_hover_color,
     categoryDetail_cart_color,
     header_color,
+    logo_shape,
+    banner_shape,
+    banner_background_color,
+    categoryDetail_shape,
+    category_shape,
     footer_color,
     price_color,
     text_color,
   } = restuarantEditorStyle
   const dispatch = useDispatch()
 
-  const [logoShape, setLogoShape] = useState("Rounded")
-  const [bannerShape, setbannerShape] = useState("Rounded")
-  const [categoryShape, setcategoryShape] = useState("Rounded")
-  const [categoryDetailShape, setcategoryDetailShape] = useState("Rounded")
   const [fontFamily, setfontFamily] = useState("Inter")
   const [weight, setWeight] = useState("Thin")
 
@@ -53,11 +56,11 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={logoShape}
-              handleChange={(value) => setLogoShape(value)}
+              defaultValue={logo_shape}
+              handleChange={(value) => dispatch(logoShape(value))}
               options={[
                 {value: "rounded", text: "Rounded"},
-                {value: "rounded", text: "Rounded"},
+                {value: "sharp", text: "Sharp"},
               ]}
             />
           </div>
@@ -67,11 +70,11 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={logoShape}
-              handleChange={(value) => setLogoShape(value)}
+              defaultValue={banner_shape}
+              handleChange={(value) => dispatch(bannerShape(value))}
               options={[
                 {value: "rounded", text: "Rounded"},
-                {value: "rounded", text: "Rounded"},
+                {value: "sharp", text: "Sharp"},
               ]}
             />
           </div>
@@ -81,11 +84,11 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={logoShape}
-              handleChange={(value) => setLogoShape(value)}
+              defaultValue={category_shape}
+              handleChange={(value) => dispatch(categoryShape(value))}
               options={[
                 {value: "rounded", text: "Rounded"},
-                {value: "rounded", text: "Rounded"},
+                {value: "sharp", text: "Sharp"},
               ]}
             />
           </div>
@@ -95,11 +98,11 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={logoShape}
-              handleChange={(value) => setLogoShape(value)}
+              defaultValue={categoryDetail_shape}
+              handleChange={(value) => dispatch(categoryDetailShape(value))}
               options={[
                 {value: "rounded", text: "Rounded"},
-                {value: "rounded", text: "Rounded"},
+                {value: "sharp", text: "Sharp"},
               ]}
             />
           </div>
@@ -127,6 +130,16 @@ const EditPanel = () => {
               modalId={"page_category"}
               color={page_category_color}
               handleColorChange={(color) => dispatch(pageCategoryColor(color))}
+            />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              Page Banner
+            </h3>
+            <ColorPallete
+              modalId={"page_banner"}
+              color={banner_background_color}
+              handleColorChange={(color) => dispatch(bannerBgColor(color))}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
