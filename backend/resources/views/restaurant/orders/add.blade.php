@@ -21,8 +21,8 @@
                     <!--begin::Container-->
                     <div id="kt_content_container" class="container-xxl">
                         <!--begin::Form-->
-                        <form id="kt_ecommerce_edit_order_form" class="form d-flex flex-column flex-lg-row"
-                            data-kt-redirect="./demo1/dist/apps/ecommerce/sales/listing.html">
+                        <form  action="{{ route('restaurant.store') }}"  method="POST" class="form d-flex flex-column flex-lg-row">
+                            @csrf
                             <!--begin::Aside column-->
                             <div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
                                 <!--begin::Order details-->
@@ -140,7 +140,7 @@
                                                 </div>
                                                 <!--begin::Selected products-->
                                                 <!--begin::Total price-->
-                                                <div class="fw-bolder fs-4">Total Cost: $
+                                                <div class="fw-bolder fs-4">Subtotal: SAR
                                                     <span id="kt_ecommerce_edit_order_total_price">0.00</span>
                                                 </div>
                                                 <!--end::Total price-->
@@ -167,22 +167,21 @@
                                                 {{-- <input type="text" data-kt-ecommerce-edit-order-filter="search"
                                                     class="form-control form-control-solid w-100 w-lg-50 ps-14"
                                                     placeholder="Search Products" /> --}}
-                                                <select id="productSelect" class="form-select" name="products[]"
+                                                <select id="productSelect" class="form-select"
                                                     multiple style="width: 300px;">
                                                     <option disabled>Search for a product...</option>
                                                 </select>
                                             </div>
                                             <!--end::Search products-->
                                             <!--begin::Table-->
-                                            <table class="table align-middle table-row-dashed fs-6 gy-5"
+                                            <table class="table align-middle table-row-dashed fs-6 gy-5 products"
                                                 id="kt_ecommerce_edit_order_product_table">
                                                 <!--begin::Table head-->
                                                 <thead>
                                                     <tr
                                                         class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                        <th class="w-25px pe-2"></th>
                                                         <th class="min-w-200px">Product</th>
-                                                        <th class="min-w-100px text-end pe-5">Qty Remaining</th>
+                                                        <th class="min-w-100px pe-5">Quantity</th>
                                                     </tr>
                                                 </thead>
                                                 <!--end::Table head-->
@@ -280,7 +279,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#productSelect').select2({
+        var totalCost = 0.00;
+        var productSelect = $('#productSelect').select2({
             placeholder: 'Search for a product...',
             ajax: {
                 url: '/search-products',
@@ -312,21 +312,19 @@
            <tr>
             <td>
                 <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
-                    <!--begin::Thumbnail-->
                     <a href="./demo1/dist/apps/ecommerce/catalog/edit-product.html" class="symbol symbol-50px">
                         <span class="symbol-label" style="background-image:url(${selectedProduct.photo});"></span>
                     </a>
-                    <!--end::Thumbnail-->
                     <div class="ms-5">
-                        <!--begin::Title-->
                         <a href="./demo1/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">${selectedProduct.description}</a>
-                        <!--end::Title-->
-                        <!--begin::Price-->
                         <div>Price: SAR <span data-kt-ecommerce-edit-order-filter="price">${selectedProduct.price}</span></div>
-                        <!--end::Price-->
-                        <!--begin::SKU-->
-
-                        <!--end::SKU-->
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
+                    <div class="ms-5">
+                        <input type="number" class="form-control product_quantity" name="products[${selectedProduct.id}][]" value="1" />
                     </div>
                 </div>
             </td>
@@ -335,7 +333,14 @@
 
         // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
         $('#product_table').append(tableRow);
+         // Update the total cost
+        totalCost += parseFloat(selectedProduct.price);
+        updateTotalCost();
+        productSelect.val(null).trigger('change');
         });
+        function updateTotalCost() {
+        $('#kt_ecommerce_edit_order_total_price').text(totalCost.toFixed(2));
+    }
     });
 </script>
 @endsection

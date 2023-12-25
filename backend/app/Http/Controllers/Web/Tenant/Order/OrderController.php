@@ -23,4 +23,9 @@ class OrderController extends BaseController
     {
         return $this->orderService->searchProducts($request);
     }
+    public function store(Request $request)
+    {
+        dd($request->all());
+        return 1;
+    }
 }

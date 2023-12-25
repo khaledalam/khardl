@@ -123,6 +123,7 @@ Route::group([
                 Route::controller(TenantOrderController::class)->group(function () {
                     Route::get('orders-all', 'index')->name('restaurant.orders_all');
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
+                    Route::post('orders-add', 'store')->name('restaurant.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                   });
                 Route::get('/products-out-of-stock', [RestaurantController::class, 'products_out_of_stock'])->name('restaurant.products_out_of_stock');
