@@ -142,5 +142,8 @@ class TapController extends Controller
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
         
     }
+    public function payments_submit_card_details(){
+        
+    }
 
 }
