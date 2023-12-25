@@ -4199,8 +4199,14 @@ details.collapse summary::-webkit-details-marker {
 .h-full {
   height: 100%;
 }
+.h-\[471px\] {
+  height: 471px;
+}
 .max-h-screen {
   max-height: 100vh;
+}
+.max-h-\[471px\] {
+  max-height: 471px;
 }
 .min-h-\[100\%\] {
   min-height: 100%;
@@ -11030,8 +11036,14 @@ details.collapse summary::-webkit-details-marker {
 .h-full {
   height: 100%;
 }
+.h-\[471px\] {
+  height: 471px;
+}
 .max-h-screen {
   max-height: 100vh;
+}
+.max-h-\[471px\] {
+  max-height: 471px;
 }
 .min-h-\[100\%\] {
   min-height: 100%;

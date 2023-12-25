@@ -10,9 +10,6 @@ import {changeStyleDataRestaurant} from "../../redux/editor/styleDataRestaurantS
 export const RestuarantHomePage = () => {
   const dispatch = useDispatch()
   const [categories, setCategories] = useState([])
-  const styleDataRestaurant = useSelector(
-    (state) => state.styleDataRestaurant.styleDataRestaurant
-  )
 
   let branch_id = localStorage.getItem("selected_branch_id")
 
@@ -42,10 +39,6 @@ export const RestuarantHomePage = () => {
     }
   }
   const fetchResStyleData = async () => {
-    console.log("resturant Style ---- ", styleDataRestaurant)
-
-    if (styleDataRestaurant) return
-
     try {
       const restaurantStyleResponse = await AxiosInstance.get(
         `restaurant-style`
@@ -72,7 +65,7 @@ export const RestuarantHomePage = () => {
   console.log("categories fetched", categories)
 
   const categoriesForBranch = categories.filter(
-    (category) => category.branch.id == branch_id
+    (category) => category.branch.id === branch_id
   )
 
   return (

@@ -1,66 +1,64 @@
 import React from "react"
-import imgLogo from "../../../assets/khardl_Logo.png"
-import imgBanner from "../../../assets/bannerRestuarant.png"
-import pizzImg from "../../../assets/pizza.png"
-import pastaImg from "../../../assets/pasta.png"
-import burgerImg from "../../../assets/burger.png"
-import chickenImg from "../../../assets/chicken.png"
-import drinkImg from "../../../assets/drink.png"
 import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
 import {useDispatch, useSelector} from "react-redux"
 import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
+import imgBanner from "../../../assets/bannerRestuarant.png"
 
 const Herosection = ({alignment, categories}) => {
   const dispatch = useDispatch()
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
   )
+  const restaurantStyle = useSelector(
+    (state) => state.styleDataRestaurant.styleDataRestaurant
+  )
 
-  const categoryList = [
-    {
-      name: "Pizza",
-      imgSrc: pizzImg,
-    },
-    {
-      name: "Pasta",
-      imgSrc: pastaImg,
-    },
-    {
-      name: "Burger",
-      imgSrc: burgerImg,
-    },
-    {
-      name: "chicken",
-      imgSrc: chickenImg,
-    },
-    {
-      name: "drink",
-      imgSrc: drinkImg,
-    },
-  ]
+  console.log("restaurantStyle", restaurantStyle)
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <div className='w-full bg-[#2A6E4F] flex flex-col py-4 items-center justify-center gap-8'>
-        <div className='w-[60px] h-[60px]'>
-          <img
-            src={imgLogo}
-            alt='logo'
-            className='w-full h-full object-contain rounded-xl'
-          />
+      <div
+        className={
+          "w-full bg-[#2A6E4F] flex flex-col py-4 items-center justify-center gap-8"
+        }
+      >
+        <div
+          className={` w-full ${
+            restaurantStyle && restaurantStyle?.logo_alignment === "Center"
+              ? " flex items-center justify-center"
+              : restaurantStyle && restaurantStyle?.logo_alignment === "Left"
+              ? "items-center justify-start"
+              : "items-center justify-end"
+          }`}
+        >
+          <div className='w-[60px] h-[60px]'>
+            <img
+              src={restaurantStyle && restaurantStyle?.logo}
+              alt='logo'
+              className='w-full h-full object-contain rounded-xl'
+            />
+          </div>
         </div>
-        <div className='w-5/6 laptopXL:w-[75%]'>
-          <img
-            src={imgBanner}
-            alt='logo'
-            className='w-full h-full object-contain'
-          />
-        </div>
+        {restaurantStyle?.banner_style === "One Photo" && (
+          <div
+            className='w-5/6 overflow-hidden h-[471px] laptopXL:w-[75%]'
+            style={{
+              boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
+              borderRadius: 12,
+            }}
+          >
+            <img
+              src={restaurantStyle ? restaurantStyle.banner_image : imgBanner}
+              alt='banner'
+              className='w-full h-full object-cover'
+            />
+          </div>
+        )}
       </div>
       {alignment === "center" && (
         <div className='bg-[#2A6E4F] w-full flex items-center justify-center'>
           <div className='flex items-center  gap-8 my-5 '>
-            {categories.map((category, i) => (
+            {categories?.map((category, i) => (
               <CategoryItem
                 key={i}
                 active={selectedCategory === category.name.toLowerCase()}

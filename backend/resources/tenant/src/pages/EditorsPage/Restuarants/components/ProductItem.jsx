@@ -31,7 +31,7 @@ const ProductItem = ({
         <div className='flex items-center justify-between pt-2'>
           <div className='flex flex-col gap-2 pl-4'>
             <h3 className='font-bold text-[1rem]'>{name}</h3>
-            <p className='font-normal text-[13px]'>{caloryInfo}Kcal</p>
+            <p className='font-normal text-[13px]'>{caloryInfo} Kcal</p>
           </div>
           <div className='w-[100px] h-[100px] mr-[-1.8rem] bg-neutral-100 rounded-full p-1'>
             <img
