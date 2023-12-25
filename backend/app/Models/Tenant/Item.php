@@ -18,6 +18,7 @@ class Item extends Model
         'photo',
         'price',
         'calories',
+        'name',
         'description',
         'checkbox_required',
         'checkbox_input_titles',
@@ -33,7 +34,7 @@ class Item extends Model
         'dropdown_input_names',
         'availability'
     ];
-    public $translatable = ['description'];
+    public $translatable = ['description','name'];
     protected $casts = [
         'checkbox_required' => 'array',
         'checkbox_input_titles'=> 'array',

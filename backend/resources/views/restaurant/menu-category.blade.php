@@ -176,7 +176,7 @@
                                                  </td>
                                                 <td>
                                                      <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                    title="{{$item->description}}">
+                                                    title="{{$item->name}}">
                                                     <img alt="Pic" src="{{$item->photo}}" />
                                                 </div>
                                                 </td>
@@ -185,7 +185,7 @@
                                                  <td  class="text-center">
                                                     <div class="text-dark">
                                                         <!--begin::Heading-->
-                                                        <span class="fw-bolder text-start">{{ $item->description }}</span>
+                                                        <span class="fw-bolder text-start">{{ $item->name }}</span>
                                                         <!--end::Heading-->
                                                     </div>
                                                 </td>
@@ -368,6 +368,26 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8">
+                            <label class="fs-6 fw-bold mb-2">Name</label>
+
+                            <ul class="nav nav-tabs" >
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="name-en-tab" data-bs-toggle="tab" href="#name-en">English</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">Arabic</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane fade show active" id="name-en">
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="Enter name in English"   name="item_name_en" />
+                                </div>
+                                <div class="tab-pane fade" id="name-ar">
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="أدخل الاسم باللغة العربية"   name="item_name_ar" />
+                                </div>
+                            </div>
+                        </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-bold mb-2">Description</label>
 
@@ -1016,6 +1036,7 @@
                 alert('Please fill in the input in the (English) tab.');
                 return ;
             }
+            
             document.getElementById('category-submit').submit();
         });
 
@@ -1025,19 +1046,38 @@
 
             submitButton.disabled = true;
 
+            var inputValue = document.querySelector('textarea[name=description_en]').value.trim();
+            var inputNameValue = document.querySelector('input[name=item_name_en]').value;
+            var inputValueAR = document.querySelector('textarea[name=description_ar]').value.trim();
+            var inputNameValueAR = document.querySelector('input[name=item_name_ar]').value;
+
+            if (inputNameValue === '') {
+                alert(`Please fill name input in (English) tab.`);
+                submitButton.disabled = false;
+
+                return ;
+            }else if (inputNameValueAR === '' ) {
+                alert(`Please fill name input in (Arabic) tab .`);
+                submitButton.disabled = false;
+                return ;
+            }
+         
+
+       
+            if(inputValueAR === '' && inputValue != ''){
+                alert(`Please fill name description in (Arabic) tab.`);
+                submitButton.disabled = false;
+
+                return ;
+            }else if(inputValue === '' && inputValueAR != ''){
+                alert(`Please fill name description in (English) tab.`);
+                submitButton.disabled = false;
+
+                return ;
+            }
             var waiting = document.querySelector('#waiting-item');
             waiting.style.display = 'block';
-            var inputValue = document.querySelector('textarea[name=description_ar]').value.trim();
-            if (inputValue === '') {
-                alert('Please fill in the input in (Arabic) tab.');
-                return ;
-            }
-            var inputValueAR = document.querySelector('textarea[name=description_en]').value.trim();
-            console.log(inputValueAR);
-            if (inputValueAR === '') {
-                alert('Please fill in the input in the (English) tab .');
-                return ;
-            }
+
             document.getElementById('kt_modal_new_target_form').submit();
 
 
