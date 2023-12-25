@@ -3,13 +3,12 @@
 @section('title', __('messages.services'))
 
 @section('content')
-@push('styles')
-<link href="{{ global_asset('js/custom/creditCard/main.css')}}"rel="stylesheet" type="text/css" />
+@push("styles")
+<link href="https://goSellJSLib.b-cdn.net/v1.6.0/css/gosell.css" rel="stylesheet" />
 
 @endpush
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
-<script src="https://secure.gosell.io/js/sdk/tap.min.js"></script>
+<script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.6.0/js/gosell.js"></script>
 
 <script src="{{ global_asset('js/custom/creditCard/main.js')}}"></script>
 
@@ -281,36 +280,14 @@
                                                                     <!--end::Modal dialog-->
                                                             <div class=" d-flex justify-content-between w-75 ">
                                                                         <div>
-                                                                            <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                            <a href="#" onclick="goSell.openPaymentPage()" class="btn btn-sm btn-khardl" ><i class="fas fa-shopping-cart"></i>Buy now</a>
                                                                         </div>
                                                                 <div>
                                                                     <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
                                                                 </div>
                                                             </div>
-
-                                                            <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
-                                                                <!--begin::Modal dialog-->
-                                                                <div class="modal-dialog modal-dialog-centered mw-650px">
-                                                                    <!--begin::Modal content-->
-                                                                    <div class="modal-content rounded p-15">
-                                                                            <!--begin::Modal header-->
-                                                                            <div class="modal-header pb-0 border-0 ">
-                                                                                <h5 class="modal-title text-center">Subscribe to the branch package</h5>
-                                                                            </div>
-                                                                            <form id="form-container" method="post"  action="/charge">
-                                                                                <div id="element-container"></div>
-                                                                                <div id="error-handler" role="alert"></div>
-                                                                                <div id="success" style=" display: none;;position: relative;float: left;">
-                                                                                      Success! Your token is <span id="token"></span>
-                                                                                </div>
-                                                                                <button id="tap-btn">Submit</button>
-                                                                            </form>
-                                                                                <!--end:Form-->
-                                                                    </div>
-                                                                </div>
-                                                                        <!--end::Modal body-->
-                                                            </div>
-                                                                    <!--end::Modal content-->
+                                                            <div id="root"></div>
+                                                           
 
                                                             <!--end::Select-->
                                                         </div>
