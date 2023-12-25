@@ -162,13 +162,13 @@ const MainBoardEditor = () => {
   return (
     <div
       style={{backgroundColor: page_color}}
-      className='w-full p-4 flex flex-col gap-6'
+      className='w-full p-4 flex flex-col gap-6 relative'
     >
       {/* Header cart */}
       <div
         style={{
           backgroundColor: header_color,
-          position: headerPosition,
+          position: headerPosition === "fixed" ? "absolute" : headerPosition,
           top: 0,
           left: 0,
           right: 0,
@@ -262,7 +262,44 @@ const MainBoardEditor = () => {
       )}
       {/* Category */}
       {category_type === "grid" ? (
-        <div> grid</div>
+        <div
+          className={` w-full flex  p-2  ${
+            category_alignment === "center"
+              ? "items-center justify-center"
+              : category_alignment === "left"
+              ? "items-center justify-start"
+              : category_alignment === "right"
+              ? "items-center justify-end"
+              : ""
+          }`}
+        >
+          <div
+            style={{
+              backgroundColor: page_category_color,
+              borderRadius: category_shape === "sharp" ? 0 : 12,
+            }}
+            className='w-[30%] py-3'
+          >
+            <div className='flex flex-col items-center gap-6'>
+              {categoryList.map((category, i) => (
+                <CategoryItem
+                  key={i}
+                  active={selectedCategory === category.name.toLowerCase()}
+                  name={category.name}
+                  imgSrc={category.imgSrc}
+                  alt={category.name}
+                  hoverColor={category_hover_color}
+                  onClick={() =>
+                    setSelectedCategory(category.name.toLowerCase())
+                  }
+                  textColor={text_color}
+                  shape={category_shape}
+                  isGrid={true}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       ) : (
         <Fragment>
           <div
@@ -303,7 +340,7 @@ const MainBoardEditor = () => {
       {/* Products/ category details */}
       {categoryDetail_type === "grid" ? (
         <div
-          className={`w-full flex ${
+          className={`w-full flex bg-white ${
             categoryDetail_alignment === "center"
               ? "items-center justify-center"
               : categoryDetail_alignment === "left"

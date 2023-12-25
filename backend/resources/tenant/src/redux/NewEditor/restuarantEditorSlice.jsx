@@ -31,7 +31,7 @@ const restuarantEditorSlice = createSlice({
     phoneNumber: "+96600000000",
     phoneNumber_alignment: "center",
 
-    page_color: "#ffffff",
+    page_color: "#fafafa",
     category_background_color: "#4466ff",
     page_category_color: "#ffffff",
     header_color: "#ffffff",
@@ -42,7 +42,7 @@ const restuarantEditorSlice = createSlice({
     text_fontWeight: "bold",
     text_fontSize: 13,
     text_alignment: "center",
-    text_color: "#ffffff",
+    text_color: "#333",
   },
   reducers: {
     headerPosition: (state, action) => {
