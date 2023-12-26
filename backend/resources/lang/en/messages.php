@@ -373,7 +373,11 @@ return [
     'others' => "Others",
     "blocked" => "Blocked",
     "blocked-user" => "User is blocked",
-    "Bank Account"=>"Bank Account"
+    "Bank Account"=>"Bank Account",
+
+    "choose-time-for-all-days"=>"Choose time for all days",
+    "choose-time-for-custom-days"=>"Choose time for custom days",
+    "time"=>"Time"
 
 
 ];

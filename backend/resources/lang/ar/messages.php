@@ -371,6 +371,9 @@ return [
     "blocked" => "محظور",
     "blocked-user" => "تم حظر هدا الحساب",
     "Title"=>"اللقب",
-    "Bank Account"=>"الحساب البنكي"
+    "Bank Account"=>"الحساب البنكي",
+    "choose-time-for-all-days"=>"اختر الوقت المناسب لكل الأيام",
+    "choose-time-for-custom-days"=>"اختر الوقت المناسب لكل يوم علي حدا",
+    "time"=>"الوقت"
 ];
 
