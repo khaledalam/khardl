@@ -21,7 +21,7 @@
                     <!--begin::Container-->
                     <div id="kt_content_container" class="container-xxl">
                         <!--begin::Form-->
-                        <form  action="{{ route('restaurant.store') }}"  method="POST" class="form d-flex flex-column flex-lg-row">
+                        <form action="{{ route('restaurant.store') }}" method="POST" class="form d-flex flex-column flex-lg-row">
                             @csrf
                             <!--begin::Aside column-->
                             <div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
@@ -43,8 +43,7 @@
                                                 <label class="required form-label">Phone Number</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="phone" type="number" name="phone" placeholder="Phone"
-                                                    class="form-control mb-2" value="" required />
+                                                <input id="phone" type="number" name="phone" placeholder="Phone" class="form-control mb-2" value="" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -52,9 +51,7 @@
                                                 <label class="required form-label">First name</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="first_name" type="text" name="first_name"
-                                                    placeholder="First name" class="form-control mb-2" value=""
-                                                    required />
+                                                <input id="first_name" type="text" name="first_name" placeholder="First name" class="form-control mb-2" value="" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -62,8 +59,7 @@
                                                 <label class="form-label">Last name</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="last_name" type="text" name="last_name"
-                                                    placeholder="Last name" class="form-control mb-2" value="" />
+                                                <input id="last_name" type="text" name="last_name" placeholder="Last name" class="form-control mb-2" value="" />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -71,9 +67,7 @@
                                                 <label class="required form-label">Deliverly Type</label>
                                                 <!--end::Label-->
                                                 <!--begin::Select2-->
-                                                <select class="form-select mb-2"
-                                                    data-hide-search="true" data-placeholder="Select Type"
-                                                    name="delivery_type_id" required>
+                                                <select class="form-select mb-2" data-hide-search="true" data-placeholder="Select Type" name="delivery_type_id" required>
                                                     @foreach ($deliveryTypes as $type)
                                                     <option value="{{ $type->id }}">{{ $type->name }}</option>
                                                     @endforeach
@@ -87,9 +81,7 @@
                                                 <label class="required form-label">Shipping address</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="address" type="text" name="shipping_address"
-                                                    placeholder="Adddress" class="form-control mb-2" value=""
-                                                    required />
+                                                <input id="address" type="text" name="shipping_address" placeholder="Adddress" class="form-control mb-2" value="" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -99,8 +91,7 @@
                                                 <label class="form-label">Order Notes</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <textarea name="order_notes" placeholder="Notes"
-                                                    class="form-control mb-2" value=""></textarea>
+                                                <textarea name="order_notes" placeholder="Notes" class="form-control mb-2" value=""></textarea>
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -131,8 +122,7 @@
                                                 <label class="form-label">Add products to this order</label>
                                                 <!--end::Label-->
                                                 <!--begin::Selected products-->
-                                                <div class="row row-cols-1 row-cols-xl-3 row-cols-md-2 border border-dashed rounded pt-3 pb-1 px-2 mb-5 mh-300px overflow-scroll"
-                                                    id="kt_ecommerce_edit_order_selected_products">
+                                                <div class="row row-cols-1 row-cols-xl-3 row-cols-md-2 border border-dashed rounded pt-3 pb-1 px-2 mb-5 mh-300px overflow-scroll" id="kt_ecommerce_edit_order_selected_products">
                                                     <!--begin::Empty message-->
                                                     <span class="w-100 text-muted">Select one or more products from the
                                                         list below by ticking the checkbox.</span>
@@ -148,38 +138,37 @@
                                             <!--end::Input group-->
                                             <!--begin::Separator-->
                                             <div class="separator"></div>
+                                            <select id="branchSelect" class="form-select" style="width: 300px;">
+                                                <option>Select branch</option>
+                                                @foreach ($branches as $branch)
+                                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="separator"></div>
                                             <!--end::Separator-->
                                             <!--begin::Search products-->
                                             <div class="d-flex align-items-center position-relative mb-n7">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                                 <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546"
-                                                            height="2" rx="1" transform="rotate(45 17.0365 15.1223)"
-                                                            fill="currentColor" />
-                                                        <path
-                                                            d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                                            fill="currentColor" />
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
                                                     </svg>
                                                 </span>
                                                 <!--end::Svg Icon-->
                                                 {{-- <input type="text" data-kt-ecommerce-edit-order-filter="search"
                                                     class="form-control form-control-solid w-100 w-lg-50 ps-14"
                                                     placeholder="Search Products" /> --}}
-                                                <select id="productSelect" class="form-select"
-                                                    multiple style="width: 300px;">
+                                                <select id="productSelect" class="form-select" multiple style="width: 300px;">
                                                     <option disabled>Search for a product...</option>
                                                 </select>
                                             </div>
                                             <!--end::Search products-->
                                             <!--begin::Table-->
-                                            <table class="table align-middle table-row-dashed fs-6 gy-5 products"
-                                                id="kt_ecommerce_edit_order_product_table">
+                                            <table class="table align-middle table-row-dashed fs-6 gy-5 products" id="kt_ecommerce_edit_order_product_table">
                                                 <!--begin::Table head-->
                                                 <thead>
-                                                    <tr
-                                                        class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                    <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                                         <th class="min-w-200px">Product</th>
                                                         <th class="min-w-100px pe-5">Quantity</th>
                                                     </tr>
@@ -250,8 +239,7 @@
                                     <button type="submit" id="kt_ecommerce_edit_order_submit" class="btn btn-khardl">
                                         <span class="indicator-label">Order</span>
                                         <span class="indicator-progress">Please wait...
-                                            <span
-                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                     <!--end::Button-->
                                 </div>
@@ -280,35 +268,43 @@
 <script>
     $(document).ready(function() {
         var totalCost = 0.00;
-        var productSelect = $('#productSelect').select2({
-            placeholder: 'Search for a product...',
-            ajax: {
-                url: '/search-products',
-                dataType: 'json',
-                delay: 250,
-                processResults: function(data) {
-                    return {
-                        results: $.map(data.data, function(product) {
-                            return {
-                                text: product.description,
-                                id: product.id,
-                                data: product
-                            };
-                        })
-                    };
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    console.error('Error fetching product details:', errorThrown);
-                },
-                cache: true
-            }
-        }).on('select2:select', function(e) {
-        // Get the selected product data
-        console.log(e);
-        var selectedProduct = e.params.data.data;
+        var branch_id = "";
+        var productTotals = {};
 
-        // Append the selected product to the table
-        var tableRow = `
+        function initializeProductSelect() {
+
+            if (branch_id == "") {
+                return $('#productSelect').select2();
+            } else {
+                return $('#productSelect').select2({
+                    placeholder: 'Search for a product...'
+                    , ajax: {
+                        url: '/search-products?branch_id=' + branch_id
+                        , dataType: 'json'
+                        , delay: 250
+                        , processResults: function(data) {
+                            return {
+                                results: $.map(data.data, function(product) {
+                                    return {
+                                        text: product.name
+                                        , id: product.id
+                                        , data: product
+                                    };
+                                })
+                            };
+                        }
+                        , error: function(xhr, textStatus, errorThrown) {
+                            console.error('Error fetching product details:', errorThrown);
+                        }
+                        , cache: true
+                    }
+                });
+            }
+
+        }
+
+        function TableRow(selectedProduct) {
+            return `
            <tr>
             <td>
                 <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
@@ -316,7 +312,7 @@
                         <span class="symbol-label" style="background-image:url(${selectedProduct.photo});"></span>
                     </a>
                     <div class="ms-5">
-                        <a href="./demo1/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">${selectedProduct.description}</a>
+                        <a href="./demo1/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">${selectedProduct.name}</a>
                         <div>Price: SAR <span data-kt-ecommerce-edit-order-filter="price">${selectedProduct.price}</span></div>
                     </div>
                 </div>
@@ -324,23 +320,63 @@
             <td>
                 <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
                     <div class="ms-5">
-                        <input type="number" class="form-control product_quantity" name="products[${selectedProduct.id}][]" value="1" />
+                        <input type="number" class="form-control product_quantity" min="1" name="products[${selectedProduct.id}][]" value="1" />
                     </div>
                 </div>
             </td>
            </tr>
         `;
+        }
+        var productSelect = initializeProductSelect();
+        productSelect.on('select2:select', function(e) {
+            // Get the selected product data
+            console.log(e);
+            var selectedProduct = e.params.data.data;
 
-        // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
-        $('#product_table').append(tableRow);
-         // Update the total cost
-        totalCost += parseFloat(selectedProduct.price);
-        updateTotalCost();
-        productSelect.val(null).trigger('change');
+            // Append the selected product to the table
+            var tableRow = TableRow(selectedProduct) ;
+            $('#product_table').on('input', `input[name="products[${selectedProduct.id}][]"]`, function() {
+                // Update the total cost when the quantity changes
+                var oldTotal = productTotals[selectedProduct.id] || 0;
+                // Update the total cost by subtracting the old total and adding the new total
+                var quantity = $(this).val();
+                var productTotal = parseFloat(selectedProduct.price) * quantity;
+                console.log(selectedProduct.id, totalCost);
+                totalCost = totalCost - oldTotal + productTotal;
+                console.log(oldTotal, quantity, productTotal, totalCost);
+
+                // Update the old total for this product
+                productTotals[selectedProduct.id] = productTotal;
+
+                updateTotalCost();
+            });
+            // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
+            $('#product_table').append(tableRow);
+            // Update the total cost
+            totalCost += parseFloat(selectedProduct.price);
+            productTotals[selectedProduct.id] = selectedProduct.price;
+            updateTotalCost();
+            productSelect.val(null).trigger('change');
         });
+        $('#branchSelect').change(function() {
+            var branchId = $(this).val();
+            // Update branch_id variable
+            branch_id = branchId; // Destroy and recreate productSelect with the updated URL
+            productSelect.select2('destroy');
+            productSelect = initializeProductSelect();
+
+            // Clear and refresh productSelect
+            productSelect.val(null).trigger('change');
+            $('#product_table').empty();
+            totalCost = 0;
+            updateTotalCost();
+
+        });
+
         function updateTotalCost() {
-        $('#kt_ecommerce_edit_order_total_price').text(totalCost.toFixed(2));
-    }
+            $('#kt_ecommerce_edit_order_total_price').text(totalCost.toFixed(2));
+        }
     });
+
 </script>
 @endsection

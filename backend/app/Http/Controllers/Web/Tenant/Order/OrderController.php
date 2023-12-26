@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant\Order;
 
+use App\Http\Requests\Web\Tenant\Order\StoreOrderFormRequest;
 use App\Http\Services\tenant\Order\OrderService;
 use App\Http\Controllers\Web\BaseController;
 use Illuminate\Http\Request;
@@ -23,9 +24,8 @@ class OrderController extends BaseController
     {
         return $this->orderService->searchProducts($request);
     }
-    public function store(Request $request)
+    public function store(StoreOrderFormRequest $request)
     {
-        dd($request->all());
-        return 1;
+        return $this->orderService->createOrder($request);
     }
 }

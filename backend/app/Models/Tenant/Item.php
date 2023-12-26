@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
@@ -33,7 +34,7 @@ class Item extends Model
         'dropdown_input_names',
         'availability'
     ];
-    public $translatable = ['description'];
+    public $translatable = ['description','name'];
     protected $casts = [
         'checkbox_required' => 'array',
         'checkbox_input_titles' => 'array',
@@ -50,12 +51,26 @@ class Item extends Model
     ];
     const STORAGE = "items";
     const STORAGE_SEEDER = "seeders/items";
+    /* Start Relations */
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
+    /* End Relations */
     /* Start Scopes */
     public function scopeWhenSearch($query, $search)
     {
         //TODO: Why case sensitive is enabled ?
         return $query->when($search != null, function ($q) use ($search) {
-            return $q->where('description', 'LIKE', '%'.$search.'%');
+            return $q->where('name', 'LIKE', '%'.$search.'%');
+        });
+    }
+    public function scopeWhenBranch($query, $id)
+    {
+        return $query->when($id != null, function ($q) use ($id) {
+            return $q->whereHas('branch',function($q)use ($id){
+                return $q->where('id',$id);
+            });
         });
     }
     /* End Scopes */

@@ -20,7 +20,7 @@ class ItemResource extends JsonResource
             'photo' => $this->photo,
             'price' => $this->price,
             'calories' => $this->calories,
-            'description' => $this->description,
+            'name' => $this->name,
             'availability' => $this->availability,
         ];
     }
