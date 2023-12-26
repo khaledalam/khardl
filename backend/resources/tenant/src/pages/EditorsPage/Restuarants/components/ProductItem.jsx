@@ -1,4 +1,4 @@
-import React, {Fragment} from "react"
+import React, {Fragment, useCallback, useEffect, useState} from "react"
 import imgCart from "../../../../assets/headerCartIcon.svg"
 import imgCartWhite from "../../../../assets/cartWhiteIcon.svg"
 import imgHotFire from "../../../../assets/hot-fire.svg"
@@ -18,6 +18,44 @@ const ProductItem = ({
   amountColor,
   shape,
 }) => {
+  const [productExtras, setProductExtras] = useState([
+    {name: "extra_cheese", label: "Extra Cheese", price: 50, isChecked: false},
+    {name: "extra_source", label: "Extra Source", price: 50, isChecked: false},
+    {name: "extra_spicy", label: "Extra Spicy", price: 50, isChecked: false},
+  ])
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() => {
+    if (amount) {
+      setTotalPrice(parseFloat(amount))
+    }
+  }, [amount])
+
+  const handleProductExtra = useCallback(
+    (event, idx) => {
+      let data = [...productExtras]
+
+      data[idx].isChecked = event.target.checked
+
+      setProductExtras(data)
+    },
+    [productExtras]
+  )
+
+  console.log("productExtras", productExtras)
+  console.log("amount", parseFloat(amount))
+  console.log("totalPrice", totalPrice)
+
+  useEffect(() => {
+    let newPrice
+    productExtras.forEach((extra) => {
+      if (extra.isChecked) {
+        newPrice = parseFloat(extra.price + totalPrice)
+      }
+    })
+    setTotalPrice(newPrice)
+  }, [productExtras, totalPrice])
+
   return (
     <Fragment>
       <div
@@ -33,7 +71,7 @@ const ProductItem = ({
             <h3 className='font-bold text-[1rem]'>{name}</h3>
             <p className='font-normal text-[13px]'>{caloryInfo} Kcal</p>
           </div>
-          <div className='w-[100px] h-[100px] mr-[-1.8rem] bg-neutral-100 rounded-full p-1'>
+          <div className='w-[100px] h-[100px] mr-[-1.8rem] rtl:mr-[1.8rem] bg-neutral-100 rounded-full p-1'>
             <img
               src={imgSrc}
               alt='product'
@@ -126,21 +164,16 @@ const ProductItem = ({
             <div className='border border-neutral-400 px-6 my-4 h-[130px] overflow-x-hidden overflow-y-scroll hide-scroll'>
               <h3 className='text-[15px] font-bold mb-1'>Customize</h3>
               <div className='flex flex-col gap-2'>
-                <ProductDetailItem
-                  name={"Extra Cheese"}
-                  price={50}
-                  // isChecked={true}
-                />
-                <ProductDetailItem
-                  name={"Extra Source"}
-                  price={50}
-                  // isChecked={true}
-                />
-                <ProductDetailItem
-                  name={"Extra Spicy"}
-                  price={50}
-                  // isChecked={true}
-                />
+                {productExtras.map((extra, idx) => (
+                  <ProductDetailItem
+                    key={idx}
+                    label={extra.label}
+                    name={extra.name}
+                    price={extra.price}
+                    isChecked={extra.isChecked}
+                    onChecked={(e) => handleProductExtra(e, idx)}
+                  />
+                ))}
               </div>
             </div>
             <div className='px-6 w-full flex items-center justify-between'>
@@ -170,7 +203,7 @@ const ProductItem = ({
                   }}
                   className='text-[14px] font-bold'
                 >
-                  SAR {amount}
+                  SAR {totalPrice}
                 </h3>
               </div>
             </div>

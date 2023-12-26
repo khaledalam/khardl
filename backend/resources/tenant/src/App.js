@@ -81,7 +81,7 @@ const App = () => {
       width={"25vw"}
     >
       <div
-        className='relative'
+        className='relative '
         style={{
           "::selection": {
             backgroundColor: "#000000",
@@ -131,9 +131,9 @@ const App = () => {
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                                                                                                                                                  path='/site-editor/restaurants'
-                                                                                                                                                                                  element={<EditorPage />}
-                                                                                                                                                                                />{" "} */}{" "}
+                                                                                                                                                                                                                          path='/site-editor/restaurants'
+                                                                                                                                                                                                                          element={<EditorPage />}
+                                                                                                                                                                                                                        />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
                 <Route path='/dashboard' element={<CustomersPreview />} />{" "}
                 <Route path='/site-editor/customers' element={<EditorPage />} />{" "}

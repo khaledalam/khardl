@@ -56,6 +56,8 @@ const MainBoardEditor = () => {
   console.log("restuarantEditorStyle", restuarantEditorStyle)
 
   const [selectedCategory, setSelectedCategory] = useState("burger")
+  const [uploadLogo, setUploadLogo] = useState(null)
+  const [uploadSingleBanner, setUploadSingleBanner] = useState(null)
 
   const categoryList = [
     {
@@ -157,6 +159,31 @@ const MainBoardEditor = () => {
     (product) => product.category === selectedCategory
   )
 
+  const handleLogoUpload = (event) => {
+    event.preventDefault()
+
+    const selectedLogo = event.target.files[0]
+    if (selectedLogo) {
+      setUploadLogo(selectedLogo)
+    }
+  }
+
+  const handleBannerUpload = (event) => {
+    event.preventDefault()
+
+    const selectedBanner = event.target.files[0]
+    if (selectedBanner) {
+      setUploadSingleBanner(selectedBanner)
+    }
+  }
+
+  const clearLogo = () => {
+    setUploadLogo(null)
+  }
+  const clearBanner = () => {
+    setUploadSingleBanner(null)
+  }
+
   console.log("bannner shape", banner_shape)
 
   return (
@@ -213,16 +240,31 @@ const MainBoardEditor = () => {
           style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
           className='w-[60px] h-[60px] p-2 bg-neutral-100 relative'
         >
-          <img
-            src={ImageIcon}
-            alt={""}
-            style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
-            className='w-full h-full object-cover'
+          <input
+            type='file'
+            name='logo'
+            id={"logo"}
+            accept='*/image'
+            onChange={handleLogoUpload}
+            className='hidden'
+            hidden
           />
-          {false && (
+          <label htmlFor='logo'>
+            <img
+              src={uploadLogo ? URL.createObjectURL(uploadLogo) : ImageIcon}
+              alt={""}
+              style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
+              className='w-full h-full object-cover'
+            />
+          </label>
+          {uploadLogo && (
             <div className='absolute top-[-0.8rem] right-[-1rem]'>
               <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
-                <IoCloseOutline size={16} className='text-red-500' />
+                <IoCloseOutline
+                  size={16}
+                  className='text-red-500'
+                  onClick={clearLogo}
+                />
               </div>
             </div>
           )}
@@ -237,7 +279,12 @@ const MainBoardEditor = () => {
         <div
           style={{
             backgroundColor: banner_background_color,
+            backgroundImage: uploadSingleBanner
+              ? `url(${URL.createObjectURL(uploadSingleBanner)})`
+              : "initial",
             borderRadius: banner_shape === "sharp" ? 0 : 12,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
           }}
           className={`w-full min-h-[180px]   flex items-center justify-center`}
         >
@@ -247,15 +294,34 @@ const MainBoardEditor = () => {
             }}
             className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
           >
-            <img
-              src={ImageIcon}
-              alt={""}
-              className='w-full h-full object-cover'
-            />
-            {false && (
+            <label htmlFor='banner'>
+              <input
+                type='file'
+                name='banner'
+                id={"banner"}
+                accept='*/image'
+                onChange={handleBannerUpload}
+                className='hidden'
+                hidden
+              />
+              <img
+                src={
+                  uploadSingleBanner
+                    ? URL.createObjectURL(uploadSingleBanner)
+                    : ImageIcon
+                }
+                alt={""}
+                className='w-full h-full object-cover'
+              />
+            </label>
+            {uploadSingleBanner && (
               <div className='absolute top-[-0.8rem] right-[-1rem]'>
                 <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
-                  <IoCloseOutline size={16} className='text-red-500' />
+                  <IoCloseOutline
+                    size={16}
+                    className='text-red-500'
+                    onClick={clearBanner}
+                  />
                 </div>
               </div>
             )}
