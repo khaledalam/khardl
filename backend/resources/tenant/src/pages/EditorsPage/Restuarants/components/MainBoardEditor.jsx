@@ -14,6 +14,7 @@ import {useSelector, useDispatch} from "react-redux"
 import {MenuContext} from "react-flexible-sliding-menu"
 import Slider from "./Slider"
 import {selectedCategoryAPI} from "../../../../redux/NewEditor/categoryAPISlice"
+import {logoUpload} from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const MainBoardEditor = ({categories}) => {
   const restuarantEditorStyle = useSelector(
@@ -80,7 +81,8 @@ const MainBoardEditor = ({categories}) => {
 
     const selectedLogo = event.target.files[0]
     if (selectedLogo) {
-      setUploadLogo(selectedLogo)
+      // setUploadLogo(selectedLogo)
+      dispatch(logoUpload(selectedLogo))
     }
   }
 
