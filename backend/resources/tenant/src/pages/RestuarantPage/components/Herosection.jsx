@@ -20,8 +20,8 @@ const Herosection = ({alignment, categories}) => {
       <div
         style={{
           backgroundColor: restaurantStyle
-            ? restaurantStyle?.page_color
-            : "#2A6E4F",
+            ? restaurantStyle?.banner_background_color
+            : "inherit",
         }}
         className={
           "w-full  flex flex-col py-4 items-center justify-center gap-8"

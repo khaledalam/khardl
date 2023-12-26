@@ -4,12 +4,13 @@ import Herosection from "./components/Herosection"
 import ProductSection from "./components/ProductSection"
 import FooterRestuarant from "./components/Footer"
 import AxiosInstance from "../../axios/axios"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
 
 export const RestuarantHomePage = () => {
   const dispatch = useDispatch()
   const [categories, setCategories] = useState([])
+  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   let branch_id = localStorage.getItem("selected_branch_id")
 
@@ -64,7 +65,7 @@ export const RestuarantHomePage = () => {
   )
 
   return (
-    <div>
+    <div style={{backgroundColor: restaurantStyle?.page_color}}>
       <NavbarRestuarant />
       <Herosection alignment={"center"} categories={categories} />
       <ProductSection alignment={"center"} categories={categories} />

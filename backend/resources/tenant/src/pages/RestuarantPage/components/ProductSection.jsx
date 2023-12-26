@@ -21,10 +21,10 @@ const ProductSection = ({categories}) => {
 
   console.log("filterCategory", filterCategory)
   return (
-    <Fragment>
+    <div>
       {restaurantStyle?.category_alignment === "center" && (
         <Fragment>
-          <div className='bg-white w-full'>
+          <div className='w-full'>
             <div className='w-5/6 laptopXL:w-[75%] mx-auto py-4'>
               {filterCategory &&
                 filterCategory.map((category) => (
@@ -58,7 +58,7 @@ const ProductSection = ({categories}) => {
       )}
       {restaurantStyle?.category_alignment === "left" && (
         <Fragment>
-          <div className='bg-white w-full flex items-start p-16 gap-2 '>
+          <div className='w-full flex items-start p-16 gap-2 '>
             <div className='flex-[20%]'>
               <div
                 style={{
@@ -130,7 +130,7 @@ const ProductSection = ({categories}) => {
       )}
       {restaurantStyle?.category_alignment === "right" && (
         <Fragment>
-          <div className='bg-white w-full flex items-start p-16 gap-2'>
+          <div className='w-full flex items-start p-16 gap-2'>
             <div className='flex-[80%]'>
               <div className='w-full py-4'>
                 {filterCategory &&
@@ -200,7 +200,7 @@ const ProductSection = ({categories}) => {
           </div>
         </Fragment>
       )}
-    </Fragment>
+    </div>
   )
 }
 
