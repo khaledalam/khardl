@@ -30,12 +30,22 @@ class RestaurantStyleService
                 }
             }
         }
+
+        if($request->banner_images_urls){
+            foreach($request->banner_images_urls as $k=>$image ){
+                $banner_images_urls[]= $image;
+            }
+        }
+
         return [
             'id' => 1,
             'logo' => $logo,
+            'logo_url' => $request->logo_url,
             'logo_alignment' => $request->logo_alignment,
             'banner_image' => isset($banner_image)?$banner_image: null,
+            'banner_image_url' => $request->banner_image_url,
             'banner_images' => (isset($banner_images))?$banner_images: null,
+            'banner_images_urls' => (isset($banner_images_urls))?$banner_images_urls: null,
             'logo_shape' => $request->logo_shape,
             'banner_type' => $request->banner_type,
             'banner_shape' => $request->banner_shape,

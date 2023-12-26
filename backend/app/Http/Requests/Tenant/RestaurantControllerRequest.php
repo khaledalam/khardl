@@ -17,12 +17,16 @@ class RestaurantControllerRequest extends FormRequest
     {
         return [
             /* New */
+            'logo_url' => 'nullable',
+            'banner_image_url' => 'nullable',
+            'banner_images_urls' => 'nullable',
+            'banner_images_urls.*' => 'nullable',
             'phoneNumber' => 'required',
             'logo_alignment' => 'nullable|string|in:left,right,center',
             'phoneNumber_alignment' => 'nullable|string|in:left,right,center',
             'text_alignment' => 'nullable|string|in:left,right,center',
             'logo_shape' => 'nullable|string|in:rounded,sharp',
-            'banner_type' => 'nullable|string|in:one-page,slider',
+            'banner_type' => 'nullable|string|in:one-photo,slider',
             'banner_shape' => 'nullable|string|in:rounded,sharp',
             'banner_background_color' => 'nullable|string',
             'categoryDetail_type' => 'nullable|string|in:stack,grid',
@@ -39,13 +43,13 @@ class RestaurantControllerRequest extends FormRequest
             'price_color' => 'nullable|string',
             'selectedSocialIcons'   => 'nullable|array',
             'text_fontFamily' => 'nullable|string',
-            'text_fontWeight' => 'nullable|in:bold,400,700,300',
+            'text_fontWeight' => 'nullable|numeric|in:200,300,400,500,600,700,800',
             'text_fontSize' => 'nullable',
             'text_color' => 'nullable|string',
             /* OLD */
             'logo' => 'required|mimes:png,jpg,jpeg|max:2048',
-            'banner_image' => 'required_if:banner_style,One Photo|nullable|mimes:png,jpg,jpeg|max:2048',
-            'banner_images' => 'required_if:banner_style,Slider|nullable|array',
+            'banner_image' => 'required_if:banner_type,one-photo|nullable|mimes:png,jpg,jpeg|max:2048',
+            'banner_images' => 'required_if:banner_type,slider|nullable|array',
             'banner_images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ];
     }
