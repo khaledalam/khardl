@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
         $user = Auth::user();
         View::share('link', request()->segment(1));
         View::share('admin_link', request()->segment(2));
-    
+
         View::share('user', $user);
         Schema::defaultStringLength(250);
 
