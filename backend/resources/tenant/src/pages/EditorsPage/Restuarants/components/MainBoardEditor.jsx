@@ -28,7 +28,6 @@ const MainBoardEditor = () => {
     page_color,
     page_category_color,
     category_hover_color,
-    category_type,
     category_alignment,
     category_shape,
 
@@ -264,7 +263,7 @@ const MainBoardEditor = () => {
         </div>
       )}
       {/* Category */}
-      {category_type === "grid" ? (
+      {/* {false ? (
         <div
           className={` w-full flex  p-2  ${
             category_alignment === "center"
@@ -339,9 +338,104 @@ const MainBoardEditor = () => {
             </div>
           </div>
         </Fragment>
-      )}
+      )} */}
+      <div
+        className={`w-full h-[550px] flex ${
+          category_alignment === "center"
+            ? "flex-col justify-center"
+            : "flex-row"
+        } items-center gap-8`}
+      >
+        <div
+          className={` h-full ${
+            category_alignment === "left"
+              ? "order-1 w-[25%]"
+              : category_alignment === "right"
+              ? "order-2 w-[25%]"
+              : category_alignment === "center"
+              ? "w-full"
+              : "w-[25%]"
+          } `}
+        >
+          <div
+            style={{
+              backgroundColor: page_category_color,
+              borderRadius: category_shape === "sharp" ? 0 : 12,
+            }}
+            className='w-full py-3 flex items-center justify-center'
+          >
+            <div
+              className={`flex ${
+                category_alignment === "center"
+                  ? "flex-row gap-10 "
+                  : "flex-col gap-6"
+              } items-center `}
+            >
+              {categoryList.map((category, i) => (
+                <CategoryItem
+                  key={i}
+                  active={selectedCategory === category.name.toLowerCase()}
+                  name={category.name}
+                  imgSrc={category.imgSrc}
+                  alt={category.name}
+                  hoverColor={category_hover_color}
+                  onClick={() =>
+                    setSelectedCategory(category.name.toLowerCase())
+                  }
+                  textColor={text_color}
+                  shape={category_shape}
+                  isGrid={category_alignment === "center" ? false : true}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div
+          className={`h-full ${
+            category_alignment === "left"
+              ? "order-2 w-[75%]"
+              : category_alignment === "right"
+              ? "order-1 w-[75%]"
+              : category_alignment === "center"
+              ? "w-full"
+              : "w-[75%]"
+          }`}
+        >
+          <div className={`w-full flex bg-white p-8`}>
+            <div
+              className={`w-full h-full flex flex-col items-center justify-center `}
+            >
+              <h3 className='font-semibold text-[1.5rem] text-center my-4 relative capitalize'>
+                <span className='custom-underline'>{selectedCategory}</span>{" "}
+              </h3>
+
+              <div
+                className={`flex  ${
+                  category_alignment === "center"
+                    ? "flex-row flex-wrap gap-12"
+                    : "flex-col gap-6"
+                }  h-fit  p-4`}
+              >
+                {filterProductList.map((product, i) => (
+                  <ProductItem
+                    key={i}
+                    id={product.name + i}
+                    name={product.name}
+                    imgSrc={product.imgSrc}
+                    amount={product.amount}
+                    caloryInfo={product.caloryInfo}
+                    cartBgcolor={categoryDetail_cart_color}
+                    amountColor={price_color}
+                    shape={categoryDetail_shape}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Products/ category details */}
-      {categoryDetail_type === "grid" ? (
+      {/* {categoryDetail_type === "grid" ? (
         <div
           className={`w-full flex bg-white ${
             categoryDetail_alignment === "center"
@@ -415,7 +509,7 @@ const MainBoardEditor = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {/* social media */}
 
       <div

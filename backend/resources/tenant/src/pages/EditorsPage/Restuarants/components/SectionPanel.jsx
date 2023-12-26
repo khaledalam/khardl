@@ -74,11 +74,11 @@ const SectionPanel = () => {
       </div>
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Category</h2>
-        <CategoryAlign
+        {/* <CategoryAlign
           label={"Type"}
           defaultValue={category_type}
           onChange={(value) => dispatch(categoryType(value))}
-        />
+        /> */}
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}
@@ -92,7 +92,7 @@ const SectionPanel = () => {
           />
         </div>
       </div>
-      <div className='py-4 border-b border-neutral-300'>
+      {/* <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>Category Details</h2>
         <CategoryAlign
           label={"Type"}
@@ -111,7 +111,7 @@ const SectionPanel = () => {
             ]}
           />
         </div>
-      </div>
+      </div> */}
 
       <div className='py-4 border-b border-neutral-300 '>
         <div className='flex items-center justify-between p-2 w-[70%] mb-4 '>

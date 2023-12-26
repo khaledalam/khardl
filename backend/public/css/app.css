@@ -4252,11 +4252,23 @@ details.collapse summary::-webkit-details-marker {
 .h-\[471px\] {
   height: 471px;
 }
+.h-\[550px\] {
+  height: 550px;
+}
 .max-h-screen {
   max-height: 100vh;
 }
 .max-h-\[471px\] {
   max-height: 471px;
+}
+.max-h-\[100px\] {
+  max-height: 100px;
+}
+.max-h-\[140px\] {
+  max-height: 140px;
+}
+.max-h-\[150px\] {
+  max-height: 150px;
 }
 .min-h-\[100\%\] {
   min-height: 100%;
@@ -4449,6 +4461,12 @@ details.collapse summary::-webkit-details-marker {
 .w-full {
   width: 100%;
 }
+.w-\[25\%\] {
+  width: 25%;
+}
+.w-\[75\%\] {
+  width: 75%;
+}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }
@@ -4529,6 +4547,15 @@ details.collapse summary::-webkit-details-marker {
 }
 .flex-\[80\%\] {
   flex: 80%;
+}
+.flex-\[25\%\] {
+  flex: 25%;
+}
+.flex-\[75\%\] {
+  flex: 75%;
+}
+.flex-\[100\%\] {
+  flex: 100%;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
@@ -4630,6 +4657,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .flex-nowrap {
   flex-wrap: nowrap;
+}
+.\!flex-nowrap {
+  flex-wrap: nowrap !important;
 }
 .content-center {
   align-content: center;

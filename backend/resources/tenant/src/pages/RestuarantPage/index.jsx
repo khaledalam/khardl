@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from "react"
+import React, {useEffect, useLayoutEffect, useState} from "react"
 import NavbarRestuarant from "./components/Navbar"
 import Herosection from "./components/Herosection"
 import ProductSection from "./components/ProductSection"
@@ -53,7 +53,7 @@ export const RestuarantHomePage = () => {
     }
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchCategoriesData().then(() =>
       console.log("fetched categories successfully")
     )

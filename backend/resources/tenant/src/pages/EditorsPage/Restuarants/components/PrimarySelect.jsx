@@ -37,7 +37,7 @@ const PrimarySelect = ({
         {isOpen && (
           <div
             tabIndex={0}
-            className='dropdown-content z-[1] menu flex flex-col gap-4 p-2 shadow bg-base-100 rounded-box w-full'
+            className='dropdown-content z-[1] menu flex flex-col gap-4 p-2 shadow bg-base-100 rounded-box w-full max-h-[150px] overflow-x-hidden overflow-y-scroll !flex-nowrap hide-scroll'
           >
             {options &&
               options?.map((item, i) => (
