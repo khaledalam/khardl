@@ -217,7 +217,7 @@ const Cart = () => {
                                                 border: '1px solid var(--primary)',
                                                 borderRadius: '15%'
                                             }} src={it?.item?.photo} width={80} height={80}/>
-                                            <span>{Language === "en" ? it?.item?.description?.en : it?.item?.description?.ar}
+                                            <span>{Language === "en" ? it?.item?.name?.en : it?.item?.name?.ar}
                                             <br />
                                             {!it.item.availability ? (
                                                 <span className=' !text-[10px] !bg-[var(--danger)] !px-[6px] !py-[6px] rounded-[16px] !text-white'> {t('Not available')} </span>

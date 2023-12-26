@@ -54,7 +54,7 @@ const Sidebar = () => {
             inputs.logo = (state?.logo)?await fetch(state?.logo).then(r => r.blob()):'';
             inputs.logo_alignment = state?.align?.selectedAlign;
             inputs.category_style = state?.category?.selectedCategory;
-            inputs.banner_style = state?.banner?.selectedBanner;
+            inputs.banner_type = state?.banner?.selectedBanner;
             inputs.social_medias = state?.contact?.icons;
             inputs.phone_number = state?.contact?.phoneNumber;
             inputs.primary_color = state?.button?.GlobalColor;
