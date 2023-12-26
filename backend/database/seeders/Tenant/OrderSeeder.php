@@ -21,8 +21,7 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-
-        $status = ['accepted','cancelled','pending'];
+        $status = Order::STATUS;
         for($i=0;$i<11;$i++){
             $order = Order::create([
                 'user_id'=> RestaurantUser::find(UserSeeder::RESTAURANT_CUSTOMER_USER_ID)->id,
@@ -31,7 +30,7 @@ class OrderSeeder extends Seeder
                 'total'=> fake()->randomNumber(4, true),
                 'status'=>$status[array_rand($status)],
                 "payment_method_id"=>PaymentMethod::inRandomOrder()->first()->id,
-                'payment_status'=>"pending",
+                'payment_status' => Order::PENDING,
                 'delivery_type_id'=>DeliveryType::inRandomOrder()->first()->id,
                 'shipping_address'=>fake()->address(),
             ]);
@@ -46,75 +45,77 @@ class OrderSeeder extends Seeder
                     'total' => $item->price * $quantity,
                     'notes' => $item->notes,
                     "checkbox_options"=> [
-                        [
-                          "c1 ar"=> [
-                            [
-                              "c1 v1 ar",
-                              "10"
-                            ],
-                            [
-                              "c1 v2 ar",
-                              "10"
-                            ]
+                      [
+                          "ar"=> [
+                              "الاختيارات"=> [
+                                  [
+                                      "حار",
+                                      "10"
+                                  ],
+                                  [
+                                      "بارد",
+                                      "10"
+                                  ]
+                              ]
                           ],
-                          "c1 en"=> [
-                            [
-                              "c1 v1 en",
-                              "10"
-                            ],
-                            [
-                              "c1 v2 en",
-                              "10"
-                            ]
+                          "en"=> [
+                              "choices"=> [
+                                  [
+                                      "c1",
+                                      "10"
+                                  ],
+                                  [
+                                      "ac2",
+                                      "10"
+                                  ]
+                              ]
                           ]
-                        ],
-                        [
-                          "c2 ar"=> [
-                            [
-                              "c2 v1 ar",
-                              "10"
-                            ]
-                          ],
-                          "c2 en"=> [
-                            [
-                              "c2 v1 en",
-                              "10"
-                            ]
-                          ]
-                        ]
                       ],
+                      [
+                          "ar"=> [
+                              "اختيارات ٢"=> [
+                                  [
+                                      "c2  value 1 ar",
+                                      "1"
+                                  ]
+                              ]
+                          ],
+                          "en"=> [
+                              "choices 2"=> [
+                                  [
+                                      "c2 value 1 en",
+                                      "1"
+                                  ]
+                              ]
+                          ]
+                      ]
+                  ],
                       "selection_options"=> [
                         [
-                          "s1 ar"=> [
-                            "s1 v1 ar",
-                            "10"
-                          ],
-                          "s1 en"=> [
-                            "s1 v1 en",
-                            "10"
-                          ]
-                        ],
-                        [
-                          "s2 ar"=> [
-                            "s2 v2 ar",
-                            "10"
-                          ],
-                          "s2 en"=> [
-                            "s2 v2 en",
-                            "10"
-                          ]
+                            "ar"=> [
+                                "الأرز"=> [
+                                    "١ كيلو",
+                                    "10"
+                                ]
+                            ],
+                            "en"=> [
+                                "rice"=> [
+                                    "1 kilo",
+                                    "10"
+                                ]
+                            ]
                         ]
-                      ],
+                          ],
                       "dropdown_options"=> [
                         [
-                          "d1 ar"=> "d1 v1 ar",
-                          "d1 en"=> "d1 v1 en"
-                        ],
-                        [
-                          "d2 ar"=> "d2 v1 ar",
-                          "d2 en"=> "d2 v1 en"
+                            "ar"=> [
+                                "المقبلات "=> "اختيار ١"
+                            ],
+                            "en"=> [
+                                "d1 en"=> "d1  value 1 en"
+                            ]
                         ]
-                      ]
+                        ]
                 ]);
             }
 

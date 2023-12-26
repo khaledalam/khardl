@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
+use App\Http\Services\tenant\Restaurant\RestaurantService;
 use App\Models\Tenant\Item;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -25,13 +26,12 @@ use Illuminate\Contracts\Database\Query\Builder;
 
 class RestaurantController extends BaseController
 {
+    public function __construct(
+        private RestaurantService $restaurantService
+      ) {
+      }
     public function index(){
-
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-        $branches = Branch::all();
-
-        return view('restaurant.summary', compact('user', 'branches'));
+        return $this->restaurantService->index();
     }
 
     public function services(){
@@ -274,11 +274,11 @@ class RestaurantController extends BaseController
                     Item::create([
                         'branch_id' => $newBranchId,
                         'category_id' => $newCategoryId,
-                        // 'name' => $item->name,
                         'photo' => tenant_asset($newFilename),
                         'price' => $item->price,
                         'calories' => $item->calories,
-                        'description' => $item->description,
+                        'name' => $item->name,
+                        'description' => $item->description ?? null,
                         'checkbox_required' => $item->checkbox_required,
                         'checkbox_input_titles' => $item->checkbox_input_titles,
                         'checkbox_input_maximum_choices' => $item->checkbox_input_maximum_choices,
@@ -529,18 +529,19 @@ class RestaurantController extends BaseController
                     'photo' => tenant_asset('items/'.$filename),
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
-                    'description' =>trans_json( $request->input('description_en'), $request->input('description_ar')),
+                    'name' =>trans_json( $request->input('item_name_en'), $request->input('item_name_ar')),
+                    'description' =>($request->input('description_en'))?trans_json( $request->input('description_en'), $request->input('description_ar')):null,
                     'checkbox_required' =>( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
                     'checkbox_input_titles' =>($request->checkboxInputTitleEn)?array_map(null, $request->checkboxInputTitleEn,  $request->checkboxInputTitleAr):null,
                     'checkbox_input_maximum_choices' => $request->input('checkboxInputMaximumChoice'),
                     'checkbox_input_names' => $this->processOptions($request, 'checkboxInputNameEn', 'checkboxInputNameAr'),
                     'checkbox_input_prices' => $request->input('checkboxInputPrice') ? array_values($request->input('checkboxInputPrice')) : null,
-                    'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
+                    'selection_required' => $request->input('selection_required')?array_values( $request->input('selection_required')):null,
                     'selection_input_names' => $this->processOptions($request, 'selectionInputNameEn', 'selectionInputNameAr'),
                     'selection_input_prices' => $request->input('selectionInputPrice') ? array_values($request->input('selectionInputPrice')) : null,
-                    'selection_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->selectionInputTitleEn,  $request->selectionInputTitleAr):null,
+                    'selection_input_titles' =>(isset($request->selectionInputTitleEn))?array_map(null, $request->selectionInputTitleEn,  $request->selectionInputTitleAr):null,
                     'dropdown_required' => ( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
-                    'dropdown_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->dropdownInputTitleEn,  $request->dropdownInputTitleAr):null,
+                    'dropdown_input_titles' =>(isset($request->dropdownInputTitleEn))?array_map(null, $request->dropdownInputTitleEn,  $request->dropdownInputTitleAr):null,
                     'dropdown_input_names' => $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr'),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,

@@ -106,6 +106,7 @@ const RestaurantHomePage = (props) => {
       <div className='justify-center mt-[30px] mb-[50px] xl:mx-[150px]'>
         <div>
           <div>
+<<<<<<< HEAD
             <div
               className={`px-[30px] text-xl `}
               style={{
@@ -153,6 +154,34 @@ const RestaurantHomePage = (props) => {
               ) : (
                 <h2>No categories yet!</h2>
               )}
+=======
+            <div className={`px-[30px] text-xl `} style={{
+                minWidth: 'min(100vw, 650px)',
+                marginBottom: '200px'
+            }}>
+                {categoriesForBranch?.length > 0 ?
+                    <Taps
+                contentClassName={`
+        bg-[var(--secondary)] text-center mb-5 ${styleDataRestaurant?.category_style === "Carousel" ? `flex justify-center`:''} text-xl
+        ${styleDataRestaurant?.category_style === "Right" || styleDataRestaurant?.category_style === "Left" ? "min-w-[180px]  mx-[15px] p-2 rounded-md" : "px-[30px]"}`}>
+                {categoriesForBranch?.map((category, i) => (
+                  <Tap
+                      key={i}
+                    component={
+                        category?.items?.length > 0
+                            ? <MenuItems items={category?.items?.filter(item => item?.availability == '1')} /> // only availabile items
+                             : <h2 style={{color: 'var(--primary)'}}>{t("No items in this category")}</h2>
+                    }
+                    contentClassName="text-black">
+                      <img src={category?.photo} height={50} className="flex" style={{
+                          height: '50px',
+                          width: '50px',
+                          borderRadius: '50%'
+                      }}/> {category?.name}
+                  </Tap>
+                ))}
+              </Taps> : <h2>No categories yet!</h2>}
+>>>>>>> cf308f6c40e28fec0cc8c2b6b4e4abf4f36d7bd3
             </div>
           </div>
         </div>

@@ -46,7 +46,7 @@
                     
                                             <p>
                                                 We are pleased to inform you that your restaurant has been approved and is now live on our platform.
-                                                Users can access your restaurant at the following URL: <a href="{{$url}}">[{{$restaurant->restaurant_name}}]</a>.
+                                                Users can access your restaurant at the following URL: <a href="{{$url}}">{{$restaurant->restaurant_name}}</a>.
                                             </p>
                                         
                                             <p>

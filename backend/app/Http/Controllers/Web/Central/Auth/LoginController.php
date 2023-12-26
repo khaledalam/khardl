@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Central\Auth;
 
+use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Web\BaseController;
 use App\Models\Tenant\RestaurantUser;
@@ -53,19 +54,22 @@ class LoginController extends BaseController
             'remember_me' => 'nullable|boolean',
         ]);
 
-        
+
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
             return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
-       
+
 
 
         $user = Auth::user();
         if($user->isBlocked() ){
             Auth::logout();
-            return $this->sendError('Unauthorized.', ['error' => 'Inactive User']);
+            return $this->sendError('Unauthorized.', ['error' => __('messages.blocked-user')]);
+        }elseif(!$user->isActive()){
+            $register = new RegisterController();
+            $register->sendVerificationCode($request);
         }
         // @TODO: uncomment if need!
         $data = [
@@ -80,7 +84,7 @@ class LoginController extends BaseController
                 $data['step2_status'] = 'completed';
             }
         }
-     
+
 
         return $this->sendResponse($data, __('User logged in successfully.'));
     }

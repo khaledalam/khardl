@@ -14,13 +14,12 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        
         $data = [
             'id' => $this->id,
             'name' => $this->name,
+            'photo' => $this->photo ?? global_asset('img/category-icon.png'),
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
-
         ];
         if ($request->has('branch')) {
             $data['branch'] = $this->branch;
