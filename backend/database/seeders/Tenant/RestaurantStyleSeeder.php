@@ -19,48 +19,55 @@ class RestaurantStyleSeeder extends Seeder
     {
         // use public seeder folder
         $logo_file = new UploadedFile(public_path('seeders/logo.png'), true);
-        $logo = $assets.store_image($logo_file,RestaurantStyle::STORAGE,'logo');
+        $logo = $assets . store_image($logo_file, RestaurantStyle::STORAGE, 'logo');
 
         $banner1_file = new UploadedFile(public_path('seeders/banner_1.jpeg'), true);
-        $banner1 =  $assets. store_image($banner1_file,RestaurantStyle::STORAGE,'banner_1');
+        $banner1 = $assets . store_image($banner1_file, RestaurantStyle::STORAGE, 'banner_1');
 
         $banner2_file = new UploadedFile(public_path('seeders/banner_2.jpg'), true);
-        $banner2 = $assets.store_image($banner2_file,RestaurantStyle::STORAGE,'banner_2');
+        $banner2 = $assets . store_image($banner2_file, RestaurantStyle::STORAGE, 'banner_2');
 
 
         RestaurantStyle::create([
             'id' => self::RESTAURANT_STYLE_ID,
             'logo' => $logo,
-            'logo_alignment' => 'Center',
-            'category_style' => 'Tabs',
-            'banner_style' => 'One Photo',
+            'logo_alignment' => 'center',
             'banner_image' => $banner1,
             'banner_images' => [
                 // @TODO: handle banner_images tenant_asset() in seeder
                 $banner1,
                 $banner2
             ],
-            'social_medias' => [
+            'logo_shape' => 'rounded',
+            'banner_type' => 'slider',
+            'banner_shape' => 'rounded',
+            'banner_background_color' => 'blue',
+            'category_shape' => 'rounded',
+            'category_hover_color' => 'red',
+            'category_alignment' => 'right',
+            'categoryDetail_type' => 'stack',
+            'categoryDetail_alignment' => 'left',
+            'categoryDetail_shape' => 'rounded',
+            'categoryDetail_cart_color' => 'green',
+            'phoneNumber' => '+96600000000',
+            'phoneNumber_alignment' => 'center',
+            'page_color' => 'pink',
+            'page_category_color' => 'orange',
+            'header_color' => 'green',
+            'footer_color' => 'black',
+            'price_color' => 'yellow',
+            'text_fontFamily' => 'cairo',
+            'text_fontWeight' => 'normal',
+            'text_fontSize' => '15px',
+            'text_alignment' => 'center',
+            'text_color' => 'black',
+            'selectedSocialIcons' => [
                 [
                     'id' => self::RESTAURANT_STYLE_SOCIAL_MEDIA_ID,
-                    'name' => 'Whatsapp',
-                    'icon' => 'BsWhatsapp',
-                    'color' => 'Whatsapp',
-                    'Link' => '966666666'
+                    'imgUrl' => $logo,
+                    'link' => $logo,
                 ]
             ],
-            'phone_number' => '+96600000000',
-            'primary_color' => 'var(--primary)',
-            'buttons_style' => '0px',
-            'images_style' => '0px',
-            'font_family' => 'cairo',
-            'font_type' => 'normal',
-            'font_size' => '15px',
-            'font_alignment' => 'Center',
-            'left_side_button' => ['id' => 3, 'text' => 'Login', 'color' => 'var(--primary)', 'shape' => '8px'],
-            'right_side_button' => ['id' => 2, 'text' => 'delivery', 'color' => 'var(--primary)', 'shape' => '8px'],
-            "center_side_button" => ['id' => 2, 'text' => 'Receipt', 'color' => 'var(--primary)', 'shape' => '8px'],
-            'user_id' => null
         ]);
     }
 }

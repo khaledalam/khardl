@@ -17,7 +17,7 @@ function Hero() {
 
     const image = styleData?.banner_image || sessionStorage.getItem('previewImage');
     const shapeImageShape = styleData?.images_style || sessionStorage.getItem('shapeImageShape');
-    const selectBanner = styleData?.banner_style || sessionStorage.getItem('selectBanner');
+    const selectBanner = styleData?.banner_type || sessionStorage.getItem('selectBanner');
     const images = styleData?.banner_images || JSON.parse(sessionStorage.getItem('images'));
     const [uploadedImages, setUploadedImages] = useState(images);
 

@@ -67,7 +67,7 @@ function OrderDetail(props) {
                             {order?.items?.map((item, index) => (
                                 <div key={index}>
                                     <div className='mt-2 flex justify-start items-start gap-12 min-w-[250px]'>
-                                        <p className=''>{t('Name')}: {item?.item?.description}</p>
+                                        <p className=''>{t('Name')}: {item?.item?.name}</p>
                                         <p className=''>{t('Quantity')}: {item?.quantity}</p>
                                         <p className='font-bold'>{t('price')}: {item.price} {t('SAR')}</p>
                                     </div>

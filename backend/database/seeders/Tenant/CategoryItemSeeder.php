@@ -67,7 +67,9 @@ class CategoryItemSeeder extends Seeder
                         'photo' => $assets.$photo,
                         'price' => $faker->numberBetween(10, 500),
                         'calories' => $faker->numberBetween(0, 500),
-                        'description' =>  trans_json("Item " . $kk,"Item " . $kk),
+                        'name' =>  trans_json("Item " . $kk,"Item " . $kk),
+                        'description' =>  trans_json("Description " . $kk,"Description " . $kk),
+     
                         'availability'=> (bool)$faker->numberBetween(0, 1),
                         'branch_id' => $branch->id,
                         'user_id'=>UserSeeder::RESTAURANT_WORKER_USER_ID

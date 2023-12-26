@@ -19,6 +19,7 @@ class Item extends Model
         'photo',
         'price',
         'calories',
+        'name',
         'description',
         'checkbox_required',
         'checkbox_input_titles',

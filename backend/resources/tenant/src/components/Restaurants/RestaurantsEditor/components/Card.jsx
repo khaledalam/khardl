@@ -68,11 +68,13 @@ function Card(props) {
                 maxHeight: '1.2em',
                 textAlign: selectedAlignText
               }}
-            >{props.description}</h2>
+            >{props.name}</h2>
             <div className="flex justify-between items-center px-4 my-4">
               <span className="text-[14px] font-semibold text-[#5e5e5e]">{props.calories} {t("calories")}</span>
                 <hr />
               <span className="text-[14px] text-[#5e5e5e]">{props.price} {t("SAR")}</span>
+              <span>{props.description  || ''}</span>
+          
             </div>
           </button>
           <button className="text-center bg-[var(--primary)] py-1 text-black font-bold"
@@ -86,7 +88,8 @@ function Card(props) {
           onClose={showMeDetailesItem}
           onRequest={showMeDetailesItem}
           title={props.title}
-          description={props.description}
+          name={props.name}
+          description={props.description || ''}
           image={props.image}
           calories={props.calories}
           price={props.price}

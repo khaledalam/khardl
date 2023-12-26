@@ -14,25 +14,39 @@ return new class extends Migration
         Schema::create('restaurant_styles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable(); // Ensure one style per user
-            $table->string('logo');
-            $table->string('logo_alignment');
-            $table->string('category_style');
-            $table->string('banner_style');
+            $table->string('logo_alignment')->nullable();
+            $table->string('logo_shape')->nullable();
+            $table->string('banner_type')->nullable();
+            $table->string('banner_shape')->nullable();
+            $table->string('banner_background_color')->nullable();
+            $table->string('category_shape')->nullable();
+            $table->string('category_hover_color')->nullable();
+            $table->string('category_alignment')->nullable();
+            $table->string('categoryDetail_type')->nullable();
+            $table->string('categoryDetail_alignment')->nullable();
+            $table->string('categoryDetail_shape')->nullable();
+            $table->string('categoryDetail_cart_color')->nullable();
+            $table->string('phoneNumber')->nullable();
+            $table->string('phoneNumber_alignment')->nullable();
+            $table->string('page_color')->nullable();
+            $table->string('page_category_color')->nullable();
+            $table->string('header_color')->nullable();
+            $table->string('footer_color')->nullable();
+            $table->string('price_color')->nullable();
+            $table->json('selectedSocialIcons')->nullable();
+            $table->string('text_fontFamily')->nullable();
+            $table->string('text_fontWeight')->nullable();
+            $table->string('text_fontSize')->nullable();
+            $table->string('text_alignment')->nullable();
+            $table->string('text_color')->nullable();
+
+            $table->string('logo')->nullable();
             $table->string('banner_image')->nullable();
             $table->json('banner_images')->nullable();
-            $table->json('social_medias');
-            $table->string('phone_number');
-            $table->string('primary_color');
-            $table->string('buttons_style');
-            $table->string('images_style');
-            $table->string('font_family');
-            $table->string('font_type');
-            $table->string('font_size');
-            $table->string('font_alignment');
-            $table->json('left_side_button');
-            $table->json('right_side_button');
-            $table->json('center_side_button');
 
+            $table->string('logo_url')->nullable();
+            $table->string('banner_image_url')->nullable();
+            $table->json('banner_images_urls')->nullable();
 
             $table->timestamps();
 
