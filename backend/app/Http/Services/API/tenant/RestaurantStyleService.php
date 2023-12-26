@@ -31,7 +31,7 @@ class RestaurantStyleService
             }
         }
 
-        if($request->banner_images){
+        if($request->banner_images_urls){
             foreach($request->banner_images_urls as $k=>$image ){
                 $banner_images_urls[]= $image;
             }
