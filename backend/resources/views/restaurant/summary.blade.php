@@ -264,7 +264,7 @@
                      <div class="card card-xl-stretch mb-xl-8">
                          <!--begin::Header-->
                          <div class="card-header border-0">
-                             <h3 class="card-title fw-bolder text-dark">Best selling products (This month)</h3>
+                             <h3 class="card-title fw-bolder text-dark">Best selling products (Last 30 days)</h3>
                              <div class="card-toolbar">
 
                              </div>

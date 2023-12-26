@@ -61,7 +61,7 @@ class RestaurantService
     {
         return OrderItem::with('item')
             ->whereHas('order', function ($query) {
-                $query->whereMonth('created_at', now()->month);
+                $query->whereDate('created_at', '>=', now()->subDays(30));
             })
             ->select('item_id', DB::raw('SUM(quantity) as total_quantity'))
             ->groupBy('item_id')
