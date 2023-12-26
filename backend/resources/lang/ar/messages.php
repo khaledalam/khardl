@@ -374,6 +374,7 @@ return [
     "Bank Account"=>"الحساب البنكي",
     "choose-time-for-all-days"=>"اختر الوقت المناسب لكل الأيام",
     "choose-time-for-custom-days"=>"اختر الوقت المناسب لكل يوم علي حدا",
-    "time"=>"الوقت"
+    "time"=>"الوقت",
+    "Is Business Licensed"=>"هل السجل التجاري مرخص"
 ];
 

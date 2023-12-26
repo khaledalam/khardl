@@ -339,6 +339,7 @@ return [
     "Legal Name (English)"=>"Legal Name (English)",
     "Legal Name (Arabic)"=>"Legal Name (Arabic)",
     "Is Licensed"=>"Is Licensed",
+    "Is Business Licensed"=>"Is Business Licensed",
     "country"=>"Country",
     "Contact Person"=>"Person Information",
     "Title"=>"Title",
