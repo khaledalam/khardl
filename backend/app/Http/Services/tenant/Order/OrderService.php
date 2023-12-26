@@ -2,12 +2,17 @@
 
 namespace App\Http\Services\tenant\Order;
 
+use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
+use App\Http\Requests\Tenant\Customer\OrderRequest;
 use App\Http\Resources\Web\Tenant\ItemResource;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\PaymentMethod;
 use App\Models\User;
+use App\Repositories\Customer\CartRepository;
+use App\Repositories\Customer\OrderRepository;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
@@ -28,24 +33,56 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $deliveryTypes = DeliveryType::all();
-        $branches   = Branch::all();
-        return view('restaurant.orders.add', compact('user','deliveryTypes','branches'));
+        $branches = Branch::all();
+        return view('restaurant.orders.add', compact('user', 'deliveryTypes', 'branches'));
     }
-    public function createOrder($request)
+    public function addOrder($request)
     {
         $user = $this->checkUser($request);
-        dd($user);
+        $cart = $this->createCart($request, $user);
+        $this->createOrder($request, $cart, $user);
+        return redirect()->route('restaurant.orders_all');
+    }
+    private function createOrder($request, $cart, $user)
+    {
+        $delivery_type = DeliveryType::findOrFail($request->delivery_type_id);
+        $orderRequest = new OrderRequest([
+            'payment_method' => PaymentMethod::CASH_ON_DELIVERY,
+            'delivery_type' => $delivery_type->name,
+            'shipping_address' => $request->shipping_address,
+            'order_notes' => $request->order_notes,
+        ]);
+        $order = new OrderRepository();
+        return $order->create($orderRequest, $cart, $user->id);
+    }
+    private function createCart($request, $user)
+    {
+        $products = $request->products;
+        $new_cart = (new CartRepository)->initiate($user->id);
+        foreach ($products as $product => $quantities) {
+            foreach ($quantities as $quantity) {
+                $addItemToCartRequest = new AddItemToCartRequest([
+                    'item_id' => $product,
+                    'quantity' => $quantity,
+                    'branch_id' => $request->branch_id,
+                ]);
+
+                $new_cart->add($addItemToCartRequest);
+            }
+        }
+        return $new_cart;
     }
     public function searchProducts($request)
     {
-        $items = Item::whenSearch($request['term']??null)
-        ->whenBranch($request['branch_id']??null)
-        ->take(5)
-        ->get();
+        $items = Item::whenSearch($request['term'] ?? null)
+            ->whenBranch($request['branch_id'] ?? null)
+            ->take(5)
+            ->get();
         logger($items);
-        return $this->sendResponse(ItemResource::collection($items),'');
+        return $this->sendResponse(ItemResource::collection($items), '');
     }
-    private function checkUser($request){
+    private function checkUser($request)
+    {
         $user = User::firstOrCreate(
             ['phone' => $request->phone],
             [

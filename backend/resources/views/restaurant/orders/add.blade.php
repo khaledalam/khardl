@@ -138,7 +138,7 @@
                                             <!--end::Input group-->
                                             <!--begin::Separator-->
                                             <div class="separator"></div>
-                                            <select id="branchSelect" class="form-select" style="width: 300px;">
+                                            <select id="branchSelect" name="branch_id"  required class="form-select" style="width: 300px;">
                                                 <option>Select branch</option>
                                                 @foreach ($branches as $branch)
                                                 <option value="{{ $branch->id }}">{{ $branch->name }}</option>

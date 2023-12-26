@@ -32,9 +32,10 @@ class StoreOrderFormRequest extends FormRequest
         ]
         */
         return [
-            /* 'phone' => 'required|regex:/^(966)?\d{9}$/', */
+            'phone' => 'required|regex:/^(966)?\d{9}$/',
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
+            'branch_id' => 'required|integer|exists:branches,id',
             'delivery_type_id'  => 'required|integer|exists:delivery_types,id',
             'shipping_address'  => 'required|max:255',
             'order_notes'   => 'nullable|max:255',
