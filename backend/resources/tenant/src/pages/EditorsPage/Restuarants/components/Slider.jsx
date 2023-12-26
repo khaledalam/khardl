@@ -7,20 +7,19 @@ import {IoCloseOutline} from "react-icons/io5"
 import ImageIcon from "../../../../assets/imageIcon.svg"
 import {useCallback, useState} from "react"
 
-const Slider = () => {
+const Slider = ({banner_images}) => {
   const [uploadImages, setUploadImages] = useState([])
 
   const handleImagesUpload = useCallback((event, idx) => {
     const selectedImage = event.target.files[0]
     const selectedImages = []
     if (selectedImage) {
-      console.log(URL.createObjectURL(selectedImage))
-      selectedImages.push(URL.createObjectURL(selectedImage))
+      selectedImages.push(selectedImage)
       setUploadImages(selectedImages)
     }
     if (selectedImages[idx]) {
       selectedImages.splice(idx, 1)
-      selectedImages[idx] = URL.createObjectURL(selectedImage)
+      selectedImages[idx] = selectedImage
       setUploadImages(selectedImages)
     }
   }, [])
@@ -42,8 +41,10 @@ const Slider = () => {
               style={{
                 backgroundImage:
                   uploadImages.length > 0
-                    ? `url(${uploadImages[index]})`
-                    : "none",
+                    ? `url(${URL.createObjectURL(uploadImages[index])})`
+                    : `url(${
+                        banner_images.length > 0 && banner_images[index]
+                      })`,
               }}
               className={`h-[280px] rounded-md flex items-center justify-center   shadow-md`}
             >
@@ -63,7 +64,9 @@ const Slider = () => {
                   className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
                 >
                   <img
-                    src={ImageIcon}
+                    src={
+                      banner_images[index] ? banner_images[index] : ImageIcon
+                    }
                     alt={""}
                     className='w-full h-full object-cover'
                   />

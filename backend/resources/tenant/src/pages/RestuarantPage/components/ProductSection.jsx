@@ -1,15 +1,16 @@
 import React, {Fragment, useState} from "react"
-import {categoryList, productSectionList} from "../DATA"
 import ProductItem from "../../EditorsPage/Restuarants/components/ProductItem"
 import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
 import {useDispatch, useSelector} from "react-redux"
 import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
 
-const ProductSection = ({alignment, categories}) => {
+const ProductSection = ({categories}) => {
   const dispatch = useDispatch()
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
   )
+  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
+
   const filterCategory =
     categories && categories.length > 0
       ? categories?.filter(
@@ -21,7 +22,7 @@ const ProductSection = ({alignment, categories}) => {
   console.log("filterCategory", filterCategory)
   return (
     <Fragment>
-      {alignment === "center" && (
+      {restaurantStyle?.category_alignment === "center" && (
         <Fragment>
           <div className='bg-white w-full'>
             <div className='w-5/6 laptopXL:w-[75%] mx-auto py-4'>
@@ -40,7 +41,12 @@ const ProductSection = ({alignment, categories}) => {
                           imgSrc={product.photo}
                           amount={product.price}
                           caloryInfo={product.calories}
-                          cartBgcolor={"#2A6E4F"}
+                          cartBgcolor={
+                            restaurantStyle?.categoryDetail_cart_color
+                          }
+                          amountColor={restaurantStyle?.price_color}
+                          fontSize={restaurantStyle?.text_fontSize}
+                          shape={restaurantStyle?.categoryDetail_shape}
                         />
                       ))}
                     </div>
@@ -50,7 +56,7 @@ const ProductSection = ({alignment, categories}) => {
           </div>
         </Fragment>
       )}
-      {alignment === "left" && (
+      {restaurantStyle?.category_alignment === "left" && (
         <Fragment>
           <div className='bg-white w-full flex items-start p-16 gap-2 '>
             <div className='flex-[20%]'>
@@ -72,14 +78,15 @@ const ProductSection = ({alignment, categories}) => {
                         name={category.name}
                         imgSrc={category.imgSrc}
                         alt={category.name}
-                        hoverColor={"red"}
+                        hoverColor={restaurantStyle?.category_hover_color}
                         onClick={() =>
                           dispatch(
                             selectedCategoryAPI(category.name.toLowerCase())
                           )
                         }
-                        textColor={"#fff"}
-                        shape={"rounded"}
+                        textColor={restaurantStyle?.text_color}
+                        fontSize={restaurantStyle?.text_fontSize}
+                        shape={restaurantStyle?.category_shape}
                         isGrid={true}
                       />
                     ))}
@@ -105,7 +112,12 @@ const ProductSection = ({alignment, categories}) => {
                             imgSrc={product.photo}
                             amount={product.price}
                             caloryInfo={product.calories}
-                            cartBgcolor={"#2A6E4F"}
+                            cartBgcolor={
+                              restaurantStyle?.categoryDetail_cart_color
+                            }
+                            amountColor={restaurantStyle?.price_color}
+                            fontSize={restaurantStyle?.text_fontSize}
+                            shape={restaurantStyle?.categoryDetail_shape}
                           />
                         ))}
                       </div>
@@ -116,7 +128,7 @@ const ProductSection = ({alignment, categories}) => {
           </div>
         </Fragment>
       )}
-      {alignment === "right" && (
+      {restaurantStyle?.category_alignment === "right" && (
         <Fragment>
           <div className='bg-white w-full flex items-start p-16 gap-2'>
             <div className='flex-[80%]'>
@@ -138,7 +150,12 @@ const ProductSection = ({alignment, categories}) => {
                             imgSrc={product.photo}
                             amount={product.price}
                             caloryInfo={product.calories}
-                            cartBgcolor={"#2A6E4F"}
+                            cartBgcolor={
+                              restaurantStyle?.categoryDetail_cart_color
+                            }
+                            amountColor={restaurantStyle?.price_color}
+                            fontSize={restaurantStyle?.text_fontSize}
+                            shape={restaurantStyle?.categoryDetail_shape}
                           />
                         ))}
                       </div>
@@ -165,14 +182,15 @@ const ProductSection = ({alignment, categories}) => {
                         name={category.name}
                         imgSrc={category.imgSrc}
                         alt={category.name}
-                        hoverColor={"red"}
+                        hoverColor={restaurantStyle?.category_hover_color}
                         onClick={() =>
                           dispatch(
                             selectedCategoryAPI(category.name.toLowerCase())
                           )
                         }
-                        textColor={"#fff"}
-                        shape={"rounded"}
+                        textColor={restaurantStyle?.text_color}
+                        fontSize={restaurantStyle?.text_fontSize}
+                        shape={restaurantStyle?.category_shape}
                         isGrid={true}
                       />
                     ))}

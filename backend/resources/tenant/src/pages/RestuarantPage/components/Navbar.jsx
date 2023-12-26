@@ -2,16 +2,22 @@ import React, {Fragment, useContext} from "react"
 import cartHeaderImg from "../../../assets/cartBoldIcon.svg"
 import {IoMenuOutline} from "react-icons/io5"
 import {MenuContext} from "react-flexible-sliding-menu"
+import {useSelector} from "react-redux"
 
 const NavbarRestuarant = () => {
   const {toggleMenu} = useContext(MenuContext)
+  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
   const toggleTheMenu = () => {
     toggleMenu()
   }
-
+  const {header_color} = restaurantStyle
+  console.log("restuarant styles header", restaurantStyle)
   return (
     <Fragment>
-      <div className='w-full bg-white flex flex-row items-center justify-between px-12 py-2'>
+      <div
+        style={{backgroundColor: header_color ? header_color : "white"}}
+        className='w-full  flex flex-row items-center justify-between px-12 py-2'
+      >
         <div
           onClick={toggleTheMenu}
           className='w-[40px] h-[40px]  bg-[#2A6E4F] rounded-lg p-1 flex items-center justify-center'

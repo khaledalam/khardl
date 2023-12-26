@@ -189,7 +189,7 @@ const MainBoardEditor = ({categories}) => {
       {/* banner */}
       {banner_type === "slider" ? (
         <div className='w-full'>
-          <Slider />
+          <Slider banner_images={banner_images} />
         </div>
       ) : (
         <div

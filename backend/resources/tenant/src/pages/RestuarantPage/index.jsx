@@ -1,11 +1,10 @@
-import React, {useEffect, useLayoutEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import NavbarRestuarant from "./components/Navbar"
 import Herosection from "./components/Herosection"
 import ProductSection from "./components/ProductSection"
 import FooterRestuarant from "./components/Footer"
 import AxiosInstance from "../../axios/axios"
-import {useDispatch, useSelector} from "react-redux"
-import {changeStyleDataRestaurant} from "../../redux/editor/styleDataRestaurantSlice"
+import {useDispatch} from "react-redux"
 import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
 
 export const RestuarantHomePage = () => {
@@ -41,16 +40,9 @@ export const RestuarantHomePage = () => {
   }
   const fetchResStyleData = async () => {
     try {
-      const restaurantStyleResponse = await AxiosInstance.get(
-        `restaurant-style`
+      AxiosInstance.get(`restaurant-style`).then((response) =>
+        dispatch(changeRestuarantEditorStyle(response.data?.data))
       )
-
-      if (restaurantStyleResponse.data) {
-        dispatch(changeStyleDataRestaurant(restaurantStyleResponse.data?.data))
-        dispatch(
-          changeRestuarantEditorStyle(restaurantStyleResponse.data?.data)
-        )
-      }
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
       console.log(error)
@@ -58,12 +50,11 @@ export const RestuarantHomePage = () => {
   }
 
   useEffect(() => {
-    fetchCategoriesData().then(() =>
-      console.log("fetched categories successfully")
-    )
-    fetchResStyleData().then(() =>
+    fetchCategoriesData().then((result) => {
       console.log("fetched restuarant style successfully")
-    )
+    })
+
+    fetchResStyleData()
   }, [])
 
   console.log("categories fetched", categories)
