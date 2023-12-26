@@ -14,6 +14,8 @@ class Card extends Tap implements CardInterface
             ],
         ]);
     }
-
+    public static function retrieve(string $token_id): array {
+        return self::send("/tokens/$token_id",[],'get');
+    }
 
 }

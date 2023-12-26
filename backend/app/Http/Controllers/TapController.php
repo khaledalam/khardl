@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ApprovedBusiness;
+use App\Models\ROSubscription;
+use App\Models\Subscription as CentralSubscriptionOptions;
 use App\Models\User;
 use LVR\CountryCode\Two;
 use Illuminate\Http\Request;
@@ -13,9 +15,12 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Tenant\Tap\TapBusiness;
 use App\Models\Tenant\Tap\TapBusinessFile;
 use App\Packages\TapPayment\Business\Business;
+use App\Packages\TapPayment\Card\Card;
+use App\Packages\TapPayment\Charge\Charge;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
+use App\Packages\TapPayment\Subscription\Subscription;
 
 class TapController extends Controller
 {
@@ -91,8 +96,7 @@ class TapController extends Controller
 
     public function payments_submit_tap_documents(CreateBusinessRequest $request)
     { 
-       
-
+    
         $user= Auth::user();
        
         $data = $request->validated();
@@ -142,8 +146,31 @@ class TapController extends Controller
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
         
     }
-    public function payments_submit_card_details(Request $request){
-        dd($request->all());
+    public function payments_submit_card_details($token,Request $request){
+        // TODO @todo protect request only coming from payment
+        // if($request->tap_id){
+        //     $RO_subscription = new ROSubscription();
+        //     $RO_subscription->charge_id  = $request->tap_id;
+        //     $RO_subscription->data  =[$request->token, $request->data];
+           
+        //     $charge = Charge::retrieve($request->tap_id);
+        //     if($charge['http_code'] == ResponseHelper::HTTP_OK){
+        //         $token = $charge['source']['id'];
+        //         $RO_subscription->token_id = $token;
+        //         $card = Card::retrieve($token);
+        //         if($card['http_code'] == ResponseHelper::HTTP_OK){
+        //             $card_id = $card['card']['id'];
+        //             $RO_subscription->card_id = $card_id;
+        //             // $subscription_options = CentralSubscriptionOptions::first();
+        //             // $subscription = Subscription::create();
+                    
+        //         }
+        //     }
+        //     $RO_subscription->save();
+        // }
+        dd($token);
+        return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+        
     }
 
 }

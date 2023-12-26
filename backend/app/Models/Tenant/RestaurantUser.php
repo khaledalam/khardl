@@ -77,6 +77,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+    public function getPhoneWithoutCountryCodeAttribute()
+    {
+        return substr($this->phone, 3);
+    }
     // public function roles()
     // {
     //     return $this->belongsToMany(Role::class,'roles');

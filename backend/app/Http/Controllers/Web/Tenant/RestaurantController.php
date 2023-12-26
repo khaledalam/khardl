@@ -22,6 +22,7 @@ use App\Models\Tenant\OrderStatusLogs;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
+use App\Models\Subscription;
 use Illuminate\Contracts\Database\Query\Builder;
 
 class RestaurantController extends BaseController
@@ -38,9 +39,12 @@ class RestaurantController extends BaseController
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $branches = Branch::all();
-
+        $subscription = tenancy()->central(function(){
+            return Subscription::first();
+        });
+ 
         return view('restaurant.service',
-            compact('user', 'branches'));
+            compact('user', 'branches','subscription'));
     }
 
     public function delivery(){
