@@ -6,6 +6,7 @@ import FooterRestuarant from "./components/Footer"
 import AxiosInstance from "../../axios/axios"
 import {useDispatch, useSelector} from "react-redux"
 import {changeStyleDataRestaurant} from "../../redux/editor/styleDataRestaurantSlice"
+import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
 
 export const RestuarantHomePage = () => {
   const dispatch = useDispatch()
@@ -46,6 +47,9 @@ export const RestuarantHomePage = () => {
 
       if (restaurantStyleResponse.data) {
         dispatch(changeStyleDataRestaurant(restaurantStyleResponse.data?.data))
+        dispatch(
+          changeRestuarantEditorStyle(restaurantStyleResponse.data?.data)
+        )
       }
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)

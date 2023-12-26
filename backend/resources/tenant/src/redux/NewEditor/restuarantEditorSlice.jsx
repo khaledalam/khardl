@@ -3,6 +3,8 @@ import {createSlice} from "@reduxjs/toolkit"
 const restuarantEditorSlice = createSlice({
   name: "restuarantEditorSlice",
   initialState: {
+    id: 1,
+    user: null,
     headerPosition: "relative",
     logo_alignment: "center",
     logo_shape: "rounded",
@@ -131,6 +133,12 @@ const restuarantEditorSlice = createSlice({
     textColor: (state, action) => {
       state.text_color = action.payload
     },
+    changeRestuarantEditorStyle: (state, action) => {
+      return (state = {
+        ...state,
+        ...action.payload,
+      })
+    },
   },
 })
 
@@ -164,5 +172,6 @@ export const {
   bannerShape,
   phoneNumber,
   phoneNumberAlignment,
+  changeRestuarantEditorStyle,
 } = restuarantEditorSlice.actions
 export default restuarantEditorSlice.reducer

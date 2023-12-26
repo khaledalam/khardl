@@ -16,6 +16,7 @@ const ProductItem = ({
   amount,
   cartBgcolor,
   amountColor,
+  fontSize,
   shape,
 }) => {
   const [productExtras, setProductExtras] = useState([
@@ -68,8 +69,27 @@ const ProductItem = ({
       >
         <div className='flex items-center justify-between pt-2'>
           <div className='flex flex-col gap-2 pl-4'>
-            <h3 className='font-bold text-[1rem]'>{name}</h3>
-            <p className='font-normal text-[13px]'>{caloryInfo} Kcal</p>
+            <h3
+              style={{fontSize: fontSize ? fontSize : 16}}
+              className='font-bold text-[1rem]'
+            >
+              {name}
+            </h3>
+            <p
+              style={{
+                fontSize:
+                  fontSize &&
+                  typeof fontSize == "string" &&
+                  fontSize.includes("px")
+                    ? Number(fontSize.slice(0, 2)) - 3
+                    : typeof fontSize == "number"
+                    ? fontSize - 3
+                    : 13,
+              }}
+              className='font-normal'
+            >
+              {caloryInfo} Kcal
+            </p>
           </div>
           <div className='w-[100px] h-[100px] mr-[-1.8rem] rtl:mr-[1.8rem] bg-neutral-100 rounded-full p-1'>
             <img

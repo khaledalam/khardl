@@ -11,6 +11,7 @@ const CategoryItem = ({
   textColor,
   shape,
   isGrid,
+  fontSize,
 }) => {
   const [isHover, setIsHover] = useState(false)
 
@@ -53,7 +54,18 @@ const CategoryItem = ({
           />
         </div>
       </div>
-      <h3 style={{color: textColor}} className='text-sm font-normal'>
+      <h3
+        style={{
+          color: textColor,
+          fontSize:
+            fontSize && typeof fontSize == "string" && fontSize.includes("px")
+              ? Number(fontSize.slice(0, 2)) - 2
+              : typeof fontSize == "number"
+              ? fontSize - 2
+              : 14,
+        }}
+        className='font-normal'
+      >
         {name}
       </h3>
     </div>

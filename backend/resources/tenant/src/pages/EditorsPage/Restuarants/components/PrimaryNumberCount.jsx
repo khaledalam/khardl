@@ -1,16 +1,18 @@
 import React, {useCallback, useState} from "react"
 import {GoChevronDown, GoChevronUp} from "react-icons/go"
 
-const PrimaryNumberCount = ({defaultValue}) => {
+const PrimaryNumberCount = ({defaultValue, onChange}) => {
   const [number, setNumber] = useState(defaultValue)
 
   const increment = useCallback(() => {
     setNumber((prev) => prev + 1)
-  }, [])
+    onChange(number)
+  }, [number])
 
   const decrement = useCallback(() => {
     setNumber((prev) => prev - 1)
-  }, [])
+    onChange(number)
+  }, [number])
 
   return (
     <div className='w-[50%]'>

@@ -18,6 +18,7 @@ import {
   footerColor,
   priceColor,
   textColor,
+  textFontSize,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const EditPanel = () => {
@@ -238,7 +239,10 @@ const EditPanel = () => {
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
               Size
             </h3>
-            <PrimaryNumberCount defaultValue={14} />
+            <PrimaryNumberCount
+              defaultValue={14}
+              onChange={(value) => dispatch(textFontSize(value))}
+            />
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>

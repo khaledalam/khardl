@@ -51,7 +51,7 @@ const mediaCollection = [
   },
 ]
 
-const SocialMediaCollection = ({onChange, showMedia}) => {
+const SocialMediaCollection = ({onChange, showMedia, selectedSocialIcons}) => {
   const [selectedMedia, setSelectedMedia] = useState([])
   const [selectedSingleMedia, setSelectedSingleMedia] = useState()
   const [socialUrl, setSocialUrl] = useState("")
@@ -82,26 +82,42 @@ const SocialMediaCollection = ({onChange, showMedia}) => {
         </div>
       )}
       <div className='flex items-center gap-3 flex-wrap'>
-        {selectedMedia &&
-          selectedMedia.map((socialMedia) => (
-            <div
-              key={socialMedia.id}
-              onClick={() => {
-                setSocialUrl("")
-                setSelectedSingleMedia(socialMedia)
-              }}
-              className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
-            >
-              <img src={socialMedia.imageSrc} alt={socialMedia.name} />
-            </div>
-          ))}
+        {selectedSocialIcons
+          ? selectedSocialIcons.map((socialMedia) => (
+              <div
+                key={socialMedia.id}
+                onClick={() => {
+                  setSocialUrl("")
+                  setSelectedSingleMedia(socialMedia)
+                }}
+                className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
+              >
+                <img src={socialMedia.imgUrl} alt={"social icon"} />
+              </div>
+            ))
+          : selectedMedia.map((socialMedia) => (
+              <div
+                key={socialMedia.id}
+                onClick={() => {
+                  setSocialUrl("")
+                  setSelectedSingleMedia(socialMedia)
+                }}
+                className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
+              >
+                <img src={socialMedia.imageSrc} alt={socialMedia.name} />
+              </div>
+            ))}
       </div>
       {selectedSingleMedia && (
         <div className=''>
           <input
             type='text'
-            value={socialUrl}
-            placeholder={`Write ${selectedSingleMedia.name.toLowerCase()} link`}
+            value={
+              selectedSingleMedia.link ? selectedSingleMedia.link : socialUrl
+            }
+            placeholder={`Write ${
+              selectedSingleMedia?.name?.toLowerCase() ?? "social media"
+            } link`}
             className='input input-bordered w-full max-w-[70%]'
             onChange={(e) => setSocialUrl(e.target.value)}
           />

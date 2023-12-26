@@ -33,6 +33,7 @@ const SectionPanel = () => {
     category_alignment,
     categoryDetail_alignment,
     socialMediaIcons_alignment,
+    selectedSocialIcons,
     phoneNumber,
     phoneNumber_alignment,
     categoryDetail_type,
@@ -125,6 +126,7 @@ const SectionPanel = () => {
         <SocialMediaCollection
           showMedia={showSocialMedia}
           onChange={(value) => console.log("socialMedia", value)}
+          selectedSocialIcons={selectedSocialIcons}
         />
         <div className='mt-3'>
           <PrimarySelect

@@ -13,12 +13,13 @@ import ProductItem from "./ProductItem"
 import {useSelector, useDispatch} from "react-redux"
 import {MenuContext} from "react-flexible-sliding-menu"
 import Slider from "./Slider"
+import {selectedCategoryAPI} from "../../../../redux/NewEditor/categoryAPISlice"
 
-const MainBoardEditor = () => {
-  const [activeItem, setActiveItem] = useState({name: "", imgSrc: ""})
+const MainBoardEditor = ({categories}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
+  const dispatch = useDispatch()
   const {toggleMenu} = useContext(MenuContext)
 
   const toggleTheMenu = () => {
@@ -37,6 +38,9 @@ const MainBoardEditor = () => {
     categoryDetail_shape,
 
     price_color,
+    logo,
+    banner_image,
+    banner_images,
     header_color,
     banner_background_color,
     footer_color,
@@ -56,109 +60,20 @@ const MainBoardEditor = () => {
   } = restuarantEditorStyle
   console.log("restuarantEditorStyle", restuarantEditorStyle)
 
-  const [selectedCategory, setSelectedCategory] = useState("burger")
+  const selectedCategory = useSelector(
+    (state) => state.categoryAPI.selected_category
+  )
+
+  const filterCategory =
+    categories && categories.length > 0
+      ? categories?.filter(
+          (category) =>
+            category.name.toLowerCase() === selectedCategory.toLowerCase()
+        )
+      : [{name: "", items: []}]
+
   const [uploadLogo, setUploadLogo] = useState(null)
   const [uploadSingleBanner, setUploadSingleBanner] = useState(null)
-
-  const categoryList = [
-    {
-      name: "Pizza",
-      imgSrc: pizzImg,
-    },
-    {
-      name: "Pasta",
-      imgSrc: pastaImg,
-    },
-    {
-      name: "Burger",
-      imgSrc: burgerImg,
-    },
-    {
-      name: "Chicken",
-      imgSrc: chickenImg,
-    },
-    {
-      name: "Drink",
-      imgSrc: drinkImg,
-    },
-  ]
-
-  const productList = [
-    {
-      category: "pizza",
-      name: "Pizza Special",
-      imgSrc: pizzImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "pizza",
-      name: "Pizza Special",
-      imgSrc: pizzImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "burger",
-      name: "Burger Special",
-      imgSrc: burgerImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "burger",
-      name: "Burger Special",
-      imgSrc: burgerImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "pasta",
-      name: "Pasta Special",
-      imgSrc: pastaImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "pasta",
-      name: "Pasta Special",
-      imgSrc: pastaImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "chicken",
-      name: "Chicken Special",
-      imgSrc: chickenImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "chicken",
-      name: "Chicken Special",
-      imgSrc: chickenImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "drink",
-      name: "Drink Special",
-      imgSrc: drinkImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-    {
-      category: "drink",
-      name: "Drink Special",
-      imgSrc: drinkImg,
-      caloryInfo: "142 Calories",
-      amount: "875.000",
-    },
-  ]
-
-  const filterProductList = productList.filter(
-    (product) => product.category === selectedCategory
-  )
 
   const handleLogoUpload = (event) => {
     event.preventDefault()
@@ -252,7 +167,7 @@ const MainBoardEditor = () => {
           />
           <label htmlFor='logo'>
             <img
-              src={uploadLogo ? URL.createObjectURL(uploadLogo) : ImageIcon}
+              src={uploadLogo ? URL.createObjectURL(uploadLogo) : logo}
               alt={""}
               style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
               className='w-full h-full object-cover'
@@ -282,7 +197,7 @@ const MainBoardEditor = () => {
             backgroundColor: banner_background_color,
             backgroundImage: uploadSingleBanner
               ? `url(${URL.createObjectURL(uploadSingleBanner)})`
-              : "initial",
+              : `url(${banner_image})`,
             borderRadius: banner_shape === "sharp" ? 0 : 12,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
@@ -309,7 +224,7 @@ const MainBoardEditor = () => {
                 src={
                   uploadSingleBanner
                     ? URL.createObjectURL(uploadSingleBanner)
-                    : ImageIcon
+                    : banner_image
                 }
                 alt={""}
                 className='w-full h-full object-cover'
@@ -438,20 +353,21 @@ const MainBoardEditor = () => {
                   : "flex-col gap-6"
               } items-center `}
             >
-              {categoryList.map((category, i) => (
+              {categories?.map((category, i) => (
                 <CategoryItem
                   key={i}
                   active={selectedCategory === category.name.toLowerCase()}
                   name={category.name}
-                  imgSrc={category.imgSrc}
+                  imgSrc={category.photo}
                   alt={category.name}
                   hoverColor={category_hover_color}
                   onClick={() =>
-                    setSelectedCategory(category.name.toLowerCase())
+                    dispatch(selectedCategoryAPI(category.name.toLowerCase()))
                   }
                   textColor={text_color}
                   shape={category_shape}
                   isGrid={category_alignment === "center" ? false : true}
+                  fontSize={text_fontSize}
                 />
               ))}
             </div>
@@ -483,19 +399,22 @@ const MainBoardEditor = () => {
                     : "flex-col gap-6"
                 }  h-fit  p-4`}
               >
-                {filterProductList.map((product, i) => (
-                  <ProductItem
-                    key={i}
-                    id={product.name + i}
-                    name={product.name}
-                    imgSrc={product.imgSrc}
-                    amount={product.amount}
-                    caloryInfo={product.caloryInfo}
-                    cartBgcolor={categoryDetail_cart_color}
-                    amountColor={price_color}
-                    shape={categoryDetail_shape}
-                  />
-                ))}
+                {filterCategory &&
+                  filterCategory[0]?.items
+                    .slice(0, 2)
+                    .map((product, i) => (
+                      <ProductItem
+                        key={i}
+                        name={product.description}
+                        imgSrc={product.photo}
+                        amount={product.price}
+                        caloryInfo={product.calories}
+                        cartBgcolor={categoryDetail_cart_color}
+                        amountColor={price_color}
+                        shape={categoryDetail_shape}
+                        fontSize={text_fontSize}
+                      />
+                    ))}
               </div>
             </div>
           </div>
