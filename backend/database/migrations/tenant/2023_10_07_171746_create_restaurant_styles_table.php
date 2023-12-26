@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('price_color')->nullable();
             $table->json('selectedSocialIcons')->nullable();
             $table->string('text_fontFamily')->nullable();
-            $table->integer('text_fontWeight')->nullable();
+            $table->string('text_fontWeight')->nullable();
             $table->string('text_fontSize')->nullable();
             $table->string('text_alignment')->nullable();
             $table->string('text_color')->nullable();

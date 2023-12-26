@@ -43,7 +43,7 @@ class RestaurantControllerRequest extends FormRequest
             'price_color' => 'nullable|string',
             'selectedSocialIcons'   => 'nullable|array',
             'text_fontFamily' => 'nullable|string',
-            'text_fontWeight' => 'nullable|numeric|in:200,300,400,500,600,700,800',
+            'text_fontWeight' => 'nullable|string|in:200,300,400,500,600,700,800',
             'text_fontSize' => 'nullable',
             'text_color' => 'nullable|string',
             /* OLD */
