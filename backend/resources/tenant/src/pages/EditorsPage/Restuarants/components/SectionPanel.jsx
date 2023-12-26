@@ -24,6 +24,7 @@ const SectionPanel = () => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
+  const [showSocialMedia, setShowSocialMedia] = useState(false)
 
   const {
     headerPosition,
@@ -116,9 +117,15 @@ const SectionPanel = () => {
       <div className='py-4 border-b border-neutral-300 '>
         <div className='flex items-center justify-between p-2 w-[70%] mb-4 '>
           <h2 className='font-bold text-lg '>Social Media</h2>
-          <IoAdd size={25} />
+          <IoAdd
+            size={25}
+            onClick={() => setShowSocialMedia((prev) => !prev)}
+          />
         </div>
-        <SocialMediaCollection />
+        <SocialMediaCollection
+          showMedia={showSocialMedia}
+          onChange={(value) => console.log("socialMedia", value)}
+        />
         <div className='mt-3'>
           <PrimarySelect
             label={"Content"}

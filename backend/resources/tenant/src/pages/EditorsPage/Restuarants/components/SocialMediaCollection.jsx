@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import ImgTelegram from "../../../../assets/imgTelgram.svg"
 import ImgYoutube from "../../../../assets/imgYoutube.svg"
 import ImgInstagram from "../../../../assets/ImgInstagram.svg"
@@ -51,32 +51,59 @@ const mediaCollection = [
   },
 ]
 
-const SocialMediaCollection = () => {
-  const [selectedMedia, setSelectedMedia] = useState(null)
+const SocialMediaCollection = ({onChange, showMedia}) => {
+  const [selectedMedia, setSelectedMedia] = useState([])
+  const [selectedSingleMedia, setSelectedSingleMedia] = useState()
+  const [socialUrl, setSocialUrl] = useState("")
+
+  useEffect(() => {
+    onChange({
+      name: selectedSingleMedia ? selectedSingleMedia?.name : "",
+      imageUrl: selectedSingleMedia ? selectedSingleMedia?.imageSrc : "",
+      link: socialUrl,
+    })
+  }, [selectedSingleMedia, socialUrl])
+
   return (
     <div>
-      <div className='flex items-center gap-6 flex-wrap w-[70%] p-3 rounded-xl bg-neutral-100'>
-        {mediaCollection.map((media) => (
-          <img
-            src={media.imageSrc}
-            alt={media.id}
-            key={media.id}
-            className='cursor-pointer'
-            onClick={() => setSelectedMedia(media)}
-          />
-        ))}
-      </div>
-      {selectedMedia && (
-        <div className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'>
-          <img src={selectedMedia.imageSrc} alt={selectedMedia.id} />
+      {showMedia && (
+        <div className='flex items-center gap-6 flex-wrap w-[70%] p-3 rounded-xl bg-neutral-100'>
+          {mediaCollection.map((media) => (
+            <img
+              src={media.imageSrc}
+              alt={media.id}
+              key={media.id}
+              className='cursor-pointer'
+              onClick={() => {
+                setSelectedMedia((prev) => [...prev, media])
+              }}
+            />
+          ))}
         </div>
       )}
-      {selectedMedia && (
+      <div className='flex items-center gap-3 flex-wrap'>
+        {selectedMedia &&
+          selectedMedia.map((socialMedia) => (
+            <div
+              key={socialMedia.id}
+              onClick={() => {
+                setSocialUrl("")
+                setSelectedSingleMedia(socialMedia)
+              }}
+              className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
+            >
+              <img src={socialMedia.imageSrc} alt={socialMedia.name} />
+            </div>
+          ))}
+      </div>
+      {selectedSingleMedia && (
         <div className=''>
           <input
             type='text'
-            placeholder={`Write ${selectedMedia.name.toLowerCase()} link`}
+            value={socialUrl}
+            placeholder={`Write ${selectedSingleMedia.name.toLowerCase()} link`}
             className='input input-bordered w-full max-w-[70%]'
+            onChange={(e) => setSocialUrl(e.target.value)}
           />
         </div>
       )}
