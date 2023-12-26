@@ -14,7 +14,10 @@ import {useSelector, useDispatch} from "react-redux"
 import {MenuContext} from "react-flexible-sliding-menu"
 import Slider from "./Slider"
 import {selectedCategoryAPI} from "../../../../redux/NewEditor/categoryAPISlice"
-import {logoUpload} from "../../../../redux/NewEditor/restuarantEditorSlice"
+import {
+  clearLogoUpload,
+  logoUpload,
+} from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const MainBoardEditor = ({categories}) => {
   const restuarantEditorStyle = useSelector(
@@ -64,6 +67,9 @@ const MainBoardEditor = ({categories}) => {
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
   )
+  const uploadLogo = useSelector(
+    (state) => state.restuarantEditorStyle.logoUpload
+  )
 
   const filterCategory =
     categories && categories.length > 0
@@ -73,7 +79,6 @@ const MainBoardEditor = ({categories}) => {
         )
       : [{name: "", items: []}]
 
-  const [uploadLogo, setUploadLogo] = useState(null)
   const [uploadSingleBanner, setUploadSingleBanner] = useState(null)
 
   const handleLogoUpload = (event) => {
@@ -96,7 +101,7 @@ const MainBoardEditor = ({categories}) => {
   }
 
   const clearLogo = () => {
-    setUploadLogo(null)
+    dispatch(clearLogoUpload())
   }
   const clearBanner = () => {
     setUploadSingleBanner(null)

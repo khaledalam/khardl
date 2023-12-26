@@ -4150,6 +4150,9 @@ details.collapse summary::-webkit-details-marker {
 .h-\[40px\] {
   height: 40px;
 }
+.h-\[470px\] {
+  height: 470px;
+}
 .h-\[471px\] {
   height: 471px;
 }
@@ -4207,9 +4210,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .h-full {
   height: 100%;
-}
-.h-\[470px\] {
-  height: 470px;
 }
 .max-h-\[150px\] {
   max-height: 150px;

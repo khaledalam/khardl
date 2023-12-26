@@ -15,6 +15,7 @@ const Navbar = () => {
   }
 
   const handleSubmitResStyle = async (e) => {
+    e.preventDefault()
     let inputs = {}
     inputs.logo = restuarantStyle.logo
     inputs.logo_alignment = restuarantStyle.logo_alignment
@@ -45,8 +46,7 @@ const Navbar = () => {
     inputs.text_alignment = restuarantStyle.text_alignment
     inputs.text_color = restuarantStyle.text_color
     inputs.banner_image = restuarantStyle.banner_image
-    inputs.banner_images[0] = restuarantStyle.banner_images[0]
-    inputs.banner_images[1] = restuarantStyle.banner_images[1]
+    inputs.banner_images = restuarantStyle.banner_images
 
     try {
       const response = await AxiosInstance.post(`restaurant-style`, inputs, {

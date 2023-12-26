@@ -6,6 +6,7 @@ const restuarantEditorSlice = createSlice({
     id: 1,
     user: null,
     logo: "",
+    logoUpload: null,
     headerPosition: "relative",
     logo_alignment: "center",
     logo_shape: "rounded",
@@ -47,7 +48,7 @@ const restuarantEditorSlice = createSlice({
     text_alignment: "center",
     text_color: "#333",
     banner_image: "",
-    banner_images: ["", ""],
+    banner_images: [],
   },
   reducers: {
     headerPosition: (state, action) => {
@@ -137,7 +138,7 @@ const restuarantEditorSlice = createSlice({
       state.text_color = action.payload
     },
     logoUpload: (state, action) => {
-      return action.payload
+      state.logoUpload = action.payload
     },
     clearLogoUpload: () => null,
 
@@ -145,7 +146,7 @@ const restuarantEditorSlice = createSlice({
       state.banner_image = action.payload
     },
     bannerImages: (state, action) => {
-      state.banner_images = action.payload
+      state.banner_images = state.banner_images.push(action.payload)
     },
     changeRestuarantEditorStyle: (state, action) => {
       return (state = {
