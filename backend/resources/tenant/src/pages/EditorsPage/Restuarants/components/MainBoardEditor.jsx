@@ -51,6 +51,7 @@ const MainBoardEditor = () => {
     text_alignment,
     phoneNumber,
     phoneNumber_alignment,
+    socialMediaIcons_alignment,
     text_color,
   } = restuarantEditorStyle
   console.log("restuarantEditorStyle", restuarantEditorStyle)
@@ -580,7 +581,15 @@ const MainBoardEditor = () => {
 
       <div
         style={{backgroundColor: footer_color}}
-        className={`w-full min-h-[70px]  rounded-xl flex items-center justify-center`}
+        className={`w-full min-h-[70px]  rounded-xl flex ${
+          socialMediaIcons_alignment === "center"
+            ? "items-center justify-center"
+            : socialMediaIcons_alignment === "left"
+            ? "items-center justify-start"
+            : socialMediaIcons_alignment === "right"
+            ? "items-center justify-end"
+            : ""
+        }`}
       >
         <div className='w-[30px] h-[30px] rounded-full relative'>
           <img
