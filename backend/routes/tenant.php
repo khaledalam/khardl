@@ -282,6 +282,9 @@ Route::prefix('api')->middleware([
         ]);
         Route::webhooks('webhook-tap-actions','tap-payment');
     });
+    Route::prefix('delivery')->group(function(){
+        Route::webhooks('webhook-delivery-actions','delivery-companies');
+    });
 
 
 
