@@ -621,6 +621,14 @@
 
     <!--begin::Javascript-->
     <script>
+        var modal = document.getElementById('kt_modal_new_target');
+        modal.addEventListener('hidden.bs.modal', function () {
+            document.getElementById("kt_modal_new_target_form").reset();
+            document.getElementById('checkboxes').innerHTML = '';
+            document.getElementById('selections').innerHTML = '';
+            document.getElementById('dropdowns').innerHTML = '';
+
+        });
         var deleteButtons = document.querySelectorAll('.delete-button');
                     deleteButtons.forEach(function(button) {
                         button.addEventListener('click', function(event) {

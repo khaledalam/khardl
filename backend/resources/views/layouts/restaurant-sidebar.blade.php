@@ -35,6 +35,8 @@
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
         <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/css/resturant-main.css')}}" rel="stylesheet" type="text/css" />
+    @yield('css')
 @endif
 <!--end::Global Stylesheets Bundle-->
 </head>
@@ -192,7 +194,7 @@
                             </a>
 
                         </div>
-                        
+
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
                            <a href="{{route('restaurant.branches')}}">
@@ -224,9 +226,9 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                
+
                                         <span class="menu-title">{{__('messages.menu')}}</span>
-                                    
+
                                 </span>
                              </a>
                           </div>
@@ -372,7 +374,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <span class="menu-title">
-                                        
+
 
                                         {{__('messages.payments')}} </span>
                                 </span>
@@ -649,6 +651,7 @@
 <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
+@yield('js')
 @stack('scripts')
 
 <!--end::Page Custom Javascript-->

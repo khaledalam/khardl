@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Branch extends Model
 {
     // use HasTranslations;
-
+    // TODO @todo soft deletes
     protected $table = 'branches';
 
     protected $fillable = [
