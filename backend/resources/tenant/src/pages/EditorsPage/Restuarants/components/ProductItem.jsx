@@ -18,10 +18,55 @@ const ProductItem = ({
   amountColor,
   fontSize,
   shape,
+  checkbox_required,
+  checkbox_input_titles,
+  checkbox_input_names,
+  checkbox_input_prices,
+
+  selection_required,
+  selection_input_titles,
+  selection_input_names,
+  selection_input_prices,
+
+  dropdown_required,
+  dropdown_input_titles,
+  dropdown_input_names,
 }) => {
+  const [checkboxItems, setCheckboxItems] = useState(
+    Object.keys(checkbox_input_names).map((key) => {
+      const namesArray = checkbox_input_names[key]
+      const pricesArray = checkbox_input_prices[key]
+
+      return namesArray.map((name, index) => ({
+        value: name,
+        price: pricesArray[index],
+      }))
+    })
+  )
+  const [radioItems, setRadioItems] = useState(
+    Object.keys(selection_input_names).map((key) => {
+      const namesArray = selection_input_names[key]
+      const pricesArray = selection_input_prices[key]
+
+      return namesArray.map((name, index) => ({
+        value: name,
+        price: pricesArray[index],
+      }))
+    })
+  )
+  const [dropdownItems, setDropdownItems] = useState(
+    Object.keys(dropdown_input_names).map((key) => {
+      const namesArray = dropdown_input_names[key]
+
+      return namesArray.map((name, index) => ({
+        value: name,
+      }))
+    })
+  )
+
   const [totalPrice, setTotalPrice] = useState(parseFloat(amount))
   const [qtyCount, setQtyCount] = useState(1)
-  const [productExtras, setProductExtras] = useState([
+  const [productExtrasCheckbox, setproductExtrasCheckbox] = useState([
     {name: "extra_cheese", label: "Extra Cheese", price: 50, isChecked: false},
     {name: "extra_source", label: "Extra Source", price: 100, isChecked: false},
     {name: "extra_spicy", label: "Extra Spicy", price: 150, isChecked: false},
@@ -29,13 +74,13 @@ const ProductItem = ({
 
   const handleProductExtra = useCallback(
     (event, idx) => {
-      let data = [...productExtras]
+      let data = [...productExtrasCheckbox]
 
       data[idx].isChecked = event.target.checked
 
-      setProductExtras(data)
+      setproductExtrasCheckbox(data)
     },
-    [productExtras]
+    [productExtrasCheckbox]
   )
   const incrementQty = useCallback(() => {
     setQtyCount((prev) => prev + 1)
@@ -48,7 +93,7 @@ const ProductItem = ({
 
   useEffect(() => {
     let newPrice = 0
-    const extraPrice = productExtras
+    const extraPrice = productExtrasCheckbox
       ?.filter((extra) => extra.isChecked === true)
       .map((extra) => extra.price)
 
@@ -58,7 +103,11 @@ const ProductItem = ({
     } else {
       setTotalPrice(parseFloat(amount))
     }
-  }, [productExtras])
+  }, [productExtrasCheckbox])
+
+  console.log("dropdownItems", dropdownItems)
+  console.log("checkboxItems", checkboxItems)
+  console.log("radioItems", radioItems)
 
   const finalPrice = qtyCount * totalPrice
 
@@ -187,18 +236,71 @@ const ProductItem = ({
               </div>
             </div>
             <div className='border border-neutral-400 px-6 my-4 h-[130px] overflow-x-hidden overflow-y-scroll hide-scroll'>
-              <h3 className='text-[15px] font-bold mb-1'>Customize</h3>
-              <div className='flex flex-col gap-2'>
-                {productExtras.map((extra, idx) => (
-                  <ProductDetailItem
-                    key={idx}
-                    label={extra.label}
-                    name={extra.name}
-                    price={extra.price}
-                    isChecked={extra.isChecked}
-                    onChecked={(e) => handleProductExtra(e, idx)}
-                  />
-                ))}
+              <div className='flex flex-col gap-5'>
+                <div id={"checkbox"} className=''>
+                  <h3 className='text-[15px] font-bold mb-1'>
+                    {checkbox_input_titles &&
+                      checkbox_input_titles.length > 0 &&
+                      checkbox_input_titles[0][0]}
+                  </h3>
+                  <div className='flex flex-col gap-2'>
+                    {checkboxItems &&
+                      checkboxItems.length > 0 &&
+                      checkboxItems[0]?.map((item, idx) => (
+                        <ProductDetailItem
+                          key={idx}
+                          label={item?.value[0]}
+                          name={item?.value[0]}
+                          price={Number(item.price)}
+                          isChecked={false}
+                          onChecked={(e) => handleProductExtra(e, idx)}
+                        />
+                      ))}
+                  </div>
+                </div>
+                <div id={"radio"} className=''>
+                  <h3 className='text-[15px] font-bold mb-1'>
+                    {selection_input_titles &&
+                      selection_input_titles.length > 0 &&
+                      selection_input_titles[0][0]}
+                  </h3>
+                  <div className='flex flex-col gap-2'>
+                    {radioItems &&
+                      radioItems.length > 0 &&
+                      radioItems[0]?.map((item, idx) => (
+                        <ProductDetailItem
+                          key={idx}
+                          label={item?.value[0]}
+                          name={item?.value[0]}
+                          price={Number(item?.price)}
+                          isChecked={false}
+                          isRadio
+                          onChecked={(e) => handleProductExtra(e, idx)}
+                        />
+                      ))}
+                  </div>
+                </div>
+                <div id={"dropdown"} className=''>
+                  <h3 className='text-[15px] font-bold mb-1'>
+                    {dropdown_input_titles &&
+                      dropdown_input_titles.length > 0 &&
+                      dropdown_input_titles[0][0]}
+                  </h3>
+                  <div className='flex flex-col gap-2'>
+                    {dropdownItems &&
+                      dropdownItems.length > 0 &&
+                      dropdownItems[0]?.map((item, idx) => (
+                        <ProductDetailItem
+                          key={idx}
+                          label={item?.value[0]}
+                          name={item?.value[0]}
+                          isDropdown
+                          options={[]}
+                          onChecked={(e) => handleProductExtra(e, idx)}
+                        />
+                      ))}
+                  </div>
+                </div>
               </div>
             </div>
             <div className='px-6 w-full flex items-center justify-between'>

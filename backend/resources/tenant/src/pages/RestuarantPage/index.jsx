@@ -13,6 +13,7 @@ export const RestuarantHomePage = () => {
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   let branch_id = localStorage.getItem("selected_branch_id")
+  // let branch_id = 2
 
   const fetchCategoriesData = async () => {
     try {
@@ -68,7 +69,10 @@ export const RestuarantHomePage = () => {
     <div style={{backgroundColor: restaurantStyle?.page_color}}>
       <NavbarRestuarant />
       <Herosection alignment={"center"} categories={categories} />
-      <ProductSection alignment={"center"} categories={categories} />
+      {/* <ProductSection alignment={"center"} categories={categories} /> */}
+      {categories && categories.length > 0 && (
+        <ProductSection alignment={"center"} categories={categories} />
+      )}
       <FooterRestuarant />
     </div>
   )

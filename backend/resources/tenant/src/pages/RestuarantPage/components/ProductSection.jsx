@@ -41,6 +41,79 @@ const ProductSection = ({categories}) => {
                           imgSrc={product.photo}
                           amount={product.price}
                           caloryInfo={product.calories}
+                          checkbox_required={
+                            product?.checkbox_required
+                              ? product.checkbox_required
+                              : ["true"]
+                          }
+                          checkbox_input_titles={
+                            product?.checkbox_input_titles
+                              ? product?.checkbox_input_titles
+                              : [
+                                  ["Sweet pie", "sweet pie"],
+                                  ["Noodles", "noodles"],
+                                ]
+                          }
+                          checkbox_input_names={
+                            product?.checkbox_input_names
+                              ? product?.checkbox_input_names
+                              : [
+                                  ["sweetpie1", "sweetpie1"],
+                                  ["noodles1", "noodle1"],
+                                ]
+                          }
+                          checkbox_input_prices={
+                            product?.checkbox_input_prices
+                              ? product?.checkbox_input_prices
+                              : [[0, 1], 2]
+                          }
+                          selection_required={
+                            product?.selection_required
+                              ? product?.selection_required
+                              : [[0, 1], 2]
+                          }
+                          selection_input_titles={
+                            product?.selection_input_titles
+                              ? product?.selection_input_titles
+                              : [
+                                  ["Sweet pie", "sweet pie"],
+                                  ["Noodles", "noodles"],
+                                ]
+                          }
+                          selection_input_names={
+                            product?.selection_input_names
+                              ? product?.selection_input_names
+                              : [
+                                  ["Sweet pie", "sweet pie"],
+                                  ["Noodles", "noodles"],
+                                ]
+                          }
+                          selection_input_prices={
+                            product?.selection_input_prices
+                              ? product?.selection_input_prices
+                              : [[0, 1], 2]
+                          }
+                          dropdown_required={
+                            product?.dropdown_required
+                              ? product?.dropdown_required
+                              : [[0, 1], 2]
+                          }
+                          dropdown_input_titles={
+                            product?.dropdown_input_titles
+                              ? product?.dropdown_input_titles
+                              : [
+                                  ["Sweet pie", "sweet pie"],
+                                  ["Noodles", "noodles"],
+                                ]
+                          }
+                          dropdown_input_names={
+                            product?.dropdown_input_names
+                              ? product?.dropdown_input_names
+                              : [
+                                  ["Sweet pie", "sweet pie"],
+                                  ["Noodles", "noodles"],
+                                ]
+                          }
                           cartBgcolor={
                             restaurantStyle?.categoryDetail_cart_color
                           }
@@ -112,6 +185,79 @@ const ProductSection = ({categories}) => {
                             imgSrc={product.photo}
                             amount={product.price}
                             caloryInfo={product.calories}
+                            checkbox_required={
+                              product?.checkbox_required
+                                ? product.checkbox_required
+                                : ["true"]
+                            }
+                            checkbox_input_titles={
+                              product?.checkbox_input_titles
+                                ? product?.checkbox_input_titles
+                                : [
+                                    ["Sweet pie", "sweet pie"],
+                                    ["Noodles", "noodles"],
+                                  ]
+                            }
+                            checkbox_input_names={
+                              product?.checkbox_input_names
+                                ? product?.checkbox_input_names
+                                : [
+                                    ["sweetpie1", "sweetpie1"],
+                                    ["noodles1", "noodle1"],
+                                  ]
+                            }
+                            checkbox_input_prices={
+                              product?.checkbox_input_prices
+                                ? product?.checkbox_input_prices
+                                : [[0, 1], 2]
+                            }
+                            selection_required={
+                              product?.selection_required
+                                ? product?.selection_required
+                                : [[0, 1], 2]
+                            }
+                            selection_input_titles={
+                              product?.selection_input_titles
+                                ? product?.selection_input_titles
+                                : [
+                                    ["Sweet pie", "sweet pie"],
+                                    ["Noodles", "noodles"],
+                                  ]
+                            }
+                            selection_input_names={
+                              product?.selection_input_names
+                                ? product?.selection_input_names
+                                : [
+                                    ["Sweet pie", "sweet pie"],
+                                    ["Noodles", "noodles"],
+                                  ]
+                            }
+                            selection_input_prices={
+                              product?.selection_input_prices
+                                ? product?.selection_input_prices
+                                : [[0, 1], 2]
+                            }
+                            dropdown_required={
+                              product?.dropdown_required
+                                ? product?.dropdown_required
+                                : [[0, 1], 2]
+                            }
+                            dropdown_input_titles={
+                              product?.dropdown_input_titles
+                                ? product?.dropdown_input_titles
+                                : [
+                                    ["Sweet pie", "sweet pie"],
+                                    ["Noodles", "noodles"],
+                                  ]
+                            }
+                            dropdown_input_names={
+                              product?.dropdown_input_names
+                                ? product?.dropdown_input_names
+                                : [
+                                    ["Sweet pie", "sweet pie"],
+                                    ["Noodles", "noodles"],
+                                  ]
+                            }
                             cartBgcolor={
                               restaurantStyle?.categoryDetail_cart_color
                             }
@@ -150,6 +296,39 @@ const ProductSection = ({categories}) => {
                             imgSrc={product.photo}
                             amount={product.price}
                             caloryInfo={product.calories}
+                            checkbox_required={
+                              product?.checkbox_required ?? ["true", "false"]
+                            }
+                            checkbox_input_titles={
+                              product?.checkbox_input_titles ?? [[]]
+                            }
+                            checkbox_input_names={
+                              product?.checkbox_input_names ?? [[]]
+                            }
+                            checkbox_input_prices={
+                              product?.checkbox_input_prices ?? [[]]
+                            }
+                            selection_required={
+                              product?.selection_required ?? ["true", "false"]
+                            }
+                            selection_input_titles={
+                              product?.selection_input_titles ?? [[]]
+                            }
+                            selection_input_names={
+                              product?.selection_input_names ?? [[]]
+                            }
+                            selection_input_prices={
+                              product?.selection_input_prices ?? [[]]
+                            }
+                            dropdown_required={
+                              product?.dropdown_required ?? ["true", "false"]
+                            }
+                            dropdown_input_titles={
+                              product?.dropdown_input_titles ?? [[]]
+                            }
+                            dropdown_input_names={
+                              product?.dropdown_input_names ?? [[]]
+                            }
                             cartBgcolor={
                               restaurantStyle?.categoryDetail_cart_color
                             }
