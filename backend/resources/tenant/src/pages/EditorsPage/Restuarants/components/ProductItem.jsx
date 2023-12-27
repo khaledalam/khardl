@@ -7,6 +7,12 @@ import {MdSend} from "react-icons/md"
 import ProductDetailItem from "./ProductDetailItem"
 import {FiMinusCircle} from "react-icons/fi"
 import {IoAddCircleOutline} from "react-icons/io5"
+import AxiosInstance from "../../../../axios/axios"
+import {toast} from "react-toastify"
+import {addItemToCart} from "../../../../redux/editor/cartSlice"
+import {useDispatch} from "react-redux"
+import {useNavigate} from "react-router-dom"
+import {useTranslation} from "react-i18next"
 
 const ProductItem = ({
   id,
@@ -32,59 +38,18 @@ const ProductItem = ({
   dropdown_input_titles,
   dropdown_input_names,
 }) => {
-  const [checkboxItems, setCheckboxItems] = useState(
-    Object.keys(checkbox_input_names).map((key) => {
-      const namesArray = checkbox_input_names[key]
-      const pricesArray = checkbox_input_prices[key]
-
-      return namesArray.map((name, index) => ({
-        value: name,
-        price: pricesArray[index],
-      }))
-    })
-  )
-  const [radioItems, setRadioItems] = useState(
-    Object.keys(selection_input_names).map((key) => {
-      const namesArray = selection_input_names[key]
-      const pricesArray = selection_input_prices[key]
-
-      return namesArray.map((name, index) => ({
-        value: name,
-        price: pricesArray[index],
-      }))
-    })
-  )
-  const [dropdownItems, setDropdownItems] = useState(
-    Object.keys(dropdown_input_names).map((key) => {
-      const namesArray = dropdown_input_names[key]
-
-      return namesArray.map((name, index) => ({
-        value: name,
-      }))
-    })
-  )
-
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {t} = useTranslation()
+  const [feedback, setFeedback] = useState("")
   const [totalPrice, setTotalPrice] = useState(parseFloat(amount))
   const [qtyCount, setQtyCount] = useState(1)
+  const [gotoCart, setGotoCart] = useState(false)
+  const [checkboxTotalPrice, setCheckboxTotalPrice] = useState(0)
+  const [radioTotalPrice, setRadioTotalPrice] = useState(0)
   const [selectedCheckbox, setSelectedCheckbox] = useState([])
   const [selectedRadio, setSelectedRadio] = useState([])
   const [selectedDropdown, setSelectedDropdown] = useState([])
-  const [productExtrasCheckbox, setproductExtrasCheckbox] = useState([
-    {name: "extra_cheese", label: "Extra Cheese", price: 50, isChecked: false},
-    {name: "extra_source", label: "Extra Source", price: 100, isChecked: false},
-    {name: "extra_spicy", label: "Extra Spicy", price: 150, isChecked: false},
-  ])
-
-  const handleProductExtra = useCallback(
-    (event, idx) => {
-      let data = [...productExtrasCheckbox]
-
-      data[idx].isChecked = event.target.checked
-
-      setproductExtrasCheckbox(data)
-    },
-    [productExtrasCheckbox]
-  )
   const incrementQty = useCallback(() => {
     setQtyCount((prev) => prev + 1)
   }, [])
@@ -93,28 +58,65 @@ const ProductItem = ({
       setQtyCount((prev) => prev - 1)
     }
   }, [qtyCount])
+  const branch_id = localStorage.getItem("selected_branch_id")
+
+  const checkboxItems = Object.keys(checkbox_input_names).map((key) => {
+    const namesArray = checkbox_input_names[key]
+    const pricesArray = checkbox_input_prices[key]
+
+    return namesArray.map((name, index) => ({
+      value: name,
+      price: pricesArray[index],
+    }))
+  })
+
+  const radioItems = Object.keys(selection_input_names).map((key) => {
+    const namesArray = selection_input_names[key]
+    const pricesArray = selection_input_prices[key]
+
+    return namesArray.map((name, index) => ({
+      value: name,
+      price: pricesArray[index],
+    }))
+  })
+  const dropdownItems = Object.keys(dropdown_input_names).map((key) => {
+    const namesArray = dropdown_input_names[key]
+
+    return namesArray.map((name, index) => ({
+      value: name,
+    }))
+  })
 
   useEffect(() => {
-    let newPrice = 0
-    const extraPrice = productExtrasCheckbox
-      ?.filter((extra) => extra.isChecked === true)
-      .map((extra) => extra.price)
-
-    if (extraPrice && extraPrice.length > 0) {
-      newPrice = newPrice + extraPrice.reduce((acc, extra) => acc + extra)
-      setTotalPrice(parseFloat(amount) + newPrice)
-    } else {
-      setTotalPrice(parseFloat(amount))
+    let newTotal = totalPrice
+    for (const i in selectedCheckbox) {
+      for (const j in selectedCheckbox[i]) {
+        const [checkbox_index, index] = selectedCheckbox[i][j]
+        const price = checkboxItems[checkbox_index][index].price
+        newTotal += parseFloat(price)
+      }
     }
-  }, [productExtrasCheckbox])
+    const total_new = newTotal
 
-  console.log("dropdownItems", dropdownItems)
-  console.log("checkboxItems", checkboxItems)
-  console.log("radioItems", radioItems)
+    setTotalPrice(newTotal - checkboxTotalPrice)
+    setCheckboxTotalPrice(total_new - totalPrice)
+  }, [selectedCheckbox])
 
-  console.log("selectedCheckbox", selectedCheckbox)
-  console.log("selectedRadio", selectedRadio)
-  console.log("selectedDropdown", selectedDropdown)
+  useEffect(() => {
+    let newTotal = totalPrice
+    for (const i in selectedRadio) {
+      for (const j in selectedRadio[i]) {
+        const [selection_index, index] = selectedRadio[i][j]
+        const price = radioItems[selection_index][index].price
+        newTotal += parseFloat(price)
+      }
+    }
+
+    const total_new = newTotal
+
+    setTotalPrice(newTotal - radioTotalPrice)
+    setRadioTotalPrice(total_new - totalPrice)
+  }, [selectedRadio])
 
   const handleCheckboxChange = (checkbox_index, index, event) => {
     let isChecked = event.target.checked
@@ -162,6 +164,33 @@ const ProductItem = ({
   }
 
   const finalPrice = qtyCount * totalPrice
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await AxiosInstance.post(`/carts`, {
+        item_id: id,
+        quantity: qtyCount,
+        branch_id: branch_id,
+        notes: feedback,
+        selectedCheckbox: selectedCheckbox,
+        selectedRadio: selectedRadio,
+        selectedDropdown: selectedDropdown,
+      })
+
+      console.log("response ", response)
+
+      if (response?.data) {
+        toast.success(`${t("Item added to cart")}`)
+        setGotoCart(true)
+      }
+    } catch (error) {
+      console.log(error)
+
+      toast.error(error.response?.data?.message)
+      setGotoCart(false)
+    }
+    dispatch(addItemToCart("props.name"))
+  }
 
   return (
     <Fragment>
@@ -271,7 +300,7 @@ const ProductItem = ({
             <div className='w-[90%] mx-auto'>
               <h3 className='text-[1rem] font-bold mb-4'>Feedback</h3>
               <div className='w-full flex items-center gap-4'>
-                <div className='border border-neutral-200 rounded-lg w-[85%] h-[48px] flex items-center gap-2 px-2'>
+                <div className='border border-neutral-200 rounded-lg w-full h-[48px] flex items-center gap-2 px-2'>
                   <PiNoteFill
                     size={28}
                     className='border-r border-neutral-100'
@@ -279,16 +308,18 @@ const ProductItem = ({
                   <input
                     type='text'
                     placeholder='Say something nice...'
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
                     className='input w-full  h-full rounded-none outline-none border-none focus-visible:border-none focus-within:border-none focus-within:outline-none'
                   />
                 </div>
-                <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
+                {/* <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
                   <MdSend size={22} />
-                </div>
+                </div> */}
               </div>
             </div>
             <div className='border border-neutral-400 px-6 my-4 h-[130px] overflow-x-hidden overflow-y-scroll hide-scroll'>
-              <div className='flex flex-col gap-5'>
+              <div className='flex flex-col gap-5 py-4'>
                 {/* checkbox */}
                 {checkbox_input_titles &&
                   checkbox_input_titles.length > 0 &&
@@ -345,7 +376,7 @@ const ProductItem = ({
                   dropdown_input_titles.map((title, dropdown_idx) => (
                     <div id={"dropdown"} className=''>
                       <h3 className='text-[15px] font-bold mb-1'>{title[0]}</h3>
-                      <div className='flex flex-col gap-2'>
+                      <div className='flex flex-col gap-2 mb-3'>
                         {dropdownItems &&
                           dropdownItems.length > 0 &&
                           dropdownItems?.map((item, idx) => (
@@ -372,6 +403,7 @@ const ProductItem = ({
               <div
                 style={{backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00"}}
                 className='w-[45%] flex items-end justify-center gap-5  p-2 rounded-lg'
+                onClick={gotoCart ? () => navigate("/cart") : handleAddToCart}
               >
                 <div className='w-[30px] h-[30px] '>
                   <img
@@ -380,18 +412,33 @@ const ProductItem = ({
                     className='w-full h-full object-contain '
                   />
                 </div>
-                <h3
-                  style={{
-                    color: amountColor
-                      ? amountColor
-                      : cartBgcolor
-                      ? "white"
-                      : "red",
-                  }}
-                  className='text-[14px] font-bold'
-                >
-                  SAR {totalPrice && finalPrice}
-                </h3>
+                {gotoCart ? (
+                  <h3
+                    style={{
+                      color: amountColor
+                        ? amountColor
+                        : cartBgcolor
+                        ? "white"
+                        : "red",
+                    }}
+                    className='text-[14px] font-bold'
+                  >
+                    Check Cart
+                  </h3>
+                ) : (
+                  <h3
+                    style={{
+                      color: amountColor
+                        ? amountColor
+                        : cartBgcolor
+                        ? "white"
+                        : "red",
+                    }}
+                    className='text-[14px] font-bold'
+                  >
+                    SAR {totalPrice && finalPrice}
+                  </h3>
+                )}
               </div>
             </div>
           </div>

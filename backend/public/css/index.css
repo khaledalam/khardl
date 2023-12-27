@@ -4415,6 +4415,9 @@ details.collapse summary::-webkit-details-marker {
 .max-w-\[80px\] {
   max-width: 80px;
 }
+.max-w-\[90\%\] {
+  max-width: 90%;
+}
 .max-w-md {
   max-width: 28rem;
 }
@@ -4423,12 +4426,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .max-w-xl {
   max-width: 36rem;
-}
-.max-w-xs {
-  max-width: 20rem;
-}
-.max-w-\[90\%\] {
-  max-width: 90%;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -11219,6 +11216,9 @@ details.collapse summary::-webkit-details-marker {
 .max-w-\[80px\] {
   max-width: 80px;
 }
+.max-w-\[90\%\] {
+  max-width: 90%;
+}
 .max-w-md {
   max-width: 28rem;
 }
@@ -11227,12 +11227,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .max-w-xl {
   max-width: 36rem;
-}
-.max-w-xs {
-  max-width: 20rem;
-}
-.max-w-\[90\%\] {
-  max-width: 90%;
 }
 .flex-1 {
   flex: 1 1 0%;
