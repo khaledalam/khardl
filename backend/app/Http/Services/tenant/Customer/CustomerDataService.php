@@ -16,4 +16,10 @@ class CustomerDataService
         $allCustomers = RestaurantUser::with(['branch'])->Customers()->orderBy('created_at', 'DESC')->paginate(config('application.perPage'));
         return view('restaurant.customers_data.list', compact('user','allCustomers'));
     }
+    public function show($request,RestaurantUser $restaurantUser)
+    {
+        /** @var RestaurantUser $user */
+        $user  = Auth::user();
+        return view('restaurant.customers_data.show', compact('user','restaurantUser'));
+    }
 }

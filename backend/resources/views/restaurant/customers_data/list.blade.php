@@ -66,17 +66,82 @@
                                         <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->email }}</td>
                                         <td>
-                                            <span class="badge {{ $customer->status }}" >{{__("messages.$customer->status")}}</span>
+                                            <span class="badge {{ $customer->status }}">{{__("messages.$customer->status")}}</span>
                                         </td>
                                         <td>{{ $customer->address }}</td>
                                         <td>{{ $customer->branch?->name }}</td>
                                         <td>{{ $customer->last_login }}</td>
                                         <td>{{ $customer->created_at->format('Y-m-d') }}</td>
+                                        <td class="text-end">
+                                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+                                                <span class="svg-icon svg-icon-5 m-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon--></a>
+                                            <!--begin::Menu-->
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="{{route('customers_data.show',['restaurantUser'=>$customer->id])}}" class="menu-link px-3">View</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">Edit</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                {{-- <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
+                                                </div> --}}
+                                                <div class="menu-item px-3">
+                                                    <a href="#" onclick="showConfirmation({{$customer->id}})" class="menu-link px-3">{{__('messages.status')}}</a>
+                                                </div>
+
+                                                <!--end::Menu item-->
+                                            </div>
+                                            <!--end::Menu-->
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <!--end::Tbody-->
                             </table>
+                            {{-- TODO:Change status --}}
+                            <form id="approve-form"  method="POST" style="display: inline">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="status" id="orderStatus" >
+                            </form>
+                            <script>
+                                function showConfirmation(orderId) {
+                                    event.preventDefault();
+                                    const statusOptions = @json(array_combine(\App\Models\Tenant\Order::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\Order::STATUS)));
+
+                                    Swal.fire({
+                                        text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
+                                        icon: 'warning',
+                                        input: 'select',
+                                        showCancelButton: true,
+                                        inputOptions: statusOptions,
+                                        inputPlaceholder: 'Select an option',
+                                        confirmButtonText: '{{ __('messages.yes') }}',
+                                        cancelButtonText: '{{ __('messages.no') }}'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            const selectedStatus = result.value;
+                                            document.getElementById('orderStatus').setAttribute('value',selectedStatus);
+                                            var form = document.getElementById('approve-form');
+                                            form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
+                                            form.submit();
+
+                                        }
+                                    });
+                                }
+                            </script>
                             {{ $allCustomers->links('pagination::bootstrap-4') }}
                             <!--end::Table-->
                         </div>
@@ -92,94 +157,5 @@
     </div>
     <!--end::Post-->
 </div>
-<!--end::Content-->
-</div>
-<!--end::Wrapper-->
-</div>
-<!--end::Page-->
-</div>
-<!--end::Root-->
-
-<!--begin::Modal -registeration-->
-<div class="modal fade" id="kt_modal_pop_registeration" tabindex="-1" aria-hidden="true">
-    <!--begin::Modal dialog-->
-    <div class="modal-dialog modal-dialog-centered mw-650px">
-        <!--begin::Modal content-->
-        <div class="modal-content rounded">
-            <!--begin::Modal header-->
-            <div class="modal-header pb-0 border-0 justify-content-end">
-                <!--begin::Close-->
-                <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
-                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                    <span class="svg-icon svg-icon-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
-                        </svg>
-                    </span>
-                    <!--end::Svg Icon-->
-                </div>
-                <!--end::Close-->
-            </div>
-            <!--begin::Modal header-->
-            <!--begin::Modal body-->
-            <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                <!--begin:Form-->
-                <form id="kt_modal_bidding_form" class="form" action="#">
-                    <!--begin::Heading-->
-                    <div class="mb-13 text-center">
-                        <!--begin::Title-->
-                        <h1 class="mb-3">Add funds</h1>
-                        <!--end::Title-->
-                    </div>
-                    <!--end::Heading-->
-                    <!--begin::Input group-->
-                    <div class="d-flex flex-column mb-8 fv-row">
-                        <input type="text" class="form-control form-control-solid" placeholder="Add funds" name="bid_funds" />
-                    </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Actions-->
-                    <div class="text-center">
-                        <button type="reset" class="btn btn-light me-3" data-kt-modal-action-type="cancel">Cancel</button>
-                        <button type="submit" class="btn btn-primary" data-kt-modal-action-type="submit">
-                            <span class="indicator-label">Submit</span>
-                            <span class="indicator-progress">Please wait...
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                        </button>
-                    </div>
-                    <!--end::Actions-->
-                </form>
-                <!--end:Form-->
-            </div>
-            <!--end::Modal body-->
-        </div>
-        <!--end::Modal content-->
-    </div>
-    <!--end::Modal dialog-->
-</div>
-<!--end::Modal -registeration-->
-
-<!--begin::Javascript-->
-<script>
-    var hostUrl = "../assets/";
-
-</script>
-<!--begin::Global Javascript Bundle(used by all pages)-->
-<script src="../assets/plugins/global/plugins.bundle.js"></script>
-{{-- <script src="../assets/js/scripts.bundle.js"></script>--}}
-<!--end::Global Javascript Bundle-->
-<!--begin::Page Vendors Javascript(used by this page)-->
-{{-- <script src="../assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>--}}
-{{-- <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>--}}
-<!--end::Page Vendors Javascript-->
-<!--begin::Page Custom Javascript(used by this page)-->
-{{-- <script src="../assets/js/widgets.bundle.js"></script>--}}
-{{-- <script src="../assets/js/custom/widgets.js"></script>--}}
-{{-- <script src="../assets/js/custom/apps/chat/chat.js"></script>--}}
-{{-- <script src="../assets/js/custom/utilities/modals/upgrade-plan.js"></script>--}}
-{{-- <script src="../assets/js/custom/utilities/modals/create-app.js"></script>--}}
-{{-- <script src="../assets/js/custom/utilities/modals/users-search.js"></script>--}}
-<!--end::Page Custom Javascript-->
 
 @endsection
