@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -114,7 +115,7 @@ Route::group([
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
-                Route::get('/customers-data', [RestaurantController::class, 'customers_data'])->name('restaurant.customers_data');
+                Route::get('/customers-data', [CustomerDataController::class, 'index'])->name('restaurant.customers_data');
                 Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
                 Route::post('/update-settings', [RestaurantController::class, 'upadteSettings'])->name('restaurant.update.settings');
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');

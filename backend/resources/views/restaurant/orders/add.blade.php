@@ -115,7 +115,7 @@
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
                                     <div class="card-body pt-0">
-                                        <div class="d-flex flex-column gap-10">
+                                        <div class="d-flex flex-column gap-5">
                                             <!--begin::Input group-->
                                             <div>
                                                 <!--begin::Label-->
@@ -137,7 +137,7 @@
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Separator-->
-                                            <div class="separator"></div>
+                                            <label class="required form-label">Select branch first</label>
                                             <select id="branchSelect" name="branch_id"  required class="form-select" style="width: 300px;">
                                                 <option>Select branch</option>
                                                 @foreach ($branches as $branch)
@@ -147,6 +147,7 @@
                                             <div class="separator"></div>
                                             <!--end::Separator-->
                                             <!--begin::Search products-->
+                                            <label class="required form-label">Select products</label>
                                             <div class="d-flex align-items-center position-relative mb-n7">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                                 <span class="svg-icon svg-icon-1 position-absolute ms-4">
@@ -157,8 +158,8 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                                 {{-- <input type="text" data-kt-ecommerce-edit-order-filter="search"
-                                                    class="form-control form-control-solid w-100 w-lg-50 ps-14"
-                                                    placeholder="Search Products" /> --}}
+                                                    class="form-control form-control-solid w-100 w-lg-50 ps-14"                                                    placeholder="Search Products" /> --}}
+
                                                 <select id="productSelect" class="form-select" multiple style="width: 300px;">
                                                     <option disabled>Search for a product...</option>
                                                 </select>

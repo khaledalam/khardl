@@ -373,10 +373,10 @@
 
                             <ul class="nav nav-tabs" >
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="name-en-tab" data-bs-toggle="tab" href="#name-en">English</a>
+                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">English</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">Arabic</a>
+                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">Arabic</a>
                                 </li>
                             </ul>
                             <div class="tab-content mt-3">
@@ -1044,7 +1044,7 @@
                 alert('Please fill in the input in the (English) tab.');
                 return ;
             }
-            
+
             document.getElementById('category-submit').submit();
         });
 
@@ -1069,9 +1069,9 @@
                 submitButton.disabled = false;
                 return ;
             }
-         
 
-       
+
+
             if(inputValueAR === '' && inputValue != ''){
                 alert(`Please fill name description in (Arabic) tab.`);
                 submitButton.disabled = false;

@@ -59,14 +59,6 @@ class RestaurantController extends BaseController
             compact('user'));
     }
 
-    public function customers_data(){
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-
-        return view('restaurant.customers_data',
-            compact('user'));
-    }
-
     public function settings(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
@@ -208,7 +200,7 @@ class RestaurantController extends BaseController
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
-       
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required',
@@ -231,7 +223,7 @@ class RestaurantController extends BaseController
             'friday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
             'friday_close' => 'nullable|required_if:hours_option,custom|date_format:H:i|after:friday_open',
         ]);
-       
+
 
 
         list($lat, $lng) = explode(' ', $validatedData['location']);
@@ -242,13 +234,13 @@ class RestaurantController extends BaseController
             if($request->hours_option == 'normal'){
                 if($open)
                     return  Carbon::createFromFormat('H:i', $request->input('normal_from'))->format('H:i');
-                else 
+                else
                     return  Carbon::createFromFormat('H:i', $request->input('normal_to'))->format('H:i');
             }else {
                 return  Carbon::createFromFormat('H:i', $time)->format('H:i');
             }
         };
-        
+
         $newBranchId = DB::table('branches')->insertGetId([
             'name' => $validatedData['name'],
             'lat' => (float) $lat,
