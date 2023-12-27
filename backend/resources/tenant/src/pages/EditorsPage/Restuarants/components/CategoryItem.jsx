@@ -30,9 +30,9 @@ const CategoryItem = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className={`flex ${
+      className={`flex w-5/6 ${
         isGrid ? "flex-row" : "flex-col"
-      } gap-3 items-center justify-center`}
+      } gap-3 items-center`}
     >
       <div
         style={{
@@ -46,11 +46,17 @@ const CategoryItem = ({
           shape === "sharp" ? "" : "rounded-full"
         }  flex items-center justify-center scale-100 hover:scale-125 transition-all duration-300   bg-neutral-100  `}
       >
-        <div className='w-[50px] h-[50px] flex items-center justify-center'>
+        <div
+          className={`w-[50px] h-[50px] flex items-center ${
+            shape === "sharp" ? "" : "rounded-full"
+          } justify-center`}
+        >
           <img
             src={imgSrc ? imgSrc : ImgBurger}
             alt={alt}
-            className='w-full h-full object-cover'
+            className={`w-full h-full object-cover ${
+              shape === "sharp" ? "" : "rounded-full"
+            } `}
           />
         </div>
       </div>

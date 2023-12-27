@@ -5,11 +5,22 @@ import MainBoardEditor from "./components/MainBoardEditor"
 import AxiosInstance from "../../../axios/axios"
 import {useDispatch, useSelector} from "react-redux"
 import {changeStyleDataRestaurant} from "../../../redux/editor/styleDataRestaurantSlice"
-import {changeRestuarantEditorStyle} from "../../../redux/NewEditor/restuarantEditorSlice"
+import {
+  changeRestuarantEditorStyle,
+  setSidebarCollapse,
+} from "../../../redux/NewEditor/restuarantEditorSlice"
 
 export const RestuarantEditor = () => {
   const dispatch = useDispatch()
   const [categories, setCategories] = useState([])
+
+  const isSidebarCollapse = useSelector(
+    (state) => state.restuarantEditorStyle.collapse_sidebar
+  )
+
+  const handleSidebarCollapse = () => {
+    dispatch(setSidebarCollapse(!isSidebarCollapse))
+  }
 
   const fetchResStyleData = async () => {
     try {
@@ -68,12 +79,23 @@ export const RestuarantEditor = () => {
   return (
     <div className='block'>
       <Navbar />
-      <div className='flex bg-white h-[calc(100vh-75px)] w-full'>
-        <div className='flex-[18%] xl:flex-[30%] laptopXL:flex-[25%] overflow--hidden bg-white h-full '>
+      <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all'>
+        <div
+          className={`transition-all ${
+            isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[18%]"
+          } xl:flex-[30%] laptopXL:flex-[25%] overflow--hidden bg-white h-full `}
+        >
           <SidebarEditor />
         </div>
-        <div className='flex-[81%] xl:flex-[70%] laptopXL:flex-[75%] overflow-x-hidden bg-neutral-200 h-full overflow-y-scroll hide-scroll'>
-          <MainBoardEditor categories={categories} />
+        <div
+          className={` transition-all ${
+            isSidebarCollapse ? "flex-[100%] w-full" : "flex-[82%]"
+          } xl:flex-[70%] laptopXL:flex-[75%] overflow-x-hidden bg-neutral-200 h-full overflow-y-scroll hide-scroll`}
+        >
+          <MainBoardEditor
+            categories={categories}
+            toggleSidebarCollapse={handleSidebarCollapse}
+          />
         </div>
       </div>
     </div>

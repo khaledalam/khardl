@@ -20,7 +20,7 @@ import {
   setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 
-const MainBoardEditor = ({categories}) => {
+const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
@@ -129,7 +129,7 @@ const MainBoardEditor = ({categories}) => {
         className='w-full min-h-[85px]   rounded-xl flex items-center justify-between px-2'
       >
         <div
-          onClick={toggleTheMenu}
+          onClick={toggleSidebarCollapse}
           className='btn hover:bg-neutral-100 flex items-center gap-3'
         >
           <IoMenuOutline size={40} className='text-neutral-400' />
@@ -327,14 +327,14 @@ const MainBoardEditor = ({categories}) => {
         </Fragment>
       )} */}
       <div
-        className={`w-full h-[550px] flex ${
+        className={`w-full h-[500px] flex ${
           category_alignment === "center"
             ? "flex-col justify-center"
             : "flex-row"
         } items-center gap-8`}
       >
         <div
-          className={` h-full ${
+          className={` h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
             category_alignment === "left"
               ? "order-1 w-[25%]"
               : category_alignment === "right"
@@ -389,7 +389,11 @@ const MainBoardEditor = ({categories}) => {
               : "w-[75%]"
           }`}
         >
-          <div className={`w-full flex bg-white p-8`}>
+          <div
+            className={`w-full flex ${
+              categoryDetail_shape === "sharp" ? "" : "rounded-lg"
+            } bg-white p-8`}
+          >
             <div
               className={`w-full h-full flex flex-col items-center justify-center `}
             >
@@ -410,10 +414,44 @@ const MainBoardEditor = ({categories}) => {
                     .map((product, i) => (
                       <ProductItem
                         key={i}
+                        id={product.id}
                         name={product.description}
                         imgSrc={product.photo}
                         amount={product.price}
                         caloryInfo={product.calories}
+                        checkbox_required={
+                          product?.checkbox_required ?? ["true", "false"]
+                        }
+                        checkbox_input_titles={
+                          product?.checkbox_input_titles ?? [[]]
+                        }
+                        checkbox_input_names={
+                          product?.checkbox_input_names ?? [[]]
+                        }
+                        checkbox_input_prices={
+                          product?.checkbox_input_prices ?? [[]]
+                        }
+                        selection_required={
+                          product?.selection_required ?? ["true", "false"]
+                        }
+                        selection_input_titles={
+                          product?.selection_input_titles ?? [[]]
+                        }
+                        selection_input_names={
+                          product?.selection_input_names ?? [[]]
+                        }
+                        selection_input_prices={
+                          product?.selection_input_prices ?? [[]]
+                        }
+                        dropdown_required={
+                          product?.dropdown_required ?? ["true", "false"]
+                        }
+                        dropdown_input_titles={
+                          product?.dropdown_input_titles ?? [[]]
+                        }
+                        dropdown_input_names={
+                          product?.dropdown_input_names ?? [[]]
+                        }
                         cartBgcolor={categoryDetail_cart_color}
                         amountColor={price_color}
                         shape={categoryDetail_shape}

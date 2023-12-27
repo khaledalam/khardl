@@ -54,6 +54,7 @@ const restuarantEditorSlice = createSlice({
     logo_url: null,
     banner_image_url: null,
     banner_images_urls: null,
+    collapse_sidebar: false,
   },
   reducers: {
     headerPosition: (state, action) => {
@@ -158,6 +159,9 @@ const restuarantEditorSlice = createSlice({
     setBannersUpload: (state, action) => {
       state.bannersUpload = [].concat(action.payload)
     },
+    setSidebarCollapse: (state, action) => {
+      state.collapse_sidebar = action.payload
+    },
   },
 })
 
@@ -195,5 +199,6 @@ export const {
   logoUpload,
   setBannerUpload,
   setBannersUpload,
+  setSidebarCollapse,
 } = restuarantEditorSlice.actions
 export default restuarantEditorSlice.reducer

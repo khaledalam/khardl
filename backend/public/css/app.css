@@ -4414,6 +4414,15 @@ details.collapse summary::-webkit-details-marker {
 .w-full {
   width: 100%;
 }
+.w-\[40\%\] {
+  width: 40%;
+}
+.w-1 {
+  width: 0.25rem;
+}
+.w-0 {
+  width: 0px;
+}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }
@@ -4491,6 +4500,15 @@ details.collapse summary::-webkit-details-marker {
 }
 .flex-\[81\%\] {
   flex: 81%;
+}
+.flex-\[0\] {
+  flex: 0;
+}
+.flex-\[100\%\] {
+  flex: 100%;
+}
+.flex-\[82\%\] {
+  flex: 82%;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
