@@ -324,9 +324,9 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->saturday_closed) checked @endif name="saturday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->saturday_closed) checked @endif name="saturday_closed" id="saturday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="saturday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -348,9 +348,9 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->sunday_closed) checked @endif name="sunday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->sunday_closed) checked @endif name="sunday_closed" id="sunday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="sunday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -372,9 +372,9 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->monday_closed) checked @endif name="monday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->monday_closed) checked @endif name="monday_closed" id="monday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="monday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -396,9 +396,9 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->tuesday_closed) checked @endif name="tuesday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->tuesday_closed) checked @endif name="tuesday_closed" id="tuesday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="tuesday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -420,9 +420,9 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->wednesday_closed) checked @endif name="wednesday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->wednesday_closed) checked @endif name="wednesday_closed" id="wednesday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="wednesday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -443,9 +443,9 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->thursday_closed) checked @endif name="thursday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->thursday_closed) checked @endif name="thursday_closed" id="thursday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="thursday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -466,9 +466,9 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->friday_closed) checked @endif name="friday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->friday_closed) checked @endif name="friday_closed" id="friday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="friday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -644,9 +644,41 @@
                     <!--end::Input-->
                 </div>
                 <!--end::Col-->
-
-                <!--begin::Col-->
                 <div class="col-md-12 fv-row">
+                    <div class="position-relative d-flex align-items-center">
+                        <div class="card-body pt-0">
+                            <p class="form-label required fs-6 fw-bold mb-2">{{__("messages.time")}} </p>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hours_option" id="normalChoice" value="normal" checked>
+                                <label class="form-check-label" for="normalChoice">{{ __('messages.choose-time-for-all-days') }}</label>
+                            </div>
+                          
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hours_option" id="customChoice" value="custom">
+                                <label class="form-check-label" for="customChoice">{{ __('messages.choose-time-for-custom-days') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Hours input for normal choice -->
+                 <div  id="normalChoiceSection">
+                 
+                    <div class=" d-flex justify-content-between w-100">
+                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                            <label for="normal_from">{{ __('messages.from') }}  </label>
+                            <input type="time" class="form-control form-control-solid"  name="normal_from" id="normal_from"   />
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                            <label for="normal_to">{{ __('messages.to') }}  </label>
+                            <input type="time" class="form-control form-control-solid"  name="normal_to" id="normal_to"   />
+
+                        </div>
+                    </div>
+                </div>
+                <!--begin::Col-->
+                <div class="col-md-12 fv-row"  id="customChoiceTabs">
+
                     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6 d-flex justify-content-center">
                         <li class="nav-item">
                             <a class="nav-link text-dark active" data-bs-toggle="tab" href="#kt_tab_pane_8">{{ __('messages.saturday') }}</a>
@@ -671,18 +703,18 @@
                         </li>
                     </ul>
 
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content" id="customChoiceContent"  >
 
                         <div class="tab-pane fade show active" id="kt_tab_pane_8" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="saturday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_open" id="saturday_open"  required />
+                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_open" id="saturday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="saturday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_close" id="saturday_close"  required />
+                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_close" id="saturday_close"   />
 
                                 </div>
                             </div>
@@ -692,12 +724,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="sunday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_open" id="sunday_open"  required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_open" id="sunday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="sunday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_close" id="sunday_close"  required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_close" id="sunday_close"   />
 
                                 </div>
                             </div>
@@ -707,12 +739,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="monday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_open" id="monday_open"  required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_open" id="monday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="monday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_close" id="monday_close"  required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_close" id="monday_close"   />
 
                                 </div>
                             </div>
@@ -722,12 +754,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="tuesday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_open" id="tuesday_open"  required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_open" id="tuesday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="tuesday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_close" id="tuesday_close"  required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_close" id="tuesday_close"   />
                                 </div>
                             </div>
                         </div>
@@ -736,12 +768,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="wednesday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_open" id="wednesday_open" required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_open" id="wednesday_open"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="wednesday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_close" id="wednesday_close" required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_close" id="wednesday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -750,12 +782,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="thursday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_open" id="thursday_open"  required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_open" id="thursday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="thursday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_close" id="thursday_close" required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_close" id="thursday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -764,12 +796,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="friday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_open" id="friday_open" required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_open" id="friday_open"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="friday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_close" id="friday_close" required />
+                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_close" id="friday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -825,7 +857,42 @@
     <!--end::Scrolltop-->
 
     <script>
+        var normalChoiceSection = document.getElementById('normalChoiceSection');
+        var customChoiceTabs = document.getElementById('customChoiceTabs');
+        var customChoiceContent = document.getElementById('customChoiceContent');
+        function setRequiredForCustomChoice(required) {
+            var customInputs = customChoiceContent.querySelectorAll('input[type="time"]');
+            customInputs.forEach(function (input) {
+                input.required = required;
+            });
+        }
+        function setRequiredForNormalChoice(required) {
+            var customInputs = normalChoiceSection.querySelectorAll('input[type="time"]');
+            customInputs.forEach(function (input) {
+                input.required = required;
+            });
+        }
+        // Hide/show sections based on the selected option
+        document.querySelectorAll('input[name="hours_option"]').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                if (this.value === 'normal') {
+                    normalChoiceSection.style.display = 'block';
+                    customChoiceTabs.style.display = 'none';
+                    customChoiceContent.style.display = 'none';
+                    setRequiredForNormalChoice(true);
+                    setRequiredForCustomChoice(false);
+                } else if (this.value === 'custom') {
+                    normalChoiceSection.style.display = 'none';
+                    customChoiceTabs.style.display = 'block';
+                    customChoiceContent.style.display = 'block';
+                    setRequiredForNormalChoice(false);
+                    setRequiredForCustomChoice(true);
+                }
+            });
+        });
 
+        // Initialize based on the default selected option
+        document.querySelector('input[name="hours_option"]:checked').dispatchEvent(new Event('change'));
         document.addEventListener("DOMContentLoaded", (event) => {
             let maps = {}; // Store maps in an object
             let markers = {}; // Store markers in an object
@@ -903,6 +970,9 @@
                 const lngInput = document.getElementById('lng' + branchId);
                 latInput.value = latLng.lat();
                 lngInput.value = latLng.lng();
+                const locationInput = document.getElementById('location');
+                locationInput.value = `${lngInput.value }, ${latInput.value }`;
+
             }
 
             function updateLocation(branchId) {
@@ -937,7 +1007,7 @@
 
             // Initialize the maps for each branch
             @foreach ($branches as $branch)
-            initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
+                initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
             @endforeach
 
 

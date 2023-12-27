@@ -66,6 +66,9 @@ class CartRepository
 
         return CartItem::updateOrCreate([
             'item_id' => $item->id,
+            'checkbox_options'=>$checkbox_options,
+            'selection_options'=>$selection_options,
+            'dropdown_options'=>$dropdown_options,
         ],[
             'cart_id' => $this->cart->id,
             'price' =>$item->price,
@@ -131,8 +134,9 @@ class CartRepository
     }
     public function remove($id): JsonResponse
     {
+
         $this->cart->items()
-            ->where('item_id', $id)
+            ->where('id', $id)
             ->delete();
         return $this->sendResponse(null, __('The meal has been removed successfully.'));
     }
