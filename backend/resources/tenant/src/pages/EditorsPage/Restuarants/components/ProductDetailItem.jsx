@@ -53,12 +53,15 @@ const ProductDetailItem = ({
       )}
 
       {isDropDown && (
-        <select className='select w-full max-w-xs' onChange={onChange}>
+        <select
+          className='select w-full max-w-[90%] select-bordered'
+          onChange={onChange}
+        >
           <option disabled selected>
             select option
           </option>
           {options.map((option, idx) => (
-            <option key={idx} value={option[0]}>
+            <option key={idx} value={idx}>
               {option.value[0]}
             </option>
           ))}

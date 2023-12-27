@@ -327,7 +327,7 @@ const ProductItem = ({
                             <ProductDetailItem
                               key={idx}
                               label={item?.value[0]}
-                              name={item?.value[0]}
+                              name={"radio_item"}
                               price={Number(item?.price)}
                               isRadio
                               onChange={(e) =>
