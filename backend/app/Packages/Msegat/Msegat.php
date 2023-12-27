@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Packages;
+namespace App\Packages\Msegat;
 
 use Exception;
 use App\Utils\ResponseHelper;

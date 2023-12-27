@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('delivery_company', static function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->json('name');
+            $table->string('Module');
+            $table->boolean('status')->default(false);
+            $table->json('description')->nullable();
             $table->float('price', 8, 2)->default(0);
             $table->float('extra_price', 8, 2)->default(0);
             $table->float('coverage_km', 8, 2)->default(0);

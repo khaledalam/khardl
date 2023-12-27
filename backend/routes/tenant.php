@@ -15,7 +15,6 @@ use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
 use App\Http\Controllers\API\Tenant\ItemController;
 use App\Http\Controllers\API\Tenant\OrderController;
-use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Packages\TapPayment\Controllers\FileController;
@@ -34,6 +33,7 @@ use App\Packages\TapPayment\Controllers\SubscriptionController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 
 /*

@@ -3,9 +3,10 @@
 namespace App\Models\Tenant;
 
 use Carbon\Carbon;
-use App\Packages\Msegat;
+
 use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
+use App\Packages\Msegat\Msegat;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -137,18 +138,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         return 1;
     }
 
-    public function delivery_companies()
-    {
-        return $this->hasManyThrough(
-            DeliveryCompany::class,
-            UserDeliveryCompanies::class,
-            'user_id',  // Foreign key on the restaurant_delivery_company table...
-            'id',             // Local key on the delivery_company table...
-            'id',             // Local key on the restaurants table...
-            'delivery_company_id' // Foreign key on the restaurant_delivery_company table...
-        );
-    }
-
+  
     public function tap_verified(): bool
     {
         return $this->tap_verified;

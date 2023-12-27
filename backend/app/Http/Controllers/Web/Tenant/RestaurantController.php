@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
-use App\Http\Services\tenant\Restaurant\RestaurantService;
 use App\Models\Tenant\Item;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
@@ -20,17 +18,22 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\OrderStatusLogs;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
+use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
+use App\Http\Services\tenant\Restaurant\RestaurantService;
 
 class RestaurantController extends BaseController
 {
     public function __construct(
         private RestaurantService $restaurantService
       ) {
-      }
+    }
     public function index(){
+        $sd = new Yeswa();
+        dd($sd->assignToDriver(1));
         return $this->restaurantService->index();
     }
 
