@@ -69,7 +69,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function isWorker(){
         return $this->hasRole("Worker");
     }
-    
+
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
@@ -135,6 +135,18 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         // @TODO: logic based on how many services(slots) owner buy
 
         return 1;
+    }
+
+    public function delivery_companies()
+    {
+        return $this->hasManyThrough(
+            DeliveryCompany::class,
+            UserDeliveryCompanies::class,
+            'user_id',  // Foreign key on the restaurant_delivery_company table...
+            'id',             // Local key on the delivery_company table...
+            'id',             // Local key on the restaurants table...
+            'delivery_company_id' // Foreign key on the restaurant_delivery_company table...
+        );
     }
 
     public function tap_verified(): bool

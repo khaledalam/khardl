@@ -27,7 +27,6 @@ class  OrderController extends BaseRepositoryController
             } else if (!Auth::user()?->isWorker() && !Auth::user()?->isRestaurantOwner()) {
                 // customer get his orders
                 $this->default_repository = new CustomerOrderRepository();
-
             }
             return $next($request);
 
@@ -88,7 +87,6 @@ class  OrderController extends BaseRepositoryController
             return $this->sendResponse(null, __('Order has been updated successfully.'));
         }
 
-
         return redirect()->back()->with('success',__('Order has been updated successfully.'));
     }
 
@@ -97,6 +95,7 @@ class  OrderController extends BaseRepositoryController
 
         // @TODO
 
+//        dd($order?->branch());
 
         // Get all delivery companies that registered for this restaurant
 
