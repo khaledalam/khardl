@@ -18,6 +18,7 @@ class DeliveryCompany extends Model
         'contract',
         'profile',
         'payments',
+        'api_url',
         'api_key',
         'secret_key',
         'api_doc_url',
@@ -25,14 +26,6 @@ class DeliveryCompany extends Model
 
     public $translatable = ['name', 'description'];
 
-    const DELIVERY = 'Delivery';
-    const PICKUP = 'PICKUP';
-    const PICKUP_BY_CAR = 'PICKUP By Car';
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
 
 
 }
