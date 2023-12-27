@@ -44,7 +44,7 @@ const Herosection = ({alignment, categories}) => {
             />
           </div>
         </div>
-        {restaurantStyle && restaurantStyle?.banner_type === "one-page" ? (
+        {restaurantStyle && restaurantStyle?.banner_type === "one-photo" ? (
           <div
             className='w-5/6 overflow-hidden h-[471px] laptopXL:w-[75%]'
             style={{

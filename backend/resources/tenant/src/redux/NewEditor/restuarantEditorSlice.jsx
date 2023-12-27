@@ -7,6 +7,8 @@ const restuarantEditorSlice = createSlice({
     user: null,
     logo: "",
     logoUpload: null,
+    bannerUpload: null,
+    bannersUpload: null,
     headerPosition: "relative",
     logo_alignment: "center",
     logo_shape: "rounded",
@@ -49,6 +51,9 @@ const restuarantEditorSlice = createSlice({
     text_color: "#333",
     banner_image: "",
     banner_images: [],
+    logo_url: null,
+    banner_image_url: null,
+    banner_images_urls: null,
   },
   reducers: {
     headerPosition: (state, action) => {
@@ -140,19 +145,18 @@ const restuarantEditorSlice = createSlice({
     logoUpload: (state, action) => {
       state.logoUpload = action.payload
     },
-    clearLogoUpload: () => null,
 
-    bannerImage: (state, action) => {
-      state.banner_image = action.payload
-    },
-    bannerImages: (state, action) => {
-      state.banner_images = state.banner_images.push(action.payload)
-    },
     changeRestuarantEditorStyle: (state, action) => {
       return (state = {
         ...state,
         ...action.payload,
       })
+    },
+    setBannerUpload: (state, action) => {
+      state.bannerUpload = action.payload
+    },
+    setBannersUpload: (state, action) => {
+      state.bannersUpload = [].concat(action.payload)
     },
   },
 })
@@ -189,8 +193,7 @@ export const {
   phoneNumberAlignment,
   changeRestuarantEditorStyle,
   logoUpload,
-  clearLogoUpload,
-  bannerImage,
-  bannerImages,
+  setBannerUpload,
+  setBannersUpload,
 } = restuarantEditorSlice.actions
 export default restuarantEditorSlice.reducer

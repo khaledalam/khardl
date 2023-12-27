@@ -9,7 +9,7 @@ const ProductDetailItem = ({isChecked, price, label, onChecked, name}) => {
           <div className='flex flex-row items-center gap-2 '>
             <span className='label-text'>+ SAR {price}</span>
             <input
-              type='radio'
+              type='checkbox'
               name={name}
               className='radio w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[#2A6E4F]'
               checked={isChecked}

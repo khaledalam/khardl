@@ -17,6 +17,7 @@ import {selectedCategoryAPI} from "../../../../redux/NewEditor/categoryAPISlice"
 import {
   clearLogoUpload,
   logoUpload,
+  setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const MainBoardEditor = ({categories}) => {
@@ -86,8 +87,7 @@ const MainBoardEditor = ({categories}) => {
 
     const selectedLogo = event.target.files[0]
     if (selectedLogo) {
-      // setUploadLogo(selectedLogo)
-      dispatch(logoUpload(selectedLogo))
+      dispatch(logoUpload(URL.createObjectURL(selectedLogo)))
     }
   }
 
@@ -95,13 +95,15 @@ const MainBoardEditor = ({categories}) => {
     event.preventDefault()
 
     const selectedBanner = event.target.files[0]
+
     if (selectedBanner) {
-      setUploadSingleBanner(selectedBanner)
+      setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+      dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
     }
   }
 
   const clearLogo = () => {
-    dispatch(clearLogoUpload())
+    dispatch(logoUpload(null))
   }
   const clearBanner = () => {
     setUploadSingleBanner(null)
@@ -174,7 +176,7 @@ const MainBoardEditor = ({categories}) => {
           />
           <label htmlFor='logo'>
             <img
-              src={uploadLogo ? URL.createObjectURL(uploadLogo) : logo}
+              src={uploadLogo ? uploadLogo : logo}
               alt={""}
               style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
               className='w-full h-full object-cover'
@@ -203,7 +205,7 @@ const MainBoardEditor = ({categories}) => {
           style={{
             backgroundColor: banner_background_color,
             backgroundImage: uploadSingleBanner
-              ? `url(${URL.createObjectURL(uploadSingleBanner)})`
+              ? `url(${uploadSingleBanner})`
               : `url(${banner_image})`,
             borderRadius: banner_shape === "sharp" ? 0 : 12,
             backgroundSize: "cover",
@@ -228,11 +230,7 @@ const MainBoardEditor = ({categories}) => {
                 hidden
               />
               <img
-                src={
-                  uploadSingleBanner
-                    ? URL.createObjectURL(uploadSingleBanner)
-                    : banner_image
-                }
+                src={uploadSingleBanner ? uploadSingleBanner : banner_image}
                 alt={""}
                 className='w-full h-full object-cover'
               />

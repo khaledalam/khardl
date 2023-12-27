@@ -19,18 +19,13 @@ const ProductItem = ({
   fontSize,
   shape,
 }) => {
+  const [totalPrice, setTotalPrice] = useState(parseFloat(amount))
+  const [qtyCount, setQtyCount] = useState(1)
   const [productExtras, setProductExtras] = useState([
     {name: "extra_cheese", label: "Extra Cheese", price: 50, isChecked: false},
-    {name: "extra_source", label: "Extra Source", price: 50, isChecked: false},
-    {name: "extra_spicy", label: "Extra Spicy", price: 50, isChecked: false},
+    {name: "extra_source", label: "Extra Source", price: 100, isChecked: false},
+    {name: "extra_spicy", label: "Extra Spicy", price: 150, isChecked: false},
   ])
-  const [totalPrice, setTotalPrice] = useState(0)
-
-  useEffect(() => {
-    if (amount) {
-      setTotalPrice(parseFloat(amount))
-    }
-  }, [amount])
 
   const handleProductExtra = useCallback(
     (event, idx) => {
@@ -42,20 +37,30 @@ const ProductItem = ({
     },
     [productExtras]
   )
-
-  console.log("productExtras", productExtras)
-  console.log("amount", parseFloat(amount))
-  console.log("totalPrice", totalPrice)
+  const incrementQty = useCallback(() => {
+    setQtyCount((prev) => prev + 1)
+  }, [])
+  const decrementQty = useCallback(() => {
+    if (qtyCount > 1) {
+      setQtyCount((prev) => prev - 1)
+    }
+  }, [qtyCount])
 
   useEffect(() => {
-    let newPrice
-    productExtras.forEach((extra) => {
-      if (extra.isChecked) {
-        newPrice = parseFloat(extra.price + totalPrice)
-      }
-    })
-    setTotalPrice(newPrice)
-  }, [productExtras, totalPrice])
+    let newPrice = 0
+    const extraPrice = productExtras
+      ?.filter((extra) => extra.isChecked === true)
+      .map((extra) => extra.price)
+
+    if (extraPrice && extraPrice.length > 0) {
+      newPrice = newPrice + extraPrice.reduce((acc, extra) => acc + extra)
+      setTotalPrice(parseFloat(amount) + newPrice)
+    } else {
+      setTotalPrice(parseFloat(amount))
+    }
+  }, [productExtras])
+
+  const finalPrice = qtyCount * totalPrice
 
   return (
     <Fragment>
@@ -158,7 +163,7 @@ const ProductItem = ({
                   style={{color: amountColor ? amountColor : "red"}}
                   className='text-[17px] font-bold'
                 >
-                  {amount}
+                  {totalPrice && finalPrice}
                 </span>
               </div>
             </div>
@@ -198,9 +203,9 @@ const ProductItem = ({
             </div>
             <div className='px-6 w-full flex items-center justify-between'>
               <div className='flex items-center justify-between w-1/3'>
-                <FiMinusCircle size={28} />
-                <h3 className='text-[16px] font-bold'>1</h3>
-                <IoAddCircleOutline size={28} />
+                <FiMinusCircle size={28} onClick={decrementQty} />
+                <h3 className='text-[16px] font-bold'>{qtyCount}</h3>
+                <IoAddCircleOutline size={28} onClick={incrementQty} />
               </div>
               <div
                 style={{backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00"}}
@@ -223,7 +228,7 @@ const ProductItem = ({
                   }}
                   className='text-[14px] font-bold'
                 >
-                  SAR {totalPrice}
+                  SAR {totalPrice && finalPrice}
                 </h3>
               </div>
             </div>

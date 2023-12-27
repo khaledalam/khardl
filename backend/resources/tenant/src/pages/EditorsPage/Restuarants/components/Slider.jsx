@@ -5,24 +5,22 @@ import {Swiper, SwiperSlide} from "swiper/react"
 import {Navigation, Pagination} from "swiper/modules"
 import {IoCloseOutline} from "react-icons/io5"
 import ImageIcon from "../../../../assets/imageIcon.svg"
+import ImgRestBanner from "../../../../assets/bannerRestuarant.png"
 import {useCallback, useState} from "react"
+import {useDispatch} from "react-redux"
+import {setBannersUpload} from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const Slider = ({banner_images}) => {
   const [uploadImages, setUploadImages] = useState([])
+  const dispatch = useDispatch()
 
-  const handleImagesUpload = useCallback((event, idx) => {
+  const handleImagesUpload = (event, idx) => {
     const selectedImage = event.target.files[0]
-    const selectedImages = []
-    if (selectedImage) {
-      selectedImages.push(selectedImage)
-      setUploadImages(selectedImages)
-    }
-    if (selectedImages[idx]) {
-      selectedImages.splice(idx, 1)
-      selectedImages[idx] = selectedImage
-      setUploadImages(selectedImages)
-    }
-  }, [])
+    dispatch(
+      setBannersUpload([...uploadImages, URL.createObjectURL(selectedImage)])
+    )
+    setUploadImages([...uploadImages, URL.createObjectURL(selectedImage)])
+  }
 
   console.log("uploaded images", uploadImages)
 
@@ -40,11 +38,11 @@ const Slider = ({banner_images}) => {
             <div
               style={{
                 backgroundImage:
-                  uploadImages.length > 0
-                    ? `url(${URL.createObjectURL(uploadImages[index])})`
-                    : `url(${
-                        banner_images.length > 0 && banner_images[index]
-                      })`,
+                  uploadImages && uploadImages?.length > 0
+                    ? `url(${uploadImages[index]})`
+                    : banner_images && banner_images?.length > 0
+                    ? `url(${banner_images[index]})`
+                    : `url(${ImgRestBanner})`,
               }}
               className={`h-[280px] rounded-md flex items-center justify-center   shadow-md`}
             >

@@ -70,7 +70,7 @@ const SectionPanel = () => {
           handleChange={(value) => dispatch(bannerType(value))}
           options={[
             {value: "slider", text: "Slider"},
-            {value: "one-page", text: "One-Page"},
+            {value: "one-photo", text: "One-Photo"},
           ]}
         />
       </div>

@@ -19,6 +19,9 @@ import {
   priceColor,
   textColor,
   textFontSize,
+  textFontFamily,
+  textFontWeight,
+  textAlignment,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 
 const EditPanel = () => {
@@ -39,6 +42,10 @@ const EditPanel = () => {
     footer_color,
     price_color,
     text_color,
+    text_fontFamily,
+    text_fontWeight,
+    text_alignment,
+    text_fontSize,
   } = restuarantEditorStyle
   const dispatch = useDispatch()
 
@@ -207,8 +214,8 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={fontFamily}
-              handleChange={(value) => setfontFamily(value)}
+              defaultValue={text_fontFamily}
+              handleChange={(value) => dispatch(textFontFamily(value))}
               options={[
                 {value: "Poppins", text: "Poppins"},
                 {value: "Roboto", text: "Roboto"},
@@ -221,17 +228,16 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={weight}
-              handleChange={(value) => setWeight(value)}
+              defaultValue={text_fontWeight}
+              handleChange={(value) => dispatch(textFontWeight(value))}
               options={[
-                {value: "Thin", text: "Thin"},
-                {value: "Extra light", text: "Extra light"},
-                {value: "Light", text: "Light"},
-                {value: "Regular", text: "Regular"},
-                {value: "Medium", text: "Medium"},
-                {value: "Semi Bold", text: "Semi Bold"},
-                {value: "Bold", text: "Bold"},
-                {value: "Extra Bold", text: "Extra Bold"},
+                {value: 200, text: "Thin"},
+                {value: 300, text: "Light"},
+                {value: 400, text: "Regular"},
+                {value: 500, text: "Medium"},
+                {value: 600, text: "Semi Bold"},
+                {value: 700, text: "Bold"},
+                {value: 800, text: "Extra Bold"},
               ]}
             />
           </div>
@@ -240,7 +246,9 @@ const EditPanel = () => {
               Size
             </h3>
             <PrimaryNumberCount
-              defaultValue={14}
+              defaultValue={
+                typeof text_fontSize == "string" ? 14 : text_fontSize
+              }
               onChange={(value) => dispatch(textFontSize(value))}
             />
           </div>
@@ -248,7 +256,12 @@ const EditPanel = () => {
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
               Alignment
             </h3>
-            <LogoAlignment iconSize={20} widthStyle={"w-[50%]"} />
+            <LogoAlignment
+              iconSize={20}
+              widthStyle={"w-[50%]"}
+              defaultValue={text_alignment}
+              onChange={(value) => dispatch(textAlignment(value))}
+            />
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>

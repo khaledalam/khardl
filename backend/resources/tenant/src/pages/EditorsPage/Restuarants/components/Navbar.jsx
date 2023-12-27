@@ -17,7 +17,6 @@ const Navbar = () => {
   const handleSubmitResStyle = async (e) => {
     e.preventDefault()
     let inputs = {}
-    inputs.logo = restuarantStyle.logo
     inputs.logo_alignment = restuarantStyle.logo_alignment
     inputs.logo_shape = restuarantStyle.logo_shape
     inputs.banner_shape = restuarantStyle.banner_shape
@@ -45,8 +44,26 @@ const Navbar = () => {
     inputs.text_fontSize = restuarantStyle.text_fontSize
     inputs.text_alignment = restuarantStyle.text_alignment
     inputs.text_color = restuarantStyle.text_color
-    inputs.banner_image = restuarantStyle.banner_image
-    inputs.banner_images = restuarantStyle.banner_images
+    inputs.banner_image = restuarantStyle?.bannerUpload
+      ? await fetch(restuarantStyle?.bannerUpload).then((r) => r.blob())
+      : ""
+
+    if (
+      restuarantStyle?.bannersUpload &&
+      restuarantStyle?.bannersUpload.length > 0
+    ) {
+      const imagePromises = restuarantStyle?.bannersUpload.map(
+        async (image) => {
+          return await fetch(image).then((r) => r.blob())
+        }
+      )
+      inputs.banner_images = await Promise.all(imagePromises)
+    } else {
+      inputs.banner_images = ""
+    }
+    inputs.logo = restuarantStyle?.logoUpload
+      ? await fetch(restuarantStyle?.logoUpload).then((r) => r.blob())
+      : ""
 
     try {
       const response = await AxiosInstance.post(`restaurant-style`, inputs, {
