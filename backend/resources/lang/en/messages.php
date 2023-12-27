@@ -378,7 +378,26 @@ return [
 
     "choose-time-for-all-days"=>"Choose time for all days",
     "choose-time-for-custom-days"=>"Choose time for custom days",
-    "time"=>"Time"
+    "time"=>"Time",
+    "delivery.yeswa.summary" => "We are a Saudi logistics services provider located in the city of Riyadh and serve all cities across the Saudi Arabia.<br /><br />We help local businesses achieve their eCommerce potential by providing shipping and fulfillment services at competitive prices and excellent service guarantee. Currently, we serve various sectors across the Kingdom, from food services, pharmaceuticals, and fashion, to cosmetics, and electronics.",
+    "yeswa" => "Yeswa",
+    "brief" => "Brief",
+    "activation-within" => "Activation within",
+    "hour" => "Hour",
+    "coverage" => "Coverage",
+    "prices" => "Prices",
+    "payment" => "Payment",
+    "contract" => "Contract",
+    "cover-area" => "Covers the following cities",
+    "Riyadh" => "Riyadh",
+    "Jeddah" => "Jeddah",
+    "Mecca" => "Mecca",
+    "Dammam" => "Dammam",
+    "Al-Ahsa" => "Al-Ahsa",
+    "cost" => "Cost",
+    "main-cost" => "Main cost",
+    "additional-cost" => "Main cost",
+    "na" => "N/A"
 
 
 ];
