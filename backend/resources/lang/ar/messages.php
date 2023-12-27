@@ -20,6 +20,7 @@ return [
     'about' => 'معلومات عنا',
     'support' => 'دعم',
     'pending' => 'قيد الانتظار',
+    'suspended' => 'معلق',
     'active' => 'نشط',
     'denied' => 'مرفوض',
     'total-orders' => 'إجمالي الطلبات',

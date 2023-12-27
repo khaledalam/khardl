@@ -21,6 +21,7 @@ return [
     'support' => 'Support',
     'pending' => 'pending',
     'active' => 'Active',
+    'suspended' => 'Suspended',
     'denied' => 'Denied',
     'total-orders' => 'Total Orders',
     'cancelled' => 'cancelled',

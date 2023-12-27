@@ -65,7 +65,9 @@
                                         </td>
                                         <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->email }}</td>
-                                        <td>{{ $customer->status }}</td>
+                                        <td>
+                                            <span class="badge {{ $customer->status }}" >{{__("messages.$customer->status")}}</span>
+                                        </td>
                                         <td>{{ $customer->address }}</td>
                                         <td>{{ $customer->branch?->name }}</td>
                                         <td>{{ $customer->last_login }}</td>
