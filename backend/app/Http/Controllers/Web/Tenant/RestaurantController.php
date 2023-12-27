@@ -432,9 +432,10 @@ class RestaurantController extends BaseController
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
 
-        $selectedCategory =Category::where('id', $id)->where('branch_id', $branchId)->first();
-        $categories = Category::where('id', $id)->where('branch_id', $branchId)->get();
-
+        $categories = Category::where('branch_id', $branchId)
+        ->orderByRaw("id = $id DESC")
+        ->get();
+        $selectedCategory = $categories->where('id',$id)->first();
         $items = Item::
         where('user_id', $user->id)
         ->where('category_id', $selectedCategory->id)
