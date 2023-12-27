@@ -4220,6 +4220,9 @@ details.collapse summary::-webkit-details-marker {
 .max-h-screen {
   max-height: 100vh;
 }
+.max-h-\[500px\] {
+  max-height: 500px;
+}
 .min-h-\[100\%\] {
   min-height: 100%;
 }

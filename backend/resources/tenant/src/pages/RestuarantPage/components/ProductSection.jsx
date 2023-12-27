@@ -100,7 +100,7 @@ const ProductSection = ({categories}) => {
                 }}
                 className='w-[90%] py-3'
               >
-                <div className='flex flex-col items-center gap-6'>
+                <div className='flex flex-col items-center  px-3 gap-6'>
                   {categories &&
                     categories?.map((category, i) => (
                       <CategoryItem

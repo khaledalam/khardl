@@ -89,7 +89,10 @@ const Navbar = () => {
           onClick={toggleTheMenu}
         />
         <div className='flex items-center gap-4'>
-          <button className='btn btn-active p-3 bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200 flex items-center justify-center'>
+          <button
+            onClick={() => window.open("/")}
+            className='btn btn-active p-3 bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200 flex items-center justify-center'
+          >
             <FaPlay size={22} />
           </button>
           <button

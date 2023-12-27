@@ -334,7 +334,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
         } items-center gap-8`}
       >
         <div
-          className={` h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
+          className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
             category_alignment === "left"
               ? "order-1 w-[25%]"
               : category_alignment === "right"
@@ -379,7 +379,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
           </div>
         </div>
         <div
-          className={`h-full ${
+          className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${
             category_alignment === "left"
               ? "order-2 w-[75%]"
               : category_alignment === "right"
@@ -387,78 +387,74 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
               : category_alignment === "center"
               ? "w-full"
               : "w-[75%]"
-          }`}
+          } ${
+            categoryDetail_shape === "sharp" ? "" : "rounded-lg"
+          } bg-white p-8`}
         >
           <div
-            className={`w-full flex ${
-              categoryDetail_shape === "sharp" ? "" : "rounded-lg"
-            } bg-white p-8`}
+            className={`w-full h-full flex flex-col items-center justify-center `}
           >
-            <div
-              className={`w-full h-full flex flex-col items-center justify-center `}
-            >
-              <h3 className='font-semibold text-[1.5rem] text-center my-4 relative capitalize'>
-                <span className='custom-underline'>{selectedCategory}</span>{" "}
-              </h3>
+            <h3 className='font-semibold text-[1.5rem] text-center my-4 relative capitalize'>
+              <span className='custom-underline'>{selectedCategory}</span>{" "}
+            </h3>
 
-              <div
-                className={`flex  ${
-                  category_alignment === "center"
-                    ? "flex-row flex-wrap gap-12"
-                    : "flex-col gap-6"
-                }  h-fit  p-4`}
-              >
-                {filterCategory &&
-                  filterCategory[0]?.items
-                    .slice(0, 2)
-                    .map((product, i) => (
-                      <ProductItem
-                        key={i}
-                        id={product.id}
-                        name={product.description}
-                        imgSrc={product.photo}
-                        amount={product.price}
-                        caloryInfo={product.calories}
-                        checkbox_required={
-                          product?.checkbox_required ?? ["true", "false"]
-                        }
-                        checkbox_input_titles={
-                          product?.checkbox_input_titles ?? [[]]
-                        }
-                        checkbox_input_names={
-                          product?.checkbox_input_names ?? [[]]
-                        }
-                        checkbox_input_prices={
-                          product?.checkbox_input_prices ?? [[]]
-                        }
-                        selection_required={
-                          product?.selection_required ?? ["true", "false"]
-                        }
-                        selection_input_titles={
-                          product?.selection_input_titles ?? [[]]
-                        }
-                        selection_input_names={
-                          product?.selection_input_names ?? [[]]
-                        }
-                        selection_input_prices={
-                          product?.selection_input_prices ?? [[]]
-                        }
-                        dropdown_required={
-                          product?.dropdown_required ?? ["true", "false"]
-                        }
-                        dropdown_input_titles={
-                          product?.dropdown_input_titles ?? [[]]
-                        }
-                        dropdown_input_names={
-                          product?.dropdown_input_names ?? [[]]
-                        }
-                        cartBgcolor={categoryDetail_cart_color}
-                        amountColor={price_color}
-                        shape={categoryDetail_shape}
-                        fontSize={text_fontSize}
-                      />
-                    ))}
-              </div>
+            <div
+              className={`flex  ${
+                category_alignment === "center"
+                  ? "flex-row flex-wrap gap-12"
+                  : "flex-col gap-6"
+              }  h-fit  p-4`}
+            >
+              {filterCategory &&
+                filterCategory[0]?.items
+                  .slice(0, 2)
+                  .map((product, i) => (
+                    <ProductItem
+                      key={i}
+                      id={product.id}
+                      name={product.description}
+                      imgSrc={product.photo}
+                      amount={product.price}
+                      caloryInfo={product.calories}
+                      checkbox_required={
+                        product?.checkbox_required ?? ["true", "false"]
+                      }
+                      checkbox_input_titles={
+                        product?.checkbox_input_titles ?? [[]]
+                      }
+                      checkbox_input_names={
+                        product?.checkbox_input_names ?? [[]]
+                      }
+                      checkbox_input_prices={
+                        product?.checkbox_input_prices ?? [[]]
+                      }
+                      selection_required={
+                        product?.selection_required ?? ["true", "false"]
+                      }
+                      selection_input_titles={
+                        product?.selection_input_titles ?? [[]]
+                      }
+                      selection_input_names={
+                        product?.selection_input_names ?? [[]]
+                      }
+                      selection_input_prices={
+                        product?.selection_input_prices ?? [[]]
+                      }
+                      dropdown_required={
+                        product?.dropdown_required ?? ["true", "false"]
+                      }
+                      dropdown_input_titles={
+                        product?.dropdown_input_titles ?? [[]]
+                      }
+                      dropdown_input_names={
+                        product?.dropdown_input_names ?? [[]]
+                      }
+                      cartBgcolor={categoryDetail_cart_color}
+                      amountColor={price_color}
+                      shape={categoryDetail_shape}
+                      fontSize={text_fontSize}
+                    />
+                  ))}
             </div>
           </div>
         </div>

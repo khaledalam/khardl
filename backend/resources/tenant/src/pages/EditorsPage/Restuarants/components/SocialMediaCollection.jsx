@@ -12,57 +12,67 @@ const mediaCollection = [
   {
     id: 1,
     name: "Telegram",
-    imageSrc: ImgTelegram,
+    imgUrl: ImgTelegram,
+    link: "",
   },
   {
     id: 2,
     name: "Youtube",
-    imageSrc: ImgYoutube,
+    imgUrl: ImgYoutube,
+    link: "",
   },
   {
     id: 3,
     name: "Instagram",
-    imageSrc: ImgInstagram,
+    imgUrl: ImgInstagram,
+    link: "",
   },
   {
     id: 4,
     name: "Facebook",
-    imageSrc: ImgFacebook,
+    imgUrl: ImgFacebook,
+    link: "",
   },
   {
     id: 5,
     name: "LinkedIn",
-    imageSrc: ImgLinkedin,
+    imgUrl: ImgLinkedin,
+    link: "",
   },
   {
     id: 6,
     name: "Tiktok",
-    imageSrc: ImgLinkedin,
+    imgUrl: ImgLinkedin,
+    link: "",
   },
   {
     id: 7,
     name: "Messenger",
     imageSrc: ImgMsger,
+    link: "",
   },
   {
     id: 8,
     name: "X",
-    imageSrc: ImgX,
+    imgUrl: ImgX,
+    link: "",
   },
 ]
 
 const SocialMediaCollection = ({onChange, showMedia, selectedSocialIcons}) => {
-  const [selectedMedia, setSelectedMedia] = useState([])
+  const [selectedMedia, setSelectedMedia] = useState(selectedSocialIcons)
   const [selectedSingleMedia, setSelectedSingleMedia] = useState()
   const [socialUrl, setSocialUrl] = useState("")
 
   useEffect(() => {
     onChange({
       name: selectedSingleMedia ? selectedSingleMedia?.name : "",
-      imageUrl: selectedSingleMedia ? selectedSingleMedia?.imageSrc : "",
+      imageUrl: selectedSingleMedia ? selectedSingleMedia?.imgUrl : "",
       link: socialUrl,
     })
   }, [selectedSingleMedia, socialUrl])
+
+  console.log("selectedMedia", selectedMedia)
 
   return (
     <div>
@@ -70,7 +80,7 @@ const SocialMediaCollection = ({onChange, showMedia, selectedSocialIcons}) => {
         <div className='flex items-center gap-6 flex-wrap w-[70%] p-3 rounded-xl bg-neutral-100'>
           {mediaCollection.map((media) => (
             <img
-              src={media.imageSrc}
+              src={media.imgUrl}
               alt={media.id}
               key={media.id}
               className='cursor-pointer'
@@ -82,31 +92,18 @@ const SocialMediaCollection = ({onChange, showMedia, selectedSocialIcons}) => {
         </div>
       )}
       <div className='flex items-center gap-3 flex-wrap'>
-        {selectedSocialIcons
-          ? selectedSocialIcons.map((socialMedia) => (
-              <div
-                key={socialMedia.id}
-                onClick={() => {
-                  setSocialUrl("")
-                  setSelectedSingleMedia(socialMedia)
-                }}
-                className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
-              >
-                <img src={socialMedia.imgUrl} alt={"social icon"} />
-              </div>
-            ))
-          : selectedMedia.map((socialMedia) => (
-              <div
-                key={socialMedia.id}
-                onClick={() => {
-                  setSocialUrl("")
-                  setSelectedSingleMedia(socialMedia)
-                }}
-                className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
-              >
-                <img src={socialMedia.imageSrc} alt={socialMedia.name} />
-              </div>
-            ))}
+        {selectedMedia.map((socialMedia) => (
+          <div
+            key={socialMedia.id}
+            onClick={() => {
+              setSocialUrl("")
+              setSelectedSingleMedia(socialMedia)
+            }}
+            className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
+          >
+            <img src={socialMedia.imgUrl} alt={socialMedia?.name} />
+          </div>
+        ))}
       </div>
       {selectedSingleMedia && (
         <div className=''>

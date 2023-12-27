@@ -54,7 +54,7 @@ const restuarantEditorSlice = createSlice({
     logo_url: null,
     banner_image_url: null,
     banner_images_urls: null,
-    collapse_sidebar: false,
+    collapse_sidebar: true,
   },
   reducers: {
     headerPosition: (state, action) => {

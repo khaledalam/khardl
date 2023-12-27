@@ -3,19 +3,25 @@ import {ChromePicker} from "react-color"
 import {IoIosClose} from "react-icons/io"
 
 const ColorPallete = ({color, handleColorChange, modalId}) => {
+  const [isResetColor, setIsResetColor] = useState(false)
   console.log("colorPalette", color)
+  const resetColor = "#ffffff"
 
   return (
     <div className='w-[50%]'>
       <button className='btn hover:bg-neutral-100 w-full h-[40px] flex items-center justify-between p-1 px-2'>
         <div
-          style={{backgroundColor: color}}
+          onClick={() => document.getElementById(modalId).showModal()}
+          style={{backgroundColor: isResetColor ? resetColor : color}}
           className={`w-7 h-7 rounded-lg`}
         ></div>
         <span className='tracking-wide'>{color}</span>
         <IoIosClose
           size={24}
-          onClick={() => document.getElementById(modalId).showModal()}
+          onClick={() => {
+            setIsResetColor(true)
+            handleColorChange(resetColor)
+          }}
         />
       </button>
       <dialog id={modalId} className='modal'>

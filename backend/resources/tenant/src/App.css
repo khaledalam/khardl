@@ -37,7 +37,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 2rem #eee;
+  box-shadow: inset 0 0 2rem transparent;
 }
 
 @keyframes slideIn {
