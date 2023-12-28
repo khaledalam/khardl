@@ -32,8 +32,7 @@ class RestaurantController extends BaseController
       ) {
     }
     public function index(){
-        $new = new Yeswa();
-        dd($new->assignToDriver(Order::first(),RestaurantUser::first()));
+
         return $this->restaurantService->index();
     }
 
