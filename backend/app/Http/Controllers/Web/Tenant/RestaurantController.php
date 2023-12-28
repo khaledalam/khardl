@@ -60,14 +60,6 @@ class RestaurantController extends BaseController
             compact('user'));
     }
 
-    public function customers_data(){
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-
-        return view('restaurant.customers_data',
-            compact('user'));
-    }
-
     public function settings(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
@@ -209,8 +201,7 @@ class RestaurantController extends BaseController
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
-       
-        
+      
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required',
@@ -232,9 +223,6 @@ class RestaurantController extends BaseController
             'friday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
             'friday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:friday_open')],
         ]);
-      
-       
-
 
         list($lat, $lng) = explode(' ', $validatedData['location']);
 
@@ -244,13 +232,13 @@ class RestaurantController extends BaseController
             if($request->hours_option == 'normal'){
                 if($open)
                     return  Carbon::createFromFormat('H:i', $request->input('normal_from'))->format('H:i');
-                else 
+                else
                     return  Carbon::createFromFormat('H:i', $request->input('normal_to'))->format('H:i');
             }else {
                 return  Carbon::createFromFormat('H:i', $time)->format('H:i');
             }
         };
-       
+
         $newBranchId = DB::table('branches')->insertGetId([
             'name' => $validatedData['name'],
             'lat' => (float) $lat,
@@ -442,9 +430,10 @@ class RestaurantController extends BaseController
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
 
-        $selectedCategory =Category::where('id', $id)->where('branch_id', $branchId)->first();
-        $categories = Category::where('id', $id)->where('branch_id', $branchId)->get();
-
+        $categories = Category::where('branch_id', $branchId)
+        ->orderByRaw("id = $id DESC")
+        ->get();
+        $selectedCategory = $categories->where('id',$id)->first();
         $items = Item::
         where('user_id', $user->id)
         ->where('category_id', $selectedCategory->id)
