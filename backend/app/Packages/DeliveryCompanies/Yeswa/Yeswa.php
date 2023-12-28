@@ -11,6 +11,10 @@ use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 
 class Yeswa  extends AbstractDeliveryCompany
 {
+    const CORRESPOND_METHODS = [
+        PaymentMethod::CASH_ON_DELIVERY=> 'COD',
+        PaymentMethod::CREDIT_CARD=> 'PP',
+    ];
     public function assignToDriver(Order $order,RestaurantUser $customer){
         $branch = $order->branch;
         if(env('APP_ENV') == 'local'){
@@ -42,7 +46,7 @@ class Yeswa  extends AbstractDeliveryCompany
             "dropoff_phone"=> $customer->phone,
             "dropoff_address"=> $customer->address,
             "order_amount"=> $order->total,
-            "payment_method"=>  PaymentMethod::YESWA_CORRESPOND_METHODS[$order->payment_method->name]  ,
+            "payment_method"=>  self::CORRESPOND_METHODS[$order->payment_method->name]  ,
             // nullable 
             // "dropoff_time"=> "",
             // "dropoff_notes"=> "",
@@ -53,7 +57,7 @@ class Yeswa  extends AbstractDeliveryCompany
         ];
     
         return self::send(
-            url: 'http://api.yeswa.net/v1/create_trip/',
+            url:  $this->delivery_company->api_url.'/create_trip/',
             method: 'post',
             token: false,
             data: $data

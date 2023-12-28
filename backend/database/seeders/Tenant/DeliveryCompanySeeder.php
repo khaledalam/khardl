@@ -17,12 +17,12 @@ class DeliveryCompanySeeder extends Seeder
     {
         DeliveryCompany::create([
             'name'=> trans_json('Yeswa','يسوى'),
-
+            'api_url'=>"http://api.yeswa.net/v1",
             'Module'=> class_basename(Yeswa::class) // cannot be override 
         ]);
         DeliveryCompany::create([
             'name'=> trans_json('Cervo','سيرفو'),
-            
+            'api_url'=>"https://carvo.isoft4is.com/apis/v2",
             'Module'=>class_basename(Cervo::class) // cannot be override 
         ]);
 

@@ -8,7 +8,7 @@ use Spatie\Translatable\HasTranslations;
 class DeliveryCompany extends Model
 {
     use HasTranslations;
-    protected $table = 'delivery_company';
+    protected $table = 'delivery_companies';
     public $timestamps  = false;
     protected $fillable = [
         'id',
@@ -23,9 +23,10 @@ class DeliveryCompany extends Model
         'payments',
         'api_key',
         'api_doc_url',
+        'api_url',
         //  TODO @todo no need for both of those fields 
         'secret_key',
-        'api_url',
+       
        
     ];
 

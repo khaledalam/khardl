@@ -227,7 +227,7 @@ Route::group([
 
 
         });
-
+        // TODO @todo prevent to access it from the website 
         Route::get('categories',[CategoryController::class,'index']);
         Route::get('orders',[OrderController::class,'index']);
 

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('delivery_company', static function (Blueprint $table) {
+        Schema::create('delivery_companies', static function (Blueprint $table) {
             $table->id();
             $table->json('name');
             $table->string('Module');
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('api_doc_url')->nullable();
             $table->json('payments')->nullable();
             $table->string('api_key')->nullable();
+            $table->string('api_url')->nullable();
             $table->string('secret_key')->nullable();
         });
     }
