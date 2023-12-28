@@ -2,17 +2,22 @@
 .products .product_quantity{
     max-width: 70px;
 }
-.badge.active{
+/* Badges */
+.badge.active,.badge.accepted,.badge.completed,.badge.paid{
     color: #fff;
     background-color: #50cd89;
 }
-.badge.suspended{
+.badge.suspended,.badge.cancelled{
     color: #fff;
     background-color: #f1416c;
 }
-.badge.inactive{
+.badge.inactive,.badge.ready,.badge.pending{
     color: #fff;
     background-color: #009ef7;
+}
+.badge.received_by_restaurant{
+    color: #fff;
+    background-color: #f7bd00;
 }
 /* Menu page */
 .card-body .menu-column{

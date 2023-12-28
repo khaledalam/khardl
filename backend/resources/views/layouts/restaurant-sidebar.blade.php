@@ -20,6 +20,7 @@
     <!--begin::Fonts-->
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
+    <link href="{{ global_asset('assets/css/resturant-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
@@ -35,7 +36,6 @@
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
         <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{ global_asset('assets/css/resturant-main.css')}}" rel="stylesheet" type="text/css" />
     @yield('css')
 @endif
 <!--end::Global Stylesheets Bundle-->

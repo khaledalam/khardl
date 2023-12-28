@@ -43,7 +43,7 @@
                                 <!--begin::Thead-->
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
                                     <tr>
-                                        <th class="min-w-25px ps-5">ID</th>
+                                        <th class="min-w-50px ps-5">ID</th>
                                         <th class="min-w-100px px-0">Name</th>
                                         <th class="min-w-100px px-0">Phone</th>
                                         <th class="min-w-100px px-0">Eamil</th>
@@ -59,8 +59,12 @@
                                 <tbody class="fs-6 fw-bold text-gray-600">
                                     @foreach ($allCustomers as $customer)
                                     <tr>
-                                        <td class="ps-5">{{ $customer->id }}</td>
-                                        <td class="ps-0">
+                                        <td class="px-2">
+                                            <a href="{{ route('customers_data.show',$customer->id) }}">
+                                                {{ $customer->id }}
+                                            </a>
+                                        </td>
+                                        <td>
                                             <a href="" class="text-gray-600 text-hover-primary">{{ $customer->full_name }}</a>
                                         </td>
                                         <td>{{ $customer->phone }}</td>

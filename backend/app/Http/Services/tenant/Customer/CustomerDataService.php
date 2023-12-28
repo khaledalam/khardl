@@ -20,6 +20,8 @@ class CustomerDataService
     {
         /** @var RestaurantUser $user */
         $user  = Auth::user();
-        return view('restaurant.customers_data.show', compact('user','restaurantUser'));
+        $restaurantUser->load(['branch','orders','orders.branch','orders.delivery_type']);
+        $orders = $restaurantUser->orders;
+        return view('restaurant.customers_data.show', compact('user','restaurantUser','orders'));
     }
 }

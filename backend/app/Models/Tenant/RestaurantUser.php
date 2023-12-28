@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Packages\Msegat;
 use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -69,7 +70,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function isWorker(){
         return $this->hasRole("Worker");
     }
-    
+
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
@@ -80,6 +81,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     // }
     public function branch(){
         return $this->belongsTo(Branch::class);
+    }
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class,'user_id','id');
     }
     public function hasPermissionWorker($permission)
     {
