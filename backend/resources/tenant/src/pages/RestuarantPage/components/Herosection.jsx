@@ -9,7 +9,7 @@ import {Navigation, Pagination} from "swiper/modules"
 const Herosection = ({alignment, categories}) => {
   const dispatch = useDispatch()
   const selectedCategory = useSelector(
-    (state) => state.categoryAPI.selected_category
+    (state) => state.categoryAPI.selected_category.id
   )
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
@@ -98,14 +98,16 @@ const Herosection = ({alignment, categories}) => {
             {categories?.map((category, i) => (
               <CategoryItem
                 key={i}
-                active={selectedCategory === category.name.toLowerCase()}
+                active={selectedCategory.id === category.id}
                 name={category.name}
                 imgSrc={category.imgSrc}
                 alt={category.name}
                 hoverColor={"red"}
                 textColor={"white"}
                 onClick={() =>
-                  dispatch(selectedCategoryAPI(category.name.toLowerCase()))
+                  dispatch(
+                    selectedCategoryAPI({name: category.name, id: category.id})
+                  )
                 }
               />
             ))}

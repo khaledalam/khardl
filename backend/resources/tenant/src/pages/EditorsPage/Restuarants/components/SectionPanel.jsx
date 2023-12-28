@@ -18,6 +18,7 @@ import {
   categoryType,
   categoryDetailType,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
+import {BiMinus} from "react-icons/bi"
 
 const SectionPanel = () => {
   const dispatch = useDispatch()
@@ -118,10 +119,17 @@ const SectionPanel = () => {
       <div className='py-4 border-b border-neutral-300 '>
         <div className='flex items-center justify-between p-2 w-[70%] mb-4 '>
           <h2 className='font-bold text-lg '>Social Media</h2>
-          <IoAdd
-            size={25}
-            onClick={() => setShowSocialMedia((prev) => !prev)}
-          />
+          {showSocialMedia ? (
+            <BiMinus
+              size={25}
+              onClick={() => setShowSocialMedia((prev) => !prev)}
+            />
+          ) : (
+            <IoAdd
+              size={25}
+              onClick={() => setShowSocialMedia((prev) => !prev)}
+            />
+          )}
         </div>
         <SocialMediaCollection
           showMedia={showSocialMedia}

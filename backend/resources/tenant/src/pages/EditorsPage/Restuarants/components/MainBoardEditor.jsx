@@ -1,11 +1,6 @@
 import React, {Fragment, useContext, useState} from "react"
-import pizzImg from "../../../../assets/pizza.png"
-import pastaImg from "../../../../assets/pasta.png"
-import burgerImg from "../../../../assets/burger.png"
-import chickenImg from "../../../../assets/chicken.png"
-import drinkImg from "../../../../assets/drink.png"
+import {useNavigate} from "react-router-dom"
 import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
-import ImageIcon from "../../../../assets/imageIcon.svg"
 import WhatsappIcon from "../../../../assets/whatsappImg.svg"
 import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
 import CategoryItem from "./CategoryItem"
@@ -15,7 +10,6 @@ import {MenuContext} from "react-flexible-sliding-menu"
 import Slider from "./Slider"
 import {selectedCategoryAPI} from "../../../../redux/NewEditor/categoryAPISlice"
 import {
-  clearLogoUpload,
   logoUpload,
   setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
@@ -25,11 +19,9 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
     (state) => state.restuarantEditorStyle
   )
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const {toggleMenu} = useContext(MenuContext)
 
-  const toggleTheMenu = () => {
-    toggleMenu()
-  }
   const {
     page_color,
     page_category_color,
@@ -74,10 +66,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
 
   const filterCategory =
     categories && categories.length > 0
-      ? categories?.filter(
-          (category) =>
-            category.name.toLowerCase() === selectedCategory.toLowerCase()
-        )
+      ? categories?.filter((category) => category.id === selectedCategory.id)
       : [{name: "", items: []}]
 
   const [uploadSingleBanner, setUploadSingleBanner] = useState(null)
@@ -113,7 +102,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
 
   return (
     <div
-      style={{backgroundColor: page_color}}
+      style={{backgroundColor: page_color, fontFamily: text_fontFamily}}
       className='w-full p-4 flex flex-col gap-6 relative'
     >
       {/* Header cart */}
@@ -129,7 +118,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
         className='w-full min-h-[85px]   rounded-xl flex items-center justify-between px-2'
       >
         <div
-          onClick={toggleSidebarCollapse}
+          onClick={toggleMenu}
           className='btn hover:bg-neutral-100 flex items-center gap-3'
         >
           <IoMenuOutline size={40} className='text-neutral-400' />
@@ -137,7 +126,10 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
             Show Navigation Bar To Edit
           </span>
         </div>
-        <div className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center'>
+        <div
+          onClick={() => navigate("/cart")}
+          className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center'
+        >
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {true && (
             <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
@@ -361,13 +353,18 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
               {categories?.map((category, i) => (
                 <CategoryItem
                   key={i}
-                  active={selectedCategory === category.name.toLowerCase()}
+                  active={selectedCategory.id === category.id}
                   name={category.name}
                   imgSrc={category.photo}
                   alt={category.name}
                   hoverColor={category_hover_color}
                   onClick={() =>
-                    dispatch(selectedCategoryAPI(category.name.toLowerCase()))
+                    dispatch(
+                      selectedCategoryAPI({
+                        name: category.name,
+                        id: category.id,
+                      })
+                    )
                   }
                   textColor={text_color}
                   shape={category_shape}

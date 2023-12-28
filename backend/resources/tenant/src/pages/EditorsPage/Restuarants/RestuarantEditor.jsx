@@ -78,7 +78,7 @@ export const RestuarantEditor = () => {
 
   return (
     <div className='block'>
-      <Navbar />
+      <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
       <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all'>
         <div
           className={`transition-all ${
@@ -92,10 +92,7 @@ export const RestuarantEditor = () => {
             isSidebarCollapse ? "flex-[100%] w-full" : "flex-[82%]"
           } xl:flex-[70%] laptopXL:flex-[75%] overflow-x-hidden bg-neutral-200 h-full overflow-y-scroll hide-scroll`}
         >
-          <MainBoardEditor
-            categories={categories}
-            toggleSidebarCollapse={handleSidebarCollapse}
-          />
+          <MainBoardEditor categories={categories} />
         </div>
       </div>
     </div>

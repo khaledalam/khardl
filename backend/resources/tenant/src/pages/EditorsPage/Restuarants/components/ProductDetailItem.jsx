@@ -4,6 +4,7 @@ const ProductDetailItem = ({
   price,
   label,
   onChange,
+  language,
   id,
   name,
   isCheckbox,
@@ -62,7 +63,7 @@ const ProductDetailItem = ({
           </option>
           {options.map((option, idx) => (
             <option key={idx} value={idx}>
-              {option.value[0]}
+              {language === "en" ? option.value[0] : option.value[1]}
             </option>
           ))}
         </select>

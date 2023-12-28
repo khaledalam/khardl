@@ -3,9 +3,11 @@ import ProductItem from "../../EditorsPage/Restuarants/components/ProductItem"
 import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
 import {useDispatch, useSelector} from "react-redux"
 import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
+import {useTranslation} from "react-i18next"
 
 const ProductSection = ({categories}) => {
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
   )
@@ -13,10 +15,7 @@ const ProductSection = ({categories}) => {
 
   const filterCategory =
     categories && categories.length > 0
-      ? categories?.filter(
-          (category) =>
-            category.name.toLowerCase() === selectedCategory.toLowerCase()
-        )
+      ? categories?.filter((category) => category.id === selectedCategory.id)
       : [{name: "", items: []}]
 
   console.log("filterCategory", filterCategory)
@@ -26,7 +25,7 @@ const ProductSection = ({categories}) => {
         <Fragment>
           <div className='w-full'>
             <div className='w-5/6 laptopXL:w-[75%] mx-auto py-4'>
-              {filterCategory &&
+              {filterCategory ? (
                 filterCategory.map((category) => (
                   <div className='my-4' key={category.id}>
                     <h3 className='font-semibold text-[1.5rem] relative'>
@@ -84,7 +83,14 @@ const ProductSection = ({categories}) => {
                       ))}
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className='w-full h-full items-center justify-center'>
+                  <div className='text-2xl font-medium'>
+                    {t("No items in this category")}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Fragment>
@@ -105,16 +111,17 @@ const ProductSection = ({categories}) => {
                     categories?.map((category, i) => (
                       <CategoryItem
                         key={i}
-                        active={
-                          selectedCategory === category.name.toLowerCase()
-                        }
+                        active={selectedCategory.id === category.id}
                         name={category.name}
                         imgSrc={category.imgSrc}
                         alt={category.name}
                         hoverColor={restaurantStyle?.category_hover_color}
                         onClick={() =>
                           dispatch(
-                            selectedCategoryAPI(category.name.toLowerCase())
+                            selectedCategoryAPI({
+                              name: category.name,
+                              id: category.id,
+                            })
                           )
                         }
                         textColor={restaurantStyle?.text_color}
@@ -275,16 +282,17 @@ const ProductSection = ({categories}) => {
                     categories?.map((category, i) => (
                       <CategoryItem
                         key={i}
-                        active={
-                          selectedCategory === category.name.toLowerCase()
-                        }
+                        active={selectedCategory.id === category.id}
                         name={category.name}
                         imgSrc={category.imgSrc}
                         alt={category.name}
                         hoverColor={restaurantStyle?.category_hover_color}
                         onClick={() =>
                           dispatch(
-                            selectedCategoryAPI(category.name.toLowerCase())
+                            selectedCategoryAPI({
+                              name: category.name,
+                              id: category.id,
+                            })
                           )
                         }
                         textColor={restaurantStyle?.text_color}

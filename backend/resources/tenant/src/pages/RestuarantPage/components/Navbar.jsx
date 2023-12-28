@@ -3,9 +3,11 @@ import cartHeaderImg from "../../../assets/cartBoldIcon.svg"
 import {IoMenuOutline} from "react-icons/io5"
 import {MenuContext} from "react-flexible-sliding-menu"
 import {useSelector} from "react-redux"
+import {useNavigate} from "react-router-dom"
 
 const NavbarRestuarant = () => {
   const {toggleMenu} = useContext(MenuContext)
+  const navigate = useNavigate()
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
   const toggleTheMenu = () => {
     toggleMenu()
@@ -24,7 +26,10 @@ const NavbarRestuarant = () => {
         >
           <IoMenuOutline size={38} className='text-white' />
         </div>
-        <div className='w-[50px] h-[50px] relative flex items-center justify-center'>
+        <div
+          onClick={() => navigate("/cart")}
+          className='w-[50px] h-[50px] relative flex items-center justify-center'
+        >
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {true && (
             <div className='absolute top-0 right-0'>

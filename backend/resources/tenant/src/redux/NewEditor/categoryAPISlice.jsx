@@ -3,7 +3,10 @@ import {createSlice} from "@reduxjs/toolkit"
 const categoryAPISlice = createSlice({
   name: "categoryAPI",
   initialState: {
-    selected_category: "first category",
+    selected_category: {
+      name: "first category",
+      id: 1,
+    },
   },
   reducers: {
     selectedCategoryAPI: (state, action) => {

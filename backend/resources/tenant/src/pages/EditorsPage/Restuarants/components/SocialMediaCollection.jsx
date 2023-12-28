@@ -7,8 +7,15 @@ import ImgLinkedin from "../../../../assets/Linkedin.svg"
 import ImgTiktok from "../../../../assets/Tiktok.svg"
 import ImgMsger from "../../../../assets/Msgner.svg"
 import ImgX from "../../../../assets/Xtwitter.svg"
+import ImgWhatsapp from "../../../../assets/whatsappImg.svg"
 
 const mediaCollection = [
+  {
+    id: 0,
+    name: "Whatsapp",
+    imgUrl: ImgWhatsapp,
+    link: "",
+  },
   {
     id: 1,
     name: "Telegram",
@@ -42,13 +49,13 @@ const mediaCollection = [
   {
     id: 6,
     name: "Tiktok",
-    imgUrl: ImgLinkedin,
+    imgUrl: ImgTiktok,
     link: "",
   },
   {
     id: 7,
     name: "Messenger",
-    imageSrc: ImgMsger,
+    imgUrl: ImgMsger,
     link: "",
   },
   {
@@ -60,7 +67,7 @@ const mediaCollection = [
 ]
 
 const SocialMediaCollection = ({onChange, showMedia, selectedSocialIcons}) => {
-  const [selectedMedia, setSelectedMedia] = useState(selectedSocialIcons)
+  const [selectedMedia, setSelectedMedia] = useState([...selectedSocialIcons])
   const [selectedSingleMedia, setSelectedSingleMedia] = useState()
   const [socialUrl, setSocialUrl] = useState("")
 
@@ -92,26 +99,27 @@ const SocialMediaCollection = ({onChange, showMedia, selectedSocialIcons}) => {
         </div>
       )}
       <div className='flex items-center gap-3 flex-wrap'>
-        {selectedMedia.map((socialMedia) => (
-          <div
-            key={socialMedia.id}
-            onClick={() => {
-              setSocialUrl("")
-              setSelectedSingleMedia(socialMedia)
-            }}
-            className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
-          >
-            <img src={socialMedia.imgUrl} alt={socialMedia?.name} />
-          </div>
-        ))}
+        {selectedMedia.map(
+          (socialMedia) =>
+            socialMedia.imgUrl !== "" && (
+              <div
+                key={socialMedia.id}
+                onClick={() => {
+                  setSocialUrl("")
+                  setSelectedSingleMedia(socialMedia)
+                }}
+                className='bg-neutral-100 w-[35px] h-[35px] rounded-md p-1 my-3 flex items-center justify-center'
+              >
+                <img src={socialMedia.imgUrl} alt={socialMedia?.name} />
+              </div>
+            )
+        )}
       </div>
       {selectedSingleMedia && (
         <div className=''>
           <input
             type='text'
-            value={
-              selectedSingleMedia.link ? selectedSingleMedia.link : socialUrl
-            }
+            value={selectedSingleMedia ? selectedSingleMedia?.link : socialUrl}
             placeholder={`Write ${
               selectedSingleMedia?.name?.toLowerCase() ?? "social media"
             } link`}
