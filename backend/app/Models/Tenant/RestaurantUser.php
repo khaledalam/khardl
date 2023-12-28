@@ -58,6 +58,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
         'password' => 'hashed',
+        'last_login'    => 'date:Y-m-d'
     ];
     public function hasPermission($permission)
     {
@@ -85,6 +86,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class,'user_id','id');
+    }
+    public function recent_orders()
+    {
+        return $this->orders()->orderBy('id','DESC');
     }
     public function hasPermissionWorker($permission)
     {

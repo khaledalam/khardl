@@ -74,8 +74,8 @@
                                         </td>
                                         <td>{{ $customer->address }}</td>
                                         <td>{{ $customer->branch?->name }}</td>
-                                        <td>{{ $customer->last_login }}</td>
-                                        <td>{{ $customer->created_at->format('Y-m-d') }}</td>
+                                        <td>{{ $customer->last_login?->format('Y-m-d') }}</td>
+                                        <td>{{ $customer->created_at?->format('Y-m-d') }}</td>
                                         <td class="text-end">
                                             <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->

@@ -152,7 +152,7 @@
                                                     <!--end::Svg Icon-->Last login</div>
                                             </td>
                                             <td class="fw-bolder text-end">
-                                                {{ $restaurantUser->last_login }}
+                                                {{ $restaurantUser->last_login?->format('Y-m-d') }}
                                             </td>
                                         </tr>
                                         <!--end::Date-->

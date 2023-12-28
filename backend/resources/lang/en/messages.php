@@ -126,7 +126,7 @@ return [
     'commercial-registration' => 'Commercial registration',
     'tax-number' => 'Tax number',
     'bank-certificate' => 'Bank certificate',
-    'accepted' => 'accepted',
+    'accepted' => 'Accepted',
     'status-must-be-active' => 'Status must be active',
     'date' => 'Date',
     'order-id' => 'Order ID',
