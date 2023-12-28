@@ -4,6 +4,8 @@ namespace Database\Seeders\Tenant;
 
 use Carbon\Carbon;
 use App\Models\Tenant\Branch;
+use Faker\Factory;
+use Faker\Generator;
 use Illuminate\Database\Seeder;
 
 class BranchSeeder extends Seeder
@@ -18,6 +20,8 @@ class BranchSeeder extends Seeder
      */
     public function run(): void
     {
+        $faker = (new Factory())::create();
+
         // This branch has pickup and delivery
         $currentDateTime = Carbon::now();
         $branch = Branch::create([
@@ -40,6 +44,7 @@ class BranchSeeder extends Seeder
             'thursday_close' => $currentDateTime->addHour()->format('H:i'),
             'friday_open' => $currentDateTime->format('H:i'),
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
+            'pickup_availability' => $faker->boolean
         ]);
         $branch->payment_methods()->sync([
             PaymentMethodSeeder::PAYMENT_METHOD_COD
@@ -48,7 +53,7 @@ class BranchSeeder extends Seeder
             DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY,
             DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
         ]);
-     
+
 
 
         // This branch has pickup only

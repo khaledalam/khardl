@@ -6,7 +6,7 @@ import imgBanner from "../../../assets/bannerRestuarant.png"
 import {Swiper, SwiperSlide} from "swiper/react"
 import {Navigation, Pagination} from "swiper/modules"
 
-const Herosection = ({alignment, categories}) => {
+const Herosection = ({isMobile, categories}) => {
   const dispatch = useDispatch()
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
@@ -92,20 +92,26 @@ const Herosection = ({alignment, categories}) => {
           <Fragment>Not a Slider</Fragment>
         )}
       </div>
-      {restaurantStyle?.category_alignment === "center" && (
-        <div className='bg-[#2A6E4F] w-full flex items-center justify-center'>
-          <div className='flex items-center  gap-8 my-5 '>
+      {(restaurantStyle?.category_alignment === "center" || isMobile) && (
+        <div
+          className={`bg-[#2A6E4F] w-full flex items-center ${
+            isMobile ? "overflow-x-scroll hide-scroll px-4" : ""
+          } `}
+        >
+          <div className={`flex items-center w-full  gap-8 my-5  `}>
             {categories?.map((category, i) => (
               <CategoryItem
                 key={i}
-                active={selectedCategory === category.name.toLowerCase()}
+                active={selectedCategory.id === category.id}
                 name={category.name}
                 imgSrc={category.imgSrc}
                 alt={category.name}
                 hoverColor={"red"}
                 textColor={"white"}
                 onClick={() =>
-                  dispatch(selectedCategoryAPI(category.name.toLowerCase()))
+                  dispatch(
+                    selectedCategoryAPI({name: category.name, id: category.id})
+                  )
                 }
               />
             ))}

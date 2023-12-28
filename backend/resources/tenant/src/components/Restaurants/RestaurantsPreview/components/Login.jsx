@@ -81,7 +81,8 @@ const DetailesItem = ({ onClose }) => {
                               }}>
                                   {t('Name')}: {selectedBranch?.name}<br />
                                   {t('Delivery Availability')}: {t(selectedBranch?.delivery_availability ? 'Yes' : 'No')}<br />
-                                      {t('Preparation time delivery')}: {selectedBranch?.preparation_time_delivery || t('not set')}
+                                  {t('Pickup Availability')}: {t(selectedBranch?.pickup_availability ? 'Yes' : 'No')}<br />
+                                  {t('Preparation time delivery')}: {selectedBranch?.preparation_time_delivery || t('not set')}
                               </pre> : <span className={""}>{t('No default branch selected')}</span>}
                           </div>
 

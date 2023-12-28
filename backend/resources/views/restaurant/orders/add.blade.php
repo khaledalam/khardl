@@ -115,7 +115,7 @@
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
                                     <div class="card-body pt-0">
-                                        <div class="d-flex flex-column gap-10">
+                                        <div class="d-flex flex-column gap-5">
                                             <!--begin::Input group-->
                                             <div>
                                                 <!--begin::Label-->
@@ -137,8 +137,8 @@
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Separator-->
-                                            <div class="separator"></div>
-                                            <select id="branchSelect" name="branch_id"  required class="form-select" style="width: 300px;">
+                                            <label class="required form-label">Select branch first</label>
+                                            <select id="branchSelect" name="branch_id" required class="form-select" style="width: 300px;">
                                                 <option>Select branch</option>
                                                 @foreach ($branches as $branch)
                                                 <option value="{{ $branch->id }}">{{ $branch->name }}</option>
@@ -147,6 +147,7 @@
                                             <div class="separator"></div>
                                             <!--end::Separator-->
                                             <!--begin::Search products-->
+                                            <label class="required form-label">Select products</label>
                                             <div class="d-flex align-items-center position-relative mb-n7">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                                 <span class="svg-icon svg-icon-1 position-absolute ms-4">
@@ -157,8 +158,8 @@
                                                 </span>
                                                 <!--end::Svg Icon-->
                                                 {{-- <input type="text" data-kt-ecommerce-edit-order-filter="search"
-                                                    class="form-control form-control-solid w-100 w-lg-50 ps-14"
-                                                    placeholder="Search Products" /> --}}
+                                                    class="form-control form-control-solid w-100 w-lg-50 ps-14"                                                    placeholder="Search Products" /> --}}
+
                                                 <select id="productSelect" class="form-select" multiple style="width: 300px;">
                                                     <option disabled>Search for a product...</option>
                                                 </select>
@@ -171,6 +172,7 @@
                                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                                         <th class="min-w-200px">Product</th>
                                                         <th class="min-w-100px pe-5">Quantity</th>
+                                                        <th class="min-w-100px pe-5">Options</th>
                                                     </tr>
                                                 </thead>
                                                 <!--end::Table head-->
@@ -259,6 +261,9 @@
     </div>
     <!--end::Page-->
 </div>
+<div id="modal_here">
+
+</div>
 <!--end::Root-->
 <!--end::Main-->
 
@@ -270,6 +275,7 @@
         var totalCost = 0.00;
         var branch_id = "";
         var productTotals = {};
+        let cuurent_product = null;
 
         function initializeProductSelect() {
 
@@ -324,9 +330,103 @@
                     </div>
                 </div>
             </td>
+            <td>
+                <i class="bi bi-eye btn-sm btn btn-success"
+                data-bs-toggle="modal"
+                data-bs-target="#kt_modal_select_options_${selectedProduct.id}"></i>
+            </td>
            </tr>
         `;
         }
+
+        function getLangName($name) {
+            if (`{!! config('app.locale') !!}` == 'ar') return $name[0];
+            return $name[1];
+        }
+
+        function ModalRow(selectedProduct) {
+            let optionsHTML = '';
+
+            if (selectedProduct.checkbox_input_titles) {
+                selectedProduct.checkbox_input_titles.forEach((option, index) => {
+                    optionsHTML += `<div class="mb-4">
+                                <h6>${getLangName(option)}</h6>`;
+                    selectedProduct.checkbox_input_names.forEach((option, index) => {
+                        option.forEach((innerOption, innerIndex) => {
+                            optionsHTML += `<div class="form-check mb-2">`;
+                            optionsHTML += `
+                            <label class="form-check-label">${getLangName(innerOption)}</label>
+                            <input class="form-check-input" type="checkbox" value="${innerIndex}" name="product_options[${selectedProduct.id}]['checkbox_input'][${index}]">
+                            `;
+                            optionsHTML += `</div>`;
+                        });
+                    });
+                    optionsHTML += `
+                    </div>`;
+                });
+            }
+            if (selectedProduct.selection_input_titles) {
+                selectedProduct.selection_input_titles.forEach((option, index) => {
+                    optionsHTML += `<div class="mb-4">
+                                <h6>${getLangName(option)}</h6>`;
+                    selectedProduct.selection_input_names.forEach((option, index) => {
+                        option.forEach((innerOption, innerIndex) => {
+                            optionsHTML += `<div class="form-check mb-2">`;
+                            optionsHTML += `
+                            <label class="form-check-label">${getLangName(innerOption)}</label>
+                            <input class="form-check-input" type="radio" value="${innerIndex}" name="product_options[${selectedProduct.id}]['selection_input'][${index}]">
+                            `;
+                            optionsHTML += `</div>`;
+                        });
+                    });
+                    optionsHTML += `
+                    </div>`;
+                });
+            }
+            if (selectedProduct.dropdown_input_titles) {
+                selectedProduct.dropdown_input_titles.forEach((option, index) => {
+                    optionsHTML += `<div class="mb-4">
+                                <h6>${getLangName(option)}</h6>`;
+                    selectedProduct.dropdown_input_names.forEach((option, index) => {
+                        optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">`;
+                        option.forEach((innerOption, innerIndex) => {
+                            optionsHTML += `
+                            <option value="${innerIndex}">${getLangName(innerOption)}</option>
+                            `;
+                        });
+                        optionsHTML += `</select>`;
+                    });
+                    optionsHTML += `
+                    </div>`;
+                });
+            }
+
+            return `
+        <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered mw-650px">
+                <div class="modal-content rounded">
+                    <div class="modal-header pb-0 border-0 justify-content-end">
+                        <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
+                            <span class="svg-icon svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                        <span>Select options for :
+                            <h6 class="d-inline">${selectedProduct.name}</h6>
+                        </span>
+                        ${optionsHTML}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+        }
+
         var productSelect = initializeProductSelect();
         productSelect.on('select2:select', function(e) {
             // Get the selected product data
@@ -334,7 +434,8 @@
             var selectedProduct = e.params.data.data;
 
             // Append the selected product to the table
-            var tableRow = TableRow(selectedProduct) ;
+            var tableRow = TableRow(selectedProduct);
+            /* var ModalRow = ModalRow(selectedProduct); */
             $('#product_table').on('input', `input[name="products[${selectedProduct.id}][]"]`, function() {
                 // Update the total cost when the quantity changes
                 var oldTotal = productTotals[selectedProduct.id] || 0;
@@ -352,6 +453,7 @@
             });
             // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
             $('#product_table').append(tableRow);
+            $('#modal_here').append(ModalRow(selectedProduct));
             // Update the total cost
             totalCost += parseFloat(selectedProduct.price);
             productTotals[selectedProduct.id] = selectedProduct.price;
