@@ -32,8 +32,8 @@ class RestaurantController extends BaseController
       ) {
     }
     public function index(){
-        $sd = new Yeswa();
-        dd($sd->assignToDriver(1));
+        $new = new Yeswa();
+        dd($new->assignToDriver(Order::first(),RestaurantUser::first()));
         return $this->restaurantService->index();
     }
 
@@ -214,9 +214,10 @@ class RestaurantController extends BaseController
        
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'phone' => 'required|string',
+            'address' => 'required|string',
             'location' => 'required',
             'copy_menu' => 'required',
-
             'normal_from' => 'nullable|required_if:hours_option,normal|date_format:H:i',
             'normal_to' => 'nullable|required_if:hours_option,normal|date_format:H:i|after:normal_from',
             'saturday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
@@ -254,8 +255,11 @@ class RestaurantController extends BaseController
         
         $newBranchId = DB::table('branches')->insertGetId([
             'name' => $validatedData['name'],
+            'phone' => $validatedData['phone'],
+            'address'=> $validatedData['address'],
             'lat' => (float) $lat,
             'lng' => (float) $lng,
+       
             'is_primary' => !$branchesExist,
             'saturday_open' => $time( $request->input('saturday_open')),
             'saturday_close' => $time( $request->input('saturday_close'),false),

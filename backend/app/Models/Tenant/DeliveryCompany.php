@@ -21,10 +21,12 @@ class DeliveryCompany extends Model
         'contract',
         'profile',
         'payments',
-        'api_url',
         'api_key',
-        'secret_key',
         'api_doc_url',
+        //  TODO @todo no need for both of those fields 
+        'secret_key',
+        'api_url',
+       
     ];
 
     public $translatable = ['name', 'description'];

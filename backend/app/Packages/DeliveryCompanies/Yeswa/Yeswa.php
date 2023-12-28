@@ -2,41 +2,63 @@
 
 namespace App\Packages\DeliveryCompanies\Yeswa;
 
+use App\Models\Tenant\Order;
+use App\Models\Tenant\Branch;
+use App\Models\Tenant\PaymentMethod;
+use App\Models\Tenant\RestaurantUser;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
-use App\Packages\DeliveryCompanies\DeliveryCompanyInterface;
 
 
 class Yeswa  extends AbstractDeliveryCompany
 {
-    public function assignToDriver($order_id){
-       
+    public function assignToDriver(Order $order,RestaurantUser $customer){
+        $branch = $order->branch;
+        if(env('APP_ENV') == 'local'){
+            $data = [
+                "api_key"=> env('YESWA_SECRET_API_KEY',''),
+                "pickup_name"=> 'Test '.$branch->name,
+                "dropoff_name"=> 'Test '.$customer->fullName,
+                "pickup_latitude"=> 27.05,
+                "pickup_longitude"=>  30.14,
+                "dropoff_latitude"=>  27.05,
+                "dropoff_longitude"=>  30.14,
+               
+            ];
+        }else {
+            $data = [
+                "pickup_name"=>$branch->name,
+                "pickup_latitude"=> $branch->lat,
+                "pickup_longitude"=>  $branch->lng,
+                "dropoff_name"=> $customer->fullName,
+                "dropoff_latitude"=> $customer->lat,
+                "dropoff_longitude"=> $customer->lng,
+               
+            ];
+        }
+        $data += [
+            "api_key"=> $this->delivery_company->api_key,
+            "pickup_phone"=> $branch->phone,
+            "pickup_address"=> $branch->address,
+            "dropoff_phone"=> $customer->phone,
+            "dropoff_address"=> $customer->address,
+            "order_amount"=> $order->total,
+            "payment_method"=>  PaymentMethod::YESWA_CORRESPOND_METHODS[$order->payment_method->name]  ,
+            // nullable 
+            // "dropoff_time"=> "",
+            // "dropoff_notes"=> "",
+            // "pickup_time"=> "",
+            // "pickup_notes"=> "",
+            // "eftops"=> true
+            // "client_id"=> "",
+        ];
+    
         return self::send(
             url: 'http://api.yeswa.net/v1/create_trip/',
             method: 'post',
             token: false,
-            data: [
-                "api_key"=> "string",
-                "pickup_name"=> "string",
-                "pickup_phone"=> "string",
-                "pickup_address"=> "string",
-                "pickup_latitude"=> 0,
-                "pickup_longitude"=> 0,
-                "pickup_time"=> "2019-08-24T14:15:22Z",
-                "pickup_notes"=> "string",
-                "dropoff_name"=> "string",
-                "dropoff_phone"=> "string",
-                "dropoff_address"=> "string",
-                "dropoff_latitude"=> 0,
-                "dropoff_longitude"=> 0,
-                "dropoff_time"=> "2019-08-24T14:15:22Z",
-                "dropoff_notes"=> "string",
-                "payment_method"=> "PP",
-                "order_amount"=> 0,
-                "client_id"=> "string",
-                "eftops"=> true
-            ]
+            data: $data
         );
-        
+
     }
 
 }

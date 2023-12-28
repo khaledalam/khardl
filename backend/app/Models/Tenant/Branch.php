@@ -17,6 +17,8 @@ class Branch extends Model
         'name',
         'lat',
         'lng',
+        'phone',
+        'address',
         'is_primary',
         'monday_open',
         'monday_close',

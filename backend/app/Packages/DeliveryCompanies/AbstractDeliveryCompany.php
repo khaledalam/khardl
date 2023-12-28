@@ -2,9 +2,11 @@
 
 namespace App\Packages\DeliveryCompanies;
 
-use App\Models\Tenant\DeliveryCompany;
+use App\Models\Tenant\Order;
 use App\Utils\ResponseHelper;
 use Illuminate\Support\Facades\Http;
+use App\Models\Tenant\RestaurantUser;
+use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\DeliveryCompanyInterface;
 
 abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
@@ -16,7 +18,6 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
         where('status',true)
         ->where('Module',class_basename($this))
         ->whereNotNull('api_key')
-        ->whereNotNull('secret_key')
         ->first();
 
         if(!$this->delivery_company)  {
@@ -24,7 +25,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
         } 
          
     }
-    abstract public function assignToDriver($order_id);
+    abstract public function assignToDriver(Order $order,RestaurantUser $customer);
     
     public function send(string $url,string $method = 'post',$token,array $data):array{
         try {
@@ -34,19 +35,23 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
             }else {
                 $response = Http::$method($url,$data);
             }
+           
             if($response->successful()){
+                $response =  json_decode($response->getBody(), true);
                 return [
                     'http_code'=> ResponseHelper::HTTP_OK,
-                    'message'=>  json_decode($response->getBody(), true)
+                    'message'=> $response
                 ];
             }
+            
          
         }catch(\Exception $e){
            logger($e->getMessage());
         }
+ 
         return [
             'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
-            'message'=> __("Error Occur")
+            'message'=> isset($response['message']) ?$response['message']: __("Failed to complete the process, please try again or contact Support Team")
         ];
     }
   

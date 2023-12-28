@@ -35,7 +35,7 @@ class Msegat
         }
         return [
             'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
-            'message'=> __("Error Occur")
+            'message'=> __("Failed to complete the process, please try again or contact Support Team")
         ];
 
     }
