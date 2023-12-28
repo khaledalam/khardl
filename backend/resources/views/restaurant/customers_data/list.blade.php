@@ -65,7 +65,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="" class="text-gray-600 text-hover-primary">{{ $customer->full_name }}</a>
+                                            <a href="{{ route('customers_data.show',$customer->id) }}" class="text-gray-600 text-hover-primary">{{ $customer->full_name }}</a>
                                         </td>
                                         <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->email }}</td>
