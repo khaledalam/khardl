@@ -4118,9 +4118,6 @@ details.collapse summary::-webkit-details-marker {
 .h-\[50px\] {
   height: 50px;
 }
-.h-\[550px\] {
-  height: 550px;
-}
 .h-\[60px\] {
   height: 60px;
 }
@@ -4170,9 +4167,6 @@ details.collapse summary::-webkit-details-marker {
 .max-h-screen {
   max-height: 100vh;
 }
-.max-h-\[500px\] {
-  max-height: 500px;
-}
 .min-h-\[100\%\] {
   min-height: 100%;
 }
@@ -4203,6 +4197,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .\!w-full {
   width: 100% !important;
+}
+.w-0 {
+  width: 0px;
 }
 .w-1\/3 {
   width: 33.333333%;
@@ -4367,15 +4364,6 @@ details.collapse summary::-webkit-details-marker {
 .w-full {
   width: 100%;
 }
-.w-\[40\%\] {
-  width: 40%;
-}
-.w-1 {
-  width: 0.25rem;
-}
-.w-0 {
-  width: 0px;
-}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }
@@ -4442,6 +4430,12 @@ details.collapse summary::-webkit-details-marker {
 .flex-1 {
   flex: 1 1 0%;
 }
+.flex-\[0\] {
+  flex: 0;
+}
+.flex-\[100\%\] {
+  flex: 100%;
+}
 .flex-\[18\%\] {
   flex: 18%;
 }
@@ -4450,15 +4444,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .flex-\[80\%\] {
   flex: 80%;
-}
-.flex-\[81\%\] {
-  flex: 81%;
-}
-.flex-\[0\] {
-  flex: 0;
-}
-.flex-\[100\%\] {
-  flex: 100%;
 }
 .flex-\[82\%\] {
   flex: 82%;
@@ -10940,9 +10925,6 @@ details.collapse summary::-webkit-details-marker {
 .h-\[50px\] {
   height: 50px;
 }
-.h-\[550px\] {
-  height: 550px;
-}
 .h-\[60px\] {
   height: 60px;
 }
@@ -10992,9 +10974,6 @@ details.collapse summary::-webkit-details-marker {
 .max-h-screen {
   max-height: 100vh;
 }
-.max-h-\[500px\] {
-  max-height: 500px;
-}
 .min-h-\[100\%\] {
   min-height: 100%;
 }
@@ -11025,6 +11004,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .\!w-full {
   width: 100% !important;
+}
+.w-0 {
+  width: 0px;
 }
 .w-1\/3 {
   width: 33.333333%;
@@ -11189,15 +11171,6 @@ details.collapse summary::-webkit-details-marker {
 .w-full {
   width: 100%;
 }
-.w-\[40\%\] {
-  width: 40%;
-}
-.w-1 {
-  width: 0.25rem;
-}
-.w-0 {
-  width: 0px;
-}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }
@@ -11264,6 +11237,12 @@ details.collapse summary::-webkit-details-marker {
 .flex-1 {
   flex: 1 1 0%;
 }
+.flex-\[0\] {
+  flex: 0;
+}
+.flex-\[100\%\] {
+  flex: 100%;
+}
 .flex-\[18\%\] {
   flex: 18%;
 }
@@ -11272,15 +11251,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .flex-\[80\%\] {
   flex: 80%;
-}
-.flex-\[81\%\] {
-  flex: 81%;
-}
-.flex-\[0\] {
-  flex: 0;
-}
-.flex-\[100\%\] {
-  flex: 100%;
 }
 .flex-\[82\%\] {
   flex: 82%;
