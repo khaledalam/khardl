@@ -9,7 +9,7 @@ import {Navigation, Pagination} from "swiper/modules"
 const Herosection = ({isMobile, categories}) => {
   const dispatch = useDispatch()
   const selectedCategory = useSelector(
-    (state) => state.categoryAPI.selected_category.id
+    (state) => state.categoryAPI.selected_category
   )
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
@@ -94,13 +94,11 @@ const Herosection = ({isMobile, categories}) => {
       </div>
       {(restaurantStyle?.category_alignment === "center" || isMobile) && (
         <div
-          className={`bg-[#2A6E4F] w-full flex items-center justify-center `}
+          className={`bg-[#2A6E4F] w-full flex items-center ${
+            isMobile ? "overflow-x-scroll hide-scroll px-4" : ""
+          } `}
         >
-          <div
-            className={`flex items-center w-full  gap-8 my-5  ${
-              isMobile ? "overflow-x-scroll hide-scroll px-4" : ""
-            }`}
-          >
+          <div className={`flex items-center w-full  gap-8 my-5  `}>
             {categories?.map((category, i) => (
               <CategoryItem
                 key={i}
