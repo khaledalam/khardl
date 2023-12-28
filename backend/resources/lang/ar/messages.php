@@ -376,6 +376,8 @@ return [
     "choose-time-for-all-days"=>"اختر الوقت المناسب لكل الأيام",
     "choose-time-for-custom-days"=>"اختر الوقت المناسب لكل يوم علي حدا",
     "time"=>"الوقت",
-    "Is Business Licensed"=>"هل السجل التجاري مرخص"
+    "Is Business Licensed"=>"هل السجل التجاري مرخص",
+    "Are u sure to change customer of status ?"=>"حاحا",
+    "Status changed successfully"   => "تم تغير الحالة بنجاح"
 ];
 

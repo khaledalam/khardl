@@ -121,9 +121,9 @@
                                 <input type="hidden" name="status" id="orderStatus" >
                             </form>
                             <script>
-                                function showConfirmation(orderId) {
+                                function showConfirmation(customerId) {
                                     event.preventDefault();
-                                    const statusOptions = @json(array_combine(\App\Models\Tenant\Order::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\Order::STATUS)));
+                                    const statusOptions = @json(array_combine(\App\Models\Tenant\RestaurantUser::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\RestaurantUser::STATUS)));
 
                                     Swal.fire({
                                         text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
@@ -139,7 +139,7 @@
                                             const selectedStatus = result.value;
                                             document.getElementById('orderStatus').setAttribute('value',selectedStatus);
                                             var form = document.getElementById('approve-form');
-                                            form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
+                                            form.action = `{{ route('customers_data.change-status', ['restaurantUser' => ':customerId']) }}`.replace(':customerId', customerId)
                                             form.submit();
 
                                         }
