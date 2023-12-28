@@ -179,6 +179,7 @@ const EditPanel = () => {
             <ColorPallete
               modalId={"price"}
               color={price_color}
+              defaultColor='red'
               handleColorChange={(color) => dispatch(priceColor(color))}
             />
           </div>
@@ -189,6 +190,7 @@ const EditPanel = () => {
             <ColorPallete
               modalId={"header"}
               color={header_color}
+              defaultColor='#c0d123'
               handleColorChange={(color) => dispatch(headerColor(color))}
             />
           </div>
@@ -199,6 +201,7 @@ const EditPanel = () => {
             <ColorPallete
               modalId={"footer_modal"}
               color={footer_color}
+              defaultColor='#c0d123'
               handleColorChange={(color) => dispatch(footerColor(color))}
             />
           </div>
@@ -270,6 +273,7 @@ const EditPanel = () => {
             <ColorPallete
               modalId={"text_color"}
               color={text_color}
+              defaultColor='black'
               handleColorChange={(color) => dispatch(textColor(color))}
             />
           </div>

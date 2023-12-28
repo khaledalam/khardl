@@ -50,6 +50,7 @@ const ProductItem = ({
 }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const language = useSelector((state) => state.languageMode.languageMode)
   const {setStatusCode} = useAuthContext()
   const {t} = useTranslation()
   const [feedback, setFeedback] = useState("")
@@ -270,7 +271,11 @@ const ProductItem = ({
         onClick={() => document.getElementById(id).showModal()}
       >
         <div className='flex items-center justify-between pt-2'>
-          <div className='flex flex-col gap-2 pl-4'>
+          <div
+            className={`flex flex-col gap-2 ${
+              language === "en" ? "pl-4" : "pr-4"
+            }`}
+          >
             <h3
               style={{fontSize: fontSize ? fontSize : 16}}
               className='font-bold text-[1rem]'
@@ -293,7 +298,11 @@ const ProductItem = ({
               {caloryInfo} Kcal
             </p>
           </div>
-          <div className='w-[100px] h-[100px] mr-[-1.8rem] rtl:mr-[1.8rem] bg-neutral-100 rounded-full p-1'>
+          <div
+            className={`w-[100px] h-[100px] ${
+              language === "en" ? "mr-[-1.8rem]" : "ml-[-1.8rem]"
+            }   bg-neutral-100 rounded-full p-1`}
+          >
             <img
               src={imgSrc}
               alt='product'
@@ -305,7 +314,11 @@ const ProductItem = ({
           <div className='flex gap-6 w-full'>
             <div
               style={{backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00"}}
-              className='w-[70px] h-[30px] p-1 rounded-tr-lg rounded-bl-2xl  flex items-center justify-center'
+              className={`w-[70px] h-[30px] p-1 ${
+                language === "en"
+                  ? "rounded-tr-lg rounded-bl-2xl "
+                  : "rounded-tl-lg rounded-br-2xl"
+              }   flex items-center justify-center`}
             >
               <img
                 src={cartBgcolor ? imgCartWhite : imgCart}
@@ -356,7 +369,7 @@ const ProductItem = ({
                       style={{color: amountColor ? amountColor : "red"}}
                       className='text-[13px] font-bold'
                     >
-                      SAR
+                      {t("SAR")}{" "}
                     </span>
                     <span
                       style={{color: amountColor ? amountColor : "red"}}
@@ -394,18 +407,35 @@ const ProductItem = ({
                       checkbox_input_titles.length > 0 &&
                       checkbox_input_titles.map((title, checkbox_idx) => (
                         <div id={"checkbox"} className=''>
-                          <h3 className='text-[15px] font-bold mb-1'>
-                            {title[0]}
-                          </h3>
+                          {title[0] && (
+                            <h3 className='text-[15px] font-bold mb-1'>
+                              {language === "en" ? title[0] : title[1]}
+                              {checkbox_required[checkbox_idx] === "true" && (
+                                <span className='text-red-500'>*</span>
+                              )}
+                            </h3>
+                          )}
                           <div className='flex flex-col gap-2'>
                             {checkboxItems &&
                               checkboxItems.length > 0 &&
                               checkboxItems[checkbox_idx]?.map((item, idx) => (
                                 <ProductDetailItem
                                   key={idx}
-                                  label={item?.value[0]}
-                                  name={item?.value[0]}
-                                  price={Number(item.price)}
+                                  label={
+                                    language === "en"
+                                      ? item?.value[0]
+                                      : item?.value[1]
+                                  }
+                                  name={
+                                    "checkbox" + language === "en"
+                                      ? item?.value[0]
+                                      : item?.value[1]
+                                  }
+                                  price={
+                                    item.price === 0
+                                      ? t("Free")
+                                      : `${Number(item?.price)} ${t("SAR")}`
+                                  }
                                   isCheckbox
                                   onChange={(e) =>
                                     handleCheckboxChange(checkbox_idx, idx, e)
@@ -421,18 +451,31 @@ const ProductItem = ({
                       selection_input_titles.length > 0 &&
                       selection_input_titles.map((title, selection_idx) => (
                         <div id={"radio"} className=''>
-                          <h3 className='text-[15px] font-bold mb-1'>
-                            {title[0]}
-                          </h3>
+                          {title[0] && (
+                            <h3 className='text-[15px] font-bold mb-1'>
+                              {language === "en" ? title[0] : title[1]}
+                              {selection_required[selection_idx] === "true" && (
+                                <span className='text-red-500'>*</span>
+                              )}
+                            </h3>
+                          )}
                           <div className='flex flex-col gap-2'>
                             {radioItems &&
                               radioItems.length > 0 &&
                               radioItems[selection_idx]?.map((item, idx) => (
                                 <ProductDetailItem
                                   key={idx}
-                                  label={item?.value[0]}
+                                  label={
+                                    language === "en"
+                                      ? item?.value[0]
+                                      : item?.value[1]
+                                  }
                                   name={"radio_item"}
-                                  price={Number(item?.price)}
+                                  price={
+                                    item.price === 0
+                                      ? t("Free")
+                                      : `${Number(item?.price)} ${t("SAR")}`
+                                  }
                                   isRadio
                                   onChange={(e) =>
                                     handleRadioChange(selection_idx, idx, e)
@@ -448,16 +491,23 @@ const ProductItem = ({
                       dropdown_input_titles.length > 0 &&
                       dropdown_input_titles.map((title, dropdown_idx) => (
                         <div id={"dropdown"} className=''>
-                          <h3 className='text-[15px] font-bold mb-1'>
-                            {title[0]}
-                          </h3>
+                          {title[0] && (
+                            <h3 className='text-[15px] font-bold mb-1'>
+                              {language === "en" ? title[0] : title[1]}
+                              {dropdown_required[dropdown_idx] === "true" && (
+                                <span className='text-red-500'>*</span>
+                              )}
+                            </h3>
+                          )}
                           <div className='flex flex-col gap-2 mb-3'>
                             {dropdownItems &&
                               dropdownItems.length > 0 &&
+                              dropdownItems[dropdown_idx][0]?.value[0] &&
                               dropdownItems?.map((item, idx) => (
                                 <ProductDetailItem
                                   key={idx}
                                   isDropDown
+                                  language={language}
                                   options={item}
                                   onChange={(e) =>
                                     handleDropdownChange(dropdown_idx, e)
@@ -515,7 +565,7 @@ const ProductItem = ({
                         }}
                         className='text-[14px] font-bold'
                       >
-                        SAR {totalPrice && finalPrice}
+                        {t("SAR")} {totalPrice && finalPrice}
                       </h3>
                     )}
                   </div>

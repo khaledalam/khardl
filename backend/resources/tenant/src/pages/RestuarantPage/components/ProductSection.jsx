@@ -3,9 +3,11 @@ import ProductItem from "../../EditorsPage/Restuarants/components/ProductItem"
 import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
 import {useDispatch, useSelector} from "react-redux"
 import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
+import {useTranslation} from "react-i18next"
 
-const ProductSection = ({categories}) => {
+const ProductSection = ({categories, isMobile}) => {
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
   )
@@ -13,26 +15,23 @@ const ProductSection = ({categories}) => {
 
   const filterCategory =
     categories && categories.length > 0
-      ? categories?.filter(
-          (category) =>
-            category.name.toLowerCase() === selectedCategory.toLowerCase()
-        )
+      ? categories?.filter((category) => category.id === selectedCategory.id)
       : [{name: "", items: []}]
 
   console.log("filterCategory", filterCategory)
   return (
     <div>
-      {restaurantStyle?.category_alignment === "center" && (
+      {(restaurantStyle?.category_alignment === "center" || isMobile) && (
         <Fragment>
           <div className='w-full'>
             <div className='w-5/6 laptopXL:w-[75%] mx-auto py-4'>
-              {filterCategory &&
+              {filterCategory ? (
                 filterCategory.map((category) => (
                   <div className='my-4' key={category.id}>
                     <h3 className='font-semibold text-[1.5rem] relative'>
                       <span className='custom-underline'>{category?.name}</span>{" "}
                     </h3>
-                    <div className='w-[95%] mt-10 ml-auto grid grid-cols-3 gap-y-12 gap-x-6 py-10'>
+                    <div className='w-[95%] mt-10 ml-auto grid grid-col-1 xl:grid-cols-3 gap-y-12 gap-x-6 py-10'>
                       {category?.items?.map((product, i) => (
                         <ProductItem
                           key={product.id}
@@ -84,12 +83,19 @@ const ProductSection = ({categories}) => {
                       ))}
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className='w-full h-full items-center justify-center'>
+                  <div className='text-2xl font-medium'>
+                    {t("No items in this category")}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Fragment>
       )}
-      {restaurantStyle?.category_alignment === "left" && (
+      {restaurantStyle?.category_alignment === "left" && !isMobile && (
         <Fragment>
           <div className='w-full flex items-start p-16 gap-2 '>
             <div className='flex-[20%]'>
@@ -105,16 +111,17 @@ const ProductSection = ({categories}) => {
                     categories?.map((category, i) => (
                       <CategoryItem
                         key={i}
-                        active={
-                          selectedCategory === category.name.toLowerCase()
-                        }
+                        active={selectedCategory.id === category.id}
                         name={category.name}
                         imgSrc={category.imgSrc}
                         alt={category.name}
                         hoverColor={restaurantStyle?.category_hover_color}
                         onClick={() =>
                           dispatch(
-                            selectedCategoryAPI(category.name.toLowerCase())
+                            selectedCategoryAPI({
+                              name: category.name,
+                              id: category.id,
+                            })
                           )
                         }
                         textColor={restaurantStyle?.text_color}
@@ -194,7 +201,7 @@ const ProductSection = ({categories}) => {
           </div>
         </Fragment>
       )}
-      {restaurantStyle?.category_alignment === "right" && (
+      {restaurantStyle?.category_alignment === "right" && !isMobile && (
         <Fragment>
           <div className='w-full flex items-start p-16 gap-2'>
             <div className='flex-[80%]'>
@@ -275,16 +282,17 @@ const ProductSection = ({categories}) => {
                     categories?.map((category, i) => (
                       <CategoryItem
                         key={i}
-                        active={
-                          selectedCategory === category.name.toLowerCase()
-                        }
+                        active={selectedCategory.id === category.id}
                         name={category.name}
                         imgSrc={category.imgSrc}
                         alt={category.name}
                         hoverColor={restaurantStyle?.category_hover_color}
                         onClick={() =>
                           dispatch(
-                            selectedCategoryAPI(category.name.toLowerCase())
+                            selectedCategoryAPI({
+                              name: category.name,
+                              id: category.id,
+                            })
                           )
                         }
                         textColor={restaurantStyle?.text_color}

@@ -2640,6 +2640,14 @@ details.collapse summary::-webkit-details-marker {
   outline-offset: 2px;
   outline-color: var(--fallback-bc,oklch(var(--bc)/0.2));
 }
+.select-ghost {
+  --tw-bg-opacity: 0.05;
+}
+.select-ghost:focus {
+  --tw-bg-opacity: 1;
+  --tw-text-opacity: 1;
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+}
 .select-disabled,
   .select:disabled,
   .select[disabled] {
@@ -3549,6 +3557,9 @@ details.collapse summary::-webkit-details-marker {
 .bottom-6 {
   bottom: 1.5rem;
 }
+.bottom-7 {
+  bottom: 1.75rem;
+}
 .bottom-\[-10px\] {
   bottom: -10px;
 }
@@ -3949,6 +3960,9 @@ details.collapse summary::-webkit-details-marker {
 .ml-6 {
   margin-left: 1.5rem;
 }
+.ml-\[-1\.8rem\] {
+  margin-left: -1.8rem;
+}
 .ml-auto {
   margin-left: auto;
 }
@@ -4105,6 +4119,9 @@ details.collapse summary::-webkit-details-marker {
 .h-\[1\.38rem\] {
   height: 1.38rem;
 }
+.h-\[1\.3rem\] {
+  height: 1.3rem;
+}
 .h-\[100\%\] {
   height: 100%;
 }
@@ -4183,8 +4200,8 @@ details.collapse summary::-webkit-details-marker {
 .h-\[80px\] {
   height: 80px;
 }
-.h-\[82px\] {
-  height: 82px;
+.h-\[85px\] {
+  height: 85px;
 }
 .h-\[85vh\] {
   height: 85vh;
@@ -4216,6 +4233,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .max-h-screen {
   max-height: 100vh;
+}
+.min-h-\[1\.3rem\] {
+  min-height: 1.3rem;
 }
 .min-h-\[100\%\] {
   min-height: 100%;
@@ -4286,6 +4306,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-\[1\.38rem\] {
   width: 1.38rem;
+}
+.w-\[1\.3rem\] {
+  width: 1.3rem;
 }
 .w-\[100\%\] {
   width: 100%;
@@ -4414,6 +4437,10 @@ details.collapse summary::-webkit-details-marker {
 .w-full {
   width: 100%;
 }
+.w-max {
+  width: -moz-max-content;
+  width: max-content;
+}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }
@@ -4467,6 +4494,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .max-w-\[90\%\] {
   max-width: 90%;
+}
+.max-w-full {
+  max-width: 100%;
 }
 .max-w-md {
   max-width: 28rem;
@@ -4787,6 +4817,9 @@ details.collapse summary::-webkit-details-marker {
 .overflow-x-hidden {
   overflow-x: hidden;
 }
+.overflow-x-scroll {
+  overflow-x: scroll;
+}
 .overflow-y-scroll {
   overflow-y: scroll;
 }
@@ -4912,6 +4945,12 @@ details.collapse summary::-webkit-details-marker {
 }
 .rounded-bl-2xl {
   border-bottom-left-radius: 1rem;
+}
+.rounded-br-2xl {
+  border-bottom-right-radius: 1rem;
+}
+.rounded-tl-lg {
+  border-top-left-radius: 0.5rem;
 }
 .rounded-tr-lg {
   border-top-right-radius: 0.5rem;
@@ -5069,6 +5108,10 @@ details.collapse summary::-webkit-details-marker {
 }
 .bg-\[\#C0D12325\] {
   background-color: #C0D12325;
+}
+.bg-\[\#C0D123\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(192 209 35 / var(--tw-bg-opacity));
 }
 .bg-\[\#b8cb0aa4\] {
   background-color: #b8cb0aa4;
@@ -5480,6 +5523,12 @@ details.collapse summary::-webkit-details-marker {
 .pl-\[6px\] {
   padding-left: 6px;
 }
+.pr-2 {
+  padding-right: 0.5rem;
+}
+.pr-4 {
+  padding-right: 1rem;
+}
 .ps-0 {
   padding-inline-start: 0px;
 }
@@ -5708,6 +5757,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .leading-7 {
   line-height: 1.75rem;
+}
+.leading-\[0px\] {
+  line-height: 0px;
 }
 .leading-none {
   line-height: 1;
@@ -6172,6 +6224,13 @@ details.collapse summary::-webkit-details-marker {
 .focus-visible\:border-none:focus-visible {
   border-style: none;
 }
+.focus-visible\:bg-transparent:focus-visible {
+  background-color: transparent;
+}
+.focus-visible\:outline-none:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
 .focus-visible\:ring:focus-visible {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -6210,9 +6269,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
-}
-:is([dir="rtl"] .rtl\:mr-\[1\.8rem\]) {
-  margin-right: 1.8rem;
 }
 @media not all and (min-width: 1280px) {
 
@@ -6836,6 +6892,11 @@ details.collapse summary::-webkit-details-marker {
 
   .xl\:grid-cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .xl\:px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 }
 @media (min-width: 1536px) {

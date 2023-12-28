@@ -6,13 +6,18 @@ import {Navigation, Pagination} from "swiper/modules"
 import {IoCloseOutline} from "react-icons/io5"
 import ImageIcon from "../../../../assets/imageIcon.svg"
 import ImgRestBanner from "../../../../assets/bannerRestuarant.png"
-import {useCallback, useState} from "react"
+import {useCallback, useEffect, useRef, useState} from "react"
 import {useDispatch} from "react-redux"
 import {setBannersUpload} from "../../../../redux/NewEditor/restuarantEditorSlice"
+import {FaCircleChevronLeft, FaCircleChevronRight} from "react-icons/fa6"
 
 const Slider = ({banner_images}) => {
   const [uploadImages, setUploadImages] = useState([])
+  const [sliderCount, setSliderCount] = useState(2)
   const dispatch = useDispatch()
+
+  const navigationPrevRef = useRef(null)
+  const navigationNextRef = useRef(null)
 
   const handleImagesUpload = (event, idx) => {
     const selectedImage = event.target.files[0]
@@ -22,7 +27,9 @@ const Slider = ({banner_images}) => {
     setUploadImages([...uploadImages, URL.createObjectURL(selectedImage)])
   }
 
-  console.log("uploaded images", uploadImages)
+  const addMoreSlider = useCallback(() => {
+    setSliderCount((prev) => prev + 1)
+  }, [])
 
   return (
     <Swiper
@@ -31,7 +38,7 @@ const Slider = ({banner_images}) => {
       navigation={true}
       slideClass='swiper-slide'
     >
-      {Array(10)
+      {Array(sliderCount)
         .fill(1)
         .map((_, index) => (
           <SwiperSlide key={index}>
@@ -44,7 +51,7 @@ const Slider = ({banner_images}) => {
                     ? `url(${banner_images[index]})`
                     : `url(${ImgRestBanner})`,
               }}
-              className={`h-[280px] rounded-md flex items-center justify-center   shadow-md`}
+              className={`h-[280px] rounded-md flex items-center justify-center  relative  shadow-md`}
             >
               <input
                 type='file'
@@ -63,7 +70,7 @@ const Slider = ({banner_images}) => {
                 >
                   <img
                     src={
-                      banner_images[index] ? banner_images[index] : ImageIcon
+                      (uploadImages[index] || banner_images[index]) ?? ImageIcon
                     }
                     alt={""}
                     className='w-full h-full object-cover'
@@ -77,9 +84,21 @@ const Slider = ({banner_images}) => {
                   )}
                 </div>
               </label>
+              <div
+                onClick={addMoreSlider}
+                className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7'
+              >
+                +
+              </div>
             </div>
           </SwiperSlide>
         ))}
+      {/* <div className='prev-btn' ref={navigationPrevRef}>
+        <FaCircleChevronLeft size={25} />
+      </div>
+      <span className='next-btn' ref={navigationNextRef}>
+        <FaCircleChevronRight size={25} />
+      </span> */}
     </Swiper>
   )
 }

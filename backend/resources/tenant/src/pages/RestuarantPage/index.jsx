@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from "react"
-import NavbarRestuarant from "./components/Navbar"
 import Herosection from "./components/Herosection"
 import ProductSection from "./components/ProductSection"
 import FooterRestuarant from "./components/Footer"
 import AxiosInstance from "../../axios/axios"
 import {useDispatch, useSelector} from "react-redux"
 import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
+import {setCategoriesAPI} from "../../redux/NewEditor/categoryAPISlice"
+import NavbarRestuarant from "./components/NavbarRestuarant"
 
 export const RestuarantHomePage = () => {
   const dispatch = useDispatch()
-  const [categories, setCategories] = useState([])
+  const [isMobile, setIsMobile] = useState(false)
+  const categories = useSelector((state) => state.categoryAPI.categories)
+
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   let branch_id = localStorage.getItem("selected_branch_id")
@@ -26,7 +29,7 @@ export const RestuarantHomePage = () => {
         restaurantCategoriesResponse.data
       )
       if (restaurantCategoriesResponse.data) {
-        setCategories(restaurantCategoriesResponse.data?.data)
+        dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data))
 
         console.log(">> branch_id >>", branch_id)
 
@@ -50,6 +53,11 @@ export const RestuarantHomePage = () => {
       console.log(error)
     }
   }
+  useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    setIsMobile(isMobile)
+  }, [])
 
   useEffect(() => {
     fetchCategoriesData().then((result) => {
@@ -58,6 +66,10 @@ export const RestuarantHomePage = () => {
 
     fetchResStyleData()
   }, [])
+
+  if (!restaurantStyle) {
+    return
+  }
 
   console.log("categories fetched", categories)
 
@@ -68,11 +80,13 @@ export const RestuarantHomePage = () => {
   return (
     <div style={{backgroundColor: restaurantStyle?.page_color}}>
       <NavbarRestuarant />
-      <Herosection alignment={"center"} categories={categories} />
+      <Herosection isMobile={isMobile} categories={categories} />
       {/* <ProductSection alignment={"center"} categories={categories} /> */}
-      {categories && categories.length > 0 && (
-        <ProductSection alignment={"center"} categories={categories} />
-      )}
+      <ProductSection
+        alignment={"center"}
+        categories={categories}
+        isMobile={isMobile}
+      />
       <FooterRestuarant />
     </div>
   )
