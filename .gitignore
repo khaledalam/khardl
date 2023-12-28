@@ -22,6 +22,7 @@ docker/database/data
 frontend/temp
 frontend/package-lock.json
 .htaccess
+test.json
 
 #backend/public/js/central.js
 #backend/public/js/tenant.js

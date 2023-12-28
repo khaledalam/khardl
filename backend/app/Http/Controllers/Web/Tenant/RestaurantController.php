@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
-use App\Http\Services\tenant\Restaurant\RestaurantService;
 use App\Models\Tenant\Item;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
@@ -12,6 +10,7 @@ use App\Models\Tenant\Branch;
 use App\Models\Tenant\Setting;
 use Illuminate\Support\Carbon;
 use App\Models\Tenant\Category;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\PaymentMethod;
@@ -20,9 +19,11 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\OrderStatusLogs;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
 use Illuminate\Contracts\Database\Query\Builder;
+use App\Http\Services\tenant\Restaurant\RestaurantService;
 
 class RestaurantController extends BaseController
 {
@@ -200,31 +201,28 @@ class RestaurantController extends BaseController
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
-
+      
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required',
             'copy_menu' => 'required',
-
-            'normal_from' => 'nullable|required_if:hours_option,normal|date_format:H:i',
-            'normal_to' => 'nullable|required_if:hours_option,normal|date_format:H:i|after:normal_from',
-            'saturday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
-            'saturday_close' => 'nullable|required_if:hours_option,custom|date_format:H:i|after:saturday_open',
-            'sunday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
-            'sunday_close' => 'nullable|required_if:hours_option,custom|date_format:H:i|after:sunday_open',
-            'monday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
-            'monday_close' => 'nullable|required_if:hours_option,custom|date_format:H:i|after:monday_open',
-            'tuesday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
-            'tuesday_close' => 'nullable|required_if:hours_option,custom|date_format:H:i|after:tuesday_open',
-            'wednesday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
-            'wednesday_close' => 'nullable|required_if:hours_option,custom|date_format:H:i|after:wednesday_open',
-            'thursday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
-            'thursday_close' => 'nullable|required_if:hours_option,custom|date_format:H:i|after:thursday_open',
-            'friday_open' => 'nullable|required_if:hours_option,custom|date_format:H:i',
-            'friday_close' => 'nullable|required_if:hours_option,custom|date_format:H:i|after:friday_open',
+            'normal_from' => [ Rule::when($request->hours_option == 'normal','date_format:H:i')],
+            'normal_to' => [ Rule::when($request->hours_option == 'normal','date_format:H:i|after:normal_from')],
+            'saturday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'saturday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:saturday_open')],
+            'sunday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'sunday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:sunday_open')],
+            'monday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'monday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:monday_open')],
+            'tuesday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'tuesday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:tuesday_open')],
+            'wednesday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'wednesday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:wednesday_open')],
+            'thursday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'thursday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:thursday_open')],
+            'friday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'friday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:friday_open')],
         ]);
-
-
 
         list($lat, $lng) = explode(' ', $validatedData['location']);
 

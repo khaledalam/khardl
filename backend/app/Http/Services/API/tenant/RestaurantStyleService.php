@@ -85,7 +85,7 @@ class RestaurantStyleService
             ];
 
             // get branches of restaurant
-            $data['branches'] = Branch::all(['name', 'id', 'lat', 'lng', 'delivery_availability', 'preparation_time_delivery']);
+            $data['branches'] = Branch::all(['name', 'id', 'lat', 'lng', 'delivery_availability', 'pickup_availability', 'preparation_time_delivery']);
         }
 
         return $this->sendResponse($data, __('Restaurant style fetched successfully.'));
