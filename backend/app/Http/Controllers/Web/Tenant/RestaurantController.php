@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
-use App\Http\Services\tenant\Restaurant\RestaurantService;
 use App\Models\Tenant\Item;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
@@ -12,6 +10,7 @@ use App\Models\Tenant\Branch;
 use App\Models\Tenant\Setting;
 use Illuminate\Support\Carbon;
 use App\Models\Tenant\Category;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\PaymentMethod;
@@ -20,9 +19,11 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\OrderStatusLogs;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
 use Illuminate\Contracts\Database\Query\Builder;
+use App\Http\Services\tenant\Restaurant\RestaurantService;
 
 class RestaurantController extends BaseController
 {
@@ -208,50 +209,67 @@ class RestaurantController extends BaseController
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
+       
+        
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'location' => 'required',
             'copy_menu' => 'required',
-            'saturday_open' => 'required|date_format:H:i',
-            'saturday_close' => 'required|date_format:H:i|after:saturday_open',
-            'sunday_open' => 'required|date_format:H:i',
-            'sunday_close' => 'required|date_format:H:i|after:sunday_open',
-            'monday_open' => 'required|date_format:H:i',
-            'monday_close' => 'required|date_format:H:i|after:monday_open',
-            'tuesday_open' => 'required|date_format:H:i',
-            'tuesday_close' => 'required|date_format:H:i|after:tuesday_open',
-            'wednesday_open' => 'required|date_format:H:i',
-            'wednesday_close' => 'required|date_format:H:i|after:wednesday_open',
-            'thursday_open' => 'required|date_format:H:i',
-            'thursday_close' => 'required|date_format:H:i|after:thursday_open',
-            'friday_open' => 'required|date_format:H:i',
-            'friday_close' => 'required|date_format:H:i|after:friday_open',
+            'normal_from' => [ Rule::when($request->hours_option == 'normal','date_format:H:i')],
+            'normal_to' => [ Rule::when($request->hours_option == 'normal','date_format:H:i|after:normal_from')],
+            'saturday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'saturday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:saturday_open')],
+            'sunday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'sunday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:sunday_open')],
+            'monday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'monday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:monday_open')],
+            'tuesday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'tuesday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:tuesday_open')],
+            'wednesday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'wednesday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:wednesday_open')],
+            'thursday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'thursday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:thursday_open')],
+            'friday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'friday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:friday_open')],
         ]);
+      
+       
 
 
         list($lat, $lng) = explode(' ', $validatedData['location']);
 
         $branchesExist = DB::table('branches')->where('is_primary',1)->exists();
 
+        $time = function($time,$open = true)use($request){
+            if($request->hours_option == 'normal'){
+                if($open)
+                    return  Carbon::createFromFormat('H:i', $request->input('normal_from'))->format('H:i');
+                else 
+                    return  Carbon::createFromFormat('H:i', $request->input('normal_to'))->format('H:i');
+            }else {
+                return  Carbon::createFromFormat('H:i', $time)->format('H:i');
+            }
+        };
+       
         $newBranchId = DB::table('branches')->insertGetId([
             'name' => $validatedData['name'],
             'lat' => (float) $lat,
             'lng' => (float) $lng,
             'is_primary' => !$branchesExist,
-            'saturday_open' => Carbon::createFromFormat('H:i', $request->input('saturday_open'))->format('H:i'),
-            'saturday_close' => Carbon::createFromFormat('H:i', $request->input('saturday_close'))->format('H:i'),
-            'sunday_open' => Carbon::createFromFormat('H:i', $request->input('sunday_open'))->format('H:i'),
-            'sunday_close' => Carbon::createFromFormat('H:i', $request->input('sunday_close'))->format('H:i'),
-            'monday_open' => Carbon::createFromFormat('H:i', $request->input('monday_open'))->format('H:i'),
-            'monday_close' => Carbon::createFromFormat('H:i', $request->input('monday_close'))->format('H:i'),
-            'tuesday_open' => Carbon::createFromFormat('H:i', $request->input('tuesday_open'))->format('H:i'),
-            'tuesday_close' => Carbon::createFromFormat('H:i', $request->input('tuesday_close'))->format('H:i'),
-            'wednesday_open' => Carbon::createFromFormat('H:i', $request->input('wednesday_open'))->format('H:i'),
-            'wednesday_close' => Carbon::createFromFormat('H:i', $request->input('wednesday_close'))->format('H:i'),
-            'thursday_open' => Carbon::createFromFormat('H:i', $request->input('thursday_open'))->format('H:i'),
-            'thursday_close' => Carbon::createFromFormat('H:i', $request->input('thursday_close'))->format('H:i'),
-            'friday_open' => Carbon::createFromFormat('H:i', $request->input('friday_open'))->format('H:i'),
-            'friday_close' => Carbon::createFromFormat('H:i', $request->input('friday_close'))->format('H:i'),
+            'saturday_open' => $time( $request->input('saturday_open')),
+            'saturday_close' => $time( $request->input('saturday_close'),false),
+            'sunday_open' =>$time( $request->input('sunday_open')),
+            'sunday_close' =>$time( $request->input('sunday_close'),false),
+            'monday_open' =>$time( $request->input('monday_open')),
+            'monday_close' => $time( $request->input('monday_close'),false),
+            'tuesday_open' =>$time( $request->input('tuesday_open')),
+            'tuesday_close' => $time( $request->input('tuesday_close'),false),
+            'wednesday_open' => $time( $request->input('wednesday_open')),
+            'wednesday_close' => $time( $request->input('wednesday_close'),false),
+            'thursday_open' =>$time( $request->input('thursday_open')),
+            'thursday_close' =>$time( $request->input('thursday_close'),false),
+            'friday_open' => $time( $request->input('friday_open')),
+            'friday_close' => $time( $request->input('friday_close'),false),
         ]);
 
         if ($validatedData['copy_menu'] != "None") {

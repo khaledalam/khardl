@@ -19,7 +19,7 @@ use App\Models\Tenant\OrderItem;
 class OrderRepository
 {
     use APIResponseTrait;
-    public function create(OrderRequest $request,CartRepository $cart): JsonResponse
+    public function create(OrderRequest $request,CartRepository $cart,$user = null): JsonResponse
     {
         DB::beginTransaction();
         try {
@@ -30,7 +30,7 @@ class OrderRepository
                 $paymentMethod = PaymentMethod::where('name',$request->payment_method)?->first();
 
                 $order = Order::create([
-                    'user_id'=>Auth::id(),
+                    'user_id'=>$user?? Auth::id(),
                     'branch_id'=>$cart->branch()->id,
                     'payment_method_id'=> $paymentMethod?->id,
                     'delivery_type_id'=> $delivery->id,

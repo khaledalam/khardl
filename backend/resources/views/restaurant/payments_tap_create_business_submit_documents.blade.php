@@ -17,11 +17,11 @@
             <div class="d-flex flex-column mb-8 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_en">
-                    <span class="required">{{__("messages.Name (English)")}}</span>
+                    <span class="required">{{__("messages.Enter Business Name (EN)")}}</span>
                   
                 </label>
                 <!--end::Label-->
-                <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Business Name (EN)')}}" name="name[en]" id="name_en" value="{{old('name.en')}}" />
+                <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Business Name (EN)')}}" name="name[en]" id="name_en" value="{{old('name.en')  ?? $restaurant_name}}" />
             </div>
             <!--end::Input group-->
 
@@ -29,11 +29,11 @@
             <div class="d-flex flex-column mb-8 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                    <span >{{__("messages.Name (Arabic)")}}</span>
+                    <span >{{__("messages.Enter Business Name (AR)")}}</span>
                    
                 </label>
                 <!--end::Label-->
-                <input type="text" class="form-control form-control-solid"  placeholder="{{__('messages.Enter Business Name (AR)')}}" name="name[ar]" id="name_ar"  value="{{old('name.ar')}}"/>
+                <input type="text" class="form-control form-control-solid"  v placeholder="{{__('messages.Enter Business Name (AR)')}}" name="name[ar]" id="name_ar"  value="{{old('name.ar') ?? $restaurant_name}}"/>
             </div>
             <!--end::Input group-->
 
@@ -83,7 +83,7 @@
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="is_licensed">
-                        <span class="required">{{__('messages.Is Licensed')}}</span>
+                        <span class="required">{{__('messages.Is Business Licensed')}}</span>
                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('messages.Denote whether the business is licensed or not')}}"></i>
                     <!--end::Label-->
                         <input  type="hidden" name="entity[is_licensed]" value="{{false}}"   />
@@ -163,7 +163,7 @@
                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="The official documents related to the business."></i>
                     </label>
                     <!--end::Label-->
-                    <input id="bank_account_iban" type="text" class="form-control form-control-solid" placeholder="IBAN e.g. INBNK00045545555555555555" name="entity[bank_account][iban]"  value="{{old('entity.bank_account.iban')}}"/><br />
+                    <input id="bank_account_iban" type="text" class="form-control form-control-solid" placeholder="IBAN e.g. INBNK00045545555555555555" name="entity[bank_account][iban]"  value="{{old('entity.bank_account.iban') ?? $iban}}"/><br />
                     <input id="bank_account_swift_code" type="text" class="form-control form-control-solid" placeholder="SWIFT code e.g. SWFT12345678909836435647" name="entity[bank_account][swift_code]"  value="{{old('entity.bank_account.swift_code')}}" /><br />
                     <input id="bank_account_number" type="text" class="form-control form-control-solid" placeholder="Account Number e.g. DFGHGFVB876215bsdjhkn" name="entity[bank_account][account_number]" value="{{old('entity.bank_account.account_number')}}" />
                 </div>
@@ -216,7 +216,7 @@
                         
                     </label>
                     <!-- Input -->
-                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('messages.Enter First Name') }}" name="contact_person[name][first]" id="name_first" value="{{ old('contact_person.name.first') }}" />
+                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('messages.Enter First Name') }}" name="contact_person[name][first]" id="name_first" value="{{ old('contact_person.name.first') ?? $user->first_name }}" />
                 </div>
 
                 <!-- Name middle input group -->
@@ -238,7 +238,7 @@
                          
                     </label>
                     <!-- Input -->
-                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('messages.Enter Last Name') }}" name="contact_person[name][last]" id="name_last" value="{{ old('contact_person.name.last') }}" />
+                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('messages.Enter Last Name') }}" name="contact_person[name][last]" id="name_last" value="{{ old('contact_person.name.last') ?? $user->last_name }}" />
                 </div>
             </div>
             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="contact_info_group">
@@ -254,7 +254,7 @@
                            
                         </label>
                         <!--end::Label-->
-                        <input type="email" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Your Email')}}" name="contact_person[contact_info][primary][email]" id="contact_person_primary_email" value="{{ old('contact_person.contact_info.primary.email') }}" />
+                        <input type="email" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Your Email')}}" name="contact_person[contact_info][primary][email]" id="contact_person_primary_email" value="{{ old('contact_person.contact_info.primary.email') ?? $user->email }}" />
                     </div>
                     <!--end::Input group-->
 
@@ -275,7 +275,7 @@
                                 <input type="text"  readonly name="contact_person[contact_info][primary][phone][country_code]" id="countryCodeInput" value="{{old('contact_person.contact_info.primary.phone.country_code')}}" style="width: 40px;border:0;background-color:#f5f8fa">
                             </span>
                         </div>
-                        <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Your Number')}}" name="contact_person[contact_info][primary][phone][number]"  id="contact_person_primary_number" value="{{ old('contact_person.contact_info.primary.phone.number') }}" />
+                        <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Your Number')}}" name="contact_person[contact_info][primary][phone][number]"  id="contact_person_primary_number" value="{{ old('contact_person.contact_info.primary.phone.number') ?? substr($user->phone,3)}}" />
                         </div>
                     </div>
                     <!--end::Input group-->
@@ -294,7 +294,7 @@
                            
                         </label>
                         <!--end::Label-->
-                        <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Brand Name (EN)')}}" name="brands[0][name][en]" id="name_en" value="{{old('brands.0.name.en')}}" />
+                        <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Brand Name (EN)')}}" name="brands[0][name][en]" id="name_en" value="{{old('brands.0.name.en') ?? $facility_name}}" />
                     </div>
                     <!--end::Input group-->
 
@@ -306,7 +306,7 @@
                           
                         </label>
                         <!--end::Label-->
-                        <input type="text" class="form-control form-control-solid"  placeholder="{{__('messages.Enter Brand Name (AR)')}}" name="brands[0][name][ar]" id="name_ar"  value="{{old('brands.0.name.ar')}}"/>
+                        <input type="text" class="form-control form-control-solid"  placeholder="{{__('messages.Enter Brand Name (AR)')}}" name="brands[0][name][ar]" id="name_ar"  value="{{old('brands.0.name.ar') ?? $facility_name}}"/>
                     </div>
                     <!--end::Input group-->
             </div>
