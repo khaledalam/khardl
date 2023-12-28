@@ -9,10 +9,11 @@ import {
   changeRestuarantEditorStyle,
   setSidebarCollapse,
 } from "../../../redux/NewEditor/restuarantEditorSlice"
+import {setCategoriesAPI} from "../../../redux/NewEditor/categoryAPISlice"
 
 export const RestuarantEditor = () => {
   const dispatch = useDispatch()
-  const [categories, setCategories] = useState([])
+  const categories = useSelector((state) => state.categoryAPI.categories)
 
   const isSidebarCollapse = useSelector(
     (state) => state.restuarantEditorStyle.collapse_sidebar
@@ -52,7 +53,7 @@ export const RestuarantEditor = () => {
         restaurantCategoriesResponse.data
       )
       if (restaurantCategoriesResponse.data) {
-        setCategories(restaurantCategoriesResponse.data?.data)
+        dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data))
 
         console.log(">> branch_id >>", branch_id)
 

@@ -70,7 +70,7 @@ const CategoryItem = ({
               ? fontSize - 2
               : 14,
         }}
-        className='font-normal'
+        className='font-normal w-max'
       >
         {name}
       </h3>

@@ -1,5 +1,7 @@
-import React, {Fragment, useContext} from "react"
+import React, {Fragment, useContext, useState} from "react"
 import homeIcon from "../../../../assets/homeIcon.svg"
+import LoginIcon from "../../../../assets/login.svg"
+import logoutIcon from "../../../../assets/logout.svg"
 import shopIcon from "../../../../assets/shopIcon.svg"
 import deliveryIcon from "../../../../assets/bikeDeliveryIcon.svg"
 import {IoMenuOutline} from "react-icons/io5"
@@ -14,9 +16,14 @@ import {useTranslation} from "react-i18next"
 import AxiosInstance from "../../../../axios/axios"
 import {changeLanguage} from "../../../../redux/languageSlice"
 import {MenuContext} from "react-flexible-sliding-menu"
+import PrimarySelectWithIcon from "./PrimarySelectWithIcon"
+import {BiSolidUserAccount} from "react-icons/bi"
+import {setCategoriesAPI} from "../../../../redux/NewEditor/categoryAPISlice"
 
 const OuterSidebarNav = ({id}) => {
   const {setStatusCode} = useAuthContext()
+  const [branch, setBranch] = useState("Branch A")
+  const [pickUp, setPickUp] = useState("Pick A")
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {t} = useTranslation()
@@ -27,6 +34,34 @@ const OuterSidebarNav = ({id}) => {
     (state) => state.languageMode.languageMode
   )
 
+  let branch_id = localStorage.getItem("selected_branch_id")
+  // let branch_id = 2
+
+  const fetchCategoriesData = async () => {
+    try {
+      const restaurantCategoriesResponse = await AxiosInstance.get(
+        `categories?items&user&branch&selected_branch_id=${branch_id}`
+      )
+
+      console.log(
+        "editor rest restaurantCategoriesResponse >>>",
+        restaurantCategoriesResponse.data
+      )
+      if (restaurantCategoriesResponse.data) {
+        dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data))
+
+        console.log(">> branch_id >>", branch_id)
+
+        if (!branch_id) {
+          branch_id = restaurantCategoriesResponse.data?.data[0]?.branch?.id
+          localStorage.setItem("selected_branch_id", branch_id)
+        }
+      }
+    } catch (error) {
+      // toast.error(`${t('Failed to send verification code')}`)
+      console.log(error)
+    }
+  }
   const handleLogout = async (e) => {
     e.preventDefault()
 
@@ -53,8 +88,10 @@ const OuterSidebarNav = ({id}) => {
     )
 
   const handleLanguageChange = async () => {
-    await AxiosInstance.get(`/change-language/${newLanguage}`, {})
-    dispatch(changeLanguage(newLanguage))
+    AxiosInstance.get(`/change-language/${newLanguage}`, {}).then(() => {
+      dispatch(changeLanguage(newLanguage))
+      fetchCategoriesData()
+    })
   }
 
   return (
@@ -73,19 +110,38 @@ const OuterSidebarNav = ({id}) => {
           <h3 className=''>Home</h3>
         </div>
         {/* pick up */}
-        <div className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '>
-          <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
-            <img src={shopIcon} alt='shopping' />
-          </div>
-          <h3 className=''>Pick up</h3>
-        </div>
-        {/* delivery */}
-        <div className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '>
-          <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
-            <img src={deliveryIcon} alt='deliveryIcon' />
-          </div>
-          <h3 className=''>Delivery</h3>
-        </div>
+        <PrimarySelectWithIcon
+          imgUrl={shopIcon}
+          text={"Pick up"}
+          placeholder={`Khardl Pick-Up - Jeddah`}
+          onChange={(e) => setPickUp(e.target.value)}
+          options={[
+            {
+              value: 1,
+              text: "Pick-Up A",
+            },
+            {
+              value: 2,
+              text: "Pick-Up B",
+            },
+          ]}
+        />
+        <PrimarySelectWithIcon
+          imgUrl={deliveryIcon}
+          text={"delivery"}
+          placeholder={`Khardl Branch - Jeddah`}
+          onChange={(e) => setBranch(e.target.value)}
+          options={[
+            {
+              value: 1,
+              text: "Branch A",
+            },
+            {
+              value: 2,
+              text: "Branch B",
+            },
+          ]}
+        />
         {/* login */}
         {isLoggedIn ? (
           <Fragment>
@@ -100,26 +156,33 @@ const OuterSidebarNav = ({id}) => {
         ) : (
           <Fragment>
             <div
-              role='button'
               onClick={() => navigate("/register")}
-              className='w-[90%] mx-auto btn bg-neutral-100 hover:bg-neutral-100 active:bg-neutral-100 font-normal border border-[#C0D123]'
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
             >
-              {t("Create an account")}{" "}
-            </div>
-            <div
-              role='button'
-              onClick={() => navigate("/login")}
-              className='w-[90%] mx-auto btn bg-neutral-100 hover:bg-neutral-100 active:bg-neutral-100 font-normal border border-[#C0D123]'
-            >
-              {t("Login as Customer")}{" "}
+              <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+                <BiSolidUserAccount size={25} />
+              </div>
+              <h3 className=''> {t("Create an account")} </h3>
             </div>
 
             <div
-              role='button'
-              onClick={() => navigate("/login-admins")}
-              className='w-[90%] mx-auto btn bg-neutral-100 hover:bg-neutral-100 active:bg-neutral-100 font-normal border border-[#C0D123]'
+              onClick={() => navigate("/login")}
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
             >
-              {t("Management Area")}{" "}
+              <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+                <img src={LoginIcon} alt='home' />
+              </div>
+              <h3 className=''> {t("Login as Customer")} </h3>
+            </div>
+
+            <div
+              onClick={() => navigate("/login-admins")}
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+            >
+              <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+                <img src={LoginIcon} alt='home' />
+              </div>
+              <h3 className=''> {t("Management Area")} </h3>
             </div>
           </Fragment>
         )}
@@ -141,13 +204,12 @@ const OuterSidebarNav = ({id}) => {
         <div className='w-full mb-20'>
           <div
             onClick={handleLogout}
-            role='button'
-            className='w-[90%] mx-auto btn bg-neutral-100 hover:bg-neutral-100 active:bg-neutral-100 font-normal border border-[#C0D123] flex items-center gap-3'
+            className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
           >
-            <span className=''>Logout </span>
-            <span>
-              <FaLongArrowAltRight size={20} />
-            </span>
+            <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+              <img src={logoutIcon} alt='home' />
+            </div>
+            <h3 className=''> Logout </h3>
           </div>
         </div>
       ) : (

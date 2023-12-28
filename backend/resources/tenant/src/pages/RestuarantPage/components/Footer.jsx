@@ -9,7 +9,7 @@ const FooterRestuarant = () => {
     <div className='w-full flex flex-col gap-4'>
       <div
         style={{background: restaurantStyle?.footer_color}}
-        className='w-full b h-[82px] flex items-center justify-center'
+        className='w-full b h-[85px] flex flex-col gap-4  items-center justify-center'
       >
         <div
           className={`flex flex-col gap-3 ${

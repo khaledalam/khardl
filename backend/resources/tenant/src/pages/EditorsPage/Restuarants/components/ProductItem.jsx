@@ -407,12 +407,14 @@ const ProductItem = ({
                       checkbox_input_titles.length > 0 &&
                       checkbox_input_titles.map((title, checkbox_idx) => (
                         <div id={"checkbox"} className=''>
-                          <h3 className='text-[15px] font-bold mb-1'>
-                            {language === "en" ? title[0] : title[1]}
-                            {checkbox_required[checkbox_idx] === "true" && (
-                              <span className='text-red-500'>*</span>
-                            )}
-                          </h3>
+                          {title[0] && (
+                            <h3 className='text-[15px] font-bold mb-1'>
+                              {language === "en" ? title[0] : title[1]}
+                              {checkbox_required[checkbox_idx] === "true" && (
+                                <span className='text-red-500'>*</span>
+                              )}
+                            </h3>
+                          )}
                           <div className='flex flex-col gap-2'>
                             {checkboxItems &&
                               checkboxItems.length > 0 &&
@@ -449,12 +451,14 @@ const ProductItem = ({
                       selection_input_titles.length > 0 &&
                       selection_input_titles.map((title, selection_idx) => (
                         <div id={"radio"} className=''>
-                          <h3 className='text-[15px] font-bold mb-1'>
-                            {language === "en" ? title[0] : title[1]}
-                            {selection_required[selection_idx] === "true" && (
-                              <span className='text-red-500'>*</span>
-                            )}
-                          </h3>
+                          {title[0] && (
+                            <h3 className='text-[15px] font-bold mb-1'>
+                              {language === "en" ? title[0] : title[1]}
+                              {selection_required[selection_idx] === "true" && (
+                                <span className='text-red-500'>*</span>
+                              )}
+                            </h3>
+                          )}
                           <div className='flex flex-col gap-2'>
                             {radioItems &&
                               radioItems.length > 0 &&
@@ -487,15 +491,18 @@ const ProductItem = ({
                       dropdown_input_titles.length > 0 &&
                       dropdown_input_titles.map((title, dropdown_idx) => (
                         <div id={"dropdown"} className=''>
-                          <h3 className='text-[15px] font-bold mb-1'>
-                            {language === "en" ? title[0] : title[1]}
-                            {dropdown_required[dropdown_idx] === "true" && (
-                              <span className='text-red-500'>*</span>
-                            )}
-                          </h3>
+                          {title[0] && (
+                            <h3 className='text-[15px] font-bold mb-1'>
+                              {language === "en" ? title[0] : title[1]}
+                              {dropdown_required[dropdown_idx] === "true" && (
+                                <span className='text-red-500'>*</span>
+                              )}
+                            </h3>
+                          )}
                           <div className='flex flex-col gap-2 mb-3'>
                             {dropdownItems &&
                               dropdownItems.length > 0 &&
+                              dropdownItems[dropdown_idx][0]?.value[0] &&
                               dropdownItems?.map((item, idx) => (
                                 <ProductDetailItem
                                   key={idx}

@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
 import {useTranslation} from "react-i18next"
 
-const ProductSection = ({categories}) => {
+const ProductSection = ({categories, isMobile}) => {
   const dispatch = useDispatch()
   const {t} = useTranslation()
   const selectedCategory = useSelector(
@@ -21,7 +21,7 @@ const ProductSection = ({categories}) => {
   console.log("filterCategory", filterCategory)
   return (
     <div>
-      {restaurantStyle?.category_alignment === "center" && (
+      {(restaurantStyle?.category_alignment === "center" || isMobile) && (
         <Fragment>
           <div className='w-full'>
             <div className='w-5/6 laptopXL:w-[75%] mx-auto py-4'>
@@ -31,7 +31,7 @@ const ProductSection = ({categories}) => {
                     <h3 className='font-semibold text-[1.5rem] relative'>
                       <span className='custom-underline'>{category?.name}</span>{" "}
                     </h3>
-                    <div className='w-[95%] mt-10 ml-auto grid grid-cols-3 gap-y-12 gap-x-6 py-10'>
+                    <div className='w-[95%] mt-10 ml-auto grid grid-col-1 xl:grid-cols-3 gap-y-12 gap-x-6 py-10'>
                       {category?.items?.map((product, i) => (
                         <ProductItem
                           key={product.id}
@@ -95,7 +95,7 @@ const ProductSection = ({categories}) => {
           </div>
         </Fragment>
       )}
-      {restaurantStyle?.category_alignment === "left" && (
+      {restaurantStyle?.category_alignment === "left" && !isMobile && (
         <Fragment>
           <div className='w-full flex items-start p-16 gap-2 '>
             <div className='flex-[20%]'>
@@ -201,7 +201,7 @@ const ProductSection = ({categories}) => {
           </div>
         </Fragment>
       )}
-      {restaurantStyle?.category_alignment === "right" && (
+      {restaurantStyle?.category_alignment === "right" && !isMobile && (
         <Fragment>
           <div className='w-full flex items-start p-16 gap-2'>
             <div className='flex-[80%]'>

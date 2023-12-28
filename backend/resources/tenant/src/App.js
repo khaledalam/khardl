@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import "./App.css"
 import {Routes, Route, useLocation} from "react-router-dom"
 import {useSelector} from "react-redux"
@@ -41,6 +41,14 @@ const App = () => {
   const fontFamily = "cairo, sans-serif"
   const location = useLocation()
   const {loading} = useAuthContext()
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    setIsMobile(isMobile)
+  }, [])
+
   const showHeader = ![
     "/policies",
     "/login-trial",
@@ -78,7 +86,7 @@ const App = () => {
       MenuComponent={OuterSidebarNav}
       direction={Language == "en" ? "left" : "right"}
       animation={"slide"} // 'slide' │ 'push' │ 'reveal'
-      width={"25vw"}
+      width={isMobile ? "80vw" : "25vw"}
     >
       <div
         className='relative '
@@ -131,9 +139,9 @@ const App = () => {
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                                                                                                                                                                                          path='/site-editor/restaurants'
-                                                                                                                                                                                                                          element={<EditorPage />}
-                                                                                                                                                                                                                        />{" "} */}{" "}
+                                                                                                                                                                                                                                                                                      path='/site-editor/restaurants'
+                                                                                                                                                                                                                                                                                      element={<EditorPage />}
+                                                                                                                                                                                                                                                                                    />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
                 <Route path='/dashboard' element={<CustomersPreview />} />{" "}
                 <Route path='/site-editor/customers' element={<EditorPage />} />{" "}

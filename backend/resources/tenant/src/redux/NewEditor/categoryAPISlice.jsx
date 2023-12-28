@@ -7,13 +7,17 @@ const categoryAPISlice = createSlice({
       name: "first category",
       id: 1,
     },
+    categories: [],
   },
   reducers: {
     selectedCategoryAPI: (state, action) => {
       state.selected_category = action.payload
     },
+    setCategoriesAPI: (state, action) => {
+      state.categories = action.payload
+    },
   },
 })
 
-export const {selectedCategoryAPI} = categoryAPISlice.actions
+export const {selectedCategoryAPI, setCategoriesAPI} = categoryAPISlice.actions
 export default categoryAPISlice.reducer

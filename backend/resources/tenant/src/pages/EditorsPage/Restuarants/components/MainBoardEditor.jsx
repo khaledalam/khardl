@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useState} from "react"
+import React, {Fragment, useContext, useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom"
 import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
 import WhatsappIcon from "../../../../assets/whatsappImg.svg"
@@ -14,10 +14,12 @@ import {
   setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 
-const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
+const MainBoardEditor = ({categories}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
+  const language = useSelector((state) => state.languageMode.languageMode)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {toggleMenu} = useContext(MenuContext)
@@ -90,6 +92,26 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
     }
   }
+
+  useEffect(() => {
+    if (language !== "en") {
+      if (categories && categories.length > 0) {
+        dispatch(
+          selectedCategoryAPI({
+            name: categories[0]?.name,
+            id: categories && categories[0]?.id,
+          })
+        )
+      }
+    } else {
+      dispatch(
+        selectedCategoryAPI({
+          name: categories[0]?.name,
+          id: categories && categories[0]?.id,
+        })
+      )
+    }
+  }, [language, dispatch, categories])
 
   const clearLogo = () => {
     dispatch(logoUpload(null))
@@ -392,7 +414,9 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
             className={`w-full h-full flex flex-col items-center justify-center `}
           >
             <h3 className='font-semibold text-[1.5rem] text-center my-4 relative capitalize'>
-              <span className='custom-underline'>{selectedCategory}</span>{" "}
+              <span className='custom-underline capitalize'>
+                {selectedCategory.name}
+              </span>{" "}
             </h3>
 
             <div
