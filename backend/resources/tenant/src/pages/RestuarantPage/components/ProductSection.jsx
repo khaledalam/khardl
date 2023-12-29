@@ -97,7 +97,7 @@ const ProductSection = ({categories, isMobile}) => {
           </div>
         </Fragment>
       )}
-      {restaurantStyle?.category_alignment === "left" && !isMobile && (
+      {restaurantStyle?.category_alignment === t("left") && !isMobile && (
         <Fragment>
           <div className='w-full flex items-start p-16 gap-2 '>
             <div className='flex-[20%]'>
@@ -206,7 +206,7 @@ const ProductSection = ({categories, isMobile}) => {
           </div>
         </Fragment>
       )}
-      {restaurantStyle?.category_alignment === "right" && !isMobile && (
+      {restaurantStyle?.category_alignment === t("right") && !isMobile && (
         <Fragment>
           <div className='w-full flex items-start p-16 gap-2'>
             <div className='flex-[80%]'>

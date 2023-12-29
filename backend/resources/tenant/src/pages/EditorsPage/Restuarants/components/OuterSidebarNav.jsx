@@ -108,7 +108,7 @@ const OuterSidebarNav = ({id}) => {
           <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
             <img src={homeIcon} alt='home' />
           </div>
-          <h3 className=''>Home</h3>
+          <h3 className=''>{t("Homepage")}</h3>
         </div>
         {/* pick up */}
         <PrimarySelectWithIcon
@@ -214,7 +214,7 @@ const OuterSidebarNav = ({id}) => {
             <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
               <img src={logoutIcon} alt='home' />
             </div>
-            <h3 className=''> Logout </h3>
+            <h3 className=''>{t("Logout")}</h3>
           </div>
         </div>
       ) : (

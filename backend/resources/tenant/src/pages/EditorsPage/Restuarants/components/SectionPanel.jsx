@@ -19,9 +19,11 @@ import {
   categoryDetailType,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 import {BiMinus} from "react-icons/bi"
+import {useTranslation} from "react-i18next"
 
 const SectionPanel = () => {
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
@@ -57,7 +59,7 @@ const SectionPanel = () => {
       </div>
       <div className='py-4 border-b border-neutral-300'>
         <div className='flex items-center justify-between w-[70%] px-2'>
-          <h2 className='font-bold text-lg'>Logo</h2>
+          <h2 className='font-bold text-lg'>{t("Logo")}</h2>
           <LogoAlignment
             defaultValue={logo_alignment}
             onChange={(value) => dispatch(logoAlignment(value))}
@@ -65,18 +67,18 @@ const SectionPanel = () => {
         </div>
       </div>
       <div className='py-4 border-b border-neutral-300'>
-        <h2 className='font-bold text-lg mb-4'>Banner</h2>
+        <h2 className='font-bold text-lg mb-4'>{t("Banner")}</h2>
         <PrimarySelect
           defaultValue={banner_type}
           handleChange={(value) => dispatch(bannerType(value))}
           options={[
-            {value: "slider", text: "Slider"},
-            {value: "one-photo", text: "One-Photo"},
+            {value: t("Slider"), text: t("Slider")},
+            {value: t("One-photo"), text: t("One-photo")},
           ]}
         />
       </div>
       <div className='py-4 border-b border-neutral-300'>
-        <h2 className='font-bold text-lg mb-4'>Category</h2>
+        <h2 className='font-bold text-lg mb-4'>{t("Category")}</h2>
         {/* <CategoryAlign
           label={"Type"}
           defaultValue={category_type}
@@ -88,9 +90,9 @@ const SectionPanel = () => {
             defaultValue={category_alignment}
             handleChange={(value) => dispatch(categoryAlignment(value))}
             options={[
-              {value: "left", text: "Left"},
+              {value: t("left"), text: t("left")},
               {value: "center", text: "Center"},
-              {value: "right", text: "Right"},
+              {value: t("right"), text: t("right")},
             ]}
           />
         </div>
@@ -108,9 +110,9 @@ const SectionPanel = () => {
             defaultValue={categoryDetail_alignment}
             handleChange={(value) => dispatch(categoryDetailAlignment(value))}
             options={[
-              {value: "left", text: "Left"},
+              {value: t('left'), text: t('left')},
               {value: "center", text: "Center"},
-              {value: "right", text: "Right"},
+              {value: t('right'), text: t('right')},
             ]}
           />
         </div>
@@ -118,7 +120,7 @@ const SectionPanel = () => {
 
       <div className='py-4 border-b border-neutral-300 '>
         <div className='flex items-center justify-between p-2 w-[70%] mb-4 '>
-          <h2 className='font-bold text-lg '>Social Media</h2>
+          <h2 className='font-bold text-lg '>{t("Social Media")}</h2>
           {showSocialMedia ? (
             <BiMinus
               size={25}
@@ -142,16 +144,16 @@ const SectionPanel = () => {
             defaultValue={socialMediaIcons_alignment}
             handleChange={(value) => dispatch(socialMediaIconsAlignment(value))}
             options={[
-              {value: "left", text: "Left"},
+              {value: t("left"), text: t("left")},
               {value: "center", text: "Center"},
-              {value: "right", text: "Right"},
+              {value: t("right"), text: t("right")},
             ]}
           />
         </div>
       </div>
 
       <div className='py-4 border-b border-neutral-300'>
-        <h2 className='font-bold text-lg mb-4'>Phone Number</h2>
+        <h2 className='font-bold text-lg mb-4'>{t("Phone")}</h2>
         <div className='w-[70%]'>
           <PhoneInput
             country={"sa"}
@@ -167,9 +169,9 @@ const SectionPanel = () => {
             defaultValue={phoneNumber_alignment}
             handleChange={(value) => dispatch(phoneNumberAlignment(value))}
             options={[
-              {value: "left", text: "Left"},
+              {value: t("left"), text: t("left")},
               {value: "center", text: "Center"},
-              {value: "right", text: "Right"},
+              {value: t("right"), text: t("right")},
             ]}
           />
         </div>

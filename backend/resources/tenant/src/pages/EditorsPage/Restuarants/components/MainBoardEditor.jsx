@@ -13,11 +13,13 @@ import {
   logoUpload,
   setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
+import {useTranslation} from "react-i18next"
 
 const MainBoardEditor = ({categories}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
+  const {t} = useTranslation()
   const language = useSelector((state) => state.languageMode.languageMode)
 
   const dispatch = useDispatch()
@@ -357,9 +359,9 @@ const MainBoardEditor = ({categories}) => {
       >
         <div
           className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
-            category_alignment === "left"
+            category_alignment === t("left")
               ? "order-1 w-[25%]"
-              : category_alignment === "right"
+              : category_alignment === t("right")
               ? "order-2 w-[25%]"
               : category_alignment === "center"
               ? "w-full"
@@ -409,9 +411,9 @@ const MainBoardEditor = ({categories}) => {
         </div>
         <div
           className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${
-            category_alignment === "left"
+            category_alignment === t("left")
               ? "order-2 w-[75%]"
-              : category_alignment === "right"
+              : category_alignment === t("right")
               ? "order-1 w-[75%]"
               : category_alignment === "center"
               ? "w-full"
@@ -504,9 +506,9 @@ const MainBoardEditor = ({categories}) => {
           className={`w-full flex bg-white ${
             categoryDetail_alignment === "center"
               ? "items-center justify-center"
-              : categoryDetail_alignment === "left"
+              : categoryDetail_alignment === t('left')
               ? "items-center justify-start"
-              : categoryDetail_alignment === "right"
+              : categoryDetail_alignment === t('right')
               ? "items-center justify-end"
               : ""
           }
@@ -542,9 +544,9 @@ const MainBoardEditor = ({categories}) => {
           className={`w-full h-fit bg-white   flex ${
             categoryDetail_alignment === "center"
               ? "items-center justify-center"
-              : categoryDetail_alignment === "left"
+              : categoryDetail_alignment === t('left')
               ? "items-center justify-start"
-              : categoryDetail_alignment === "right"
+              : categoryDetail_alignment === t('right')
               ? "items-center justify-end"
               : ""
           }  `}
@@ -581,9 +583,9 @@ const MainBoardEditor = ({categories}) => {
         className={`w-full min-h-[70px]  rounded-xl flex ${
           socialMediaIcons_alignment === "center"
             ? "items-center justify-center"
-            : socialMediaIcons_alignment === "left"
+            : socialMediaIcons_alignment === t("left")
             ? "items-center justify-start"
-            : socialMediaIcons_alignment === "right"
+            : socialMediaIcons_alignment === t("right")
             ? "items-center justify-end"
             : ""
         }`}
@@ -601,9 +603,9 @@ const MainBoardEditor = ({categories}) => {
         className={`w-full min-h-[70px]  rounded-xl flex  ${
           phoneNumber_alignment === "center"
             ? "items-center justify-center"
-            : phoneNumber_alignment === "left"
+            : phoneNumber_alignment === t("left")
             ? "items-center justify-start"
-            : phoneNumber_alignment === "right"
+            : phoneNumber_alignment === t("right")
             ? "items-center justify-end"
             : ""
         }`}

@@ -4,8 +4,10 @@ import {IoMenuOutline} from "react-icons/io5"
 import {useSelector} from "react-redux"
 import AxiosInstance from "../../../../axios/axios"
 import {toast} from "react-toastify"
+import {useTranslation} from "react-i18next"
 
 const Navbar = ({toggleSidebarCollapse}) => {
+  const {t} = useTranslation()
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   const handleSubmitResStyle = async (e) => {
@@ -93,7 +95,7 @@ const Navbar = ({toggleSidebarCollapse}) => {
             onClick={handleSubmitResStyle}
             className='btn btn-active w-[100px] bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200'
           >
-            Save
+            {t("Save")}
           </button>
         </div>
       </div>
