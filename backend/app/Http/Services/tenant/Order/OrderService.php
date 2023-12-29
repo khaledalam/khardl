@@ -24,7 +24,7 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders = Order::orderBy('created_at', 'DESC')->paginate(10);
+        $orders = Order::orderBy('created_at', 'DESC')->paginate(config('application.perPage'));
         return view('restaurant.orders.list', compact('user', 'orders'));
     }
 
