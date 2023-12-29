@@ -57,6 +57,7 @@ const MainBoardEditor = ({categories}) => {
     phoneNumber,
     phoneNumber_alignment,
     socialMediaIcons_alignment,
+    selectedSocialIcons,
     text_color,
   } = restuarantEditorStyle
   console.log("restuarantEditorStyle", restuarantEditorStyle)
@@ -586,7 +587,7 @@ const MainBoardEditor = ({categories}) => {
 
       <div
         style={{backgroundColor: footer_color}}
-        className={`w-full min-h-[70px]  rounded-xl flex ${
+        className={`w-full min-h-[70px] px-3  rounded-xl flex ${
           socialMediaIcons_alignment === "center"
             ? "items-center justify-center"
             : socialMediaIcons_alignment === t("left")
@@ -596,12 +597,22 @@ const MainBoardEditor = ({categories}) => {
             : ""
         }`}
       >
-        <div className='w-[30px] h-[30px] rounded-full relative'>
-          <img
-            src={WhatsappIcon}
-            alt={"whatsapp"}
-            className='w-full h-full object-cover'
-          />
+        <div className='flex items-center gap-5'>
+          {selectedSocialIcons?.map((socialMedia) => (
+            <a
+              href={socialMedia.link}
+              key={socialMedia.id}
+              className='cursor-pointer'
+            >
+              <div className='w-[30px] h-[30px] rounded-full relative'>
+                <img
+                  src={socialMedia.imgUrl}
+                  alt={"whatsapp"}
+                  className='w-full h-full object-cover'
+                />
+              </div>
+            </a>
+          ))}
         </div>
       </div>
       <div

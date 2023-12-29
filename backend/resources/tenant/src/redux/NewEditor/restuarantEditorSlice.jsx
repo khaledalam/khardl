@@ -1,4 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit"
+import ImgTelegram from "../../assets/imgTelgram.svg"
+import ImgYoutube from "../../assets/imgYoutube.svg"
+import ImgInstagram from "../../assets/ImgInstagram.svg"
+import ImgFacebook from "../../assets/imgFB.svg"
+import ImgLinkedin from "../../assets/Linkedin.svg"
+import ImgTiktok from "../../assets/Tiktok.svg"
+import ImgMsger from "../../assets/Msgner.svg"
+import ImgX from "../../assets/Xtwitter.svg"
+import ImgWhatsapp from "../../assets/whatsappImg.svg"
 
 const restuarantEditorSlice = createSlice({
   name: "restuarantEditorSlice",
@@ -28,11 +37,71 @@ const restuarantEditorSlice = createSlice({
 
     selectedSocialIcons: [
       {
-        id: 1,
-        imgUrl: "",
+        id: 0,
+        name: "Whatsapp",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968841.png",
         link: "",
       },
     ],
+
+    mediaCollection: [
+      {
+        id: 0,
+        // name: "Whatsapp",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968841.png",
+        link: "",
+      },
+      {
+        id: 1,
+        // name: "Telegram",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/2111/2111646.png",
+        link: "",
+      },
+      {
+        id: 2,
+        // name: "Youtube",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/3670/3670147.png",
+        link: "",
+      },
+      {
+        id: 3,
+        // name: "Instagram",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/2111/2111463.png",
+        link: "",
+      },
+      {
+        id: 4,
+        // name: "Facebook",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/3670/3670032.png",
+        link: "",
+      },
+      {
+        id: 5,
+        // name: "LinkedIn",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/2504/2504923.png",
+        link: "",
+      },
+      {
+        id: 6,
+        // name: "Tiktok",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/3116/3116490.png",
+        link: "",
+      },
+      {
+        id: 7,
+        // name: "Messenger",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968771.png",
+        link: "",
+      },
+      {
+        id: 8,
+        // name: "X",
+        imgUrl: "https://cdn-icons-png.flaticon.com/128/11823/11823292.png",
+        link: "",
+      },
+    ],
+
+    selectedMediaId: 0,
     socialMediaIcons_alignment: "center",
     phoneNumber: "+96600000000",
     phoneNumber_alignment: "center",
@@ -162,6 +231,42 @@ const restuarantEditorSlice = createSlice({
     setSidebarCollapse: (state, action) => {
       state.collapse_sidebar = action.payload
     },
+    setSelectedSocialMediaId: (state, action) => {
+      state.selectedMediaId = action.payload
+    },
+    updateSelectedIconInput: (state, action) => {
+      const {id, link} = action.payload
+      const iconToUpdate = state.selectedSocialIcons.find(
+        (icon) => icon.id === id
+      )
+      if (iconToUpdate) {
+        iconToUpdate.link = link
+      }
+    },
+    mediaIconsToSelected: (state, action) => {
+      const iconId = action.payload
+      const iconToMove = state.mediaCollection.find(
+        (icon) => icon.id === iconId
+      )
+      if (iconToMove) {
+        state.mediaCollection = state.mediaCollection.filter(
+          (icon) => icon.id !== iconId
+        )
+        state.selectedSocialIcons.push(iconToMove)
+      }
+    },
+    moveSelectedIconsToMedia: (state, action) => {
+      const iconIdToMove = action.payload
+      const iconToMove = state.selectedSocialIcons.find(
+        (icon) => icon.id === iconIdToMove
+      )
+      if (iconToMove) {
+        state.selectedSocialIcons = state.selectedSocialIcons.filter(
+          (icon) => icon.id !== iconIdToMove
+        )
+        state.mediaCollection.push(iconToMove)
+      }
+    },
   },
 })
 
@@ -200,5 +305,9 @@ export const {
   setBannerUpload,
   setBannersUpload,
   setSidebarCollapse,
+  updateSelectedIconInput,
+  mediaIconsToSelected,
+  moveSelectedIconsToMedia,
+  setSelectedSocialMediaId,
 } = restuarantEditorSlice.actions
 export default restuarantEditorSlice.reducer
