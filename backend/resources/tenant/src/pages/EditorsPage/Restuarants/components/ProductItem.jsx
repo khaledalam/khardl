@@ -23,6 +23,7 @@ import {
 } from "../../../../config"
 import {useAuthContext} from "../../../../components/context/AuthContext"
 import {useForm} from "react-hook-form"
+import {getCartItemsCount} from "../../../../redux/NewEditor/categoryAPISlice"
 
 const ProductItem = ({
   id,
@@ -181,6 +182,18 @@ const ProductItem = ({
 
   const finalPrice = qtyCount * totalPrice
 
+  const fetchCartData = async () => {
+    try {
+      const cartResponse = await AxiosInstance.get(`carts`)
+      if (cartResponse.data) {
+        dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length))
+      }
+    } catch (error) {
+      // toast.error(`${t('Failed to send verification code')}`)
+      console.log(error)
+    }
+  }
+
   const handleAddToCart = async () => {
     try {
       const response = await AxiosInstance.post(`/carts`, {
@@ -198,6 +211,7 @@ const ProductItem = ({
       if (response?.data) {
         toast.success(`${t("Item added to cart")}`)
         setGotoCart(true)
+        fetchCartData()
       }
     } catch (error) {
       console.log(error)
@@ -545,12 +559,12 @@ const ProductItem = ({
                     style={{
                       backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
                     }}
-                    className='w-[45%] flex items-end justify-center gap-5  p-2 rounded-lg'
+                    className='w-[45%] flex items-end justify-center gap-5  p-2 rounded-lg cursor-pointer'
                     onClick={
                       gotoCart ? () => navigate("/cart") : handleAddToCart
                     }
                   >
-                    <div className='w-[30px] h-[30px] '>
+                    <div className='w-[30px] h-[30px] cursor-pointer '>
                       <img
                         src={cartBgcolor ? imgCartWhite : imgCart}
                         alt='product'

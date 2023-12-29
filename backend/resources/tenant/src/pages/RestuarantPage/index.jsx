@@ -5,7 +5,10 @@ import FooterRestuarant from "./components/Footer"
 import AxiosInstance from "../../axios/axios"
 import {useDispatch, useSelector} from "react-redux"
 import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
-import {setCategoriesAPI} from "../../redux/NewEditor/categoryAPISlice"
+import {
+  getCartItemsCount,
+  setCategoriesAPI,
+} from "../../redux/NewEditor/categoryAPISlice"
 import NavbarRestuarant from "./components/NavbarRestuarant"
 
 export const RestuarantHomePage = () => {
@@ -59,12 +62,27 @@ export const RestuarantHomePage = () => {
     setIsMobile(isMobile)
   }, [])
 
+  const fetchCartData = async () => {
+    try {
+      const cartResponse = await AxiosInstance.get(`carts`)
+      if (cartResponse.data) {
+        dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length))
+      }
+    } catch (error) {
+      // toast.error(`${t('Failed to send verification code')}`)
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    fetchCategoriesData().then((result) => {
+    fetchCategoriesData().then(() => {
       console.log("fetched restuarant style successfully")
     })
 
     fetchResStyleData()
+    fetchCartData().then(() => {
+      console.log("fetched cart item count successfully")
+    })
   }, [])
 
   if (!restaurantStyle) {

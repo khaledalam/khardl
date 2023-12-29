@@ -64,6 +64,9 @@ const MainBoardEditor = ({categories}) => {
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
   )
+  const cartItemsCount = useSelector(
+    (state) => state.categoryAPI.cartItemsCount
+  )
   const uploadLogo = useSelector(
     (state) => state.restuarantEditorStyle.logoUpload
   )
@@ -162,7 +165,9 @@ const MainBoardEditor = ({categories}) => {
           {true && (
             <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
               <div className='w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
-                <span className='text-white font-bold text-xs'>0</span>
+                <span className='text-white font-bold text-xs'>
+                  {cartItemsCount}
+                </span>
               </div>
             </div>
           )}
@@ -445,6 +450,7 @@ const MainBoardEditor = ({categories}) => {
             >
               {filterCategory &&
                 filterCategory[0]?.items
+                  .filter((item) => item.availability === 1)
                   .slice(0, 2)
                   .map((product, i) => (
                     <ProductItem

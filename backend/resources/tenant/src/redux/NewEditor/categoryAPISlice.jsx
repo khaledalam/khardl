@@ -8,6 +8,7 @@ const categoryAPISlice = createSlice({
       id: 1,
     },
     categories: [],
+    cartItemsCount: 0,
   },
   reducers: {
     selectedCategoryAPI: (state, action) => {
@@ -16,8 +17,12 @@ const categoryAPISlice = createSlice({
     setCategoriesAPI: (state, action) => {
       state.categories = action.payload
     },
+    getCartItemsCount: (state, action) => {
+      state.cartItemsCount = action.payload
+    },
   },
 })
 
-export const {selectedCategoryAPI, setCategoriesAPI} = categoryAPISlice.actions
+export const {selectedCategoryAPI, setCategoriesAPI, getCartItemsCount} =
+  categoryAPISlice.actions
 export default categoryAPISlice.reducer

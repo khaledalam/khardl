@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useState} from "react"
+import React, {Fragment, useContext, useEffect, useRef, useState} from "react"
 import homeIcon from "../../../../assets/homeIcon.svg"
 import LoginIcon from "../../../../assets/login.svg"
 import logoutIcon from "../../../../assets/logout.svg"
@@ -23,6 +23,8 @@ import {setCategoriesAPI} from "../../../../redux/NewEditor/categoryAPISlice"
 
 const OuterSidebarNav = ({id}) => {
   const {setStatusCode} = useAuthContext()
+  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
+  const branches = restuarantStyle.branches
   const [branch, setBranch] = useState("Branch A")
   const [pickUp, setPickUp] = useState("Pick A")
   const dispatch = useDispatch()
@@ -34,6 +36,27 @@ const OuterSidebarNav = ({id}) => {
   const currentLanguage = useSelector(
     (state) => state.languageMode.languageMode
   )
+
+  const refOuterNav = useRef(null)
+
+  useEffect(() => {
+    document.addEventListener("keydown", hideOnEscape, true)
+    document.addEventListener("click", hideOnClickOutside, true)
+  }, [])
+
+  // hide on ESC press
+  const hideOnEscape = (e) => {
+    if (e.key === "Escape") {
+      closeMenu()
+    }
+  }
+
+  // Hide on outside click
+  const hideOnClickOutside = (e) => {
+    if (refOuterNav.current && !refOuterNav.current?.contains(e.target)) {
+      closeMenu()
+    }
+  }
 
   let branch_id = localStorage.getItem("selected_branch_id")
   // let branch_id = 2
@@ -95,8 +118,12 @@ const OuterSidebarNav = ({id}) => {
     })
   }
 
+  console.log("branches", branches)
   return (
-    <div className='w-full bg-white h-[100vh] flex flex-col items-center justify-between'>
+    <div
+      ref={refOuterNav}
+      className='w-full bg-white h-[100vh] flex flex-col items-center justify-between'
+    >
       <div onClick={closeMenu}>
         <IoMenuOutline size={42} className='text-neutral-400' />
       </div>
@@ -116,32 +143,18 @@ const OuterSidebarNav = ({id}) => {
           text={"Pick up"}
           placeholder={`Khardl Pick-Up - Jeddah`}
           onChange={(e) => setPickUp(e.target.value)}
-          options={[
-            {
-              value: 1,
-              text: "Pick-Up A",
-            },
-            {
-              value: 2,
-              text: "Pick-Up B",
-            },
-          ]}
+          options={branches.filter(
+            (branch) => branch.pickup_availability === 1
+          )}
         />
         <PrimarySelectWithIcon
           imgUrl={deliveryIcon}
           text={"delivery"}
-          placeholder={`Khardl Branch - Jeddah`}
+          placeholder={`Khardl Delivery - Jeddah`}
           onChange={(e) => setBranch(e.target.value)}
-          options={[
-            {
-              value: 1,
-              text: "Branch A",
-            },
-            {
-              value: 2,
-              text: "Branch B",
-            },
-          ]}
+          options={branches.filter(
+            (branch) => branch.delivery_availability === 1
+          )}
         />
         {/* login */}
         {isLoggedIn ? (

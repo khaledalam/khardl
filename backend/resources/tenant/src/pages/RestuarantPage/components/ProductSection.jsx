@@ -32,57 +32,59 @@ const ProductSection = ({categories, isMobile}) => {
                       <span className='custom-underline'>{category?.name}</span>{" "}
                     </h3>
                     <div className='w-[95%] mt-10 ml-auto grid grid-col-1 xl:grid-cols-3 gap-y-12 gap-x-6 py-10'>
-                      {category?.items?.map((product, i) => (
-                        <ProductItem
-                          key={product.id}
-                          id={product.id}
-                          name={product.description}
-                          imgSrc={product.photo}
-                          amount={product.price}
-                          caloryInfo={product.calories}
-                          checkbox_required={
-                            product?.checkbox_required ?? ["true", "false"]
-                          }
-                          checkbox_input_titles={
-                            product?.checkbox_input_titles ?? [[]]
-                          }
-                          checkbox_input_names={
-                            product?.checkbox_input_names ?? [[]]
-                          }
-                          checkbox_input_prices={
-                            product?.checkbox_input_prices ?? [[]]
-                          }
-                          selection_required={
-                            product?.selection_required ?? ["true", "false"]
-                          }
-                          selection_input_titles={
-                            product?.selection_input_titles ?? [[]]
-                          }
-                          selection_input_names={
-                            product?.selection_input_names ?? [[]]
-                          }
-                          selection_input_prices={
-                            product?.selection_input_prices ?? [[]]
-                          }
-                          dropdown_required={
-                            product?.dropdown_required ?? ["true", "false"]
-                          }
-                          dropdown_input_titles={
-                            product?.dropdown_input_titles ?? [[]]
-                          }
-                          dropdown_input_names={
-                            product?.dropdown_input_names ?? [[]]
-                          }
-                          cartBgcolor={
-                            restaurantStyle?.categoryDetail_cart_color
-                          }
-                          amountColor={restaurantStyle?.price_color}
-                          textColor={restaurantStyle?.text_color}
-                          textAlign={restaurantStyle?.text_alignment}
-                          fontSize={restaurantStyle?.text_fontSize}
-                          shape={restaurantStyle?.categoryDetail_shape}
-                        />
-                      ))}
+                      {category?.items
+                        ?.filter((item) => item.availability === 1)
+                        .map((product, i) => (
+                          <ProductItem
+                            key={product.id}
+                            id={product.id}
+                            name={product.description}
+                            imgSrc={product.photo}
+                            amount={product.price}
+                            caloryInfo={product.calories}
+                            checkbox_required={
+                              product?.checkbox_required ?? ["true", "false"]
+                            }
+                            checkbox_input_titles={
+                              product?.checkbox_input_titles ?? [[]]
+                            }
+                            checkbox_input_names={
+                              product?.checkbox_input_names ?? [[]]
+                            }
+                            checkbox_input_prices={
+                              product?.checkbox_input_prices ?? [[]]
+                            }
+                            selection_required={
+                              product?.selection_required ?? ["true", "false"]
+                            }
+                            selection_input_titles={
+                              product?.selection_input_titles ?? [[]]
+                            }
+                            selection_input_names={
+                              product?.selection_input_names ?? [[]]
+                            }
+                            selection_input_prices={
+                              product?.selection_input_prices ?? [[]]
+                            }
+                            dropdown_required={
+                              product?.dropdown_required ?? ["true", "false"]
+                            }
+                            dropdown_input_titles={
+                              product?.dropdown_input_titles ?? [[]]
+                            }
+                            dropdown_input_names={
+                              product?.dropdown_input_names ?? [[]]
+                            }
+                            cartBgcolor={
+                              restaurantStyle?.categoryDetail_cart_color
+                            }
+                            amountColor={restaurantStyle?.price_color}
+                            textColor={restaurantStyle?.text_color}
+                            textAlign={restaurantStyle?.text_alignment}
+                            fontSize={restaurantStyle?.text_fontSize}
+                            shape={restaurantStyle?.categoryDetail_shape}
+                          />
+                        ))}
                     </div>
                   </div>
                 ))
@@ -147,57 +149,59 @@ const ProductSection = ({categories, isMobile}) => {
                         </span>{" "}
                       </h3>
                       <div className='w-[95%] mt-10 ml-auto grid grid-cols-3 gap-y-12 gap-x-6 py-10'>
-                        {category?.items?.map((product, i) => (
-                          <ProductItem
-                            key={product.id}
-                            id={product.id}
-                            name={product.description}
-                            imgSrc={product.photo}
-                            amount={product.price}
-                            caloryInfo={product.calories}
-                            checkbox_required={
-                              product?.checkbox_required ?? ["true", "false"]
-                            }
-                            checkbox_input_titles={
-                              product?.checkbox_input_titles ?? [[]]
-                            }
-                            checkbox_input_names={
-                              product?.checkbox_input_names ?? [[]]
-                            }
-                            checkbox_input_prices={
-                              product?.checkbox_input_prices ?? [[]]
-                            }
-                            selection_required={
-                              product?.selection_required ?? ["true", "false"]
-                            }
-                            selection_input_titles={
-                              product?.selection_input_titles ?? [[]]
-                            }
-                            selection_input_names={
-                              product?.selection_input_names ?? [[]]
-                            }
-                            selection_input_prices={
-                              product?.selection_input_prices ?? [[]]
-                            }
-                            dropdown_required={
-                              product?.dropdown_required ?? ["true", "false"]
-                            }
-                            dropdown_input_titles={
-                              product?.dropdown_input_titles ?? [[]]
-                            }
-                            dropdown_input_names={
-                              product?.dropdown_input_names ?? [[]]
-                            }
-                            cartBgcolor={
-                              restaurantStyle?.categoryDetail_cart_color
-                            }
-                            amountColor={restaurantStyle?.price_color}
-                            textColor={restaurantStyle?.text_color}
-                            textAlign={restaurantStyle?.text_alignment}
-                            fontSize={restaurantStyle?.text_fontSize}
-                            shape={restaurantStyle?.categoryDetail_shape}
-                          />
-                        ))}
+                        {category?.items
+                          ?.filter((item) => item.availability === 1)
+                          .map((product, i) => (
+                            <ProductItem
+                              key={product.id}
+                              id={product.id}
+                              name={product.description}
+                              imgSrc={product.photo}
+                              amount={product.price}
+                              caloryInfo={product.calories}
+                              checkbox_required={
+                                product?.checkbox_required ?? ["true", "false"]
+                              }
+                              checkbox_input_titles={
+                                product?.checkbox_input_titles ?? [[]]
+                              }
+                              checkbox_input_names={
+                                product?.checkbox_input_names ?? [[]]
+                              }
+                              checkbox_input_prices={
+                                product?.checkbox_input_prices ?? [[]]
+                              }
+                              selection_required={
+                                product?.selection_required ?? ["true", "false"]
+                              }
+                              selection_input_titles={
+                                product?.selection_input_titles ?? [[]]
+                              }
+                              selection_input_names={
+                                product?.selection_input_names ?? [[]]
+                              }
+                              selection_input_prices={
+                                product?.selection_input_prices ?? [[]]
+                              }
+                              dropdown_required={
+                                product?.dropdown_required ?? ["true", "false"]
+                              }
+                              dropdown_input_titles={
+                                product?.dropdown_input_titles ?? [[]]
+                              }
+                              dropdown_input_names={
+                                product?.dropdown_input_names ?? [[]]
+                              }
+                              cartBgcolor={
+                                restaurantStyle?.categoryDetail_cart_color
+                              }
+                              amountColor={restaurantStyle?.price_color}
+                              textColor={restaurantStyle?.text_color}
+                              textAlign={restaurantStyle?.text_alignment}
+                              fontSize={restaurantStyle?.text_fontSize}
+                              shape={restaurantStyle?.categoryDetail_shape}
+                            />
+                          ))}
                       </div>
                     </div>
                   ))}
@@ -220,57 +224,59 @@ const ProductSection = ({categories, isMobile}) => {
                         </span>{" "}
                       </h3>
                       <div className='w-[95%] mt-10 ml-auto grid grid-cols-3 gap-y-12 gap-x-6 py-10'>
-                        {category?.items?.map((product, i) => (
-                          <ProductItem
-                            key={product.id}
-                            id={product.id}
-                            name={product.description}
-                            imgSrc={product.photo}
-                            amount={product.price}
-                            caloryInfo={product.calories}
-                            checkbox_required={
-                              product?.checkbox_required ?? ["true", "false"]
-                            }
-                            checkbox_input_titles={
-                              product?.checkbox_input_titles ?? [[]]
-                            }
-                            checkbox_input_names={
-                              product?.checkbox_input_names ?? [[]]
-                            }
-                            checkbox_input_prices={
-                              product?.checkbox_input_prices ?? [[]]
-                            }
-                            selection_required={
-                              product?.selection_required ?? ["true", "false"]
-                            }
-                            selection_input_titles={
-                              product?.selection_input_titles ?? [[]]
-                            }
-                            selection_input_names={
-                              product?.selection_input_names ?? [[]]
-                            }
-                            selection_input_prices={
-                              product?.selection_input_prices ?? [[]]
-                            }
-                            dropdown_required={
-                              product?.dropdown_required ?? ["true", "false"]
-                            }
-                            dropdown_input_titles={
-                              product?.dropdown_input_titles ?? [[]]
-                            }
-                            dropdown_input_names={
-                              product?.dropdown_input_names ?? [[]]
-                            }
-                            cartBgcolor={
-                              restaurantStyle?.categoryDetail_cart_color
-                            }
-                            amountColor={restaurantStyle?.price_color}
-                            textColor={restaurantStyle?.text_color}
-                            textAlign={restaurantStyle?.text_alignment}
-                            fontSize={restaurantStyle?.text_fontSize}
-                            shape={restaurantStyle?.categoryDetail_shape}
-                          />
-                        ))}
+                        {category?.items
+                          ?.filter((item) => item.availability === 1)
+                          .map((product, i) => (
+                            <ProductItem
+                              key={product.id}
+                              id={product.id}
+                              name={product.description}
+                              imgSrc={product.photo}
+                              amount={product.price}
+                              caloryInfo={product.calories}
+                              checkbox_required={
+                                product?.checkbox_required ?? ["true", "false"]
+                              }
+                              checkbox_input_titles={
+                                product?.checkbox_input_titles ?? [[]]
+                              }
+                              checkbox_input_names={
+                                product?.checkbox_input_names ?? [[]]
+                              }
+                              checkbox_input_prices={
+                                product?.checkbox_input_prices ?? [[]]
+                              }
+                              selection_required={
+                                product?.selection_required ?? ["true", "false"]
+                              }
+                              selection_input_titles={
+                                product?.selection_input_titles ?? [[]]
+                              }
+                              selection_input_names={
+                                product?.selection_input_names ?? [[]]
+                              }
+                              selection_input_prices={
+                                product?.selection_input_prices ?? [[]]
+                              }
+                              dropdown_required={
+                                product?.dropdown_required ?? ["true", "false"]
+                              }
+                              dropdown_input_titles={
+                                product?.dropdown_input_titles ?? [[]]
+                              }
+                              dropdown_input_names={
+                                product?.dropdown_input_names ?? [[]]
+                              }
+                              cartBgcolor={
+                                restaurantStyle?.categoryDetail_cart_color
+                              }
+                              amountColor={restaurantStyle?.price_color}
+                              textColor={restaurantStyle?.text_color}
+                              textAlign={restaurantStyle?.text_alignment}
+                              fontSize={restaurantStyle?.text_fontSize}
+                              shape={restaurantStyle?.categoryDetail_shape}
+                            />
+                          ))}
                       </div>
                     </div>
                   ))}

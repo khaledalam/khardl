@@ -12,6 +12,9 @@ const NavbarRestuarant = () => {
   const toggleTheMenu = () => {
     toggleMenu()
   }
+  const cartItemsCount = useSelector(
+    (state) => state.categoryAPI.cartItemsCount
+  )
   const {header_color} = restaurantStyle
   console.log("restuarant styles header", restaurantStyle)
   return (
@@ -34,7 +37,9 @@ const NavbarRestuarant = () => {
           {true && (
             <div className='absolute top-0 right-0'>
               <div className='w-[18px] h-[18px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
-                <span className='text-white font-bold text-xs'>0</span>
+                <span className='text-white font-bold text-xs'>
+                  {cartItemsCount}
+                </span>
               </div>
             </div>
           )}
