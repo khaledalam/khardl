@@ -77,6 +77,8 @@ const ProductSection = ({categories, isMobile}) => {
                             restaurantStyle?.categoryDetail_cart_color
                           }
                           amountColor={restaurantStyle?.price_color}
+                          textColor={restaurantStyle?.text_color}
+                          textAlign={restaurantStyle?.text_alignment}
                           fontSize={restaurantStyle?.text_fontSize}
                           shape={restaurantStyle?.categoryDetail_shape}
                         />
@@ -125,6 +127,7 @@ const ProductSection = ({categories, isMobile}) => {
                           )
                         }
                         textColor={restaurantStyle?.text_color}
+                        textAlign={restaurantStyle?.text_alignment}
                         fontSize={restaurantStyle?.text_fontSize}
                         shape={restaurantStyle?.category_shape}
                         isGrid={true}
@@ -189,6 +192,8 @@ const ProductSection = ({categories, isMobile}) => {
                               restaurantStyle?.categoryDetail_cart_color
                             }
                             amountColor={restaurantStyle?.price_color}
+                            textColor={restaurantStyle?.text_color}
+                            textAlign={restaurantStyle?.text_alignment}
                             fontSize={restaurantStyle?.text_fontSize}
                             shape={restaurantStyle?.categoryDetail_shape}
                           />
@@ -260,6 +265,8 @@ const ProductSection = ({categories, isMobile}) => {
                               restaurantStyle?.categoryDetail_cart_color
                             }
                             amountColor={restaurantStyle?.price_color}
+                            textColor={restaurantStyle?.text_color}
+                            textAlign={restaurantStyle?.text_alignment}
                             fontSize={restaurantStyle?.text_fontSize}
                             shape={restaurantStyle?.categoryDetail_shape}
                           />
@@ -296,6 +303,7 @@ const ProductSection = ({categories, isMobile}) => {
                           )
                         }
                         textColor={restaurantStyle?.text_color}
+                        textAlign={restaurantStyle?.text_alignment}
                         fontSize={restaurantStyle?.text_fontSize}
                         shape={restaurantStyle?.category_shape}
                         isGrid={true}

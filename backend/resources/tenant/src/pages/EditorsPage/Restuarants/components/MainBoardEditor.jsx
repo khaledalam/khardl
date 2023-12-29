@@ -121,10 +121,15 @@ const MainBoardEditor = ({categories}) => {
   }
 
   console.log("bannner shape", banner_shape)
+  console.log("font weight", text_fontWeight)
 
   return (
     <div
-      style={{backgroundColor: page_color, fontFamily: text_fontFamily}}
+      style={{
+        backgroundColor: page_color,
+        fontFamily: text_fontFamily,
+        fontWeight: text_fontWeight,
+      }}
       className='w-full p-4 flex flex-col gap-6 relative'
     >
       {/* Header cart */}
@@ -141,16 +146,15 @@ const MainBoardEditor = ({categories}) => {
       >
         <div
           onClick={toggleMenu}
-          className='btn hover:bg-neutral-100 flex items-center gap-3'
+          style={{fontWeight: text_fontWeight}}
+          className={`btn hover:bg-neutral-100 flex items-center gap-3`}
         >
           <IoMenuOutline size={40} className='text-neutral-400' />
-          <span className='font-normal text-sm'>
-            Show Navigation Bar To Edit
-          </span>
+          <span className='text-sm'>Show Navigation Bar To Edit</span>
         </div>
         <div
           onClick={() => navigate("/cart")}
-          className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center'
+          className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer'
         >
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {true && (
@@ -296,6 +300,8 @@ const MainBoardEditor = ({categories}) => {
                     setSelectedCategory(category.name.toLowerCase())
                   }
                   textColor={text_color}
+                  textAlign={text_alignment}
+                  fontWeight={text_fontWeight}
                   shape={category_shape}
                   isGrid={true}
                 />
@@ -333,6 +339,8 @@ const MainBoardEditor = ({categories}) => {
                     setSelectedCategory(category.name.toLowerCase())
                   }
                   textColor={text_color}
+                  textAlign={text_alignment}
+                  fontWeight={text_fontWeight}
                   shape={category_shape}
                 />
               ))}
@@ -389,6 +397,8 @@ const MainBoardEditor = ({categories}) => {
                     )
                   }
                   textColor={text_color}
+                  textAlign={text_alignment}
+                  fontWeight={text_fontWeight}
                   shape={category_shape}
                   isGrid={category_alignment === "center" ? false : true}
                   fontSize={text_fontSize}
@@ -413,7 +423,12 @@ const MainBoardEditor = ({categories}) => {
           <div
             className={`w-full h-full flex flex-col items-center justify-center `}
           >
-            <h3 className='font-semibold text-[1.5rem] text-center my-4 relative capitalize'>
+            <h3
+              style={{fontWeight: text_fontWeight}}
+              className={`${
+                text_fontFamily ? text_fontFamily : "font-semibold"
+              } text-[1.5rem] text-center my-4 relative capitalize`}
+            >
               <span className='custom-underline capitalize'>
                 {selectedCategory.name}
               </span>{" "}
@@ -472,6 +487,9 @@ const MainBoardEditor = ({categories}) => {
                       }
                       cartBgcolor={categoryDetail_cart_color}
                       amountColor={price_color}
+                      textColor={text_color}
+                      textAlign={text_alignment}
+                      fontWeight={text_fontWeight}
                       shape={categoryDetail_shape}
                       fontSize={text_fontSize}
                     />
@@ -590,7 +608,13 @@ const MainBoardEditor = ({categories}) => {
             : ""
         }`}
       >
-        <h3 className='font-semibold text-lg'>{phoneNumber}</h3>
+        <h3
+          className={`${
+            text_fontFamily ? text_fontFamily : "font-semibold"
+          } text-lg`}
+        >
+          {phoneNumber}
+        </h3>
       </div>
     </div>
   )

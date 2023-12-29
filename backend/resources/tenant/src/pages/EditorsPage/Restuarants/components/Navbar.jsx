@@ -79,10 +79,10 @@ const Navbar = ({toggleSidebarCollapse}) => {
       <div className='h-[70px] w-full bg-white flex items-center justify-between px-8'>
         <IoMenuOutline
           size={42}
-          className='text-neutral-400'
+          className='text-neutral-400 cursor-pointer'
           onClick={toggleSidebarCollapse}
         />
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-4 cursor-pointer'>
           <button
             onClick={() => window.open("/")}
             className='btn btn-active p-3 bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200 flex items-center justify-center'

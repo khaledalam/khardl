@@ -31,8 +31,11 @@ const ProductItem = ({
   caloryInfo,
   amount,
   cartBgcolor,
+  textColor,
+  textAlign,
   amountColor,
   fontSize,
+  fontWeight,
   shape,
   checkbox_required,
   checkbox_input_titles,
@@ -264,10 +267,10 @@ const ProductItem = ({
     <Fragment>
       <div
         style={{
-          boxShadow: "4px 0px 10px 0px rgba(0, 0, 0, 0.25)",
+          boxShadow: "4px 0px  10px 0px rgba(0, 0, 0, 0.25)",
           borderRadius: shape === "sharp" ? 0 : 16,
         }}
-        className='w-[250px] min-h-[138px]'
+        className='w-[250px] min-h-[138px] cursor-pointer'
         onClick={() => document.getElementById(id).showModal()}
       >
         <div className='flex items-center justify-between pt-2'>
@@ -277,13 +280,18 @@ const ProductItem = ({
             }`}
           >
             <h3
-              style={{fontSize: fontSize ? fontSize : 16}}
-              className='font-bold text-[1rem]'
+              style={{
+                fontSize: fontSize ? fontSize : 16,
+                color: textColor,
+                fontWeight: fontWeight ? fontWeight : 700,
+              }}
+              className='text-[1rem]'
             >
               {name}
             </h3>
             <p
               style={{
+                color: textColor,
                 fontSize:
                   fontSize &&
                   typeof fontSize == "string" &&
@@ -293,7 +301,15 @@ const ProductItem = ({
                     ? fontSize - 3
                     : 13,
               }}
-              className='font-normal'
+              className={`${
+                textAlign === "center"
+                  ? "text-center"
+                  : textAlign === "left"
+                  ? "text-left"
+                  : textAlign === "right"
+                  ? "text-right"
+                  : ""
+              }`}
             >
               {caloryInfo} Kcal
             </p>
@@ -328,7 +344,7 @@ const ProductItem = ({
             </div>
             <h3
               style={{color: amountColor ? amountColor : "red"}}
-              className=' font-bold'
+              className='font-bold'
             >
               SAR {amount}
             </h3>

@@ -45,7 +45,7 @@ const restuarantEditorSlice = createSlice({
     price_color: "#ffffff",
 
     text_fontFamily: "Inter",
-    text_fontWeight: "bold",
+    text_fontWeight: 400,
     text_fontSize: 13,
     text_alignment: "center",
     text_color: "#333",

@@ -4,8 +4,9 @@ import LoginIcon from "../../../../assets/login.svg"
 import logoutIcon from "../../../../assets/logout.svg"
 import shopIcon from "../../../../assets/shopIcon.svg"
 import deliveryIcon from "../../../../assets/bikeDeliveryIcon.svg"
+import dashboardIcon from "../../../../assets/dashboardIcon.svg"
+import worldLangIcon from "../../../../assets/worldLang.svg"
 import {IoMenuOutline} from "react-icons/io5"
-import {FaLongArrowAltRight} from "react-icons/fa"
 import {HTTP_NOT_AUTHENTICATED} from "../../../../config"
 import {toast} from "react-toastify"
 import {useSelector, useDispatch} from "react-redux"
@@ -146,11 +147,13 @@ const OuterSidebarNav = ({id}) => {
         {isLoggedIn ? (
           <Fragment>
             <div
-              role='button'
               onClick={() => navigate("/dashboard")}
-              className='w-[90%] mx-auto btn bg-neutral-100 hover:bg-neutral-100 active:bg-neutral-100 font-normal border border-[#C0D123]'
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '
             >
-              {t("Dashboard")}
+              <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+                <img src={dashboardIcon} alt='home' />
+              </div>
+              <h3 className=''> {t("Dashboard")}</h3>
             </div>
           </Fragment>
         ) : (
@@ -189,15 +192,17 @@ const OuterSidebarNav = ({id}) => {
         <label
           htmlFor={id}
           aria-label='close sidebar'
-          className='w-[90%] mx-auto drawer-button rounded-lg p-1 flex items-center justify-center'
+          className='w-[90%] mx-auto drawer-button rounded-lg p-1 flex items-center justify-center cursor-pointer'
         >
           <div
-            role='button'
             onClick={handleLanguageChange}
-            className='w-full btn bg-neutral-100 hover:bg-neutral-100 active:bg-neutral-100 font-normal !border !border-[#C0D123]'
+            className='w-full mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
           >
-            {buttonText}
-          </div>{" "}
+            <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+              <img src={worldLangIcon} alt='language' />
+            </div>
+            <h3 className=''> {buttonText}</h3>
+          </div>
         </label>
       </div>
       {isLoggedIn ? (

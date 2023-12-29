@@ -23,6 +23,7 @@ import {
   textFontWeight,
   textAlignment,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
+import PrimaryOriginSelect from "./PrimaryOriginSelect"
 
 const EditPanel = () => {
   const restuarantEditorStyle = useSelector(
@@ -53,7 +54,10 @@ const EditPanel = () => {
   const [weight, setWeight] = useState("Thin")
 
   return (
-    <div className='w-full h-full'>
+    <div
+      className='w-full h-full'
+      style={{fontWeight: `${text_fontWeight}!important`}}
+    >
       {/* shape  */}
       <div className='py-4 border-b border-neutral-300 px-2'>
         <h2 className='font-bold text-lg mb-4'>Shape</h2>
@@ -220,6 +224,7 @@ const EditPanel = () => {
               defaultValue={text_fontFamily}
               handleChange={(value) => dispatch(textFontFamily(value))}
               options={[
+                {value: "cairo", text: "Cairo"},
                 {value: "Poppins", text: "Poppins"},
                 {value: "Roboto", text: "Roboto"},
               ]}
@@ -229,10 +234,24 @@ const EditPanel = () => {
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
               Weight
             </h3>
-            <PrimarySelect
+            {/* <PrimarySelect
               widthStyle={"w-[50%]"}
               defaultValue={text_fontWeight}
               handleChange={(value) => dispatch(textFontWeight(value))}
+              options={[
+                {value: 200, text: "Thin"},
+                {value: 300, text: "Light"},
+                {value: 400, text: "Regular"},
+                {value: 500, text: "Medium"},
+                {value: 600, text: "Semi Bold"},
+                {value: 700, text: "Bold"},
+                {value: 800, text: "Extra Bold"},
+              ]}
+            /> */}
+            <PrimaryOriginSelect
+              widthStyle={"w-[50%]"}
+              defaultValue={text_fontWeight}
+              handleChange={(e) => dispatch(textFontWeight(e.target.value))}
               options={[
                 {value: 200, text: "Thin"},
                 {value: 300, text: "Light"},
