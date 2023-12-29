@@ -27,7 +27,7 @@ const FooterRestuarant = () => {
               <div className='w-[30px] h-[30px]' key={idx + "icons"}>
                 <img
                   src={socialMedia?.imgUrl ? socialMedia.imgUrl : imgWhatsapp}
-                  alt='whatsapp'
+                  alt='social media'
                   className='w-full h-full object-contain'
                 />
               </div>
