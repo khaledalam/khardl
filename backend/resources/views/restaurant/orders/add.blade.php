@@ -3,6 +3,12 @@
 @section('title', __('messages.orders-add'))
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    i.required:after{
+        position: absolute!important;
+        font-size: 16px;
+    }
+</style>
 @endsection
 @section('content')
 <!--begin::Main-->
@@ -333,6 +339,7 @@
             <td>
                 <i class="bi bi-eye btn-sm btn btn-success"
                 data-bs-toggle="modal"
+                id="options_${selectedProduct.id}"
                 data-bs-target="#kt_modal_select_options_${selectedProduct.id}"></i>
             </td>
            </tr>
@@ -345,13 +352,20 @@
         }
 
         function ModalRow(selectedProduct) {
+            let haveRequiredFiled = false;
             let optionsHTML = '';
-
+            if(!selectedProduct.checkbox_input_titles&&!selectedProduct.selection_input_titles&&!selectedProduct.dropdown_input_titles){
+                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
+                elementToRemove.remove();
+                return '';
+            }
             if (selectedProduct.checkbox_input_titles) {
                 selectedProduct.checkbox_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.checkbox_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     innerOptions.forEach((option, innerIndex) => {
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
@@ -367,8 +381,10 @@
             if (selectedProduct.selection_input_titles) {
                 selectedProduct.selection_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.selection_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     innerOptions.forEach((option, innerIndex) => {
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
@@ -384,8 +400,10 @@
             if (selectedProduct.dropdown_input_titles) {
                 selectedProduct.dropdown_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.dropdown_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">
                         <option>Select option</option>`;
                     innerOptions.forEach((option, innerIndex) => {
@@ -398,7 +416,10 @@
                     </div>`;
                 });
             }
-
+            if(haveRequiredFiled){
+                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
+                elementToRemove.classList.add('required');
+            }
             return `
         <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mw-650px">
