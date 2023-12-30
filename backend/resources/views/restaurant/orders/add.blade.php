@@ -349,17 +349,16 @@
 
             if (selectedProduct.checkbox_input_titles) {
                 selectedProduct.checkbox_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.checkbox_input_names[index];
                     optionsHTML += `<div class="mb-4">
                                 <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.checkbox_input_names.forEach((option, index) => {
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `<div class="form-check mb-2">`;
-                            optionsHTML += `
-                            <label class="form-check-label">${getLangName(innerOption)}</label>
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `<div class="form-check mb-2">`;
+                        optionsHTML += `
+                            <label class="form-check-label">${getLangName(option)}</label>
                             <input class="form-check-input" type="checkbox" value="${innerIndex}" name="product_options[${selectedProduct.id}]['checkbox_input'][${index}]">
                             `;
-                            optionsHTML += `</div>`;
-                        });
+                        optionsHTML += `</div>`;
                     });
                     optionsHTML += `
                     </div>`;
@@ -367,17 +366,16 @@
             }
             if (selectedProduct.selection_input_titles) {
                 selectedProduct.selection_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.selection_input_names[index];
                     optionsHTML += `<div class="mb-4">
                                 <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.selection_input_names.forEach((option, index) => {
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `<div class="form-check mb-2">`;
-                            optionsHTML += `
-                            <label class="form-check-label">${getLangName(innerOption)}</label>
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `<div class="form-check mb-2">`;
+                        optionsHTML += `
+                            <label class="form-check-label">${getLangName(option)}</label>
                             <input class="form-check-input" type="radio" value="${innerIndex}" name="product_options[${selectedProduct.id}]['selection_input'][${index}]">
                             `;
-                            optionsHTML += `</div>`;
-                        });
+                        optionsHTML += `</div>`;
                     });
                     optionsHTML += `
                     </div>`;
@@ -385,17 +383,17 @@
             }
             if (selectedProduct.dropdown_input_titles) {
                 selectedProduct.dropdown_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.dropdown_input_names[index];
                     optionsHTML += `<div class="mb-4">
                                 <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.dropdown_input_names.forEach((option, index) => {
-                        optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">`;
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `
-                            <option value="${innerIndex}">${getLangName(innerOption)}</option>
+                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">
+                        <option>Select option</option>`;
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `
+                            <option value="${innerIndex}">${getLangName(option)}</option>
                             `;
-                        });
-                        optionsHTML += `</select>`;
                     });
+                    optionsHTML += `</select>`;
                     optionsHTML += `
                     </div>`;
                 });
