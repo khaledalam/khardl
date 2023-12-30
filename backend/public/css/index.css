@@ -6825,6 +6825,10 @@ details.collapse summary::-webkit-details-marker {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
   .md\:gap-x-8 {
     column-gap: 2rem;
   }
@@ -13897,6 +13901,10 @@ details.collapse summary::-webkit-details-marker {
 
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
   }
 
   .md\:gap-x-8 {

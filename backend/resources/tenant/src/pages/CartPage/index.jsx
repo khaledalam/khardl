@@ -58,7 +58,7 @@ const CartPage = () => {
   console.log("address", address)
 
   return (
-    <div className='w-full mt-14'>
+    <div className='w-[98%] mx-auto mt-14'>
       {/* // TODO:  work on the new cart page  */}
       <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
         <CartHeader />
