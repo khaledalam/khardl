@@ -72,9 +72,7 @@ const CartItem = ({cartItem, cartItems, language}) => {
     try {
       const response = await AxiosInstance.delete(`/carts/` + cartItemId, {})
       if (response?.data) {
-        const updatedCart = cartItems.filter(
-          (item) => item.item_id !== cartItemId
-        )
+        const updatedCart = cartItems.filter((item) => item.id !== cartItemId)
         dispatch(setCartItemsData(updatedCart))
         toast.success(`${t("Item removed from cart")}`)
       }
@@ -129,7 +127,7 @@ const CartItem = ({cartItem, cartItems, language}) => {
             />
           </div>
           <div
-            onClick={() => handleRemoveItem(cartItem.item_id)}
+            onClick={() => handleRemoveItem(cartItem.id)}
             className='bg-[var(--primary)] flex items-center justify-center cursor-pointer rounded-lg w-[40px] h-[35px]'
           >
             <IoClose size={25} className='cursor-pointer' />

@@ -24,8 +24,13 @@ const FooterRestuarant = () => {
         >
           <div className='flex items-center gap-3'>
             {restaurantStyle?.selectedSocialIcons?.map((socialMedia, idx) => (
-              <a href={socialMedia?.link} className='cursor-pointer'>
+              <a
+                href={socialMedia?.link}
+                rel='noreferrer'
+                target='_blank'
+                className='cursor-pointer'
                 key={idx + "icon"}
+              >
                 <div className='w-[30px] h-[30px]'>
                   <img
                     src={socialMedia?.imgUrl ? socialMedia.imgUrl : imgWhatsapp}

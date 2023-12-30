@@ -115,6 +115,7 @@ const OuterSidebarNav = ({id}) => {
     AxiosInstance.get(`/change-language/${newLanguage}`, {}).then(() => {
       dispatch(changeLanguage(newLanguage))
       fetchCategoriesData()
+      closeMenu()
     })
   }
 
@@ -164,7 +165,10 @@ const OuterSidebarNav = ({id}) => {
         {isLoggedIn ? (
           <Fragment>
             <div
-              onClick={() => navigate("/dashboard")}
+              onClick={() => {
+                navigate("/dashboard")
+                closeMenu()
+              }}
               className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>

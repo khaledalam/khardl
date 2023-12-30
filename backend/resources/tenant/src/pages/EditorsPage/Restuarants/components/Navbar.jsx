@@ -60,7 +60,15 @@ const Navbar = ({toggleSidebarCollapse}) => {
     inputs.logo = restuarantStyle?.logoUpload
       ? await fetch(restuarantStyle?.logoUpload).then((r) => r.blob())
       : ""
-
+    inputs.logo_url =
+      restuarantStyle?.logoUpload === null ? restuarantStyle.logo : ""
+    inputs.banner_image_url =
+      restuarantStyle?.bannerUpload === null ? restuarantStyle.banner_image : ""
+    inputs.banner_images_urls =
+      restuarantStyle?.bannersUpload === null
+        ? restuarantStyle.banner_images
+        : ""
+    inputs.logo_type = restuarantStyle?.logoUpload === null ? "url" : "file"
     try {
       const response = await AxiosInstance.post(`restaurant-style`, inputs, {
         headers: {
