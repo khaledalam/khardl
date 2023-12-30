@@ -117,7 +117,7 @@ const CartItem = ({cartItem, cartItems, language}) => {
         </h3>
         <p className=''>
           {t("SAR")} {cartItem.price}{" "}
-          {cartItem.optional_price > 0 &&
+          {cartItem.options_price > 0 &&
             ` + ${cartItem.options_price} ${t("SAR")}  ${t("Options")}`}
         </p>
         <div className='flex items-center justify-between'>

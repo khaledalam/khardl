@@ -122,15 +122,15 @@ const OuterSidebarNav = ({id}) => {
   return (
     <div
       ref={refOuterNav}
-      className='w-full bg-white h-[100vh] flex flex-col items-center justify-between'
+      className='w-full bg-white h-[100vh] flex flex-col items-center justify-between cursor-pointer'
     >
       <div onClick={closeMenu}>
-        <IoMenuOutline size={42} className='text-neutral-400' />
+        <IoMenuOutline size={42} className='text-neutral-400 cursor-pointer' />
       </div>
-      <div className='w-full h-full flex flex-col items-center justify-center gap-6'>
+      <div className='w-full h-full flex flex-col items-center justify-center gap-6 cursor-pointer'>
         <div
           onClick={() => navigate("/")}
-          className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+          className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '
         >
           <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
             <img src={homeIcon} alt='home' />
@@ -177,7 +177,7 @@ const OuterSidebarNav = ({id}) => {
           <Fragment>
             <div
               onClick={() => navigate("/register")}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border cursor-pointer border-[#C0D123] items-center '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <BiSolidUserAccount size={25} />
@@ -187,7 +187,7 @@ const OuterSidebarNav = ({id}) => {
 
             <div
               onClick={() => navigate("/login")}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg cursor-pointer border border-[#C0D123] items-center '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <img src={LoginIcon} alt='home' />
@@ -197,7 +197,7 @@ const OuterSidebarNav = ({id}) => {
 
             <div
               onClick={() => navigate("/login-admins")}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+              className='w-[90%] mx-auto flex flex-row gap-3 cursor-pointer bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <img src={LoginIcon} alt='home' />
@@ -223,10 +223,10 @@ const OuterSidebarNav = ({id}) => {
         </label>
       </div>
       {isLoggedIn ? (
-        <div className='w-full mb-20'>
+        <div className='w-full mb-20 cursor-pointer'>
           <div
             onClick={handleLogout}
-            className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+            className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer'
           >
             <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
               <img src={logoutIcon} alt='home' />
