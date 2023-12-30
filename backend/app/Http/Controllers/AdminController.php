@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\QueuedWelcomeEmailJob;
+use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
@@ -579,7 +580,8 @@ class AdminController extends Controller
             $user->isApproved = 1;
             $user->save();
         }
-        Mail::to($user->email)->send(new ApprovedEmail($user));
+
+        SendApprovedEmailJob::dispatch($user);
 
         $loggedUser = Auth::user();
 
