@@ -117,7 +117,7 @@ class RestaurantService
     {
         $currentDate = $this->getCurrentMonthAndYear();
 
-        return User::whereYear('created_at', $currentDate['year'])
+        return RestaurantUser::Customers()->whereYear('created_at', $currentDate['year'])
             ->whereMonth('created_at', $currentDate['month'])
             ->count();
     }

@@ -20,6 +20,7 @@ return [
     'about' => 'معلومات عنا',
     'support' => 'دعم',
     'pending' => 'قيد الانتظار',
+    'suspended' => 'معلق',
     'active' => 'نشط',
     'denied' => 'مرفوض',
     'total-orders' => 'إجمالي الطلبات',
@@ -394,7 +395,9 @@ return [
     "cost" => "التكلفه",
     "main-cost" => "التكلفه الرئيسيه",
     "additional-cost" => "التكلفه الاضافيه",
-    "na" => "لايوجد"
+    "na" => "لايوجد",
 
+    "Are u sure to change customer of status ?"=>"هل انت متأكد من تغير حالة العميل ؟",
+    "Status changed successfully"   => "تم تغير الحالة بنجاح"
 ];
 
