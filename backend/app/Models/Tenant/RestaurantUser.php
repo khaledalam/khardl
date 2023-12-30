@@ -3,9 +3,10 @@
 namespace App\Models\Tenant;
 
 use Carbon\Carbon;
-use App\Packages\Msegat;
+
 use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
+use App\Packages\Msegat\Msegat;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
@@ -163,6 +164,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         return 1;
     }
 
+  
     public function tap_verified(): bool
     {
         return $this->tap_verified;

@@ -12,6 +12,9 @@ const NavbarRestuarant = () => {
   const toggleTheMenu = () => {
     toggleMenu()
   }
+  const cartItemsCount = useSelector(
+    (state) => state.categoryAPI.cartItemsCount
+  )
   const {header_color} = restaurantStyle
   console.log("restuarant styles header", restaurantStyle)
   return (
@@ -22,19 +25,21 @@ const NavbarRestuarant = () => {
       >
         <div
           onClick={toggleTheMenu}
-          className='w-[40px] h-[40px]  bg-[#2A6E4F] rounded-lg p-1 flex items-center justify-center'
+          className='w-[40px] h-[40px]  bg-[#2A6E4F] rounded-lg cursor-pointer p-1 flex items-center justify-center'
         >
           <IoMenuOutline size={38} className='text-white' />
         </div>
         <div
           onClick={() => navigate("/cart")}
-          className='w-[50px] h-[50px] relative flex items-center justify-center'
+          className='w-[50px] h-[50px] relative flex items-center justify-center cursor-pointer'
         >
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {true && (
             <div className='absolute top-0 right-0'>
               <div className='w-[18px] h-[18px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
-                <span className='text-white font-bold text-xs'>0</span>
+                <span className='text-white font-bold text-xs'>
+                  {cartItemsCount}
+                </span>
               </div>
             </div>
           )}

@@ -9,6 +9,8 @@ const CategoryItem = ({
   onClick,
   hoverColor,
   textColor,
+  textAlign,
+  fontWeight,
   shape,
   isGrid,
   fontSize,
@@ -30,7 +32,7 @@ const CategoryItem = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className={`flex w-5/6 ${
+      className={`flex w-5/6 cursor-pointer ${
         isGrid ? "flex-row" : "flex-col"
       } gap-3 items-center`}
     >
@@ -63,6 +65,7 @@ const CategoryItem = ({
       <h3
         style={{
           color: textColor,
+          fontWeight,
           fontSize:
             fontSize && typeof fontSize == "string" && fontSize.includes("px")
               ? Number(fontSize.slice(0, 2)) - 2
@@ -70,7 +73,15 @@ const CategoryItem = ({
               ? fontSize - 2
               : 14,
         }}
-        className='font-normal w-max'
+        className={`font-normal w-max ${
+          textAlign === "center"
+            ? "text-center"
+            : textAlign === "left"
+            ? "text-left"
+            : textAlign === "right"
+            ? "text-right"
+            : ""
+        }`}
       >
         {name}
       </h3>
