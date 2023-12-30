@@ -4274,6 +4274,9 @@ details.collapse summary::-webkit-details-marker {
 .h-\[45px\] {
   height: 45px;
 }
+.h-\[40vh\] {
+  height: 40vh;
+}
 .max-h-\[150px\] {
   max-height: 150px;
 }
@@ -5786,6 +5789,10 @@ details.collapse summary::-webkit-details-marker {
 .text-\[1\.125rem\] {
   font-size: 1.125rem;
 }
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
 .\!font-medium {
   font-weight: 500 !important;
 }
@@ -6252,6 +6259,9 @@ details.collapse summary::-webkit-details-marker {
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.hover\:bg-\[var\(--primary\)\]:hover {
+  background-color: var(--primary);
 }
 .hover\:text-blue-300:hover {
   --tw-text-opacity: 1;

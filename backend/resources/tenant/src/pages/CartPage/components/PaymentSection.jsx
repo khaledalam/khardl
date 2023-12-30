@@ -30,10 +30,10 @@ const PaymentSection = ({
   const {t} = useTranslation()
   const [notes, setNotes] = useState("")
   const [couponCode, setCouponCode] = useState("")
-  const [deliveryType, setDeliveryType] = useState(null)
+  const [deliveryType, setDeliveryType] = useState(deliveryTypes[1].name)
   const [couponDiscountValue, setCouponDiscountValue] = useState(0)
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-  const [paymentMethod, setPaymentMethod] = useState(null)
+  const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0].name)
   const [deliveryCost, setDeliveryCost] = useState(0)
   const [activeDeliveryType, setActiveDeliveryType] = useState("pickup")
 
@@ -292,7 +292,10 @@ const PaymentSection = ({
             </div>
           </div>
           <div className='w-full h-[45px] flex items-center gap-2 my-2'>
-            <div className='w-1/2 h-full flex items-center justify-center bg-[var(--danger)]'>
+            <div
+              onClick={handleEmptyCart}
+              className='w-1/2 h-full flex cursor-pointer items-center justify-center bg-[var(--danger)]'
+            >
               <div className='flex items-center gap-4'>
                 <div className='w-7 h-7'>
                   <img
@@ -306,7 +309,10 @@ const PaymentSection = ({
                 </h3>
               </div>
             </div>
-            <div className='w-1/2 h-full flex items-center justify-center bg-[var(--primary)]'>
+            <div
+              onClick={handlePlaceOrder}
+              className='w-1/2 h-full flex items-center cursor-pointer justify-center bg-[var(--primary)]'
+            >
               <div className='flex items-center gap-4'>
                 <div className='w-7 h-7'>
                   <img

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react"
+import React, {Fragment, useCallback, useEffect, useState} from "react"
 import CartHeader from "./components/CartHeader"
 import CartSection from "./components/CartSection"
 import PaymentSection from "./components/PaymentSection"
@@ -62,16 +62,32 @@ const CartPage = () => {
       {/* // TODO:  work on the new cart page  */}
       <div className='w-[70%] laptopXL:w-[80%] mx-auto'>
         <CartHeader />
-        <CartSection cartItems={cartItems} />
-        <PaymentSection
-          paymentMethods={paymentMethodsData}
-          deliveryTypes={deliveryTypesData}
-          cartItems={cartItems}
-          fetchCartData={fetchCartData}
-          deliveryAddress={address}
-          isloading={isloading}
-          setIsLoading={setIsLoading}
-        />
+        {!cartItems || cartItems.length === 0 ? (
+          <div className='h-[40vh] w-full flex items-center justify-center'>
+            <div className='w-1/2 mx-auto flex flex-col items-center justify-center gap-6'>
+              <h3 className='text-3xl text-center '>Your cart is Empty. </h3>
+              <button
+                onClick={() => navigate("/")}
+                className='btn w-1/2 bg-[var(--primary)] text-lg hover:bg-[var(--primary)]'
+              >
+                Continue shopping
+              </button>
+            </div>
+          </div>
+        ) : (
+          <Fragment>
+            <CartSection cartItems={cartItems} />
+            <PaymentSection
+              paymentMethods={paymentMethodsData}
+              deliveryTypes={deliveryTypesData}
+              cartItems={cartItems}
+              fetchCartData={fetchCartData}
+              deliveryAddress={address}
+              isloading={isloading}
+              setIsLoading={setIsLoading}
+            />
+          </Fragment>
+        )}
       </div>
     </div>
   )
