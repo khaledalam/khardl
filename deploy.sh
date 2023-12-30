@@ -23,6 +23,8 @@ php backend/artisan create:tenant
 php backend/artisan optimize:clear
 
 
+# nohup php /home/khardl5/public_html/backend/artisan queue:work --daemon &
+
 # Build frontend
 #./run-frontend-build.sh
 

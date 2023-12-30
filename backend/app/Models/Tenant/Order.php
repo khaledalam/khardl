@@ -41,6 +41,8 @@ class Order extends Model
     const COMPLETED = 'completed';
     const READY = 'ready';
 
+    
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
