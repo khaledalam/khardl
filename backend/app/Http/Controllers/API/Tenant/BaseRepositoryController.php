@@ -8,8 +8,8 @@ use App\Utils\DefaultRepositoryPattern;
 class BaseRepositoryController extends Controller
 {
    protected DefaultRepositoryPattern $default_repository;
-   public function index(){
-      return $this->default_repository->all();
-   }
-  
+   public function index()
+    {
+        return $this->default_repository->all();
+    }
 }

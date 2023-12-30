@@ -18,8 +18,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
-
-
+use App\Models\CentralSetting;
 
 /*
 |--------------------------------------------------------------------------
@@ -227,20 +226,8 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
     })->name('change.language');
 
 
-    Route::get('/delivery-webhook', static function () {
-        return response()->json([
-            'status' => 'under construction',
-            '_get' => $_GET,
-        ]);
-
-    })->name('delivery.webhook');
-
-    Route::post('/delivery-webhook', static function () {
-        return response()->json([
-            'status' => 'under construction',
-            '_post' => $_POST
-        ]);
-
+    Route::post('/delivery-webhook', static function (Request $request) {
+        return Redirect::to(CentralSetting::first()->webhook_url ?? '')->withInput($request->all());
     })->name('delivery.webhook-post');
 
 });

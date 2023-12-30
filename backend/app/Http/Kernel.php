@@ -62,7 +62,7 @@ class Kernel extends HttpKernel
 
      protected function schedule(Schedule $schedule)
     {
-            $schedule->command('auth:clear-resets')->everyFifteenMinutes();
+        $schedule->command('auth:clear-resets')->everyFifteenMinutes();
     }
 
 
