@@ -6138,6 +6138,9 @@ details.collapse summary::-webkit-details-marker {
   --tw-bg-opacity: 1;
   background-color: rgb(42 110 79 / var(--tw-bg-opacity));
 }
+.checked\:bg-\[var\(--primary\)\]:checked {
+  background-color: var(--primary);
+}
 .focus-within\:border-none:focus-within {
   border-style: none;
 }
@@ -6336,6 +6339,9 @@ details.collapse summary::-webkit-details-marker {
 .active\:text-gray-700:active {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+.disabled\:bg-transparent:disabled {
+  background-color: transparent;
 }
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;

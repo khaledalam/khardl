@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import CartColumn from "./CartColumn"
 import CashDeliveryIcon from "../../../assets/CashDelivery.svg"
 import CardIcon from "../../../assets/Card.svg"
@@ -11,90 +11,199 @@ import trashIcon from "../../../assets/trashBin.svg"
 import orderIcon from "../../../assets/orderPlace.svg"
 import {MdSend} from "react-icons/md"
 import Feedback from "./Feedback"
+import {useSelector} from "react-redux"
+import AxiosInstance from "../../../axios/axios"
+import {useNavigate} from "react-router-dom"
+import {toast} from "react-toastify"
+import {useTranslation} from "react-i18next"
 
-const PaymentSection = () => {
+const PaymentSection = ({
+  cartItems,
+  paymentMethods,
+  deliveryTypes,
+  deliveryAddress,
+  isloading,
+  setIsLoading,
+  fetchCartData,
+}) => {
+  const navigate = useNavigate()
+  const {t} = useTranslation()
+  const [notes, setNotes] = useState("")
+  const [couponCode, setCouponCode] = useState("")
+  const [deliveryType, setDeliveryType] = useState(null)
+  const [couponDiscountValue, setCouponDiscountValue] = useState(0)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const [paymentMethod, setPaymentMethod] = useState(null)
+  const [deliveryCost, setDeliveryCost] = useState(0)
+  const [activeDeliveryType, setActiveDeliveryType] = useState("pickup")
+
+  const getTotalPrice = () => {
+    return cartItems
+      ? parseFloat(
+          cartItems.reduce(
+            (total, item) =>
+              total + (item.price + item.options_price) * item.quantity,
+            0
+          )
+        ) + deliveryCost
+      : 0
+  }
+  const priceSummary = cartItems
+    ? parseFloat(
+        cartItems.reduce(
+          (total, item) =>
+            total + (item.price + item.options_price) * item.quantity,
+          0
+        )
+      )
+    : 0
+
+  const handlePaymentMethodChange = (method) => {
+    setPaymentMethod(method.name)
+  }
+
+  const handleDeliveryTypeChange = async (type) => {
+    setDeliveryType(type.name)
+    setDeliveryCost(type?.cost)
+    setActiveDeliveryType(type.name.toLowerCase())
+  }
+
+  const handlePlaceOrder = async () => {
+    if (window.confirm(t("Are You sure you want to place the order?"))) {
+      try {
+        const cartResponse = await AxiosInstance.post(`/orders`, {
+          payment_method: paymentMethod,
+          delivery_type: deliveryType,
+          notes: notes,
+          couponCode: couponCode,
+        })
+        if (cartResponse.data) {
+          toast.success(`${t("Order has been created successfully")}`)
+          navigate(`/dashboard#orders`)
+          // navigate(`/dashboard?OrderId=${cartResponse.data?.order?.id}#orders`);
+        }
+      } catch (error) {
+        toast.error(error.response.data.message)
+      }
+    }
+  }
+
+  const handleEmptyCart = async () => {
+    if (isloading) return
+
+    if (!window.confirm(t("Are you sure to empty cart items?"))) {
+      return
+    }
+
+    try {
+      setIsLoading(true)
+      await AxiosInstance.delete(`/carts/trash`, {}).finally(async () => {
+        await fetchCartData().then((r) => null)
+      })
+    } catch (error) {}
+    setIsLoading(false)
+  }
+
+  if (!isLoggedIn) {
+    window.confirm("You need to login first")
+    navigate("/login")
+    return
+  }
+
+  console.log("payment methods ", paymentMethods)
+  console.log("delivery methods", deliveryTypes)
+
   return (
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
       <div className='w-full flex items-start gap-8 my-4'>
         <div className='w-1/2'>
           <CartColumn headerTitle={"Select Payment Method"}>
             <div className='border border-[var(--primary)]'>
-              <div className='form-control w-fulll h-[62px] flex items-center justify-center border-b border-[var(--primary)] last:border-none'>
-                <label className='label cursor-pointer w-[80%] mx-auto flex items-center justify-between '>
-                  <div className='flex   w-full flex-row items-center justify-between px-3 '>
-                    <img
-                      src={CashDeliveryIcon}
-                      alt='cash on delivery'
-                      className=''
-                    />
-                    <span className='label-text text-[1rem]'>
-                      Cash on Delivery
-                    </span>
-                    <input
-                      id={"cash_delivery"}
-                      type={"radio"}
-                      name={"cash_delivery"}
-                      className={` 
+              {paymentMethods &&
+                paymentMethods.map((method) => (
+                  <div
+                    key={method.id}
+                    className='form-control w-fulll h-[62px] flex items-center justify-center border-b border-[var(--primary)] last:border-none'
+                  >
+                    <label className='label cursor-pointer w-[80%] mx-auto flex items-center justify-between '>
+                      <div className='flex   w-full flex-row items-center justify-between px-3 '>
+                        <img
+                          src={CashDeliveryIcon}
+                          alt={method.name}
+                          className=''
+                        />
+                        <span className='label-text text-[1rem]'>
+                          {method.name}
+                        </span>
+                        <input
+                          id={"cash_delivery"}
+                          type={"radio"}
+                          name={"cash_delivery"}
+                          checked={
+                            paymentMethods.length < 2 ||
+                            method.name === paymentMethod
+                          }
+                          className={` 
                         radio 
-                       w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[#2A6E4F]`}
-                      onChange={() => {}}
-                    />
+                       w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[var(--primary)]`}
+                          onChange={() => handlePaymentMethodChange(method)}
+                        />
+                      </div>
+                    </label>
                   </div>
-                </label>
-              </div>
-              <div className='form-control w-fulll h-[62px] flex items-center justify-center border-b border-[var(--primary)] last:border-none'>
-                <label className='label cursor-pointer w-[80%] mx-auto flex items-center justify-between '>
-                  <div className='flex   w-full flex-row items-center justify-between px-3 '>
-                    <img src={CardIcon} alt='cash on delivery' className='' />
-                    <span className='label-text text-[1rem]'>Card XXXX</span>
-                    <input
-                      id={"cash_delivery"}
-                      type={"radio"}
-                      name={"cash_delivery"}
-                      className={` 
-                        radio 
-                       w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[#2A6E4F]`}
-                      onChange={() => {}}
-                    />
-                  </div>
-                </label>
-              </div>
+                ))}
             </div>
           </CartColumn>
         </div>
         <div className='w-1/2'>
           <CartColumn headerTitle={"Select Delivery Type"}>
             <div className='w-full flex items-start gap-2 py-2'>
-              <div className='w-1/2 h-[118px] flex items-center justify-center border border-[var(--primary)]'>
-                <div className='flex items-center gap-4'>
-                  <div className='w-[50px] h-[50px] bg-[#C0D12330] rounded-full p-2'>
-                    <img
-                      src={BikeIcon}
-                      alt='bike'
-                      className='w-full h-full object-contain'
-                    />
+              {deliveryTypes &&
+                deliveryTypes.map((deliveryType) => (
+                  <div
+                    key={deliveryType.id}
+                    className={`w-1/2 h-[118px] flex items-center justify-center cursor-pointer  ${
+                      activeDeliveryType === deliveryType.name.toLowerCase()
+                        ? " bg-neutral-200 border border-neutral-300"
+                        : "border border-[var(--primary)]"
+                    }`}
+                    onClick={() => handleDeliveryTypeChange(deliveryType)}
+                  >
+                    <div className='flex items-center gap-4'>
+                      <div
+                        className={`w-[50px] h-[50px]  ${
+                          activeDeliveryType === deliveryType.name.toLowerCase()
+                            ? "bg-[#D9D9D9]"
+                            : "bg-[#C0D12330]"
+                        } rounded-full p-2`}
+                      >
+                        <img
+                          src={
+                            deliveryType.name.toLowerCase().includes("delivery")
+                              ? BikeIcon
+                              : deliveryType.name
+                                  .toLowerCase()
+                                  .includes("pickup")
+                              ? shopIcon
+                              : ""
+                          }
+                          alt={deliveryType.name}
+                          className='w-full h-full object-contain'
+                        />
+                      </div>
+                      <div className='flex flex-col'>
+                        <h3 className='text-[16px] font-medium capitalize'>
+                          {deliveryType.name.toLowerCase()}
+                        </h3>
+                        <p className='text-[14px]'>
+                          {deliveryType.cost > 0
+                            ? `${t("SAR")} ${deliveryType.cost}`
+                            : `${t("Free")}`}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className='flex flex-col'>
-                    <h3 className='text-[16px] font-medium'>Delivery</h3>
-                    <p className='text-[14px]'>SAR {45}</p>
-                  </div>
-                </div>
-              </div>
-              <div className='w-1/2 h-[118px] flex items-center justify-center bg-neutral-200 border border-neutral-300'>
-                <div className='flex items-center gap-4'>
-                  <div className='w-[50px] h-[50px] bg-[#D9D9D9] rounded-full p-2'>
-                    <img
-                      src={shopIcon}
-                      alt='pick up'
-                      className='w-full h-full object-contain'
-                    />
-                  </div>
-                  <div className='flex flex-col'>
-                    <h3 className='text-[16px] font-medium'>Pickup</h3>
-                    <p className='text-[14px]'>Free</p>
-                  </div>
-                </div>
-              </div>
+                ))}
             </div>
           </CartColumn>
         </div>
@@ -104,7 +213,10 @@ const PaymentSection = () => {
         <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
           <div className='flex items-center gap-3 w-1/2 '>
             <div className='w-full'>
-              <Feedback />
+              <Feedback
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
             </div>
             <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
               <MdSend size={22} />
@@ -122,6 +234,9 @@ const PaymentSection = () => {
                   <Feedback
                     imgUrl={pinLocate}
                     placeholder={"Jeddah xxxyyyzzzz street"}
+                    value={deliveryAddress}
+                    isDisabled
+                    isReadOnly
                   />
                 </div>
                 <div className='w-[60px] h-[48px] border border-[var(--primary)] bg-[var(--primary)] rounded-lg flex items-center justify-center'>
@@ -156,17 +271,23 @@ const PaymentSection = () => {
             <div className='flex flex-col gap-4 border-b pb-4 border-[var(--primary)]'>
               <div className='flex items-start justify-between'>
                 <h3 className='text-[16px] font-normal'>Price</h3>
-                <span className='text-[14px]'>SAR {1000}</span>
+                <span className='text-[14px]'>
+                  {t("SAR")} {priceSummary}
+                </span>
               </div>
               <div className='flex items-start justify-between'>
                 <h3 className='text-[16px] font-normal'>Delivery fee</h3>
-                <span className='text-[14px]'>SAR {1000}</span>
+                <span className='text-[14px]'>
+                  {t("SAR")} {deliveryCost}
+                </span>
               </div>
             </div>
             <div className=''>
               <div className='flex items-start justify-between'>
                 <h3 className='text-[1.125rem] font-bold'>Total Payment</h3>
-                <span className='text-[1.125rem] font-bold'>SAR {1000}</span>
+                <span className='text-[1.125rem] font-bold'>
+                  {t("SAR")} {getTotalPrice()}
+                </span>
               </div>
             </div>
           </div>

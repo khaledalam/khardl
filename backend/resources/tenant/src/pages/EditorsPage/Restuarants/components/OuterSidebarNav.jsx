@@ -143,18 +143,22 @@ const OuterSidebarNav = ({id}) => {
           text={"Pick up"}
           placeholder={`Khardl Pick-Up - Jeddah`}
           onChange={(e) => setPickUp(e.target.value)}
-          options={branches.filter(
-            (branch) => branch.pickup_availability === 1
-          )}
+          options={
+            branches
+              ? branches?.filter((branch) => branch.pickup_availability === 1)
+              : []
+          }
         />
         <PrimarySelectWithIcon
           imgUrl={deliveryIcon}
           text={"delivery"}
           placeholder={`Khardl Delivery - Jeddah`}
           onChange={(e) => setBranch(e.target.value)}
-          options={branches.filter(
-            (branch) => branch.delivery_availability === 1
-          )}
+          options={
+            branches
+              ? branches.filter((branch) => branch.delivery_availability === 1)
+              : []
+          }
         />
         {/* login */}
         {isLoggedIn ? (

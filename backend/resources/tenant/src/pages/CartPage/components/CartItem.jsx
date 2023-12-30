@@ -9,7 +9,9 @@ import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
 
 const CartItem = ({cartItem, cartItems, language}) => {
-  const [feedback, setFeedback] = useState("")
+  const [feedback, setFeedback] = useState(
+    cartItem.notes !== null ? cartItem.notes : ""
+  )
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
@@ -133,7 +135,9 @@ const CartItem = ({cartItem, cartItems, language}) => {
             <IoClose size={25} className='cursor-pointer' />
           </div>
         </div>
-        <h3 className='font-bold'>Total: SAR {400}</h3>
+        <h3 className='font-bold'>
+          Total: SAR {cartItem.price * cartItem.quantity}
+        </h3>
       </div>
     </div>
   )
