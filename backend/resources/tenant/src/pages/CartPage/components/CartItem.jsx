@@ -82,17 +82,17 @@ const CartItem = ({cartItem, cartItems, language}) => {
   }
 
   return (
-    <div className='h-[200px] laptopXL:h-[220px] w-full flex items-center gap-4 p-5 border-b border-b-[var(--primary)]'>
-      <div className='w-[20%] h-full flex items-start justify-center'>
+    <div className='h-[200px] laptopXL:h-[220px] w-full flex items-center gap-4 p-2  lg:p-5 border-b border-b-[var(--primary)]'>
+      <div className='w-[28%] lg:w-[20%] h-full flex flex-col xl:flex-row items-start justify-center'>
         <div className='flex h-full flex-col justify-between'>
-          <div className='w-[120px] laptopXL:w-[140px] h-[120px] laptopXL:h-[140px] p-2 rounded-full bg-neutral-100'>
+          <div className='w-[90px] h-[90px] lg:w-[120px] laptopXL:w-[140px] lg:h-[120px] laptopXL:h-[140px] p-2 rounded-full bg-neutral-100'>
             <img
               src={cartItem?.item?.photo}
               alt=''
               className='w-full h-full object-cover rounded-full'
             />
           </div>
-          <div className='flex items-center justify-between w-[120px] cursor-pointer laptopXL:w-[150px]'>
+          <div className='flex items-center justify-between w-[90px] lg:w-[120px] cursor-pointer laptopXL:w-[150px]'>
             <BiMinusCircle
               size={25}
               onClick={() =>
@@ -109,7 +109,7 @@ const CartItem = ({cartItem, cartItems, language}) => {
           </div>
         </div>
       </div>
-      <div className='w-[80%] flex flex-col h-full  justify-between'>
+      <div className='w-[72%] lg:w-[80%] flex flex-col h-full  justify-between relative'>
         <h3 className='text-lg'>
           {language === "en" ? cartItem.item.name.en : cartItem.item.name.ar}
         </h3>
@@ -119,7 +119,7 @@ const CartItem = ({cartItem, cartItems, language}) => {
             ` + ${cartItem.options_price} ${t("SAR")}  ${t("Options")}`}
         </p>
         <div className='flex items-center justify-between'>
-          <div className='w-5/6'>
+          <div className='w-full lg:w-5/6'>
             <Feedback
               value={feedback}
               placeholder={"Item notes : e.g. Please make the meat medium cook"}
@@ -128,7 +128,7 @@ const CartItem = ({cartItem, cartItems, language}) => {
           </div>
           <div
             onClick={() => handleRemoveItem(cartItem.id)}
-            className='bg-[var(--primary)] flex items-center justify-center cursor-pointer rounded-lg w-[40px] h-[35px]'
+            className='bg-[var(--primary)] absolute top-[3rem] right-[.6rem] md:relative flex items-center justify-center cursor-pointer rounded-lg w-[40px] h-[35px]'
           >
             <IoClose size={25} className='cursor-pointer' />
           </div>

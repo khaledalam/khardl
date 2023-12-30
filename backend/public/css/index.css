@@ -3652,6 +3652,15 @@ details.collapse summary::-webkit-details-marker {
 .right-\[-0\.7rem\] {
   right: -0.7rem;
 }
+.right-\[1rem\] {
+  right: 1rem;
+}
+.top-\[3rem\] {
+  top: 3rem;
+}
+.right-\[\.6rem\] {
+  right: .6rem;
+}
 .z-0 {
   z-index: 0;
 }
@@ -4022,6 +4031,12 @@ details.collapse summary::-webkit-details-marker {
 .mt-14 {
   margin-top: 3.5rem;
 }
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
 .block {
   display: block;
 }
@@ -4229,6 +4244,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .h-\[380px\] {
   height: 380px;
+}
+.h-\[90px\] {
+  height: 90px;
 }
 .max-h-\[150px\] {
   max-height: 150px;
@@ -4453,6 +4471,18 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-\[53px\] {
   width: 53px;
+}
+.w-\[98\%\] {
+  width: 98%;
+}
+.w-\[90px\] {
+  width: 90px;
+}
+.w-\[28\%\] {
+  width: 28%;
+}
+.w-\[72\%\] {
+  width: 72%;
 }
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
@@ -6775,6 +6805,18 @@ details.collapse summary::-webkit-details-marker {
 }
 @media (min-width: 768px) {
 
+  .md\:relative {
+    position: relative;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:w-\[440px\] {
+    width: 440px;
+  }
+
   .md\:max-w-xl {
     max-width: 36rem;
   }
@@ -6799,6 +6841,10 @@ details.collapse summary::-webkit-details-marker {
   .md\:text-5xl {
     font-size: 3rem;
     line-height: 1;
+  }
+
+  .md\:text-\[14px\] {
+    font-size: 14px;
   }
 }
 @media (min-width: 1000px) {
@@ -6830,8 +6876,36 @@ details.collapse summary::-webkit-details-marker {
     display: none;
   }
 
+  .lg\:h-\[120px\] {
+    height: 120px;
+  }
+
   .lg\:w-\[100\%\] {
     width: 100%;
+  }
+
+  .lg\:w-\[70\%\] {
+    width: 70%;
+  }
+
+  .lg\:w-\[120px\] {
+    width: 120px;
+  }
+
+  .lg\:w-5\/6 {
+    width: 83.333333%;
+  }
+
+  .lg\:w-\[20\%\] {
+    width: 20%;
+  }
+
+  .lg\:w-\[80\%\] {
+    width: 80%;
+  }
+
+  .lg\:w-1\/2 {
+    width: 50%;
   }
 
   .lg\:max-w-xl {
@@ -6848,6 +6922,14 @@ details.collapse summary::-webkit-details-marker {
 
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
+  .lg\:p-5 {
+    padding: 1.25rem;
   }
 
   .lg\:px-48 {
@@ -6890,6 +6972,10 @@ details.collapse summary::-webkit-details-marker {
     width: 80%;
   }
 
+  .xl\:w-\[20\%\] {
+    width: 20%;
+  }
+
   .xl\:max-w-\[60\%\] {
     max-width: 60%;
   }
@@ -6920,6 +7006,10 @@ details.collapse summary::-webkit-details-marker {
 
   .xl\:grid-cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .xl\:flex-row {
+    flex-direction: row;
   }
 
   .xl\:px-12 {
@@ -10636,6 +10726,15 @@ details.collapse summary::-webkit-details-marker {
 .right-\[-0\.7rem\] {
   right: -0.7rem;
 }
+.right-\[1rem\] {
+  right: 1rem;
+}
+.top-\[3rem\] {
+  top: 3rem;
+}
+.right-\[\.6rem\] {
+  right: .6rem;
+}
 .z-0 {
   z-index: 0;
 }
@@ -11006,6 +11105,12 @@ details.collapse summary::-webkit-details-marker {
 .mt-14 {
   margin-top: 3.5rem;
 }
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
 .block {
   display: block;
 }
@@ -11213,6 +11318,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .h-\[380px\] {
   height: 380px;
+}
+.h-\[90px\] {
+  height: 90px;
 }
 .max-h-\[150px\] {
   max-height: 150px;
@@ -11437,6 +11545,18 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-\[53px\] {
   width: 53px;
+}
+.w-\[98\%\] {
+  width: 98%;
+}
+.w-\[90px\] {
+  width: 90px;
+}
+.w-\[28\%\] {
+  width: 28%;
+}
+.w-\[72\%\] {
+  width: 72%;
 }
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
@@ -13759,6 +13879,18 @@ details.collapse summary::-webkit-details-marker {
 }
 @media (min-width: 768px) {
 
+  .md\:relative {
+    position: relative;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:w-\[440px\] {
+    width: 440px;
+  }
+
   .md\:max-w-xl {
     max-width: 36rem;
   }
@@ -13783,6 +13915,10 @@ details.collapse summary::-webkit-details-marker {
   .md\:text-5xl {
     font-size: 3rem;
     line-height: 1;
+  }
+
+  .md\:text-\[14px\] {
+    font-size: 14px;
   }
 }
 @media (min-width: 1000px) {
@@ -13814,8 +13950,36 @@ details.collapse summary::-webkit-details-marker {
     display: none;
   }
 
+  .lg\:h-\[120px\] {
+    height: 120px;
+  }
+
   .lg\:w-\[100\%\] {
     width: 100%;
+  }
+
+  .lg\:w-\[70\%\] {
+    width: 70%;
+  }
+
+  .lg\:w-\[120px\] {
+    width: 120px;
+  }
+
+  .lg\:w-5\/6 {
+    width: 83.333333%;
+  }
+
+  .lg\:w-\[20\%\] {
+    width: 20%;
+  }
+
+  .lg\:w-\[80\%\] {
+    width: 80%;
+  }
+
+  .lg\:w-1\/2 {
+    width: 50%;
   }
 
   .lg\:max-w-xl {
@@ -13832,6 +13996,14 @@ details.collapse summary::-webkit-details-marker {
 
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
+  .lg\:p-5 {
+    padding: 1.25rem;
   }
 
   .lg\:px-48 {
@@ -13874,6 +14046,10 @@ details.collapse summary::-webkit-details-marker {
     width: 80%;
   }
 
+  .xl\:w-\[20\%\] {
+    width: 20%;
+  }
+
   .xl\:max-w-\[60\%\] {
     max-width: 60%;
   }
@@ -13904,6 +14080,10 @@ details.collapse summary::-webkit-details-marker {
 
   .xl\:grid-cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .xl\:flex-row {
+    flex-direction: row;
   }
 
   .xl\:px-12 {

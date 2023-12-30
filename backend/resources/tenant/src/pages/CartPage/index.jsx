@@ -60,7 +60,7 @@ const CartPage = () => {
   return (
     <div className='w-full mt-14'>
       {/* // TODO:  work on the new cart page  */}
-      <div className='w-[70%] laptopXL:w-[80%] mx-auto'>
+      <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
         <CartHeader />
         {!cartItems || cartItems.length === 0 ? (
           <div className='h-[40vh] w-full flex items-center justify-center'>

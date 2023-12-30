@@ -115,8 +115,8 @@ const PaymentSection = ({
 
   return (
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
-      <div className='w-full flex items-start gap-8 my-4'>
-        <div className='w-1/2'>
+      <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
+        <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Select Payment Method"}>
             <div className='border border-[var(--primary)]'>
               {paymentMethods &&
@@ -155,7 +155,7 @@ const PaymentSection = ({
             </div>
           </CartColumn>
         </div>
-        <div className='w-1/2'>
+        <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Select Delivery Type"}>
             <div className='w-full flex items-start gap-2 py-2'>
               {deliveryTypes &&
@@ -211,7 +211,7 @@ const PaymentSection = ({
       {/* order notes */}
       <CartColumn headerTitle={"Order Notes"}>
         <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
-          <div className='flex items-center gap-3 w-1/2 '>
+          <div className='flex items-center gap-3 w-full lg:w-1/2 '>
             <div className='w-full'>
               <Feedback
                 value={notes}
@@ -225,11 +225,11 @@ const PaymentSection = ({
         </div>
       </CartColumn>
       {/* address and coupon */}
-      <div className='flex items-start gap-6'>
-        <div className='w-1/2 '>
+      <div className='flex flex-col md:flex-row items-start gap-6'>
+        <div className='w-full lg:w-1/2 '>
           <CartColumn headerTitle={"Address"}>
             <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
-              <div className='flex items-center gap-3 w-1/2 '>
+              <div className='flex items-center gap-3 w-full lg:w-1/2 '>
                 <div className='w-full'>
                   <Feedback
                     imgUrl={pinLocate}
@@ -246,10 +246,10 @@ const PaymentSection = ({
             </div>{" "}
           </CartColumn>
         </div>
-        <div className='w-1/2'>
+        <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Coupon"}>
             <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
-              <div className='flex items-center gap-3 w-1/2 '>
+              <div className='flex items-center gap-3 w-full lg:w-1/2 '>
                 <div className='w-full'>
                   <Feedback
                     imgUrl={couponIcon}
@@ -265,7 +265,7 @@ const PaymentSection = ({
         </div>
       </div>
       {/* payment summary */}
-      <div className='w-1/2 mx-auto my-8'>
+      <div className='w-full lg:w-1/2 mx-auto my-8'>
         <CartColumn headerTitle={"Payment Summary"}>
           <div className='p-6 flex flex-col gap-4 border border-[var(--primary)'>
             <div className='flex flex-col gap-4 border-b pb-4 border-[var(--primary)]'>
@@ -294,7 +294,7 @@ const PaymentSection = ({
           <div className='w-full h-[45px] flex items-center gap-2 my-2'>
             <div
               onClick={handleEmptyCart}
-              className='w-1/2 h-full flex cursor-pointer items-center justify-center bg-[var(--danger)]'
+              className='w-full lg:w-1/2 h-full flex cursor-pointer items-center justify-center bg-[var(--danger)]'
             >
               <div className='flex items-center gap-4'>
                 <div className='w-7 h-7'>
@@ -311,7 +311,7 @@ const PaymentSection = ({
             </div>
             <div
               onClick={handlePlaceOrder}
-              className='w-1/2 h-full flex items-center cursor-pointer justify-center bg-[var(--primary)]'
+              className='w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center bg-[var(--primary)]'
             >
               <div className='flex items-center gap-4'>
                 <div className='w-7 h-7'>

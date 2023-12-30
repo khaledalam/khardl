@@ -130,7 +130,10 @@ const OuterSidebarNav = ({id}) => {
       </div>
       <div className='w-full h-full flex flex-col items-center justify-center gap-6 cursor-pointer'>
         <div
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/")
+            closeMenu()
+          }}
           className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '
         >
           <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>

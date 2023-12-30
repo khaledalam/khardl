@@ -373,7 +373,7 @@ const ProductItem = ({
       <dialog id={id} className='modal'>
         <div
           style={{backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00"}}
-          className={`modal-box !p-0 rounded-[46px] w-[440px] ${
+          className={`modal-box !p-0 rounded-[46px] w-[98%] mx-auto md:w-[440px] ${
             checkboxItems[0]?.length > 0 ||
             radioItems[0]?.length > 0 ||
             dropdownItems[0]?.length > 0
@@ -596,7 +596,7 @@ const ProductItem = ({
                     style={{
                       backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
                     }}
-                    className='w-[45%] flex items-end justify-center gap-5  p-2 rounded-lg cursor-pointer'
+                    className='w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer'
                     onClick={
                       gotoCart ? () => navigate("/cart") : handleAddToCart
                     }
@@ -617,7 +617,7 @@ const ProductItem = ({
                             ? "white"
                             : "red",
                         }}
-                        className='text-[14px] font-bold'
+                        className='text-xs line-clamp-1 md:text-[14px] font-bold'
                       >
                         Check Cart
                       </h3>
