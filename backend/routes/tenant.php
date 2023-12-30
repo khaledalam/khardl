@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ use App\Packages\TapPayment\Controllers\SubscriptionController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 
 /*
@@ -113,15 +115,22 @@ Route::group([
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
-                Route::get('/customers-data', [RestaurantController::class, 'customers_data'])->name('restaurant.customers_data');
+                Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
+                    Route::get('/customers-data','index')->name('list');
+                    Route::get('/customers-data/{restaurantUser}','show')->name('show');
+                    Route::put('/change-status/{restaurantUser}','update_status')->name('change-status');
+                });
                 Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
                 Route::post('/update-settings', [RestaurantController::class, 'upadteSettings'])->name('restaurant.update.settings');
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
 
-
-                Route::get('/orders-all', [RestaurantController::class, 'orders_all'])->name('restaurant.orders_all');
-                Route::get('/orders-add', [RestaurantController::class, 'orders_add'])->name('restaurant.orders_add');
+                Route::controller(TenantOrderController::class)->group(function () {
+                    Route::get('orders-all', 'index')->name('restaurant.orders_all');
+                    Route::get('orders-add', 'create')->name('restaurant.orders_add');
+                    Route::post('orders-add', 'store')->name('restaurant.store');
+                    Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
+                  });
                 Route::get('/products-out-of-stock', [RestaurantController::class, 'products_out_of_stock'])->name('restaurant.products_out_of_stock');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
@@ -223,7 +232,7 @@ Route::group([
 
 
         });
-
+        // TODO @todo prevent to access it from the website 
         Route::get('categories',[CategoryController::class,'index']);
         Route::get('orders',[OrderController::class,'index']);
 
@@ -278,10 +287,14 @@ Route::prefix('api')->middleware([
         ]);
         Route::webhooks('webhook-tap-actions','tap-payment');
     });
+    
 
 
 
 });
+
+Route::webhooks('delivery-webhook','delivery-companies');
+
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
     Route::get('/csrf-cookie', [CsrfCookieController::class, 'show'])
         ->middleware([

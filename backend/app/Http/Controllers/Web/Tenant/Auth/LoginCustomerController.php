@@ -43,7 +43,7 @@ class LoginCustomerController extends BaseController
     public function login(CustomerLoginRequest $request)
     {
         $user = RestaurantUser::where("phone",$request->phone)->first();
-        $user->status = 'inactive';
+        $user->status = RestaurantUser::INACTIVE;
         $user->phone_verified_at = null;
         $user->save();
         Auth::loginUsingId($user->id);

@@ -20,6 +20,7 @@
     <!--begin::Fonts-->
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
+    <link href="{{ global_asset('assets/css/resturant-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
@@ -35,6 +36,7 @@
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
         <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    @yield('css')
 @endif
 <!--end::Global Stylesheets Bundle-->
 </head>
@@ -192,7 +194,7 @@
                             </a>
 
                         </div>
-                        
+
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
                            <a href="{{route('restaurant.branches')}}">
@@ -224,9 +226,9 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                
+
                                         <span class="menu-title">{{__('messages.menu')}}</span>
-                                    
+
                                 </span>
                              </a>
                           </div>
@@ -335,7 +337,7 @@
                         </div>
                         <!-- Customer data -->
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('restaurant.customers_data')}}">
+                            <a href="{{route('customers_data.list')}}">
                                 <span class="{{ ($link == 'customers-data' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M1 5C1 3.34315 2.34315 2 4 2H8.43845C9.81505 2 11.015 2.93689 11.3489 4.27239L11.7808 6H13.5H20C21.6569 6 23 7.34315 23 9V10C23 10.5523 22.5523 11 22 11C21.4477 11 21 10.5523 21 10V9C21 8.44772 20.5523 8 20 8H13.5H11.7808H4C3.44772 8 3 8.44772 3 9V10V19C3 19.5523 3.44772 20 4 20H8C8.55228 20 9 20.4477 9 21C9 21.5523 8.55228 22 8 22H4C2.34315 22 1 20.6569 1 19V10V9V5ZM3 6.17071C3.31278 6.06015 3.64936 6 4 6H9.71922L9.40859 4.75746C9.2973 4.3123 8.89732 4 8.43845 4H4C3.44772 4 3 4.44772 3 5V6.17071ZM17 19C14.2951 19 13 20.6758 13 22C13 22.5523 12.5523 23 12 23C11.4477 23 11 22.5523 11 22C11 20.1742 12.1429 18.5122 13.9952 17.6404C13.3757 16.936 13 16.0119 13 15C13 12.7909 14.7909 11 17 11C19.2091 11 21 12.7909 21 15C21 16.0119 20.6243 16.936 20.0048 17.6404C21.8571 18.5122 23 20.1742 23 22C23 22.5523 22.5523 23 22 23C21.4477 23 21 22.5523 21 22C21 20.6758 19.7049 19 17 19ZM17 17C18.1046 17 19 16.1046 19 15C19 13.8954 18.1046 13 17 13C15.8954 13 15 13.8954 15 15C15 16.1046 15.8954 17 17 17Z" fill="{{ ($link == 'customers-data' ) ? '#c2da08' : '#000000' }}"></path> </g></svg>
@@ -372,7 +374,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <span class="menu-title">
-                                        
+
 
                                         {{__('messages.payments')}} </span>
                                 </span>
@@ -649,6 +651,7 @@
 <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
 <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
+@yield('js')
 @stack('scripts')
 
 <!--end::Page Custom Javascript-->

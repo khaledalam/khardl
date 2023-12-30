@@ -2,9 +2,10 @@
 
 namespace Database\Seeders\Tenant;
 
+use App\Models\Tenant;
 use Illuminate\Database\Seeder;
 use App\Actions\CreateTenantAction;
-use App\Models\Tenant;
+use Database\Seeders\Tenant\DeliveryCompanySeeder;
 
 class TenantSeeder extends Seeder
 {
@@ -43,6 +44,7 @@ class TenantSeeder extends Seeder
 
 
             OrderSeeder::class,
+            DeliveryCompanySeeder::class
         ],false,[
             'assets'=>$assets,
             'restaurant_name'=>$restaurant_name

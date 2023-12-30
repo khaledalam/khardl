@@ -39,22 +39,6 @@
                                                         <img src="{{ $category->photo }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
                                                         <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
-                                                        {{-- <span class="badge badge-light-success">3</span> --}}
-                                                        {{-- <form class="delete-form" action="{{ route('restaurant.delete-category', ['id' => $selectedCategory->id]) }}" method="POST">
-                                                            @method('DELETE')
-                                                            @csrf
-                                                            <button type="submit" class="delete-button btn btn-icon btn-active-color-danger btn-sm">
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                            <span class="svg-icon svg-icon-3">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
-                                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor" />
-                                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                            </button>
-                                                        </form>          --}}
                                                     </span>
                                                 </a>
                                                 <!--end::Inbox-->
@@ -373,10 +357,10 @@
 
                             <ul class="nav nav-tabs" >
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="name-en-tab" data-bs-toggle="tab" href="#name-en">English</a>
+                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">English</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">Arabic</a>
+                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">Arabic</a>
                                 </li>
                             </ul>
                             <div class="tab-content mt-3">
@@ -1044,7 +1028,7 @@
                 alert('Please fill in the input in the (English) tab.');
                 return ;
             }
-            
+
             document.getElementById('category-submit').submit();
         });
 
@@ -1069,9 +1053,9 @@
                 submitButton.disabled = false;
                 return ;
             }
-         
 
-       
+
+
             if(inputValueAR === '' && inputValue != ''){
                 alert(`Please fill name description in (Arabic) tab.`);
                 submitButton.disabled = false;

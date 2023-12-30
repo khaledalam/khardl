@@ -79,6 +79,7 @@
                                                 @endif
                                                 <span
                                                     class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
+                                                    <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
                                             </div>
                                             <!--end::Title-->
                                         </div>
@@ -608,11 +609,20 @@
                     <!--end::Input-->
                 </div>
                 <!--end::Col-->
-
+                <div class="col-md-12 fv-row">
+                    <label class="required fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
+                    <!--begin::Input-->
+                    <div class="position-relative d-flex align-items-center">
+                        <!--begin::Datepicker-->
+                        <input value="{{ old('phone') }}" required name="phone" class="form-control form-control-solid " />
+                        <!--end::Datepicker-->
+                    </div>
+                    <!--end::Input-->
+                </div>
                 <!--begin::Col-->
                 <div class="col-md-12 fv-row">
                     <label class="required fs-6 fw-bold mb-2">{{ __('messages.location-branch') }}</label>
-                    <input id="pac-input-new_branch" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}">
+                    <input id="pac-input-new_branch" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}" name="address">
                     <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
                     <input type="hidden" value="{{ old('location') }}" id="location" name="location">
                     <input type="hidden" id="lat-new_branch" name="lat-new_branch" />

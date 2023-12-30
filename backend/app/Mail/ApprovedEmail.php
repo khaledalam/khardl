@@ -32,6 +32,5 @@ class ApprovedEmail extends Mailable
     public function build()
     {
         return $this->subject('Account Approved')->view('emails.approved_email');
-
     }
 }

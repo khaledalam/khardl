@@ -22,10 +22,10 @@ class CartRepository
     const VAT_PERCENTAGE = 15;
     use APIResponseTrait;
 
-    public  function initiate()
+    public  function initiate($user = null)
     {
         $this->cart = Cart::query()->firstOrCreate([
-            'user_id' => Auth::id(),
+            'user_id' => $user?? Auth::id(),
         ]);
        return $this;
     }
@@ -39,7 +39,7 @@ class CartRepository
             return $this->sendError('Fail', __('Cannot add item from different branch.'));
         }
         $item = Item::findOrFail($request->item_id);
-        $this->createCartItem($item, $request->validated());
+        $this->createCartItem($item, $request->all());
         return $this->sendResponse(null, __('The meal has been added successfully.'));
     }
     public function update($request)
@@ -48,7 +48,7 @@ class CartRepository
     }
 
     public function createCartItem($item,$request):CartItem
-    {   
+    {
         $checkbox_options = null;
         $selection_options = null;
         $dropdown_options = null;
@@ -62,8 +62,8 @@ class CartRepository
         if($request['selectedDropdown'] ?? false){
             $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
-      
-       
+
+
         return CartItem::updateOrCreate([
             'item_id' => $item->id,
             'checkbox_options'=>$checkbox_options,
@@ -74,7 +74,7 @@ class CartRepository
             'price' =>$item->price,
             'total' =>($item->price + $options_price) * $request['quantity'] ,
             'quantity' => $request['quantity'],
-            'notes' => $request['notes'],
+            'notes' => $request['notes'] ?? null,
             'options_price'=>$options_price,
             'checkbox_options'=>$checkbox_options,
             'selection_options'=>$selection_options,
@@ -87,10 +87,10 @@ class CartRepository
             foreach($option as $j=>$sub_option){
                 $updatedOptions [$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$j][0],$item->checkbox_input_prices[$i][$j]];
                 $updatedOptions [$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$j][1],$item->checkbox_input_prices[$i][$j]];
-           
+
                 $totalPrice += (float) $item->checkbox_input_prices[$i][$j];
-            }   
-        } 
+            }
+        }
         return  $totalPrice;
     }
     public function loopingTroughSelectionOptions($item,$options,&$updatedOptions){
@@ -102,8 +102,8 @@ class CartRepository
                     $updatedOptions [$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$j][1],$item->selection_input_prices[$i][$j]];
 
                     $totalPrice += (float) $item->selection_input_prices[$i][$j];
-                }   
-        } 
+                }
+        }
         return  $totalPrice;
     }
     public function loopingTroughDropdownOptions($item,$options,&$updatedOptions){
@@ -113,8 +113,8 @@ class CartRepository
                     $updatedOptions [$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$j][0];
                     $updatedOptions [$i]['ar'][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$j][1];
 
-                }   
-        } 
+                }
+        }
     }
     public function updateCartItem(CartItem $cartItem, $request)
     {

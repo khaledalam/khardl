@@ -15,6 +15,7 @@
         "laravel/ui": "^4.2",
         "laraveldaily/laravel-charts": "^0.2.3",
         "realrashid/sweet-alert": "^7.0",
+        "sentry/sentry-laravel": "^4.1",
         "spatie/laravel-permission": "^5.11",
         "spatie/laravel-translatable": "^6.5",
         "spatie/laravel-webhook-client": "^3.2",

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API\Central\Auth;
 
+use App\Jobs\SendVerifyEmailJob;
 use App\Models\Log;
+use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
 use App\Models\Promoter;
 use App\Models\Restaurant;
@@ -132,11 +134,7 @@ class RegisterController extends BaseController
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
 
-        // Send the email with the verification code
-        Mail::send('emails.verify', ['code' => $user->verification_code, 'name' => "$user->first_name $user->last_name"], static function($message) use ($request) {
-            $message->to($request->email);
-            $message->subject('Email Verification Code');
-        });
+        SendVerifyEmailJob::dispatch($user);
 
         return $this->sendResponse(null, 'Verification code sent to email.');
     }
@@ -169,7 +167,7 @@ class RegisterController extends BaseController
         // Check the verification code
         if ($user->checkVerificationCode($request->code)) {
             $user->email_verified_at = now();
-            $user->status = 'active';
+            $user->status = RestaurantUser::ACTIVE;
             $user->verification_code = $request->code; // Clear the verification code
             $user->save();
 
