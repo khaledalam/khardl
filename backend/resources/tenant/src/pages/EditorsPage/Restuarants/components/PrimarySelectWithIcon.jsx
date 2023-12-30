@@ -8,7 +8,7 @@ const PrimarySelectWithIcon = ({
   onChange,
 }) => {
   return (
-    <div className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '>
+    <div className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '>
       <div className='bg-[#C0D123] flex items-center gap-1  border-r border-[#C0D123]'>
         <div className='w-[50px] h-[50px] rounded-xl flex items-center justify-center'>
           <img src={imgUrl} alt='deliveryIcon' />

@@ -34,8 +34,8 @@ const ProductDetailItem = ({
         </div>
       )}
       {isRadio && (
-        <div className='form-control '>
-          <label className='label cursor-pointer flex items-center justify-between'>
+        <div className='form-control  '>
+          <label className='label cursor-pointer flex items-center justify-between '>
             <p className='text-sm'>{label}</p>
             <div className='flex flex-row items-center gap-2 '>
               <span className='label-text'>+ SAR {price}</span>
@@ -55,7 +55,7 @@ const ProductDetailItem = ({
 
       {isDropDown && (
         <select
-          className='select w-full max-w-[90%] select-bordered'
+          className='select w-full max-w-[90%] select-bordered cursor-pointer'
           onChange={onChange}
         >
           <option disabled selected>
