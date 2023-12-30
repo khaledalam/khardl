@@ -22,6 +22,8 @@ class PaymentMethod extends Model
 
     const CASH_ON_DELIVERY = 'Cash on Delivery';
     const CREDIT_CARD = 'Credit Card';
+
+  
     public function orders()
     {
         return $this->hasMany(Order::class);

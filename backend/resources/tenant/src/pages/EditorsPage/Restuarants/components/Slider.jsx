@@ -7,12 +7,15 @@ import {IoCloseOutline} from "react-icons/io5"
 import ImageIcon from "../../../../assets/imageIcon.svg"
 import ImgRestBanner from "../../../../assets/bannerRestuarant.png"
 import {useCallback, useEffect, useRef, useState} from "react"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {setBannersUpload} from "../../../../redux/NewEditor/restuarantEditorSlice"
 import {FaCircleChevronLeft, FaCircleChevronRight} from "react-icons/fa6"
 
 const Slider = ({banner_images}) => {
   const [uploadImages, setUploadImages] = useState([])
+  const bannersUpload =
+    useSelector((state) => state.restuarantEditorStyle.bannersUpload) || []
+
   const [sliderCount, setSliderCount] = useState(2)
   const dispatch = useDispatch()
 
@@ -21,15 +24,17 @@ const Slider = ({banner_images}) => {
 
   const handleImagesUpload = (event, idx) => {
     const selectedImage = event.target.files[0]
+    setUploadImages([...uploadImages, URL.createObjectURL(selectedImage)])
     dispatch(
       setBannersUpload([...uploadImages, URL.createObjectURL(selectedImage)])
     )
-    setUploadImages([...uploadImages, URL.createObjectURL(selectedImage)])
   }
 
   const addMoreSlider = useCallback(() => {
     setSliderCount((prev) => prev + 1)
   }, [])
+
+  console.log("uploaded images", uploadImages)
 
   return (
     <Swiper
@@ -38,15 +43,17 @@ const Slider = ({banner_images}) => {
       navigation={true}
       slideClass='swiper-slide'
     >
-      {Array(sliderCount)
+      {Array(
+        bannersUpload.length > sliderCount ? bannersUpload.length : sliderCount
+      )
         .fill(1)
         .map((_, index) => (
           <SwiperSlide key={index}>
             <div
               style={{
                 backgroundImage:
-                  uploadImages && uploadImages?.length > 0
-                    ? `url(${uploadImages[index]})`
+                  bannersUpload && bannersUpload?.length > 0
+                    ? `url(${bannersUpload[index]})`
                     : banner_images && banner_images?.length > 0
                     ? `url(${banner_images[index]})`
                     : `url(${ImgRestBanner})`,
@@ -70,7 +77,8 @@ const Slider = ({banner_images}) => {
                 >
                   <img
                     src={
-                      (uploadImages[index] || banner_images[index]) ?? ImageIcon
+                      (bannersUpload[index] || banner_images[index]) ??
+                      ImageIcon
                     }
                     alt={""}
                     className='w-full h-full object-cover'

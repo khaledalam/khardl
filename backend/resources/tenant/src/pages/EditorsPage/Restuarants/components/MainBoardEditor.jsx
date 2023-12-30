@@ -13,11 +13,13 @@ import {
   logoUpload,
   setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
+import {useTranslation} from "react-i18next"
 
 const MainBoardEditor = ({categories}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
+  const {t} = useTranslation()
   const language = useSelector((state) => state.languageMode.languageMode)
 
   const dispatch = useDispatch()
@@ -55,12 +57,16 @@ const MainBoardEditor = ({categories}) => {
     phoneNumber,
     phoneNumber_alignment,
     socialMediaIcons_alignment,
+    selectedSocialIcons,
     text_color,
   } = restuarantEditorStyle
   console.log("restuarantEditorStyle", restuarantEditorStyle)
 
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
+  )
+  const cartItemsCount = useSelector(
+    (state) => state.categoryAPI.cartItemsCount
   )
   const uploadLogo = useSelector(
     (state) => state.restuarantEditorStyle.logoUpload
@@ -121,10 +127,15 @@ const MainBoardEditor = ({categories}) => {
   }
 
   console.log("bannner shape", banner_shape)
+  console.log("font weight", text_fontWeight)
 
   return (
     <div
-      style={{backgroundColor: page_color, fontFamily: text_fontFamily}}
+      style={{
+        backgroundColor: page_color,
+        fontFamily: text_fontFamily,
+        fontWeight: text_fontWeight,
+      }}
       className='w-full p-4 flex flex-col gap-6 relative'
     >
       {/* Header cart */}
@@ -141,22 +152,23 @@ const MainBoardEditor = ({categories}) => {
       >
         <div
           onClick={toggleMenu}
-          className='btn hover:bg-neutral-100 flex items-center gap-3'
+          style={{fontWeight: text_fontWeight}}
+          className={`btn hover:bg-neutral-100 flex items-center gap-3`}
         >
           <IoMenuOutline size={40} className='text-neutral-400' />
-          <span className='font-normal text-sm'>
-            Show Navigation Bar To Edit
-          </span>
+          <span className='text-sm'>Show Navigation Bar To Edit</span>
         </div>
         <div
           onClick={() => navigate("/cart")}
-          className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center'
+          className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer'
         >
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {true && (
             <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
               <div className='w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
-                <span className='text-white font-bold text-xs'>0</span>
+                <span className='text-white font-bold text-xs'>
+                  {cartItemsCount}
+                </span>
               </div>
             </div>
           )}
@@ -296,6 +308,8 @@ const MainBoardEditor = ({categories}) => {
                     setSelectedCategory(category.name.toLowerCase())
                   }
                   textColor={text_color}
+                  textAlign={text_alignment}
+                  fontWeight={text_fontWeight}
                   shape={category_shape}
                   isGrid={true}
                 />
@@ -333,6 +347,8 @@ const MainBoardEditor = ({categories}) => {
                     setSelectedCategory(category.name.toLowerCase())
                   }
                   textColor={text_color}
+                  textAlign={text_alignment}
+                  fontWeight={text_fontWeight}
                   shape={category_shape}
                 />
               ))}
@@ -349,9 +365,9 @@ const MainBoardEditor = ({categories}) => {
       >
         <div
           className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
-            category_alignment === "left"
+            category_alignment === t("left")
               ? "order-1 w-[25%]"
-              : category_alignment === "right"
+              : category_alignment === t("right")
               ? "order-2 w-[25%]"
               : category_alignment === "center"
               ? "w-full"
@@ -389,6 +405,8 @@ const MainBoardEditor = ({categories}) => {
                     )
                   }
                   textColor={text_color}
+                  textAlign={text_alignment}
+                  fontWeight={text_fontWeight}
                   shape={category_shape}
                   isGrid={category_alignment === "center" ? false : true}
                   fontSize={text_fontSize}
@@ -399,9 +417,9 @@ const MainBoardEditor = ({categories}) => {
         </div>
         <div
           className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${
-            category_alignment === "left"
+            category_alignment === t("left")
               ? "order-2 w-[75%]"
-              : category_alignment === "right"
+              : category_alignment === t("right")
               ? "order-1 w-[75%]"
               : category_alignment === "center"
               ? "w-full"
@@ -413,7 +431,12 @@ const MainBoardEditor = ({categories}) => {
           <div
             className={`w-full h-full flex flex-col items-center justify-center `}
           >
-            <h3 className='font-semibold text-[1.5rem] text-center my-4 relative capitalize'>
+            <h3
+              style={{fontWeight: text_fontWeight}}
+              className={`${
+                text_fontFamily ? text_fontFamily : "font-semibold"
+              } text-[1.5rem] text-center my-4 relative capitalize`}
+            >
               <span className='custom-underline capitalize'>
                 {selectedCategory.name}
               </span>{" "}
@@ -428,6 +451,7 @@ const MainBoardEditor = ({categories}) => {
             >
               {filterCategory &&
                 filterCategory[0]?.items
+                  .filter((item) => item.availability === 1)
                   .slice(0, 2)
                   .map((product, i) => (
                     <ProductItem
@@ -472,6 +496,9 @@ const MainBoardEditor = ({categories}) => {
                       }
                       cartBgcolor={categoryDetail_cart_color}
                       amountColor={price_color}
+                      textColor={text_color}
+                      textAlign={text_alignment}
+                      fontWeight={text_fontWeight}
                       shape={categoryDetail_shape}
                       fontSize={text_fontSize}
                     />
@@ -486,9 +513,9 @@ const MainBoardEditor = ({categories}) => {
           className={`w-full flex bg-white ${
             categoryDetail_alignment === "center"
               ? "items-center justify-center"
-              : categoryDetail_alignment === "left"
+              : categoryDetail_alignment === t('left')
               ? "items-center justify-start"
-              : categoryDetail_alignment === "right"
+              : categoryDetail_alignment === t('right')
               ? "items-center justify-end"
               : ""
           }
@@ -524,9 +551,9 @@ const MainBoardEditor = ({categories}) => {
           className={`w-full h-fit bg-white   flex ${
             categoryDetail_alignment === "center"
               ? "items-center justify-center"
-              : categoryDetail_alignment === "left"
+              : categoryDetail_alignment === t('left')
               ? "items-center justify-start"
-              : categoryDetail_alignment === "right"
+              : categoryDetail_alignment === t('right')
               ? "items-center justify-end"
               : ""
           }  `}
@@ -560,22 +587,32 @@ const MainBoardEditor = ({categories}) => {
 
       <div
         style={{backgroundColor: footer_color}}
-        className={`w-full min-h-[70px]  rounded-xl flex ${
+        className={`w-full min-h-[70px] px-3  rounded-xl flex ${
           socialMediaIcons_alignment === "center"
             ? "items-center justify-center"
-            : socialMediaIcons_alignment === "left"
+            : socialMediaIcons_alignment === t("left")
             ? "items-center justify-start"
-            : socialMediaIcons_alignment === "right"
+            : socialMediaIcons_alignment === t("right")
             ? "items-center justify-end"
             : ""
         }`}
       >
-        <div className='w-[30px] h-[30px] rounded-full relative'>
-          <img
-            src={WhatsappIcon}
-            alt={"whatsapp"}
-            className='w-full h-full object-cover'
-          />
+        <div className='flex items-center gap-5'>
+          {selectedSocialIcons?.map((socialMedia) => (
+            <a
+              href={socialMedia.link}
+              key={socialMedia.id}
+              className='cursor-pointer'
+            >
+              <div className='w-[30px] h-[30px] rounded-full relative'>
+                <img
+                  src={socialMedia.imgUrl}
+                  alt={"whatsapp"}
+                  className='w-full h-full object-cover'
+                />
+              </div>
+            </a>
+          ))}
         </div>
       </div>
       <div
@@ -583,14 +620,20 @@ const MainBoardEditor = ({categories}) => {
         className={`w-full min-h-[70px]  rounded-xl flex  ${
           phoneNumber_alignment === "center"
             ? "items-center justify-center"
-            : phoneNumber_alignment === "left"
+            : phoneNumber_alignment === t("left")
             ? "items-center justify-start"
-            : phoneNumber_alignment === "right"
+            : phoneNumber_alignment === t("right")
             ? "items-center justify-end"
             : ""
         }`}
       >
-        <h3 className='font-semibold text-lg'>{phoneNumber}</h3>
+        <h3
+          className={`${
+            text_fontFamily ? text_fontFamily : "font-semibold"
+          } text-lg`}
+        >
+          {phoneNumber}
+        </h3>
       </div>
     </div>
   )

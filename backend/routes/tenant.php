@@ -16,7 +16,6 @@ use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
 use App\Http\Controllers\API\Tenant\ItemController;
 use App\Http\Controllers\API\Tenant\OrderController;
-use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
 use App\Packages\TapPayment\Controllers\FileController;
@@ -35,6 +34,7 @@ use App\Packages\TapPayment\Controllers\SubscriptionController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 
 /*
@@ -232,7 +232,7 @@ Route::group([
 
 
         });
-
+        // TODO @todo prevent to access it from the website 
         Route::get('categories',[CategoryController::class,'index']);
         Route::get('orders',[OrderController::class,'index']);
 
@@ -287,10 +287,14 @@ Route::prefix('api')->middleware([
         ]);
         Route::webhooks('webhook-tap-actions','tap-payment');
     });
+    
 
 
 
 });
+
+Route::webhooks('delivery-webhook','delivery-companies');
+
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
     Route::get('/csrf-cookie', [CsrfCookieController::class, 'show'])
         ->middleware([

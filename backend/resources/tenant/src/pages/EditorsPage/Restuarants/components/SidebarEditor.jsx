@@ -1,26 +1,14 @@
-import React, {Fragment, useCallback, useState} from "react"
+import React, {Fragment, useCallback, useEffect, useState} from "react"
 import PrimaryDropDown from "./PrimaryDropDown"
 import SectionPanel from "./SectionPanel"
 import EditPanel from "./EditPanel"
-
-const btnList = [
-  {
-    id: "Section",
-    name: "Section",
-  },
-  {
-    id: "General",
-    name: "General",
-  },
-]
-
-const TABS = {
-  section: "Section",
-  general: "General",
-}
-
+import {useTranslation} from "react-i18next"
+import {useSelector} from "react-redux"
 const SidebarEditor = () => {
-  const [activeTab, setActiveTab] = useState("Section")
+  const {t} = useTranslation()
+  const language = useSelector((state) => state.languageMode.languageMode)
+
+  const [activeTab, setActiveTab] = useState(t("Section"))
   const [dropdownValue, setDropdownValue] = useState("Template 1")
 
   const handleActiveTab = useCallback((value) => {
@@ -30,6 +18,29 @@ const SidebarEditor = () => {
   const handleChange = useCallback((value) => {
     setDropdownValue(value)
   }, [])
+
+  const btnList = [
+    {
+      id: "Section",
+      name: t("Section"),
+    },
+    {
+      id: "General",
+      name: "General",
+    },
+  ]
+
+  const TABS = {
+    section: t("Section"),
+    general: "General",
+  }
+
+  useEffect(() => {
+    if (language !== "ar") {
+      setActiveTab(t("Section"))
+    }
+    setActiveTab(t("Section"))
+  }, [language])
 
   return (
     <div className='h-full w-full flex flex-col pt-4 px-2'>
