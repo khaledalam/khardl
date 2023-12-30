@@ -138,11 +138,13 @@
                                                     <i class="bi bi-building mx-2"></i>
                                                     <!--end::Svg Icon-->Branch</div>
                                             </td>
-                                            <td class="fw-bolder text-end">
+                                            @if($restaurantUser->branch)
+                                            <td class="fw-bolder text-end" >
                                                 <a href="{{ route('restaurant.menu',$restaurantUser->branch->id) }}">
                                                     {{ $restaurantUser->branch?->name }}
                                                 </a>
                                             </td>
+                                            @endif
                                         </tr>
                                         <tr>
                                             <td class="text-muted">
