@@ -1,0 +1,209 @@
+import React from "react"
+import CartColumn from "./CartColumn"
+import CashDeliveryIcon from "../../../assets/CashDelivery.svg"
+import CardIcon from "../../../assets/Card.svg"
+import BikeIcon from "../../../assets/bikeDeliveryIcon.svg"
+import shopIcon from "../../../assets/shopIcon.svg"
+import pinLocate from "../../../assets/pinLocate.svg"
+import LocationIcon from "../../../assets/locationPin.svg"
+import couponIcon from "../../../assets/coupon.svg"
+import trashIcon from "../../../assets/trashBin.svg"
+import orderIcon from "../../../assets/orderPlace.svg"
+import {MdSend} from "react-icons/md"
+import Feedback from "./Feedback"
+
+const PaymentSection = () => {
+  return (
+    <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
+      <div className='w-full flex items-start gap-8 my-4'>
+        <div className='w-1/2'>
+          <CartColumn headerTitle={"Select Payment Method"}>
+            <div className='border border-[var(--primary)]'>
+              <div className='form-control w-fulll h-[62px] flex items-center justify-center border-b border-[var(--primary)] last:border-none'>
+                <label className='label cursor-pointer w-[80%] mx-auto flex items-center justify-between '>
+                  <div className='flex   w-full flex-row items-center justify-between px-3 '>
+                    <img
+                      src={CashDeliveryIcon}
+                      alt='cash on delivery'
+                      className=''
+                    />
+                    <span className='label-text text-[1rem]'>
+                      Cash on Delivery
+                    </span>
+                    <input
+                      id={"cash_delivery"}
+                      type={"radio"}
+                      name={"cash_delivery"}
+                      className={` 
+                        radio 
+                       w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[#2A6E4F]`}
+                      onChange={() => {}}
+                    />
+                  </div>
+                </label>
+              </div>
+              <div className='form-control w-fulll h-[62px] flex items-center justify-center border-b border-[var(--primary)] last:border-none'>
+                <label className='label cursor-pointer w-[80%] mx-auto flex items-center justify-between '>
+                  <div className='flex   w-full flex-row items-center justify-between px-3 '>
+                    <img src={CardIcon} alt='cash on delivery' className='' />
+                    <span className='label-text text-[1rem]'>Card XXXX</span>
+                    <input
+                      id={"cash_delivery"}
+                      type={"radio"}
+                      name={"cash_delivery"}
+                      className={` 
+                        radio 
+                       w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[#2A6E4F]`}
+                      onChange={() => {}}
+                    />
+                  </div>
+                </label>
+              </div>
+            </div>
+          </CartColumn>
+        </div>
+        <div className='w-1/2'>
+          <CartColumn headerTitle={"Select Delivery Type"}>
+            <div className='w-full flex items-start gap-2 py-2'>
+              <div className='w-1/2 h-[118px] flex items-center justify-center border border-[var(--primary)]'>
+                <div className='flex items-center gap-4'>
+                  <div className='w-[50px] h-[50px] bg-[#C0D12330] rounded-full p-2'>
+                    <img
+                      src={BikeIcon}
+                      alt='bike'
+                      className='w-full h-full object-contain'
+                    />
+                  </div>
+                  <div className='flex flex-col'>
+                    <h3 className='text-[16px] font-medium'>Delivery</h3>
+                    <p className='text-[14px]'>SAR {45}</p>
+                  </div>
+                </div>
+              </div>
+              <div className='w-1/2 h-[118px] flex items-center justify-center bg-neutral-200 border border-neutral-300'>
+                <div className='flex items-center gap-4'>
+                  <div className='w-[50px] h-[50px] bg-[#D9D9D9] rounded-full p-2'>
+                    <img
+                      src={shopIcon}
+                      alt='pick up'
+                      className='w-full h-full object-contain'
+                    />
+                  </div>
+                  <div className='flex flex-col'>
+                    <h3 className='text-[16px] font-medium'>Pickup</h3>
+                    <p className='text-[14px]'>Free</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CartColumn>
+        </div>
+      </div>
+      {/* order notes */}
+      <CartColumn headerTitle={"Order Notes"}>
+        <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
+          <div className='flex items-center gap-3 w-1/2 '>
+            <div className='w-full'>
+              <Feedback />
+            </div>
+            <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
+              <MdSend size={22} />
+            </div>
+          </div>
+        </div>
+      </CartColumn>
+      {/* address and coupon */}
+      <div className='flex items-start gap-6'>
+        <div className='w-1/2 '>
+          <CartColumn headerTitle={"Address"}>
+            <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
+              <div className='flex items-center gap-3 w-1/2 '>
+                <div className='w-full'>
+                  <Feedback
+                    imgUrl={pinLocate}
+                    placeholder={"Jeddah xxxyyyzzzz street"}
+                  />
+                </div>
+                <div className='w-[60px] h-[48px] border border-[var(--primary)] bg-[var(--primary)] rounded-lg flex items-center justify-center'>
+                  <img src={LocationIcon} alt='' />
+                </div>
+              </div>
+            </div>{" "}
+          </CartColumn>
+        </div>
+        <div className='w-1/2'>
+          <CartColumn headerTitle={"Coupon"}>
+            <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
+              <div className='flex items-center gap-3 w-1/2 '>
+                <div className='w-full'>
+                  <Feedback
+                    imgUrl={couponIcon}
+                    placeholder={"Type your coupon code here"}
+                  />
+                </div>
+                <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
+                  <MdSend size={22} />
+                </div>
+              </div>
+            </div>{" "}
+          </CartColumn>
+        </div>
+      </div>
+      {/* payment summary */}
+      <div className='w-1/2 mx-auto my-8'>
+        <CartColumn headerTitle={"Payment Summary"}>
+          <div className='p-6 flex flex-col gap-4 border border-[var(--primary)'>
+            <div className='flex flex-col gap-4 border-b pb-4 border-[var(--primary)]'>
+              <div className='flex items-start justify-between'>
+                <h3 className='text-[16px] font-normal'>Price</h3>
+                <span className='text-[14px]'>SAR {1000}</span>
+              </div>
+              <div className='flex items-start justify-between'>
+                <h3 className='text-[16px] font-normal'>Delivery fee</h3>
+                <span className='text-[14px]'>SAR {1000}</span>
+              </div>
+            </div>
+            <div className=''>
+              <div className='flex items-start justify-between'>
+                <h3 className='text-[1.125rem] font-bold'>Total Payment</h3>
+                <span className='text-[1.125rem] font-bold'>SAR {1000}</span>
+              </div>
+            </div>
+          </div>
+          <div className='w-full h-[45px] flex items-center gap-2 my-2'>
+            <div className='w-1/2 h-full flex items-center justify-center bg-[var(--danger)]'>
+              <div className='flex items-center gap-4'>
+                <div className='w-7 h-7'>
+                  <img
+                    src={trashIcon}
+                    alt=''
+                    className='w-full h-full object-contain'
+                  />
+                </div>
+                <h3 className='text-[1rem] font-medium text-white'>
+                  Empty Cart
+                </h3>
+              </div>
+            </div>
+            <div className='w-1/2 h-full flex items-center justify-center bg-[var(--primary)]'>
+              <div className='flex items-center gap-4'>
+                <div className='w-7 h-7'>
+                  <img
+                    src={orderIcon}
+                    alt=''
+                    className='w-full h-full object-contain'
+                  />
+                </div>
+                <h3 className='text-[1rem] font-medium text-black'>
+                  Place Order
+                </h3>
+              </div>
+            </div>
+          </div>
+        </CartColumn>
+      </div>
+    </div>
+  )
+}
+
+export default PaymentSection
