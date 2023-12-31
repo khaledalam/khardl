@@ -2,8 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Tenant\Tap\TapBusiness;
-use Illuminate\Http\Request;
+use App\Models\CentralSetting;
 use App\Repositories\PDF\OrderPDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;

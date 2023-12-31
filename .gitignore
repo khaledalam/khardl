@@ -24,6 +24,8 @@ frontend/package-lock.json
 .htaccess
 test.json
 
+backend/nohup.out
+
 #backend/public/js/central.js
 #backend/public/js/tenant.js
 #backend/public/mix-manifest.json

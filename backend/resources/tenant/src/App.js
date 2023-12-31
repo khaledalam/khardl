@@ -100,7 +100,7 @@ const App = () => {
       >
         <div>
           <ToastContainer theme='colored' /> {showHeader && <Header />}{" "}
-          <Supports />
+          {/*<Supports />*/}
           <ScrollUp />
           <div>
             <Routes>
