@@ -1508,6 +1508,18 @@ html {
   z-index: 3;
   opacity: 1;
 }
+.stats {
+  display: inline-grid;
+  border-radius: var(--rounded-box, 1rem);
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+  --tw-text-opacity: 1;
+  color: var(--fallback-bc,oklch(var(--bc)/var(--tw-text-opacity)));
+}
+:where(.stats) {
+  grid-auto-flow: column;
+  overflow-x: auto;
+}
 .steps {
   display: inline-grid;
   grid-auto-flow: column;
@@ -2700,6 +2712,17 @@ details.collapse summary::-webkit-details-marker {
   to {
     background-position: -50%;
   }
+}
+:where(.stats) > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-x-reverse: 0;
+  border-right-width: calc(1px * var(--tw-divide-x-reverse));
+  border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(0px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(0px * var(--tw-divide-y-reverse));
+}
+:is([dir="rtl"] .stats > :not([hidden]) ~ :not([hidden])) {
+  --tw-divide-x-reverse: 1;
 }
 .steps .step:before {
   top: 0px;

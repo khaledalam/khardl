@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Jobs\SendVerifyEmailJob;
+use App\Mail\verifyEmail;
+use Illuminate\Bus\Queueable;
 use Illuminate\Support\Str;
 use App\Models\TraderRequirement;
 use Laravel\Sanctum\HasApiTokens;
@@ -16,7 +19,7 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
-    use MustVerifyEmailTrait, HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use MustVerifyEmailTrait, HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     protected $table ='users';
     protected $primaryKey = 'id';
@@ -91,7 +94,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     }
     public function generateVerificationCode()
     {
-        // TODO @todo create new email_verification_tokens record 
+        // TODO @todo create new email_verification_tokens record
         $this->verification_code = Str::random(6);
         $this->save();
     }
@@ -102,6 +105,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     }
     public function restaurant(){
         return $this->hasOne(Tenant::class);
+    }
+
+
+    public function sendEmailVerificationNotification()
+    {
+        die("here");
+        //dispactches the job to the queue passing it this User object
+        verifyEmail::dispatch($this);
     }
 
 }

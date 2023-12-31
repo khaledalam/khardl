@@ -50,7 +50,7 @@ return new class extends Migration
 
             $table->boolean('delivery_availability')->default(false);
             $table->boolean('pickup_availability')->default(true);
-            $table->time('preparation_time_delivery')->nullable();
+            $table->time('preparation_time_delivery')->default('00:30');
 
             $table->timestamps();
 

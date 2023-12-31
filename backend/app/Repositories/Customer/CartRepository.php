@@ -5,15 +5,16 @@ namespace App\Repositories\Customer;
 
 use App\Models\Tenant\Cart;
 use App\Models\Tenant\Item;
-use App\Models\Tenant\CartItem;
 use App\Models\Tenant\Setting;
+use App\Models\Tenant\CartItem;
+use App\Traits\APIResponseTrait;
+use Illuminate\Http\JsonResponse;
+use App\Models\Tenant\DeliveryType;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
-use App\Models\Tenant\DeliveryType;
-use App\Models\Tenant\PaymentMethod;
-use App\Traits\APIResponseTrait;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\Tenant\Customer\UpdateItemCartRequest;
 
 class CartRepository
 {
@@ -42,9 +43,10 @@ class CartRepository
         $this->createCartItem($item, $request->all());
         return $this->sendResponse(null, __('The meal has been added successfully.'));
     }
-    public function update($request)
+    public function update(CartItem $cartItem,UpdateItemCartRequest $request)
     {
-        return true;
+        $this->updateCartItem($cartItem, $request->all());
+        return $this->sendResponse(null, __('The meal has been updated successfully.'));
     }
 
     public function createCartItem($item,$request):CartItem
@@ -119,8 +121,9 @@ class CartRepository
     public function updateCartItem(CartItem $cartItem, $request)
     {
         return $cartItem->update([
-            'price'     => $cartItem->item->price,
-            'quantity'  => $request->quantity,
+            'notes'     => $request['notes'] ?? '',
+            'quantity'  => $request['quantity'],
+            'total' =>($cartItem->item->price + $cartItem->options_price) * $request['quantity'] ,
         ]);
     }
 
