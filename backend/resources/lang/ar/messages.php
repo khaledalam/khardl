@@ -396,8 +396,8 @@ return [
     "main-cost" => "التكلفه الرئيسيه",
     "additional-cost" => "التكلفه الاضافيه",
     "na" => "لايوجد",
-
     "Are u sure to change customer of status ?"=>"هل انت متأكد من تغير حالة العميل ؟",
-    "Status changed successfully"   => "تم تغير الحالة بنجاح"
+    "Status changed successfully"   => "تم تغير الحالة بنجاح",
+    "live-chat" => "محادثه حيه"
 ];
 

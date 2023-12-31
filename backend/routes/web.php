@@ -31,17 +31,6 @@ use App\Models\CentralSetting;
 |
 */
 
-Route::get('/health', function (){
-    return response()->json([
-        'status' => 'ok'
-    ]);
-})->name('health');
-
- Route::get('/test', function (){
-     return response()->json([
-         'status' => 'test'
-     ]);
- })->name('test');
 
 // Route::post('/logout', function(){
 //     Auth::logout();
@@ -122,6 +111,17 @@ Route::get('/health', function (){
 // });
 
 
+Route::get('/health', static function (){
+    return response()->json([
+        'status' => 'ok'
+    ]);
+})->name('health');
+
+Route::get('/test', static function (){
+    return response()->json([
+        'status' => 'test'
+    ]);
+})->name('test');
 
 Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
 Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
@@ -199,6 +199,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/restaurants/{id}/customers', [AdminController::class, 'viewRestaurantCustomers'])->middleware('permission:can_view_restaurants')->name('view-restaurants-customers');
                     Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('restaurants');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
+                    Route::post('/save-settings', [AdminController::class, 'save_settings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('user-management');

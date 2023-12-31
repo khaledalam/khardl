@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\QueuedWelcomeEmailJob;
 use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
+use App\Models\Setting as CentralSettings;
+use App\Models\Tenant\Setting as TenantSettings;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use Carbon\Carbon;
@@ -18,8 +19,6 @@ use App\Mail\ApprovedRestaurant;
 use App\Models\User;
 use App\Models\Log;
 use App\Models\Promoter;
-use App\Models\Tenant\RestaurantStyle;
-use App\Models\Tenant\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +42,7 @@ class AdminController extends Controller
 
         foreach ($restaurantsAll as $restaurant) {
             $restaurant->run(static function ($tenant) use (&$restaurantsLive, &$customers) {
-                $setting = Tenant\Setting::first();
+                $setting = TenantSettings::first();
                 if ($setting->is_live) {
                     $restaurantsLive ++;
                 }
@@ -301,17 +300,19 @@ class AdminController extends Controller
         // }else{
         //     return abort(404);
         // }
+
         return view('admin.view-restaurant', compact('restaurant','widget','user','logo','is_live','owner'));
 
     }
 
     public function activateRestaurant(Tenant $restaurant){
+
         $error = false;
         $restaurant->run(static function() use (&$error){
-            if (Setting::first()->is_live) {
+            if (TenantSettings::first()->is_live) {
                 $error = true;
             } else {
-                Setting::first()->update(['is_live' => true]);
+                TenantSettings::first()->update(['is_live' => true]);
             }
         });
 
@@ -320,7 +321,6 @@ class AdminController extends Controller
         }
 
         SendApprovedRestaurantEmailJob::dispatch($restaurant);
-//        Mail::to($restaurant->user->email)->send(new ApprovedRestaurant($restaurant->user,$restaurant));
 
         Log::create([
             'user_id' => Auth::id(),
@@ -443,7 +443,26 @@ class AdminController extends Controller
     public function settings()
     {
         $user = Auth::user();
-        return view('admin.settings', compact('user'));
+
+        $settings = CentralSettings::first();
+
+        $live_chat_enabled = $settings?->live_chat_enabled ? 'checked' : '';
+
+        return view('admin.settings', compact('user', 'live_chat_enabled'));
+    }
+
+    public function save_settings(Request $request)
+    {
+        $settings = CentralSettings::first();
+
+        $settings->live_chat_enabled = $request->live_chat_enabled;
+
+        $settings->save();
+
+        if(app()->getLocale() === 'en')
+            return redirect()->back()->with('success', 'Save settings successfully.');
+        else
+            return redirect()->back()->with('success', "حفظ الاعدادات بنجاح");
     }
 
     public function userManagement()
