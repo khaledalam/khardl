@@ -121,7 +121,7 @@ const ProductSection = ({categories, isMobile}) => {
                           key={i}
                           active={selectedCategory.id === category.id}
                           name={category.name}
-                          imgSrc={category.imgSrc}
+                          imgSrc={category.photo}
                           alt={category.name}
                           hoverColor={restaurantStyle?.category_hover_color}
                           onClick={() =>
@@ -321,7 +321,7 @@ const ProductSection = ({categories, isMobile}) => {
                           key={i}
                           active={selectedCategory.id === category.id}
                           name={category.name}
-                          imgSrc={category.imgSrc}
+                          imgSrc={category.photo}
                           alt={category.name}
                           hoverColor={restaurantStyle?.category_hover_color}
                           onClick={() =>
