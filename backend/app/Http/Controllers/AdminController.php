@@ -457,6 +457,12 @@ class AdminController extends Controller
 
         $settings->save();
 
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'Update platform central settings',
+            'metadata' => json_encode($request->all())
+        ]);
+
         if(app()->getLocale() === 'en')
             return redirect()->back()->with('success', 'Save settings successfully.');
         else
