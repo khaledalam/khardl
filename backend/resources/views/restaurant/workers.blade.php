@@ -16,7 +16,7 @@
                      <!--begin::Header-->
                      <div class="card-header border-0 pt-5">
                          <h3 class="card-title align-items-start flex-column">
-                             <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.workers') }}</span>
+                             <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.workers') }} - <small>{{__('messages.branch')}}: {{\App\Models\Tenant\Branch::find($branchId)?->name}}</small></span>
                              <span class="text-muted mt-1 fw-bold fs-7">{{ count($workers) }} {{ __('messages.workers') }}</span>
                          </h3>
                          <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
@@ -128,9 +128,9 @@
                 deleteButtons.forEach(function(button) {
                     button.addEventListener('click', function(event) {
                         event.preventDefault();
-                        
+
                         var form = button.closest('.delete-form');
-                        
+
                         Swal.fire({
                             title: '{{ __('messages.are-you-sure') }}',
                             text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",

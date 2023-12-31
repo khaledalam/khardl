@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('text_fontSize')->nullable();
             $table->string('text_alignment')->nullable();
             $table->string('text_color')->nullable();
+            $table->string('product_background_color')->nullable();
 
             $table->string('logo')->nullable();
             $table->string('banner_image')->nullable();

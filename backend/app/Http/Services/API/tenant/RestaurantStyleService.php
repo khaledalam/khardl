@@ -69,8 +69,9 @@ class RestaurantStyleService
             'text_fontSize' => $request->text_fontSize,
             'text_alignment' => $request->text_alignment,
             'text_color' => $request->text_color,
+            'product_background_color' => $request->product_background_color,
             'selectedSocialIcons' => $request->selectedSocialIcons,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()?->id
         ];
     }
     public function fetch($request)
