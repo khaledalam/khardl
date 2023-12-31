@@ -229,7 +229,7 @@ Route::group([
             Route::middleware('verifiedPhone')->group(function () {
                 Route::delete("carts/trash",[CartController::class,'trash'])->name('carts.trash');
                 Route::resource("carts",CartController::class)->only([
-                    'index','store','destroy'
+                    'index','store','destroy','update'
                 ]);
                 Route::resource("orders",CustomerOrderController::class)->only([
                     'store', 'index'
