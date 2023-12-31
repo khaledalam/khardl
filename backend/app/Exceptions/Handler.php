@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Sentry\Laravel\Integration;
 use Throwable;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -23,11 +24,20 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
+    public function report(Throwable $exception)
+    {
+        if (app()->bound('sentry')) {
+            app('sentry')->captureException($exception);
+//            Integration::captureUnhandledException($exception);
+        }
+    }
+
     /**
      * Register the exception handling callbacks for the application.
      */
     public function register(): void
     {
+
         $this->reportable(function (Throwable $e) {
             //
         });
@@ -43,14 +53,14 @@ class Handler extends ExceptionHandler
 
          if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
             if ($request->expectsJson()) {
-                return response()->json(['error' => __("Not found")], 404);    
+                return response()->json(['error' => __("Not found")], 404);
             }
             return  redirect()->back();
         }
         if ($exception instanceof TenantCouldNotBeIdentifiedException || $exception instanceof DomainOccupiedByOtherTenantException) {
             return redirect()->route('home');
         }
-    
+
         return parent::render($request, $exception);
     }
 }

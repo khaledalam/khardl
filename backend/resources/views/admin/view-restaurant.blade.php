@@ -343,7 +343,19 @@
                     <div class="card-body p-9">
                         <!--begin::Row-->
 
-                       
+{{--                        <div class="row mb-7">--}}
+{{--                            <!--begin::Label-->--}}
+{{--                            <label class="col-lg-4 fw-bold text-muted">{{ __('messages.health') }}</label>--}}
+{{--                            <!--end::Label-->--}}
+{{--                            <!--begin::Col-->--}}
+{{--                            <div class="col-lg-8">--}}
+{{--                                <span class="fw-bolder fs-6 text-gray-800">--}}
+{{--                                   <a href={"https://stats.uptimerobot.com/xjL9numDqg"} target={"_blank"}>🟢</a>--}}
+{{--                                </span>--}}
+{{--                            </div>--}}
+{{--                            <!--end::Col-->--}}
+{{--                        </div>--}}
+
                         <div class="row mb-7">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">@if (app()->getLocale() == 'en')
@@ -358,7 +370,7 @@
                             </div>
                             <!--end::Col-->
                         </div>
-                        <div class="row mb-7">
+                        <div class="row mb-1">
                             <!--begin::Label-->
                             <label class="col-lg-4 fw-bold text-muted">{{ __('messages.domain') }}</label>
                             <!--end::Label-->
@@ -366,9 +378,7 @@
                             <div class="col-lg-8">
                                 <span class="fw-bolder fs-6 text-gray-800">
                                     <a href="{{ $restaurant->route('home') }}" >
-                                        <p class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{$restaurant->primary_domain->domain}}
-                                    
-                                        </p><i class="fas fa-external-link-alt"></i> 
+                                        <p class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{$restaurant->primary_domain->domain}} <i class="fas fa-external-link-alt"></i></p>
                                     </a>
                                 </span>
                             </div>
@@ -489,15 +499,15 @@
 									</div>
 									<!--end::Card title-->
 								</div>
-								
-									
-                                
+
+
+
 								<!--end::Card body-->
-					
+
 							<!--end::downloaded-->
-							
+
                         <div class="card-body  row">
-                    
+
                             <!--begin::Input group-->
                             <div class="col-md-6 mb-5">
                                 <!--begin::Label-->
@@ -533,7 +543,7 @@
                                 <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
                                 <!--end::Label-->
                                 <!--begin::Col-->
-                               
+
                                 <div class="">
                                     @if ($restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager)
                                     <a href="{{ route('admin.download.file', ['path' =>$restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager,'fileName'=>$restaurant->restaurant_name.' - Identity of owner or manager']) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
@@ -573,7 +583,7 @@
                                     @else
                                         {{ __('messages.no-file-available') }}
                                     @endif
-                                
+
                                 </div>
                                 <!--end::Col-->
                             </div>

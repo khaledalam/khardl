@@ -6,7 +6,7 @@ function Copyright() {
   return (
     <footer className="bg-[var(--primary)] flex items-center justify-center py-4 rounded-b-[30px] border-t-[0.5px] border-t-black">
       <p className="max-[450px]:text-sm max-[450px]:mx-2">
-      © {t("All rights reserved")}
+      © {t("All rights reserved")} - <a href={"https://stats.uptimerobot.com/xjL9numDqg"} target={"_blank"}>🟢</a>
       </p>
     </footer>
   );

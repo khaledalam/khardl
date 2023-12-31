@@ -49,6 +49,12 @@ use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderCon
 |
 */
 
+Route::get('/health', function (){
+    return response()->json([
+        'status' => 'ok'
+    ]);
+})->name('health');
+
 Route::group([
     'middleware' => ['tenant','web'],
 ], static function () {
@@ -223,7 +229,7 @@ Route::group([
             Route::middleware('verifiedPhone')->group(function () {
                 Route::delete("carts/trash",[CartController::class,'trash'])->name('carts.trash');
                 Route::resource("carts",CartController::class)->only([
-                    'index','store','destroy'
+                    'index','store','destroy','update'
                 ]);
                 Route::resource("orders",CustomerOrderController::class)->only([
                     'store', 'index'
@@ -232,7 +238,7 @@ Route::group([
 
 
         });
-        // TODO @todo prevent to access it from the website 
+        // TODO @todo prevent to access it from the website
         Route::get('categories',[CategoryController::class,'index']);
         Route::get('orders',[OrderController::class,'index']);
 
@@ -287,7 +293,7 @@ Route::prefix('api')->middleware([
         ]);
         Route::webhooks('webhook-tap-actions','tap-payment');
     });
-    
+
 
 
 

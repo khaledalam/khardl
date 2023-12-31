@@ -398,7 +398,11 @@ return [
     "cost" => "Cost",
     "main-cost" => "Main cost",
     "additional-cost" => "Main cost",
-    "na" => "N/A"
+    "na" => "N/A",
+    "live-chat" => "Live Chat",
+    "show" => "Show",
+    "webhook-url" => "Webhook URL"
+
 
 
 ];
