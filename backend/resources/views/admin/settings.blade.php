@@ -113,6 +113,18 @@
       </div>
       <!--end::Input group-->
 
+        <!--begin::Input group-->
+        <div class="row mb-0 mt-5">
+            <!--begin::Label-->
+            <div class="form-text fv-row">
+                <label class="form-label" for="allowmarketing5">{{ __('messages.webhook-url')}}
+                </label>:
+                <input class="form-control form-control-solid" value="{{$webhook_url}}" type="url" id="allowmarketing5" name="webhook_url" />
+            </div>
+            <!--begin::Label-->
+        </div>
+        <!--end::Input group-->
+
 
     </div>
     <!--end::Card body-->

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('central_settings', function (Blueprint $table) {
             $table->id();
             $table->string("webhook_url")->nullable();
+            $table->boolean('live_chat_enabled')->default(false);
+
             $table->timestamps();
         });
     }

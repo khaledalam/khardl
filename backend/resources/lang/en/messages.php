@@ -400,7 +400,9 @@ return [
     "additional-cost" => "Main cost",
     "na" => "N/A",
     "live-chat" => "Live Chat",
-    "show" => "Show"
+    "show" => "Show",
+    "webhook-url" => "Webhook URL"
+
 
 
 ];

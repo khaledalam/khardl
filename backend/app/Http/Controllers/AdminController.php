@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
-use App\Models\Setting as CentralSettings;
+use App\Models\CentralSetting;
 use App\Models\Tenant\Setting as TenantSettings;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
@@ -442,19 +442,20 @@ class AdminController extends Controller
     {
         $user = Auth::user();
 
-        $settings = CentralSettings::first();
+        $settings = CentralSetting::first();
 
         $live_chat_enabled = $settings?->live_chat_enabled;
+        $webhook_url = $settings?->webhook_url;
 
-        return view('admin.settings', compact('user', 'live_chat_enabled'));
+        return view('admin.settings', compact('user', 'live_chat_enabled', 'webhook_url'));
     }
 
     public function saveSettings(Request $request)
     {
-        $settings = CentralSettings::first();
+        $settings = CentralSetting::first();
 
         $settings->live_chat_enabled = strtolower($request->live_chat_enabled) == 'on';
-
+        $settings->webhook_url = $request->webhook_url;
         $settings->save();
 
         Log::create([

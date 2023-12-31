@@ -24,7 +24,7 @@
     </script>
     <script type="text/javascript" src="{{ mix('js/central.js') }}"></script>
 
-    @if($live_chat_enabled)
+    @if(App\Models\CentralSetting::first()?->live_chat_enabled)
         <script type="text/javascript">
             var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
             (function(){
