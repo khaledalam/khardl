@@ -14,6 +14,7 @@
     <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
     <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
+    <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
