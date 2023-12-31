@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('category_shape')->nullable();
             $table->string('category_hover_color')->nullable();
             $table->string('category_alignment')->nullable();
+            $table->string('categoryDetail_type')->nullable();
             $table->string('categoryDetail_alignment')->nullable();
             $table->string('categoryDetail_shape')->nullable();
             $table->string('categoryDetail_cart_color')->nullable();
