@@ -31,6 +31,18 @@ use App\Models\CentralSetting;
 |
 */
 
+Route::get('/health', function (){
+    return response()->json([
+        'status' => 'ok'
+    ]);
+})->name('health');
+
+
+ Route::get('/test', function (){
+     return response()->json([
+         'status' => 'test'
+     ]);
+ })->name('test');
 
 // Route::post('/logout', function(){
 //     Auth::logout();
