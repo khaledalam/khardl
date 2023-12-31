@@ -398,6 +398,7 @@ return [
     "na" => "لايوجد",
     "Are u sure to change customer of status ?"=>"هل انت متأكد من تغير حالة العميل ؟",
     "Status changed successfully"   => "تم تغير الحالة بنجاح",
-    "live-chat" => "محادثه حيه"
+    "live-chat" => "محادثه حيه",
+    "show" => "عرض"
 ];
 

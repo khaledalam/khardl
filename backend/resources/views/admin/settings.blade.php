@@ -95,7 +95,8 @@
 <!--begin::Content-->
 <div id="kt_account_settings_profile_details" class="collapse show">
   <!--begin::Form-->
-  <form id="kt_account_profile_details_form" action="{{ route('admin.save-settings') }}" method="POST" class="form">
+  <form action="{{ route('admin.save-settings') }}" method="POST">
+  @csrf
     <!--begin::Card body-->
     <div class="card-body border-top p-9">
 
@@ -104,8 +105,8 @@
       <div class="row mb-0 mt-5">
         <!--begin::Label-->
           <div class="form-check form-check-solid form-switch fv-row">
-            <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing5" name="live_chat_enabled" {{$live_chat_enabled}} />
-            <label class="form-check-label" for="allowmarketing5">{{ __('messages.live-chat')}}
+            <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing5" name="live_chat_enabled" @if($live_chat_enabled) checked="checked" @endif}} />
+            <label class="form-check-label" for="allowmarketing5">{{ __('messages.show')}} {{ __('messages.live-chat')}}
                                           </label>
           </div>
         <!--begin::Label-->

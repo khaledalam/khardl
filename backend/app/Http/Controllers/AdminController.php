@@ -80,8 +80,6 @@ class AdminController extends Controller
         return view('admin.revenue', compact('user'));
     }
 
-
-
     public function promoters(){
 
         $promoters = Promoter::paginate(15);
@@ -189,7 +187,6 @@ class AdminController extends Controller
         else
             return redirect()->route('admin.user-management')->with('success', 'تمت إضافة المسؤول بنجاح');
     }
-
 
     public function profile()
     {
@@ -349,6 +346,7 @@ class AdminController extends Controller
 
         return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live','logo'));
     }
+
     public function viewRestaurantCustomers( $id){
 
         $restaurant = Tenant::findOrFail($id);
@@ -446,16 +444,16 @@ class AdminController extends Controller
 
         $settings = CentralSettings::first();
 
-        $live_chat_enabled = $settings?->live_chat_enabled ? 'checked' : '';
+        $live_chat_enabled = $settings?->live_chat_enabled;
 
         return view('admin.settings', compact('user', 'live_chat_enabled'));
     }
 
-    public function save_settings(Request $request)
+    public function saveSettings(Request $request)
     {
         $settings = CentralSettings::first();
 
-        $settings->live_chat_enabled = $request->live_chat_enabled;
+        $settings->live_chat_enabled = strtolower($request->live_chat_enabled) == 'on';
 
         $settings->save();
 
@@ -475,6 +473,7 @@ class AdminController extends Controller
         $user = Auth::user();
         return view('admin.user-management', compact('user', 'admins'));
     }
+
     public function restaurantOwnerManagement()
     {
         $admins = User::whereHas('roles',function($q){
@@ -518,7 +517,6 @@ class AdminController extends Controller
 
         return view('admin.logs', compact('user', 'logs', 'owners'));
     }
-
 
     public function updateUserPermissions(Request $request, $userId){
 
@@ -722,6 +720,7 @@ class AdminController extends Controller
         }
 
     }
+
     public function toggleStatus(User $user)
     {
         // Toggle the user status

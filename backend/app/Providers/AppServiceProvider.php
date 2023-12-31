@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Setting as CentralSettings;
 use App\Models\Tenant\Tap\TapBusiness;
 use Illuminate\Http\Request;
 use App\Repositories\PDF\OrderPDF;
@@ -42,6 +43,11 @@ class AppServiceProvider extends ServiceProvider
         $user = Auth::user();
         View::share('link', request()->segment(1));
         View::share('admin_link', request()->segment(2));
+
+        $settings = CentralSettings::first();
+        $live_chat_enabled = $settings?->live_chat_enabled;
+
+        View::share('live_chat_enabled', $live_chat_enabled);
 
         View::share('user', $user);
         Schema::defaultStringLength(250);

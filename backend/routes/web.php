@@ -198,8 +198,8 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/restaurants/{id}/orders', [AdminController::class, 'viewRestaurantOrders'])->middleware('permission:can_view_restaurants')->name('view-restaurants-orders');
                     Route::get('/restaurants/{id}/customers', [AdminController::class, 'viewRestaurantCustomers'])->middleware('permission:can_view_restaurants')->name('view-restaurants-customers');
                     Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('restaurants');
+                    Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
-                    Route::post('/save-settings', [AdminController::class, 'save_settings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('user-management');

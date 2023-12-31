@@ -399,7 +399,8 @@ return [
     "main-cost" => "Main cost",
     "additional-cost" => "Main cost",
     "na" => "N/A",
-    "live-chat" => "Live Chat"
+    "live-chat" => "Live Chat",
+    "show" => "Show"
 
 
 ];
