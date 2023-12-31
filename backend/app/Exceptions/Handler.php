@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Sentry\Laravel\Integration;
 use Throwable;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -29,7 +30,7 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
+            Integration::captureUnhandledException($e);
         });
     }
 
@@ -43,14 +44,14 @@ class Handler extends ExceptionHandler
 
          if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
             if ($request->expectsJson()) {
-                return response()->json(['error' => __("Not found")], 404);    
+                return response()->json(['error' => __("Not found")], 404);
             }
             return  redirect()->back();
         }
         if ($exception instanceof TenantCouldNotBeIdentifiedException || $exception instanceof DomainOccupiedByOtherTenantException) {
             return redirect()->route('home');
         }
-    
+
         return parent::render($request, $exception);
     }
 }
