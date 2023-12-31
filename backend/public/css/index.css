@@ -4918,6 +4918,9 @@ details.collapse summary::-webkit-details-marker {
 .rounded-xl {
   border-radius: 0.75rem;
 }
+.\!rounded-none {
+  border-radius: 0px !important;
+}
 .rounded-b-2xl {
   border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
@@ -11966,6 +11969,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .rounded-xl {
   border-radius: 0.75rem;
+}
+.\!rounded-none {
+  border-radius: 0px !important;
 }
 .rounded-b-2xl {
   border-bottom-right-radius: 1rem;

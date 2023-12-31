@@ -21,11 +21,14 @@ const ProductSection = ({categories, isMobile}) => {
   console.log("filterCategory", filterCategory)
   return (
     <div>
-      {(restaurantStyle?.category_alignment === t("center") ||
+      {(restaurantStyle?.category_alignment === t("Center") ||
         restaurantStyle?.category_alignment === "center" ||
         isMobile) && (
         <Fragment>
-          <div className='w-full'>
+          <div
+            className='w-full'
+            style={{backgroundColor: restaurantStyle.product_background_color}}
+          >
             <div className='w-5/6 laptopXL:w-[75%] mx-auto py-4'>
               {filterCategory ? (
                 filterCategory.map((category) => (
@@ -101,11 +104,16 @@ const ProductSection = ({categories, isMobile}) => {
           </div>
         </Fragment>
       )}
-      {(restaurantStyle?.category_alignment === t("left") ||
+      {(restaurantStyle?.category_alignment === t("Left") ||
         restaurantStyle?.category_alignment === "left") &&
         !isMobile && (
           <Fragment>
-            <div className='w-full flex items-start p-16 gap-2 '>
+            <div
+              style={{
+                backgroundColor: restaurantStyle.product_background_color,
+              }}
+              className='w-full flex items-start p-16 gap-2 '
+            >
               <div className='flex-[20%]'>
                 <div
                   style={{
@@ -223,11 +231,16 @@ const ProductSection = ({categories, isMobile}) => {
             </div>
           </Fragment>
         )}
-      {(restaurantStyle?.category_alignment === t("right") ||
+      {(restaurantStyle?.category_alignment === t("Right") ||
         restaurantStyle?.category_alignment === "right") &&
         !isMobile && (
           <Fragment>
-            <div className='w-full flex items-start p-16 gap-2'>
+            <div
+              style={{
+                backgroundColor: restaurantStyle.product_background_color,
+              }}
+              className='w-full flex items-start p-16 gap-2'
+            >
               <div className='flex-[80%]'>
                 <div className='w-full py-4'>
                   {filterCategory &&

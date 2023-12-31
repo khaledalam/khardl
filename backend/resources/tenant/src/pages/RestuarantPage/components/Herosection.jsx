@@ -31,9 +31,11 @@ const Herosection = ({isMobile, categories}) => {
       >
         <div
           className={` w-full ${
-            restaurantStyle && restaurantStyle.logo_alignment === "center"
+            restaurantStyle?.logo_alignment === t("Center") ||
+            restaurantStyle?.logo_alignment === "center"
               ? " flex items-center justify-center"
-              : restaurantStyle && restaurantStyle.logo_alignment === "Left"
+              : restaurantStyle?.logo_alignment === t("Left") ||
+                restaurantStyle?.logo_alignment === "left"
               ? "items-center justify-start"
               : "items-center justify-end"
           }`}
@@ -58,7 +60,8 @@ const Herosection = ({isMobile, categories}) => {
             />
           </div>
         </div>
-        {restaurantStyle && restaurantStyle?.banner_type === "one-photo" ? (
+        {(restaurantStyle && restaurantStyle?.banner_type === "one-photo") ||
+        (restaurantStyle && restaurantStyle?.banner_type === t("One-photo")) ? (
           <div
             className='w-5/6 overflow-hidden h-[471px] laptopXL:w-[75%]'
             style={{
@@ -72,7 +75,8 @@ const Herosection = ({isMobile, categories}) => {
               className='w-full h-full object-cover'
             />
           </div>
-        ) : restaurantStyle?.banner_type === "slider" ? (
+        ) : restaurantStyle?.banner_type === t("Slider") ||
+          restaurantStyle?.banner_type === "slider" ? (
           <div className='w-5/6 overflow-hidden h-[471px] laptopXL:w-[75%]'>
             <Swiper
               modules={[Pagination, Navigation]}
@@ -106,7 +110,9 @@ const Herosection = ({isMobile, categories}) => {
           <Fragment>Not a Slider</Fragment>
         )}
       </div>
-      {(restaurantStyle?.category_alignment === "center" || isMobile) && (
+      {(restaurantStyle?.category_alignment === t("Center") ||
+        restaurantStyle?.category_alignment === "center" ||
+        isMobile) && (
         <div
           style={{
             backgroundColor: restaurantStyle.page_category_color,

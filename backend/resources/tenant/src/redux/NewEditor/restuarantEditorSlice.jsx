@@ -17,11 +17,11 @@ const restuarantEditorSlice = createSlice({
     logo: "",
     logoUpload: null,
     bannerUpload: null,
-    bannersUpload: null,
+    bannersUpload: [],
     headerPosition: "relative",
     logo_alignment: "center",
     logo_shape: "rounded",
-    banner_type: "one-page",
+    banner_type: "one-photo",
     banner_shape: "rounded",
     banner_background_color: "green",
 
@@ -37,7 +37,7 @@ const restuarantEditorSlice = createSlice({
 
     selectedSocialIcons: [
       {
-        id: "0xwhatapp",
+        id: 1,
         name: "Whatsapp",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968841.png",
         link: "",
@@ -46,62 +46,62 @@ const restuarantEditorSlice = createSlice({
 
     mediaCollection: [
       {
-        id: "0xwhatapp",
+        id: 1,
         // name: "Whatsapp",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968841.png",
         link: "",
       },
       {
-        id: "1xTelegram",
+        id: 2,
         // name: "Telegram",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/2111/2111646.png",
         link: "",
       },
       {
-        id: "2xyoyuutubr",
+        id: 3,
         // name: "Youtube",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/3670/3670147.png",
         link: "",
       },
       {
-        id: "3xdgfinstgrm",
+        id: 4,
         // name: "Instagram",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/2111/2111463.png",
         link: "",
       },
       {
-        id: "4fgkkfgbook",
+        id: 5,
         // name: "Facebook",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/3670/3670032.png",
         link: "",
       },
       {
-        id: "5sfroaflinkedn",
+        id: 6,
         // name: "LinkedIn",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/2504/2504923.png",
         link: "",
       },
       {
-        id: "6jtwnhwldnuwtiktpk",
+        id: 7,
         // name: "Tiktok",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/3116/3116490.png",
         link: "",
       },
       {
-        id: "7mshfnfhylermsg",
+        id: 8,
         // name: "Messenger",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968771.png",
         link: "",
       },
       {
-        id: "8sjsjdyuesws",
+        id: 9,
         // name: "X",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/11823/11823292.png",
         link: "",
       },
     ],
 
-    selectedMediaId: "0xwhatapp",
+    selectedMediaId: 1,
     socialMediaIcons_alignment: "center",
     phoneNumber: "+96600000000",
     phoneNumber_alignment: "center",
@@ -109,7 +109,7 @@ const restuarantEditorSlice = createSlice({
     page_color: "#fafafa",
     category_background_color: "#4466ff",
     page_category_color: "#ffffff",
-
+    product_background_color: "white",
     header_color: "#ffffff",
     footer_color: "#ffffff",
     price_color: "#ffffff",
@@ -189,6 +189,9 @@ const restuarantEditorSlice = createSlice({
     pageCategoryColor: (state, action) => {
       state.page_category_color = action.payload
     },
+    productBackgroundColor: (state, action) => {
+      state.product_background_color = action.payload
+    },
     priceColor: (state, action) => {
       state.price_color = action.payload
     },
@@ -227,7 +230,8 @@ const restuarantEditorSlice = createSlice({
       state.bannerUpload = action.payload
     },
     setBannersUpload: (state, action) => {
-      state.bannersUpload = [].concat(action.payload)
+      const {index, image} = action.payload
+      state.bannersUpload[index] = image
     },
     removeBannersUpload: (state, action) => {
       const {index} = action.payload
@@ -258,9 +262,16 @@ const restuarantEditorSlice = createSlice({
       )
       if (iconToMove) {
         state.mediaCollection = state.mediaCollection.filter(
-          (icon) => icon.id !== iconId
+          (icon) => icon.id !== iconToMove.id
         )
-        state.selectedSocialIcons.push(iconToMove)
+
+        if (
+          state.selectedSocialIcons.some(
+            (social) => social.id !== iconToMove.id
+          )
+        ) {
+          state.selectedSocialIcons.push(iconToMove)
+        }
       }
     },
     moveSelectedIconsToMedia: (state, action) => {
@@ -295,6 +306,7 @@ export const {
   socialMediaIconsAlignment,
   pageColor,
   pageCategoryColor,
+  productBackgroundColor,
   priceColor,
   headerColor,
   footerColor,

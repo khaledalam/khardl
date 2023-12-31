@@ -22,21 +22,23 @@ const Slider = ({banner_images}) => {
   const [sliderCount, setSliderCount] = useState(2)
   const dispatch = useDispatch()
 
-  const navigationPrevRef = useRef(null)
-  const navigationNextRef = useRef(null)
-
   const handleImagesUpload = (event, idx) => {
     const selectedImage = event.target.files[0]
-    setUploadImages([...uploadImages, URL.createObjectURL(selectedImage)])
-    dispatch(
-      setBannersUpload([...uploadImages, URL.createObjectURL(selectedImage)])
-    )
+    //  setUploadImages([...uploadImages, URL.createObjectURL(selectedImage)])
+    if (selectedImage) {
+      dispatch(
+        setBannersUpload({
+          index: idx,
+          image: URL.createObjectURL(selectedImage),
+        })
+      )
+    }
   }
 
   const handleRemoveImages = (index) => {
     dispatch(removeBannersUpload({index}))
-    const newImages = uploadImages.filter((_, i) => i !== index)
-    setUploadImages(newImages)
+    // const newImages = uploadImages.filter((_, i) => i !== index)
+    // // setUploadImages(newImages)
   }
 
   const addMoreSlider = useCallback(() => {
@@ -72,7 +74,8 @@ const Slider = ({banner_images}) => {
               <input
                 type='file'
                 accept='image/*'
-                id='imageBanner'
+                id={"imageBanner" + index}
+                name={"imageBanner" + index}
                 onChange={(e) => handleImagesUpload(e, index)}
                 className='hidden'
               />
@@ -83,7 +86,7 @@ const Slider = ({banner_images}) => {
                 }}
                 className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
               >
-                <label htmlFor='imageBanner'>
+                <label htmlFor={"imageBanner" + index}>
                   <img
                     src={
                       (bannersUpload[index] || banner_images[index]) ??

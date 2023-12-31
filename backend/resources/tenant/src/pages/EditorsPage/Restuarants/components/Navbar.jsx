@@ -31,6 +31,7 @@ const Navbar = ({toggleSidebarCollapse}) => {
     inputs.phoneNumber = restuarantStyle.phoneNumber
     inputs.phoneNumber_alignment = restuarantStyle.phoneNumber_alignment
     inputs.page_color = restuarantStyle.page_color
+    inputs.product_background_color = restuarantStyle.product_background_color
     inputs.page_category_color = restuarantStyle.page_category_color
     inputs.header_color = restuarantStyle.header_color
     inputs.footer_color = restuarantStyle.footer_color
@@ -69,6 +70,7 @@ const Navbar = ({toggleSidebarCollapse}) => {
         ? restuarantStyle.banner_images
         : ""
     inputs.logo_type = restuarantStyle?.logoUpload === null ? "url" : "file"
+
     try {
       const response = await AxiosInstance.post(`restaurant-style`, inputs, {
         headers: {

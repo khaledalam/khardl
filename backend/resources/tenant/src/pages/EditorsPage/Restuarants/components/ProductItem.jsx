@@ -286,7 +286,7 @@ const ProductItem = ({
       <div
         style={{
           boxShadow: "4px 0px  10px 0px rgba(0, 0, 0, 0.25)",
-          borderRadius: shape === "sharp" ? 0 : 16,
+          borderRadius: shape === t("Sharp") ? 0 : 16,
         }}
         className='w-[250px] min-h-[138px] cursor-pointer'
         onClick={() => document.getElementById(id).showModal()}
@@ -320,11 +320,11 @@ const ProductItem = ({
                     : 13,
               }}
               className={`${
-                textAlign === "center"
+                textAlign === t("Center")
                   ? "text-center"
-                  : textAlign === "left"
+                  : textAlign === t("Left")
                   ? "text-left"
-                  : textAlign === "right"
+                  : textAlign === t("Right")
                   ? "text-right"
                   : ""
               }`}
@@ -352,7 +352,9 @@ const ProductItem = ({
                 language === "en"
                   ? "rounded-tr-lg rounded-bl-2xl "
                   : "rounded-tl-lg rounded-br-2xl"
-              }   flex items-center justify-center`}
+              } ${
+                shape === t("Sharp") ? "!rounded-none" : ""
+              }  flex items-center justify-center`}
             >
               <img
                 src={cartBgcolor ? imgCartWhite : imgCart}

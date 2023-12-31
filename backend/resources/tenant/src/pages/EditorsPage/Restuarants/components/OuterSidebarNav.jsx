@@ -144,7 +144,7 @@ const OuterSidebarNav = ({id}) => {
         {/* pick up */}
         <PrimarySelectWithIcon
           imgUrl={shopIcon}
-          text={"Pick up"}
+          text={t("PICKUP")}
           placeholder={`Khardl Pick-Up - Jeddah`}
           onChange={(e) => setPickUp(e.target.value)}
           options={
@@ -155,7 +155,7 @@ const OuterSidebarNav = ({id}) => {
         />
         <PrimarySelectWithIcon
           imgUrl={deliveryIcon}
-          text={"delivery"}
+          text={t("Delivery")}
           placeholder={`Khardl Delivery - Jeddah`}
           onChange={(e) => setBranch(e.target.value)}
           options={
