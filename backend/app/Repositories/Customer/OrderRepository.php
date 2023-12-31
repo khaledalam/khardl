@@ -52,6 +52,8 @@ class OrderRepository
 
                 $cart->clone_to_order_items($order->id);
                 $cart->trash();
+                // will be handled with another repo
+                
                 DB::commit();
                 return $this->sendResponse($order, __('The order been created successfully.'));
 

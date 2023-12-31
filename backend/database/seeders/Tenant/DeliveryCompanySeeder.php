@@ -4,6 +4,7 @@ namespace Database\Seeders\Tenant;
 
 use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -25,6 +26,12 @@ class DeliveryCompanySeeder extends Seeder
             'api_url'=>"https://carvo.isoft4is.com/apis/v2",
             'Module'=>class_basename(Cervo::class) // cannot be override 
         ]);
+        DeliveryCompany::create([
+            'name'=> trans_json('Street Line','ستريت لاين'),
+            'api_url'=>"https://api.streetline.app/a",
+            'Module'=>class_basename(StreetLine::class) // cannot be override 
+        ]);
+
 
      
     }

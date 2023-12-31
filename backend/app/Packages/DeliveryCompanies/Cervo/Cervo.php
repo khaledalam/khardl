@@ -66,7 +66,6 @@ class Cervo  extends AbstractDeliveryCompany
         ];
         return $this->send(
             url:   $this->delivery_company->api_url.'/order',
-            method: 'post',
             token: $token,
             data: $data
         );

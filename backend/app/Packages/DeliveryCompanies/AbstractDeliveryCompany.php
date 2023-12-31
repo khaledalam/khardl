@@ -29,7 +29,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
     }
     abstract public function assignToDriver(Order $order,RestaurantUser $customer);
     
-    public function send(string $url,string $method = 'post',$token,array $data):array{
+    public function send(string $url,$token,array $data,string $method = 'post'):array{
         try {
             // dd($url,$method,$data,$token);
             if($token){
