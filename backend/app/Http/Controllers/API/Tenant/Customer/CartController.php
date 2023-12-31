@@ -6,6 +6,8 @@ use App\Traits\APIResponseTrait;
 use App\Repositories\Customer\CartRepository;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
 use App\Http\Requests\Tenant\Customer\RemoveItemToCartRequest;
+use App\Http\Requests\Tenant\Customer\UpdateItemCartRequest;
+use App\Models\Tenant\CartItem;
 
 class CartController
 {
@@ -30,9 +32,9 @@ class CartController
     }
 
   
-    public function update()
+    public function update(CartItem $cart,UpdateItemCartRequest $request)
     {
-        
+        return $this->cart->update($cart,$request);
     }
 
     public function destroy($item)

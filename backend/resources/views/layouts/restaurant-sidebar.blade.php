@@ -198,14 +198,14 @@
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
                            <a href="{{route('restaurant.branches')}}">
-                            <span class="{{ ($link == 'branches' || $link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
+                            <span class="{{ ($link == 'branches') ? 'menu-link active' : 'menu-link ' }}">
                                 <span class="menu-icon">
                                     <!--begin::Svg Icon -->
                                         <span class="svg-icon svg-icon-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="{{ ($link == 'branches' || $link == 'workers') ? '#c2da08' : '#000000' }}" />
-                                                <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="{{ ($link == 'branches' || $link == 'workers') ? '#c2da08' : '#000000' }}" />
-                                                <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="{{ ($link == 'branches' || $link == 'workers') ? '#c2da08' : '#000000' }}" />
+                                                <path d="M21 9V11C21 11.6 20.6 12 20 12H14V8H20C20.6 8 21 8.4 21 9ZM10 8H4C3.4 8 3 8.4 3 9V11C3 11.6 3.4 12 4 12H10V8Z" fill="{{ ($link == 'branches') ? '#c2da08' : '#000000' }}" />
+                                                <path d="M15 2C13.3 2 12 3.3 12 5V8H15C16.7 8 18 6.7 18 5C18 3.3 16.7 2 15 2Z" fill="{{ ($link == 'branches') ? '#c2da08' : '#000000' }}" />
+                                                <path opacity="0.3" d="M9 2C10.7 2 12 3.3 12 5V8H9C7.3 8 6 6.7 6 5C6 3.3 7.3 2 9 2ZM4 12V21C4 21.6 4.4 22 5 22H10V12H4ZM20 12V21C20 21.6 19.6 22 19 22H14V12H20Z" fill="{{ ($link == 'branches') ? '#c2da08' : '#000000' }}" />
                                             </svg>
                                         </span>
                                     <!--end::Svg Icon-->
@@ -234,6 +234,26 @@
                           </div>
                           @endif
                         <!-- menu -->
+
+                        <!-- workers -->
+                        @if(\App\Models\Tenant\Branch::first())
+                            <div class="menu-item menu-accordion">
+                                <a href="{{route('restaurant.workers',['branchId' => \App\Models\Tenant\Branch::where('is_primary',true)->first()->id])}}">
+                                <span class="{{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($link == 'workers') ? '#c2da08' : '#000000' }}" class="bi bi-person" viewBox="0 0 16 16"> <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/> </svg>                                            </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+
+                                        <span class="menu-title">{{__('messages.staff-modification')}}</span>
+
+                                </span>
+                                </a>
+                            </div>
+                    @endif
+                    <!-- menu -->
 
                         <!-- Orders -->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? 'show' : '' }}">

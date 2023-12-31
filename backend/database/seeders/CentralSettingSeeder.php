@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\CentralSetting;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CentralSettingSeeder extends Seeder
@@ -14,7 +13,8 @@ class CentralSettingSeeder extends Seeder
     public function run(): void
     {
         CentralSetting::create([
-            'webhook_url'=>''
+            'webhook_url' => '',
+            'live_chat_enabled' => false
         ]);
     }
 }
