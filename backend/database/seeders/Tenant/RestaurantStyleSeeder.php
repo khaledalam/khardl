@@ -64,10 +64,10 @@ class RestaurantStyleSeeder extends Seeder
             'product_background_color' => 'white',
             'selectedSocialIcons' => [
                 [
-                    'name' => 'youtube',
                     'id' => self::RESTAURANT_STYLE_SOCIAL_MEDIA_ID,
-                    'imgUrl' => 'https://cdn-icons-png.flaticon.com/512/1384/1384060.png',
-                    'link' => 'https://youtube.com',
+                    'name' => "Whatsapp",
+                    'imgUrl' => "https://cdn-icons-png.flaticon.com/128/5968/5968841.png",
+                    'link' => "",
                 ]
             ],
         ]);
