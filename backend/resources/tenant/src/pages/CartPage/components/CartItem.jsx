@@ -8,7 +8,7 @@ import {setCartItemsData} from "../../../redux/NewEditor/categoryAPISlice"
 import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
 
-const CartItem = ({cartItem, cartItems, language}) => {
+const CartItem = ({cartItem, cartItems, language, isMobile}) => {
   const [feedback, setFeedback] = useState(
     cartItem.notes !== null ? cartItem.notes : ""
   )
@@ -30,7 +30,7 @@ const CartItem = ({cartItem, cartItems, language}) => {
 
   const incrementQty = useCallback(async (cartId, branchId) => {
     try {
-      await AxiosInstance.post(`/carts`, {
+      await AxiosInstance.put(`/carts`, {
         item_id: cartId,
         quantity: cartItem.quantity + 1,
         branch_id: branchId,
@@ -47,6 +47,33 @@ const CartItem = ({cartItem, cartItems, language}) => {
       console.log("error: ", error)
     }
   }, [])
+  // [[ [] ],[[  [] ]]]
+  const checkbox_options_names =
+    cartItem && cartItem?.checkbox_options !== null
+      ? cartItem?.checkbox_options
+          .map((option, key) => {
+            const namesArray =
+              language === "en"
+                ? Object.values(option?.en)
+                : Object.values(option?.ar)
+            return namesArray
+          })[0][0]
+          .map((option, idx) => option)
+      : []
+  const selection_options_names =
+    cartItem && cartItem?.selection_options !== null
+      ? cartItem?.selection_options
+          .map((option, key) => {
+            const namesArray =
+              language === "en"
+                ? Object.values(option?.en)
+                : Object.values(option?.ar)
+            return namesArray
+          })[0]
+          .map((option, idx) => ({name: option[0]}))
+      : []
+  console.log("checkbox_options name", checkbox_options_names)
+  console.log("selection_options name", selection_options_names)
 
   const decrementQty = useCallback(async (cartId, branchId) => {
     try {
@@ -112,6 +139,38 @@ const CartItem = ({cartItem, cartItems, language}) => {
       <div className='w-[72%] lg:w-[80%] flex flex-col h-full  justify-between relative'>
         <h3 className='text-lg'>
           {language === "en" ? cartItem.item.name.en : cartItem.item.name.ar}
+          {(checkbox_options_names.length > 0 ||
+            selection_options_names.length > 0) && (
+            <span>
+              <span className='mx-4'>+</span>
+              <span className='text-[15px]'>
+                ( Extras:{"  "}
+                {checkbox_options_names.length > 0 &&
+                  checkbox_options_names.map((option, i) => (
+                    <span className='font-normal' key={i}>
+                      <span>{option[0]}</span>
+                      {i < checkbox_options_names.length - 1 && (
+                        <span className='mx-3'>+</span>
+                      )}
+                    </span>
+                  ))}
+                {selection_options_names.length > 0 &&
+                  checkbox_options_names.length > 0 && (
+                    <span className='mx-3'>+</span>
+                  )}
+                {selection_options_names.length > 0 &&
+                  selection_options_names.map((option, i) => (
+                    <span key={i} className='font-normal'>
+                      <span>{option.name}</span>
+                      {i > 0 && i < checkbox_options_names.length - 1 && (
+                        <span className='mx-3'>+</span>
+                      )}
+                    </span>
+                  ))}{" "}
+                )
+              </span>
+            </span>
+          )}
         </h3>
         <p className=''>
           {t("SAR")} {cartItem.price}{" "}
@@ -128,13 +187,16 @@ const CartItem = ({cartItem, cartItems, language}) => {
           </div>
           <div
             onClick={() => handleRemoveItem(cartItem.id)}
-            className='bg-[var(--primary)] absolute top-[3rem] right-[.6rem] md:relative flex items-center justify-center cursor-pointer rounded-lg w-[40px] h-[35px]'
+            className={`bg-[var(--primary)] ${
+              isMobile ? "absolute top-[3rem] right-[.6rem]" : "relative"
+            } relative flex items-center justify-center cursor-pointer rounded-lg w-[40px] h-[35px]`}
           >
             <IoClose size={25} className='cursor-pointer' />
           </div>
         </div>
         <h3 className='font-bold'>
-          Total: SAR {cartItem.price * cartItem.quantity}
+          Total: SAR{" "}
+          {cartItem.price * cartItem.quantity + cartItem.options_price}
         </h3>
       </div>
     </div>

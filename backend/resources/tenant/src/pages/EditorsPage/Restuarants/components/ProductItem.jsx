@@ -277,6 +277,10 @@ const ProductItem = ({
       })
   }
 
+  const handleGotoCart = () => {
+    navigate("/cart")
+  }
+
   console.log("checboxItem", checkboxItems)
   console.log("radioItems", radioItems)
   console.log("selectionItems", dropdownItems)

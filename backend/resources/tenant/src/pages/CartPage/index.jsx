@@ -62,7 +62,7 @@ const CartPage = () => {
       {/* // TODO:  work on the new cart page  */}
       <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
         <CartHeader />
-        {!cartItems || cartItems.length === 0 ? (
+        {(!cartItems || cartItems.length === 0) && !isloading ? (
           <div className='h-[40vh] w-full flex items-center justify-center'>
             <div className='w-1/2 mx-auto flex flex-col items-center justify-center gap-6'>
               <h3 className='text-3xl text-center '>Your cart is Empty. </h3>

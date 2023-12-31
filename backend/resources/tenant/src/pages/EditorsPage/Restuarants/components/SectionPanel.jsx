@@ -20,7 +20,6 @@ import {
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 import {BiMinus} from "react-icons/bi"
 import {useTranslation} from "react-i18next"
-import PrimaryOriginSelect from "./PrimaryOriginSelect"
 
 const SectionPanel = () => {
   const dispatch = useDispatch()

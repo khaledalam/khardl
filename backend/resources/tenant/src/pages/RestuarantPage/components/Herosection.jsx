@@ -100,7 +100,9 @@ const Herosection = ({isMobile, categories}) => {
                             ? `url(${restaurantStyle?.banner_images[index]})`
                             : "",
                       }}
-                      className={`h-[470px] rounded-md flex items-center justify-center   shadow-md`}
+                      className={`${
+                        isMobile ? "h-[350px]" : "h-[470px]"
+                      } rounded-md flex items-center justify-center   shadow-md`}
                     ></div>
                   </SwiperSlide>
                 ))}
@@ -127,7 +129,7 @@ const Herosection = ({isMobile, categories}) => {
                 key={i}
                 active={selectedCategory.id === category.id}
                 name={category.name}
-                imgSrc={category.imgSrc}
+                imgSrc={category.photo}
                 alt={category.name}
                 hoverColor={"red"}
                 textColor={"white"}

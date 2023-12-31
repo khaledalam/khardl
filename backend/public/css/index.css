@@ -4867,6 +4867,9 @@ details.collapse summary::-webkit-details-marker {
 .\!rounded-full {
   border-radius: 9999px !important;
 }
+.\!rounded-none {
+  border-radius: 0px !important;
+}
 .rounded {
   border-radius: 0.25rem;
 }
@@ -4917,9 +4920,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .rounded-xl {
   border-radius: 0.75rem;
-}
-.\!rounded-none {
-  border-radius: 0px !important;
 }
 .rounded-b-2xl {
   border-bottom-right-radius: 1rem;
@@ -5783,6 +5783,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .capitalize {
   text-transform: capitalize;
+}
+.italic {
+  font-style: italic;
 }
 .\!leading-8 {
   line-height: 2rem !important;
@@ -6794,10 +6797,6 @@ details.collapse summary::-webkit-details-marker {
   }
 }
 @media (min-width: 768px) {
-
-  .md\:relative {
-    position: relative;
-  }
 
   .md\:w-\[440px\] {
     width: 440px;
@@ -11919,6 +11918,9 @@ details.collapse summary::-webkit-details-marker {
 .\!rounded-full {
   border-radius: 9999px !important;
 }
+.\!rounded-none {
+  border-radius: 0px !important;
+}
 .rounded {
   border-radius: 0.25rem;
 }
@@ -11969,9 +11971,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .rounded-xl {
   border-radius: 0.75rem;
-}
-.\!rounded-none {
-  border-radius: 0px !important;
 }
 .rounded-b-2xl {
   border-bottom-right-radius: 1rem;
@@ -12835,6 +12834,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .capitalize {
   text-transform: capitalize;
+}
+.italic {
+  font-style: italic;
 }
 .\!leading-8 {
   line-height: 2rem !important;
@@ -13846,10 +13848,6 @@ details.collapse summary::-webkit-details-marker {
   }
 }
 @media (min-width: 768px) {
-
-  .md\:relative {
-    position: relative;
-  }
 
   .md\:w-\[440px\] {
     width: 440px;

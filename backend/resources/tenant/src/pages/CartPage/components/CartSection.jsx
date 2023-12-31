@@ -1,9 +1,15 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import CartItem from "./CartItem"
 import {useSelector} from "react-redux"
 
 const CartSection = ({cartItems}) => {
   const language = useSelector((state) => state.languageMode.languageMode)
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    setIsMobile(isMobile)
+  }, [])
 
   return (
     <div className='border-[var(--primary)] border rounded-lg w-full laptopXL:w-[75%] mx-auto my-5'>
@@ -14,6 +20,7 @@ const CartSection = ({cartItems}) => {
             cartItem={cartItem}
             cartItems={cartItems}
             language={language}
+            isMobile={isMobile}
           />
         ))}
     </div>

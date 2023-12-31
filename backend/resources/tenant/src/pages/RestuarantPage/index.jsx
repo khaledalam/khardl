@@ -105,11 +105,7 @@ export const RestuarantHomePage = () => {
       <NavbarRestuarant />
       <Herosection isMobile={isMobile} categories={categories} />
       {/* <ProductSection alignment={"center"} categories={categories} /> */}
-      <ProductSection
-        alignment={"center"}
-        categories={categories}
-        isMobile={isMobile}
-      />
+      <ProductSection categories={categories} isMobile={isMobile} />
       <FooterRestuarant />
     </div>
   )
