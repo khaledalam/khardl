@@ -41,7 +41,7 @@ class Order extends Model
     const COMPLETED = 'completed';
     const READY = 'ready';
 
-    
+
 
     public function getCreatedAtAttribute($value)
     {
@@ -82,6 +82,10 @@ class Order extends Model
     public function scopeReady($query)
     {
         return $query->where('status', self::READY);
+    }
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('id', 'DESC');
     }
     /* End Scoped */
 

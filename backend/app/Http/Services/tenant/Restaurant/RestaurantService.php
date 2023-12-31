@@ -20,19 +20,18 @@ class RestaurantService
         $user = Auth::user();
         $branches = Branch::all();
         $orders = Order::query();
+        $pending = $this->getOrderStatusCount(clone $orders, 'pending');
+        $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
+        $completed = $this->getOrderStatusCount(clone $orders, 'completed');
+        $cancelled = $this->getOrderStatusCount(clone $orders, 'cancelled');
         $allOrders = $orders->get();
         $completedOrders = $orders->completed();
-        $totalPriceThisMonth = $this->getTotalPriceThisMonth(clone $completedOrders);
+        $totalPriceThisMonth = $this->getTotalPriceThisMonth(clone $orders);
         $total = $allOrders->count();
-        $ordersStatuses = $allOrders->groupBy('status');
-        $pending = $this->getOrderStatusCount($ordersStatuses, Order::PENDING);
-        $accepted = $this->getOrderStatusCount($ordersStatuses, Order::ACCEPTED);
-        $completed = $this->getOrderStatusCount($ordersStatuses, Order::COMPLETED);
-        $cancelled = $this->getOrderStatusCount($ordersStatuses, Order::CANCELLED);
         $dailySales = $this->getDailySales(clone $completedOrders);
-        $averageLast7DaysSales = $this->getAverageLast7DaysSales($completedOrders);
-        $profitLast7Days = $this->profitLast7Days();
-        $profitLast4Months = $this->profitLast4Months();
+        $averageLast7DaysSales = $this->getAverageLast7DaysSales($orders);
+        $profitLast7Days = $this->profitDays(7);
+        $profitLast4Months = $this->profitMonths(4);
         $percentageChange = ($averageLast7DaysSales > 0)
             ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
             : (($dailySales > 0) ? 100 : 0);
@@ -69,10 +68,10 @@ class RestaurantService
             ->take(10)
             ->get();
     }
-    private function profitLast7Days()
+    public function profitDays($count)
     {
         $chart_options = [
-            'chart_title' => 'Profit per day',
+            'chart_title' => __('messages.Profit per day'),
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Tenant\Order',
             'group_by_field' => 'created_at',
@@ -81,16 +80,16 @@ class RestaurantService
             'aggregate_field' => 'total',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
-            'filter_days' => 8,
+            'filter_days' => $count + 1,
             'chart_color' => '194, 218, 8',
             'where_raw' => 'status = "completed"'
         ];
         return new LaravelChart($chart_options);
     }
-    private function profitLast4Months()
+    public function profitMonths($count)
     {
         $chart_options = [
-            'chart_title' => 'Profit per month',
+            'chart_title' => __('messages.Profit per month'),
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Tenant\Order',
             'group_by_field' => 'created_at',
@@ -99,7 +98,7 @@ class RestaurantService
             'aggregate_field' => 'total',
             'aggregate_function' => 'sum',
             'filter_field' => 'created_at',
-            'filter_days' => 4 * 30, //Last 4 months
+            'filter_days' => $count * 30,
             'chart_color' => '0, 158, 247',
             'where_raw' => 'status = "completed"'
         ];
@@ -122,17 +121,18 @@ class RestaurantService
             ->count();
     }
 
-    private function getTotalPriceThisMonth($completedOrders)
+    public function getTotalPriceThisMonth($orders)
     {
         $currentDate = $this->getCurrentMonthAndYear();
-
-        return $completedOrders->whereYear('created_at', $currentDate['year'])
+        return $orders
+            ->completed()
+            ->whereYear('created_at', $currentDate['year'])
             ->whereMonth('created_at', $currentDate['month'])
             ->sum('total');
     }
-    private function getOrderStatusCount($ordersStatuses, $status)
+    public function getOrderStatusCount($orders, $scope)
     {
-        return $ordersStatuses->has($status) ? $ordersStatuses[$status]->count() : 0;
+        return $orders->$scope()->count();
     }
 
     private function getDailySales($completed)
@@ -140,12 +140,13 @@ class RestaurantService
         return $completed->whereDate('created_at', Carbon::today())->avg('total') ?? 0;
     }
 
-    private function getAverageLast7DaysSales($completedOrders)
+    public function getAverageLast7DaysSales($orders)
     {
         $startDate = Carbon::now()->subDays(7)->startOfDay();
         $endDate = Carbon::now()->subDays(1)->endOfDay();
 
-        return $completedOrders
+        return $orders
+            ->completed()
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get()
             ->avg('total') ?? 0;

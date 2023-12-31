@@ -400,6 +400,12 @@ return [
     "Status changed successfully"   => "تم تغير الحالة بنجاح",
     "live-chat" => "محادثه حيه",
     "show" => "عرض",
-    "webhook-url" => "رابط webhook"
+    "webhook-url" => "رابط webhook",
+    "Daily earnings"=>"الارباح اليومية",
+    "Daily orders"  => "الطلبات اليومية",
+    "SAR"   => "ريال",
+    "Sales This month"  =>"المبيعات هذا الشهر",
+    "Profit per day"    => "الربح يوميا",
+    "Profit per month"    => "الربح شهريا",
 ];
 
