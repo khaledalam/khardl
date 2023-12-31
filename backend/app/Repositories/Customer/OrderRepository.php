@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\OrderItem;
+use App\Packages\DeliveryCompanies\DeliveryCompanies;
 
 class OrderRepository
 {
@@ -23,6 +24,7 @@ class OrderRepository
     {
         DB::beginTransaction();
         try {
+            $user= $user ?? Auth::user();
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){
                 $subtotal = $cart->subTotal();
                 $delivery = DeliveryType::where('name',$request->delivery_type)->first();
@@ -30,7 +32,7 @@ class OrderRepository
                 $paymentMethod = PaymentMethod::where('name',$request->payment_method)?->first();
 
                 $order = Order::create([
-                    'user_id'=>$user?? Auth::id(),
+                    'user_id'=>$user->id,
                     'branch_id'=>$cart->branch()->id,
                     'payment_method_id'=> $paymentMethod?->id,
                     'delivery_type_id'=> $delivery->id,
@@ -49,10 +51,15 @@ class OrderRepository
                 $statusLog->status = Order::PENDING;
                 $statusLog->notes = 'Order Notes: ' . $request->order_notes;
                 $statusLog->saveOrFail();
-
+                
                 $cart->clone_to_order_items($order->id);
+
+                if($delivery->name == DeliveryType::DELIVERY) {
+                    // uncomment until webhook works
+                    // DeliveryCompanies::assign($order,$user);
+                }
                 $cart->trash();
-                // will be handled with another repo
+
                 
                 DB::commit();
                 return $this->sendResponse($order, __('The order been created successfully.'));
