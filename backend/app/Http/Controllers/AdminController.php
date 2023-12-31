@@ -369,14 +369,13 @@ class AdminController extends Controller
 
     public function deleteRestaurant($id)
     {
-
         //
         User::findOrFail($id)->delete();
 
-            Log::create([
-                'user_id' => Auth::id(),
-                'action' => 'Has deleted a restaurant with an ID of: ' . $id,
-            ]);
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'Has deleted a restaurant with an ID of: ' . $id,
+        ]);
 
         if(app()->getLocale() === 'en')
             return redirect()->back()->with('success', 'Deleted successfully.');
