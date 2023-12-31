@@ -28,13 +28,6 @@ php backend/artisan optimize:clear
 # Build frontend
 #./run-frontend-build.sh
 
-./discord.sh \
-  --webhook-url="https://discord.com/api/webhooks/1190627943832100964/lc1t2A2Y9a-7TnLlMQC55oDjPhcmdiVQCyedOESLZ5UID-8ZBNbN75kiJm-k6vMZ_LUP" \
-  --username "DeployLiveServerAlert" \
-  --avatar "https://i.imgur.com/12jyR5Q.png" \
-  --text "test deploy!"
-
-
 # Alert discord
 ./discord.sh \
   --webhook-url="https://discord.com/api/webhooks/1190627943832100964/lc1t2A2Y9a-7TnLlMQC55oDjPhcmdiVQCyedOESLZ5UID-8ZBNbN75kiJm-k6vMZ_LUP" \
