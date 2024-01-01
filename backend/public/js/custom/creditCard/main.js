@@ -1,5 +1,5 @@
 // TODO @todo change to live public key
-var tap = Tapjsli('pk_test_LSwNp8KReqHB4Mgly1PWOA7E');
+var tap = Tapjsli('pk_test_eSKQWEusGry3q1mCYOk2MoXH');
 
 var elements = tap.elements({});
 var style = {
@@ -33,22 +33,32 @@ var paymentOptions = {
 }
 //create element, pass style and payment options
 var card = elements.create('card', {style: style},paymentOptions);
+
 //mount element
 card.mount('#element-container');
 //card change event listener
 card.addEventListener('change', function(event) {
+    console.log("here")
   if(event.BIN){
-    console.log(event.BIN)
+      console.log("here 1")
+
+      console.log(event.BIN)
   }
   if(event.loaded){
-    console.log("UI loaded :"+event.loaded);
+      console.log("here 2")
+
+      console.log("UI loaded :"+event.loaded);
     console.log("current currency is :"+card.getCurrency())
   }
   var displayError = document.getElementById('error-handler');
   if (event.error) {
-    displayError.textContent = event.error.message;
+      console.log("here 3")
+
+      displayError.textContent = event.error.message;
   } else {
-    displayError.textContent = '';
+      console.log("here 4")
+
+      displayError.textContent = '';
   }
 });
 
@@ -57,7 +67,16 @@ var form = document.getElementById('form-container');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
 
-  tap.createToken(card).then(function(result) {
+    console.log("card:", card);
+
+    console.log("tap:", tap);
+
+    let token = tap.createToken(card);
+
+    console.log("token:", token);
+
+
+    token.then(function(result) {
     console.log(result);
     if (result.error) {
       // Inform the user if there was an error
@@ -77,6 +96,8 @@ form.addEventListener('submit', function(event) {
       tokenElement.textContent = result.id;
       console.log(result.id);
     }
+  }).error(e => {
+      console.log("error: ", e);
   });
 
     // var cardNumber =  document.getElementById('card-number')?.value;

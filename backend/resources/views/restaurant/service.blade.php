@@ -277,7 +277,7 @@
                                                             <!--end::Heading-->
 
                                                             <!--begin::Select-->
-                                                           
+
                                                                     <!--end::Modal dialog-->
                                                             <div class=" d-flex justify-content-between w-75 ">
                                                                         <div>
@@ -297,14 +297,59 @@
                                                                             <div class="modal-header pb-0 border-0 ">
                                                                                 <h5 class="modal-title text-center">Subscribe to the branch package</h5>
                                                                             </div>
-                                                                            <form id="form-container" method="post"  action="/charge">
-                                                                                <div id="element-container"></div>
-                                                                                <div id="error-handler" role="alert"></div>
-                                                                                <div id="success" style=" display: none;;position: relative;float: left;">
-                                                                                      Success! Your token is <span id="token"></span>
-                                                                                </div>
-                                                                                <button id="tap-btn">Submit</button>
-                                                                            </form>
+{{--                                                                            <form id="form-container">--}}
+{{--                                                                                <div id="element-container"></div>--}}
+{{--                                                                                <div id="error-handler" role="alert"></div>--}}
+{{--                                                                                <div id="success" style=" display: none;;position: relative;float: left;">--}}
+{{--                                                                                      Success! Your token is <span id="token"></span>--}}
+{{--                                                                                </div>--}}
+{{--                                                                                <button id="tap-btn">Submit</button>--}}
+{{--                                                                            </form>--}}
+
+
+                                                                        <script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.6.0/js/gosell.js"></script>
+                                                                        <div id="root"></div>
+                                                                        <p id="msg"></p>
+                                                                        <button id="submit-elements" onclick="goSell.submit()">Submit</button>
+                                                                        <script>
+                                                                            goSell.goSellElements({
+                                                                                containerID:"root",
+                                                                                gateway:{
+                                                                                    publicKey:"pk_test_eSKQWEusGry3q1mCYOk2MoXH",
+                                                                                    language:"en",
+                                                                                    supportedCurrencies: "all",
+                                                                                    supportedPaymentMethods: "all",
+                                                                                    notifications:'msg',
+                                                                                    labels:{
+                                                                                        cardNumber:"Card Number",
+                                                                                        expirationDate:"MM/YY",
+                                                                                        cvv:"CVV",
+                                                                                        cardHolder:"Name on Card",
+                                                                                        actionButton:"Pay"
+                                                                                    },
+                                                                                    style: {
+                                                                                        base: {
+                                                                                            color: '#535353',
+                                                                                            lineHeight: '18px',
+                                                                                            fontFamily: 'sans-serif',
+                                                                                            fontSmoothing: 'antialiased',
+                                                                                            fontSize: '16px',
+                                                                                            '::placeholder': {
+                                                                                                color: 'rgba(0, 0, 0, 0.26)',
+                                                                                                fontSize:'15px'
+                                                                                            }
+                                                                                        },
+                                                                                        invalid: {
+                                                                                            color: 'red',
+                                                                                            iconColor: '#fa755a '
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            });
+
+                                                                        </script>
+
+
                                                                                 <!--end:Form-->
                                                                     </div>
                                                                 </div>
@@ -710,7 +755,7 @@
         <!--end::Modal - Cancle branch-->
 
 
-      
+
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var myLink = document.getElementById("myLink");
@@ -757,10 +802,10 @@
             });
 
         </script>
-        
-        
+
+
         <!--end::Javascript-->
-        
+
         <script>
             function tapTokenHandler(token) {
                 // Insert the token ID into the form so it gets submitted to the server
