@@ -26,6 +26,7 @@ class Yeswa  extends AbstractDeliveryCompany
                 "pickup_longitude"=>  30.14,
                 "dropoff_latitude"=>  27.05,
                 "dropoff_longitude"=>  30.14,
+             
                
             ];
         }else {
@@ -46,6 +47,7 @@ class Yeswa  extends AbstractDeliveryCompany
             "dropoff_phone"=> $customer->phone,
             "dropoff_address"=> $customer->address,
             "order_amount"=> $order->total,
+            'client_id'=>$customer->id,
             "payment_method"=>  self::CORRESPOND_METHODS[$order->payment_method->name]  ,
             // nullable 
             // "dropoff_time"=> "",
