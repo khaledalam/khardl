@@ -3,6 +3,12 @@
 @section('title', __('messages.orders-add'))
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    i.required:after{
+        position: absolute!important;
+        font-size: 16px;
+    }
+</style>
 @endsection
 @section('content')
 <!--begin::Main-->
@@ -283,6 +289,7 @@
             <td>
                 <i class="bi bi-eye btn-sm btn btn-success"
                 data-bs-toggle="modal"
+                id="options_${selectedProduct.id}"
                 data-bs-target="#kt_modal_select_options_${selectedProduct.id}"></i>
             </td>
            </tr>
@@ -294,22 +301,29 @@
             return $name[1];
         }
 
-        function ModalRow(selectedProduct) {
-            let optionsHTML = '';
 
+        function ModalRow(selectedProduct) {
+            let haveRequiredFiled = false;
+            let optionsHTML = '';
+            if(!selectedProduct.checkbox_input_titles&&!selectedProduct.selection_input_titles&&!selectedProduct.dropdown_input_titles){
+                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
+                elementToRemove.remove();
+                return '';
+            }
             if (selectedProduct.checkbox_input_titles) {
                 selectedProduct.checkbox_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.checkbox_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.checkbox_input_names.forEach((option, index) => {
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `<div class="form-check mb-2">`;
-                            optionsHTML += `
-                            <label class="form-check-label">${getLangName(innerOption)}</label>
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `<div class="form-check mb-2">`;
+                        optionsHTML += `
+                            <label class="form-check-label">${getLangName(option)}</label>
                             <input class="form-check-input" type="checkbox" value="${innerIndex}" name="product_options[${selectedProduct.id}]['checkbox_input'][${index}]">
                             `;
-                            optionsHTML += `</div>`;
-                        });
+                        optionsHTML += `</div>`;
                     });
                     optionsHTML += `
                     </div>`;
@@ -317,17 +331,18 @@
             }
             if (selectedProduct.selection_input_titles) {
                 selectedProduct.selection_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.selection_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.selection_input_names.forEach((option, index) => {
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `<div class="form-check mb-2">`;
-                            optionsHTML += `
-                            <label class="form-check-label">${getLangName(innerOption)}</label>
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `<div class="form-check mb-2">`;
+                        optionsHTML += `
+                            <label class="form-check-label">${getLangName(option)}</label>
                             <input class="form-check-input" type="radio" value="${innerIndex}" name="product_options[${selectedProduct.id}]['selection_input'][${index}]">
                             `;
-                            optionsHTML += `</div>`;
-                        });
+                        optionsHTML += `</div>`;
                     });
                     optionsHTML += `
                     </div>`;
@@ -335,22 +350,27 @@
             }
             if (selectedProduct.dropdown_input_titles) {
                 selectedProduct.dropdown_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.dropdown_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.dropdown_input_names.forEach((option, index) => {
-                        optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">`;
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `
-                            <option value="${innerIndex}">${getLangName(innerOption)}</option>
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
+                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">
+                        <option>Select option</option>`;
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `
+                            <option value="${innerIndex}">${getLangName(option)}</option>
                             `;
-                        });
-                        optionsHTML += `</select>`;
                     });
+                    optionsHTML += `</select>`;
                     optionsHTML += `
                     </div>`;
                 });
             }
-
+            if(haveRequiredFiled){
+                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
+                elementToRemove.classList.add('required');
+            }
             return `
         <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -366,7 +386,7 @@
                         </div>
                     </div>
                     <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                        <span>{{ __('messages.Select options for') }} :
+                        <span>{{ __('messages.Select options for' ) }} :
                             <h6 class="d-inline">${selectedProduct.name}</h6>
                         </span>
                         ${optionsHTML}
@@ -376,7 +396,6 @@
         </div>
     `;
         }
-
         var productSelect = initializeProductSelect();
         productSelect.on('select2:select', function(e) {
             // Get the selected product data
