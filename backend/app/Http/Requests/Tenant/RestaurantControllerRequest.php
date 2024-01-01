@@ -53,14 +53,14 @@ class RestaurantControllerRequest extends FormRequest
             'text_color' => 'nullable|string',
             /* OLD */
             'logo' => [
-                Rule::when((!$restaurantStyles || !$restaurantStyles?->logo_url) && $this->logo == null, 'required|mimes:png,jpg,jpeg|max:2048')
+                Rule::when((!$restaurantStyles || !$restaurantStyles?->logo) && $this->logo == null, 'required|mimes:png,jpg,jpeg|max:2048')
             ],
             'banner_image' => [
                 Rule::when(function ($attribute) use ($restaurantStyles) {
                     if (!$restaurantStyles && $attribute->banner_type == 'one-photo' && empty($attribute->banner_image)) {
                         return true;
                     } else {
-                        if ($restaurantStyles->banner_image_url == null && $attribute->banner_type == 'one-photo' && empty($attribute->banner_image)) {
+                        if ($restaurantStyles->banner_image == null && $attribute->banner_type == 'one-photo' && empty($attribute->banner_image)) {
                             return true;
                         }
                     }
@@ -71,7 +71,7 @@ class RestaurantControllerRequest extends FormRequest
                     if (!$restaurantStyles && $attribute->banner_type == 'slider' && empty($attribute->banner_images)) {
                         return true;
                     } else {
-                        if ($restaurantStyles->banner_images_urls == null && $attribute->banner_type == 'slider' && empty($attribute->banner_images)) {
+                        if ($restaurantStyles->banner_images == null && $attribute->banner_type == 'slider' && empty($attribute->banner_images)) {
                             return true;
                         }
                     }
