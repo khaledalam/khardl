@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('msegat_id_verification')->nullable();
             $table->string('address')->nullable();
             $table->boolean("tap_verified")->default(false);
-            $table->double('lat')->nullable();
-            $table->double('lng')->nullable();
+            $table->decimal('lat', 10, 8)->nullable();
+            $table->decimal('lng', 10, 8)->nullable();
             $table->foreignIdFor(Branch::class)->nullable()->constrained()->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();

@@ -18,17 +18,20 @@ class DeliveryCompanySeeder extends Seeder
     {
         DeliveryCompany::create([
             'name'=> trans_json('Yeswa','يسوى'),
+            'coverage_km'=>10,
             'api_url'=>"http://api.yeswa.net/v1",
             'module'=> class_basename(Yeswa::class) // cannot be override 
         ]);
         DeliveryCompany::create([
             'name'=> trans_json('Cervo','سيرفو'),
             'api_url'=>"https://carvo.isoft4is.com/apis/v2",
+            'coverage_km'=>16,
             'module'=>class_basename(Cervo::class) // cannot be override 
         ]);
         DeliveryCompany::create([
             'name'=> trans_json('Street Line','ستريت لاين'),
             'api_url'=>"https://api.streetline.app/a",
+            'coverage_km'=>10,
             'module'=>class_basename(StreetLine::class) // cannot be override 
         ]);
 
