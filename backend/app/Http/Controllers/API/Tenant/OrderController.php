@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\API\Tenant;
 
 use App\Models\Tenant\Order;
-use App\Models\Tenant\OrderStatusLogs;
-use App\Repositories\API\CustomerOrderRepository;
-use Faker\Provider\id_ID\Color;
 use Illuminate\Http\Request;
+use Faker\Provider\id_ID\Color;
+use Illuminate\Validation\Rule;
 use App\Traits\APIResponseTrait;
-
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\Tenant\OrderStatusLogs;
 use App\Repositories\API\OrderRepository;
 use Illuminate\Contracts\Database\Query\Builder;
+use App\Repositories\API\CustomerOrderRepository;
+use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
-use Illuminate\Validation\Rule;
 
 
 class  OrderController extends BaseRepositoryController
@@ -80,7 +81,7 @@ class  OrderController extends BaseRepositoryController
 
         // Handle register order to all delivery companies
         if ($request->status == Order::RECEIVED_BY_RESTAURANT) {
-            $this->delivery_companies_register_order($order);
+            // dd(DeliveryCompanies::assign($order,$user));
         }
 
         if ($request->expectsJson()) {
@@ -90,17 +91,6 @@ class  OrderController extends BaseRepositoryController
         return redirect()->back()->with('success',__('Order has been updated successfully.'));
     }
 
-    private function delivery_companies_register_order(Order $order)
-    {
-
-        // @TODO
-
-//        dd($order?->user()->delivery_companies());
-
-        // Get all delivery companies that registered for this restaurant
-
-        // Send register order
-    }
-
+    
 
 }

@@ -54,10 +54,7 @@ class OrderRepository
                 
                 $cart->clone_to_order_items($order->id);
 
-                if($delivery->name == DeliveryType::DELIVERY) {
-                    // uncomment until webhook works
-                    // DeliveryCompanies::assign($order,$user);
-                }
+               
                 $cart->trash();
 
                 
