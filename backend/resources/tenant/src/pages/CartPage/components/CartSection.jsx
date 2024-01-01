@@ -4,6 +4,8 @@ import {useSelector} from "react-redux"
 
 const CartSection = ({cartItems}) => {
   const language = useSelector((state) => state.languageMode.languageMode)
+  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
+
   const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
@@ -12,10 +14,18 @@ const CartSection = ({cartItems}) => {
   }, [])
 
   return (
-    <div className='border-[var(--primary)] border rounded-lg w-full laptopXL:w-[75%] mx-auto my-5'>
+    <div
+      style={{borderColor: restuarantStyle?.categoryDetail_cart_color}}
+      className={`${
+        restuarantStyle?.categoryDetail_cart_color
+          ? ""
+          : "border-[var(--primary)]"
+      } border rounded-lg w-full laptopXL:w-[75%] mx-auto my-5`}
+    >
       {cartItems &&
         cartItems.map((cartItem) => (
           <CartItem
+            styles={restuarantStyle}
             key={cartItem.item_id}
             cartItem={cartItem}
             cartItems={cartItems}

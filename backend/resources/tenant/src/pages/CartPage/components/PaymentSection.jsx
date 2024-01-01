@@ -18,6 +18,7 @@ import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
 
 const PaymentSection = ({
+  styles,
   cartItems,
   paymentMethods,
   deliveryTypes,
@@ -117,13 +118,25 @@ const PaymentSection = ({
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
       <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Select Payment Method"}>
-            <div className='border border-[var(--primary)]'>
+          <CartColumn headerTitle={"Select Payment Method"} isRequired>
+            <div
+              style={{borderColor: styles?.categoryDetail_cart_color}}
+              className={`border ${
+                styles?.categoryDetail_cart_color
+                  ? ""
+                  : "border-[var(--primary)]"
+              }`}
+            >
               {paymentMethods &&
                 paymentMethods.map((method) => (
                   <div
                     key={method.id}
-                    className='form-control w-fulll h-[62px] flex items-center justify-center border-b border-[var(--primary)] last:border-none'
+                    style={{borderColor: styles?.categoryDetail_cart_color}}
+                    className={`form-control w-fulll h-[62px] flex items-center justify-center border-b ${
+                      styles?.categoryDetail_cart_color
+                        ? ""
+                        : "border-[var(--primary)]"
+                    }}last:border-none`}
                   >
                     <label className='label cursor-pointer w-[80%] mx-auto flex items-center justify-between '>
                       <div className='flex   w-full flex-row items-center justify-between px-3 '>
@@ -139,13 +152,14 @@ const PaymentSection = ({
                           id={"cash_delivery"}
                           type={"radio"}
                           name={"cash_delivery"}
+                          style={{}}
                           checked={
                             paymentMethods.length < 2 ||
                             method.name === paymentMethod
                           }
-                          className={` 
-                        radio 
-                       w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[var(--primary)]`}
+                          className={
+                            "radio w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[var(--primary)] "
+                          }
                           onChange={() => handlePaymentMethodChange(method)}
                         />
                       </div>
@@ -156,7 +170,7 @@ const PaymentSection = ({
           </CartColumn>
         </div>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Select Delivery Type"}>
+          <CartColumn headerTitle={"Select Delivery Type"} isRequired>
             <div className='w-full flex items-start gap-2 py-2'>
               {deliveryTypes &&
                 deliveryTypes.map((deliveryType) => (
@@ -165,7 +179,7 @@ const PaymentSection = ({
                     className={`w-1/2 h-[118px] flex items-center justify-center cursor-pointer  ${
                       activeDeliveryType === deliveryType.name.toLowerCase()
                         ? " bg-neutral-200 border border-neutral-300"
-                        : "border border-[var(--primary)]"
+                        : "border border-neutral-200"
                     }`}
                     onClick={() => handleDeliveryTypeChange(deliveryType)}
                   >
@@ -210,26 +224,37 @@ const PaymentSection = ({
       </div>
       {/* order notes */}
       <CartColumn headerTitle={"Order Notes"}>
-        <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
-          <div className='flex items-center gap-3 w-full lg:w-1/2 '>
+        <div
+          className={`w-full border ${
+            styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"
+          }}h-[80px] flex items-center justify-center mb-6`}
+        >
+          <div className='flex items-center gap-3 w-full p-3 lg:w-1/2 '>
             <div className='w-full'>
               <Feedback
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
               />
             </div>
-            <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
+            {/* <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
               <MdSend size={22} />
-            </div>
+            </div> */}
           </div>
         </div>
       </CartColumn>
       {/* address and coupon */}
       <div className='flex flex-col md:flex-row items-start gap-6'>
-        <div className='w-full lg:w-1/2 '>
-          <CartColumn headerTitle={"Address"}>
-            <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
-              <div className='flex items-center gap-3 w-full lg:w-1/2 '>
+        <div className='w-full  '>
+          <CartColumn headerTitle={"Address"} isRequired>
+            <div
+              style={{borderColor: styles?.categoryDetail_cart_color}}
+              className={`w-full border ${
+                styles?.categoryDetail_cart_color
+                  ? ""
+                  : "border-[var(--primary)]"
+              }}h-[100px] flex items-center  py-4 justify-center mb-6`}
+            >
+              <div className='flex items-center gap-3 p-3 w-full lg:w-1/2 '>
                 <div className='w-full'>
                   <Feedback
                     imgUrl={pinLocate}
@@ -239,16 +264,34 @@ const PaymentSection = ({
                     isReadOnly
                   />
                 </div>
-                <div className='w-[60px] h-[48px] border border-[var(--primary)] bg-[var(--primary)] rounded-lg flex items-center justify-center'>
+                <div
+                  style={{
+                    borderColor: styles?.categoryDetail_cart_color,
+                    backgroundColor: styles?.categoryDetail_cart_color,
+                  }}
+                  onClick={() => navigate("/dashboard#Profile")}
+                  className={` w-[60px] h-[48px] border cursor-pointer ${
+                    styles?.categoryDetail_cart_color
+                      ? ""
+                      : "border-[var(--primary)] bg-[var(--primary)]"
+                  }}  rounded-lg flex items-center justify-center`}
+                >
                   <img src={LocationIcon} alt='' />
                 </div>
               </div>
             </div>{" "}
           </CartColumn>
         </div>
-        <div className='w-full lg:w-1/2'>
+        <div className='w-full lg:w-1/2 hidden'>
           <CartColumn headerTitle={"Coupon"}>
-            <div className='w-full border border-[var(--primary)] h-[80px] flex items-center justify-center mb-6'>
+            <div
+              style={{borderColor: styles?.categoryDetail_cart_color}}
+              className={`w-full border ${
+                styles?.categoryDetail_cart_color
+                  ? ""
+                  : "border-[var(--primary)]"
+              }}h-[100px] flex items-center justify-center mb-6`}
+            >
               <div className='flex items-center gap-3 w-full lg:w-1/2 '>
                 <div className='w-full'>
                   <Feedback
@@ -268,7 +311,14 @@ const PaymentSection = ({
       <div className='w-full lg:w-1/2 mx-auto my-8'>
         <CartColumn headerTitle={"Payment Summary"}>
           <div className='p-6 flex flex-col gap-4 border border-[var(--primary)'>
-            <div className='flex flex-col gap-4 border-b pb-4 border-[var(--primary)]'>
+            <div
+              style={{borderColor: styles?.categoryDetail_cart_color}}
+              className={`flex flex-col gap-4 border-b pb-4 ${
+                styles?.categoryDetail_cart_color
+                  ? ""
+                  : "border-[var(--primary)]"
+              }}`}
+            >
               <div className='flex items-start justify-between'>
                 <h3 className='text-[16px] font-normal'>Price</h3>
                 <span className='text-[14px]'>
@@ -311,7 +361,10 @@ const PaymentSection = ({
             </div>
             <div
               onClick={handlePlaceOrder}
-              className='w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center bg-[var(--primary)]'
+              style={{backgroundColor: styles?.categoryDetail_cart_color}}
+              className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${
+                styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
+              }`}
             >
               <div className='flex items-center gap-4'>
                 <div className='w-7 h-7'>

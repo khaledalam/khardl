@@ -66,7 +66,7 @@ const Navbar = ({toggleSidebarCollapse}) => {
     inputs.banner_image_url =
       restuarantStyle?.bannerUpload === null ? restuarantStyle.banner_image : ""
     inputs.banner_images_urls =
-      restuarantStyle?.bannersUpload === null
+      restuarantStyle?.bannersUpload.length === 0
         ? restuarantStyle.banner_images
         : ""
     inputs.logo_type = restuarantStyle?.logoUpload === null ? "url" : "file"

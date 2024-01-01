@@ -8,10 +8,12 @@ import {setCartItemsData} from "../../../redux/NewEditor/categoryAPISlice"
 import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
 
-const CartItem = ({cartItem, cartItems, language, isMobile}) => {
+const CartItem = ({cartItem, cartItems, language, isMobile, styles}) => {
   const [feedback, setFeedback] = useState(
     cartItem.notes !== null ? cartItem.notes : ""
   )
+  const [qtyCount, setQtyCount] = useState(cartItem.quantity)
+
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
@@ -28,25 +30,32 @@ const CartItem = ({cartItem, cartItems, language, isMobile}) => {
     }
   }
 
-  const incrementQty = useCallback(async (cartId, branchId) => {
-    try {
-      await AxiosInstance.put(`/carts`, {
-        item_id: cartId,
-        quantity: cartItem.quantity + 1,
-        branch_id: branchId,
-        notes: feedback,
-      })
-        .then((e) => {
-          toast.success(`${t("Item quantity updated")}`)
-          console.log("successfully", e)
-        })
-        .finally(async () => {
-          await fetchCartData().then((r) => null)
-        })
-    } catch (error) {
-      console.log("error: ", error)
-    }
-  }, [])
+  const incrementQty = useCallback(
+    async (cartId, branchId, newQuantity) => {
+      setQtyCount((prev) => prev + 1)
+
+      if (newQuantity > cartItem.quantity) {
+        try {
+          await AxiosInstance.post(`/carts`, {
+            item_id: cartId,
+            quantity: newQuantity,
+            branch_id: branchId,
+            notes: feedback,
+          })
+            .then((e) => {
+              toast.success(`${t("Item quantity updated")}`)
+              console.log("successfully", e)
+            })
+            .finally(async () => {
+              await fetchCartData().then((r) => null)
+            })
+        } catch (error) {
+          console.log("error: ", error)
+        }
+      }
+    },
+    [cartItem.quantity, qtyCount]
+  )
   // [[ [] ],[[  [] ]]]
   const checkbox_options_names =
     cartItem && cartItem?.checkbox_options !== null
@@ -75,25 +84,34 @@ const CartItem = ({cartItem, cartItems, language, isMobile}) => {
   console.log("checkbox_options name", checkbox_options_names)
   console.log("selection_options name", selection_options_names)
 
-  const decrementQty = useCallback(async (cartId, branchId) => {
-    try {
-      await AxiosInstance.post(`/carts`, {
-        item_id: cartId,
-        quantity: cartItem.quantity - 1,
-        branch_id: branchId,
-        notes: feedback,
-      })
-        .then((e) => {
-          toast.success(`${t("Item quantity updated")}`)
-          console.log("successfully", e)
-        })
-        .finally(async () => {
-          await fetchCartData().then((r) => null)
-        })
-    } catch (error) {
-      console.log("error: ", error)
-    }
-  }, [])
+  const decrementQty = useCallback(
+    async (cartId, branchId, newQuantity) => {
+      if (qtyCount > 1) {
+        setQtyCount((prev) => prev - 1)
+      }
+
+      if (newQuantity < cartItem.quantity) {
+        try {
+          await AxiosInstance.post(`/carts`, {
+            item_id: cartId,
+            quantity: newQuantity,
+            branch_id: branchId,
+            notes: feedback,
+          })
+            .then((e) => {
+              toast.success(`${t("Item quantity updated")}`)
+              console.log("successfully", e)
+            })
+            .finally(async () => {
+              await fetchCartData().then((r) => null)
+            })
+        } catch (error) {
+          console.log("error: ", error)
+        }
+      }
+    },
+    [cartItem.quantity, qtyCount]
+  )
 
   const handleRemoveItem = async (cartItemId) => {
     try {
@@ -123,14 +141,22 @@ const CartItem = ({cartItem, cartItems, language, isMobile}) => {
             <BiMinusCircle
               size={25}
               onClick={() =>
-                decrementQty(cartItem.item_id, cartItem.item.branch_id)
+                decrementQty(
+                  cartItem.item_id,
+                  cartItem.item.branch_id,
+                  qtyCount
+                )
               }
             />
             <span>{cartItem.quantity}</span>
             <IoAddCircleOutline
               size={25}
               onClick={() =>
-                incrementQty(cartItem.item_id, cartItem.item.branch_id)
+                incrementQty(
+                  cartItem.item_id,
+                  cartItem.item.branch_id,
+                  qtyCount
+                )
               }
             />
           </div>
@@ -186,8 +212,13 @@ const CartItem = ({cartItem, cartItems, language, isMobile}) => {
             />
           </div>
           <div
+            style={{
+              backgroundColor: styles?.categoryDetail_cart_color,
+            }}
             onClick={() => handleRemoveItem(cartItem.id)}
-            className={`bg-[var(--primary)] ${
+            className={` ${
+              styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
+            } ${
               isMobile ? "absolute top-[3rem] right-[.6rem]" : "relative"
             } relative flex items-center justify-center cursor-pointer rounded-lg w-[40px] h-[35px]`}
           >

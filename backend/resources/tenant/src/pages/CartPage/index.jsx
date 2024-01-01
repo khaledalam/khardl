@@ -9,12 +9,14 @@ import {useDispatch, useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
 import {toast} from "react-toastify"
 import {setCartItemsData} from "../../redux/NewEditor/categoryAPISlice"
+import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
 
 const CartPage = () => {
   const [isloading, setIsLoading] = useState(false)
   const [paymentMethodsData, setPaymentMethodsData] = useState(null)
   const [address, setAddress] = useState(null)
   const [deliveryTypesData, setDeliveryTypesData] = useState(null)
+  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -44,8 +46,20 @@ const CartPage = () => {
     }
   }
 
+  const fetchResStyleData = async () => {
+    try {
+      AxiosInstance.get(`restaurant-style`).then((response) =>
+        dispatch(changeRestuarantEditorStyle(response.data?.data))
+      )
+    } catch (error) {
+      // toast.error(`${t('Failed to send verification code')}`)
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchCartData().then((r) => null)
+    fetchResStyleData().then(() => null)
   }, [])
 
   const handleValidateCoupon = async () => {}
@@ -61,7 +75,7 @@ const CartPage = () => {
     <div className='w-[98%] mx-auto mt-14'>
       {/* // TODO:  work on the new cart page  */}
       <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
-        <CartHeader />
+        <CartHeader styles={restuarantStyle} />
         {(!cartItems || cartItems.length === 0) && !isloading ? (
           <div className='h-[40vh] w-full flex items-center justify-center'>
             <div className='w-1/2 mx-auto flex flex-col items-center justify-center gap-6'>
@@ -78,6 +92,7 @@ const CartPage = () => {
           <Fragment>
             <CartSection cartItems={cartItems} />
             <PaymentSection
+              styles={restuarantStyle}
               paymentMethods={paymentMethodsData}
               deliveryTypes={deliveryTypesData}
               cartItems={cartItems}

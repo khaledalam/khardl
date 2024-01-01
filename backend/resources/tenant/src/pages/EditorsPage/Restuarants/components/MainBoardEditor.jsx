@@ -125,6 +125,7 @@ const MainBoardEditor = ({categories}) => {
   }
   const clearBanner = () => {
     setUploadSingleBanner(null)
+    dispatch(setBannerUpload(null))
   }
 
   console.log("bannner shape", banner_shape)
