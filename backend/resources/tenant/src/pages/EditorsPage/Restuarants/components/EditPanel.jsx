@@ -171,6 +171,16 @@ const EditPanel = () => {
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              {t("page")} {t("Banner")}
+            </h3>
+            <ColorPallete
+              modalId={"page_banner"}
+              color={banner_background_color}
+              handleColorChange={(color) => dispatch(bannerBgColor(color))}
+            />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
               {t("Product Background")}
             </h3>
             <ColorPallete
@@ -179,16 +189,6 @@ const EditPanel = () => {
               handleColorChange={(color) =>
                 dispatch(productBackgroundColor(color))
               }
-            />
-          </div>
-          <div className='flex w-full justify-between items-center'>
-            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              {t("page")} {t("Banner")}
-            </h3>
-            <ColorPallete
-              modalId={"page_banner"}
-              color={banner_background_color}
-              handleColorChange={(color) => dispatch(bannerBgColor(color))}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
