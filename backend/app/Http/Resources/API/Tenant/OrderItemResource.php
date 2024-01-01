@@ -32,12 +32,14 @@ class OrderItemResource extends JsonResource
         if ($request->has('item')) {
             $data['item'] = new ItemResource($this->item);
         }
+        
         return $data;
     }
     public function slice_options($data){
-        $lang = (app()->getLocale() == 'ar')?0:1;
-        return array_map(function ($item) use($lang){
-            return array_slice($item, $lang, 1);
+        if(!$data) return null;
+        $locale = app()->getLocale();
+        return array_map(function ($item)use($locale){
+            return $item[$locale];
         }, $data);
     }
 }

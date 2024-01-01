@@ -16,8 +16,9 @@ class BranchController extends Controller
 
    public function updateDelivery($branch,Request $request){
         $request->validate([
-            'delivery_availability' => 'required_without_all:preparation_time_delivery|boolean',
-            'preparation_time_delivery'=>'required_without_all:delivery_availability|date_format:"H:i","H:i:s"'
+            'delivery_availability' => 'required_without_all:preparation_time_delivery,pickup_availability|boolean',
+            'pickup_availability' => 'required_without_all:delivery_availability,preparation_time_delivery|boolean',
+            'preparation_time_delivery'=>'required_without_all:delivery_availability,pickup_availability|date_format:"H:i","H:i:s"'
         ]);
         $user = Auth::user();
         $branch = Branch::where('id',$branch)
@@ -25,6 +26,9 @@ class BranchController extends Controller
         if ($request->has('delivery_availability')) {
             $updateData['delivery_availability'] = $request->input('delivery_availability');
         }
+       if ($request->has('pickup_availability')) {
+           $updateData['pickup_availability'] = $request->input('pickup_availability');
+       }
         if ($request->has('preparation_time_delivery')) {
             $updateData['preparation_time_delivery'] = $request->input('preparation_time_delivery');
         }
@@ -41,7 +45,8 @@ class BranchController extends Controller
         return response()->json([
             'branch_id' => $user->branch->id,
             'preparation_time_delivery' => $branch->preparation_time_delivery,
-            'availability' => $branch->delivery_availability
+            'availability' => $branch->delivery_availability,
+            'pickup' => $branch->pickup_availability,
         ]);
 
     }

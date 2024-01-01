@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('phone');
+            $table->string('address');
             $table->double('lat', 8, 2);
             $table->double('lng', 8, 2);
             $table->time('monday_open');
@@ -47,7 +49,8 @@ return new class extends Migration
             $table->boolean('is_primary')->default(false);
 
             $table->boolean('delivery_availability')->default(false);
-            $table->time('preparation_time_delivery')->nullable();
+            $table->boolean('pickup_availability')->default(true);
+            $table->time('preparation_time_delivery')->default('00:30');
 
             $table->timestamps();
 

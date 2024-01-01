@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
-use App\Http\Services\tenant\Restaurant\RestaurantService;
 use App\Models\Tenant\Item;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
@@ -12,6 +10,7 @@ use App\Models\Tenant\Branch;
 use App\Models\Tenant\Setting;
 use Illuminate\Support\Carbon;
 use App\Models\Tenant\Category;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\PaymentMethod;
@@ -20,18 +19,22 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\OrderStatusLogs;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
 use App\Models\Subscription;
+use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
+use App\Http\Services\tenant\Restaurant\RestaurantService;
 
 class RestaurantController extends BaseController
 {
     public function __construct(
         private RestaurantService $restaurantService
       ) {
-      }
+    }
     public function index(){
+
         return $this->restaurantService->index();
     }
 
@@ -42,7 +45,7 @@ class RestaurantController extends BaseController
         $subscription = tenancy()->central(function(){
             return Subscription::first();
         });
- 
+
         return view('restaurant.service',
             compact('user', 'branches','subscription'));
     }
@@ -60,14 +63,6 @@ class RestaurantController extends BaseController
         $user = Auth::user();
 
         return view('restaurant.promotions',
-            compact('user'));
-    }
-
-    public function customers_data(){
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-
-        return view('restaurant.customers_data',
             compact('user'));
     }
 
@@ -212,50 +207,68 @@ class RestaurantController extends BaseController
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'phone' => 'required|string',
+            'address' => 'required|string',
             'location' => 'required',
             'copy_menu' => 'required',
-            'saturday_open' => 'required|date_format:H:i',
-            'saturday_close' => 'required|date_format:H:i|after:saturday_open',
-            'sunday_open' => 'required|date_format:H:i',
-            'sunday_close' => 'required|date_format:H:i|after:sunday_open',
-            'monday_open' => 'required|date_format:H:i',
-            'monday_close' => 'required|date_format:H:i|after:monday_open',
-            'tuesday_open' => 'required|date_format:H:i',
-            'tuesday_close' => 'required|date_format:H:i|after:tuesday_open',
-            'wednesday_open' => 'required|date_format:H:i',
-            'wednesday_close' => 'required|date_format:H:i|after:wednesday_open',
-            'thursday_open' => 'required|date_format:H:i',
-            'thursday_close' => 'required|date_format:H:i|after:thursday_open',
-            'friday_open' => 'required|date_format:H:i',
-            'friday_close' => 'required|date_format:H:i|after:friday_open',
+            'normal_from' => [ Rule::when($request->hours_option == 'normal','date_format:H:i')],
+            'normal_to' => [ Rule::when($request->hours_option == 'normal','date_format:H:i|after:normal_from')],
+            'saturday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'saturday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:saturday_open')],
+            'sunday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'sunday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:sunday_open')],
+            'monday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'monday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:monday_open')],
+            'tuesday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'tuesday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:tuesday_open')],
+            'wednesday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'wednesday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:wednesday_open')],
+            'thursday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'thursday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:thursday_open')],
+            'friday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
+            'friday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:friday_open')],
         ]);
-
 
         list($lat, $lng) = explode(' ', $validatedData['location']);
 
         $branchesExist = DB::table('branches')->where('is_primary',1)->exists();
 
+        $time = function($time,$open = true)use($request){
+            if($request->hours_option == 'normal'){
+                if($open)
+                    return  Carbon::createFromFormat('H:i', $request->input('normal_from'))->format('H:i');
+                else
+                    return  Carbon::createFromFormat('H:i', $request->input('normal_to'))->format('H:i');
+            }else {
+                return  Carbon::createFromFormat('H:i', $time)->format('H:i');
+            }
+        };
+
         $newBranchId = DB::table('branches')->insertGetId([
             'name' => $validatedData['name'],
+            'phone' => $validatedData['phone'],
+            'address'=> $validatedData['address'],
             'lat' => (float) $lat,
             'lng' => (float) $lng,
+
             'is_primary' => !$branchesExist,
-            'saturday_open' => Carbon::createFromFormat('H:i', $request->input('saturday_open'))->format('H:i'),
-            'saturday_close' => Carbon::createFromFormat('H:i', $request->input('saturday_close'))->format('H:i'),
-            'sunday_open' => Carbon::createFromFormat('H:i', $request->input('sunday_open'))->format('H:i'),
-            'sunday_close' => Carbon::createFromFormat('H:i', $request->input('sunday_close'))->format('H:i'),
-            'monday_open' => Carbon::createFromFormat('H:i', $request->input('monday_open'))->format('H:i'),
-            'monday_close' => Carbon::createFromFormat('H:i', $request->input('monday_close'))->format('H:i'),
-            'tuesday_open' => Carbon::createFromFormat('H:i', $request->input('tuesday_open'))->format('H:i'),
-            'tuesday_close' => Carbon::createFromFormat('H:i', $request->input('tuesday_close'))->format('H:i'),
-            'wednesday_open' => Carbon::createFromFormat('H:i', $request->input('wednesday_open'))->format('H:i'),
-            'wednesday_close' => Carbon::createFromFormat('H:i', $request->input('wednesday_close'))->format('H:i'),
-            'thursday_open' => Carbon::createFromFormat('H:i', $request->input('thursday_open'))->format('H:i'),
-            'thursday_close' => Carbon::createFromFormat('H:i', $request->input('thursday_close'))->format('H:i'),
-            'friday_open' => Carbon::createFromFormat('H:i', $request->input('friday_open'))->format('H:i'),
-            'friday_close' => Carbon::createFromFormat('H:i', $request->input('friday_close'))->format('H:i'),
+            'saturday_open' => $time( $request->input('saturday_open')),
+            'saturday_close' => $time( $request->input('saturday_close'),false),
+            'sunday_open' =>$time( $request->input('sunday_open')),
+            'sunday_close' =>$time( $request->input('sunday_close'),false),
+            'monday_open' =>$time( $request->input('monday_open')),
+            'monday_close' => $time( $request->input('monday_close'),false),
+            'tuesday_open' =>$time( $request->input('tuesday_open')),
+            'tuesday_close' => $time( $request->input('tuesday_close'),false),
+            'wednesday_open' => $time( $request->input('wednesday_open')),
+            'wednesday_close' => $time( $request->input('wednesday_close'),false),
+            'thursday_open' =>$time( $request->input('thursday_open')),
+            'thursday_close' =>$time( $request->input('thursday_close'),false),
+            'friday_open' => $time( $request->input('friday_open')),
+            'friday_close' => $time( $request->input('friday_close'),false),
         ]);
 
         if ($validatedData['copy_menu'] != "None") {
@@ -278,11 +291,11 @@ class RestaurantController extends BaseController
                     Item::create([
                         'branch_id' => $newBranchId,
                         'category_id' => $newCategoryId,
-                        // 'name' => $item->name,
                         'photo' => tenant_asset($newFilename),
                         'price' => $item->price,
                         'calories' => $item->calories,
-                        'description' => $item->description,
+                        'name' => $item->name,
+                        'description' => $item->description ?? null,
                         'checkbox_required' => $item->checkbox_required,
                         'checkbox_input_titles' => $item->checkbox_input_titles,
                         'checkbox_input_maximum_choices' => $item->checkbox_input_maximum_choices,
@@ -428,9 +441,10 @@ class RestaurantController extends BaseController
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
 
-        $selectedCategory =Category::where('id', $id)->where('branch_id', $branchId)->first();
-        $categories = Category::where('id', $id)->where('branch_id', $branchId)->get();
-
+        $categories = Category::where('branch_id', $branchId)
+        ->orderByRaw("id = $id DESC")
+        ->get();
+        $selectedCategory = $categories->where('id',$id)->first();
         $items = Item::
         where('user_id', $user->id)
         ->where('category_id', $selectedCategory->id)
@@ -533,18 +547,19 @@ class RestaurantController extends BaseController
                     'photo' => tenant_asset('items/'.$filename),
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
-                    'description' =>trans_json( $request->input('description_en'), $request->input('description_ar')),
+                    'name' =>trans_json( $request->input('item_name_en'), $request->input('item_name_ar')),
+                    'description' =>($request->input('description_en'))?trans_json( $request->input('description_en'), $request->input('description_ar')):null,
                     'checkbox_required' =>( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
                     'checkbox_input_titles' =>($request->checkboxInputTitleEn)?array_map(null, $request->checkboxInputTitleEn,  $request->checkboxInputTitleAr):null,
                     'checkbox_input_maximum_choices' => $request->input('checkboxInputMaximumChoice'),
                     'checkbox_input_names' => $this->processOptions($request, 'checkboxInputNameEn', 'checkboxInputNameAr'),
                     'checkbox_input_prices' => $request->input('checkboxInputPrice') ? array_values($request->input('checkboxInputPrice')) : null,
-                    'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
+                    'selection_required' => $request->input('selection_required')?array_values( $request->input('selection_required')):null,
                     'selection_input_names' => $this->processOptions($request, 'selectionInputNameEn', 'selectionInputNameAr'),
                     'selection_input_prices' => $request->input('selectionInputPrice') ? array_values($request->input('selectionInputPrice')) : null,
-                    'selection_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->selectionInputTitleEn,  $request->selectionInputTitleAr):null,
+                    'selection_input_titles' =>(isset($request->selectionInputTitleEn))?array_map(null, $request->selectionInputTitleEn,  $request->selectionInputTitleAr):null,
                     'dropdown_required' => ( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
-                    'dropdown_input_titles' =>($request->selectionInputTitleEn)?array_map(null, $request->dropdownInputTitleEn,  $request->dropdownInputTitleAr):null,
+                    'dropdown_input_titles' =>(isset($request->dropdownInputTitleEn))?array_map(null, $request->dropdownInputTitleEn,  $request->dropdownInputTitleAr):null,
                     'dropdown_input_names' => $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr'),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,

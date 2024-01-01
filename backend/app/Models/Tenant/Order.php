@@ -41,6 +41,8 @@ class Order extends Model
     const COMPLETED = 'completed';
     const READY = 'ready';
 
+
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
@@ -80,6 +82,10 @@ class Order extends Model
     public function scopeReady($query)
     {
         return $query->where('status', self::READY);
+    }
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('id', 'DESC');
     }
     /* End Scoped */
 

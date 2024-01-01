@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
+use App\Jobs\SendDeniedEmailJob;
+use App\Models\CentralSetting;
+use App\Models\Tenant\Setting as TenantSettings;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use Carbon\Carbon;
@@ -16,8 +20,6 @@ use App\Mail\ApprovedRestaurant;
 use App\Models\User;
 use App\Models\Log;
 use App\Models\Promoter;
-use App\Models\Tenant\RestaurantStyle;
-use App\Models\Tenant\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,7 +43,7 @@ class AdminController extends Controller
 
         foreach ($restaurantsAll as $restaurant) {
             $restaurant->run(static function ($tenant) use (&$restaurantsLive, &$customers) {
-                $setting = Tenant\Setting::first();
+                $setting = TenantSettings::first();
                 if ($setting->is_live) {
                     $restaurantsLive ++;
                 }
@@ -78,8 +80,6 @@ class AdminController extends Controller
 
         return view('admin.revenue', compact('user'));
     }
-
-
 
     public function promoters(){
 
@@ -189,7 +189,6 @@ class AdminController extends Controller
             return redirect()->route('admin.user-management')->with('success', 'تمت إضافة المسؤول بنجاح');
     }
 
-
     public function profile()
     {
         $user = Auth::user();
@@ -279,37 +278,15 @@ class AdminController extends Controller
         return view('admin.restaraunts', compact('restaurants', 'user'));
     }
 
-    public function viewRestaurant($id){
-
-        $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
-        $logo =null;
-        $is_live= false;
-
-        $restaurant->run(static function($restaurant)use(&$logo,&$is_live){
-            $info = $restaurant->info(false);
-            $logo = $info['logo'];
-            $is_live = $info['is_live'];
-        });
-
-        $owner =  $restaurant->user;
-        $widget = 'overview';
-        $user = Auth::user();
-        // if($restaurant->role == 0){
-        //     return view('admin.view-restaurant', compact('restaurant'));
-        // }else{
-        //     return abort(404);
-        // }
-        return view('admin.view-restaurant', compact('restaurant','widget','user','logo','is_live','owner'));
-
-    }
 
     public function activateRestaurant(Tenant $restaurant){
+
         $error = false;
         $restaurant->run(static function() use (&$error){
-            if (Setting::first()->is_live) {
+            if (TenantSettings::first()->is_live) {
                 $error = true;
             } else {
-                Setting::first()->update(['is_live' => true]);
+                TenantSettings::first()->update(['is_live' => true]);
             }
         });
 
@@ -317,9 +294,7 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Restaurant is already approved');
         }
 
-        Mail::to($restaurant->user->email)->send(new ApprovedRestaurant($restaurant->user,$restaurant));
-
-//        Mail::to($restaurant->user->email)->send(new SendApprovedRestaurantEmailJob(new ApprovedRestaurant($restaurant->user, $restaurant)));
+        SendApprovedRestaurantEmailJob::dispatch($restaurant);
 
         Log::create([
             'user_id' => Auth::id(),
@@ -330,54 +305,19 @@ class AdminController extends Controller
 
     }
 
-    public function viewRestaurantOrders( $id){
 
-        $restaurant = Tenant::findOrFail($id);
-        $logo =null;
-        $is_live= false;
-        $orders = [];
-        $restaurant->run(static function($restaurant)use(&$logo,&$is_live,&$orders){
-            $info = $restaurant->info(false);
-            $logo = $info['logo'];
-            $is_live = $info['is_live'];
-            $orders = $restaurant->orders(false);
-        });
-        $owner =  $restaurant->user;
-        $user = Auth::user();
-        $widget = 'orders';
 
-        return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live','logo'));
-    }
-    public function viewRestaurantCustomers( $id){
 
-        $restaurant = Tenant::findOrFail($id);
-        $is_live = false;
-        $logo = null;
-
-        $customers =[];
-        $restaurant->run(static function($restaurant)use(&$logo,&$is_live,&$customers){
-            $info = $restaurant->info(false);
-            $logo = $info['logo'];
-            $is_live = $info['is_live'];
-            $customers = $restaurant->customers(false);
-        });
-        $owner =  $restaurant->user;
-        $user = Auth::user();
-        $widget = 'customers';
-
-        return view('admin.view-restaurant-customers', compact('user','widget','owner','logo','restaurant', 'customers','is_live'));
-    }
 
     public function deleteRestaurant($id)
     {
-
         //
         User::findOrFail($id)->delete();
 
-            Log::create([
-                'user_id' => Auth::id(),
-                'action' => 'Has deleted a restaurant with an ID of: ' . $id,
-            ]);
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'Has deleted a restaurant with an ID of: ' . $id,
+        ]);
 
         if(app()->getLocale() === 'en')
             return redirect()->back()->with('success', 'Deleted successfully.');
@@ -442,7 +382,33 @@ class AdminController extends Controller
     public function settings()
     {
         $user = Auth::user();
-        return view('admin.settings', compact('user'));
+
+        $settings = CentralSetting::first();
+
+        $live_chat_enabled = $settings?->live_chat_enabled;
+        $webhook_url = $settings?->webhook_url;
+
+        return view('admin.settings', compact('user', 'live_chat_enabled', 'webhook_url'));
+    }
+
+    public function saveSettings(Request $request)
+    {
+        $settings = CentralSetting::first();
+
+        $settings->live_chat_enabled = strtolower($request->live_chat_enabled) == 'on';
+        $settings->webhook_url = $request->webhook_url;
+        $settings->save();
+
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => 'Update platform central settings',
+            'metadata' => json_encode($request->all())
+        ]);
+
+        if(app()->getLocale() === 'en')
+            return redirect()->back()->with('success', 'Save settings successfully.');
+        else
+            return redirect()->back()->with('success', "حفظ الاعدادات بنجاح");
     }
 
     public function userManagement()
@@ -455,6 +421,7 @@ class AdminController extends Controller
         $user = Auth::user();
         return view('admin.user-management', compact('user', 'admins'));
     }
+
     public function restaurantOwnerManagement()
     {
         $admins = User::whereHas('roles',function($q){
@@ -498,7 +465,6 @@ class AdminController extends Controller
 
         return view('admin.logs', compact('user', 'logs', 'owners'));
     }
-
 
     public function updateUserPermissions(Request $request, $userId){
 
@@ -579,7 +545,8 @@ class AdminController extends Controller
             $user->isApproved = 1;
             $user->save();
         }
-        Mail::to($user->email)->send(new ApprovedEmail($user));
+
+        SendApprovedEmailJob::dispatch($user);
 
         $loggedUser = Auth::user();
 
@@ -624,7 +591,7 @@ class AdminController extends Controller
             $user->save();
         }
 
-        Mail::to($user->email)->queue(new DeniedEmail($user, $selectedOption));
+        SendDeniedEmailJob::dispatch($user, $selectedOption);
 
         Log::create([
             'user_id' => Auth::id(),
@@ -701,6 +668,7 @@ class AdminController extends Controller
         }
 
     }
+
     public function toggleStatus(User $user)
     {
         // Toggle the user status

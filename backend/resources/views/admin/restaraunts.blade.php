@@ -127,7 +127,7 @@
                     <div class="card-body d-flex flex-center flex-column p-9 pt-3">
 
                         <!--begin::Name-->
-                        <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
+                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
                             {{ $restaurant?->restaurant_name }}
                             @if($restaurant?->is_live())
                             <span class="badge badge-light-success fw-bolder">{{ __('messages.live')}}</span>
@@ -173,7 +173,7 @@
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="menu-link px-3">{{ __('messages.view')}}</a>
+                                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="menu-link px-3">{{ __('messages.view')}}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
@@ -382,7 +382,7 @@
                       <!--begin::Info-->
 
                       <div class="d-flex flex-column justify-content-center">
-                        <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
+                        <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="mb-1 text-gray-800 text-hover-primary">{{ $restaurant->restaurant_name }}</a>
                         <div class="fw-bold fs-6 text-gray-400">{{ $restaurant->email }}</div>
                       </div>
                       <!--end::Info-->
@@ -413,7 +413,7 @@
                                                           <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                               <!--begin::Menu item-->
                                                               <div class="menu-item px-3">
-                                                                  <a href="{{ route('admin.view-restaurants', ['id' => $restaurant->id]) }}" class="menu-link px-3">{{ __('messages.view')}}</a>
+                                                                  <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="menu-link px-3">{{ __('messages.view')}}</a>
                                                               </div>
                                                               <!--end::Menu item-->
                                                               <!--begin::Menu item-->

@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
             'first_name' => "khardl",
             'last_name' => "admin",
             'email' => "khardl@admin.com",
+            'phone'=>'966999999999',
             'email_verified_at' => now(),
             'status'=> 'active',
             'address' => 'test address',

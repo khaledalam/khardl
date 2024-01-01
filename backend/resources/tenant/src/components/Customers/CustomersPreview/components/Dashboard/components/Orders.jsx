@@ -64,7 +64,7 @@ function Orders() {
                         style={{ backgroundImage: `url(${row.original?.items[0]?.item?.photo})`, borderRadius: shapeImageShape }}>
                     </div>
                     <div className={`truncate w-[4rem] ${Language == "en" ? 'rtl' : 'ltr'}`}>
-                        {row.original?.items[0]?.item?.description} {row.original?.items?.length > 1 ? <span><br />{t('and')} {row.original?.items?.length - 1} {t('other products')}</span> : null}
+                        {row.original?.items[0]?.item?.name} {row.original?.items?.length > 1 ? <span><br />{t('and')} {row.original?.items?.length - 1} {t('other products')}</span> : null}
                     </div>
                 </div>
             ),

@@ -59,7 +59,7 @@ class OrderRequest extends FormRequest
             }
             $cart->items()->map(function($cart_item)use($validator){
                 if(!$cart_item->item->availability){
-                    $validator->errors()->add('cart', __(':name is not available',['name'=>$cart_item->item->description]));
+                    $validator->errors()->add('cart', __(':name is not available',['name'=>$cart_item->item->name]));
                     return ;
                 }
             });

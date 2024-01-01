@@ -10,13 +10,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Branch extends Model
 {
     // use HasTranslations;
-
+    // TODO @todo soft deletes
     protected $table = 'branches';
 
     protected $fillable = [
         'name',
         'lat',
         'lng',
+        'phone',
+        'address',
         'is_primary',
         'monday_open',
         'monday_close',
@@ -40,6 +42,7 @@ class Branch extends Model
         'sunday_close',
         'sunday_closed',
         'delivery_availability',
+        'pickup_availability',
         'preparation_time_delivery'
     ];
 
@@ -54,13 +57,13 @@ class Branch extends Model
     public function payment_methods(){
         return $this->belongsToMany(PaymentMethod::class,'branches_payment_methods');
     }
-  
+
     public function orders(){
         return $this->belongsToMany(Order::class);
     }
     public function delivery_types(){
         return $this->belongsToMany(DeliveryType::class,'branches_delivery_types');
     }
-  
+
 
 }

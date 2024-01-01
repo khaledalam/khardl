@@ -5,15 +5,16 @@ namespace App\Repositories\Customer;
 
 use App\Models\Tenant\Cart;
 use App\Models\Tenant\Item;
-use App\Models\Tenant\CartItem;
 use App\Models\Tenant\Setting;
+use App\Models\Tenant\CartItem;
+use App\Traits\APIResponseTrait;
+use Illuminate\Http\JsonResponse;
+use App\Models\Tenant\DeliveryType;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
-use App\Models\Tenant\DeliveryType;
-use App\Models\Tenant\PaymentMethod;
-use App\Traits\APIResponseTrait;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\Tenant\Customer\UpdateItemCartRequest;
 
 class CartRepository
 {
@@ -22,10 +23,10 @@ class CartRepository
     const VAT_PERCENTAGE = 15;
     use APIResponseTrait;
 
-    public  function initiate()
+    public  function initiate($user = null)
     {
         $this->cart = Cart::query()->firstOrCreate([
-            'user_id' => Auth::id(),
+            'user_id' => $user?? Auth::id(),
         ]);
        return $this;
     }
@@ -39,16 +40,17 @@ class CartRepository
             return $this->sendError('Fail', __('Cannot add item from different branch.'));
         }
         $item = Item::findOrFail($request->item_id);
-        $this->createCartItem($item, $request->validated());
+        $this->createCartItem($item, $request->all());
         return $this->sendResponse(null, __('The meal has been added successfully.'));
     }
-    public function update($request)
+    public function update(CartItem $cartItem,UpdateItemCartRequest $request)
     {
-        return true;
+        $this->updateCartItem($cartItem, $request->all());
+        return $this->sendResponse(null, __('The meal has been updated successfully.'));
     }
 
     public function createCartItem($item,$request):CartItem
-    {   
+    {
         $checkbox_options = null;
         $selection_options = null;
         $dropdown_options = null;
@@ -62,15 +64,19 @@ class CartRepository
         if($request['selectedDropdown'] ?? false){
             $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
-       
+
+
         return CartItem::updateOrCreate([
             'item_id' => $item->id,
+            'checkbox_options'=>$checkbox_options,
+            'selection_options'=>$selection_options,
+            'dropdown_options'=>$dropdown_options,
         ],[
             'cart_id' => $this->cart->id,
             'price' =>$item->price,
             'total' =>($item->price + $options_price) * $request['quantity'] ,
             'quantity' => $request['quantity'],
-            'notes' => $request['notes'],
+            'notes' => $request['notes'] ?? null,
             'options_price'=>$options_price,
             'checkbox_options'=>$checkbox_options,
             'selection_options'=>$selection_options,
@@ -81,12 +87,12 @@ class CartRepository
         $totalPrice = 0;
         foreach($options as $i=>$option){
             foreach($option as $j=>$sub_option){
-                $updatedOptions [$i][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$j][0],$item->checkbox_input_prices[$i][$j]];
-                $updatedOptions [$i][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$j][1],$item->checkbox_input_prices[$i][$j]];
-           
+                $updatedOptions [$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$j][0],$item->checkbox_input_prices[$i][$j]];
+                $updatedOptions [$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$j][1],$item->checkbox_input_prices[$i][$j]];
+
                 $totalPrice += (float) $item->checkbox_input_prices[$i][$j];
-            }   
-        } 
+            }
+        }
         return  $totalPrice;
     }
     public function loopingTroughSelectionOptions($item,$options,&$updatedOptions){
@@ -94,29 +100,30 @@ class CartRepository
         foreach($options as $i=>$option){
             if($option)
                 foreach($option as $j=>$sub_option){
-                    $updatedOptions [$i][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$j][0],$item->selection_input_prices[$i][$j]];
-                    $updatedOptions [$i][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$j][1],$item->selection_input_prices[$i][$j]];
+                    $updatedOptions [$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$j][0],$item->selection_input_prices[$i][$j]];
+                    $updatedOptions [$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$j][1],$item->selection_input_prices[$i][$j]];
 
                     $totalPrice += (float) $item->selection_input_prices[$i][$j];
-                }   
-        } 
+                }
+        }
         return  $totalPrice;
     }
     public function loopingTroughDropdownOptions($item,$options,&$updatedOptions){
         foreach($options as $i=>$option){
             if($option)
                 foreach($option as $j=>$sub_option){
-                    $updatedOptions [$i][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$j][0];
-                    $updatedOptions [$i][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$j][1];
+                    $updatedOptions [$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$j][0];
+                    $updatedOptions [$i]['ar'][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$j][1];
 
-                }   
-        } 
+                }
+        }
     }
     public function updateCartItem(CartItem $cartItem, $request)
     {
         return $cartItem->update([
-            'price'     => $cartItem->item->price,
-            'quantity'  => $request->quantity,
+            'notes'     => $request['notes'] ?? '',
+            'quantity'  => $request['quantity'],
+            'total' =>($cartItem->item->price + $cartItem->options_price) * $request['quantity'] ,
         ]);
     }
 
@@ -130,8 +137,9 @@ class CartRepository
     }
     public function remove($id): JsonResponse
     {
+
         $this->cart->items()
-            ->where('item_id', $id)
+            ->where('id', $id)
             ->delete();
         return $this->sendResponse(null, __('The meal has been removed successfully.'));
     }

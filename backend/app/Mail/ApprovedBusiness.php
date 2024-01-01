@@ -15,7 +15,6 @@ class ApprovedBusiness extends Mailable
 {
     use Queueable, SerializesModels;
 
-
     public $restaurant_logo;
     public $business;
 
@@ -35,7 +34,7 @@ class ApprovedBusiness extends Mailable
        $this->business = TapBusiness::first();
        $this->restaurant_name = Setting::first()->restaurant_name;
        $this->subscription_url = route('restaurant.service');
-        
+
     }
 
     /**
@@ -46,6 +45,5 @@ class ApprovedBusiness extends Mailable
     public function build()
     {
         return $this->subject('Approval Business')->view('emails.approved_business');
-
     }
 }

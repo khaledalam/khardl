@@ -99,15 +99,15 @@ const Cart = () => {
         return parseFloat(cartItems.reduce((total, item) => total + (item.price + item.options_price) * item.quantity, 0)) + (deliveryCost / 100);
     };
 
-    const handleRemoveItem =  async (itemId) => {
+    const handleRemoveItem =  async (cartItemId) => {
 
         if (loading) return;
         try {
             setLoading(true);
-                const response = await AxiosInstance.delete(`/carts/`+itemId, {
+                const response = await AxiosInstance.delete(`/carts/`+cartItemId, {
             });
             if (response?.data) {
-                const updatedCart = cartItems.filter(item => item.item.id != itemId);
+                const updatedCart = cartItems.filter(item => item.id != cartItemId);
                 setCartItems(updatedCart);
                 toast.success(`${t('Item removed from cart')}`)
             }
@@ -217,7 +217,7 @@ const Cart = () => {
                                                 border: '1px solid var(--primary)',
                                                 borderRadius: '15%'
                                             }} src={it?.item?.photo} width={80} height={80}/>
-                                            <span>{Language === "en" ? it?.item?.description?.en : it?.item?.description?.ar}
+                                            <span>{Language === "en" ? it?.item?.name?.en : it?.item?.name?.ar}
                                             <br />
                                             {!it.item.availability ? (
                                                 <span className=' !text-[10px] !bg-[var(--danger)] !px-[6px] !py-[6px] rounded-[16px] !text-white'> {t('Not available')} </span>
@@ -242,7 +242,7 @@ const Cart = () => {
                                             <button
                                                 disabled={loading}
                                                 className="p-[6px] text-black shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-1"
-                                                onClick={() => handleRemoveItem(it?.item_id)}>❌ {t('Remove')}</button><br />
+                                                onClick={() => handleRemoveItem(it?.id)}>❌ {t('Remove')}</button><br />
                                         </li>
                                             <span className={"flex cart-item-notes"}>{t('Notes item')}: <pre>{it?.notes || t('N/A')}</pre></span>
                                         </div>

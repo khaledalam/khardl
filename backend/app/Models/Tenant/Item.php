@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
@@ -10,7 +11,7 @@ class Item extends Model
 {
     use HasTranslations;
     protected $table = 'items';
-    
+
     protected $fillable = [
         'category_id',
         'branch_id',
@@ -18,6 +19,7 @@ class Item extends Model
         'photo',
         'price',
         'calories',
+        'name',
         'description',
         'checkbox_required',
         'checkbox_input_titles',
@@ -33,24 +35,46 @@ class Item extends Model
         'dropdown_input_names',
         'availability'
     ];
-    public $translatable = ['description'];
+    public $translatable = ['description','name'];
     protected $casts = [
         'checkbox_required' => 'array',
-        'checkbox_input_titles'=> 'array',
-        'checkbox_input_maximum_choices'=> 'array',
-        'checkbox_input_names'=> 'array',
-        'checkbox_input_prices'=> 'array',
-        'selection_required'=> 'array',
-        'selection_input_names'=> 'array',
-        'selection_input_prices'=> 'array',
-        'selection_input_titles'=> 'array',
-        'dropdown_required'=> 'array',
-        'dropdown_input_titles'=> 'array',
-        'dropdown_input_names'=> 'array',
+        'checkbox_input_titles' => 'array',
+        'checkbox_input_maximum_choices' => 'array',
+        'checkbox_input_names' => 'array',
+        'checkbox_input_prices' => 'array',
+        'selection_required' => 'array',
+        'selection_input_names' => 'array',
+        'selection_input_prices' => 'array',
+        'selection_input_titles' => 'array',
+        'dropdown_required' => 'array',
+        'dropdown_input_titles' => 'array',
+        'dropdown_input_names' => 'array',
     ];
     const STORAGE = "items";
     const STORAGE_SEEDER = "seeders/items";
-    
+    /* Start Relations */
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
+    /* End Relations */
+    /* Start Scopes */
+    public function scopeWhenSearch($query, $search)
+    {
+        //TODO: Why case sensitive is enabled ?
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('name', 'LIKE', '%'.$search.'%');
+        });
+    }
+    public function scopeWhenBranch($query, $id)
+    {
+        return $query->when($id != null, function ($q) use ($id) {
+            return $q->whereHas('branch',function($q)use ($id){
+                return $q->where('id',$id);
+            });
+        });
+    }
+    /* End Scopes */
 
 }
 

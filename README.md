@@ -45,3 +45,30 @@ Where `test` is the name of Tenant(Restaurant name)
 Additional Resources: [How to Edit Hosts File](https://www.hostinger.com/tutorials/how-to-edit-hosts-file).
 
 
+### Useful commands and tools:
+- SQL quest to delete all databases that start with `restaurant_` prefix 
+```sql
+SELECT CONCAT('DROP DATABASE `', SCHEMA_NAME, '`;')
+FROM `information_schema`.`SCHEMATA`
+WHERE SCHEMA_NAME LIKE 'restaurant_%';
+``` 
+- Run laravel queue worker in the background:
+```shell 
+nohup php /home/khardl5/public_html/backend/artisan queue:work --daemon &
+
+
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/khardl5/public_html/backend/artisan queue:work --daemon --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+;user=root
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/khardl5/public_html/backend/queue_worker.log
+stopwaitsecs=3600
+
+```
+

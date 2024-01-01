@@ -39,22 +39,6 @@
                                                         <img src="{{ $category->photo }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
                                                         <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
-                                                        {{-- <span class="badge badge-light-success">3</span> --}}
-                                                        {{-- <form class="delete-form" action="{{ route('restaurant.delete-category', ['id' => $selectedCategory->id]) }}" method="POST">
-                                                            @method('DELETE')
-                                                            @csrf
-                                                            <button type="submit" class="delete-button btn btn-icon btn-active-color-danger btn-sm">
-                                                            <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-                                                            <span class="svg-icon svg-icon-3">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                <path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor" />
-                                                                <path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor" />
-                                                                <path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->
-                                                            </button>
-                                                        </form>          --}}
                                                     </span>
                                                 </a>
                                                 <!--end::Inbox-->
@@ -176,7 +160,7 @@
                                                  </td>
                                                 <td>
                                                      <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip"
-                                                    title="{{$item->description}}">
+                                                    title="{{$item->name}}">
                                                     <img alt="Pic" src="{{$item->photo}}" />
                                                 </div>
                                                 </td>
@@ -185,7 +169,7 @@
                                                  <td  class="text-center">
                                                     <div class="text-dark">
                                                         <!--begin::Heading-->
-                                                        <span class="fw-bolder text-start">{{ $item->description }}</span>
+                                                        <span class="fw-bolder text-start">{{ $item->name }}</span>
                                                         <!--end::Heading-->
                                                     </div>
                                                 </td>
@@ -368,6 +352,26 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8">
+                            <label class="fs-6 fw-bold mb-2">Name</label>
+
+                            <ul class="nav nav-tabs" >
+                                <li class="nav-item">
+                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">English</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">Arabic</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane fade show active" id="name-en">
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="Enter name in English"   name="item_name_en" />
+                                </div>
+                                <div class="tab-pane fade" id="name-ar">
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="أدخل الاسم باللغة العربية"   name="item_name_ar" />
+                                </div>
+                            </div>
+                        </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-bold mb-2">Description</label>
 
@@ -601,6 +605,14 @@
 
     <!--begin::Javascript-->
     <script>
+        var modal = document.getElementById('kt_modal_new_target');
+        modal.addEventListener('hidden.bs.modal', function () {
+            document.getElementById("kt_modal_new_target_form").reset();
+            document.getElementById('checkboxes').innerHTML = '';
+            document.getElementById('selections').innerHTML = '';
+            document.getElementById('dropdowns').innerHTML = '';
+
+        });
         var deleteButtons = document.querySelectorAll('.delete-button');
                     deleteButtons.forEach(function(button) {
                         button.addEventListener('click', function(event) {
@@ -1016,6 +1028,7 @@
                 alert('Please fill in the input in the (English) tab.');
                 return ;
             }
+
             document.getElementById('category-submit').submit();
         });
 
@@ -1025,19 +1038,38 @@
 
             submitButton.disabled = true;
 
+            var inputValue = document.querySelector('textarea[name=description_en]').value.trim();
+            var inputNameValue = document.querySelector('input[name=item_name_en]').value;
+            var inputValueAR = document.querySelector('textarea[name=description_ar]').value.trim();
+            var inputNameValueAR = document.querySelector('input[name=item_name_ar]').value;
+
+            if (inputNameValue === '') {
+                alert(`Please fill name input in (English) tab.`);
+                submitButton.disabled = false;
+
+                return ;
+            }else if (inputNameValueAR === '' ) {
+                alert(`Please fill name input in (Arabic) tab .`);
+                submitButton.disabled = false;
+                return ;
+            }
+
+
+
+            if(inputValueAR === '' && inputValue != ''){
+                alert(`Please fill name description in (Arabic) tab.`);
+                submitButton.disabled = false;
+
+                return ;
+            }else if(inputValue === '' && inputValueAR != ''){
+                alert(`Please fill name description in (English) tab.`);
+                submitButton.disabled = false;
+
+                return ;
+            }
             var waiting = document.querySelector('#waiting-item');
             waiting.style.display = 'block';
-            var inputValue = document.querySelector('textarea[name=description_ar]').value.trim();
-            if (inputValue === '') {
-                alert('Please fill in the input in (Arabic) tab.');
-                return ;
-            }
-            var inputValueAR = document.querySelector('textarea[name=description_en]').value.trim();
-            console.log(inputValueAR);
-            if (inputValueAR === '') {
-                alert('Please fill in the input in the (English) tab .');
-                return ;
-            }
+
             document.getElementById('kt_modal_new_target_form').submit();
 
 

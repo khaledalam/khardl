@@ -79,6 +79,7 @@
                                                 @endif
                                                 <span
                                                     class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
+                                                    <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
                                             </div>
                                             <!--end::Title-->
                                         </div>
@@ -283,22 +284,22 @@
                         <div class="col-md-12 fv-row">
                             <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6 d-flex justify-content-center">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark active" data-bs-toggle="tab" href="#kt_tab_pane_1">{{ __('messages.saturday') }}</a>
+                                    <a class="nav-link text-dark active" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_1">{{ __('messages.saturday') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_2">{{ __('messages.sunday') }}</a>
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_2">{{ __('messages.sunday') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_3">{{ __('messages.monday') }}</a>
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_3">{{ __('messages.monday') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_4">{{ __('messages.tuesday') }}</a>
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_4">{{ __('messages.tuesday') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_5">{{ __('messages.wednesday') }}</a>
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_5">{{ __('messages.wednesday') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_6">{{ __('messages.thursday') }}</a>
+                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_6">{{ __('messages.thursday') }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_7">{{ __('messages.friday') }}</a>
@@ -307,16 +308,16 @@
 
                             <div class="tab-content" id="myTabContent">
 
-                                <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+                                <div class="tab-pane fade show active" id="kt_tab_pane_{{$branch->id}}_1" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
-                                            <input type="time" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="saturday_open"  required />
+                                            <input type="time" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="saturday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
-                                            <input type="time" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="saturday_close"  required />
+                                            <input type="time" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="saturday_close"  required />
 
                                         </div>
                                     </div>
@@ -324,23 +325,23 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->saturday_closed) checked @endif name="saturday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->saturday_closed) checked @endif name="saturday_closed" id="saturday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="saturday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_2" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
-                                            <input type="time" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="sunday_open"  required />
+                                            <input type="time" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="sunday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
-                                            <input type="time" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="sunday_close"  required />
+                                            <input type="time" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="sunday_close"  required />
 
                                         </div>
                                     </div>
@@ -348,23 +349,23 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->sunday_closed) checked @endif name="sunday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->sunday_closed) checked @endif name="sunday_closed" id="sunday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="sunday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel">
+                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_3" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
-                                            <input type="time" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="monday_open"  required />
+                                            <input type="time" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="monday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
-                                            <input type="time" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="monday_close"  required />
+                                            <input type="time" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="monday_close"  required />
 
                                         </div>
                                     </div>
@@ -372,23 +373,23 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->monday_closed) checked @endif name="monday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->monday_closed) checked @endif name="monday_closed" id="monday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="monday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="kt_tab_pane_4" role="tabpanel">
+                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_4" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
-                                            <input type="time" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="tuesday_open"  required />
+                                            <input type="time" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="tuesday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
-                                            <input type="time" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="tuesday_close"  required />
+                                            <input type="time" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="tuesday_close"  required />
 
                                         </div>
                                     </div>
@@ -396,23 +397,23 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->tuesday_closed) checked @endif name="tuesday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->tuesday_closed) checked @endif name="tuesday_closed" id="tuesday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="tuesday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel">
+                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_5" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
-                                            <input type="time" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="wednesday_open"  required />
+                                            <input type="time" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="wednesday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
-                                            <input type="time" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="wednesday_close"  required />
+                                            <input type="time" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="wednesday_close"  required />
 
                                         </div>
                                     </div>
@@ -420,55 +421,55 @@
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->wednesday_closed) checked @endif name="wednesday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->wednesday_closed) checked @endif name="wednesday_closed" id="wednesday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="wednesday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="kt_tab_pane_6" role="tabpanel">
+                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_6" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
-                                            <input type="time" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="thursday_open"  required />
+                                            <input type="time" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="thursday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
-                                            <input type="time" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="thursday_close"  required />
+                                            <input type="time" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="thursday_close"  required />
                                         </div>
                                     </div>
 
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->thursday_closed) checked @endif name="thursday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->thursday_closed) checked @endif name="thursday_closed" id="thursday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="thursday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="kt_tab_pane_7" role="tabpanel">
+                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_7" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.from') }} </label>
-                                            <input type="time" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="friday_open"  required />
+                                            <input type="time" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="friday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label for="">{{ __('messages.to') }} </label>
-                                            <input type="time" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid " id="appt" name="friday_close"  required />
+                                            <input type="time" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="friday_close"  required />
                                         </div>
                                     </div>
 
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->friday_closed) checked @endif name="friday_closed" id="closed_receving"
+                                            <input class="form-check-input" type="checkbox" @if($branch->friday_closed) checked @endif name="friday_closed" id="friday_closed"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="closed_receving">{{ __('messages.the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="friday_closed">{{ __('messages.the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -608,11 +609,20 @@
                     <!--end::Input-->
                 </div>
                 <!--end::Col-->
-
+                <div class="col-md-12 fv-row">
+                    <label class="required fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
+                    <!--begin::Input-->
+                    <div class="position-relative d-flex align-items-center">
+                        <!--begin::Datepicker-->
+                        <input value="{{ old('phone') }}" required name="phone" class="form-control form-control-solid " />
+                        <!--end::Datepicker-->
+                    </div>
+                    <!--end::Input-->
+                </div>
                 <!--begin::Col-->
                 <div class="col-md-12 fv-row">
                     <label class="required fs-6 fw-bold mb-2">{{ __('messages.location-branch') }}</label>
-                    <input id="pac-input-new_branch" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}">
+                    <input id="pac-input-new_branch" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}" name="address">
                     <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
                     <input type="hidden" value="{{ old('location') }}" id="location" name="location">
                     <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
@@ -644,9 +654,41 @@
                     <!--end::Input-->
                 </div>
                 <!--end::Col-->
-
-                <!--begin::Col-->
                 <div class="col-md-12 fv-row">
+                    <div class="position-relative d-flex align-items-center">
+                        <div class="card-body pt-0">
+                            <p class="form-label required fs-6 fw-bold mb-2">{{__("messages.time")}} </p>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hours_option" id="normalChoice" value="normal" checked>
+                                <label class="form-check-label" for="normalChoice">{{ __('messages.choose-time-for-all-days') }}</label>
+                            </div>
+                          
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hours_option" id="customChoice" value="custom">
+                                <label class="form-check-label" for="customChoice">{{ __('messages.choose-time-for-custom-days') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Hours input for normal choice -->
+                 <div  id="normalChoiceSection">
+                 
+                    <div class=" d-flex justify-content-between w-100">
+                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                            <label for="normal_from">{{ __('messages.from') }}  </label>
+                            <input type="time" class="form-control form-control-solid"  name="normal_from" id="normal_from"   />
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                            <label for="normal_to">{{ __('messages.to') }}  </label>
+                            <input type="time" class="form-control form-control-solid"  name="normal_to" id="normal_to"   />
+
+                        </div>
+                    </div>
+                </div>
+                <!--begin::Col-->
+                <div class="col-md-12 fv-row"  id="customChoiceTabs">
+
                     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6 d-flex justify-content-center">
                         <li class="nav-item">
                             <a class="nav-link text-dark active" data-bs-toggle="tab" href="#kt_tab_pane_8">{{ __('messages.saturday') }}</a>
@@ -671,18 +713,18 @@
                         </li>
                     </ul>
 
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content" id="customChoiceContent"  >
 
                         <div class="tab-pane fade show active" id="kt_tab_pane_8" role="tabpanel">
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="saturday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_open" id="saturday_open"  required />
+                                    <input type="time" class="form-control form-control-solid"  name="saturday_open" id="saturday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="saturday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid" id="appt" name="saturday_close" id="saturday_close"  required />
+                                    <input type="time" class="form-control form-control-solid"  name="saturday_close" id="saturday_close"   />
 
                                 </div>
                             </div>
@@ -692,12 +734,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="sunday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_open" id="sunday_open"  required />
+                                    <input type="time" class="form-control form-control-solid "  name="sunday_open" id="sunday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="sunday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="sunday_close" id="sunday_close"  required />
+                                    <input type="time" class="form-control form-control-solid "  name="sunday_close" id="sunday_close"   />
 
                                 </div>
                             </div>
@@ -707,12 +749,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="monday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_open" id="monday_open"  required />
+                                    <input type="time" class="form-control form-control-solid "  name="monday_open" id="monday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="monday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="monday_close" id="monday_close"  required />
+                                    <input type="time" class="form-control form-control-solid "  name="monday_close" id="monday_close"   />
 
                                 </div>
                             </div>
@@ -722,12 +764,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="tuesday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_open" id="tuesday_open"  required />
+                                    <input type="time" class="form-control form-control-solid "  name="tuesday_open" id="tuesday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="tuesday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="tuesday_close" id="tuesday_close"  required />
+                                    <input type="time" class="form-control form-control-solid "  name="tuesday_close" id="tuesday_close"   />
                                 </div>
                             </div>
                         </div>
@@ -736,12 +778,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="wednesday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_open" id="wednesday_open" required />
+                                    <input type="time" class="form-control form-control-solid "  name="wednesday_open" id="wednesday_open"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="wednesday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="wednesday_close" id="wednesday_close" required />
+                                    <input type="time" class="form-control form-control-solid "  name="wednesday_close" id="wednesday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -750,12 +792,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="thursday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_open" id="thursday_open"  required />
+                                    <input type="time" class="form-control form-control-solid "  name="thursday_open" id="thursday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="thursday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="thursday_close" id="thursday_close" required />
+                                    <input type="time" class="form-control form-control-solid "  name="thursday_close" id="thursday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -764,12 +806,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="friday_open">{{ __('messages.from') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_open" id="friday_open" required />
+                                    <input type="time" class="form-control form-control-solid "  name="friday_open" id="friday_open"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="friday_close">{{ __('messages.to') }} </label>
-                                    <input type="time" class="form-control form-control-solid " id="appt" name="friday_close" id="friday_close" required />
+                                    <input type="time" class="form-control form-control-solid "  name="friday_close" id="friday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -825,7 +867,42 @@
     <!--end::Scrolltop-->
 
     <script>
+        var normalChoiceSection = document.getElementById('normalChoiceSection');
+        var customChoiceTabs = document.getElementById('customChoiceTabs');
+        var customChoiceContent = document.getElementById('customChoiceContent');
+        function setRequiredForCustomChoice(required) {
+            var customInputs = customChoiceContent.querySelectorAll('input[type="time"]');
+            customInputs.forEach(function (input) {
+                input.required = required;
+            });
+        }
+        function setRequiredForNormalChoice(required) {
+            var customInputs = normalChoiceSection.querySelectorAll('input[type="time"]');
+            customInputs.forEach(function (input) {
+                input.required = required;
+            });
+        }
+        // Hide/show sections based on the selected option
+        document.querySelectorAll('input[name="hours_option"]').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                if (this.value === 'normal') {
+                    normalChoiceSection.style.display = 'block';
+                    customChoiceTabs.style.display = 'none';
+                    customChoiceContent.style.display = 'none';
+                    setRequiredForNormalChoice(true);
+                    setRequiredForCustomChoice(false);
+                } else if (this.value === 'custom') {
+                    normalChoiceSection.style.display = 'none';
+                    customChoiceTabs.style.display = 'block';
+                    customChoiceContent.style.display = 'block';
+                    setRequiredForNormalChoice(false);
+                    setRequiredForCustomChoice(true);
+                }
+            });
+        });
 
+        // Initialize based on the default selected option
+        document.querySelector('input[name="hours_option"]:checked').dispatchEvent(new Event('change'));
         document.addEventListener("DOMContentLoaded", (event) => {
             let maps = {}; // Store maps in an object
             let markers = {}; // Store markers in an object
@@ -903,6 +980,9 @@
                 const lngInput = document.getElementById('lng' + branchId);
                 latInput.value = latLng.lat();
                 lngInput.value = latLng.lng();
+                const locationInput = document.getElementById('location');
+                locationInput.value = `${lngInput.value }, ${latInput.value }`;
+
             }
 
             function updateLocation(branchId) {
@@ -937,7 +1017,7 @@
 
             // Initialize the maps for each branch
             @foreach ($branches as $branch)
-            initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
+                initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
             @endforeach
 
 

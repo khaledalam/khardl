@@ -4,6 +4,8 @@ namespace Database\Seeders\Tenant;
 
 use Carbon\Carbon;
 use App\Models\Tenant\Branch;
+use Faker\Factory;
+use Faker\Generator;
 use Illuminate\Database\Seeder;
 
 class BranchSeeder extends Seeder
@@ -18,6 +20,8 @@ class BranchSeeder extends Seeder
      */
     public function run(): void
     {
+        $faker = (new Factory())::create();
+
         // This branch has pickup and delivery
         $currentDateTime = Carbon::now();
         $branch = Branch::create([
@@ -25,6 +29,8 @@ class BranchSeeder extends Seeder
             'name' => 'Branch 1',
             'lat' => '37.7',
             'lng' => '37.7',
+            'phone'=> '966123456789',
+            'address'=>"Riyadh",
             'is_primary' => true,
             'saturday_open' => $currentDateTime->format('H:i'),
             'saturday_close' => $currentDateTime->addHour()->format('H:i'),
@@ -40,6 +46,7 @@ class BranchSeeder extends Seeder
             'thursday_close' => $currentDateTime->addHour()->format('H:i'),
             'friday_open' => $currentDateTime->format('H:i'),
             'friday_close' => $currentDateTime->addHour()->format('H:i'),
+            'pickup_availability' => $faker->boolean
         ]);
         $branch->payment_methods()->sync([
             PaymentMethodSeeder::PAYMENT_METHOD_COD
@@ -48,15 +55,17 @@ class BranchSeeder extends Seeder
             DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY,
             DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
         ]);
-     
+
 
 
         // This branch has pickup only
         $branch2 = Branch::create([
             'id' => self::BRANCH_B_ID,
             'name' => 'Branch 2',
+            'address'=>"Riyadh",
             'lat' => '27.7',
             'lng' => '27.7',
+            'phone'=> '966123456789',
             'is_primary' => false,
             'saturday_open' => $currentDateTime->format('H:i'),
             'saturday_close' => $currentDateTime->addHour()->format('H:i'),
