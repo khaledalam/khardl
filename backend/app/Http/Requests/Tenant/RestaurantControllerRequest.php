@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\PhoneValidation;
 use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 
 
 class RestaurantControllerRequest extends FormRequest
@@ -19,7 +20,13 @@ class RestaurantControllerRequest extends FormRequest
     }
     public function rules()
     {
-        $restaurantStyles = RestaurantStyle::find(1);
+        // Register a custom validation rule for non-empty string
+//        Validator::extend('non_empty_string', function ($attribute, $value, $parameters, $validator) {
+//            $otherFieldValue = $validator->getData()[$parameters[0]];
+//
+//            return is_string($otherFieldValue) && !empty($otherFieldValue);
+//        });
+
         return [
             /* New */
             'logo_url' => 'nullable',
@@ -52,31 +59,9 @@ class RestaurantControllerRequest extends FormRequest
             'text_fontSize' => 'nullable',
             'text_color' => 'nullable|string',
             /* OLD */
-            'logo' => [
-                Rule::when((!$restaurantStyles || !$restaurantStyles?->logo_url) && $this->logo == null, 'required|mimes:png,jpg,jpeg|max:2048')
-            ],
-            'banner_image' => [
-                Rule::when(function ($attribute) use ($restaurantStyles) {
-                    if (!$restaurantStyles && $attribute->banner_type == 'one-photo' && empty($attribute->banner_image)) {
-                        return true;
-                    } else {
-                        if ($restaurantStyles->banner_image_url == null && $attribute->banner_type == 'one-photo' && empty($attribute->banner_image)) {
-                            return true;
-                        }
-                    }
-                }, 'required|mimes:png,jpg,jpeg|max:2048'),
-            ],
-            'banner_images' => [
-                Rule::when(function ($attribute) use ($restaurantStyles) {
-                    if (!$restaurantStyles && $attribute->banner_type == 'slider' && empty($attribute->banner_images)) {
-                        return true;
-                    } else {
-                        if ($restaurantStyles->banner_images_urls == null && $attribute->banner_type == 'slider' && empty($attribute->banner_images)) {
-                            return true;
-                        }
-                    }
-                }, 'required|array'),
-            ],
+            'logo' => 'nullable|required_without:logo_url|mimes:png,jpg,jpeg|max:2048',
+            'banner_image' => 'nullable|required_if:banner_type,one-photo&&required_without:banner_image_url|mimes:png,jpg,jpeg|max:2048',
+            'banner_images' => 'nullable|required_without:banner_images_urls&&required_if:banner_type,slider|array',
             'banner_images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ];
     }

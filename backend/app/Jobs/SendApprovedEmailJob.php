@@ -38,12 +38,14 @@ class SendApprovedEmailJob implements ShouldQueue
             Log::create([
                 'restaurant_user_email' => $this?->user?->email,
                 'action' => '[ok] Sent approved email notification',
+                'user_id'=> $this?->user?->id
             ]);
 
         } catch(\Exception $e) {
             Log::create([
                 'restaurant_user_email' => $this?->user?->email,
                 'action' => '[fail] Send approved email notification',
+                'user_id'=> $this?->user?->id
             ]);
         }
     }

@@ -55,4 +55,20 @@ WHERE SCHEMA_NAME LIKE 'restaurant_%';
 - Run laravel queue worker in the background:
 ```shell 
 nohup php /home/khardl5/public_html/backend/artisan queue:work --daemon &
+
+
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/khardl5/public_html/backend/artisan queue:work --daemon --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+;user=root
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/khardl5/public_html/backend/queue_worker.log
+stopwaitsecs=3600
+
 ```
+

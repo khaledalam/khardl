@@ -401,7 +401,13 @@ return [
     "na" => "N/A",
     "live-chat" => "Live Chat",
     "show" => "Show",
-    "webhook-url" => "Webhook URL"
+    "webhook-url" => "Webhook URL",
+    "Daily earnings"    => "Daily earnings",
+    "Daily orders"  => "Daily orders",
+    "SAR"   => "SAR",
+    "Sales This month"  => "Sales This month",
+    "Profit per day"    => "Profit per day",
+    "Profit per month"    => "Profit per month",
 
 
 
