@@ -82,7 +82,7 @@
                 </span>
               </td>
               <td>
-                <a class="text-dark fw-bolder text-hover-primary d-block fs-6" href="{{ route('admin.view-restaurants', ['id' => $admin->restaurant?->id]) }}">
+                <a class="text-dark fw-bolder text-hover-primary d-block fs-6" href="{{ route('admin.view-restaurants', ['tenant' => $admin->restaurant?->id]) }}">
                   {{ $admin->restaurant?->restaurant_name }}
                   <br>
                   @if ($admin->restaurant->is_live())
@@ -113,8 +113,8 @@
                         </div>
                     </span>
                 </a>
-               
-                  
+
+
                 </div>
               </td>
             </tr>
@@ -142,9 +142,9 @@
               deleteButtons.forEach(function(button) {
                   button.addEventListener('click', function(event) {
                       event.preventDefault();
-                      
+
                       var form = button.closest('.delete-form');
-                      
+
                       Swal.fire({
                           title: '{{ __('messages.are-you-sure') }}',
                           text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
