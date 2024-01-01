@@ -5,13 +5,11 @@
 @section('content')
 @push('styles')
 <link href="{{ global_asset('js/custom/creditCard/main.css')}}"rel="stylesheet" type="text/css" />
-
+<script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.6.0/js/gosell.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 @endpush
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
-<script src="https://secure.gosell.io/js/sdk/tap.min.js"></script>
 
-<script src="{{ global_asset('js/custom/creditCard/main.js')}}"></script>
 
 @endpush
 
@@ -297,36 +295,41 @@
                                                                             <div class="modal-header pb-0 border-0 ">
                                                                                 <h5 class="modal-title text-center">Subscribe to the branch package</h5>
                                                                             </div>
-{{--                                                                            <form id="form-container">--}}
-{{--                                                                                <div id="element-container"></div>--}}
-{{--                                                                                <div id="error-handler" role="alert"></div>--}}
-{{--                                                                                <div id="success" style=" display: none;;position: relative;float: left;">--}}
-{{--                                                                                      Success! Your token is <span id="token"></span>--}}
-{{--                                                                                </div>--}}
-{{--                                                                                <button id="tap-btn">Submit</button>--}}
-{{--                                                                            </form>--}}
-
-
-                                                                        <script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.6.0/js/gosell.js"></script>
-                                                                        <div id="root"></div>
-                                                                        <p id="msg"></p>
-                                                                        <button id="submit-elements" onclick="goSell.submit()">Submit</button>
-                                                                        <script>
+        
+                                                                                <div id="root"></div>
+                                                                                <p id="msg"></p>
+                                                                                <button id="tap-btn"  onclick="goSell.submit()" >Submit</button>
+                                                                          
+                                                                      <script>
                                                                             goSell.goSellElements({
                                                                                 containerID:"root",
+                                                                              
                                                                                 gateway:{
-                                                                                    publicKey:"pk_test_eSKQWEusGry3q1mCYOk2MoXH",
-                                                                                    language:"en",
+                                                                                    callback	: function(event){
+                                                                                        if(event.status == "ACTIVE" && event.card.id){
+                                                                                            $.ajax({
+                                                                                                url: '{{ route('tap.payments_submit_card_details', ['cardId' => '__card__','data'=>'__data__']) }}'
+                                                                                                .replace('__card__', event.card.id) .replace('__data__', JSON.stringify(event)),
+                                                                                                type: 'POST',
+                                                                                                dataType: 'json',
+                                                                                                data: {
+                                                                                                    '_token': '{{ csrf_token() }}', // Include the CSRF token
+                                                                                                },
+                                                                                                success: function (response) {
+                                                                                                    
+                                                                                                },
+                                                                                                error: function (error) {
+                                                                                                    console.error('Error toggling user status:', error);
+                                                                                                }
+                                                                                            });
+                                                                                        }
+                                                                                       
+                                                                                    },
+                                                                                    publicKey:"pk_test_LSwNp8KReqHB4Mgly1PWOA7E",
+                                                                                    language: "{{app()->getLocale()}}",
                                                                                     supportedCurrencies: "all",
                                                                                     supportedPaymentMethods: "all",
-                                                                                    notifications:'msg',
-                                                                                    labels:{
-                                                                                        cardNumber:"Card Number",
-                                                                                        expirationDate:"MM/YY",
-                                                                                        cvv:"CVV",
-                                                                                        cardHolder:"Name on Card",
-                                                                                        actionButton:"Pay"
-                                                                                    },
+                                                                                    notifications: 'msg',
                                                                                     style: {
                                                                                         base: {
                                                                                             color: '#535353',
@@ -346,7 +349,7 @@
                                                                                     }
                                                                                 }
                                                                             });
-
+                                                                           
                                                                         </script>
 
 
@@ -804,22 +807,6 @@
         </script>
 
 
-        <!--end::Javascript-->
-
-        <script>
-            function tapTokenHandler(token) {
-                // Insert the token ID into the form so it gets submitted to the server
-                var form = document.getElementById('payment-form');
-                var hiddenInput = document.createElement('input');
-                hiddenInput.setAttribute('type', 'hidden');
-                hiddenInput.setAttribute('name', 'tapToken');
-                hiddenInput.setAttribute('value', token.id);
-                form.appendChild(hiddenInput);
-
-                // Submit the form
-                // form.submit();
-            }
-        </script>
      </div>
      <!--end::Content-->
 @endsection

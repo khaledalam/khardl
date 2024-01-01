@@ -46,8 +46,7 @@ class RestaurantController extends BaseController
             return Subscription::first();
         });
 
-        return view('restaurant.service',
-            compact('user', 'branches','subscription'));
+        return view('restaurant.service', compact('user', 'branches','subscription'));
     }
 
     public function delivery(){

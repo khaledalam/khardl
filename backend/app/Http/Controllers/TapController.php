@@ -25,7 +25,7 @@ use App\Packages\TapPayment\Charge\Charge;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
-use App\Packages\TapPayment\Subscription\Subscription;
+use App\Packages\TapPayment\Subscription\Subscription as TapSubscription;
 
 class TapController extends Controller
 {
@@ -156,30 +156,41 @@ class TapController extends Controller
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
 
     }
-    public function payments_submit_card_details($token,Request $request){
+    public function payments_submit_card_details($cardId,Request $request){
         // TODO @todo protect request only coming from payment
-        // if($request->tap_id){
-        //     $RO_subscription = new ROSubscription();
-        //     $RO_subscription->charge_id  = $request->tap_id;
-        //     $RO_subscription->data  =[$request->token, $request->data];
+        dd(1);
+        $user = Auth::user();
+    
+        if($user->tap_customer_id){
+            $subscription_options = tenancy()->central(function(){
+                return CentralSubscriptionOptions::first();
+            });
+            try {
+                // deprecated 
+                // TapSubscription::create([
 
-        //     $charge = Charge::retrieve($request->tap_id);
-        //     if($charge['http_code'] == ResponseHelper::HTTP_OK){
-        //         $token = $charge['source']['id'];
-        //         $RO_subscription->token_id = $token;
-        //         $card = Card::retrieve($token);
-        //         if($card['http_code'] == ResponseHelper::HTTP_OK){
-        //             $card_id = $card['card']['id'];
-        //             $RO_subscription->card_id = $card_id;
-        //             // $subscription_options = CentralSubscriptionOptions::first();
-        //             // $subscription = Subscription::create();
+                // ]);
 
-        //         }
-        //     }
-        //     $RO_subscription->save();
-        // }
-        dd($token);
-        return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+                // ROSubscription::create([
+                //     'card_id'=>$cardId,
+                //     'data'=>json_decode($request->data),
+                //     'customer_id'=> $user->tap_customer_id,
+                //     'amount'=>$subscription_options->amount,
+                //     'status'=>'inactive',
+                // ]);
+              
+           
+            }catch(\Exception $e) {
+
+                logger($e->getMessage());
+                return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+            }
+          
+        }else {
+            return redirect()->route('restaurant.service')->with('error', __('This User has not any related tap customer'));
+        }
+       
+    
 
     }
 

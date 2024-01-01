@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class ROSubscription extends Model
 {
     use HasFactory;
+    protected $table ="r_o_subscriptions";
     protected $fillable =[
-        'payment_agreement_id',
         'customer_id',
         'card_id',
+        'data',
         'amount',
         'status',
+        'id',
         'public_key',
         'secret_key'
     ];

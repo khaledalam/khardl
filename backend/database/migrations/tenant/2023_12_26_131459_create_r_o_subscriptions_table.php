@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("card_id");
             $table->string("customer_id");
-            $table->string('payment_agreement_id');
+            $table->json("data");
             $table->string('amount');
             $table->string('status');
             $table->string('public_key')->nullable();
