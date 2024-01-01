@@ -1,6 +1,8 @@
-import "swiper/css"
-import "swiper/css/navigation"
-import "swiper/css/pagination"
+// import "swiper/css"
+// import "swiper/css/navigation"
+// import "swiper/css/pagination"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
 import {Swiper, SwiperSlide} from "swiper/react"
 import {Navigation, Pagination} from "swiper/modules"
 import {IoCloseOutline} from "react-icons/io5"
@@ -12,6 +14,7 @@ import {
   removeBannersUpload,
   setBannersUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
+import ReactSlider from "react-slick"
 import {FaCircleChevronLeft, FaCircleChevronRight} from "react-icons/fa6"
 
 const Slider = ({banner_images}) => {
@@ -45,88 +48,168 @@ const Slider = ({banner_images}) => {
     setSliderCount((prev) => prev + 1)
   }, [])
 
+  const settings = {
+    dots: true,
+    infinite: false,
+    autoplay: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  }
+
   console.log("uploaded images", uploadImages)
 
   return (
-    <Swiper
-      modules={[Pagination, Navigation]}
-      pagination={{clickable: true}}
-      navigation={true}
-      slideClass='swiper-slide'
-    >
-      {Array(
-        bannersUpload.length > sliderCount ? bannersUpload.length : sliderCount
-      )
-        .fill(1)
-        .map((_, index) => (
-          <SwiperSlide key={index}>
-            <div
-              style={{
-                backgroundImage:
-                  bannersUpload && bannersUpload?.length > 0
-                    ? `url(${bannersUpload[index]})`
-                    : banner_images && banner_images?.length > 0
-                    ? `url(${banner_images[index]})`
-                    : ``,
-              }}
-              className={`h-[280px] rounded-md flex items-center justify-center  relative  shadow-md`}
-            >
-              <input
-                type='file'
-                accept='image/*'
-                id={"imageBanner" + index}
-                name={"imageBanner" + index}
-                onChange={(e) => handleImagesUpload(e, index)}
-                className='hidden'
-              />
+    // <Swiper
+    //   modules={[Pagination, Navigation]}
+    //   pagination={{clickable: true}}
+    //   navigation={true}
+    //   slideClass='swiper-slide'
+    // >
+    //   {Array(
+    //     bannersUpload.length > sliderCount ? bannersUpload.length : sliderCount
+    //   )
+    //     .fill(1)
+    //     .map((_, index) => (
+    //       <SwiperSlide key={index}>
+    //         <div
+    //           style={{
+    //             backgroundImage:
+    //               bannersUpload && bannersUpload?.length > 0
+    //                 ? `url(${bannersUpload[index]})`
+    //                 : banner_images && banner_images?.length > 0
+    //                 ? `url(${banner_images[index]})`
+    //                 : ``,
+    //           }}
+    //           className={`h-[280px] rounded-md flex items-center justify-center  relative  shadow-md`}
+    //         >
+    //           <input
+    //             type='file'
+    //             accept='image/*'
+    //             id={"imageBanner" + index}
+    //             name={"imageBanner" + index}
+    //             onChange={(e) => handleImagesUpload(e, index)}
+    //             className='hidden'
+    //           />
 
+    //           <div
+    //             style={{
+    //               borderRadius: 12,
+    //             }}
+    //             className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
+    //           >
+    //             <label htmlFor={"imageBanner" + index}>
+    //               <img
+    //                 src={
+    //                   (bannersUpload[index] || banner_images[index]) ??
+    //                   ImageIcon
+    //                 }
+    //                 alt={""}
+    //                 className='w-full h-full object-cover'
+    //               />
+    //             </label>
+    //             {(bannersUpload[index] || banner_images[index]) && (
+    //               <div
+    //                 onClick={() => handleRemoveImages(index)}
+    //                 className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'
+    //               >
+    //                 <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
+    //                   <IoCloseOutline
+    //                     size={16}
+    //                     className='text-red-500 cursor-pointer'
+    //                   />
+    //                 </div>
+    //               </div>
+    //             )}
+    //           </div>
+    //           <div
+    //             onClick={addMoreSlider}
+    //             className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7'
+    //           >
+    //             +
+    //           </div>
+    //         </div>
+    //       </SwiperSlide>
+    //     ))}
+    // </Swiper>
+    <div className='w-[92%] mx-auto'>
+      <ReactSlider {...settings}>
+        {Array(
+          bannersUpload.length > sliderCount
+            ? bannersUpload.length
+            : sliderCount
+        )
+          .fill(1)
+          .map((_, index) => (
+            <div key={index} className={`h-[300px] !block`}>
               <div
                 style={{
-                  borderRadius: 12,
+                  backgroundRepeat: "no-repeat",
+                  backgroundImage:
+                    bannersUpload && bannersUpload?.length > 0
+                      ? `url(${bannersUpload[index]})`
+                      : banner_images && banner_images?.length > 0
+                      ? `url(${banner_images[index]})`
+                      : ``,
                 }}
-                className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
+                className={`h-full w-full  rounded-md !flex items-center justify-center  relative  shadow-md `}
               >
-                <label htmlFor={"imageBanner" + index}>
-                  <img
-                    src={
-                      (bannersUpload[index] || banner_images[index]) ??
-                      ImageIcon
-                    }
-                    alt={""}
-                    className='w-full h-full object-cover'
-                  />
-                </label>
-                {(bannersUpload[index] || banner_images[index]) && (
-                  <div
-                    onClick={() => handleRemoveImages(index)}
-                    className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'
-                  >
-                    <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
-                      <IoCloseOutline
-                        size={16}
-                        className='text-red-500 cursor-pointer'
-                      />
+                <input
+                  type='file'
+                  accept='image/*'
+                  id={"imageBanner" + index}
+                  name={"imageBanner" + index}
+                  onChange={(e) => handleImagesUpload(e, index)}
+                  className='hidden'
+                />
+
+                <div
+                  style={{
+                    borderRadius: 12,
+                  }}
+                  className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
+                >
+                  <label htmlFor={"imageBanner" + index}>
+                    <img
+                      src={
+                        (bannersUpload[index] || banner_images[index]) ??
+                        ImageIcon
+                      }
+                      alt={""}
+                      className='w-full h-full object-cover'
+                    />
+                  </label>
+                  {(bannersUpload[index] || banner_images[index]) && (
+                    <div
+                      onClick={() => handleRemoveImages(index)}
+                      className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'
+                    >
+                      <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
+                        <IoCloseOutline
+                          size={16}
+                          className='text-red-500 cursor-pointer'
+                        />
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-              <div
-                onClick={addMoreSlider}
-                className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7'
-              >
-                +
+                  )}
+                </div>
+                <div
+                  onClick={addMoreSlider}
+                  className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7'
+                >
+                  +
+                </div>
               </div>
             </div>
-          </SwiperSlide>
-        ))}
-      {/* <div className='prev-btn' ref={navigationPrevRef}>
-        <FaCircleChevronLeft size={25} />
-      </div>
-      <span className='next-btn' ref={navigationNextRef}>
-        <FaCircleChevronRight size={25} />
-      </span> */}
-    </Swiper>
+          ))}
+      </ReactSlider>
+    </div>
   )
 }
 
 export default Slider
+/* 
+
+
+
+* */

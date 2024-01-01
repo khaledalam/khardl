@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import "./App.css"
+
 import {Routes, Route, useLocation} from "react-router-dom"
 import {useSelector} from "react-redux"
 import {ToastContainer} from "react-toastify"
@@ -138,9 +139,9 @@ const App = () => {
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                                                                                                                                                                                                                                                                                                                                                                              path='/site-editor/restaurants'
-                                                                                                                                                                                                                                                                                                                                                                                                              element={<EditorPage />}
-                                                                                                                                                                                                                                                                                                                                                                                                            />{" "} */}{" "}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  path='/site-editor/restaurants'
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  element={<EditorPage />}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
                 <Route path='/dashboard' element={<CustomersPreview />} />{" "}
                 <Route path='/site-editor/customers' element={<EditorPage />} />{" "}
