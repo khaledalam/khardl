@@ -5,6 +5,7 @@ namespace App\Http\Requests\Tenant;
 
 use App\Http\Requests\PhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
 
 
 class RestaurantControllerRequest extends FormRequest
@@ -15,6 +16,13 @@ class RestaurantControllerRequest extends FormRequest
     }
     public function rules()
     {
+        // Register a custom validation rule for non-empty string
+//        Validator::extend('non_empty_string', function ($attribute, $value, $parameters, $validator) {
+//            $otherFieldValue = $validator->getData()[$parameters[0]];
+//
+//            return is_string($otherFieldValue) && !empty($otherFieldValue);
+//        });
+
         return [
             /* New */
             'logo_url' => 'nullable',
@@ -47,9 +55,9 @@ class RestaurantControllerRequest extends FormRequest
             'text_fontSize' => 'nullable',
             'text_color' => 'nullable|string',
             /* OLD */
-            'logo' => 'required|mimes:png,jpg,jpeg|max:2048',
-            'banner_image' => 'required_if:banner_type,one-photo|nullable|mimes:png,jpg,jpeg|max:2048',
-            'banner_images' => 'required_if:banner_type,slider|nullable|array',
+            'logo' => 'nullable|required_without:logo_url|mimes:png,jpg,jpeg|max:2048',
+            'banner_image' => 'nullable|required_if:banner_type,one-photo&&required_without:banner_image_url|mimes:png,jpg,jpeg|max:2048',
+            'banner_images' => 'nullable|required_without:banner_images_urls&&required_if:banner_type,slider|array',
             'banner_images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ];
     }
