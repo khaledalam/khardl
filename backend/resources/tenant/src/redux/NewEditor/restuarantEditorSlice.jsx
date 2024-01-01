@@ -37,7 +37,7 @@ const restuarantEditorSlice = createSlice({
 
     selectedSocialIcons: [
       {
-        id: 0,
+        id: "0xwhatapp",
         name: "Whatsapp",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968841.png",
         link: "",
@@ -46,62 +46,62 @@ const restuarantEditorSlice = createSlice({
 
     mediaCollection: [
       {
-        id: 0,
+        id: "0xwhatapp",
         // name: "Whatsapp",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968841.png",
         link: "",
       },
       {
-        id: 1,
+        id: "1xTelegram",
         // name: "Telegram",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/2111/2111646.png",
         link: "",
       },
       {
-        id: 2,
+        id: "2xyoyuutubr",
         // name: "Youtube",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/3670/3670147.png",
         link: "",
       },
       {
-        id: 3,
+        id: "3xdgfinstgrm",
         // name: "Instagram",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/2111/2111463.png",
         link: "",
       },
       {
-        id: 4,
+        id: "4fgkkfgbook",
         // name: "Facebook",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/3670/3670032.png",
         link: "",
       },
       {
-        id: 5,
+        id: "5sfroaflinkedn",
         // name: "LinkedIn",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/2504/2504923.png",
         link: "",
       },
       {
-        id: 6,
+        id: "6jtwnhwldnuwtiktpk",
         // name: "Tiktok",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/3116/3116490.png",
         link: "",
       },
       {
-        id: 7,
+        id: "7mshfnfhylermsg",
         // name: "Messenger",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/5968/5968771.png",
         link: "",
       },
       {
-        id: 8,
+        id: "8sjsjdyuesws",
         // name: "X",
         imgUrl: "https://cdn-icons-png.flaticon.com/128/11823/11823292.png",
         link: "",
       },
     ],
 
-    selectedMediaId: 0,
+    selectedMediaId: "0xwhatapp",
     socialMediaIcons_alignment: "center",
     phoneNumber: "+96600000000",
     phoneNumber_alignment: "center",
@@ -109,6 +109,7 @@ const restuarantEditorSlice = createSlice({
     page_color: "#fafafa",
     category_background_color: "#4466ff",
     page_category_color: "#ffffff",
+
     header_color: "#ffffff",
     footer_color: "#ffffff",
     price_color: "#ffffff",
@@ -228,6 +229,13 @@ const restuarantEditorSlice = createSlice({
     setBannersUpload: (state, action) => {
       state.bannersUpload = [].concat(action.payload)
     },
+    removeBannersUpload: (state, action) => {
+      const {index} = action.payload
+      if (state.bannersUpload) {
+        state.bannersUpload.splice(index, 1)
+      }
+      state.banner_images.splice(index, 1)
+    },
     setSidebarCollapse: (state, action) => {
       state.collapse_sidebar = action.payload
     },
@@ -304,6 +312,7 @@ export const {
   logoUpload,
   setBannerUpload,
   setBannersUpload,
+  removeBannersUpload,
   setSidebarCollapse,
   updateSelectedIconInput,
   mediaIconsToSelected,

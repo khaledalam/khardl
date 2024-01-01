@@ -453,9 +453,9 @@ const MainBoardEditor = ({categories}) => {
                 filterCategory[0]?.items
                   .filter((item) => item.availability === 1)
                   .slice(0, 2)
-                  .map((product, i) => (
+                  .map((product, idx) => (
                     <ProductItem
-                      key={i}
+                      key={idx + "prdt"}
                       id={product.id}
                       name={product.description}
                       imgSrc={product.photo}

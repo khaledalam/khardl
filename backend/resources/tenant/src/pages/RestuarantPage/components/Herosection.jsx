@@ -5,9 +5,11 @@ import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
 import imgBanner from "../../../assets/bannerRestuarant.png"
 import {Swiper, SwiperSlide} from "swiper/react"
 import {Navigation, Pagination} from "swiper/modules"
+import {useTranslation} from "react-i18next"
 
 const Herosection = ({isMobile, categories}) => {
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
   )
@@ -36,11 +38,23 @@ const Herosection = ({isMobile, categories}) => {
               : "items-center justify-end"
           }`}
         >
-          <div className='w-[60px] h-[60px]'>
+          <div
+            className={`w-[60px] h-[60px]  ${
+              restaurantStyle?.logo_shape === "rounded" ||
+              restaurantStyle?.logo_shape === t("Rounded")
+                ? "rounded-full"
+                : restaurantStyle?.logo_shape === "sharp" ||
+                  restaurantStyle?.logo_shape === t("Sharp")
+                ? "rounded-none"
+                : ""
+            }`}
+          >
             <img
               src={restaurantStyle?.logo}
               alt='logo'
-              className='w-full h-full object-contain rounded-xl'
+              className={`w-full h-full object-cover ${
+                restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
+              }`}
             />
           </div>
         </div>
@@ -94,7 +108,10 @@ const Herosection = ({isMobile, categories}) => {
       </div>
       {(restaurantStyle?.category_alignment === "center" || isMobile) && (
         <div
-          className={`bg-[#2A6E4F] w-full flex items-center ${
+          style={{
+            backgroundColor: restaurantStyle.page_category_color,
+          }}
+          className={` w-full flex items-center ${
             isMobile ? "overflow-x-scroll hide-scroll px-4" : ""
           } `}
         >

@@ -135,7 +135,6 @@ const SectionPanel = () => {
         </div>
         <SocialMediaCollection
           showMedia={showSocialMedia}
-          onChange={(value) => console.log("socialMedia", value)}
           selectedSocialIcons={selectedSocialIcons}
         />
         <div className='mt-3'>
