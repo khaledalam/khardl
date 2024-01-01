@@ -3731,6 +3731,9 @@ details.collapse summary::-webkit-details-marker {
 .top-\[8px\] {
   top: 8px;
 }
+.top-\[2rem\] {
+  top: 2rem;
+}
 .z-0 {
   z-index: 0;
 }
@@ -4215,6 +4218,9 @@ details.collapse summary::-webkit-details-marker {
 .h-\[280px\] {
   height: 280px;
 }
+.h-\[300px\] {
+  height: 300px;
+}
 .h-\[30px\] {
   height: 30px;
 }
@@ -4302,9 +4308,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .h-full {
   height: 100%;
-}
-.h-\[300px\] {
-  height: 300px;
 }
 .max-h-\[150px\] {
   max-height: 150px;
@@ -4614,6 +4617,12 @@ details.collapse summary::-webkit-details-marker {
 }
 .flex-\[82\%\] {
   flex: 82%;
+}
+.flex-\[25\%\] {
+  flex: 25%;
+}
+.flex-\[75\%\] {
+  flex: 75%;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
@@ -7103,6 +7112,18 @@ details.collapse summary::-webkit-details-marker {
 
   .laptopXL\:flex-\[75\%\] {
     flex: 75%;
+  }
+
+  .laptopXL\:flex-\[20\%\] {
+    flex: 20%;
+  }
+
+  .laptopXL\:flex-\[80\%\] {
+    flex: 80%;
+  }
+
+  .laptopXL\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .laptopXL\:text-\[1rem\] {

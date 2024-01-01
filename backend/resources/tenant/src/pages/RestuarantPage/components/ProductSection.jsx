@@ -114,7 +114,7 @@ const ProductSection = ({categories, isMobile}) => {
               }}
               className='w-full flex items-start p-16 gap-2 '
             >
-              <div className='flex-[20%]'>
+              <div className='flex-[25%] laptopXL:flex-[20%]'>
                 <div
                   style={{
                     backgroundColor: restaurantStyle.page_category_color,
@@ -150,7 +150,7 @@ const ProductSection = ({categories, isMobile}) => {
                   </div>
                 </div>
               </div>
-              <div className='flex-[80%]'>
+              <div className='flex-[75%] laptopXL:flex-[80%]'>
                 <div className='w-full'>
                   {filterCategory &&
                     filterCategory.map((category) => (
@@ -160,7 +160,7 @@ const ProductSection = ({categories, isMobile}) => {
                             {category?.name}
                           </span>{" "}
                         </h3>
-                        <div className='w-[95%] mt-10 ml-auto grid grid-cols-3 gap-y-12 gap-x-6 py-10'>
+                        <div className='w-[95%] mt-10 ml-auto grid grid-cols-2 laptopXL:grid-cols-3 gap-y-12 gap-x-6 py-10'>
                           {category?.items
                             ?.filter((item) => item.availability === 1)
                             .map((product, i) => (
@@ -241,7 +241,7 @@ const ProductSection = ({categories, isMobile}) => {
               }}
               className='w-full flex items-start p-16 gap-2'
             >
-              <div className='flex-[80%]'>
+              <div className='flex-[75%] laptopXL:flex-[80%]'>
                 <div className='w-full py-4'>
                   {filterCategory &&
                     filterCategory.map((category) => (
@@ -251,7 +251,7 @@ const ProductSection = ({categories, isMobile}) => {
                             {category?.name}
                           </span>{" "}
                         </h3>
-                        <div className='w-[95%] mt-10 ml-auto grid grid-cols-3 gap-y-12 gap-x-6 py-10'>
+                        <div className='w-[95%] mt-10 ml-auto grid grid-cols-2 laptopXL:grid-cols-3 gap-y-12 gap-x-6 py-10'>
                           {category?.items
                             ?.filter((item) => item.availability === 1)
                             .map((product, i) => (
@@ -319,7 +319,7 @@ const ProductSection = ({categories, isMobile}) => {
                     ))}
                 </div>
               </div>
-              <div className='flex-[20%]'>
+              <div className='flex-[25%] laptopXL:flex-[20%]'>
                 <div
                   style={{
                     backgroundColor: restaurantStyle.page_category_color,

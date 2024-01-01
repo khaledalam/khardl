@@ -63,8 +63,8 @@ const Herosection = ({isMobile, categories}) => {
         {(restaurantStyle && restaurantStyle?.banner_type === "one-photo") ||
         (restaurantStyle && restaurantStyle?.banner_type === t("One-photo")) ? (
           <div
-            className={`w-5/6 overflow-hidden ${
-              isMobile ? "h-[300px]" : "h-[471px]"
+            className={`w-5/6 overflow-hidden  ${
+              isMobile ? "h-[300px]" : "h-[471px] mb-8"
             } laptopXL:w-[75%]`}
             style={{
               boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
@@ -81,7 +81,7 @@ const Herosection = ({isMobile, categories}) => {
           restaurantStyle?.banner_type === "slider" ? (
           <div
             className={`w-5/6 overflow-hidden ${
-              isMobile ? "h-[300px]" : "h-[471px]"
+              isMobile ? "h-[300px]" : "h-[471px] mb-8"
             } laptopXL:w-[75%]`}
           >
             <Swiper

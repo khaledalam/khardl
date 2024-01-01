@@ -14,7 +14,7 @@ class SettingSeeder extends Seeder
     public function run($assets,$restaurant_name): void
     {
         Setting::create([
-            'is_live' => true,
+            'is_live' => false,
             'delivery_fee' => 0,
             'restaurant_name'=>$restaurant_name
         ]);

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import {BiMinusCircle} from "react-icons/bi"
 import {IoAddCircleOutline, IoClose} from "react-icons/io5"
 import Feedback from "./Feedback"
@@ -30,33 +30,6 @@ const CartItem = ({cartItem, cartItems, language, isMobile, styles}) => {
     }
   }
 
-  const incrementQty = useCallback(
-    async (cartId, branchId, newQuantity) => {
-      setQtyCount((prev) => prev + 1)
-
-      if (newQuantity > cartItem.quantity) {
-        try {
-          await AxiosInstance.post(`/carts`, {
-            item_id: cartId,
-            quantity: newQuantity,
-            branch_id: branchId,
-            notes: feedback,
-          })
-            .then((e) => {
-              toast.success(`${t("Item quantity updated")}`)
-              console.log("successfully", e)
-            })
-            .finally(async () => {
-              await fetchCartData().then((r) => null)
-            })
-        } catch (error) {
-          console.log("error: ", error)
-        }
-      }
-    },
-    [cartItem.quantity, qtyCount]
-  )
-  // [[ [] ],[[  [] ]]]
   const checkbox_options_names =
     cartItem && cartItem?.checkbox_options !== null
       ? cartItem?.checkbox_options
@@ -84,34 +57,38 @@ const CartItem = ({cartItem, cartItems, language, isMobile, styles}) => {
   console.log("checkbox_options name", checkbox_options_names)
   console.log("selection_options name", selection_options_names)
 
-  const decrementQty = useCallback(
-    async (cartId, branchId, newQuantity) => {
-      if (qtyCount > 1) {
-        setQtyCount((prev) => prev - 1)
-      }
+  const handleQuantityChange = async (cartId, quantity, branchId) => {
+    try {
+      await AxiosInstance.post(`/carts`, {
+        item_id: cartItem.item_id,
+        quantity: qtyCount,
+        branch_id: cartItem.item.branch_id,
+        notes: feedback,
+      })
+        .then((e) => {
+          toast.success(`${t("Item quantity updated")}`)
+          console.log("successfully", e)
+        })
+        .finally(async () => {
+          await fetchCartData().then((r) => null)
+        })
+    } catch (error) {
+      console.log("error: ", error)
+    }
+  }
+  const incrementQty = useCallback(() => {
+    setQtyCount((prev) => prev + 1)
+  }, [])
 
-      if (newQuantity < cartItem.quantity) {
-        try {
-          await AxiosInstance.post(`/carts`, {
-            item_id: cartId,
-            quantity: newQuantity,
-            branch_id: branchId,
-            notes: feedback,
-          })
-            .then((e) => {
-              toast.success(`${t("Item quantity updated")}`)
-              console.log("successfully", e)
-            })
-            .finally(async () => {
-              await fetchCartData().then((r) => null)
-            })
-        } catch (error) {
-          console.log("error: ", error)
-        }
-      }
-    },
-    [cartItem.quantity, qtyCount]
-  )
+  const decrementQty = useCallback(() => {
+    if (qtyCount > 1) {
+      setQtyCount((prev) => prev - 1)
+    }
+  }, [qtyCount])
+
+  useEffect(() => {
+    handleQuantityChange()
+  }, [qtyCount])
 
   const handleRemoveItem = async (cartItemId) => {
     try {
@@ -138,27 +115,9 @@ const CartItem = ({cartItem, cartItems, language, isMobile, styles}) => {
             />
           </div>
           <div className='flex items-center justify-between w-[90px] lg:w-[120px] cursor-pointer laptopXL:w-[150px]'>
-            <BiMinusCircle
-              size={25}
-              onClick={() =>
-                decrementQty(
-                  cartItem.item_id,
-                  cartItem.item.branch_id,
-                  qtyCount
-                )
-              }
-            />
+            <BiMinusCircle size={25} onClick={decrementQty} />
             <span>{cartItem.quantity}</span>
-            <IoAddCircleOutline
-              size={25}
-              onClick={() =>
-                incrementQty(
-                  cartItem.item_id,
-                  cartItem.item.branch_id,
-                  qtyCount
-                )
-              }
-            />
+            <IoAddCircleOutline size={25} onClick={incrementQty} />
           </div>
         </div>
       </div>
@@ -219,7 +178,7 @@ const CartItem = ({cartItem, cartItems, language, isMobile, styles}) => {
             className={` ${
               styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
             } ${
-              isMobile ? "absolute top-[3rem] right-[.6rem]" : "relative"
+              isMobile ? "absolute top-[2rem] right-[.6rem]" : "relative"
             } relative flex items-center justify-center cursor-pointer rounded-lg w-[40px] h-[35px]`}
           >
             <IoClose size={25} className='cursor-pointer' />
