@@ -8,7 +8,6 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\PhoneValidation;
 use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Validator;
 
 
 class RestaurantControllerRequest extends FormRequest
@@ -20,13 +19,7 @@ class RestaurantControllerRequest extends FormRequest
     }
     public function rules()
     {
-        // Register a custom validation rule for non-empty string
-//        Validator::extend('non_empty_string', function ($attribute, $value, $parameters, $validator) {
-//            $otherFieldValue = $validator->getData()[$parameters[0]];
-//
-//            return is_string($otherFieldValue) && !empty($otherFieldValue);
-//        });
-
+        $restaurantStyles = RestaurantStyle::find(1);
         return [
             /* New */
             'logo_url' => 'nullable',
