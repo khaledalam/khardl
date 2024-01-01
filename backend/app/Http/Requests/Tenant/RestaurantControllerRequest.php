@@ -47,9 +47,9 @@ class RestaurantControllerRequest extends FormRequest
             'text_fontSize' => 'nullable',
             'text_color' => 'nullable|string',
             /* OLD */
-            'logo' => 'required|mimes:png,jpg,jpeg|max:2048',
-            'banner_image' => 'required_if:banner_type,one-photo|nullable|mimes:png,jpg,jpeg|max:2048',
-            'banner_images' => 'required_if:banner_type,slider|nullable|array',
+            'logo' => 'required_if:logo_url|mimes:png,jpg,jpeg|max:2048',
+            'banner_image' => 'required_if:banner_type,one-photo|required_if:banner_image_url,null|nullable|mimes:png,jpg,jpeg|max:2048',
+            'banner_images' => 'required_if:banner_type,slider|required_if:banner_images_urls,null|nullable|array',
             'banner_images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ];
     }
