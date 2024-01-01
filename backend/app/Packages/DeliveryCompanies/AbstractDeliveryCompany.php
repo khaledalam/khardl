@@ -2,61 +2,56 @@
 
 namespace App\Packages\DeliveryCompanies;
 
+use Carbon\Carbon;
 use App\Models\Tenant\Order;
 use App\Utils\ResponseHelper;
+use GuzzleHttp\Promise\Promise;
 use Illuminate\Support\Facades\Http;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\DeliveryCompanyInterface;
-use Carbon\Carbon;
 
 abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
 {
     protected $delivery_company;
-    public function __construct()
+    public function __construct(DeliveryCompany $delivery_company)
     {
-        $this->delivery_company = DeliveryCompany::
-        where('status',true)
-        ->where('Module',class_basename($this))
-        ->whereNotNull('api_key')
-        ->whereNotNull('api_url')
-        ->first();
-
-        if(!$this->delivery_company)  {
-            throw new \Exception(__(":delivery_company is not activated yet", ['delivery_company' => __(class_basename($this))]));
-        } 
-         
+        $this->delivery_company = $delivery_company;
     }
     abstract public function assignToDriver(Order $order,RestaurantUser $customer);
     
-    public function send(string $url,string $method = 'post',$token,array $data):array{
-        try {
-            // dd($url,$method,$data,$token);
-            if($token){
-                $response = Http::withToken($token)
-                ->$method($url,$data);
-            }else {
-                $response = Http::$method($url,$data);
-            }
-           
-            if($response->successful()){
-                $response =  json_decode($response->getBody(), true);
-                return [
-                    'http_code'=> ResponseHelper::HTTP_OK,
-                    'message'=> $response
-                ];
-            }
+    public function send(string $url,$token,array $data,string $method = 'post'): Promise{
+        if($token){
+            $response = Http::async()->withToken($token)
+            ->$method($url,$data);
+        }else {
+            $response = Http::async()->$method($url,$data);
+        }
+        return $response;
+
+        // try {
+        // }catch(\Exception $e){
+        //    logger($e->getMessage());
+
+        // }
+        //     if($response->successful()){
+        //         $response =  json_decode($response->getBody(), true);
+        //         return [
+        //             'http_code'=> ResponseHelper::HTTP_OK,
+        //             'message'=> $response
+        //         ];
+        //     }
             
          
-        }catch(\Exception $e){
-           logger($e->getMessage());
-        }
-        $response =  json_decode($response->getBody(), true);
+        // }catch(\Exception $e){
+        //    logger($e->getMessage());
+        // }
+        // $response =  json_decode($response->getBody(), true);
    
-        return [
-            'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
-            'message'=> isset($response['message']) ?$response['message']: __("Failed to complete the process, please try again or contact Support Team")
-        ];
+        // return [
+        //     'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
+        //     'message'=> isset($response['message']) ?$response['message']: __("Failed to complete the process, please try again or contact Support Team")
+        // ];
     }
   
 }

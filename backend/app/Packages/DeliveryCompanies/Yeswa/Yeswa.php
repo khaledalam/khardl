@@ -58,7 +58,6 @@ class Yeswa  extends AbstractDeliveryCompany
     
         return self::send(
             url:  $this->delivery_company->api_url.'/create_trip/',
-            method: 'post',
             token: false,
             data: $data
         );
