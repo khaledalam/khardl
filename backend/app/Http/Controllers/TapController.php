@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendApprovedBusinessEmailJob;
 use App\Mail\ApprovedBusiness;
 use App\Models\Domain;
 use App\Models\Tenant;
@@ -48,7 +49,7 @@ class TapController extends Controller
     public function payments_upload_tap_documents(Request $request)
     {
         // @TODO: handle upload tap documents logic here...
-       
+
         $validationRules = [
             'business_logo' => 'required|mimes:jpeg,png,gif|file|max:8192',
             'customer_signature' => 'required|mimes:gif,jpeg,png,pdf|file|max:8192',
@@ -57,9 +58,9 @@ class TapController extends Controller
             'pci_document' => 'required|mimes:jpeg,png,pdf|file|max:8192',
             'tax_document_user_upload' => 'required|mimes:jpeg,png,pdf|file|max:8192',
         ];
-       
+
         $request->validate($validationRules);
-      
+
         // Iterate through the keys
         $files = ['id'=>1];
         foreach ($validationRules as $key => $rule) {
@@ -79,7 +80,7 @@ class TapController extends Controller
         TapBusinessFile::updateOrCreate([
             'id'=>1
         ],$files);
-    
+
         return redirect()->back()->with('success', __('Files successfully added.'));
 
     }
@@ -100,11 +101,11 @@ class TapController extends Controller
     }
 
     public function payments_submit_tap_documents(CreateBusinessRequest $request)
-    { 
-       
+    {
+
 
         $user= Auth::user();
-       
+
         $data = $request->validated();
         $files = TapBusinessFile::first();
         $types = [
@@ -132,7 +133,7 @@ class TapController extends Controller
             ])
             ->withInput($request->input());
         }
-       
+
         TapBusiness::create([
             'data'=>$data,
             'business_id'=>$business['message']['id'],
@@ -142,15 +143,15 @@ class TapController extends Controller
             "wallet_id"=>$business['message']['entity']['wallets'][0]['id'],
             'user_id'=>$user->id
         ]);
-      
+
         if($business['message']['status'] == 'Active'){
             $user->tap_verified = true;
             $user->save();
-            Mail::to($user->email)->send(new ApprovedBusiness($user));
+            SendApprovedBusinessEmailJob::dispatch($user);
         }
-      
+
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
-        
+
     }
 
 }

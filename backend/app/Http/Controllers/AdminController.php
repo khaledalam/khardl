@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
+use App\Jobs\SendDeniedEmailJob;
 use App\Models\CentralSetting;
 use App\Models\Tenant\Setting as TenantSettings;
 use App\Models\Tenant;
@@ -590,7 +591,7 @@ class AdminController extends Controller
             $user->save();
         }
 
-        Mail::to($user->email)->queue(new DeniedEmail($user, $selectedOption));
+        SendDeniedEmailJob::dispatch($user, $selectedOption);
 
         Log::create([
             'user_id' => Auth::id(),

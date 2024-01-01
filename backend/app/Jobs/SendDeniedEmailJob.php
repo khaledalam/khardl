@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\DeniedEmail;
 use App\Models\Log;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -11,18 +12,20 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendVerifyEmailJob implements ShouldQueue
+class SendDeniedEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $user;
+    protected $message;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $message = null)
     {
         $this->user = $user;
+        $this->message = $message;
     }
 
     /**
@@ -31,22 +34,18 @@ class SendVerifyEmailJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            // Send the email with the verification code
-            Mail::send('emails.verify', ['code' => $this->user?->verification_code, 'name' => "{$this?->user?->first_name} {$this?->user?->last_name}"], function($message) {
-                $message->to($this?->user?->email);
-                $message->subject('Email Verification Code');
-            });
+            Mail::to($this->user->email)->queue(new DeniedEmail($this->user, $this->message));
 
             Log::create([
                 'restaurant_user_email' => $this?->user?->email,
-                'action' => '[ok] Sent verify restaurant user email',
+                'action' => '[ok] Sent denied email notification',
                 'user_id'=> $this?->user?->id
             ]);
 
         } catch(\Exception $e) {
             Log::create([
                 'restaurant_user_email' => $this?->user?->email,
-                'action' => '[fail] Send verify restaurant user email',
+                'action' => '[fail] Send denied email notification',
                 'user_id'=> $this?->user?->id
             ]);
         }
