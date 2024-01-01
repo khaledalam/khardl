@@ -21,22 +21,6 @@ class RestaurantStyleService
     }
     private function data($request)
     {
-        $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
-        if ($request->banner_image) {
-            $banner_image = tenant_asset(store_image($request->file('banner_image'), RestaurantStyle::STORAGE, 'banner_image'));
-        } else {
-            if ($request->banner_images) {
-                foreach ($request->banner_images as $k => $image) {
-                    $banner_images[] = tenant_asset(store_image($image, RestaurantStyle::STORAGE, 'banner_image_' . $k + 1));
-                }
-            }
-        }
-
-        if ($request->banner_images_urls) {
-            foreach ($request->banner_images_urls as $k => $image) {
-                $banner_images_urls[] = $image;
-            }
-        }
         $data = [
             'id' => 1,
             'logo_alignment' => $request->logo_alignment,
@@ -67,22 +51,21 @@ class RestaurantStyleService
             'selectedSocialIcons' => $request->selectedSocialIcons,
             'user_id' => Auth::user()?->id
         ];
-        if (isset($banner_images)) {
-            $data['banner_images'] = $banner_images;
+        if (isset($request->logo) && $request->logo) {
+            $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
+            $data['logo'] = $logo;
         }
-        if (isset($banner_images_urls)) {
-            $data['banner_images_urls'] = $banner_images_urls;
-        }
-        if (isset($request->banner_image_url) && $request->banner_image_url) {
-            $data['banner_image_url'] = $request->banner_image_url;
-        }
-        if (isset($request->logo_url) && $request->logo_url) {
-            $data['logo_url'] = $request->logo_url;
-            $data['logo'] = $request->$logo;
-        }
-        if (isset($banner_image)) {
+        if (isset($request->banner_image) && $request->banner_image) {
+            $banner_image = tenant_asset(store_image($request->file('banner_image'), RestaurantStyle::STORAGE, 'banner_image'));
             $data['banner_image'] = $banner_image;
         }
+        if (isset($request->banner_images) && $request->banner_images) {
+            foreach ($request->banner_images as $k => $image) {
+                $banner_images[] = tenant_asset(store_image($image, RestaurantStyle::STORAGE, 'banner_image_' . $k + 1));
+            }
+            $data['banner_images'] = $banner_images;
+        }
+
         return $data;
     }
     public function fetch($request)

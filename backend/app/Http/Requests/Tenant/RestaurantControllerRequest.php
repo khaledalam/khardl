@@ -59,9 +59,31 @@ class RestaurantControllerRequest extends FormRequest
             'text_fontSize' => 'nullable',
             'text_color' => 'nullable|string',
             /* OLD */
-            'logo' => 'nullable|required_without:logo_url|mimes:png,jpg,jpeg|max:2048',
-            'banner_image' => 'nullable|required_if:banner_type,one-photo&&required_without:banner_image_url|mimes:png,jpg,jpeg|max:2048',
-            'banner_images' => 'nullable|required_without:banner_images_urls&&required_if:banner_type,slider|array',
+            'logo' => [
+                Rule::when((!$restaurantStyles || !$restaurantStyles?->logo) && $this->logo == null, 'required|mimes:png,jpg,jpeg|max:2048')
+            ],
+            'banner_image' => [
+                Rule::when(function ($attribute) use ($restaurantStyles) {
+                    if (!$restaurantStyles && $attribute->banner_type == 'one-photo' && empty($attribute->banner_image)) {
+                        return true;
+                    } else {
+                        if ($restaurantStyles->banner_image == null && $attribute->banner_type == 'one-photo' && empty($attribute->banner_image)) {
+                            return true;
+                        }
+                    }
+                }, 'required|mimes:png,jpg,jpeg|max:2048'),
+            ],
+            'banner_images' => [
+                Rule::when(function ($attribute) use ($restaurantStyles) {
+                    if (!$restaurantStyles && $attribute->banner_type == 'slider' && empty($attribute->banner_images)) {
+                        return true;
+                    } else {
+                        if ($restaurantStyles->banner_images == null && $attribute->banner_type == 'slider' && empty($attribute->banner_images)) {
+                            return true;
+                        }
+                    }
+                }, 'required|array'),
+            ],
             'banner_images.*' => 'mimes:png,jpg,jpeg|max:2048',
         ];
     }
