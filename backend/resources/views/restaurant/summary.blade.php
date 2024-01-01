@@ -50,7 +50,7 @@
                                  </div>
                                  <!--end::Info-->
                                  <!--begin::Subtitle-->
-                                 <span class="text-gray-400 pt-1 fw-bold fs-6">Total orders</span>
+                                 <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.Total orders') }}</span>
                                  <!--end::Subtitle-->
                              </div>
                              <!--end::Title-->
@@ -67,7 +67,7 @@
                                      <!--end::Bullet-->
                                      <!--begin::Label-->
                                      <div class="text-gray-500 flex-grow-1 me-4">
-                                         Pending
+                                         {{ __('messages.Pending') }}
                                      </div>
                                      <!--end::Label-->
                                      <!--begin::Stats-->
@@ -84,7 +84,7 @@
                                      <!--end::Bullet-->
                                      <!--begin::Label-->
                                      <div class="text-gray-500 flex-grow-1 me-4">
-                                         Accepted
+                                        {{ __('messages.Accepted') }}
                                      </div>
                                      <!--end::Label-->
                                      <!--begin::Stats-->
@@ -101,7 +101,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        Completed
+                                        {{ __('messages.Completed') }}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -119,7 +119,7 @@
                                      <!--end::Bullet-->
                                      <!--begin::Label-->
                                      <div class="text-gray-500 flex-grow-1 me-4">
-                                         Cancelled
+                                        {{ __('messages.Cancelled') }}
                                      </div>
                                      <!--end::Label-->
                                      <!--begin::Stats-->
@@ -147,7 +147,7 @@
                                  <div class="d-flex align-items-center">
                                      <!--begin::Currency-->
                                      <span
-                                         class="fs-4 fw-bold text-gray-400 me-1 align-self-start">SAR</span>
+                                         class="fs-4 fw-bold text-gray-400 me-1 align-self-start">{{ __('messages.SAR') }}</span>
                                      <!--end::Currency-->
                                      <!--begin::Amount-->
                                      <span
@@ -169,7 +169,7 @@
                                  </div>
                                  <!--end::Info-->
                                  <!--begin::Subtitle-->
-                                 <span class="text-gray-400 pt-1 fw-bold fs-6">Average Daily Sales</span>
+                                 <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.Daily Sales') }}</span>
                                  <!--end::Subtitle-->
                              </div>
                              <!--end::Title-->
@@ -196,8 +196,7 @@
                                                 <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{ $noOfUsersThisMonth }}</span>
                                                 <!--end::Amount-->
                                                 <!--begin::Subtitle-->
-                                                <span class="text-gray-400 pt-1 fw-bold fs-6">New Customers This
-                                                    Month</span>
+                                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.New Customers This Month') }}</span>
                                                 <!--end::Subtitle-->
                                             </div>
                                             <!--end::Title-->
@@ -221,7 +220,7 @@
                          <div class="card-header">
                              <!--begin::Title-->
                              <h3 class="card-title align-items-start flex-column">
-                                 <span class="card-label fw-bolder text-dark">Sales This Months</span>
+                                 <span class="card-label fw-bolder text-dark">{{ __('messages.Sales This Months') }}</span>
                              </h3>
                              <!--end::Title-->
                          </div>
@@ -232,7 +231,7 @@
                              <div class="px-9 mb-5">
                                  <!--begin::Statistics-->
                                  <div class="d-flex mb-2">
-                                     <span class="fs-4 fw-bold text-gray-400 me-1">SAR</span>
+                                     <span class="fs-4 fw-bold text-gray-400 me-1">{{ __('messages.SAR') }}</span>
                                      <span
                                          class="fs-2hx fw-bolder text-gray-800 me-2 lh-1 ls-n2">{{ $totalPriceThisMonth }}</span>
                                  </div>
@@ -264,7 +263,7 @@
                      <div class="card card-xl-stretch mb-xl-8">
                          <!--begin::Header-->
                          <div class="card-header border-0">
-                             <h3 class="card-title fw-bolder text-dark">Best selling products (Last 30 days)</h3>
+                             <h3 class="card-title fw-bolder text-dark">{{ __('messages.Best selling products (Last 30 days)') }}</h3>
                              <div class="card-toolbar">
 
                              </div>
@@ -288,7 +287,7 @@
                                 <!--begin::Description-->
                                 <div class="flex-grow-1">
                                     <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">{{ $orderItem->item->description }}</a>
-                                    <span class="text-muted fw-bold d-block">{{ $orderItem->item->price }} SAR</span>
+                                    <span class="text-muted fw-bold d-block">{{ $orderItem->item->price }} {{ __('messages.SAR') }}</span>
                                 </div>
                                 <!--end::Description-->
                                 <span class="badge badge-light-success fs-8 fw-bolder">{{ $orderItem->total_quantity }}</span>
