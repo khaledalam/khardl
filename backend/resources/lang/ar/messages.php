@@ -473,6 +473,11 @@ return [
     "Name in arabic" => "الاسم بالعربية",
     "Price" => "السعر",
     "Add option" => "اضافة خيار",
-    "Required"=>"مطلوب"
+    "Required"=>"مطلوب",
+    "Unavailable products" => "المنتجات الغير متاحة",
+    "Category" => "التصنيف",
+    "Image" => "الصورة",
+    "User" => "المستخدم",
+    "Created at" => "تاريخ الانشاء"
 ];
 

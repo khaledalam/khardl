@@ -475,5 +475,10 @@ return [
     "Price" => "Price",
     "Add option" => "Add option",
     "Required" => "Required",
+    "Unavailable products" => "Unavailable products",
+    "Category" => 'Category',
+    "Image" => "Image",
+    "User" => "User",
+    "Created at" => "Created at"
 
 ];

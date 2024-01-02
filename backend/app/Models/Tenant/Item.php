@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
@@ -57,6 +58,14 @@ class Item extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
     /* End Relations */
     /* Start Scopes */
     public function scopeWhenSearch($query, $search)
@@ -73,6 +82,14 @@ class Item extends Model
                 return $q->where('id',$id);
             });
         });
+    }
+    public function scopeUnAvailable($query)
+    {
+        return $query->where('availability', 0);
+    }
+    public function scopeRecent($query)
+    {
+        return $query->orderBy('id','DESC');
     }
     /* End Scopes */
 
