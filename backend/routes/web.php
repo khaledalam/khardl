@@ -247,7 +247,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
     Route::post('/delivery-webhook', static function (Request $request) {
         try{
-            \Sentry\captureMessage('Webhook post from delivery company');
+            // \Sentry\captureMessage('Webhook post from delivery company');
             
             $client = new \GuzzleHttp\Client();
     
