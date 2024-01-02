@@ -457,6 +457,7 @@ return [
     "Quantity" => "الكمية",
     "Options" => "الخيارات",
     "Order" => "اطلب",
-    "Select options for" => "اختر خيارات ل"
+    "Select options for" => "اختر خيارات ل",
+    "contact" => "التواصل"
 ];
 

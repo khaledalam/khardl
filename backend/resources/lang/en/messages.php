@@ -408,6 +408,7 @@ return [
     "Sales This month"  => "Sales This month",
     "Profit per day"    => "Profit per day",
     "Profit per month"    => "Profit per month",
+    "contact" => "Contact"
 
 
 
