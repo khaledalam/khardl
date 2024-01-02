@@ -14,7 +14,7 @@ class BusinessController extends Controller
     public function show($business_id){
         return Business::retrieve($business_id);
     }
-    public function dummy_data(){
+    public static function dummy_data(){
         return [
             'name' => [
                 'en' => 'Flexwares',

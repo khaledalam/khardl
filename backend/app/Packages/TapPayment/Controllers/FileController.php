@@ -14,7 +14,7 @@ class FileController extends Controller
     public function show($file_id){
         return File::retrieve($file_id);
     }
-    public function dummy_data(){
+    public static function dummy_data(){
         return [
             'headers' => [
                 'Authorization' => 'Bearer sk_test_XKokBfNWv6FIYuTMg5sLPjhJ',

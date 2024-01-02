@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Tenant\Customer;
 
+use App\Models\Tenant\DeliveryType;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Repositories\Customer\CartRepository;
-use Illuminate\Support\Facades\Auth;
+use App\Packages\DeliveryCompanies\DeliveryCompanies;
 
 class OrderRequest extends FormRequest
 {
@@ -25,6 +27,7 @@ class OrderRequest extends FormRequest
      */
     public function rules()
     {
+       
         return [
             'payment_method'=>'required',
             'delivery_type'=>'required',
@@ -57,12 +60,18 @@ class OrderRequest extends FormRequest
                 $validator->errors()->add('delivery_type', __('Invalid Delivery Type'));
                 return ;
             }
+           
             $cart->items()->map(function($cart_item)use($validator){
                 if(!$cart_item->item->availability){
                     $validator->errors()->add('cart', __(':name is not available',['name'=>$cart_item->item->name]));
                     return ;
                 }
             });
+            if($this->delivery_type == DeliveryType::DELIVERY ){
+                $branch = $cart->branch();
+                DeliveryCompanies::validateCustomerAddress($validator,$branch->lat,$branch->lng,$user->lat,$user->lng);
+            }
+            
         });
     }
 

@@ -448,8 +448,13 @@
     </div>
     <!--end::Post-->
 </div>
-@section('js')
+@section('charts')
+@if($profitDays&&$is_live)
 {!! $profitDays->renderChartJsLibrary() !!}
 {!! $profitDays->renderJs() !!}
+@endif
+@if($profitMonths&&$is_live)
+{!! $profitDays->renderChartJsLibrary() !!}
 {!! $profitMonths->renderJs() !!}
-@endsection
+@endif
+@stop
