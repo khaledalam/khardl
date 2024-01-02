@@ -43,21 +43,28 @@ class OrderRepository
                     // TODO @todo update
                     'payment_status' => Payment::PENDING,
                     'status'=> Order::PENDING,
-
                 ]);
+
+                // @TODO: fetch transaction fee percentage that need to be deduce from
+                // each TAP transaction from super admin dashboard settings
+
+
+                // @TODO: Create TAP charge
+
+
 
                 $statusLog = new OrderStatusLogs();
                 $statusLog->order_id = $order->id;
                 $statusLog->status = Order::PENDING;
                 $statusLog->notes = 'Order Notes: ' . $request->order_notes;
                 $statusLog->saveOrFail();
-                
+
                 $cart->clone_to_order_items($order->id);
 
-               
+
                 $cart->trash();
 
-                
+
                 DB::commit();
                 return $this->sendResponse($order, __('The order been created successfully.'));
 

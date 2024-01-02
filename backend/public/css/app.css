@@ -3710,14 +3710,14 @@ details.collapse summary::-webkit-details-marker {
 .top-\[25\%\] {
   top: 25%;
 }
+.top-\[2rem\] {
+  top: 2rem;
+}
 .top-\[38px\] {
   top: 38px;
 }
 .top-\[39\%\] {
   top: 39%;
-}
-.top-\[3rem\] {
-  top: 3rem;
 }
 .top-\[44\.1\%\] {
   top: 44.1%;
@@ -3730,9 +3730,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .top-\[8px\] {
   top: 8px;
-}
-.top-\[2rem\] {
-  top: 2rem;
 }
 .z-0 {
   z-index: 0;
@@ -4609,20 +4606,14 @@ details.collapse summary::-webkit-details-marker {
 .flex-\[18\%\] {
   flex: 18%;
 }
-.flex-\[20\%\] {
-  flex: 20%;
-}
-.flex-\[80\%\] {
-  flex: 80%;
-}
-.flex-\[82\%\] {
-  flex: 82%;
-}
 .flex-\[25\%\] {
   flex: 25%;
 }
 .flex-\[75\%\] {
   flex: 75%;
+}
+.flex-\[82\%\] {
+  flex: 82%;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
@@ -7106,16 +7097,16 @@ details.collapse summary::-webkit-details-marker {
     width: 80%;
   }
 
+  .laptopXL\:flex-\[20\%\] {
+    flex: 20%;
+  }
+
   .laptopXL\:flex-\[25\%\] {
     flex: 25%;
   }
 
   .laptopXL\:flex-\[75\%\] {
     flex: 75%;
-  }
-
-  .laptopXL\:flex-\[20\%\] {
-    flex: 20%;
   }
 
   .laptopXL\:flex-\[80\%\] {
