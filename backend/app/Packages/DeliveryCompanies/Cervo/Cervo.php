@@ -73,6 +73,8 @@ class Cervo  extends AbstractDeliveryCompany
             data: $data
         );
     }
+    public static function processWebhook($payload){
 
+    }
 }
    
