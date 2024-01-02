@@ -83,14 +83,15 @@ class StreetLine  extends AbstractDeliveryCompany
     }
     public static function processWebhook($payload){
         if($payload['status_id'] == self::STATUS_ORDER['Order delivered']){
-                Order::findOrFail($payload['client_order_id'])->update([
+                Order::findOrFail($payload['order_id'])->update([
                     'status'=>Order::COMPLETED
                 ]);
 
         }else if(
             $payload['status_id'] == self::STATUS_ORDER['Arrived to pickup'] ||
             $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
-                Order::findOrFail($payload['client_order_id'])->update([
+                
+                Order::findOrFail($payload['order_id'])->update([
                     'status'=>Order::ACCEPTED
                 ]);
         }else if(

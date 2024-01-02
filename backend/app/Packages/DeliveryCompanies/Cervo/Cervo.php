@@ -74,6 +74,20 @@ class Cervo  extends AbstractDeliveryCompany
         );
     }
     public static function processWebhook($payload){
+        if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER'] || $payload["order_status"]  == self::STATUS_ORDER['ORDER_ON_HAND']){
+            Order::findOrFail($payload['order_id'])->update([
+                'status'=>Order::ACCEPTED
+            ]);
+        }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
+            Order::findOrFail($payload['order_id'])->update([
+                'status'=>Order::COMPLETED
+            ]);
+        }else if (
+            $payload['order_status'] == self::STATUS_ORDER['CANCELLED'] ||
+            $payload['order_status'] == self::STATUS_ORDER['CANCELED_BY_DRIVER'] ){
+            // Todo @todo
+            // resend the order to any delivery companies or cancelled 
+        }
 
     }
 }
