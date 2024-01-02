@@ -87,16 +87,18 @@ const PaymentSection = ({
 
     if (window.confirm(t("Are You sure you want to place the order?"))) {
 
+        console.log("tap_public_key", tap_public_key);
+
         goSell.config({
-            containerID: "root",
+            containerID: "tap_charge_element",
             gateway: {
-                publicKey: "pk_test_Vlk842B1EA7tDN5QbrfGjYzh",
-                merchantId: null,
+                publicKey: tap_public_key,
+                merchantId: 123,
                 language: "en",
                 contactInfo: true,
                 supportedCurrencies: "all",
                 supportedPaymentMethods: "all",
-                saveCardOption: false,
+                saveCardOption: true,
                 customerCards: true,
                 notifications: "standard",
                 callback: (response) => {
@@ -141,13 +143,13 @@ const PaymentSection = ({
                 last_name: "Last Name",
                 email: "demo@email.com",
                 phone: {
-                    country_code: "965",
+                    country_code: "966",
                     number: "99999999",
                 },
             },
             order: {
                 amount: 100,
-                currency: "KWD",
+                currency: "SAR",
                 items: [
                     {
                         id: 1,
@@ -521,6 +523,7 @@ const PaymentSection = ({
                     className='w-full h-full object-contain'
                   />
                 </div>
+                  <div id={"tap_charge_element"} />
                 <h3 className='text-[1rem] font-medium text-black'>
                   Place Order
                 </h3>
