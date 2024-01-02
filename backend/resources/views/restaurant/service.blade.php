@@ -3,6 +3,16 @@
 @section('title', __('messages.services'))
 
 @section('content')
+@push('styles')
+<link href="{{ global_asset('js/custom/creditCard/main.css')}}"rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.6.0/js/gosell.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+@endpush
+@push('scripts')
+
+
+@endpush
+
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
         <div class="d-flex flex-column flex-root">
@@ -265,14 +275,91 @@
                                                             <!--end::Heading-->
 
                                                             <!--begin::Select-->
+
+                                                                    <!--end::Modal dialog-->
                                                             <div class=" d-flex justify-content-between w-75 ">
-                                                                <div>
-                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                </div>
+                                                                        <div>
+                                                                            <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                        </div>
                                                                 <div>
                                                                     <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
+                                                                <!--begin::Modal dialog-->
+                                                                <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                                    <!--begin::Modal content-->
+                                                                    <div class="modal-content rounded p-15">
+                                                                            <!--begin::Modal header-->
+                                                                            <div class="modal-header pb-0 border-0 ">
+                                                                                <h5 class="modal-title text-center">Subscribe to the branch package</h5>
+                                                                            </div>
+        
+                                                                                <div id="root"></div>
+                                                                                <p id="msg"></p>
+                                                                                <button id="tap-btn"  onclick="goSell.submit()" >Submit</button>
+                                                                          
+                                                                      <script>
+                                                                            goSell.goSellElements({
+                                                                                containerID:"root",
+                                                                              
+                                                                                gateway:{
+                                                                                    callback	: function(event){
+                                                                                        if(event.status == "ACTIVE" && event.card.id){
+                                                                                            $.ajax({
+                                                                                                url: '{{ route('tap.payments_submit_card_details', ['cardId' => '__card__','data'=>'__data__']) }}'
+                                                                                                .replace('__card__', event.card.id) .replace('__data__', JSON.stringify(event)),
+                                                                                                type: 'POST',
+                                                                                                dataType: 'json',
+                                                                                                data: {
+                                                                                                    '_token': '{{ csrf_token() }}', // Include the CSRF token
+                                                                                                },
+                                                                                                success: function (response) {
+                                                                                                    
+                                                                                                },
+                                                                                                error: function (error) {
+                                                                                                    console.error('Error toggling user status:', error);
+                                                                                                }
+                                                                                            });
+                                                                                        }
+                                                                                       
+                                                                                    },
+                                                                                    publicKey:"pk_test_LSwNp8KReqHB4Mgly1PWOA7E",
+                                                                                    language: "{{app()->getLocale()}}",
+                                                                                    supportedCurrencies: "all",
+                                                                                    supportedPaymentMethods: "all",
+                                                                                    notifications: 'msg',
+                                                                                    style: {
+                                                                                        base: {
+                                                                                            color: '#535353',
+                                                                                            lineHeight: '18px',
+                                                                                            fontFamily: 'sans-serif',
+                                                                                            fontSmoothing: 'antialiased',
+                                                                                            fontSize: '16px',
+                                                                                            '::placeholder': {
+                                                                                                color: 'rgba(0, 0, 0, 0.26)',
+                                                                                                fontSize:'15px'
+                                                                                            }
+                                                                                        },
+                                                                                        invalid: {
+                                                                                            color: 'red',
+                                                                                            iconColor: '#fa755a '
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                           
+                                                                        </script>
+
+
+                                                                                <!--end:Form-->
+                                                                    </div>
+                                                                </div>
+                                                                        <!--end::Modal body-->
+                                                            </div>
+                                                                    <!--end::Modal content-->
+
                                                             <!--end::Select-->
                                                         </div>
                                                         <!--end::Option-->
@@ -671,19 +758,7 @@
         <!--end::Modal - Cancle branch-->
 
 
-        <!--begin::Javascript-->
-        <script>var hostUrl = "assets/";</script>
-        <!--begin::Global Javascript Bundle(used by all pages)-->
-        <script src="{{global_asset('assets/plugins/global/plugins.bundle.js')}}"></script>
-{{--        <script src="assets/js/scripts.bundle.js"></script>--}}
-        <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
-{{--        <script src="assets/js/custom/apps/file-manager/list.js"></script>--}}
-{{--        <script src="assets/js/widgets.bundle.js"></script>--}}
-{{--        <script src="assets/js/custom/widgets.js"></script>--}}
-{{--        <script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>--}}
-{{--        <script src="assets/js/custom/utilities/modals/create-app.js"></script>--}}
-{{--        <script src="assets/js/custom/utilities/modals/users-search.js"></script>--}}
-        <!--end::Page Custom Javascript-->
+
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var myLink = document.getElementById("myLink");
@@ -730,7 +805,7 @@
             });
 
         </script>
-        <!--end::Javascript-->
+
 
      </div>
      <!--end::Content-->

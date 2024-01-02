@@ -37,7 +37,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'address',
         'lat',
         'lng',
-        'branch_id'
+        'branch_id',
+        'msegat_id_verification',
+        'tap_customer_id',
+        'tap_verified'
     ];
     const STATUS = [
         self::ACTIVE,
@@ -87,6 +90,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+    public function getPhoneWithoutCountryCodeAttribute()
+    {
+        return substr($this->phone, 3);
     }
     // public function roles()
     // {
