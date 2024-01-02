@@ -96,15 +96,16 @@ export const RestuarantHomePage = () => {
   )
 
   return (
-    <div style={{backgroundColor: restaurantStyle?.page_color}}>
+    <div
+      style={{
+        backgroundColor: restaurantStyle?.page_color,
+        fontFamily: restaurantStyle.text_fontFamily,
+      }}
+    >
       <NavbarRestuarant />
       <Herosection isMobile={isMobile} categories={categories} />
       {/* <ProductSection alignment={"center"} categories={categories} /> */}
-      <ProductSection
-        alignment={"center"}
-        categories={categories}
-        isMobile={isMobile}
-      />
+      <ProductSection categories={categories} isMobile={isMobile} />
       <FooterRestuarant />
     </div>
   )

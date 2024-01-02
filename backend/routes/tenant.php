@@ -37,6 +37,8 @@ use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
+use App\Packages\TapPayment\Controllers\CardController;
+use App\Packages\TapPayment\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,16 +112,20 @@ Route::group([
             Route::middleware('restaurant')->group(function () {
 
                 // TAP Create Business
-                // Step 1:
+                // Step 1: store files
                 Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get')->middleware('isBusinessSubmitted');
                 Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents')->middleware('isBusinessSubmitted');
 
-                // Step 2:
+                // Step 2: create business
                 Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get')->middleware('isBusinessFilesSubmitted');
                 Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
+                // Step 3: save cards
+                Route::post('/payments/tap-create-card-details/{cardId}', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
+
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {

@@ -40,12 +40,14 @@ class SendVerifyEmailJob implements ShouldQueue
             Log::create([
                 'restaurant_user_email' => $this?->user?->email,
                 'action' => '[ok] Sent verify restaurant user email',
+                'user_id'=> $this?->user?->id
             ]);
 
         } catch(\Exception $e) {
             Log::create([
                 'restaurant_user_email' => $this?->user?->email,
                 'action' => '[fail] Send verify restaurant user email',
+                'user_id'=> $this?->user?->id
             ]);
         }
     }

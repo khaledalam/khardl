@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
+use App\Jobs\SendDeniedEmailJob;
 use App\Models\CentralSetting;
 use App\Models\Tenant\Setting as TenantSettings;
 use App\Models\Tenant;
@@ -277,30 +278,6 @@ class AdminController extends Controller
         return view('admin.restaraunts', compact('restaurants', 'user'));
     }
 
-    public function viewRestaurant($id){
-
-        $restaurant = Tenant::findOrFail($id);//->with('user.traderRegistrationRequirement');
-        $logo =null;
-        $is_live= false;
-
-        $restaurant->run(static function($restaurant)use(&$logo,&$is_live){
-            $info = $restaurant->info(false);
-            $logo = $info['logo'];
-            $is_live = $info['is_live'];
-        });
-
-        $owner =  $restaurant->user;
-        $widget = 'overview';
-        $user = Auth::user();
-        // if($restaurant->role == 0){
-        //     return view('admin.view-restaurant', compact('restaurant'));
-        // }else{
-        //     return abort(404);
-        // }
-
-        return view('admin.view-restaurant', compact('restaurant','widget','user','logo','is_live','owner'));
-
-    }
 
     public function activateRestaurant(Tenant $restaurant){
 
@@ -321,51 +298,16 @@ class AdminController extends Controller
 
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['id'=>$restaurant->id])."> $restaurant->id </a>",
+            'action' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
         ]);
 
-        return redirect()->route('admin.view-restaurants',['id'=>$restaurant->id])->with('success', __("Restaurant has been activated successfully."));
+        return redirect()->route('admin.view-restaurants',['tenant'=>$restaurant->id])->with('success', __("Restaurant has been activated successfully."));
 
     }
 
-    public function viewRestaurantOrders( $id){
 
-        $restaurant = Tenant::findOrFail($id);
-        $logo =null;
-        $is_live= false;
-        $orders = [];
-        $restaurant->run(static function($restaurant)use(&$logo,&$is_live,&$orders){
-            $info = $restaurant->info(false);
-            $logo = $info['logo'];
-            $is_live = $info['is_live'];
-            $orders = $restaurant->orders(false);
-        });
-        $owner =  $restaurant->user;
-        $user = Auth::user();
-        $widget = 'orders';
 
-        return view('admin.view-restaurant-orders', compact('user','widget','owner','restaurant', 'orders','is_live','logo'));
-    }
 
-    public function viewRestaurantCustomers( $id){
-
-        $restaurant = Tenant::findOrFail($id);
-        $is_live = false;
-        $logo = null;
-
-        $customers =[];
-        $restaurant->run(static function($restaurant)use(&$logo,&$is_live,&$customers){
-            $info = $restaurant->info(false);
-            $logo = $info['logo'];
-            $is_live = $info['is_live'];
-            $customers = $restaurant->customers(false);
-        });
-        $owner =  $restaurant->user;
-        $user = Auth::user();
-        $widget = 'customers';
-
-        return view('admin.view-restaurant-customers', compact('user','widget','owner','logo','restaurant', 'customers','is_live'));
-    }
 
     public function deleteRestaurant($id)
     {
@@ -649,7 +591,7 @@ class AdminController extends Controller
             $user->save();
         }
 
-        Mail::to($user->email)->queue(new DeniedEmail($user, $selectedOption));
+        SendDeniedEmailJob::dispatch($user, $selectedOption);
 
         Log::create([
             'user_id' => Auth::id(),

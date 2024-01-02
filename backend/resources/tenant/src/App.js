@@ -57,6 +57,7 @@ const App = () => {
   ].includes(location.pathname)
   const showFooter = ![
     "/",
+    "/cart",
     "/site-editor/restaurants",
     "/site-editor/customers",
     "/login",
@@ -100,8 +101,7 @@ const App = () => {
       >
         <div>
           <ToastContainer theme='colored' /> {showHeader && <Header />}{" "}
-          {/*<Supports />*/}
-          <ScrollUp />
+          {/*<Supports />*/} <ScrollUp />
           <div>
             <Routes>
               {" "}
@@ -132,15 +132,15 @@ const App = () => {
                   element={<VerificationPhone />}
                 />{" "}
                 <Route path='/site-editor' element={<EditorSwitcher />} />{" "}
-                <Route path='/cart' element={<Cart />} />{" "}
+                <Route path='/cart' element={<CartPage />} />{" "}
                 <Route
                   path='/site-editor/restaurants'
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                                                                                                                                                                                                                                                                                                                  path='/site-editor/restaurants'
-                                                                                                                                                                                                                                                                                                                                                  element={<EditorPage />}
-                                                                                                                                                                                                                                                                                                                                                />{" "} */}{" "}
+                                                                                                                                                                                                                                                                                                                                                                                                              path='/site-editor/restaurants'
+                                                                                                                                                                                                                                                                                                                                                                                                              element={<EditorPage />}
+                                                                                                                                                                                                                                                                                                                                                                                                            />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
                 <Route path='/dashboard' element={<CustomersPreview />} />{" "}
                 <Route path='/site-editor/customers' element={<EditorPage />} />{" "}

@@ -26,13 +26,13 @@ const SidebarEditor = () => {
     },
     {
       id: "General",
-      name: "General",
+      name: t("General"),
     },
   ]
 
   const TABS = {
     section: t("Section"),
-    general: "General",
+    general: t("General"),
   }
 
   useEffect(() => {
