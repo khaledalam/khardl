@@ -456,6 +456,23 @@ return [
     "Quantity" => "الكمية",
     "Options" => "الخيارات",
     "Order" => "اطلب",
-    "Select options for" => "اختر خيارات ل"
+    "Select options for" => "اختر خيارات ل",
+    "Checkbox" => "خيارات(اختيار متعدد)",
+    "Selection" => "خيارات(اختبار واحد بسعر)",
+    "Dropdown" => "خيارات(اختيار واحد بدون سعر)",
+    "Calories" => "السعرات",
+    "English" => "بالانجليزية",
+    "Arabic" => "بالعربية",
+    "Enter name in english" => "ادخل الاسم بالانجليزية",
+    "Enter name in arabic" => "ادخل الاسم بالعربية",
+    "Description" => "الوصف",
+    "Title in english" => "العنوان بالانجليزية",
+    "Title in arabic" => "العنوان بالعربية",
+    "Max" => "عدد الخيارات المتاحة",
+    "Name in english" => "الاسم بالانجليزية",
+    "Name in arabic" => "الاسم بالعربية",
+    "Price" => "السعر",
+    "Add option" => "اضافة خيار",
+    "Required"=>"مطلوب"
 ];
 

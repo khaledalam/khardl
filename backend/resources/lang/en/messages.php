@@ -458,7 +458,22 @@ return [
     "Options" => "Options",
     "Order" => "Order",
     "Select options for" => "Select options for",
-
-
+    "Checkbox" => "Checkbox",
+    "Selection" => "Selection",
+    "Dropdown" => "Dropdown",
+    "Calories" => "Calories",
+    "English" => "English",
+    "Arabic" => "Arabic",
+    "Enter name in english" => "Enter name in english",
+    "Enter name in arabic" => "Enter name in arabic",
+    "Description" => "Description",
+    "Title in english" => "Title in english",
+    "Title in arabic" => "Title in arabic",
+    "Max" => "Max",
+    "Name in english" => "Name in english",
+    "Name in arabic" => "Name in arabic",
+    "Price" => "Price",
+    "Add option" => "Add option",
+    "Required" => "Required",
 
 ];
