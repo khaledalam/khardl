@@ -36,6 +36,9 @@
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
         <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    @endif
+
+    @stack('styles')
     @yield('css')
 @endif
 <!--end::Global Stylesheets Bundle-->
@@ -680,4 +683,3 @@
 <!--end::Body-->
 
 </html>
-@endif

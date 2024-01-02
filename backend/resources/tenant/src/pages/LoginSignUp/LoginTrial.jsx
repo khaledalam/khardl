@@ -33,7 +33,7 @@ const LoginTrial = () => {
    const onSubmit = async (data) => {
       try {
          setSpinner(true)
-         const response = await AxiosInstance.post(`/login`, {
+         const response = await AxiosInstance.post(`/login-admins`, {
            email: data.email,
            password: data.password,
            // remember_me: data.remember_me, // used only in API token-based

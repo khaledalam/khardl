@@ -16,12 +16,12 @@
                     <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-lg-n2 me-auto">
                         <!--begin:::Tab item-->
                         <li class="nav-item">
-                            <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_summary">Customer Summary</a>
+                            <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_summary">{{ __('messages.Customer Summary') }}</a>
                         </li>
                         <!--end:::Tab item-->
                         <!--begin:::Tab item-->
                         <li class="nav-item">
-                            <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_history">Order History</a>
+                            <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_history">{{ __('messages.Order History') }}</a>
                         </li>
                         <!--end:::Tab item-->
                     </ul>
@@ -37,7 +37,7 @@
                         <!--begin::Card header-->
                         <div class="card-header">
                             <div class="card-title">
-                                <h2>Customer Details</h2>
+                                <h2>{{ __('messages.Customer') }}</h2>
                             </div>
                         </div>
                         <!--end::Card header-->
@@ -59,7 +59,7 @@
                                                             <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->Customer</div>
+                                                    <!--end::Svg Icon-->{{ __('messages.Customer') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 <div class="d-flex align-items-center justify-content-end">
@@ -81,7 +81,7 @@
                                                             <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->Email</div>
+                                                    <!--end::Svg Icon-->{{ __('messages.Email') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 <a href="../../demo1/dist/apps/user-management/users/view.html" class="text-gray-600 text-hover-khardl">{{ $restaurantUser->email }}</a>
@@ -99,7 +99,7 @@
                                                             <path opacity="0.3" d="M19 4H5V20H19V4Z" fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->Phone</div>
+                                                    <!--end::Svg Icon-->{{ __('messages.Phone') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">+{{ $restaurantUser->phone }}</td>
                                         </tr>
@@ -110,7 +110,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-person-badge mx-2"></i>
-                                                    <!--end::Svg Icon-->Status</div>
+                                                    <!--end::Svg Icon-->{{ __('messages.Status') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 <span class="badge {{ $restaurantUser->status }}">
@@ -125,7 +125,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-house mx-2"></i>
-                                                    <!--end::Svg Icon-->Address</div>
+                                                    <!--end::Svg Icon-->{{ __('messages.Address') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 {{ $restaurantUser->address }}
@@ -136,7 +136,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-building mx-2"></i>
-                                                    <!--end::Svg Icon-->Branch</div>
+                                                    <!--end::Svg Icon-->{{ __('messages.Branch') }}</div>
                                             </td>
                                             @if($restaurantUser->branch)
                                             <td class="fw-bolder text-end" >
@@ -151,7 +151,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-clock-fill mx-2"></i>
-                                                    <!--end::Svg Icon-->Last login</div>
+                                                    <!--end::Svg Icon-->{{ __('messages.Last login') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 {{ $restaurantUser->last_login?->format('Y-m-d') }}
@@ -303,7 +303,7 @@
                                 <!--begin::Card header-->
                                 <div class="card-header">
                                     <div class="card-title">
-                                        <h2>Order History</h2>
+                                        <h2>{{ __('messages.Order History') }}</h2>
                                     </div>
                                 </div>
                                 <!--end::Card header-->
@@ -315,14 +315,14 @@
                                             <!--begin::Table head-->
                                             <thead>
                                                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                    <th class="min-w-100px">#</th>
-                                                    <th class="min-w-100px">Date Added</th>
-                                                    <th class="min-w-175px">Total</th>
-                                                    <th class="min-w-100px">Branch</th>
-                                                    <th class="min-w-70px">Order Status</th>
-                                                    <th class="min-w-70px">Payment Status</th>
-                                                    <th class="min-w-70px">Type</th>
-                                                    <th class="min-w-70px">Address</th>
+                                                    <th class="min-w-100px">{{ __('messages.ID') }}</th>
+                                                    <th class="min-w-100px">{{ __('messages.Date Added') }}</th>
+                                                    <th class="min-w-175px">{{ __('messages.Total') }}</th>
+                                                    <th class="min-w-100px">{{ __('messages.Branch') }}</th>
+                                                    <th class="min-w-70px">{{ __('messages.Status') }}</th>
+                                                    <th class="min-w-70px">{{ __('messages.Payment Status') }}</th>
+                                                    <th class="min-w-70px">{{ __('messages.Type') }}</th>
+                                                    <th class="min-w-70px">{{ __('messages.Address') }}</th>
                                                 </tr>
                                             </thead>
                                             <!--end::Table head-->
@@ -355,7 +355,7 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        {{ $order->delivery_type->name }}
+                                                        {{ __('messages.'.$order->delivery_type?->name) }}
                                                     </td>
                                                     <td>
                                                         {{ $order->shipping_address }}

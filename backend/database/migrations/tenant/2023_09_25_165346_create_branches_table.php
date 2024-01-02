@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('address');
-            $table->double('lat', 8, 2);
-            $table->double('lng', 8, 2);
+            $table->decimal('lat', 10, 8);
+            $table->decimal('lng', 10, 8);
             $table->time('monday_open');
             $table->time('monday_close');
             $table->boolean('monday_closed')->default(false);

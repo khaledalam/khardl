@@ -168,114 +168,18 @@
                                 @elseif (!$is_live && !$restaurant?->user?->isBlocked())
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if($user?->hasPermission('can_approve_restaurants'))
-                                    <a onclick="showConfirmation()" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3">{{ __('messages.approve')}}</a>
+                                    <a id="active_restuarant" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3">{{ __('messages.approve')}}</a>
                                     <form id="approve-form" data-loading="false" action="{{ route('admin.restaurant.activate', ['restaurant' => $restaurant->id]) }}" method="POST" style="display: inline">
                                         @csrf
                                         @method('PUT')
 
                                     </form>
-                                    <script>
-                                        function showConfirmation() {
-                                            event.preventDefault();
-
-                                            if (document.getElementById('approve-form').dataset.loading === "true") {
-                                                Swal.fire('Action is already in progress!', '', 'danger')
-                                                return;
-                                            }
-
-                                            Swal.fire({
-                                                title: '{{ __('
-                                                messages.confirm - approval ') }}'
-                                                , text: '{{ __('
-                                                messages.are - you - sure - you - want - to - approve - this - restaurant ') }}'
-                                                , icon: 'warning'
-                                                , showCancelButton: true
-                                                , confirmButtonText: '{{ __('
-                                                messages.yes - approve - it ') }}'
-                                                , cancelButtonText: '{{ __('
-                                                messages.cancel ') }}'
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    document.getElementById('approve-form').dataset.loading = "true";
-                                                    document.getElementById('approve-form').submit();
-                                                }
-                                            })
-                                        }
-
-                                    </script>
                                     @endif
 
                                     <form action="{{ route('admin.denyUser', ['id' => $restaurant->id]) }}" method="POST" style="display: inline">
                                         @csrf
                                         <button style="border: 0;" type="submit" class="badge badge-light-danger btn-confirm text-hover-white bg-hover-danger p-5 m-3">{{ __('messages.deny')}}</button>
                                     </form>
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            var confirmButtons = document.querySelectorAll('.btn-confirm');
-
-                                            confirmButtons.forEach(function(button) {
-                                                button.addEventListener('click', function(event) {
-                                                    event.preventDefault();
-
-                                                    if (document.getElementById('approve-form').dataset.loading === "true") {
-                                                        Swal.fire('Action is already in progress!', '', 'danger')
-                                                        return;
-                                                    }
-
-                                                    Swal.fire({
-                                                        title: "{{ __('messages.you-wont-be-able-to-undo-this') }}"
-                                                        , showCancelButton: true
-                                                        , confirmButtonText: '{{ __('
-                                                        messages.yes - proceed ') }}'
-                                                        , cancelButtonText: '{{ __('
-                                                        messages.no - cancel ') }}'
-                                                        , html: `
-                                                                    <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="commercial-registration-number">
-                                                                        <label class="form-check-label" for="option1">{{ __('messages.commercial-registration-number') }}</label>
-                                                                    </div>
-                                                                    <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="delivery-company-contract">
-                                                                        <label class="form-check-label" for="option2">{{ __('messages.delivery-company-contract') }}</label>
-                                                                    </div>
-                                                                    <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="tax-number">
-                                                                        <label class="form-check-label" for="option3">{{ __('messages.tax-number') }}</label>
-                                                                    </div>
-                                                                    <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="bank-certificate">
-                                                                        <label class="form-check-label" for="option4">{{ __('messages.bank-certificate') }}</label>
-                                                                    </div>
-                                                                    <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input" id="option5" name="options[]" value="others">
-                                                                        <label class="form-check-label" for="option5">{{ __('messages.others') }}</label>
-                                                                    </div>
-                                                                `
-                                                        , preConfirm: function() {
-                                                            var selectedOptions = [];
-                                                            document.querySelectorAll('input[name="options[]"]:checked').forEach(function(checkbox) {
-                                                                selectedOptions.push(checkbox.value);
-                                                            });
-                                                            return selectedOptions;
-                                                        }
-                                                        , allowOutsideClick: false
-                                                        , allowEscapeKey: false
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed && result.value.length > 0) {
-                                                            var form = event.target.closest('form');
-                                                            var selectedOptions = result.value;
-                                                            selectedOptions.forEach(function(option) {
-                                                                form.insertAdjacentHTML('beforeend', '<input type="hidden" name="options[]" value="' + option + '">');
-                                                            });
-                                                            form.submit();
-                                                        }
-                                                    });
-                                                });
-                                            });
-                                        });
-
-                                    </script>
-
 
                                 </div>
                                 @elseif ($restaurant?->user?->isBlocked())
@@ -328,7 +232,7 @@
                             @include('admin.Restaurants.Orders.view')
                         </div>
                         <div class="tab-pane fade" id="customers" role="tab-panel">
-                           @include('admin.Restaurants.Customer.view')
+                            @include('admin.Restaurants.Customer.view')
                         </div>
                     </div>
                 </div>
@@ -339,3 +243,87 @@
     </div>
 </div>
 @endsection
+
+@section('javascript')
+<script>
+    function ActiveRestuarant() {
+        event.preventDefault();
+        if (document.getElementById('approve-form').dataset.loading === "true") {
+            Swal.fire('Action is already in progress!', '', 'danger')
+            return;
+        }
+        Swal.fire({
+            title: '{{ __('messages.confirm-approval') }}'
+            , text: '{{ __('messages.are-you-sure-you-want-to-approve-this-restaurant') }}'
+            , icon: 'warning'
+            , showCancelButton: true
+            , confirmButtonText: '{{ __('messages.yes-approve-it') }}'
+            , cancelButtonText: '{{ __('messages.cancel') }}'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('approve-form').dataset.loading = "true";
+                document.getElementById('approve-form').submit();
+            }
+        })
+    }
+    $("#active_restuarant").click(ActiveRestuarant);
+    document.addEventListener('DOMContentLoaded', function() {
+        var confirmButtons = document.querySelectorAll('.btn-confirm');
+        confirmButtons.forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                if (document.getElementById('approve-form').dataset.loading === "true"){
+                    Swal.fire('Action is already in progress!', '', 'danger')
+                    return;
+                }
+                Swal.fire({
+                    title: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
+                    showCancelButton: true,
+                    confirmButtonText: '{{ __('messages.yes-proceed') }}',
+                    cancelButtonText: '{{ __('messages.no-cancel') }}',
+                    html: `
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="commercial-registration-number">
+                            <label class="form-check-label" for="option1">{{ __('messages.commercial-registration-number') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="delivery-company-contract">
+                            <label class="form-check-label" for="option2">{{ __('messages.delivery-company-contract') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="tax-number">
+                            <label class="form-check-label" for="option3">{{ __('messages.tax-number') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="bank-certificate">
+                            <label class="form-check-label" for="option4">{{ __('messages.bank-certificate') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option5" name="options[]" value="others">
+                            <label class="form-check-label" for="option5">{{ __('messages.others') }}</label>
+                        </div>
+                    `,
+                    preConfirm: function() {
+                        var selectedOptions = [];
+                        document.querySelectorAll('input[name="options[]"]:checked').forEach(function(checkbox) {
+                            selectedOptions.push(checkbox.value);
+                        });
+                        return selectedOptions;
+                    },
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then((result) => {
+                    if (result.isConfirmed && result.value.length > 0) {
+                        var form = event.target.closest('form');
+                        var selectedOptions = result.value;
+                        selectedOptions.forEach(function(option) {
+                            form.insertAdjacentHTML('beforeend', '<input type="hidden" name="options[]" value="' + option + '">');
+                        });
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
+@stop
