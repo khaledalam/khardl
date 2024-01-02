@@ -46,14 +46,16 @@ const SectionPanel = () => {
   return (
     <div className='p-2 w-full'>
       <div className='pb-4 border-b border-neutral-300'>
-        <h2 className='font-bold text-lg mb-4'>Header</h2>
+        <h2 className='font-bold text-lg mb-4'>{t("Header")}</h2>
         <PrimarySelect
-          label={"Position"}
-          defaultValue={headerPosition}
+          label={t("Position")}
+          defaultValue={
+            headerPosition === "relative" ? t("Relative") : t("Fixed")
+          }
           handleChange={(value) => dispatch(setHeaderPosition(value))}
           options={[
-            {value: "fixed", text: "Fixed"},
-            {value: "relative", text: "Relative"},
+            {value: "fixed", text: t("Fixed")},
+            {value: "relative", text: t("Relative")},
           ]}
         />
       </div>
@@ -69,11 +71,17 @@ const SectionPanel = () => {
       <div className='py-4 border-b border-neutral-300'>
         <h2 className='font-bold text-lg mb-4'>{t("Banner")}</h2>
         <PrimarySelect
-          defaultValue={banner_type}
+          defaultValue={
+            banner_type === "one-photo"
+              ? t("One-photo")
+              : banner_type === "slider"
+              ? t("Slider")
+              : banner_type
+          }
           handleChange={(value) => dispatch(bannerType(value))}
           options={[
-            {value: t("Slider"), text: t("Slider")},
-            {value: t("One-photo"), text: t("One-photo")},
+            {value: "slider", text: t("Slider")},
+            {value: "one-photo", text: t("One-photo")},
           ]}
         />
       </div>
@@ -86,13 +94,21 @@ const SectionPanel = () => {
         /> */}
         <div className='mt-3'>
           <PrimarySelect
-            label={"Content"}
-            defaultValue={category_alignment}
+            label={t("Content")}
+            defaultValue={
+              category_alignment === "center"
+                ? t("Center")
+                : category_alignment === "left"
+                ? t("Left")
+                : category_alignment === "right"
+                ? t("Right")
+                : ""
+            }
             handleChange={(value) => dispatch(categoryAlignment(value))}
             options={[
-              {value: t("left"), text: t("left")},
-              {value: "center", text: "Center"},
-              {value: t("right"), text: t("right")},
+              {value: "left", text: t("Left")},
+              {value: "center", text: t("Center")},
+              {value: "right", text: t("Right")},
             ]}
           />
         </div>
@@ -106,13 +122,13 @@ const SectionPanel = () => {
         />
         <div className='mt-3'>
           <PrimarySelect
-            label={"Content"}
+            label={t("Content")}
             defaultValue={categoryDetail_alignment}
             handleChange={(value) => dispatch(categoryDetailAlignment(value))}
             options={[
               {value: t('left'), text: t('left')},
               {value: "center", text: "Center"},
-              {value: t('right'), text: t('right')},
+              {value: t('Right'), text: t('Right')},
             ]}
           />
         </div>
@@ -124,29 +140,38 @@ const SectionPanel = () => {
           {showSocialMedia ? (
             <BiMinus
               size={25}
+              className='cursor-pointer'
               onClick={() => setShowSocialMedia((prev) => !prev)}
             />
           ) : (
             <IoAdd
               size={25}
+              className='cursor-pointer'
               onClick={() => setShowSocialMedia((prev) => !prev)}
             />
           )}
         </div>
         <SocialMediaCollection
           showMedia={showSocialMedia}
-          onChange={(value) => console.log("socialMedia", value)}
           selectedSocialIcons={selectedSocialIcons}
         />
         <div className='mt-3'>
           <PrimarySelect
-            label={"Content"}
-            defaultValue={socialMediaIcons_alignment}
+            label={t("Content")}
+            defaultValue={
+              socialMediaIcons_alignment === "center"
+                ? t("Center")
+                : socialMediaIcons_alignment === "left"
+                ? t("Left")
+                : socialMediaIcons_alignment === "right"
+                ? t("Right")
+                : ""
+            }
             handleChange={(value) => dispatch(socialMediaIconsAlignment(value))}
             options={[
-              {value: t("left"), text: t("left")},
-              {value: "center", text: "Center"},
-              {value: t("right"), text: t("right")},
+              {value: "left", text: t("Left")},
+              {value: "center", text: t("Center")},
+              {value: "right", text: t("Right")},
             ]}
           />
         </div>
@@ -165,13 +190,21 @@ const SectionPanel = () => {
         </div>
         <div className='mt-3'>
           <PrimarySelect
-            label={"Content"}
-            defaultValue={phoneNumber_alignment}
+            label={t("Content")}
+            defaultValue={
+              phoneNumber_alignment === "center"
+                ? t("Center")
+                : phoneNumber_alignment === "left"
+                ? t("Left")
+                : phoneNumber_alignment === "right"
+                ? t("Right")
+                : ""
+            }
             handleChange={(value) => dispatch(phoneNumberAlignment(value))}
             options={[
-              {value: t("left"), text: t("left")},
-              {value: "center", text: "Center"},
-              {value: t("right"), text: t("right")},
+              {value: "left", text: t("Left")},
+              {value: "center", text: t("Center")},
+              {value: "right", text: t("Right")},
             ]}
           />
         </div>

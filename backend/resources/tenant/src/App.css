@@ -84,12 +84,12 @@ body::-webkit-scrollbar-track {
 }
 
 .hide-scroll::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 2rem #fff;
+  box-shadow: inset 0 0 0rem #fff;
   scroll-behavior: smooth;
 }
 
 .hide-scroll::-webkit-scrollbar {
-  width: 0.1rem;
+  width: 0rem;
   opacity: 0;
   scroll-behavior: smooth;
 }

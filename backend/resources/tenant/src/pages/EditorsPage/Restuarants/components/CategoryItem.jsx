@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import ImgBurger from "../../../../assets/burger.png"
+import {useTranslation} from "react-i18next"
 
 const CategoryItem = ({
   active,
@@ -16,6 +17,7 @@ const CategoryItem = ({
   fontSize,
 }) => {
   const [isHover, setIsHover] = useState(false)
+  const {t} = useTranslation()
 
   const handleMouseEnter = () => {
     setIsHover((prev) => !prev)
@@ -45,19 +47,19 @@ const CategoryItem = ({
             : "#F5F5F5",
         }}
         className={`w-[75px] h-[75px] p-2  ${
-          shape === "sharp" ? "" : "rounded-full"
+          shape === t("Sharp") ? "" : "rounded-full"
         }  flex items-center justify-center scale-100 hover:scale-125 transition-all duration-300   bg-neutral-100  `}
       >
         <div
           className={`w-[50px] h-[50px] flex items-center ${
-            shape === "sharp" ? "" : "rounded-full"
+            shape === t("Sharp") ? "" : "rounded-full"
           } justify-center`}
         >
           <img
             src={imgSrc ? imgSrc : ImgBurger}
             alt={alt}
             className={`w-full h-full object-cover ${
-              shape === "sharp" ? "" : "rounded-full"
+              shape === t("Sharp") ? "" : "rounded-full"
             } `}
           />
         </div>
@@ -74,11 +76,11 @@ const CategoryItem = ({
               : 14,
         }}
         className={`font-normal w-max ${
-          textAlign === "center"
+          textAlign === t("Center")
             ? "text-center"
-            : textAlign === "left"
+            : textAlign === t("Left")
             ? "text-left"
-            : textAlign === "right"
+            : textAlign === t("Right")
             ? "text-right"
             : ""
         }`}
