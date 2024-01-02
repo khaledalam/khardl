@@ -1,5 +1,3 @@
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
 import {IoCloseOutline} from "react-icons/io5"
 import ImageIcon from "../../../../assets/imageIcon.svg"
 import {useCallback, useState} from "react"
