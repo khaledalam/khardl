@@ -46,7 +46,7 @@
                                         <th class="min-w-50px ps-5">{{ __('messages.ID') }}</th>
                                         <th class="min-w-100px px-0">{{ __('messages.Name') }}</th>
                                         <th class="min-w-100px px-0">{{ __('messages.Phone') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Eamil') }}</th>
+                                        <th class="min-w-100px px-0">{{ __('messages.Email') }}</th>
                                         <th class="min-w-100px px-0">{{ __('messages.Status') }}</th>
                                         <th class="min-w-100px px-0">{{ __('messages.Address') }}</th>
                                         <th class="min-w-100px px-0">{{ __('messages.Branch') }}</th>

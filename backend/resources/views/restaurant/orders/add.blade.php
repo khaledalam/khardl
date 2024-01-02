@@ -70,7 +70,7 @@
                                             </div>
                                             <div class="fv-row">
                                                 <!--begin::Label-->
-                                                <label class="required form-label">{{ __('messages.Deliverly Type') }}</label>
+                                                <label class="required form-label">{{ __('messages.Delivery Type') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Select2-->
                                                 <select class="form-select mb-2" data-hide-search="true" data-placeholder="Select Type" name="delivery_type_id" required>
