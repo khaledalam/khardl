@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 
-use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
@@ -33,6 +33,7 @@ use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
@@ -262,35 +263,41 @@ Route::group([
 
 });
 
-Route::prefix('api')->middleware([
+Route::middleware([
     'api',
     'tenant',
     "trans_api"
 ])->group(function () {
-    // API
 
-    Route::post('login', [APILoginController::class, 'login']);
-
-
-    Route::middleware('auth:sanctum')->group(function(){
-        Route::apiResource('categories',CategoryController::class)->only([
-            'index'
-        ]);
-        Route::apiResource('orders',OrderController::class)->only([
-            'index'
-        ]);
-        Route::get('orders/{order}/logs',[OrderController::class,'logs']);
-
-        Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
-        Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
-        Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
-        Route::get('branches/{branch}/delivery',[BranchController::class,'getDeliveryAvailability']);
-        Route::post('logout', [APILoginController::class, 'logout']);
+    // route name webhook-client-delivery-companies
+    Route::webhooks('delivery-webhook','delivery-companies');
+    // route name  webhook-client-tap-payment
+    Route::webhooks('webhook-tap-actions','tap-payment');
+    
+    Route::get('/delivery-webhook', static function (Request $request) {
+        logger($request->all());
     });
-    Route::prefix('tap')->group(function(){
-        Route::webhooks('webhook-tap-actions','tap-payment');
+    // API
+    Route::prefix('api')->group(function(){
+        Route::post('login', [APILoginController::class, 'login']);
 
-        // Only for testing tap api
+
+        Route::middleware('auth:sanctum')->group(function(){
+            Route::apiResource('categories',CategoryController::class)->only([
+                'index'
+            ]);
+            Route::apiResource('orders',OrderController::class)->only([
+                'index'
+            ]);
+            Route::get('orders/{order}/logs',[OrderController::class,'logs']);
+
+            Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
+            Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
+            Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
+            Route::get('branches/{branch}/delivery',[BranchController::class,'getDeliveryAvailability']);
+            Route::post('logout', [APILoginController::class, 'logout']);
+        });
+        Route::prefix('tap')->group(function(){
             Route::apiResource('businesses', BusinessController::class)->only([
                 'store','show'
             ]);
@@ -300,23 +307,17 @@ Route::prefix('api')->middleware([
             Route::apiResource('files', FileController::class)->only([
                 'store','show'
             ]);
-            Route::apiResource('customers', CustomerController::class)->only([
-                'store','show'
-            ]);
-            // create a token (Card)
-            Route::apiResource('tokens', CardController::class)->only([
-                'store',
-            ]);
-        // -----
-      
+        
+        });
+
+
     });
-
-
+    
 
 
 });
 
-Route::webhooks('delivery-webhook','delivery-companies');
+
 
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
     Route::get('/csrf-cookie', [CsrfCookieController::class, 'show'])
@@ -326,3 +327,4 @@ Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function 
             InitializeTenancyByDomain::class
         ])->name('sanctum.csrf-cookie');
 });
+// URL::forceScheme('https');

@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->boolean("tap_verified")->default(false);
             $table->string("tap_customer_id")->nullable();
-            $table->string('lat')->nullable();
-            $table->string('lng')->nullable();
+            $table->decimal('lat', 10, 8)->nullable();
+            $table->decimal('lng', 10, 8)->nullable();
             $table->foreignIdFor(Branch::class)->nullable()->constrained()->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();

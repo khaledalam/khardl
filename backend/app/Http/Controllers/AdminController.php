@@ -298,10 +298,10 @@ class AdminController extends Controller
 
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['id'=>$restaurant->id])."> $restaurant->id </a>",
+            'action' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
         ]);
 
-        return redirect()->route('admin.view-restaurants',['id'=>$restaurant->id])->with('success', __("Restaurant has been activated successfully."));
+        return redirect()->route('admin.view-restaurants',['tenant'=>$restaurant->id])->with('success', __("Restaurant has been activated successfully."));
 
     }
 
