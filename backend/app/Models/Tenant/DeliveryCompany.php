@@ -2,6 +2,9 @@
 
 namespace App\Models\Tenant;
 
+use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
+use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
@@ -31,6 +34,15 @@ class DeliveryCompany extends Model
     ];
 
     public $translatable = ['name', 'description'];
+    function getModuleAttribute()
+    {
+        return match($this->attributes['module']){
+            class_basename(Cervo::class)=> new Cervo($this),
+            class_basename(StreetLine::class) => new StreetLine($this),
+            class_basename(Yeswa::class) => new Yeswa($this),
+            default => null
+        };
+    }
 
 
 

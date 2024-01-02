@@ -247,8 +247,30 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
 
     Route::post('/delivery-webhook', static function (Request $request) {
-        return Redirect::to(CentralSetting::first()->webhook_url ?? '')->withInput($request->all());
+        \Sentry\captureMessage('Webhook get from cervo');
+        \Sentry\captureMessage(json_encode($request->all()));
+        $client = new \GuzzleHttp\Client();
+
+        $url = CentralSetting::first()->webhook_url ?? '';
+        $data = [ 'query' =>$request->all()];
+        $request = $client->request('post',$url,$data);
+    
+        return response()->json(['message'=>"received"],200);
     })->name('delivery.webhook-post');
+
+    Route::get('/delivery-webhook', static function (Request $request) {
+        \Sentry\captureMessage('Webhook get from cervo');
+        \Sentry\captureMessage(json_encode($request->all()));
+        
+        $client = new \GuzzleHttp\Client();
+
+        $url = CentralSetting::first()->webhook_url ?? '';
+        $data = [ 'query' =>$request->all()];
+        $request = $client->request('get',$url,$data);
+    
+        return response()->json(['message'=>"received"],200);
+
+    });
 
 });
 //-----------------------------------------------------------------------------------------------------------------------
