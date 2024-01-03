@@ -143,8 +143,8 @@ Route::group([
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
                     Route::post('orders-add', 'store')->name('restaurant.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
+                    Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
                   });
-                Route::get('/products-out-of-stock', [RestaurantController::class, 'products_out_of_stock'])->name('restaurant.products_out_of_stock');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
@@ -273,7 +273,7 @@ Route::middleware([
     Route::webhooks('delivery-webhook','delivery-companies');
     // route name  webhook-client-tap-payment
     Route::webhooks('webhook-tap-actions','tap-payment');
-
+  
     // API
     Route::prefix('api')->group(function(){
         Route::post('login', [APILoginController::class, 'login']);
@@ -304,12 +304,12 @@ Route::middleware([
             Route::apiResource('files', FileController::class)->only([
                 'store','show'
             ]);
-        
+
         });
 
 
     });
-    
+
 
 
 });
