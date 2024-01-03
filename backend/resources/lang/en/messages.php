@@ -508,5 +508,6 @@ return [
     "Filter" => "Filter",
     "Discard" => "Discard",
     "Select an option" => "Select an option",
-    "Download" => "Download"
+    "Download" => "Download",
+    "Per page" => "Per page"
 ];

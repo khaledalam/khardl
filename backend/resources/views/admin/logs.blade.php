@@ -25,7 +25,7 @@
               <div class="d-flex my-0">
                                   <!--begin::Select-->
                 <select id="usersDropdown" name="user_id" class="form-select form-select-sm border-body bg-body w-150px me-5">
-                    <option value="all" {{ request('user_id') == 'all' ? 'selected' : '' }}>All</option>
+                    <option value="" selected>{{ __('messages.All') }}</option>
                     @foreach ($owners as $owner)
                         <option value="{{ $owner->id }}" {{ request('user_id') == $owner->id ? 'selected' : '' }}>
                             {{ $owner->id }} | {{ $owner->first_name }} {{ $owner->last_name }}
@@ -34,7 +34,7 @@
                 </select>
 
                 <select id="actionsDropdown" name="action" class="form-select form-select-sm border-body bg-body w-150px me-5">
-                    <option value="all" {{ request('action', 'all') == 'all' ? 'selected' : '' }}>All</option>
+                    <option value="" selected>{{ __('messages.All') }}</option>
                     <option value="Logged in" {{ request('action') == 'Logged in' ? 'selected' : '' }}>{{ __('messages.logged-in') }}</option>
                     <option value="Has edited profile and permissions for an user with ID of" {{ request('action') == 'Has edited profile and permissions for an user with ID of' ? 'selected' : '' }}>{{ __('messages.has-edited-permissions') }}</option>
                     <option value="Made an user" {{ request('action') == 'Made an user' ? 'selected' : '' }}>{{ __('messages.made-an-user') }}</option>
@@ -51,7 +51,14 @@
                     <option value="Has deleted an user" {{ request('action') == 'Has deleted an user' ? 'selected' : '' }}>{{ __('messages.has-deleted-an-user') }}</option>
                     <option value="Has created new restaurant" {{ request('action') == 'Has created new restaurant' ? 'selected' : '' }}>{{ __('messages.has-created-new-restaurant') }}</option>
                 </select>
+                <select id="actionsDropdown" name="perPage" class="form-select form-select-sm border-body bg-body w-150px me-5">
+                    <option value="" >{{ __('messages.Per page') }}</option>
+                    <option value="10" >10</option>
+                    <option value="20" >20</option>
+                    <option value="50" >50</option>
+                    <option value="100" >100</option>
 
+                </select>
                                   <!--end::Select-->
                 <button type="submit" id="kt_ecommerce_add_product_submit"
                   class="btn btn-primary">
@@ -60,17 +67,21 @@
                   <span
                   class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                 </button>
-                <button type="submit" id="download_logs"
-                  class="btn btn-success mx-2">
-                  <span class="indicator-label">{{ __('messages.Download') }}</span>
-                  <span class="indicator-progress">{{ __('messages.please-wait')}}
-                  <span
-                  class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                </button>
               </div>
 
             </form>
-                              <!--end::Actions-->
+            <form method="GET" action="{{ route('admin.log') }}">
+                <div class="d-flex my-0">
+                    <input type="hidden" name="download" value="csv">
+                  <button type="submit" id="download_logs"
+                    class="btn btn-success mx-2">
+                    <span class="indicator-label">{{ __('messages.Download') }}</span>
+                    <span class="indicator-progress">{{ __('messages.please-wait')}}
+                    <span
+                    class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                  </button>
+                </div>
+              </form>
           </div>
           <!--end::Card header-->
           <!--begin::Card body-->
@@ -82,7 +93,7 @@
                 <!--begin::Thead-->
                 <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
                   <tr>
-                    <th class="min-w-200px">#</th>
+                    <th class="min-w-200px">{{ __("messages.Customer") }}</th>
                     <th class="min-w-200px">{{ __('messages.actions') }}</th>
                       <th class="min-w-200px">{{ __('messages.date-and-time')}}</th>
                       <th class="min-w-200px">{{ __('messages.metadata')}}</th>

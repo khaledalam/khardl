@@ -11,6 +11,7 @@ use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
@@ -439,30 +440,6 @@ class AdminController extends Controller
 
         return view('admin.edit-user', compact('user'));
 
-    }
-
-    public function logs(Request $request)
-    {
-
-        $query = Log::with(['user'])->orderBy('created_at', 'desc');
-
-        if ($request->filled('user_id')) {
-            if ($request->input('user_id') != 'all') {
-                $query->where('user_id', $request->input('user_id'));
-            }
-        }
-
-        if ($request->filled('action')) {
-            if ($request->input('action') != 'all') {
-                $query->where('action', 'LIKE', '%' . $request->input('action') . '%');
-            }
-        }
-
-        $owners = User::get();
-        $user = Auth::user();
-        $logs = $query->paginate(config('application.perPage')??20);
-
-        return view('admin.logs', compact('user', 'logs', 'owners'));
     }
 
     public function updateUserPermissions(Request $request, $userId){

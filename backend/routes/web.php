@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
@@ -206,7 +207,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/add-user', [AdminController::class, 'addUser'])->middleware('permission:can_add_admins')->name('add-user');
                     Route::delete('/delete/{id}', [AdminController::class, 'deleteRestaurant'])->middleware('permission:can_delete_restaurants')->name('delete-restaurant');
                     Route::post('/generate-user', [AdminController::class, 'generateUser'])->middleware('permission:can_add_admins')->name('generate-user');
-                    Route::get('/logs', [AdminController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
+                    Route::get('/logs', [LogController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
                     Route::get('/restaurants/{tenant}', [RestaurantController::class, 'viewRestaurant'])->middleware('permission:can_view_restaurants')->name('view-restaurants');
 
                     Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('restaurants');
@@ -248,18 +249,18 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
     Route::post('/delivery-webhook', static function (Request $request) {
         try{
             // \Sentry\captureMessage('Webhook post from delivery company');
-            
+
             $client = new \GuzzleHttp\Client();
-    
+
             $url = CentralSetting::first()->webhook_url ?? '';
-            
+
             $request = $client->post($url, ['json'=>$request->all()]);
          }catch(Exception $e){
-             
+
          }
          return response()->json(['message'=>"received"],200);
     })->name('delivery.webhook-post');
- 
+
 
 });
 //-----------------------------------------------------------------------------------------------------------------------
