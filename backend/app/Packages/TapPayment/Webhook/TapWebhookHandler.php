@@ -6,6 +6,7 @@ use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class TapWebhookHandler extends ProcessWebhookJob
 {
+    public $connection = 'sync';
     public function handle()
     {
         logger($this->webhookCall);

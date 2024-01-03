@@ -65,6 +65,9 @@ class Yeswa  extends AbstractDeliveryCompany
         );
 
     }
+    public static function processWebhook($payload){
+       
+    }
 
 }
    
