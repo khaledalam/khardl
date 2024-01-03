@@ -25,7 +25,9 @@ class OrderController
     {
         return $this->order->create($request,$this->cart);
     }
-
+    public function validateOrder(OrderRequest $request){
+        return response()->json([],200);
+    }
     public function index(){
         return $this->sendResponse($this->order, '');
     }

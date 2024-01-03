@@ -73,6 +73,7 @@ const CartPage = () => {
 
   return (
     <div className='w-[98%] mx-auto mt-14'>
+    
       {/* // TODO:  work on the new cart page  */}
       <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
         <CartHeader styles={restuarantStyle} />

@@ -39,9 +39,11 @@ class OrderRequest extends FormRequest
     }
     public function withValidator($validator)
     {
+        
         $cart = CartRepository::get();
 
         $validator->after(function ($validator) use($cart){
+            
             $user = Auth::user();
             // if(!$user->lat && !$user->lng){
             if(!$user->address){
