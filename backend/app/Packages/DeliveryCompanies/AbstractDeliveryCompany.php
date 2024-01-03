@@ -19,6 +19,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
         $this->delivery_company = $delivery_company;
     }
     abstract public function assignToDriver(Order $order,RestaurantUser $customer);
+    abstract public static function processWebhook($payload);
     
     public function send(string $url,$token,array $data,string $method = 'post'): Promise{
         if($token){

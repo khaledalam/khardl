@@ -273,10 +273,7 @@ Route::middleware([
     Route::webhooks('delivery-webhook','delivery-companies');
     // route name  webhook-client-tap-payment
     Route::webhooks('webhook-tap-actions','tap-payment');
-
-    Route::get('/delivery-webhook', static function (Request $request) {
-        logger($request->all());
-    });
+  
     // API
     Route::prefix('api')->group(function(){
         Route::post('login', [APILoginController::class, 'login']);
