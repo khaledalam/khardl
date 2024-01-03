@@ -2,12 +2,14 @@ import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {
   mediaIconsToSelected,
+  moveSelectedIconsToMedia,
   setSelectedSocialMediaId,
   updateSelectedIconInput,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 import {useTranslation} from "react-i18next"
+import {AiOutlineClose} from "react-icons/ai"
 
-const SocialMediaCollection = ({onChange, showMedia}) => {
+const SocialMediaCollection = ({showMedia}) => {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
@@ -27,6 +29,9 @@ const SocialMediaCollection = ({onChange, showMedia}) => {
   }
   const handleSocialMediaSelect = (id) => {
     dispatch(setSelectedSocialMediaId(id))
+  }
+  const handleRemoveMediaSelect = (id) => {
+    dispatch(moveSelectedIconsToMedia(id))
   }
 
   return (
@@ -53,15 +58,23 @@ const SocialMediaCollection = ({onChange, showMedia}) => {
           (socialMedia) =>
             socialMedia.imgUrl !== "" && (
               <div
-                key={socialMedia.id}
                 onClick={() => handleSocialMediaSelect(socialMedia.id)}
-                className='bg-neutral-100 w-[30px] h-[30px] rounded-md p-1 my-3 flex items-center justify-center'
+                className='bg-neutral-100 w-[30px] h-[30px] rounded-md p-1 my-3 flex items-center justify-center relative'
               >
                 <img
                   src={socialMedia?.imgUrl}
                   alt={socialMedia?.name ?? "social media"}
                   className='w-full h-full object-cover'
                 />
+                {socialMedia.id === selectedMediaId && (
+                  <button
+                    key={socialMedia.id}
+                    className='absolute top-[-5px] right-[-4px] text-[10px] text-bold h-fit w-fit rounded-full bg-red-500 p-[3px] text-white'
+                    onClick={() => handleRemoveMediaSelect(socialMedia.id)}
+                  >
+                    <AiOutlineClose size={7} />
+                  </button>
+                )}
               </div>
             )
         )}
@@ -73,7 +86,7 @@ const SocialMediaCollection = ({onChange, showMedia}) => {
               <input
                 type='text'
                 value={socialMedia?.link}
-                placeholder={`Write ${socialMedia.name ?? "social media"} ${t(
+                placeholder={`${socialMedia.name ?? "social media"} ${t(
                   "Link"
                 )}`}
                 className='input input-bordered w-full max-w-[70%]'

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('delivery_companies', static function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->string('Module');
+            $table->string('module');
             $table->boolean('status')->default(false);
             $table->json('description')->nullable();
             $table->float('price', 8, 2)->default(0);

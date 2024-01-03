@@ -22,6 +22,7 @@ import {
   textFontFamily,
   textFontWeight,
   textAlignment,
+  productBackgroundColor,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 import PrimaryOriginSelect from "./PrimaryOriginSelect"
 import {useTranslation} from "react-i18next"
@@ -33,6 +34,7 @@ const EditPanel = () => {
   const {
     page_color,
     page_category_color,
+    product_background_color,
     category_hover_color,
     categoryDetail_cart_color,
     header_color,
@@ -52,9 +54,6 @@ const EditPanel = () => {
   const dispatch = useDispatch()
   const {t} = useTranslation()
 
-  const [fontFamily, setfontFamily] = useState("Inter")
-  const [weight, setWeight] = useState("Thin")
-
   return (
     <div
       className='w-full h-full'
@@ -70,11 +69,17 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={logo_shape}
+              defaultValue={
+                logo_shape === "rounded"
+                  ? t("Rounded")
+                  : logo_shape === "sharp"
+                  ? t("Sharp")
+                  : ""
+              }
               handleChange={(value) => dispatch(logoShape(value))}
               options={[
-                {value: t("Rounded"), text: t("Rounded")},
-                {value: t("Sharp"), text: t("Sharp")},
+                {value: "rounded", text: t("Rounded")},
+                {value: "sharp", text: t("Sharp")},
               ]}
             />
           </div>
@@ -84,11 +89,17 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={banner_shape}
+              defaultValue={
+                banner_shape === "rounded"
+                  ? t("Rounded")
+                  : banner_shape === "sharp"
+                  ? t("Sharp")
+                  : ""
+              }
               handleChange={(value) => dispatch(bannerShape(value))}
               options={[
-                {value: t("Rounded"), text: t("Rounded")},
-                {value: t("Sharp"), text: t("Sharp")},
+                {value: "rounded", text: t("Rounded")},
+                {value: "sharp", text: t("Sharp")},
               ]}
             />
           </div>
@@ -98,25 +109,37 @@ const EditPanel = () => {
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={category_shape}
+              defaultValue={
+                category_shape === "rounded"
+                  ? t("Rounded")
+                  : category_shape === "sharp"
+                  ? t("Sharp")
+                  : ""
+              }
               handleChange={(value) => dispatch(categoryShape(value))}
               options={[
-                {value: t("Rounded"), text: t("Rounded")},
-                {value: t("Sharp"), text: t("Sharp")},
+                {value: "rounded", text: t("Rounded")},
+                {value: "sharp", text: t("Sharp")},
               ]}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              Category Detail
+              {t("Category Detail")}
             </h3>
             <PrimarySelect
               widthStyle={"w-[50%]"}
-              defaultValue={categoryDetail_shape}
+              defaultValue={
+                categoryDetail_shape === "rounded"
+                  ? t("Rounded")
+                  : categoryDetail_shape === "sharp"
+                  ? t("Sharp")
+                  : ""
+              }
               handleChange={(value) => dispatch(categoryDetailShape(value))}
               options={[
-                {value: t("Rounded"), text: t("Rounded")},
-                {value: t("Sharp"), text: t("Sharp")},
+                {value: "rounded", text: t("Rounded")},
+                {value: "sharp", text: t("Sharp")},
               ]}
             />
           </div>
@@ -148,6 +171,18 @@ const EditPanel = () => {
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
+              {t("Product Background")}
+            </h3>
+            <ColorPallete
+              modalId={"product_background_color"}
+              color={product_background_color}
+              handleColorChange={(color) =>
+                dispatch(productBackgroundColor(color))
+              }
+            />
+          </div>
+          <div className='flex w-full justify-between items-center'>
+            <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
               {t("page")} {t("Banner")}
             </h3>
             <ColorPallete
@@ -158,7 +193,7 @@ const EditPanel = () => {
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              Category Animation
+              {t("Category Animation")}
             </h3>
             <ColorPallete
               modalId={"categoryAnimation"}
@@ -168,7 +203,7 @@ const EditPanel = () => {
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              Category Detail Cart
+              {t("Category Detail Cart")}
             </h3>
             <ColorPallete
               modalId={"categoryDetails"}
@@ -191,23 +226,21 @@ const EditPanel = () => {
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              Header
+              {t("Header")}
             </h3>
             <ColorPallete
               modalId={"header"}
               color={header_color}
-              defaultColor='#c0d123'
               handleColorChange={(color) => dispatch(headerColor(color))}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              Footer
+              {t("Footer_Color")}
             </h3>
             <ColorPallete
               modalId={"footer_modal"}
               color={footer_color}
-              defaultColor='#c0d123'
               handleColorChange={(color) => dispatch(footerColor(color))}
             />
           </div>
@@ -215,7 +248,7 @@ const EditPanel = () => {
       </div>
       {/* Text */}
       <div className='py-4 border-b border-neutral-300 px-2'>
-        <h2 className='font-bold text-lg mb-4'>Text</h2>
+        <h2 className='font-bold text-lg mb-4'>{t("Text")}</h2>
         <div className='flex flex-col gap-4'>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
@@ -234,40 +267,25 @@ const EditPanel = () => {
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              Weight
+              {t("Weight")}
             </h3>
-            {/* <PrimarySelect
-              widthStyle={"w-[50%]"}
-              defaultValue={text_fontWeight}
-              handleChange={(value) => dispatch(textFontWeight(value))}
-              options={[
-                {value: 200, text: "Thin"},
-                {value: 300, text: "Light"},
-                {value: 400, text: "Regular"},
-                {value: 500, text: "Medium"},
-                {value: 600, text: "Semi Bold"},
-                {value: 700, text: "Bold"},
-                {value: 800, text: "Extra Bold"},
-              ]}
-            /> */}
             <PrimaryOriginSelect
               widthStyle={"w-[50%]"}
               defaultValue={text_fontWeight}
               handleChange={(e) => dispatch(textFontWeight(e.target.value))}
               options={[
-                {value: 200, text: "Thin"},
-                {value: 300, text: "Light"},
-                {value: 400, text: "Regular"},
-                {value: 500, text: "Medium"},
-                {value: 600, text: "Semi Bold"},
-                {value: 700, text: "Bold"},
-                {value: 800, text: "Extra Bold"},
+                {value: 200, text: t("Thin")},
+                {value: 300, text: t("Light")},
+                {value: 400, text: t("Regular")},
+                {value: 500, text: t("Medium")},
+                {value: 600, text: t("Semibold")},
+                {value: 700, text: t("Bold")},
               ]}
             />
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              Size
+              {t("Size")}
             </h3>
             <PrimaryNumberCount
               defaultValue={
@@ -278,7 +296,7 @@ const EditPanel = () => {
           </div>
           <div className='flex w-full justify-between items-center'>
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
-              Alignment
+              {t("Alignment")}
             </h3>
             <LogoAlignment
               iconSize={20}

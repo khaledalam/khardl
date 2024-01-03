@@ -31,7 +31,9 @@ const ColorPallete = ({
         <div className='modal-box w-[300px] flex items-center justify-center'>
           <ChromePicker
             color={color}
-            onChangeComplete={(color) => handleColorChange(color.hex)}
+            onChangeComplete={(color) =>
+              handleColorChange(color ? color?.hex : "#fff")
+            }
           />
         </div>
         <form method='dialog' className='modal-backdrop'>

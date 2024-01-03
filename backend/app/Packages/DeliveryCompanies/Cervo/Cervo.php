@@ -28,16 +28,18 @@ class Cervo  extends AbstractDeliveryCompany
 
     public function assignToDriver(Order $order,RestaurantUser $customer){
         $branch = $order->branch;
+      
         if(env('APP_ENV') == 'local'){
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
                 "customer"=>"Testing customer",
-                "order_id"=>"Testing $order->id",
-                "id"=>"TESTING $order->id",
+                "order_id"=>"Testing 6",
+                "id"=>"TESTING 6",
                 "lng"=>34.266593,
                 "lat"=>31.279708,
                 "storelat"=>31.277202,
                 "storelng"=>34.268996,
+                "address"=>'Testing address'
             ];
         }else {
             $token = $this->delivery_company->api_key;
@@ -49,10 +51,11 @@ class Cervo  extends AbstractDeliveryCompany
                 "lat"=> $customer->lng,
                 "storelat"=>$branch->lat,
                 "storelng"=>$branch->lng,
+                "address"=>$customer->address,
             ];
         }
         $data += [
-            "address"=>$customer->address,
+          
             "date"=>now()->format('Y-m-d H:i:s'),
             "mobile"=>$customer->phone,
             "price"=>$order->total,
@@ -66,11 +69,26 @@ class Cervo  extends AbstractDeliveryCompany
         ];
         return $this->send(
             url:   $this->delivery_company->api_url.'/order',
-            method: 'post',
             token: $token,
             data: $data
         );
     }
+    public static function processWebhook($payload){
+        if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER'] || $payload["order_status"]  == self::STATUS_ORDER['ORDER_ON_HAND']){
+            Order::findOrFail($payload['order_id'])->update([
+                'status'=>Order::ACCEPTED
+            ]);
+        }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
+            Order::findOrFail($payload['order_id'])->update([
+                'status'=>Order::COMPLETED
+            ]);
+        }else if (
+            $payload['order_status'] == self::STATUS_ORDER['CANCELLED'] ||
+            $payload['order_status'] == self::STATUS_ORDER['CANCELED_BY_DRIVER'] ){
+            // Todo @todo
+            // resend the order to any delivery companies or cancelled 
+        }
 
+    }
 }
    

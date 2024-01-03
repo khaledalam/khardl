@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 
-use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
@@ -33,9 +33,12 @@ use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
+use App\Packages\TapPayment\Controllers\CardController;
+use App\Packages\TapPayment\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +51,12 @@ use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderCon
 | Feel free to customize them however you want. Good luck!
 |
 */
+
+Route::get('/health', function (){
+    return response()->json([
+        'status' => 'ok'
+    ]);
+})->name('health');
 
 Route::group([
     'middleware' => ['tenant','web'],
@@ -103,16 +112,20 @@ Route::group([
             Route::middleware('restaurant')->group(function () {
 
                 // TAP Create Business
-                // Step 1:
+                // Step 1: store files
                 Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get')->middleware('isBusinessSubmitted');
                 Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents')->middleware('isBusinessSubmitted');
 
-                // Step 2:
+                // Step 2: create business
                 Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get')->middleware('isBusinessFilesSubmitted');
                 Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
+                // Step 3: save cards
+                Route::post('/payments/tap-create-card-details/{cardId}', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
+
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
@@ -130,8 +143,8 @@ Route::group([
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
                     Route::post('orders-add', 'store')->name('restaurant.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
+                    Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
                   });
-                Route::get('/products-out-of-stock', [RestaurantController::class, 'products_out_of_stock'])->name('restaurant.products_out_of_stock');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
@@ -232,7 +245,7 @@ Route::group([
 
 
         });
-        // TODO @todo prevent to access it from the website 
+        // TODO @todo prevent to access it from the website
         Route::get('categories',[CategoryController::class,'index']);
         Route::get('orders',[OrderController::class,'index']);
 
@@ -250,50 +263,58 @@ Route::group([
 
 });
 
-Route::prefix('api')->middleware([
+Route::middleware([
     'api',
     'tenant',
     "trans_api"
 ])->group(function () {
+
+    // route name webhook-client-delivery-companies
+    Route::webhooks('delivery-webhook','delivery-companies');
+    // route name  webhook-client-tap-payment
+    Route::webhooks('webhook-tap-actions','tap-payment');
+  
     // API
+    Route::prefix('api')->group(function(){
+        Route::post('login', [APILoginController::class, 'login']);
 
-    Route::post('login', [APILoginController::class, 'login']);
+
+        Route::middleware('auth:sanctum')->group(function(){
+            Route::apiResource('categories',CategoryController::class)->only([
+                'index'
+            ]);
+            Route::apiResource('orders',OrderController::class)->only([
+                'index'
+            ]);
+            Route::get('orders/{order}/logs',[OrderController::class,'logs']);
+
+            Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
+            Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
+            Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
+            Route::get('branches/{branch}/delivery',[BranchController::class,'getDeliveryAvailability']);
+            Route::post('logout', [APILoginController::class, 'logout']);
+        });
+        Route::prefix('tap')->group(function(){
+            Route::apiResource('businesses', BusinessController::class)->only([
+                'store','show'
+            ]);
+            Route::apiResource('subscriptions', SubscriptionController::class)->only([
+                'store','show'
+            ]);
+            Route::apiResource('files', FileController::class)->only([
+                'store','show'
+            ]);
+
+        });
 
 
-    Route::middleware('auth:sanctum')->group(function(){
-        Route::apiResource('categories',CategoryController::class)->only([
-            'index'
-        ]);
-        Route::apiResource('orders',OrderController::class)->only([
-            'index'
-        ]);
-        Route::get('orders/{order}/logs',[OrderController::class,'logs']);
-
-        Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
-        Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
-        Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
-        Route::get('branches/{branch}/delivery',[BranchController::class,'getDeliveryAvailability']);
-        Route::post('logout', [APILoginController::class, 'logout']);
     });
-    Route::prefix('tap')->group(function(){
-        Route::apiResource('businesses', BusinessController::class)->only([
-            'store','show'
-        ]);
-        Route::apiResource('subscriptions', SubscriptionController::class)->only([
-            'store','show'
-        ]);
-        Route::apiResource('files', FileController::class)->only([
-            'store','show'
-        ]);
-        Route::webhooks('webhook-tap-actions','tap-payment');
-    });
-    
 
 
 
 });
 
-Route::webhooks('delivery-webhook','delivery-companies');
+
 
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {
     Route::get('/csrf-cookie', [CsrfCookieController::class, 'show'])
@@ -303,3 +324,4 @@ Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function 
             InitializeTenancyByDomain::class
         ])->name('sanctum.csrf-cookie');
 });
+// URL::forceScheme('https');

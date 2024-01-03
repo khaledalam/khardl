@@ -16,36 +16,14 @@ class RestaurantStyleService
     {
         RestaurantStyle::updateOrCreate([
             'id' => 1
-        ],$this->data($request));
+        ], $this->data($request));
         return $this->sendResponse(null, __('Restaurant style saved successfully.'));
     }
-    private function data($request){
-        $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
-        if($request->banner_image){
-            $banner_image= tenant_asset(store_image($request->file('banner_image'),RestaurantStyle::STORAGE,'banner_image'));
-        }else {
-            if($request->banner_images){
-                foreach($request->banner_images as $k=>$image ){
-                    $banner_images[]= tenant_asset(store_image($image,RestaurantStyle::STORAGE,'banner_image_'.$k+1));
-                }
-            }
-        }
-
-        if($request->banner_images_urls){
-            foreach($request->banner_images_urls as $k=>$image ){
-                $banner_images_urls[]= $image;
-            }
-        }
-
-        return [
+    private function data($request)
+    {
+        $data = [
             'id' => 1,
-            'logo' => $logo,
-            'logo_url' => $request->logo_url,
             'logo_alignment' => $request->logo_alignment,
-            'banner_image' => isset($banner_image)?$banner_image: null,
-            'banner_image_url' => $request->banner_image_url,
-            'banner_images' => (isset($banner_images))?$banner_images: null,
-            'banner_images_urls' => (isset($banner_images_urls))?$banner_images_urls: null,
             'logo_shape' => $request->logo_shape,
             'banner_type' => $request->banner_type,
             'banner_shape' => $request->banner_shape,
@@ -69,9 +47,26 @@ class RestaurantStyleService
             'text_fontSize' => $request->text_fontSize,
             'text_alignment' => $request->text_alignment,
             'text_color' => $request->text_color,
+            'product_background_color' => $request->product_background_color,
             'selectedSocialIcons' => $request->selectedSocialIcons,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()?->id
         ];
+        if (isset($request->logo) && $request->logo) {
+            $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
+            $data['logo'] = $logo;
+        }
+        if (isset($request->banner_image) && $request->banner_image) {
+            $banner_image = tenant_asset(store_image($request->file('banner_image'), RestaurantStyle::STORAGE, 'banner_image'));
+            $data['banner_image'] = $banner_image;
+        }
+        if (isset($request->banner_images) && $request->banner_images) {
+            foreach ($request->banner_images as $k => $image) {
+                $banner_images[] = tenant_asset(store_image($image, RestaurantStyle::STORAGE, 'banner_image_' . $k + 1));
+            }
+            $data['banner_images'] = $banner_images;
+        }
+
+        return $data;
     }
     public function fetch($request)
     {
@@ -84,6 +79,7 @@ class RestaurantStyleService
                 $data->right_side_button,
             ];
 
+            $data->logo_url = $data->logo_url ?: $data->logo;
             // get branches of restaurant
             $data['branches'] = Branch::all(['name', 'id', 'lat', 'lng', 'delivery_availability', 'pickup_availability', 'preparation_time_delivery']);
         }

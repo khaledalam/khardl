@@ -29,6 +29,7 @@ const MainBoardEditor = ({categories}) => {
   const {
     page_color,
     page_category_color,
+    product_background_color,
     category_hover_color,
     category_alignment,
     category_shape,
@@ -124,6 +125,7 @@ const MainBoardEditor = ({categories}) => {
   }
   const clearBanner = () => {
     setUploadSingleBanner(null)
+    dispatch(setBannerUpload(null))
   }
 
   console.log("bannner shape", banner_shape)
@@ -156,7 +158,7 @@ const MainBoardEditor = ({categories}) => {
           className={`btn hover:bg-neutral-100 flex items-center gap-3`}
         >
           <IoMenuOutline size={40} className='text-neutral-400' />
-          <span className='text-sm'>Show Navigation Bar To Edit</span>
+          <span className='text-sm'>{t("Show Navigation Bar To Edit")}</span>
         </div>
         <div
           onClick={() => navigate("/cart")}
@@ -279,11 +281,11 @@ const MainBoardEditor = ({categories}) => {
       {/* {false ? (
         <div
           className={` w-full flex  p-2  ${
-            category_alignment === "center"
+            category_alignment ===t('Center')
               ? "items-center justify-center"
-              : category_alignment === "left"
+              : category_alignment ===t('Left')
               ? "items-center justify-start"
-              : category_alignment === "right"
+              : category_alignment ===t('Right')
               ? "items-center justify-end"
               : ""
           }`}
@@ -291,7 +293,7 @@ const MainBoardEditor = ({categories}) => {
           <div
             style={{
               backgroundColor: page_category_color,
-              borderRadius: category_shape === "sharp" ? 0 : 12,
+              borderRadius: category_shape === t('Sharp') ? 0 : 12,
             }}
             className='w-[30%] py-3'
           >
@@ -322,14 +324,14 @@ const MainBoardEditor = ({categories}) => {
           <div
             style={{
               backgroundColor: page_category_color,
-              // borderRadius: category_shape === "sharp" ? 0 : 12,
+              // borderRadius: category_shape === t('Sharp') ? 0 : 12,
             }}
             className={`w-full min-h-[180px]  flex   ${
-              category_alignment === "center"
+              category_alignment ===t('Center')
                 ? "items-center justify-center"
-                : category_alignment === "left"
+                : category_alignment ===t('Left')
                 ? "items-center justify-start"
-                : category_alignment === "right"
+                : category_alignment ===t('Right')
                 ? "items-center justify-end"
                 : ""
             }`}
@@ -365,9 +367,9 @@ const MainBoardEditor = ({categories}) => {
       >
         <div
           className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
-            category_alignment === t("left")
+            category_alignment === "left"
               ? "order-1 w-[25%]"
-              : category_alignment === t("right")
+              : category_alignment === "right"
               ? "order-2 w-[25%]"
               : category_alignment === "center"
               ? "w-full"
@@ -416,10 +418,11 @@ const MainBoardEditor = ({categories}) => {
           </div>
         </div>
         <div
+          style={{backgroundColor: product_background_color}}
           className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${
-            category_alignment === t("left")
+            category_alignment === "left"
               ? "order-2 w-[75%]"
-              : category_alignment === t("right")
+              : category_alignment === "right"
               ? "order-1 w-[75%]"
               : category_alignment === "center"
               ? "w-full"
@@ -453,9 +456,9 @@ const MainBoardEditor = ({categories}) => {
                 filterCategory[0]?.items
                   .filter((item) => item.availability === 1)
                   .slice(0, 2)
-                  .map((product, i) => (
+                  .map((product, idx) => (
                     <ProductItem
-                      key={i}
+                      key={idx + "prdt"}
                       id={product.id}
                       name={product.description}
                       imgSrc={product.photo}
@@ -511,7 +514,7 @@ const MainBoardEditor = ({categories}) => {
       {/* {categoryDetail_type === "grid" ? (
         <div
           className={`w-full flex bg-white ${
-            categoryDetail_alignment === "center"
+            categoryDetail_alignment ===t('Center')
               ? "items-center justify-center"
               : categoryDetail_alignment === t('left')
               ? "items-center justify-start"
@@ -549,7 +552,7 @@ const MainBoardEditor = ({categories}) => {
             borderRadius: categoryDetail_shape === "sharp" ? 0 : 12,
           }}
           className={`w-full h-fit bg-white   flex ${
-            categoryDetail_alignment === "center"
+            categoryDetail_alignment ===t('Center')
               ? "items-center justify-center"
               : categoryDetail_alignment === t('left')
               ? "items-center justify-start"
@@ -590,9 +593,9 @@ const MainBoardEditor = ({categories}) => {
         className={`w-full min-h-[70px] px-3  rounded-xl flex ${
           socialMediaIcons_alignment === "center"
             ? "items-center justify-center"
-            : socialMediaIcons_alignment === t("left")
+            : socialMediaIcons_alignment === "left"
             ? "items-center justify-start"
-            : socialMediaIcons_alignment === t("right")
+            : socialMediaIcons_alignment === "right"
             ? "items-center justify-end"
             : ""
         }`}
@@ -620,9 +623,9 @@ const MainBoardEditor = ({categories}) => {
         className={`w-full min-h-[70px]  rounded-xl flex  ${
           phoneNumber_alignment === "center"
             ? "items-center justify-center"
-            : phoneNumber_alignment === t("left")
+            : phoneNumber_alignment === "left"
             ? "items-center justify-start"
-            : phoneNumber_alignment === t("right")
+            : phoneNumber_alignment === "right"
             ? "items-center justify-end"
             : ""
         }`}

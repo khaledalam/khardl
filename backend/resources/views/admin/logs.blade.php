@@ -64,7 +64,7 @@
 
             </form>
                               <!--end::Actions-->
-          </div>  
+          </div>
           <!--end::Card header-->
           <!--begin::Card body-->
           <div class="card-body p-0">
@@ -77,7 +77,8 @@
                   <tr>
                     <th class="min-w-200px">#</th>
                     <th class="min-w-200px">{{ __('messages.actions') }}</th>
-                    <th class="min-w-200px">{{ __('messages.date-and-time')}}</th>
+                      <th class="min-w-200px">{{ __('messages.date-and-time')}}</th>
+                      <th class="min-w-200px">{{ __('messages.detadata')}}</th>
                   </tr>
                 </thead>
                 <!--end::Thead-->
@@ -140,7 +141,7 @@
                                         $filename = $matches[1];
                                     }
                                 @endphp
-                            
+
                             قام بتنزيل ملف سجل تجاري الملف باسم: {{ $filename }}
 
                               @elseif (Str::contains($log->action, 'Has downloaded a tax number file with a filename of:'))
@@ -150,17 +151,17 @@
                                           $filename = $matches[1];
                                       }
                                   @endphp
-                              
+
                               قام بتنزيل ملف رقم ضريبي الملف باسم: {{ $filename }}
 
                               @elseif (Str::contains($log->action, 'Has downloaded a delivery contract file with a filename of:'))
-                                @php  
+                                @php
                                     $matches = [];
                                     if (preg_match('/filename of: (.+)$/', $log->action, $matches)) {
                                         $filename = $matches[1];
                                     }
                                 @endphp
-                            
+
                             قام بتنزيل ملف عقد توصيل الملف باسم: {{ $filename }}
 
                               @elseif (Str::contains($log->action, 'Has downloaded a bank certificate file with a filename of:'))
@@ -171,7 +172,7 @@
                                         $filename = $matches[1];
                                     }
                                 @endphp
-                            
+
                             لقد رفض مطعم بمعرف: {{ $filename }}
 
                               @elseif (Str::contains($log->action, 'Has denied an user with an ID of:'))
@@ -213,7 +214,7 @@
                                 @endphp
                                 {{ $userId }} is the id
                               @elseif (Str::contains($log->action, 'Made a promoter with an ID of:'))
-                                    
+
                                 @php
                                       $matches = [];
                                       if (preg_match('/\d+/', $log->action, $matches)) {
@@ -225,6 +226,7 @@
                           @endif
                         </span>
                       </td>
+                        <td>{{ $log->metadata }}</td>
                       <td>{{ $log->created_at }}</td>
                     </tr>
                   @endforeach
@@ -233,14 +235,14 @@
                 <!--end::Tbody-->
               </table>
 
-              
+
               <!--end::Table-->
             </div>
-            
+
             <!--end::Table wrapper-->
           </div>
 
-          
+
           <!--end::Card body-->
         </div>
         <div class="d-flex flex-stack flex-wrap pt-10">
@@ -256,13 +258,13 @@
                       </a>
                   </li>
               @endif
-      
+
               @for ($page = max(1, $logs->currentPage() - 2); $page <= min($logs->lastPage(), $logs->currentPage() + 2); $page++)
                   <li class="page-item {{ $page == $logs->currentPage() ? 'active' : '' }}">
                       <a href="{{ $logs->url($page) }}" class="page-link">{{ $page }}</a>
                   </li>
               @endfor
-      
+
               @if ($logs->hasMorePages())
                   <li class="page-item next">
                       <a href="{{ $logs->nextPageUrl() }}" class="page-link">

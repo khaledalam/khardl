@@ -43,15 +43,16 @@
                                 <!--begin::Thead-->
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
                                     <tr>
-                                        <th class="min-w-50px ps-5">ID</th>
-                                        <th class="min-w-100px px-0">Name</th>
-                                        <th class="min-w-100px px-0">Phone</th>
-                                        <th class="min-w-100px px-0">Eamil</th>
-                                        <th class="min-w-100px px-0">Status</th>
-                                        <th class="min-w-100px px-0">Adress</th>
-                                        <th class="min-w-100px px-0">Branch</th>
-                                        <th class="min-w-100px px-0">Last login</th>
-                                        <th class="min-w-125px text-center">Registration <br> date</th>
+                                        <th>{{ __('messages.ID') }}</th>
+                                        <th>{{ __('messages.Name') }}</th>
+                                        <th>{{ __('messages.Phone') }}</th>
+                                        <th>{{ __('messages.Email') }}</th>
+                                        <th>{{ __('messages.Status') }}</th>
+                                        <th>{{ __('messages.Address') }}</th>
+                                        <th>{{ __('messages.Branch') }}</th>
+                                        <th>{{ __('messages.Last login') }}</th>
+                                        <th>{{ __('messages.Registration') }} <br> {{ __('messages.date') }}</th>
+                                        <th>{{ __('messages.Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <!--end::Thead-->
@@ -77,7 +78,7 @@
                                         <td>{{ $customer->last_login?->format('Y-m-d') }}</td>
                                         <td>{{ $customer->created_at?->format('Y-m-d') }}</td>
                                         <td class="text-end">
-                                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.Actions') }}
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                 <span class="svg-icon svg-icon-5 m-0">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -89,12 +90,12 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="{{route('customers_data.show',['restaurantUser'=>$customer->id])}}" class="menu-link px-3">View</a>
+                                                    <a href="{{route('customers_data.show',['restaurantUser'=>$customer->id])}}" class="menu-link px-3">{{ __('messages.View') }}</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">Edit</a>
+                                                    <a href="#" class="menu-link px-3">{{ __('messages.Edit') }}</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->

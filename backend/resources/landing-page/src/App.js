@@ -69,7 +69,7 @@ const App = () => {
          <div>
             <ToastContainer theme='colored'/>
             {showHeader && !loading && <Header />}
-            <Supports />
+            {/*<Supports />*/}
             <ScrollUp />
             <div>
                <Routes>

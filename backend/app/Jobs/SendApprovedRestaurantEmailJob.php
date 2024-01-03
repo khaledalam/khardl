@@ -39,12 +39,14 @@ class SendApprovedRestaurantEmailJob implements ShouldQueue
             Log::create([
                 'restaurant_user_email' => $this?->restaurant?->user?->email,
                 'action' => '[ok] Sent approve restaurant email',
+                'user_id'=> $this?->restaurant?->user?->id
             ]);
 
         } catch(\Exception $e) {
             Log::create([
                 'restaurant_user_email' => $this?->restaurant?->user?->email,
                 'action' => '[fail] Send approve restaurant email',
+                'user_id'=> $this?->restaurant?->user?->id
             ]);
         }
     }

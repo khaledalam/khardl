@@ -14,7 +14,7 @@ class SubscriptionController extends Controller
     public function show($subscription_id){
         return Subscription::retrieve($subscription_id);
     }
-    public function dummy_data(){
+    public static function dummy_data(){
         return [
             'term' => [
                 'interval' => 'MONTHLY',

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
@@ -31,9 +32,17 @@ use App\Models\CentralSetting;
 |
 */
 
+Route::get('/health', function (){
+    return response()->json([
+        'status' => 'ok'
+    ]);
+})->name('health');
+
 
  Route::get('/test', function (){
-
+     return response()->json([
+         'status' => 'test'
+     ]);
  })->name('test');
 
 // Route::post('/logout', function(){
@@ -115,6 +124,17 @@ use App\Models\CentralSetting;
 // });
 
 
+Route::get('/health', static function (){
+    return response()->json([
+        'status' => 'ok'
+    ]);
+})->name('health');
+
+Route::get('/test', static function (){
+    return response()->json([
+        'status' => 'test'
+    ]);
+})->name('test');
 
 Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
 Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
@@ -187,10 +207,10 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::delete('/delete/{id}', [AdminController::class, 'deleteRestaurant'])->middleware('permission:can_delete_restaurants')->name('delete-restaurant');
                     Route::post('/generate-user', [AdminController::class, 'generateUser'])->middleware('permission:can_add_admins')->name('generate-user');
                     Route::get('/logs', [AdminController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
-                    Route::get('/restaurants/{id}', [AdminController::class, 'viewRestaurant'])->middleware('permission:can_view_restaurants')->name('view-restaurants');
-                    Route::get('/restaurants/{id}/orders', [AdminController::class, 'viewRestaurantOrders'])->middleware('permission:can_view_restaurants')->name('view-restaurants-orders');
-                    Route::get('/restaurants/{id}/customers', [AdminController::class, 'viewRestaurantCustomers'])->middleware('permission:can_view_restaurants')->name('view-restaurants-customers');
+                    Route::get('/restaurants/{tenant}', [RestaurantController::class, 'viewRestaurant'])->middleware('permission:can_view_restaurants')->name('view-restaurants');
+
                     Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('restaurants');
+                    Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
@@ -225,10 +245,21 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         return Redirect::back();
     })->name('change.language');
 
-
     Route::post('/delivery-webhook', static function (Request $request) {
-        return Redirect::to(CentralSetting::first()->webhook_url ?? '')->withInput($request->all());
+        try{
+            // \Sentry\captureMessage('Webhook post from delivery company');
+            
+            $client = new \GuzzleHttp\Client();
+    
+            $url = CentralSetting::first()->webhook_url ?? '';
+            
+            $request = $client->post($url, ['json'=>$request->all()]);
+         }catch(Exception $e){
+             
+         }
+         return response()->json(['message'=>"received"],200);
     })->name('delivery.webhook-post');
+ 
 
 });
 //-----------------------------------------------------------------------------------------------------------------------
