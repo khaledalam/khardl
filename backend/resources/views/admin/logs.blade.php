@@ -27,7 +27,7 @@
                 <select id="usersDropdown" name="user_id" class="form-select form-select-sm border-body bg-body w-150px me-5">
                     <option value="all" {{ request('user_id') == 'all' ? 'selected' : '' }}>All</option>
                     @foreach ($owners as $owner)
-                        <option value="{{ $user->id }}" {{ request('user_id') == $owner->id ? 'selected' : '' }}>
+                        <option value="{{ $owner->id }}" {{ request('user_id') == $owner->id ? 'selected' : '' }}>
                             {{ $owner->id }} | {{ $owner->first_name }} {{ $owner->last_name }}
                         </option>
                     @endforeach
@@ -56,6 +56,13 @@
                 <button type="submit" id="kt_ecommerce_add_product_submit"
                   class="btn btn-primary">
                   <span class="indicator-label">{{ __('messages.search') }}</span>
+                  <span class="indicator-progress">{{ __('messages.please-wait')}}
+                  <span
+                  class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                </button>
+                <button type="submit" id="download_logs"
+                  class="btn btn-success mx-2">
+                  <span class="indicator-label">{{ __('messages.Download') }}</span>
                   <span class="indicator-progress">{{ __('messages.please-wait')}}
                   <span
                   class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -236,7 +243,7 @@
                 </tbody>
                 <!--end::Tbody-->
               </table>
-
+              {{ $logs->links('pagination::bootstrap-4') }}
 
               <!--end::Table-->
             </div>
@@ -246,35 +253,6 @@
 
 
           <!--end::Card body-->
-        </div>
-        <div class="d-flex flex-stack flex-wrap pt-10">
-          <div class="fs-6 fw-bold text-gray-700">
-              Showing {{ $logs->firstItem() }} to {{ $logs->lastItem() }} of {{ $logs->total() }} entries
-          </div>
-          <!--begin::Pages-->
-          <ul class="pagination">
-              @if ($logs->currentPage() > 1)
-                  <li class="page-item previous">
-                      <a href="{{ $logs->previousPageUrl() }}" class="page-link">
-                          <i class="previous"></i>
-                      </a>
-                  </li>
-              @endif
-
-              @for ($page = max(1, $logs->currentPage() - 2); $page <= min($logs->lastPage(), $logs->currentPage() + 2); $page++)
-                  <li class="page-item {{ $page == $logs->currentPage() ? 'active' : '' }}">
-                      <a href="{{ $logs->url($page) }}" class="page-link">{{ $page }}</a>
-                  </li>
-              @endfor
-
-              @if ($logs->hasMorePages())
-                  <li class="page-item next">
-                      <a href="{{ $logs->nextPageUrl() }}" class="page-link">
-                          <i class="next"></i>
-                      </a>
-                  </li>
-              @endif
-          </ul>
         </div>
         <!--end::Login sessions-->
       </div>

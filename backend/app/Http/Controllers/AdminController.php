@@ -460,7 +460,7 @@ class AdminController extends Controller
 
         $owners = User::get();
         $user = Auth::user();
-        $logs = $query->paginate(25);
+        $logs = $query->paginate(config('application.perPage')??20);
 
         return view('admin.logs', compact('user', 'logs', 'owners'));
     }

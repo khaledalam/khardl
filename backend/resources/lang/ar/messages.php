@@ -508,5 +508,6 @@ return [
     "Filter" => "تصفية",
     "Discard" => "الغاء",
     "Select an option" => "اختار خيار",
+    "Download" => "تحميل"
 ];
 

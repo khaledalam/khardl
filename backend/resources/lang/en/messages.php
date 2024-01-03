@@ -507,5 +507,6 @@ return [
     "With khardl" => "With Khardl",
     "Filter" => "Filter",
     "Discard" => "Discard",
-    "Select an option" => "Select an option"
+    "Select an option" => "Select an option",
+    "Download" => "Download"
 ];
