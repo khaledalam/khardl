@@ -2,7 +2,7 @@
 
 use App\Packages\TapPayment\Webhook\WebhookSignature;
 use App\Packages\TapPayment\Webhook\TapWebhookHandler;
-use App\Packages\TapPayment\Webhook\DeliveryCompaniesWebhookHandler;
+use App\Packages\DeliveryCompanies\Webhook\DeliveryCompaniesWebhookHandler;
 
 return [
     'configs' => [
@@ -19,7 +19,7 @@ return [
         ],
         [
             'name' => 'delivery-companies',
-            'signing_secret' => env('WEBHOOK_CLIENT_SECRET'),
+            'signing_secret' =>  env('WEBHOOK_CLIENT_SECRET'),
             'signature_header_name' => 'Signature',
             'signature_validator' => WebhookSignature::class,
             'webhook_profile' => \Spatie\WebhookClient\WebhookProfile\ProcessEverythingWebhookProfile::class,
