@@ -502,4 +502,12 @@ return [
     "Delivered" => "Delivered",
     "Delivering" => "Delivering",
     "Pick date range" => "Pick date range",
+    "Contract" => "Contract",
+    "Directly" => "Directly",
+    "With khardl" => "With Khardl",
+    "Filter" => "Filter",
+    "Discard" => "Discard",
+    "Contract" => "Contract",
+    "Contract" => "Contract",
+    "Contract" => "Contract",
 ];
