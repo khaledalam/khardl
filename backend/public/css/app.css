@@ -6215,6 +6215,9 @@ details.collapse summary::-webkit-details-marker {
   --tw-scale-y: 1.25;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+.hover\:border-none:hover {
+  border-style: none;
+}
 .hover\:\!bg-\[\#00000099\]:hover {
   background-color: #00000099 !important;
 }
@@ -6263,9 +6266,6 @@ details.collapse summary::-webkit-details-marker {
 .hover\:bg-\[\#dadada\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(218 218 218 / var(--tw-bg-opacity));
-}
-.hover\:bg-\[var\(--primary\)\]:hover {
-  background-color: var(--primary);
 }
 .hover\:bg-\[var\(--secondary\)\]:hover {
   background-color: var(--secondary);

@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
 import {
   getCartItemsCount,
+  selectedCategoryAPI,
   setCategoriesAPI,
 } from "../../redux/NewEditor/categoryAPISlice"
 import NavbarRestuarant from "./components/NavbarRestuarant"
@@ -33,6 +34,12 @@ export const RestuarantHomePage = () => {
       )
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data))
+        dispatch(
+          selectedCategoryAPI({
+            name: restaurantCategoriesResponse.data?.data[0].name,
+            id: restaurantCategoriesResponse.data?.data[0].id,
+          })
+        )
 
         console.log(">> branch_id >>", branch_id)
 
@@ -102,9 +109,7 @@ export const RestuarantHomePage = () => {
         fontFamily: restaurantStyle.text_fontFamily,
       }}
     >
-      <NavbarRestuarant />
       <Herosection isMobile={isMobile} categories={categories} />
-      {/* <ProductSection alignment={"center"} categories={categories} /> */}
       <ProductSection categories={categories} isMobile={isMobile} />
       <FooterRestuarant />
     </div>
