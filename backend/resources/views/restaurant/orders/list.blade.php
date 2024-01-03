@@ -267,9 +267,9 @@
                                                 input: 'select',
                                                 showCancelButton: true,
                                                 inputOptions: statusOptions,
-                                                inputPlaceholder: 'Select an option',
-                                                confirmButtonText: '{{ __('messages.yes') }}',
-                                                cancelButtonText: '{{ __('messages.no') }}'
+                                                inputPlaceholder: "{{ __('messages.Select an option') }}",
+                                                confirmButtonText: "{{ __('messages.yes') }}",
+                                                cancelButtonText: "{{ __('messages.no') }}"
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
                                                     const selectedStatus = result.value;

@@ -444,7 +444,7 @@ class AdminController extends Controller
     public function logs(Request $request)
     {
 
-        $query = DB::table('logs')->orderBy('created_at', 'desc');
+        $query = Log::with(['user'])->orderBy('created_at', 'desc');
 
         if ($request->filled('user_id')) {
             if ($request->input('user_id') != 'all') {

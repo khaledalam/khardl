@@ -507,15 +507,6 @@ return [
     "With khardl" => "مع khardl",
     "Filter" => "تصفية",
     "Discard" => "الغاء",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
-    "Contract" => "xxxx",
+    "Select an option" => "اختار خيار",
 ];
 

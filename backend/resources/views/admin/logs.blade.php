@@ -85,9 +85,11 @@
                 <!--begin::Tbody-->
                 <tbody class="fw-6 fw-bold text-gray-600">
                   @foreach ($logs as $log)
-                    <tr data-user-id="{{ $log->user_id }}" data-action="{{ $log->action }}">
+                    <tr data-user-id="{{ $log->user?->id }}" data-action="{{ $log->action }}">
                       <td>
-                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user_id]) }}" class="text-hover-primary text-gray-600">{{ $log->user_id }}</a>
+                      @if($log->user)
+                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user?->id]) }}" class="text-hover-primary text-gray-600">{{ $log->user?->full_name }}</a>
+                      @endif
                       </td>
                       <td>
                         <span>
@@ -226,8 +228,8 @@
                           @endif
                         </span>
                       </td>
-                        <td>{{ $log->metadata }}</td>
                       <td>{{ $log->created_at }}</td>
+                        <td>{{ $log->metadata }}</td>
                     </tr>
                   @endforeach
 
