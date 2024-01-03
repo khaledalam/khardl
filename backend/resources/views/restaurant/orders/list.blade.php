@@ -45,7 +45,7 @@
                                     <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                                         <!--begin::Flatpickr-->
                                         <div class="input-group w-250px">
-                                            <input class="form-control form-control-solid rounded rounded-end-0" placeholder="Pick date range" id="kt_ecommerce_sales_flatpickr" />
+                                            <input class="form-control form-control-solid rounded rounded-end-0" placeholder="{{ __('messages.Pick date range') }}" id="kt_ecommerce_sales_flatpickr" />
                                             <button class="btn btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear">
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr088.svg-->
                                                 <span class="svg-icon svg-icon-2">
@@ -60,19 +60,19 @@
                                         <!--end::Flatpickr-->
                                         <div class="w-100 mw-150px">
                                             <!--begin::Select2-->
-                                            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Delivery" data-kt-ecommerce-order-filter="status">
+                                            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.Delivery') }}" data-kt-ecommerce-order-filter="status">
                                                 <option></option>
-                                                <option value="all">All</option>
-                                                <option value="Cancelled">Cancelled</option>
-                                                <option value="Completed">Completed</option>
-                                                <option value="Denied">Denied</option>
-                                                <option value="Expired">Expired</option>
-                                                <option value="Failed">Failed</option>
-                                                <option value="Pending">Pending</option>
-                                                <option value="Processing">Processing</option>
-                                                <option value="Refunded">Refunded</option>
-                                                <option value="Delivered">Delivered</option>
-                                                <option value="Delivering">Delivering</option>
+                                                <option value="all">{{ __('messages.All') }}</option>
+                                                <option value="Cancelled">{{ __('messages.Cancelled') }}</option>
+                                                <option value="Completed">{{ __('messages.Completed') }}</option>
+                                                <option value="Denied">{{ __('messages.Denied') }}</option>
+                                                <option value="Expired">{{ __('messages.Expired') }}</option>
+                                                <option value="Failed">{{ __('messages.Failed') }}</option>
+                                                <option value="Pending">{{ __('messages.Pending') }}</option>
+                                                <option value="Processing">{{ __('messages.Processing') }}</option>
+                                                <option value="Refunded">{{ __('messages.Refunded') }}</option>
+                                                <option value="Delivered">{{ __('messages.Delivered') }}</option>
+                                                <option value="Delivering">{{ __('messages.Delivering') }}</option>
                                             </select>
                                             <!--end::Select2-->
                                         </div>
@@ -80,11 +80,11 @@
 
                                         <div class="w-100 mw-150px">
                                             <!--begin::Select2-->
-                                            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Payment" data-kt-ecommerce-order-filter="status">
+                                            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.Payment') }}" data-kt-ecommerce-order-filter="status">
                                                 <option></option>
-                                                <option value="all">All</option>
-                                                <option value="paid">Paid</option>
-                                                <option value="unpaid">unPaid</option>
+                                                <option value="all">{{ __('messages.All') }}</option>
+                                                <option value="paid">{{ __('messages.Paid') }}</option>
+                                                <option value="unpaid">{{ __('messages.Un Paid') }}</option>
                                             </select>
                                             <!--end::Select2-->
                                         </div>
@@ -111,14 +111,14 @@
                                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_sales_table .form-check-input" value="1" />
                                                 </div>
                                             </th>
-                                            <th class="min-w-100px">Order ID</th>
-                                            <th class="min-w-175px">Customer</th>
+                                            <th class="min-w-100px">{{ __('messages.ID') }}</th>
+                                            <th class="min-w-175px">{{ __('messages.Customer') }}</th>
                                             {{-- <th class="text-end min-w-70px">Delivery Type</th> --}}
-                                            <th class="text-end min-w-70px">Branch Name</th>
-                                            <th class="text-end min-w-70px">Status</th>
-                                            <th class="text-end min-w-100px">Total</th>
-                                            <th class="text-end min-w-100px">Date Added</th>
-                                            <th class="text-end min-w-100px"><div class="btn btn-sm btn-khardl"><a href="./add-order.html" class=" text-white">Add new</a></div>
+                                            <th class="text-end min-w-70px">{{ __('messages.Branch') }}</th>
+                                            <th class="text-end min-w-70px">{{ __('messages.Status') }}</th>
+                                            <th class="text-end min-w-100px">{{ __('messages.Total') }}</th>
+                                            <th class="text-end min-w-100px">{{ __('messages.Date') }}</th>
+                                            <th class="text-end min-w-100px"><div class="btn btn-sm btn-khardl"><a href="{{ route('restaurant.orders_add') }}" class=" text-white">{{ __('messages.Add new') }}</a></div>
                                             </th>
                                         </tr>
                                         <!--end::Table row-->
@@ -211,7 +211,7 @@
                                                     <!--end::Date Added=-->
                                                     <!--begin::Action=-->
                                                     <td class="text-end">
-                                                        <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                                        <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.Actions') }}
                                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                             <span class="svg-icon svg-icon-5 m-0">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -223,12 +223,12 @@
                                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                             <!--begin::Menu item-->
                                                             <div class="menu-item px-3">
-                                                                <a  href="{{route('restaurant.branch.order',['order'=>$order->id])}}" class="menu-link px-3">View</a>
+                                                                <a  href="{{route('restaurant.branch.order',['order'=>$order->id])}}" class="menu-link px-3">{{ __('messages.View') }}</a>
                                                             </div>
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->
                                                             <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">Edit</a>
+                                                                <a href="#" class="menu-link px-3">{{ __('messages.Edit') }}</a>
                                                             </div>
                                                             <!--end::Menu item-->
                                                             <!--begin::Menu item-->
@@ -236,7 +236,7 @@
                                                                 <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
                                                             </div> --}}
                                                             <div class="menu-item px-3">
-                                                                <a href="#" onclick="showConfirmation({{$order->id}})" class="menu-link px-3" >{{__('messages.status')}}</a>
+                                                                <a href="#" onclick="showConfirmation({{$order->id}})" class="menu-link px-3" >{{__('messages.Changes status')}}</a>
                                                             </div>
 
                                                             <!--end::Menu item-->

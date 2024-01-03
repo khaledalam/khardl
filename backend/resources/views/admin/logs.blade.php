@@ -78,7 +78,7 @@
                     <th class="min-w-200px">#</th>
                     <th class="min-w-200px">{{ __('messages.actions') }}</th>
                       <th class="min-w-200px">{{ __('messages.date-and-time')}}</th>
-                      <th class="min-w-200px">{{ __('messages.detadata')}}</th>
+                      <th class="min-w-200px">{{ __('messages.metadata')}}</th>
                   </tr>
                 </thead>
                 <!--end::Thead-->

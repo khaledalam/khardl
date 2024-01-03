@@ -141,12 +141,10 @@
                                 </div>
                                 <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">Site end date :</span>
-                                        <span class="badge badge-dark p-2 fs-6">2025-07-09</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">App end date :</span>
-                                        <span class="badge badge-dark p-2 fs-6">2024-12-08</span>
+                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.Trial ends at') }} :</span>
+                                        <span class="badge badge-dark p-2 fs-6">
+                                            {{ $restaurant->trial_ends_at?->format('Y-m-d') }}
+                                        </span>
                                     </div>
                                 </div>
                                 <!--end::Wrapper-->
