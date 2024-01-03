@@ -1,7 +1,7 @@
 import React from "react"
 import Eyes from "./Eyes"
 
-const OrderTable = ({data, onViewMore}) => {
+const OrderTable = ({data}) => {
   return (
     <div className='w-full'>
       <table className='w-full table border-separate border-spacing-y-4'>
