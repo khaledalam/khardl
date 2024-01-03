@@ -29,7 +29,7 @@ export const CustomerPage = () => {
         <div
           className={` transition-all ${
             isSidebarCollapse ? "flex-[100%] w-full" : "flex-[80%]"
-          } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-200 h-full overflow-y-scroll hide-scroll`}
+          } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
         >
           {activeNavItem === TABS.dashboard ? (
             <CustomerDashboard />

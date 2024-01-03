@@ -1,0 +1,74 @@
+import ImgBurger from "../../assets/burger.png"
+import ImgPizza from "../../assets/pizza.png"
+import ImgPasta from "../../assets/pasta.png"
+import ImgChicken from "../../assets/chicken.png"
+import ImgDrink from "../../assets/drink.png"
+
+export const customerOrderData = [
+  {
+    id: "#0484de4j543",
+    orderId: "#01",
+    productName: "Burger",
+    productImgUrl: ImgBurger,
+    extraItems: 2,
+    status: "Accepted",
+    total: 650,
+    DateAdded: "01/01/2024",
+    timeAdded: "14:25AM",
+  },
+  {
+    id: "#0484degyt543",
+    orderId: "#02",
+    productName: "Pizza",
+    productImgUrl: ImgPizza,
+    extraItems: 5,
+    status: "Rejected",
+    total: 1250,
+    DateAdded: "01/01/2024",
+    timeAdded: "14:25AM",
+  },
+  {
+    id: "#0484de4j544gf",
+    orderId: "#03",
+    productName: "Chicken",
+    productImgUrl: ImgChicken,
+    extraItems: 0,
+    status: "Cancelled",
+    total: 250,
+    DateAdded: "01/01/2024",
+    timeAdded: "14:25AM",
+  },
+  {
+    id: "#0484d6hg543",
+    orderId: "#04",
+    productName: "Chicken",
+    productImgUrl: ImgChicken,
+    extraItems: 0,
+    status: "Cancelled",
+    total: 450,
+    DateAdded: "01/01/2024",
+    timeAdded: "14:25AM",
+  },
+  {
+    id: "#0484d6hg4skf3",
+    orderId: "#05",
+    productName: "Pasta",
+    productImgUrl: ImgPasta,
+    extraItems: 1,
+    status: "Received by Restaurant",
+    total: 850,
+    DateAdded: "01/01/2024",
+    timeAdded: "14:25AM",
+  },
+  {
+    id: "#0484d6hgdlsdf3",
+    orderId: "#05",
+    productName: "Soda Drink",
+    productImgUrl: ImgDrink,
+    extraItems: 1,
+    status: "Ready",
+    total: 160,
+    DateAdded: "01/01/2024",
+    timeAdded: "14:25AM",
+  },
+]
