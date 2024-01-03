@@ -4101,6 +4101,9 @@ details.collapse summary::-webkit-details-marker {
 .mt-auto {
   margin-top: auto;
 }
+.ml-16 {
+  margin-left: 4rem;
+}
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -4623,6 +4626,18 @@ details.collapse summary::-webkit-details-marker {
 }
 .flex-\[82\%\] {
   flex: 82%;
+}
+.flex-\[15\%\] {
+  flex: 15%;
+}
+.flex-\[85\%\] {
+  flex: 85%;
+}
+.flex-\[20\%\] {
+  flex: 20%;
+}
+.flex-\[80\%\] {
+  flex: 80%;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
@@ -5308,6 +5323,9 @@ details.collapse summary::-webkit-details-marker {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.bg-\[var\(--customer\)\] {
+  background-color: var(--customer);
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
@@ -6342,9 +6360,6 @@ details.collapse summary::-webkit-details-marker {
 .focus-visible\:border-none:focus-visible {
   border-style: none;
 }
-.focus-visible\:bg-transparent:focus-visible {
-  background-color: transparent;
-}
 .focus-visible\:outline-none:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -7051,6 +7066,22 @@ details.collapse summary::-webkit-details-marker {
     flex: 70%;
   }
 
+  .xl\:flex-\[15\%\] {
+    flex: 15%;
+  }
+
+  .xl\:flex-\[85\%\] {
+    flex: 85%;
+  }
+
+  .xl\:flex-\[20\%\] {
+    flex: 20%;
+  }
+
+  .xl\:flex-\[80\%\] {
+    flex: 80%;
+  }
+
   .xl\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -7120,6 +7151,22 @@ details.collapse summary::-webkit-details-marker {
 
   .laptopXL\:flex-\[80\%\] {
     flex: 80%;
+  }
+
+  .laptopXL\:flex-\[15\%\] {
+    flex: 15%;
+  }
+
+  .laptopXL\:flex-\[85\%\] {
+    flex: 85%;
+  }
+
+  .laptopXL\:flex-\[17\%\] {
+    flex: 17%;
+  }
+
+  .laptopXL\:flex-\[83\%\] {
+    flex: 83%;
   }
 
   .laptopXL\:grid-cols-3 {
