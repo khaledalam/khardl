@@ -479,6 +479,9 @@ return [
     "Category" => 'Category',
     "Image" => "Image",
     "User" => "User",
-    "Created at" => "Created at"
+    "Created at" => "Created at",
+    "K" => "K",
+    "M" => "M",
+    "B" => "B",
 
 ];

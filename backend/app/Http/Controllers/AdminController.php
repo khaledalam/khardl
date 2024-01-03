@@ -271,7 +271,6 @@ class AdminController extends Controller
         }
 
 
-
         $restaurants = $query->paginate();
         $user = Auth::user();
 
