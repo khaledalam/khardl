@@ -12,7 +12,7 @@ return new class extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
-            $table->string('url');
+            $table->text('url');
             $table->json('headers')->nullable();
             $table->json('payload')->nullable();
             $table->text('exception')->nullable();
