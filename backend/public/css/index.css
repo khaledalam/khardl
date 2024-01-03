@@ -5145,6 +5145,10 @@ details.collapse summary::-webkit-details-marker {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
+.border-neutral-800 {
+  --tw-border-opacity: 1;
+  border-color: rgb(38 38 38 / var(--tw-border-opacity));
+}
 .border-b-\[var\(--primary\)\] {
   border-bottom-color: var(--primary);
 }
@@ -6412,6 +6416,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .active\:bg-transparent:active {
   background-color: transparent;
+}
+.active\:bg-\[var\(--customer\)\]:active {
+  background-color: var(--customer);
 }
 .active\:text-gray-500:active {
   --tw-text-opacity: 1;
@@ -12332,6 +12339,10 @@ details.collapse summary::-webkit-details-marker {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
+.border-neutral-800 {
+  --tw-border-opacity: 1;
+  border-color: rgb(38 38 38 / var(--tw-border-opacity));
+}
 .border-b-\[var\(--primary\)\] {
   border-bottom-color: var(--primary);
 }
@@ -13599,6 +13610,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .active\:bg-transparent:active {
   background-color: transparent;
+}
+.active\:bg-\[var\(--customer\)\]:active {
+  background-color: var(--customer);
 }
 .active\:text-gray-500:active {
   --tw-text-opacity: 1;

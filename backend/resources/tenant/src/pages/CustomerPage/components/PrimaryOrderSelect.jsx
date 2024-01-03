@@ -5,6 +5,7 @@ const PrimaryOrderSelect = ({
   defaultValue,
   options,
   handleChange,
+  background,
   label,
   widthStyle,
 }) => {
@@ -29,9 +30,15 @@ const PrimaryOrderSelect = ({
           tabIndex={0}
           role='button'
           onClick={() => handleDropdown()}
-          className='btn min-h-[40px] w-full min-w-full flex items-center hover:border-[var(--customer)] h-10 rounded-2xl outline-none hover:outline-none focus:outline-none focus-within:outline-none justify-between px-2 border-[var(--customer)] bg-transparent active:bg-transparent hover:bg-transparent'
+          className={`btn min-h-[40px] w-full min-w-full flex items-center hover:border-[var(--customer)] h-10 rounded-2xl outline-none hover:outline-none focus:outline-none focus-within:outline-none justify-between px-2 border-[var(--customer)] ${
+            background
+              ? "bg-[var(--customer)] active:bg-[var(--customer)] hover:bg-[var(--customer)]"
+              : "bg-transparent active:bg-transparent hover:bg-transparent"
+          } `}
         >
-          <span className='text-neutral-500'>{defaultValue}</span>
+          <span className={background ? "text-white" : "text-neutral-500"}>
+            {defaultValue}
+          </span>
           <span className=''>
             <BiChevronDown size={22} />
           </span>
@@ -44,7 +51,7 @@ const PrimaryOrderSelect = ({
             {options &&
               options?.map((item, i) => (
                 <div
-                  className='flex w-full gap-3 items-center p-2 hover:bg-[var(--customer)]'
+                  className='flex w-full gap-3 items-center p-2 hover:bg-[var(--customer)] cursor-pointer'
                   key={i}
                   onClick={() => {
                     handleChange(item.value)

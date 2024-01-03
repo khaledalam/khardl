@@ -62,7 +62,7 @@ export const customerOrderData = [
   },
   {
     id: "#0484d6hgdlsdf3",
-    orderId: "#05",
+    orderId: "#06",
     productName: "Soda Drink",
     productImgUrl: ImgDrink,
     extraItems: 1,
@@ -73,7 +73,7 @@ export const customerOrderData = [
   },
   {
     id: "#0484d6hg543r",
-    orderId: "#04",
+    orderId: "#07",
     productName: "Chicken",
     productImgUrl: ImgChicken,
     extraItems: 0,
@@ -84,7 +84,7 @@ export const customerOrderData = [
   },
   {
     id: "#0484d6hg4skf3s",
-    orderId: "#05",
+    orderId: "#08",
     productName: "Pasta",
     productImgUrl: ImgPasta,
     extraItems: 1,
@@ -95,7 +95,7 @@ export const customerOrderData = [
   },
   {
     id: "#0484d6hgdlsdf3t",
-    orderId: "#05",
+    orderId: "#09",
     productName: "Soda Drink",
     productImgUrl: ImgDrink,
     extraItems: 1,
@@ -106,7 +106,7 @@ export const customerOrderData = [
   },
   {
     id: "#0484d6hg543u",
-    orderId: "#04",
+    orderId: "#10",
     productName: "Chicken",
     productImgUrl: ImgChicken,
     extraItems: 0,
@@ -117,7 +117,7 @@ export const customerOrderData = [
   },
   {
     id: "#0484d6hg4skf3v",
-    orderId: "#05",
+    orderId: "#11",
     productName: "Pasta",
     productImgUrl: ImgPasta,
     extraItems: 1,
@@ -128,7 +128,7 @@ export const customerOrderData = [
   },
   {
     id: "#0484d6hgdlsdf3w",
-    orderId: "#05",
+    orderId: "#12",
     productName: "Soda Drink",
     productImgUrl: ImgDrink,
     extraItems: 1,
