@@ -170,7 +170,10 @@ const OuterSidebarNav = ({id}) => {
           defaultValue={
             pickUp?.name
               ? `${pickUp.name}`
-              : branches.filter((branch) => branch.pickup_availability === 1)[0]
+              : branches &&
+                branches?.filter(
+                  (branch) => branch.pickup_availability === 1
+                )[0]
               ? `Branch ${branch_id}`
               : ""
           }
@@ -187,7 +190,8 @@ const OuterSidebarNav = ({id}) => {
           defaultValue={
             branch?.name
               ? `${branch.name}`
-              : branches.filter(
+              : branches &&
+                branches?.filter(
                   (branch) => branch.delivery_availability === 1
                 )[0]
               ? `Branch ${branch_id}`
@@ -196,7 +200,7 @@ const OuterSidebarNav = ({id}) => {
           onChange={(value) => setBranch(value)}
           options={
             branches
-              ? branches.filter((branch) => branch.delivery_availability === 1)
+              ? branches?.filter((branch) => branch.delivery_availability === 1)
               : []
           }
         />
@@ -218,7 +222,7 @@ const OuterSidebarNav = ({id}) => {
           </Fragment>
         ) : (
           <Fragment>
-            <div
+            {/* <div
               onClick={() => navigate("/register")}
               className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border cursor-pointer border-[#C0D123] items-center '
             >
@@ -226,7 +230,7 @@ const OuterSidebarNav = ({id}) => {
                 <BiSolidUserAccount size={25} />
               </div>
               <h3 className=''> {t("Create an account")} </h3>
-            </div>
+            </div> */}
 
             <div
               onClick={() => navigate("/login")}
@@ -238,7 +242,7 @@ const OuterSidebarNav = ({id}) => {
               <h3 className=''> {t("Login as Customer")} </h3>
             </div>
 
-            <div
+            {/* <div
               onClick={() => navigate("/login-admins")}
               className='w-[90%] mx-auto flex flex-row gap-3 cursor-pointer bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
             >
@@ -246,7 +250,7 @@ const OuterSidebarNav = ({id}) => {
                 <img src={LoginIcon} alt='home' />
               </div>
               <h3 className=''> {t("Management Area")} </h3>
-            </div>
+            </div> */}
           </Fragment>
         )}
         <label
