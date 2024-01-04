@@ -397,7 +397,7 @@ return [
     "Al-Ahsa" => "Al-Ahsa",
     "cost" => "Cost",
     "main-cost" => "Main cost",
-    "additional-cost" => "Main cost",
+    "additional-cost" => "Additional cost",
     "na" => "N/A",
     "live-chat" => "Live Chat",
     "show" => "Show",
@@ -481,5 +481,8 @@ return [
     "Image" => "Image",
     "User" => "User",
     "Created at" => "Created at",
+    "cervo" => "Cervo",
+    "delivery.cervo.summary" => "Cervo Delivery Services is a leading logistics company in the Kingdom of Saudi Arabia, specializing in delivery of orders, food, and parcel transportation.<br /><br />We offer our services in all cities across the country. Our company possesses a complete fleet of modern vehicles that cater to and meet all needs. Our employees are dedicated to providing excellent customer service and respecting privacy, from order receipt to prompt delivery. Our motto is always speed, care, reliability, and credibility"
+
 
 ];
