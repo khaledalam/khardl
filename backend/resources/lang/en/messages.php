@@ -536,4 +536,6 @@ return [
     "Approve business fail" => "Approve business fail",
     "Verify restaurant user sent"   => "Verify restaurant user sent",
     "Verify restaurant user fail"   => "Verify restaurant user fail",
+    "Metadata" => "Metadata",
+    "Action" => "Action"
 ];

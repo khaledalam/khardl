@@ -536,5 +536,7 @@ return [
     "Approve business fail" => "فشل ارسال بريد قبوالاعمال",
     "Verify restaurant user sent"   => "تم ارسال بريد تاكيد مستخدم مطعم",
     "Verify restaurant user fail"   => "فشل ارسال بريد تاكيد مستخدم مطعم",
+    "Metadata" => "البيانات الوصفية",
+    "Action" => "الفعل"
 ];
 

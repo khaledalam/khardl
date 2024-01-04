@@ -3,6 +3,7 @@
 namespace App\Http\Services\Central\Log;
 
 use App\Enums\Admin\LogTypes;
+use App\Exports\LogsExport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use App\Models\User;
 use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class LogService
@@ -37,26 +39,7 @@ class LogService
             $todayDate = Carbon::now()->format('Y-m-d');
             $filename = "logs_$todayDate.csv";
 
-            // Ensure the directory exists or create it
-            $csvDirectory = storage_path('app/csv');
-            File::makeDirectory($csvDirectory, $mode = 0755, true, true);
-
-            $filePath = storage_path("app/csv/$filename");
-            $handle = fopen($filePath, 'w+');
-
-            fputcsv($handle, array('Customer', 'Action', 'Metadata', 'Date'));
-            $model = $model->get();
-            foreach ($model as $row) {
-                fputcsv($handle, array($row->user?->full_name, $row['action'], json_encode($row['metadata']), $row->created_at?->format('Y-m-d H')));
-            }
-
-            fclose($handle);
-
-            $headers = [
-                'Content-Type' => 'text/csv',
-            ];
-
-            return response()->download($filePath, $filename, $headers);
+            return Excel::download(new LogsExport($model->get()), $filename);
         } catch (\Exception $e) {
             logger($e);
             return redirect()->route('admin.log');
