@@ -62,9 +62,17 @@ const FooterRestuarant = () => {
           </h3>
         </div>
       </div>
-      <h3 className='pl-16 text-[1rem] text-black font-medium'>
-        &copy; All Right Reserved.
-      </h3>
+      <div className='h-7 flex bg-white items-center justify-between p-2'>
+        <h3 className='pl-16 text-[1rem] text-neutral-700 font-medium'>
+          &copy; Powered by{" "}
+          <a
+            href='https://first.khardl.com'
+            className='text-neutral-400 text-sm cursor-pointer'
+          >
+            Khardl
+          </a>
+        </h3>
+      </div>
     </div>
   )
 }

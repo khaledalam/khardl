@@ -245,42 +245,22 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         return Redirect::back();
     })->name('change.language');
 
-
     Route::post('/delivery-webhook', static function (Request $request) {
         try{
-          \Sentry\captureMessage('Webhook post from cervo');
-          \Sentry\captureMessage(json_encode($request->all()));
-         
-         $client = new \GuzzleHttp\Client();
+            \Sentry\captureMessage('Webhook post from cervo');
+           
+           $client = new \GuzzleHttp\Client();
+   
+           $url = CentralSetting::first()->webhook_url ?? '';
+           $data = [ 'query' =>$request->all()+ ['delivery_company'=>request()->header('Delivery-Company') ?? '']];
+           $request = $client->request('post',$url,$data);
+        }
+        catch(Exception $e){
+               
+        }
+        return response()->json(['message'=>"received"],200);
+    })->name('delivery.webhook-post');
  
-         $url = CentralSetting::first()->webhook_url ?? '';
-         $data = [ 'query' =>$request->all()];
-         $request = $client->request('post',$url,$data);
-         }catch(Exception $e){
-             
-         }
-         return response()->json(['message'=>"received"],200);
-     })->name('delivery.webhook-post');
- 
-     Route::get('/delivery-webhook', static function (Request $request) {
-        
-         try{
-          \Sentry\captureMessage('Webhook get from cervo');
-          \Sentry\captureMessage(json_encode($request->all()));
-         
-         $client = new \GuzzleHttp\Client();
- 
-         $url = CentralSetting::first()->webhook_url ?? '';
-         $data = [ 'query' =>$request->all()];
-         $request = $client->request('get',$url,$data);
-         }catch(Exception $e){
-             
-         }
-        
-     
-         return response()->json(['message'=>"received"],200);
- 
-     });
 
 });
 //-----------------------------------------------------------------------------------------------------------------------

@@ -4,6 +4,7 @@ namespace App\Packages\DeliveryCompanies\Cervo;
 
 use App\Models\Tenant\Order;
 use App\Models\Tenant\PaymentMethod;
+use Illuminate\Support\Facades\Http;
 use App\Models\Tenant\RestaurantUser;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 
@@ -73,6 +74,39 @@ class Cervo  extends AbstractDeliveryCompany
             data: $data
         );
     }
+    public static function processWebhook($payload){
+        if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER'] || $payload["order_status"]  == self::STATUS_ORDER['ORDER_ON_HAND']){
+            Order::findOrFail($payload['order_id'])->update([
+                'status'=>Order::ACCEPTED
+            ]);
+        }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
+            Order::findOrFail($payload['order_id'])->update([
+                'status'=>Order::COMPLETED
+            ]);
+        }else if (
+            $payload['order_status'] == self::STATUS_ORDER['CANCELLED'] ||
+            $payload['order_status'] == self::STATUS_ORDER['CANCELED_BY_DRIVER'] ){
+            // Todo @todo
+            // resend the order to any delivery companies or cancelled 
+        }
 
+    }
+    // public function getOrder($id){
+    //     if(env('APP_ENV') == 'local'){
+    //         $token = env('CERVO_SECRET_API_KEY','');
+    //     }else {
+    //         $token = $this->delivery_company->api_key;
+    //     }
+    //     try {
+    //         $response = Http::withToken($token)
+    //         ->get($this->delivery_company->api_url."/order/$id");
+    //         $response =  json_decode($response->getBody(), true);
+    //         return $response['Status'];
+    //     }catch(\Exception $e){
+    //         logger($e->getMessage());
+    //         return false;
+    //     }
+        
+    // }
 }
    

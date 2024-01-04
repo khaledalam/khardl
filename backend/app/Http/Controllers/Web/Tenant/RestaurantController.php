@@ -153,14 +153,6 @@ class RestaurantController extends BaseController
     }
 
 
-    public function products_out_of_stock(){
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-
-        return view('restaurant.products_out_of_stock',
-            compact('user'));
-    }
-
     public function qr(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
