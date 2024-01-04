@@ -23,6 +23,7 @@ import { GoSell } from "@tap-payments/gosell";
 const PaymentSection = ({
   styles,
   cartItems,
+  customerTapId,
   paymentMethods,
   deliveryTypes,
   deliveryAddress,
@@ -156,19 +157,11 @@ const PaymentSection = ({
                   },
               },
               customer: {
-                  id: null,
-                  first_name: "First Name",
-                  middle_name: "Middle Name",
-                  last_name: "Last Name",
-                  email: "demo@email.com",
-                  phone: {
-                      country_code: "966",
-                      number: "99999999",
-                  },
+                  id: customerTapId,
               },
               order: {
                   amount: getTotalPrice(),
-                  currency: "SAR",
+                  currency: "KWD",
                   items: extractedData,
                   shipping: null,
                   taxes: null,
@@ -252,6 +245,7 @@ const PaymentSection = ({
   return (
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
         <div id={"tap_charge_element"} />
+        
       <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
         <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Select Payment Method"} isRequired>
@@ -361,6 +355,7 @@ const PaymentSection = ({
       </div>
       {/* order notes */}
       <CartColumn headerTitle={"Order Notes"}>
+        
         <div
           className={`w-full border ${
             styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"

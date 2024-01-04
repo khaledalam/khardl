@@ -216,7 +216,8 @@ class CartRepository
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],
-            'address' => $this->cart->user()->firstOrFail()?->address
+            'tap_customer_id'=> $this->cart->user->tap_customer_id,
+            'address' => $this->cart->user->address
         ], '');
     }
     public function items()

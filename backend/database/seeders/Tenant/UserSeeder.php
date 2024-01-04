@@ -2,11 +2,12 @@
 
 namespace Database\Seeders\Tenant;
 
-use App\Models\Tenant\Branch;
 use Illuminate\Support\Str;
+use App\Models\Tenant\Branch;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tenant\RestaurantUser;
+use App\Packages\TapPayment\Customer\Customer;
 
 class UserSeeder extends Seeder
 {
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             'address' => 'test address',
             "lat"=>24.7136,
             "lng"=> 46.6753,
+            'tap_customer_id'=> Customer::DEFAULT_CUSTOMER_ID,
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
@@ -60,6 +62,7 @@ class UserSeeder extends Seeder
             'address' => 'test address',
             "lat"=>24.7136,
             "lng"=> 46.6753,
+            'tap_customer_id'=> Customer::DEFAULT_CUSTOMER_ID,
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
@@ -87,6 +90,7 @@ class UserSeeder extends Seeder
             'address' => 'test address',
             "lat"=>24.7136,
             "lng"=> 46.6753,
+            'tap_customer_id'=> Customer::DEFAULT_CUSTOMER_ID,
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);

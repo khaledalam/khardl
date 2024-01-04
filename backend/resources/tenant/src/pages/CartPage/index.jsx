@@ -15,6 +15,7 @@ const CartPage = () => {
   const [isloading, setIsLoading] = useState(false)
   const [paymentMethodsData, setPaymentMethodsData] = useState(null)
   const [address, setAddress] = useState(null)
+  const [customerTapId, setCustomerTapId] = useState(null)
   const [deliveryTypesData, setDeliveryTypesData] = useState(null)
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
 
@@ -37,6 +38,7 @@ const CartPage = () => {
         setPaymentMethodsData(cartResponse.data?.data?.payment_methods)
         setDeliveryTypesData(cartResponse.data?.data?.delivery_types)
         setAddress(cartResponse.data?.data?.address ?? t("N/A"))
+        setCustomerTapId(cartResponse.data?.data?.tap_customer_id)
       }
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
@@ -94,6 +96,7 @@ const CartPage = () => {
             <CartSection cartItems={cartItems} />
             <PaymentSection
               styles={restuarantStyle}
+              customerTapId={customerTapId}
               paymentMethods={paymentMethodsData}
               deliveryTypes={deliveryTypesData}
               cartItems={cartItems}

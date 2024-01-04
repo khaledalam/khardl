@@ -9,6 +9,7 @@ use App\Packages\TapPayment\Customer\CustomerInterface;
 
 class Customer extends Tap implements CustomerInterface
 {
+    const DEFAULT_CUSTOMER_ID = 'cus_TS03A3920231337Jw212412549';
     public static function create($data):array{
         return self::send('/customers',$data + [
             "currency"=>"SAR"
@@ -34,7 +35,7 @@ class Customer extends Tap implements CustomerInterface
             }
         }else {
             // TODO @todo Testing only , remove after set production 
-            $user->tap_customer_id = "cus_TS03A3920231337Jw212412549";
+            $user->tap_customer_id = self::DEFAULT_CUSTOMER_ID;
             $user->save();  
         }
     }
