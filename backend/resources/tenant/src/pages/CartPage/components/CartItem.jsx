@@ -57,7 +57,7 @@ const CartItem = ({cartItem, cartItems, language, isMobile, styles}) => {
   console.log("checkbox_options name", checkbox_options_names)
   console.log("selection_options name", selection_options_names)
 
-  const handleQuantityChange = async (cartId, quantity, branchId) => {
+  const handleQuantityChange = async () => {
     try {
       await AxiosInstance.post(`/carts`, {
         item_id: cartItem.item_id,
@@ -66,7 +66,7 @@ const CartItem = ({cartItem, cartItems, language, isMobile, styles}) => {
         notes: feedback,
       })
         .then((e) => {
-          toast.success(`${t("Item quantity updated")}`)
+          // toast.success(`${t("Item quantity updated")}`)
           console.log("successfully", e)
         })
         .finally(async () => {

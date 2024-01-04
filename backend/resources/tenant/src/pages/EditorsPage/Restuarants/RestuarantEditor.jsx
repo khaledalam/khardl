@@ -21,6 +21,7 @@ export const RestuarantEditor = () => {
   const isSidebarCollapse = useSelector(
     (state) => state.restuarantEditorStyle.collapse_sidebar
   )
+  const template = useSelector((state) => state.restuarantEditorStyle.template)
 
   const handleSidebarCollapse = () => {
     dispatch(setSidebarCollapse(!isSidebarCollapse))
@@ -110,7 +111,9 @@ export const RestuarantEditor = () => {
             isSidebarCollapse ? "flex-[100%] w-full" : "flex-[82%]"
           } xl:flex-[70%] laptopXL:flex-[75%] overflow-x-hidden bg-neutral-200 h-full overflow-y-scroll hide-scroll`}
         >
-          <MainBoardEditor categories={categories} />
+          {template === "template-1" && (
+            <MainBoardEditor categories={categories} />
+          )}
         </div>
       </div>
     </div>

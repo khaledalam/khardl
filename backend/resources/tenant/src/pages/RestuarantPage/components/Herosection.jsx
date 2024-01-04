@@ -3,9 +3,8 @@ import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
 import {useDispatch, useSelector} from "react-redux"
 import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
 import imgBanner from "../../../assets/bannerRestuarant.png"
-import {Swiper, SwiperSlide} from "swiper/react"
-import {Navigation, Pagination} from "swiper/modules"
 import {useTranslation} from "react-i18next"
+import ReactSlider from "react-slick"
 
 const Herosection = ({isMobile, categories}) => {
   const dispatch = useDispatch()
@@ -16,6 +15,15 @@ const Herosection = ({isMobile, categories}) => {
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   console.log("restaurantStyle", restaurantStyle)
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  }
 
   return (
     <div className='flex flex-col items-center justify-center'>
@@ -79,40 +87,40 @@ const Herosection = ({isMobile, categories}) => {
           </div>
         ) : restaurantStyle?.banner_type === t("Slider") ||
           restaurantStyle?.banner_type === "slider" ? (
-          <div
-            className={`w-5/6 overflow-hidden ${
-              isMobile ? "h-[300px]" : "h-[471px] mb-8"
-            } laptopXL:w-[75%]`}
-          >
-            <Swiper
-              modules={[Pagination, Navigation]}
-              pagination={{clickable: true}}
-              navigation={true}
-              slideClass='swiper-slide'
+          <div className='w-full'>
+            <div
+              className={`w-5/6 mx-auto  ${
+                isMobile ? "" : " mb-8"
+              } laptopXL:w-[75%]`}
             >
-              {Array(
-                restaurantStyle ? restaurantStyle?.banner_images?.length : 3
-              )
-                .fill(1)
-                .map((_, index) => (
-                  <SwiperSlide key={index}>
+              <ReactSlider {...settings}>
+                {Array(
+                  restaurantStyle ? restaurantStyle?.banner_images?.length : 3
+                )
+                  .fill(1)
+                  .map((_, index) => (
                     <div
-                      style={{
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        backgroundImage:
-                          restaurantStyle?.banner_images &&
-                          restaurantStyle?.banner_images?.length > 0
-                            ? `url(${restaurantStyle?.banner_images[index]})`
-                            : "",
-                      }}
+                      key={index}
                       className={`${
                         isMobile ? "h-[300px]" : "h-[470px]"
-                      } rounded-md flex items-center justify-center   shadow-md`}
-                    ></div>
-                  </SwiperSlide>
-                ))}
-            </Swiper>{" "}
+                      } !block`}
+                    >
+                      <div
+                        style={{
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: "cover",
+                          backgroundImage:
+                            restaurantStyle?.banner_images &&
+                            restaurantStyle?.banner_images?.length > 0
+                              ? `url(${restaurantStyle?.banner_images[index]})`
+                              : "",
+                        }}
+                        className={` h-full w-full rounded-md flex items-center justify-center   shadow-md`}
+                      ></div>
+                    </div>
+                  ))}
+              </ReactSlider>
+            </div>
           </div>
         ) : (
           <Fragment>Not a Slider</Fragment>

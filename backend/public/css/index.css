@@ -3654,6 +3654,9 @@ details.collapse summary::-webkit-details-marker {
 .top-\[25\%\] {
   top: 25%;
 }
+.top-\[2rem\] {
+  top: 2rem;
+}
 .top-\[38px\] {
   top: 38px;
 }
@@ -4057,6 +4060,9 @@ details.collapse summary::-webkit-details-marker {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 }
+.\!block {
+  display: block !important;
+}
 .block {
   display: block;
 }
@@ -4065,6 +4071,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .inline {
   display: inline;
+}
+.\!flex {
+  display: flex !important;
 }
 .flex {
   display: flex;
@@ -4449,6 +4458,12 @@ details.collapse summary::-webkit-details-marker {
 .w-\[90\%\] {
   width: 90%;
 }
+.w-\[90px\] {
+  width: 90px;
+}
+.w-\[92\%\] {
+  width: 92%;
+}
 .w-\[95\%\] {
   width: 95%;
 }
@@ -4558,20 +4573,14 @@ details.collapse summary::-webkit-details-marker {
 .flex-\[18\%\] {
   flex: 18%;
 }
-.flex-\[20\%\] {
-  flex: 20%;
-}
-.flex-\[80\%\] {
-  flex: 80%;
-}
-.flex-\[82\%\] {
-  flex: 82%;
-}
 .flex-\[25\%\] {
   flex: 25%;
 }
 .flex-\[75\%\] {
   flex: 75%;
+}
+.flex-\[82\%\] {
+  flex: 82%;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
@@ -6156,6 +6165,9 @@ details.collapse summary::-webkit-details-marker {
   --tw-scale-y: 1.25;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+.hover\:border-none:hover {
+  border-style: none;
+}
 .hover\:\!bg-\[\#00000099\]:hover {
   background-color: #00000099 !important;
 }
@@ -7045,16 +7057,16 @@ details.collapse summary::-webkit-details-marker {
     width: 80%;
   }
 
+  .laptopXL\:flex-\[20\%\] {
+    flex: 20%;
+  }
+
   .laptopXL\:flex-\[25\%\] {
     flex: 25%;
   }
 
   .laptopXL\:flex-\[75\%\] {
     flex: 75%;
-  }
-
-  .laptopXL\:flex-\[20\%\] {
-    flex: 20%;
   }
 
   .laptopXL\:flex-\[80\%\] {
@@ -10726,6 +10738,9 @@ details.collapse summary::-webkit-details-marker {
 .top-\[25\%\] {
   top: 25%;
 }
+.top-\[2rem\] {
+  top: 2rem;
+}
 .top-\[38px\] {
   top: 38px;
 }
@@ -11129,6 +11144,9 @@ details.collapse summary::-webkit-details-marker {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
 }
+.\!block {
+  display: block !important;
+}
 .block {
   display: block;
 }
@@ -11137,6 +11155,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .inline {
   display: inline;
+}
+.\!flex {
+  display: flex !important;
 }
 .flex {
   display: flex;
@@ -11521,6 +11542,12 @@ details.collapse summary::-webkit-details-marker {
 .w-\[90\%\] {
   width: 90%;
 }
+.w-\[90px\] {
+  width: 90px;
+}
+.w-\[92\%\] {
+  width: 92%;
+}
 .w-\[95\%\] {
   width: 95%;
 }
@@ -11630,20 +11657,14 @@ details.collapse summary::-webkit-details-marker {
 .flex-\[18\%\] {
   flex: 18%;
 }
-.flex-\[20\%\] {
-  flex: 20%;
-}
-.flex-\[80\%\] {
-  flex: 80%;
-}
-.flex-\[82\%\] {
-  flex: 82%;
-}
 .flex-\[25\%\] {
   flex: 25%;
 }
 .flex-\[75\%\] {
   flex: 75%;
+}
+.flex-\[82\%\] {
+  flex: 82%;
 }
 .flex-shrink-0 {
   flex-shrink: 0;
@@ -13228,6 +13249,9 @@ details.collapse summary::-webkit-details-marker {
   --tw-scale-y: 1.25;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+.hover\:border-none:hover {
+  border-style: none;
+}
 .hover\:\!bg-\[\#00000099\]:hover {
   background-color: #00000099 !important;
 }
@@ -14117,16 +14141,16 @@ details.collapse summary::-webkit-details-marker {
     width: 80%;
   }
 
+  .laptopXL\:flex-\[20\%\] {
+    flex: 20%;
+  }
+
   .laptopXL\:flex-\[25\%\] {
     flex: 25%;
   }
 
   .laptopXL\:flex-\[75\%\] {
     flex: 75%;
-  }
-
-  .laptopXL\:flex-\[20\%\] {
-    flex: 20%;
   }
 
   .laptopXL\:flex-\[80\%\] {
