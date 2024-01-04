@@ -12,9 +12,12 @@ import {
   ComboboxOption,
 } from "@reach/combobox"
 import "@reach/combobox/styles.css"
+import {useSelector, useDispatch} from "react-redux"
 
 const Places = () => {
   const [libraries, _] = useState(["places"])
+  const [selected, setSelected] = useState(null)
+
   const {isLoaded} = useLoadScript({
     googleMapsApiKey: "AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0",
     libraries,
@@ -23,19 +26,36 @@ const Places = () => {
   if (!isLoaded) {
     return <div>Loading....</div>
   }
-  return <Map />
+  console.log("selected", selected)
+  return <Map selected={selected} setSelected={setSelected} />
 }
 
-function Map() {
-  const center = useMemo(() => ({lat: 43.45, lng: -80.49}), [])
-  const [selected, setSelected] = useState(null)
+function Map({selected, setSelected}) {
+  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
+  const branches = restuarantStyle.branches
+  const filterBranch = branches?.filter(
+    (branch) => branch.pickup_availability === 1
+  )[0]
+
+  const center = useMemo(() => {
+    if (filterBranch) {
+      return {
+        lat: parseInt(filterBranch.lat),
+        lng: parseInt(filterBranch.lng),
+      }
+    }
+    return {
+      lat: 23.885942,
+      lng: 45.079162,
+    }
+  }, [filterBranch])
 
   const containerStyle = {
     width: "100",
     height: "500px",
   }
 
-  console.log("selected", selected)
+  console.log("filterBranch", filterBranch)
 
   return (
     <div className='w-full '>
