@@ -81,8 +81,11 @@ const CartPage = () => {
             <div className='w-1/2 mx-auto flex flex-col items-center justify-center gap-6'>
               <h3 className='text-3xl text-center '>Your cart is Empty. </h3>
               <button
+                style={{
+                  backgroundColor: restuarantStyle?.categoryDetail_cart_color,
+                }}
                 onClick={() => navigate("/")}
-                className='btn w-1/2 bg-[var(--primary)] text-lg hover:bg-[var(--primary)]'
+                className={`btn w-1/2  `}
               >
                 Continue shopping
               </button>

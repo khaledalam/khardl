@@ -259,7 +259,7 @@
                     <!-- menu -->
 
                         <!-- Orders -->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? 'show' : '' }}">
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'unavailable-products') ? 'show' : '' }}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -288,12 +288,12 @@
                                         <span class="menu-title">{{__('messages.orders-add')}}</span>
                                     </div>
                                 </a>
-                                <a href="{{route('restaurant.products_out_of_stock')}}">
-                                    <div class="{{ ($link == 'products-out-of-stock') ? 'menu-link active' : 'menu-link ' }}">
+                                <a href="{{route('restaurant.unavailable-products')}}">
+                                    <div class="{{ ($link == 'unavailable-products') ? 'menu-link active' : 'menu-link ' }}">
                                         <span class="menu-bullet">
-                                            <span class="bullet bullet-dot {{ ($link == 'products-out-of-stock') ? 'bg-light' : '' }}"></span>
+                                            <span class="bullet bullet-dot {{ ($link == 'unavailable-products') ? 'bg-light' : '' }}"></span>
                                         </span>
-                                        <span class="menu-title">{{__('messages.products-out-of-stock')}}</span>
+                                        <span class="menu-title">{{__('messages.Unavailable products')}}</span>
                                     </div>
                                 </a>
                             </div>

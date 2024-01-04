@@ -10,6 +10,7 @@ use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\PaymentMethod;
+use App\Models\Tenant\Product;
 use App\Models\User;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
@@ -24,7 +25,7 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders = Order::orderBy('created_at', 'DESC')->paginate(config('application.perPage'));
+        $orders = Order::orderBy('created_at', 'DESC')->paginate(config('application.perPage')??20);
         return view('restaurant.orders.list', compact('user', 'orders'));
     }
 
@@ -92,5 +93,15 @@ class OrderService
             ]
         );
         return $user;
+    }
+    public function listUnavailableProducts($request)
+    {
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+        $products = Item::with(['category','branch','user'])
+        ->unAvailable()
+        ->recent()
+        ->paginate(config('application.perPage')??20);
+        return view('restaurant.orders.unavailable_products', compact('user','products'));
     }
 }
