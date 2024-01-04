@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\Admin\LogTypes;
 use App\Mail\DeniedEmail;
 use App\Models\Log;
 use App\Models\User;
@@ -35,18 +36,31 @@ class SendDeniedEmailJob implements ShouldQueue
     {
         try {
             Mail::to($this->user->email)->queue(new DeniedEmail($this->user, $this->message));
-
+            $action = [
+                'en' => '[ok] Sent denied email notification',
+                'ar' => '[تم] ارسال بريد بالرفض',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->user?->email,
-                'action' => '[ok] Sent denied email notification',
-                'user_id'=> $this?->user?->id
+                'user_id' => $this?->user?->id,
+                'action' => $action,
+                'type' => LogTypes::DenyUserSent,
+               'metadata' => [
+                    'email' => $this->user->email ?? null,
+                ]
             ]);
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
+            $action = [
+                'en' => '[fail] Sent denied email notification',
+                'ar' => '[فشل] ارسال بريد بالرفض',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->user?->email,
-                'action' => '[fail] Send denied email notification',
-                'user_id'=> $this?->user?->id
+                'action' => $action,
+                'user_id' => $this?->user?->id,
+                'type' => LogTypes::DenyUserFail,
+               'metadata' => [
+                    'email' => $this->user->email ?? null,
+                ]
             ]);
         }
     }

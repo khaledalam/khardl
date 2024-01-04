@@ -4,277 +4,168 @@
 @section('title', __('messages.logs'))
 
 @section('content')
-  <!--begin::Content-->
-  <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+<!--begin::Content-->
+<div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
-      <!--begin::Container-->
-      <div id="kt_content_container" class="container-xxl">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
 
-        <!--begin::Login sessions-->
-        <div class="card mb-5 mb-lg-10">
-          <!--begin::Card header-->
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <!--begin::Heading-->
-            <div class="card-title">
-              <h3>{{ __('messages.logs') }}</h3>
-            </div>
-                              <!--begin::Actions-->
-            <form method="GET" action="{{ route('admin.log') }}">
-              <div class="d-flex my-0">
-                                  <!--begin::Select-->
-                <select id="usersDropdown" name="user_id" class="form-select form-select-sm border-body bg-body w-150px me-5">
-                    <option value="" selected>{{ __('messages.All') }}</option>
-                    @foreach ($owners as $owner)
-                        <option value="{{ $owner->id }}" {{ request('user_id') == $owner->id ? 'selected' : '' }}>
-                            {{ $owner->id }} | {{ $owner->first_name }} {{ $owner->last_name }}
-                        </option>
-                    @endforeach
-                </select>
+            <!--begin::Login sessions-->
+            <div class="card mb-5 mb-lg-10">
+                <!--begin::Card header-->
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <!--begin::Heading-->
+                    <div class="card-title">
+                        <h3>{{ __('messages.logs') }}</h3>
+                    </div>
+                    <!--begin::Actions-->
+                    <form method="GET" action="{{ route('admin.log') }}">
+                        <div class="d-flex my-0">
+                            <!--begin::Select-->
+                            <select id="usersDropdown" name="user_id" class="form-select form-select-sm border-body bg-body w-150px me-5">
+                                <option value="" selected>{{ __('messages.All') }}</option>
+                                @foreach ($owners as $owner)
+                                <option value="{{ $owner->id }}" {{ request('user_id') == $owner->id ? 'selected' : '' }}>
+                                    {{ $owner->id }} | {{ $owner->first_name }} {{ $owner->last_name }}
+                                </option>
+                                @endforeach
+                            </select>
 
-                <select id="actionsDropdown" name="action" class="form-select form-select-sm border-body bg-body w-150px me-5">
-                    <option value="" selected>{{ __('messages.All') }}</option>
-                    <option value="Logged in" {{ request('action') == 'Logged in' ? 'selected' : '' }}>{{ __('messages.logged-in') }}</option>
-                    <option value="Has edited profile and permissions for an user with ID of" {{ request('action') == 'Has edited profile and permissions for an user with ID of' ? 'selected' : '' }}>{{ __('messages.has-edited-permissions') }}</option>
-                    <option value="Made an user" {{ request('action') == 'Made an user' ? 'selected' : '' }}>{{ __('messages.made-an-user') }}</option>
-                    <option value="Has activate restaurant" {{ request('action') == 'Has activate restaurant' ? 'selected' : '' }}>{{ __('messages.has-approved-restaurant') }}</option>
-                    <option value="Made a promoter" {{ request('action') == 'Made a promoter' ? 'selected' : '' }}>{{ __('messages.made-a-promoter') }}</option>
-                    <option value="Has edited his profile" {{ request('action') == 'Has edited his profile' ? 'selected' : '' }}>{{ __('messages.has-edited-his-profile') }}</option>
-                    <option value="Has approved an user" {{ request('action') == 'Has approved an user' ? 'selected' : '' }}>{{ __('messages.has-approved-an-user') }}</option>
-                    <option value="Has denied an user" {{ request('action') == 'Has denied an user' ? 'selected' : '' }}>{{ __('messages.has-denied-an-user') }}</option>
-                    <option value="Has downloaded a commercial registration file" {{ request('action') == 'Has downloaded a commercial registration file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-commercial-registration-file') }}</option>
-                    <option value="Has downloaded a delivery contract file" {{ request('action') == 'Has downloaded a delivery contract file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-delivery-contract-file') }}</option>
-                    <option value="Has downloaded a tax number registration file" {{ request('action') == 'Has downloaded a tax number registration file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-tax-number-file') }}</option>
-                    <option value="Has downloaded a bank certificate contract file" {{ request('action') == 'Has downloaded a bank certificate contract file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-bank-cerificate-file') }}</option>
-                    <option value="Has deleted a restaurant" {{ request('action') == 'Has deleted a restaurant' ? 'selected' : '' }}>{{ __('messages.has-deleted-a-restaurant') }}</option>
-                    <option value="Has deleted an user" {{ request('action') == 'Has deleted an user' ? 'selected' : '' }}>{{ __('messages.has-deleted-an-user') }}</option>
-                    <option value="Has created new restaurant" {{ request('action') == 'Has created new restaurant' ? 'selected' : '' }}>{{ __('messages.has-created-new-restaurant') }}</option>
-                </select>
-                <select id="actionsDropdown" name="perPage" class="form-select form-select-sm border-body bg-body w-150px me-5">
-                    <option value="" >{{ __('messages.Per page') }}</option>
-                    <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
-                    <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
-                    <option value="50" {{ request('perPage') == 50 ? 'selected' : '' }}>50</option>
-                    <option value="100" {{ request('perPage') == 100 ? 'selected' : '' }}>100</option>
+                            <select id="actionsDropdown" name="action" class="form-select form-select-sm border-body bg-body w-150px me-5">
+                                <option value="" selected>{{ __('messages.All') }}</option>
+                                <option value="Logged in" {{ request('action') == 'Logged in' ? 'selected' : '' }}>{{ __('messages.logged-in') }}</option>
+                                <option value="Has edited profile and permissions for an user with ID of" {{ request('action') == 'Has edited profile and permissions for an user with ID of' ? 'selected' : '' }}>{{ __('messages.has-edited-permissions') }}</option>
+                                <option value="Made an user" {{ request('action') == 'Made an user' ? 'selected' : '' }}>{{ __('messages.made-an-user') }}</option>
+                                <option value="Has activate restaurant" {{ request('action') == 'Has activate restaurant' ? 'selected' : '' }}>{{ __('messages.has-approved-restaurant') }}</option>
+                                <option value="Made a promoter" {{ request('action') == 'Made a promoter' ? 'selected' : '' }}>{{ __('messages.made-a-promoter') }}</option>
+                                <option value="Has edited his profile" {{ request('action') == 'Has edited his profile' ? 'selected' : '' }}>{{ __('messages.has-edited-his-profile') }}</option>
+                                <option value="Has approved an user" {{ request('action') == 'Has approved an user' ? 'selected' : '' }}>{{ __('messages.has-approved-an-user') }}</option>
+                                <option value="Has denied an user" {{ request('action') == 'Has denied an user' ? 'selected' : '' }}>{{ __('messages.has-denied-an-user') }}</option>
+                                <option value="Has downloaded a commercial registration file" {{ request('action') == 'Has downloaded a commercial registration file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-commercial-registration-file') }}</option>
+                                <option value="Has downloaded a delivery contract file" {{ request('action') == 'Has downloaded a delivery contract file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-delivery-contract-file') }}</option>
+                                <option value="Has downloaded a tax number registration file" {{ request('action') == 'Has downloaded a tax number registration file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-tax-number-file') }}</option>
+                                <option value="Has downloaded a bank certificate contract file" {{ request('action') == 'Has downloaded a bank certificate contract file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-bank-cerificate-file') }}</option>
+                                <option value="Has deleted a restaurant" {{ request('action') == 'Has deleted a restaurant' ? 'selected' : '' }}>{{ __('messages.has-deleted-a-restaurant') }}</option>
+                                <option value="Has deleted an user" {{ request('action') == 'Has deleted an user' ? 'selected' : '' }}>{{ __('messages.has-deleted-an-user') }}</option>
+                                <option value="Has created new restaurant" {{ request('action') == 'Has created new restaurant' ? 'selected' : '' }}>{{ __('messages.has-created-new-restaurant') }}</option>
+                            </select>
+                            <select id="actionsDropdown" name="perPage" class="form-select form-select-sm border-body bg-body w-150px me-5">
+                                <option value="">{{ __('messages.Per page') }}</option>
+                                <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
+                                <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
+                                <option value="50" {{ request('perPage') == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ request('perPage') == 100 ? 'selected' : '' }}>100</option>
 
-                </select>
-                                  <!--end::Select-->
-                <button type="submit" id="kt_ecommerce_add_product_submit"
-                  class="btn btn-primary">
-                  <span class="indicator-label">{{ __('messages.search') }}</span>
-                  <span class="indicator-progress">{{ __('messages.please-wait')}}
-                  <span
-                  class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                </button>
-              </div>
+                            </select>
+                            <!--end::Select-->
+                            <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                                <span class="indicator-label">{{ __('messages.search') }}</span>
+                                <span class="indicator-progress">{{ __('messages.please-wait')}}
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
 
-            </form>
-            <form method="GET" action="{{ route('admin.log') }}">
-                <div class="d-flex my-0">
-                    <input type="hidden" name="download" value="csv">
-                  <button type="submit" id="download_logs"
-                    class="btn btn-success mx-2">
-                    <span class="indicator-label">{{ __('messages.Download') }}</span>
-                    <span class="indicator-progress">{{ __('messages.please-wait')}}
-                    <span
-                    class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                  </button>
+                    </form>
+                    <form method="GET" action="{{ route('admin.log') }}">
+                        <div class="d-flex my-0">
+                            <input type="hidden" name="download" value="csv">
+                            <button type="submit" id="download_logs" class="btn btn-success mx-2">
+                                <span class="indicator-label">{{ __('messages.Download') }}</span>
+                                <span class="indicator-progress">{{ __('messages.please-wait')}}
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-              </form>
-          </div>
-          <!--end::Card header-->
-          <!--begin::Card body-->
-          <div class="card-body p-0">
-            <!--begin::Table wrapper-->
-            <div class="table-responsive">
-              <!--begin::Table-->
-              <table id="logsTable" class="table table-flush align-middle table-row-bordered table-row-solid gy-4 gs-9">
-                <!--begin::Thead-->
-                <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
-                  <tr>
-                    <th class="min-w-200px">{{ __("messages.Customer") }}</th>
-                    <th class="min-w-200px">{{ __('messages.actions') }}</th>
-                      <th class="min-w-200px">{{ __('messages.date-and-time')}}</th>
-                      <th class="min-w-200px">{{ __('messages.metadata')}}</th>
-                  </tr>
-                </thead>
-                <!--end::Thead-->
-                <!--begin::Tbody-->
-                <tbody class="fw-6 fw-bold text-gray-600">
-                  @foreach ($logs as $log)
-                    <tr data-user-id="{{ $log->user?->id }}" data-action="{{ $log->action }}">
-                      <td>
-                      @if($log->user)
-                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user?->id]) }}" class="text-hover-primary text-gray-600">{{ $log->user?->full_name }}</a>
-                      @endif
-                      </td>
-                      <td>
-                        <span>
-                          @if(app()->getLocale() === 'en')
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body p-0">
+                    <!--begin::Table wrapper-->
+                    <div class="table-responsive">
+                        <!--begin::Table-->
+                        <table id="logsTable" class="table table-flush align-middle table-row-bordered table-row-solid gy-4 gs-9">
+                            <!--begin::Thead-->
+                            <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
+                                <tr>
+                                    <th class="min-w-200px">{{ __("messages.Customer") }}</th>
+                                    <th class="min-w-200px">{{ __('messages.actions') }}</th>
+                                    <th class="min-w-200px">{{ __('messages.date-and-time')}}</th>
+                                    <th class="min-w-200px">{{ __('messages.metadata')}}</th>
+                                </tr>
+                            </thead>
+                            <!--end::Thead-->
+                            <!--begin::Tbody-->
+                            <tbody class="fw-6 fw-bold text-gray-600">
+                                @foreach ($logs as $log)
+                                <tr data-user-id="{{ $log->user?->id }}" data-action="{{ $log->action }}">
+                                    <td>
+                                        @if($log->user)
+                                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user?->id]) }}" class="text-hover-primary text-gray-600">{{ $log->user?->full_name }}</a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span>
+                                            {!! $log->action !!}
+                                        </span>
+                                    </td>
+                                    <td>{{ $log->created_at }}</td>
+                                    <td>
+                                        @if (isset($log->metadata['email']))
+                                        {{ $log->metadata['email'] }}
+                                        @elseif($log->type == \App\Enums\Admin\LogTypes::DenyRestaurant->value)
+                                        @if (isset($log->metadata['reason']))
+                                        <ul>
+                                            @foreach ($log->metadata['reason'] as $reason)
+                                            <li>
+                                                {{ $reason }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                        @endif
+                                        @elseif($log->type == \App\Enums\Admin\LogTypes::UpdateSettings->value)
+                                            @if(isset($log->metadata['webhook_url']))
+                                            <p>
+                                                {{ __('messages.webhook-url') }} :
+                                                <strong>{{ $log->metadata['webhook_url'] }}</strong>
+                                            </p>
+                                            @endif
+                                            @if(isset($log->metadata['live_chat_enabled']))
+                                            <p>
+                                                {{ __('messages.live-chat') }} :
+                                                <strong>{{ $log->metadata['live_chat_enabled'] }}</strong>
+                                            </p>
+                                            @endif
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
 
-                            {!! $log->action !!}
+                            </tbody>
+                            <!--end::Tbody-->
+                        </table>
+                        {{ $logs->links('pagination::bootstrap-4') }}
 
-                          @else
+                        <!--end::Table-->
+                    </div>
 
-                            @if($log->action == 'Logged in')
-                                سجل دخوله
-                            @elseif ($log->action == 'Has edited his profile.')
-                            قام بتحرير ملفه الشخصي
-                            @elseif (Str::contains($log->action, 'Has edited profile and permissions for an user with ID of:'))
-                              @php
-                                  $matches = [];
-                                  if (preg_match('/\d+/', $log->action, $matches)) {
-                                      $userId = $matches[0];
-                                  }
-                              @endphp
-                              قام بتحرير الملف الشخصي والأذونات لمستخدم بمعرف: {{ $userId }}
-                              @elseif (Str::contains($log->action, 'Made an user with an ID of:'))
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/\d+/', $log->action, $matches)) {
-                                        $userId = $matches[0];
-                                    }
-                                @endphp
-                              قام بصنع مستخدم بمعرف: {{ $userId }}
+                    <!--end::Table wrapper-->
+                </div>
 
-                              @elseif (Str::contains($log->action, 'Has approved an user with an ID of:'))
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/\d+/', $log->action, $matches)) {
-                                        $userId = $matches[0];
-                                    }
-                                @endphp
-                                قاما بقبول مطعم بمعرف: {{ $userId }}
-                              @elseif (Str::contains($log->action, 'Has activate restaurant with an ID of:'))
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/\d+/', $log->action, $matches)) {
-                                        $restaurat_id = $matches[0];
-                                    }
-                                @endphp
-                                قاما بتفعيل مطعم بمعرف: {{ $restaurat_id }}
-                              @elseif (Str::contains($log->action, 'Has downloaded a commercial registration file with a filename of:'))
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/filename of: (.+)$/', $log->action, $matches)) {
-                                        $filename = $matches[1];
-                                    }
-                                @endphp
 
-                            قام بتنزيل ملف سجل تجاري الملف باسم: {{ $filename }}
-
-                              @elseif (Str::contains($log->action, 'Has downloaded a tax number file with a filename of:'))
-                                @php
-                                      $matches = [];
-                                      if (preg_match('/filename of: (.+)$/', $log->action, $matches)) {
-                                          $filename = $matches[1];
-                                      }
-                                  @endphp
-
-                              قام بتنزيل ملف رقم ضريبي الملف باسم: {{ $filename }}
-
-                              @elseif (Str::contains($log->action, 'Has downloaded a delivery contract file with a filename of:'))
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/filename of: (.+)$/', $log->action, $matches)) {
-                                        $filename = $matches[1];
-                                    }
-                                @endphp
-
-                            قام بتنزيل ملف عقد توصيل الملف باسم: {{ $filename }}
-
-                              @elseif (Str::contains($log->action, 'Has downloaded a bank certificate file with a filename of:'))
-
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/filename of: (.+)$/', $log->action, $matches)) {
-                                        $filename = $matches[1];
-                                    }
-                                @endphp
-
-                            لقد رفض مطعم بمعرف: {{ $filename }}
-
-                              @elseif (Str::contains($log->action, 'Has denied an user with an ID of:'))
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/\d+/', $log->action, $matches)) {
-                                        $userId = $matches[0];
-                                    }
-                                @endphp
-                              لقد قام بحذف مطعم بمعرف:  {{ $userId }}
-
-                              @elseif (Str::contains($log->action, 'Has deleted an user with an ID of:'))
-
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/\d+/', $log->action, $matches)) {
-                                        $userId = $matches[0];
-                                    }
-                                @endphp
-                                لقد قام بتحرير ملفه الشخصي: {{ $userId }}
-
-                              @elseif (Str::contains($log->action, 'Has deleted a restaurant with an ID of:'))
-
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/\d+/', $log->action, $matches)) {
-                                        $userId = $matches[0];
-                                    }
-                                @endphp
-                              لقد قام بصنع مروج برقم تعريفي: {{ $userId }}
-
-                              @elseif (Str::contains($log->action, 'Has edited his profile.'))
-
-                                @php
-                                    $matches = [];
-                                    if (preg_match('/\d+/', $log->action, $matches)) {
-                                        $userId = $matches[0];
-                                    }
-                                @endphp
-                                {{ $userId }} is the id
-                              @elseif (Str::contains($log->action, 'Made a promoter with an ID of:'))
-
-                                @php
-                                      $matches = [];
-                                      if (preg_match('/\d+/', $log->action, $matches)) {
-                                          $userId = $matches[0];
-                                      }
-                                  @endphp
-                                  {{ $userId }} is the id
-                              @endif
-                          @endif
-                        </span>
-                      </td>
-                      <td>{{ $log->created_at }}</td>
-                        <td>{{ $log->metadata }}</td>
-                    </tr>
-                  @endforeach
-
-                </tbody>
-                <!--end::Tbody-->
-              </table>
-              {{ $logs->links('pagination::bootstrap-4') }}
-
-              <!--end::Table-->
+                <!--end::Card body-->
             </div>
-
-            <!--end::Table wrapper-->
-          </div>
-
-
-          <!--end::Card body-->
+            <!--end::Login sessions-->
         </div>
-        <!--end::Login sessions-->
-      </div>
-      <!--end::Container-->
+        <!--end::Container-->
     </div>
     <!--end::Post-->
-          </div>
+</div>
 
-  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Blob.js/1.1.1/blob.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Blob.js/1.1.1/blob.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-          <!--end::Content-->
+<!--end::Content-->
 @endsection

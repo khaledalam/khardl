@@ -3,11 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Log extends Model
 {
-    protected $fillable = ['user_id', 'action', 'timestamp'];
+    use HasTranslations;
+    public $translatable = ['action'];
+    protected $fillable = ['user_id', 'action', 'timestamp','type','metadata'];
     public $timestamps = true;
+    protected $casts = [
+        'metadata' => 'json'
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

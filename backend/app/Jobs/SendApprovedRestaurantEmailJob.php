@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\Admin\LogTypes;
 use App\Mail\ApprovedRestaurant;
 use App\Models\Log;
 use App\Models\Tenant;
@@ -35,18 +36,31 @@ class SendApprovedRestaurantEmailJob implements ShouldQueue
             Mail::to($this?->restaurant?->user?->email)->send(
                 new ApprovedRestaurant($this?->restaurant?->user, $this?->restaurant)
             );
-
+            $action = [
+                'en' => '[ok] Email sent for approve restaurant',
+                'ar' => '[تم] ارسال بريد بالموافقة علي المطعم',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->restaurant?->user?->email,
-                'action' => '[ok] Sent approve restaurant email',
-                'user_id'=> $this?->restaurant?->user?->id
+                'user_id'=> $this?->restaurant?->user?->id,
+                'action' => $action,
+                'type' => LogTypes::ActivateRestaurantNotifySent,
+                'metadata' => [
+                    'email' => $this->restaurant->email ?? null,
+                ]
             ]);
 
         } catch(\Exception $e) {
+            $action = [
+                'en' => '[fail] Email approve restaurant',
+                'ar' => '[فشل] ارسال بريد بالموافقة علي المطعم',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->restaurant?->user?->email,
-                'action' => '[fail] Send approve restaurant email',
-                'user_id'=> $this?->restaurant?->user?->id
+                'user_id'=> $this?->restaurant?->user?->id,
+                'action' => $action,
+                'type' => LogTypes::ActivateRestaurantNotifyFail,
+                'metadata' => [
+                    'email' => $this->restaurant->email ?? null,
+                ]
             ]);
         }
     }

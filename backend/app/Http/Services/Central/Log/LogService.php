@@ -4,6 +4,7 @@ namespace App\Http\Services\Central\Log;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use App\Models\User;
 use App\Models\Log;
@@ -31,19 +32,30 @@ class LogService
         try {
             $todayDate = Carbon::now()->format('Y-m-d');
             $filename = "logs_$todayDate.csv";
-            $handle = fopen($filename, 'w+');
+
+            // Ensure the directory exists or create it
+            $csvDirectory = storage_path('app/csv');
+            File::makeDirectory($csvDirectory, $mode = 0755, true, true);
+
+            $filePath = storage_path("app/csv/$filename");
+            $handle = fopen($filePath, 'w+');
+
             fputcsv($handle, array('Customer', 'Action', 'Metadata', 'Date'));
+
             foreach ($model as $row) {
                 fputcsv($handle, array($row->user?->full_name, $row['action'], $row['metadata'], $row->created_at?->format('Y-m-d H')));
             }
+
             fclose($handle);
-            $headers = array(
+
+            $headers = [
                 'Content-Type' => 'text/csv',
-            );
-            return Response::download($filename, $filename, $headers);
+            ];
+
+            return response()->download($filePath, $filename, $headers);
         } catch (\Exception $e) {
             logger($e);
-            return redirect()->route('log');
+            return redirect()->route('admin.log');
         }
     }
 }
