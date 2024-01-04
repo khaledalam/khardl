@@ -4,6 +4,7 @@ namespace App\Packages\DeliveryCompanies\Webhook;
 
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
+use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Support\Facades\Config;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
@@ -22,6 +23,8 @@ class DeliveryCompaniesWebhookHandler extends ProcessWebhookJob
                 StreetLine::processWebhook($data);
             }else if (strpos($data['tracking'] ?? '', "https://carvo") === 0) {// the webhook coming from cervo
                 Cervo::processWebhook($data);
+            }else if (isset($data['deliveries'])) {// the webhook coming from Yeswa
+                Yeswa::processWebhook($data);
             }
         }
        

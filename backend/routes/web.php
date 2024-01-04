@@ -247,17 +247,18 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
 
     Route::post('/delivery-webhook', static function (Request $request) {
         try{
-            // \Sentry\captureMessage('Webhook post from delivery company');
-            
-            $client = new \GuzzleHttp\Client();
-    
-            $url = CentralSetting::first()->webhook_url ?? '';
-            
-            $request = $client->post($url, ['json'=>$request->all()]);
-         }catch(Exception $e){
-             
-         }
-         return response()->json(['message'=>"received"],200);
+            \Sentry\captureMessage('Webhook post from cervo');
+           
+           $client = new \GuzzleHttp\Client();
+   
+           $url = CentralSetting::first()->webhook_url ?? '';
+           $data = [ 'query' =>$request->all()+ ['delivery_company'=>request()->header('Delivery-Company') ?? '']];
+           $request = $client->request('post',$url,$data);
+        }
+        catch(Exception $e){
+               
+        }
+        return response()->json(['message'=>"received"],200);
     })->name('delivery.webhook-post');
  
 
