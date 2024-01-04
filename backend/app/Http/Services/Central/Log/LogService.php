@@ -19,10 +19,13 @@ class LogService
         $logs = Log::with(['user'])
             ->whenUser($request['user_id'] ?? null)
             ->whenAction($request['action'] ?? null)
-            ->recent()
-            ->paginate($request['perPage'] ? (int) $request['perPage'] : config('application.perPage'));
-        if ($request->filled('download') && $request->input('download') == 'csv')
+            ->recent();
+
+        if ($request->filled('download') && $request->input('download') == 'csv'){
             return $this->handleDownload($request, $logs);
+        }
+
+        $logs = $logs->paginate($request['perPage'] ? (int) $request['perPage'] : config('application.perPage'));
         $owners = User::get();
         $user = Auth::user();
         $logTypes = LogTypes::values();
@@ -42,9 +45,9 @@ class LogService
             $handle = fopen($filePath, 'w+');
 
             fputcsv($handle, array('Customer', 'Action', 'Metadata', 'Date'));
-
+            $model = $model->get();
             foreach ($model as $row) {
-                fputcsv($handle, array($row->user?->full_name, $row['action'], $row['metadata'], $row->created_at?->format('Y-m-d H')));
+                fputcsv($handle, array($row->user?->full_name, $row['action'], json_encode($row['metadata']), $row->created_at?->format('Y-m-d H')));
             }
 
             fclose($handle);
