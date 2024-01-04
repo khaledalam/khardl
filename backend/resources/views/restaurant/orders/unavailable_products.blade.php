@@ -1,9 +1,8 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.customers-data'))
+@section('title', __('messages.Unavailable products'))
 
 @section('content')
-
 
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -44,31 +43,62 @@
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
                                     <tr>
                                         <th>{{ __('messages.ID') }}</th>
+                                        <th>{{ __('messages.Image') }}</th>
                                         <th>{{ __('messages.Name') }}</th>
-                                        <th>{{ __('messages.Phone') }}</th>
-                                        <th>{{ __('messages.Email') }}</th>
-                                        <th>{{ __('messages.Status') }}</th>
-                                        <th>{{ __('messages.Address') }}</th>
+                                        <th>{{ __('messages.Price') }}</th>
+                                        <th>{{ __('messages.Category') }}</th>
                                         <th>{{ __('messages.Branch') }}</th>
-                                        <th>{{ __('messages.Last login') }}</th>
-                                        <th>{{ __('messages.Registration') }} <br> {{ __('messages.date') }}</th>
+                                        <th>{{ __('messages.User') }}</th>
+                                        <th>{{ __('messages.Calories') }}</th>
+                                        <th>{{ __('messages.Created at') }}</th>
                                         <th>{{ __('messages.Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <!--end::Thead-->
                                 <!--begin::Tbody-->
                                 <tbody class="fs-6 fw-bold text-gray-600">
-                                    @foreach ($allCustomers as $customer)
+                                    @foreach ($products as $product)
                                     <tr>
                                         <td class="px-2">
-                                            <a href="{{ route('customers_data.show',$customer->id) }}">
-                                                {{ $customer->id }}
+                                            <a href="#">
+                                                {{ $product->id }}
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('customers_data.show',$customer->id) }}" class="text-gray-600 text-hover-primary">{{ $customer->full_name }}</a>
+                                            <div class="form-check form-check-custom form-check-solid mx-5">
+                                                <a href="#" class="symbol symbol-50px">
+                                                    <span class="symbol-label" style="background-image:url({{$product->photo}});"></span>
+                                                </a>
+                                            </div>
                                         </td>
-                                        <td>{{ $customer->phone }}</td>
+                                        <td class="px-2">
+                                            <span>{{ $product->name }}</span>
+                                        </td>
+                                        <td class="px-2">
+                                            <span>{{ $product->price }}</span>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('restaurant.get-category',['id'=> $product->category,'branchId'=> $product->branch_id]) }}" class="text-gray-600 text-hover-primary">
+                                                {{ $product->category->name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('restaurant.menu',['branchId'=> $product->branch_id]) }}" class="text-gray-600 text-hover-primary">
+                                                {{ $product->branch->name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="text-gray-600 text-hover-primary">
+                                                {{ $product->user->first_name }}
+                                            </a>
+                                        </td>
+                                        <td class="px-2">
+                                            <span>{{ $product->calories }}</span>
+                                        </td>
+                                        <td class="px-2">
+                                            <span>{{ $product->created_at?->format('Y-m-d') }}</span>
+                                        </td>
+                                      {{--   <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->email }}</td>
                                         <td>
                                             <span class="badge {{ $customer->status }}">{{__("messages.$customer->status")}}</span>
@@ -76,7 +106,7 @@
                                         <td>{{ $customer->address }}</td>
                                         <td>{{ $customer->branch?->name }}</td>
                                         <td>{{ $customer->last_login?->format('Y-m-d') }}</td>
-                                        <td>{{ $customer->created_at?->format('Y-m-d') }}</td>
+                                        <td>{{ $customer->created_at?->format('Y-m-d') }}</td> --}}
                                         <td class="text-end">
                                             <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.Actions') }}
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
@@ -90,23 +120,13 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="{{route('customers_data.show',['restaurantUser'=>$customer->id])}}" class="menu-link px-3">{{ __('messages.View') }}</a>
+                                                    <a href="#" class="menu-link px-3">{{ __('messages.View') }}</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3">{{ __('messages.Edit') }}</a>
                                                 </div>
-                                                <!--end::Menu item-->
-                                                <!--begin::Menu item-->
-                                                {{-- <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
-                                                </div> --}}
-                                                <div class="menu-item px-3">
-                                                    <a href="#" onclick="showConfirmation({{$customer->id}})" class="menu-link px-3">{{__('messages.status')}}</a>
-                                                </div>
-
-                                                <!--end::Menu item-->
                                             </div>
                                             <!--end::Menu-->
                                         </td>
@@ -115,39 +135,7 @@
                                 </tbody>
                                 <!--end::Tbody-->
                             </table>
-                            {{-- TODO:Change status --}}
-                            <form id="approve-form"  method="POST" style="display: inline">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="status" id="orderStatus" >
-                            </form>
-                            <script>
-                                function showConfirmation(customerId) {
-                                    event.preventDefault();
-                                    const statusOptions = @json(array_combine(\App\Models\Tenant\RestaurantUser::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\RestaurantUser::STATUS)));
-
-                                    Swal.fire({
-                                        text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
-                                        icon: 'warning',
-                                        input: 'select',
-                                        showCancelButton: true,
-                                        inputOptions: statusOptions,
-                                        inputPlaceholder: 'Select an option',
-                                        confirmButtonText: '{{ __('messages.yes') }}',
-                                        cancelButtonText: '{{ __('messages.no') }}'
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            const selectedStatus = result.value;
-                                            document.getElementById('orderStatus').setAttribute('value',selectedStatus);
-                                            var form = document.getElementById('approve-form');
-                                            form.action = `{{ route('customers_data.change-status', ['restaurantUser' => ':customerId']) }}`.replace(':customerId', customerId)
-                                            form.submit();
-
-                                        }
-                                    });
-                                }
-                            </script>
-                            {{ $allCustomers->links('pagination::bootstrap-4') }}
+                            {{ $products->links('pagination::bootstrap-4') }}
                             <!--end::Table-->
                         </div>
                     </div>

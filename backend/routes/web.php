@@ -245,32 +245,21 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         return Redirect::back();
     })->name('change.language');
 
-
     Route::post('/delivery-webhook', static function (Request $request) {
-        \Sentry\captureMessage('Webhook get from cervo');
-        \Sentry\captureMessage(json_encode($request->all()));
-        $client = new \GuzzleHttp\Client();
-
-        $url = CentralSetting::first()->webhook_url ?? '';
-        $data = [ 'query' =>$request->all()];
-        $request = $client->request('post',$url,$data);
+        try{
+            // \Sentry\captureMessage('Webhook post from delivery company');
+            
+            $client = new \GuzzleHttp\Client();
     
-        return response()->json(['message'=>"received"],200);
+            $url = CentralSetting::first()->webhook_url ?? '';
+            
+            $request = $client->post($url, ['json'=>$request->all()]);
+         }catch(Exception $e){
+             
+         }
+         return response()->json(['message'=>"received"],200);
     })->name('delivery.webhook-post');
-
-    Route::get('/delivery-webhook', static function (Request $request) {
-        \Sentry\captureMessage('Webhook get from cervo');
-        \Sentry\captureMessage(json_encode($request->all()));
-        
-        $client = new \GuzzleHttp\Client();
-
-        $url = CentralSetting::first()->webhook_url ?? '';
-        $data = [ 'query' =>$request->all()];
-        $request = $client->request('get',$url,$data);
-    
-        return response()->json(['message'=>"received"],200);
-
-    });
+ 
 
 });
 //-----------------------------------------------------------------------------------------------------------------------
