@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Central\Log;
 
+use App\Enums\Admin\LogTypes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -24,8 +25,8 @@ class LogService
             return $this->handleDownload($request, $logs);
         $owners = User::get();
         $user = Auth::user();
-
-        return view('admin.logs', compact('user', 'logs', 'owners'));
+        $logTypes = LogTypes::values();
+        return view('admin.logs', compact('user', 'logs', 'owners','logTypes'));
     }
     private function handleDownload($request, $model)
     {

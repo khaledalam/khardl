@@ -32,7 +32,7 @@ class Log extends Model
     public function scopeWhenAction($query,$search)
     {
         return $query->when($search != null, function ($q) use ($search) {
-            return $q->where('action', 'LIKE', '%' . $search . '%');
+            return $q->where('type', $search);
         });
     }
     /* TODO: getActionAttribute()

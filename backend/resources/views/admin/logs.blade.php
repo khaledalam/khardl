@@ -33,25 +33,13 @@
                                 @endforeach
                             </select>
 
-                            <select id="actionsDropdown" name="action" class="form-select form-select-sm border-body bg-body w-150px me-5">
+                            <select id="actionsDropdown" name="action" class="form-select form-select-sm border-body bg-body w-250px me-5">
                                 <option value="" selected>{{ __('messages.All') }}</option>
-                                <option value="Logged in" {{ request('action') == 'Logged in' ? 'selected' : '' }}>{{ __('messages.logged-in') }}</option>
-                                <option value="Has edited profile and permissions for an user with ID of" {{ request('action') == 'Has edited profile and permissions for an user with ID of' ? 'selected' : '' }}>{{ __('messages.has-edited-permissions') }}</option>
-                                <option value="Made an user" {{ request('action') == 'Made an user' ? 'selected' : '' }}>{{ __('messages.made-an-user') }}</option>
-                                <option value="Has activate restaurant" {{ request('action') == 'Has activate restaurant' ? 'selected' : '' }}>{{ __('messages.has-approved-restaurant') }}</option>
-                                <option value="Made a promoter" {{ request('action') == 'Made a promoter' ? 'selected' : '' }}>{{ __('messages.made-a-promoter') }}</option>
-                                <option value="Has edited his profile" {{ request('action') == 'Has edited his profile' ? 'selected' : '' }}>{{ __('messages.has-edited-his-profile') }}</option>
-                                <option value="Has approved an user" {{ request('action') == 'Has approved an user' ? 'selected' : '' }}>{{ __('messages.has-approved-an-user') }}</option>
-                                <option value="Has denied an user" {{ request('action') == 'Has denied an user' ? 'selected' : '' }}>{{ __('messages.has-denied-an-user') }}</option>
-                                <option value="Has downloaded a commercial registration file" {{ request('action') == 'Has downloaded a commercial registration file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-commercial-registration-file') }}</option>
-                                <option value="Has downloaded a delivery contract file" {{ request('action') == 'Has downloaded a delivery contract file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-delivery-contract-file') }}</option>
-                                <option value="Has downloaded a tax number registration file" {{ request('action') == 'Has downloaded a tax number registration file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-tax-number-file') }}</option>
-                                <option value="Has downloaded a bank certificate contract file" {{ request('action') == 'Has downloaded a bank certificate contract file' ? 'selected' : '' }}>{{ __('messages.has-downloaded-a-bank-cerificate-file') }}</option>
-                                <option value="Has deleted a restaurant" {{ request('action') == 'Has deleted a restaurant' ? 'selected' : '' }}>{{ __('messages.has-deleted-a-restaurant') }}</option>
-                                <option value="Has deleted an user" {{ request('action') == 'Has deleted an user' ? 'selected' : '' }}>{{ __('messages.has-deleted-an-user') }}</option>
-                                <option value="Has created new restaurant" {{ request('action') == 'Has created new restaurant' ? 'selected' : '' }}>{{ __('messages.has-created-new-restaurant') }}</option>
+                                @foreach ($logTypes as $type)
+                                    <option {{ request('action') == $type ? 'selected' : '' }} value="{{ $type }}">{{ __('messages.'.$type) }}</option>
+                                @endforeach
                             </select>
-                            <select id="actionsDropdown" name="perPage" class="form-select form-select-sm border-body bg-body w-150px me-5">
+                            <select id="actionsDropdown" name="perPage" class="form-select form-select-sm border-body bg-body w-100px me-5">
                                 <option value="">{{ __('messages.Per page') }}</option>
                                 <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
                                 <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
@@ -91,6 +79,7 @@
                                 <tr>
                                     <th class="min-w-200px">{{ __("messages.Customer") }}</th>
                                     <th class="min-w-200px">{{ __('messages.actions') }}</th>
+                                    <th class="min-w-200px">{{ __('messages.Type') }}</th>
                                     <th class="min-w-200px">{{ __('messages.date-and-time')}}</th>
                                     <th class="min-w-200px">{{ __('messages.metadata')}}</th>
                                 </tr>
@@ -110,20 +99,23 @@
                                             {!! $log->action !!}
                                         </span>
                                     </td>
+                                    <td>
+                                        @if($log->type!=null)
+                                            {{ __('messages.'.$log->type) }}
+                                        @endif
+                                    </td>
                                     <td>{{ $log->created_at }}</td>
                                     <td>
                                         @if (isset($log->metadata['email']))
-                                        {{ $log->metadata['email'] }}
-                                        @elseif($log->type == \App\Enums\Admin\LogTypes::DenyRestaurant->value)
-                                        @if (isset($log->metadata['reason']))
-                                        <ul>
-                                            @foreach ($log->metadata['reason'] as $reason)
-                                            <li>
-                                                {{ $reason }}
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                        @endif
+                                            {{ $log->metadata['email'] }}
+                                        @elseif(isset($log->metadata['reason']))
+                                            <ul>
+                                                @foreach ($log->metadata['reason'] as $reason)
+                                                <li>
+                                                    {{ $reason }}
+                                                </li>
+                                                @endforeach
+                                            </ul>
                                         @elseif($log->type == \App\Enums\Admin\LogTypes::UpdateSettings->value)
                                             @if(isset($log->metadata['webhook_url']))
                                             <p>
