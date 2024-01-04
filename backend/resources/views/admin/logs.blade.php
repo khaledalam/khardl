@@ -53,10 +53,10 @@
                 </select>
                 <select id="actionsDropdown" name="perPage" class="form-select form-select-sm border-body bg-body w-150px me-5">
                     <option value="" >{{ __('messages.Per page') }}</option>
-                    <option value="10" >10</option>
-                    <option value="20" >20</option>
-                    <option value="50" >50</option>
-                    <option value="100" >100</option>
+                    <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
+                    <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
+                    <option value="50" {{ request('perPage') == 50 ? 'selected' : '' }}>50</option>
+                    <option value="100" {{ request('perPage') == 100 ? 'selected' : '' }}>100</option>
 
                 </select>
                                   <!--end::Select-->
