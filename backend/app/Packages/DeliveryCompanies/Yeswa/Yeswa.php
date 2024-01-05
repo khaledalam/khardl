@@ -15,6 +15,7 @@ class Yeswa  extends AbstractDeliveryCompany
         PaymentMethod::CASH_ON_DELIVERY=> 'COD',
         PaymentMethod::CREDIT_CARD=> 'PP',
     ];
+    
     public function assignToDriver(Order $order,RestaurantUser $customer){
         $branch = $order->branch;
         if(env('APP_ENV') == 'local'){
@@ -47,7 +48,7 @@ class Yeswa  extends AbstractDeliveryCompany
             "dropoff_phone"=> $customer->phone,
             "dropoff_address"=> $customer->address,
             "order_amount"=> $order->total,
-            'client_id'=>$customer->id,
+            'client_id'=>$order->id, // instead if customer id
             "payment_method"=>  self::CORRESPOND_METHODS[$order->payment_method->name]  ,
             // nullable 
             // "dropoff_time"=> "",
@@ -64,6 +65,23 @@ class Yeswa  extends AbstractDeliveryCompany
             data: $data
         );
 
+    }
+    public static function processWebhook($payload){
+        if($payload["deliveries"][0]['job_status']  == 'ACCEPTED'){
+            Order::findOrFail($payload['client_id'])->update([
+                'status'=>Order::ACCEPTED
+            ]);
+        }else if($payload["deliveries"][0]['job_status'] == 'SUCCESSFUL'){
+            Order::findOrFail($payload['client_id'])->update([
+                'status'=>Order::COMPLETED
+            ]);
+        }else if (
+            $payload["deliveries"][0]['job_status'] == 'CANCELLED'||
+            $payload["deliveries"][0]['job_status'] == 'DECLINED' ||
+            $payload["deliveries"][0]['job_status'] == 'FAILED' ){
+            // Todo @todo
+            // resend the order to any delivery companies or cancelled 
+        }
     }
 
 }

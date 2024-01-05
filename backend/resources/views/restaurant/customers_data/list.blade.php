@@ -43,16 +43,16 @@
                                 <!--begin::Thead-->
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
                                     <tr>
-                                        <th class="min-w-50px ps-5">{{ __('messages.ID') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Name') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Phone') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Eamil') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Status') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Address') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Branch') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Last login') }}</th>
-                                        <th class="min-w-125px text-center">{{ __('messages.Registration') }} <br> {{ __('messages.date') }}</th>
-                                        <th class="min-w-100px px-0">{{ __('messages.Actions') }}</th>
+                                        <th>{{ __('messages.ID') }}</th>
+                                        <th>{{ __('messages.Name') }}</th>
+                                        <th>{{ __('messages.Phone') }}</th>
+                                        <th>{{ __('messages.Email') }}</th>
+                                        <th>{{ __('messages.Status') }}</th>
+                                        <th>{{ __('messages.Address') }}</th>
+                                        <th>{{ __('messages.Branch') }}</th>
+                                        <th>{{ __('messages.Last login') }}</th>
+                                        <th>{{ __('messages.Registration') }} <br> {{ __('messages.date') }}</th>
+                                        <th>{{ __('messages.Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <!--end::Thead-->

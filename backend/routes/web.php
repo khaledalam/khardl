@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
@@ -206,7 +207,7 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
                     Route::get('/add-user', [AdminController::class, 'addUser'])->middleware('permission:can_add_admins')->name('add-user');
                     Route::delete('/delete/{id}', [AdminController::class, 'deleteRestaurant'])->middleware('permission:can_delete_restaurants')->name('delete-restaurant');
                     Route::post('/generate-user', [AdminController::class, 'generateUser'])->middleware('permission:can_add_admins')->name('generate-user');
-                    Route::get('/logs', [AdminController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
+                    Route::get('/logs', [LogController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
                     Route::get('/restaurants/{tenant}', [RestaurantController::class, 'viewRestaurant'])->middleware('permission:can_view_restaurants')->name('view-restaurants');
 
                     Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('restaurants');
@@ -245,32 +246,22 @@ Route::group(['middleware' => ['universal', InitializeTenancyByDomain::class]], 
         return Redirect::back();
     })->name('change.language');
 
-
     Route::post('/delivery-webhook', static function (Request $request) {
-        \Sentry\captureMessage('Webhook get from cervo');
-        \Sentry\captureMessage(json_encode($request->all()));
-        $client = new \GuzzleHttp\Client();
-
-        $url = CentralSetting::first()->webhook_url ?? '';
-        $data = [ 'query' =>$request->all()];
-        $request = $client->request('post',$url,$data);
-    
+        try{
+            \Sentry\captureMessage('Webhook post from cervo');
+           
+           $client = new \GuzzleHttp\Client();
+   
+           $url = CentralSetting::first()->webhook_url ?? '';
+           $data = [ 'query' =>$request->all()+ ['delivery_company'=>request()->header('Delivery-Company') ?? '']];
+           $request = $client->request('post',$url,$data);
+        }
+        catch(Exception $e){
+               
+        }
         return response()->json(['message'=>"received"],200);
     })->name('delivery.webhook-post');
 
-    Route::get('/delivery-webhook', static function (Request $request) {
-        \Sentry\captureMessage('Webhook get from cervo');
-        \Sentry\captureMessage(json_encode($request->all()));
-        
-        $client = new \GuzzleHttp\Client();
-
-        $url = CentralSetting::first()->webhook_url ?? '';
-        $data = [ 'query' =>$request->all()];
-        $request = $client->request('get',$url,$data);
-    
-        return response()->json(['message'=>"received"],200);
-
-    });
 
 });
 //-----------------------------------------------------------------------------------------------------------------------

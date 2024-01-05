@@ -15,22 +15,6 @@ class StoreOrderFormRequest extends FormRequest
     }
     public function rules()
     {
-        /*
-        "phone" => "65"
-        "first_name" => "Nita"
-        "last_name" => "May"
-        "delivery_type_id" => "3"
-        "shipping_address" => "Sit laborum Quibusd"
-        "order_notes" => "Sit aut minus quod e"
-        "products" => array:2 [▼
-            1 => array:1 [▼
-            0 => "1"
-            ]
-            2 => array:1 [▼
-            0 => "1"
-            ]
-        ]
-        */
         return [
             'phone' => 'required|regex:/^(966)?\d{9}$/',
             'first_name' => 'required|string|max:255',
@@ -42,5 +26,9 @@ class StoreOrderFormRequest extends FormRequest
             'products'  => 'required|array',
             'products.*'  => ['required','min:1'],
         ];
+    }
+    protected function prepareForValidation()
+    {
+        $this->validatePhone();
     }
 }

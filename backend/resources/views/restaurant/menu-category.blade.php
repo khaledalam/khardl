@@ -182,7 +182,7 @@
                                                   <!--end::Title-->
                                                   <!--begin::Date-->
                                                   <td class="text-center">
-                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.Actions') }}
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                     <span class="svg-icon svg-icon-5 m-0">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -276,16 +276,16 @@
                     <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse end-0 {{app()->getLocale() == 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
                         <!--begin::Demos drawer toggle-->
                         <button id="addCheckbox" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Checkbox">
-                            <span id="create_new_checkbox">+ Checkbox</span>
+                            <span id="create_new_checkbox">+ {{ __('messages.Checkbox') }}</span>
                         </button>
                         <!--end::Demos drawer toggle-->
                         <!--begin::Help drawer toggle-->
                         <button id="addSelection" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Selection">
-                            <span id="create_new_selection">+ Selection</span>
+                            <span id="create_new_selection">+ {{ __('messages.Selection') }}</span>
                         </button>                        <!--end::Help drawer toggle-->
                         <!--begin::Purchase link-->
                         <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Dropdown">
-                            <span id="create_new_Dropdown">+ Dropdown</span>
+                            <span id="create_new_Dropdown">+ {{ __('messages.Dropdown') }}</span>
                         </button>
                         <!--end::Purchase link-->
                     </div>
@@ -332,7 +332,7 @@
                         <div class="row g-9 mb-8">
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-bold mb-2">price</label>
+                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.Price') }}</label>
                                 <!--begin::Input-->
                                 <div class="position-relative d-flex align-items-center">
                                     <!--begin::Datepicker-->
@@ -344,7 +344,7 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-bold mb-2">Calories</label>
+                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.Calories') }}</label>
                                 <input type="number" required name="calories" class="form-control form-control-solid ps-12" />
                             </div>
                             <!--end::Col-->
@@ -353,42 +353,42 @@
                         <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-bold mb-2">Name</label>
+                            <label class="fs-6 fw-bold mb-2">{{ __('messages.Name') }}</label>
 
                             <ul class="nav nav-tabs" >
                                 <li class="nav-item">
-                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">English</a>
+                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('messages.English') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">Arabic</a>
+                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">{{ __('messages.Arabic') }}</a>
                                 </li>
                             </ul>
                             <div class="tab-content mt-3">
                                 <div class="tab-pane fade show active" id="name-en">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="Enter name in English"   name="item_name_en" />
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in english') }}"   name="item_name_en" />
                                 </div>
                                 <div class="tab-pane fade" id="name-ar">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="أدخل الاسم باللغة العربية"   name="item_name_ar" />
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="item_name_ar" />
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-bold mb-2">Description</label>
+                            <label class="fs-6 fw-bold mb-2">{{ __("messages.Description") }}</label>
 
                             <ul class="nav nav-tabs" >
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">English</a>
+                                    <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">{{ __('messages.English') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">Arabic</a>
+                                    <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">{{ __('messages.Arabic') }}</a>
                                 </li>
                             </ul>
                             <div class="tab-content mt-3">
                                 <div class="tab-pane fade show active" id="d-en">
-                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="Enter Description in English"   name="description_en"></textarea>
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in english') }}"   name="description_en"></textarea>
                                 </div>
                                 <div class="tab-pane fade" id="d-ar">
-                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="أدخل الوصف باللغة العربية"   name="description_ar"></textarea>
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="description_ar"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -709,21 +709,21 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">Checkbox buttons </span>
+                            <span class="">{{ __('messages.Checkbox') }} </span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                             <input type="hidden" name="checkbox_required[${checkboxCount}]" value="false" />
-                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" id="" > required
+                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" id="" > {{ __('messages.Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${checkboxCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-75" name="checkboxInputTitleEn[]" placeholder="Title in english ">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-75" name="checkboxInputTitleAr[]" placeholder="العنوان بالعربية">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[]" placeholder="{{ __('messages.Title in english') }}">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[]" placeholder="{{ __('messages.Title in arabic') }}">
 
-                            <input type="number" required class="form-control form-control-solid mx-3 w-25" name="checkboxInputMaximumChoice[]" placeholder="max ">
+                            <input type="number" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('messages.Max') }}">
                             <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
@@ -731,7 +731,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${checkboxCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ Add Option</a>
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('messages.Add option') }}</a>
                     </div>
                 </div>
             `;
@@ -769,20 +769,20 @@
             if(isDeletable){
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Name in english ">
-                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="الاسم بالعربية ">
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in english') }}">
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in arabic') }}">
 
-                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price">
+                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Price') }}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
             }else {
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
-                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="الاسم بالعربية ">
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in arabic') }}">
 
-                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="price">
+                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Price') }}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -817,20 +817,20 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">Selection buttons </span>
+                            <span class="">{{ __('messages.Selection') }}</span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
-                            <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" > required
+                            <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" > {{ __('messages.Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${selectionCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="Title in english ">
-                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="العنوان بالعربية">
+                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="{{ __('messages.Title in english') }}">
+                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="{{ __('messages.Title in arabic') }}">
 
                             <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
@@ -839,7 +839,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${selectionCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ Add Option</a>
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('messages.Add option') }}</a>
                     </div>
                 </div>
             `;
@@ -877,20 +877,20 @@
             if(isDeletable){
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
-                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="الاسم بالعربية ">
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in arabic') }}">
 
-                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price">
+                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Price') }}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;  }
             else {
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
-                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="الاسم بالعربية ">
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in arabic') }}">
 
-                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="price">
+                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Price') }}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;
@@ -924,20 +924,20 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">Dropdown buttons </span>
+                            <span class="">{{ __('messages.Dropdown') }}</span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
-                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" > required
+                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" > {{ __('messages.Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${dropdownCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="Title in english ">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="العنوان بالعربية">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="{{ __('messages.Title in english') }}">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="{{ __('messages.Title in arabic') }}">
 
                             <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
@@ -946,7 +946,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${dropdownCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ Add Option</a>
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('messages.Add option') }}</a>
                     </div>
                 </div>
             `;
@@ -984,8 +984,8 @@
             if(isDeletable){
             optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="Name in english ">
-                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="الاسم بالعربية ">
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in english') }}">
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in arabic') }}">
 
 
                         <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
@@ -993,8 +993,8 @@
             `; }else {
                 optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="Name in english ">
-                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="الاسم بالعربية ">
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('messages.Name in arabic') }}">
 
 
                         <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>

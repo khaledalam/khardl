@@ -11,7 +11,6 @@ class WebhookSignature implements SignatureValidator
 {
     public function isValid(Request $request, WebhookConfig $config): bool
     {
-        logger("coming from delivery");
         return true;
         // TODO @todo validate the coming request after finished the integration
         // $myHashString = hash_hmac('sha256', $request->header('hashstring'), env('TAP_SECRET_API_KEY'));
