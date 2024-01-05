@@ -16,6 +16,7 @@ class SettingSeeder extends Seeder
         Setting::create([
             'is_live' => false,
             'delivery_fee' => 0,
+            'transaction_percentage_fee' => 0,
             'restaurant_name'=>$restaurant_name
         ]);
     }

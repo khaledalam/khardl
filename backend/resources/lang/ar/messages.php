@@ -542,6 +542,11 @@ return [
     "Verify restaurant user sent"   => "تم ارسال بريد تاكيد مستخدم مطعم",
     "Verify restaurant user fail"   => "فشل ارسال بريد تاكيد مستخدم مطعم",
     "Metadata" => "البيانات الوصفية",
-    "Action" => "الفعل"
+    "Action" => "الفعل",
+    "fees" => "العمولات",
+    "percentage-fee" => "نسبه العموله",
+    "percentage-fee-explain" => "نسبه العموله التي سيتم خضمها من كل عمليه دفع",
+    "in" => "ب"
+
 ];
 

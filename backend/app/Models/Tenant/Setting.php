@@ -12,6 +12,7 @@ class Setting extends Model
     protected $fillable =[
         'is_live',
         'delivery_fee',
+        'transaction_percentage_fee',
         'restaurant_name'
     ];
     public $timestamps = false;
