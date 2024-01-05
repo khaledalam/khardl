@@ -40,7 +40,7 @@
                                                 <label class="form-label">{{ __('messages.delivery-fee')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="number" step="0.5" name="delivery_fee" class="form-control mb-2" required placeholder="{{ __('messages.delivery-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['delivery_fee']}}" />
+                                                <input type="number" step="0.1" name="delivery_fee" class="form-control mb-2" required placeholder="{{ __('messages.delivery-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['delivery_fee']}}" />
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">{{__('messages.e.g.')}} 10.5 {{__('messages.sar')}}</div>
@@ -55,10 +55,10 @@
                                                 <label class="form-label">{{ __('messages.percentage-fee')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="number" name="transaction_percentage_fee" class="form-control mb-2" required placeholder="{{ __('messages.percentage-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['transaction_percentage_fee']}}" />
+                                                <input type="number" step="0.1" name="transaction_percentage_fee" class="form-control mb-2" required placeholder="{{ __('messages.percentage-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['transaction_percentage_fee']}}" />
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{__('messages.percentage-fee-explain')}} {{__('messages.e.g.')}} 2 %</div>
+                                                <div class="text-muted fs-7">{{__('messages.percentage-fee-explain')}} {{__('messages.e.g.')}} 2.4%</div>
                                                 <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->

@@ -375,6 +375,7 @@ return [
     'others' => "Others",
     "blocked" => "Blocked",
     "blocked-user" => "User is blocked",
+    "ro-user-no-tenant" => "Restaurant Owner User has no tenant yet",
     "Bank Account"=>"Bank Account",
 
     "choose-time-for-all-days"=>"Choose time for all days",
