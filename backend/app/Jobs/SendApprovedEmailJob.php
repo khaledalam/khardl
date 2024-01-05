@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\Admin\LogTypes;
 use App\Mail\ApprovedEmail;
 use App\Models\Log;
 use App\Models\User;
@@ -34,18 +35,31 @@ class SendApprovedEmailJob implements ShouldQueue
         try {
             // Send approved email notification
             Mail::to($this->user->email)->send(new ApprovedEmail($this->user));
-
+            $action = [
+                'en' => '[ok] Sent approved email notification',
+                'ar' => '[تم] ارسال بريد للموافقة',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->user?->email,
-                'action' => '[ok] Sent approved email notification',
-                'user_id'=> $this?->user?->id
+                'user_id' => $this?->user?->id,
+                'action' => $action,
+                'type' => LogTypes::ApproveUserSent,
+               'metadata' => [
+                    'email' => $this->user->email ?? null,
+                ]
             ]);
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
+            $action = [
+                'en' => '[fail] Sent approved email notification',
+                'ar' => '[فشل] ارسال بريد للموافقة',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->user?->email,
-                'action' => '[fail] Send approved email notification',
-                'user_id'=> $this?->user?->id
+                'user_id' => $this?->user?->id,
+                'action' => $action,
+                'type' => LogTypes::ApproveUserFail,
+               'metadata' => [
+                    'email' => $this->user->email ?? null,
+                ]
             ]);
         }
     }

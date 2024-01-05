@@ -42,7 +42,26 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return "{$this->first_name} {$this->last_name}";
     }
-
+    public function getTotalEarningAttribute()
+    {
+        return $this->run(function () {
+            $total = Order::completed()->sum('total');
+            return [
+                'number_formatted' => getAmount((float)$total),
+                'number' => $total
+            ];
+        });
+    }
+    public function getTotalOrdersAttribute()
+    {
+        return $this->run(function () {
+            $count =  Order::completed()->count();
+            return [
+                'number_formatted' => getAmount((float)$count),
+                'number' => $count
+            ];
+        });
+    }
     public function route($route, $parameters = [], $absolute = true)
     {
         $domain = $this->primary_domain->domain;

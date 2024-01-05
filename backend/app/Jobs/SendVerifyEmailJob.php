@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\Admin\LogTypes;
 use App\Models\Log;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -32,22 +33,35 @@ class SendVerifyEmailJob implements ShouldQueue
     {
         try {
             // Send the email with the verification code
-            Mail::send('emails.verify', ['code' => $this->user?->verification_code, 'name' => "{$this?->user?->first_name} {$this?->user?->last_name}"], function($message) {
+            Mail::send('emails.verify', ['code' => $this->user?->verification_code, 'name' => "{$this?->user?->first_name} {$this?->user?->last_name}"], function ($message) {
                 $message->to($this?->user?->email);
                 $message->subject('Email Verification Code');
             });
-
+            $action = [
+                'en' => '[ok] Sent verify restaurant user email',
+                'ar' => '[تم] ارسال بريد للتحقق من مستخدم المطعم',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->user?->email,
-                'action' => '[ok] Sent verify restaurant user email',
-                'user_id'=> $this?->user?->id
+                'action' => $action,
+                'user_id' => $this?->user?->id,
+                'type' => LogTypes::VerifyRestaurantUserSent,
+               'metadata' => [
+                    'email' => $this->user->email ?? null,
+                ]
             ]);
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
+            $action = [
+                'en' => '[fail] Sent verify restaurant user email',
+                'ar' => '[فشل] ارسال بريد للتحقق من مستخدم المطعم',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->user?->email,
-                'action' => '[fail] Send verify restaurant user email',
-                'user_id'=> $this?->user?->id
+                'user_id' => $this?->user?->id,
+                'action' => $action,
+                'type' => LogTypes::VerifyRestaurantUserFail,
+               'metadata' => [
+                    'email' => $this->user->email ?? null,
+                ]
             ]);
         }
     }

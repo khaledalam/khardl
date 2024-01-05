@@ -29,7 +29,7 @@
               </div>
               <!--end::Card header-->
               <!--begin::Card body-->
-              
+
                 <div class="card-body pt-0">
                   <!--begin::Input group-->
                   <div class="mb-10 fv-row">
@@ -103,7 +103,7 @@
                     <label class="required form-label">{{ __('messages.position')}}</label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input type="text" required class="form-control @error('phone') is-invalid @enderror" value="{{ old('position') }}" name="position" id="position" placeholder="position" >
+                    <input type="text" required class="form-control @error('phone') is-invalid @enderror" value="{{ old('position') }}" name="position" id="position" placeholder="{{ __('messages.position') }}" >
                     <!--end::Input-->
                     <!--begin::Description-->
                     <div class="text-muted fs-7">{{ __('messages.position')}} {{ __('messages.is-required')}}</div>
@@ -146,8 +146,8 @@
                                                               <!--end::Label-->
                                                           </div>
                                                           <!--end::Input group-->
-                                                  
-                                                  
+
+
                                                           <!--begin::Input group-->
                                                           <div class="row mb-0 mt-5">
                                                               <!--begin::Label-->
@@ -158,7 +158,7 @@
                                                               <!--end::Label-->
                                                           </div>
                                                           <!--end::Input group-->
-                                                  
+
                                                           <!--begin::Input group-->
                                                           <div class="row mb-0 mt-5">
                                                               <!--begin::Label-->
@@ -169,7 +169,7 @@
                                                               <!--end::Label-->
                                                           </div>
                                                           <!--end::Input group-->
-                                                  
+
                                                           <!--begin::Input group-->
                                                           <div class="row mb-0 mt-5">
                                                               <!--begin::Label-->
@@ -180,9 +180,9 @@
                                                               <!--end::Label-->
                                                           </div>
                                                           <!--end::Input group-->
-                                                  
+
                                                           <hr>
-                                                  
+
                                                           <!--begin::Input group-->
                                                           <div class="row mb-0 mt-5">
                                                               <!--begin::Label-->
@@ -193,7 +193,7 @@
                                                               <!--end::Label-->
                                                           </div>
                                                           <!--end::Input group-->
-                                                  
+
                                                           <!--begin::Input group-->
                                                           <div class="row mb-0 mt-5">
                                                               <!--begin::Label-->
@@ -204,7 +204,7 @@
                                                               <!--end::Label-->
                                                           </div>
                                                           <!--end::Input group-->
-                                                  
+
                                                           <!--begin::Input group-->
                                                           <div class="row mb-0 mt-5">
                                                               <!--begin::Label-->
@@ -227,10 +227,10 @@
                                                               <!--end::Label-->
                                                           </div>
                                                           <!--end::Input group-->
-                                                        
+
                                                         <!--end::Input group-->
                                                           <hr>
-                                                  
+
                                                           <!--begin::Input group-->
                                                           <div class="row mb-0 mt-5">
                                                               <!--begin::Label-->
@@ -269,7 +269,7 @@
                                                             </div>
                                                             <!--end::Label-->
                                                         </div>
-                                                        
+
                                                           <!--end::Input group-->
                                                       </div>
                                                       <!--end::Card body-->
@@ -278,7 +278,7 @@
                   </div>
                                                 <!--end::Permission-->
 
-                                                
+
                 </div>
               <!--end::Card header-->
             </div>
