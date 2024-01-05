@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\Admin\LogTypes;
 use App\Mail\ApprovedBusiness;
 use App\Models\Log;
 use App\Models\User;
@@ -33,18 +34,31 @@ class SendApprovedBusinessEmailJob implements ShouldQueue
     {
         try {
             Mail::to($this->user->email)->send(new ApprovedBusiness($this->user));
-
+            $actions = [
+                'en' => '[ok] Email approve business sent successfully',
+                'ar' => '[تم] تم ارسال بريد للموافقة علي الاعمال',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->user?->email,
-                'action' => '[ok] Sent approve business',
-                'user_id'=> $this?->user?->id
+                'user_id' => $this?->user?->id,
+                'action' => $actions,
+                'type' => LogTypes::ApproveBusinessSent,
+               'metadata' => [
+                    'email' => $this->user->email ?? null,
+                ]
             ]);
 
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
+            $actions = [
+                'en' => '[fail] Email approve business sent successfully',
+                'ar' => '[فشل] تم ارسال بريد للموافقة علي الاعمال',
+            ];
             Log::create([
-                'restaurant_user_email' => $this?->user?->email,
-                'action' => '[fail] Send approve business',
-                'user_id'=> $this?->user?->id
+                'action' => $actions,
+                'user_id' => $this?->user?->id,
+                'type' => LogTypes::ApproveBusinessFail,
+               'metadata' => [
+                    'email' => $this->user->email ?? null,
+                ]
             ]);
         }
     }
