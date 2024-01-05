@@ -482,7 +482,8 @@ return [
     "User" => "User",
     "Created at" => "Created at",
     "cervo" => "Cervo",
-    "delivery.cervo.summary" => "Cervo Delivery Services is a leading logistics company in the Kingdom of Saudi Arabia, specializing in delivery of orders, food, and parcel transportation.<br /><br />We offer our services in all cities across the country. Our company possesses a complete fleet of modern vehicles that cater to and meet all needs. Our employees are dedicated to providing excellent customer service and respecting privacy, from order receipt to prompt delivery. Our motto is always speed, care, reliability, and credibility"
-
+    "delivery.cervo.summary" => "Cervo Delivery Services is a leading logistics company in the Kingdom of Saudi Arabia, specializing in delivery of orders, food, and parcel transportation.<br /><br />We offer our services in all cities across the country. Our company possesses a complete fleet of modern vehicles that cater to and meet all needs. Our employees are dedicated to providing excellent customer service and respecting privacy, from order receipt to prompt delivery. Our motto is always speed, care, reliability, and credibility",
+    "street-line" => "StreetLine",
+    "delivery.street-line.summary" => "Al Shrouq Express Offers Its Best Solution Street Line App For The Delivery Of The Orders From Your Restaurant Or Outlet To Your End Customers Address (Homes/ Offices) Fast With No Delays",
 
 ];
