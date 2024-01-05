@@ -125,6 +125,7 @@ const restuarantEditorSlice = createSlice({
     banner_image_url: null,
     banner_images_urls: null,
     collapse_sidebar: false,
+    template: "template-1",
   },
   reducers: {
     headerPosition: (state, action) => {
@@ -286,6 +287,9 @@ const restuarantEditorSlice = createSlice({
         state.mediaCollection.push(iconToMove)
       }
     },
+    setTemplate: (state, action) => {
+      state.template = action.payload
+    },
   },
 })
 
@@ -330,5 +334,6 @@ export const {
   mediaIconsToSelected,
   moveSelectedIconsToMedia,
   setSelectedSocialMediaId,
+  setTemplate,
 } = restuarantEditorSlice.actions
 export default restuarantEditorSlice.reducer
