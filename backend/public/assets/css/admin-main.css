@@ -24,3 +24,19 @@
     max-height: 280px;
     overflow: auto;
 }
+.currency_amount,.total_orders{
+    position: absolute;
+    background-color: #1b1b28;
+    border-radius: 3px;
+    padding: 2px 10px;
+    top: -19px;
+    color: #ffffff;
+}
+.formatted_amount:hover  .currency_amount{
+    opacity: 1;
+    transition: 1s all;
+}
+.res_total_orders:hover .total_orders{
+    opacity: 1;
+    transition: 1s all;
+}

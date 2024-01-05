@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Central\Auth;
 
+use App\Enums\Admin\LogTypes;
 use App\Jobs\SendVerifyEmailJob;
 use App\Models\Log;
 use App\Models\Tenant\RestaurantUser;
@@ -103,9 +104,14 @@ class RegisterController extends BaseController
             user: $user,
             domain: $user->restaurant_name
         );
+        $actions = [
+            'en' => 'Has created new restaurant',
+            'ar' => 'انشأ مطعم جديد',
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has created new restaurant'
+            'action' => $actions,
+            'type' => LogTypes::CreateNewRestaurant
         ]);
         return $this->sendResponse(['url'=>$tenant->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID)], 'User complete register step two successfully.');
     }
