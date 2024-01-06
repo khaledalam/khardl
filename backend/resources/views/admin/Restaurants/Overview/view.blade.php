@@ -138,7 +138,7 @@
                                 <div class="d-flex align-items-center">
                                     <!--begin::Amount-->
                                     <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">
-                                        {{ $salesThisMonth }} {{ __('messages.SAR') }}
+                                        {{ getAmount((float)$salesThisMonth) }} {{ __('messages.SAR') }}
                                     </span>
                                     <!--end::Amount-->
                                 </div>
