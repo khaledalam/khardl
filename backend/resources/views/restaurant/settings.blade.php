@@ -49,21 +49,6 @@
                                             <!--end::Input group-->
 
 
-                                            <!--begin::Input group-->
-                                            <div class="mb-10 fv-row">
-                                                <!--begin::Label-->
-                                                <label class="form-label">{{ __('messages.percentage-fee')}}</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="number" step="0.1" name="transaction_percentage_fee" class="form-control mb-2" required placeholder="{{ __('messages.percentage-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['transaction_percentage_fee']}}" />
-                                                <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{__('messages.percentage-fee-explain')}} {{__('messages.e.g.')}} 2.4%</div>
-                                                <!--end::Description-->
-                                            </div>
-                                            <!--end::Input group-->
-
-
                                         </div>
                                         <!--end::Card header-->
                                     </div>
