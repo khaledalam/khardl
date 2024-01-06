@@ -547,6 +547,11 @@ return [
     "fees" => "Fees",
     "percentage-fee" => "Percentage Fee",
     "percentage-fee-explain" => "Percentage that will be deduced from each transaction",
-    "in" => "in"
+    "in" => "in",
+    "Add" => "Add",
+    "Logs" => "Logs",
+    "Enter text in Arabic" => "Enter text in Arabic",
+    "Enter text in English" => "Enter text in English",
+    "Customer Address" => "Customer Address",
 
 ];

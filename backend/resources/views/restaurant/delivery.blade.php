@@ -57,7 +57,7 @@
                                             </div>
 
                                             <div class="d-flex align-items-center">
-                                                <button type="reset" class="btn btn-sm btn-secondary me-5">Discard</button>
+                                                <button type="reset" class="btn btn-sm btn-secondary me-5">{{__('messages.Discard')}}</button>
                                             </div>
                                             <!--end:Action-->
                                         </div>

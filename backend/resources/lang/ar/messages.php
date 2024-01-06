@@ -547,7 +547,12 @@ return [
     "fees" => "العمولات",
     "percentage-fee" => "نسبه العموله",
     "percentage-fee-explain" => "نسبه العموله التي سيتم خضمها من كل عمليه دفع",
-    "in" => "ب"
+    "in" => "ب",
+    "Add" => "اضافة",
+    "Logs" => "السجلات",
+    "Enter text in English" => "ادخل الاسم بالانجليزية",
+    "Enter text in Arabic" => "ادخل الاسم بالعربية",
+    "Customer Address" => "عنوان العميل",
 
 ];
 

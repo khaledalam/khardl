@@ -19,7 +19,7 @@
                              <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.workers') }} - <small>{{__('messages.branch')}}: {{\App\Models\Tenant\Branch::find($branchId)?->name}}</small></span>
                              <span class="text-muted mt-1 fw-bold fs-7">{{ count($workers) }} {{ __('messages.workers') }}</span>
                          </h3>
-                         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
+                         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('messages.Add') }}">
                              <a href="{{ route('restaurant.get-workers', ['branchId' => $branchId]) }}" class="btn btn-sm btn-light btn-active-khardl">
                              <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                              <span class="svg-icon svg-icon-3">

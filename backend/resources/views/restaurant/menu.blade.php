@@ -88,10 +88,10 @@
                                             </ul>
                                             <div class="tab-content mt-3">
                                                 <div class="tab-pane fade show active" id="en">
-                                                    <input type="text" class="form-control" placeholder="Enter text in English" name="name_en">
+                                                    <input type="text" class="form-control" placeholder="{{ __('messages.Enter text in English') }}" name="name_en">
                                                 </div>
                                                 <div class="tab-pane fade" id="ar">
-                                                    <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية" name="name_ar">
+                                                    <input type="text" class="form-control" placeholder="{{ __('messages.Enter text in Arabic') }}" name="name_ar">
                                                 </div>
                                                 <div class="tab-pane fade" id="logo">
                                                     <label>{{__('messages.category-logo')}}</label>

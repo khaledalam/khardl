@@ -19,7 +19,7 @@
        <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.admin-staff')}}</span>
        <span class="text-muted mt-1 fw-bold fs-7">{{ count($admins) }} {{ __('messages.admins')}}</span>
      </h3>
-     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
+     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('messages.Add') }}">
        <a href="{{ route('admin.add-user') }}" class="btn btn-sm btn-light btn-active-primary">
        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
        <span class="svg-icon svg-icon-3">
@@ -93,7 +93,7 @@
                         </div>
                     </span>
                 </a>
-                
+
                   <a href="{{ route('admin.user-management-edit', ['id' => $admin->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                     <span class="svg-icon svg-icon-3">
@@ -104,7 +104,7 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a>
-                 
+
                   <form class="delete-form" action="{{ route('admin.delete-user', ['id' => $admin->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
@@ -120,7 +120,7 @@
                       <!--end::Svg Icon-->
                     </button>
                   </form>
-                  
+
                 </div>
               </td>
             </tr>
@@ -148,9 +148,9 @@
               deleteButtons.forEach(function(button) {
                   button.addEventListener('click', function(event) {
                       event.preventDefault();
-                      
+
                       var form = button.closest('.delete-form');
-                      
+
                       Swal.fire({
                           title: '{{ __('messages.are-you-sure') }}',
                           text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
