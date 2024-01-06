@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import SideNavbar from "./components/SideNavbar"
 import NavbarCustomer from "./components/NavbarCustomer"
 import {useSelector} from "react-redux"
@@ -7,6 +7,7 @@ import CustomerOrder from "./components/CustomerOrder"
 import CustomerProfile from "./components/CustomerProfile"
 import {useSearchParams} from "react-router-dom"
 import CustomerOrderDetail from "./components/CustomerOrderDetail"
+import {MenuContext} from "react-flexible-sliding-menu"
 
 const TABS = {
   dashboard: "Dashboard",
@@ -18,6 +19,7 @@ export const CustomerPage = () => {
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
   const [searchParam] = useSearchParams()
   const [showOrderDetail, setShowOrderDetail] = useState(false)
+  const {toggleMenu} = useContext(MenuContext)
 
   const orderId = searchParam.get("orderId")
   console.log("orderId", orderId)

@@ -104,12 +104,14 @@ function PlacesAutoComplete({inputStyle}) {
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
-        value={value ? value : customerAddress}
+        value={value}
+        defaultValue={customerAddress}
         onChange={(e) => setValue(e.target.value)}
         disabled={!ready}
         className={inputStyle}
         placeholder='Search an address...'
       />
+
       <ComboboxPopover>
         <ComboboxList>
           {status === "OK" &&

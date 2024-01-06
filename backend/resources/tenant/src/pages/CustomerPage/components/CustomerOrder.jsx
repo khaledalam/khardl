@@ -11,13 +11,16 @@ import {
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md"
 
+import {useSelector} from "react-redux"
+
 const CustomerOrder = () => {
   const [pageNumber, setpageNumber] = useState(1)
   const [orderPerPage, setOrderPerPage] = useState(7)
   const [dateAdded, setDateAdded] = useState("")
   const [orderStatus, setOrderStatus] = useState("")
+  const ordersList = useSelector((state) => state.customerAPI.ordersList)
 
-  const slicedOrderData = customerOrderData.slice(0, orderPerPage)
+  const slicedOrderData = ordersList.slice(0, orderPerPage)
 
   return (
     <div className='p-6'>

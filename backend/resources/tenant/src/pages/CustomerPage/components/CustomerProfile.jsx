@@ -116,10 +116,14 @@ const CustomerProfile = () => {
       </div>
       <div className='flex w-full items-center justify-end mt-10 mb-4'>
         <div className='flex items-center gap-5'>
-          <button className='w-[85px] p-2 !border border-solid border-[var(--customer)] bg-white outline-none rounded-lg'>
+          {/* <button className='w-[85px] p-2 !border border-solid border-[var(--customer)] bg-white outline-none rounded-lg'>
             Cancel
-          </button>
-          <button className='w-[85px] p-2 bg-[var(--customer)] outline-none text-white rounded-lg'>
+          </button> */}
+          <button
+            onClick={handleSaveProfile}
+            disabled={isLoading}
+            className='w-[85px] p-2 bg-[var(--customer)] outline-none text-white rounded-lg'
+          >
             Save
           </button>
         </div>

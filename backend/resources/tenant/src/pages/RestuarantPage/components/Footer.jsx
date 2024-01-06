@@ -65,7 +65,7 @@ const FooterRestuarant = () => {
       </div>
       <div className='h-7 flex bg-white items-center justify-between p-2'>
         <h3 className='pl-16 text-[1rem] text-neutral-700 font-medium'>
-          &copy; Powered by{" "}
+          Powered by{" "}
           <a
             href='https://first.khardl.com'
             className='text-neutral-400 text-sm cursor-pointer'
@@ -74,7 +74,7 @@ const FooterRestuarant = () => {
           </a>
         </h3>
         <h3 className='pl-16 text-[1rem] text-neutral-700 font-medium'>
-          &copy; مشغل بواسطة
+          مشغل بواسطة{" "}
           <a
             href='https://first.khardl.com'
             className='text-neutral-400 text-sm cursor-pointer'

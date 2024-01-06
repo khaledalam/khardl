@@ -67,7 +67,13 @@ const OrderTable = ({data}) => {
               </td>
               <td>
                 <div className='flex items-center gap-2'>
-                  {/* <span className='text-[1rem]'>{order.DateAdded}</span> */}
+                  <span className='text-[1rem]'>
+                    {new Date(order?.created_at).toLocaleString("en-US", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}
+                  </span>
                   <span className='text-xs text-[var(--customer)]'>
                     {order?.created_at &&
                       new Date(order.created_at).toLocaleString("en-US", {
