@@ -14,9 +14,8 @@ import {
 import "@reach/combobox/styles.css"
 import {useSelector, useDispatch} from "react-redux"
 
-const Places = () => {
+const Places = ({selected, setSelected}) => {
   const [libraries, _] = useState(["places"])
-  const [selected, setSelected] = useState(null)
 
   const {isLoaded} = useLoadScript({
     googleMapsApiKey: "AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0",

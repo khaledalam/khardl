@@ -5,6 +5,8 @@ import {useSelector} from "react-redux"
 import CustomerDashboard from "./components/CustomerDashboard"
 import CustomerOrder from "./components/CustomerOrder"
 import CustomerProfile from "./components/CustomerProfile"
+import {useSearchParams} from "react-router-dom"
+import CustomerOrderDetail from "./components/CustomerOrderDetail"
 
 const TABS = {
   dashboard: "Dashboard",
@@ -14,6 +16,8 @@ const TABS = {
 export const CustomerPage = () => {
   const isSidebarCollapse = false
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
+  const [searchParam] = useSearchParams()
+  const orderId = searchParam.get("orderId")
 
   return (
     <div>
@@ -40,6 +44,7 @@ export const CustomerPage = () => {
           ) : (
             <></>
           )}
+          {orderId && <CustomerOrderDetail />}
         </div>
       </div>
     </div>
