@@ -375,6 +375,7 @@ return [
     'others' => "Others",
     "blocked" => "Blocked",
     "blocked-user" => "User is blocked",
+    "ro-user-no-tenant" => "Restaurant Owner User has no tenant yet",
     "Bank Account"=>"Bank Account",
 
     "choose-time-for-all-days"=>"Choose time for all days",
@@ -542,5 +543,10 @@ return [
     "Verify restaurant user sent"   => "Verify restaurant user sent",
     "Verify restaurant user fail"   => "Verify restaurant user fail",
     "Metadata" => "Metadata",
-    "Action" => "Action"
+    "Action" => "Action",
+    "fees" => "Fees",
+    "percentage-fee" => "Percentage Fee",
+    "percentage-fee-explain" => "Percentage that will be deduced from each transaction",
+    "in" => "in"
+
 ];

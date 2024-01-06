@@ -54,14 +54,11 @@ class LoginController extends BaseController
             'remember_me' => 'nullable|boolean',
         ]);
 
-
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
             return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
         }
-
-
 
         $user = Auth::user();
         if($user->isBlocked() ){
@@ -76,8 +73,12 @@ class LoginController extends BaseController
             'user'=>$user
         ];
         if($user->isAdmin()){
-                $data['step2_status'] = 'completed';
-        }else {
+            $data['step2_status'] = 'completed';
+        } else if($user->isRestaurantOwner() && !$user->restaurant) {
+            Auth::logout();
+            return $this->sendError('Unauthorized.', ['error' => __('messages.ro-user-no-tenant')]);
+        }
+        else {
             if (!$user->traderRegistrationRequirement) {
                 $data['step2_status'] = 'incomplete';
             }else{

@@ -145,8 +145,8 @@ const Herosection = ({isMobile, categories}) => {
                 name={category.name}
                 imgSrc={category.photo}
                 alt={category.name}
-                hoverColor={"red"}
-                textColor={"white"}
+                hoverColor={restaurantStyle?.category_hover_color}
+                textColor={restaurantStyle?.text_color}
                 onClick={() =>
                   dispatch(
                     selectedCategoryAPI({name: category.name, id: category.id})

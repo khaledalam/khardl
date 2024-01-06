@@ -74,13 +74,14 @@ class AdminController extends Controller
     public function revenue()
     {
         $user = Auth::user();
+        $settings = CentralSetting::first();
 
 
         if ($user?->email !== env('SUPER_MASTER_ADMIN_EMAIL')) {
             return redirect()->back()->with('error', __('You are not allowed to access this page'));
         }
 
-        return view('admin.revenue', compact('user'));
+        return view('admin.revenue', compact('user', 'settings'));
     }
 
     public function promoters(){
