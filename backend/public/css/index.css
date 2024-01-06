@@ -4884,6 +4884,9 @@ details.collapse summary::-webkit-details-marker {
   --tw-divide-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-divide-opacity));
 }
+.self-start {
+  align-self: flex-start;
+}
 .self-center {
   align-self: center;
 }
@@ -4978,6 +4981,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .rounded-xl {
   border-radius: 0.75rem;
+}
+.rounded-3xl {
+  border-radius: 1.5rem;
 }
 .rounded-b-2xl {
   border-bottom-right-radius: 1rem;
@@ -5145,6 +5151,10 @@ details.collapse summary::-webkit-details-marker {
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 .border-b-\[var\(--primary\)\] {
   border-bottom-color: var(--primary);
@@ -5697,6 +5707,9 @@ details.collapse summary::-webkit-details-marker {
 .pt-\[100px\] {
   padding-top: 100px;
 }
+.pt-\[200px\] {
+  padding-top: 200px;
+}
 .pt-\[20px\] {
   padding-top: 20px;
 }
@@ -5708,12 +5721,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .pt-\[80px\] {
   padding-top: 80px;
-}
-.pb-\[200px\] {
-  padding-bottom: 200px;
-}
-.pt-\[200px\] {
-  padding-top: 200px;
 }
 .text-left {
   text-align: left;
@@ -12075,6 +12082,9 @@ details.collapse summary::-webkit-details-marker {
   --tw-divide-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-divide-opacity));
 }
+.self-start {
+  align-self: flex-start;
+}
 .self-center {
   align-self: center;
 }
@@ -12169,6 +12179,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .rounded-xl {
   border-radius: 0.75rem;
+}
+.rounded-3xl {
+  border-radius: 1.5rem;
 }
 .rounded-b-2xl {
   border-bottom-right-radius: 1rem;
@@ -12336,6 +12349,10 @@ details.collapse summary::-webkit-details-marker {
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 .border-b-\[var\(--primary\)\] {
   border-bottom-color: var(--primary);
@@ -12888,6 +12905,9 @@ details.collapse summary::-webkit-details-marker {
 .pt-\[100px\] {
   padding-top: 100px;
 }
+.pt-\[200px\] {
+  padding-top: 200px;
+}
 .pt-\[20px\] {
   padding-top: 20px;
 }
@@ -12899,12 +12919,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .pt-\[80px\] {
   padding-top: 80px;
-}
-.pb-\[200px\] {
-  padding-bottom: 200px;
-}
-.pt-\[200px\] {
-  padding-top: 200px;
 }
 .text-left {
   text-align: left;

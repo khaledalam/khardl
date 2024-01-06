@@ -16,21 +16,21 @@ const navItems = [
     imgUrl: DashboardBlack,
     activeImgUrl: Dashboard,
     title: "Dashboard",
-    link: "/site-editor/customers/#Dashboard",
+    link: "/dashboard#Dashboard",
   },
   {
     id: 2,
     imgUrl: OrderBlack,
     activeImgUrl: OrderWhite,
     title: "Orders",
-    link: "/site-editor/customers/#Orders",
+    link: "/dashboard#Orders",
   },
   {
     id: 3,
     imgUrl: ProfileIcon,
     activeImgUrl: ProfileWhiteIcon,
     title: "Profile",
-    link: "/site-editor/customers/#Profile",
+    link: "/dashboard#Profile",
   },
 ]
 
@@ -47,9 +47,9 @@ const SideNavbar = () => {
     dispatch(setActiveNavItem("Orders"))
   }
 
-  useEffect(() => {
-    navigate("/site-editor/customers/#Dashboard")
-  }, [])
+  // useEffect(() => {
+  //   navigate("/dashboard#Dashboard")
+  // }, [])
 
   return (
     <div className='mt-5'>

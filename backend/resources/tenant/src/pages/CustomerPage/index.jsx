@@ -18,12 +18,15 @@ export const CustomerPage = () => {
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
   const [searchParam] = useSearchParams()
   const [showOrderDetail, setShowOrderDetail] = useState(false)
+
   const orderId = searchParam.get("orderId")
   console.log("orderId", orderId)
 
   useEffect(() => {
     if (orderId) {
       setShowOrderDetail(true)
+    } else {
+      setShowOrderDetail(false)
     }
   }, [orderId])
 
@@ -43,11 +46,11 @@ export const CustomerPage = () => {
             isSidebarCollapse ? "flex-[100%] w-full" : "flex-[80%]"
           } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
         >
-          {activeNavItem && !showOrderDetail === TABS.dashboard ? (
+          {activeNavItem === TABS.dashboard && !showOrderDetail ? (
             <CustomerDashboard />
-          ) : activeNavItem && !showOrderDetail === TABS.orders ? (
+          ) : activeNavItem === TABS.orders && !showOrderDetail ? (
             <CustomerOrder />
-          ) : activeNavItem && !showOrderDetail === TABS.profile ? (
+          ) : activeNavItem === TABS.profile && !showOrderDetail ? (
             <CustomerProfile />
           ) : (
             <></>

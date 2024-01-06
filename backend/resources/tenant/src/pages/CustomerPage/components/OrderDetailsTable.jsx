@@ -1,28 +1,25 @@
 import React from "react"
 import Eyes from "./Eyes"
-import {useNavigate} from "react-router-dom"
 
-const OrderTable = ({data}) => {
-  const navigate = useNavigate()
+const OrderDetailsTable = ({data}) => {
   return (
     <div className='w-full'>
-      <table className='w-full table border-separate border-spacing-y-4'>
+      <table className='w-full table'>
         <thead className='w-full '>
-          <tr className='text-white bg-[var(--customer)] h-[60px] rounded-lg'>
-            <th className='font-bold text-[1rem]'>Order ID</th>
-            <th className='font-bold text-[1rem]'>Products</th>
-            <th className='font-bold text-[1rem]'>Status</th>
-            <th className='font-bold text-[1rem]'>Total</th>
-            <th className='font-bold text-[1rem]'>Date Added</th>
-            <th className='font-bold text-[1rem]'>Display Order</th>
+          <tr className='text-black h-[60px]'>
+            <th className='font-bold text-[1rem]'>Product</th>
+            <th className='font-bold text-[1rem]'>Name</th>
+            <th className='font-bold text-[1rem]'>Qty</th>
+            <th className='font-bold text-[1rem]'>Additional</th>
+            <th className='font-bold text-[1rem]'>Price</th>
+            <th className='font-bold text-[1rem]'>Notes</th>
           </tr>
         </thead>
         <tbody>
           {data.map((order) => (
             <tr
               key={order.id}
-              onClick={() => navigate(`/dashboard?orderId=${order.id}`)}
-              className='h-[80px] bg-white my-4 hover:shadow-lg hover:border hover:border-[var(--customer)] cursor-pointer'
+              className='h-[80px] bg-white my-4  cursor-pointer'
             >
               <td>
                 <h3 className='text-sm font-medium'>{order.orderId}</h3>
@@ -82,4 +79,4 @@ const OrderTable = ({data}) => {
   )
 }
 
-export default OrderTable
+export default OrderDetailsTable
