@@ -18,7 +18,7 @@ const CustomerOrder = () => {
   const slicedOrderData = customerOrderData.slice(0, orderPerPage)
 
   return (
-    <div className='p-4'>
+    <div className='p-6'>
       <div className='flex items-center gap-3'>
         <img src={orderIcon} alt='dashboard' className='' />
         <h3 className='text-lg font-medium'>Order</h3>

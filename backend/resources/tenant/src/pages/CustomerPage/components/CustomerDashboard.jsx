@@ -37,7 +37,7 @@ const CustomerDashboard = () => {
 
   const slicedOrderData = customerOrderData.slice(0, orderLength)
   return (
-    <div className=' p-4'>
+    <div className='p-6'>
       <div className='flex items-center gap-3'>
         <img src={DashboardIcon} alt='dashboard' className='' />
         <h3 className='text-lg font-medium'>Dashboard</h3>
