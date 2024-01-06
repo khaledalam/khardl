@@ -65,7 +65,6 @@ class CartRepository
             $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
 
-
         return CartItem::updateOrCreate([
             'item_id' => $item->id,
             'checkbox_options'=>$checkbox_options,

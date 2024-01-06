@@ -98,7 +98,7 @@
                                         <!--begin::Stat-->
                                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                             <!--begin::Number-->
-                                            <div class="d-flex align-items-center">
+                                            <div class="d-flex align-items-center restaurant_daily_amount position-relative">
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                 @if ($compareEarningResult=='higher')
                                                 <i class="fa fa-arrow-up text-success mx-2"></i>
@@ -106,7 +106,8 @@
                                                 <i class="fa fa-arrow-down text-danger mx-2"></i>
                                                 @endif
                                                 <!--end::Svg Icon-->
-                                                <div class="fs-2 fw-bolder">{{ $dailyEarning }} {{ __('messages.SAR') }}</div>
+                                                <span class="restaurant_daily_earning fade">{{ $dailyEarning }} {{ __('messages.SAR') }}</span>
+                                                <div class="fs-2 fw-bolder">{{ getAmount((float)$dailyEarning) }} {{ __('messages.SAR') }}</div>
                                             </div>
                                             <!--end::Number-->
                                             <!--begin::Label-->
@@ -141,12 +142,10 @@
                                 </div>
                                 <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">Site end date :</span>
-                                        <span class="badge badge-dark p-2 fs-6">2025-07-09</span>
-                                    </div>
-                                    <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">App end date :</span>
-                                        <span class="badge badge-dark p-2 fs-6">2024-12-08</span>
+                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.Trial ends at') }} :</span>
+                                        <span class="badge badge-dark p-2 fs-6">
+                                            {{ $restaurant->trial_ends_at?->format('Y-m-d') }}
+                                        </span>
                                     </div>
                                 </div>
                                 <!--end::Wrapper-->

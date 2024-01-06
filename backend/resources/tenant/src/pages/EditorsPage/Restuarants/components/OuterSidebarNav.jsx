@@ -19,14 +19,19 @@ import {changeLanguage} from "../../../../redux/languageSlice"
 import {MenuContext} from "react-flexible-sliding-menu"
 import PrimarySelectWithIcon from "./PrimarySelectWithIcon"
 import {BiSolidUserAccount} from "react-icons/bi"
-import {setCategoriesAPI} from "../../../../redux/NewEditor/categoryAPISlice"
+import {
+  selectedCategoryAPI,
+  setCategoriesAPI,
+} from "../../../../redux/NewEditor/categoryAPISlice"
 
 const OuterSidebarNav = ({id}) => {
   const {setStatusCode} = useAuthContext()
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
   const branches = restuarantStyle.branches
-  const [branch, setBranch] = useState("Branch A")
-  const [pickUp, setPickUp] = useState("Pick A")
+  let branch_id = localStorage.getItem("selected_branch_id")
+
+  const [branch, setBranch] = useState(null)
+  const [pickUp, setPickUp] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {t} = useTranslation()
@@ -58,13 +63,12 @@ const OuterSidebarNav = ({id}) => {
     }
   }
 
-  let branch_id = localStorage.getItem("selected_branch_id")
   // let branch_id = 2
 
-  const fetchCategoriesData = async () => {
+  const fetchCategoriesData = async (id) => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch&selected_branch_id=${branch_id}`
+        `categories?items&user&branch&selected_branch_id=${id}`
       )
 
       console.log(
@@ -73,6 +77,12 @@ const OuterSidebarNav = ({id}) => {
       )
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data))
+        dispatch(
+          selectedCategoryAPI({
+            name: restaurantCategoriesResponse.data?.data[0].name,
+            id: restaurantCategoriesResponse.data?.data[0].id,
+          })
+        )
 
         console.log(">> branch_id >>", branch_id)
 
@@ -114,10 +124,22 @@ const OuterSidebarNav = ({id}) => {
   const handleLanguageChange = async () => {
     AxiosInstance.get(`/change-language/${newLanguage}`, {}).then(() => {
       dispatch(changeLanguage(newLanguage))
-      fetchCategoriesData()
+      fetchCategoriesData(branch_id)
       closeMenu()
     })
   }
+
+  useEffect(() => {
+    if (pickUp?.id) {
+      fetchCategoriesData(pickUp.id)
+      localStorage.setItem("selected_branch_id", pickUp.id)
+    }
+
+    if (branch?.id) {
+      fetchCategoriesData(branch?.id)
+      localStorage.setItem("selected_branch_id", branch.id)
+    }
+  }, [pickUp, branch])
 
   console.log("branches", branches)
   return (
@@ -145,8 +167,14 @@ const OuterSidebarNav = ({id}) => {
         <PrimarySelectWithIcon
           imgUrl={shopIcon}
           text={t("PICKUP")}
-          placeholder={`Khardl Pick-Up - Jeddah`}
-          onChange={(e) => setPickUp(e.target.value)}
+          defaultValue={
+            pickUp?.name
+              ? `${pickUp.name}`
+              : branches.filter((branch) => branch.pickup_availability === 1)[0]
+              ? `Branch ${branch_id}`
+              : ""
+          }
+          onChange={(value) => setPickUp(value)}
           options={
             branches
               ? branches?.filter((branch) => branch.pickup_availability === 1)
@@ -156,8 +184,16 @@ const OuterSidebarNav = ({id}) => {
         <PrimarySelectWithIcon
           imgUrl={deliveryIcon}
           text={t("Delivery")}
-          placeholder={`Khardl Delivery - Jeddah`}
-          onChange={(e) => setBranch(e.target.value)}
+          defaultValue={
+            branch?.name
+              ? `${branch.name}`
+              : branches.filter(
+                  (branch) => branch.delivery_availability === 1
+                )[0]
+              ? `Branch ${branch_id}`
+              : ""
+          }
+          onChange={(value) => setBranch(value)}
           options={
             branches
               ? branches.filter((branch) => branch.delivery_availability === 1)
