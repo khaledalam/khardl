@@ -202,7 +202,7 @@ const PaymentSection = ({
                             sms: true,
                         },
                         redirect: tap.redirect,
-                        post: tap.redirect,
+                        post: null,
                     },
                 },
             });

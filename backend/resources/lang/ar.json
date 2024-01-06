@@ -27,5 +27,8 @@
     "Branch has been updated successfully.":"تم تحديث بيانات الفرع بنجاح",
     "Order has been updated successfully.":"تم تحديث بيانات الطلب",
     "Order status logs fetched":"تم جمع حالات الطلب المتاحة",
-    ":delivery_company is not activated yet":":delivery_company ليست مفعلة"
+    ":delivery_company is not activated yet":":delivery_company ليست مفعلة",
+    "The payment was successful, your order is pending":"تمت عملية الدفع بالنجاح طلبك قيد الانتظار",
+    "Payment failed, please try again":"فشلت عملية الدفع الرجاء المحاولة مرة اخري"
+
 }
