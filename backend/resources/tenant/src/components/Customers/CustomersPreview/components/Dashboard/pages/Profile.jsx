@@ -49,8 +49,8 @@ const Profile = () => {
           first_name: firstName,
           last_name: lastName,
           phone: phone,
-          lat: 45.45,
-          lng: 45.45,
+          lat: selected && selected?.lat,
+          lng: selected && selected?.lng,
         })
           .then((r) => {
             toast.success(t("Profile updated successfully"))
@@ -63,6 +63,8 @@ const Profile = () => {
       }
     }
   }
+
+  console.log("selected", selected)
 
   return (
     <div className='w-full bg-[var(--secondary)] py-6 px-4'>
