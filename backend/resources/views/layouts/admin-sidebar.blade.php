@@ -440,23 +440,19 @@
                                         </div>
                                         <!--end::Menu separator-->
                                         <!--begin::Menu item-->
-
-
-
-
                                         <div class="menu-item px-5" data-kt-menu-trigger="hover"
-                                            data-kt-menu-placement="left-start">
+                                             data-kt-menu-placement="left-start">
                                             <a href="#" class="menu-link px-5">
                                                 <span class="menu-title position-relative">{{ __('messages.language')}}
                                                     <span
                                                         class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('messages.english')}} @else {{ __('messages.arabic')}} @endif
                                                         <img class="w-15px h-15px rounded-1 ms-2"
-                                                            @if(app()->getLocale() != 'ar')
-                                                                src="{{ global_asset('assets/media/flags/united-kingdom.svg') }}"
-                                                            @else
-                                                                src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
-                                                            @endif
-                                                            alt="" /></span></span>
+                                                             @if(app()->getLocale() != 'ar')
+                                                             src="{{ global_asset('assets/media/flags/united-kingdom.svg') }}"
+                                                             @else
+                                                             src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
+                                                             @endif
+                                                             alt="" /></span></span>
                                             </a>
                                             <!--begin::Menu sub-->
                                             <div class="menu-sub menu-sub-dropdown w-175px py-4">
@@ -465,10 +461,10 @@
                                                     <form action="{{ route('change.language', 'en') }}" method="GET">
                                                         @csrf
                                                         <button style="border: 0;" type="submit"
-                                                            class="w-100 menu-link d-flex px-5 active">
+                                                                class="w-100 menu-link d-flex px-5 active">
                                                             <span class="symbol symbol-20px me-4">
                                                                 <img class="rounded-1"
-                                                                    src={{ global_asset('assets/media/flags/united-kingdom.svg') }} alt="" />
+                                                                     src={{ global_asset('assets/media/flags/united-kingdom.svg') }} alt="" />
                                                             </span>{{ __('messages.english')}}</button>
                                                     </form>
                                                 </div>
@@ -478,10 +474,10 @@
                                                     <form action="{{ route('change.language', 'ar') }}" method="GET">
                                                         @csrf
                                                         <button style="border: 0;" type="submit"
-                                                        class="w-100 menu-link d-flex px-5 active">
+                                                                class="w-100 menu-link d-flex px-5 active">
                                                         <span class="symbol symbol-20px me-4">
                                                             <img class="rounded-1" src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
-                                                                alt="" /> </span>{{ __('messages.arabic')}}</button>
+                                                                 alt="" /> </span>{{ __('messages.arabic')}}</button>
                                                     </form>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -540,27 +536,17 @@
                 @yield('content')
                 <!--end::Content-->
                 <!--begin::Footer-->
-                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                <div class="footer py-2 d-flex flex-lg-column" id="kt_footer">
                     <!--begin::Container-->
                     <div
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
                         <!--begin::Copyright-->
                         <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted fw-bold me-1">2023 ©</span>
+                            <span class="text-muted fw-bold me-1">{{date('Y')}} ©</span>
                             <a href="https://www.khardl.com" target="_blank"
                                 class="text-gray-800 text-hover-primary">{{ __('messages.khardl')}}</a>
                         </div>
                         <!--end::Copyright-->
-                        <!--begin::Menu-->
-                        <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
-                            <li class="menu-item">
-                                <a href="#" target="_blank" class="menu-link px-2">{{ __('messages.about')}}</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="" target="_blank" class="menu-link px-2">{{ __('messages.support')}}</a>
-                            </li>
-                        </ul>
-                        <!--end::Menu-->
                     </div>
                     <!--end::Container-->
                 </div>
