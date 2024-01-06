@@ -15,9 +15,9 @@ class LocalizationApi
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $local = ($request->hasHeader('localization'))?$request->header('localization'):'en';
+        $local = ($request->hasHeader('localization'))?$request->header('localization'): app()->getLocale();
         app()->setLocale($local);
-        
+
         return $next($request);
     }
 }

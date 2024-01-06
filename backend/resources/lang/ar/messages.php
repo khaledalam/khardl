@@ -257,8 +257,8 @@ return [
     'not_live'=>'غير مفعل',
     'receipt' => 'استلام',
     'payment-in-cash-upon-receipt' => 'الدفع عند الاستلام',
-    'tap-approve-warning-text' => 'حساب الاعمال الخاص بك علي منصه تاب لم يتم الموافقه عليه بعد، من فضلك',
-    'tap-approve-warning-link-text' => 'ارفع ملفات تاب',
+    'payment-gateway-approve-warning-text' => 'حساب الاعمال الخاص بك علي بوابه الدفع لم يتم الموافقه عليه بعد، من فضلك',
+    'payment-gateway-approve-warning-link-text' => 'ارفع ملفات بوابه الدفع',
     "download-all-files"=>"تحميل كل الملفات",
     "download-all"=>"تحميل الكل",
     'domain'=>"اسم النطاق",
@@ -520,6 +520,7 @@ return [
     "Approve user sent" => "تم ارسال بريد قبول مستخدم",
     "Approve user fail" => "فشل ارسال بريد قبول مستخدم",
     "Activate restaurant"   => "تفعيل مطعم",
+    "Activate"   => "تفعيل ",
     "Activate restaurant sent"  => "تم ارسال بريد تفعيل مطعم",
     "Activate restaurant fail"  => "فشل ارسال بريد تفعيل مطعم",
     "Create promoter"   => "اضافة مروج",
@@ -547,7 +548,8 @@ return [
     "fees" => "العمولات",
     "percentage-fee" => "نسبه العموله",
     "percentage-fee-explain" => "نسبه العموله التي سيتم خضمها من كل عمليه دفع",
-    "in" => "ب"
-
+    "in" => "ب",
+    "configurations"=>"الاعدادات",
+    "Deactivate"=>"الغاء التفعيل"
 ];
 

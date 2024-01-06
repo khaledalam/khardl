@@ -52,7 +52,7 @@ function Services() {
   return (
     <div>
       <Helmet>
-        <title>khardl services</title>
+        <title>Khardl Services</title>
         <meta name="description" content="khardl services" />
       </Helmet>
 
@@ -78,20 +78,20 @@ function Services() {
                 />
               ))}
             </div>
-            <div className='mt-6'
-            data-aos='fade-up'
-          data-aos-delay='400'>
-              <MainText SubTitle={t("Application for your site")} />
-            </div>
-            <div className="grid max-sm:grid-cols-1 max-lg:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-10 mx-4 mt-8 mb-[50px]">
-              {Fees.map((Feature, index) => (
-                <Card
-                  key={index}
-                  FeatureTitle={Feature.title}
-                  FeaturePrice={Feature.Price}
-                />
-              ))}
-            </div>
+          {/*  <div className='mt-6'*/}
+          {/*  data-aos='fade-up'*/}
+          {/*data-aos-delay='400'>*/}
+          {/*    <MainText SubTitle={t("Application for your site")} />*/}
+          {/*  </div>*/}
+          {/*  <div className="grid max-sm:grid-cols-1 max-lg:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-10 mx-4 mt-8 mb-[50px]">*/}
+          {/*    {Fees.map((Feature, index) => (*/}
+          {/*      <Card*/}
+          {/*        key={index}*/}
+          {/*        FeatureTitle={Feature.title}*/}
+          {/*        FeaturePrice={Feature.Price}*/}
+          {/*      />*/}
+          {/*    ))}*/}
+          {/*  </div>*/}
           </div>
           <div className='flex justify-center'
           data-aos='fade-up'

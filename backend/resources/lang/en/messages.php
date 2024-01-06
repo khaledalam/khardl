@@ -259,8 +259,8 @@ return [
     'not_live'=>"Not live",
     'receipt' => 'Receipt',
     'payment-in-cash-upon-receipt' => 'Payment in cash upon receipt',
-    'tap-approve-warning-text' => 'Your TAP business account is not approved yet, please',
-    'tap-approve-warning-link-text' => 'submit your TAP documents.',
+    'payment-gateway-approve-warning-text' => 'Your payment gateway business account is not approved yet, please',
+    'payment-gateway-approve-warning-link-text' => 'submit your payment gateway documents.',
     'see-restaurant-owners'=>'See Restaurant owners',
     'restaurant-owners'=>"Restaurant Owners",
     'restaurant-owner-management'=>"Restaurant Owners Management",
@@ -547,6 +547,8 @@ return [
     "fees" => "Fees",
     "percentage-fee" => "Percentage Fee",
     "percentage-fee-explain" => "Percentage that will be deduced from each transaction",
-    "in" => "in"
-
+    "in" => "in",
+    "configurations"=>"Configurations",
+    "Activate"   => "تفعيل ",
+    "Deactivate"=>"Deactivate"
 ];

@@ -135,6 +135,9 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_contact">{{__("messages.contact")}}</a>
                                                 </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_yeswa_configurations">{{__("messages.configurations")}}</a>
+                                                </li>
                                                 <!--end:::Tab item-->
 
                                             </ul>
@@ -249,6 +252,53 @@
                                                     </div>
                                                     <!--end::Timeline-->
                                                 </div>
+                                                 <div class="tab-pane fade" id="kt_yeswa_configurations" role="tabpanel">
+                                                    <!--begin::Timeline-->
+                                                    <div class="timeline-label">
+                                                        <!--begin::Card body-->
+                                                        <div class="card-body pt-0">
+                                                            <div class="table-responsive">
+                                                                <!--begin::Table-->
+                                                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                                                    <!--begin::Table body-->
+                                                                    <tbody class="fw-bold text-gray-600">
+                                                                    <!--begin::Payment method-->
+                                                                    <tr>
+                                                                        <td class="text-muted p-0 py-3">
+                                                                            <div class="d-flex flex-column align-items-center">
+                                                                                {{-- <form  action="{{route('restaurant.delivery.activate',['module'=>'Yeswa'])}}" method="POST" style="width: 100%">
+                                                                                    @csrf
+                                                                                    @if($yeswa->status)
+                                                                                        Secret Key <input type="text" readonly value="{{$yeswa->api_key}}" class="form-control mb-2" name="api_key" id="">
+                                                                                    @else
+                                                                                        Secret Key <input type="text"   class="form-control mb-2" name="api_key" value="{{$yeswa->api_key}}">
+                                                                                    @endif
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        @if(!$yeswa->status)
+                                                                                        <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("messages.Activate")}}</a>
+                                                                                        @else 
+                                                                                            <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("messages.Deactivate")}}</a>
+                                                                                        @endif
+                                                                                    </div>
+                                                                                </form> --}}
+                                                                               
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="fw-bolder text-end py-0"></td>
+                                                                       
+                                                                    </tr>
+                                                                    <!--end::Payment method-->
+                                                                    </tbody>
+                                                                    <!--end::Table body-->
+                                                                </table>
+                                                                <!--end::Table-->
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Card body-->
+                                                    </div>
+                                                    <!--end::Timeline-->
+                                                </div>
+
                                                 <!--end:::Tab pane-->
 
                                                 <!--begin:::Tab pane-->
@@ -411,6 +461,9 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_contact_cervo">{{__("messages.contact")}}</a>
                                                 </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_cervo_configurations">{{__("messages.configurations")}}</a>
+                                                </li>
                                                 <!--end:::Tab item-->
 
                                             </ul>
@@ -524,6 +577,51 @@
                                                                             </div>
                                                                         </td>
                                                                         <td class="fw-bolder text-end py-0"></td>
+                                                                    </tr>
+                                                                    <!--end::Payment method-->
+                                                                    </tbody>
+                                                                    <!--end::Table body-->
+                                                                </table>
+                                                                <!--end::Table-->
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Card body-->
+                                                    </div>
+                                                    <!--end::Timeline-->
+                                                </div>
+                                                <div class="tab-pane fade" id="kt_cervo_configurations" role="tabpanel">
+                                                    <!--begin::Timeline-->
+                                                    <div class="timeline-label">
+                                                        <!--begin::Card body-->
+                                                        <div class="card-body pt-0">
+                                                            <div class="table-responsive">
+                                                                <!--begin::Table-->
+                                                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                                                    <!--begin::Table body-->
+                                                                    <tbody class="fw-bold text-gray-600">
+                                                                    <!--begin::Payment method-->
+                                                                    <tr>
+                                                                        <td class="text-muted p-0 py-3">
+                                                                            <div class="d-flex flex-column align-items-center">
+                                                                                <form  action="{{route('restaurant.delivery.activate',['module'=>'Cervo'])}}" method="POST" style="width: 100%">
+                                                                                    @csrf
+                                                                                    @if($cervo->status)
+                                                                                        Secret Key <input type="text" readonly value="{{$cervo->api_key}}" class="form-control mb-2" name="api_key" id="">
+                                                                                    @else
+                                                                                        Secret Key <input type="text"   class="form-control mb-2" name="api_key" value="{{$cervo->api_key}}">
+                                                                                    @endif
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        @if(!$cervo->status)
+                                                                                        <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("messages.Activate")}}</a>
+                                                                                        @else 
+                                                                                            <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("messages.Deactivate")}}</a>
+                                                                                        @endif
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="fw-bolder text-end py-0"></td>
+                                                                       
                                                                     </tr>
                                                                     <!--end::Payment method-->
                                                                     </tbody>
@@ -697,6 +795,9 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_contact_street-line">{{__("messages.contact")}}</a>
                                                 </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_streetline_configurations">{{__("messages.configurations")}}</a>
+                                                </li>
                                                 <!--end:::Tab item-->
 
                                             </ul>
@@ -809,6 +910,51 @@
                                                                             </div>
                                                                         </td>
                                                                         <td class="fw-bolder text-end py-0"></td>
+                                                                    </tr>
+                                                                    <!--end::Payment method-->
+                                                                    </tbody>
+                                                                    <!--end::Table body-->
+                                                                </table>
+                                                                <!--end::Table-->
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Card body-->
+                                                    </div>
+                                                    <!--end::Timeline-->
+                                                </div>
+                                                <div class="tab-pane fade" id="kt_streetline_configurations" role="tabpanel">
+                                                    <!--begin::Timeline-->
+                                                    <div class="timeline-label">
+                                                        <!--begin::Card body-->
+                                                        <div class="card-body pt-0">
+                                                            <div class="table-responsive">
+                                                                <!--begin::Table-->
+                                                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                                                    <!--begin::Table body-->
+                                                                    <tbody class="fw-bold text-gray-600">
+                                                                    <!--begin::Payment method-->
+                                                                    <tr>
+                                                                        <td class="text-muted p-0 py-3">
+                                                                            <div class="d-flex flex-column align-items-center">
+                                                                                {{-- <form  action="{{route('restaurant.delivery.activate',['module'=>'StreetLine'])}}" method="POST" style="width: 100%">
+                                                                                    @csrf
+                                                                                    @if($streetline->status)
+                                                                                        Secret Key <input type="text" readonly value="{{$streetline->api_key}}" class="form-control mb-2" name="api_key" id="">
+                                                                                    @else
+                                                                                        Secret Key <input type="text"   class="form-control mb-2" name="api_key" value="{{$streetline->api_key}}">
+                                                                                    @endif
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        @if(!$streetline->status)
+                                                                                        <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("messages.Activate")}}</a>
+                                                                                        @else 
+                                                                                            <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("messages.Deactivate")}}</a>
+                                                                                        @endif
+                                                                                    </div>
+                                                                                </form> --}}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="fw-bolder text-end py-0"></td>
+                                                                       
                                                                     </tr>
                                                                     <!--end::Payment method-->
                                                                     </tbody>
