@@ -40,7 +40,7 @@
                                             <label class="form-label">{{ __('messages.flat-rate')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" step="0.1" name="first_name" class="form-control mb-2" required placeholder="{{ __('messages.flat-rate')}} in {{__('messages.Halala')}}" value="" />
+                                            <input type="text" step="0.1" name="flat_rate" class="form-control mb-2" required placeholder="{{ __('messages.flat-rate')}} in {{__('messages.sar')}}" value="{{$settings['flat_rate']}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{__("e.g.")}} 10 {{__('messages.sar')}}</div>
