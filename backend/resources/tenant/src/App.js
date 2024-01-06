@@ -36,6 +36,8 @@ import {RestuarantHomePage} from "./pages/RestuarantPage"
 import OuterSidebarNav from "./pages/EditorsPage/Restuarants/components/OuterSidebarNav"
 import CartPage from "./pages/CartPage"
 import NavbarRestuarant from "./pages/RestuarantPage/components/NavbarRestuarant"
+import {CustomerPage} from "./pages/CustomerPage"
+import Editor from "./components/Customers/CustomersEditor/Editor"
 
 const App = () => {
   const Language = useSelector((state) => state.languageMode.languageMode)
@@ -56,6 +58,7 @@ const App = () => {
     "/login-trial",
     "/privacy",
     "/site-editor/restaurants",
+    "/site-editor/customers",
   ].includes(location.pathname)
   const showFooter = ![
     "/",
@@ -140,12 +143,16 @@ const App = () => {
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      path='/site-editor/restaurants'
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      element={<EditorPage />}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    />{" "} */}{" "}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      path='/site-editor/restaurants'
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      element={<EditorPage />}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
                 <Route path='/dashboard' element={<CustomersPreview />} />{" "}
-                <Route path='/site-editor/customers' element={<EditorPage />} />{" "}
+                <Route
+                  path='/site-editor/customers'
+                  element={<CustomerPage />}
+                />{" "}
+                {/* <Route path='/customers' element={<CustomerPage />} />{" "} */}{" "}
               </Route>{" "}
             </Routes>{" "}
           </div>{" "}
