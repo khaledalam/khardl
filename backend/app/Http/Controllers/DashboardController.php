@@ -13,6 +13,15 @@ class DashboardController extends Controller
         if($user->isAdmin()){
             return  redirect()->route("admin.dashboard");
         }elseif($user->isRestaurantOwner()){
+
+            if (!$user->restaurant) {
+                // RO user existed in cerntral database but has no tenant
+
+                Auth::logout();
+
+                return redirect()->back()->with('error', __('You are not allowed to access this page'));
+            }
+
             $id = $user->restaurant->run(function ($tenant) {
                 return  RestaurantUser::whereHas('roles', function ($query) {
                         $query->where('name', 'Restaurant Owner');

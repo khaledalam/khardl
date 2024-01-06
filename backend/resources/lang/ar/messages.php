@@ -371,6 +371,7 @@ return [
     "others" => "اخري",
     "blocked" => "محظور",
     "blocked-user" => "تم حظر هدا الحساب",
+    "ro-user-no-tenant" => "حساب صاحب المطعم ليس لديه رابط موقع بعد",
     "Title"=>"اللقب",
     "Bank Account"=>"الحساب البنكي",
     "choose-time-for-all-days"=>"اختر الوقت المناسب لكل الأيام",
@@ -542,6 +543,11 @@ return [
     "Verify restaurant user sent"   => "تم ارسال بريد تاكيد مستخدم مطعم",
     "Verify restaurant user fail"   => "فشل ارسال بريد تاكيد مستخدم مطعم",
     "Metadata" => "البيانات الوصفية",
-    "Action" => "الفعل"
+    "Action" => "الفعل",
+    "fees" => "العمولات",
+    "percentage-fee" => "نسبه العموله",
+    "percentage-fee-explain" => "نسبه العموله التي سيتم خضمها من كل عمليه دفع",
+    "in" => "ب"
+
 ];
 
