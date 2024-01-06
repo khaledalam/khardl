@@ -6264,9 +6264,6 @@ details.collapse summary::-webkit-details-marker {
   --tw-bg-opacity: 1;
   background-color: rgb(218 218 218 / var(--tw-bg-opacity));
 }
-.hover\:bg-\[var\(--primary\)\]:hover {
-  background-color: var(--primary);
-}
 .hover\:bg-\[var\(--secondary\)\]:hover {
   background-color: var(--secondary);
 }
@@ -6341,9 +6338,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .focus-visible\:border-none:focus-visible {
   border-style: none;
-}
-.focus-visible\:bg-transparent:focus-visible {
-  background-color: transparent;
 }
 .focus-visible\:outline-none:focus-visible {
   outline: 2px solid transparent;
