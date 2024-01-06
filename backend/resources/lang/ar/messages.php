@@ -571,7 +571,10 @@ return [
     "Submit ✔️" => "أرسل ✔️",
     "Please wait..." => "انتظر من فضلك...",
     "Back to step 1" => "⬅ العودة إلى الخطوة 1",
-    "Ready" => "جاهزة"
+    "Ready" => "جاهزة",
+    "Order by" => "الترتيب ب",
+    "Highest orders" => "الاعلي في الطلبات",
+    "Highest customers" => "الاعلي في العملاء"
 
 ];
 

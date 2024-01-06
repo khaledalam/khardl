@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Central\Dashboard;
+namespace App\Http\Services\Central\Admin\Dashboard;
 
 use App\Models\Tenant\Order;
 use App\Models\Tenant\RestaurantUser;

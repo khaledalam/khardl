@@ -571,6 +571,9 @@ return [
     "Submit ✔️" => "Submit ✔️",
     "Please wait..." => "Please wait...",
     "Back to step 1" => "Back to step 1 ⬅",
-    "Ready" => "Ready"
+    "Ready" => "Ready",
+    "Order by" => "Order by",
+    "Highest customers" => "Highest customers",
+    "Highest orders" => "Highest orders"
 
 ];
