@@ -46,6 +46,7 @@ const Profile = () => {
 
       try {
         await AxiosInstance.post(`/user`, {
+          address: address,
           first_name: firstName,
           last_name: lastName,
           phone: phone,
@@ -63,8 +64,6 @@ const Profile = () => {
       }
     }
   }
-
-  console.log("selected", selected)
 
   return (
     <div className='w-full bg-[var(--secondary)] py-6 px-4'>

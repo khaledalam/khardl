@@ -75,7 +75,7 @@ function Map({selected, setSelected}) {
   )
 }
 
-function PlacesAutoComplete({setSelected}) {
+function PlacesAutoComplete({setSelected, address}) {
   const {
     ready,
     value,
@@ -96,7 +96,7 @@ function PlacesAutoComplete({setSelected}) {
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
-        value={value}
+        value={value ? value : address}
         onChange={(e) => setValue(e.target.value)}
         disabled={!ready}
         className='w-full text-[14px] bg-[var(--secondary)]  py-3 rounded-full px-4 appearance-none'
