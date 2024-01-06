@@ -24,3 +24,16 @@
     max-height: 280px;
     overflow: auto;
 }
+/* Summary */
+.restaurant_daily_amount:hover .restaurant_daily_earning{
+    opacity: 1;
+    transition: 1s all;
+}
+.restaurant_daily_earning{
+    position: absolute;
+    background-color: #1b1b28;
+    border-radius: 3px;
+    padding: 2px 10px;
+    top: -60px;
+    color: #ffffff;
+}
