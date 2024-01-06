@@ -14,5 +14,6 @@ jobs:
           repository_root: '/home/khardl5/public_html'
           branch: production
           cpanel_token: '${{ secrets.CPANEL_TOKEN }}'
+          cpanel_username: 'khardl5'
       - name: echo deploy-duration
         run: echo "Deployment took ${{ steps.deploy.outputs.duration }} milliseconds"
