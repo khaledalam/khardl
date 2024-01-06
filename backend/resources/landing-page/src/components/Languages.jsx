@@ -12,7 +12,7 @@ function Languages() {
   const buttonText = currentLanguage === 'en' ? <img src={Arabic} width={"30px"} alt="Arabic" /> : <img src={English} width={"30px"} alt="English" />;
 
   const handleLanguageChange = () => {
-    dispatch(changeLanguage(newLanguage));
+      dispatch(changeLanguage(newLanguage));
   };
 
   return (

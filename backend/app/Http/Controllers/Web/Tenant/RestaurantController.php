@@ -78,12 +78,14 @@ class RestaurantController extends BaseController
     public function upadteSettings(Request $request){
 
         $request->validate([
-            'delivery_fee' => 'required|numeric|min:0'
+            'delivery_fee' => 'required|numeric|min:0',
+            'transaction_percentage_fee' => 'required|numeric|min:0',
         ]);
 
         $settings = Setting::all()->firstOrFail();
 
         $settings->delivery_fee = $request->delivery_fee;
+        $settings->transaction_percentage_fee = $request->transaction_percentage_fee;
         $settings->save();
 
         $delivery = DeliveryType::where('name', DeliveryType::DELIVERY)->first();

@@ -13,6 +13,7 @@ const languageSlice = createSlice({
       state.languageMode = action.payload;
       localStorage.setItem('i18nextLng', state.languageMode);
       i18n.changeLanguage(state.languageMode);
+      window.location.reload();
     },
   },
 });
