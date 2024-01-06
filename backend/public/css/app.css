@@ -5756,6 +5756,9 @@ details.collapse summary::-webkit-details-marker {
 .pt-\[100px\] {
   padding-top: 100px;
 }
+.pt-\[200px\] {
+  padding-top: 200px;
+}
 .pt-\[20px\] {
   padding-top: 20px;
 }
@@ -5767,12 +5770,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .pt-\[80px\] {
   padding-top: 80px;
-}
-.pb-\[200px\] {
-  padding-bottom: 200px;
-}
-.pt-\[200px\] {
-  padding-top: 200px;
 }
 .text-left {
   text-align: left;

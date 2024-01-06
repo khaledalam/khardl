@@ -47,7 +47,7 @@ php backend/artisan migrate:fresh --seed --database=mysql_testing
 
 php backend/artisan create:tenant
 
-php backend/artisan create:tenant --testing=true
+#php backend/artisan create:tenant --testing=true
 
 php backend/artisan serv # --port 80
 

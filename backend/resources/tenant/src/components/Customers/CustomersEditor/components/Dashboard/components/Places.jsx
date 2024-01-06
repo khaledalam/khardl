@@ -90,7 +90,7 @@ function PlacesAutoComplete({setSelected}) {
 
     const results = await getGeocode({address: address})
     const {lat, lng} = await getLatLng(results[0])
-    setSelected({lat, lng})
+    setSelected({lat, lng, address})
   }
 
   return (
