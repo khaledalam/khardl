@@ -143,13 +143,19 @@ export const customerOrderDetailData = [
     id: "0484de4j543",
     orderId: "#01",
     status: "Accepted",
+    productImgUrl: ImgBurger,
     items: [
       {
         productName: "Burger",
-        productImgUrl: ImgBurger,
         additional: ["Extra Cheese", "Extra Ketchup"],
-        total: 650,
-        DateAdded: "01/01/2024",
+        price: 650,
+        notes: "put the mayo little",
+        quantity: 4,
+      },
+      {
+        productName: "Double Cheese Burger",
+        additional: ["Extra Cheese", "Extra Ketchup"],
+        price: 650,
         notes: "put the mayo little",
         quantity: 4,
       },
