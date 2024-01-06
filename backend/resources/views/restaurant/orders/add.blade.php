@@ -3,6 +3,12 @@
 @section('title', __('messages.orders-add'))
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    i.required:after{
+        position: absolute!important;
+        font-size: 16px;
+    }
+</style>
 @endsection
 @section('content')
 <!--begin::Main-->
@@ -30,7 +36,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Order Details</h2>
+                                            <h2>{{ __('messages.Order Details') }}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -40,36 +46,36 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row">
                                                 <!--begin::Label-->
-                                                <label class="required form-label">Phone Number</label>
+                                                <label class="required form-label">{{ __('messages.Phone Number') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="phone" type="number" name="phone" placeholder="Phone" class="form-control mb-2" value="" required />
+                                                <input id="phone" type="number" name="phone" placeholder="{{ __('messages.Phone') }}" class="form-control mb-2" value="" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
                                                 <!--begin::Label-->
-                                                <label class="required form-label">First name</label>
+                                                <label class="required form-label">{{ __('messages.First name') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="first_name" type="text" name="first_name" placeholder="First name" class="form-control mb-2" value="" required />
+                                                <input id="first_name" type="text" name="first_name" placeholder="{{ __('messages.First name') }}" class="form-control mb-2" value="" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
                                                 <!--begin::Label-->
-                                                <label class="form-label">Last name</label>
+                                                <label class="form-label">{{ __('messages.Last name') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="last_name" type="text" name="last_name" placeholder="Last name" class="form-control mb-2" value="" />
+                                                <input id="last_name" type="text" name="last_name" placeholder="{{ __('messages.Last name') }}" class="form-control mb-2" value="" />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
                                                 <!--begin::Label-->
-                                                <label class="required form-label">Deliverly Type</label>
+                                                <label class="required form-label">{{ __('messages.Delivery Type') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Select2-->
                                                 <select class="form-select mb-2" data-hide-search="true" data-placeholder="Select Type" name="delivery_type_id" required>
                                                     @foreach ($deliveryTypes as $type)
-                                                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                    <option value="{{ $type->id }}">{{ __('messages.'.$type->name) }}</option>
                                                     @endforeach
                                                 </select>
                                                 <!--end::Select2-->
@@ -78,20 +84,20 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row">
                                                 <!--begin::Label-->
-                                                <label class="required form-label">Shipping address</label>
+                                                <label class="required form-label">{{ __('messages.Shipping address') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="address" type="text" name="shipping_address" placeholder="Adddress" class="form-control mb-2" value="" required />
+                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('messages.Address') }}" class="form-control mb-2" value="" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Input group-->
                                             <div class="fv-row">
                                                 <!--begin::Label-->
-                                                <label class="form-label">Order Notes</label>
+                                                <label class="form-label">{{ __('messages.Order Notes') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <textarea name="order_notes" placeholder="Notes" class="form-control mb-2" value=""></textarea>
+                                                <textarea name="order_notes" placeholder="{{ __('messages.Notes') }}" class="form-control mb-2" value=""></textarea>
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -109,7 +115,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Select Products</h2>
+                                            <h2>{{ __('messages.Select Products') }}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -119,27 +125,26 @@
                                             <!--begin::Input group-->
                                             <div>
                                                 <!--begin::Label-->
-                                                <label class="form-label">Add products to this order</label>
+                                                <label class="form-label">{{ __('messages.Add products to this order') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Selected products-->
                                                 <div class="row row-cols-1 row-cols-xl-3 row-cols-md-2 border border-dashed rounded pt-3 pb-1 px-2 mb-5 mh-300px overflow-scroll" id="kt_ecommerce_edit_order_selected_products">
                                                     <!--begin::Empty message-->
-                                                    <span class="w-100 text-muted">Select one or more products from the
-                                                        list below by ticking the checkbox.</span>
+                                                    <span class="w-100 text-muted">{{ __('messages.Select one or more products from the list below by click the product.') }}</span>
                                                     <!--end::Empty message-->
                                                 </div>
                                                 <!--begin::Selected products-->
                                                 <!--begin::Total price-->
-                                                <div class="fw-bolder fs-4">Subtotal: SAR
+                                                <div class="fw-bolder fs-4">{{ __('messages.Subtotal') }}: {{ __('messages.SAR') }}
                                                     <span id="kt_ecommerce_edit_order_total_price">0.00</span>
                                                 </div>
                                                 <!--end::Total price-->
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Separator-->
-                                            <label class="required form-label">Select branch first</label>
+                                            <label class="required form-label">{{ __('messages.Select branch first') }}</label>
                                             <select id="branchSelect" name="branch_id" required class="form-select" style="width: 300px;">
-                                                <option>Select branch</option>
+                                                <option>{{ __('messages.Select branch') }}</option>
                                                 @foreach ($branches as $branch)
                                                 <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                                                 @endforeach
@@ -147,7 +152,7 @@
                                             <div class="separator"></div>
                                             <!--end::Separator-->
                                             <!--begin::Search products-->
-                                            <label class="required form-label">Select products</label>
+                                            <label class="required form-label">{{ __('messages.Select products') }}</label>
                                             <div class="d-flex align-items-center position-relative mb-n7">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
                                                 <span class="svg-icon svg-icon-1 position-absolute ms-4">
@@ -161,7 +166,7 @@
                                                     class="form-control form-control-solid w-100 w-lg-50 ps-14"                                                    placeholder="Search Products" /> --}}
 
                                                 <select id="productSelect" class="form-select" multiple style="width: 300px;">
-                                                    <option disabled>Search for a product...</option>
+                                                    <option disabled>{{ __('messages.Search for a product...') }}</option>
                                                 </select>
                                             </div>
                                             <!--end::Search products-->
@@ -170,63 +175,14 @@
                                                 <!--begin::Table head-->
                                                 <thead>
                                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                        <th class="min-w-200px">Product</th>
-                                                        <th class="min-w-100px pe-5">Quantity</th>
-                                                        <th class="min-w-100px pe-5">Options</th>
+                                                        <th class="min-w-200px">{{ __('messages.Product') }}</th>
+                                                        <th class="min-w-100px pe-5">{{ __('messages.Quantity') }}</th>
+                                                        <th class="min-w-100px pe-5">{{ __('messages.Options') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <!--end::Table head-->
                                                 <!--begin::Table body-->
                                                 <tbody class="fw-bold text-gray-600" id="product_table">
-                                                    <!--begin::Table row-->
-                                                    {{-- <tr>
-                                                        <!--begin::Checkbox-->
-                                                        <td>
-                                                            <div
-                                                                class="form-check form-check-sm form-check-custom form-check-solid">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    value="1" />
-                                                            </div>
-                                                        </td>
-                                                        <!--end::Checkbox-->
-                                                        <!--begin::Product=-->
-                                                        <td>
-                                                            <div class="d-flex align-items-center"
-                                                                data-kt-ecommerce-edit-order-filter="product"
-                                                                data-kt-ecommerce-edit-order-id="product_1">
-                                                                <!--begin::Thumbnail-->
-                                                                <a href="./demo1/dist/apps/ecommerce/catalog/edit-product.html"
-                                                                    class="symbol symbol-50px">
-                                                                    <span class="symbol-label"
-                                                                        style="background-image:url(assets/media//stock/ecommerce/1.gif);"></span>
-                                                                </a>
-                                                                <!--end::Thumbnail-->
-                                                                <div class="ms-5">
-                                                                    <!--begin::Title-->
-                                                                    <a href="./demo1/dist/apps/ecommerce/catalog/edit-product.html"
-                                                                        class="text-gray-800 text-hover-khardl fs-5 fw-bolder">Product
-                                                                        1</a>
-                                                                    <!--end::Title-->
-                                                                    <!--begin::Price-->
-                                                                    <div class="fw-bold fs-7">Price: $
-                                                                        <span
-                                                                            data-kt-ecommerce-edit-order-filter="price">292.00</span>
-                                                                    </div>
-                                                                    <!--end::Price-->
-                                                                    <!--begin::SKU-->
-                                                                    <div class="text-muted fs-7">SKU: 04792007</div>
-                                                                    <!--end::SKU-->
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <!--end::Product=-->
-                                                        <!--begin::Qty=-->
-                                                        <td class="text-end pe-5" data-order="35">
-                                                            <span class="fw-bolder ms-3">35</span>
-                                                        </td>
-                                                        <!--end::Qty=-->
-                                                    </tr> --}}
-                                                    <!--end::Table row-->
                                                 </tbody>
                                                 <!--end::Table body-->
                                             </table>
@@ -239,7 +195,7 @@
                                 <div class="d-flex justify-content-end">
                                     <!--begin::Button-->
                                     <button type="submit" id="kt_ecommerce_edit_order_submit" class="btn btn-khardl">
-                                        <span class="indicator-label">Order</span>
+                                        <span class="indicator-label">{{ __('messages.Order') }}</span>
                                         <span class="indicator-progress">Please wait...
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
@@ -283,7 +239,7 @@
                 return $('#productSelect').select2();
             } else {
                 return $('#productSelect').select2({
-                    placeholder: 'Search for a product...'
+                    placeholder: "{{ __('messages.Search for a product...') }}"
                     , ajax: {
                         url: '/search-products?branch_id=' + branch_id
                         , dataType: 'json'
@@ -333,6 +289,7 @@
             <td>
                 <i class="bi bi-eye btn-sm btn btn-success"
                 data-bs-toggle="modal"
+                id="options_${selectedProduct.id}"
                 data-bs-target="#kt_modal_select_options_${selectedProduct.id}"></i>
             </td>
            </tr>
@@ -344,22 +301,29 @@
             return $name[1];
         }
 
-        function ModalRow(selectedProduct) {
-            let optionsHTML = '';
 
+        function ModalRow(selectedProduct) {
+            let haveRequiredFiled = false;
+            let optionsHTML = '';
+            if(!selectedProduct.checkbox_input_titles&&!selectedProduct.selection_input_titles&&!selectedProduct.dropdown_input_titles){
+                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
+                elementToRemove.remove();
+                return '';
+            }
             if (selectedProduct.checkbox_input_titles) {
                 selectedProduct.checkbox_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.checkbox_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.checkbox_input_names.forEach((option, index) => {
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `<div class="form-check mb-2">`;
-                            optionsHTML += `
-                            <label class="form-check-label">${getLangName(innerOption)}</label>
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `<div class="form-check mb-2">`;
+                        optionsHTML += `
+                            <label class="form-check-label">${getLangName(option)}</label>
                             <input class="form-check-input" type="checkbox" value="${innerIndex}" name="product_options[${selectedProduct.id}]['checkbox_input'][${index}]">
                             `;
-                            optionsHTML += `</div>`;
-                        });
+                        optionsHTML += `</div>`;
                     });
                     optionsHTML += `
                     </div>`;
@@ -367,17 +331,18 @@
             }
             if (selectedProduct.selection_input_titles) {
                 selectedProduct.selection_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.selection_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.selection_input_names.forEach((option, index) => {
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `<div class="form-check mb-2">`;
-                            optionsHTML += `
-                            <label class="form-check-label">${getLangName(innerOption)}</label>
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `<div class="form-check mb-2">`;
+                        optionsHTML += `
+                            <label class="form-check-label">${getLangName(option)}</label>
                             <input class="form-check-input" type="radio" value="${innerIndex}" name="product_options[${selectedProduct.id}]['selection_input'][${index}]">
                             `;
-                            optionsHTML += `</div>`;
-                        });
+                        optionsHTML += `</div>`;
                     });
                     optionsHTML += `
                     </div>`;
@@ -385,22 +350,27 @@
             }
             if (selectedProduct.dropdown_input_titles) {
                 selectedProduct.dropdown_input_titles.forEach((option, index) => {
+                    let innerOptions = selectedProduct.dropdown_input_names[index];
+                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
-                                <h6>${getLangName(option)}</h6>`;
-                    selectedProduct.dropdown_input_names.forEach((option, index) => {
-                        optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">`;
-                        option.forEach((innerOption, innerIndex) => {
-                            optionsHTML += `
-                            <option value="${innerIndex}">${getLangName(innerOption)}</option>
+                                <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
+                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">
+                        <option>Select option</option>`;
+                    innerOptions.forEach((option, innerIndex) => {
+                        optionsHTML += `
+                            <option value="${innerIndex}">${getLangName(option)}</option>
                             `;
-                        });
-                        optionsHTML += `</select>`;
                     });
+                    optionsHTML += `</select>`;
                     optionsHTML += `
                     </div>`;
                 });
             }
-
+            if(haveRequiredFiled){
+                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
+                elementToRemove.classList.add('required');
+            }
             return `
         <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -416,7 +386,7 @@
                         </div>
                     </div>
                     <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                        <span>Select options for :
+                        <span>{{ __('messages.Select options for' ) }} :
                             <h6 class="d-inline">${selectedProduct.name}</h6>
                         </span>
                         ${optionsHTML}
@@ -426,7 +396,6 @@
         </div>
     `;
         }
-
         var productSelect = initializeProductSelect();
         productSelect.on('select2:select', function(e) {
             // Get the selected product data

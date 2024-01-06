@@ -277,12 +277,20 @@ const ProductItem = ({
       })
   }
 
+  const handleGotoCart = () => {
+    navigate("/cart")
+  }
+
+  console.log("checboxItem", checkboxItems)
+  console.log("radioItems", radioItems)
+  console.log("selectionItems", dropdownItems)
+
   return (
     <Fragment>
       <div
         style={{
           boxShadow: "4px 0px  10px 0px rgba(0, 0, 0, 0.25)",
-          borderRadius: shape === "sharp" ? 0 : 16,
+          borderRadius: shape === t("Sharp") ? 0 : 16,
         }}
         className='w-[250px] min-h-[138px] cursor-pointer'
         onClick={() => document.getElementById(id).showModal()}
@@ -316,11 +324,11 @@ const ProductItem = ({
                     : 13,
               }}
               className={`${
-                textAlign === "center"
+                textAlign === t("Center")
                   ? "text-center"
-                  : textAlign === "left"
+                  : textAlign === t("Left")
                   ? "text-left"
-                  : textAlign === "right"
+                  : textAlign === t("Right")
                   ? "text-right"
                   : ""
               }`}
@@ -348,7 +356,9 @@ const ProductItem = ({
                 language === "en"
                   ? "rounded-tr-lg rounded-bl-2xl "
                   : "rounded-tl-lg rounded-br-2xl"
-              }   flex items-center justify-center`}
+              } ${
+                shape === t("Sharp") ? "!rounded-none" : ""
+              }  flex items-center justify-center`}
             >
               <img
                 src={cartBgcolor ? imgCartWhite : imgCart}
@@ -369,7 +379,13 @@ const ProductItem = ({
       <dialog id={id} className='modal'>
         <div
           style={{backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00"}}
-          className='modal-box !p-0 rounded-[46px] w-[440px] h-[650px] flex flex-col justify-end'
+          className={`modal-box !p-0 rounded-[46px] w-[98%] mx-auto md:w-[440px] ${
+            checkboxItems[0]?.length > 0 ||
+            radioItems[0]?.length > 0 ||
+            dropdownItems[0]?.length > 0
+              ? "h-[650px]"
+              : "h-[500px]"
+          } flex flex-col justify-end`}
         >
           <form method='dialog'>
             {/* if there is a button in form, it will close the modal */}
@@ -380,7 +396,15 @@ const ProductItem = ({
           </form>
           {isLoggedIn ? (
             <Fragment>
-              <div className='bg-white w-full rounded-t-[80px] h-[500px] '>
+              <div
+                className={`bg-white w-full rounded-t-[80px]   ${
+                  checkboxItems[0]?.length > 0 ||
+                  radioItems[0]?.length > 0 ||
+                  dropdownItems[0]?.length > 0
+                    ? "h-[500px]"
+                    : "h-[380px]"
+                } `}
+              >
                 <div className='w-[216px] h-[182px] mt-[-5.8rem] mx-auto bg-neutral-100 rounded-full p-1'>
                   <img
                     src={imgSrc}
@@ -430,127 +454,146 @@ const ProductItem = ({
                   </div> */}
                   </div>
                 </div>
-                <div className='border border-neutral-400 px-6 my-4 h-[130px] overflow-x-hidden overflow-y-scroll hide-scroll'>
-                  <div className='flex flex-col gap-5 py-4'>
-                    {/* checkbox */}
-                    {checkbox_input_titles &&
-                      checkbox_input_titles.length > 0 &&
-                      checkbox_input_titles.map((title, checkbox_idx) => (
-                        <div id={"checkbox"} className=''>
-                          {title[0] && (
-                            <h3 className='text-[15px] font-bold mb-1'>
-                              {language === "en" ? title[0] : title[1]}
-                              {checkbox_required[checkbox_idx] === "true" && (
-                                <span className='text-red-500'>*</span>
-                              )}
-                            </h3>
-                          )}
-                          <div className='flex flex-col gap-2'>
-                            {checkboxItems &&
-                              checkboxItems.length > 0 &&
-                              checkboxItems[checkbox_idx]?.map((item, idx) => (
-                                <ProductDetailItem
-                                  key={idx}
-                                  label={
-                                    language === "en"
-                                      ? item?.value[0]
-                                      : item?.value[1]
-                                  }
-                                  name={
-                                    "checkbox" + language === "en"
-                                      ? item?.value[0]
-                                      : item?.value[1]
-                                  }
-                                  price={
-                                    item.price === 0
-                                      ? t("Free")
-                                      : `${Number(item?.price)} ${t("SAR")}`
-                                  }
-                                  isCheckbox
-                                  onChange={(e) =>
-                                    handleCheckboxChange(checkbox_idx, idx, e)
-                                  }
-                                />
-                              ))}
+                {(checkboxItems[0]?.length > 0 ||
+                  radioItems[0]?.length > 0 ||
+                  dropdownItems[0]?.length > 0) && (
+                  <div className='border border-neutral-400 px-6 my-4 h-[130px] overflow-x-hidden overflow-y-scroll hide-scroll'>
+                    <div className='flex flex-col gap-5 py-4'>
+                      {/* checkbox */}
+                      {checkbox_input_titles &&
+                        checkbox_input_titles.length > 0 &&
+                        checkbox_input_titles.map((title, checkbox_idx) => (
+                          <div id={"checkbox"} className='' key={checkbox_idx}>
+                            {title[0] && (
+                              <h3 className='text-[15px] font-bold mb-1'>
+                                {language === "en" ? title[0] : title[1]}
+                                {checkbox_required[checkbox_idx] === "true" && (
+                                  <span className='text-red-500'>*</span>
+                                )}
+                              </h3>
+                            )}
+                            <div className='flex flex-col gap-2'>
+                              {checkboxItems &&
+                                checkboxItems.length > 0 &&
+                                checkboxItems[checkbox_idx]?.map(
+                                  (item, idx) => (
+                                    <ProductDetailItem
+                                      key={idx}
+                                      label={
+                                        language === "en"
+                                          ? item?.value[0]
+                                          : item?.value[1]
+                                      }
+                                      name={
+                                        "checkbox" + language === "en"
+                                          ? item?.value[0]
+                                          : item?.value[1]
+                                      }
+                                      price={
+                                        item.price === 0
+                                          ? t("Free")
+                                          : `${Number(item?.price)} ${t("SAR")}`
+                                      }
+                                      isCheckbox
+                                      onChange={(e) =>
+                                        handleCheckboxChange(
+                                          checkbox_idx,
+                                          idx,
+                                          e
+                                        )
+                                      }
+                                    />
+                                  )
+                                )}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
 
-                    {/* selection  */}
-                    {selection_input_titles &&
-                      selection_input_titles.length > 0 &&
-                      selection_input_titles.map((title, selection_idx) => (
-                        <div id={"radio"} className=''>
-                          {title[0] && (
-                            <h3 className='text-[15px] font-bold mb-1'>
-                              {language === "en" ? title[0] : title[1]}
-                              {selection_required[selection_idx] === "true" && (
-                                <span className='text-red-500'>*</span>
-                              )}
-                            </h3>
-                          )}
-                          <div className='flex flex-col gap-2'>
-                            {radioItems &&
-                              radioItems.length > 0 &&
-                              radioItems[selection_idx]?.map((item, idx) => (
-                                <ProductDetailItem
-                                  key={idx}
-                                  label={
-                                    language === "en"
-                                      ? item?.value[0]
-                                      : item?.value[1]
-                                  }
-                                  name={"radio_item"}
-                                  price={
-                                    item.price === 0
-                                      ? t("Free")
-                                      : `${Number(item?.price)} ${t("SAR")}`
-                                  }
-                                  isRadio
-                                  onChange={(e) =>
-                                    handleRadioChange(selection_idx, idx, e)
-                                  }
-                                />
-                              ))}
+                      {/* selection  */}
+                      {selection_input_titles &&
+                        selection_input_titles.length > 0 &&
+                        selection_input_titles.map((title, selection_idx) => (
+                          <div id={"radio"} className='' key={selection_idx}>
+                            {title[0] && (
+                              <h3 className='text-[15px] font-bold mb-1'>
+                                {language === "en" ? title[0] : title[1]}
+                                {selection_required[selection_idx] ===
+                                  "true" && (
+                                  <span className='text-red-500'>*</span>
+                                )}
+                              </h3>
+                            )}
+                            <div className='flex flex-col gap-2'>
+                              {radioItems &&
+                                radioItems.length > 0 &&
+                                radioItems[selection_idx]?.map((item, idx) => (
+                                  <ProductDetailItem
+                                    key={idx}
+                                    label={
+                                      language === "en"
+                                        ? item?.value[0]
+                                        : item?.value[1]
+                                    }
+                                    name={"radio_item"}
+                                    price={
+                                      item.price === 0
+                                        ? t("Free")
+                                        : `${Number(item?.price)} ${t("SAR")}`
+                                    }
+                                    isRadio
+                                    onChange={(e) =>
+                                      handleRadioChange(selection_idx, idx, e)
+                                    }
+                                  />
+                                ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
 
-                    {/* dropdown */}
-                    {dropdown_input_titles &&
-                      dropdown_input_titles.length > 0 &&
-                      dropdown_input_titles.map((title, dropdown_idx) => (
-                        <div id={"dropdown"} className=''>
-                          {title[0] && (
-                            <h3 className='text-[15px] font-bold mb-1'>
-                              {language === "en" ? title[0] : title[1]}
-                              {dropdown_required[dropdown_idx] === "true" && (
-                                <span className='text-red-500'>*</span>
-                              )}
-                            </h3>
-                          )}
-                          <div className='flex flex-col gap-2 mb-3'>
-                            {dropdownItems &&
-                              dropdownItems.length > 0 &&
-                              dropdownItems[dropdown_idx][0]?.value[0] &&
-                              dropdownItems?.map((item, idx) => (
-                                <ProductDetailItem
-                                  key={idx}
-                                  isDropDown
-                                  language={language}
-                                  options={item}
-                                  onChange={(e) =>
-                                    handleDropdownChange(dropdown_idx, e)
-                                  }
-                                />
-                              ))}
+                      {/* dropdown */}
+                      {dropdown_input_titles &&
+                        dropdown_input_titles.length > 0 &&
+                        dropdown_input_titles.map((title, dropdown_idx) => (
+                          <div id={"dropdown"} className='' key={dropdown_idx}>
+                            {title[0] && (
+                              <h3 className='text-[15px] font-bold mb-1'>
+                                {language === "en" ? title[0] : title[1]}
+                                {dropdown_required[dropdown_idx] === "true" && (
+                                  <span className='text-red-500'>*</span>
+                                )}
+                              </h3>
+                            )}
+                            <div className='flex flex-col gap-2 mb-3'>
+                              {dropdownItems &&
+                                dropdownItems.length > 0 &&
+                                dropdownItems[dropdown_idx][0]?.value[0] &&
+                                dropdownItems?.map((item, idx) => (
+                                  <ProductDetailItem
+                                    key={idx}
+                                    isDropDown
+                                    language={language}
+                                    options={item}
+                                    onChange={(e) =>
+                                      handleDropdownChange(dropdown_idx, e)
+                                    }
+                                  />
+                                ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                    </div>
                   </div>
-                </div>
-                <div className='px-6 w-full flex items-center justify-between'>
-                  <div className='flex items-center justify-between w-1/3'>
+                )}
+                <div
+                  className={`px-6 w-full flex items-center justify-between    ${
+                    checkboxItems[0]?.length > 0 ||
+                    radioItems[0]?.length > 0 ||
+                    dropdownItems[0]?.length > 0
+                      ? ""
+                      : "mt-5"
+                  } `}
+                >
+                  <div className='flex items-center justify-between w-1/3 cursor-pointer'>
                     <FiMinusCircle size={28} onClick={decrementQty} />
                     <h3 className='text-[16px] font-bold'>{qtyCount}</h3>
                     <IoAddCircleOutline size={28} onClick={incrementQty} />
@@ -559,7 +602,7 @@ const ProductItem = ({
                     style={{
                       backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
                     }}
-                    className='w-[45%] flex items-end justify-center gap-5  p-2 rounded-lg cursor-pointer'
+                    className='w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer'
                     onClick={
                       gotoCart ? () => navigate("/cart") : handleAddToCart
                     }
@@ -580,7 +623,7 @@ const ProductItem = ({
                             ? "white"
                             : "red",
                         }}
-                        className='text-[14px] font-bold'
+                        className='text-xs line-clamp-1 md:text-[14px] font-bold'
                       >
                         Check Cart
                       </h3>

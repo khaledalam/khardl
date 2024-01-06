@@ -36,6 +36,9 @@
         <!--begin::Global Stylesheets Bundle(used by all pages)-->
         <link href="{{ global_asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    @endif
+
+    @stack('styles')
     @yield('css')
 @endif
 <!--end::Global Stylesheets Bundle-->
@@ -256,7 +259,7 @@
                     <!-- menu -->
 
                         <!-- Orders -->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'products-out-of-stock') ? 'show' : '' }}">
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'unavailable-products') ? 'show' : '' }}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -285,12 +288,12 @@
                                         <span class="menu-title">{{__('messages.orders-add')}}</span>
                                     </div>
                                 </a>
-                                <a href="{{route('restaurant.products_out_of_stock')}}">
-                                    <div class="{{ ($link == 'products-out-of-stock') ? 'menu-link active' : 'menu-link ' }}">
+                                <a href="{{route('restaurant.unavailable-products')}}">
+                                    <div class="{{ ($link == 'unavailable-products') ? 'menu-link active' : 'menu-link ' }}">
                                         <span class="menu-bullet">
-                                            <span class="bullet bullet-dot {{ ($link == 'products-out-of-stock') ? 'bg-light' : '' }}"></span>
+                                            <span class="bullet bullet-dot {{ ($link == 'unavailable-products') ? 'bg-light' : '' }}"></span>
                                         </span>
-                                        <span class="menu-title">{{__('messages.products-out-of-stock')}}</span>
+                                        <span class="menu-title">{{__('messages.Unavailable products')}}</span>
                                     </div>
                                 </a>
                             </div>
@@ -616,10 +619,10 @@
                     <!--begin::Menu-->
                     <ul class="menu menu-gray-600 menu-hover-khardl fw-bold order-1">
                         <li class="menu-item">
-                            <a href="#" target="_blank" class="menu-link px-2">About</a>
+                            <a href="#" target="_blank" class="menu-link px-2">{{ __('messages.About') }}</a>
                         </li>
                         <li class="menu-item">
-                            <a href="mailto:info@khardl.com" target="_blank" class="menu-link px-2">Support</a>
+                            <a href="mailto:info@khardl.com" target="_blank" class="menu-link px-2">{{ __('messages.Support') }}</a>
                         </li>
                     </ul>
                     <!--end::Menu-->
@@ -680,4 +683,3 @@
 <!--end::Body-->
 
 </html>
-@endif

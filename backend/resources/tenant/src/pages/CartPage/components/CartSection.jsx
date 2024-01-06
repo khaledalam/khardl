@@ -1,7 +1,40 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
+import CartItem from "./CartItem"
+import {useSelector} from "react-redux"
 
-const CartSection = () => {
-  return <div>CartSection</div>
+const CartSection = ({cartItems}) => {
+  const language = useSelector((state) => state.languageMode.languageMode)
+  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
+
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    setIsMobile(isMobile)
+  }, [])
+
+  return (
+    <div
+      style={{borderColor: restuarantStyle?.categoryDetail_cart_color}}
+      className={`${
+        restuarantStyle?.categoryDetail_cart_color
+          ? ""
+          : "border-[var(--primary)]"
+      } border rounded-lg w-full laptopXL:w-[75%] mx-auto my-5`}
+    >
+      {cartItems &&
+        cartItems.map((cartItem) => (
+          <CartItem
+            styles={restuarantStyle}
+            key={cartItem.item_id}
+            cartItem={cartItem}
+            cartItems={cartItems}
+            language={language}
+            isMobile={isMobile}
+          />
+        ))}
+    </div>
+  )
 }
 
 export default CartSection

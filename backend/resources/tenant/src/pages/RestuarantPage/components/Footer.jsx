@@ -24,13 +24,21 @@ const FooterRestuarant = () => {
         >
           <div className='flex items-center gap-3'>
             {restaurantStyle?.selectedSocialIcons?.map((socialMedia, idx) => (
-              <div className='w-[30px] h-[30px]' key={idx + "icons"}>
-                <img
-                  src={socialMedia?.imgUrl ? socialMedia.imgUrl : imgWhatsapp}
-                  alt='social media'
-                  className='w-full h-full object-contain'
-                />
-              </div>
+              <a
+                href={socialMedia?.link}
+                rel='noreferrer'
+                target='_blank'
+                className='cursor-pointer'
+                key={idx + "icon"}
+              >
+                <div className='w-[30px] h-[30px]'>
+                  <img
+                    src={socialMedia?.imgUrl ? socialMedia.imgUrl : imgWhatsapp}
+                    alt={socialMedia?.name ?? "social media"}
+                    className='w-full h-full object-contain'
+                  />
+                </div>
+              </a>
             ))}
           </div>
         </div>
@@ -46,17 +54,26 @@ const FooterRestuarant = () => {
           }`}
         >
           {" "}
-          <h3
+          <a
+            href={`tel:${restaurantStyle?.phoneNumber}`}
             style={{color: restaurantStyle?.text_color}}
-            className='font-semibol'
+            className='font-semibold cursor-pointer'
           >
             {restaurantStyle?.phoneNumber}
-          </h3>
+          </a>
         </div>
       </div>
-      <h3 className='pl-16 text-[1rem] text-black font-medium'>
-        &copy; All Right Reserved.
-      </h3>
+      <div className='h-7 flex bg-white items-center justify-between p-2'>
+        <h3 className='pl-16 text-[1rem] text-neutral-700 font-medium'>
+          &copy; Powered by{" "}
+          <a
+            href='https://first.khardl.com'
+            className='text-neutral-400 text-sm cursor-pointer'
+          >
+            Khardl
+          </a>
+        </h3>
+      </div>
     </div>
   )
 }

@@ -3,21 +3,26 @@ import PrimaryDropDown from "./PrimaryDropDown"
 import SectionPanel from "./SectionPanel"
 import EditPanel from "./EditPanel"
 import {useTranslation} from "react-i18next"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import {setTemplate} from "../../../../redux/NewEditor/restuarantEditorSlice"
 const SidebarEditor = () => {
   const {t} = useTranslation()
+  const dispatch = useDispatch()
   const language = useSelector((state) => state.languageMode.languageMode)
+  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   const [activeTab, setActiveTab] = useState(t("Section"))
-  const [dropdownValue, setDropdownValue] = useState("Template 1")
 
   const handleActiveTab = useCallback((value) => {
     setActiveTab(value)
   }, [])
 
-  const handleChange = useCallback((value) => {
-    setDropdownValue(value)
-  }, [])
+  const handleChange = useCallback(
+    (value) => {
+      dispatch(setTemplate(value))
+    },
+    [dispatch]
+  )
 
   const btnList = [
     {
@@ -26,13 +31,13 @@ const SidebarEditor = () => {
     },
     {
       id: "General",
-      name: "General",
+      name: t("General"),
     },
   ]
 
   const TABS = {
     section: t("Section"),
-    general: "General",
+    general: t("General"),
   }
 
   useEffect(() => {
@@ -48,17 +53,28 @@ const SidebarEditor = () => {
         <div className='bg-neutral-100 w-[45%] laptopXL:w-[40%] p-2 rounded-2xl'>
           <PrimaryDropDown
             handleChange={handleChange}
-            defaultValue={dropdownValue}
+            defaultValue={
+              restaurantStyle.template === "template-1"
+                ? "Template 1"
+                : restaurantStyle.template === "template-2"
+                ? "Template 2"
+                : restaurantStyle.template === "template-3"
+                ? "Template 3"
+                : " "
+            }
             dropdownList={[
               {
+                value: "template-1",
                 text: "Template 1",
               },
-              {
-                text: "Template 2",
-              },
-              {
-                text: "Template 3",
-              },
+              // {
+              //   value: "template-2",
+              //   text: "Template 2",
+              // },
+              // {
+              //   value: "template-3",
+              //   text: "Template 3",
+              // },
             ]}
           />
         </div>

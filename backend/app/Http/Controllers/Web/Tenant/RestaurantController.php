@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\RegisterWorkerRequest;
+use App\Models\Subscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
@@ -41,9 +42,11 @@ class RestaurantController extends BaseController
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $branches = Branch::all();
+        $subscription = tenancy()->central(function(){
+            return Subscription::first();
+        });
 
-        return view('restaurant.service',
-            compact('user', 'branches'));
+        return view('restaurant.service', compact('user', 'branches','subscription'));
     }
 
     public function delivery(){
@@ -75,7 +78,7 @@ class RestaurantController extends BaseController
     public function upadteSettings(Request $request){
 
         $request->validate([
-            'delivery_fee' => 'required|numeric|min:0'
+            'delivery_fee' => 'required|numeric|min:0',
         ]);
 
         $settings = Setting::all()->firstOrFail();
@@ -150,14 +153,6 @@ class RestaurantController extends BaseController
     }
 
 
-    public function products_out_of_stock(){
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-
-        return view('restaurant.products_out_of_stock',
-            compact('user'));
-    }
-
     public function qr(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
@@ -203,7 +198,7 @@ class RestaurantController extends BaseController
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
-      
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string',
@@ -249,7 +244,7 @@ class RestaurantController extends BaseController
             'address'=> $validatedData['address'],
             'lat' => (float) $lat,
             'lng' => (float) $lng,
-       
+
             'is_primary' => !$branchesExist,
             'saturday_open' => $time( $request->input('saturday_open')),
             'saturday_close' => $time( $request->input('saturday_close'),false),

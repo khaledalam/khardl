@@ -19,14 +19,19 @@ import {changeLanguage} from "../../../../redux/languageSlice"
 import {MenuContext} from "react-flexible-sliding-menu"
 import PrimarySelectWithIcon from "./PrimarySelectWithIcon"
 import {BiSolidUserAccount} from "react-icons/bi"
-import {setCategoriesAPI} from "../../../../redux/NewEditor/categoryAPISlice"
+import {
+  selectedCategoryAPI,
+  setCategoriesAPI,
+} from "../../../../redux/NewEditor/categoryAPISlice"
 
 const OuterSidebarNav = ({id}) => {
   const {setStatusCode} = useAuthContext()
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
   const branches = restuarantStyle.branches
-  const [branch, setBranch] = useState("Branch A")
-  const [pickUp, setPickUp] = useState("Pick A")
+  let branch_id = localStorage.getItem("selected_branch_id")
+
+  const [branch, setBranch] = useState(null)
+  const [pickUp, setPickUp] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {t} = useTranslation()
@@ -58,13 +63,12 @@ const OuterSidebarNav = ({id}) => {
     }
   }
 
-  let branch_id = localStorage.getItem("selected_branch_id")
   // let branch_id = 2
 
-  const fetchCategoriesData = async () => {
+  const fetchCategoriesData = async (id) => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch&selected_branch_id=${branch_id}`
+        `categories?items&user&branch&selected_branch_id=${id}`
       )
 
       console.log(
@@ -73,6 +77,12 @@ const OuterSidebarNav = ({id}) => {
       )
       if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data))
+        dispatch(
+          selectedCategoryAPI({
+            name: restaurantCategoriesResponse.data?.data[0].name,
+            id: restaurantCategoriesResponse.data?.data[0].id,
+          })
+        )
 
         console.log(">> branch_id >>", branch_id)
 
@@ -114,23 +124,39 @@ const OuterSidebarNav = ({id}) => {
   const handleLanguageChange = async () => {
     AxiosInstance.get(`/change-language/${newLanguage}`, {}).then(() => {
       dispatch(changeLanguage(newLanguage))
-      fetchCategoriesData()
+      fetchCategoriesData(branch_id)
+      closeMenu()
     })
   }
+
+  useEffect(() => {
+    if (pickUp?.id) {
+      fetchCategoriesData(pickUp.id)
+      localStorage.setItem("selected_branch_id", pickUp.id)
+    }
+
+    if (branch?.id) {
+      fetchCategoriesData(branch?.id)
+      localStorage.setItem("selected_branch_id", branch.id)
+    }
+  }, [pickUp, branch])
 
   console.log("branches", branches)
   return (
     <div
       ref={refOuterNav}
-      className='w-full bg-white h-[100vh] flex flex-col items-center justify-between'
+      className='w-full bg-white h-[100vh] flex flex-col items-center justify-between cursor-pointer'
     >
       <div onClick={closeMenu}>
-        <IoMenuOutline size={42} className='text-neutral-400' />
+        <IoMenuOutline size={42} className='text-neutral-400 cursor-pointer' />
       </div>
-      <div className='w-full h-full flex flex-col items-center justify-center gap-6'>
+      <div className='w-full h-full flex flex-col items-center justify-center gap-6 cursor-pointer'>
         <div
-          onClick={() => navigate("/")}
-          className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+          onClick={() => {
+            navigate("/")
+            closeMenu()
+          }}
+          className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '
         >
           <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
             <img src={homeIcon} alt='home' />
@@ -140,27 +166,52 @@ const OuterSidebarNav = ({id}) => {
         {/* pick up */}
         <PrimarySelectWithIcon
           imgUrl={shopIcon}
-          text={"Pick up"}
-          placeholder={`Khardl Pick-Up - Jeddah`}
-          onChange={(e) => setPickUp(e.target.value)}
-          options={branches.filter(
-            (branch) => branch.pickup_availability === 1
-          )}
+          text={t("PICKUP")}
+          defaultValue={
+            pickUp?.name
+              ? `${pickUp.name}`
+              : branches &&
+                branches?.filter(
+                  (branch) => branch.pickup_availability === 1
+                )[0]
+              ? `Branch ${branch_id}`
+              : ""
+          }
+          onChange={(value) => setPickUp(value)}
+          options={
+            branches
+              ? branches?.filter((branch) => branch.pickup_availability === 1)
+              : []
+          }
         />
         <PrimarySelectWithIcon
           imgUrl={deliveryIcon}
-          text={"delivery"}
-          placeholder={`Khardl Delivery - Jeddah`}
-          onChange={(e) => setBranch(e.target.value)}
-          options={branches.filter(
-            (branch) => branch.delivery_availability === 1
-          )}
+          text={t("Delivery")}
+          defaultValue={
+            branch?.name
+              ? `${branch.name}`
+              : branches &&
+                branches?.filter(
+                  (branch) => branch.delivery_availability === 1
+                )[0]
+              ? `Branch ${branch_id}`
+              : ""
+          }
+          onChange={(value) => setBranch(value)}
+          options={
+            branches
+              ? branches?.filter((branch) => branch.delivery_availability === 1)
+              : []
+          }
         />
         {/* login */}
         {isLoggedIn ? (
           <Fragment>
             <div
-              onClick={() => navigate("/dashboard")}
+              onClick={() => {
+                navigate("/dashboard")
+                closeMenu()
+              }}
               className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
@@ -171,19 +222,19 @@ const OuterSidebarNav = ({id}) => {
           </Fragment>
         ) : (
           <Fragment>
-            <div
+            {/* <div
               onClick={() => navigate("/register")}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border cursor-pointer border-[#C0D123] items-center '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <BiSolidUserAccount size={25} />
               </div>
               <h3 className=''> {t("Create an account")} </h3>
-            </div>
+            </div> */}
 
             <div
               onClick={() => navigate("/login")}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg cursor-pointer border border-[#C0D123] items-center '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <img src={LoginIcon} alt='home' />
@@ -191,15 +242,15 @@ const OuterSidebarNav = ({id}) => {
               <h3 className=''> {t("Login as Customer")} </h3>
             </div>
 
-            <div
+            {/* <div
               onClick={() => navigate("/login-admins")}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+              className='w-[90%] mx-auto flex flex-row gap-3 cursor-pointer bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <img src={LoginIcon} alt='home' />
               </div>
               <h3 className=''> {t("Management Area")} </h3>
-            </div>
+            </div> */}
           </Fragment>
         )}
         <label
@@ -219,10 +270,10 @@ const OuterSidebarNav = ({id}) => {
         </label>
       </div>
       {isLoggedIn ? (
-        <div className='w-full mb-20'>
+        <div className='w-full mb-20 cursor-pointer'>
           <div
             onClick={handleLogout}
-            className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+            className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer'
           >
             <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
               <img src={logoutIcon} alt='home' />

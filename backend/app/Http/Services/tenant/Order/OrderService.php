@@ -10,6 +10,7 @@ use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\PaymentMethod;
+use App\Models\Tenant\Product;
 use App\Models\User;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
@@ -24,7 +25,7 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders = Order::orderBy('created_at', 'DESC')->paginate(config('application.perPage'));
+        $orders = Order::recent()->paginate(config('application.perPage')??20);
         return view('restaurant.orders.list', compact('user', 'orders'));
     }
 
@@ -53,7 +54,7 @@ class OrderService
             'order_notes' => $request->order_notes,
         ]);
         $order = new OrderRepository();
-        return $order->create($orderRequest, $cart, $user->id);
+        return $order->create($orderRequest, $cart, $user);
     }
     private function createCart($request, $user)
     {
@@ -66,7 +67,6 @@ class OrderService
                     'quantity' => $quantity,
                     'branch_id' => $request->branch_id,
                 ]);
-
                 $new_cart->add($addItemToCartRequest);
             }
         }
@@ -92,5 +92,15 @@ class OrderService
             ]
         );
         return $user;
+    }
+    public function listUnavailableProducts($request)
+    {
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+        $products = Item::with(['category','branch','user'])
+        ->unAvailable()
+        ->recent()
+        ->paginate(config('application.perPage')??20);
+        return view('restaurant.orders.unavailable_products', compact('user','products'));
     }
 }
