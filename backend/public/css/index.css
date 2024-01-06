@@ -4452,9 +4452,6 @@ details.collapse summary::-webkit-details-marker {
 .w-\[50\%\] {
   width: 50%;
 }
-.w-\[500px\] {
-  width: 500px;
-}
 .w-\[50px\] {
   width: 50px;
 }
@@ -11639,9 +11636,6 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-\[50\%\] {
   width: 50%;
-}
-.w-\[500px\] {
-  width: 500px;
 }
 .w-\[50px\] {
   width: 50px;
