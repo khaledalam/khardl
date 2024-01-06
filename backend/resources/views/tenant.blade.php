@@ -20,9 +20,16 @@
     <div id="root"></div>
     <script>
         window.csrfToken = "{{ csrf_token() }}";
-        const url_tenant = "{{request()->getSchemeAndHttpHost()}}";
+        const url_tenant = "{{request()->getSchemeAndHttpHost() }}"
+        //        const url_tenant = "{{ preg_replace("/^http:/i", 'https:', request()->getSchemeAndHttpHost())}}";
         const tap_public_key = "{{env('TAP_PUBLIC_API_KEY')}}";
     </script>
     <script type="text/javascript" src="{{ mix('js/tenant.js') }}"></script>
+    <style>
+
+        #gosell-gateway {
+        top: -60% !important;
+        }
+    </style>
 </body>
 </html>

@@ -69,10 +69,10 @@ class OrderRequest extends FormRequest
                     return ;
                 }
             });
-            if($this->delivery_type == DeliveryType::DELIVERY ){
-                $branch = $cart->branch();
-                DeliveryCompanies::validateCustomerAddress($validator,$branch->lat,$branch->lng,$user->lat,$user->lng);
-            }
+            // if($this->delivery_type == DeliveryType::DELIVERY ){
+            //     $branch = $cart->branch();
+            //     DeliveryCompanies::validateCustomerAddress($validator,$branch->lat,$branch->lng,$user->lat,$user->lng);
+            // }
             
         });
     }

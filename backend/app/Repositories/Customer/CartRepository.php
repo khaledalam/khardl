@@ -216,7 +216,10 @@ class CartRepository
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],
-            'tap_customer_id'=> $this->cart->user->tap_customer_id,
+            'tap_information'=> [
+                'tap_customer_id'=>$this->cart->user->tap_customer_id,
+                'redirect'=>route('orders.payment')
+            ],
             'address' => $this->cart->user->address
         ], '');
     }
@@ -261,23 +264,15 @@ class CartRepository
         return false;
     }
     // Accept Cash on delivery payment method
-    public function hasPaymentCashOnDelivery()
+    public function hasPaymentCashOnDelivery($paymentMethod)
     {
-        $method = PaymentMethod::where('name',PaymentMethod::CASH_ON_DELIVERY)->first();
-        if($method){
-            return $this->cart->branch->payment_methods->contains('id',$method->id);
-        }
-        return false;
+        return $paymentMethod == PaymentMethod::CASH_ON_DELIVERY;
     }
 
     // Accept Credit card payment method
-    public function hasPaymentCreditCard()
+    public function hasPaymentCreditCard($paymentMethod)
     {
-        $method = PaymentMethod::where('name',PaymentMethod::CREDIT_CARD)->first();
-        if($method){
-            return $this->cart->branch->payment_methods->contains('id',$method->id);
-        }
-        return false;
+        return  $paymentMethod == PaymentMethod::CREDIT_CARD;
     }
 
     public function hasPayment($name)

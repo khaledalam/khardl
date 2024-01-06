@@ -239,7 +239,7 @@ Route::group([
                     'index','store','destroy','update'
                 ]);
                 Route::post("orders/validate",[CustomerOrderController::class,'validateOrder'])->name('orders.validate');
-
+                Route::get("orders/payment/response",[CustomerOrderController::class,'paymentResponse'])->name('orders.payment');
                 Route::resource("orders",CustomerOrderController::class)->only([
                     'store', 'index'
                 ]);

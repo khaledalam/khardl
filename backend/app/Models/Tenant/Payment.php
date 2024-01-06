@@ -11,6 +11,8 @@ class Payment extends Model
     protected $table = 'payments';
 
     public const PENDING = 'pending';
+    public const PAID = 'paid';
+    public const FAILED = 'failed';
 
     protected $fillable = [
         'order_id',
