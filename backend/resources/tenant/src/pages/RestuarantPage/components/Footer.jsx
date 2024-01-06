@@ -79,7 +79,7 @@ const FooterRestuarant = () => {
             href='https://first.khardl.com'
             className='text-neutral-400 text-sm cursor-pointer'
           >
-            Khardl
+            خردل
           </a>
         </h3>
       </div>
