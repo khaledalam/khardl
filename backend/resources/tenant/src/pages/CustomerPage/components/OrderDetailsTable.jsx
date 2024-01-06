@@ -16,60 +16,28 @@ const OrderDetailsTable = ({data}) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((order) => (
-            <tr
-              key={order.id}
-              className='h-[80px] bg-white my-4  cursor-pointer'
-            >
+          {data.map((order, idx) => (
+            <tr key={idx} className='h-[80px] bg-white my-4  cursor-pointer'>
               <td>
-                <h3 className='text-sm font-medium'>{order.orderId}</h3>
+                <h3 className='text-sm font-medium'>{idx + 1}</h3>
               </td>
-              <td className='h-full'>
-                <div className='flex items-center gap-2'>
-                  <div className='w-[55px] h-[55px] border border-[var(--customer)] rounded-full p-1'>
-                    <img
-                      src={order.productImgUrl}
-                      alt={order.productName}
-                      className='w-full h-full object-contain'
-                    />
-                  </div>
-                  <div className='flex flex-col gap-2'>
-                    <h3 className=''>{order.productName}</h3>
-                    <h4 className=''>and {order.extraItems} Others</h4>
-                  </div>
-                </div>
+              <td className='h-full'>{order.productName}</td>
+              <td>
+                <h3 className=''>{order.quantity}</h3>
               </td>
               <td>
-                <div
-                  className={`${
-                    order.status.startsWith("Accepted") ||
-                    order.status.startsWith("Ready") ||
-                    order.status.includes("Receive")
-                      ? "bg-[var(--accepted)]"
-                      : "bg-[var(--rejected)]"
-                  } rounded-xl flex items-center justify-center p-2 px-4 w-max`}
-                >
-                  <h3 className=''>{order.status}</h3>
-                </div>
+                <ul className='list-disc'>
+                  {order.additional &&
+                    order.additional.map((item) => (
+                      <li className=''>{item}</li>
+                    ))}
+                </ul>
               </td>
               <td>
-                <h3 className='font-normal'>
-                  <span className='text-xs mr-1'>SAR</span>
-                  <span className='text-[1rem] text-[var(--customer)]'>
-                    {order.total}
-                  </span>
-                </h3>
+                <h3 className=''>SAR 650</h3>
               </td>
               <td>
-                <div className='flex items-center gap-2'>
-                  <span className='text-[1rem]'>{order.DateAdded}</span>
-                  <span className='text-xs text-[var(--customer)]'>
-                    {order.timeAdded}
-                  </span>
-                </div>
-              </td>
-              <td>
-                <Eyes />
+                <h3 className=''>{order.notes}</h3>
               </td>
             </tr>
           ))}

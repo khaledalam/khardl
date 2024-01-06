@@ -4060,6 +4060,9 @@ details.collapse summary::-webkit-details-marker {
 .mt-auto {
   margin-top: auto;
 }
+.mt-\[-6rem\] {
+  margin-top: -6rem;
+}
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -4686,6 +4689,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .resize {
   resize: both;
+}
+.list-disc {
+  list-style-type: disc;
 }
 .appearance-none {
   appearance: none;
@@ -5405,6 +5411,9 @@ details.collapse summary::-webkit-details-marker {
 .p-\[8px\] {
   padding: 8px;
 }
+.p-10 {
+  padding: 2.5rem;
+}
 .\!px-0 {
   padding-left: 0px !important;
   padding-right: 0px !important;
@@ -5721,6 +5730,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .pt-\[80px\] {
   padding-top: 80px;
+}
+.pt-\[150px\] {
+  padding-top: 150px;
 }
 .text-left {
   text-align: left;
@@ -11258,6 +11270,9 @@ details.collapse summary::-webkit-details-marker {
 .mt-auto {
   margin-top: auto;
 }
+.mt-\[-6rem\] {
+  margin-top: -6rem;
+}
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -11884,6 +11899,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .resize {
   resize: both;
+}
+.list-disc {
+  list-style-type: disc;
 }
 .appearance-none {
   appearance: none;
@@ -12603,6 +12621,9 @@ details.collapse summary::-webkit-details-marker {
 .p-\[8px\] {
   padding: 8px;
 }
+.p-10 {
+  padding: 2.5rem;
+}
 .\!px-0 {
   padding-left: 0px !important;
   padding-right: 0px !important;
@@ -12919,6 +12940,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .pt-\[80px\] {
   padding-top: 80px;
+}
+.pt-\[150px\] {
+  padding-top: 150px;
 }
 .text-left {
   text-align: left;

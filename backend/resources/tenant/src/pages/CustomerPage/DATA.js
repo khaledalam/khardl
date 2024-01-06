@@ -138,27 +138,33 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
 ]
-export const customerOrderDetailData = [
-  {
-    id: "0484de4j543",
-    orderId: "#01",
-    status: "Accepted",
-    productImgUrl: ImgBurger,
-    items: [
-      {
-        productName: "Burger",
-        additional: ["Extra Cheese", "Extra Ketchup"],
-        price: 650,
-        notes: "put the mayo little",
-        quantity: 4,
-      },
-      {
-        productName: "Double Cheese Burger",
-        additional: ["Extra Cheese", "Extra Ketchup"],
-        price: 650,
-        notes: "put the mayo little",
-        quantity: 4,
-      },
-    ],
-  },
-]
+
+export const customerOrderDetailData = {
+  id: "0484de4j543",
+  orderId: "#01",
+  status: "Accepted",
+  productImgUrl: ImgBurger,
+  items: [
+    {
+      productName: "Burger",
+      additional: ["Extra Cheese", "Extra Ketchup"],
+      price: 650,
+      notes: "put the mayo little",
+      quantity: 4,
+    },
+    {
+      productName: "Double Cheese Burger",
+      additional: null,
+      price: 100,
+      notes: "make the bread more fluffy",
+      quantity: 2,
+    },
+    {
+      productName: "Original Burger",
+      additional: null,
+      price: 50,
+      notes: "",
+      quantity: 1,
+    },
+  ],
+}
