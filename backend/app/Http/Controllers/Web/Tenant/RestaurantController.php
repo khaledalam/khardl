@@ -26,6 +26,9 @@ use App\Models\Subscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
+use App\Models\Tenant\DeliveryCompany;
+use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 
 class RestaurantController extends BaseController
 {
@@ -52,9 +55,12 @@ class RestaurantController extends BaseController
     public function delivery(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
+        $yeswa = DeliveryCompany::where("module",class_basename(Yeswa::class))->first();
+        $cervo = DeliveryCompany::where("module",class_basename(Cervo::class))->first();
+        $streetline = DeliveryCompany::where("module",class_basename(StreetLine::class))->first();
 
         return view('restaurant.delivery',
-            compact('user'));
+            compact('user','streetline','yeswa','cervo'));
     }
 
     public function promotions(){
@@ -802,5 +808,21 @@ class RestaurantController extends BaseController
         //     return abort(404);
         // }
         return view('restaurant.edit-worker', compact('worker', 'user'));
+    }
+    public function deliveryActivate($module,Request $request){
+      
+        $request->validate([
+            'api_key'=>"required"
+        ]);
+        $company = DeliveryCompany::where("module",$module)->first();
+        $company->update([
+            'status'=>!$company->status,
+            'api_key'=>$request->api_key
+        ]);
+        $message = ($company->status)?__(':module has been successfully activated'):__(':module has been successfully deactivated');
+        return redirect()->back()->with([
+            'success' => __($message,['module'=>__($module)]),
+        ]);
+
     }
 }

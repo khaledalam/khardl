@@ -520,6 +520,7 @@ return [
     "Approve user sent" => "تم ارسال بريد قبول مستخدم",
     "Approve user fail" => "فشل ارسال بريد قبول مستخدم",
     "Activate restaurant"   => "تفعيل مطعم",
+    "Activate"   => "تفعيل ",
     "Activate restaurant sent"  => "تم ارسال بريد تفعيل مطعم",
     "Activate restaurant fail"  => "فشل ارسال بريد تفعيل مطعم",
     "Create promoter"   => "اضافة مروج",
@@ -547,7 +548,8 @@ return [
     "fees" => "العمولات",
     "percentage-fee" => "نسبه العموله",
     "percentage-fee-explain" => "نسبه العموله التي سيتم خضمها من كل عمليه دفع",
-    "in" => "ب"
-
+    "in" => "ب",
+    "configurations"=>"الاعدادات",
+    "Deactivate"=>"الغاء التفعيل"
 ];
 
