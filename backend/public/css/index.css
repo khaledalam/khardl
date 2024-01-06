@@ -1214,6 +1214,10 @@ html {
   border-color: transparent;
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
+  -webkit-border-radius: var(--rounded-btn, 0.5rem);
+  -moz-border-radius: var(--rounded-btn, 0.5rem);
+  -ms-border-radius: var(--rounded-btn, 0.5rem);
+  -o-border-radius: var(--rounded-btn, 0.5rem);
 }
 .join {
   display: inline-flex;
@@ -5761,9 +5765,12 @@ details.collapse summary::-webkit-details-marker {
 .pt-\[80px\] {
   padding-top: 80px;
 }
+<<<<<<< HEAD
 .pt-\[150px\] {
   padding-top: 150px;
 }
+=======
+>>>>>>> f3c21001af30eb7673f8c6b0edfd84bebc7c9d13
 .text-left {
   text-align: left;
 }

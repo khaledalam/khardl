@@ -30,7 +30,7 @@ services:
         ports:
             - "3307:3306"
         volumes:
-            - ./docker/database/data:/var/lib/mysql:z
+            - ./docker/database/data_testing:/var/lib/mysql:z
 
 #    backend:
 #        container_name: backend

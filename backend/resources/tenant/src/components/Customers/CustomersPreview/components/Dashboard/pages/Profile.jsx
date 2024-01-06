@@ -44,6 +44,8 @@ const Profile = () => {
       if (loading) return
       setLoading(true)
 
+        console.log(selected);
+
       try {
         await AxiosInstance.post(`/user`, {
           address: address,
@@ -52,6 +54,7 @@ const Profile = () => {
           phone: phone,
           lat: selected && selected?.lat,
           lng: selected && selected?.lng,
+            address: selected?.address
         })
           .then((r) => {
             toast.success(t("Profile updated successfully"))
