@@ -14,6 +14,8 @@ import {
 const CustomerOrder = () => {
   const [pageNumber, setpageNumber] = useState(1)
   const [orderPerPage, setOrderPerPage] = useState(7)
+  const [dateAdded, setDateAdded] = useState("")
+  const [orderStatus, setOrderStatus] = useState("")
 
   const slicedOrderData = customerOrderData.slice(0, orderPerPage)
 
@@ -30,7 +32,8 @@ const CustomerOrder = () => {
         <div className='w-full gap-4 flex items-center'>
           <div className='w-1/2'>
             <PrimaryOrderSelect
-              defaultValue={"Status"}
+              defaultValue={orderStatus ? orderStatus : "Status"}
+              handleChange={(value) => setOrderStatus(value)}
               options={[
                 {
                   value: "Received by Restaurant",
@@ -45,7 +48,8 @@ const CustomerOrder = () => {
           </div>
           <div className='w-1/2'>
             <PrimaryOrderSelect
-              defaultValue={"Date Added"}
+              defaultValue={dateAdded ? dateAdded : "Date Added"}
+              handleChange={(value) => setDateAdded(value)}
               options={[
                 {
                   value: "Today",
@@ -69,6 +73,7 @@ const CustomerOrder = () => {
             <PrimaryOrderSelect
               background
               defaultValue={`Show ${orderPerPage}`}
+              handleChange={(value) => setOrderPerPage(value)}
               options={[
                 {
                   value: 5,

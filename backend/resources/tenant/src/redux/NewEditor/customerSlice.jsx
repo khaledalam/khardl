@@ -9,6 +9,7 @@ const customerAPISlice = createSlice({
       lat: 28.45,
       lng: 45.45,
     },
+    ordersList: [],
   },
   reducers: {
     setActiveNavItem: (state, action) => {
@@ -20,9 +21,16 @@ const customerAPISlice = createSlice({
     updateLatLng: (state, action) => {
       state.addressLatLng = action.payload
     },
+    updateOrderList: (state, action) => {
+      state.ordersList = action.payload
+    },
   },
 })
 
-export const {setActiveNavItem, updateCustomerAddress, updateLatLng} =
-  customerAPISlice.actions
+export const {
+  setActiveNavItem,
+  updateCustomerAddress,
+  updateLatLng,
+  updateOrderList,
+} = customerAPISlice.actions
 export default customerAPISlice.reducer

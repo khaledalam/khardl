@@ -66,7 +66,7 @@ function Map({inputStyle}) {
         <PlacesAutoComplete inputStyle={inputStyle} />
       </div>
 
-      <div className='w-full h-[500px]'>
+      <div className='w-full h-full'>
         <GoogleMap
           zoom={10}
           center={selectedLatLng ? selectedLatLng : center}

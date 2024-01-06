@@ -5,11 +5,16 @@ import {customerOrderData} from "../DATA"
 import {useCallback, useEffect, useState} from "react"
 import AxiosInstance from "../../../axios/axios"
 import {useNavigate} from "react-router-dom"
+import {updateOrderList} from "../../../redux/NewEditor/customerSlice"
+import {useDispatch, useSelector} from "react-redux"
 
 const CustomerDashboard = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const ordersList = useSelector((state) => state.customerAPI.ordersList)
   const [orderLength, setOrderLength] = useState(6)
   const [isViewMore, setIsViewMore] = useState(false)
+
   const overviewInfo = [
     {
       id: 1,
@@ -40,11 +45,11 @@ const CustomerDashboard = () => {
 
   const fetchOrdersData = async () => {
     try {
-      const ordersResponse = await AxiosInstance.get(`orders`)
+      const ordersResponse = await AxiosInstance.get(`orders?items&item`)
 
       console.log("ordersResponse >>>", ordersResponse.data)
       if (ordersResponse.data) {
-        console.log("orderData", ordersResponse?.data?.data)
+        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
       }
     } catch (error) {
       console.log(error)
@@ -55,7 +60,7 @@ const CustomerDashboard = () => {
     fetchOrdersData().then(() => {})
   }, [])
 
-  const slicedOrderData = customerOrderData.slice(0, orderLength)
+  const slicedOrderData = ordersList.slice(0, orderLength)
   return (
     <div className='p-6'>
       <div className='flex items-center gap-3'>

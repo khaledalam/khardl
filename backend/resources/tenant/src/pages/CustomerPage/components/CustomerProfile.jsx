@@ -5,13 +5,17 @@ import AxiosInstance from "../../../axios/axios"
 import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
 import Places from "../../../components/Customers/CustomersEditor/components/Dashboard/components/Places"
+import {updateCustomerAddress} from "../../../redux/NewEditor/customerSlice"
+import {useSelector, useDispatch} from "react-redux"
 
 const CustomerProfile = () => {
   const {t} = useTranslation()
+  const dispatch = useDispatch()
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [phone, setPhone] = useState("")
-  const [address, setAddress] = useState("")
+  const address = useSelector((state) => state.customerAPI.address)
+  const addressLatLng = useSelector((state) => state.customerAPI.addressLatLng)
   const [isLoading, setIsLoading] = useState(false)
 
   const fetchProfileData = async () => {
@@ -26,7 +30,9 @@ const CustomerProfile = () => {
         setFirstName(profileResponse.data?.data?.firstName ?? t("N/A"))
         setLastName(profileResponse.data?.data?.lastName ?? t("N/A"))
         setPhone(profileResponse.data?.data?.phone ?? t("N/A"))
-        setAddress(profileResponse.data?.data?.address ?? t("N/A"))
+        dispatch(
+          updateCustomerAddress(profileResponse.data?.data?.address ?? t("N/A"))
+        )
       }
     } catch (error) {
       console.log(error)
@@ -50,8 +56,8 @@ const CustomerProfile = () => {
           first_name: firstName,
           last_name: lastName,
           phone: phone,
-          // lat: selected && selected?.lat,
-          // lng: selected && selected?.lng,
+          lat: addressLatLng && addressLatLng?.lat,
+          lng: addressLatLng && addressLatLng?.lng,
         })
           .then((r) => {
             toast.success(t("Profile updated successfully"))
@@ -64,6 +70,7 @@ const CustomerProfile = () => {
       }
     }
   }
+
   return (
     <div className='p-6'>
       <div className='flex items-center gap-3'>
@@ -78,12 +85,14 @@ const CustomerProfile = () => {
             name={"first-name"}
             label={"First Name"}
             placeholder={"First name"}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <PrimaryTextInput
             id={"last-name"}
             name={"last-name"}
             label={"Last Name"}
             placeholder={"Last name"}
+            onChange={(e) => setLastName(e.target.value)}
           />
           <PrimaryTextInput
             id={"phone-number"}
@@ -91,6 +100,7 @@ const CustomerProfile = () => {
             type='tel'
             label={"Phone Number"}
             placeholder={"Phone Number"}
+            onChange={(e) => setPhone(e.target.value)}
           />
         </div>
       </div>
@@ -102,6 +112,16 @@ const CustomerProfile = () => {
               "input border-[var(--customer)] !w-1/3 hover:border-[var(--customer)] focus-visible:border-[var(--customer)] outline-0 outline-none focus-visible:outline-none w-full"
             }
           />
+        </div>
+      </div>
+      <div className='flex w-full items-center justify-end mt-10 mb-4'>
+        <div className='flex items-center gap-5'>
+          <button className='w-[85px] p-2 !border border-solid border-[var(--customer)] bg-white outline-none rounded-lg'>
+            Cancel
+          </button>
+          <button className='w-[85px] p-2 bg-[var(--customer)] outline-none text-white rounded-lg'>
+            Save
+          </button>
         </div>
       </div>
     </div>

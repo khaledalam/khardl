@@ -112,7 +112,7 @@ const Profile = () => {
             <div className='py-4 px-8'>
               <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]' />
               <p className='mb-2 mt-4 mx-2'>{t("Address")}</p>
-              <div className='w-[100%]'>
+              <div className='w-[100%] h-[400px]'>
                 <Places
                   inputStyle={
                     "w-full text-[14px] bg-[var(--secondary)]  py-3 rounded-full px-4 appearance-none"

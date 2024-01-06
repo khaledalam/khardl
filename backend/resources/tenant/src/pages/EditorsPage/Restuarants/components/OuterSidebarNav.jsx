@@ -104,7 +104,8 @@ const OuterSidebarNav = ({id}) => {
         .unwrap()
         .then((res) => {
           setStatusCode(HTTP_NOT_AUTHENTICATED)
-          navigate("/login", {replace: true})
+          navigate("/", {replace: true})
+          closeMenu()
           toast.success("Logged out successfully")
         })
     } catch (err) {
