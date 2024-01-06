@@ -179,7 +179,7 @@ const PaymentSection = ({
                 },
                 order: {
                     amount: getTotalPrice(),
-                    currency: "KWD",
+                    currency: "SAR",
                     items: extractedData,
                     shipping: null,
                     taxes: null,
@@ -187,7 +187,7 @@ const PaymentSection = ({
                 transaction: {
                     mode: "charge",
                     charge: {
-                        saveCard: false,
+                        saveCard: true,
                         threeDSecure: true,
                         description: t("Order Details"),
                         statement_descriptor: "Sample",
