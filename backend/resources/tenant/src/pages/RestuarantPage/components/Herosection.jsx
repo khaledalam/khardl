@@ -71,7 +71,7 @@ const Herosection = ({isMobile, categories}) => {
         {(restaurantStyle && restaurantStyle?.banner_type === "one-photo") ||
         (restaurantStyle && restaurantStyle?.banner_type === t("One-photo")) ? (
           <div
-            className={`w-5/6 overflow-hidden shadow-md  ${
+            className={`w-5/6 overflow-hidden shadow-lg  ${
               isMobile ? "h-[300px]" : "h-[471px] mb-8"
             } laptopXL:w-[75%]`}
             style={{
@@ -101,7 +101,7 @@ const Herosection = ({isMobile, categories}) => {
                   .map((_, index) => (
                     <div
                       key={index}
-                      className={`shadow-md ${
+                      className={` ${
                         isMobile ? "h-[300px]" : "h-[470px]"
                       } !block`}
                     >
@@ -109,13 +109,14 @@ const Herosection = ({isMobile, categories}) => {
                         style={{
                           backgroundRepeat: "no-repeat",
                           backgroundSize: "cover",
+                          boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
                           backgroundImage:
                             restaurantStyle?.banner_images &&
                             restaurantStyle?.banner_images?.length > 0
                               ? `url(${restaurantStyle?.banner_images[index]})`
                               : "",
                         }}
-                        className={` h-full w-full rounded-md flex items-center justify-center   shadow-md`}
+                        className={` h-full w-full rounded-md flex items-center justify-center   shadow-lg`}
                       ></div>
                     </div>
                   ))}
