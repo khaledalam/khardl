@@ -30,39 +30,6 @@ use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {
-    public function dashboard()
-    {
-        $user = Auth::user();
-
-        //
-        $restaurantsAll = Tenant::with("primary_domain")->get();
-
-        // not complete register step2
-        $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
-
-        $restaurantsLive = 0;
-        $customers = 0;
-
-        foreach ($restaurantsAll as $restaurant) {
-            $restaurant->run(static function ($tenant) use (&$restaurantsLive, &$customers) {
-                $setting = TenantSettings::first();
-                if ($setting->is_live) {
-                    $restaurantsLive ++;
-                }
-
-                $currentMonth = Carbon::now()->month;
-                $customers+= RestaurantUser::customers()->whereMonth('created_at', '=', $currentMonth)->count();
-            });
-        }
-        $restaurantsAll = count($restaurantsAll);
-
-
-
-        return view('admin.dashboard', compact('user',
-            'restaurantsAll', 'restaurantsOwnersNotUploadFiles',
-            'restaurantsLive', 'customers'
-        ));
-    }
 
     public function addUser()
     {

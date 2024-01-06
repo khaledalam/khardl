@@ -571,9 +571,6 @@ return [
     "Submit ✔️" => "Submit ✔️",
     "Please wait..." => "Please wait...",
     "Back to step 1" => "Back to step 1 ⬅",
-    "XXX" => "",
-    "XXX" => "",
-    "XXX" => "",
-    "XXX" => "",
+    "Ready" => "Ready"
 
 ];

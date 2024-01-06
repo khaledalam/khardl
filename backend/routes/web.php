@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Web\Central\Admin\Dashboard\DashboardController as SuperAdminDashboard;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -201,7 +202,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
             Route::middleware(['accepted'])->group(function () {
                 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
                 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function () {
-                    Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('permission:can_access_dashboard')->name('dashboard');
+                    Route::get('/dashboard', [SuperAdminDashboard::class, 'index'])->middleware('permission:can_access_dashboard')->name('dashboard');
                     Route::post('/approve/{id}', [AdminController::class, 'approveUser'])->middleware('permission:can_approve_restaurants')->name('approveUser');
                     Route::post('/deny/{id}', [AdminController::class, 'denyUser'])->middleware('permission:can_approve_restaurants')->name('denyUser');
                     Route::get('/add-user', [AdminController::class, 'addUser'])->middleware('permission:can_add_admins')->name('add-user');
