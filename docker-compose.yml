@@ -23,10 +23,10 @@ services:
         image: mariadb
         restart: unless-stopped
         environment:
-            - MYSQL_DATABASE=khardl_test
-            - MYSQL_USER=test
-            - MYSQL_PASSWORD=test
-            - MYSQL_ROOT_PASSWORD=test
+            - MYSQL_DATABASE=${DB_TESTING_DATABASE}
+            - MYSQL_USER=${DB_TESTING_USERNAME}
+            - MYSQL_PASSWORD=${DB_TESTING_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${DB_TESTING_ROOT_PASSWORD}
         ports:
             - "3307:3306"
         volumes:
