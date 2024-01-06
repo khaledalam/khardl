@@ -75,15 +75,14 @@ const Login = () => {
             dispatch(setIsOpen(false))
             toast.success(`${t('You have been logged in successfully')}`)
          } else {
-             console.log("response?.data?.success false")
-            setSpinner(false)
-            throw new Error(`${t('Login failed')}`)
+             setSpinner(false)
+            throw new Error(`${response?.data?.error || t('Login failed')}`)
          }
       } catch (error) {
          setSpinner(false)
          dispatch(changeLogState(false))
          setStatusCode(HTTP_NOT_AUTHENTICATED)
-         toast.error(`${t('Login failed')}`)
+         toast.error(`${error?.response?.data?.data?.error || t('Login failed')}`)
       }
    }
    /////////////////////////////////////////////////////////////////////////////////////
