@@ -55,7 +55,7 @@ export const CustomerPage = () => {
           ) : (
             <></>
           )}
-          {showOrderDetail && <CustomerOrderDetail />}
+          {showOrderDetail && <CustomerOrderDetail orderId={orderId} />}
         </div>
       </div>
     </div>
