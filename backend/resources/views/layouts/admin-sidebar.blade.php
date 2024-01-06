@@ -156,23 +156,12 @@
                             </div>
 
                             <!-- Setting -->
-                            <div class="menu-item">
-                                <a href="{{ route('admin.profile') }}">
-                                    <span class="{{ ($admin_link == 'edit-profile'   || $admin_link == 'profile' ) ? 'menu-link active' : 'menu-link ' }}">
-                                        <span class="menu-icon">
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                            <i class="fa fa-user"></i>
-                                        </span>
-                                        <span class="menu-title">{{ __('messages.edit-profile')}}</span>
-                                    </span>
-                                </a>
-                            </div>
 
 
                             @if($user?->hasPermission("can_access_restaurants"))
                                 <!-- Restaurants -->
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                    <span class="{{ ($admin_link == 'restaurants' ) ? 'menu-link active' : 'menu-link ' }}">
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'restaurants' || $admin_link == 'restaurant-owner-management') ? 'show' : ''}}">
+                                    <span class="{{ ($admin_link == 'restaurants' || $admin_link == 'restaurant-owner-management') ? 'menu-link active' : 'menu-link' }}">
                                         <span class="menu-icon">
                                             <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
                                             <i class="fa fa-store"></i>
@@ -183,15 +172,36 @@
                                     </span>
                                     <div class="menu-sub menu-sub-accordion menu-active-bg">
                                         <div class="menu-item">
-                                            <a class="menu-link" href="{{ route('admin.restaurants') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
+                                            <a class="menu-link {{($admin_link == 'restaurants') ? 'active' : ''}}" href="{{ route('admin.restaurants') }}">
+                                                <span class="menu-icon">
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <i class="fa fa-store"></i>
+                                                    </span>
                                                 </span>
                                                 <span class="menu-title">{{ __('messages.all-restaurants')}}
-{{--                                                    @if(($restaurantsAll  - $restaurantsLive) > 0)<span class="badge badge-danger mx-1">{{($restaurantsAll  - $restaurantsLive)}}</span>@endif--}}
+                                                    {{--                                                    @if(($restaurantsAll  - $restaurantsLive) > 0)<span class="badge badge-danger mx-1">{{($restaurantsAll  - $restaurantsLive)}}</span>@endif--}}
                                                 </span>
                                             </a>
                                         </div>
+
+
+                                        @if($user?->hasPermission('can_see_restaurant_owners'))
+                                            <!-- Staff evaluation -->
+                                            <div class="menu-item">
+                                                <a class="menu-link {{($admin_link == 'restaurant-owner-management') ? 'active' : ''}}" href="{{ route('admin.restaurant-owner-management') }}">
+                                                    <span class="menu-icon">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                                        <span class="svg-icon svg-icon-2">
+                                                            <i class=" fa fa-users"></i>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+                                                    <span class="menu-title">{{ __('messages.restaurant-owners')}}</span>
+                                                </a>
+                                            </div>
+                                        @endif
+
+
                                     </div>
                                 </div>
                             @endif
@@ -231,24 +241,6 @@
                                     </div>
                                     @endif
                                 </div>
-                            </div>
-
-                            @endif
-                            @if($user?->hasPermission('can_see_restaurant_owners'))
-                             <!-- Staff evaluation -->
-                             <div class="menu-item">
-                                <a href="{{ route('admin.restaurant-owner-management') }}">
-                                <span class="{{ ($admin_link == 'restaurant-owner-management'  ) ? 'menu-link active' : 'menu-link ' }}">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                        <span class="svg-icon svg-icon-2">
-                                            <i class=" fa fa-users"></i>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                    <span class="menu-title">{{ __('messages.restaurant-owners')}}</span>
-                                </span>
-                            </a>
                             </div>
                             @endif
                             @if($user?->hasPermission('can_promoters'))
