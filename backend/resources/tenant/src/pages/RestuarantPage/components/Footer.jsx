@@ -54,12 +54,13 @@ const FooterRestuarant = () => {
           }`}
         >
           {" "}
-          <h3
+          <a
+            href={`tel:${restaurantStyle?.phoneNumber}`}
             style={{color: restaurantStyle?.text_color}}
-            className='font-semibol'
+            className='font-semibold cursor-pointer'
           >
             {restaurantStyle?.phoneNumber}
-          </h3>
+          </a>
         </div>
       </div>
       <div className='h-7 flex bg-white items-center justify-between p-2'>
