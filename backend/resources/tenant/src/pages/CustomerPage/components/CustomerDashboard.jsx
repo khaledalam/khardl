@@ -2,9 +2,12 @@ import {BsChevronDoubleDown, BsChevronDoubleUp} from "react-icons/bs"
 import DashboardIcon from "../../../assets/dashboardBlockIcon.svg"
 import OrderTable from "./OrderTable"
 import {customerOrderData} from "../DATA"
-import {useCallback, useState} from "react"
+import {useCallback, useEffect, useState} from "react"
+import AxiosInstance from "../../../axios/axios"
+import {useNavigate} from "react-router-dom"
 
 const CustomerDashboard = () => {
+  const navigate = useNavigate()
   const [orderLength, setOrderLength] = useState(6)
   const [isViewMore, setIsViewMore] = useState(false)
   const overviewInfo = [
@@ -25,14 +28,31 @@ const CustomerDashboard = () => {
     },
   ]
 
-  const onViewMore = useCallback(() => {
-    setOrderLength((prev) => prev + 6)
-    setIsViewMore(true)
-  }, [])
+  // const onViewMore = useCallback(() => {
+  //   setOrderLength((prev) => prev + 6)
+  //   setIsViewMore(true)
+  // }, [])
 
-  const hideMore = useCallback(() => {
-    setOrderLength((prev) => prev - 6)
-    setIsViewMore(false)
+  // const hideMore = useCallback(() => {
+  //   setOrderLength((prev) => prev - 6)
+  //   setIsViewMore(false)
+  // }, [])
+
+  const fetchOrdersData = async () => {
+    try {
+      const ordersResponse = await AxiosInstance.get(`orders`)
+
+      console.log("ordersResponse >>>", ordersResponse.data)
+      if (ordersResponse.data) {
+        console.log("orderData", ordersResponse?.data?.data)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
+  }
+  useEffect(() => {
+    fetchOrdersData().then(() => {})
   }, [])
 
   const slicedOrderData = customerOrderData.slice(0, orderLength)
@@ -63,15 +83,11 @@ const CustomerDashboard = () => {
       </div>
       <div className='w-full p-5 flex items-center justify-center cursor-pointer'>
         <div
-          onClick={isViewMore ? hideMore : onViewMore}
+          onClick={() => navigate("/dashboard#Orders")}
           className='flex items-center gap-2 w-36 rounded-2xl bg-[var(--customer)] p-3 text-white'
         >
-          {isViewMore ? (
-            <BsChevronDoubleUp size={20} color={"#fff"} />
-          ) : (
-            <BsChevronDoubleDown size={20} color={"#fff"} />
-          )}
-          <h3 className=''>{isViewMore ? "Hide" : "View More"}</h3>
+          <BsChevronDoubleDown size={20} color={"#fff"} />
+          <h3 className=''>{"View More"}</h3>
         </div>
       </div>
     </div>
