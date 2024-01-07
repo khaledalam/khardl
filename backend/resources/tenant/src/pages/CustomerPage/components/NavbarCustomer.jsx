@@ -1,17 +1,20 @@
-import React from "react"
+import React, {useContext} from "react"
 import {IoMenuOutline} from "react-icons/io5"
 import {useNavigate} from "react-router-dom"
 import cartHeaderImg from "../../../assets/cartBoldIcon.svg"
+import {MenuContext} from "react-flexible-sliding-menu"
 
 const NavbarCustomer = () => {
   const navigate = useNavigate()
+  const {toggleMenu} = useContext(MenuContext)
+
   const cartItemsCount = 0
   return (
     <div className='h-[70px] w-full bg-white flex items-center justify-between px-8'>
       <IoMenuOutline
         size={42}
         className='text-neutral-400 cursor-pointer ml-16'
-        // onClick={toggleSidebarCollapse}
+        onClick={toggleMenu}
       />
       <div
         onClick={() => navigate("/cart")}

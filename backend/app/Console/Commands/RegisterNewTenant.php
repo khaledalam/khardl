@@ -10,6 +10,8 @@ use Illuminate\Console\Command;
 use Database\Seeders\TenantActionSeeder;
 use Exception;
 use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class RegisterNewTenant extends Command
 {
@@ -18,7 +20,7 @@ class RegisterNewTenant extends Command
      *
      * @var string
      */
-    protected $signature = 'create:tenant {name?}';
+    protected $signature = 'create:tenant {--testing=} {name=first}';
 
     /**
      * The console Create a new tenant with subdomain and DB.
@@ -32,8 +34,15 @@ class RegisterNewTenant extends Command
      */
     public function handle(TenantActionSeeder $seeder)
     {
+        $testing = $this->option('testing') ?? false;
+
+        if ($testing) {
+            DB::setDefaultConnection('mysql_testing');
+        }
+
         $user = User::find(UserSeeder::RESTAURANT_OWNER_USER_ID);
         $name = $this->argument('name') ?? 'first';
+
         if(!$user){
             $this->error("No user registered, try run `php artisan migrate:fresh --seed`");
             return ;

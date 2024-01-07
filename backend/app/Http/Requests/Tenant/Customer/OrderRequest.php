@@ -43,8 +43,7 @@ class OrderRequest extends FormRequest
 
         $validator->after(function ($validator) use($cart){
             $user = Auth::user();
-            // if(!$user->lat && !$user->lng){
-            if(!$user->address){
+            if(!$user->address || !$user->lat || !$user->lng){
                 $validator->errors()->add('address', __('Please update your location before place an order'));
                 return ;
             }

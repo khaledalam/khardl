@@ -96,12 +96,19 @@
                                                             <!--begin::Select-->
 
                                                                     <!--end::Modal dialog-->
-                                                            <div class=" d-flex justify-content-between w-75 ">
-                                                                        <div>
+                                                            <div class=" d-flex justify-content-between  ">
+                                                                        {{-- <div>
                                                                             <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                        </div>
+                                                                        </div> --}}
+                                                                <div style="margin-right: 2px">
+                                                                    <a href="{{route('restaurant.service.increase')}}" class="btn btn-sm btn-khardl">
+                                                                        <i class="fa fa-arrow-circle-up"></i>
+                                                                        {{__('messages.Increase Slots')}}
+                                                                    </a>
+                                                                </div>
+
                                                                 <div>
-                                                                    <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
+                                                                    <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancel branch</a>
                                                                 </div>
                                                             </div>
 
@@ -321,180 +328,180 @@
 
 
                         <!--begin::Post-->
-                        <div class="post d-flex flex-column-fluid mt-5" id="kt_post">
-                            <!--begin::Container-->
-                            <div id="kt_content_container" class="container-xxl">
-                                <!--begin::Pricing card-->
-                                <div class="card" id="kt_pricing">
-                                    <!--begin::Card body-->
-                                    <div class="card-body p-lg-10">
-                                        <!--begin::Plans-->
-                                        <div class="d-flex flex-column">
-                                            <!--begin::Heading-->
-                                            <div class="mb-13 text-center">
-                                                <h3 class="fs-2hx fw-bolder mb-5">Application for your site</h3>
-                                            </div>
-                                            <!--end::Heading-->
+{{--                        <div class="post d-flex flex-column-fluid mt-5" id="kt_post">--}}
+{{--                            <!--begin::Container-->--}}
+{{--                            <div id="kt_content_container" class="container-xxl">--}}
+{{--                                <!--begin::Pricing card-->--}}
+{{--                                <div class="card" id="kt_pricing">--}}
+{{--                                    <!--begin::Card body-->--}}
+{{--                                    <div class="card-body p-lg-10">--}}
+{{--                                        <!--begin::Plans-->--}}
+{{--                                        <div class="d-flex flex-column">--}}
+{{--                                            <!--begin::Heading-->--}}
+{{--                                            <div class="mb-13 text-center">--}}
+{{--                                                <h3 class="fs-2hx fw-bolder mb-5">Application for your site</h3>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Heading-->--}}
 
-                                            <!--begin::Row-->
-                                            <div class="row g-10">
+{{--                                            <!--begin::Row-->--}}
+{{--                                            <div class="row g-10">--}}
 
-                                                <!--begin::Col-->
-                                                <div class="col-xl-3">
-                                                    <div class="d-flex h-100 align-items-center">
-                                                        <!--begin::Option-->
-                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
-                                                            <!--begin::Heading-->
-                                                            <div class="mb-7 text-center">
-                                                                <!--begin::Title-->
-                                                                <h3 class="text-dark mb-5 fw-boldest text-center">Monthly</h3>
-                                                                <!--end::Title-->
-                                                                <!--begin::Price-->
-                                                                <div class="text-center">
-                                                                    <span class="mb-2 text-khardl">SAR</span>
-                                                                    <span class="fs-2x fw-bolder text-khardl text-center">299</span>
-                                                                </div>
-                                                                <!--end::Price-->
-                                                            </div>
-                                                            <!--end::Heading-->
+{{--                                                <!--begin::Col-->--}}
+{{--                                                <div class="col-xl-3">--}}
+{{--                                                    <div class="d-flex h-100 align-items-center">--}}
+{{--                                                        <!--begin::Option-->--}}
+{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
+{{--                                                            <!--begin::Heading-->--}}
+{{--                                                            <div class="mb-7 text-center">--}}
+{{--                                                                <!--begin::Title-->--}}
+{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">Monthly</h3>--}}
+{{--                                                                <!--end::Title-->--}}
+{{--                                                                <!--begin::Price-->--}}
+{{--                                                                <div class="text-center">--}}
+{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
+{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">299</span>--}}
+{{--                                                                </div>--}}
+{{--                                                                <!--end::Price-->--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::Heading-->--}}
 
-                                                            <!--begin::Select-->
-                                                            <div class=" d-flex justify-content-between ">
-                                                                <div>
-                                                                    <a href="#" class="btn btn-sm btn-danger" id="myLink2"><i class="fas fa-trash"></i>Denied</a>
-                                                                </div>
-                                                                <div class="mx-3">
-                                                                    <a href="#" class="btn btn-sm btn-secondary">Current</a>
-                                                                </div>
-                                                            </div>
-                                                            <!--end::Select-->
-                                                        </div>
-                                                        <!--end::Option-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Col-->
-
-
-                                                <!--begin::Col-->
-                                                <div class="col-xl-3">
-                                                    <div class="d-flex h-100 align-items-center">
-                                                        <!--begin::Option-->
-                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
-                                                            <!--begin::Heading-->
-                                                            <div class="mb-7 text-center">
-                                                                <!--begin::Title-->
-                                                                <h3 class="text-dark mb-5 fw-boldest text-center">3 months</h3>
-                                                                <!--end::Title-->
-                                                                <!--begin::Price-->
-                                                                <div class="text-center">
-                                                                    <span class="mb-2 text-khardl">SAR</span>
-                                                                    <span class="fs-2x fw-bolder text-khardl text-center">499</span>
-                                                                </div>
-                                                                <!--end::Price-->
-                                                            </div>
-                                                            <!--end::Heading-->
-
-                                                            <!--begin::Select-->
-                                                            <div class=" d-flex justify-content-between ">
-                                                                <div>
-                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                </div>
-                                                                <div>
-                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
-                                                                </div>
-                                                            </div>
-                                                            <!--end::Select-->
-                                                        </div>
-                                                        <!--end::Option-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Col-->
+{{--                                                            <!--begin::Select-->--}}
+{{--                                                            <div class=" d-flex justify-content-between ">--}}
+{{--                                                                <div>--}}
+{{--                                                                    <a href="#" class="btn btn-sm btn-danger" id="myLink2"><i class="fas fa-trash"></i>Denied</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="mx-3">--}}
+{{--                                                                    <a href="#" class="btn btn-sm btn-secondary">Current</a>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::Select-->--}}
+{{--                                                        </div>--}}
+{{--                                                        <!--end::Option-->--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Col-->--}}
 
 
-                                                <!--begin::Col-->
-                                                <div class="col-xl-3">
-                                                    <div class="d-flex h-100 align-items-center">
-                                                        <!--begin::Option-->
-                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
-                                                            <!--begin::Heading-->
-                                                            <div class="mb-7 text-center">
-                                                                <!--begin::Title-->
-                                                                <h3 class="text-dark mb-5 fw-boldest text-center">6 months</h3>
-                                                                <!--end::Title-->
-                                                                <!--begin::Price-->
-                                                                <div class="text-center">
-                                                                    <span class="mb-2 text-khardl">SAR</span>
-                                                                    <span class="fs-2x fw-bolder text-khardl text-center">799</span>
-                                                                </div>
-                                                                <!--end::Price-->
-                                                            </div>
-                                                            <!--end::Heading-->
+{{--                                                <!--begin::Col-->--}}
+{{--                                                <div class="col-xl-3">--}}
+{{--                                                    <div class="d-flex h-100 align-items-center">--}}
+{{--                                                        <!--begin::Option-->--}}
+{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
+{{--                                                            <!--begin::Heading-->--}}
+{{--                                                            <div class="mb-7 text-center">--}}
+{{--                                                                <!--begin::Title-->--}}
+{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">3 months</h3>--}}
+{{--                                                                <!--end::Title-->--}}
+{{--                                                                <!--begin::Price-->--}}
+{{--                                                                <div class="text-center">--}}
+{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
+{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">499</span>--}}
+{{--                                                                </div>--}}
+{{--                                                                <!--end::Price-->--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::Heading-->--}}
 
-                                                            <!--begin::Select-->
-                                                            <div class=" d-flex justify-content-between ">
-                                                                <div>
-                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                </div>
-                                                                <div>
-                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
-                                                                </div>
-                                                            </div>
-                                                            <!--end::Select-->
-                                                        </div>
-                                                        <!--end::Option-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Col-->
-
-
-                                                <!--begin::Col-->
-                                                <div class="col-xl-3">
-                                                    <div class="d-flex h-100 align-items-center">
-                                                        <!--begin::Option-->
-                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
-                                                            <!--begin::Heading-->
-                                                            <div class="mb-7 text-center">
-                                                                <!--begin::Title-->
-                                                                <h3 class="text-dark mb-5 fw-boldest text-center">12 months</h3>
-                                                                <!--end::Title-->
-                                                                <!--begin::Price-->
-                                                                <div class="text-center">
-                                                                    <span class="mb-2 text-khardl">SAR</span>
-                                                                    <span class="fs-2x fw-bolder text-khardl text-center">1299</span>
-                                                                </div>
-                                                                <!--end::Price-->
-                                                            </div>
-                                                            <!--end::Heading-->
-
-                                                            <!--begin::Select-->
-                                                            <div class=" d-flex justify-content-between ">
-                                                                <div>
-                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                </div>
-                                                                <div>
-                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
-                                                                </div>
-                                                            </div>
-                                                            <!--end::Select-->
-                                                        </div>
-                                                        <!--end::Option-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Col-->
+{{--                                                            <!--begin::Select-->--}}
+{{--                                                            <div class=" d-flex justify-content-between ">--}}
+{{--                                                                <div>--}}
+{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div>--}}
+{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::Select-->--}}
+{{--                                                        </div>--}}
+{{--                                                        <!--end::Option-->--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Col-->--}}
 
 
+{{--                                                <!--begin::Col-->--}}
+{{--                                                <div class="col-xl-3">--}}
+{{--                                                    <div class="d-flex h-100 align-items-center">--}}
+{{--                                                        <!--begin::Option-->--}}
+{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
+{{--                                                            <!--begin::Heading-->--}}
+{{--                                                            <div class="mb-7 text-center">--}}
+{{--                                                                <!--begin::Title-->--}}
+{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">6 months</h3>--}}
+{{--                                                                <!--end::Title-->--}}
+{{--                                                                <!--begin::Price-->--}}
+{{--                                                                <div class="text-center">--}}
+{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
+{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">799</span>--}}
+{{--                                                                </div>--}}
+{{--                                                                <!--end::Price-->--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::Heading-->--}}
 
-                                            </div>
-                                            <!--end::Row-->
-                                        </div>
-                                        <!--end::Plans-->
-                                    </div>
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::Pricing card-->
-                            </div>
-                            <!--end::Container-->
-                        </div>
+{{--                                                            <!--begin::Select-->--}}
+{{--                                                            <div class=" d-flex justify-content-between ">--}}
+{{--                                                                <div>--}}
+{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div>--}}
+{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::Select-->--}}
+{{--                                                        </div>--}}
+{{--                                                        <!--end::Option-->--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Col-->--}}
+
+
+{{--                                                <!--begin::Col-->--}}
+{{--                                                <div class="col-xl-3">--}}
+{{--                                                    <div class="d-flex h-100 align-items-center">--}}
+{{--                                                        <!--begin::Option-->--}}
+{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
+{{--                                                            <!--begin::Heading-->--}}
+{{--                                                            <div class="mb-7 text-center">--}}
+{{--                                                                <!--begin::Title-->--}}
+{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">12 months</h3>--}}
+{{--                                                                <!--end::Title-->--}}
+{{--                                                                <!--begin::Price-->--}}
+{{--                                                                <div class="text-center">--}}
+{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
+{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">1299</span>--}}
+{{--                                                                </div>--}}
+{{--                                                                <!--end::Price-->--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::Heading-->--}}
+
+{{--                                                            <!--begin::Select-->--}}
+{{--                                                            <div class=" d-flex justify-content-between ">--}}
+{{--                                                                <div>--}}
+{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div>--}}
+{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                            <!--end::Select-->--}}
+{{--                                                        </div>--}}
+{{--                                                        <!--end::Option-->--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Col-->--}}
+
+
+
+{{--                                            </div>--}}
+{{--                                            <!--end::Row-->--}}
+{{--                                        </div>--}}
+{{--                                        <!--end::Plans-->--}}
+{{--                                    </div>--}}
+{{--                                    <!--end::Card body-->--}}
+{{--                                </div>--}}
+{{--                                <!--end::Pricing card-->--}}
+{{--                            </div>--}}
+{{--                            <!--end::Container-->--}}
+{{--                        </div>--}}
                         <!--end::Post-->
 
 

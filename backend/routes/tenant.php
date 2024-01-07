@@ -109,6 +109,7 @@ Route::group([
                 // Route::delete('/orders/{order}',[OrderController::class,'destroy'])->name('restaurant.branch.order.destroy');
 
             });
+
             Route::middleware('restaurant')->group(function () {
 
                 // TAP Create Business
@@ -125,8 +126,10 @@ Route::group([
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
+                Route::get('/service/increase', [RestaurantController::class, 'servicesIncrease'])->name('restaurant.service.increase');
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
+                Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
                     Route::get('/customers-data','index')->name('list');

@@ -13,10 +13,13 @@ import {
 } from "@reach/combobox"
 import "@reach/combobox/styles.css"
 import {useSelector, useDispatch} from "react-redux"
+import {
+  updateCustomerAddress,
+  updateLatLng,
+} from "../../../../../../redux/NewEditor/customerSlice"
 
-const Places = () => {
+const Places = ({inputStyle}) => {
   const [libraries, _] = useState(["places"])
-  const [selected, setSelected] = useState(null)
 
   const {isLoaded} = useLoadScript({
     googleMapsApiKey: "AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0",
@@ -26,12 +29,12 @@ const Places = () => {
   if (!isLoaded) {
     return <div>Loading....</div>
   }
-  console.log("selected", selected)
-  return <Map selected={selected} setSelected={setSelected} />
+  return <Map inputStyle={inputStyle} />
 }
 
-function Map({selected, setSelected}) {
+function Map({inputStyle}) {
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
+  const selectedLatLng = useSelector((state) => state.customerAPI.addressLatLng)
   const branches = restuarantStyle.branches
   const filterBranch = branches?.filter(
     (branch) => branch.pickup_availability === 1
@@ -51,8 +54,8 @@ function Map({selected, setSelected}) {
   }, [filterBranch])
 
   const containerStyle = {
-    width: "100",
-    height: "500px",
+    width: "100%",
+    height: "400px",
   }
 
   console.log("filterBranch", filterBranch)
@@ -60,23 +63,23 @@ function Map({selected, setSelected}) {
   return (
     <div className='w-full '>
       <div className='mb-6'>
-        <PlacesAutoComplete setSelected={setSelected} />
+        <PlacesAutoComplete inputStyle={inputStyle} />
       </div>
 
-      <div className='w-full h-[500px]'>
+      <div className='w-full h-full'>
         <GoogleMap
           zoom={10}
-          center={selected ? selected : center}
+          center={selectedLatLng ? selectedLatLng : center}
           mapContainerStyle={containerStyle}
         >
-          <MarkerF position={selected ? selected : center} />
+          <MarkerF position={selectedLatLng ? selectedLatLng : center} />
         </GoogleMap>
       </div>
     </div>
   )
 }
 
-function PlacesAutoComplete({setSelected}) {
+function PlacesAutoComplete({inputStyle}) {
   const {
     ready,
     value,
@@ -84,25 +87,35 @@ function PlacesAutoComplete({setSelected}) {
     suggestions: {status, data},
     clearSuggestions,
   } = usePlaceAutoComplete()
+  const customerAddress = useSelector((state) => state.customerAPI.address)
+
+  const dispatch = useDispatch()
 
   const handleSelect = async (address) => {
     setValue(address)
     clearSuggestions()
+    dispatch(updateCustomerAddress(address))
 
     const results = await getGeocode({address: address})
     const {lat, lng} = await getLatLng(results[0])
-    setSelected({lat, lng})
+<<<<<<< HEAD
+    dispatch(updateLatLng({lat, lng}))
+=======
+    setSelected({lat, lng, address})
+>>>>>>> f3c21001af30eb7673f8c6b0edfd84bebc7c9d13
   }
 
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
         value={value}
+        defaultValue={customerAddress}
         onChange={(e) => setValue(e.target.value)}
         disabled={!ready}
-        className='w-full text-[14px] bg-[var(--secondary)]  py-3 rounded-full px-4 appearance-none'
+        className={inputStyle}
         placeholder='Search an address...'
       />
+
       <ComboboxPopover>
         <ComboboxList>
           {status === "OK" &&
