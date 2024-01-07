@@ -49,7 +49,7 @@ const navItems = [
 const SideNavbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [status, setStatus] = useState(false)
+  const [status, setStatus] = useState(true)
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
   const saveProfileChange = useSelector(
     (state) => state.customerAPI.saveProfileChanges
@@ -65,25 +65,24 @@ const SideNavbar = () => {
     dispatch(setActiveNavItem("Payment"))
   }
 
-  useEffect(() => {
-    dispatch(updateProfileSaveStatus(true))
-  }, [])
-
   const handleNavigate = (navItem) => {
     navigate(navItem.link)
   }
   const handleWindowAlert = () => {
-    setStatus(
-      window.confirm("Are you sure you want to navigate to another page")
+    const stat = window.confirm(
+      "Are you sure you want to navigate to another page"
     )
+    console.log("stat", stat)
+    setStatus(stat)
+    stat && dispatch(updateProfileSaveStatus(true))
   }
+
   useEffect(() => {
-    if (status) {
-      dispatch(updateProfileSaveStatus(true))
-    } else {
+    if (!status) {
       dispatch(updateProfileSaveStatus(false))
     }
-  }, [dispatch, status])
+  }, [status])
+
   console.log("status updated", status)
   console.log("saveProfile", saveProfileChange)
 
