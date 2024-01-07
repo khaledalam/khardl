@@ -96,12 +96,19 @@
                                                             <!--begin::Select-->
 
                                                                     <!--end::Modal dialog-->
-                                                            <div class=" d-flex justify-content-between w-75 ">
-                                                                        <div>
+                                                            <div class=" d-flex justify-content-between  ">
+                                                                        {{-- <div>
                                                                             <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                        </div>
+                                                                        </div> --}}
+                                                                <div style="margin-right: 2px">
+                                                                    <a href="{{route('restaurant.service.increase')}}" class="btn btn-sm btn-khardl">
+                                                                        <i class="fa fa-arrow-circle-up"></i>
+                                                                        {{__('messages.Increase Slots')}}
+                                                                    </a>
+                                                                </div>
+
                                                                 <div>
-                                                                    <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
+                                                                    <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancel branch</a>
                                                                 </div>
                                                             </div>
 
