@@ -17,6 +17,7 @@ import {
   updateCustomerAddress,
   updateLatLng,
 } from "../../../../../../redux/NewEditor/customerSlice"
+import {MdLocationPin} from "react-icons/md"
 
 const Places = ({inputStyle}) => {
   const [libraries, _] = useState(["places"])
@@ -98,23 +99,67 @@ function PlacesAutoComplete({inputStyle}) {
 
     const results = await getGeocode({address: address})
     const {lat, lng} = await getLatLng(results[0])
-<<<<<<< HEAD
     dispatch(updateLatLng({lat, lng}))
-=======
-    setSelected({lat, lng, address})
->>>>>>> f3c21001af30eb7673f8c6b0edfd84bebc7c9d13
+  }
+
+  const getPosition = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, positionError)
+    } else {
+      window.alert("Sorry,Geolocation is not supported by your browser")
+    }
+  }
+
+  const positionError = () => {
+    if (navigator.permissions) {
+      navigator.permissions.query({name: "geolocation"}).then((res) => {
+        if (res.state === "denied") {
+          window.alert(
+            "Enable location permissions for this website in your browser settings"
+          )
+        } else {
+          alert(
+            "Unable to access your location, you can continue by typing your location on the map"
+          )
+        }
+      })
+    }
+  }
+  const showPosition = (position) => {
+    let lat = position.coords.latitude
+    let lng = position.coords.longitude
+
+    dispatch(updateLatLng({lat, lng}))
+
+    convertToAddress(lat, lng)
+  }
+
+  const convertToAddress = (lat, lng) => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0`
+    )
+      .then((res) => res.json())
+      .then((address) => console.log("addressDetected: " + address))
   }
 
   return (
     <Combobox onSelect={handleSelect}>
-      <ComboboxInput
-        value={value}
-        defaultValue={customerAddress}
-        onChange={(e) => setValue(e.target.value)}
-        disabled={!ready}
-        className={inputStyle}
-        placeholder='Search an address...'
-      />
+      <div className='flex items-center gap-2'>
+        <ComboboxInput
+          value={value}
+          defaultValue={customerAddress}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={!ready}
+          className={inputStyle}
+          placeholder='Search an address...'
+        />
+        <div
+          onClick={getPosition}
+          className='w-8 h-8 rounded-lg p-1 border border-[var(--customer)] cursor-pointer'
+        >
+          <MdLocationPin size={28} color={"red"} />
+        </div>
+      </div>
 
       <ComboboxPopover>
         <ComboboxList>

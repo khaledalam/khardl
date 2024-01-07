@@ -49,7 +49,8 @@ const OrderTable = ({data}) => {
                   className={`${
                     order.status.startsWith("accepted") ||
                     order.status.startsWith("ready") ||
-                    order.status.includes("receive")
+                    order.status.includes("receive") ||
+                    order.status.includes("complete")
                       ? "bg-[var(--accepted)]"
                       : "bg-[var(--rejected)]"
                   } rounded-xl flex items-center justify-center p-2 px-4 w-max`}

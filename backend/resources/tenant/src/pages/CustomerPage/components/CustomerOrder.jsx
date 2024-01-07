@@ -3,7 +3,6 @@ import orderIcon from "../../../assets/orderBlack.svg"
 import PrimaryOrderSearch from "./PrimaryOrderSearch"
 import PrimaryOrderSelect from "./PrimaryOrderSelect"
 import OrderTable from "./OrderTable"
-import {customerOrderData} from "../DATA"
 import {
   MdKeyboardArrowLeft,
   MdKeyboardArrowRight,
@@ -15,7 +14,7 @@ import {useSelector} from "react-redux"
 
 const CustomerOrder = () => {
   const [pageNumber, setpageNumber] = useState(1)
-  const [orderPerPage, setOrderPerPage] = useState(7)
+  const [orderPerPage, setOrderPerPage] = useState(5)
   const [dateAdded, setDateAdded] = useState("")
   const [orderStatus, setOrderStatus] = useState("")
   const ordersList = useSelector((state) => state.customerAPI.ordersList)
