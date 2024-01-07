@@ -574,7 +574,11 @@ return [
     "Ready" => "جاهزة",
     "Order by" => "الترتيب ب",
     "Highest orders" => "الاعلي في الطلبات",
-    "Highest customers" => "الاعلي في العملاء"
+    "Highest customers" => "الاعلي في العملاء",
+    "Swift code" => "سويفت كود",
+    "SWIFT code e.g. SWFT12345678909836435647" => "سويفت كود مثال : SWFT12345678909836435647",
+    "Account number" => "رقم الحساب",
+    "Account Number e.g. DFGHGFVB876215bsdjhkn" => "رقم الحساب مثال : DFGHGFVB876215bsdjhkn"
 
 ];
 

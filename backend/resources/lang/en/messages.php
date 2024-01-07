@@ -574,6 +574,10 @@ return [
     "Ready" => "Ready",
     "Order by" => "Order by",
     "Highest customers" => "Highest customers",
-    "Highest orders" => "Highest orders"
+    "Highest orders" => "Highest orders",
+    "Swift code" => "Swift code",
+    "SWIFT code e.g. SWFT12345678909836435647" => "SWIFT code e.g. SWFT12345678909836435647",
+    "Account number" => "Account number",
+    "Account Number e.g. DFGHGFVB876215bsdjhkn" => "Account Number e.g. DFGHGFVB876215bsdjhkn"
 
 ];

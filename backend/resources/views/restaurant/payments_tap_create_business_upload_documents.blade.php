@@ -20,7 +20,8 @@
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="business_log">
                     <span class="">{{ __('messages.'.$title) }}</span>
-                    <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="A business logo."></i>
+                    <span class="text-danger h4"> * </span>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="{{ __('messages.'.$title) }}"></i>
                 </label>
                 <input id="business_log" accept="{{($name == 'business_logo')?'.gif':'.pdf'}},.jpeg,.png" type="file" class="form-control form-control-solid" name="{{$name}}" />
                 <small><i>{{ __('messages.Accept') }}: {{ ($name == 'business_logo')?'GIF':'PDF' }}, JPEG, PNG. {{ __('messages.size <= 8 MG') }}</i></small>
