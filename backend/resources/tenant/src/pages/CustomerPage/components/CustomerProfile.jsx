@@ -16,8 +16,8 @@ const CustomerProfile = () => {
   const [phone, setPhone] = useState("")
   const address = useSelector((state) => state.customerAPI.address)
   const addressLatLng = useSelector((state) => state.customerAPI.addressLatLng)
-  const [isLoading, setIsLoading] = useState(false)
   const [isDisabled, setIsDisabled] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   const userProfile =
     JSON.parse(localStorage.getItem("userProfileInfo")) || null
@@ -64,6 +64,7 @@ const CustomerProfile = () => {
         phone.trim() === userProfile.phone.trim() &&
         address.trim() === userProfile.address.trim()
       ) {
+        setIsDisabled(true)
         console.log("initial values matches userProfile")
       } else {
         console.log("not a match, values changes")
@@ -105,7 +106,7 @@ const CustomerProfile = () => {
   const handleReset = () => {
     fetchProfileData()
   }
-
+  console.log("isDisabled", isDisabled)
   return (
     <div className='p-6'>
       <div className='flex items-center gap-3'>
@@ -162,7 +163,7 @@ const CustomerProfile = () => {
           </button>
           <button
             onClick={handleSaveProfile}
-            disabled={isDisabled}
+            disabled={isDisabled || isLoading ? true : false}
             className='w-[85px] p-2 bg-[var(--customer)] disabled:cursor-not-allowed disabled:bg-neutral-400 outline-none text-white rounded-lg'
           >
             Save

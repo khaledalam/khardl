@@ -32,6 +32,13 @@ const navItems = [
     title: "Profile",
     link: "/dashboard#Profile",
   },
+  {
+    id: 4,
+    imgUrl: ProfileIcon,
+    activeImgUrl: ProfileWhiteIcon,
+    title: "Profile",
+    link: "/dashboard#Profile",
+  },
 ]
 
 const SideNavbar = () => {

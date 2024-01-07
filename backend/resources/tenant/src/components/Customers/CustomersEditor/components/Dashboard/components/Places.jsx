@@ -157,7 +157,6 @@ function PlacesAutoComplete({inputStyle}) {
           type='text'
           name='location'
           id={"location"}
-          defaultValue={customerAddress}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={!ready}

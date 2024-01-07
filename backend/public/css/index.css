@@ -6471,12 +6471,12 @@ details.collapse summary::-webkit-details-marker {
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
 }
-.disabled\:bg-transparent:disabled {
-  background-color: transparent;
-}
 .disabled\:bg-neutral-400:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(163 163 163 / var(--tw-bg-opacity));
+}
+.disabled\:bg-transparent:disabled {
+  background-color: transparent;
 }
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
@@ -13712,12 +13712,12 @@ details.collapse summary::-webkit-details-marker {
 .disabled\:cursor-not-allowed:disabled {
   cursor: not-allowed;
 }
-.disabled\:bg-transparent:disabled {
-  background-color: transparent;
-}
 .disabled\:bg-neutral-400:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(163 163 163 / var(--tw-bg-opacity));
+}
+.disabled\:bg-transparent:disabled {
+  background-color: transparent;
 }
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
