@@ -8,11 +8,13 @@ import CustomerProfile from "./components/CustomerProfile"
 import {useSearchParams} from "react-router-dom"
 import CustomerOrderDetail from "./components/CustomerOrderDetail"
 import {MenuContext} from "react-flexible-sliding-menu"
+import CustomerPayment from "./components/CustomerPayment"
 
 const TABS = {
   dashboard: "Dashboard",
   orders: "Orders",
   profile: "Profile",
+  payment: "Payment",
 }
 export const CustomerPage = () => {
   const isSidebarCollapse = false
@@ -54,6 +56,8 @@ export const CustomerPage = () => {
             <CustomerOrder />
           ) : activeNavItem === TABS.profile && !showOrderDetail ? (
             <CustomerProfile />
+          ) : activeNavItem === TABS.payment && !showOrderDetail ? (
+            <CustomerPayment />
           ) : (
             <></>
           )}

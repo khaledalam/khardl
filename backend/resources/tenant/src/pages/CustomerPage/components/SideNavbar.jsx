@@ -6,6 +6,8 @@ import OrderWhite from "../../../assets/orderWhite.svg"
 import OrderBlack from "../../../assets/orderBlack.svg"
 import ProfileIcon from "../../../assets/profileIcon.svg"
 import ProfileWhiteIcon from "../../../assets/profileWhiteIcon.svg"
+import CardIcon from "../../../assets/cardProfileIcon.svg"
+import CardWhiteIcon from "../../../assets/CardProfileWhite.svg"
 import {useDispatch, useSelector} from "react-redux"
 import {setActiveNavItem} from "../../../redux/NewEditor/customerSlice"
 import {useNavigate} from "react-router-dom"
@@ -34,10 +36,10 @@ const navItems = [
   },
   {
     id: 4,
-    imgUrl: ProfileIcon,
-    activeImgUrl: ProfileWhiteIcon,
-    title: "Profile",
-    link: "/dashboard#Profile",
+    imgUrl: CardIcon,
+    activeImgUrl: CardWhiteIcon,
+    title: "Payment",
+    link: "/dashboard#Payment",
   },
 ]
 
@@ -52,6 +54,8 @@ const SideNavbar = () => {
     dispatch(setActiveNavItem("Dashboard"))
   } else if (window.location.href.indexOf("#Orders") > -1) {
     dispatch(setActiveNavItem("Orders"))
+  } else if (window.location.href.indexOf("#Payment") > -1) {
+    dispatch(setActiveNavItem("Payment"))
   }
 
   // useEffect(() => {
