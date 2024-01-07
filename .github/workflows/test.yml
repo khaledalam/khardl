@@ -1,7 +1,7 @@
 on: push
 name: Testing
 env:
-  backend_path: /home/khardl5/public_html/backend/
+  backend_path: backend
 jobs:
   phpunit:
     runs-on: ubuntu-latest
