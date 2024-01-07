@@ -550,5 +550,8 @@ return [
     "in" => "in",
     "configurations"=>"Configurations",
     "Activate"   => "تفعيل ",
-    "Deactivate"=>"Deactivate"
+    "Deactivate"=>"Deactivate",
+    "Increase Slots"=>"Increase Slots",
+    'Branch slot has been increased'=>"Branch slot has been increased"
+
 ];
