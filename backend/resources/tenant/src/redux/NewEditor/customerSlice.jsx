@@ -10,6 +10,7 @@ const customerAPISlice = createSlice({
       lng: 45.45,
     },
     ordersList: [],
+    saveProfileChanges: true,
   },
   reducers: {
     setActiveNavItem: (state, action) => {
@@ -24,6 +25,9 @@ const customerAPISlice = createSlice({
     updateOrderList: (state, action) => {
       state.ordersList = action.payload
     },
+    updateProfileSaveStatus: (state, action) => {
+      state.saveProfileChanges = action.payload
+    },
   },
 })
 
@@ -32,5 +36,6 @@ export const {
   updateCustomerAddress,
   updateLatLng,
   updateOrderList,
+  updateProfileSaveStatus,
 } = customerAPISlice.actions
 export default customerAPISlice.reducer

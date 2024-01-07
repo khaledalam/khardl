@@ -5,7 +5,10 @@ import AxiosInstance from "../../../axios/axios"
 import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
 import Places from "../../../components/Customers/CustomersEditor/components/Dashboard/components/Places"
-import {updateCustomerAddress} from "../../../redux/NewEditor/customerSlice"
+import {
+  updateCustomerAddress,
+  updateProfileSaveStatus,
+} from "../../../redux/NewEditor/customerSlice"
 import {useSelector, useDispatch} from "react-redux"
 
 const CustomerProfile = () => {
@@ -65,10 +68,13 @@ const CustomerProfile = () => {
         address.trim() === userProfile.address.trim()
       ) {
         setIsDisabled(true)
+        dispatch(updateProfileSaveStatus(true))
+
         console.log("initial values matches userProfile")
       } else {
         console.log("not a match, values changes")
         setIsDisabled(false)
+        dispatch(updateProfileSaveStatus(false))
       }
     }
   }, [address, firstName, lastName, phone, userProfile])

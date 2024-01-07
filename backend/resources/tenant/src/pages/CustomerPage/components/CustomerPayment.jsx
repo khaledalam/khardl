@@ -14,7 +14,7 @@ const CustomerPayment = () => {
       <h3 className='border-b inline-block border-[var(--customer)] text-xl pb-1 my-5'>
         My Card
       </h3>
-      <div className='w-auto overflow-x-scroll h-full flex items-center gap-14 my-5'>
+      <div className='w-auto overflow-x-scroll h-full flex items-center gap-14 my-5 hide-scroll'>
         <div className='w-max'>
           <CardPayment
             poweredByImgURl={imgVisa}

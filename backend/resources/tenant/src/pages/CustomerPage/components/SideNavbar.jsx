@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import NavItem from "./NavItem"
 import Dashboard from "../../../assets/dashboardWhiteIcon.svg"
 import DashboardBlack from "../../../assets/dashboardBlockIcon.svg"
@@ -9,7 +9,10 @@ import ProfileWhiteIcon from "../../../assets/profileWhiteIcon.svg"
 import CardIcon from "../../../assets/cardProfileIcon.svg"
 import CardWhiteIcon from "../../../assets/CardProfileWhite.svg"
 import {useDispatch, useSelector} from "react-redux"
-import {setActiveNavItem} from "../../../redux/NewEditor/customerSlice"
+import {
+  setActiveNavItem,
+  updateProfileSaveStatus,
+} from "../../../redux/NewEditor/customerSlice"
 import {useNavigate} from "react-router-dom"
 
 const navItems = [
@@ -46,7 +49,11 @@ const navItems = [
 const SideNavbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [status, setStatus] = useState(false)
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
+  const saveProfileChange = useSelector(
+    (state) => state.customerAPI.saveProfileChanges
+  )
 
   if (window.location.href.indexOf("#Profile") > -1) {
     dispatch(setActiveNavItem("Profile"))
@@ -58,9 +65,27 @@ const SideNavbar = () => {
     dispatch(setActiveNavItem("Payment"))
   }
 
-  // useEffect(() => {
-  //   navigate("/dashboard#Dashboard")
-  // }, [])
+  useEffect(() => {
+    dispatch(updateProfileSaveStatus(true))
+  }, [])
+
+  const handleNavigate = (navItem) => {
+    navigate(navItem.link)
+  }
+  const handleWindowAlert = () => {
+    setStatus(
+      window.confirm("Are you sure you want to navigate to another page")
+    )
+  }
+  useEffect(() => {
+    if (status) {
+      dispatch(updateProfileSaveStatus(true))
+    } else {
+      dispatch(updateProfileSaveStatus(false))
+    }
+  }, [dispatch, status])
+  console.log("status updated", status)
+  console.log("saveProfile", saveProfileChange)
 
   return (
     <div className='mt-5'>
@@ -69,7 +94,11 @@ const SideNavbar = () => {
           <NavItem
             key={navItem.id}
             active={navItem.title === activeNavItem}
-            onClick={() => navigate(navItem.link)}
+            onClick={
+              saveProfileChange
+                ? () => handleNavigate(navItem)
+                : handleWindowAlert
+            }
             title={navItem.title}
             imgUrl={navItem.imgUrl}
             activeImgUrl={navItem.activeImgUrl}
