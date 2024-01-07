@@ -2,15 +2,16 @@
 
 namespace App\Providers;
 
+use URL;
 use App\Models\CentralSetting;
 use App\Repositories\PDF\OrderPDF;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use App\Repositories\PDF\CustomerPDF;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\PDF\PdfPrintInterface;
 use App\Repositories\Customer\CartRepository;
-use App\Repositories\PDF\CustomerPDF;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AppServiceProvider extends ServiceProvider
@@ -38,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \URL::forceScheme('https');
         $user = Auth::user();
         View::share('link', request()->segment(1));
         View::share('admin_link', request()->segment(2));

@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->enum("term",["DAIL", "WEEKLY", "MONTHLY", "BIMONTHLY", "QUARTERLY", "HALFYEARLY", "YEARLY"])->default('YEARLY');
-            $table->integer('period')->default(1);
-            $table->integer("due")->default(0);
-            $table->boolean('auto_renew')->default(true);
+            $table->date("start_at");
+            $table->date("end_at");
             $table->integer("amount");
-
+            $table->integer("number_of_branches");
+            $table->string("cus_id");
+            $table->string("chg_id");
+            $table->string("payment_agreement_id")->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

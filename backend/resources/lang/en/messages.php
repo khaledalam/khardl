@@ -552,6 +552,8 @@ return [
     "Activate"   => "تفعيل ",
     "Deactivate"=>"Deactivate",
     "Increase Slots"=>"Increase Slots",
-    'Branch slot has been increased'=>"Branch slot has been increased"
-
+    'Branch slot has been increased'=>"Branch slot has been increased",
+    "New subscription"=>"New subscription",
+    "Number of branches"=> "Number of branches",
+    "purchase"=>"purchase"
 ];

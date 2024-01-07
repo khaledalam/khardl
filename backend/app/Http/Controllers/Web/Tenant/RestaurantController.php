@@ -48,8 +48,10 @@ class RestaurantController extends BaseController
         $subscription = tenancy()->central(function(){
             return Subscription::first();
         });
+        $customer_tap_id = Auth::user()->tap_customer_id;
+        $price = 10;
 
-        return view('restaurant.service', compact('user', 'branches','subscription'));
+        return view('restaurant.service', compact('user', 'price','customer_tap_id','branches','subscription'));
     }
 
     public function delivery(){
@@ -834,7 +836,8 @@ class RestaurantController extends BaseController
         ]);
 
     }
-    public function servicesIncrease(){
+    public function servicesBuy(Request $request){
+        dd($request->all());
         Setting::first()->update([
             'branch_slots'=> DB::raw('branch_slots + 1'),
         ]);

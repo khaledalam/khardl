@@ -552,7 +552,9 @@ return [
     "configurations"=>"الاعدادات",
     "Deactivate"=>"الغاء التفعيل",
     "Increase Slots"=>"زيادة العدد",
-    'Branch slot has been increased'=>"تم تزويد عدد الفروع المتاحة "
-   
+    'Branch slot has been increased'=>"تم تزويد عدد الفروع المتاحة ",
+    "New subscription"=>"اشتراك جديد",
+    "Number of branches"=>"عدد الفروع",
+    "purchase"=>"شراء"
 ];
 

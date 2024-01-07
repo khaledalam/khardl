@@ -9,10 +9,13 @@ class Subscription extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'term',
-        'period',
-        'due',
-        'auto_renew',
-        'amount'
+        "start_at",
+        "end_at",
+        'amount',
+        "number_of_branches",
+        "user_id",
+        "chg_id",
+        'cus_id',
+        'payment_agreement_id'
     ];
 }

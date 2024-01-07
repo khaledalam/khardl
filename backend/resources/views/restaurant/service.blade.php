@@ -3,13 +3,115 @@
 @section('title', __('messages.services'))
 
 @section('content')
-@push('styles')
-<link href="{{ global_asset('js/custom/creditCard/main.css')}}"rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.6.0/js/gosell.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+@push("styles")
+<link
+href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css"
+rel="stylesheet"
+/>
+<script
+type="text/javascript"
+src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
+></script>
 @endpush
 @push('scripts')
 
+<script>
+    goSell.config({
+  containerID: "root",
+  gateway: {
+    publicKey: "{{env('TAP_PUBLIC_API_KEY')}}",
+    merchantId: null,
+    language: "{{app()->getLocale()}}",
+    contactInfo: true,
+    supportedCurrencies: "all",
+    supportedPaymentMethods: "all",
+    saveCardOption: false,
+    customerCards: true,
+    notifications: "standard",
+    callback: (response) => {
+      console.log("response", response);
+    },
+    onClose: () => {
+      console.log("onClose Event");
+    },
+    backgroundImg: {
+      url: "imgURL",
+      opacity: "0.5",
+    },
+    labels: {
+      cardNumber: "Card Number",
+      expirationDate: "MM/YY",
+      cvv: "CVV",
+      cardHolder: "Name on Card",
+      actionButton: "Pay",
+    },
+    style: {
+      base: {
+        color: "#535353",
+        lineHeight: "18px",
+        fontFamily: "sans-serif",
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "rgba(0, 0, 0, 0.26)",
+          fontSize: "15px",
+        },
+      },
+      invalid: {
+        color: "red",
+        iconColor: "#fa755a ",
+      },
+    },
+  },
+  customer: {
+    id: '{{$customer_tap_id}}'
+  },
+  order: {
+    amount: '{{$price}}',
+    currency: "SAR",
+    items: [
+      {
+        id: 1,
+        name: "item1",
+        description: "item1 desc",
+        quantity: "1",
+        amount_per_unit: "00.000",
+        // discount: {
+        //   type: "P",
+        //   value: "10%",
+        // },
+        total_amount: "000.000",
+      },
+      
+    ],
+    shipping: null,
+    taxes: null,
+  },
+  transaction: {
+    mode: "charge",
+    charge: {
+      saveCard: true,
+      threeDSecure: true,
+      description: "{{__('messages.New subscription')}}",
+      statement_descriptor: "Sample",
+      reference: {
+        transaction: "txn_0001",
+        order: "{{$subscription->id}}",
+      },
+      hashstring:"",
+      metadata: {},
+      receipt: {
+        email: false,
+        sms: true,
+      },
+      redirect: "{{route('tap.payments_submit_card_details')}}",
+      post: null,
+    },
+  },
+});
+
+
+</script>
 
 @endpush
 
@@ -20,8 +122,189 @@
             <div class="page d-flex flex-row flex-column-fluid">
                 <!--begin::Wrapper-->
                 <div class=" d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                    <!--begin::Header-->
+                    <div id="kt_header" class="header align-items-stretch">
+                        <!--begin::Container-->
+                        <div class="container-fluid d-flex align-items-stretch justify-content-between">
+                            <!--begin::Aside mobile toggle-->
+                            <div class="d-flex align-items-center d-lg-none ms-n2 me-2" title="Show aside menu">
+                                <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
+                                     id="kt_aside_mobile_toggle">
+                                    <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
+                                    <span class="svg-icon svg-icon-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none">
+                                        <path
+                                            d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z"
+                                            fill="currentColor" />
+                                        <path opacity="0.3"
+                                              d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z"
+                                              fill="currentColor" />
+                                    </svg>
+                                </span>
+                                    <!--end::Svg Icon-->
+                                </div>
+                            </div>
+                            <!--end::Aside mobile toggle-->
+                            <!--begin::Mobile logo-->
+                            <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                                <a href="/" class="d-lg-none">
+                                    <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
+                                </a>
+                            </div>
+                            <!--end::Mobile logo-->
+                            <!--begin::Wrapper-->
+                            <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+                                <!--begin::Navbar-->
+                                <div class="d-flex align-items-stretch" id="kt_header_nav">
+                                    <!--begin::Menu wrapper-->
+                                    <div class="header-menu align-items-stretch">
+                                        <!--begin::Page title-->
+                                        <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
+                                             data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
+                                             class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                                            <!--begin::Title-->
+                                            <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">
+                                            @yield('title', 'Dashboard')
+                                                <!--begin::Separator-->
+                                                <span class="h-20px border-1 border-gray-200 border-start ms-3 mx-2 me-1"></span>
+                                                <!--end::Separator-->
+                                            </h1>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Page title-->
+                                    </div>
+                                    <!--end::Menu wrapper-->
+                                </div>
+                                <!--end::Navbar-->
+                                <!--begin::Toolbar wrapper-->
+                                <div class="d-flex align-items-stretch flex-shrink-0">
+
+                                    <!--begin::User menu-->
+                                    <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+                                        <!--begin::Menu wrapper-->
+                                        <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
+                                             data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                                             data-kt-menu-placement="bottom-end">
+                                            <img src="assets/media/avatars/300-1.jpg" alt="user" />
+                                        </div>
+                                        <!--begin::User account menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-khardl fw-bold py-4 fs-6 w-275px"
+                                             data-kt-menu="true">
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-3">
+                                                <div class="menu-content d-flex align-items-center px-3">
+                                                    <!--begin::Avatar-->
+                                                    <div class="symbol symbol-50px me-5">
+                                                        <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+                                                    </div>
+                                                    <!--end::Avatar-->
+                                                    <!--begin::Username-->
+                                                    <div class="d-flex flex-column">
+                                                        <div class="fw-bolder d-flex align-items-center fs-5">
+                                                            Max Smith
+                                                            <span
+                                                                class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span>
+                                                        </div>
+                                                        <a href="#"
+                                                           class="fw-bold text-muted text-hover-khardl fs-7">max@kt.com</a>
+                                                    </div>
+                                                    <!--end::Username-->
+                                                </div>
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu separator-->
+                                            <div class="separator my-2"></div>
+                                            <!--end::Menu separator-->
+
+                                            <!--begin::Menu separator-->
+                                            <div class="separator my-2"></div>
+                                            <!--end::Menu separator-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-5" data-kt-menu-trigger="hover"
+                                                 data-kt-menu-placement="left-start">
+                                                <a href="#" class="menu-link px-5">
+                                            <span class="menu-title position-relative">Language
+                                                <span
+                                                    class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
+                                                    <img class="w-15px h-15px rounded-1 ms-2"
+                                                         src="assets/media/flags/united-states.svg"
+                                                         alt="" /></span></span>
+                                                </a>
+                                                <!--begin::Menu sub-->
+                                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="demo1/dist/account/settings.html"
+                                                           class="menu-link d-flex px-5 active">
+                                                    <span class="symbol symbol-20px me-4">
+                                                        <img class="rounded-1"
+                                                             src="assets/media/flags/united-states.svg" alt="" />
+                                                    </span>English</a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+                                                    <!--begin::Menu item-->
+                                                    <div class="menu-item px-3">
+                                                        <a href="demo1/dist/account/settings.html"
+                                                           class="menu-link d-flex px-5">
+                                                    <span class="symbol symbol-20px me-4">
+                                                        <img class="rounded-1" src="assets/media/flags/saudi-arabia.svg"
+                                                             alt="" /> </span>Arabic</a>
+                                                    </div>
+                                                    <!--end::Menu item-->
+                                                </div>
+                                                <!--end::Menu sub-->
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-5 my-1">
+                                                <a href="log.html" class="menu-link px-5">Logs</a>
+                                            </div>
+                                            <!--end::Menu item-->
+                                            <!--begin::Menu item-->
+                                            <div class="menu-item px-5">
+                                                <a href="demo1/dist/authentication/flows/basic/sign-in.html"
+                                                   class="menu-link px-5">Sign Out</a>
+                                            </div>
+                                            <!--end::Menu item-->
+
+                                        </div>
+                                        <!--end::User account menu-->
+                                        <!--end::Menu wrapper-->
+                                    </div>
+                                    <!--end::User menu-->
+                                    <!--begin::Header menu toggle-->
+                                    <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
+                                        <div class="btn btn-icon btn-active-light-khardl w-30px h-30px w-md-40px h-md-40px"
+                                             id="kt_header_menu_mobile_toggle">
+                                            <!--begin::Svg Icon | path: icons/duotune/text/txt001.svg-->
+                                            <span class="svg-icon svg-icon-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none">
+                                            <path
+                                                d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z"
+                                                fill="currentColor" />
+                                            <path opacity="0.3"
+                                                  d="M21 16H3C2.4 16 2 15.6 2 15V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V15C22 15.6 21.6 16 21 16ZM14 20V19C14 18.4 13.6 18 13 18H3C2.4 18 2 18.4 2 19V20C2 20.6 2.4 21 3 21H13C13.6 21 14 20.6 14 20Z"
+                                                  fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                            <!--end::Svg Icon-->
+                                        </div>
+                                    </div>
+                                    <!--end::Header menu toggle-->
+                                </div>
+                                <!--end::Toolbar wrapper-->
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        <!--end::Container-->
+                    </div>
+                    <!--end::Header-->
                     <!--begin::Content-->
                     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+
+
 
                         <!--begin::Post-->
                         <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -94,24 +377,16 @@
                                                             <!--end::Heading-->
 
                                                             <!--begin::Select-->
-
+                                                           
                                                                     <!--end::Modal dialog-->
-                                                            <div class=" d-flex justify-content-between  ">
-                                                                        {{-- <div>
-                                                                            <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                        </div> --}}
-                                                                <div style="margin-right: 2px">
-                                                                    <a href="{{route('restaurant.service.increase')}}" class="btn btn-sm btn-khardl">
-                                                                        <i class="fa fa-arrow-circle-up"></i>
-                                                                        {{__('messages.Increase Slots')}}
-                                                                    </a>
-                                                                </div>
-
+                                                            <div class=" d-flex justify-content-between w-75 ">
+                                                                        <div>
+                                                                            <a href="#"  class="btn btn-sm btn-khardl"   data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                        </div>
                                                                 <div>
-                                                                    <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancel branch</a>
+                                                                    <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
                                                                 </div>
                                                             </div>
-
                                                             <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -121,70 +396,34 @@
                                                                             <div class="modal-header pb-0 border-0 ">
                                                                                 <h5 class="modal-title text-center">Subscribe to the branch package</h5>
                                                                             </div>
-
-                                                                                <div id="root"></div>
-                                                                                <p id="msg"></p>
-                                                                                <button id="tap-btn"  onclick="goSell.submit()" >Submit</button>
-
-                                                                      <script>
-                                                                            goSell.goSellElements({
-                                                                                containerID:"root",
-
-                                                                                gateway:{
-                                                                                    callback	: function(event){
-                                                                                        if(event.status == "ACTIVE" && event.card.id){
-                                                                                            $.ajax({
-                                                                                                url: '{{ route('tap.payments_submit_card_details', ['cardId' => '__card__','data'=>'__data__']) }}'
-                                                                                                .replace('__card__', event.card.id) .replace('__data__', JSON.stringify(event)),
-                                                                                                type: 'POST',
-                                                                                                dataType: 'json',
-                                                                                                data: {
-                                                                                                    '_token': '{{ csrf_token() }}', // Include the CSRF token
-                                                                                                },
-                                                                                                success: function (response) {
-
-                                                                                                },
-                                                                                                error: function (error) {
-                                                                                                    console.error('Error toggling user status:', error);
-                                                                                                }
-                                                                                            });
-                                                                                        }
-
-                                                                                    },
-                                                                                    publicKey:"pk_test_LSwNp8KReqHB4Mgly1PWOA7E",
-                                                                                    language: "{{app()->getLocale()}}",
-                                                                                    supportedCurrencies: "all",
-                                                                                    supportedPaymentMethods: "all",
-                                                                                    notifications: 'msg',
-                                                                                    style: {
-                                                                                        base: {
-                                                                                            color: '#535353',
-                                                                                            lineHeight: '18px',
-                                                                                            fontFamily: 'sans-serif',
-                                                                                            fontSmoothing: 'antialiased',
-                                                                                            fontSize: '16px',
-                                                                                            '::placeholder': {
-                                                                                                color: 'rgba(0, 0, 0, 0.26)',
-                                                                                                fontSize:'15px'
-                                                                                            }
-                                                                                        },
-                                                                                        invalid: {
-                                                                                            color: 'red',
-                                                                                            iconColor: '#fa755a '
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            });
-
-                                                                        </script>
-
-
-                                                                                <!--end:Form-->
+        
+                                                                            <div id="root"></div>
+                                                                            <div class="form-group">
+                                                                                <label for="price">Current Price:</label>
+                                                                                <input type="text" class="form-control" id="price" name="price" value="{{ $price }}" readonly>
+                                                                            </div>
+                                                            
+                                                                            <div class="form-group">
+                                                                                <label for="factor">{{__('messages.Number of branches')}}</label>
+                                                                                <input type="number" class="form-control" id="factor" name="factor" value="1" min="1" onchange="updatePrice()">
+                                                                            </div>
+                                                                            <p id="msg"></p>
+                                                                            <button id="tap-btn"  onclick="goSell.submit()" >{{__("messages.purchase")}}</button>
                                                                     </div>
+                                                                    <script>
+                                                                         function updatePrice() {
+                                                                            const priceInput = document.getElementById('price');
+                                                                            const factorInput = document.getElementById('factor');
+                                                                            const factor = parseFloat(factorInput.value) || 1; // Default to 1 if factor is not a valid number
+
+                                                                            priceInput.value = parseFloat(priceInput.value) + factor;
+                                                                        }
+                                                                    </script>
                                                                 </div>
                                                                         <!--end::Modal body-->
                                                             </div>
-                                                                    <!--end::Modal content-->
+                                                            
+                                                           
 
                                                             <!--end::Select-->
                                                         </div>
@@ -328,180 +567,180 @@
 
 
                         <!--begin::Post-->
-{{--                        <div class="post d-flex flex-column-fluid mt-5" id="kt_post">--}}
-{{--                            <!--begin::Container-->--}}
-{{--                            <div id="kt_content_container" class="container-xxl">--}}
-{{--                                <!--begin::Pricing card-->--}}
-{{--                                <div class="card" id="kt_pricing">--}}
-{{--                                    <!--begin::Card body-->--}}
-{{--                                    <div class="card-body p-lg-10">--}}
-{{--                                        <!--begin::Plans-->--}}
-{{--                                        <div class="d-flex flex-column">--}}
-{{--                                            <!--begin::Heading-->--}}
-{{--                                            <div class="mb-13 text-center">--}}
-{{--                                                <h3 class="fs-2hx fw-bolder mb-5">Application for your site</h3>--}}
-{{--                                            </div>--}}
-{{--                                            <!--end::Heading-->--}}
+                        <div class="post d-flex flex-column-fluid mt-5" id="kt_post">
+                            <!--begin::Container-->
+                            <div id="kt_content_container" class="container-xxl">
+                                <!--begin::Pricing card-->
+                                <div class="card" id="kt_pricing">
+                                    <!--begin::Card body-->
+                                    <div class="card-body p-lg-10">
+                                        <!--begin::Plans-->
+                                        <div class="d-flex flex-column">
+                                            <!--begin::Heading-->
+                                            <div class="mb-13 text-center">
+                                                <h3 class="fs-2hx fw-bolder mb-5">Application for your site</h3>
+                                            </div>
+                                            <!--end::Heading-->
 
-{{--                                            <!--begin::Row-->--}}
-{{--                                            <div class="row g-10">--}}
+                                            <!--begin::Row-->
+                                            <div class="row g-10">
 
-{{--                                                <!--begin::Col-->--}}
-{{--                                                <div class="col-xl-3">--}}
-{{--                                                    <div class="d-flex h-100 align-items-center">--}}
-{{--                                                        <!--begin::Option-->--}}
-{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
-{{--                                                            <!--begin::Heading-->--}}
-{{--                                                            <div class="mb-7 text-center">--}}
-{{--                                                                <!--begin::Title-->--}}
-{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">Monthly</h3>--}}
-{{--                                                                <!--end::Title-->--}}
-{{--                                                                <!--begin::Price-->--}}
-{{--                                                                <div class="text-center">--}}
-{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
-{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">299</span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <!--end::Price-->--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Heading-->--}}
+                                                <!--begin::Col-->
+                                                <div class="col-xl-3">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-7 text-center">
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">Monthly</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+                                                                    <span class="mb-2 text-khardl">SAR</span>
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">299</span>
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
 
-{{--                                                            <!--begin::Select-->--}}
-{{--                                                            <div class=" d-flex justify-content-between ">--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-danger" id="myLink2"><i class="fas fa-trash"></i>Denied</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div class="mx-3">--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-secondary">Current</a>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Select-->--}}
-{{--                                                        </div>--}}
-{{--                                                        <!--end::Option-->--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <!--end::Col-->--}}
-
-
-{{--                                                <!--begin::Col-->--}}
-{{--                                                <div class="col-xl-3">--}}
-{{--                                                    <div class="d-flex h-100 align-items-center">--}}
-{{--                                                        <!--begin::Option-->--}}
-{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
-{{--                                                            <!--begin::Heading-->--}}
-{{--                                                            <div class="mb-7 text-center">--}}
-{{--                                                                <!--begin::Title-->--}}
-{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">3 months</h3>--}}
-{{--                                                                <!--end::Title-->--}}
-{{--                                                                <!--begin::Price-->--}}
-{{--                                                                <div class="text-center">--}}
-{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
-{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">499</span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <!--end::Price-->--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Heading-->--}}
-
-{{--                                                            <!--begin::Select-->--}}
-{{--                                                            <div class=" d-flex justify-content-between ">--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Select-->--}}
-{{--                                                        </div>--}}
-{{--                                                        <!--end::Option-->--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <!--end::Col-->--}}
+                                                            <!--begin::Select-->
+                                                            <div class=" d-flex justify-content-between ">
+                                                                <div>
+                                                                    <a href="#" class="btn btn-sm btn-danger" id="myLink2"><i class="fas fa-trash"></i>Denied</a>
+                                                                </div>
+                                                                <div class="mx-3">
+                                                                    <a href="#" class="btn btn-sm btn-secondary">Current</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col-->
 
 
-{{--                                                <!--begin::Col-->--}}
-{{--                                                <div class="col-xl-3">--}}
-{{--                                                    <div class="d-flex h-100 align-items-center">--}}
-{{--                                                        <!--begin::Option-->--}}
-{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
-{{--                                                            <!--begin::Heading-->--}}
-{{--                                                            <div class="mb-7 text-center">--}}
-{{--                                                                <!--begin::Title-->--}}
-{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">6 months</h3>--}}
-{{--                                                                <!--end::Title-->--}}
-{{--                                                                <!--begin::Price-->--}}
-{{--                                                                <div class="text-center">--}}
-{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
-{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">799</span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <!--end::Price-->--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Heading-->--}}
+                                                <!--begin::Col-->
+                                                <div class="col-xl-3">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-7 text-center">
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">3 months</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+                                                                    <span class="mb-2 text-khardl">SAR</span>
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">499</span>
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
 
-{{--                                                            <!--begin::Select-->--}}
-{{--                                                            <div class=" d-flex justify-content-between ">--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Select-->--}}
-{{--                                                        </div>--}}
-{{--                                                        <!--end::Option-->--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <!--end::Col-->--}}
-
-
-{{--                                                <!--begin::Col-->--}}
-{{--                                                <div class="col-xl-3">--}}
-{{--                                                    <div class="d-flex h-100 align-items-center">--}}
-{{--                                                        <!--begin::Option-->--}}
-{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
-{{--                                                            <!--begin::Heading-->--}}
-{{--                                                            <div class="mb-7 text-center">--}}
-{{--                                                                <!--begin::Title-->--}}
-{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">12 months</h3>--}}
-{{--                                                                <!--end::Title-->--}}
-{{--                                                                <!--begin::Price-->--}}
-{{--                                                                <div class="text-center">--}}
-{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
-{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">1299</span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <!--end::Price-->--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Heading-->--}}
-
-{{--                                                            <!--begin::Select-->--}}
-{{--                                                            <div class=" d-flex justify-content-between ">--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Select-->--}}
-{{--                                                        </div>--}}
-{{--                                                        <!--end::Option-->--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <!--end::Col-->--}}
+                                                            <!--begin::Select-->
+                                                            <div class=" d-flex justify-content-between ">
+                                                                <div>
+                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col-->
 
 
+                                                <!--begin::Col-->
+                                                <div class="col-xl-3">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-7 text-center">
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">6 months</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+                                                                    <span class="mb-2 text-khardl">SAR</span>
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">799</span>
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
 
-{{--                                            </div>--}}
-{{--                                            <!--end::Row-->--}}
-{{--                                        </div>--}}
-{{--                                        <!--end::Plans-->--}}
-{{--                                    </div>--}}
-{{--                                    <!--end::Card body-->--}}
-{{--                                </div>--}}
-{{--                                <!--end::Pricing card-->--}}
-{{--                            </div>--}}
-{{--                            <!--end::Container-->--}}
-{{--                        </div>--}}
+                                                            <!--begin::Select-->
+                                                            <div class=" d-flex justify-content-between ">
+                                                                <div>
+                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col-->
+
+
+                                                <!--begin::Col-->
+                                                <div class="col-xl-3">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-7 text-center">
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">12 months</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+                                                                    <span class="mb-2 text-khardl">SAR</span>
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">1299</span>
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
+
+                                                            <!--begin::Select-->
+                                                            <div class=" d-flex justify-content-between ">
+                                                                <div>
+                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col-->
+
+
+
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Plans-->
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Pricing card-->
+                            </div>
+                            <!--end::Container-->
+                        </div>
                         <!--end::Post-->
 
 
@@ -515,6 +754,7 @@
         </div>
         <!--end::Root-->
         <!--end::Main-->
+
 
         <!--begin::Modal - Cancle branch-->
         <div class="modal fade" id="kt_modal_cancle_branch" tabindex="-1" aria-hidden="true">
@@ -584,7 +824,7 @@
         <!--end::Modal - Cancle branch-->
 
 
-
+      
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var myLink = document.getElementById("myLink");
@@ -631,8 +871,8 @@
             });
 
         </script>
-
-
+        
+       
      </div>
      <!--end::Content-->
 @endsection
