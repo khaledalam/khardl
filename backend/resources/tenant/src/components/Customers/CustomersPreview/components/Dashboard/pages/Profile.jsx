@@ -48,6 +48,7 @@ const Profile = () => {
 
       try {
         await AxiosInstance.post(`/user`, {
+          address: address,
           first_name: firstName,
           last_name: lastName,
           phone: phone,
@@ -66,8 +67,6 @@ const Profile = () => {
       }
     }
   }
-
-  console.log("selected", selected)
 
   return (
     <div className='w-full bg-[var(--secondary)] py-6 px-4'>
@@ -116,8 +115,12 @@ const Profile = () => {
             <div className='py-4 px-8'>
               <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]' />
               <p className='mb-2 mt-4 mx-2'>{t("Address")}</p>
-              <div className='w-[100%]'>
-                <Places selected={selected} setSelected={setSelected} />
+              <div className='w-[100%] h-[400px]'>
+                <Places
+                  inputStyle={
+                    "w-full text-[14px] bg-[var(--secondary)]  py-3 rounded-full px-4 appearance-none"
+                  }
+                />
               </div>
             </div>
           </div>

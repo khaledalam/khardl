@@ -104,7 +104,8 @@ const OuterSidebarNav = ({id}) => {
         .unwrap()
         .then((res) => {
           setStatusCode(HTTP_NOT_AUTHENTICATED)
-          navigate("/login", {replace: true})
+          navigate("/", {replace: true})
+          closeMenu()
           toast.success("Logged out successfully")
         })
     } catch (err) {
@@ -233,7 +234,10 @@ const OuterSidebarNav = ({id}) => {
             </div> */}
 
             <div
-              onClick={() => navigate("/login")}
+              onClick={() => {
+                navigate("/login")
+                closeMenu()
+              }}
               className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg cursor-pointer border border-[#C0D123] items-center '
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
