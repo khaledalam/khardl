@@ -46,8 +46,6 @@ const Profile = () => {
       if (loading) return
       setLoading(true)
 
-        console.log(selected);
-
       try {
         await AxiosInstance.post(`/user`, {
           address: customerAddress,
