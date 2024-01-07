@@ -127,6 +127,7 @@ Route::group([
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
+                Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
                     Route::get('/customers-data','index')->name('list');

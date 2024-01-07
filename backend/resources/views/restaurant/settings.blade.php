@@ -27,7 +27,7 @@
                                         <!--begin::Card header-->
                                         <div class="card-header">
                                             <div class="card-title">
-                                                <h2>{{ __('messages.delivery-fee')}}</h2>
+                                                <h2>{{ __('messages.fees')}}</h2>
                                             </div>
                                         </div>
                                         <!--end::Card header-->
@@ -40,10 +40,10 @@
                                                 <label class="form-label">{{ __('messages.delivery-fee')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="text" name="delivery_fee" class="form-control mb-2" required placeholder="{{ __('messages.delivery-fee')}} {{__('messages.in')}} {{__('messages.Halala')}}" value="{{$settings['delivery_fee']}}" />
+                                                <input type="number" step="0.1" name="delivery_fee" class="form-control mb-2" required placeholder="{{ __('messages.delivery-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['delivery_fee']}}" />
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{__('messages.e.g.')}} 2700 {{__('messages.Halala')}}</div>
+                                                <div class="text-muted fs-7">{{__('messages.e.g.')}} 10.5 {{__('messages.sar')}}</div>
                                                 <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->

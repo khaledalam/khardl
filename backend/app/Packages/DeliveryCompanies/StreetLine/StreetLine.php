@@ -50,7 +50,7 @@ class StreetLine  extends AbstractDeliveryCompany
             ];
         }
         $data += [
-
+            "client_order_id"=>$order->id,
             "value"=>$branch->total,
             "payment_type"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "CASH": "CREDIT",
             "customer_phone"=>$customer->phone,
@@ -83,7 +83,7 @@ class StreetLine  extends AbstractDeliveryCompany
     }
     public static function processWebhook($payload){
         if($payload['status_id'] == self::STATUS_ORDER['Order delivered']){
-                Order::findOrFail($payload['order_id'])->update([
+                Order::findOrFail($payload['client_order_id'])->update([
                     'status'=>Order::COMPLETED
                 ]);
 
@@ -91,7 +91,7 @@ class StreetLine  extends AbstractDeliveryCompany
             $payload['status_id'] == self::STATUS_ORDER['Arrived to pickup'] ||
             $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
                 
-                Order::findOrFail($payload['order_id'])->update([
+                Order::findOrFail($payload['client_order_id'])->update([
                     'status'=>Order::ACCEPTED
                 ]);
         }else if(

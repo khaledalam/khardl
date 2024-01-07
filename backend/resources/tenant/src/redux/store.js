@@ -26,6 +26,7 @@ import authReducer from "./auth/authSlice"
 import styleDataRestaurantReducer from "./editor/styleDataRestaurantSlice"
 import restuarantEditorReducer from "./NewEditor/restuarantEditorSlice"
 import categoryAPIReducer from "./NewEditor/categoryAPISlice"
+import customerAPIReducer from "./NewEditor/customerSlice"
 
 const store = configureStore({
   reducer: {
@@ -56,6 +57,7 @@ const store = configureStore({
     styleDataRestaurant: styleDataRestaurantReducer,
     restuarantEditorStyle: restuarantEditorReducer,
     categoryAPI: categoryAPIReducer,
+    customerAPI: customerAPIReducer,
   },
 })
 

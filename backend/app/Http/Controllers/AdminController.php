@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Admin\LogTypes;
 use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
 use App\Jobs\SendDeniedEmailJob;
@@ -11,6 +12,7 @@ use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Mail\Mailable;
 use Illuminate\Support\Facades\Mail;
@@ -72,13 +74,14 @@ class AdminController extends Controller
     public function revenue()
     {
         $user = Auth::user();
+        $settings = CentralSetting::first();
 
 
         if ($user?->email !== env('SUPER_MASTER_ADMIN_EMAIL')) {
             return redirect()->back()->with('error', __('You are not allowed to access this page'));
         }
 
-        return view('admin.revenue', compact('user'));
+        return view('admin.revenue', compact('user', 'settings'));
     }
 
     public function promoters(){
@@ -113,14 +116,16 @@ class AdminController extends Controller
         $insertData['url'] = $url;
         $insertData['name'] = $name;
         $insertData['user_id'] = Auth::user()->id;
-        $insertData['created_at'] = now();
-        $insertData['updated_at'] = now();
 
-        DB::table('promoters')->insert($insertData);
-
+        $promoter = Promoter::create($insertData);
+        $actions = [
+            'en' => 'Create a promoter called: ' . $promoter->name,
+            'ar' => 'انشأ مروج باسم : ' . $promoter->name,
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Made a promoter with an ID of: ' . DB::table('promoters')->where('url', $url)->value('id'),
+            'action' => $actions,
+            'type' => LogTypes::CreatePromoter
         ]);
 
         if(app()->getLocale() === 'en')
@@ -177,10 +182,14 @@ class AdminController extends Controller
         $insertData['can_access_dashboard'] = 1;
 
         DB::table('permissions')->insert($insertData);
-
+        $actions = [
+            'en' => 'Create user with email : ' . $user->email,
+            'ar' => 'انشأ مستتخدم ببريد : ' . $user->email,
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Made an user with an ID of: ' . $user->id,
+            'action' => $actions,
+            'type'  => LogTypes::CreateUser
         ]);
 
         if(app()->getLocale() === 'en')
@@ -212,10 +221,14 @@ class AdminController extends Controller
 
 
         $user = User::find($loggedUserId);
-
+        $actions = [
+            'en' => 'Has edited his profile',
+            'ar' => 'تم تعديل ملفه الشخصي',
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has edited his profile.',
+            'action' => $actions,
+            'type' =>  LogTypes::UpdateProfile
         ]);
 
         $user->first_name = $validatedData['first_name'];
@@ -271,7 +284,6 @@ class AdminController extends Controller
         }
 
 
-
         $restaurants = $query->paginate();
         $user = Auth::user();
 
@@ -295,10 +307,14 @@ class AdminController extends Controller
         }
 
         SendApprovedRestaurantEmailJob::dispatch($restaurant);
-
+        $actions = [
+            'en' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
+            'ar' => 'فعل مطعم المعرف ب: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
+            'action' => $actions,
+            'type'  =>  LogTypes::ActivateRestaurant
         ]);
 
         return redirect()->route('admin.view-restaurants',['tenant'=>$restaurant->id])->with('success', __("Restaurant has been activated successfully."));
@@ -313,10 +329,14 @@ class AdminController extends Controller
     {
         //
         User::findOrFail($id)->delete();
-
+        $actions = [
+            'en' => 'Has deleted a restaurant with an ID of: ' . $id,
+            'ar' => 'حذف مطعم بمعرف: ' . $id,
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has deleted a restaurant with an ID of: ' . $id,
+            'action' => $actions,
+            'type' => LogTypes::DeleteRestaurant
         ]);
 
         if(app()->getLocale() === 'en')
@@ -336,10 +356,14 @@ class AdminController extends Controller
         DB::beginTransaction();
 
         try {
-
+            $actions = [
+                'en' => 'Has deleted an user with id: ' . $user->id,
+                'ar' => 'حذف مستخدم بمعرف:  ' . $user->id,
+            ];
             Log::create([
                 'user_id' => Auth::id(),
-                'action' => 'Has deleted an user with an ID of: ' . $id,
+                'action' => $actions,
+                'type' => LogTypes::DeleteUser
             ]);
 
             DB::table('logs')->where('user_id', $id)->delete();
@@ -365,12 +389,17 @@ class AdminController extends Controller
     }
 
     public function deletePromoter($id){
+        $promoter = Promoter::findOrFail($id);
+        $actions = [
+            'en' => 'Has deleted a promoter with name : ' . $promoter->name,
+            'ar' => 'حذف مروج باسم:  ' . $promoter->name,
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has deleted a promoter with an ID of: ' . $id,
+            'action' => $actions,
+            'type' => LogTypes::DeletePromoter
         ]);
-
-        DB::table('promoters')->where('id', $id)->delete();
+        $promoter->delete();
 
         if(app()->getLocale() === 'en')
                 return redirect()->back()->with('success', 'Deleted successfully.');
@@ -398,11 +427,15 @@ class AdminController extends Controller
         $settings->live_chat_enabled = strtolower($request->live_chat_enabled) == 'on';
         $settings->webhook_url = $request->webhook_url;
         $settings->save();
-
+        $actions = [
+            'en' => 'Update platform central settings',
+            'ar' => 'عدل علي اعدادات المنصة'
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Update platform central settings',
-            'metadata' => json_encode($request->all())
+            'action' => $actions,
+            'metadata' => $request->all(),
+            'type' => LogTypes::UpdateSettings
         ]);
 
         if(app()->getLocale() === 'en')
@@ -440,30 +473,6 @@ class AdminController extends Controller
 
         return view('admin.edit-user', compact('user'));
 
-    }
-
-    public function logs(Request $request)
-    {
-
-        $query = DB::table('logs')->orderBy('created_at', 'desc');
-
-        if ($request->filled('user_id')) {
-            if ($request->input('user_id') != 'all') {
-                $query->where('user_id', $request->input('user_id'));
-            }
-        }
-
-        if ($request->filled('action')) {
-            if ($request->input('action') != 'all') {
-                $query->where('action', 'LIKE', '%' . $request->input('action') . '%');
-            }
-        }
-
-        $owners = User::get();
-        $user = Auth::user();
-        $logs = $query->paginate(25);
-
-        return view('admin.logs', compact('user', 'logs', 'owners'));
     }
 
     public function updateUserPermissions(Request $request, $userId){
@@ -507,10 +516,14 @@ class AdminController extends Controller
         $selectedUser->save();
 
         $user = Auth::user();
-
+        $actions = [
+            'en' => 'Has edited profile and permissions for an user with ID of: ' . $userId,
+            'ar' => 'عدل علي صلاحيات المستخدم المعرف ب: ' . $userId,
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has edited profile and permissions for an user with ID of: ' . $userId,
+            'action' => $actions,
+            'type'  => LogTypes::UpdateUserPermissions
         ]);
 
         if(app()->getLocale() === 'en')
@@ -549,10 +562,14 @@ class AdminController extends Controller
         SendApprovedEmailJob::dispatch($user);
 
         $loggedUser = Auth::user();
-
+        $actions = [
+            'en' => 'Has approved an user with an ID of: ' . $id,
+            'ar' => 'تم الموافقة علي مستخدم بمعرف :' . $id,
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has approved an user with an ID of: ' . $id,
+            'action' => $actions,
+            'type'  =>  LogTypes::ApproveUser
         ]);
 
         if(app()->getLocale() === 'en')
@@ -568,9 +585,8 @@ class AdminController extends Controller
 
     public function denyUser(Request $request, $id)
     {
-        $user = User::find(
-            Tenant::findOrFail($id)?->user_id
-        );
+        $tenant = Tenant::findOrFail($id);
+        $user = User::find($tenant->user_id);
 
         if (!$user) {
             return redirect()->back()->with('error', __('Invalid user'));
@@ -592,11 +608,15 @@ class AdminController extends Controller
         }
 
         SendDeniedEmailJob::dispatch($user, $selectedOption);
-
+        $actions = [
+            'en' => 'Has denied an restaurant with an ID of: '."<a href=".route('admin.view-restaurants',['tenant'=>$tenant->id])."> $tenant->id </a>",
+            'ar' => 'رفض مطعم بمعرف: '."<a href=".route('admin.view-restaurants',['tenant'=>$tenant->id])."> $tenant->id </a>",
+        ];
         Log::create([
             'user_id' => Auth::id(),
-            'action' => 'Has denied an user with an ID of: ' . $id,
-            'reason' => $selectedOption
+            'action' => $actions,
+            'type' => LogTypes::DenyRestaurant,
+            'metadata' => ['reason' => $selectedOption]
         ]);
 
         return redirect()->back()->with([
@@ -610,9 +630,14 @@ class AdminController extends Controller
         $file = Storage::disk('local')->get($filePath);
 
         if ($file) {
+            $actions = [
+                'en' => 'Has downloaded a commercial registration file with a filename of: ' . $filename,
+                'ar' => 'قام بتنزيل ملف سجل تجاري باسم الملف: ' . $filename,
+            ];
             Log::create([
                 'user_id' => Auth::id(),
-                'action' => 'Has downloaded a commercial registration file with a filename of: ' . $filename,
+                'action' => $actions,
+                'type' => LogTypes::DownloadCommercialFile
             ]);
             return response()->download(storage_path('app/' . $filePath), $filename);
         } else {
@@ -626,9 +651,14 @@ class AdminController extends Controller
         $file = Storage::disk('local')->get($filePath);
 
         if ($file) {
+            $actions = [
+                'en' => 'Has downloaded a delivery contract file with a filename of: ' . $filename,
+                'ar' => 'قام بتنزيل ملف عقد التسليم باسم ملف: ' . $filename,
+            ];
             Log::create([
                 'user_id' => Auth::id(),
-                'action' => 'Has downloaded a delivery contract file with a filename of: ' . $filename,
+                'action' => $actions,
+                'type' => LogTypes::DownloadDeliveryContract
             ]);
             return response()->download(storage_path('app/' . $filePath), $filename);
         } else {
@@ -642,9 +672,14 @@ class AdminController extends Controller
         $file = Storage::disk('local')->get($filePath);
 
         if ($file) {
+            $actions = [
+                'en' => 'Has downloaded a tax number file with a filename of: ' . $filename,
+                'ar' => 'قام بتنزيل ملف الرقم الضريبي باسم ملف: ' . $filename,
+            ];
             Log::create([
                 'user_id' => Auth::id(),
-                'action' => 'Has downloaded a tax number file with a filename of: ' . $filename,
+                'action' => $actions,
+                'type' => LogTypes::DownloadTaxNumber,
             ]);
             return response()->download(storage_path('app/' . $filePath), $filename);
         } else {
@@ -658,9 +693,14 @@ class AdminController extends Controller
         $file = Storage::disk('local')->get($filePath);
 
         if ($file) {
+            $actions = [
+                'en' => 'Has downloaded a bank certificate file with a filename of: ' . $filename,
+                'ar' => 'قام بتنزيل ملف شهادة بنكية باسم ملف: ' . $filename,
+            ];
             Log::create([
                 'user_id' => Auth::id(),
-                'action' => 'Has downloaded a bank certificate file with a filename of: ' . $filename,
+                'action' => $actions,
+                'type' => LogTypes::DownloadBankCertificate
             ]);
             return response()->download(storage_path('app/' . $filePath), $filename);
         } else {

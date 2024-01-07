@@ -38,7 +38,7 @@ const PrimaryDropDown = ({dropdownList, defaultValue, handleChange, label}) => {
                   className='flex w-full gap-3 items-center p-2 hover:bg-[#C0D12330]'
                   key={i}
                   onClick={() => {
-                    handleChange(item.text)
+                    handleChange(item.value)
                     handleDropdown()
                   }}
                 >

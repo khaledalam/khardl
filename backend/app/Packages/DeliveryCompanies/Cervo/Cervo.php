@@ -4,6 +4,7 @@ namespace App\Packages\DeliveryCompanies\Cervo;
 
 use App\Models\Tenant\Order;
 use App\Models\Tenant\PaymentMethod;
+use Illuminate\Support\Facades\Http;
 use App\Models\Tenant\RestaurantUser;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 
@@ -90,5 +91,22 @@ class Cervo  extends AbstractDeliveryCompany
         }
 
     }
+    // public function getOrder($id){
+    //     if(env('APP_ENV') == 'local'){
+    //         $token = env('CERVO_SECRET_API_KEY','');
+    //     }else {
+    //         $token = $this->delivery_company->api_key;
+    //     }
+    //     try {
+    //         $response = Http::withToken($token)
+    //         ->get($this->delivery_company->api_url."/order/$id");
+    //         $response =  json_decode($response->getBody(), true);
+    //         return $response['Status'];
+    //     }catch(\Exception $e){
+    //         logger($e->getMessage());
+    //         return false;
+    //     }
+        
+    // }
 }
    

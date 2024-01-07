@@ -54,17 +54,35 @@ const FooterRestuarant = () => {
           }`}
         >
           {" "}
-          <h3
+          <a
+            href={`tel:${restaurantStyle?.phoneNumber}`}
             style={{color: restaurantStyle?.text_color}}
-            className='font-semibol'
+            className='font-semibold cursor-pointer'
           >
             {restaurantStyle?.phoneNumber}
-          </h3>
+          </a>
         </div>
       </div>
-      <h3 className='pl-16 text-[1rem] text-black font-medium'>
-        &copy; All Right Reserved.
-      </h3>
+      <div className='h-7 flex bg-white items-center justify-between p-2'>
+        <h3 className='pl-16 text-[1rem] text-neutral-700 font-medium'>
+          &copy; Powered by{" "}
+          <a
+            href='https://first.khardl.com'
+            className='text-neutral-400 text-sm cursor-pointer'
+          >
+            Khardl
+          </a>
+        </h3>
+        <h3 className='pl-16 text-[1rem] text-neutral-700 font-medium'>
+          &copy; مشغل بواسطة
+          <a
+            href='https://first.khardl.com'
+            className='text-neutral-400 text-sm cursor-pointer'
+          >
+            خردل
+          </a>
+        </h3>
+      </div>
     </div>
   )
 }

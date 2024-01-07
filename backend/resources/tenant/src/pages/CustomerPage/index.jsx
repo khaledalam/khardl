@@ -1,0 +1,60 @@
+import React, {useEffect, useState} from "react"
+import SideNavbar from "./components/SideNavbar"
+import NavbarCustomer from "./components/NavbarCustomer"
+import {useSelector} from "react-redux"
+import CustomerDashboard from "./components/CustomerDashboard"
+import CustomerOrder from "./components/CustomerOrder"
+import CustomerProfile from "./components/CustomerProfile"
+import {useSearchParams} from "react-router-dom"
+import CustomerOrderDetail from "./components/CustomerOrderDetail"
+
+const TABS = {
+  dashboard: "Dashboard",
+  orders: "Orders",
+  profile: "Profile",
+}
+export const CustomerPage = () => {
+  const isSidebarCollapse = false
+  const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
+  const [searchParam] = useSearchParams()
+  const [showOrderDetail, setShowOrderDetail] = useState(false)
+  const orderId = searchParam.get("orderId")
+  console.log("orderId", orderId)
+
+  useEffect(() => {
+    if (orderId) {
+      setShowOrderDetail(true)
+    }
+  }, [orderId])
+
+  return (
+    <div>
+      <NavbarCustomer />
+      <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all'>
+        <div
+          className={`transition-all ${
+            isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[20%]"
+          } xl:flex-[20%] laptopXL:flex-[17%] overflow--hidden bg-white h-full `}
+        >
+          <SideNavbar />
+        </div>
+        <div
+          className={` transition-all ${
+            isSidebarCollapse ? "flex-[100%] w-full" : "flex-[80%]"
+          } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
+        >
+          {activeNavItem && !showOrderDetail === TABS.dashboard ? (
+            <CustomerDashboard />
+          ) : activeNavItem && !showOrderDetail === TABS.orders ? (
+            <CustomerOrder />
+          ) : activeNavItem && !showOrderDetail === TABS.profile ? (
+            <CustomerProfile />
+          ) : (
+            <></>
+          )}
+          {showOrderDetail && <CustomerOrderDetail />}
+        </div>
+      </div>
+    </div>
+  )
+}

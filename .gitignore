@@ -19,6 +19,7 @@ yarn-error.log
 /.vscode
 .DS_Store
 docker/database/data
+docker/database/data_testing
 frontend/temp
 frontend/package-lock.json
 .htaccess
