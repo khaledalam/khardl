@@ -43,7 +43,7 @@ done
 
 php backend/artisan migrate:fresh --seed
 
-php backend/artisan migrate:fresh --seed --database=mysql_testing
+#php backend/artisan migrate:fresh --seed --database=mysql_testing
 
 php backend/artisan create:tenant
 
