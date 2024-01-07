@@ -40,7 +40,7 @@
 
     @stack('styles')
     @yield('css')
-@endif
+
 <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -673,3 +673,4 @@
 <!--end::Body-->
 
 </html>
+@endif
