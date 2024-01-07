@@ -33,6 +33,7 @@ jobs:
 
       - name: Prepare Laravel Application
         run: |
+          cp $backend_path/.env.example $backend_path/.env
           php $backend_path/artisan key:generate
 
       - name: Run Testsuite
