@@ -1,38 +1,37 @@
-#on: push
-#name: Testing
-#env:
-#  backend_path: /home/khardl5/public_html/backend/
-#jobs:
-#  phpunit:
-#    runs-on: ubuntu-latest
-#    container:
-#      image: kirschbaumdevelopment/laravel-test-runner:8.1
-#
-#    services:
-#      mysql:
-#        image: mysql:5.7
-#        env:
-#          MYSQL_ROOT_PASSWORD: password
-#          MYSQL_DATABASE: test
-#          MYSQL_USERNAME: test
-#        ports:
-#          - 33306:3306
-#        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-#
-#    steps:
-#      - uses: actions/checkout@v1
-#        with:
-#          fetch-depth: 1
-#
-#      - name: Install composer dependencies
-#        run: |
-#          cd $backend_path
-#          composer install --no-scripts
-#
-#      - name: Prepare Laravel Application
-#        run: |
-#          cp $backend_path/.env.ci $backend_path/.env
-#          php artisan key:generate
-#
-#      - name: Run Testsuite
-#        run: $backend_path/vendor/bin/phpunit $backend_path/tests/
+on: push
+name: Testing
+env:
+  backend_path: /home/khardl5/public_html/backend/
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    container:
+      image: kirschbaumdevelopment/laravel-test-runner:8.1
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: testing
+          MYSQL_DATABASE: khardl_testing
+          MYSQL_USERNAME: testing
+        ports:
+          - 3307:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: Install composer dependencies
+        run: |
+          cd $backend_path
+          composer install --no-scripts
+
+      - name: Prepare Laravel Application
+        run: |
+          php $backend_path/artisan key:generate
+
+      - name: Run Testsuite
+        run: $backend_path/vendor/bin/phpunit $backend_path/tests/
