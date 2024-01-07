@@ -326,7 +326,16 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        return true;
+        $setting = Setting::first();
+        if($setting->branch_slots == 0){
+            return false;
+        }else {
+            $setting->update([
+                'branch_slots'=> DB::raw('branch_slots - 1'),
+            ]);
+            return true;
+        }
+       
     }
 
 
@@ -824,5 +833,13 @@ class RestaurantController extends BaseController
             'success' => __($message,['module'=>__($module)]),
         ]);
 
+    }
+    public function servicesIncrease(){
+        Setting::first()->update([
+            'branch_slots'=> DB::raw('branch_slots + 1'),
+        ]);
+        return redirect()->back()->with([
+            'success' => __("Branch slot has been increased by one"),
+        ]);
     }
 }

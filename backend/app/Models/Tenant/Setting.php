@@ -13,7 +13,8 @@ class Setting extends Model
         'is_live',
         'delivery_fee',
         'transaction_percentage_fee',
-        'restaurant_name'
+        'restaurant_name',
+        'branch_slots'
     ];
     public $timestamps = false;
 

@@ -550,6 +550,9 @@ return [
     "percentage-fee-explain" => "نسبه العموله التي سيتم خضمها من كل عمليه دفع",
     "in" => "ب",
     "configurations"=>"الاعدادات",
-    "Deactivate"=>"الغاء التفعيل"
+    "Deactivate"=>"الغاء التفعيل",
+    "Increase Slots"=>"زيادة العدد",
+    'Branch slot has been increased'=>"تم تزويد عدد الفروع المتاحة "
+   
 ];
 
