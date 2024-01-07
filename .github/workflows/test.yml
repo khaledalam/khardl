@@ -26,6 +26,8 @@ jobs:
 
       - name: Install composer dependencies
         run: |
+          echo $(pwd)
+          ls
           cd $backend_path
           composer install --no-scripts
 
