@@ -35,6 +35,7 @@ jobs:
         run: |
           cp $backend_path/.env.ci $backend_path/.env
           php $backend_path/artisan key:generate
+          php $backend_path/artisan migrate
 
       - name: Run Testsuite
         run: $backend_path/vendor/bin/phpunit $backend_path/tests/
