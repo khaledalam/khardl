@@ -24,7 +24,7 @@
                     <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="{{ __('messages.'.$title) }}"></i>
                 </label>
                 <input id="business_log" accept="{{($name == 'business_logo')?'.gif':'.pdf'}},.jpeg,.png" type="file" class="form-control form-control-solid" name="{{$name}}" />
-                <small><i>{{ __('messages.Accept') }}: {{ ($name == 'business_logo')?'GIF':'PDF' }}, JPEG, PNG. {{ __('messages.size <= 8 MG') }}</i></small>
+                <small><i>{{ __('messages.Accept') }}: {{ ($name == 'business_logo')?'GIF':'PDF' }}, JPEG, PNG. {{ __('messages.size <= 16 MG') }}</i></small>
                 @if ($tap_files)
                     <a href="{{ route('download.file', ['path' => $tap_files->{$name.'_path'}]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                 @endif
