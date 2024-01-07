@@ -104,7 +104,16 @@ function PlacesAutoComplete({inputStyle}) {
 
   const getPosition = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition, positionError)
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude
+        let lng = position.coords.longitude
+
+        console.log("geolocation", position)
+
+        dispatch(updateLatLng({lat, lng}))
+
+        convertToAddress(lat, lng)
+      }, positionError)
     } else {
       window.alert("Sorry,Geolocation is not supported by your browser")
     }
@@ -125,14 +134,6 @@ function PlacesAutoComplete({inputStyle}) {
       })
     }
   }
-  const showPosition = (position) => {
-    let lat = position.coords.latitude
-    let lng = position.coords.longitude
-
-    dispatch(updateLatLng({lat, lng}))
-
-    convertToAddress(lat, lng)
-  }
 
   const convertToAddress = (lat, lng) => {
     fetch(
@@ -144,9 +145,10 @@ function PlacesAutoComplete({inputStyle}) {
 
   return (
     <Combobox onSelect={handleSelect}>
-      <div className='flex items-center gap-2'>
+      <div className='flex items-center gap-8'>
         <ComboboxInput
           value={value}
+          type='text'
           defaultValue={customerAddress}
           onChange={(e) => setValue(e.target.value)}
           disabled={!ready}
@@ -155,7 +157,7 @@ function PlacesAutoComplete({inputStyle}) {
         />
         <div
           onClick={getPosition}
-          className='w-8 h-8 rounded-lg p-1 border border-[var(--customer)] cursor-pointer'
+          className='w-10 h-10 flex items-center justify-center rounded-lg p-1 border border-[var(--customer)] cursor-pointer'
         >
           <MdLocationPin size={28} color={"red"} />
         </div>
