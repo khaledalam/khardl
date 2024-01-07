@@ -33,8 +33,8 @@
                             <div class="position-relative w-md-200px me-md-2">
                                 <select class="form-select form-select-solid" name="live">
                                     <option>{{ __('messages.all')}}</option>
-                                    <option value="1" {{ request('live') == 1 ? 'selected' : '' }}>{{ __('messages.live')}}</option>
-                                    <option value="0" {{ request('live') == 0 ? 'selected' : '' }}>{{ __('messages.not_live')}}</option>
+                                    <option value="1" {{ request('live') == '1' ? 'selected' : '' }}>{{ __('messages.live')}}</option>
+                                    <option value="0" {{ request('live') == '0' ? 'selected' : '' }}>{{ __('messages.not_live')}}</option>
                                 </select>
                                 </select>
                             </div>

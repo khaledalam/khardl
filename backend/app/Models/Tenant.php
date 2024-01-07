@@ -103,6 +103,20 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         };
         return $run_on_tenant ? $this->run($orderQuery) : $orderQuery();
     }
+    public function completed_orders($run_on_tenant = true)
+    {
+        $orderQuery = function () {
+            return Order::with(['payment_method:id,name', 'branch:id,name'])->completed();
+        };
+        return $run_on_tenant ? $this->run($orderQuery) : $orderQuery();
+    }
+    public function allCustomers($run_on_tenant = true)
+    {
+        $customerQuery = function () {
+            return RestaurantUser::customers()->orderBy('created_at','DESC');
+        };
+        return $run_on_tenant ? $this->run($customerQuery) : $customerQuery();
+    }
     public function customers($run_on_tenant = true)
     {
         $customerQuery = function () {
