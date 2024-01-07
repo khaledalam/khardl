@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\CentralSetting;
+use App\Models\User;
 use App\Repositories\PDF\OrderPDF;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+//        if (env('APP_ENV') == 'local') {
+//            config()->set('database.default', 'mysql_testing');
+//        }
+
         $this->app->singleton(CartRepository::class,function(){
             return (new CartRepository)->initiate();
         });
@@ -38,6 +44,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+//        echo config()->get('database.default',);
+//        exit;
+
         $user = Auth::user();
         View::share('link', request()->segment(1));
         View::share('admin_link', request()->segment(2));
