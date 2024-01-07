@@ -57,6 +57,10 @@ function Map({inputStyle}) {
   const containerStyle = {
     width: "100%",
     height: "400px",
+    borderWidth: 6,
+    borderColor: "#E16449",
+    padding: 5,
+    borderRadius: 6,
   }
 
   console.log("filterBranch", filterBranch)
@@ -92,11 +96,14 @@ function PlacesAutoComplete({inputStyle}) {
 
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    setValue(customerAddress)
+  }, [customerAddress])
+
   const handleSelect = async (address) => {
     setValue(address)
     clearSuggestions()
     dispatch(updateCustomerAddress(address))
-
     const results = await getGeocode({address: address})
     const {lat, lng} = await getLatLng(results[0])
     dispatch(updateLatLng({lat, lng}))
@@ -147,9 +154,11 @@ function PlacesAutoComplete({inputStyle}) {
     <Combobox onSelect={handleSelect}>
       <div className='flex items-center gap-8'>
         <ComboboxInput
-          value={value}
           type='text'
+          name='location'
+          id={"location"}
           defaultValue={customerAddress}
+          value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={!ready}
           className={inputStyle}
