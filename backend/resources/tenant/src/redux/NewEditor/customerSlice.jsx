@@ -10,6 +10,7 @@ const customerAPISlice = createSlice({
       lng: 45.45,
     },
     ordersList: [],
+    cardsList: [],
     saveProfileChanges: true,
   },
   reducers: {
@@ -25,6 +26,9 @@ const customerAPISlice = createSlice({
     updateOrderList: (state, action) => {
       state.ordersList = action.payload
     },
+    updateCardsList: (state, action) => {
+      state.cardsList = action.payload
+    },
     updateProfileSaveStatus: (state, action) => {
       state.saveProfileChanges = action.payload
     },
@@ -36,6 +40,7 @@ export const {
   updateCustomerAddress,
   updateLatLng,
   updateOrderList,
+  updateCardsList,
   updateProfileSaveStatus,
 } = customerAPISlice.actions
 export default customerAPISlice.reducer

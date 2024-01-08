@@ -12,7 +12,6 @@ import {useTranslation} from "react-i18next"
 const CustomerDashboard = () => {
   const navigate = useNavigate()
   const {t} = useTranslation()
-  const dispatch = useDispatch()
   const ordersList = useSelector((state) => state.customerAPI.ordersList)
   const [orderLength, setOrderLength] = useState(6)
   const [isViewMore, setIsViewMore] = useState(false)
@@ -44,23 +43,6 @@ const CustomerDashboard = () => {
   //   setOrderLength((prev) => prev - 6)
   //   setIsViewMore(false)
   // }, [])
-
-  const fetchOrdersData = async () => {
-    try {
-      const ordersResponse = await AxiosInstance.get(`orders?items&item`)
-
-      console.log("ordersResponse >>>", ordersResponse.data)
-      if (ordersResponse.data) {
-        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
-      }
-    } catch (error) {
-      console.log(error)
-    } finally {
-    }
-  }
-  useEffect(() => {
-    fetchOrdersData().then(() => {})
-  }, [])
 
   const slicedOrderData = ordersList.slice(0, orderLength)
   return (

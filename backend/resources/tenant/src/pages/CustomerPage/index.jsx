@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react"
 import SideNavbar from "./components/SideNavbar"
 import NavbarCustomer from "./components/NavbarCustomer"
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
 import CustomerDashboard from "./components/CustomerDashboard"
 import CustomerOrder from "./components/CustomerOrder"
 import CustomerProfile from "./components/CustomerProfile"
@@ -9,6 +9,11 @@ import {useSearchParams} from "react-router-dom"
 import CustomerOrderDetail from "./components/CustomerOrderDetail"
 import {MenuContext} from "react-flexible-sliding-menu"
 import CustomerPayment from "./components/CustomerPayment"
+import {
+  updateCardsList,
+  updateOrderList,
+} from "../../redux/NewEditor/customerSlice"
+import AxiosInstance from "../../axios/axios"
 
 const TABS = {
   dashboard: "Dashboard",
@@ -18,6 +23,7 @@ const TABS = {
 }
 export const CustomerPage = () => {
   const isSidebarCollapse = false
+  const dispatch = useDispatch()
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
   const [searchParam] = useSearchParams()
   const [showOrderDetail, setShowOrderDetail] = useState(false)
@@ -33,6 +39,38 @@ export const CustomerPage = () => {
       setShowOrderDetail(false)
     }
   }, [orderId])
+
+  const fetchOrdersData = async () => {
+    try {
+      const ordersResponse = await AxiosInstance.get(`orders?items&item`)
+
+      console.log("ordersResponse >>>", ordersResponse.data)
+      if (ordersResponse.data) {
+        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
+  }
+
+  const fetchCardsData = async () => {
+    try {
+      const cardsResponse = await AxiosInstance.get(`cards`)
+
+      console.log("cardsResponse >>>", cardsResponse.data)
+      if (cardsResponse.data) {
+        dispatch(updateCardsList(Object.values(cardsResponse?.data?.data)))
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
+  }
+  useEffect(() => {
+    fetchOrdersData().then(() => {})
+    fetchCardsData().then(() => {})
+  }, [])
 
   return (
     <div>
