@@ -590,6 +590,8 @@ return [
     'cashback-per-amount-percentage' => 'Cashback per order amount percentage',
     'new-branch-slot-price' => 'New branch slot price',
     "Received by restaurant" => "Received by restaurant",
-    "Search" => "Search"
+    "Search" => "Search",
+    "Secret Key" => "Secret Key",
+    "Not verified" => "Not verified"
 
 ];

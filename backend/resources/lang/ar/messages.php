@@ -590,7 +590,8 @@ return [
     'cashback-per-amount-percentage' => 'نسبه استرداد النقود',
     'new-branch-slot-price' => 'سعر فرع جديد',
     "Received by restaurant" => "تلقى من قبل المطعم",
-    "Search" => "ابحث"
+    "Secret Key" => "المفتاح السري",
+    "Not verified" => "لم يتم التحقق منها"
 
 
 ];
