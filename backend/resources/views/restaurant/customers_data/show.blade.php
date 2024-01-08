@@ -168,7 +168,7 @@
                     </div>
                     <!--end::Customer details-->
                     <!--begin::Documents-->
-                    <div class="card card-flush py-4 flex-row-fluid">
+                 {{--    <div class="card card-flush py-4 flex-row-fluid">
                         <!--begin::Card header-->
                         <div class="card-header">
                             <div class="card-title">
@@ -246,7 +246,7 @@
                             </div>
                         </div>
                         <!--end::Card body-->
-                    </div>
+                    </div> --}}
                     <!--end::Documents-->
                 </div>
                 <!--end::Order summary-->
@@ -267,7 +267,9 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>Customer Address(TODO)</h2>
+                                            <h2>
+                                                <a href="https://www.google.com/maps" target="_blank">{{ __('messages.Customer Address') }}</a>
+                                            </h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -392,77 +394,17 @@
 <script>
     $(document).ready(function() {
 
-        let maps = {}; // Store maps in an object
-        let markers = {}; // Store markers in an object
-        /* initializeMap(5,'24.7136','24.7136'); */
-        //TODO:Connect map
-        function initializeMap(customerId, lat, lng) {
-            const latLng = new google.maps.LatLng(lat, lng);
+        $('.nav-link').on('click', function (e) {
+                e.preventDefault(); // Prevent default link behavior
 
-            const map = new google.maps.Map(document.getElementById('map' + customerId), {
-                center: latLng
-                , zoom: 8
-            , });
+                // Get the target tab id from the href attribute
+                var targetTabId = $(this).attr('href');
 
-            const input = document.getElementById("pac-input" + customerId);
-
-            const options = {
-                fields: ["formatted_address", "geometry", "name"]
-                , strictBounds: false
-            , };
-            const autocomplete = new google.maps.places.Autocomplete(input, options);
-            autocomplete.bindTo("bounds", map);
-
-            const marker = new google.maps.Marker({
-                position: latLng
-                , map: map
-                , draggable: true
-            , });
-
-            markers[customerId] = marker; // Store the marker for this branch
-            maps[customerId] = map; // Store the map for this branch
-
-            google.maps.event.addListener(marker, 'dragend', function() {
-                updateLocationInput(marker.getPosition(), customerId);
+                // Scroll to the content below the tab using jQuery animate
+                $('html, body').animate({
+                    scrollTop: $(targetTabId).offset().top + 700
+                }, 800); // Adjust the animation duration as needed
             });
-
-            // Add a click event listener to the map
-            google.maps.event.addListener(map, 'click', function(event) {
-                marker.setPosition(event.latLng);
-                updateLocationInput(event.latLng, customerId);
-            });
-            autocomplete.addListener("place_changed", () => {
-                console.log('change location')
-                // infowindow.close();
-                marker.setVisible(false);
-
-                const place = autocomplete.getPlace();
-
-                if (!place.geometry || !place.geometry.location) {
-                    // User entered the name of a Place that was not suggested and
-                    // pressed the Enter key, or the Place Details request failed.
-                    window.alert("No details available for input: '" + place.name + "'");
-                    return;
-                }
-                const lat = place.geometry.location.lat();
-                const lng = place.geometry.location.lng();
-                selectedPlacePosition = new google.maps.LatLng(lat, lng);
-                updateLocationInput(selectedPlacePosition, customerId);
-                // If the place has a geometry, then present it on a map.
-                if (place.geometry.viewport) {
-                    map.fitBounds(place.geometry.viewport);
-                } else {
-                    map.setCenter(place.geometry.location);
-                    map.setZoom(17);
-                }
-
-                marker.setPosition(place.geometry.location);
-                marker.setVisible(true);
-                // infowindow.open(map, marker);
-            });
-
-            console.log("ok")
-        }
     });
 
 </script>

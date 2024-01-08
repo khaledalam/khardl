@@ -42,7 +42,7 @@
                                             <!--begin::Col-->
                                             <div class="position-relative w-md-200px me-md-2">
                                                 <select class="form-select form-select-solid">
-                                                    <option value="0" selected="selected">Coverage areas</option>
+                                                    <option value="0" selected="selected">{{ __('messages.Coverage areas') }}</option>
                                                     <option value="1">City 1</option>
                                                     <option value="1">City 2</option>
                                                     <option value="1">City 3</option>
@@ -57,7 +57,7 @@
                                             </div>
 
                                             <div class="d-flex align-items-center">
-                                                <button type="reset" class="btn btn-sm btn-secondary me-5">Discard</button>
+                                                <button type="reset" class="btn btn-sm btn-secondary me-5">{{__('messages.Discard')}}</button>
                                             </div>
                                             <!--end:Action-->
                                         </div>

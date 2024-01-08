@@ -109,6 +109,7 @@ Route::group([
                 // Route::delete('/orders/{order}',[OrderController::class,'destroy'])->name('restaurant.branch.order.destroy');
 
             });
+
             Route::middleware('restaurant')->group(function () {
 
                 // TAP Create Business
@@ -125,17 +126,21 @@ Route::group([
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
+                Route::get('/service/increase', [RestaurantController::class, 'servicesIncrease'])->name('restaurant.service.increase');
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
+                Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
+
+
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
                     Route::get('/customers-data','index')->name('list');
                     Route::get('/customers-data/{restaurantUser}','show')->name('show');
                     Route::put('/change-status/{restaurantUser}','update_status')->name('change-status');
                 });
                 Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
-                Route::post('/update-settings', [RestaurantController::class, 'upadteSettings'])->name('restaurant.update.settings');
+                Route::post('/update-settings', [RestaurantController::class, 'updateSettings'])->name('restaurant.update.settings');
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
 
@@ -145,6 +150,7 @@ Route::group([
                     Route::post('orders-add', 'store')->name('restaurant.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                     Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
+                    Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
                   });
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
@@ -274,7 +280,7 @@ Route::middleware([
     Route::webhooks('delivery-webhook','delivery-companies');
     // route name  webhook-client-tap-payment
     Route::webhooks('webhook-tap-actions','tap-payment');
-  
+
     // API
     Route::prefix('api')->group(function(){
         Route::post('login', [APILoginController::class, 'login']);

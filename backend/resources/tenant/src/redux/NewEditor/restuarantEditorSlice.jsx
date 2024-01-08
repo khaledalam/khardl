@@ -103,7 +103,7 @@ const restuarantEditorSlice = createSlice({
 
     selectedMediaId: 1,
     socialMediaIcons_alignment: "center",
-    phoneNumber: "+96600000000",
+    phoneNumber: "",
     phoneNumber_alignment: "center",
 
     page_color: "#fafafa",

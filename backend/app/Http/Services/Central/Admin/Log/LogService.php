@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Central\Log;
+namespace App\Http\Services\Central\Admin\Log;
 
 use App\Enums\Admin\LogTypes;
 use App\Exports\LogsExport;

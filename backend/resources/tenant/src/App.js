@@ -56,6 +56,7 @@ const App = () => {
   const showHeader = ![
     "/policies",
     "/login-trial",
+    "/dashboard",
     "/privacy",
     "/site-editor/restaurants",
     "/site-editor/customers",
@@ -63,6 +64,7 @@ const App = () => {
   const showFooter = ![
     "/",
     "/cart",
+    "/dashboard",
     "/site-editor/restaurants",
     "/site-editor/customers",
     "/login",
@@ -143,15 +145,14 @@ const App = () => {
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      path='/site-editor/restaurants'
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      element={<EditorPage />}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    />{" "} */}{" "}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          path='/site-editor/restaurants'
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          element={<EditorPage />}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        />{" "} */}{" "}
                 {/*/site-editor/customers/preview*/}{" "}
-                <Route path='/dashboard' element={<CustomersPreview />} />{" "}
-                <Route
-                  path='/site-editor/customers'
-                  element={<CustomerPage />}
-                />{" "}
+                {/* <Route path='/dashboard' element={<CustomersPreview />} />{" "} */}{" "}
+                <Route path='/dashboard' element={<CustomerPage />} />{" "}
+                <Route path='/customers' element={<CustomerPage />} />{" "}
+                <Route path='/site-editor/customers' element={<Editor />} />{" "}
                 {/* <Route path='/customers' element={<CustomerPage />} />{" "} */}{" "}
               </Route>{" "}
             </Routes>{" "}

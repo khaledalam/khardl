@@ -36,7 +36,6 @@ class RestaurantService
             ? (number_format((($dailySales - $averageLast7DaysSales) / $averageLast7DaysSales) * 100, 2))
             : (($dailySales > 0) ? 100 : 0);
 
-        $dailySales = number_format($dailySales, 2);
         $noOfUsersThisMonth = $this->getNumberOfUsersThisMonth();
         $bestSellingItems = $this->bestSellingItems();
         return view('restaurant.summary', compact(

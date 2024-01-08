@@ -86,8 +86,8 @@ function CompleteRegistration() {
                // navigate('/');
             }, 5000);
 
-           
-            
+
+
          } else {
             throw new Error(`${t('Account creation failed to complete')}`)
          }
@@ -123,7 +123,10 @@ function CompleteRegistration() {
                   {/* First Input */}
                   <div className='w-[100%]'>
                      <div className='mb-2 font-semibold'>
-                        {t('Commercial Record')}
+                        {t('Commercial Record')} <span className="text-red-500">*</span>
+                        <p>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        </p>
                      </div>
                      <input
                         type='file'
@@ -175,7 +178,10 @@ function CompleteRegistration() {
                   {/* Input 2 */}
                   <div className='w-[100%]'>
                      <div className='mb-2 font-semibold'>
-                        {t('Tax registration certificate')}
+                        {t('Tax registration certificate')} <span className="text-red-500">*</span>
+                        <p>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        </p>
                      </div>
                      <input
                         type='file'
@@ -227,7 +233,10 @@ function CompleteRegistration() {
                   {/* Input 3 */}
                   <div className='w-[100%]'>
                      <div className='mb-2 font-semibold'>
-                        {t('National address')}
+                        {t('National address')} <span className="text-red-500">*</span>
+                        <p>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        </p>
                      </div>
                      <input
                         type='file'
@@ -277,7 +286,10 @@ function CompleteRegistration() {
                   {/* Input 4 */}
                   <div className='w-[100%]'>
                      <div className='mb-2 font-semibold'>
-                        {t('Identity of the owner or manager')}
+                        {t('Identity of the owner or manager')} <span className="text-red-500">*</span>
+                        <p>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        </p>
                      </div>
                      <input
                         type='file'
@@ -330,7 +342,10 @@ function CompleteRegistration() {
                   {/* Input 5 */}
                   <div className='w-[100%]'>
                      <div className='mb-2 font-semibold'>
-                        {t('Bank certificate')}
+                        {t('Bank certificate')} <span className="text-red-500">*</span>
+                        <p>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        </p>
                      </div>
                      <input
                         type='file'
@@ -381,7 +396,9 @@ function CompleteRegistration() {
                   <div className='w-[100%] flex flex-col items-start gap-4'>
 
                      <div className='w-[100%]'>
-                        <div className='mb-2 font-semibold'>{t('BANK IBAN')}</div>
+                        <div className='mb-2 font-semibold'>
+                            {t('BANK IBAN')}<span className="text-red-500">*</span>
+                        </div>
                         <input
                            type='text'
                            className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
@@ -398,7 +415,7 @@ function CompleteRegistration() {
                      {/* Input 7 */}
                      <div className='w-[100%]'>
                         <div className='mb-2 font-semibold'>
-                           {t('Facility Name')}
+                           {t('Facility Name')}<span className="text-red-500">*</span>
                         </div>
                         <input
                            type='text'
@@ -450,7 +467,7 @@ function CompleteRegistration() {
                                        </div>
                                    </div>
                                )}          {t('Complete registration')}</span>
-            
+
                   </button>
                </form>
             </div>

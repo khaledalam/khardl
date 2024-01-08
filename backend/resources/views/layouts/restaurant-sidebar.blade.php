@@ -40,7 +40,7 @@
 
     @stack('styles')
     @yield('css')
-@endif
+
 <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -573,7 +573,7 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5 my-1">
-                                        <a href="log.html" class="menu-link px-5">Logs</a>
+                                        <a href="log.html" class="menu-link px-5">{{ __('messages.Logs') }}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
@@ -673,3 +673,4 @@
 <!--end::Body-->
 
 </html>
+@endif
