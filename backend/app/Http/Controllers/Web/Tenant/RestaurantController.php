@@ -26,6 +26,9 @@ use App\Models\Subscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
+use App\Models\Tenant\DeliveryCompany;
+use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 
 class RestaurantController extends BaseController
 {
@@ -52,17 +55,42 @@ class RestaurantController extends BaseController
     public function delivery(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
+        $yeswa = DeliveryCompany::where("module",class_basename(Yeswa::class))->first();
+        $cervo = DeliveryCompany::where("module",class_basename(Cervo::class))->first();
+        $streetline = DeliveryCompany::where("module",class_basename(StreetLine::class))->first();
 
         return view('restaurant.delivery',
-            compact('user'));
+            compact('user','streetline','yeswa','cervo'));
     }
 
     public function promotions(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
+        $settings = Setting::all()->firstOrFail();
+
         return view('restaurant.promotions',
-            compact('user'));
+            compact('user', 'settings'));
+    }
+
+    public function updatePromotions(Request $request){
+
+        $request->validate([
+            'loyalty_points' => 'required|numeric|min:0',
+            'loyalty_point_price' => 'required|numeric|min:0',
+            'cashback_threshold' => 'required|numeric|min:0',
+            'cashback_percentage' => 'required|numeric|min:0',
+        ]);
+
+        $settings = Setting::all()->firstOrFail();
+
+        $settings->loyalty_points = $request->loyalty_points;
+        $settings->loyalty_point_price = $request->loyalty_point_price;
+        $settings->cashback_threshold = $request->cashback_threshold;
+        $settings->cashback_percentage = $request->cashback_percentage;
+        $settings->save();
+
+        return redirect()->back()->with('success', __('Restaurant promotions successfully updated.'));
     }
 
     public function settings(){
@@ -75,7 +103,7 @@ class RestaurantController extends BaseController
             compact('user', 'settings'));
     }
 
-    public function upadteSettings(Request $request){
+    public function updateSettings(Request $request){
 
         $request->validate([
             'delivery_fee' => 'required|numeric|min:0',
@@ -320,7 +348,16 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        return true;
+        $setting = Setting::first();
+        if($setting->branch_slots == 0){
+            return false;
+        }else {
+            $setting->update([
+                'branch_slots'=> DB::raw('branch_slots - 1'),
+            ]);
+            return true;
+        }
+
     }
 
 
@@ -802,5 +839,29 @@ class RestaurantController extends BaseController
         //     return abort(404);
         // }
         return view('restaurant.edit-worker', compact('worker', 'user'));
+    }
+    public function deliveryActivate($module,Request $request){
+
+        $request->validate([
+            'api_key'=>"required"
+        ]);
+        $company = DeliveryCompany::where("module",$module)->first();
+        $company->update([
+            'status'=>!$company->status,
+            'api_key'=>$request->api_key
+        ]);
+        $message = ($company->status)?__(':module has been successfully activated'):__(':module has been successfully deactivated');
+        return redirect()->back()->with([
+            'success' => __($message,['module'=>__($module)]),
+        ]);
+
+    }
+    public function servicesIncrease(){
+        Setting::first()->update([
+            'branch_slots'=> DB::raw('branch_slots + 1'),
+        ]);
+        return redirect()->back()->with([
+            'success' => __("Branch slot has been increased by one"),
+        ]);
     }
 }

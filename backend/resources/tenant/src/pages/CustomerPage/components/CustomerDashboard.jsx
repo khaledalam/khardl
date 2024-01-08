@@ -2,11 +2,19 @@ import {BsChevronDoubleDown, BsChevronDoubleUp} from "react-icons/bs"
 import DashboardIcon from "../../../assets/dashboardBlockIcon.svg"
 import OrderTable from "./OrderTable"
 import {customerOrderData} from "../DATA"
-import {useCallback, useState} from "react"
+import {useCallback, useEffect, useState} from "react"
+import AxiosInstance from "../../../axios/axios"
+import {useNavigate} from "react-router-dom"
+import {updateOrderList} from "../../../redux/NewEditor/customerSlice"
+import {useDispatch, useSelector} from "react-redux"
 
 const CustomerDashboard = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const ordersList = useSelector((state) => state.customerAPI.ordersList)
   const [orderLength, setOrderLength] = useState(6)
   const [isViewMore, setIsViewMore] = useState(false)
+
   const overviewInfo = [
     {
       id: 1,
@@ -25,19 +33,36 @@ const CustomerDashboard = () => {
     },
   ]
 
-  const onViewMore = useCallback(() => {
-    setOrderLength((prev) => prev + 6)
-    setIsViewMore(true)
+  // const onViewMore = useCallback(() => {
+  //   setOrderLength((prev) => prev + 6)
+  //   setIsViewMore(true)
+  // }, [])
+
+  // const hideMore = useCallback(() => {
+  //   setOrderLength((prev) => prev - 6)
+  //   setIsViewMore(false)
+  // }, [])
+
+  const fetchOrdersData = async () => {
+    try {
+      const ordersResponse = await AxiosInstance.get(`orders?items&item`)
+
+      console.log("ordersResponse >>>", ordersResponse.data)
+      if (ordersResponse.data) {
+        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
+  }
+  useEffect(() => {
+    fetchOrdersData().then(() => {})
   }, [])
 
-  const hideMore = useCallback(() => {
-    setOrderLength((prev) => prev - 6)
-    setIsViewMore(false)
-  }, [])
-
-  const slicedOrderData = customerOrderData.slice(0, orderLength)
+  const slicedOrderData = ordersList.slice(0, orderLength)
   return (
-    <div className=' p-4'>
+    <div className='p-6'>
       <div className='flex items-center gap-3'>
         <img src={DashboardIcon} alt='dashboard' className='' />
         <h3 className='text-lg font-medium'>Dashboard</h3>
@@ -63,15 +88,11 @@ const CustomerDashboard = () => {
       </div>
       <div className='w-full p-5 flex items-center justify-center cursor-pointer'>
         <div
-          onClick={isViewMore ? hideMore : onViewMore}
+          onClick={() => navigate("/dashboard#Orders")}
           className='flex items-center gap-2 w-36 rounded-2xl bg-[var(--customer)] p-3 text-white'
         >
-          {isViewMore ? (
-            <BsChevronDoubleUp size={20} color={"#fff"} />
-          ) : (
-            <BsChevronDoubleDown size={20} color={"#fff"} />
-          )}
-          <h3 className=''>{isViewMore ? "Hide" : "View More"}</h3>
+          <BsChevronDoubleDown size={20} color={"#fff"} />
+          <h3 className=''>{"View More"}</h3>
         </div>
       </div>
     </div>

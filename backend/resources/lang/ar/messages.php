@@ -488,7 +488,7 @@ return [
     "K" => "الف",
     "M" => "مليون",
     "B" => "بليون",
-    "Trial ends at" => "فترة التجربة تنتهي في",
+    "plan ends at" => "فترة صلاحيه العضويه تنتهي في",
     "metadata" => "البيانات الوصفية",
     "Support" => "الدعم",
     "About" => "من نحن",
@@ -520,6 +520,7 @@ return [
     "Approve user sent" => "تم ارسال بريد قبول مستخدم",
     "Approve user fail" => "فشل ارسال بريد قبول مستخدم",
     "Activate restaurant"   => "تفعيل مطعم",
+    "Activate"   => "تفعيل ",
     "Activate restaurant sent"  => "تم ارسال بريد تفعيل مطعم",
     "Activate restaurant fail"  => "فشل ارسال بريد تفعيل مطعم",
     "Create promoter"   => "اضافة مروج",
@@ -547,7 +548,17 @@ return [
     "fees" => "العمولات",
     "percentage-fee" => "نسبه العموله",
     "percentage-fee-explain" => "نسبه العموله التي سيتم خضمها من كل عمليه دفع",
-    "in" => "ب"
+    "in" => "ب",
+    "configurations"=>"الاعدادات",
+    "Deactivate"=>"الغاء التفعيل",
+    "Increase Slots"=>"زيادة العدد",
+    'Branch slot has been increased'=>"تم تزويد عدد الفروع المتاحة ",
+    'loyalty-points' => "نقاط الولاء",
+    'loyalty-points-per-order' => "نقاط الولاء لكل طلب",
+    'loyalty-point-desc' => "كم عدد نقاط ولاء الطلب التي سيحصل عليها العميل لكل طلب",
+    'cashback-per-amount-percentage' => 'نسبه استرداد النقود',
+    'new-branch-slot-price' => 'سعر فرع جديد',
+
 
 ];
 

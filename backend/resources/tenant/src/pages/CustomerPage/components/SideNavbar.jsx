@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import NavItem from "./NavItem"
 import Dashboard from "../../../assets/dashboardWhiteIcon.svg"
 import DashboardBlack from "../../../assets/dashboardBlockIcon.svg"
@@ -8,6 +8,7 @@ import ProfileIcon from "../../../assets/profileIcon.svg"
 import ProfileWhiteIcon from "../../../assets/profileWhiteIcon.svg"
 import {useDispatch, useSelector} from "react-redux"
 import {setActiveNavItem} from "../../../redux/NewEditor/customerSlice"
+import {useNavigate} from "react-router-dom"
 
 const navItems = [
   {
@@ -15,24 +16,40 @@ const navItems = [
     imgUrl: DashboardBlack,
     activeImgUrl: Dashboard,
     title: "Dashboard",
+    link: "/dashboard#Dashboard",
   },
   {
     id: 2,
     imgUrl: OrderBlack,
     activeImgUrl: OrderWhite,
-    title: "Order",
+    title: "Orders",
+    link: "/dashboard#Orders",
   },
   {
     id: 3,
     imgUrl: ProfileIcon,
     activeImgUrl: ProfileWhiteIcon,
     title: "Profile",
+    link: "/dashboard#Profile",
   },
 ]
 
 const SideNavbar = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
+
+  if (window.location.href.indexOf("#Profile") > -1) {
+    dispatch(setActiveNavItem("Profile"))
+  } else if (window.location.href.indexOf("#Dashboard") > -1) {
+    dispatch(setActiveNavItem("Dashboard"))
+  } else if (window.location.href.indexOf("#Orders") > -1) {
+    dispatch(setActiveNavItem("Orders"))
+  }
+
+  // useEffect(() => {
+  //   navigate("/dashboard#Dashboard")
+  // }, [])
 
   return (
     <div className='mt-5'>
@@ -41,7 +58,7 @@ const SideNavbar = () => {
           <NavItem
             key={navItem.id}
             active={navItem.title === activeNavItem}
-            onClick={() => dispatch(setActiveNavItem(navItem.title))}
+            onClick={() => navigate(navItem.link)}
             title={navItem.title}
             imgUrl={navItem.imgUrl}
             activeImgUrl={navItem.activeImgUrl}

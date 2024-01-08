@@ -14,7 +14,7 @@ class SwitchLanguageTest extends TestCase
     {
         $response = $this->get(env('APP_URL'));
 
-        dd($response);
+        dd($response->getContent());
 
         $response->assertStatus(200);
     }

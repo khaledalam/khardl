@@ -51,13 +51,20 @@ class OrderRepository
                 $statusLog->status = Order::PENDING;
                 $statusLog->notes = 'Order Notes: ' . $request->order_notes;
                 $statusLog->saveOrFail();
-                
+
                 $cart->clone_to_order_items($order->id);
 
-               
+
+                $restaurant_settings = Setting::first();
+                $loyalty_points = $restaurant_settings?->loyalty_points_per_order;
+                $cashback = $restaurant_settings?->cashback_per_amount_percentage * $subtotal;
+
+                $user->loyalty_points += $loyalty_points;
+                $user->cashback += $cashback;
+
                 $cart->trash();
 
-                
+
                 DB::commit();
                 return $this->sendResponse($order, __('The order been created successfully.'));
 

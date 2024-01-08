@@ -1,19 +1,36 @@
-import React from "react"
+import React, {useContext, useEffect, useState} from "react"
 import SideNavbar from "./components/SideNavbar"
 import NavbarCustomer from "./components/NavbarCustomer"
 import {useSelector} from "react-redux"
 import CustomerDashboard from "./components/CustomerDashboard"
 import CustomerOrder from "./components/CustomerOrder"
 import CustomerProfile from "./components/CustomerProfile"
+import {useSearchParams} from "react-router-dom"
+import CustomerOrderDetail from "./components/CustomerOrderDetail"
+import {MenuContext} from "react-flexible-sliding-menu"
 
 const TABS = {
   dashboard: "Dashboard",
-  order: "Order",
+  orders: "Orders",
   profile: "Profile",
 }
 export const CustomerPage = () => {
   const isSidebarCollapse = false
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
+  const [searchParam] = useSearchParams()
+  const [showOrderDetail, setShowOrderDetail] = useState(false)
+  const {toggleMenu} = useContext(MenuContext)
+
+  const orderId = searchParam.get("orderId")
+  console.log("orderId", orderId)
+
+  useEffect(() => {
+    if (orderId) {
+      setShowOrderDetail(true)
+    } else {
+      setShowOrderDetail(false)
+    }
+  }, [orderId])
 
   return (
     <div>
@@ -31,15 +48,16 @@ export const CustomerPage = () => {
             isSidebarCollapse ? "flex-[100%] w-full" : "flex-[80%]"
           } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
         >
-          {activeNavItem === TABS.dashboard ? (
+          {activeNavItem === TABS.dashboard && !showOrderDetail ? (
             <CustomerDashboard />
-          ) : activeNavItem === TABS.order ? (
+          ) : activeNavItem === TABS.orders && !showOrderDetail ? (
             <CustomerOrder />
-          ) : activeNavItem === TABS.profile ? (
+          ) : activeNavItem === TABS.profile && !showOrderDetail ? (
             <CustomerProfile />
           ) : (
             <></>
           )}
+          {showOrderDetail && <CustomerOrderDetail orderId={orderId} />}
         </div>
       </div>
     </div>

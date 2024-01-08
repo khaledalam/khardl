@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_live')->default(false);
             $table->float('delivery_fee')->default(0);
+            $table->integer("branch_slots")->default(0);
             $table->string("restaurant_name");
+
         });
     }
 

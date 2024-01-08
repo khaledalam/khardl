@@ -4,6 +4,7 @@ import Maps from "../../../../../map"
 import AxiosInstance from "../../../../../../axios/axios"
 import {toast} from "react-toastify"
 import Places from "../../../../CustomersEditor/components/Dashboard/components/Places"
+import {useSelector} from "react-redux";
 
 const Profile = () => {
   const {t} = useTranslation()
@@ -11,9 +12,12 @@ const Profile = () => {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [phone, setPhone] = useState("")
-  const [address, setAddress] = useState("")
+  const [selected, setSelected] = useState(null)
 
-  useEffect(() => {
+    const customerAddress = useSelector((state) => state.customerAPI.address)
+
+
+    useEffect(() => {
     fetchProfileData().then((r) => null)
   }, [])
 
@@ -29,7 +33,6 @@ const Profile = () => {
         setFirstName(profileResponse.data?.data?.firstName ?? t("N/A"))
         setLastName(profileResponse.data?.data?.lastName ?? t("N/A"))
         setPhone(profileResponse.data?.data?.phone ?? t("N/A"))
-        setAddress(profileResponse.data?.data?.address ?? t("N/A"))
       }
     } catch (error) {
       console.log(error)
@@ -45,10 +48,12 @@ const Profile = () => {
 
       try {
         await AxiosInstance.post(`/user`, {
-          address: address,
+          address: customerAddress,
           first_name: firstName,
           last_name: lastName,
           phone: phone,
+          lat: selected && selected?.lat,
+          lng: selected && selected?.lng,
         })
           .then((r) => {
             toast.success(t("Profile updated successfully"))
@@ -109,23 +114,14 @@ const Profile = () => {
             <div className='py-4 px-8'>
               <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]' />
               <p className='mb-2 mt-4 mx-2'>{t("Address")}</p>
-              <div className='w-[100%]'>
-                {/* <input
-                  type='text'
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className='text-[14px] bg-[var(--secondary)] w-[100%] py-3 rounded-full px-4 appearance-none'
-                  placeholder={`${t("building number")}, ${t("street")}, ${t(
-                    "area"
-                  )}, ${t("city")}`}
+              <div className='w-[100%] h-[400px]'>
+                <Places
+                  inputStyle={
+                    "w-full text-[14px] bg-[var(--secondary)]  py-3 rounded-full px-4 appearance-none"
+                  }
                 />
-            //   </div> */}
-                <Places />
               </div>
             </div>
-            {/*<div className='relative py-4 px-8 w-[100%]'>*/}
-            {/*   <Maps />*/}
-            {/*</div>*/}
           </div>
 
           <button

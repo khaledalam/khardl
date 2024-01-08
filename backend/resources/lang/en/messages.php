@@ -489,7 +489,7 @@ return [
     "K" => "K",
     "M" => "M",
     "B" => "B",
-    "Trial ends at" => "Trial ends at",
+    "plan ends at" => "Plan ends at",
     "metadata" => "metadata",
     "Support" => "Support",
     "About" => "About",
@@ -547,6 +547,16 @@ return [
     "fees" => "Fees",
     "percentage-fee" => "Percentage Fee",
     "percentage-fee-explain" => "Percentage that will be deduced from each transaction",
-    "in" => "in"
+    "in" => "in",
+    "configurations"=>"Configurations",
+    "Activate"   => "تفعيل ",
+    "Deactivate"=>"Deactivate",
+    "Increase Slots"=>"Increase Slots",
+    'Branch slot has been increased'=>"Branch slot has been increased",
+    'loyalty-points' => "Loyalty Points",
+    'loyalty-points-per-order' => "Loyalty points per order",
+    'loyalty-point-desc' => "How many order loyalty points customer will gain per each order",
+    'cashback-per-amount-percentage' => 'Cashback per order amount percentage',
+    'new-branch-slot-price' => 'New branch slot price',
 
 ];
