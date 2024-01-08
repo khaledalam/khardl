@@ -15,6 +15,8 @@
   "Don't have an account?": "ليس لديك حساب ؟",
   "You have an account?": "لديك حساب ؟",
   "Commercial Record": "السجل التجاري",
+  "Accept": "نقبل",
+  "size <= 16 MG":"الحجم اقل من او يساوي ١٦ ميجا",
   "Tax registration certificate": "شهادة التسجيل الضريبي",
   "Bank certificate": "شهادة بنكية",
   "Identity of the owner or manager": "هوية المالك أو المدير",

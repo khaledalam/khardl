@@ -49,11 +49,11 @@ class RegisterController extends BaseController
     {
 
         $request->validate([
-            'commercial_registration' => 'required|mimes:pdf|max:2048',
-            'tax_registration_certificate' => 'required|mimes:pdf|max:2048',
-            'bank_certificate' => 'required|mimes:pdf|max:2048',
-            'identity_of_owner_or_manager' => 'required|mimes:pdf|max:2048',
-            'national_address' => 'required|mimes:pdf|max:2048',
+            'commercial_registration' => 'required|mimes:pdf|max:16384',
+            'tax_registration_certificate' => 'required|mimes:pdf|max:16384',
+            'bank_certificate' => 'required|mimes:pdf|max:16384',
+            'identity_of_owner_or_manager' => 'required|mimes:pdf|max:16384',
+            'national_address' => 'required|mimes:pdf|max:16384',
             'IBAN' => 'required|string|min:10|max:255',
             'facility_name' => 'required|string|min:5|max:255',
         ]);
