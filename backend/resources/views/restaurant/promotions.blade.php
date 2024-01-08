@@ -37,7 +37,7 @@
                                         <!--begin::Form-->
                                         <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row"
                                               action="{{route('promotions.save-settings')}}" method="POST">
-
+                                            @csrf
                                             <!--begin::main column-->
                                             <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
 

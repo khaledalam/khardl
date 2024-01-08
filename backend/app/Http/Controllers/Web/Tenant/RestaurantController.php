@@ -75,7 +75,6 @@ class RestaurantController extends BaseController
 
     public function updatePromotions(Request $request){
 
-
         $request->validate([
             'loyalty_points' => 'required|numeric|min:0',
             'loyalty_point_price' => 'required|numeric|min:0',

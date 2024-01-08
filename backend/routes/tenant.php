@@ -131,7 +131,7 @@ Route::group([
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
                 Route::get('/promotions', [RestaurantController::class, 'promotions'])->name('restaurant.promotions');
-                Route::post('/save-promotions', [RestaurantController::class, 'savePromotions'])->name('promotions.save-settings');
+                Route::post('/save-promotions', [RestaurantController::class, 'updatePromotions'])->name('promotions.save-settings');
 
 
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
