@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web\Tenant\Order;
 use App\Http\Requests\Web\Tenant\Order\StoreOrderFormRequest;
 use App\Http\Services\tenant\Order\OrderService;
 use App\Http\Controllers\Web\BaseController;
+use App\Models\Tenant\Item;
+use App\Models\Tenant\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends BaseController
@@ -30,5 +32,9 @@ class OrderController extends BaseController
     }
     public function UnavailableProducts(Request $request){
         return $this->orderService->listUnavailableProducts($request);
+    }
+    public function changeProductAvailability(Request $request,Item $item){
+        $this->orderService->changeProductAvailability($item);
+        return $this->sendResponse('', '');
     }
 }

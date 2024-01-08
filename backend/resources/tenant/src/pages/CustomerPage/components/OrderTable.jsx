@@ -1,9 +1,11 @@
 import React from "react"
 import Eyes from "./Eyes"
 import {useNavigate} from "react-router-dom"
+import {useTranslation} from "react-i18next"
 
 const OrderTable = ({data}) => {
   const navigate = useNavigate()
+  const {t} = useTranslation()
 
   console.log("from order table", data)
   return (
@@ -11,12 +13,12 @@ const OrderTable = ({data}) => {
       <table className='w-full table border-separate border-spacing-y-4'>
         <thead className='w-full '>
           <tr className='text-white bg-[var(--customer)] h-[60px] rounded-lg'>
-            <th className='font-bold text-[1rem]'>Order ID</th>
-            <th className='font-bold text-[1rem]'>Products</th>
-            <th className='font-bold text-[1rem]'>Status</th>
-            <th className='font-bold text-[1rem]'>Total</th>
-            <th className='font-bold text-[1rem]'>Date Added</th>
-            <th className='font-bold text-[1rem]'>Display Order</th>
+            <th className='font-bold text-[1rem]'>{t("Order ID")}</th>
+            <th className='font-bold text-[1rem]'>{t("Products")}</th>
+            <th className='font-bold text-[1rem]'>{t("Status")}</th>
+            <th className='font-bold text-[1rem]'>{t("Total")}</th>
+            <th className='font-bold text-[1rem]'>{t("Date Added")}</th>
+            <th className='font-bold text-[1rem]'>{t("Display Order")}</th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +51,8 @@ const OrderTable = ({data}) => {
                   className={`${
                     order.status.startsWith("accepted") ||
                     order.status.startsWith("ready") ||
-                    order.status.includes("receive")
+                    order.status.includes("receive") ||
+                    order.status.includes("complete")
                       ? "bg-[var(--accepted)]"
                       : "bg-[var(--rejected)]"
                   } rounded-xl flex items-center justify-center p-2 px-4 w-max`}
