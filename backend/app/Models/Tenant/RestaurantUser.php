@@ -40,7 +40,9 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'branch_id',
         'msegat_id_verification',
         'tap_customer_id',
-        'tap_verified'
+        'tap_verified',
+        'loyalty_points',
+        'cashback'
     ];
     const STATUS = [
         self::ACTIVE,
@@ -171,7 +173,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         return 1;
     }
 
-  
+
     public function tap_verified(): bool
     {
         return $this->tap_verified;
