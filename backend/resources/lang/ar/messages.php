@@ -555,6 +555,10 @@ return [
     'Branch slot has been increased'=>"تم تزويد عدد الفروع المتاحة ",
     "New subscription"=>"اشتراك جديد",
     "Number of branches"=>"عدد الفروع",
-    "purchase"=>"شراء"
+    "purchase"=>"شراء",
+    "For each branch annually"=>"لكل فرع سنوياً",
+    "Enjoy benefiting from our services"=>"استمتع بالاستفادة من خدماتنا",
+    "Buy now"=>"اشتري الان",
+    "subscriptions"=>"الاشتراكات"
 ];
 

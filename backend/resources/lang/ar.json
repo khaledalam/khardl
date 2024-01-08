@@ -33,5 +33,6 @@
     "StreetLine":"ستريت لاين",
     ":module has been successfully activated":"تم تفعيل شركة الشحن :module",
     ":module has been successfully deactivated":"تم الغاء تفعيل شركة الشحن :module",
-    "Location is required":"الموقع مطلوب"
+    "Location is required":"الموقع مطلوب",
+    "A new Subscription has been created":"تمت اضافة اشتراك جديد بنجاح"
 }

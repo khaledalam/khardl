@@ -20,11 +20,8 @@ class SubscriptionSeeder extends Seeder
     public function run(): void
     {
         Subscription::create([
-            'term'=>"YEARLY",
-            "period"=>0,
-            "due"=>0,
-            "auto_renew"=>true,
-            "amount"=>1
+            'name'=>trans_json('Default Package','الباقة التقليدية'),
+            "amount"=>400
         ]);
     }
 }

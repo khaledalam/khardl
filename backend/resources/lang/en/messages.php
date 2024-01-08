@@ -555,5 +555,10 @@ return [
     'Branch slot has been increased'=>"Branch slot has been increased",
     "New subscription"=>"New subscription",
     "Number of branches"=> "Number of branches",
-    "purchase"=>"purchase"
+    "purchase"=>"purchase",
+    "For each branch annually"=>"For each branch annually",
+    'Enjoy benefiting from our services'=>'Enjoy benefiting from our services',
+    "Buy now"=>"Buy now",
+    "subscriptions"=>"subscriptions"
+
 ];

@@ -14,7 +14,6 @@ class Setting extends Model
         'delivery_fee',
         'transaction_percentage_fee',
         'restaurant_name',
-        'branch_slots'
     ];
     public $timestamps = false;
 
