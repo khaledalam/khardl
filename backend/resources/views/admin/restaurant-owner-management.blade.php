@@ -19,7 +19,7 @@
        <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.restaurant-owners')}}</span>
        <span class="text-muted mt-1 fw-bold fs-7">{{ count($admins) }} {{ __('messages.restaurant-owners')}}</span>
      </h3>
-     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
+     <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('messages.Add') }}">
        <a href="{{ route('admin.add-user') }}" class="btn btn-sm btn-light btn-active-primary">
        <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
        <span class="svg-icon svg-icon-3">

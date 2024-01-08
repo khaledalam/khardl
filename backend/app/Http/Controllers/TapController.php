@@ -56,12 +56,12 @@ class TapController extends Controller
         // @TODO: handle upload tap documents logic here...
 
         $validationRules = [
-            'business_logo' => 'required|mimes:jpeg,png,gif|file|max:8192',
-            'customer_signature' => 'required|mimes:gif,jpeg,png,pdf|file|max:8192',
-            'dispute_evidence' => 'required|mimes:jpeg,png,pdf|file|max:8192',
-            'identity_document' => 'required|mimes:jpeg,png,pdf|file|max:8192',
-            'pci_document' => 'required|mimes:jpeg,png,pdf|file|max:8192',
-            'tax_document_user_upload' => 'required|mimes:jpeg,png,pdf|file|max:8192',
+            'business_logo' => 'required|mimes:jpeg,png,gif|file|max:16384',//16MB
+            'customer_signature' => 'required|mimes:gif,jpeg,png,pdf|file|max:16384',
+            'dispute_evidence' => 'required|mimes:jpeg,png,pdf|file|max:16384',
+            'identity_document' => 'required|mimes:jpeg,png,pdf|file|max:16384',
+            'pci_document' => 'required|mimes:jpeg,png,pdf|file|max:16384',
+            'tax_document_user_upload' => 'required|mimes:jpeg,png,pdf|file|max:16384',
         ];
 
         $request->validate($validationRules);
@@ -160,13 +160,13 @@ class TapController extends Controller
         // TODO @todo protect request only coming from payment
         dd(1);
         $user = Auth::user();
-    
+
         if($user->tap_customer_id){
             $subscription_options = tenancy()->central(function(){
                 return CentralSubscriptionOptions::first();
             });
             try {
-                // deprecated 
+                // deprecated
                 // TapSubscription::create([
 
                 // ]);
@@ -178,19 +178,19 @@ class TapController extends Controller
                 //     'amount'=>$subscription_options->amount,
                 //     'status'=>'inactive',
                 // ]);
-              
-           
+
+
             }catch(\Exception $e) {
 
                 logger($e->getMessage());
                 return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
             }
-          
+
         }else {
             return redirect()->route('restaurant.service')->with('error', __('This User has not any related tap customer'));
         }
-       
-    
+
+
 
     }
 

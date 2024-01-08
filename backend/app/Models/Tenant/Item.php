@@ -91,6 +91,11 @@ class Item extends Model
     {
         return $query->orderBy('id','DESC');
     }
+    public function toggleAvailability()
+    {
+        $this->availability = !$this->availability;
+        $this->save();
+    }
     /* End Scopes */
 
 }

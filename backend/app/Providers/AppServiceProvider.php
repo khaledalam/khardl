@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\CentralSetting;
 use App\Repositories\PDF\OrderPDF;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
@@ -30,6 +32,14 @@ class AppServiceProvider extends ServiceProvider
                 'customer'=> new CustomerPDF($request['tenant_id'],$request['id'] ?? null),
                 default =>  throw new ModelNotFoundException('')
             };
+        });
+        Collection::macro('customPaginate', function ($perPage, $total = null, $page = null, $pageName = 'page') {
+            $page = $page ?: LengthAwarePaginator::resolveCurrentPage($pageName);
+
+            return new LengthAwarePaginator($this->forPage($page, $perPage), $total ?: $this->count(), $perPage, $page, [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+                'pageName' => $pageName,
+            ]);
         });
     }
 

@@ -103,4 +103,8 @@ class OrderService
         ->paginate(config('application.perPage')??20);
         return view('restaurant.orders.unavailable_products', compact('user','products'));
     }
+    public function changeProductAvailability(Item $item)
+    {
+        $item->toggleAvailability();
+    }
 }
