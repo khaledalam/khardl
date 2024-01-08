@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from "react-redux"
 import CustomerDashboard from "./components/CustomerDashboard"
 import CustomerOrder from "./components/CustomerOrder"
 import CustomerProfile from "./components/CustomerProfile"
-import {useSearchParams} from "react-router-dom"
+import {useNavigate, useSearchParams} from "react-router-dom"
 import CustomerOrderDetail from "./components/CustomerOrderDetail"
 import {RiMenuFoldFill} from "react-icons/ri"
 import CustomerPayment from "./components/CustomerPayment"
@@ -15,19 +15,23 @@ import {
 } from "../../redux/NewEditor/customerSlice"
 import AxiosInstance from "../../axios/axios"
 import MobileMenu from "./components/MobileMenu"
+import {useTranslation} from "react-i18next"
 
-const TABS = {
-  dashboard: "Dashboard",
-  orders: "Orders",
-  profile: "Profile",
-  payment: "Payment",
-}
 export const CustomerPage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {t} = useTranslation()
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
   const [searchParam] = useSearchParams()
   const [showOrderDetail, setShowOrderDetail] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+
+  const TABS = {
+    dashboard: t("Dashboard"),
+    orders: t("Orders"),
+    profile: t("Profile"),
+    payment: t("Payment"),
+  }
 
   const orderId = searchParam.get("orderId")
   console.log("orderId", orderId)
@@ -59,6 +63,10 @@ export const CustomerPage = () => {
     } finally {
     }
   }
+
+  useEffect(() => {
+    navigate("/dashboard#Dashboard")
+  }, [])
 
   const fetchCardsData = async () => {
     try {

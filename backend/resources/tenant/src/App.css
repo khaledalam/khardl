@@ -127,9 +127,9 @@ body::-webkit-scrollbar-track {
 }
 
 .drawer-end .drawer-toggle ~ .drawer-side > *:not(.drawer-overlay) {
-  transform: translateX(135%);
-  -webkit-transform: translateX(135%);
-  -moz-transform: translateX(135%);
-  -ms-transform: translateX(135%);
-  -o-transform: translateX(135%);
+  transform: translateX(-135%);
+  -webkit-transform: translateX(-135%);
+  -moz-transform: translateX(-135%);
+  -ms-transform: translateX(-135%);
+  -o-transform: translateX(-135%);
 }

@@ -7158,6 +7158,10 @@ details.collapse summary::-webkit-details-marker {
     width: 66.666667%;
   }
 
+  .md\:w-80 {
+    width: 20rem;
+  }
+
   .md\:max-w-xl {
     max-width: 36rem;
   }
@@ -14630,6 +14634,10 @@ details.collapse summary::-webkit-details-marker {
 
   .md\:w-2\/3 {
     width: 66.666667%;
+  }
+
+  .md\:w-80 {
+    width: 20rem;
   }
 
   .md\:max-w-xl {

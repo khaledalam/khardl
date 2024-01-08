@@ -8,11 +8,13 @@ const MobileMenu = () => {
 
   return (
     <Fragment>
-      <div className={`drawer ${language !== "en" ? "drawer-end" : ""}`}>
+      <div
+        className={`drawer lg:hidden ${language !== "en" ? "drawer-end" : ""}`}
+      >
         <input id='mobile_en' type='checkbox' className='drawer-toggle' />
         <div className='drawer-content'>
           {/* Page content here */}
-          <label htmlFor='mobile_en' className='md:hidden drawer-button'>
+          <label htmlFor='mobile_en' className='lg:hidden drawer-button'>
             <RiMenuFoldFill
               size={35}
               className={`text-neutral-400 cursor-pointer ${
@@ -21,13 +23,13 @@ const MobileMenu = () => {
             />
           </label>{" "}
         </div>
-        <div className='drawer-side z-50'>
+        <div className='drawer-side z-50 lg:hidden'>
           <label
             htmlFor='mobile_en'
             aria-label='close sidebar'
             className='drawer-overlay'
           ></label>
-          <div className='menu bg-white p-4 w-72 min-h-full text-base-content'>
+          <div className='menu lg:hidden bg-white p-4 w-72 md:w-80 min-h-full text-base-content'>
             <SideNavbar />
           </div>
         </div>

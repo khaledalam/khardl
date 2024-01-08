@@ -58,13 +58,13 @@ const SideNavbar = () => {
   ]
 
   if (window.location.href.indexOf("#Profile") > -1) {
-    dispatch(setActiveNavItem("Profile"))
+    dispatch(setActiveNavItem(t("Profile")))
   } else if (window.location.href.indexOf("#Dashboard") > -1) {
-    dispatch(setActiveNavItem("Dashboard"))
+    dispatch(setActiveNavItem(t("Dashboard")))
   } else if (window.location.href.indexOf("#Orders") > -1) {
-    dispatch(setActiveNavItem("Orders"))
+    dispatch(setActiveNavItem(t("Orders")))
   } else if (window.location.href.indexOf("#Payment") > -1) {
-    dispatch(setActiveNavItem("Payment"))
+    dispatch(setActiveNavItem(t("Payment")))
   }
 
   const handleNavigate = (navItem) => {
