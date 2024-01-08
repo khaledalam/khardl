@@ -57,7 +57,9 @@ const CustomerDashboard = () => {
             key={overview.id}
             className='w-[30%] md:w-[25%] h-[80px] md:h-[110px] rounded-2xl bg-[var(--customer)] p-3 text-white flex flex-col gap-3'
           >
-            <h4 className='text-xs md:text-sm'>{overview.title}</h4>
+            <h4 className='text-xs md:text-sm line-clamp-1 truncate'>
+              {overview.title}
+            </h4>
             <h2 className='font-bold text-white text-center text-sm md:text-2xl'>
               {t("SAR")} {overview.amount}
             </h2>
