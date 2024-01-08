@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.Trial ends at') }} :</span>
+                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.plan ends at') }} :</span>
                                         <span class="badge badge-dark p-2 fs-6">
                                             {{ $restaurant->trial_ends_at?->format('Y-m-d') }}
                                         </span>

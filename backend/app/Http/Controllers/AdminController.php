@@ -417,8 +417,10 @@ class AdminController extends Controller
 
         $live_chat_enabled = $settings?->live_chat_enabled;
         $webhook_url = $settings?->webhook_url;
+        $new_branch_slot_price = $settings?->new_branch_slot_price;
 
-        return view('admin.settings', compact('user', 'live_chat_enabled', 'webhook_url'));
+
+        return view('admin.settings', compact('user', 'live_chat_enabled', 'webhook_url', 'new_branch_slot_price'));
     }
 
     public function saveSettings(Request $request)
@@ -443,6 +445,31 @@ class AdminController extends Controller
             return redirect()->back()->with('success', 'Save settings successfully.');
         else
             return redirect()->back()->with('success', "حفظ الاعدادات بنجاح");
+    }
+
+    public function saveRevenue(Request $request)
+    {
+        $settings = CentralSetting::first();
+
+        $settings->fee_flat_rate = $request->fee_flat_rate;
+        $settings->fee_percentage = $request->fee_percentage;
+        $settings->new_branch_slot_price = $request->new_branch_slot_price;
+        $settings->save();
+        $actions = [
+            'en' => 'Update platform revenue settings',
+            'ar' => 'عدل علي اعدادات اربح'
+        ];
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => $actions,
+            'metadata' => $request->all(),
+            'type' => LogTypes::UpdateRevenueSettings
+        ]);
+
+        if(app()->getLocale() === 'en')
+            return redirect()->back()->with('success', 'Save revenue settings successfully.');
+        else
+            return redirect()->back()->with('success', "حفظ اعدادات الربح بنجاح");
     }
 
     public function userManagement()

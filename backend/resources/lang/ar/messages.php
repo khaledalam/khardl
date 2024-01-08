@@ -488,7 +488,7 @@ return [
     "K" => "الف",
     "M" => "مليون",
     "B" => "بليون",
-    "Trial ends at" => "فترة التجربة تنتهي في",
+    "plan ends at" => "فترة صلاحيه العضويه تنتهي في",
     "metadata" => "البيانات الوصفية",
     "Support" => "الدعم",
     "About" => "من نحن",
@@ -560,6 +560,13 @@ return [
     "Enjoy benefiting from our services"=>"استمتع بالاستفادة من خدماتنا",
     "Buy now"=>"اشتري الان",
     "subscriptions"=>"الاشتراكات",
-    "update"=>'تحديث'
+    "update"=>'تحديث',
+    'loyalty-points' => "نقاط الولاء",
+    'loyalty-points-per-order' => "نقاط الولاء لكل طلب",
+    'loyalty-point-desc' => "كم عدد نقاط ولاء الطلب التي سيحصل عليها العميل لكل طلب",
+    'cashback-per-amount-percentage' => 'نسبه استرداد النقود',
+    'new-branch-slot-price' => 'سعر فرع جديد',
+
+
 ];
 

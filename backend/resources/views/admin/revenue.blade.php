@@ -12,7 +12,7 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('admin.generate-user') }}" method="POST">
+            <form action="{{ route('admin.save-revenue') }}" method="POST">
             @csrf
 
             <!--begin::Main column-->
@@ -40,7 +40,7 @@
                                             <label class="form-label">{{ __('messages.flat-rate')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" step="0.1" name="flat_rate" class="form-control mb-2" required placeholder="{{ __('messages.flat-rate')}} in {{__('messages.sar')}}" value="{{$settings['flat_rate']}}" />
+                                            <input type="text" step="0.1" name="fee_flat_rate" class="form-control mb-2" required placeholder="{{ __('messages.flat-rate')}} in {{__('messages.sar')}}" value="{{$settings['fee_flat_rate']}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{__("e.g.")}} 10 {{__('messages.sar')}}</div>
@@ -54,10 +54,24 @@
                                             <label class="form-label">{{ __('messages.percentage-fee')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" step="0.1" name="transaction_percentage_fee" class="form-control mb-2" required placeholder="{{ __('messages.percentage-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['transaction_percentage_fee']}}" />
+                                            <input type="number" step="0.1" name="fee_percentage" class="form-control mb-2" required placeholder="{{ __('messages.percentage-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['fee_percentage']}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{__('messages.percentage-fee-explain')}} {{__('messages.e.g.')}} 2.4%</div>
+                                            <!--end::Description-->
+                                        </div>
+                                        <!--end::Input group-->
+
+                                        <!--begin::Input group-->
+                                        <div class="mb-10 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="form-label">{{ __('messages.new-branch-slot-price')}}</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="number" step="0.1" name="new_branch_slot_price" class="form-control mb-2" required placeholder="{{ __('messages.new-branch-slot-price')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['new_branch_slot_price']}}" />
+                                            <!--end::Input-->
+                                            <!--begin::Description-->
+                                            <div class="text-muted fs-7">{{__('messages.e.g.')}} 388 {{__('messages.sar')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->

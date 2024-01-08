@@ -11,14 +11,19 @@ import {
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md"
 
+import {useSelector} from "react-redux"
+
 const CustomerOrder = () => {
   const [pageNumber, setpageNumber] = useState(1)
   const [orderPerPage, setOrderPerPage] = useState(7)
+  const [dateAdded, setDateAdded] = useState("")
+  const [orderStatus, setOrderStatus] = useState("")
+  const ordersList = useSelector((state) => state.customerAPI.ordersList)
 
-  const slicedOrderData = customerOrderData.slice(0, orderPerPage)
+  const slicedOrderData = ordersList.slice(0, orderPerPage)
 
   return (
-    <div className='p-4'>
+    <div className='p-6'>
       <div className='flex items-center gap-3'>
         <img src={orderIcon} alt='dashboard' className='' />
         <h3 className='text-lg font-medium'>Order</h3>
@@ -30,7 +35,8 @@ const CustomerOrder = () => {
         <div className='w-full gap-4 flex items-center'>
           <div className='w-1/2'>
             <PrimaryOrderSelect
-              defaultValue={"Status"}
+              defaultValue={orderStatus ? orderStatus : "Status"}
+              handleChange={(value) => setOrderStatus(value)}
               options={[
                 {
                   value: "Received by Restaurant",
@@ -45,7 +51,8 @@ const CustomerOrder = () => {
           </div>
           <div className='w-1/2'>
             <PrimaryOrderSelect
-              defaultValue={"Date Added"}
+              defaultValue={dateAdded ? dateAdded : "Date Added"}
+              handleChange={(value) => setDateAdded(value)}
               options={[
                 {
                   value: "Today",
@@ -69,6 +76,7 @@ const CustomerOrder = () => {
             <PrimaryOrderSelect
               background
               defaultValue={`Show ${orderPerPage}`}
+              handleChange={(value) => setOrderPerPage(value)}
               options={[
                 {
                   value: 5,
