@@ -21,6 +21,7 @@ class SubscriptionSeeder extends Seeder
     {
         Subscription::create([
             'name'=>trans_json('Default Package','الباقة التقليدية'),
+            'description'=>trans_json('For each branch annually','لكل فرع سنوياً'),
             "amount"=>400
         ]);
     }

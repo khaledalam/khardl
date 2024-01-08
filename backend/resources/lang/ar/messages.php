@@ -559,6 +559,7 @@ return [
     "For each branch annually"=>"لكل فرع سنوياً",
     "Enjoy benefiting from our services"=>"استمتع بالاستفادة من خدماتنا",
     "Buy now"=>"اشتري الان",
-    "subscriptions"=>"الاشتراكات"
+    "subscriptions"=>"الاشتراكات",
+    "update"=>'تحديث'
 ];
 

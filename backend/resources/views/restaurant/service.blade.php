@@ -193,7 +193,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 </div>
                                                                 <!--end::image-->
                                                                 <!--begin::Title-->
-                                                                <h3 class="text-dark mb-5 fw-boldest text-center">{{__('messages.For each branch annually')}}</h3>
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">{{$subscription->description}}</h3>
                                                                 <!--end::Title-->
                                                                 <!--begin::Price-->
                                                                 <div class="text-center">
@@ -205,7 +205,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                             <!--end::Heading-->
 
                                                             <!--begin::Select-->
-                                                           
+                                                            
                                                                     <!--end::Modal dialog-->
                                                             <div class=" d-flex justify-content-center w-75 ">
                                                                         <div>

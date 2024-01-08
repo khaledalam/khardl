@@ -559,6 +559,7 @@ return [
     "For each branch annually"=>"For each branch annually",
     'Enjoy benefiting from our services'=>'Enjoy benefiting from our services',
     "Buy now"=>"Buy now",
-    "subscriptions"=>"subscriptions"
+    "subscriptions"=>"subscriptions",
+    "update"=>'update'
 
 ];

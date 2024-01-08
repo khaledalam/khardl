@@ -11,8 +11,9 @@ class Subscription extends Model
     use HasFactory,HasTranslations;
     protected $fillable = [
         'amount',
-        'name'
+        'name',
+        'description'
     ];
-    public $translatable = ['name'];
+    public $translatable = ['name','description'];
     
 }

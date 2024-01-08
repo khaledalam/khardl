@@ -735,4 +735,11 @@ class AdminController extends Controller
             'success' => __("A new Subscription has been created"),
         ]);
     }
+    public function subscriptionShow(Subscription $subscription){
+        $user = Auth::user();
+        return view('admin.subscriptions-edit', compact('user','subscription'));
+    }
+    public function subscriptionUpdate(Subscription $subscription){
+
+    }
 }
