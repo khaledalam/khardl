@@ -4,6 +4,7 @@ import Maps from "../../../../../map"
 import AxiosInstance from "../../../../../../axios/axios"
 import {toast} from "react-toastify"
 import Places from "../../../../CustomersEditor/components/Dashboard/components/Places"
+import {useSelector} from "react-redux";
 
 const Profile = () => {
   const {t} = useTranslation()
@@ -11,10 +12,12 @@ const Profile = () => {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [phone, setPhone] = useState("")
-  const [address, setAddress] = useState("")
   const [selected, setSelected] = useState(null)
 
-  useEffect(() => {
+    const customerAddress = useSelector((state) => state.customerAPI.address)
+
+
+    useEffect(() => {
     fetchProfileData().then((r) => null)
   }, [])
 
@@ -30,7 +33,6 @@ const Profile = () => {
         setFirstName(profileResponse.data?.data?.firstName ?? t("N/A"))
         setLastName(profileResponse.data?.data?.lastName ?? t("N/A"))
         setPhone(profileResponse.data?.data?.phone ?? t("N/A"))
-        setAddress(profileResponse.data?.data?.address ?? t("N/A"))
       }
     } catch (error) {
       console.log(error)
@@ -44,17 +46,14 @@ const Profile = () => {
       if (loading) return
       setLoading(true)
 
-        console.log(selected);
-
       try {
         await AxiosInstance.post(`/user`, {
-          address: address,
+          address: customerAddress,
           first_name: firstName,
           last_name: lastName,
           phone: phone,
           lat: selected && selected?.lat,
           lng: selected && selected?.lng,
-            address: selected?.address
         })
           .then((r) => {
             toast.success(t("Profile updated successfully"))

@@ -21,6 +21,8 @@
                         <div class="tab-content">
                             <!--begin::Tab pane-->
                             <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
+
+                                {{-- Fee start --}}
                                 <div class="d-flex flex-column gap-7 gap-lg-10">
                                     <!--begin::General options-->
                                     <div class="card card-flush py-4">
@@ -54,6 +56,44 @@
                                     </div>
                                     <!--end::General options-->
                                 </div>
+                                {{-- Fee end --}}
+
+                                {{-- loyalty_points start --}}
+                                <div class="d-flex flex-column gap-7 gap-lg-10">
+                                    <!--begin::General options-->
+                                    <div class="card card-flush py-4">
+                                        <!--begin::Card header-->
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                <h2>{{ __('messages.loyalty-points')}}</h2>
+                                            </div>
+                                        </div>
+                                        <!--end::Card header-->
+                                        <!--begin::Card body-->
+
+                                        <div class="card-body pt-0">
+                                            <!--begin::Input group-->
+                                            <div class="mb-10 fv-row">
+                                                <!--begin::Label-->
+                                                <label class="form-label">{{ __('messages.loyalty-points-per-order')}}</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <input type="number" step="0.1" name="loyalty_points_per_order" class="form-control mb-2" required placeholder="{{ __('messages.loyalty-points-per-order')}}" value="{{$settings['loyalty_points_per_order']}}" />
+                                                <!--end::Input-->
+                                                <!--begin::Description-->
+                                                <div class="text-muted fs-7">{{__('messages.loyalty-point-desc')}}</div>
+                                                <!--end::Description-->
+                                            </div>
+                                            <!--end::Input group-->
+
+
+                                        </div>
+                                        <!--end::Card header-->
+                                    </div>
+                                    <!--end::General options-->
+                                </div>
+                                {{-- loyalty_points and cashback end --}}
+
                             </div>
                             <!--end::Tab pane-->
                             <div class="d-flex justify-content-end mt-3">
