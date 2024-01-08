@@ -327,16 +327,7 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        $setting = Setting::first();
-        if($setting->branch_slots == 0){
-            return false;
-        }else {
-            $setting->update([
-                'branch_slots'=> DB::raw('branch_slots - 1'),
-            ]);
-            return true;
-        }
-       
+        return true;
     }
 
 

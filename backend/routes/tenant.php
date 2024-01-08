@@ -38,6 +38,7 @@ use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Packages\TapPayment\Controllers\CardController;
+use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
 use App\Packages\TapPayment\Controllers\CustomerController;
 
 /*
@@ -244,6 +245,7 @@ Route::group([
                 Route::resource("orders",CustomerOrderController::class)->only([
                     'store', 'index'
                 ]);
+                Route::get("cards",[CustomerCardController::class,'show'])->name('customer.cards');
             });
 
 
