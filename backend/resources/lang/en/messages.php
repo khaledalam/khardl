@@ -589,5 +589,7 @@ return [
     'loyalty-point-desc' => "How many order loyalty points customer will gain per each order",
     'cashback-per-amount-percentage' => 'Cashback per order amount percentage',
     'new-branch-slot-price' => 'New branch slot price',
+    "Received by restaurant" => "Received by restaurant",
+    "Search" => "Search"
 
 ];

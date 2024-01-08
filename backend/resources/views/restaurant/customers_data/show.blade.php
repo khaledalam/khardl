@@ -220,12 +220,55 @@
                         <div class="d-flex flex-column gap-7 gap-lg-10">
                             <!--begin::Order history-->
                             <div class="card card-flush py-4 flex-row-fluid">
-                                <!--begin::Card header-->
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <h2>{{ __('messages.Order History') }}</h2>
+                                <form action="">
+                                    @csrf
+                                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                        <!--begin::Card title-->
+                                        <div class="card-title">
+                                            <h2>{{ __('messages.Order History') }}</h2>
+                                        </div>
+                                        <!--end::Card title-->
+                                        <!--begin::Card toolbar-->
+                                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                            <!--begin::Search-->
+                                            <div class="d-flex align-items-center position-relative my-1">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                                <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                                        <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <input type="text" name="search" value="{{ request('search')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('messages.search')}}" />
+                                            </div>
+                                            <div class="w-100 mw-150px">
+                                                <!--begin::Select2-->
+                                                <select class="form-select form-select-solid" name="status">
+                                                    <option value="">{{ __('messages.Status') }}</option>
+                                                    <option value="pending" {{ request('status') =='pending' ? 'selected':'' }}>{{ __('messages.Pending') }}</option>
+                                                    <option value="received_by_restaurant" {{ request('status') =='received_by_restaurant' ? 'selected':'' }}>{{ __('messages.received_by_restaurant') }}</option>
+                                                    <option value="ready" {{ request('status') =='ready' ? 'selected':'' }}>{{ __('messages.Ready') }}</option>
+                                                    <option value="accepted" {{ request('status') =='accepted' ? 'selected':'' }}>{{ __('messages.Accepted') }}</option>
+                                                    <option value="completed" {{ request('status') =='completed' ? 'selected':'' }}>{{ __('messages.Completed') }}</option>
+                                                    <option value="cancelled" {{ request('status') =='cancelled' ? 'selected':'' }}>{{ __('messages.Cancelled') }}</option>
+                                                </select>
+                                                <!--end::Select2-->
+                                            </div>
+                                            <div class="w-100 mw-150px">
+                                                <!--begin::Select2-->
+                                                <select class="form-select form-select-solid" name="payment_status">
+                                                    <option value="">{{ __('messages.Payment') }}</option>
+                                                    <option value="paid" {{ request('payment_status') =='paid' ? 'selected':'' }}>{{ __('messages.Paid') }}</option>
+                                                    <option value="pending" {{ request('payment_status') =='pending' ? 'selected':'' }}>{{ __('messages.Pending') }}</option>
+                                                </select>
+                                                <!--end::Select2-->
+                                            </div>
+                                            <button class="btn btn-primary" type="submit">{{ __('messages.Search') }}</button>
+                                        </div>
+                                        <!--end::Card toolbar-->
                                     </div>
-                                </div>
+                                </form>
                                 <!--end::Card header-->
                                 <!--begin::Card body-->
                                 <div class="card-body pt-0">
@@ -285,7 +328,7 @@
                                             </tbody>
                                             <!--end::Table head-->
                                         </table>
-                                        {{ $orders->links('pagination::bootstrap-4') }}
+                                        {{ $orders->withQueryString()->links('pagination::bootstrap-4') }}
                                         <!--end::Table-->
                                     </div>
                                 </div>
@@ -314,7 +357,11 @@
     $(document).ready(function() {
         const urlParams = new URLSearchParams(window.location.search);
         const pageParam = urlParams.get('page');
-        if (pageParam) {
+        const statusParam = urlParams.get('status');
+        const paymentStatusParam = urlParams.get('payment_status');
+        const searchParam = urlParams.get('search');
+
+        if (pageParam || statusParam || paymentStatusParam || searchParam) {
             $('#summary').removeClass('active');
             $('#order_history').addClass('active');
             $('#kt_ecommerce_sales_order_history').addClass('active show');

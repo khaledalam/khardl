@@ -589,6 +589,8 @@ return [
     'loyalty-point-desc' => "كم عدد نقاط ولاء الطلب التي سيحصل عليها العميل لكل طلب",
     'cashback-per-amount-percentage' => 'نسبه استرداد النقود',
     'new-branch-slot-price' => 'سعر فرع جديد',
+    "Received by restaurant" => "تلقى من قبل المطعم",
+    "Search" => "ابحث"
 
 
 ];
