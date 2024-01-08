@@ -1,8 +1,14 @@
 {
     "/js/central.js": "/js/central.js?id=239dfb99d73e27aeafc6ea314dd67baf",
+<<<<<<< HEAD
     "/js/tenant.js": "/js/tenant.js?id=9631de51c61e5ef8e5af4126db4ab933",
     "/css/index.css": "/css/index.css?id=27d7fd390c65c6de84f86865de26d7a5",
     "/css/app.css": "/css/app.css?id=fc1930dee90d369f6865357b4a73e095",
+=======
+    "/js/tenant.js": "/js/tenant.js?id=f0c5cd00d2dba32ee7314da9d76a9ef5",
+    "/css/index.css": "/css/index.css?id=1b40deea6d341ba2ebef9f1bc81798cd",
+    "/css/app.css": "/css/app.css?id=26d71c6d7842663c7e7fbddde461160b",
+>>>>>>> e0cdb9af9b9f1455ad1e4f43a856c3d92edd2924
     "/Linestroke.svg": "/Linestroke.svg?id=8715a9dc777dc8005136fbe92d1449e6",
     "/Logo.svg": "/Logo.svg?id=9f58778b18dc8a6ceb2b784bde375954",
     "/asset-manifest.json": "/asset-manifest.json?id=ef4c1bcefc8ba6874daf4bc0ab7be845",
@@ -4225,7 +4231,11 @@
     "/media/technology-logos/Html5.png": "/media/technology-logos/Html5.png?id=b4a3ff7e36f190b0c7eb545f6154cfac",
     "/media/technology-logos/React.png": "/media/technology-logos/React.png?id=66d79d92233f04e128ea676dea1d93e0",
     "/media/technology-logos/VueJS.png": "/media/technology-logos/VueJS.png?id=d3e5fefbe4df2bd095731f8de30c9438",
+<<<<<<< HEAD
     "/mix-manifest.json": "/mix-manifest.json?id=6e5be622b72da4e0cffa284cb4807ce5",
+=======
+    "/mix-manifest.json": "/mix-manifest.json?id=9f5220091afa1a6c70e25394d7205852",
+>>>>>>> e0cdb9af9b9f1455ad1e4f43a856c3d92edd2924
     "/plugins/custom/cookiealert/cookiealert.bundle.css": "/plugins/custom/cookiealert/cookiealert.bundle.css?id=ee5818bd8e3e62108f9c60dd356c99e5",
     "/plugins/custom/cookiealert/cookiealert.bundle.js": "/plugins/custom/cookiealert/cookiealert.bundle.js?id=eddbeff68c5fd81397decbcd254d8db2",
     "/plugins/custom/cookiealert/cookiealert.bundle.rtl.css": "/plugins/custom/cookiealert/cookiealert.bundle.rtl.css?id=ee5818bd8e3e62108f9c60dd356c99e5",
@@ -4414,10 +4424,14 @@
     "/static/js/483.1448968e.chunk.js.map": "/static/js/483.1448968e.chunk.js.map?id=dd970c783fc4cff02cb2dea32e23c942",
     "/static/js/main.d3d127bb.js": "/static/js/main.d3d127bb.js?id=2482ea592fc44a12e0e4e4e8bfe6d539",
     "/static/js/main.d3d127bb.js.LICENSE.txt": "/static/js/main.d3d127bb.js.LICENSE.txt?id=d4736f9ca4b5e2223a5e00f1ae8a2b66",
+<<<<<<< HEAD
     "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47",
     "/images/CardProfileWhite.svg": "/images/CardProfileWhite.svg?id=db355e819bc3849cdcfc58f75d161113",
     "/images/cardProfileIcon.svg": "/images/cardProfileIcon.svg?id=26881506c0380446a08c237347394981",
     "/images/cardSim.svg": "/images/cardSim.svg?id=36b9bbf6bf1b2120d84e3c1047487fe7",
     "/images/mastercard.svg": "/images/mastercard.svg?id=a2fefd2a2d1528eb19826ee665a23b94",
     "/images/visa.svg": "/images/visa.svg?id=3f14e6af6b73907faa947a2725e2560f"
+=======
+    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47"
+>>>>>>> e0cdb9af9b9f1455ad1e4f43a856c3d92edd2924
 }

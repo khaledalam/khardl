@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Enums\Admin\LogTypes;
 use App\Mail\ApprovedBusiness;
 use App\Models\Log;
-use App\Models\User;
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -22,7 +22,7 @@ class SendApprovedBusinessEmailJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user)
+    public function __construct(RestaurantUser $user)
     {
         $this->user = $user;
     }
