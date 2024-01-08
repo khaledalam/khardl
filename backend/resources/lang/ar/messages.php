@@ -552,7 +552,13 @@ return [
     "configurations"=>"الاعدادات",
     "Deactivate"=>"الغاء التفعيل",
     "Increase Slots"=>"زيادة العدد",
-    'Branch slot has been increased'=>"تم تزويد عدد الفروع المتاحة "
-   
+    'Branch slot has been increased'=>"تم تزويد عدد الفروع المتاحة ",
+    'loyalty-points' => "نقاط الولاء",
+    'loyalty-points-per-order' => "نقاط الولاء لكل طلب",
+    'loyalty-point-desc' => "كم عدد نقاط ولاء الطلب التي سيحصل عليها العميل لكل طلب",
+    'cashback-per-amount-percentage' => 'نسبه استرداد النقود',
+    'new-branch-slot-price' => 'سعر فرع جديد',
+
+
 ];
 

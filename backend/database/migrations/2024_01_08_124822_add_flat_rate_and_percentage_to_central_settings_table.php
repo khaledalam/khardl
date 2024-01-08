@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->float('loyalty_points')->unsigned()->default(0);
-            $table->float('cashback')->unsigned()->default(0);
-            $table->float('new_branch_slot_price')->unsigned()->default(1);
+        Schema::table('central_settings', function (Blueprint $table) {
+            $table->float('fee_flat_rate')->unsigned()->default(0);
+            $table->float('fee_percentage')->unsigned()->default(0);
         });
     }
 
@@ -24,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('loyalty_points');
-            $table->dropColumn('cashback');
+            $table->dropColumn('fee_flat_rate');
+            $table->dropColumn('fee_percentage');
         });
     }
 };

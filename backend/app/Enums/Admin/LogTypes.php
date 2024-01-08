@@ -19,7 +19,8 @@ enum LogTypes: string
   case DeleteRestaurant  = 'Delete restaurant';
   case DeleteUser  = 'Delete user';
   case DeletePromoter  = 'Delete promoter';
-  case UpdateSettings  = 'Update settings';
+  case UpdateSettings  = 'Update central settings';
+  case UpdateRevenueSettings  = 'Update revenue settings';
   case UpdateUserPermissions  = 'Update user permissions';
   case DenyRestaurant  = 'Deny restaurant';
   case DenyUserSent  = 'Deny user sent';
