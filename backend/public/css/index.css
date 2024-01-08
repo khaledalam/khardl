@@ -3750,11 +3750,11 @@ details.collapse summary::-webkit-details-marker {
 .z-\[9999999\] {
   z-index: 9999999;
 }
-.z-\[99\] {
-  z-index: 99;
-}
 .z-\[999\] {
   z-index: 999;
+}
+.z-\[99\] {
+  z-index: 99;
 }
 .order-1 {
   order: 1;
@@ -11033,11 +11033,11 @@ details.collapse summary::-webkit-details-marker {
 .z-\[9999999\] {
   z-index: 9999999;
 }
-.z-\[99\] {
-  z-index: 99;
-}
 .z-\[999\] {
   z-index: 999;
+}
+.z-\[99\] {
+  z-index: 99;
 }
 .order-1 {
   order: 1;

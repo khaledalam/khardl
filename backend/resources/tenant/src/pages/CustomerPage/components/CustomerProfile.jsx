@@ -19,6 +19,10 @@ const CustomerProfile = () => {
   const [phone, setPhone] = useState("")
   const address = useSelector((state) => state.customerAPI.address)
   const addressLatLng = useSelector((state) => state.customerAPI.addressLatLng)
+  const saveProfileChange = useSelector(
+    (state) => state.customerAPI.saveProfileChanges
+  )
+
   const [isDisabled, setIsDisabled] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -73,7 +77,6 @@ const CustomerProfile = () => {
       ) {
         setIsDisabled(true)
         dispatch(updateProfileSaveStatus(true))
-
         console.log("initial values matches userProfile")
       } else {
         console.log("not a match, values changes")
@@ -112,6 +115,12 @@ const CustomerProfile = () => {
       }
     }
   }
+
+  useEffect(() => {
+    if (saveProfileChange) {
+      handleReset()
+    }
+  }, [saveProfileChange])
 
   const handleReset = () => {
     fetchProfileData()
