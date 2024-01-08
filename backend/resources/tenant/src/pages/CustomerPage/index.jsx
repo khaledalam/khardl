@@ -7,13 +7,14 @@ import CustomerOrder from "./components/CustomerOrder"
 import CustomerProfile from "./components/CustomerProfile"
 import {useSearchParams} from "react-router-dom"
 import CustomerOrderDetail from "./components/CustomerOrderDetail"
-import {MenuContext} from "react-flexible-sliding-menu"
+import {RiMenuFoldFill} from "react-icons/ri"
 import CustomerPayment from "./components/CustomerPayment"
 import {
   updateCardsList,
   updateOrderList,
 } from "../../redux/NewEditor/customerSlice"
 import AxiosInstance from "../../axios/axios"
+import MobileMenu from "./components/MobileMenu"
 
 const TABS = {
   dashboard: "Dashboard",
@@ -22,15 +23,20 @@ const TABS = {
   payment: "Payment",
 }
 export const CustomerPage = () => {
-  const isSidebarCollapse = false
   const dispatch = useDispatch()
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
   const [searchParam] = useSearchParams()
   const [showOrderDetail, setShowOrderDetail] = useState(false)
-  const {toggleMenu} = useContext(MenuContext)
+  const [isMobile, setIsMobile] = useState(false)
 
   const orderId = searchParam.get("orderId")
   console.log("orderId", orderId)
+
+  useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    setIsMobile(isMobile)
+  }, [])
 
   useEffect(() => {
     if (orderId) {
@@ -75,17 +81,18 @@ export const CustomerPage = () => {
   return (
     <div>
       <NavbarCustomer />
+      <MobileMenu />
       <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all'>
         <div
           className={`transition-all ${
-            isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[20%]"
-          } xl:flex-[20%] laptopXL:flex-[17%] overflow--hidden bg-white h-full `}
+            isMobile ? "flex-[0] hidden w-0" : "flex-[20%]"
+          } xl:flex-[20%] laptopXL:flex-[17%] overflow-hidden bg-white h-full `}
         >
           <SideNavbar />
         </div>
         <div
           className={` transition-all ${
-            isSidebarCollapse ? "flex-[100%] w-full" : "flex-[80%]"
+            isMobile ? "flex-[100%] w-full" : "flex-[80%]"
           } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
         >
           {activeNavItem === TABS.dashboard && !showOrderDetail ? (

@@ -29,8 +29,8 @@ const CustomerOrder = () => {
         <img src={orderIcon} alt='dashboard' className='' />
         <h3 className='text-lg font-medium'>{t("Orders")}</h3>
       </div>
-      <div className='my-5 flex w-[60%] items-center gap-4'>
-        <div className='w-2/3'>
+      <div className='my-5 flex flex-col md:flex-row w-full lg:w-[60%] items-center gap-4'>
+        <div className='w-full md:w-2/3'>
           <PrimaryOrderSearch />
         </div>
         <div className='w-full gap-4 flex items-center'>
@@ -68,10 +68,10 @@ const CustomerOrder = () => {
           </div>
         </div>
       </div>
-      <div className='mb-5'>
+      <div className='mb-5 overflow-x-scroll hide-scroll'>
         <OrderTable data={slicedOrderData} />
       </div>
-      <div className='flex items-center justify-between mb-5'>
+      <div className='flex flex-col  xl:flex-row items-center gap-4 justify-between mb-5'>
         <div className='flex items-center gap-3'>
           <div className='w-[200px]'>
             <PrimaryOrderSelect

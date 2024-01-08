@@ -134,7 +134,7 @@ const CustomerProfile = () => {
       </div>
       <h3 className='text-lg my-5 '>{t("Profile Details")}</h3>
       <div className='w-full bg-white shadow-md  min-h-[300px] h-full p-4'>
-        <div className='w-1/3 flex flex-col gap-4'>
+        <div className='w-full lg:w-1/3 flex flex-col gap-4'>
           <PrimaryTextInput
             id={"first-name"}
             name={"first-name"}
@@ -167,7 +167,7 @@ const CustomerProfile = () => {
         <div className='w-full flex flex-col gap-4'>
           <Places
             inputStyle={
-              "input border-[var(--customer)] !w-1/3 hover:border-[var(--customer)] focus-visible:border-[var(--customer)] outline-0 outline-none focus-visible:outline-none w-full"
+              "input border-[var(--customer)] !w-full lg:!w-1/3 hover:border-[var(--customer)] focus-visible:border-[var(--customer)] outline-0 outline-none focus-visible:outline-none w-full"
             }
           />
         </div>

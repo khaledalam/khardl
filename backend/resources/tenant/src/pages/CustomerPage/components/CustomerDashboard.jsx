@@ -51,14 +51,14 @@ const CustomerDashboard = () => {
         <img src={DashboardIcon} alt='dashboard' className='' />
         <h3 className='text-lg font-medium'>{t("Dashboard")}</h3>
       </div>
-      <div className='w-[80%] laptopXL:w-[70%] mx-auto flex items-center justify-between  my-5'>
+      <div className='w-full md:w-[80%] laptopXL:w-[70%] mx-auto flex items-center justify-between  my-5'>
         {overviewInfo.map((overview) => (
           <div
             key={overview.id}
-            className='w-[25%] h-[110px] rounded-2xl bg-[var(--customer)] p-3 text-white flex flex-col gap-3'
+            className='w-[30%] md:w-[25%] h-[80px] md:h-[110px] rounded-2xl bg-[var(--customer)] p-3 text-white flex flex-col gap-3'
           >
-            <h4 className='text-sm'>{overview.title}</h4>
-            <h2 className='font-bold text-white text-center text-2xl'>
+            <h4 className='text-xs md:text-sm'>{overview.title}</h4>
+            <h2 className='font-bold text-white text-center text-sm md:text-2xl'>
               {t("SAR")} {overview.amount}
             </h2>
           </div>
@@ -66,7 +66,7 @@ const CustomerDashboard = () => {
       </div>
       <div className='w-full'>
         <h3 className='my-4'>{t("Last Orders")}</h3>
-        <div className=''>
+        <div className='overflow-x-scroll hide-scroll'>
           <OrderTable data={slicedOrderData} />
         </div>
       </div>
