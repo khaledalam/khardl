@@ -57,6 +57,10 @@ const CustomerProfile = () => {
     }
   }
 
+  window.addEventListener("beforeunload", () => {
+    dispatch(updateProfileSaveStatus(false))
+  })
+
   console.log("userProfile", userProfile)
 
   useEffect(() => {
@@ -117,24 +121,24 @@ const CustomerProfile = () => {
     <div className='p-6'>
       <div className='flex items-center gap-3'>
         <img src={profileIcon} alt='dashboard' className='' />
-        <h3 className='text-lg font-medium'>Profile</h3>
+        <h3 className='text-lg font-medium'>{t("Profile")}</h3>
       </div>
-      <h3 className='text-lg my-5 '>Profile Detail</h3>
+      <h3 className='text-lg my-5 '>{t("Profile Details")}</h3>
       <div className='w-full bg-white shadow-md  min-h-[300px] h-full p-4'>
         <div className='w-1/3 flex flex-col gap-4'>
           <PrimaryTextInput
             id={"first-name"}
             name={"first-name"}
-            label={"First Name"}
+            label={t("First name")}
             value={firstName}
-            placeholder={"First name"}
+            placeholder={t("First name")}
             onChange={(e) => setFirstName(e.target.value)}
           />
           <PrimaryTextInput
             id={"last-name"}
             name={"last-name"}
-            label={"Last Name"}
-            placeholder={"Last name"}
+            label={t("Last name")}
+            placeholder={t("Last name")}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -142,14 +146,14 @@ const CustomerProfile = () => {
             id={"phone-number"}
             name={"phone-number"}
             type='tel'
-            label={"Phone Number"}
-            placeholder={"Phone Number"}
+            label={t("Phone")}
+            placeholder={t("Phone")}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
       </div>
-      <h3 className='text-lg my-5 '>Location</h3>
+      <h3 className='text-lg my-5 '>{t("Location")}</h3>
       <div className='w-full bg-white shadow-md  min-h-[400px] h-full p-4'>
         <div className='w-full flex flex-col gap-4'>
           <Places
@@ -165,14 +169,14 @@ const CustomerProfile = () => {
             onClick={handleReset}
             className='w-[85px] p-2 !border border-solid border-[var(--customer)] bg-white outline-none rounded-lg'
           >
-            Cancel
+            {t("Cancel")}
           </button>
           <button
             onClick={handleSaveProfile}
             disabled={isDisabled || isLoading ? true : false}
             className='w-[85px] p-2 bg-[var(--customer)] disabled:cursor-not-allowed disabled:bg-neutral-400 outline-none text-white rounded-lg'
           >
-            Save
+            {t("Save")}
           </button>
         </div>
       </div>

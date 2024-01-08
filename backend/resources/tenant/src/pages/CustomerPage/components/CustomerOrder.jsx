@@ -11,8 +11,10 @@ import {
 } from "react-icons/md"
 
 import {useSelector} from "react-redux"
+import {useTranslation} from "react-i18next"
 
 const CustomerOrder = () => {
+  const {t} = useTranslation()
   const [pageNumber, setpageNumber] = useState(1)
   const [orderPerPage, setOrderPerPage] = useState(5)
   const [dateAdded, setDateAdded] = useState("")
@@ -25,7 +27,7 @@ const CustomerOrder = () => {
     <div className='p-6'>
       <div className='flex items-center gap-3'>
         <img src={orderIcon} alt='dashboard' className='' />
-        <h3 className='text-lg font-medium'>Order</h3>
+        <h3 className='text-lg font-medium'>{t("Orders")}</h3>
       </div>
       <div className='my-5 flex w-[60%] items-center gap-4'>
         <div className='w-2/3'>
@@ -34,7 +36,7 @@ const CustomerOrder = () => {
         <div className='w-full gap-4 flex items-center'>
           <div className='w-1/2'>
             <PrimaryOrderSelect
-              defaultValue={orderStatus ? orderStatus : "Status"}
+              defaultValue={orderStatus ? orderStatus : t("Status")}
               handleChange={(value) => setOrderStatus(value)}
               options={[
                 {
@@ -50,7 +52,7 @@ const CustomerOrder = () => {
           </div>
           <div className='w-1/2'>
             <PrimaryOrderSelect
-              defaultValue={dateAdded ? dateAdded : "Date Added"}
+              defaultValue={dateAdded ? dateAdded : t("Date Added")}
               handleChange={(value) => setDateAdded(value)}
               options={[
                 {
@@ -96,7 +98,9 @@ const CustomerOrder = () => {
               ]}
             />
           </div>
-          <h3 className=''>Page {pageNumber} of 1</h3>
+          <h3 className=''>
+            {t("page")} {pageNumber} of 1
+          </h3>
         </div>
         <div className='flex items-center gap-3'>
           <div className='w-8 h-8 border border-neutral-800 rounded-full flex items-center justify-center cursor-pointer'>

@@ -14,46 +14,48 @@ import {
   updateProfileSaveStatus,
 } from "../../../redux/NewEditor/customerSlice"
 import {useNavigate} from "react-router-dom"
-
-const navItems = [
-  {
-    id: 1,
-    imgUrl: DashboardBlack,
-    activeImgUrl: Dashboard,
-    title: "Dashboard",
-    link: "/dashboard#Dashboard",
-  },
-  {
-    id: 2,
-    imgUrl: OrderBlack,
-    activeImgUrl: OrderWhite,
-    title: "Orders",
-    link: "/dashboard#Orders",
-  },
-  {
-    id: 3,
-    imgUrl: ProfileIcon,
-    activeImgUrl: ProfileWhiteIcon,
-    title: "Profile",
-    link: "/dashboard#Profile",
-  },
-  {
-    id: 4,
-    imgUrl: CardIcon,
-    activeImgUrl: CardWhiteIcon,
-    title: "Payment",
-    link: "/dashboard#Payment",
-  },
-]
+import {useTranslation} from "react-i18next"
 
 const SideNavbar = () => {
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   const navigate = useNavigate()
   const [status, setStatus] = useState(true)
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
   const saveProfileChange = useSelector(
     (state) => state.customerAPI.saveProfileChanges
   )
+
+  const navItems = [
+    {
+      id: 1,
+      imgUrl: DashboardBlack,
+      activeImgUrl: Dashboard,
+      title: t("Dashboard"),
+      link: "/dashboard#Dashboard",
+    },
+    {
+      id: 2,
+      imgUrl: OrderBlack,
+      activeImgUrl: OrderWhite,
+      title: t("Orders"),
+      link: "/dashboard#Orders",
+    },
+    {
+      id: 3,
+      imgUrl: ProfileIcon,
+      activeImgUrl: ProfileWhiteIcon,
+      title: t("Profile"),
+      link: "/dashboard#Profile",
+    },
+    {
+      id: 4,
+      imgUrl: CardIcon,
+      activeImgUrl: CardWhiteIcon,
+      title: t("Payment"),
+      link: "/dashboard#Payment",
+    },
+  ]
 
   if (window.location.href.indexOf("#Profile") > -1) {
     dispatch(setActiveNavItem("Profile"))

@@ -7,9 +7,11 @@ import AxiosInstance from "../../../axios/axios"
 import {useNavigate} from "react-router-dom"
 import {updateOrderList} from "../../../redux/NewEditor/customerSlice"
 import {useDispatch, useSelector} from "react-redux"
+import {useTranslation} from "react-i18next"
 
 const CustomerDashboard = () => {
   const navigate = useNavigate()
+  const {t} = useTranslation()
   const dispatch = useDispatch()
   const ordersList = useSelector((state) => state.customerAPI.ordersList)
   const [orderLength, setOrderLength] = useState(6)
@@ -18,17 +20,17 @@ const CustomerDashboard = () => {
   const overviewInfo = [
     {
       id: 1,
-      title: "Wallet",
+      title: t("Wallet"),
       amount: 700,
     },
     {
       id: 2,
-      title: "Loyalty Point",
+      title: t("Loyalty Point"),
       amount: 700,
     },
     {
       id: 3,
-      title: "Total Cashback",
+      title: t("Total CashBack"),
       amount: 700,
     },
   ]
@@ -65,7 +67,7 @@ const CustomerDashboard = () => {
     <div className='p-6'>
       <div className='flex items-center gap-3'>
         <img src={DashboardIcon} alt='dashboard' className='' />
-        <h3 className='text-lg font-medium'>Dashboard</h3>
+        <h3 className='text-lg font-medium'>{t("Dashboard")}</h3>
       </div>
       <div className='w-[80%] laptopXL:w-[70%] mx-auto flex items-center justify-between  my-5'>
         {overviewInfo.map((overview) => (
@@ -75,13 +77,13 @@ const CustomerDashboard = () => {
           >
             <h4 className='text-sm'>{overview.title}</h4>
             <h2 className='font-bold text-white text-center text-2xl'>
-              SAR {overview.amount}
+              {t("SAR")} {overview.amount}
             </h2>
           </div>
         ))}
       </div>
       <div className='w-full'>
-        <h3 className='my-4'>Last Orders</h3>
+        <h3 className='my-4'>{t("Last Orders")}</h3>
         <div className=''>
           <OrderTable data={slicedOrderData} />
         </div>
