@@ -566,5 +566,9 @@ return [
     'loyalty-point-desc' => "How many order loyalty points customer will gain per each order",
     'cashback-per-amount-percentage' => 'Cashback per order amount percentage',
     'new-branch-slot-price' => 'New branch slot price',
+    "Subscription has been updated"=>"Subscription has been updated",
+    "The subscription has been activated successfully"=>"The subscription has been activated successfully",
+    "subscribed"=>"subscribed",
+    "Number of available branches"=>"Number of available branches"
 
 ];

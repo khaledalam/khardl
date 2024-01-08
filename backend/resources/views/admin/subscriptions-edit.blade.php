@@ -9,7 +9,7 @@
           <!--begin::Container-->
           <div id="kt_content_container" class="container-xxl">
               <!--begin::Form-->
-              <form action="{{ route('admin.subscriptions.update') }}" method="POST">
+              <form action="{{ route('admin.subscriptions.update',['subscription'=>$subscription->id]) }}" method="POST">
                 @method('PATCH')
                 @csrf
 

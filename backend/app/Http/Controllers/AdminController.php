@@ -766,7 +766,13 @@ class AdminController extends Controller
         $user = Auth::user();
         return view('admin.subscriptions-edit', compact('user','subscription'));
     }
-    public function subscriptionUpdate(Subscription $subscription){
-
+    public function subscriptionUpdate(Subscription $subscription,Request $request){
+        $subscription->update([
+            'name'=>trans_json($request->name_en,$request->name_ar),
+            'amount'=>$request->amount
+        ]);
+        return redirect()->route('admin.subscriptions')->with([
+            'success' => __("Subscription has been updated"),
+        ]);
     }
 }

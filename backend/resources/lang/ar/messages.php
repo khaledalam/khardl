@@ -566,7 +566,9 @@ return [
     'loyalty-point-desc' => "كم عدد نقاط ولاء الطلب التي سيحصل عليها العميل لكل طلب",
     'cashback-per-amount-percentage' => 'نسبه استرداد النقود',
     'new-branch-slot-price' => 'سعر فرع جديد',
-
-
+    "Subscription has been updated"=>"تم تحديث الاشتراك بنجاج",
+    "The subscription has been activated successfully"=>"تم تفعيل الاشتراك بنجاح ",
+    "subscribed"=>"تم الاشتراك",
+    "Number of available branches"=>"عدد الفروع المتاحة"
 ];
 

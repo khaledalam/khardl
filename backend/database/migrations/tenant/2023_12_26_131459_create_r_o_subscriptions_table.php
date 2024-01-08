@@ -19,7 +19,9 @@ return new class extends Migration
             $table->integer("number_of_branches");
             $table->string("cus_id");
             $table->string("chg_id");
+            $table->string("card_id")->nullable();
             $table->string("payment_agreement_id")->nullable();
+            $table->string('subscription_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string("status")->default('active');

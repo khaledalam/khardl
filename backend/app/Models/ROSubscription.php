@@ -18,8 +18,10 @@ class ROSubscription extends Model
         "user_id",
         "chg_id",
         'cus_id',
+        'card_id',
         'payment_agreement_id',
-        'status'
+        'status',
+        'subscription_id'
     ];
    
 }

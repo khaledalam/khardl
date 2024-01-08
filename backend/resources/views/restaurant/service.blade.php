@@ -26,7 +26,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 contactInfo: true,
                 supportedCurrencies: "all",
                 supportedPaymentMethods: "all",
-                saveCardOption: false,
+                saveCardOption: true,
                 customerCards: true,
                 notifications: "standard",
                 callback: (response) => {
@@ -69,7 +69,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             },
             order: {
                 amount: document.getElementById('price').value,
-                currency: "KWD",
+                currency: "SAR",
                 items: [
                 {
                     id: "{{$subscription->id}}",
@@ -118,7 +118,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 </script>
 
 @endpush
-
+     <div id="root"></div>
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
         <div class="d-flex flex-column flex-root">
@@ -149,7 +149,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 <h1 class="fs-2hx fw-bolder mb-5">{{__('messages.Enjoy benefiting from our services')}}</h1>
                                             </div>
                                             <!--end::Heading-->
-
+                                           
                                             <!--begin::Row-->
                                             <div class="row g-10">
 
@@ -193,12 +193,21 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 </div>
                                                                 <!--end::image-->
                                                                 <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">{{$subscription->name}}</h3>
                                                                 <h3 class="text-dark mb-5 fw-boldest text-center">{{$subscription->description}}</h3>
                                                                 <!--end::Title-->
                                                                 <!--begin::Price-->
                                                                 <div class="text-center">
+
                                                                     <span class="mb-2 text-khardl">{{__('messages.SAR')}}</span>
+                                                                    @if($RO_subscription?->amount)
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">{{$RO_subscription->amount}}</span>
+                                                                    <br>
+                                                                    <span> {{__('messages.Number of available branches')}} <strong>{{$RO_subscription->number_of_branches}}</strong></span>
+                                                                    @else 
                                                                     <span class="fs-2x fw-bolder text-khardl text-center">{{$subscription->amount}}</span>
+                                                                    @endif
+                                                                 
                                                                 </div>
                                                                 <!--end::Price-->
                                                             </div>
@@ -209,13 +218,18 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                     <!--end::Modal dialog-->
                                                             <div class=" d-flex justify-content-center w-75 ">
                                                                         <div>
+                                                                            @if($RO_subscription?->status == 'active')
+                                                                            <a href="#"  class="btn btn-sm btn-khardl"  ><i class="fas fa-check"></i>{{__("messages.subscribed")}}</a>
+                                                                            @else
                                                                             <a href="#"  class="btn btn-sm btn-khardl"   data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>{{__('messages.Buy now')}}</a>
+                                                                            @endif
+                                                                  
                                                                         </div>
                                                                 {{-- <div>
                                                                     <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
                                                                 </div> --}}
                                                             </div>
-                                                            <div id="root"></div>
+                                              
                                                             <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -242,6 +256,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                             </div>
                                                                       
                                                                             <p id="msg"></p>
+                                                                            
                                                                             <button id="tap-btn" class="btn btn-khardl text-white " onclick="setPayment()" >{{__("messages.purchase")}}</button>
                                                                             </div>
                                                                           
@@ -661,49 +676,49 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
       
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var myLink = document.getElementById("myLink");
+            // document.addEventListener("DOMContentLoaded", function () {
+            //     var myLink = document.getElementById("myLink");
 
-                myLink.addEventListener("click", function (event) {
-                    event.preventDefault();
+            //     myLink.addEventListener("click", function (event) {
+            //         event.preventDefault();
 
-                    Swal.fire({
-                        title: 'Are you sure? All content will be deleted from the branch',
-                        showDenyButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: 'Save',
-                        denyButtonText: `Don't save`,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire('Deleted successfully!', '', 'success')
-                        } else if (result.isDenied) {
-                            Swal.fire('Not deleted', '', 'info')
-                        }
-                    });
-                });
-            });
+            //         Swal.fire({
+            //             title: 'Are you sure? All content will be deleted from the branch',
+            //             showDenyButton: true,
+            //             showCancelButton: true,
+            //             confirmButtonText: 'Save',
+            //             denyButtonText: `Don't save`,
+            //         }).then((result) => {
+            //             if (result.isConfirmed) {
+            //                 Swal.fire('Deleted successfully!', '', 'success')
+            //             } else if (result.isDenied) {
+            //                 Swal.fire('Not deleted', '', 'info')
+            //             }
+            //         });
+            //     });
+            // });
 
-            document.addEventListener("DOMContentLoaded", function () {
-                var myLink2 = document.getElementById("myLink2");
+            // document.addEventListener("DOMContentLoaded", function () {
+            //     var myLink2 = document.getElementById("myLink2");
 
-                myLink2.addEventListener("click", function (event) {
-                    event.preventDefault();
+            //     myLink2.addEventListener("click", function (event) {
+            //         event.preventDefault();
 
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        showDenyButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: 'Denied',
-                        denyButtonText: `Don't Denied`,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire('Denied successfully!', '', 'success')
-                        } else if (result.isDenied) {
-                            Swal.fire('Not Denied', '', 'info')
-                        }
-                    });
-                });
-            });
+            //         Swal.fire({
+            //             title: 'Are you sure?',
+            //             showDenyButton: true,
+            //             showCancelButton: true,
+            //             confirmButtonText: 'Denied',
+            //             denyButtonText: `Don't Denied`,
+            //         }).then((result) => {
+            //             if (result.isConfirmed) {
+            //                 Swal.fire('Denied successfully!', '', 'success')
+            //             } else if (result.isDenied) {
+            //                 Swal.fire('Not Denied', '', 'info')
+            //             }
+            //         });
+            //     });
+            // });
 
         </script>
         

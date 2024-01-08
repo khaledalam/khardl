@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\SendApprovedBusinessEmailJob;
 use App\Mail\ApprovedBusiness;
 use App\Models\ROSubscription;
-use App\Models\Subscription as CentralSubscriptionOptions;
+use App\Models\Subscription as CentralSubscription;
 use App\Models\Domain;
 use App\Models\Tenant;
 use App\Models\Tenant\Setting;
@@ -158,39 +158,41 @@ class TapController extends Controller
     }
     public function payments_submit_card_details(Request $request){
         // TODO @todo protect request only coming from payment
-        dd($request->all());
+      
         $user = Auth::user();
-    
-        if($user->tap_customer_id){
-            $subscription_options = tenancy()->central(function(){
-                return CentralSubscriptionOptions::first();
-            });
-            try {
-                // deprecated 
-                // TapSubscription::create([
-
-                // ]);
-
-                // ROSubscription::create([
-                //     'card_id'=>$cardId,
-                //     'data'=>json_decode($request->data),
-                //     'customer_id'=> $user->tap_customer_id,
-                //     'amount'=>$subscription_options->amount,
-                //     'status'=>'inactive',
-                // ]);
-              
-           
-            }catch(\Exception $e) {
-
-                logger($e->getMessage());
-                return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+        logger($request->tap_id);
+        if($request->tap_id){
+            $RO_subscription = new ROSubscription();
+            $RO_subscription->chg_id  = $request->tap_id;
+            $RO_subscription->cus_id  = $user->tap_customer_id;
+            $RO_subscription->user_id = $user->id;
+            $RO_subscription->status  = 'active';
+            $RO_subscription->start_at= now();
+            $RO_subscription->end_at= now()->addYear();
+            $charge = Charge::retrieve($request->tap_id);
+            if($charge['http_code'] == ResponseHelper::HTTP_OK){
+                if($charge['message']['status'] == 'CAPTURED'){// payment successful
+                     
+                    $central_subscription = tenancy()->central(function()use($charge){
+                        return CentralSubscription::find($charge['message']['reference']['order']);
+                    });
+                    $RO_subscription->payment_agreement_id =isset($charge['message']['payment_agreement']['id'])?$charge['message']['payment_agreement']['id']:null;
+                    $RO_subscription->card_id  = $charge['message']['card']['id'];
+                    $RO_subscription->subscription_id  = $charge['message']['reference']['order'];
+                    $RO_subscription->amount  = $charge['message']['amount'];
+                    $RO_subscription->number_of_branches =   $charge['message']['amount'] / $central_subscription->amount;
+                    $RO_subscription->save();
+                    return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
+                } else {
+                    return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+                }
+               
             }
-          
-        }else {
-            return redirect()->route('restaurant.service')->with('error', __('This User has not any related tap customer'));
+            $RO_subscription->save();
+           
+           
         }
-       
-    
+        return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
 
     }
 
