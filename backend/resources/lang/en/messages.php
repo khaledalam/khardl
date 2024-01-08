@@ -489,7 +489,7 @@ return [
     "K" => "K",
     "M" => "M",
     "B" => "B",
-    "Trial ends at" => "Trial ends at",
+    "plan ends at" => "Plan ends at",
     "metadata" => "metadata",
     "Support" => "Support",
     "About" => "About",
