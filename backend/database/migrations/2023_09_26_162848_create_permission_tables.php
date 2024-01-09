@@ -17,7 +17,7 @@ class CreatePermissionTables extends Migration
         $tableNames = config('permission.table_names');
         $columnNames = config('permission.column_names');
         $teams = config('permission.teams');
-        
+
         if (empty($tableNames)) {
             throw new \Exception('Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
@@ -43,8 +43,8 @@ class CreatePermissionTables extends Migration
             $table->boolean('can_see_logs')->default(false);
             $table->boolean('can_settings')->default(false);
             $table->boolean('can_edit_profile')->default(false);
-            
-            
+
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
         Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {

@@ -17,6 +17,7 @@ import {
   updateCustomerAddress,
   updateLatLng,
 } from "../../../../../../redux/NewEditor/customerSlice"
+import {MdLocationPin} from "react-icons/md"
 
 const Places = ({inputStyle}) => {
   const [libraries, _] = useState(["places"])
@@ -56,6 +57,10 @@ function Map({inputStyle}) {
   const containerStyle = {
     width: "100%",
     height: "400px",
+    borderWidth: 6,
+    borderColor: "#E16449",
+    padding: 5,
+    borderRadius: 6,
   }
 
   console.log("filterBranch", filterBranch)
@@ -91,25 +96,80 @@ function PlacesAutoComplete({inputStyle}) {
 
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    setValue(customerAddress)
+  }, [customerAddress])
+
   const handleSelect = async (address) => {
     setValue(address)
     clearSuggestions()
     dispatch(updateCustomerAddress(address))
-
     const results = await getGeocode({address: address})
     const {lat, lng} = await getLatLng(results[0])
+    dispatch(updateLatLng({lat, lng}))
+  }
+
+  const getPosition = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let lat = position.coords.latitude
+        let lng = position.coords.longitude
+
+        console.log("geolocation", position)
+
+        dispatch(updateLatLng({lat, lng}))
+
+        convertToAddress(lat, lng)
+      }, positionError)
+    } else {
+      window.alert("Sorry,Geolocation is not supported by your browser")
+    }
+  }
+
+  const positionError = () => {
+    if (navigator.permissions) {
+      navigator.permissions.query({name: "geolocation"}).then((res) => {
+        if (res.state === "denied") {
+          window.alert(
+            "Enable location permissions for this website in your browser settings"
+          )
+        } else {
+          alert(
+            "Unable to access your location, you can continue by typing your location on the map"
+          )
+        }
+      })
+    }
+  }
+
+  const convertToAddress = (lat, lng) => {
+    fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0`
+    )
+      .then((res) => res.json())
+      .then((address) => console.log("addressDetected: " + address))
   }
 
   return (
     <Combobox onSelect={handleSelect}>
-      <ComboboxInput
-        value={value}
-        defaultValue={customerAddress}
-        onChange={(e) => setValue(e.target.value)}
-        disabled={!ready}
-        className={inputStyle}
-        placeholder='Search an address...'
-      />
+      <div className='flex items-center gap-8'>
+        <ComboboxInput
+          type='text'
+          name='location'
+          id={"location"}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={!ready}
+          className={inputStyle}
+          placeholder='Search an address...'
+        />
+        <div
+          onClick={getPosition}
+          className='w-10 h-10 flex items-center justify-center rounded-lg p-1 border border-[var(--customer)] cursor-pointer'
+        >
+          <MdLocationPin size={28} color={"red"} />
+        </div>
+      </div>
 
       <ComboboxPopover>
         <ComboboxList>
