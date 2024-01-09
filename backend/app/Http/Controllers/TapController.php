@@ -157,40 +157,16 @@ class TapController extends Controller
 
     }
     public function payments_submit_card_details(Request $request){
-        // TODO @todo protect request only coming from payment
-        // dd($request->all());
-        $user = Auth::user();
-        logger($request->tap_id);
         if($request->tap_id){
-            $RO_subscription = new ROSubscription();
-            $RO_subscription->chg_id  = $request->tap_id;
-            $RO_subscription->cus_id  = $user->tap_customer_id;
-            $RO_subscription->user_id = $user->id;
-            $RO_subscription->status  = 'active';
-            $RO_subscription->start_at= now();
-            $RO_subscription->end_at= now()->addYear();
             $charge = Charge::retrieve($request->tap_id);
             if($charge['http_code'] == ResponseHelper::HTTP_OK){
                 if($charge['message']['status'] == 'CAPTURED'){// payment successful
-                     
-                    $central_subscription = tenancy()->central(function()use($charge){
-                        return CentralSubscription::find($charge['message']['reference']['order']);
-                    });
-                    $RO_subscription->payment_agreement_id =isset($charge['message']['payment_agreement']['id'])?$charge['message']['payment_agreement']['id']:null;
-                    $RO_subscription->card_id  =isset($charge['message']['card']['id'])? $charge['message']['card']['id']:null;
-                    $RO_subscription->subscription_id  = $charge['message']['reference']['order'];
-                    $RO_subscription->amount  = $charge['message']['amount'];
-                    $RO_subscription->number_of_branches =   $charge['message']['amount'] / $central_subscription->amount;
-                    $RO_subscription->save();
                     return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
                 } else {
-                    return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+                    return redirect()->route('restaurant.service')->with('error', __("The payment failed, and the subscription fee has not been paid"));
                 }
                
             }
-            $RO_subscription->save();
-           
-           
         }
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
 

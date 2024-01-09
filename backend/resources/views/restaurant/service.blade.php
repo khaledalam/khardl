@@ -16,7 +16,103 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 @push('scripts')
 
 <script>
-    function setPayment(){
+    function newSubscription(){
+        goSell.config({
+            containerID: "root",
+            gateway: {
+                publicKey: "{{env('TAP_PUBLIC_API_KEY')}}",
+                merchantId: null,
+                language: "{{app()->getLocale()}}",
+                contactInfo: true,
+                supportedCurrencies: "all",
+                supportedPaymentMethods: "all",
+                saveCardOption: true,
+                customerCards: true,
+                notifications: "standard",
+                callback: (response) => {
+                console.log("response", response);
+                },
+                onClose: () => {
+                console.log("onClose Event");
+                },
+                backgroundImg: {
+                url: "imgURL",
+                opacity: "0.5",
+                },
+                labels: {
+                cardNumber: "Card Number",
+                expirationDate: "MM/YY",
+                cvv: "CVV",
+                cardHolder: "Name on Card",
+                actionButton: "Pay",
+                },
+                style: {
+                base: {
+                    color: "#535353",
+                    lineHeight: "18px",
+                    fontFamily: "sans-serif",
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                    color: "rgba(0, 0, 0, 0.26)",
+                    fontSize: "15px",
+                    },
+                },
+                invalid: {
+                    color: "red",
+                    iconColor: "#fa755a ",
+                },
+                },
+            },
+            customer: {
+                id: '{{$customer_tap_id}}'
+            },
+            order: {
+                amount: document.getElementById('price').value,
+                currency: "SAR",
+                items: [
+                {
+                    id: "{{$subscription->id}}",
+                    name: "{{$subscription->name}}",
+                    description: "",
+                    quantity: document.getElementById('factor').value,
+                    amount_per_unit: "{{$subscription->amount}}",
+                    // discount: {
+                    //   type: "P",
+                    //   value: "10%",
+                    // },
+                    total_amount: document.getElementById('price').value,
+                },
+                
+                ],
+                shipping: null,
+                taxes: null,
+            },
+            transaction: {
+                mode: "charge",
+                charge: {
+                saveCard: true,
+                threeDSecure: true,
+                description: "{{__('messages.New subscription')}}",
+                statement_descriptor: "Sample",
+                reference: {
+                    transaction: "txn_0001",
+                    order: "{{$subscription->id}}",
+                },
+                hashstring:"",
+                metadata: {},
+                receipt: {
+                    email: false,
+                    sms: true,
+                },
+                redirect: "{{route('tap.payments_submit_card_details')}}",
+                post: "{{route('webhook-client-tap-payment')}}",
+                },
+            },
+            });
+        goSell.openLightBox();
+    }
+    function renewSubscription(){
         goSell.config({
             containerID: "root",
             gateway: {
@@ -257,7 +353,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                       
                                                                             <p id="msg"></p>
                                                                             
-                                                                            <button id="tap-btn" class="btn btn-khardl text-white " onclick="setPayment()" >{{__("messages.purchase")}}</button>
+                                                                            <button id="tap-btn" class="btn btn-khardl text-white " onclick="newSubscription()" >{{__("messages.purchase")}}</button>
                                                                             </div>
                                                                           
                                                                     </div>
