@@ -3,16 +3,218 @@
 @section('title', __('messages.services'))
 
 @section('content')
-@push('styles')
-<link href="{{ global_asset('js/custom/creditCard/main.css')}}"rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="https://goSellJSLib.b-cdn.net/v1.6.0/js/gosell.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+@push("styles")
+<link
+href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css"
+rel="stylesheet"
+/>
+<script
+type="text/javascript"
+src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
+></script>
 @endpush
 @push('scripts')
 
+<script>
+    function newSubscription(){
+        goSell.config({
+            containerID: "root",
+            gateway: {
+                publicKey: "{{env('TAP_PUBLIC_API_KEY')}}",
+                merchantId: null,
+                language: "{{app()->getLocale()}}",
+                contactInfo: true,
+                supportedCurrencies: "all",
+                supportedPaymentMethods: "all",
+                saveCardOption: true,
+                customerCards: true,
+                notifications: "standard",
+                callback: (response) => {
+                console.log("response", response);
+                },
+                onClose: () => {
+                console.log("onClose Event");
+                },
+                backgroundImg: {
+                url: "imgURL",
+                opacity: "0.5",
+                },
+                labels: {
+                cardNumber: "Card Number",
+                expirationDate: "MM/YY",
+                cvv: "CVV",
+                cardHolder: "Name on Card",
+                actionButton: "Pay",
+                },
+                style: {
+                base: {
+                    color: "#535353",
+                    lineHeight: "18px",
+                    fontFamily: "sans-serif",
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                    color: "rgba(0, 0, 0, 0.26)",
+                    fontSize: "15px",
+                    },
+                },
+                invalid: {
+                    color: "red",
+                    iconColor: "#fa755a ",
+                },
+                },
+            },
+            customer: {
+                id: '{{$customer_tap_id}}'
+            },
+            order: {
+                amount: document.getElementById('price').value,
+                currency: "SAR",
+                items: [
+                {
+                    id: "{{$subscription->id}}",
+                    name: "{{$subscription->name}}",
+                    description: "",
+                    quantity: document.getElementById('factor').value,
+                    amount_per_unit: "{{$subscription->amount}}",
+                    // discount: {
+                    //   type: "P",
+                    //   value: "10%",
+                    // },
+                    total_amount: document.getElementById('price').value,
+                },
+                
+                ],
+                shipping: null,
+                taxes: null,
+            },
+            transaction: {
+                mode: "charge",
+                charge: {
+                saveCard: true,
+                threeDSecure: true,
+                description: "{{__('messages.New subscription')}}",
+                statement_descriptor: "Sample",
+                reference: {
+                    transaction: "txn_0001",
+                    order: "{{$subscription->id}}",
+                },
+                hashstring:"",
+                metadata: {},
+                receipt: {
+                    email: false,
+                    sms: true,
+                },
+                redirect: "{{route('tap.payments_submit_card_details')}}",
+                post: "{{route('webhook-client-tap-payment')}}",
+                },
+            },
+            });
+        goSell.openLightBox();
+    }
+    function renewSubscription(){
+        goSell.config({
+            containerID: "root",
+            gateway: {
+                publicKey: "{{env('TAP_PUBLIC_API_KEY')}}",
+                merchantId: null,
+                language: "{{app()->getLocale()}}",
+                contactInfo: true,
+                supportedCurrencies: "all",
+                supportedPaymentMethods: "all",
+                saveCardOption: true,
+                customerCards: true,
+                notifications: "standard",
+                callback: (response) => {
+                console.log("response", response);
+                },
+                onClose: () => {
+                console.log("onClose Event");
+                },
+                backgroundImg: {
+                url: "imgURL",
+                opacity: "0.5",
+                },
+                labels: {
+                cardNumber: "Card Number",
+                expirationDate: "MM/YY",
+                cvv: "CVV",
+                cardHolder: "Name on Card",
+                actionButton: "Pay",
+                },
+                style: {
+                base: {
+                    color: "#535353",
+                    lineHeight: "18px",
+                    fontFamily: "sans-serif",
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                    color: "rgba(0, 0, 0, 0.26)",
+                    fontSize: "15px",
+                    },
+                },
+                invalid: {
+                    color: "red",
+                    iconColor: "#fa755a ",
+                },
+                },
+            },
+            customer: {
+                id: '{{$customer_tap_id}}'
+            },
+            order: {
+                amount: document.getElementById('price').value,
+                currency: "SAR",
+                items: [
+                {
+                    id: "{{$subscription->id}}",
+                    name: "{{$subscription->name}}",
+                    description: "",
+                    quantity: document.getElementById('factor').value,
+                    amount_per_unit: "{{$subscription->amount}}",
+                    // discount: {
+                    //   type: "P",
+                    //   value: "10%",
+                    // },
+                    total_amount: document.getElementById('price').value,
+                },
+                
+                ],
+                shipping: null,
+                taxes: null,
+            },
+            transaction: {
+                mode: "charge",
+                charge: {
+                saveCard: true,
+                threeDSecure: true,
+                description: "{{__('messages.New subscription')}}",
+                statement_descriptor: "Sample",
+                reference: {
+                    transaction: "txn_0001",
+                    order: "{{$subscription->id}}",
+                },
+                hashstring:"",
+                metadata: {},
+                receipt: {
+                    email: false,
+                    sms: true,
+                },
+                redirect: "{{route('tap.payments_submit_card_details')}}",
+                post: null,
+                },
+            },
+            });
+        goSell.openLightBox();
+    }
+    
+
+
+</script>
 
 @endpush
-
+     <div id="root"></div>
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
         <div class="d-flex flex-column flex-root">
@@ -20,8 +222,13 @@
             <div class="page d-flex flex-row flex-column-fluid">
                 <!--begin::Wrapper-->
                 <div class=" d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                    <!--begin::Header-->
+                    
+                    <!--end::Header-->
                     <!--begin::Content-->
                     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+
+
 
                         <!--begin::Post-->
                         <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -35,10 +242,10 @@
                                         <div class="d-flex flex-column">
                                             <!--begin::Heading-->
                                             <div class="mb-13 text-center">
-                                                <h1 class="fs-2hx fw-bolder mb-5">Enjoy benefiting from our services</h1>
+                                                <h1 class="fs-2hx fw-bolder mb-5">{{__('messages.Enjoy benefiting from our services')}}</h1>
                                             </div>
                                             <!--end::Heading-->
-
+                                           
                                             <!--begin::Row-->
                                             <div class="row g-10">
 
@@ -48,7 +255,7 @@
                                                         <!--begin::Option-->
                                                         <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75" style="padding-bottom: 45px;">
                                                             <div class="w-100 text-right" style="padding: -15px !important;">
-                                                                <p class="badge bg-khardl p-3 text-page-bg fw-bolder">{{count($branches)}}</p>
+                                                                {{-- <p class="badge bg-khardl p-3 text-page-bg fw-bolder">{{count($branches)}}</p> --}}
                                                             </div>
                                                             <!--begin::Heading-->
                                                             <div class="mb-7 text-center px-10" style="padding-bottom: 15px;">
@@ -82,109 +289,87 @@
                                                                 </div>
                                                                 <!--end::image-->
                                                                 <!--begin::Title-->
-                                                                <h3 class="text-dark mb-5 fw-boldest text-center">For each branch annually</h3>
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">{{$subscription->name}}</h3>
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">{{$subscription->description}}</h3>
                                                                 <!--end::Title-->
                                                                 <!--begin::Price-->
                                                                 <div class="text-center">
-                                                                    <span class="mb-2 text-khardl">SAR</span>
-                                                                    <span class="fs-2x fw-bolder text-khardl text-center">388</span>
+
+                                                                    <span class="mb-2 text-khardl">{{__('messages.SAR')}}</span>
+                                                                    @if($RO_subscription?->amount)
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">{{$RO_subscription->amount}}</span>
+                                                                    <br>
+                                                                    <span> {{__('messages.Number of available branches')}} <strong>{{$RO_subscription->number_of_branches}}</strong></span>
+                                                                    @else 
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">{{$subscription->amount}}</span>
+                                                                    @endif
+                                                                 
                                                                 </div>
                                                                 <!--end::Price-->
                                                             </div>
                                                             <!--end::Heading-->
 
                                                             <!--begin::Select-->
-
+                                                            
                                                                     <!--end::Modal dialog-->
-                                                            <div class=" d-flex justify-content-between  ">
-                                                                        {{-- <div>
-                                                                            <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>Buy now</a>
-                                                                        </div> --}}
-                                                                <div style="margin-right: 2px">
-                                                                    <a href="{{route('restaurant.service.increase')}}" class="btn btn-sm btn-khardl">
-                                                                        <i class="fa fa-arrow-circle-up"></i>
-                                                                        {{__('messages.Increase Slots')}}
-                                                                    </a>
-                                                                </div>
-
-                                                                <div>
-                                                                    <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancel branch</a>
-                                                                </div>
+                                                            <div class=" d-flex justify-content-center w-75 ">
+                                                                        <div>
+                                                                            @if($RO_subscription?->status == 'active')
+                                                                            <a href="#"  class="btn btn-sm btn-khardl"  ><i class="fas fa-check"></i>{{__("messages.subscribed")}}</a>
+                                                                            @else
+                                                                            <a href="#"  class="btn btn-sm btn-khardl"   data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>{{__('messages.Buy now')}}</a>
+                                                                            @endif
+                                                                  
+                                                                        </div>
+                                                                {{-- <div>
+                                                                    <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
+                                                                </div> --}}
                                                             </div>
-
+                                              
                                                             <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
                                                                     <div class="modal-content rounded p-15">
+                                                                        
                                                                             <!--begin::Modal header-->
-                                                                            <div class="modal-header pb-0 border-0 ">
-                                                                                <h5 class="modal-title text-center">Subscribe to the branch package</h5>
+                                                                            <div class="modal-header pb-0 border-0  d-flex justify-content-center">
+                                                                                <h5 class="modal-title text-center">{{$subscription->name}}</h5>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                 
+                                                                           
+                                                                           
+
+                                                                            <div class="form-group">
+                                                                                <label for="factor">{{__('messages.Number of branches')}}</label>
+                                                                                <input type="number" class="form-control" id="factor" name="factor" value="1" min="1" onchange="updatePrice()">
                                                                             </div>
 
-                                                                                <div id="root"></div>
-                                                                                <p id="msg"></p>
-                                                                                <button id="tap-btn"  onclick="goSell.submit()" >Submit</button>
-
-                                                                      <script>
-                                                                            goSell.goSellElements({
-                                                                                containerID:"root",
-
-                                                                                gateway:{
-                                                                                    callback	: function(event){
-                                                                                        if(event.status == "ACTIVE" && event.card.id){
-                                                                                            $.ajax({
-                                                                                                url: '{{ route('tap.payments_submit_card_details', ['cardId' => '__card__','data'=>'__data__']) }}'
-                                                                                                .replace('__card__', event.card.id) .replace('__data__', JSON.stringify(event)),
-                                                                                                type: 'POST',
-                                                                                                dataType: 'json',
-                                                                                                data: {
-                                                                                                    '_token': '{{ csrf_token() }}', // Include the CSRF token
-                                                                                                },
-                                                                                                success: function (response) {
-
-                                                                                                },
-                                                                                                error: function (error) {
-                                                                                                    console.error('Error toggling user status:', error);
-                                                                                                }
-                                                                                            });
-                                                                                        }
-
-                                                                                    },
-                                                                                    publicKey:"pk_test_LSwNp8KReqHB4Mgly1PWOA7E",
-                                                                                    language: "{{app()->getLocale()}}",
-                                                                                    supportedCurrencies: "all",
-                                                                                    supportedPaymentMethods: "all",
-                                                                                    notifications: 'msg',
-                                                                                    style: {
-                                                                                        base: {
-                                                                                            color: '#535353',
-                                                                                            lineHeight: '18px',
-                                                                                            fontFamily: 'sans-serif',
-                                                                                            fontSmoothing: 'antialiased',
-                                                                                            fontSize: '16px',
-                                                                                            '::placeholder': {
-                                                                                                color: 'rgba(0, 0, 0, 0.26)',
-                                                                                                fontSize:'15px'
-                                                                                            }
-                                                                                        },
-                                                                                        invalid: {
-                                                                                            color: 'red',
-                                                                                            iconColor: '#fa755a '
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            });
-
-                                                                        </script>
-
-
-                                                                                <!--end:Form-->
+                                                                            <div class="form-group">
+                                                                                <label for="factor">{{__('messages.total-price')}}</label>
+                                                                                <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
+                                                                            </div>
+                                                                      
+                                                                            <p id="msg"></p>
+                                                                            
+                                                                            <button id="tap-btn" class="btn btn-khardl text-white " onclick="newSubscription()" >{{__("messages.purchase")}}</button>
+                                                                            </div>
+                                                                          
                                                                     </div>
+                                                                    <script>
+                                                                         function updatePrice() {
+                                                                            const priceInput = document.getElementById('price');
+                                                                            const factorInput = document.getElementById('factor');
+                                                                            const factor = parseFloat(factorInput.value) || 1;
+                                                                            priceInput.value = "{{$subscription->amount}}" * factor;
+                                                                        }
+                                                                    </script>
                                                                 </div>
                                                                         <!--end::Modal body-->
                                                             </div>
-                                                                    <!--end::Modal content-->
+                                                            
+                                                           
 
                                                             <!--end::Select-->
                                                         </div>
@@ -193,7 +378,7 @@
                                                 </div>
                                                 <!--end::Col-->
 
-
+{{-- 
                                                 <!--begin::Col-->
                                                 <div class="col-xl-4">
                                                     <div class="d-flex h-100 align-items-center">
@@ -248,10 +433,10 @@
                                                         <!--end::Option-->
                                                     </div>
                                                 </div>
-                                                <!--end::Col-->
+                                                <!--end::Col--> --}}
 
 
-                                                <!--begin::Col-->
+                                                {{-- <!--begin::Col-->
                                                 <div class="col-xl-4">
                                                     <div class="d-flex h-100 align-items-center">
                                                         <!--begin::Option-->
@@ -311,7 +496,7 @@
                                                         <!--end::Option-->
                                                     </div>
                                                 </div>
-                                                <!--end::Col-->
+                                                <!--end::Col--> --}}
 
                                             </div>
                                             <!--end::Row-->
@@ -327,182 +512,182 @@
                         <!--end::Post-->
 
 
-                        <!--begin::Post-->
-{{--                        <div class="post d-flex flex-column-fluid mt-5" id="kt_post">--}}
-{{--                            <!--begin::Container-->--}}
-{{--                            <div id="kt_content_container" class="container-xxl">--}}
-{{--                                <!--begin::Pricing card-->--}}
-{{--                                <div class="card" id="kt_pricing">--}}
-{{--                                    <!--begin::Card body-->--}}
-{{--                                    <div class="card-body p-lg-10">--}}
-{{--                                        <!--begin::Plans-->--}}
-{{--                                        <div class="d-flex flex-column">--}}
-{{--                                            <!--begin::Heading-->--}}
-{{--                                            <div class="mb-13 text-center">--}}
-{{--                                                <h3 class="fs-2hx fw-bolder mb-5">Application for your site</h3>--}}
-{{--                                            </div>--}}
-{{--                                            <!--end::Heading-->--}}
+                        {{-- <!--begin::Post-->
+                        <div class="post d-flex flex-column-fluid mt-5" id="kt_post">
+                            <!--begin::Container-->
+                            <div id="kt_content_container" class="container-xxl">
+                                <!--begin::Pricing card-->
+                                <div class="card" id="kt_pricing">
+                                    <!--begin::Card body-->
+                                    <div class="card-body p-lg-10">
+                                        <!--begin::Plans-->
+                                        <div class="d-flex flex-column">
+                                            <!--begin::Heading-->
+                                            <div class="mb-13 text-center">
+                                                <h3 class="fs-2hx fw-bolder mb-5">Application for your site</h3>
+                                            </div>
+                                            <!--end::Heading-->
 
-{{--                                            <!--begin::Row-->--}}
-{{--                                            <div class="row g-10">--}}
+                                            <!--begin::Row-->
+                                            <div class="row g-10">
 
-{{--                                                <!--begin::Col-->--}}
-{{--                                                <div class="col-xl-3">--}}
-{{--                                                    <div class="d-flex h-100 align-items-center">--}}
-{{--                                                        <!--begin::Option-->--}}
-{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
-{{--                                                            <!--begin::Heading-->--}}
-{{--                                                            <div class="mb-7 text-center">--}}
-{{--                                                                <!--begin::Title-->--}}
-{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">Monthly</h3>--}}
-{{--                                                                <!--end::Title-->--}}
-{{--                                                                <!--begin::Price-->--}}
-{{--                                                                <div class="text-center">--}}
-{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
-{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">299</span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <!--end::Price-->--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Heading-->--}}
+                                                <!--begin::Col-->
+                                                <div class="col-xl-3">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-7 text-center">
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">Monthly</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+                                                                    <span class="mb-2 text-khardl">SAR</span>
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">299</span>
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
 
-{{--                                                            <!--begin::Select-->--}}
-{{--                                                            <div class=" d-flex justify-content-between ">--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-danger" id="myLink2"><i class="fas fa-trash"></i>Denied</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div class="mx-3">--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-secondary">Current</a>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Select-->--}}
-{{--                                                        </div>--}}
-{{--                                                        <!--end::Option-->--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <!--end::Col-->--}}
-
-
-{{--                                                <!--begin::Col-->--}}
-{{--                                                <div class="col-xl-3">--}}
-{{--                                                    <div class="d-flex h-100 align-items-center">--}}
-{{--                                                        <!--begin::Option-->--}}
-{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
-{{--                                                            <!--begin::Heading-->--}}
-{{--                                                            <div class="mb-7 text-center">--}}
-{{--                                                                <!--begin::Title-->--}}
-{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">3 months</h3>--}}
-{{--                                                                <!--end::Title-->--}}
-{{--                                                                <!--begin::Price-->--}}
-{{--                                                                <div class="text-center">--}}
-{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
-{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">499</span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <!--end::Price-->--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Heading-->--}}
-
-{{--                                                            <!--begin::Select-->--}}
-{{--                                                            <div class=" d-flex justify-content-between ">--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Select-->--}}
-{{--                                                        </div>--}}
-{{--                                                        <!--end::Option-->--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <!--end::Col-->--}}
+                                                            <!--begin::Select-->
+                                                            <div class=" d-flex justify-content-between ">
+                                                                <div>
+                                                                    <a href="#" class="btn btn-sm btn-danger" id="myLink2"><i class="fas fa-trash"></i>Denied</a>
+                                                                </div>
+                                                                <div class="mx-3">
+                                                                    <a href="#" class="btn btn-sm btn-secondary">Current</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col-->
 
 
-{{--                                                <!--begin::Col-->--}}
-{{--                                                <div class="col-xl-3">--}}
-{{--                                                    <div class="d-flex h-100 align-items-center">--}}
-{{--                                                        <!--begin::Option-->--}}
-{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
-{{--                                                            <!--begin::Heading-->--}}
-{{--                                                            <div class="mb-7 text-center">--}}
-{{--                                                                <!--begin::Title-->--}}
-{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">6 months</h3>--}}
-{{--                                                                <!--end::Title-->--}}
-{{--                                                                <!--begin::Price-->--}}
-{{--                                                                <div class="text-center">--}}
-{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
-{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">799</span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <!--end::Price-->--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Heading-->--}}
+                                                <!--begin::Col-->
+                                                <div class="col-xl-3">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-7 text-center">
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">3 months</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+                                                                    <span class="mb-2 text-khardl">SAR</span>
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">499</span>
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
 
-{{--                                                            <!--begin::Select-->--}}
-{{--                                                            <div class=" d-flex justify-content-between ">--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Select-->--}}
-{{--                                                        </div>--}}
-{{--                                                        <!--end::Option-->--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <!--end::Col-->--}}
-
-
-{{--                                                <!--begin::Col-->--}}
-{{--                                                <div class="col-xl-3">--}}
-{{--                                                    <div class="d-flex h-100 align-items-center">--}}
-{{--                                                        <!--begin::Option-->--}}
-{{--                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">--}}
-{{--                                                            <!--begin::Heading-->--}}
-{{--                                                            <div class="mb-7 text-center">--}}
-{{--                                                                <!--begin::Title-->--}}
-{{--                                                                <h3 class="text-dark mb-5 fw-boldest text-center">12 months</h3>--}}
-{{--                                                                <!--end::Title-->--}}
-{{--                                                                <!--begin::Price-->--}}
-{{--                                                                <div class="text-center">--}}
-{{--                                                                    <span class="mb-2 text-khardl">SAR</span>--}}
-{{--                                                                    <span class="fs-2x fw-bolder text-khardl text-center">1299</span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <!--end::Price-->--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Heading-->--}}
-
-{{--                                                            <!--begin::Select-->--}}
-{{--                                                            <div class=" d-flex justify-content-between ">--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div>--}}
-{{--                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <!--end::Select-->--}}
-{{--                                                        </div>--}}
-{{--                                                        <!--end::Option-->--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <!--end::Col-->--}}
+                                                            <!--begin::Select-->
+                                                            <div class=" d-flex justify-content-between ">
+                                                                <div>
+                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col-->
 
 
+                                                <!--begin::Col-->
+                                                <div class="col-xl-3">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-7 text-center">
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">6 months</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+                                                                    <span class="mb-2 text-khardl">SAR</span>
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">799</span>
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
 
-{{--                                            </div>--}}
-{{--                                            <!--end::Row-->--}}
-{{--                                        </div>--}}
-{{--                                        <!--end::Plans-->--}}
-{{--                                    </div>--}}
-{{--                                    <!--end::Card body-->--}}
-{{--                                </div>--}}
-{{--                                <!--end::Pricing card-->--}}
-{{--                            </div>--}}
-{{--                            <!--end::Container-->--}}
-{{--                        </div>--}}
-                        <!--end::Post-->
+                                                            <!--begin::Select-->
+                                                            <div class=" d-flex justify-content-between ">
+                                                                <div>
+                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col-->
+
+
+                                                <!--begin::Col-->
+                                                <div class="col-xl-3">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-7 text-center">
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">12 months</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+                                                                    <span class="mb-2 text-khardl">SAR</span>
+                                                                    <span class="fs-2x fw-bolder text-khardl text-center">1299</span>
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
+
+                                                            <!--begin::Select-->
+                                                            <div class=" d-flex justify-content-between ">
+                                                                <div>
+                                                                    <a href="#" class="btn btn-sm btn-khardl"><i class="fas fa-shopping-cart"></i>Buy now</a>
+                                                                </div>
+                                                                <div>
+                                                                    <a href="#" class="text-hover-khardl btn btn-sm btn-active-light-khardl">Change</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col-->
+
+
+
+                                            </div>
+                                            <!--end::Row-->
+                                        </div>
+                                        <!--end::Plans-->
+                                    </div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Pricing card-->
+                            </div>
+                            <!--end::Container-->
+                        </div>
+                        <!--end::Post--> --}}
 
 
                     </div>
@@ -515,6 +700,7 @@
         </div>
         <!--end::Root-->
         <!--end::Main-->
+
 
         <!--begin::Modal - Cancle branch-->
         <div class="modal fade" id="kt_modal_cancle_branch" tabindex="-1" aria-hidden="true">
@@ -584,55 +770,55 @@
         <!--end::Modal - Cancle branch-->
 
 
-
+      
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var myLink = document.getElementById("myLink");
+            // document.addEventListener("DOMContentLoaded", function () {
+            //     var myLink = document.getElementById("myLink");
 
-                myLink.addEventListener("click", function (event) {
-                    event.preventDefault();
+            //     myLink.addEventListener("click", function (event) {
+            //         event.preventDefault();
 
-                    Swal.fire({
-                        title: 'Are you sure? All content will be deleted from the branch',
-                        showDenyButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: 'Save',
-                        denyButtonText: `Don't save`,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire('Deleted successfully!', '', 'success')
-                        } else if (result.isDenied) {
-                            Swal.fire('Not deleted', '', 'info')
-                        }
-                    });
-                });
-            });
+            //         Swal.fire({
+            //             title: 'Are you sure? All content will be deleted from the branch',
+            //             showDenyButton: true,
+            //             showCancelButton: true,
+            //             confirmButtonText: 'Save',
+            //             denyButtonText: `Don't save`,
+            //         }).then((result) => {
+            //             if (result.isConfirmed) {
+            //                 Swal.fire('Deleted successfully!', '', 'success')
+            //             } else if (result.isDenied) {
+            //                 Swal.fire('Not deleted', '', 'info')
+            //             }
+            //         });
+            //     });
+            // });
 
-            document.addEventListener("DOMContentLoaded", function () {
-                var myLink2 = document.getElementById("myLink2");
+            // document.addEventListener("DOMContentLoaded", function () {
+            //     var myLink2 = document.getElementById("myLink2");
 
-                myLink2.addEventListener("click", function (event) {
-                    event.preventDefault();
+            //     myLink2.addEventListener("click", function (event) {
+            //         event.preventDefault();
 
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        showDenyButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: 'Denied',
-                        denyButtonText: `Don't Denied`,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire('Denied successfully!', '', 'success')
-                        } else if (result.isDenied) {
-                            Swal.fire('Not Denied', '', 'info')
-                        }
-                    });
-                });
-            });
+            //         Swal.fire({
+            //             title: 'Are you sure?',
+            //             showDenyButton: true,
+            //             showCancelButton: true,
+            //             confirmButtonText: 'Denied',
+            //             denyButtonText: `Don't Denied`,
+            //         }).then((result) => {
+            //             if (result.isConfirmed) {
+            //                 Swal.fire('Denied successfully!', '', 'success')
+            //             } else if (result.isDenied) {
+            //                 Swal.fire('Not Denied', '', 'info')
+            //             }
+            //         });
+            //     });
+            // });
 
         </script>
-
-
+        
+       
      </div>
      <!--end::Content-->
 @endsection
