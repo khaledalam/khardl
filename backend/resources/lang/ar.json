@@ -34,6 +34,7 @@
     ":module has been successfully activated":"تم تفعيل شركة الشحن :module",
     ":module has been successfully deactivated":"تم الغاء تفعيل شركة الشحن :module",
     "Location is required":"الموقع مطلوب",
+    "Api Key not correct, please contact :module support team to ensure about it":"الرقم السري غير صحيح، يرجى الاتصال بفريق دعم :moudle للتأكد من ذلك",
     "A new Subscription has been created":"تمت اضافة اشتراك جديد بنجاح",
     "No card found":"لا يوجد بطاقة الكترونية متاحة",
     "The subscription has been activated successfully":"تم تفعيل الاشتراك بنجاح",
