@@ -102,7 +102,7 @@ const Register = () => {
          >
               {showTerms && <TermsPolicies onClose={showTermsModal} />}
               {showPrivacy && <Privacy onClose={showPrivacyModal} />}
-              {!showTerms && !showPrivacy && 
+              {!showTerms && !showPrivacy &&
                 <div className='py-[20px] flex justify-center items-center'>
                   <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[70%] max-[1200px]:w-[100%]'>
                      <div className='relative flex justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
@@ -120,11 +120,11 @@ const Register = () => {
                                     {/* First Input */}
                                     <div className='w-[100%]'>
                                        <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                          {t('First name')}
+                                          {t('First name')} <span className="text-red-500">*</span>
                                        </h4>
                                        <input
                                           className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                          placeholder={t('Last name')}
+                                          placeholder={t('First name')}
                                           {...register('first_name', {
                                              required: true,
                                           })}
@@ -138,7 +138,7 @@ const Register = () => {
                                     {/* Input 2 */}
                                     <div className='w-[100%]'>
                                        <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                          {t('Last name')}
+                                          {t('Last name')} <span className="text-red-500">*</span>
                                        </h4>
                                        <input
                                           className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
@@ -157,7 +157,7 @@ const Register = () => {
                                  {/* Input 3 */}
                                  <div>
                                     <h4 className='ms-2 text-[13px] font-semibold'>
-                                       {t('Restaurant name')}
+                                       {t('Restaurant name')} <span className="text-red-500">*</span>
                                     </h4>
                                     <input
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
@@ -172,11 +172,11 @@ const Register = () => {
                                        </span>
                                     )}
                                  </div>
-   
+
                                  {/* Input 4 */}
                                  <div>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                       {t('Position')}
+                                       {t('Position')} <span className="text-red-500">*</span>
                                     </h4>
                                     <input
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
@@ -191,11 +191,11 @@ const Register = () => {
                                        </span>
                                     )}
                                  </div>
-   
+
                                  {/* Input 5 */}
                                  <div>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                       {t('Email')}
+                                       {t('Email')} <span className="text-red-500">*</span>
                                     </h4>
                                     <input
                                        type='email'
@@ -209,11 +209,11 @@ const Register = () => {
                                        </span>
                                     )}
                                  </div>
-   
+
                                  {/* Input 6 */}
                                  <div>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                       {t('Phone')}
+                                       {t('Phone')}  <span className="text-red-500">*</span>
                                     </h4>
                                     <input
                                        type='number'
@@ -232,11 +232,11 @@ const Register = () => {
                                        </span>
                                     )}
                                  </div>
-   
+
                                  {/* Input 7 */}
                                  <div className='relative'>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                       {t('Password')}
+                                       {t('Password')} <span className="text-red-500">*</span>
                                     </h4>
                                     <input
                                        type={
@@ -272,11 +272,11 @@ const Register = () => {
                                        )}
                                     </div>
                                  </div>
-   
+
                                  {/* Input 8 */}
                                  <div className='relative'>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                       {t('Confirm password')}
+                                       {t('Confirm password')} <span className="text-red-500">*</span>
                                     </h4>
                                     <input
                                        type={
@@ -312,7 +312,7 @@ const Register = () => {
                                        )}
                                     </div>
                                  </div>
-   
+
                                  <div className='flex justify-start items-center gap-2'>
                                     <input
                                        id={`checkbox-1`}
@@ -329,7 +329,7 @@ const Register = () => {
                                        {t('Approval')}
                                        <button
                                           onClick={() => showTermsModal()}
-                                          
+
                                           className='text-[var(--primary)]'
                                        >
                                           {t('terms_and_policies')}
@@ -342,13 +342,14 @@ const Register = () => {
                                           {t('Privacy')}
                                        </button>
                                     </label>
+                                    <span className="text-red-500">*</span>
                                  </div>
                                  {errors.terms_and_policies && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
                                     {errors.terms_and_policies.message ||   t('Approval Error') }
                                     </span>
                                  )}
-   
+
                                  <div className='flex-col flex justify-center items-center my-4'>
                                     <button
                                        type='submit'
@@ -397,7 +398,7 @@ const Register = () => {
                            </div>
                         )}
                      </div>
-                  
+
                      <div className='flex justify-center items-center max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10 shadow-lg rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none'>
                         <Link
                            to='/'
@@ -419,7 +420,7 @@ const Register = () => {
                      </div>
                   </div>
                </div> }
-          
+
          </div>
       </div>
    )
