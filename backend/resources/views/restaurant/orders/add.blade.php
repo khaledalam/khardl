@@ -332,7 +332,7 @@
             if (selectedProduct.selection_input_titles) {
                 selectedProduct.selection_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.selection_input_names[index];
-                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    let isRequired = selectedProduct.selection_required[index] == "true";
                     if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
@@ -351,7 +351,7 @@
             if (selectedProduct.dropdown_input_titles) {
                 selectedProduct.dropdown_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.dropdown_input_names[index];
-                    let isRequired = selectedProduct.checkbox_required[index] == "true";
+                    let isRequired = selectedProduct.dropdown_required[index] == "true";
                     if(isRequired)haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
@@ -368,6 +368,7 @@
                 });
             }
             if(haveRequiredFiled){
+                console.log('test');
                 var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
                 elementToRemove.classList.add('required');
             }
