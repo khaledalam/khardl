@@ -600,7 +600,7 @@ return [
     "Subscription has been updated"=>"Subscription has been updated",
     "The subscription has been activated successfully"=>"The subscription has been activated successfully",
     "subscribed"=>"subscribed",
-    "Number of available branches"=>"Number of available branches"
+    "Number of available branches"=>"Number of available branches",
     "Received by restaurant" => "Received by restaurant",
     "Search" => "Search",
     "Secret Key" => "Secret Key",
