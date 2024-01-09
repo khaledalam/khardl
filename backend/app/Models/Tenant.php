@@ -103,6 +103,20 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         };
         return $run_on_tenant ? $this->run($orderQuery) : $orderQuery();
     }
+    public function completed_orders($run_on_tenant = true)
+    {
+        $orderQuery = function () {
+            return Order::with(['payment_method:id,name', 'branch:id,name'])->completed();
+        };
+        return $run_on_tenant ? $this->run($orderQuery) : $orderQuery();
+    }
+    public function allCustomers($run_on_tenant = true)
+    {
+        $customerQuery = function () {
+            return RestaurantUser::customers()->orderBy('created_at','DESC');
+        };
+        return $run_on_tenant ? $this->run($customerQuery) : $customerQuery();
+    }
     public function customers($run_on_tenant = true)
     {
         $customerQuery = function () {
@@ -119,4 +133,21 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         }
         return ['is_live'=>$is_live,'logo'=>$logo];
     }
+    /* Start Scope */
+    public function scopeWhenSearch($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('restaurant_name', 'like', '%' . $search . '%')
+            ->orWhereHas('primary_domain', static function ($query1) use ($search) {
+                $query1->where('domain', 'like', '%' . $search . '%');
+            });
+        });
+    }
+    public function scopeWhenLive($query,$isLive)
+    {
+        return $query->when($isLive != null, function ($q) use ($isLive) {
+            return $q->where('is_live', $isLive);
+        });
+    }
+    /* End Scope */
 }

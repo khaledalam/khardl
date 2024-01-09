@@ -151,6 +151,7 @@ Route::group([
                     Route::post('orders-add', 'store')->name('restaurant.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                     Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
+                    Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
                   });
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 

@@ -31,10 +31,18 @@
                             <!--end::Input group-->
                             <!--begin::Col-->
                             <div class="position-relative w-md-200px me-md-2">
-                                <select class="form-select form-select-solid" name="status">
-                                    <option value="all" {{ request('status') === 'All' ? 'selected' : '' }}>{{ __('messages.all')}}</option>
-                                    <option value="live" {{ request('status') === 'live' ? 'selected' : '' }}>{{ __('messages.live')}}</option>
-                                    <option value="not_live" {{ request('status') === 'not_live' ? 'selected' : '' }}>{{ __('messages.not_live')}}</option>
+                                <select class="form-select form-select-solid" name="live">
+                                    <option>{{ __('messages.all')}}</option>
+                                    <option value="1" {{ request('live') == '1' ? 'selected' : '' }}>{{ __('messages.live')}}</option>
+                                    <option value="0" {{ request('live') == '0' ? 'selected' : '' }}>{{ __('messages.not_live')}}</option>
+                                </select>
+                                </select>
+                            </div>
+                            <div class="position-relative w-md-200px me-md-2">
+                                <select class="form-select form-select-solid" name="order_by">
+                                    <option >{{ __('messages.Order by')}}</option>
+                                    <option value="highest_orders" {{ request('order_by') === 'highest_orders' ? 'selected' : '' }}>{{ __('messages.Highest orders')}}</option>
+                                    <option value="highest_customers" {{ request('order_by') === 'highest_customers' ? 'selected' : '' }}>{{ __('messages.Highest customers')}}</option>
                                 </select>
                                 </select>
                             </div>

@@ -7,7 +7,7 @@ use App\Http\Requests\Web\Tenant\Customer\ChangeUserStatusFormRequest;
 use App\Http\Services\tenant\Customer\CustomerDataService;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class CustomerDataController extends BaseController
 {

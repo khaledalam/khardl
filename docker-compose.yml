@@ -17,20 +17,20 @@ services:
         volumes:
             - ./docker/database/data:/var/lib/mysql:z
 
-    khardl_db_testing:
-        #        platform: 'linux/amd64'
-        container_name: khardl_db_testing
-        image: mariadb
-        restart: unless-stopped
-        environment:
-            - MYSQL_DATABASE=${DB_TESTING_DATABASE}
-            - MYSQL_USER=${DB_TESTING_USERNAME}
-            - MYSQL_PASSWORD=${DB_TESTING_PASSWORD}
-            - MYSQL_ROOT_PASSWORD=${DB_TESTING_ROOT_PASSWORD}
-        ports:
-            - "3307:3306"
-        volumes:
-            - ./docker/database/data_testing:/var/lib/mysql:z
+#    khardl_db_testing:
+#        #        platform: 'linux/amd64'
+#        container_name: khardl_db_testing
+#        image: mariadb
+#        restart: unless-stopped
+#        environment:
+#            - MYSQL_DATABASE=${DB_TESTING_DATABASE}
+#            - MYSQL_USER=${DB_TESTING_USERNAME}
+#            - MYSQL_PASSWORD=${DB_TESTING_PASSWORD}
+#            - MYSQL_ROOT_PASSWORD=${DB_TESTING_ROOT_PASSWORD}
+#        ports:
+#            - "3307:3306"
+#        volumes:
+#            - ./docker/database/data_testing:/var/lib/mysql:z
 
 #    backend:
 #        container_name: backend
