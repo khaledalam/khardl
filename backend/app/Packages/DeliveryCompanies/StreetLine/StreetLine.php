@@ -3,6 +3,7 @@
 namespace App\Packages\DeliveryCompanies\StreetLine;
 
 use App\Models\Tenant\Order;
+use App\Utils\ResponseHelper;
 use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\RestaurantUser;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
@@ -60,7 +61,6 @@ class StreetLine  extends AbstractDeliveryCompany
         ];
         return $this->send(
             url:   $this->delivery_company->api_url."/$token/order/add",
-            method: 'post',
             token: false,
             data: $data
         );
@@ -104,6 +104,15 @@ class StreetLine  extends AbstractDeliveryCompany
             // resend the order to any delivery companies or cancelled 
 
         }
+    }
+    public function  verifyApiKey(string $api_key): bool{
+        $response = $this->sendSync(
+            url:   $this->delivery_company->api_url."/$api_key/webhooks/list",
+            token: false,
+            data: [],
+            method: 'get'
+        );
+        return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
     }
 
 }

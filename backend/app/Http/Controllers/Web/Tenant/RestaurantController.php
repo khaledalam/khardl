@@ -846,6 +846,14 @@ class RestaurantController extends BaseController
             'api_key'=>"required"
         ]);
         $company = DeliveryCompany::where("module",$module)->first();
+        if($company->status  == false){
+            if(!$company->module->verifyApiKey($request->api_key)){
+                return redirect()->back()->with([
+                    'error' => __("Api Key not correct, please contact :module support team to ensure about it",['module'=>$module]),
+                ]);
+            }
+        }
+
         $company->update([
             'status'=>!$company->status,
             'api_key'=>$request->api_key
