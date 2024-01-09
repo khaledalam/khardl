@@ -591,8 +591,11 @@ return [
     'new-branch-slot-price' => 'سعر فرع جديد',
     "Received by restaurant" => "تلقى من قبل المطعم",
     "Secret Key" => "المفتاح السري",
-    "Not verified" => "لم يتم التحقق منها"
-
+    "Not verified" => "لم يتم التحقق منها",
+    "Not complete step 2" => "لم يكمل الخطوة 2",
+    "Complete Step 1 only" => "اكمل الخطوة الاولي فقط",
+    "Have restaurant" => "لدية مطعم",
+    "Select" => "اختر"
 
 ];
 

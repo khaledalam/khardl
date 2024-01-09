@@ -592,6 +592,10 @@ return [
     "Received by restaurant" => "Received by restaurant",
     "Search" => "Search",
     "Secret Key" => "Secret Key",
-    "Not verified" => "Not verified"
+    "Not verified" => "Not verified",
+    "Not complete step 2" => "Not complete step 2",
+    "Complete Step 1 only" => "Complete Step 1 only",
+    "Have restaurant" => "Have restaurant",
+    "Select" => "Select",
 
 ];
