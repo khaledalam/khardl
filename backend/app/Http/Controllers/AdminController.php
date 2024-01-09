@@ -22,6 +22,7 @@ use App\Mail\ApprovedRestaurant;
 use App\Models\User;
 use App\Models\Log;
 use App\Models\Promoter;
+use App\Models\Subscription;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -709,5 +710,35 @@ class AdminController extends Controller
 
         return response()->json(['isBlocked' => $user->isBlocked()]);
     }
-
+    public function subscriptions(){
+        $user = Auth::user();
+        $subscriptions = Subscription::all();
+        return view('admin.subscriptions', compact('subscriptions','user'));
+    }
+    public function subscriptionsCreate(){
+        $user = Auth::user();
+        return view('admin.subscriptions-create', compact('user'));
+    }
+    public function subscriptionsStore(Request $request){
+        Subscription::create([
+            'name'=>trans_json($request->name_en,$request->name_ar),
+            'amount'=>$request->amount
+        ]);
+        return redirect()->route('admin.subscriptions')->with([
+            'success' => __("A new Subscription has been created"),
+        ]);
+    }
+    public function subscriptionShow(Subscription $subscription){
+        $user = Auth::user();
+        return view('admin.subscriptions-edit', compact('user','subscription'));
+    }
+    public function subscriptionUpdate(Subscription $subscription,Request $request){
+        $subscription->update([
+            'name'=>trans_json($request->name_en,$request->name_ar),
+            'amount'=>$request->amount
+        ]);
+        return redirect()->route('admin.subscriptions')->with([
+            'success' => __("Subscription has been updated"),
+        ]);
+    }
 }

@@ -38,6 +38,7 @@ use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Packages\TapPayment\Controllers\CardController;
+use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
 use App\Packages\TapPayment\Controllers\CustomerController;
 
 /*
@@ -121,12 +122,12 @@ Route::group([
                 Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get')->middleware('isBusinessFilesSubmitted');
                 Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
                 // Step 3: save cards
-                Route::post('/payments/tap-create-card-details/{cardId}', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+                Route::get('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
 
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
-                Route::get('/service/increase', [RestaurantController::class, 'servicesIncrease'])->name('restaurant.service.increase');
+             
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
@@ -248,6 +249,7 @@ Route::group([
                 Route::resource("orders",CustomerOrderController::class)->only([
                     'store', 'index'
                 ]);
+                Route::get("cards",[CustomerCardController::class,'show'])->name('customer.cards');
             });
 
 

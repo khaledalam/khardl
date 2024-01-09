@@ -26,6 +26,7 @@ use App\Models\Subscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
+use App\Models\ROSubscription;
 use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
@@ -44,12 +45,14 @@ class RestaurantController extends BaseController
     public function services(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $branches = Branch::all();
+
         $subscription = tenancy()->central(function(){
             return Subscription::first();
         });
+        $RO_subscription = ROSubscription::first();
+        $customer_tap_id = Auth::user()->tap_customer_id;
 
-        return view('restaurant.service', compact('user', 'branches','subscription'));
+        return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription'));
     }
 
     public function delivery(){
@@ -348,16 +351,15 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        $setting = Setting::first();
-        if($setting->branch_slots == 0){
-            return false;
-        }else {
-            $setting->update([
-                'branch_slots'=> DB::raw('branch_slots - 1'),
-            ]);
-            return true;
+        $sub = ROSubscription::first();
+        if($sub && $sub->status == 'active'){
+            if($sub->number_of_branches > 0){
+                $sub->number_of_branches -=1;
+                $sub->save();
+                return true;
+            }
         }
-
+        return false;
     }
 
 
@@ -856,12 +858,5 @@ class RestaurantController extends BaseController
         ]);
 
     }
-    public function servicesIncrease(){
-        Setting::first()->update([
-            'branch_slots'=> DB::raw('branch_slots + 1'),
-        ]);
-        return redirect()->back()->with([
-            'success' => __("Branch slot has been increased by one"),
-        ]);
-    }
+    
 }
