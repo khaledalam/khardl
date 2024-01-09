@@ -157,6 +157,7 @@ class TapController extends Controller
 
     }
     public function payments_submit_card_details(Request $request){
+
         if($request->tap_id){
             $charge = Charge::retrieve($request->tap_id);
             if($charge['http_code'] == ResponseHelper::HTTP_OK){
@@ -168,6 +169,20 @@ class TapController extends Controller
                
             }
         }
+
+        // TODO @todo optimize 
+        // sleep(1); // sleep until tap webhook processed
+        
+        // $subscription = ROSubscription::first();
+        // if($subscription){
+        //     if($subscription->status == 'active'){// payment successful
+        //         return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
+        //     } else {
+        //         return redirect()->route('restaurant.service')->with('error', __("The payment failed, and the subscription fee has not been paid"));
+        //     }
+        // }else {
+        //     return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+        // }
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
 
     }

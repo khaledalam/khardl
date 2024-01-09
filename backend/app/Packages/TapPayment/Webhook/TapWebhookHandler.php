@@ -15,6 +15,7 @@ class TapWebhookHandler extends ProcessWebhookJob
         logger("tap payment");
         // @todo validate webhook
         $data = json_decode($this->webhookCall, true)['payload'];
+       
         if (strpos($data['id'] ?? '', 'chg') === 0) { // charge end-point
             $user = RestaurantUser::where('tap_customer_id',$data['customer']['id'])->first();
             $central_subscription = tenancy()->central(function()use($data){
