@@ -158,7 +158,7 @@ class TapController extends Controller
     }
     public function payments_submit_card_details(Request $request){
         // TODO @todo protect request only coming from payment
-      
+        // dd($request->all());
         $user = Auth::user();
         logger($request->tap_id);
         if($request->tap_id){
@@ -177,7 +177,7 @@ class TapController extends Controller
                         return CentralSubscription::find($charge['message']['reference']['order']);
                     });
                     $RO_subscription->payment_agreement_id =isset($charge['message']['payment_agreement']['id'])?$charge['message']['payment_agreement']['id']:null;
-                    $RO_subscription->card_id  = $charge['message']['card']['id'];
+                    $RO_subscription->card_id  =isset($charge['message']['card']['id'])? $charge['message']['card']['id']:null;
                     $RO_subscription->subscription_id  = $charge['message']['reference']['order'];
                     $RO_subscription->amount  = $charge['message']['amount'];
                     $RO_subscription->number_of_branches =   $charge['message']['amount'] / $central_subscription->amount;
