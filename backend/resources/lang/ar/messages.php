@@ -600,7 +600,7 @@ return [
     "Subscription has been updated"=>"تم تحديث الاشتراك بنجاج",
     "The subscription has been activated successfully"=>"تم تفعيل الاشتراك بنجاح ",
     "subscribed"=>"تم الاشتراك",
-    "Number of available branches"=>"عدد الفروع المتاحة"
+    "Number of available branches"=>"عدد الفروع المتاحة",
     "Received by restaurant" => "تلقى من قبل المطعم",
     "Secret Key" => "المفتاح السري",
     "Not verified" => "لم يتم التحقق منها",
