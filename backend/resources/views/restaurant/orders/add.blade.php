@@ -196,7 +196,7 @@
                                     <!--begin::Button-->
                                     <button type="submit" id="kt_ecommerce_edit_order_submit" class="btn btn-khardl">
                                         <span class="indicator-label">{{ __('messages.Order') }}</span>
-                                        <span class="indicator-progress">Please wait...
+                                        <span class="indicator-progress">{{ __('messages.Please wait...') }}
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                     <!--end::Button-->

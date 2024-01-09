@@ -19,14 +19,14 @@
                              <!--begin::Title-->
                              <div class="card-title d-flex flex-column">
                                  <!--begin::Info-->
-                                 <div class="d-flex align-items-center">
+                                 <div class="d-flex align-items-center restaurant_daily_amount position-relative">
                                      <!--begin::Currency-->
                                      <span
                                          class="fs-4 fw-bold text-gray-400 me-1 align-self-start">{{ __('messages.SAR') }}</span>
                                      <!--end::Currency-->
                                      <!--begin::Amount-->
-                                     <span
-                                         class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{ $dailySales }}</span>
+                                     <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{ getAmount((float)$dailySales) }}</span>
+                                     <span class="restaurant_daily_earning fade">{{ number_format($dailySales,2) }} {{ __('messages.SAR') }}</span>
                                      <!--end::Amount-->
                                      <!--begin::Badge-->
                                      <span class="{{ $percentageChange >=0 ? 'badge fs-base badge-success':'badge fs-base badge-danger' }}">
@@ -82,14 +82,14 @@
                          </div>
                          <!--end::Header-->
                          <!--begin::Card body-->
-                         <div class="card-body d-flex pt-0 justify-content-between flex-column pb-1 px-0">
+                         <div class="card-body d-flex pt-0 justify-content-between flex-column pb-1 px-0 restaurant_daily_amount position-relative">
                              <!--begin::Statistics-->
                              <div class="px-9 mb-5">
                                  <!--begin::Statistics-->
                                  <div class="d-flex mb-2">
                                      <span class="fs-4 fw-bold text-gray-400 me-1">{{ __('messages.SAR') }}</span>
-                                     <span
-                                         class="fs-2hx fw-bolder text-gray-800 me-2 lh-1 ls-n2">{{ $totalPriceThisMonth }}</span>
+                                     <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{ getAmount((float)$totalPriceThisMonth) }}</span>
+                                     <span class="restaurant_daily_earning fade">{{ number_format($totalPriceThisMonth,2) }} {{ __('messages.SAR') }}</span>
                                  </div>
                                  <!--end::Statistics-->
                              </div>

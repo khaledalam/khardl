@@ -6,7 +6,7 @@ import ImgDrink from "../../assets/drink.png"
 
 export const customerOrderData = [
   {
-    id: "#0484de4j543",
+    id: "0484de4j543",
     orderId: "#01",
     productName: "Burger",
     productImgUrl: ImgBurger,
@@ -17,7 +17,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484degyt543",
+    id: "0484degyt543",
     orderId: "#02",
     productName: "Pizza",
     productImgUrl: ImgPizza,
@@ -28,7 +28,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484de4j544gf",
+    id: "0484de4j544gf",
     orderId: "#03",
     productName: "Chicken",
     productImgUrl: ImgChicken,
@@ -39,7 +39,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hg543",
+    id: "0484d6hg543",
     orderId: "#04",
     productName: "Chicken",
     productImgUrl: ImgChicken,
@@ -50,7 +50,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hg4skf3",
+    id: "0484d6hg4skf3",
     orderId: "#05",
     productName: "Pasta",
     productImgUrl: ImgPasta,
@@ -61,7 +61,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hgdlsdf3",
+    id: "0484d6hgdlsdf3",
     orderId: "#06",
     productName: "Soda Drink",
     productImgUrl: ImgDrink,
@@ -72,7 +72,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hg543r",
+    id: "0484d6hg543r",
     orderId: "#07",
     productName: "Chicken",
     productImgUrl: ImgChicken,
@@ -83,7 +83,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hg4skf3s",
+    id: "0484d6hg4skf3s",
     orderId: "#08",
     productName: "Pasta",
     productImgUrl: ImgPasta,
@@ -94,7 +94,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hgdlsdf3t",
+    id: "0484d6hgdlsdf3t",
     orderId: "#09",
     productName: "Soda Drink",
     productImgUrl: ImgDrink,
@@ -105,7 +105,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hg543u",
+    id: "0484d6hg543u",
     orderId: "#10",
     productName: "Chicken",
     productImgUrl: ImgChicken,
@@ -116,7 +116,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hg4skf3v",
+    id: "0484d6hg4skf3v",
     orderId: "#11",
     productName: "Pasta",
     productImgUrl: ImgPasta,
@@ -127,7 +127,7 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
   {
-    id: "#0484d6hgdlsdf3w",
+    id: "0484d6hgdlsdf3w",
     orderId: "#12",
     productName: "Soda Drink",
     productImgUrl: ImgDrink,
@@ -138,3 +138,33 @@ export const customerOrderData = [
     timeAdded: "14:25AM",
   },
 ]
+
+export const customerOrderDetailData = {
+  id: "0484de4j543",
+  orderId: "#01",
+  status: "Accepted",
+  productImgUrl: ImgBurger,
+  items: [
+    {
+      productName: "Burger",
+      additional: ["Extra Cheese", "Extra Ketchup"],
+      price: 650,
+      notes: "put the mayo little",
+      quantity: 4,
+    },
+    {
+      productName: "Double Cheese Burger",
+      additional: null,
+      price: 100,
+      notes: "make the bread more fluffy",
+      quantity: 2,
+    },
+    {
+      productName: "Original Burger",
+      additional: null,
+      price: 50,
+      notes: "",
+      quantity: 1,
+    },
+  ],
+}

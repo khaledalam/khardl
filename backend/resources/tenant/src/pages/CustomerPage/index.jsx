@@ -1,58 +1,120 @@
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import SideNavbar from "./components/SideNavbar"
 import NavbarCustomer from "./components/NavbarCustomer"
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
 import CustomerDashboard from "./components/CustomerDashboard"
 import CustomerOrder from "./components/CustomerOrder"
 import CustomerProfile from "./components/CustomerProfile"
-import {useSearchParams} from "react-router-dom"
+import {useNavigate, useSearchParams} from "react-router-dom"
 import CustomerOrderDetail from "./components/CustomerOrderDetail"
+import {RiMenuFoldFill} from "react-icons/ri"
+import CustomerPayment from "./components/CustomerPayment"
+import {
+  updateCardsList,
+  updateOrderList,
+} from "../../redux/NewEditor/customerSlice"
+import AxiosInstance from "../../axios/axios"
+import MobileMenu from "./components/MobileMenu"
+import {useTranslation} from "react-i18next"
 
-const TABS = {
-  dashboard: "Dashboard",
-  orders: "Orders",
-  profile: "Profile",
-}
 export const CustomerPage = () => {
-  const isSidebarCollapse = false
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {t} = useTranslation()
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
   const [searchParam] = useSearchParams()
   const [showOrderDetail, setShowOrderDetail] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  const TABS = {
+    dashboard: t("Dashboard"),
+    orders: t("Orders"),
+    profile: t("Profile"),
+    payment: t("Payment"),
+  }
+
   const orderId = searchParam.get("orderId")
   console.log("orderId", orderId)
 
   useEffect(() => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
+    setIsMobile(isMobile)
+  }, [])
+
+  useEffect(() => {
     if (orderId) {
       setShowOrderDetail(true)
+    } else {
+      setShowOrderDetail(false)
     }
   }, [orderId])
+
+  const fetchOrdersData = async () => {
+    try {
+      const ordersResponse = await AxiosInstance.get(`orders?items&item`)
+
+      console.log("ordersResponse >>>", ordersResponse.data)
+      if (ordersResponse.data) {
+        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    navigate("/dashboard#Dashboard")
+  }, [])
+
+  const fetchCardsData = async () => {
+    try {
+      const cardsResponse = await AxiosInstance.get(`cards`)
+
+      console.log("cardsResponse >>>", cardsResponse.data)
+      if (cardsResponse.data) {
+        dispatch(updateCardsList(Object.values(cardsResponse?.data?.data)))
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
+  }
+  useEffect(() => {
+    fetchOrdersData().then(() => {})
+    fetchCardsData().then(() => {})
+  }, [])
 
   return (
     <div>
       <NavbarCustomer />
+      <MobileMenu />
       <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all'>
         <div
           className={`transition-all ${
-            isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[20%]"
-          } xl:flex-[20%] laptopXL:flex-[17%] overflow--hidden bg-white h-full `}
+            isMobile ? "flex-[0] hidden w-0" : "flex-[20%]"
+          } xl:flex-[20%] laptopXL:flex-[17%] overflow-hidden bg-white h-full `}
         >
           <SideNavbar />
         </div>
         <div
           className={` transition-all ${
-            isSidebarCollapse ? "flex-[100%] w-full" : "flex-[80%]"
+            isMobile ? "flex-[100%] w-full" : "flex-[80%]"
           } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
         >
-          {activeNavItem && !showOrderDetail === TABS.dashboard ? (
+          {activeNavItem === TABS.dashboard && !showOrderDetail ? (
             <CustomerDashboard />
-          ) : activeNavItem && !showOrderDetail === TABS.orders ? (
+          ) : activeNavItem === TABS.orders && !showOrderDetail ? (
             <CustomerOrder />
-          ) : activeNavItem && !showOrderDetail === TABS.profile ? (
+          ) : activeNavItem === TABS.profile && !showOrderDetail ? (
             <CustomerProfile />
+          ) : activeNavItem === TABS.payment && !showOrderDetail ? (
+            <CustomerPayment />
           ) : (
             <></>
           )}
-          {showOrderDetail && <CustomerOrderDetail />}
+          {showOrderDetail && <CustomerOrderDetail orderId={orderId} />}
         </div>
       </div>
     </div>

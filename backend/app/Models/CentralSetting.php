@@ -13,6 +13,9 @@ class CentralSetting extends Model
 
     protected $fillable = [
         'webhook_url',
-        'live_chat_enabled'
+        'live_chat_enabled',
+        'new_branch_slot_price',
+        'fee_flat_rate',
+        'fee_percentage'
     ];
 }

@@ -36,7 +36,11 @@ const PrimaryOrderSelect = ({
               : "bg-transparent active:bg-transparent hover:bg-transparent"
           } `}
         >
-          <span className={background ? "text-white" : "text-neutral-500"}>
+          <span
+            className={`text-sm md:text-[1rem] ${
+              background ? "text-white" : "text-neutral-500"
+            }`}
+          >
             {defaultValue}
           </span>
           <span className=''>

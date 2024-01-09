@@ -67,8 +67,30 @@ class RestaurantController extends BaseController
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
+        $settings = Setting::all()->firstOrFail();
+
         return view('restaurant.promotions',
-            compact('user'));
+            compact('user', 'settings'));
+    }
+
+    public function updatePromotions(Request $request){
+
+        $request->validate([
+            'loyalty_points' => 'required|numeric|min:0',
+            'loyalty_point_price' => 'required|numeric|min:0',
+            'cashback_threshold' => 'required|numeric|min:0',
+            'cashback_percentage' => 'required|numeric|min:0',
+        ]);
+
+        $settings = Setting::all()->firstOrFail();
+
+        $settings->loyalty_points = $request->loyalty_points;
+        $settings->loyalty_point_price = $request->loyalty_point_price;
+        $settings->cashback_threshold = $request->cashback_threshold;
+        $settings->cashback_percentage = $request->cashback_percentage;
+        $settings->save();
+
+        return redirect()->back()->with('success', __('Restaurant promotions successfully updated.'));
     }
 
     public function settings(){
@@ -81,7 +103,7 @@ class RestaurantController extends BaseController
             compact('user', 'settings'));
     }
 
-    public function upadteSettings(Request $request){
+    public function updateSettings(Request $request){
 
         $request->validate([
             'delivery_fee' => 'required|numeric|min:0',
@@ -326,7 +348,16 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        return true;
+        $setting = Setting::first();
+        if($setting->branch_slots == 0){
+            return false;
+        }else {
+            $setting->update([
+                'branch_slots'=> DB::raw('branch_slots - 1'),
+            ]);
+            return true;
+        }
+
     }
 
 
@@ -810,7 +841,7 @@ class RestaurantController extends BaseController
         return view('restaurant.edit-worker', compact('worker', 'user'));
     }
     public function deliveryActivate($module,Request $request){
-      
+
         $request->validate([
             'api_key'=>"required"
         ]);
@@ -824,5 +855,13 @@ class RestaurantController extends BaseController
             'success' => __($message,['module'=>__($module)]),
         ]);
 
+    }
+    public function servicesIncrease(){
+        Setting::first()->update([
+            'branch_slots'=> DB::raw('branch_slots + 1'),
+        ]);
+        return redirect()->back()->with([
+            'success' => __("Branch slot has been increased by one"),
+        ]);
     }
 }

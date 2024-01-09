@@ -46,6 +46,7 @@
                                         <th>{{ __('messages.Image') }}</th>
                                         <th>{{ __('messages.Name') }}</th>
                                         <th>{{ __('messages.Price') }}</th>
+                                        <th>{{ __('messages.Status') }}</th>
                                         <th>{{ __('messages.Category') }}</th>
                                         <th>{{ __('messages.Branch') }}</th>
                                         <th>{{ __('messages.User') }}</th>
@@ -77,6 +78,14 @@
                                         <td class="px-2">
                                             <span>{{ $product->price }}</span>
                                         </td>
+                                        <td class="px-2">
+                                            <span>
+                                                <label class="switch">
+                                                    <input type="checkbox" onclick="toggleAvailability({{ $product->id }})">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </span>
+                                        </td>
                                         <td>
                                             <a href="{{ route('restaurant.get-category',['id'=> $product->category,'branchId'=> $product->branch_id]) }}" class="text-gray-600 text-hover-primary">
                                                 {{ $product->category->name }}
@@ -98,7 +107,7 @@
                                         <td class="px-2">
                                             <span>{{ $product->created_at?->format('Y-m-d') }}</span>
                                         </td>
-                                      {{--   <td>{{ $customer->phone }}</td>
+                                        {{-- <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->email }}</td>
                                         <td>
                                             <span class="badge {{ $customer->status }}">{{__("messages.$customer->status")}}</span>
@@ -151,4 +160,26 @@
     <!--end::Post-->
 </div>
 
+@endsection
+@section('js')
+<script>
+    function toggleAvailability(itemId,availability) {
+        $.ajax({
+                url: `{{ route('restaurant.change-availability', ['item' => ':itemId']) }}`.replace(':itemId', itemId),
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'availability': availability,
+                },
+                success: function (response) {
+
+                },
+                error: function (error) {
+                    console.error('Error toggling user status:', error);
+                }
+            });
+    }
+
+</script>
 @endsection
