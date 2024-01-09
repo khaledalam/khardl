@@ -2,6 +2,11 @@
 .products .product_quantity {
     max-width: 70px;
 }
+.product_option_price{
+    float: right;
+    padding: 0px 40px;
+    color: #35af05;
+}
 
 /* Badges */
 .badge.active,
