@@ -449,12 +449,11 @@ class AdminController extends Controller
         return view('admin.user-management', compact('user', 'admins'));
     }
 
-    public function restaurantOwnerManagement()
+    public function restaurantOwnerManagement(Request $request)
     {
-        $admins = User::whereHas('roles',function($q){
-            return $q->where("name","Restaurant Owner");
-        })
-        ->paginate(15);
+        $admins = User::restaurantOwners()
+        ->whenType($request['type']??null)
+        ->paginate(config('application.perPage')??20);
         $user = Auth::user();
         return view('admin.restaurant-owner-management', compact('user', 'admins'));
     }

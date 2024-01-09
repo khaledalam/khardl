@@ -362,7 +362,7 @@ return [
     "Enter Brand Name (EN)"=>"اكتب اسم العلامة التجارية بالانجليزية",
     "Enter Brand Name (AR)"=>"اكتب اسم العلامة التجارية بالعربية",
     "Mr"=>"السيد",
-    "STEP 2 → Submit Create TAP Business Account"=>"الخطوة الثانية - انشاء سجل تجاري مع بوابة دفع TAP",
+    "STEP 2 → Submit Create TAP Business Account"=>"الخطوة الثانية - انشاء سجل تجاري مع بوابة الدفع",
     "item-photo" => "صوره المنتج",
     "create-new-items" => "انشاء منتج جديد",
     "item-availability" => "اتاحه المنتج",
@@ -554,10 +554,10 @@ return [
     "Enter text in English" => "ادخل الاسم بالانجليزية",
     "Enter text in Arabic" => "ادخل الاسم بالعربية",
     "Customer Address" => "عنوان العميل",
-    "Create TAP" => "انشئ حساب تاب",
+    "Create TAP" => "انشئ حساب لبوابه الدفع",
     "business account" => "(حساب الاعمال)",
     "first to access this page content!" => "اولا للوصول لمحتوي المدفوعات",
-    "STEP 1 → Upload Documents for Create TAP Business Account" => "الخطوة 1 ← تحميل المستندات لإنشاء حساب أعمال TAP",
+    "STEP 1 → Upload Documents for Create TAP Business Account" => "الخطوة 1 ← تحميل المستندات لإنشاء حساب أعمال لبوابه الدفع",
     "Business Logo" => "شعار الأعمال",
     "Customer Signature" => "توقيع العميل",
     "Dispute Evidence" => "أدلة النزاع",
@@ -591,8 +591,11 @@ return [
     'new-branch-slot-price' => 'سعر فرع جديد',
     "Received by restaurant" => "تلقى من قبل المطعم",
     "Secret Key" => "المفتاح السري",
-    "Not verified" => "لم يتم التحقق منها"
-
+    "Not verified" => "لم يتم التحقق منها",
+    "Not complete step 2" => "لم يكمل الخطوة 2",
+    "Complete Step 1 only" => "اكمل الخطوة الاولي فقط",
+    "Have restaurant" => "لدية مطعم",
+    "Select" => "اختر"
 
 ];
 
