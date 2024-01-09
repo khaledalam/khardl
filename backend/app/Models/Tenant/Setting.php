@@ -13,7 +13,6 @@ class Setting extends Model
         'is_live',
         'delivery_fee',
         'restaurant_name',
-        'branch_slots',
         'loyalty_points_per_order',
         'cashback_per_amount_percentage'
     ];

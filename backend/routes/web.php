@@ -236,7 +236,15 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('toggle-status');
 
                     Route::get('/revenue', [AdminController::class, 'revenue'])->name('revenue');
-
+                    Route::controller(AdminController::class)->prefix('subscriptions')->group(function () {
+                        Route::get('/', [AdminController::class, 'subscriptions'])->name('subscriptions');
+                        Route::get('/create', [AdminController::class, 'subscriptionsCreate'])->name('subscriptions.create');
+                        Route::post('/store', [AdminController::class, 'subscriptionsStore'])->name('subscriptions.store');
+                        Route::get('/{subscription}/show', [AdminController::class, 'subscriptionShow'])->name('subscriptions.show');
+                        Route::patch('/{subscription}/update', [AdminController::class, 'subscriptionUpdate'])->name('subscriptions.update');
+    
+                    });
+                   
                 });
 
             });
