@@ -22,6 +22,7 @@ use App\Mail\ApprovedRestaurant;
 use App\Models\User;
 use App\Models\Log;
 use App\Models\Promoter;
+use App\Models\Subscription;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,39 +31,6 @@ use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {
-    public function dashboard()
-    {
-        $user = Auth::user();
-
-        //
-        $restaurantsAll = Tenant::with("primary_domain")->get();
-
-        // not complete register step2
-        $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
-
-        $restaurantsLive = 0;
-        $customers = 0;
-
-        foreach ($restaurantsAll as $restaurant) {
-            $restaurant->run(static function ($tenant) use (&$restaurantsLive, &$customers) {
-                $setting = TenantSettings::first();
-                if ($setting->is_live) {
-                    $restaurantsLive ++;
-                }
-
-                $currentMonth = Carbon::now()->month;
-                $customers+= RestaurantUser::customers()->whereMonth('created_at', '=', $currentMonth)->count();
-            });
-        }
-        $restaurantsAll = count($restaurantsAll);
-
-
-
-        return view('admin.dashboard', compact('user',
-            'restaurantsAll', 'restaurantsOwnersNotUploadFiles',
-            'restaurantsLive', 'customers'
-        ));
-    }
 
     public function addUser()
     {
@@ -416,8 +384,10 @@ class AdminController extends Controller
 
         $live_chat_enabled = $settings?->live_chat_enabled;
         $webhook_url = $settings?->webhook_url;
+        $new_branch_slot_price = $settings?->new_branch_slot_price;
 
-        return view('admin.settings', compact('user', 'live_chat_enabled', 'webhook_url'));
+
+        return view('admin.settings', compact('user', 'live_chat_enabled', 'webhook_url', 'new_branch_slot_price'));
     }
 
     public function saveSettings(Request $request)
@@ -444,6 +414,31 @@ class AdminController extends Controller
             return redirect()->back()->with('success', "حفظ الاعدادات بنجاح");
     }
 
+    public function saveRevenue(Request $request)
+    {
+        $settings = CentralSetting::first();
+
+        $settings->fee_flat_rate = $request->fee_flat_rate;
+        $settings->fee_percentage = $request->fee_percentage;
+        $settings->new_branch_slot_price = $request->new_branch_slot_price;
+        $settings->save();
+        $actions = [
+            'en' => 'Update platform revenue settings',
+            'ar' => 'عدل علي اعدادات اربح'
+        ];
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => $actions,
+            'metadata' => $request->all(),
+            'type' => LogTypes::UpdateRevenueSettings
+        ]);
+
+        if(app()->getLocale() === 'en')
+            return redirect()->back()->with('success', 'Save revenue settings successfully.');
+        else
+            return redirect()->back()->with('success', "حفظ اعدادات الربح بنجاح");
+    }
+
     public function userManagement()
     {
         $admins = User::whereHas('roles',function($q){
@@ -455,12 +450,11 @@ class AdminController extends Controller
         return view('admin.user-management', compact('user', 'admins'));
     }
 
-    public function restaurantOwnerManagement()
+    public function restaurantOwnerManagement(Request $request)
     {
-        $admins = User::whereHas('roles',function($q){
-            return $q->where("name","Restaurant Owner");
-        })
-        ->paginate(15);
+        $admins = User::restaurantOwners()
+        ->whenType($request['type']??null)
+        ->paginate(config('application.perPage')??20);
         $user = Auth::user();
         return view('admin.restaurant-owner-management', compact('user', 'admins'));
     }
@@ -716,5 +710,35 @@ class AdminController extends Controller
 
         return response()->json(['isBlocked' => $user->isBlocked()]);
     }
-
+    public function subscriptions(){
+        $user = Auth::user();
+        $subscriptions = Subscription::all();
+        return view('admin.subscriptions', compact('subscriptions','user'));
+    }
+    public function subscriptionsCreate(){
+        $user = Auth::user();
+        return view('admin.subscriptions-create', compact('user'));
+    }
+    public function subscriptionsStore(Request $request){
+        Subscription::create([
+            'name'=>trans_json($request->name_en,$request->name_ar),
+            'amount'=>$request->amount
+        ]);
+        return redirect()->route('admin.subscriptions')->with([
+            'success' => __("A new Subscription has been created"),
+        ]);
+    }
+    public function subscriptionShow(Subscription $subscription){
+        $user = Auth::user();
+        return view('admin.subscriptions-edit', compact('user','subscription'));
+    }
+    public function subscriptionUpdate(Subscription $subscription,Request $request){
+        $subscription->update([
+            'name'=>trans_json($request->name_en,$request->name_ar),
+            'amount'=>$request->amount
+        ]);
+        return redirect()->route('admin.subscriptions')->with([
+            'success' => __("Subscription has been updated"),
+        ]);
+    }
 }

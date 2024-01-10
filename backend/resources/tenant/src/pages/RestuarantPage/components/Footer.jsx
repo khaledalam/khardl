@@ -42,30 +42,32 @@ const FooterRestuarant = () => {
             ))}
           </div>
         </div>
-        <div
-          className={`flex flex-col gap-3 ${
-            restaurantStyle?.phoneNumber_alignment === "center"
-              ? "items-center justify-center"
-              : restaurantStyle?.phoneNumber_alignment === "left"
-              ? "items-center justify-start"
-              : restaurantStyle?.phoneNumber_alignment === "right"
-              ? "items-center justify-end"
-              : ""
-          }`}
-        >
-          {" "}
-          <a
-            href={`tel:${restaurantStyle?.phoneNumber}`}
-            style={{color: restaurantStyle?.text_color}}
-            className='font-semibold cursor-pointer'
+        {restaurantStyle?.phoneNumber && (
+          <div
+            className={`flex flex-col gap-3 ${
+              restaurantStyle?.phoneNumber_alignment === "center"
+                ? "items-center justify-center"
+                : restaurantStyle?.phoneNumber_alignment === "left"
+                ? "items-center justify-start"
+                : restaurantStyle?.phoneNumber_alignment === "right"
+                ? "items-center justify-end"
+                : ""
+            }`}
           >
-            {restaurantStyle?.phoneNumber}
-          </a>
-        </div>
+            {" "}
+            <a
+              href={`tel:${restaurantStyle?.phoneNumber}`}
+              style={{color: restaurantStyle?.text_color}}
+              className='font-semibold cursor-pointer'
+            >
+              {restaurantStyle?.phoneNumber}
+            </a>
+          </div>
+        )}
       </div>
       <div className='h-7 flex bg-white items-center justify-between p-2'>
         <h3 className='pl-16 text-[1rem] text-neutral-700 font-medium'>
-          &copy; Powered by{" "}
+          Powered by{" "}
           <a
             href='https://first.khardl.com'
             className='text-neutral-400 text-sm cursor-pointer'
@@ -74,7 +76,7 @@ const FooterRestuarant = () => {
           </a>
         </h3>
         <h3 className='pl-16 text-[1rem] text-neutral-700 font-medium'>
-          &copy; مشغل بواسطة
+          مشغل بواسطة{" "}
           <a
             href='https://first.khardl.com'
             className='text-neutral-400 text-sm cursor-pointer'

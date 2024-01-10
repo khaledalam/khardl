@@ -20,7 +20,8 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
     }
     abstract public function assignToDriver(Order $order,RestaurantUser $customer);
     abstract public static function processWebhook($payload);
-    
+    abstract public function verifyApiKey(string $api_key): bool;
+
     public function send(string $url,$token,array $data,string $method = 'post'): Promise{
         if($token){
             $response = Http::async()->withToken($token)
@@ -30,29 +31,35 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
         }
         return $response;
 
-        // try {
-        // }catch(\Exception $e){
-        //    logger($e->getMessage());
-
-        // }
-        //     if($response->successful()){
-        //         $response =  json_decode($response->getBody(), true);
-        //         return [
-        //             'http_code'=> ResponseHelper::HTTP_OK,
-        //             'message'=> $response
-        //         ];
-        //     }
-            
-         
-        // }catch(\Exception $e){
-        //    logger($e->getMessage());
-        // }
-        // $response =  json_decode($response->getBody(), true);
+      
+    }
+    public function sendSync(string $url,$token,array $data,string $method = 'post'): array{
+        try {
    
-        // return [
-        //     'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
-        //     'message'=> isset($response['message']) ?$response['message']: __("Failed to complete the process, please try again or contact Support Team")
-        // ];
+            if($token){
+                $response = Http::withToken($token)
+                ->$method($url,$data);
+            }else {
+                $response = Http::$method($url,$data);
+            }
+            logger( json_decode($response->getBody(), true));
+            if($response->successful()){
+                $response =  json_decode($response->getBody(), true);
+                return [
+                    'http_code'=> ResponseHelper::HTTP_OK,
+                    'message'=> $response
+                ];
+            }
+            
+        }catch(\Exception $e){
+           
+        }
+        $response =  json_decode($response->getBody(), true);
+   
+        return [
+            'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
+            'message'=> isset($response['message']) ?$response['message']: __("Failed to complete the process, please try again or contact Support Team")
+        ];
     }
   
 }

@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->enum("term",["DAIL", "WEEKLY", "MONTHLY", "BIMONTHLY", "QUARTERLY", "HALFYEARLY", "YEARLY"])->default('YEARLY');
-            $table->integer('period')->default(1);
-            $table->integer("due")->default(0);
-            $table->boolean('auto_renew')->default(true);
+            $table->string('name');
             $table->integer("amount");
-
+            $table->text("description")->nullable();
             $table->timestamps();
         });
     }

@@ -20,7 +20,7 @@ class RegisterNewTenant extends Command
      *
      * @var string
      */
-    protected $signature = 'create:tenant {--testing=} {name=first}';
+    protected $signature = 'create:tenant {name=first}';
 
     /**
      * The console Create a new tenant with subdomain and DB.
@@ -34,12 +34,6 @@ class RegisterNewTenant extends Command
      */
     public function handle(TenantActionSeeder $seeder)
     {
-        $testing = $this->option('testing') ?? false;
-
-        if ($testing) {
-            DB::setDefaultConnection('mysql_testing');
-        }
-
         $user = User::find(UserSeeder::RESTAURANT_OWNER_USER_ID);
         $name = $this->argument('name') ?? 'first';
 

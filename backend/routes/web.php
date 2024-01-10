@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
+use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Web\Central\Admin\Dashboard\DashboardController as SuperAdminDashboard;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -201,17 +202,19 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
             Route::middleware(['accepted'])->group(function () {
                 Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
                 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>['admin']],function () {
-                    Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('permission:can_access_dashboard')->name('dashboard');
+                    Route::get('/dashboard', [SuperAdminDashboard::class, 'index'])->middleware('permission:can_access_dashboard')->name('dashboard');
                     Route::post('/approve/{id}', [AdminController::class, 'approveUser'])->middleware('permission:can_approve_restaurants')->name('approveUser');
                     Route::post('/deny/{id}', [AdminController::class, 'denyUser'])->middleware('permission:can_approve_restaurants')->name('denyUser');
                     Route::get('/add-user', [AdminController::class, 'addUser'])->middleware('permission:can_add_admins')->name('add-user');
                     Route::delete('/delete/{id}', [AdminController::class, 'deleteRestaurant'])->middleware('permission:can_delete_restaurants')->name('delete-restaurant');
                     Route::post('/generate-user', [AdminController::class, 'generateUser'])->middleware('permission:can_add_admins')->name('generate-user');
                     Route::get('/logs', [LogController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
-                    Route::get('/restaurants/{tenant}', [RestaurantController::class, 'viewRestaurant'])->middleware('permission:can_view_restaurants')->name('view-restaurants');
-
-                    Route::get('/restaurants', [AdminController::class, 'restaurants'])->middleware('permission:can_access_restaurants')->name('restaurants');
+                    Route::controller(RestaurantController::class)->group(function () {
+                        Route::get('/restaurants/{tenant}','show')->middleware('permission:can_view_restaurants')->name('view-restaurants');
+                        Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
+                      });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
+                    Route::post('/save-revenue', [AdminController::class, 'saveRevenue'])->middleware('permission:can_settings')->name('save-revenue');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
@@ -233,7 +236,15 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('toggle-status');
 
                     Route::get('/revenue', [AdminController::class, 'revenue'])->name('revenue');
-
+                    Route::controller(AdminController::class)->prefix('subscriptions')->group(function () {
+                        Route::get('/', [AdminController::class, 'subscriptions'])->name('subscriptions');
+                        Route::get('/create', [AdminController::class, 'subscriptionsCreate'])->name('subscriptions.create');
+                        Route::post('/store', [AdminController::class, 'subscriptionsStore'])->name('subscriptions.store');
+                        Route::get('/{subscription}/show', [AdminController::class, 'subscriptionShow'])->name('subscriptions.show');
+                        Route::patch('/{subscription}/update', [AdminController::class, 'subscriptionUpdate'])->name('subscriptions.update');
+    
+                    });
+                   
                 });
 
             });

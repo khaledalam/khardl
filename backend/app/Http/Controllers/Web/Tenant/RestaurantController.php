@@ -26,6 +26,7 @@ use App\Models\Subscription;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Http\Services\tenant\Restaurant\RestaurantService;
+use App\Models\ROSubscription;
 use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
@@ -44,13 +45,34 @@ class RestaurantController extends BaseController
     public function services(){
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $branches = Branch::all();
+
         $subscription = tenancy()->central(function(){
             return Subscription::first();
         });
+        $RO_subscription = ROSubscription::first();
+        $customer_tap_id = Auth::user()->tap_customer_id;
 
-        return view('restaurant.service', compact('user', 'branches','subscription'));
+        return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription'));
     }
+    public function serviceDeactivate(){
+        /** @var RestaurantUser $user */
+        ROSubscription::first()->update([
+            'status'=> ROSubscription::SUSPEND
+        ]);
+        return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
+    }
+    public function serviceActivate(){
+        /** @var RestaurantUser $user */
+        $subscription = ROSubscription::first();
+        if($subscription->status != 'suspend'){
+            return redirect()->back()->with('error', __('not allowed'));
+        }
+        ROSubscription::first()->update([
+            'status'=> ROSubscription::ACTIVE
+        ]);
+        return redirect()->back()->with('success', __('Branches has been activated successfully'));
+    }
+    
 
     public function delivery(){
         /** @var RestaurantUser $user */
@@ -67,8 +89,30 @@ class RestaurantController extends BaseController
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
+        $settings = Setting::all()->firstOrFail();
+
         return view('restaurant.promotions',
-            compact('user'));
+            compact('user', 'settings'));
+    }
+
+    public function updatePromotions(Request $request){
+
+        $request->validate([
+            'loyalty_points' => 'required|numeric|min:0',
+            'loyalty_point_price' => 'required|numeric|min:0',
+            'cashback_threshold' => 'required|numeric|min:0',
+            'cashback_percentage' => 'required|numeric|min:0',
+        ]);
+
+        $settings = Setting::all()->firstOrFail();
+
+        $settings->loyalty_points = $request->loyalty_points;
+        $settings->loyalty_point_price = $request->loyalty_point_price;
+        $settings->cashback_threshold = $request->cashback_threshold;
+        $settings->cashback_percentage = $request->cashback_percentage;
+        $settings->save();
+
+        return redirect()->back()->with('success', __('Restaurant promotions successfully updated.'));
     }
 
     public function settings(){
@@ -81,7 +125,7 @@ class RestaurantController extends BaseController
             compact('user', 'settings'));
     }
 
-    public function upadteSettings(Request $request){
+    public function updateSettings(Request $request){
 
         $request->validate([
             'delivery_fee' => 'required|numeric|min:0',
@@ -326,16 +370,15 @@ class RestaurantController extends BaseController
     }
     private function can_create_branch(){
         // redirect to payment gateway
-        $setting = Setting::first();
-        if($setting->branch_slots == 0){
-            return false;
-        }else {
-            $setting->update([
-                'branch_slots'=> DB::raw('branch_slots - 1'),
-            ]);
-            return true;
+        $sub = ROSubscription::first();
+        if($sub && $sub->status == 'active'){
+            if($sub->number_of_branches > 0){
+                $sub->number_of_branches -=1;
+                $sub->save();
+                return true;
+            }
         }
-       
+        return false;
     }
 
 
@@ -819,11 +862,19 @@ class RestaurantController extends BaseController
         return view('restaurant.edit-worker', compact('worker', 'user'));
     }
     public function deliveryActivate($module,Request $request){
-      
+
         $request->validate([
             'api_key'=>"required"
         ]);
         $company = DeliveryCompany::where("module",$module)->first();
+        if($company->status  == false){
+            if(!$company->module->verifyApiKey($request->api_key)){
+                return redirect()->back()->with([
+                    'error' => __("Api Key not correct, please contact :module support team to ensure about it",['module'=>$module]),
+                ]);
+            }
+        }
+
         $company->update([
             'status'=>!$company->status,
             'api_key'=>$request->api_key
@@ -834,12 +885,5 @@ class RestaurantController extends BaseController
         ]);
 
     }
-    public function servicesIncrease(){
-        Setting::first()->update([
-            'branch_slots'=> DB::raw('branch_slots + 1'),
-        ]);
-        return redirect()->back()->with([
-            'success' => __("Branch slot has been increased by one"),
-        ]);
-    }
+    
 }

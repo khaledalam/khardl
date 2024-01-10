@@ -49,7 +49,8 @@ class BranchSeeder extends Seeder
             'pickup_availability' => $faker->boolean
         ]);
         $branch->payment_methods()->sync([
-            PaymentMethodSeeder::PAYMENT_METHOD_COD
+            PaymentMethodSeeder::PAYMENT_METHOD_COD,
+            PaymentMethodSeeder::PAYMENT_METHOD_CC
         ]);
         $branch->delivery_types()->sync([
             DeliveryTypesSeeder::DELIVERY_TYPE_DELIVERY,
@@ -89,7 +90,9 @@ class BranchSeeder extends Seeder
           DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP_BY_CAR,
       ]);
       $branch2->payment_methods()->sync([
-          PaymentMethodSeeder::PAYMENT_METHOD_COD
+          PaymentMethodSeeder::PAYMENT_METHOD_COD,
+          PaymentMethodSeeder::PAYMENT_METHOD_CC
+
       ]);
 
     }

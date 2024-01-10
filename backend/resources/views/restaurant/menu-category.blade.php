@@ -79,10 +79,10 @@
                                                     </ul>
                                                     <div class="tab-content mt-3">
                                                         <div class="tab-pane fade show active" id="en">
-                                                            <input type="text" class="form-control" placeholder="Enter text in English" name="name_en">
+                                                            <input type="text" class="form-control" placeholder="{{ __('messages.Enter text in English') }}" name="name_en">
                                                         </div>
                                                         <div class="tab-pane fade" id="ar">
-                                                            <input type="text" class="form-control" placeholder="أدخل النص باللغة العربية" name="name_ar">
+                                                            <input type="text" class="form-control" placeholder="{{ __('messages.Enter text in Arabic') }}" name="name_ar">
                                                         </div>
                                                         <div class="tab-pane fade" id="logo">
                                                             <label>{{__('messages.category-logo')}}</label>
@@ -416,7 +416,7 @@
                             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('messages.clear')}}</button>
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
                                 <span class="indicator-label">{{__('messages.submit')}}</span>
-                                <span class="indicator-progress" id="waiting-item">Please wait...
+                                <span class="indicator-progress" id="waiting-item">{{ __('messages.Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
@@ -569,7 +569,7 @@
                             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</button>
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                                 <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
+                                <span class="indicator-progress">{{ __('messages.Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>

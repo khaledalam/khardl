@@ -22,6 +22,7 @@
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ global_asset('assets/css/resturant-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
+        <link href="{{ global_asset('assets/css/resturant-main-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
@@ -573,7 +574,7 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5 my-1">
-                                        <a href="log.html" class="menu-link px-5">Logs</a>
+                                        <a href="log.html" class="menu-link px-5">{{ __('messages.Logs') }}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->

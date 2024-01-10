@@ -12,9 +12,9 @@ class Setting extends Model
     protected $fillable =[
         'is_live',
         'delivery_fee',
-        'transaction_percentage_fee',
         'restaurant_name',
-        'branch_slots'
+        'loyalty_points_per_order',
+        'cashback_per_amount_percentage'
     ];
     public $timestamps = false;
 
