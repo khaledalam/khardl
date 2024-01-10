@@ -9,6 +9,7 @@
     "/assets/b.svg": "/assets/b.svg?id=20f1f9df0df5eb93ce508d5fbb94c196",
     "/assets/b2.svg": "/assets/b2.svg?id=0a85e1a09413532a0aa454da7a41d034",
     "/assets/back.png": "/assets/back.png?id=6541ea9af613befe6c63656af7128173",
+    "/assets/css/admin-main-ar.css": "/assets/css/admin-main-ar.css?id=bf64fda5ce13ca71d5c5e64a5fd5f9aa",
     "/assets/css/admin-main.css": "/assets/css/admin-main.css?id=af21b3c06e6f28fedbe5accbde987da0",
     "/assets/css/resturant-main-ar.css": "/assets/css/resturant-main-ar.css?id=798e49b2ade418516cbc94e40ce0d9f7",
     "/assets/css/resturant-main.css": "/assets/css/resturant-main.css?id=1d42e1290e68d07a4bb4d787f55a9516",
@@ -4231,7 +4232,7 @@
     "/media/technology-logos/Html5.png": "/media/technology-logos/Html5.png?id=b4a3ff7e36f190b0c7eb545f6154cfac",
     "/media/technology-logos/React.png": "/media/technology-logos/React.png?id=66d79d92233f04e128ea676dea1d93e0",
     "/media/technology-logos/VueJS.png": "/media/technology-logos/VueJS.png?id=d3e5fefbe4df2bd095731f8de30c9438",
-    "/mix-manifest.json": "/mix-manifest.json?id=835222f4529e55bea6b3a3e0e48c764d",
+    "/mix-manifest.json": "/mix-manifest.json?id=e40e0450c3389a16cbde6571c977d134",
     "/plugins/custom/cookiealert/cookiealert.bundle.css": "/plugins/custom/cookiealert/cookiealert.bundle.css?id=ee5818bd8e3e62108f9c60dd356c99e5",
     "/plugins/custom/cookiealert/cookiealert.bundle.js": "/plugins/custom/cookiealert/cookiealert.bundle.js?id=eddbeff68c5fd81397decbcd254d8db2",
     "/plugins/custom/cookiealert/cookiealert.bundle.rtl.css": "/plugins/custom/cookiealert/cookiealert.bundle.rtl.css?id=ee5818bd8e3e62108f9c60dd356c99e5",
@@ -4420,6 +4421,5 @@
     "/static/js/483.1448968e.chunk.js.map": "/static/js/483.1448968e.chunk.js.map?id=dd970c783fc4cff02cb2dea32e23c942",
     "/static/js/main.d3d127bb.js": "/static/js/main.d3d127bb.js?id=2482ea592fc44a12e0e4e4e8bfe6d539",
     "/static/js/main.d3d127bb.js.LICENSE.txt": "/static/js/main.d3d127bb.js.LICENSE.txt?id=d4736f9ca4b5e2223a5e00f1ae8a2b66",
-    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47",
-    "/assets/css/admin-main-ar.css": "/assets/css/admin-main-ar.css?id=bf64fda5ce13ca71d5c5e64a5fd5f9aa"
+    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47"
 }

@@ -162,7 +162,7 @@
                             <!--begin::Labels-->
                             <div class="d-flex flex-column content-justify-center w-100">
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
                                     <!--end::Bullet-->
@@ -179,7 +179,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-info me-3"></div>
                                     <!--end::Bullet-->
@@ -196,7 +196,7 @@
                                 </div>
                                <!--begin::Label-->
                                  <!--begin::Label-->
-                                 <div class="d-flex fs-6 fw-bold align-items-center">
+                                 <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                    <!--begin::Bullet-->
                                    <div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
                                    <!--end::Bullet-->
@@ -214,7 +214,7 @@
                                <!--end::Label-->
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-warning me-3"></div>
                                     <!--end::Bullet-->
@@ -231,7 +231,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-secondary me-3"></div>
                                     <!--end::Bullet-->
@@ -248,7 +248,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-danger me-3"></div>
                                     <!--end::Bullet-->
