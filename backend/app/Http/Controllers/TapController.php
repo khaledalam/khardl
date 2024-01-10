@@ -157,7 +157,7 @@ class TapController extends Controller
 
     }
     public function payments_submit_card_details(Request $request){
-
+        logger('tap controller');
         if($request->tap_id){
             $charge = Charge::retrieve($request->tap_id);
             if($charge['http_code'] == ResponseHelper::HTTP_OK){

@@ -38,5 +38,7 @@
     "No card found":"لا يوجد بطاقة الكترونية متاحة",
     "The subscription has been activated successfully":"تم تفعيل الاشتراك بنجاح",
     "Error occur please try again":"حصل خطأ ما, الرجاء المحاولة مرة اخري",
-    "The payment failed, and the subscription fee has not been paid":"فشلت عملية الدفع, ولم يتم دفع رسوم الاشتراك"
+    "The payment failed, and the subscription fee has not been paid":"فشلت عملية الدفع, ولم يتم دفع رسوم الاشتراك",
+    "Branches has been deactivated successfully":"تم ايقاف نشاط الفروع بنجاح",
+    "Branches has been activated successfully":"تم تفعيل عمل الفروع بنجاح"
 }

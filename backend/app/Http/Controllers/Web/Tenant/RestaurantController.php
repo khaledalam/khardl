@@ -54,6 +54,25 @@ class RestaurantController extends BaseController
 
         return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription'));
     }
+    public function serviceDeactivate(){
+        /** @var RestaurantUser $user */
+        ROSubscription::first()->update([
+            'status'=> ROSubscription::SUSPEND
+        ]);
+        return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
+    }
+    public function serviceActivate(){
+        /** @var RestaurantUser $user */
+        $subscription = ROSubscription::first();
+        if($subscription->status != 'suspend'){
+            return redirect()->back()->with('error', __('not allowed'));
+        }
+        ROSubscription::first()->update([
+            'status'=> ROSubscription::ACTIVE
+        ]);
+        return redirect()->back()->with('success', __('Branches has been activated successfully'));
+    }
+    
 
     public function delivery(){
         /** @var RestaurantUser $user */
