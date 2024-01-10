@@ -312,15 +312,42 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                             <!--begin::Select-->
                                                             
                                                                     <!--end::Modal dialog-->
-                                                            <div class=" d-flex justify-content-center w-75 ">
-                                                                        <div>
-                                                                            @if($RO_subscription?->status == 'active')
-                                                                            <a href="#"  class="btn btn-sm btn-khardl"  ><i class="fas fa-check"></i>{{__("messages.subscribed")}}</a>
-                                                                            @else
-                                                                            <a href="#"  class="btn btn-sm btn-khardl"   data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>{{__('messages.Buy now')}}</a>
-                                                                            @endif
-                                                                  
+                                                            <div>
+                                                                    <div>
+                                                                        @if($RO_subscription?->status == 'active')
+                                                                        <div class="row" style="width: 115%">
+                                                                            <div class="col-6">
+                                                                                <form action="{{route('restaurant.service.deactivate')}}" method="POST">
+                                                                                    @csrf
+                                                                                    <button href="#" type="submit" class="btn btn-sm btn-danger"  ><i class="fa fa-pause"></i> {{__("messages.Deactivate")}}</button>
+                                                                                    @method('PATCH')
+                                                                                </form>
+                                                                            
+                                                                            </div>
+                                                                            
+                                                                            <div class="col-6">
+                                                                                <a href="#"  class="btn btn-sm btn-khardl"  ><i class="fas fa-check"></i>{{__("messages.subscribed")}}</a>
+                                                                            </div>
+                                                                            
                                                                         </div>
+                                                                        
+                                                                        @elseif($RO_subscription?->status == 'suspend')
+                                                                        <div class="row" style="width: 115%">
+                                                                            <div class="col-6">
+                                                                                <form action="{{route('restaurant.service.activate')}}" method="POST">
+                                                                                    @csrf
+                                                                                    <button href="#" type="submit" class="btn btn-sm btn-success"  ><i class="fa fa-play"></i> {{__("messages.Activate")}}</button>
+                                                                                    @method('PATCH')
+                                                                                </form>
+                                                                            
+                                                                            </div>
+                                                                        </div>
+                                                                           
+                                                                        @else
+                                                                        <a href="#"  class="btn btn-sm btn-khardl"   data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>{{__('messages.Buy now')}}</a>
+                                                                        @endif
+                                                                
+                                                                    </div>
                                                                 {{-- <div>
                                                                     <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
                                                                 </div> --}}

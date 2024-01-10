@@ -127,7 +127,9 @@ Route::group([
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
-             
+                Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
+                Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
+
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
@@ -246,6 +248,8 @@ Route::group([
                 Route::resource("carts",CartController::class)->only([
                     'index','store','destroy','update'
                 ]);
+                Route::post("orders/validate",[CustomerOrderController::class,'validateOrder'])->name('orders.validate');
+                Route::get("orders/payment/response",[CustomerOrderController::class,'paymentResponse'])->name('orders.payment');
                 Route::resource("orders",CustomerOrderController::class)->only([
                     'store', 'index'
                 ]);

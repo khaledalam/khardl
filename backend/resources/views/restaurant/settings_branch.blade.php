@@ -46,20 +46,20 @@
 
                                             <div class="separator separator-dashed my-6"></div>
                                             <!--begin::Option-->
-                                            {{-- <label class="form-check form-check-custom form-check-solid align-items-start">
-                                                <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]" value="Credit Card" {{($payment_methods['Credit Card'] ?? false)?'checked':''}} />
-                                                <!--end::Input-->
-                                                <!--begin::Label-->
-                                                <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('messages.online-payment')}}</span>
-														<span class="text-muted fs-6">[{{__('messages.visa')}}, {{__('messages.master-card')}}, {{__('messages.mada')}}, {{__('messages.apple-pay')}}]</span>
-													</span>
-                                                <!--end::Label-->
-                                            </label>
-                                            <!--end::Option-->
-                                            <!--begin::Option-->
-                                            <div class="separator separator-dashed my-6"></div>
+{{--                                            <label class="form-check form-check-custom form-check-solid align-items-start">--}}
+{{--                                                <!--begin::Input-->--}}
+{{--                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]" value="Credit Card" {{($payment_methods['Credit Card'] ?? false)?'checked':''}} />--}}
+{{--                                                <!--end::Input-->--}}
+{{--                                                <!--begin::Label-->--}}
+{{--                                                <span class="form-check-label d-flex flex-column align-items-start">--}}
+{{--														<span class="fw-bolder fs-5 mb-0">{{__('messages.online-payment')}}</span>--}}
+{{--														<span class="text-muted fs-6">[{{__('messages.visa')}}, {{__('messages.master-card')}}, {{__('messages.mada')}}, {{__('messages.apple-pay')}}]</span>--}}
+{{--													</span>--}}
+{{--                                                <!--end::Label-->--}}
+{{--                                            </label>--}}
+{{--                                            <!--end::Option-->--}}
+{{--                                            <!--begin::Option-->--}}
+{{--                                            <div class="separator separator-dashed my-6"></div>--}}
                                             <!--end::Option-->
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
@@ -72,10 +72,10 @@
 														<span class="text-muted fs-6">[{{__('messages.visa')}}, {{__('messages.master-card')}}, {{__('messages.mada')}}, {{__('messages.apple-pay')}}]</span>
 													</span>
                                                 <!--end::Label-->
-                                            </label> --}}
+                                            </label>
                                             <!--end::Option-->
                                             <!--begin::Option-->
-                                            {{-- <div class="separator separator-dashed my-6"></div> --}}
+                                             <div class="separator separator-dashed my-6"></div>
                                             <!--end::Option-->
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">

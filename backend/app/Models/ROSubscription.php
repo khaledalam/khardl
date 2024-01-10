@@ -16,12 +16,12 @@ class ROSubscription extends Model
         'amount',
         "number_of_branches",
         "user_id",
-        "chg_id",
-        'cus_id',
-        'card_id',
-        'payment_agreement_id',
         'status',
-        'subscription_id'
+        'subscription_id' // central subscription id
     ];
+
+    public const ACTIVE = 'active';
+    public const SUSPEND = 'suspend';
+    // other status in tap payment status
    
 }

@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Packages\TapPayment\Customer\Customer;
+use App\Packages\TapPayment\Customer\Customer as CustomerTap;
 use Spatie\Permission\Models\Role;
 
 class CreateTenantAdmin implements ShouldQueue
@@ -52,29 +52,8 @@ class CreateTenantAdmin implements ShouldQueue
             ]);
             // create new customer for tap
             // TODO @todo add tap customer to queue server
-            if(env('APP_ENV') != 'local'){
-                $customer = Customer::create([
-                    "first_name"=> $tenant->first_name,
-                    "last_name"=> $tenant->last_name,
-                    "email"=> $tenant->email,
-                    "phone"=> [
-                        "country_code"=> "966",
-                        "number"=> substr($tenant->phone, 3)
-                    ],
-                    "metadata"=> [
-                        "tenant_id"=>$tenant->id
-                    ],
-                ]);
-                if($customer['http_code'] == ResponseHelper::HTTP_OK){
-                    $user->tap_customer_id = $customer['message']['id'];
-                    $user->save();
-                }
-            }else {
-                // TODO @todo Testing only , remove after set production
-                $user->tap_customer_id = "cus_TS03A3920231337Jw212412549";
-                $user->save();
-            }
-
+            CustomerTap::createWithModel($user);
+            
         });
     }
 }
