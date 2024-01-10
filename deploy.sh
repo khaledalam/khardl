@@ -18,6 +18,8 @@ composer install --working-dir backend
 
 # Setup backend
 php backend/artisan migrate
+php backend/artisan tenants:migrate
+
 #php backend/artisan migrate:fresh --seed
 #php backend/artisan key:gen
 #php backend/artisan passport:install --force
