@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Subscription extends Model
 {
-    use HasFactory;
+    use HasFactory,HasTranslations;
     protected $fillable = [
-        'term',
-        'period',
-        'due',
-        'auto_renew',
-        'amount'
+        'amount',
+        'name',
+        'description'
     ];
+    public $translatable = ['name','description'];
+    
 }

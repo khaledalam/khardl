@@ -3,6 +3,7 @@
 namespace App\Packages\DeliveryCompanies\Cervo;
 
 use App\Models\Tenant\Order;
+use App\Utils\ResponseHelper;
 use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Http;
 use App\Models\Tenant\RestaurantUser;
@@ -90,6 +91,18 @@ class Cervo  extends AbstractDeliveryCompany
             // resend the order to any delivery companies or cancelled 
         }
 
+    }
+    public function  verifyApiKey(string $api_key): bool{
+
+        $response = Http::withToken($api_key)
+        ->get( $this->delivery_company->api_url.'/order/RANDOM_ID_NOT_EXISTS',[]);
+    
+        if($response->getStatusCode() == 400){
+            return true;
+        }else {
+            // 401 Unauthorized
+            return false;
+        }
     }
     // public function getOrder($id){
     //     if(env('APP_ENV') == 'local'){

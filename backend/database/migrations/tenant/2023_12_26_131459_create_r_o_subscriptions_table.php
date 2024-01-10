@@ -13,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('r_o_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string("card_id");
-            $table->string("customer_id");
-            $table->json("data");
-            $table->string('amount');
-            $table->string('status');
-            $table->string('public_key')->nullable();
-            $table->string('secret_key')->nullable();
+            $table->date("start_at");
+            $table->date("end_at");
+            $table->integer("amount");
+            $table->integer("number_of_branches");
+            $table->string("cus_id");
+            $table->string("chg_id");
+            $table->string("card_id")->nullable();
+            $table->string("payment_agreement_id")->nullable();
+            $table->string('subscription_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string("status")->default('active');
             $table->timestamps();
         });
     }

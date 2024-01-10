@@ -114,5 +114,23 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         //dispactches the job to the queue passing it this User object
         verifyEmail::dispatch($this);
     }
+    /* Scopes */
+    public function scopeRestaurantOwners($query)
+    {
+        return $query->whereHas('roles',function($q){
+            return $q->where("name","Restaurant Owner");
+        });
+    }
+    public function scopeWhenType($query,$type)
+    {
+        return $query->when($type != null && ($type=='complete_step_1'||$type=='complete_step_2'), function ($q) use ($type) {
+            if($type=='complete_step_1'){
+                return $q->whereDoesntHave('restaurant');
+            }else{
+                return $q->whereHas('restaurant');
+            }
+        });
+    }
+    /* Scopes */
 
 }

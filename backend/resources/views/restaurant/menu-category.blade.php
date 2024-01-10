@@ -416,7 +416,7 @@
                             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('messages.clear')}}</button>
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
                                 <span class="indicator-label">{{__('messages.submit')}}</span>
-                                <span class="indicator-progress" id="waiting-item">{{ __('messages.{{ __('messages.{{ __('messages.Please wait...') }}') }}') }}
+                                <span class="indicator-progress" id="waiting-item">{{ __('messages.Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>

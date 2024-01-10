@@ -10,16 +10,18 @@ class ROSubscription extends Model
     use HasFactory;
     protected $table ="r_o_subscriptions";
     protected $fillable =[
-        'customer_id',
-        'card_id',
-        'data',
-        'amount',
-        'status',
         'id',
-        'public_key',
-        'secret_key'
+        "start_at",
+        "end_at",
+        'amount',
+        "number_of_branches",
+        "user_id",
+        'status',
+        'subscription_id' // central subscription id
     ];
-    protected $casts = [
-        'data'=>'array'
-    ];
+
+    public const ACTIVE = 'active';
+    public const SUSPEND = 'suspend';
+    // other status in tap payment status
+   
 }
