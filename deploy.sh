@@ -8,7 +8,7 @@ cd /home/khardl5/public_html/
 
 # Install packages
 #npm i --prefix frontend
-rm backend/composer.lock
+rm ./backend/composer.lock
 composer install --working-dir backend
 
 
