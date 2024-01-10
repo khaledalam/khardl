@@ -34,7 +34,6 @@ class DeliveryCompanies
     }
     public static function validateCustomerAddress(&$validator,$branchLat,$branchLng,$lat,$lng){
         $deliveryCompanies = self::all();
-       
         if(!$deliveryCompanies->count()){
             $validator->errors()->add('distance', __("There is no delivery available for your order yet"));
             return ;

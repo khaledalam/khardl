@@ -4272,6 +4272,9 @@ details.collapse summary::-webkit-details-marker {
 .h-4 {
   height: 1rem;
 }
+.h-40 {
+  height: 10rem;
+}
 .h-5 {
   height: 1.25rem;
 }
@@ -5396,9 +5399,16 @@ details.collapse summary::-webkit-details-marker {
   --tw-bg-opacity: 1;
   background-color: rgb(192 209 35 / var(--tw-bg-opacity));
 }
+.bg-\[\#D9D9D99C\] {
+  background-color: #D9D9D99C;
+}
 .bg-\[\#D9D9D9\] {
   --tw-bg-opacity: 1;
   background-color: rgb(217 217 217 / var(--tw-bg-opacity));
+}
+.bg-\[\#FF3D00\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 61 0 / var(--tw-bg-opacity));
 }
 .bg-\[\#b8cb0aa4\] {
   background-color: #b8cb0aa4;
@@ -11731,6 +11741,9 @@ details.collapse summary::-webkit-details-marker {
 .h-4 {
   height: 1rem;
 }
+.h-40 {
+  height: 10rem;
+}
 .h-5 {
   height: 1.25rem;
 }
@@ -12855,9 +12868,16 @@ details.collapse summary::-webkit-details-marker {
   --tw-bg-opacity: 1;
   background-color: rgb(192 209 35 / var(--tw-bg-opacity));
 }
+.bg-\[\#D9D9D99C\] {
+  background-color: #D9D9D99C;
+}
 .bg-\[\#D9D9D9\] {
   --tw-bg-opacity: 1;
   background-color: rgb(217 217 217 / var(--tw-bg-opacity));
+}
+.bg-\[\#FF3D00\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 61 0 / var(--tw-bg-opacity));
 }
 .bg-\[\#b8cb0aa4\] {
   background-color: #b8cb0aa4;

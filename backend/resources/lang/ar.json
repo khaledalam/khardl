@@ -33,5 +33,16 @@
     "StreetLine":"ستريت لاين",
     ":module has been successfully activated":"تم تفعيل شركة الشحن :module",
     ":module has been successfully deactivated":"تم الغاء تفعيل شركة الشحن :module",
-    "Location is required":"الموقع مطلوب"
+    "Location is required":"الموقع مطلوب",
+    "Api Key not correct, please contact :module support team to ensure about it":"الرقم السري غير صحيح، يرجى الاتصال بفريق دعم :moudle للتأكد من ذلك",
+    "A new Subscription has been created":"تمت اضافة اشتراك جديد بنجاح",
+    "No card found":"لا يوجد بطاقة الكترونية متاحة",
+    "The subscription has been activated successfully":"تم تفعيل الاشتراك بنجاح",
+    "Error occur please try again":"حصل خطأ ما, الرجاء المحاولة مرة اخري",
+    "The payment failed, and the subscription fee has not been paid":"فشلت عملية الدفع, ولم يتم دفع رسوم الاشتراك",
+    "Branches has been deactivated successfully":"تم ايقاف نشاط الفروع بنجاح",
+    "Branches has been activated successfully":"تم تفعيل عمل الفروع بنجاح",
+    "The payment was successful, your order is pending":"تمت عملية الدفع بالنجاح طلبك قيد الانتظار",
+    "Payment failed, please try again":"فشلت عملية الدفع الرجاء المحاولة مرة اخري"
+
 }

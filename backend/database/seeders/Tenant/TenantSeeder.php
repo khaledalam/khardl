@@ -24,28 +24,33 @@ class TenantSeeder extends Seeder
             .'.'.config("tenancy.central_domains")[0]
         // route
             ,'stancl.tenancy.asset') . '/';
-
-        $this->call([
-            SettingSeeder::class,
-            RolesAndPermissionsSeeder::class,
-            RestaurantStyleSeeder::class,
-
-            // Testing seeders
-            PaymentMethodSeeder::class,
-            DeliveryTypesSeeder::class,
-            BranchSeeder::class,
-
-
-            // make sure BranchSeeder run before UserSeeder
-            UserSeeder::class,
-
-            // make sure UserSeeder run before CategoryItemSeeder
-            CategoryItemSeeder::class,
-
-
-            OrderSeeder::class,
-            DeliveryCompanySeeder::class
-        ],false,[
+        
+        if(env('APP_ENV') == 'local'){
+            $seeders= [
+                RolesAndPermissionsSeeder::class,
+                SettingSeeder::class,
+                RestaurantStyleSeeder::class,
+                PaymentMethodSeeder::class,
+                DeliveryTypesSeeder::class,
+                BranchSeeder::class,
+                // make sure BranchSeeder run before UserSeeder
+                UserSeeder::class,
+                // make sure UserSeeder run before CategoryItemSeeder
+                CategoryItemSeeder::class,
+                OrderSeeder::class,
+                DeliveryCompanySeeder::class
+            ];
+        }else {
+            $seeders= [
+                RolesAndPermissionsSeeder::class,
+                SettingSeeder::class,
+                RestaurantStyleSeeder::class,
+                PaymentMethodSeeder::class,
+                DeliveryTypesSeeder::class,
+                DeliveryCompanySeeder::class
+            ];
+        }
+        $this->call($seeders,false,[
             'assets'=>$assets,
             'restaurant_name'=>$restaurant_name
         ]);

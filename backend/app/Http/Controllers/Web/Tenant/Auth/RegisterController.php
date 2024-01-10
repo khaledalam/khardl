@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Tenant\OTPRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
+use App\Packages\TapPayment\Customer\Customer as CustomerTap;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\Tenant\CustomerRegisterRequest;
 use App\Http\Controllers\API\Central\Auth\RegisterController as RegisterControllerCentral;
@@ -94,7 +95,8 @@ class RegisterController extends BaseController
         // $input['password'] = Hash::make($input['password']);
         $input['status'] = 'inactive';
         $user = RestaurantUser::create($input);
-
+        // TODO @todo add tap customer to queue 
+        CustomerTap::createWithModel($user);
         $success['name'] =  "$user->first_name $user->last_name";
         Auth::login($user);
         $this->sendVerificationSMSCode($request);
