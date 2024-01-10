@@ -207,7 +207,7 @@
                             @endif
                             <!-- Supports -->
                             @if($user?->hasPermission('can_see_admins') || $user?->hasPermission('can_add_admins'))
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'user-management' || $admin_link == 'add-user') ? 'show' : ''}}">
                                 <span class="{{ ($admin_link == 'user-management' || $admin_link == 'add-user'  ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -222,7 +222,7 @@
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     @if($user?->hasPermission('can_see_admins'))
                                         <div class="menu-item">
-                                            <a class="menu-link" href="{{ route('admin.user-management') }}">
+                                            <a class="menu-link {{($admin_link == 'user-management') ? 'active' : ''}}" href="{{ route('admin.user-management') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
@@ -232,7 +232,7 @@
                                     @endif
                                     @if($user?->hasPermission('can_add_admins'))
                                     <div class="menu-item">
-                                        <a class="menu-link" href="{{ route('admin.add-user') }}">
+                                        <a class="menu-link {{($admin_link == 'add-user') ? 'active' : ''}}" href="{{ route('admin.add-user') }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
