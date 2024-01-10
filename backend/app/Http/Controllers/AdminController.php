@@ -31,39 +31,6 @@ use Spatie\Permission\Models\Permission;
 
 class AdminController extends Controller
 {
-    public function dashboard()
-    {
-        $user = Auth::user();
-
-        //
-        $restaurantsAll = Tenant::with("primary_domain")->get();
-
-        // not complete register step2
-        $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
-
-        $restaurantsLive = 0;
-        $customers = 0;
-
-        foreach ($restaurantsAll as $restaurant) {
-            $restaurant->run(static function ($tenant) use (&$restaurantsLive, &$customers) {
-                $setting = TenantSettings::first();
-                if ($setting->is_live) {
-                    $restaurantsLive ++;
-                }
-
-                $currentMonth = Carbon::now()->month;
-                $customers+= RestaurantUser::customers()->whereMonth('created_at', '=', $currentMonth)->count();
-            });
-        }
-        $restaurantsAll = count($restaurantsAll);
-
-
-
-        return view('admin.dashboard', compact('user',
-            'restaurantsAll', 'restaurantsOwnersNotUploadFiles',
-            'restaurantsLive', 'customers'
-        ));
-    }
 
     public function addUser()
     {
@@ -483,12 +450,11 @@ class AdminController extends Controller
         return view('admin.user-management', compact('user', 'admins'));
     }
 
-    public function restaurantOwnerManagement()
+    public function restaurantOwnerManagement(Request $request)
     {
-        $admins = User::whereHas('roles',function($q){
-            return $q->where("name","Restaurant Owner");
-        })
-        ->paginate(15);
+        $admins = User::restaurantOwners()
+        ->whenType($request['type']??null)
+        ->paginate(config('application.perPage')??20);
         $user = Auth::user();
         return view('admin.restaurant-owner-management', compact('user', 'admins'));
     }

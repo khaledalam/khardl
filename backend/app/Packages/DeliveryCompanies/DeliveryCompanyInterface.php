@@ -10,6 +10,7 @@ interface DeliveryCompanyInterface
 {
     public function assignToDriver(Order $order,RestaurantUser $customer);
     public function send(string $url,$token,array $data,string $method = 'post') : Promise;
-
+    public function verifyApiKey(string $api_key) : bool;
+    
 
 }

@@ -127,7 +127,7 @@
                                                 @endif
 
                                                 <!--end::Svg Icon-->
-                                                <div class="fs-2 fw-bolder">{{ $dailyOrders }} {{ __('messages.SAR') }}</div> <!--  data-kt-countup-value="150" -->
+                                                <div class="fs-2 fw-bolder">{{ $dailyOrders }}</div> <!--  data-kt-countup-value="150" -->
                                             </div>
                                             <!--end::Number-->
                                             <!--begin::Label-->

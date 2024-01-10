@@ -9,6 +9,7 @@ use Faker\Generator;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -34,7 +35,7 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        $user->assignRole('Administrator');
+        $user->assignRole(Role::findByName('Administrator'));
 
         $faker = (new Factory())::create();
         TraderRequirement::create([
@@ -73,7 +74,7 @@ class UserSeeder extends Seeder
             'national_address' => $faker->address
         ]);
 
-        $user->assignRole('Restaurant Owner');
+        $user->assignRole(Role::findByName('Restaurant Owner'));
 
         // old code permissions
         \DB::table('permissions')->insert([

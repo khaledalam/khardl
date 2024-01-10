@@ -56,12 +56,12 @@ class TapController extends Controller
         // @TODO: handle upload tap documents logic here...
 
         $validationRules = [
-            'business_logo' => 'required|mimes:jpeg,png,gif|file|max:8192',
-            'customer_signature' => 'required|mimes:gif,jpeg,png,pdf|file|max:8192',
-            'dispute_evidence' => 'required|mimes:jpeg,png,pdf|file|max:8192',
-            'identity_document' => 'required|mimes:jpeg,png,pdf|file|max:8192',
-            'pci_document' => 'required|mimes:jpeg,png,pdf|file|max:8192',
-            'tax_document_user_upload' => 'required|mimes:jpeg,png,pdf|file|max:8192',
+            'business_logo' => 'required|mimes:jpeg,png,gif|file|max:16384',//16MB
+            'customer_signature' => 'required|mimes:gif,jpeg,png,pdf|file|max:16384',
+            'dispute_evidence' => 'required|mimes:jpeg,png,pdf|file|max:16384',
+            'identity_document' => 'required|mimes:jpeg,png,pdf|file|max:16384',
+            'pci_document' => 'required|mimes:jpeg,png,pdf|file|max:16384',
+            'tax_document_user_upload' => 'required|mimes:jpeg,png,pdf|file|max:16384',
         ];
 
         $request->validate($validationRules);
@@ -156,6 +156,7 @@ class TapController extends Controller
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
 
     }
+
     public function payments_submit_card_details(Request $request){
         logger('tap controller');
         if($request->tap_id){
@@ -184,7 +185,6 @@ class TapController extends Controller
         //     return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
         // }
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
-
     }
 
 }

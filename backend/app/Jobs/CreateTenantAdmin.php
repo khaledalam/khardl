@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Packages\TapPayment\Customer\Customer as CustomerTap;
+use Spatie\Permission\Models\Role;
 
 class CreateTenantAdmin implements ShouldQueue
 {
@@ -44,12 +45,12 @@ class CreateTenantAdmin implements ShouldQueue
                 $tenant->only(['first_name','last_name', 'email', 'password','phone'])
                 + ['phone_verified_at'=>now(),'status'=>'active', 'id' => self::RESTAURANT_OWNER_USER_ID]
             );
-            $user->assignRole('Restaurant Owner');
+            $user->assignRole(Role::findByName('Restaurant Owner'));
 
             $tenant->update([
                 'ready' => true,
             ]);
-            // create new customer for tap 
+            // create new customer for tap
             // TODO @todo add tap customer to queue server
             CustomerTap::createWithModel($user);
             

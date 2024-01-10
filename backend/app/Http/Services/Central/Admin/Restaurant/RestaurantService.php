@@ -1,18 +1,56 @@
 <?php
 
-namespace App\Http\Services\Central\Restaurants;
+namespace App\Http\Services\Central\Admin\Restaurant;
 
-use Carbon\Carbon;
 use App\Models\Tenant;
-use App\Models\Tenant\Order;
-use Illuminate\Support\Facades\DB;
+use App\Models\Tenant\Setting;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use LaravelDaily\LaravelCharts\Classes\LaravelChart;
+use Illuminate\Support\Facades\DB;
 use App\Http\Services\tenant\Restaurant\RestaurantService as TenantRestaurantService;
+
 
 class RestaurantService
 {
-    public function viewRestaurant(Tenant $tenant)
+    public function index(Request $request)
+    {
+        $query = Tenant::query()->with('primary_domain')
+            ->whenSearch($request['search'] ?? null);
+        $restaurants = $query->get();
+
+        $tenants = [];
+        if (isset($request['live']) && ($request['live'] == 1 || $request['live'] == 0)) {
+            foreach ($restaurants as $restaurant) {
+                if (($restaurant->is_live() && $request['live'] == 0) || (!$restaurant->is_live() && $request['live'] == 1)) {
+                    $query->where('id', '!=', $restaurant->id);
+                }
+            }
+        }
+        if (isset($request['order_by']) && $request['order_by'] == 'highest_orders') {
+            $restaurants = $query->paginate(config('application.perPage') ?? 20)->through(function ($tenant) {
+                $tenant->run(function ($res) {
+                    $res->orders_count = $res->completed_orders()->count();
+                });
+                return $tenant;
+            })->sortByDesc('orders_count')->customPaginate(config('application.perPage') ?? 20);/* TODO: Paginate after sorting */
+
+        }elseif (isset($request['order_by']) && $request['order_by'] == 'highest_customers') {
+            $restaurants = $query->paginate(config('application.perPage') ?? 20)->through(function ($tenant) {
+                $tenant->run(function ($res) {
+                    $res->customers_count = $res->allCustomers()->count();
+                });
+                return $tenant;
+            })->sortByDesc('customers_count')->customPaginate(config('application.perPage') ?? 20);/* TODO: Paginate after sorting */
+
+        } else {
+            $restaurants = $query->paginate(config('application.perPage') ?? 20);
+        }
+        $user = Auth::user();
+
+        return view('admin.restaraunts', compact('restaurants', 'user'));
+    }
+    public function show(Tenant $tenant)
     {
         $restaurant = $tenant;
         [

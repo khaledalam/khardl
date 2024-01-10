@@ -20,19 +20,20 @@ const ScrollUp = () => {
 
   return (
     <div
-      className={`z-[9999999999] fixed max-[450px]:bottom-3  bottom-6 ${
+      className={`z-[999] fixed max-[450px]:bottom-3  bottom-6 ${
         Language === "en"
           ? "left-6 max-[450px]:left-4"
           : "right-6 max-[450px]:right-4"
-      }`}
+      }  `}
     >
       <button
-        onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}
-        className={`p-[6px]  shadow-lg cursor-pointer w-fit rounded-md ${
-          restaurantStyle?.banner_background_color
+        style={{
+          background: restaurantStyle?.banner_background_color
             ? restaurantStyle?.banner_background_color
-            : ""
-        } flex flex-col items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-2  ${
+            : "",
+        }}
+        onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}
+        className={`p-[6px]  shadow-lg cursor-pointer w-fit rounded-md  flex flex-col items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-2  ${
           scrollY > scrollThreshold ? "block" : "hidden"
         }`}
       >
