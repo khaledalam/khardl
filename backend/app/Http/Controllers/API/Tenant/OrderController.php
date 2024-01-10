@@ -23,10 +23,9 @@ class  OrderController extends BaseRepositoryController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if(Auth::user()?->isWorker()){
+            if(request()->bearerToken()){ // coming from  app api
                 $this->default_repository = new OrderRepository();
-            } else if (!Auth::user()?->isWorker() && !Auth::user()?->isRestaurantOwner()) {
-                // customer get his orders
+            }else {
                 $this->default_repository = new CustomerOrderRepository();
             }
             return $next($request);
