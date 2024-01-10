@@ -22,6 +22,7 @@ export const CustomerPage = () => {
   const navigate = useNavigate()
   const {t} = useTranslation()
   const activeNavItem = useSelector((state) => state.customerAPI.activeNavItem)
+  const cardsList = useSelector((state) => state.customerAPI.cardsList)
   const [searchParam] = useSearchParams()
   const [showOrderDetail, setShowOrderDetail] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -110,7 +111,7 @@ export const CustomerPage = () => {
           ) : activeNavItem === TABS.profile && !showOrderDetail ? (
             <CustomerProfile />
           ) : activeNavItem === TABS.payment && !showOrderDetail ? (
-            <CustomerPayment />
+            <CustomerPayment cardsList={cardsList} />
           ) : (
             <></>
           )}
