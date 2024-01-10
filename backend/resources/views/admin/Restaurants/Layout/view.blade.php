@@ -84,7 +84,7 @@
                                     <!--end::Info-->
                                 </div>
                                 <!--end::User-->
-
+                                <a class="btn btn-primary" href="{{ route('admin.restaurants') }}">{{ __('messages.Back to list') }}</a>
                             </div>
                             <!--end::Title-->
                             <!--begin::Stats-->

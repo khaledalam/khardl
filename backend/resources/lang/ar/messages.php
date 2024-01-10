@@ -597,7 +597,8 @@ return [
     "Have restaurant" => "لدية مطعم",
     "Select" => "اختر",
     "Update central settings" => "تحديث الإعدادات المركزية",
-    "Update revenue settings" => "تحديث إعدادات الإيرادات"
+    "Update revenue settings" => "تحديث إعدادات الإيرادات",
+    "Back to list" => "الرجوع الي القائمة"
 
 ];
 
