@@ -125,12 +125,12 @@ function CompleteRegistration() {
                      <div className='mb-2 font-semibold'>
                         {t('Commercial Record')} <span className="text-red-500">*</span>
                         <p>
-                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF, JPG, JPEG, PNG { t('size <= 16 MG') }</i></small>
                         </p>
                      </div>
                      <input
                         type='file'
-                        accept='application/pdf'
+                        accept='application/pdf,image/*'
                         {...register('commercial_registration', {
                            required: true,
                         })}
@@ -180,12 +180,12 @@ function CompleteRegistration() {
                      <div className='mb-2 font-semibold'>
                         {t('Tax registration certificate')} <span className="text-red-500">*</span>
                         <p>
-                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF, JPG, JPEG, PNG { t('size <= 16 MG') }</i></small>
                         </p>
                      </div>
                      <input
                         type='file'
-                        accept='application/pdf'
+                        accept='application/pdf,image/*'
                         id='Input(2)'
                         {...register('tax_registration_certificate', {
                            required: true,
@@ -235,12 +235,12 @@ function CompleteRegistration() {
                      <div className='mb-2 font-semibold'>
                         {t('National address')} <span className="text-red-500">*</span>
                         <p>
-                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF, JPG, JPEG, PNG { t('size <= 16 MG') }</i></small>
                         </p>
                      </div>
                      <input
                         type='file'
-                        accept='application/pdf'
+                        accept='application/pdf,image/*'
                         id='Input(3)'
                         {...register('national_address', { required: true })}
                         className='hidden'
@@ -288,12 +288,12 @@ function CompleteRegistration() {
                      <div className='mb-2 font-semibold'>
                         {t('Identity of the owner or manager')} <span className="text-red-500">*</span>
                         <p>
-                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF, JPG, JPEG, PNG { t('size <= 16 MG') }</i></small>
                         </p>
                      </div>
                      <input
                         type='file'
-                        accept='application/pdf'
+                        accept='application/pdf,image/*'
                         id='Input(4)'
                         {...register('identity_of_owner_or_manager', {
                            required: true,
@@ -344,12 +344,12 @@ function CompleteRegistration() {
                      <div className='mb-2 font-semibold'>
                         {t('Bank certificate')} <span className="text-red-500">*</span>
                         <p>
-                        <small className='text-gray-500'><i>{ t('Accept') }: PDF { t('size <= 16 MG') }</i></small>
+                        <small className='text-gray-500'><i>{ t('Accept') }: PDF, JPG, JPEG, PNG { t('size <= 16 MG') }</i></small>
                         </p>
                      </div>
                      <input
                         type='file'
-                        accept='application/pdf'
+                        accept='application/pdf,image/*'
                         id='Input(5)'
                         {...register('bank_certificate', { required: true })}
                         className='hidden'
@@ -418,6 +418,7 @@ function CompleteRegistration() {
                            {t('Facility Name')}<span className="text-red-500">*</span>
                         </div>
                         <input
+                            minLength={5}
                            type='text'
                            className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
                            {...register('facility_name', { required: true })}
