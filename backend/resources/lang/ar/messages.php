@@ -599,7 +599,8 @@ return [
     "Select" => "اختر",
     "Update central settings" => "تحديث الإعدادات المركزية",
     "Update revenue settings" => "تحديث إعدادات الإيرادات",
-    "Back to list" => "الرجوع الي القائمة"
+    "Back to list" => "الرجوع الي القائمة",
+    "Completed orders" => "الطلبات المكتملة"
 
 ];
 

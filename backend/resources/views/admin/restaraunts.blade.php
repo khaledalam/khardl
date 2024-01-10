@@ -166,7 +166,7 @@
                                         <div class="border border-gray-300 border-dashed rounded res_total_orders min-w-80px py-3 px-4 mx-2 mb-3 position-relative">
                                             <span class="total_orders fade">{{ $restaurant->total_orders['number'] }}</span>
                                             <div class="fs-6 fw-bolder text-gray-700">{{ $restaurant->total_orders['number_formatted'] }}</div>
-                                            <div class="fw-bold text-gray-400">{{ __('messages.orders')}}</div>
+                                            <div class="fw-bold text-gray-400">{{ __('messages.Completed orders')}}</div>
                                         </div>
                                         <!--end::Stats-->
                                         <!--begin::Action-->
