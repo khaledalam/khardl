@@ -540,7 +540,7 @@ return [
     "Download bank certificate" => "تحميل شهادة البنك",
     "Create new restaurant" => "انشاء مطعم",
     "Approve business sent" => "تم ارسال بريد قبول الاعمال",
-    "Approve business fail" => "فشل ارسال بريد قبوالاعمال",
+    "Approve business fail" => "فشل ارسال بريد قبول الاعمال",
     "Verify restaurant user sent"   => "تم ارسال بريد تاكيد مستخدم مطعم",
     "Verify restaurant user fail"   => "فشل ارسال بريد تاكيد مستخدم مطعم",
     "Metadata" => "البيانات الوصفية",
@@ -595,7 +595,9 @@ return [
     "Not complete step 2" => "لم يكمل الخطوة 2",
     "Complete Step 1 only" => "اكمل الخطوة الاولي فقط",
     "Have restaurant" => "لدية مطعم",
-    "Select" => "اختر"
+    "Select" => "اختر",
+    "Update central settings" => "تحديث الإعدادات المركزية",
+    "Update revenue settings" => "تحديث إعدادات الإيرادات"
 
 ];
 
