@@ -1,5 +1,6 @@
 import React from "react"
 import imgCardSim from "../../../assets/cardSim.svg"
+import imgThumbUp from "../../../assets/thumbup.svg"
 import {MdMoreVert} from "react-icons/md"
 
 const CardPayment = ({poweredByImgURl, CardNumber, ValidThruNo}) => {
@@ -13,11 +14,31 @@ const CardPayment = ({poweredByImgURl, CardNumber, ValidThruNo}) => {
           tabIndex={0}
           className='dropdown-content z-[2] menu shadow bg-base-100 rounded-lg w-52 h-[54px]'
         >
-          <li className='bg-[var(--customer)] text-white font-bold text-center w-full p-2 cursor-pointer'>
+          <li
+            onClick={() => document.getElementById("my_modal_3").showModal()}
+            className='bg-[var(--customer)] text-white font-bold text-center w-full p-2 cursor-pointer'
+          >
             Delete
           </li>
         </ul>
       </div>
+      {/* You can open the modal using document.getElementById('ID').showModal() method */}
+      <dialog id='my_modal_3' className='modal bg-[#D9D9D99C]'>
+        <div className='modal-box bg-[#FF3D00] h-40 w-64'>
+          <form method='dialog'>
+            {/* if there is a button in form, it will close the modal */}
+            <button className='btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-6 top-6'>
+              ✕
+            </button>
+          </form>
+          <div className='w-full h-full flex items-center justify-center gap-3 flex-col'>
+            <img src={imgThumbUp} alt='ThumbUp' className='' />
+            <h3 className='text-[1rem] font-bold text-white'>
+              Card have been deleted
+            </h3>
+          </div>
+        </div>
+      </dialog>
 
       <div className='relative w-[350px] h-full text-white'>
         <div
