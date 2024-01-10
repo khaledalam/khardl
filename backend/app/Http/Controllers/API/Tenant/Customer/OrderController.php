@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\API\Tenant\Customer;
 
+use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-
+use App\Models\Tenant\Order;
+use App\Models\Tenant\Payment;
 
 class OrderController
 {
@@ -25,7 +27,10 @@ class OrderController
     {
         return $this->order->create($request,$this->cart);
     }
-
+    public function validateOrder(OrderRequest $request){
+        session(['order_customer_'.Auth::id() =>$request->all()]);
+        return response()->json([],200);
+    }
     public function index(){
         return $this->sendResponse($this->order, '');
     }
@@ -71,6 +76,24 @@ class OrderController
         return $this->sendResponse([
             'ok' => true
         ], '');
+    }
+    public function paymentResponse(Request $request){
+        try {
+            $cartData = session('order_customer_'.Auth::id());
+            $request->merge($cartData);
+            $orderRequest = new OrderRequest($request->all());
+            $order = $this->order->create($orderRequest,$this->cart);
+          
+        }catch(\Exception $e){
+            logger($e->getMessage());
+        }
+        session()->forget(['order_customer_'.Auth::id()]);
+        $message = ($order->payment_status  == Payment::PAID)? __("The payment was successful, your order is pending"): __('Payment failed, please try again');
+        return redirect()->route("home",[
+            'status'=>($order->payment_status  == Payment::PAID)?true:false,
+            'message'=>$message
+        ]);
+
     }
 
 
