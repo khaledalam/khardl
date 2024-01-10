@@ -87,16 +87,33 @@
                                 <!--begin::Label-->
                                 <div class="d-flex fs-6 fw-bold align-items-center">
                                     <!--begin::Bullet-->
-                                    <div class="bullet w-8px h-6px rounded-2 me-3 bg-danger"></div>
+                                    <div class="bullet w-8px h-6px rounded-2 me-3 bg-warning"></div>
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.cancelled')}}
+                                        {{ __('messages.Ready')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        {{ $cancelledOrders }}
+                                        {{ $readyOrders }}
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Label-->
+                                <!--begin::Label-->
+                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-8px h-6px rounded-2 me-3 bg-secondary"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-gray-500 flex-grow-1 me-4">
+                                        {{ __('messages.received_by_restaurant')}}
+                                    </div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="fw-boldest text-gray-700 text-xxl-end">
+                                        {{ $receivedByResOrders }}
                                     </div>
                                     <!--end::Stats-->
                                 </div>

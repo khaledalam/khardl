@@ -38,6 +38,7 @@ return [
     'restaurant-name'=>"اسم المطعم",
     'all' => 'الكل',
     'search' => 'بحث',
+    'Search' => 'بحث',
     'items-found' => 'العناصر التي تم العثور عليها',
     'restaurants-found' => 'المطاعم التي تم العثور عليها',
     'points' => 'النقاط',

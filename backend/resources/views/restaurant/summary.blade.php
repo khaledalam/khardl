@@ -216,6 +216,40 @@
                                 <!--begin::Label-->
                                 <div class="d-flex fs-6 fw-bold align-items-center">
                                     <!--begin::Bullet-->
+                                    <div class="bullet w-8px h-6px rounded-2 bg-warning me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-gray-500 flex-grow-1 me-4">
+                                       {{ __('messages.Ready') }}
+                                    </div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="fw-boldest text-gray-700 text-xxl-end">
+                                        {{ $ready }}
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Label-->
+                                <!--begin::Label-->
+                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-8px h-6px rounded-2 bg-secondary me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-gray-500 flex-grow-1 me-4">
+                                       {{ __('messages.received_by_restaurant') }}
+                                    </div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="fw-boldest text-gray-700 text-xxl-end">
+                                        {{ $receivedByRes }}
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Label-->
+                                <!--begin::Label-->
+                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                    <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-danger me-3"></div>
                                     <!--end::Bullet-->
                                     <!--begin::Label-->

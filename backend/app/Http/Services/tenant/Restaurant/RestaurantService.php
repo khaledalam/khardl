@@ -24,6 +24,8 @@ class RestaurantService
         $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
         $completed = $this->getOrderStatusCount(clone $orders, 'completed');
         $cancelled = $this->getOrderStatusCount(clone $orders, 'cancelled');
+        $ready = $this->getOrderStatusCount(clone $orders, 'cancelled');
+        $receivedByRes = $this->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
         $allOrders = $orders->get();
         $completedOrders = $orders->completed();
         $totalPriceThisMonth = $this->getTotalPriceThisMonth(clone $orders);
@@ -46,6 +48,8 @@ class RestaurantService
             'cancelled',
             'completed',
             'accepted',
+            'ready',
+            'receivedByRes',
             'dailySales',
             'percentageChange',
             'noOfUsersThisMonth',
