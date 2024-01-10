@@ -45,3 +45,8 @@
     opacity: 1;
     transition: 1s all;
 }
+.badge-khardl{
+    color: #101010!important;
+    background-color: #c2da08;
+    border: none !important;
+}

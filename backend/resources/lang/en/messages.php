@@ -600,6 +600,8 @@ return [
     "Update central settings" => "Update central settings",
     "Update revenue settings" => "Update revenue settings",
     "Back to list" => "Back to list",
-    "Completed orders" => "Completed orders"
+    "Completed orders" => "Completed orders",
+    "Restaurant does not have any delivery companies yet" => "Restaurant does not have any delivery companies yet",
+    "Delivery companies" => "Delivery companies"
 
 ];

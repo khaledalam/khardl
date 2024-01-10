@@ -600,7 +600,9 @@ return [
     "Update central settings" => "تحديث الإعدادات المركزية",
     "Update revenue settings" => "تحديث إعدادات الإيرادات",
     "Back to list" => "الرجوع الي القائمة",
-    "Completed orders" => "الطلبات المكتملة"
+    "Completed orders" => "الطلبات المكتملة",
+    "Restaurant does not have any delivery companies yet" => "المطعم ليس لديه أي شركات توصيل حتى الآن",
+    "Delivery companies" => "شركات التوصيل"
 
 ];
 

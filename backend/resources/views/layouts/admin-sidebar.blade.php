@@ -16,6 +16,7 @@
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
+        <link href="{{ global_asset('assets/css/admin-main-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
         <!--end::Page Vendor Stylesheets-->
