@@ -40,5 +40,8 @@
     "Error occur please try again":"حصل خطأ ما, الرجاء المحاولة مرة اخري",
     "The payment failed, and the subscription fee has not been paid":"فشلت عملية الدفع, ولم يتم دفع رسوم الاشتراك",
     "Branches has been deactivated successfully":"تم ايقاف نشاط الفروع بنجاح",
-    "Branches has been activated successfully":"تم تفعيل عمل الفروع بنجاح"
+    "Branches has been activated successfully":"تم تفعيل عمل الفروع بنجاح",
+    "The payment was successful, your order is pending":"تمت عملية الدفع بالنجاح طلبك قيد الانتظار",
+    "Payment failed, please try again":"فشلت عملية الدفع الرجاء المحاولة مرة اخري"
+
 }

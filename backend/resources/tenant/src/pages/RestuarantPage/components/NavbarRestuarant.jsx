@@ -1,12 +1,13 @@
-import React, {Fragment, useContext} from "react"
+import React, {Fragment, useContext,useEffect} from "react"
 import cartHeaderImg from "../../../assets/cartBoldIcon.svg"
 import {IoMenuOutline} from "react-icons/io5"
 import {MenuContext} from "react-flexible-sliding-menu"
-import {useSelector} from "react-redux"
+import {useSelector } from "react-redux"
 import {useNavigate} from "react-router-dom"
-
+import { toast } from 'react-toastify'
 const NavbarRestuarant = () => {
   const {toggleMenu} = useContext(MenuContext)
+
   const navigate = useNavigate()
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
   const toggleTheMenu = () => {
@@ -17,6 +18,22 @@ const NavbarRestuarant = () => {
   )
   const {header_color} = restaurantStyle
   console.log("restuarant styles header", restaurantStyle)
+  useEffect(() => {
+    const checkOrderQueryParam = () => {
+      const queryParams = new URLSearchParams(window.location.search);
+      
+      if (queryParams.has('message')) {
+          if(queryParams.get('status') == 1){
+            toast.success(queryParams.get('message'));
+          }else {
+            toast.error(queryParams.get('message'));
+          }
+      } else {
+
+      }
+    };
+    checkOrderQueryParam();
+  }, []);
   return (
     <Fragment>
       <div

@@ -1,15 +1,26 @@
 {
+<<<<<<< HEAD
     "/js/central.js": "/js/central.js?id=239dfb99d73e27aeafc6ea314dd67baf",
     "/js/tenant.js": "/js/tenant.js?id=f0c5cd00d2dba32ee7314da9d76a9ef5",
     "/css/index.css": "/css/index.css?id=1b40deea6d341ba2ebef9f1bc81798cd",
     "/css/app.css": "/css/app.css?id=26d71c6d7842663c7e7fbddde461160b",
+=======
+    "/js/central.js": "/js/central.js",
+    "/js/tenant.js": "/js/tenant.js",
+    "/css/index.css": "/css/index.css",
+    "/css/app.css": "/css/app.css",
+>>>>>>> checkout-flow
     "/Linestroke.svg": "/Linestroke.svg?id=8715a9dc777dc8005136fbe92d1449e6",
     "/Logo.svg": "/Logo.svg?id=9f58778b18dc8a6ceb2b784bde375954",
     "/asset-manifest.json": "/asset-manifest.json?id=ef4c1bcefc8ba6874daf4bc0ab7be845",
     "/assets/b.svg": "/assets/b.svg?id=20f1f9df0df5eb93ce508d5fbb94c196",
     "/assets/b2.svg": "/assets/b2.svg?id=0a85e1a09413532a0aa454da7a41d034",
     "/assets/back.png": "/assets/back.png?id=6541ea9af613befe6c63656af7128173",
+<<<<<<< HEAD
     "/assets/css/admin-main.css": "/assets/css/admin-main.css?id=1e4a64c93da7a5f25b29aadb56a25ad7",
+=======
+    "/assets/css/admin-main.css": "/assets/css/admin-main.css?id=8b621d8021e62df3c76eb28e0d170da1",
+>>>>>>> checkout-flow
     "/assets/css/resturant-main.css": "/assets/css/resturant-main.css?id=8b621d8021e62df3c76eb28e0d170da1",
     "/assets/css/style.bundle.css": "/assets/css/style.bundle.css?id=0f6cb0d7752f8804a1f863bdb1595ab5",
     "/assets/css/style.bundle.rtl.css": "/assets/css/style.bundle.rtl.css?id=8d2efeb50ede2244f38ad66319c3f464",
@@ -2139,11 +2150,8 @@
     "/customer/listing.html": "/customer/listing.html?id=311af92cf9cbc149dcffc714ba397a8d",
     "/customer/profile.html": "/customer/profile.html?id=a35706ca543e8b6d6e6827234695169d",
     "/customer/wallet.html": "/customer/wallet.html?id=df8cc3c16b755d6a20804b854e2eada3",
-    "/delivery-companies/cervo/cervo_contract.pdf": "/delivery-companies/cervo/cervo_contract.pdf?id=3ea449958687350173149e6dda9197be",
-    "/delivery-companies/cervo/cervo_logo.svg": "/delivery-companies/cervo/cervo_logo.svg?id=7a021b53a625126775a094a22b3dea09",
-    "/delivery-companies/street-line/Riyadh_coverd_area.jpg": "/delivery-companies/street-line/Riyadh_coverd_area.jpg?id=88c3141a9771ac1ad8c5ed6a7d417bd0",
-    "/delivery-companies/street-line/StreetLine_Contract_brand.pdf": "/delivery-companies/street-line/StreetLine_Contract_brand.pdf?id=c4ad06b832b062aefaba777d0caf2c7b",
-    "/delivery-companies/street-line/street-line_logo.png": "/delivery-companies/street-line/street-line_logo.png?id=eec52c68ab0c4fae17682d399766354a",
+    "/delivery-companies/Streetline_API-2022.pdf": "/delivery-companies/Streetline_API-2022.pdf?id=2b66b8c825550d63148959aed32f8e33",
+    "/delivery-companies/lyve_api_documentation.pdf": "/delivery-companies/lyve_api_documentation.pdf?id=bda0a6da6ef1cac869378632b5410e46",
     "/delivery-companies/yeswa/Yeswa_Profile.pdf": "/delivery-companies/yeswa/Yeswa_Profile.pdf?id=32763fb911291927bdcfd8a3c2257d4a",
     "/delivery-companies/yeswa/yeswa_contract.pdf": "/delivery-companies/yeswa/yeswa_contract.pdf?id=2e5d5dcb112bd84569dd435b51d99d8f",
     "/delivery-companies/yeswa/yeswa_logo.svg": "/delivery-companies/yeswa/yeswa_logo.svg?id=2c5464c6689b0a75e2bf0dccbb01c16d",
@@ -2151,10 +2159,6 @@
     "/fonts/vendor/react-multi-carousel/lib/revicons.eot": "/fonts/vendor/react-multi-carousel/lib/revicons.eot?id=9c6843660515d691edbfc4ca223e2fd6",
     "/fonts/vendor/react-multi-carousel/lib/revicons.ttf": "/fonts/vendor/react-multi-carousel/lib/revicons.ttf?id=c9bfe444929c4f0bc22f5d567e645906",
     "/fonts/vendor/react-multi-carousel/lib/revicons.woff": "/fonts/vendor/react-multi-carousel/lib/revicons.woff?id=646bf387473b10fe16fac2eb12be18f9",
-    "/fonts/vendor/slick-carousel/slick/slick.eot": "/fonts/vendor/slick-carousel/slick/slick.eot?id=4bb08b6ed048eaf8be2a371ffc8faec2",
-    "/fonts/vendor/slick-carousel/slick/slick.svg": "/fonts/vendor/slick-carousel/slick/slick.svg?id=f97e3bbf73254b0112091d0192f17aec",
-    "/fonts/vendor/slick-carousel/slick/slick.ttf": "/fonts/vendor/slick-carousel/slick/slick.ttf?id=74144acfc01b478e4e42106977bfa954",
-    "/fonts/vendor/slick-carousel/slick/slick.woff": "/fonts/vendor/slick-carousel/slick/slick.woff?id=4a1b9b9ce5944b65bc328dda7f20a8a8",
     "/images/Branches.webp": "/images/Branches.webp?id=a1349a11892c9b0f76eb1903902d4a54",
     "/images/Card.svg": "/images/Card.svg?id=09bcc655e9d76e4f2e9e8e7a6e7214dc",
     "/images/CashDelivery.svg": "/images/CashDelivery.svg?id=3c50a02d6929ed95af0134e6b76fd046",
@@ -2226,7 +2230,6 @@
     "/images/timer.png": "/images/timer.png?id=a55a8fae43a69f91ba95c318aa939bf9",
     "/images/trashBin.svg": "/images/trashBin.svg?id=d431c086fd46cd8594a420ce76c96b36",
     "/images/unitedKingdom.png": "/images/unitedKingdom.png?id=332efd862fe5195a56afe034b15e3d94",
-    "/images/vendor/slick-carousel/slick/ajax-loader.gif": "/images/vendor/slick-carousel/slick/ajax-loader.gif?id=c5f04404df58fc3deb42d69f94476b6c",
     "/images/whatsappImg.svg": "/images/whatsappImg.svg?id=5777511838c114f9932fdb2576463869",
     "/images/worldLang.svg": "/images/worldLang.svg?id=ac6e93ea6a74f145eb1fb525b0a52bfd",
     "/img/Capture.PNG": "/img/Capture.PNG?id=2fd85373cb461633e6d23c5eb0daedb6",
@@ -2503,8 +2506,9 @@
     "/js/custom/utilities/search/horizontal.js": "/js/custom/utilities/search/horizontal.js?id=f975ff3b33fc8b5184dab3c4d1d3fb15",
     "/js/custom/widgets.js": "/js/custom/widgets.js?id=e6e710a153facf16230076f539e55afb",
     "/js/scripts.bundle.js": "/js/scripts.bundle.js?id=07183cc0cb9106c644979f7457fca663",
-    "/js/tenant.js.LICENSE.txt": "/js/tenant.js.LICENSE.txt?id=4acc988ea38ec5438c5255fd3909ee1e",
+    "/js/tenant.js.LICENSE.txt": "/js/tenant.js.LICENSE.txt?id=8cb442eb8719b8672b261739260c901d",
     "/js/widgets.bundle.js": "/js/widgets.bundle.js?id=565f1ea2edeb4cdc178825a1018219f3",
+<<<<<<< HEAD
     "/media/avatars/300-1.jpg": "/media/avatars/300-1.jpg?id=7a434f1406bd73919f53c9193fc6d01c",
     "/media/avatars/300-10.jpg": "/media/avatars/300-10.jpg?id=b0c9ee3c2f19341aff3c7d6f30d7b761",
     "/media/avatars/300-11.jpg": "/media/avatars/300-11.jpg?id=d68bfa9ea688c86d5f123506d91f0b8a",
@@ -4393,6 +4397,9 @@
     "/plugins/global/plugins.dark.bundle.css": "/plugins/global/plugins.dark.bundle.css?id=df076d143c8f814a0dc4c416cf2552cc",
     "/plugins/global/plugins.dark.bundle.rtl.css": "/plugins/global/plugins.dark.bundle.rtl.css?id=df076d143c8f814a0dc4c416cf2552cc",
     "/plugins/global/sourcemaps/tiny-slider.css.map": "/plugins/global/sourcemaps/tiny-slider.css.map?id=cfb71967951afd3714441967cd16503b",
+=======
+    "/mix-manifest.json": "/mix-manifest.json?id=b6b0f22bcb076a7cbd4f528d3aaf4b24",
+>>>>>>> checkout-flow
     "/robots.txt": "/robots.txt?id=b6216d61c03e6ce0c9aea6ca7808f7ca",
     "/seeders/banner.jpeg": "/seeders/banner.jpeg?id=036bc96b4568a822cdcdcb2877d03377",
     "/seeders/banner_1.jpeg": "/seeders/banner_1.jpeg?id=036bc96b4568a822cdcdcb2877d03377",
