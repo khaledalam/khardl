@@ -35,8 +35,10 @@ class TapWebhookSignature implements SignatureValidator
         //     }
         //     else{
         //         logger("not passed");
+        //         logger($toBeHashedString);
         //         logger($request->headers);
         //         logger($myHashString);
+        //         logger($SecretAPIKey);
         //         return false;
         //     }
         // }else {
