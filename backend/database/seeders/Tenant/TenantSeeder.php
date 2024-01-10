@@ -26,8 +26,8 @@ class TenantSeeder extends Seeder
             ,'stancl.tenancy.asset') . '/';
 
         $this->call([
-            SettingSeeder::class,
             RolesAndPermissionsSeeder::class,
+            SettingSeeder::class,
             RestaurantStyleSeeder::class,
 
             // Testing seeders

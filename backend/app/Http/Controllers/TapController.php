@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\SendApprovedBusinessEmailJob;
 use App\Mail\ApprovedBusiness;
 use App\Models\ROSubscription;
-use App\Models\Subscription as CentralSubscriptionOptions;
+use App\Models\Subscription as CentralSubscription;
 use App\Models\Domain;
 use App\Models\Tenant;
 use App\Models\Tenant\Setting;
@@ -156,42 +156,35 @@ class TapController extends Controller
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
 
     }
-    public function payments_submit_card_details($cardId,Request $request){
-        // TODO @todo protect request only coming from payment
-        dd(1);
-        $user = Auth::user();
 
-        if($user->tap_customer_id){
-            $subscription_options = tenancy()->central(function(){
-                return CentralSubscriptionOptions::first();
-            });
-            try {
-                // deprecated
-                // TapSubscription::create([
-
-                // ]);
-
-                // ROSubscription::create([
-                //     'card_id'=>$cardId,
-                //     'data'=>json_decode($request->data),
-                //     'customer_id'=> $user->tap_customer_id,
-                //     'amount'=>$subscription_options->amount,
-                //     'status'=>'inactive',
-                // ]);
-
-
-            }catch(\Exception $e) {
-
-                logger($e->getMessage());
-                return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+    public function payments_submit_card_details(Request $request){
+        logger('tap controller');
+        if($request->tap_id){
+            $charge = Charge::retrieve($request->tap_id);
+            if($charge['http_code'] == ResponseHelper::HTTP_OK){
+                if($charge['message']['status'] == 'CAPTURED'){// payment successful
+                    return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
+                } else {
+                    return redirect()->route('restaurant.service')->with('error', __("The payment failed, and the subscription fee has not been paid"));
+                }
+               
             }
-
-        }else {
-            return redirect()->route('restaurant.service')->with('error', __('This User has not any related tap customer'));
         }
 
-
-
+        // TODO @todo optimize 
+        // sleep(1); // sleep until tap webhook processed
+        
+        // $subscription = ROSubscription::first();
+        // if($subscription){
+        //     if($subscription->status == 'active'){// payment successful
+        //         return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
+        //     } else {
+        //         return redirect()->route('restaurant.service')->with('error', __("The payment failed, and the subscription fee has not been paid"));
+        //     }
+        // }else {
+        //     return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+        // }
+        return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
 
 }

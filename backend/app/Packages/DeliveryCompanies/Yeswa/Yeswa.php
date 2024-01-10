@@ -7,7 +7,7 @@ use App\Models\Tenant\Branch;
 use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\RestaurantUser;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
-
+use App\Utils\ResponseHelper;
 
 class Yeswa  extends AbstractDeliveryCompany
 {
@@ -59,7 +59,7 @@ class Yeswa  extends AbstractDeliveryCompany
             // "client_id"=> "",
         ];
     
-        return self::send(
+        return $this->send(
             url:  $this->delivery_company->api_url.'/create_trip/',
             token: false,
             data: $data
@@ -82,6 +82,16 @@ class Yeswa  extends AbstractDeliveryCompany
             // Todo @todo
             // resend the order to any delivery companies or cancelled 
         }
+    }
+    public function  verifyApiKey(string $api_key): bool{
+        $response = $this->sendSync(
+            url:  $this->delivery_company->api_url.'/auth_check/',
+            token: false,
+            data: [
+                "api_key"=> $api_key
+            ]
+        );
+        return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
     }
 
 }

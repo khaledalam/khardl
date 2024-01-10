@@ -1,8 +1,10 @@
 <?php
 
-use App\Packages\TapPayment\Webhook\WebhookSignature;
+use App\Repositories\Webhook\WebhookSignature;
 use App\Packages\TapPayment\Webhook\TapWebhookHandler;
+use App\Packages\TapPayment\Webhook\TapWebhookSignature;
 use App\Packages\DeliveryCompanies\Webhook\DeliveryCompaniesWebhookHandler;
+
 
 return [
     'configs' => [
@@ -10,7 +12,7 @@ return [
             'name' => 'tap-payment',
             'signing_secret' => env('WEBHOOK_CLIENT_SECRET'),
             'signature_header_name' => 'Signature',
-            'signature_validator' => WebhookSignature::class,
+            'signature_validator' => TapWebhookSignature::class,
             'webhook_profile' => \Spatie\WebhookClient\WebhookProfile\ProcessEverythingWebhookProfile::class,
             'webhook_response' => \Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo::class,
             'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,

@@ -39,9 +39,11 @@ class OrderRequest extends FormRequest
     }
     public function withValidator($validator)
     {
+        
         $cart = CartRepository::get();
 
         $validator->after(function ($validator) use($cart){
+            
             $user = Auth::user();
             if(!$user->address || !$user->lat || !$user->lng){
                 $validator->errors()->add('address', __('Please update your location before place an order'));
@@ -66,10 +68,10 @@ class OrderRequest extends FormRequest
                     return ;
                 }
             });
-            if($this->delivery_type == DeliveryType::DELIVERY ){
-                $branch = $cart->branch();
-                DeliveryCompanies::validateCustomerAddress($validator,$branch->lat,$branch->lng,$user->lat,$user->lng);
-            }
+            // if($this->delivery_type == DeliveryType::DELIVERY ){
+            //     $branch = $cart->branch();
+            //     DeliveryCompanies::validateCustomerAddress($validator,$branch->lat,$branch->lng,$user->lat,$user->lng);
+            // }
             
         });
     }

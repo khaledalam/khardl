@@ -87,6 +87,24 @@ class Order extends Model
     {
         return $query->orderBy('id', 'DESC');
     }
+    public function scopeWhenSearch($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('shipping_address','LIKE','%' . $search . '%');
+        });
+    }
+    public function scopeWhenStatus($query,$status)
+    {
+        return $query->when($status != null, function ($q) use ($status) {
+            return $q->where('status',$status);
+        });
+    }
+    public function scopeWhenPaymentStatus($query,$status)
+    {
+        return $query->when($status != null, function ($q) use ($status) {
+            return $q->where('payment_status',$status);
+        });
+    }
     /* End Scoped */
 
     public function user()
