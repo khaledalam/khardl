@@ -456,10 +456,6 @@
                     console.log(oldProductSelectOptions[product][index]);
                     subtotal-= oldProductSelectOptions[product][index];
                 }
-                console.log(productQuantity[product]);
-                console.log(subtotal);
-                console.log(index);
-                console.log(product);
                 if (Array.isArray(oldProductSelectOptions[product])) {
 
                     totalCost += subtotal;
