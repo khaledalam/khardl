@@ -34,7 +34,11 @@
     color: #fff;
     background-color: #f7bd00;
 }
-
+.badge-khardl{
+    color: #101010!important;
+    background-color: #c2da08;
+    border: none !important;
+}
 /* Menu page */
 .card-body .menu-column {
     max-height: 280px;
