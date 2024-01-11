@@ -264,6 +264,16 @@
                                                 </select>
                                                 <!--end::Select2-->
                                             </div>
+                                            <div class="w-100 mw-150px">
+                                                <!--begin::Select2-->
+                                                <select class="form-select form-select-solid" name="date_string">
+                                                    <option value="">{{ __('messages.Date') }}</option>
+                                                    <option value="today" {{ request('date_string') =='today' ? 'selected':'' }}>{{ __('messages.Today') }}</option>
+                                                    <option value="last_day" {{ request('date_string') =='last_day' ? 'selected':'' }}>{{ __('messages.Last day') }}</option>
+                                                    <option value="last_week" {{ request('date_string') =='last_week' ? 'selected':'' }}>{{ __('messages.Last week') }}</option>
+                                                </select>
+                                                <!--end::Select2-->
+                                            </div>
                                             <button class="btn btn-primary" type="submit">{{ __('messages.Search') }}</button>
                                         </div>
                                         <!--end::Card toolbar-->
@@ -360,8 +370,9 @@
         const statusParam = urlParams.get('status');
         const paymentStatusParam = urlParams.get('payment_status');
         const searchParam = urlParams.get('search');
+        const DateStringParam = urlParams.get('date_string');
 
-        if (pageParam || statusParam || paymentStatusParam || searchParam) {
+        if (pageParam || statusParam || paymentStatusParam || searchParam || DateStringParam) {
             $('#summary').removeClass('active');
             $('#order_history').addClass('active');
             $('#kt_ecommerce_sales_order_history').addClass('active show');

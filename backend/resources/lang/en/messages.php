@@ -407,8 +407,8 @@ return [
     "Daily orders"  => "Daily orders",
     "SAR"   => "SAR",
     "Sales This month"  => "Sales This month",
-    "Profit per day"    => "Profit per day",
-    "Profit per month"    => "Profit per month",
+    "Revenue per day"    => "Revenue per day",
+    "Revenue per month"    => "Revenue per month",
     "contact" => "Contact",
     "Best selling products (Last 30 days)" => "Best selling products (Last 30 days)",
     "Sales This Months" => "Sales This Months",
@@ -614,6 +614,9 @@ return [
     "Back to list" => "Back to list",
     "Completed orders" => "Completed orders",
     "Restaurant does not have any delivery companies yet" => "Restaurant does not have any delivery companies yet",
-    "Delivery companies" => "Delivery companies"
+    "Delivery companies" => "Delivery companies",
+    "Today" => "Today",
+    "Last day" => "Last day",
+    "Last week" => "Last week",
 
 ];

@@ -13,9 +13,14 @@ class DefaultRepositoryPattern implements CrudInterface
     protected Builder | Model | Collection $model;
     protected JsonResource $resource;
     protected $collection;
-    public function all() 
+    public function all($request)
     {
-        return $this->resource::collection($this->model->paginate());
+        $model = $this->model
+        ->WhenSearch($request['search']??null)
+        ->WhenStatus($request['status']??null)
+        ->WhenDateString($request['date_string']??null)
+        ->paginate();
+        return $this->resource::collection($model);
     }
 
 
