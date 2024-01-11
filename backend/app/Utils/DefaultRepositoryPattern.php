@@ -19,7 +19,7 @@ class DefaultRepositoryPattern implements CrudInterface
         ->WhenSearch($request['search']??null)
         ->WhenStatus($request['status']??null)
         ->WhenDateString($request['date_string']??null)
-        ->paginate();
+        ->paginate($request['per_page']??10);
         return $this->resource::collection($model);
     }
 
