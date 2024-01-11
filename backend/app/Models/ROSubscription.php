@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ROSubscription extends Model
 {
@@ -23,5 +24,26 @@ class ROSubscription extends Model
     public const ACTIVE = 'active';
     public const SUSPEND = 'suspend';
     // other status in tap payment status
-   
+    public function getStartAtAttribute()
+    {
+        return Carbon::parse($this->attributes['start_at']);
+    }
+    public function getEndAtAttribute()
+    {
+        return Carbon::parse($this->attributes['end_at']);
+    }
+    public function getDateLeftAttribute()
+    {
+        $diff=$this->start_at->diff($this->end_at);
+        $monthsLeft = $diff->m + ($diff->y * 12);
+        $daysLeft = $diff->d;
+        if ($monthsLeft > 0 && $daysLeft > 0) {
+            $leftString = __(":monthsLeft months and :daysLeft days left",['monthsLeft'=>$monthsLeft,'daysLeft'=>$daysLeft]);
+        } elseif ($monthsLeft > 0) {
+            $leftString = __(":monthsLeft months left",['monthsLeft'=>$monthsLeft]);
+        } elseif ($daysLeft > 0) {
+            $leftString = __(":daysLeft left",['daysLeft'=>$daysLeft]);
+        }
+        return $leftString;
+    }
 }

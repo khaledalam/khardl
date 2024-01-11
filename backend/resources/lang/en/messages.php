@@ -609,5 +609,11 @@ return [
     "Complete Step 1 only" => "Complete Step 1 only",
     "Have restaurant" => "Have restaurant",
     "Select" => "Select",
+    "Add more branches"=>"Add more branches",
+    "Adding new branches"=>"Adding new branches",
+    "Choose the subscription method"=>"Choose the subscription method",
+    "Pay for new branches only for "=>"Pay for new branches only for ",
+    "Renew Subscription"=>"Renew Subscription",
+    "Renew the term of old branches + pay for new branches for one year"=>"Renew the term of old branches + pay for new branches for one year"
 
 ];

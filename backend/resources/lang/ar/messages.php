@@ -607,7 +607,12 @@ return [
     "Not complete step 2" => "لم يكمل الخطوة 2",
     "Complete Step 1 only" => "اكمل الخطوة الاولي فقط",
     "Have restaurant" => "لدية مطعم",
-    "Select" => "اختر"
-
+    "Select" => "اختر",
+    "Add more branches"=>"اضافة المزيد من الفروع",
+    "Adding new branches"=>"اضافة فروع جديدة",
+    "Choose the subscription method"=>"اختار طريقة الاشتراك ",
+    "Pay for new branches only for "=>"ادفع ثمن الفروع الجديدة فقط لمدة",
+    "Renew Subscription"=>"تجديد الاشتراك",
+    "Renew the term of old branches + pay for new branches for one year"=>"تجديد مدة الفروع القديمة + ادفع الفروع الجديدة لمدة سنة"
 ];
 
