@@ -24,7 +24,7 @@ class RestaurantService
         $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
         $completed = $this->getOrderStatusCount(clone $orders, 'completed');
         $cancelled = $this->getOrderStatusCount(clone $orders, 'cancelled');
-        $ready = $this->getOrderStatusCount(clone $orders, 'cancelled');
+        $ready = $this->getOrderStatusCount(clone $orders, 'ready');
         $receivedByRes = $this->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
         $allOrders = $orders->get();
         $completedOrders = $orders->completed();
