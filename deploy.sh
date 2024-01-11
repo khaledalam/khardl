@@ -7,7 +7,10 @@
 cd /home/khardl5/public_html/
 
 # Install packages
-#npm i --prefix frontend
+npm i --prefix frontend -f
+npm run prod
+
+
 rm ./backend/composer.lock
 composer install --working-dir backend
 
@@ -19,8 +22,14 @@ composer install --working-dir backend
 # Setup backend
 php backend/artisan migrate
 php backend/artisan tenants:migrate
+#php backend/artisan db:seed
+
+
+
 
 #php backend/artisan migrate:fresh --seed
+
+
 #php backend/artisan key:gen
 #php backend/artisan passport:install --force
 
