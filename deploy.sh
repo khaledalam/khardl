@@ -12,8 +12,8 @@ cd backend;
 
 
 # Handle frontend
-npm i -f
-npm run prod
+npm i -f --silent
+npm run prod --silent
 
 
 # Handle backend
