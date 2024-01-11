@@ -31,7 +31,11 @@ backend/public/js/central.js
 backend/public/js/tenant.js
 backend/public/mix-manifest.json
 
+backend/public/css/app.css
+backend/public/css/index.css
+backend/public/js/chunks/*.js
+backend/public/js/tenant.js.LICENSE.txt
 
 # DB backup
-./db_backups
+db_backups/*.sql
 db_backup.sh
