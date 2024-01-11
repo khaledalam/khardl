@@ -17,6 +17,7 @@ const customerAPISlice = createSlice({
       prev: null,
       next: null,
     },
+    ordersMetadata: null,
 
     saveProfileChanges: true,
   },
@@ -42,6 +43,9 @@ const customerAPISlice = createSlice({
     updatePageLinks: (state, action) => {
       state.pagelinks = action.payload
     },
+    updateOrdersMeta: (state, action) => {
+      state.ordersMetadata = action.payload
+    },
   },
 })
 
@@ -53,5 +57,6 @@ export const {
   updateCardsList,
   updateProfileSaveStatus,
   updatePageLinks,
+  updateOrdersMeta,
 } = customerAPISlice.actions
 export default customerAPISlice.reducer

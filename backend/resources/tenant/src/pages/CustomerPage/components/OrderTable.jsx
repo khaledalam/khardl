@@ -108,7 +108,9 @@ const OrderTable = ({data}) => {
           </table>
         </div>
       ) : (
-        <>loading ....</>
+        <div className='w-full h-[70vh] flex items-center justify-center'>
+          <span className='loading loading-spinner text-[var(--customer)]'></span>
+        </div>
       )}
     </Fragment>
   )

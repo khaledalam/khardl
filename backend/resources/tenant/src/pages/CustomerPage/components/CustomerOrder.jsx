@@ -6,6 +6,7 @@ import OrderTable from "./OrderTable"
 import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
 import {
   updateOrderList,
+  updateOrdersMeta,
   updatePageLinks,
 } from "../../../redux/NewEditor/customerSlice"
 import {useDispatch, useSelector} from "react-redux"
@@ -22,6 +23,9 @@ const CustomerOrder = () => {
   const [orderStatus, setOrderStatus] = useState("")
   const ordersList = useSelector((state) => state.customerAPI.ordersList)
   const pagelinks = useSelector((state) => state.customerAPI.pagelinks)
+  const ordersMetadata = useSelector(
+    (state) => state.customerAPI.ordersMetadata
+  )
 
   const fetchOrderPerpage = async () => {
     try {
@@ -32,7 +36,8 @@ const CustomerOrder = () => {
       console.log("orders per page >>>", ordersResponse?.data?.data)
       if (ordersResponse.data) {
         dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
-        dispatch(updatePageLinks(Object.values(ordersResponse?.data.links)))
+        dispatch(updatePageLinks(ordersResponse?.data.links))
+        dispatch(updateOrdersMeta(ordersResponse?.data.meta))
       }
     } catch (error) {
       console.log(error)
@@ -141,7 +146,8 @@ const CustomerOrder = () => {
             />
           </div>
           <h3 className=''>
-            {t("page")} {pageNumber} of 1
+            {t("page")} {pageNumber} of{" "}
+            {ordersMetadata ? ordersMetadata?.total : 15}
           </h3>
         </div>
         <div className='flex items-center gap-3'>
@@ -151,12 +157,12 @@ const CustomerOrder = () => {
             className={`w-8 h-8 border ${
               pagelinks?.prev
                 ? "bg-[var(--customer)] cursor-pointer"
-                : "border-neutral-800 disabled:bg-neutral-500 cursor-not-allowed border-solid"
-            }  rounded-full flex items-center justify-center `}
+                : "border-neutral-800 disabled:bg-neutral-300 cursor-not-allowed border-solid"
+            }  rounded-full flex items-center justify-center !p-0 `}
           >
             <MdKeyboardArrowLeft
               size={20}
-              className={pagelinks?.prev ? "text-white" : "text-black"}
+              color={pagelinks?.prev ? "#fff" : "#000"}
             />
           </button>
           <button
@@ -165,12 +171,12 @@ const CustomerOrder = () => {
             className={`w-8 h-8 border ${
               pagelinks?.next
                 ? "bg-[var(--customer)] cursor-pointer"
-                : "border-neutral-800 disabled:bg-neutral-500 cursor-not-allowed border-solid"
-            }  rounded-full flex items-center justify-center `}
+                : "border-neutral-800 disabled:bg-neutral-300 cursor-not-allowed border-solid"
+            }  rounded-full flex items-center justify-center !p-0 `}
           >
             <MdKeyboardArrowRight
               size={20}
-              className={pagelinks?.next ? "text-white" : "text-black"}
+              color={pagelinks?.next ? "#fff" : "#000"}
             />
           </button>
         </div>
