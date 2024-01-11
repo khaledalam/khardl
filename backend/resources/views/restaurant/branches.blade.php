@@ -131,8 +131,8 @@
                                                     <span class="fw-bold text-gray-400 d-block fs-8">{{ __('messages.revenue') }}</span>
                                                     @if(isset($branch->total_revenues['number_formatted']))
                                                     <div class="revenues-container">
-                                                        <span class="fw-bold d-block fs-8 branch_revenues fade">{{ $branch->total_revenues['number'] }} {{ __() }}</span>
-                                                        <span class="fw-bolder text-gray-800 fs-7 branch_revenues_formatted">{{ $branch->total_revenues['number_formatted'] }}</span>
+                                                        <span class="fw-bold d-block fs-8 branch_revenues fade">{{ $branch->total_revenues['number'] }} {{ __('messages.SAR') }}</span>
+                                                        <span class="fw-bolder text-gray-800 fs-7 branch_revenues_formatted">{{ $branch->total_revenues['number_formatted'] }} {{ __('messages.SAR') }}</span>
                                                     </div>
                                                     </span>
                                                     @endif
