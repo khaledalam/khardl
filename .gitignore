@@ -29,4 +29,9 @@ backend/queue_worker.log
 
 #backend/public/js/central.js
 #backend/public/js/tenant.js
-#backend/public/mix-manifest.json
+backend/public/mix-manifest.json
+
+
+# DB backup
+./db_backups
+db_backup.sh

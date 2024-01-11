@@ -1,38 +1,47 @@
-# Create env files
-#cp .env.example .env
-#cp backend/.env.example backend/.env
-#cp frontend/.env.example frontend/.env
+#!/usr/bin/bash
 
-
+# shellcheck disable=SC2164
 cd /home/khardl5/public_html/
 
-# Install packages
-#npm i --prefix frontend
-rm ./backend/composer.lock
-composer install --working-dir backend
+
+# backup database
+./db_backup.sh
 
 
+cd backend;
+
+
+# Handle frontend
+npm i -f
+npm run prod
+
+
+# Handle backend
+rm ./composer.lock
+composer install
+
+
+
+# Setup backend
+php artisan migrate
+php artisan tenants:migrate
+#php artisan db:seed
+
+php artisan optimize:clear
+
+
+
+
+#php artisan migrate:fresh --seed
+#php artisan key:gen
+#php artisan passport:install --force
+#php artisan create:tenant
 
 # [BE CAREFUL] Delete all databases the start with "restaurant_" prefix
 #php backend/artisan delete:tenants
 
-# Setup backend
-php backend/artisan migrate
-php backend/artisan tenants:migrate
-
-#php backend/artisan migrate:fresh --seed
-#php backend/artisan key:gen
-#php backend/artisan passport:install --force
-
-#php backend/artisan create:tenant
-
-php backend/artisan optimize:clear
-
-
 # nohup php /home/khardl5/public_html/backend/artisan queue:work --daemon &
 
-# Build frontend
-#./run-frontend-build.sh
 
 # Alert discord
 ./discord.sh \
