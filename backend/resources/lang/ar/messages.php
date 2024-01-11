@@ -614,7 +614,10 @@ return [
     "Back to list" => "الرجوع الي القائمة",
     "Completed orders" => "الطلبات المكتملة",
     "Restaurant does not have any delivery companies yet" => "المطعم ليس لديه أي شركات توصيل حتى الآن",
-    "Delivery companies" => "شركات التوصيل"
+    "Delivery companies" => "شركات التوصيل",
+    "Today" => "اليوم",
+    "Last day" => "امس",
+    "Last week" => "اخر اسبوع",
 
 ];
 

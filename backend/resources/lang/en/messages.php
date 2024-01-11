@@ -614,6 +614,9 @@ return [
     "Back to list" => "Back to list",
     "Completed orders" => "Completed orders",
     "Restaurant does not have any delivery companies yet" => "Restaurant does not have any delivery companies yet",
-    "Delivery companies" => "Delivery companies"
+    "Delivery companies" => "Delivery companies",
+    "Today" => "Today",
+    "Last day" => "Last day",
+    "Last week" => "Last week",
 
 ];
