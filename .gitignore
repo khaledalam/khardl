@@ -34,4 +34,4 @@ backend/public/mix-manifest.json
 
 # DB backup
 ./db_backups
-db_backup.sh
+#db_backup.sh
