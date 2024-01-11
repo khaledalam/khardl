@@ -5,8 +5,14 @@ import imgVisa from "../../../assets/visa.svg"
 import imgMasterCard from "../../../assets/mastercard.svg"
 import {useTranslation} from "react-i18next"
 
-const CustomerPayment = () => {
+const CustomerPayment = ({cardsList}) => {
   const {t} = useTranslation()
+
+  /*
+  
+  */
+
+  console.log({cardsList})
   return (
     <div className='p-6'>
       <div className='flex items-center gap-3'>
@@ -17,34 +23,32 @@ const CustomerPayment = () => {
         {t("My Card")}
       </h3>
       <div className='w-auto overflow-x-scroll h-full flex items-center gap-14 my-5 hide-scroll'>
-        <div className='w-max'>
-          <CardPayment
-            poweredByImgURl={imgVisa}
-            CardNumber={"5214  32**  ****  1673"}
-            ValidThruNo={"11/27"}
-          />
-        </div>
-        <div className='w-max'>
-          <CardPayment
-            poweredByImgURl={imgMasterCard}
-            CardNumber={"5214  32**  ****  1673"}
-            ValidThruNo={"11/27"}
-          />
-        </div>
-        <div className='w-max'>
-          <CardPayment
-            poweredByImgURl={imgVisa}
-            CardNumber={"5214  32**  ****  1673"}
-            ValidThruNo={"11/27"}
-          />
-        </div>
-        <div className='w-max'>
-          <CardPayment
-            poweredByImgURl={imgMasterCard}
-            CardNumber={"5214  32**  ****  1673"}
-            ValidThruNo={"11/27"}
-          />
-        </div>
+        {cardsList && cardsList.length > 0 ? (
+          cardsList.map((card) => (
+            <div className='w-max' key={card.id}>
+              <CardPayment
+                poweredByImgURl={
+                  card?.brand === "VISA"
+                    ? imgVisa
+                    : card?.brand === "MASTERCARD"
+                    ? imgMasterCard
+                    : ""
+                }
+                cardType={
+                  card?.funding === "CREDIT"
+                    ? "Platinum Credit"
+                    : "Platinum Debit"
+                }
+                CardNumber={`${card?.first_six}**  ****  ${card?.last_four}`}
+                ValidThruNo={`${card?.expiry?.month}/${card?.expiry?.year}`}
+              />
+            </div>
+          ))
+        ) : (
+          <div className='h-full w-full flex items-center justify-center'>
+            <h3 className='text-xl '>You have no saved card at the moment</h3>
+          </div>
+        )}
       </div>
     </div>
   )

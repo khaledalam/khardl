@@ -3,7 +3,7 @@ import imgCardSim from "../../../assets/cardSim.svg"
 import imgThumbUp from "../../../assets/thumbup.svg"
 import {MdMoreVert} from "react-icons/md"
 
-const CardPayment = ({poweredByImgURl, CardNumber, ValidThruNo}) => {
+const CardPayment = ({poweredByImgURl, CardNumber, cardType, ValidThruNo}) => {
   return (
     <div className='relative p-4 h-[270px] w-[430px] flex items-center justify-center border border-[var(--customer)] rounded-xl'>
       <div className='dropdown absolute top-2 right-2'>
@@ -60,7 +60,7 @@ const CardPayment = ({poweredByImgURl, CardNumber, ValidThruNo}) => {
                 <h3 className=''>Fincard</h3>
                 <img src={imgCardSim} alt='' className='w-[40px] h-[30px] ' />
               </div>
-              <h3 className='font-bold text-sm'>{"Platinum Debit"}</h3>
+              <h3 className='font-bold text-sm'>{cardType}</h3>
             </div>
             <div className='w-full'>
               <h3 className='font-bold text-xl'>{CardNumber}</h3>
