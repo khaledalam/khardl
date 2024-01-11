@@ -4859,6 +4859,9 @@ details.collapse summary::-webkit-details-marker {
 .cursor-pointer {
   cursor: pointer;
 }
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
 .select-none {
   -webkit-user-select: none;
           user-select: none;
@@ -6652,6 +6655,14 @@ details.collapse summary::-webkit-details-marker {
 }
 .disabled\:bg-transparent:disabled {
   background-color: transparent;
+}
+.disabled\:bg-neutral-300:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+}
+.disabled\:bg-neutral-500:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(115 115 115 / var(--tw-bg-opacity));
 }
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
@@ -12334,6 +12345,9 @@ details.collapse summary::-webkit-details-marker {
 .cursor-pointer {
   cursor: pointer;
 }
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
 .select-none {
   -webkit-user-select: none;
           user-select: none;
@@ -14127,6 +14141,14 @@ details.collapse summary::-webkit-details-marker {
 }
 .disabled\:bg-transparent:disabled {
   background-color: transparent;
+}
+.disabled\:bg-neutral-300:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 212 212 / var(--tw-bg-opacity));
+}
+.disabled\:bg-neutral-500:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(115 115 115 / var(--tw-bg-opacity));
 }
 .group:hover .group-hover\:opacity-100 {
   opacity: 1;
