@@ -4749,6 +4749,9 @@ details.collapse summary::-webkit-details-marker {
   width: -moz-max-content;
   width: max-content;
 }
+.w-screen {
+  width: 100vw;
+}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }

@@ -38,7 +38,7 @@ class RestaurantController extends BaseController
       ) {
     }
     public function index(){
- 
+
         return $this->restaurantService->index();
     }
 
@@ -72,7 +72,7 @@ class RestaurantController extends BaseController
         ]);
         return redirect()->back()->with('success', __('Branches has been activated successfully'));
     }
-    
+
 
     public function delivery(){
         /** @var RestaurantUser $user */
@@ -81,7 +81,7 @@ class RestaurantController extends BaseController
         $cervo = DeliveryCompany::where("module",class_basename(Cervo::class))->first();
         $streetline = DeliveryCompany::where("module",class_basename(StreetLine::class))->first();
 
-        return view('restaurant.delivery',
+        return view('restaurant.delivery_companies.companies',
             compact('user','streetline','yeswa','cervo'));
     }
 
@@ -216,10 +216,7 @@ class RestaurantController extends BaseController
     public function branches(){
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
-        $branches =  DB::table('branches')
-        ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
-            $query->where('id', $user->branch->id);
-        })
+        $branches =  Branch::iSWorker($user)
         ->get()
         ->sortByDesc('is_primary');
 
@@ -885,5 +882,5 @@ class RestaurantController extends BaseController
         ]);
 
     }
-    
+
 }

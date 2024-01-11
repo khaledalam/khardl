@@ -159,6 +159,7 @@
                                       <!--end::Table body-->
                                   </table>
                                   <!--end::Table-->
+                                  {{ $promoters->links('pagination::bootstrap-4') }}
                               </div>
                               <!--end::Table container-->
 
@@ -168,35 +169,6 @@
                       <!--end::Tables Widget 9-->
                   </div>
                   <!--end::Container-->
-                  <div class="d-flex flex-stack flex-wrap pt-10">
-                    <div class="fs-6 fw-bold text-gray-700">
-                        Showing {{ $promoters->firstItem() }} to {{ $promoters->lastItem() }} of {{ $promoters->total() }} entries
-                    </div>
-                    <!--begin::Pages-->
-                    <ul class="pagination">
-                        @if ($promoters->currentPage() > 1)
-                            <li class="page-item previous">
-                                <a href="{{ $promoters->previousPageUrl() }}" class="page-link">
-                                    <i class="previous"></i>
-                                </a>
-                            </li>
-                        @endif
-
-                        @for ($page = max(1, $promoters->currentPage() - 2); $page <= min($promoters->lastPage(), $promoters->currentPage() + 2); $page++)
-                            <li class="page-item {{ $page == $promoters->currentPage() ? 'active' : '' }}">
-                                <a href="{{ $promoters->url($page) }}" class="page-link">{{ $page }}</a>
-                            </li>
-                        @endfor
-
-                        @if ($promoters->hasMorePages())
-                            <li class="page-item next">
-                                <a href="{{ $promoters->nextPageUrl() }}" class="page-link">
-                                    <i class="next"></i>
-                                </a>
-                            </li>
-                        @endif
-                    </ul>
-                  </div>
               </div>
           <!--end::Post-->
       </div>

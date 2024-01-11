@@ -4695,6 +4695,9 @@ details.collapse summary::-webkit-details-marker {
 .w-max {
   width: max-content;
 }
+.w-screen {
+  width: 100vw;
+}
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
 }
@@ -12166,6 +12169,9 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-max {
   width: max-content;
+}
+.w-screen {
+  width: 100vw;
 }
 .\!min-w-\[18\%\] {
   min-width: 18% !important;

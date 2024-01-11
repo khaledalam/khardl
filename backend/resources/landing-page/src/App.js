@@ -82,25 +82,22 @@ const App = () => {
             <Route path='/advantages' element={<Advantages />} />{" "}
             <Route path='/services' element={<Services />} />{" "}
             <Route path='/prices' element={<Prices />} />{" "}
-            <Route path='/fqa' element={<FQA />} />{" "}
+            <Route path='/fqa' element={<FQA />} />
             <Route element={<Layout />}>
-              <Route path='/login' element={<CompleteRegistration />} />{" "}
+              <Route path='/login' element={<Login />} />{" "}
               <Route path='/register' element={<Register />} />{" "}
+            </Route>
+            {/*Editor*/}{" "}
+            <Route element={<PrivateRoute />}>
+              <Route
+                path='/complete-register'
+                element={<CompleteRegistration />}
+              />{" "}
+              <Route
+                path='/verification-email'
+                element={<VerificationEmail />}
+              />{" "}
             </Route>{" "}
-            <Route
-              path='/complete-register'
-              element={<CompleteRegistration />}
-            />{" "}
-            {/* <Route element={<PrivateRoute />}>
-                                                      <Route
-                                                        path='/complete-register'
-                                                        element={<CompleteRegistration />}
-                                                      />{" "}
-                                                      <Route
-                                                        path='/verification-email'
-                                                        element={<VerificationEmail />}
-                                                      />{" "}
-                                                    </Route>{" "} */}{" "}
           </Routes>{" "}
         </div>{" "}
         {showFooter && !loading && (

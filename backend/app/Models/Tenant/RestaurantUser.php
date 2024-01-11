@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use App\Models\ROSubscription;
 use Carbon\Carbon;
 
 use App\Models\Tenant\Branch;
@@ -113,6 +114,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->orders()->orderBy('id', 'DESC');
     }
+    public function ROSubscription()
+    {
+        return $this->hasOne(ROSubscription::class,'user_id','id');
+    }
     public function hasPermissionWorker($permission)
     {
         if ($this->isRestaurantOwner())
@@ -168,9 +173,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     public function number_of_available_branches(): int
     {
-        // @TODO: logic based on how many services(slots) owner buy
-
-        return 1;
+        return $this->ROSubscription->number_of_branches ?? 0;
     }
 
 

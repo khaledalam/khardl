@@ -17,7 +17,7 @@ function CompleteRegistration() {
 
   const {setStatusCode} = useAuthContext()
   const [files, setFiles] = useState()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const [fileUploadSuccess, setFileUploadSuccess] = useState({
     commercial_registration: false,
@@ -484,7 +484,7 @@ function CompleteRegistration() {
                 {loading && (
                   <div
                     role='status'
-                    className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[39%] max-[860px]:top-[39.5%] left-1/2 w-[100%] h-screen z-10 '
+                    className='fixed top-0 right-0 h-screen w-screen z-10'
                   >
                     <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
                     <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
