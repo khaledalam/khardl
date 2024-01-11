@@ -37,5 +37,5 @@ backend/public/js/chunks/*.js
 backend/public/js/tenant.js.LICENSE.txt
 
 # DB backup
-db_backups
+db_backups/*.sql
 db_backup.sh
