@@ -4488,6 +4488,9 @@ details.collapse summary::-webkit-details-marker {
 .h-full {
   height: 100%;
 }
+.h-screen {
+  height: 100vh;
+}
 .max-h-\[150px\] {
   max-height: 150px;
 }
