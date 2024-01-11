@@ -44,7 +44,7 @@ const CustomerDashboard = () => {
   //   setIsViewMore(false)
   // }, [])
 
-  const slicedOrderData = ordersList.slice(0, orderLength)
+  const slicedOrderData = ordersList ? ordersList.slice(0, orderLength) : []
   return (
     <div className='p-6'>
       <div className='flex items-center gap-3'>
