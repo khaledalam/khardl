@@ -74,7 +74,7 @@ class RestaurantService
     public function profitDays($count)
     {
         $chart_options = [
-            'chart_title' => __('messages.Profit per day'),
+            'chart_title' => __('messages.Revenue per day'),
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Tenant\Order',
             'group_by_field' => 'created_at',
@@ -92,7 +92,7 @@ class RestaurantService
     public function profitMonths($count)
     {
         $chart_options = [
-            'chart_title' => __('messages.Profit per month'),
+            'chart_title' => __('messages.Revenue per month'),
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Tenant\Order',
             'group_by_field' => 'created_at',
