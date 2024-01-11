@@ -15,7 +15,7 @@ class Yeswa  extends AbstractDeliveryCompany
         PaymentMethod::CASH_ON_DELIVERY=> 'COD',
         PaymentMethod::CREDIT_CARD=> 'PP',
     ];
-    
+
     public function assignToDriver(Order $order,RestaurantUser $customer){
         $branch = $order->branch;
         if(env('APP_ENV') == 'local'){
@@ -27,8 +27,8 @@ class Yeswa  extends AbstractDeliveryCompany
                 "pickup_longitude"=>  30.14,
                 "dropoff_latitude"=>  27.05,
                 "dropoff_longitude"=>  30.14,
-             
-               
+
+
             ];
         }else {
             $data = [
@@ -38,7 +38,7 @@ class Yeswa  extends AbstractDeliveryCompany
                 "dropoff_name"=> $customer->fullName,
                 "dropoff_latitude"=> $customer->lat,
                 "dropoff_longitude"=> $customer->lng,
-               
+
             ];
         }
         $data += [
@@ -50,7 +50,7 @@ class Yeswa  extends AbstractDeliveryCompany
             "order_amount"=> $order->total,
             'client_id'=>$order->id, // instead if customer id
             "payment_method"=>  self::CORRESPOND_METHODS[$order->payment_method->name]  ,
-            // nullable 
+            // nullable
             // "dropoff_time"=> "",
             // "dropoff_notes"=> "",
             // "pickup_time"=> "",
@@ -58,7 +58,7 @@ class Yeswa  extends AbstractDeliveryCompany
             // "eftops"=> true
             // "client_id"=> "",
         ];
-    
+
         return $this->send(
             url:  $this->delivery_company->api_url.'/create_trip/',
             token: false,
@@ -80,19 +80,22 @@ class Yeswa  extends AbstractDeliveryCompany
             $payload["deliveries"][0]['job_status'] == 'DECLINED' ||
             $payload["deliveries"][0]['job_status'] == 'FAILED' ){
             // Todo @todo
-            // resend the order to any delivery companies or cancelled 
+            // resend the order to any delivery companies or cancelled
         }
     }
     public function  verifyApiKey(string $api_key): bool{
-        $response = $this->sendSync(
-            url:  $this->delivery_company->api_url.'/auth_check/',
-            token: false,
-            data: [
-                "api_key"=> $api_key
-            ]
-        );
-        return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+        try {
+            $response = $this->sendSync(
+                url: $this->delivery_company->api_url . '/auth_check/',
+                token: false,
+                data: [
+                    "api_key" => $api_key
+                ]
+            );
+            return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
 }
-   

@@ -36,18 +36,18 @@ class StreetLine  extends AbstractDeliveryCompany
                 "lat"=>"31.9625314016",
                 "lng"=>"35.8901908945",
                 "address"=>"Test Address"
-              
+
             ];
         }else {
             $token = $this->delivery_company->api_key;
-            $data = [ 
+            $data = [
                 "pickup_lat"=>$branch->lat,
                 "pickup_lng"=>$branch->lng,
                 "lat"=>$customer->lat,
                 "lng"=>$customer->lng,
                 "address"=>$customer->address,
 
-             
+
             ];
         }
         $data += [
@@ -56,8 +56,8 @@ class StreetLine  extends AbstractDeliveryCompany
             "payment_type"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "CASH": "CREDIT",
             "customer_phone"=>$customer->phone,
             "customer_name"=>$customer->fullName,
-           
-        
+
+
         ];
         return $this->send(
             url:   $this->delivery_company->api_url."/$token/order/add",
@@ -90,7 +90,7 @@ class StreetLine  extends AbstractDeliveryCompany
         }else if(
             $payload['status_id'] == self::STATUS_ORDER['Arrived to pickup'] ||
             $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
-                
+
                 Order::findOrFail($payload['client_order_id'])->update([
                     'status'=>Order::ACCEPTED
                 ]);
@@ -98,22 +98,25 @@ class StreetLine  extends AbstractDeliveryCompany
             $payload['status_id'] == self::STATUS_ORDER['Order cancelled'] ||
             $payload['status_id'] == self::STATUS_ORDER['Driver acceptance timeout']  ||
             $payload['status_id'] == self::STATUS_ORDER['Driver rejected the order'] ||
-            $payload['status_id'] == self::STATUS_ORDER['Order Unassigned'] || 
+            $payload['status_id'] == self::STATUS_ORDER['Order Unassigned'] ||
             $payload['status_id'] == self::STATUS_ORDER['Order failed'] ){
             // Todo @todo
-            // resend the order to any delivery companies or cancelled 
+            // resend the order to any delivery companies or cancelled
 
         }
     }
     public function  verifyApiKey(string $api_key): bool{
-        $response = $this->sendSync(
-            url:   $this->delivery_company->api_url."/$api_key/webhooks/list",
-            token: false,
-            data: [],
-            method: 'get'
-        );
-        return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+        try {
+            $response = $this->sendSync(
+                url: $this->delivery_company->api_url . "/$api_key/webhooks/list",
+                token: false,
+                data: [],
+                method: 'get'
+            );
+            return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
 }
-   
