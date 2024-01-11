@@ -3,7 +3,11 @@
 namespace App\Http\Services\Central\Admin\Restaurant;
 
 use App\Models\Tenant;
+use App\Models\Tenant\DeliveryCompany;
 use App\Models\Tenant\Setting;
+use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
+use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,15 +37,15 @@ class RestaurantService
                     $res->orders_count = $res->completed_orders()->count();
                 });
                 return $tenant;
-            })->sortByDesc('orders_count')->customPaginate(config('application.perPage') ?? 20);/* TODO: Paginate after sorting */
+            })->sortByDesc('orders_count')->customPaginate(config('application.perPage') ?? 20); /* TODO: Paginate after sorting */
 
-        }elseif (isset($request['order_by']) && $request['order_by'] == 'highest_customers') {
+        } elseif (isset($request['order_by']) && $request['order_by'] == 'highest_customers') {
             $restaurants = $query->paginate(config('application.perPage') ?? 20)->through(function ($tenant) {
                 $tenant->run(function ($res) {
                     $res->customers_count = $res->allCustomers()->count();
                 });
                 return $tenant;
-            })->sortByDesc('customers_count')->customPaginate(config('application.perPage') ?? 20);/* TODO: Paginate after sorting */
+            })->sortByDesc('customers_count')->customPaginate(config('application.perPage') ?? 20); /* TODO: Paginate after sorting */
 
         } else {
             $restaurants = $query->paginate(config('application.perPage') ?? 20);
@@ -67,9 +71,14 @@ class RestaurantService
             $completedOrders,
             $acceptedOrders,
             $cancelledOrders,
+            $readyOrders,
+            $receivedByResOrders,
             $salesThisMonth,
             $profitDays,
-            $profitMonths
+            $profitMonths,
+            $yeswa,
+            $cervo,
+            $streetline
         ] = $this->getRestaurantData($restaurant);
 
         $owner = $restaurant->user;
@@ -95,9 +104,14 @@ class RestaurantService
                 'completedOrders',
                 'acceptedOrders',
                 'cancelledOrders',
+                'readyOrders',
+                'receivedByResOrders',
                 'salesThisMonth',
                 'profitDays',
                 'profitMonths',
+                'yeswa',
+                'cervo',
+                'streetline',
             )
         );
     }
@@ -117,9 +131,14 @@ class RestaurantService
             $acceptedOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'accepted');
             $completedOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'completed');
             $cancelledOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'cancelled');
+            $readyOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'ready');
+            $receivedByResOrders = $tenantRestaurantService->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
             $salesThisMonth = $tenantRestaurantService->getTotalPriceThisMonth(clone $orders);
             $profitDays = $tenantRestaurantService->profitDays(7);
             $profitMonths = $tenantRestaurantService->profitMonths(12);
+            $yeswa = DeliveryCompany::where("module", class_basename(Yeswa::class))->first();
+            $cervo = DeliveryCompany::where("module", class_basename(Cervo::class))->first();
+            $streetline = DeliveryCompany::where("module", class_basename(StreetLine::class))->first();
             return [
                 $info['logo'],
                 $info['is_live'],
@@ -134,9 +153,14 @@ class RestaurantService
                 $completedOrders,
                 $acceptedOrders,
                 $cancelledOrders,
+                $readyOrders,
+                $receivedByResOrders,
                 $salesThisMonth,
                 $profitDays,
-                $profitMonths
+                $profitMonths,
+                $yeswa,
+                $cervo,
+                $streetline
             ];
         });
 

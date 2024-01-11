@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import orderIcon from "../../../assets/orderBlack.svg"
 import PrimaryOrderSearch from "./PrimaryOrderSearch"
 import PrimaryOrderSelect from "./PrimaryOrderSelect"
@@ -12,6 +12,7 @@ import {
 
 import {useSelector} from "react-redux"
 import {useTranslation} from "react-i18next"
+import AxiosInstance from "../../../axios/axios"
 
 const CustomerOrder = () => {
   const {t} = useTranslation()
@@ -22,6 +23,26 @@ const CustomerOrder = () => {
   const ordersList = useSelector((state) => state.customerAPI.ordersList)
 
   const slicedOrderData = ordersList.slice(0, orderPerPage)
+
+  const fetchOrderPerpage = async () => {
+    try {
+      const ordersResponse = await AxiosInstance.get(
+        `orders?per_page=${orderPerPage}&page=${pageNumber}`
+      )
+
+      console.log("orders per page >>>", ordersResponse?.data?.data)
+      // if (ordersResponse.data) {
+      //   dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
+      // }
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    fetchOrderPerpage().then(() => {})
+  }, [])
 
   return (
     <div className='p-6'>

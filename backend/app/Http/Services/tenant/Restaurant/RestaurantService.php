@@ -24,6 +24,8 @@ class RestaurantService
         $accepted = $this->getOrderStatusCount(clone $orders, 'accepted');
         $completed = $this->getOrderStatusCount(clone $orders, 'completed');
         $cancelled = $this->getOrderStatusCount(clone $orders, 'cancelled');
+        $ready = $this->getOrderStatusCount(clone $orders, 'ready');
+        $receivedByRes = $this->getOrderStatusCount(clone $orders, 'receivedByRestaurant');
         $allOrders = $orders->get();
         $completedOrders = $orders->completed();
         $totalPriceThisMonth = $this->getTotalPriceThisMonth(clone $orders);
@@ -46,6 +48,8 @@ class RestaurantService
             'cancelled',
             'completed',
             'accepted',
+            'ready',
+            'receivedByRes',
             'dailySales',
             'percentageChange',
             'noOfUsersThisMonth',
@@ -70,7 +74,7 @@ class RestaurantService
     public function profitDays($count)
     {
         $chart_options = [
-            'chart_title' => __('messages.Profit per day'),
+            'chart_title' => __('messages.Revenue per day'),
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Tenant\Order',
             'group_by_field' => 'created_at',
@@ -88,7 +92,7 @@ class RestaurantService
     public function profitMonths($count)
     {
         $chart_options = [
-            'chart_title' => __('messages.Profit per month'),
+            'chart_title' => __('messages.Revenue per month'),
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Tenant\Order',
             'group_by_field' => 'created_at',

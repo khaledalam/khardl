@@ -87,22 +87,37 @@ class Order extends Model
     {
         return $query->orderBy('id', 'DESC');
     }
-    public function scopeWhenSearch($query,$search)
+    public function scopeWhenSearch($query, $search)
     {
         return $query->when($search != null, function ($q) use ($search) {
-            return $q->where('shipping_address','LIKE','%' . $search . '%');
+            return $q->where('shipping_address', 'LIKE', '%' . $search . '%')
+                ->orWhere('id', 'LIKE', '%' . $search . '%');
         });
     }
-    public function scopeWhenStatus($query,$status)
+    public function scopeWhenStatus($query, $status)
     {
         return $query->when($status != null, function ($q) use ($status) {
-            return $q->where('status',$status);
+            return $q->where('status', $status);
         });
     }
-    public function scopeWhenPaymentStatus($query,$status)
+    public function scopeWhenDateString($query, $date)
+    {
+        return $query->when($date != null, function ($q) use ($date) {
+            if ($date == 'today') {
+                return $q->whereDate('created_at', now()->toDateString());
+            } elseif ($date == 'last_day') {
+                return $q->whereDate('created_at', now()->subDay()->toDateString());
+            } elseif ($date == 'last_week') {
+                $startDate = Carbon::now()->subDays(7)->startOfDay();
+                $endDate = Carbon::now()->subDays(1)->endOfDay();
+                return $q->whereBetween('created_at', [$startDate,$endDate]);
+            }
+        });
+    }
+    public function scopeWhenPaymentStatus($query, $status)
     {
         return $query->when($status != null, function ($q) use ($status) {
-            return $q->where('payment_status',$status);
+            return $q->where('payment_status', $status);
         });
     }
     /* End Scoped */
@@ -131,7 +146,8 @@ class Order extends Model
         return $this->belongsTo(DeliveryType::class);
     }
 
-    public function items(){
+    public function items()
+    {
         return $this->hasMany(OrderItem::class);
     }
 

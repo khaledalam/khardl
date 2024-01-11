@@ -30,7 +30,7 @@ class Cervo  extends AbstractDeliveryCompany
 
     public function assignToDriver(Order $order,RestaurantUser $customer){
         $branch = $order->branch;
-      
+
         if(env('APP_ENV') == 'local'){
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
@@ -45,7 +45,7 @@ class Cervo  extends AbstractDeliveryCompany
             ];
         }else {
             $token = $this->delivery_company->api_key;
-            $data = [ 
+            $data = [
                 "customer"=>$customer->address ,
                 "order_id"=>$order->id,
                 "id"=>$order->id,
@@ -57,7 +57,7 @@ class Cervo  extends AbstractDeliveryCompany
             ];
         }
         $data += [
-          
+
             "date"=>now()->format('Y-m-d H:i:s'),
             "mobile"=>$customer->phone,
             "price"=>$order->total,
@@ -65,7 +65,7 @@ class Cervo  extends AbstractDeliveryCompany
             "payment"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "CASH": "ONLINE",
             "ispaid"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "NO PAID": "PAID",
             "status"=>self::STATUS_ORDER['NEW'],
-            // nullable 
+            // nullable
             "callback"=>"",
             "notes"=>"",
         ];
@@ -88,19 +88,23 @@ class Cervo  extends AbstractDeliveryCompany
             $payload['order_status'] == self::STATUS_ORDER['CANCELLED'] ||
             $payload['order_status'] == self::STATUS_ORDER['CANCELED_BY_DRIVER'] ){
             // Todo @todo
-            // resend the order to any delivery companies or cancelled 
+            // resend the order to any delivery companies or cancelled
         }
 
     }
     public function  verifyApiKey(string $api_key): bool{
 
-        $response = Http::withToken($api_key)
-        ->get( $this->delivery_company->api_url.'/order/RANDOM_ID_NOT_EXISTS',[]);
-    
-        if($response->getStatusCode() == 400){
-            return true;
-        }else {
-            // 401 Unauthorized
+        try {
+            $response = Http::withToken($api_key)
+                ->get($this->delivery_company->api_url . '/order/RANDOM_ID_NOT_EXISTS', []);
+
+            if ($response->getStatusCode() == 400) {
+                return true;
+            } else {
+                // 401 Unauthorized
+                return false;
+            }
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -119,7 +123,6 @@ class Cervo  extends AbstractDeliveryCompany
     //         logger($e->getMessage());
     //         return false;
     //     }
-        
+
     // }
 }
-   

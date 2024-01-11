@@ -127,11 +127,15 @@
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Info-->
-                                                <div class="m-0">
-                                                    <span
-                                                        class="fw-bold text-gray-400 d-block fs-8">{{ __('messages.revenue') }}</span>
-                                                    <span
-                                                        class="fw-bolder text-gray-800 fs-7">$TODO</span>
+                                                <div class="m-0 position-relative">
+                                                    <span class="fw-bold text-gray-400 d-block fs-8">{{ __('messages.revenue') }}</span>
+                                                    @if(isset($branch->total_revenues['number_formatted']))
+                                                    <div class="revenues-container">
+                                                        <span class="fw-bold d-block fs-8 branch_revenues fade">{{ $branch->total_revenues['number'] }} {{ __('messages.SAR') }}</span>
+                                                        <span class="fw-bolder text-gray-800 fs-7 branch_revenues_formatted">{{ $branch->total_revenues['number_formatted'] }} {{ __('messages.SAR') }}</span>
+                                                    </div>
+                                                    </span>
+                                                    @endif
                                                 </div>
                                                 <!--end::Info-->
                                             </div>
@@ -662,7 +666,7 @@
                                 <input class="form-check-input" type="radio" name="hours_option" id="normalChoice" value="normal" checked>
                                 <label class="form-check-label" for="normalChoice">{{ __('messages.choose-time-for-all-days') }}</label>
                             </div>
-                          
+
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="hours_option" id="customChoice" value="custom">
                                 <label class="form-check-label" for="customChoice">{{ __('messages.choose-time-for-custom-days') }}</label>
@@ -672,7 +676,7 @@
                 </div>
                  <!-- Hours input for normal choice -->
                  <div  id="normalChoiceSection">
-                 
+
                     <div class=" d-flex justify-content-between w-100">
                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                             <label for="normal_from">{{ __('messages.from') }}  </label>
