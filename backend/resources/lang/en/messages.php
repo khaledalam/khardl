@@ -609,5 +609,11 @@ return [
     "Complete Step 1 only" => "Complete Step 1 only",
     "Have restaurant" => "Have restaurant",
     "Select" => "Select",
+    "Update central settings" => "Update central settings",
+    "Update revenue settings" => "Update revenue settings",
+    "Back to list" => "Back to list",
+    "Completed orders" => "Completed orders",
+    "Restaurant does not have any delivery companies yet" => "Restaurant does not have any delivery companies yet",
+    "Delivery companies" => "Delivery companies"
 
 ];

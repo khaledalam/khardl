@@ -84,7 +84,7 @@
                                     <!--end::Info-->
                                 </div>
                                 <!--end::User-->
-
+                                <a class="btn btn-primary" href="{{ route('admin.restaurants') }}">{{ __('messages.Back to list') }}</a>
                             </div>
                             <!--end::Title-->
                             <!--begin::Stats-->
@@ -213,6 +213,9 @@
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#customers">{{ __('messages.customers')}}</a>
                             </li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#delivery_companies">{{ __('messages.Delivery companies')}}</a>
+                            </li>
                             @endif
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
@@ -232,6 +235,9 @@
                         </div>
                         <div class="tab-pane fade" id="customers" role="tab-panel">
                             @include('admin.Restaurants.Customer.view')
+                        </div>
+                        <div class="tab-pane fade" id="delivery_companies" role="tab-panel">
+                            @include('admin.Restaurants.Delivery_companies.view')
                         </div>
                     </div>
                 </div>

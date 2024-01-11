@@ -166,7 +166,7 @@
                                         <div class="border border-gray-300 border-dashed rounded res_total_orders min-w-80px py-3 px-4 mx-2 mb-3 position-relative">
                                             <span class="total_orders fade">{{ $restaurant->total_orders['number'] }}</span>
                                             <div class="fs-6 fw-bolder text-gray-700">{{ $restaurant->total_orders['number_formatted'] }}</div>
-                                            <div class="fw-bold text-gray-400">{{ __('messages.orders')}}</div>
+                                            <div class="fw-bold text-gray-400">{{ __('messages.Completed orders')}}</div>
                                         </div>
                                         <!--end::Stats-->
                                         <!--begin::Action-->
@@ -403,7 +403,16 @@
                             <td>{{ $restaurant->phone_number }}</td>
 
                             <td>
-                                @if($restaurant->isApproved == "0")<span class="badge badge-light-warning fw-bolder px-4 py-3">{{ __('messages.pending')}}</span> @elseif ($restaurant->isApproved == "1")<span class="badge badge-light-success fw-bolder px-4 py-3">{{ __('messages.live')}}</span> @else <span class="badge badge-light-danger fw-bolder px-4 py-3">{{ __('messages.not_live')}}</span> @endif
+                                @if($restaurant?->is_live())
+                                <span class="badge badge-light-success fw-bolder">{{ __('messages.live')}}</span>
+
+                                @elseif ($restaurant->status == "active")
+                                <span class="badge badge-light-warning fw-bolder">{{ __('messages.pending')}}</span>
+                                @elseif ($restaurant?->user?->isBlocked())
+                                <span class="badge badge-danger fw-bolder">{{ __('messages.blocked')}}</span>
+                                @else
+                                <span class="badge badge-light-danger fw-bolder">{{ __('messages.not_live')}}</span>
+                                @endif
                             </td>
                             <td>
                                 <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $restaurant->total_orders['number_formatted'] }}</span>

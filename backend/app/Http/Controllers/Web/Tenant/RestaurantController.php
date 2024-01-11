@@ -81,7 +81,7 @@ class RestaurantController extends BaseController
         $cervo = DeliveryCompany::where("module",class_basename(Cervo::class))->first();
         $streetline = DeliveryCompany::where("module",class_basename(StreetLine::class))->first();
 
-        return view('restaurant.delivery',
+        return view('restaurant.delivery_companies.companies',
             compact('user','streetline','yeswa','cervo'));
     }
 
