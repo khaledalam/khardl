@@ -81,6 +81,8 @@ function CompleteRegistration() {
             )
             setTimeout(() => {
                setStatusCode(200)
+                console.log(responseData)
+
                window.location.href = responseData.data.url;
                // window.open(responseData.data.url, '_blank', 'noopener,noreferrer')
                // navigate('/');
