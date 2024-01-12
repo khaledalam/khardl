@@ -83,7 +83,7 @@ const Slider = ({banner_images}) => {
                 >
                   <input
                     type='file'
-                    accept='image/*'
+                    accept='video/*, image/*'
                     id={"imageBanner" + index}
                     name={"imageBanner" + index}
                     onChange={(e) => handleImagesUpload(e, index)}

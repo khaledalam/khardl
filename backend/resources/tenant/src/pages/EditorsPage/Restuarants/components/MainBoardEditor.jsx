@@ -92,7 +92,10 @@ const MainBoardEditor = ({categories}) => {
     const selectedBanner = event.target.files[0]
 
     if (selectedBanner) {
-      setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+      if (selectedBanner.type.includes("video")) {
+        console.log("video", selectedBanner)
+        setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+      }
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
     }
   }
@@ -189,6 +192,8 @@ const MainBoardEditor = ({categories}) => {
 
   console.log("filterCategory", filterCategory)
 
+  const filetype = "video"
+
   return (
     <div
       style={{
@@ -223,7 +228,7 @@ const MainBoardEditor = ({categories}) => {
             type='file'
             name='logo'
             id={"logo"}
-            accept='*/image'
+            accept='image/*'
             onChange={handleLogoUpload}
             className='hidden'
             hidden
@@ -258,11 +263,12 @@ const MainBoardEditor = ({categories}) => {
         <div
           style={{
             backgroundColor: banner_background_color,
-            backgroundImage: uploadSingleBanner
-              ? `url(${uploadSingleBanner})`
-              : banner_image
-              ? `url(${banner_image})`
-              : `url(${bannerPlaceholder})`,
+            backgroundImage:
+              filetype !== "video" && uploadSingleBanner
+                ? `url(${uploadSingleBanner})`
+                : banner_image
+                ? `url(${banner_image})`
+                : `url(${bannerPlaceholder})`,
             borderRadius: banner_shape === "sharp" ? 0 : 12,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
@@ -280,22 +286,33 @@ const MainBoardEditor = ({categories}) => {
                 type='file'
                 name='banner'
                 id={"banner"}
-                accept='*/image'
+                accept='video/*, image/*'
                 onChange={handleBannerUpload}
                 className='hidden'
                 hidden
               />
-              <img
-                src={
-                  uploadSingleBanner
-                    ? uploadSingleBanner
-                    : banner_image
-                    ? banner_image
-                    : ImgPlaceholder
-                }
-                alt={""}
-                className='w-full h-full object-cover'
-              />
+              {filetype === "video" ? (
+                <div className='w-full h-full bg-slate-50'>
+                  {uploadSingleBanner && (
+                    <video width='100%' height='100%' controls>
+                      <source src={uploadSingleBanner} type='video/mp4' />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                </div>
+              ) : (
+                <img
+                  src={
+                    uploadSingleBanner
+                      ? uploadSingleBanner
+                      : banner_image
+                      ? banner_image
+                      : ImgPlaceholder
+                  }
+                  alt={""}
+                  className='w-full h-full object-cover'
+                />
+              )}
             </label>
             {uploadSingleBanner && (
               <div className='absolute top-[-0.8rem] right-[-1rem]'>
