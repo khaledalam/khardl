@@ -23,7 +23,7 @@ const restuarantEditorSlice = createSlice({
     logo_shape: "rounded",
     banner_type: "one-photo",
     banner_shape: "rounded",
-    banner_background_color: "green",
+    banner_background_color: "white",
 
     category_type: "stack",
     category_alignment: "center",
