@@ -3869,6 +3869,12 @@ details.collapse summary::-webkit-details-marker {
 .top-\[8px\] {
   top: 8px;
 }
+.left-\[45\%\] {
+  left: 45%;
+}
+.left-\[47\%\] {
+  left: 47%;
+}
 .z-0 {
   z-index: 0;
 }

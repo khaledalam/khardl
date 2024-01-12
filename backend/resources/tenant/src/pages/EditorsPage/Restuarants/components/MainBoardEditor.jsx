@@ -1,7 +1,8 @@
 import React, {Fragment, useContext, useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom"
 import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
-import WhatsappIcon from "../../../../assets/whatsappImg.svg"
+import ImgPlaceholder from "../../../../assets/imgPlaceholder.png"
+import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg"
 import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
 import CategoryItem from "./CategoryItem"
 import ProductItem from "./ProductItem"
@@ -73,11 +74,6 @@ const MainBoardEditor = ({categories}) => {
     (state) => state.restuarantEditorStyle.logoUpload
   )
 
-  const filterCategory =
-    categories && categories.length > 0
-      ? categories?.filter((category) => category.id === selectedCategory.id)
-      : [{name: "", items: []}]
-
   const [uploadSingleBanner, setUploadSingleBanner] = useState(null)
 
   const handleLogoUpload = (event) => {
@@ -128,8 +124,69 @@ const MainBoardEditor = ({categories}) => {
     dispatch(setBannerUpload(null))
   }
 
+  const categoriesPlaceHolders = [
+    {
+      id: 1,
+      name: "category 1",
+      photo: ImgPlaceholder,
+    },
+    {
+      id: 2,
+      name: "category 2",
+      photo: ImgPlaceholder,
+    },
+    {
+      id: 3,
+      name: "category 3",
+      photo: ImgPlaceholder,
+    },
+    {
+      id: 4,
+      name: "category 2",
+      photo: ImgPlaceholder,
+    },
+    {
+      id: 5,
+      name: "category 3",
+      photo: ImgPlaceholder,
+    },
+  ]
+  const productPlaceHolders = [
+    {
+      id: 1,
+      description: "descriptiomn 1",
+      photo: ImgPlaceholder,
+      price: 176,
+      calories: 245,
+      availability: 1,
+    },
+    {
+      id: 2,
+      description: "descriptiomn 2",
+      photo: ImgPlaceholder,
+      price: 176,
+      calories: 245,
+      availability: 1,
+    },
+    {
+      id: 3,
+      description: "descriptiomn 3",
+      photo: ImgPlaceholder,
+      price: 176,
+      calories: 245,
+      availability: 1,
+    },
+  ]
+
+  const filterCategory =
+    categories && categories.length > 0
+      ? categories?.filter((category) => category.id === selectedCategory.id)
+      : [{name: "Product", items: productPlaceHolders}]
+
   console.log("bannner shape", banner_shape)
   console.log("font weight", text_fontWeight)
+
+  console.log("filterCategory", filterCategory)
 
   return (
     <div
@@ -150,15 +207,15 @@ const MainBoardEditor = ({categories}) => {
           right: 0,
           width: "100%",
         }}
-        className='w-full min-h-[85px]   rounded-xl flex items-center justify-between px-2'
+        className='w-full min-h-[85px] z-10  rounded-xl flex items-center justify-between px-2'
       >
         <div
           onClick={toggleMenu}
           style={{fontWeight: text_fontWeight}}
-          className={`btn hover:bg-neutral-100 flex items-center gap-3`}
+          className={`btn hover:bg-neutral-100 flex items-center gap-3 cursor-pointer`}
         >
           <IoMenuOutline size={40} className='text-neutral-400' />
-          <span className='text-sm'>{t("Show Navigation Bar To Edit")}</span>
+          {/* <span className='text-sm'>{t("Show Navigation Bar To Edit")}</span> */}
         </div>
         <div
           onClick={() => navigate("/cart")}
@@ -204,18 +261,18 @@ const MainBoardEditor = ({categories}) => {
           />
           <label htmlFor='logo'>
             <img
-              src={uploadLogo ? uploadLogo : logo}
+              src={uploadLogo ? uploadLogo : logo ? logo : ImgPlaceholder}
               alt={""}
               style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
               className='w-full h-full object-cover'
             />
           </label>
           {uploadLogo && (
-            <div className='absolute top-[-0.8rem] right-[-1rem]'>
+            <div className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'>
               <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
                 <IoCloseOutline
                   size={16}
-                  className='text-red-500'
+                  className='text-red-500 cursor-pointer'
                   onClick={clearLogo}
                 />
               </div>
@@ -234,7 +291,9 @@ const MainBoardEditor = ({categories}) => {
             backgroundColor: banner_background_color,
             backgroundImage: uploadSingleBanner
               ? `url(${uploadSingleBanner})`
-              : `url(${banner_image})`,
+              : banner_image
+              ? `url(${banner_image})`
+              : `url(${bannerPlaceholder})`,
             borderRadius: banner_shape === "sharp" ? 0 : 12,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
@@ -258,7 +317,13 @@ const MainBoardEditor = ({categories}) => {
                 hidden
               />
               <img
-                src={uploadSingleBanner ? uploadSingleBanner : banner_image}
+                src={
+                  uploadSingleBanner
+                    ? uploadSingleBanner
+                    : banner_image
+                    ? banner_image
+                    : ImgPlaceholder
+                }
                 alt={""}
                 className='w-full h-full object-cover'
               />
@@ -278,86 +343,7 @@ const MainBoardEditor = ({categories}) => {
         </div>
       )}
       {/* Category */}
-      {/* {false ? (
-        <div
-          className={` w-full flex  p-2  ${
-            category_alignment ===t('Center')
-              ? "items-center justify-center"
-              : category_alignment ===t('Left')
-              ? "items-center justify-start"
-              : category_alignment ===t('Right')
-              ? "items-center justify-end"
-              : ""
-          }`}
-        >
-          <div
-            style={{
-              backgroundColor: page_category_color,
-              borderRadius: category_shape === t('Sharp') ? 0 : 12,
-            }}
-            className='w-[30%] py-3'
-          >
-            <div className='flex flex-col items-center gap-6'>
-              {categoryList.map((category, i) => (
-                <CategoryItem
-                  key={i}
-                  active={selectedCategory === category.name.toLowerCase()}
-                  name={category.name}
-                  imgSrc={category.imgSrc}
-                  alt={category.name}
-                  hoverColor={category_hover_color}
-                  onClick={() =>
-                    setSelectedCategory(category.name.toLowerCase())
-                  }
-                  textColor={text_color}
-                  textAlign={text_alignment}
-                  fontWeight={text_fontWeight}
-                  shape={category_shape}
-                  isGrid={true}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Fragment>
-          <div
-            style={{
-              backgroundColor: page_category_color,
-              // borderRadius: category_shape === t('Sharp') ? 0 : 12,
-            }}
-            className={`w-full min-h-[180px]  flex   ${
-              category_alignment ===t('Center')
-                ? "items-center justify-center"
-                : category_alignment ===t('Left')
-                ? "items-center justify-start"
-                : category_alignment ===t('Right')
-                ? "items-center justify-end"
-                : ""
-            }`}
-          >
-            <div className='flex items-center gap-6'>
-              {categoryList.map((category, i) => (
-                <CategoryItem
-                  key={i}
-                  active={selectedCategory === category.name.toLowerCase()}
-                  name={category.name}
-                  imgSrc={category.imgSrc}
-                  alt={category.name}
-                  hoverColor={category_hover_color}
-                  onClick={() =>
-                    setSelectedCategory(category.name.toLowerCase())
-                  }
-                  textColor={text_color}
-                  textAlign={text_alignment}
-                  fontWeight={text_fontWeight}
-                  shape={category_shape}
-                />
-              ))}
-            </div>
-          </div>
-        </Fragment>
-      )} */}
+
       <div
         className={`w-full h-[500px] flex ${
           category_alignment === "center"
@@ -390,30 +376,55 @@ const MainBoardEditor = ({categories}) => {
                   : "flex-col gap-6"
               } items-center `}
             >
-              {categories?.map((category, i) => (
-                <CategoryItem
-                  key={i}
-                  active={selectedCategory.id === category.id}
-                  name={category.name}
-                  imgSrc={category.photo}
-                  alt={category.name}
-                  hoverColor={category_hover_color}
-                  onClick={() =>
-                    dispatch(
-                      selectedCategoryAPI({
-                        name: category.name,
-                        id: category.id,
-                      })
-                    )
-                  }
-                  textColor={text_color}
-                  textAlign={text_alignment}
-                  fontWeight={text_fontWeight}
-                  shape={category_shape}
-                  isGrid={category_alignment === "center" ? false : true}
-                  fontSize={text_fontSize}
-                />
-              ))}
+              {categories && categories.length > 0
+                ? categories?.map((category, i) => (
+                    <CategoryItem
+                      key={i}
+                      active={selectedCategory.id === category.id}
+                      name={category.name}
+                      imgSrc={category.photo}
+                      alt={category.name}
+                      hoverColor={category_hover_color}
+                      onClick={() =>
+                        dispatch(
+                          selectedCategoryAPI({
+                            name: category.name,
+                            id: category.id,
+                          })
+                        )
+                      }
+                      textColor={text_color}
+                      textAlign={text_alignment}
+                      fontWeight={text_fontWeight}
+                      shape={category_shape}
+                      isGrid={category_alignment === "center" ? false : true}
+                      fontSize={text_fontSize}
+                    />
+                  ))
+                : categoriesPlaceHolders.map((category, i) => (
+                    <CategoryItem
+                      key={i}
+                      active={selectedCategory.id === category.id}
+                      name={category.name}
+                      imgSrc={category.photo}
+                      alt={category.name}
+                      hoverColor={category_hover_color}
+                      onClick={() =>
+                        dispatch(
+                          selectedCategoryAPI({
+                            name: category.name,
+                            id: category.id,
+                          })
+                        )
+                      }
+                      textColor={text_color}
+                      textAlign={text_alignment}
+                      fontWeight={text_fontWeight}
+                      shape={category_shape}
+                      isGrid={category_alignment === "center" ? false : true}
+                      fontSize={text_fontSize}
+                    />
+                  ))}
             </div>
           </div>
         </div>
@@ -510,82 +521,7 @@ const MainBoardEditor = ({categories}) => {
           </div>
         </div>
       </div>
-      {/* Products/ category details */}
-      {/* {categoryDetail_type === "grid" ? (
-        <div
-          className={`w-full flex bg-white ${
-            categoryDetail_alignment ===t('Center')
-              ? "items-center justify-center"
-              : categoryDetail_alignment === t('left')
-              ? "items-center justify-start"
-              : categoryDetail_alignment === t('right')
-              ? "items-center justify-end"
-              : ""
-          }
-        `}
-        >
-          <div className={``}>
-            <h3 className='font-semibold text-[1.5rem] text-center mb-4 relative capitalize'>
-              <span className='custom-underline'>{selectedCategory}</span>{" "}
-            </h3>
 
-            <div className={`flex flex-col gap-6 h-fit  py-4 px-2`}>
-              {filterProductList.map((product, i) => (
-                <ProductItem
-                  key={i}
-                  id={product.name + i}
-                  name={product.name}
-                  imgSrc={product.imgSrc}
-                  amount={product.amount}
-                  caloryInfo={product.caloryInfo}
-                  cartBgcolor={categoryDetail_cart_color}
-                  amountColor={price_color}
-                  shape={categoryDetail_shape}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div
-          style={{
-            borderRadius: categoryDetail_shape === "sharp" ? 0 : 12,
-          }}
-          className={`w-full h-fit bg-white   flex ${
-            categoryDetail_alignment ===t('Center')
-              ? "items-center justify-center"
-              : categoryDetail_alignment === t('left')
-              ? "items-center justify-start"
-              : categoryDetail_alignment === t('right')
-              ? "items-center justify-end"
-              : ""
-          }  `}
-        >
-          <div className='flex flex-col items-center justify-center'>
-            <h3 className='font-semibold text-[1.5rem] mb-4 relative capitalize'>
-              <span className='custom-underline'>{selectedCategory}</span>{" "}
-            </h3>
-
-            <div
-              className={`flex items-center gap-6 h-fit   flex-wrap py-4 px-2`}
-            >
-              {filterProductList.map((product, i) => (
-                <ProductItem
-                  key={i}
-                  id={product.name + i}
-                  name={product.name}
-                  imgSrc={product.imgSrc}
-                  amount={product.amount}
-                  caloryInfo={product.caloryInfo}
-                  cartBgcolor={categoryDetail_cart_color}
-                  amountColor={price_color}
-                  shape={categoryDetail_shape}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )} */}
       {/* social media */}
 
       <div
