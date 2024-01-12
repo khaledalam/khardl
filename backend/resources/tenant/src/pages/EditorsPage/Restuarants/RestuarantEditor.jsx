@@ -102,25 +102,25 @@ export const RestuarantEditor = () => {
       <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
       <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all hide-scroll'>
         <div
-          className={`transition-all ${
+          className={`transition-all h-full ${
             isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[18%]"
           } xl:flex-[30%] laptopXL:flex-[25%] overflow-x-hidden bg-white h-full `}
         >
           <SidebarEditor />
         </div>
         <div
-          className={` transition-all ${
+          className={` transition-all h-full ${
             isSidebarCollapse ? "flex-[100%] w-full" : "flex-[82%]"
           } xl:flex-[70%] laptopXL:flex-[75%] overflow-x-hidden bg-neutral-200`}
         >
           {template === "template-1" && (
-            <div className='w-full  flex flex-col gap-2'>
+            <div className='w-full h-full  flex flex-col gap-2'>
               {restaurantStyle?.headerPosition === "fixed" && (
                 <div className='p-2'>
                   <HeaderEdit restaurantStyle={restaurantStyle} />
                 </div>
               )}
-              <div className='h-[calc(100vh-75px)] overflow-y-scroll hide-scroll'>
+              <div className=' h-full overflow-y-scroll hide-scroll'>
                 <MainBoardEditor categories={categories} />
               </div>
             </div>
