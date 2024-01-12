@@ -97,9 +97,9 @@ const Navbar = ({toggleSidebarCollapse}) => {
         <div className='flex items-center gap-4 cursor-pointer'>
           <button
             onClick={() => window.open("/")}
-            className='btn btn-active p-3 bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200 flex items-center justify-center'
+            className='btn btn-active w-[100px] bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200'
           >
-            <FaPlay size={22} />
+            {t("Preview")}
           </button>
           <button
             onClick={handleSubmitResStyle}
