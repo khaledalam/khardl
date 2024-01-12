@@ -34,6 +34,7 @@ const Navbar = ({toggleSidebarCollapse}) => {
     inputs.product_background_color = restuarantStyle.product_background_color
     inputs.page_category_color = restuarantStyle.page_category_color
     inputs.header_color = restuarantStyle.header_color
+    inputs.headerPosition = restuarantStyle.headerPosition
     inputs.footer_color = restuarantStyle.footer_color
     inputs.price_color = restuarantStyle.price_color
     inputs.text_fontFamily = restuarantStyle.text_fontFamily
@@ -49,11 +50,11 @@ const Navbar = ({toggleSidebarCollapse}) => {
       restuarantStyle?.bannersUpload &&
       restuarantStyle?.bannersUpload.length > 0
     ) {
-      const imagePromises = restuarantStyle?.bannersUpload.map(
-        async (image) => {
+      const imagePromises = restuarantStyle?.bannersUpload
+        .filter((banner) => banner !== undefined || banner !== null)
+        .map(async (image) => {
           return await fetch(image).then((r) => r.blob())
-        }
-      )
+        })
       inputs.banner_images = await Promise.all(imagePromises)
     } else {
       inputs.banner_images = ""
