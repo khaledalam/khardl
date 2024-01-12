@@ -15,6 +15,7 @@ import {
   setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 import {useTranslation} from "react-i18next"
+import HeaderEdit from "./HeaderEdit"
 
 const MainBoardEditor = ({categories}) => {
   const restuarantEditorStyle = useSelector(
@@ -198,41 +199,9 @@ const MainBoardEditor = ({categories}) => {
       className='w-full p-4 flex flex-col gap-6 relative'
     >
       {/* Header cart */}
-      <div
-        style={{
-          backgroundColor: header_color,
-          position: headerPosition === "fixed" ? "absolute" : headerPosition,
-          top: 0,
-          left: 0,
-          right: 0,
-          width: "100%",
-        }}
-        className='w-full min-h-[85px] z-10  rounded-xl flex items-center justify-between px-2'
-      >
-        <div
-          onClick={toggleMenu}
-          style={{fontWeight: text_fontWeight}}
-          className={`btn hover:bg-neutral-100 flex items-center gap-3 cursor-pointer`}
-        >
-          <IoMenuOutline size={40} className='text-neutral-400' />
-          {/* <span className='text-sm'>{t("Show Navigation Bar To Edit")}</span> */}
-        </div>
-        <div
-          onClick={() => navigate("/cart")}
-          className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer'
-        >
-          <img src={cartHeaderImg} alt={"cart"} className='' />
-          {true && (
-            <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
-              <div className='w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
-                <span className='text-white font-bold text-xs'>
-                  {cartItemsCount}
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      {headerPosition !== "fixed" && (
+        <HeaderEdit restaurantStyle={restuarantEditorStyle} />
+      )}
       {/* logo */}
       <div
         style={{backgroundColor: page_color}}
@@ -539,7 +508,7 @@ const MainBoardEditor = ({categories}) => {
         <div className='flex items-center gap-5'>
           {selectedSocialIcons?.map((socialMedia) => (
             <a
-              href={socialMedia.link}
+              href={socialMedia.link ? socialMedia.link : "javascript:void(0)"}
               key={socialMedia.id}
               className='cursor-pointer'
             >
