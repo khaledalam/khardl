@@ -17,7 +17,7 @@ function CompleteRegistration() {
 
   const {setStatusCode} = useAuthContext()
   const [files, setFiles] = useState()
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   const [fileUploadSuccess, setFileUploadSuccess] = useState({
     commercial_registration: false,
