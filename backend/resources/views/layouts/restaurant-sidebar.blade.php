@@ -17,6 +17,7 @@
     <meta property="og:site_name" content="Kardl" />
     <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
     <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
+    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Fonts-->
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->

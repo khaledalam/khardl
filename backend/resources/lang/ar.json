@@ -45,6 +45,7 @@
     "The payment was successful, your order is pending":"تمت عملية الدفع بالنجاح طلبك قيد الانتظار",
     "Payment failed, please try again":"فشلت عملية الدفع الرجاء المحاولة مرة اخري",
     "Invalid email or password":"البريد الإلكتروني أو كلمة السر خاطئة",
-    "Only workers can logged in":"يمكن للعمال فقط تسجيل الدخول"
+    "Only workers can logged in":"يمكن للعمال فقط تسجيل الدخول",
+    "Phone number is not exist":"رقم الهاتف غير موجود"
 
 }

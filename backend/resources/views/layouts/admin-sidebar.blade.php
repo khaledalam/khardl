@@ -13,6 +13,7 @@
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
     <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
+    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ global_asset('assets/css/AdminAndRestaurantAndWorker.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />

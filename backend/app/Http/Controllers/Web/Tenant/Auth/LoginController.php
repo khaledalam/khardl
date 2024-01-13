@@ -49,7 +49,7 @@ class LoginController extends BaseController
         $credentials = request(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
-            return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
+            return $this->sendError('Unauthorized.', ['error' => __('Invalid email or password')]);
         }
 
         $user = Auth::user();
