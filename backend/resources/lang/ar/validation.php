@@ -175,7 +175,13 @@ return [
         'payment_method'        =>'وسيلة الدفع',
         'delivery_type'=>"نوع التوصيل",
         "Please use this phone to login in into your account"=>"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول",
-        "This email is already registered with different phone" => "تم استخدام هذا البريد مع رقم هاتف مختلف"
+        "This email is already registered with different phone" => "تم استخدام هذا البريد مع رقم هاتف مختلف",
+        "business_logo" => "شعار الاعمال",
+        "customer_signature" => "توقيع العميل",
+        "dispute_evidence" => "أدلة النزاع",
+        "identity_document" => "وثيقة الهوية",
+        "pci_document" => "وثيقة PCI",
+        "tax_document_user_upload" => "مستند الضريبة",
 
     ],
 ];

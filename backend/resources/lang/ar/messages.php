@@ -564,7 +564,7 @@ return [
     "Dispute Evidence" => "أدلة النزاع",
     "Identity Document" => "وثيقة الهوية",
     "PCI Document" => "وثيقة PCI",
-    "TAX Document User Upload" => "تحميل مستخدم مستند الضريبة",
+    "TAX Document User Upload" => "مستند الضريبة",
     "Upload ⬆" => "رفع ⬆",
     "Reset ↻" => "اعادة ↻",
     "Coverage areas" => "مناطق التغطية",
