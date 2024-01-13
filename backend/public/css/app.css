@@ -3755,6 +3755,9 @@ details.collapse summary::-webkit-details-marker {
 .left-\[0\] {
   left: 0;
 }
+.left-\[47\%\] {
+  left: 47%;
+}
 .right-0 {
   right: 0px;
 }
@@ -5571,6 +5574,10 @@ details.collapse summary::-webkit-details-marker {
 .bg-secondary {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-s,oklch(var(--s)/var(--tw-bg-opacity)));
+}
+.bg-slate-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
 }
 .bg-slate-600 {
   --tw-bg-opacity: 1;

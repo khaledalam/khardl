@@ -290,7 +290,7 @@ const ProductItem = ({
       <div
         style={{
           boxShadow: "4px 0px  10px 0px rgba(0, 0, 0, 0.25)",
-          borderRadius: shape === t("Sharp") ? 0 : 16,
+          borderRadius: shape === "sharp" ? 0 : 16,
         }}
         className='w-[250px] min-h-[138px] cursor-pointer'
         onClick={() => document.getElementById(id).showModal()}
@@ -357,7 +357,7 @@ const ProductItem = ({
                   ? "rounded-tr-lg rounded-bl-2xl "
                   : "rounded-tl-lg rounded-br-2xl"
               } ${
-                shape === t("Sharp") ? "!rounded-none" : ""
+                shape === "sharp" ? "!rounded-none" : ""
               }  flex items-center justify-center`}
             >
               <img

@@ -47,19 +47,19 @@ const CategoryItem = ({
             : "#F5F5F5",
         }}
         className={`w-[75px] h-[75px] p-2  ${
-          shape === t("Sharp") ? "" : "rounded-full"
+          shape === "sharp" ? "" : "rounded-full"
         }  flex items-center justify-center scale-100 hover:scale-125 transition-all duration-300   bg-neutral-100  `}
       >
         <div
           className={`w-[50px] h-[50px] flex items-center ${
-            shape === t("Sharp") ? "" : "rounded-full"
+            shape === "sharp" ? "" : "rounded-full"
           } justify-center`}
         >
           <img
             src={imgSrc ? imgSrc : ImgBurger}
             alt={alt}
             className={`w-full h-full object-cover ${
-              shape === t("Sharp") ? "" : "rounded-full"
+              shape === "sharp" ? "" : "rounded-full"
             } `}
           />
         </div>

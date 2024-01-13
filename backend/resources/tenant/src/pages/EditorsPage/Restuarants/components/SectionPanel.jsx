@@ -1,7 +1,6 @@
 import React, {Fragment, useCallback, useState} from "react"
 import PrimarySelect from "./PrimarySelect"
 import LogoAlignment from "./LogoAlignment"
-import CategoryAlign from "./CategoryAlign"
 import SocialMediaCollection from "./SocialMediaCollection"
 import {IoAdd} from "react-icons/io5"
 import PhoneInput from "react-phone-input-2"
@@ -9,14 +8,11 @@ import {useSelector, useDispatch} from "react-redux"
 import {
   bannerType,
   categoryAlignment,
-  categoryDetailAlignment,
   logoAlignment,
   headerPosition as setHeaderPosition,
   socialMediaIconsAlignment,
   phoneNumber as setPhoneNumber,
   phoneNumberAlignment,
-  categoryType,
-  categoryDetailType,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 import {BiMinus} from "react-icons/bi"
 import {useTranslation} from "react-i18next"
@@ -34,13 +30,10 @@ const SectionPanel = () => {
     logo_alignment,
     banner_type,
     category_alignment,
-    categoryDetail_alignment,
     socialMediaIcons_alignment,
     selectedSocialIcons,
     phoneNumber,
     phoneNumber_alignment,
-    categoryDetail_type,
-    category_type,
   } = restuarantEditorStyle
 
   return (
@@ -60,9 +53,10 @@ const SectionPanel = () => {
         />
       </div>
       <div className='py-4 border-b border-neutral-300'>
-        <div className='flex items-center justify-between w-[70%] px-2'>
+        <div className='flex items-center justify-between  w-[70%] px-2'>
           <h2 className='font-bold text-lg'>{t("Logo")}</h2>
           <LogoAlignment
+            iconSize={20}
             defaultValue={logo_alignment}
             onChange={(value) => dispatch(logoAlignment(value))}
           />
@@ -187,26 +181,13 @@ const SectionPanel = () => {
             containerClass='!w-full'
             inputClass='!w-full !h-[48px] !text-[1rem]'
           />{" "}
-        </div>
-        <div className='mt-3'>
-          <PrimarySelect
-            label={t("Content")}
-            defaultValue={
-              phoneNumber_alignment === "center"
-                ? t("Center")
-                : phoneNumber_alignment === "left"
-                ? t("Left")
-                : phoneNumber_alignment === "right"
-                ? t("Right")
-                : ""
-            }
-            handleChange={(value) => dispatch(phoneNumberAlignment(value))}
-            options={[
-              {value: "left", text: t("Left")},
-              {value: "center", text: t("Center")},
-              {value: "right", text: t("Right")},
-            ]}
-          />
+          <div className='mt-3'>
+            <LogoAlignment
+              iconSize={20}
+              defaultValue={phoneNumber_alignment}
+              onChange={(value) => dispatch(phoneNumberAlignment(value))}
+            />
+          </div>
         </div>
       </div>
     </div>

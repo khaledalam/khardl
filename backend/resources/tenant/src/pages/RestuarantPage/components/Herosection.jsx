@@ -32,6 +32,7 @@ const Herosection = ({isMobile, categories}) => {
           backgroundColor: restaurantStyle
             ? restaurantStyle?.banner_background_color
             : "inherit",
+          paddingTop: restaurantStyle?.headerPosition === "fixed" ? 55 : 16,
         }}
         className={
           "w-full  flex flex-col py-4 items-center justify-center gap-8"
