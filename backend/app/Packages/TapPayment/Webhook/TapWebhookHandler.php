@@ -14,14 +14,21 @@ class TapWebhookHandler extends ProcessWebhookJob
         logger("tap payment");
      
         $data = json_decode($this->webhookCall, true)['payload'];
-        logger($data);
+  
         
         if (strpos($data['id'] ?? '', 'chg') === 0) { // charge end-point
             // metadata
             if(isset($data['metadata']['subscription'])){
-                if($data['metadata']['subscription'] == ROSubscription::NEW){
+                // new sub
+                if($data['metadata']['subscription'] == ROSubscription::NEW){ 
                     RestaurantCharge::CreateNewSubscription($data);
-                }else if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE || $data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE ){
+                }
+                // buy new branches
+                else if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE || $data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE ){
+                    RestaurantCharge::BuyNewBranches($data);
+                }
+                // activate sub to 1 year 
+                else if ($data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR){
                     RestaurantCharge::RenewSubscription($data);
                 }
             }

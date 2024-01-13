@@ -30,6 +30,7 @@ class ROSubscription extends Model
 
     // status
     public const ACTIVE = 'active';
+    public const DEACTIVATE = 'deactivate';
     public const SUSPEND = 'suspend';
     // other status in tap payment status
     public function getStartAtAttribute()

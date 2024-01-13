@@ -58,14 +58,14 @@ class RestaurantController extends BaseController
     public function serviceDeactivate(){
         /** @var RestaurantUser $user */
         ROSubscription::first()->update([
-            'status'=> ROSubscription::SUSPEND
+            'status'=> ROSubscription::DEACTIVATE
         ]);
         return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
     }
     public function serviceActivate(){
         /** @var RestaurantUser $user */
         $subscription = ROSubscription::first();
-        if($subscription->status != 'suspend'){
+        if($subscription->status !=  ROSubscription::DEACTIVATE){
             return redirect()->back()->with('error', __('not allowed'));
         }
         ROSubscription::first()->update([

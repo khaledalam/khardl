@@ -116,7 +116,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             });
         goSell.openLightBox();
     }
-    function renewSubscription(){
+    
+    function BuyNewSlots(){
         goSell.config({
             containerID: "root",
             gateway: {
@@ -215,7 +216,105 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             });
         goSell.openLightBox();
     }
-    
+    function renewSubscription(){
+        goSell.config({
+            containerID: "root",
+            gateway: {
+                publicKey: "{{env('TAP_PUBLIC_API_KEY')}}",
+                merchantId: null,
+                language: "{{app()->getLocale()}}",
+                contactInfo: true,
+                supportedCurrencies: "all",
+                supportedPaymentMethods: "all",
+                saveCardOption: true,
+                customerCards: true,
+                notifications: "standard",
+                callback: (response) => {
+                console.log("response", response);
+                },
+                onClose: () => {
+                console.log("onClose Event");
+                },
+                backgroundImg: {
+                url: "imgURL",
+                opacity: "0.5",
+                },
+                labels: {
+                cardNumber: "Card Number",
+                expirationDate: "MM/YY",
+                cvv: "CVV",
+                cardHolder: "Name on Card",
+                actionButton: "Pay",
+                },
+                style: {
+                base: {
+                    color: "#535353",
+                    lineHeight: "18px",
+                    fontFamily: "sans-serif",
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                    color: "rgba(0, 0, 0, 0.26)",
+                    fontSize: "15px",
+                    },
+                },
+                invalid: {
+                    color: "red",
+                    iconColor: "#fa755a ",
+                },
+                },
+            },
+            customer: {
+                id: '{{$customer_tap_id}}'
+            },
+            order: {
+                amount: document.getElementById('price_suspend').value,
+                currency: "SAR",
+                items: [
+                {
+                    id: "{{$subscription->id}}",
+                    name: "{{__('messages.Renew'). $subscription->name}}",
+                    description: "",
+                    quantity: "",
+                    amount_per_unit: "",
+                    // discount: {
+                    //   type: "P",
+                    //   value: "10%",
+                    // },
+                    total_amount:document.getElementById('price_suspend').value
+                },
+                
+                ],
+                shipping: null,
+                taxes: null,
+            },
+            transaction: {
+                mode: "charge",
+                charge: {
+                saveCard: true,
+                threeDSecure: true,
+                description: "{{__('messages.Renew Subscription')}}",
+                statement_descriptor: "Sample",
+                reference: {
+                    transaction: "txn_0001",
+                    order: "{{$subscription->id}}",
+                },
+             
+                metadata: {
+                    'subscription':"{{ \App\Models\ROSubscription::RENEW_AFTER_ONE_YEAR}}",
+                    'n-branches': "{{ $RO_subscription->number_of_branches }}",
+                },
+                receipt: {
+                    email: false,
+                    sms: true,
+                },
+                redirect: "{{route('tap.payments_submit_card_details')}}",
+                post: "{{route('webhook-client-tap-payment')}}",
+                },
+            },
+            });
+        goSell.openLightBox();
+    }
 
 
 </script>
@@ -321,7 +420,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                     <!--end::Modal dialog-->
                                                             <div>
                                                                     <div>
-                                                                        @if($RO_subscription?->status == 'active')
+                                                                        @if($RO_subscription?->status == \App\Models\ROSubscription::ACTIVE)
                                                                         <div class="d-flex flex-column">
                                                                             <div class="d-flex justify-content-center mb-5">
                                                                                 <form action="{{route('restaurant.service.deactivate')}}" method="POST">
@@ -338,18 +437,19 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                             
                                                                         </div>
                                                                         
-                                                                        @elseif($RO_subscription?->status == 'suspend')
-                                                                        <div class="row" style="width: 115%">
-                                                                            <div class="col-6">
-                                                                                <form action="{{route('restaurant.service.activate')}}" method="POST">
-                                                                                    @csrf
-                                                                                    <button href="#" type="submit" class="btn btn-sm btn-success"  ><i class="fa fa-play"></i> {{__("messages.Activate")}}</button>
-                                                                                    @method('PATCH')
-                                                                                </form>
-                                                                            
+                                                                        @elseif($RO_subscription?->status ==  \App\Models\ROSubscription::DEACTIVATE)
+                                                                            <div class="row" style="width: 115%">
+                                                                                <div class="col-6">
+                                                                                    <form action="{{route('restaurant.service.activate')}}" method="POST">
+                                                                                        @csrf
+                                                                                        <button href="#" type="submit" class="btn btn-sm btn-success"  ><i class="fa fa-play"></i> {{__("messages.Activate")}}</button>
+                                                                                        @method('PATCH')
+                                                                                    </form>
+                                                                                
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                           
+                                                                        @elseif($RO_subscription?->status ==  \App\Models\ROSubscription::SUSPEND)
+                                                                        <a href="#"  class="btn btn-sm btn-warning "   data-bs-toggle="modal" data-bs-target="#kt_modal_suspend_sub"><svg   style="margin-left:10px" xmlns="http://www.w3.org/2000/svg"  height="16" width="16" fill="red" viewBox="0 0 512 512"><path   d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>{{__('messages.Renew Subscription')}}</a>
                                                                         @else
                                                                         <a href="#"  class="btn btn-sm btn-khardl"   data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>{{__('messages.Buy now')}}</a>
                                                                         @endif
@@ -395,8 +495,65 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 </div>
                                                                         <!--end::Modal body-->
                                                             </div>
-                                                            
-                                                            <div class="modal fade" id="kt_modal_renew_sub" tabindex="-1" aria-hidden="true">
+                                                            @if($RO_subscription)
+                                                                <div class="modal fade" id="kt_modal_renew_sub" tabindex="-1" aria-hidden="true">
+                                                                    <!--begin::Modal dialog-->
+                                                                    <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                                        <!--begin::Modal content-->
+                                                                        <div class="modal-content rounded p-15">
+                                                                            
+                                                                                <!--begin::Modal header-->
+                                                                                <div class="modal-header pb-0 border-0  d-flex justify-content-center">
+                                                                                    <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
+                                                                                </div>
+                                                                                <div class="modal-body d-flex justify-content-center">
+                                                                                    <form action="" method="" id="renewSubForm">
+                                                                                        <div class="row">
+                                                                                            <div class="col-12 mt-3 mb-2">
+                                                                                                <label for="factor">{{__('messages.Choose the subscription method')}}</label>
+                                                                                                <div class="form-check mt-3 ">
+                                                                                                    <input class="form-check-input" type="radio" name="renewalOption" required id="renewToCurrentEndDate" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}" >
+                                                                                                    <label class="form-check-label" for="renewToCurrentEndDate">
+                                                                                                    {{__('messages.Pay for new branches only for ')}} {{$RO_subscription->dateLeft}}
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                                <div class="form-check mt-3">
+                                                                                                    <input class="form-check-input" type="radio" name="renewalOption" required id="renewFromNow" value="{{\App\Models\ROSubscription::RENEW_FROM_CURRENT_END_DATE}}">
+                                                                                                    <label class="form-check-label" for="renewFromNow">
+                                                                                                        {{__('messages.Renew the term of old branches + pay for new branches for one year including old branches')}} 
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="factor">{{__('messages.Number of branches')}}</label>
+                                                                                                    <input type="number" class="form-control" id="factor_renew" name="factor_renew"  value="1" min="1" onchange="calculateRenewPrice()">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        
+                                                                                        
+                                                                                            <div class="col-12 mt-3">
+                                                                                                <label for="factor">{{__('messages.total-price')}} </label>
+                                                                                                <input type="text" readonly class="form-control bg-secondary" id="price_renew" name="price_renew" value="" readonly>
+                                                                                                <i id="costDesc" class="hidden"></i>
+                                                                                            </div>
+                                                                                            <div class="col-12 mt-3">
+                                                                                                <button class="btn btn-primary" type="submit">{{__('messages.Renew Subscription')}}</button>
+                                                                                            </div>
+                                                                                            
+                                                                                        </div>
+                                                                                    </form>
+                                                                                
+                                                                                    
+                                                                                </div>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+                                                                            <!--end::Modal body-->
+                                                                </div>
+                                                            @endif
+                                                            @if($RO_subscription)
+                                                            <div class="modal fade" id="kt_modal_suspend_sub" tabindex="-1" aria-hidden="true">
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
@@ -404,45 +561,25 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         
                                                                             <!--begin::Modal header-->
                                                                             <div class="modal-header pb-0 border-0  d-flex justify-content-center">
-                                                                                <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
+                                                                                <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Renew Subscription')}})</h5>
                                                                             </div>
                                                                             <div class="modal-body d-flex justify-content-center">
-                                                                                <form action="" method="" id="renewSubForm">
-                                                                                    <div class="row">
-                                                                                        <div class="col-12 mt-3 mb-2">
-                                                                                            <label for="factor">{{__('messages.Choose the subscription method')}}</label>
-                                                                                            <div class="form-check mt-3 ">
-                                                                                                <input class="form-check-input" type="radio" name="renewalOption" required id="renewToCurrentEndDate" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}" >
-                                                                                                <label class="form-check-label" for="renewToCurrentEndDate">
-                                                                                                {{__('messages.Pay for new branches only for ')}} {{$RO_subscription->dateLeft}}
-                                                                                                </label>
-                                                                                            </div>
-                                                                                            <div class="form-check mt-3">
-                                                                                                <input class="form-check-input" type="radio" name="renewalOption" required id="renewFromNow" value="{{\App\Models\ROSubscription::RENEW_FROM_CURRENT_END_DATE}}">
-                                                                                                <label class="form-check-label" for="renewFromNow">
-                                                                                                    {{__('messages.Renew the term of old branches + pay for new branches for one year including old branches')}} 
-                                                                                                </label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col-12">
-                                                                                            <div class="form-group">
-                                                                                                <label for="factor">{{__('messages.Number of branches')}}</label>
-                                                                                                <input type="number" class="form-control" id="factor_renew" name="factor_renew"  value="1" min="1" onchange="calculateRenewPrice()">
-                                                                                            </div>
-                                                                                        </div>
+                                                                                <div class="row">
                                                                                     
-                                                                                    
-                                                                                        <div class="col-12 mt-3">
-                                                                                            <label for="factor">{{__('messages.total-price')}} </label>
-                                                                                            <input type="text" readonly class="form-control bg-secondary" id="price_renew" name="price_renew" value="" readonly>
-                                                                                            <i id="costDesc" class="hidden"></i>
-                                                                                        </div>
-                                                                                        <div class="col-12 mt-3">
-                                                                                            <button class="btn btn-primary" type="submit">{{__('messages.Renew Subscription')}}</button>
-                                                                                        </div>
-                                                                                        
+                                                                                    <div class="col-12 mt-3">
+                                                                                        <label for="factor">{{__('messages.total-price')}} </label>
+                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price_suspend" name="price_suspend" value="{{$RO_subscription->amount}}" readonly>
+                                                                                 
                                                                                     </div>
-                                                                                </form>
+                                                                                    <div class="col-12 mt-3">
+                                                                                        <div class="d-flex justify-content-center">
+                                                                                             <button  class="btn btn-khardl text-white " onclick="renewSubscription()" >{{__("messages.Renew Subscription")}}</button>
+                                                                                        </div>
+                                                                                       
+                                                                                      
+                                                                                    </div>
+                                                                                    
+                                                                                </div>
                                                                             
                                                                                 
                                                                             </div>
@@ -451,6 +588,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 </div>
                                                                         <!--end::Modal body-->
                                                             </div>
+                                                            @endif
+                                                            
 
                                                             <!--end::Select-->
                                                         </div>
@@ -860,7 +999,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             });
             $('#renewSubForm').on('submit',function(e){
                 e.preventDefault();
-                renewSubscription();
+                BuyNewSlots();
             });
             function calculateRenewPrice(){
                 var renewalOption = $('input[name=renewalOption]:checked').val();
