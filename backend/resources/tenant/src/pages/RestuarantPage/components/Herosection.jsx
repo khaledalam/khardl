@@ -94,7 +94,7 @@ const Herosection = ({isMobile, categories}) => {
                 id='vid'
                 loop
                 autoPlay
-                className={` ${
+                className={` z-[5] ${
                   isMobile ? "max-h-[300px] w-full" : "max-h-[470px] w-full"
                 }  `}
               >
@@ -147,7 +147,7 @@ const Herosection = ({isMobile, categories}) => {
                           id='vidSlider'
                           loop
                           autoPlay
-                          className={` ${
+                          className={` z-[5] ${
                             isMobile
                               ? "max-h-[300px] w-full"
                               : "max-h-[470px] w-full"

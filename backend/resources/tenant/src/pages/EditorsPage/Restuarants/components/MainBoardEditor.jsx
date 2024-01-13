@@ -274,7 +274,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
           {uploadSingleBanner && (
             <video
               controls
-              className='absolute top-0 right-0 bottom-0 left-0 w-full max-h-[200px]'
+              className='absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]'
             >
               <source src={uploadSingleBanner} type='video/mp4' />
               Your browser does not support the video tag.
@@ -284,7 +284,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
             style={{
               borderRadius: banner_shape === "sharp" ? 0 : 12,
             }}
-            className='w-14 h-14 rounded-lg p-2 flex items-center justify-center bg-neutral-100 relative'
+            className='w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative'
           >
             <label htmlFor='banner'>
               <input

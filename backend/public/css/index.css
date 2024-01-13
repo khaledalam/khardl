@@ -3879,6 +3879,9 @@ details.collapse summary::-webkit-details-marker {
 .z-\[99\] {
   z-index: 99;
 }
+.z-\[5\] {
+  z-index: 5;
+}
 .order-1 {
   order: 1;
 }
@@ -7210,6 +7213,10 @@ details.collapse summary::-webkit-details-marker {
 
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:flex-row {
@@ -11403,6 +11410,9 @@ details.collapse summary::-webkit-details-marker {
 .z-\[99\] {
   z-index: 99;
 }
+.z-\[5\] {
+  z-index: 5;
+}
 .order-1 {
   order: 1;
 }
@@ -14734,6 +14744,10 @@ details.collapse summary::-webkit-details-marker {
 
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:flex-row {
