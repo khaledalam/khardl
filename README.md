@@ -1,6 +1,20 @@
 # Khardl
+### A Digital Ecosystem Solution For Restaurants
 
-### Initial Setup:
+---
+
+#### Synonyms
+R-: Restaurant<br />
+RO: Restaurant Owner
+
+
+### Setup:
+
+#### prerequisites
+- install [docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/)
+- copy .env.example in root folder to .env
+- copy backend/.env.example to backend/.env
+
 First, navigate to your project directory and run the following shell scripts:
 
 - Run the back-end (Laravel) application:
@@ -8,8 +22,8 @@ First, navigate to your project directory and run the following shell scripts:
   ```$ ./run-backend.sh```
 
 - Run the front-end (React) applications:
-  - Central landing page for Admin, Restaurant Owner
-  - Restaurant Tenant for Restaurant's Owner, Customers, and Workers
+  - Central landing page for `Admins`, `RO` and `R-'s Workers`
+  - Restaurant Tenant for ROs, R-'s Customers, and R-'s Workers
 
   ```$ ./run-frontend.sh```
 
@@ -45,18 +59,19 @@ Where `test` is the name of Tenant(Restaurant name)
 Additional Resources: [How to Edit Hosts File](https://www.hostinger.com/tutorials/how-to-edit-hosts-file).
 
 
-### Useful commands and tools:
-- SQL quest to delete all databases that start with `restaurant_` prefix 
-```sql
-SELECT CONCAT('DROP DATABASE `', SCHEMA_NAME, '`;')
-FROM `information_schema`.`SCHEMATA`
-WHERE SCHEMA_NAME LIKE 'restaurant_%';
-``` 
 - Run laravel queue worker in the background:
+
+Note: 
+- <b>`khardl5`</b> cpanel username on khardl.com
+- <b>`khardl4test`</b> cpanel username on khardl.com
+
+via nohup
 ```shell 
 nohup php /home/khardl5/public_html/backend/artisan queue:work --daemon &
+```
 
-
+via supervisord:
+```shell
 [program:laravel-worker]
 process_name=%(program_name)s_%(process_num)02d
 command=php /home/khardl5/public_html/backend/artisan queue:work --daemon --sleep=3 --tries=3 --max-time=3600
@@ -69,6 +84,18 @@ numprocs=8
 redirect_stderr=true
 stdout_logfile=/home/khardl5/public_html/backend/queue_worker.log
 stopwaitsecs=3600
-
 ```
 
+
+### Database
+- db_backup.sh file is used to export the database and save the sql files in db_backups folder
+
+
+
+### Useful commands and tools:
+- SQL quest to delete all databases that start with `restaurant_` prefix
+```sql
+SELECT CONCAT('DROP DATABASE `', SCHEMA_NAME, '`;')
+FROM `information_schema`.`SCHEMATA`
+WHERE SCHEMA_NAME LIKE 'restaurant_%';
+``` 
