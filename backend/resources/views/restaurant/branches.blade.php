@@ -38,29 +38,24 @@
         <!--end::Post-->
         <!--begin::Post-->
         @foreach ($branches as $branch)
-        <div class="post d-flex flex-column-fluid" id="kt_post">
+        <div class="post d-flex flex-column-fluid my-5" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
                 <div class="card card-flush border-0 h-md-100">
                     <!--begin::Body-->
                     <div class="card-body py-9">
                         <!--begin::Row-->
-                        <div class="row gx-9 h-100">
+                        <div class="row gx-9">
                             <!--begin::Col-->
-                            <div class="col-sm-6 mb-10 mb-sm-0">
-                                <!--begin::Image-->
-
-                                    <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
-                                        <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}">
-                                        <div id="map{{ $branch->id }}" style="width: 100%; height: 90%; border:0;"></div>
-                                            <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
-                                                <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
-                                                <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl mt-3 w-100">{{ __('messages.save-location')}}</button>
-                                        </form>
-                                    </div>
-                                <!--end::Image-->
+                            <div class="col-sm-6 branches-google-maps">
+                                <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}">
+                                <div id="map{{ $branch->id }}" class="google_map" ></div>
+                                <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
+                                        <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
+                                        <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl mt-3 w-100">{{ __('messages.save-location')}}</button>
+                                </form>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
@@ -86,24 +81,6 @@
                                         <!--end::Heading-->
                                         <!--begin::Items-->
                                         <div class="d-flex align-items-center flex-wrap d-grid gap-2">
-                                            <!--begin::Item-->
-                                            {{-- <div class="d-flex align-items-center me-5 me-xl-13">
-                                                <!--begin::Symbol-->
-                                                <div class="symbol symbol-30px symbol-circle me-3">
-                                                    <img src="assets/media/avatars/300-3.jpg" class=""
-                                                        alt="" />
-                                                </div>
-                                                <!--end::Symbol-->
-                                                <!--begin::Info-->
-                                                <div class="m-0">
-                                                    <span
-                                                        class="fw-bold text-gray-400 d-block fs-8">Manager</span>
-                                                    <span class="fw-bolder text-gray-800 fs-7">Ibrahim
-                                                        Rogi</span>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div> --}}
-                                            <!--end::Item-->
                                             <!--begin::Item-->
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Symbol-->
@@ -147,9 +124,6 @@
                                     <!--begin::Body-->
                                     <div class="mb-6">
                                         <!--begin::Text-->
-                                        {{-- <span class="fw-bold text-gray-600 fs-6 mb-8 d-block">Lorem ipsum
-                                            dolor sit amet, consectetur adipisicing elit. Rem laborum
-                                            necessitatibus porro.</span> --}}
                                         <!--end::Text-->
                                         <!--begin::Stats-->
                                         <div class="d-flex align-items-center">
@@ -158,15 +132,6 @@
                                                     class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
                                                     <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.edit-menu') }}</a>
                                                 </div>
-
-                                            <!--end::Stat-->
-{{--                                            <!--begin::Stat-->--}}
-{{--                                            <div--}}
-{{--                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">--}}
-{{--                                                <a href="#" class="fs-6 text-700 fw-bolder">{{ __('messages.advertisement-modification') }}</a>--}}
-{{--                                            </div>--}}
-
-{{--                                            <!--end::Stat-->--}}
                                         </div>
                                         <!--end::Stats-->
                                         <!--begin::Stats-->
@@ -207,27 +172,6 @@
                                                 <a href="{{route('restaurant.settings.branch',['branch'=>$branch->id])}}" class="fs-6 text-700 fw-bolder">{{ __('messages.settings') }}</a>
                                             </div>
                                         <div>
-                                            <!--begin::Actions-->
-                                            {{-- <a href="demo1/dist/apps/projects/project.html"
-                                                class="text-primary opacity-75-hover fs-6 fw-bold">View
-                                                Project
-                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr095.svg-->
-                                                <span class="svg-icon svg-icon-4 svg-icon-gray-800 ms-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none">
-                                                        <path opacity="0.3"
-                                                            d="M4.7 17.3V7.7C4.7 6.59543 5.59543 5.7 6.7 5.7H9.8C10.2694 5.7 10.65 5.31944 10.65 4.85C10.65 4.38056 10.2694 4 9.8 4H5C3.89543 4 3 4.89543 3 6V19C3 20.1046 3.89543 21 5 21H18C19.1046 21 20 20.1046 20 19V14.2C20 13.7306 19.6194 13.35 19.15 13.35C18.6806 13.35 18.3 13.7306 18.3 14.2V17.3C18.3 18.4046 17.4046 19.3 16.3 19.3H6.7C5.59543 19.3 4.7 18.4046 4.7 17.3Z"
-                                                            fill="currentColor" />
-                                                        <rect x="21.9497" y="3.46448" width="13" height="2"
-                                                            rx="1" transform="rotate(135 21.9497 3.46448)"
-                                                            fill="currentColor" />
-                                                        <path
-                                                            d="M19.8284 4.97161L19.8284 9.93937C19.8284 10.5252 20.3033 11 20.8891 11C21.4749 11 21.9497 10.5252 21.9497 9.93937L21.9497 3.05029C21.9497 2.498 21.502 2.05028 20.9497 2.05028L14.0607 2.05027C13.4749 2.05027 13 2.52514 13 3.11094C13 3.69673 13.4749 4.17161 14.0607 4.17161L19.0284 4.17161C19.4702 4.17161 19.8284 4.52978 19.8284 4.97161Z"
-                                                            fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon--></a> --}}
-                                            <!--end::Actions-->
                                         </div>
                                     </div>
                                     <!--end::Footer-->
@@ -886,27 +830,30 @@
                 input.required = required;
             });
         }
-        // Hide/show sections based on the selected option
-        document.querySelectorAll('input[name="hours_option"]').forEach(function (radio) {
-            radio.addEventListener('change', function () {
-                if (this.value === 'normal') {
-                    normalChoiceSection.style.display = 'block';
-                    customChoiceTabs.style.display = 'none';
-                    customChoiceContent.style.display = 'none';
-                    setRequiredForNormalChoice(true);
-                    setRequiredForCustomChoice(false);
-                } else if (this.value === 'custom') {
-                    normalChoiceSection.style.display = 'none';
-                    customChoiceTabs.style.display = 'block';
-                    customChoiceContent.style.display = 'block';
-                    setRequiredForNormalChoice(false);
-                    setRequiredForCustomChoice(true);
-                }
+        if(document.querySelectorAll('input[name="hours_option"]').length > 0){
+            // Hide/show sections based on the selected option
+            document.querySelectorAll('input[name="hours_option"]').forEach(function (radio) {
+                radio.addEventListener('change', function () {
+                    if (this.value === 'normal') {
+                        normalChoiceSection.style.display = 'block';
+                        customChoiceTabs.style.display = 'none';
+                        customChoiceContent.style.display = 'none';
+                        setRequiredForNormalChoice(true);
+                        setRequiredForCustomChoice(false);
+                    } else if (this.value === 'custom') {
+                        normalChoiceSection.style.display = 'none';
+                        customChoiceTabs.style.display = 'block';
+                        customChoiceContent.style.display = 'block';
+                        setRequiredForNormalChoice(false);
+                        setRequiredForCustomChoice(true);
+                    }
+                });
             });
-        });
+            document.querySelector('input[name="hours_option"]:checked').dispatchEvent(new Event('change'));
+        }
 
         // Initialize based on the default selected option
-        document.querySelector('input[name="hours_option"]:checked').dispatchEvent(new Event('change'));
+
         document.addEventListener("DOMContentLoaded", (event) => {
             let maps = {}; // Store maps in an object
             let markers = {}; // Store markers in an object

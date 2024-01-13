@@ -10,5 +10,5 @@ cd $DIR && /usr/bin/mysqldump $DATABASE_NAME  \
   > $DIR/db_backups/backup_$now.sql -u $DATABASE_USER --password=$DATABASE_PASSWORD \
   --skip-extended-insert;
 
-# Remove old backups
-find $DIR/db_backups/* -mtime +24 -exec rm {} \;
+# Remove old backups (modified files more than 30 days ago)
+find $DIR/db_backups/* -mtime +30 -exec rm {} \;

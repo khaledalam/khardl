@@ -50,6 +50,7 @@ class RestaurantStyleService
             'text_color' => $request->text_color,
             'product_background_color' => $request->product_background_color,
             'selectedSocialIcons' => $request->selectedSocialIcons,
+            'headerPosition' => $request->headerPosition,
             'user_id' => Auth::user()?->id
         ];
         if (isset($request->logo) && $request->logo) {

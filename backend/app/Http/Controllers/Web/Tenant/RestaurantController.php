@@ -479,6 +479,11 @@ class RestaurantController extends BaseController
         }
         return view('restaurant.menu', compact('user', 'categories', 'branch','branchId'));
     }
+    public function noBranches()
+    {
+        $user = Auth::user();
+        return view('restaurant.no_branches', compact('user'));
+    }
 
     public function getCategory(Request $request, $id, $branchId){
         $user = Auth::user();

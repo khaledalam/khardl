@@ -618,5 +618,22 @@ return [
     "Today" => "Today",
     "Last day" => "Last day",
     "Last week" => "Last week",
+    "You need to have branches first" => "You need to have branches first",
+    "No available branches" => "No available branches",
+    "Tab business information" => "Tab business information",
+    "Key" => "Key",
+    "Value" => "Value",
+    "Wallet ID" => "Wallet ID",
+    "Corporation" => "Corporation",
+    "Individual" => "Individual",
+    "Brands" => "Brands",
+    "Your account information" => "Your account information",
+    "Middle name"=> "Middle name",
+    "Is licensed" => "Is licensed",
+    "Legal name" => "Legal name",
+    "Country" => "Country",
+    "Yes" => "Yes",
+    "No" => "No",
+    "Bank information" => "Bank information"
 
 ];

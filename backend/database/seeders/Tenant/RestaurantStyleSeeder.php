@@ -53,6 +53,7 @@ class RestaurantStyleSeeder extends Seeder
             'phoneNumber_alignment' => 'center',
             'page_color' => 'white',
             'page_category_color' => 'white',
+            'headerPosition' => 'relative',
             'header_color' => 'white',
             'footer_color' => 'black',
             'price_color' => 'red',

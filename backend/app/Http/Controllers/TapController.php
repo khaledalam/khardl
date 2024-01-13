@@ -33,7 +33,8 @@ class TapController extends Controller
     {
         $user = Auth::user();
         $business = TapBusiness::first();
-        return view('restaurant.payments', compact('user','business'));
+        $businessFile = TapBusinessFile::first();
+        return view('restaurant.payments', compact('user','business','businessFile'));
     }
 
     public function payments_upload_tap_documents_get()
@@ -167,13 +168,13 @@ class TapController extends Controller
                 } else {
                     return redirect()->route('restaurant.service')->with('error', __("The payment failed, and the subscription fee has not been paid"));
                 }
-               
+
             }
         }
 
-        // TODO @todo optimize 
+        // TODO @todo optimize
         // sleep(1); // sleep until tap webhook processed
-        
+
         // $subscription = ROSubscription::first();
         // if($subscription){
         //     if($subscription->status == 'active'){// payment successful
