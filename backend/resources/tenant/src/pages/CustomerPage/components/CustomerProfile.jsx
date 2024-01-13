@@ -14,9 +14,9 @@ import {useSelector, useDispatch} from "react-redux"
 const CustomerProfile = () => {
   const {t} = useTranslation()
   const dispatch = useDispatch()
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [phone, setPhone] = useState("")
+  const [firstName, setFirstName] = useState("John")
+  const [lastName, setLastName] = useState("Doe")
+  const [phone, setPhone] = useState("96611111111")
   const address = useSelector((state) => state.customerAPI.address)
   const addressLatLng = useSelector((state) => state.customerAPI.addressLatLng)
   const saveProfileChange = useSelector(
@@ -70,10 +70,10 @@ const CustomerProfile = () => {
   useEffect(() => {
     if (userProfile) {
       if (
-        firstName.trim() === userProfile.firstName.trim() &&
-        lastName.trim() === userProfile.lastName.trim() &&
-        phone.trim() === userProfile.phone.trim() &&
-        address.trim() === userProfile.address.trim()
+        firstName?.trim() === userProfile.firstName.trim() &&
+        lastName?.trim() === userProfile.lastName.trim() &&
+        phone?.trim() === userProfile.phone.trim() &&
+        address?.trim() === userProfile.address.trim()
       ) {
         setIsDisabled(true)
         dispatch(updateProfileSaveStatus(true))

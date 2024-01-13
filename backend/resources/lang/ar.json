@@ -21,7 +21,8 @@
     "Failed to complete the process, please try again or contact Support Team":"فشل إكمال العملية، يرجى المحاولة مرة اخري او الاتصال بفريق الدعم",
     "Your TAP account is approved. Congratulations!":"تمت موافقة حسابك التجاري في بوابة الدفع Tap , تهانينا !!",
     "Your TAP account is pending.":"في انتطار موافقة سجلك التجاري في بوابة دفع TAP, الرجاء الانتظار",
-    "Business ID #":"رقم معرف السجل التجاري ",
+    "Business ID":"رقم معرف السجل التجاري ",
+    "Destination ID":"جهة الوصول",
     "User logged in successfully.":"تم تسجيل الدخول بنجاح",
     "Item has been updated successfully.":"تم تحديث المنتج بنجاح",
     "Branch has been updated successfully.":"تم تحديث بيانات الفرع بنجاح",
@@ -47,6 +48,9 @@
     ":monthsLeft months and :daysLeft days left":":monthsLeft شهور و :daysLeft أيام",
     ":monthsLeft months left":":monthsLeft شهور",
     ":daysLeft left":":daysLeft أيام",
-    "You does not have an subscription.":"ليس لديك اي اشتراك"
+    "You does not have an subscription.":"ليس لديك اي اشتراك",
+    "Invalid email or password":"البريد الإلكتروني أو كلمة السر خاطئة",
+    "Only workers can logged in":"يمكن للعمال فقط تسجيل الدخول",
+    "Phone number is not exist":"رقم الهاتف غير موجود"
 
 }

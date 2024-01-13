@@ -72,7 +72,7 @@ const SideNavbar = () => {
   }
   const handleWindowAlert = () => {
     const stat = window.confirm(
-      "Are you sure you want to navigate to another page"
+      t("Are you sure you want to leave the page before saving")
     )
     console.log("stat", stat)
     setStatus(stat)

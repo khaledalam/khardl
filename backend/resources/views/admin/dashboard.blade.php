@@ -34,7 +34,7 @@
                             <!--begin::Labels-->
                             <div class="d-flex flex-column content-justify-center w-100">
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
                                     <!--end::Bullet-->
@@ -51,7 +51,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-info me-3"></div>
                                     <!--end::Bullet-->
@@ -68,7 +68,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
                                     <!--end::Bullet-->
@@ -85,7 +85,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-warning me-3"></div>
                                     <!--end::Bullet-->
@@ -101,8 +101,24 @@
                                     <!--end::Stats-->
                                 </div>
                                 <!--end::Label-->
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-8px h-6px rounded-2 bg-secondary me-3"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-gray-500 flex-grow-1 me-4">
+                                        {{ __('messages.Received by restaurant')}}
+                                    </div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="fw-boldest text-gray-700 text-xxl-end">
+                                       {{ $receivedByResOrders }}
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-danger me-3"></div>
                                     <!--end::Bullet-->
@@ -139,7 +155,7 @@
                             <!--begin::Labels-->
                             <div class="d-flex flex-column content-justify-center w-100">
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-danger me-3"></div>
                                     <!--end::Bullet-->
@@ -156,7 +172,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
                                     <!--end::Bullet-->
@@ -173,7 +189,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 me-3"
                                         style="background-color: #efefe4"></div>

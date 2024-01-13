@@ -5,7 +5,7 @@ import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
 import imgBanner from "../../../assets/bannerRestuarant.png"
 import {useTranslation} from "react-i18next"
 import ReactSlider from "react-slick"
-
+import imgLogo from "../../../assets/khardl_Logo.png"
 const Herosection = ({isMobile, categories}) => {
   const dispatch = useDispatch()
   const {t} = useTranslation()
@@ -32,6 +32,7 @@ const Herosection = ({isMobile, categories}) => {
           backgroundColor: restaurantStyle
             ? restaurantStyle?.banner_background_color
             : "inherit",
+          paddingTop: restaurantStyle?.headerPosition === "fixed" ? 55 : 16,
         }}
         className={
           "w-full  flex flex-col py-4 items-center justify-center gap-8"
@@ -60,7 +61,7 @@ const Herosection = ({isMobile, categories}) => {
             }`}
           >
             <img
-              src={restaurantStyle?.logo}
+              src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
               alt='logo'
               className={`w-full h-full object-cover ${
                 restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
@@ -80,7 +81,11 @@ const Herosection = ({isMobile, categories}) => {
             }}
           >
             <img
-              src={restaurantStyle ? restaurantStyle?.banner_image : imgBanner}
+              src={
+                restaurantStyle?.banner_image
+                  ? restaurantStyle?.banner_image
+                  : imgBanner
+              }
               alt='banner'
               className='w-full h-full object-cover'
             />
@@ -114,7 +119,7 @@ const Herosection = ({isMobile, categories}) => {
                             restaurantStyle?.banner_images &&
                             restaurantStyle?.banner_images?.length > 0
                               ? `url(${restaurantStyle?.banner_images[index]})`
-                              : "",
+                              : `url(${imgBanner})`,
                         }}
                         className={` h-full w-full rounded-md flex items-center justify-center   shadow-lg`}
                       ></div>

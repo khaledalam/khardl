@@ -1,27 +1,69 @@
-import React, {useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import orderIcon from "../../../assets/orderBlack.svg"
 import PrimaryOrderSearch from "./PrimaryOrderSearch"
 import PrimaryOrderSelect from "./PrimaryOrderSelect"
 import OrderTable from "./OrderTable"
+import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
 import {
-  MdKeyboardArrowLeft,
-  MdKeyboardArrowRight,
-  MdKeyboardDoubleArrowLeft,
-  MdKeyboardDoubleArrowRight,
-} from "react-icons/md"
-
-import {useSelector} from "react-redux"
+  updateOrderList,
+  updateOrdersMeta,
+  updatePageLinks,
+} from "../../../redux/NewEditor/customerSlice"
+import {useDispatch, useSelector} from "react-redux"
 import {useTranslation} from "react-i18next"
+import AxiosInstance from "../../../axios/axios"
 
 const CustomerOrder = () => {
   const {t} = useTranslation()
+  const dispatch = useDispatch()
   const [pageNumber, setpageNumber] = useState(1)
   const [orderPerPage, setOrderPerPage] = useState(5)
   const [dateAdded, setDateAdded] = useState("")
+  const [search, setsearch] = useState("")
   const [orderStatus, setOrderStatus] = useState("")
   const ordersList = useSelector((state) => state.customerAPI.ordersList)
+  const pagelinks = useSelector((state) => state.customerAPI.pagelinks)
+  const ordersMetadata = useSelector(
+    (state) => state.customerAPI.ordersMetadata
+  )
 
-  const slicedOrderData = ordersList.slice(0, orderPerPage)
+  const fetchOrderPerpage = async () => {
+    try {
+      const ordersResponse = await AxiosInstance.get(
+        `orders?items&item&per_page=${orderPerPage}&page=${pageNumber}&search=${search}&status=${orderStatus}`
+      )
+
+      console.log("orders per page >>>", ordersResponse?.data?.data)
+      if (ordersResponse.data) {
+        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
+        dispatch(updatePageLinks(ordersResponse?.data.links))
+        dispatch(updateOrdersMeta(ordersResponse?.data.meta))
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    fetchOrderPerpage().then(() => {})
+  }, [])
+
+  useEffect(() => {
+    fetchOrderPerpage().then(() => {})
+  }, [pageNumber, orderPerPage, search, orderStatus])
+
+  const prevPage = useCallback(() => {
+    if (pageNumber > 1) {
+      setpageNumber((prevPage) => pageNumber - 1)
+    }
+  }, [pageNumber])
+
+  const nextPage = useCallback(() => {
+    setpageNumber((prevPage) => prevPage + 1)
+  }, [])
+
+  console.log("pageliks", pagelinks)
 
   return (
     <div className='p-6'>
@@ -31,7 +73,10 @@ const CustomerOrder = () => {
       </div>
       <div className='my-5 flex flex-col md:flex-row w-full lg:w-[60%] items-center gap-4'>
         <div className='w-full md:w-2/3'>
-          <PrimaryOrderSearch />
+          <PrimaryOrderSearch
+            value={search}
+            onChange={(e) => setsearch(e.target.value)}
+          />
         </div>
         <div className='w-full gap-4 flex items-center'>
           <div className='w-1/2'>
@@ -40,13 +85,15 @@ const CustomerOrder = () => {
               handleChange={(value) => setOrderStatus(value)}
               options={[
                 {
-                  value: "Received by Restaurant",
+                  value: "receivedByRestaurant",
                   text: "Received by Restaurant",
                 },
-                {value: "Accepted", text: "Accepted"},
-                {value: "Rejected", text: "Rejected"},
-                {value: "Ready", text: "Ready"},
-                {value: "Cancelled", text: "Cancelled"},
+                {value: "pending", text: "Pending"},
+                {value: "accepted", text: "Accepted"},
+                {value: "rejected", text: "Rejected"},
+                {value: "completed", text: "Completed"},
+                {value: "ready", text: "Ready"},
+                {value: "cancelled", text: "Cancelled"},
               ]}
             />
           </div>
@@ -56,20 +103,20 @@ const CustomerOrder = () => {
               handleChange={(value) => setDateAdded(value)}
               options={[
                 {
-                  value: "Today",
+                  value: "today",
                   text: "Today",
                 },
-                {value: "Last Day", text: "Last Day"},
-                {value: "Last Week", text: "Last Week"},
-                {value: "Last Month", text: "Last Month"},
-                {value: "Last Year", text: "Last Year"},
+                {value: "last_day", text: "Last Day"},
+                {value: "last_week", text: "Last Week"},
+                {value: "last_month", text: "Last Month"},
+                {value: "last_year", text: "Last Year"},
               ]}
             />
           </div>
         </div>
       </div>
       <div className='mb-5 overflow-x-scroll hide-scroll'>
-        <OrderTable data={slicedOrderData} />
+        <OrderTable data={ordersList} />
       </div>
       <div className='flex flex-col  xl:flex-row items-center gap-4 justify-between mb-5'>
         <div className='flex items-center gap-3'>
@@ -99,29 +146,39 @@ const CustomerOrder = () => {
             />
           </div>
           <h3 className=''>
-            {t("page")} {pageNumber} of 1
+            {t("page")} {pageNumber} of{" "}
+            {ordersMetadata ? ordersMetadata?.total : 15}
           </h3>
         </div>
         <div className='flex items-center gap-3'>
-          <div className='w-8 h-8 border border-neutral-800 rounded-full flex items-center justify-center cursor-pointer'>
-            <MdKeyboardDoubleArrowLeft size={20} />
-          </div>
-          <div className='w-8 h-8 border border-neutral-800 rounded-full flex items-center justify-center cursor-pointer'>
-            <MdKeyboardArrowLeft size={20} />
-          </div>
-          <div
+          <button
+            onClick={prevPage}
+            disabled={pagelinks?.prev === null}
             className={`w-8 h-8 border ${
-              true ? "bg-[var(--customer)]" : "border-neutral-800"
-            }  rounded-full flex items-center justify-center cursor-pointer`}
+              pagelinks?.prev
+                ? "bg-[var(--customer)] cursor-pointer"
+                : "border-neutral-800 disabled:bg-neutral-300 cursor-not-allowed border-solid"
+            }  rounded-full flex items-center justify-center !p-0 `}
+          >
+            <MdKeyboardArrowLeft
+              size={20}
+              color={pagelinks?.prev ? "#fff" : "#000"}
+            />
+          </button>
+          <button
+            disabled={pagelinks?.next === null}
+            onClick={nextPage}
+            className={`w-8 h-8 border ${
+              pagelinks?.next
+                ? "bg-[var(--customer)] cursor-pointer"
+                : "border-neutral-800 disabled:bg-neutral-300 cursor-not-allowed border-solid"
+            }  rounded-full flex items-center justify-center !p-0 `}
           >
             <MdKeyboardArrowRight
               size={20}
-              className={true ? "text-white" : ""}
+              color={pagelinks?.next ? "#fff" : "#000"}
             />
-          </div>
-          <div className='w-8 h-8 border border-neutral-800 rounded-full flex items-center justify-center cursor-pointer'>
-            <MdKeyboardDoubleArrowRight size={20} />
-          </div>
+          </button>
         </div>
       </div>
     </div>

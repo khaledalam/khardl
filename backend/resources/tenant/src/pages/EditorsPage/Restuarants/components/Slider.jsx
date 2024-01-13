@@ -41,6 +41,12 @@ const Slider = ({banner_images}) => {
     setSliderCount((prev) => prev + 1)
   }, [])
 
+  const removeEachSlide = useCallback(() => {
+    if (sliderCount > 2 || bannersUpload.length > 2) {
+      setSliderCount((prev) => prev - 1)
+    }
+  }, [bannersUpload, sliderCount])
+
   const settings = {
     dots: true,
     infinite: true,
@@ -77,7 +83,7 @@ const Slider = ({banner_images}) => {
                 >
                   <input
                     type='file'
-                    accept='image/*'
+                    accept='video/*, image/*'
                     id={"imageBanner" + index}
                     name={"imageBanner" + index}
                     onChange={(e) => handleImagesUpload(e, index)}
@@ -105,7 +111,7 @@ const Slider = ({banner_images}) => {
                         onClick={() => handleRemoveImages(index)}
                         className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'
                       >
-                        <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
+                        <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center cursor-pointer justify-center'>
                           <IoCloseOutline
                             size={16}
                             className='text-red-500 cursor-pointer'
@@ -114,6 +120,13 @@ const Slider = ({banner_images}) => {
                       </div>
                     )}
                   </div>
+                  <button
+                    onClick={removeEachSlide}
+                    disabled={sliderCount <= 2}
+                    className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex disabled:cursor-not-allowed leading-[0px] items-center justify-center text-lg absolute left-[47%] bottom-7'
+                  >
+                    -
+                  </button>
                   <div
                     onClick={addMoreSlider}
                     className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7'

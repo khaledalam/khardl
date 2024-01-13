@@ -10,11 +10,14 @@ import {
   selectedCategoryAPI,
   setCategoriesAPI,
 } from "../../redux/NewEditor/categoryAPISlice"
-import NavbarRestuarant from "./components/NavbarRestuarant"
+import {Helmet} from "react-helmet"
+import {useTranslation} from "react-i18next"
 
 export const RestuarantHomePage = () => {
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   const [isMobile, setIsMobile] = useState(false)
+  const [isLoading, setisLoading] = useState(true)
   const categories = useSelector((state) => state.categoryAPI.categories)
 
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
@@ -40,7 +43,7 @@ export const RestuarantHomePage = () => {
             id: restaurantCategoriesResponse.data?.data[0].id,
           })
         )
-
+        setisLoading(false)
         console.log(">> branch_id >>", branch_id)
 
         if (!branch_id) {
@@ -51,6 +54,7 @@ export const RestuarantHomePage = () => {
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
       console.log(error)
+      setisLoading(false)
     }
   }
   const fetchResStyleData = async () => {
@@ -58,9 +62,11 @@ export const RestuarantHomePage = () => {
       AxiosInstance.get(`restaurant-style`).then((response) =>
         dispatch(changeRestuarantEditorStyle(response.data?.data))
       )
+      setisLoading(false)
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
       console.log(error)
+      setisLoading(false)
     }
   }
   useEffect(() => {
@@ -92,26 +98,39 @@ export const RestuarantHomePage = () => {
     })
   }, [])
 
-  if (!restaurantStyle) {
-    return
-  }
-
+  console.log("isLoading", isLoading)
   console.log("categories fetched", categories)
 
-  const categoriesForBranch = categories.filter(
-    (category) => category.branch.id === branch_id
-  )
+  if (isLoading || !restaurantStyle) {
+    return (
+      <div className='w-screen h-screen flex items-center justify-center'>
+        <span className='loading loading-spinner text-primary'></span>
+      </div>
+    )
+  }
 
   return (
-    <div
-      style={{
-        backgroundColor: restaurantStyle?.page_color,
-        fontFamily: restaurantStyle.text_fontFamily,
-      }}
-    >
-      <Herosection isMobile={isMobile} categories={categories} />
-      <ProductSection categories={categories} isMobile={isMobile} />
-      <FooterRestuarant />
-    </div>
+    <>
+      <Helmet>
+        <title>{t("Home")}</title>
+        <link
+          rel='icon'
+          type='image/png'
+          href={restaurantStyle.logo}
+          sizes='16x16'
+        />
+      </Helmet>
+
+      <div
+        style={{
+          backgroundColor: restaurantStyle?.page_color,
+          fontFamily: restaurantStyle.text_fontFamily,
+        }}
+      >
+        <Herosection isMobile={isMobile} categories={categories} />
+        <ProductSection categories={categories} isMobile={isMobile} />
+        <FooterRestuarant />
+      </div>
+    </>
   )
 }

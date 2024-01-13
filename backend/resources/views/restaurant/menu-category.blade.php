@@ -368,7 +368,7 @@
                                     <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in english') }}"   name="item_name_en" />
                                 </div>
                                 <div class="tab-pane fade" id="name-ar">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="item_name_ar" />
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in arabic') }}"   name="item_name_ar" />
                                 </div>
                             </div>
                         </div>
@@ -388,7 +388,7 @@
                                     <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in english') }}"   name="description_en"></textarea>
                                 </div>
                                 <div class="tab-pane fade" id="d-ar">
-                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="description_ar"></textarea>
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in arabic') }}"   name="description_ar"></textarea>
                                 </div>
                             </div>
                         </div>

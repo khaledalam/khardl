@@ -28,8 +28,11 @@ class LoginController extends BaseController
         }
         $credentials = request(['email', 'password']);
 
-        if (!Auth::attempt($credentials) ||  !Auth::user()->isWorker()) {
-            return $this->sendError('Unauthorized.', ['error' => 'Unauthorized']);
+        if (!Auth::attempt($credentials)) {
+            return $this->sendError('Unauthorized.', ['error' => __('Invalid email or password')]);
+        }
+        if(!Auth::user()->isWorker()){
+            return $this->sendError('Unauthorized.', ['error' => __('Only workers can logged in')]);
         }
 
 

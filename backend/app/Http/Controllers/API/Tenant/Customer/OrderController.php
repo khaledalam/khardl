@@ -53,14 +53,14 @@ class OrderController
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'lat' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'], 
+            'lat' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
             'lng' => ['required','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
         ],[
             'lat.required'=>__("Location is required"),
             'lng.required'=>__("Location is required")
         ]);
 
-        
+
         $user = Auth::user();
 
 
@@ -83,7 +83,7 @@ class OrderController
             $request->merge($cartData);
             $orderRequest = new OrderRequest($request->all());
             $order = $this->order->create($orderRequest,$this->cart);
-          
+
         }catch(\Exception $e){
             logger($e->getMessage());
         }

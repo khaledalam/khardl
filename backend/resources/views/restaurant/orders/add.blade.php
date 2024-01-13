@@ -4,10 +4,11 @@
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-    i.required:after{
-        position: absolute!important;
+    i.required:after {
+        position: absolute !important;
         font-size: 16px;
     }
+
 </style>
 @endsection
 @section('content')
@@ -120,7 +121,7 @@
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
-                                    <div class="card-body pt-0">
+                                    <div class="card-body pt-0 products">
                                         <div class="d-flex flex-column gap-5">
                                             <!--begin::Input group-->
                                             <div>
@@ -231,6 +232,8 @@
         var totalCost = 0.00;
         var branch_id = "";
         var productTotals = {};
+        var productQuantity = {};
+        var oldProductSelectOptions = {};
         let cuurent_product = null;
 
         function initializeProductSelect() {
@@ -297,15 +300,15 @@
         }
 
         function getLangName($name) {
-            if (`{!! config('app.locale') !!}` == 'ar') return $name[0];
-            return $name[1];
+            if (`{!! config('app.locale') !!}` == 'ar') return $name[1];
+            return $name[0];
         }
 
 
         function ModalRow(selectedProduct) {
             let haveRequiredFiled = false;
             let optionsHTML = '';
-            if(!selectedProduct.checkbox_input_titles&&!selectedProduct.selection_input_titles&&!selectedProduct.dropdown_input_titles){
+            if (!selectedProduct.checkbox_input_titles && !selectedProduct.selection_input_titles && !selectedProduct.dropdown_input_titles) {
                 var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
                 elementToRemove.remove();
                 return '';
@@ -314,14 +317,16 @@
                 selectedProduct.checkbox_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.checkbox_input_names[index];
                     let isRequired = selectedProduct.checkbox_required[index] == "true";
-                    if(isRequired)haveRequiredFiled = true;
-                    optionsHTML += `<div class="mb-4">
+                    if (isRequired) haveRequiredFiled = true;
+                    optionsHTML += `<div class="mb-4" id="checkbox_${selectedProduct.id}">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     innerOptions.forEach((option, innerIndex) => {
+                        let price = selectedProduct.checkbox_input_prices[index][innerIndex];
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="checkbox" value="${innerIndex}" name="product_options[${selectedProduct.id}]['checkbox_input'][${index}]">
+                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}]['checkbox_input'][${index}]" >
+                            <span class="product_option_price">{{ __('messages.SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
                     });
@@ -332,15 +337,17 @@
             if (selectedProduct.selection_input_titles) {
                 selectedProduct.selection_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.selection_input_names[index];
-                    let isRequired = selectedProduct.checkbox_required[index] == "true";
-                    if(isRequired)haveRequiredFiled = true;
+                    let isRequired = selectedProduct.selection_required[index] == "true";
+                    if (isRequired) haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     innerOptions.forEach((option, innerIndex) => {
+                        let price = selectedProduct.selection_input_prices[index][innerIndex];
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="radio" value="${innerIndex}" name="product_options[${selectedProduct.id}]['selection_input'][${index}]">
+                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}]['selection_input'][${index}]">
+                            <span class="product_option_price">{{ __('messages.SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
                     });
@@ -351,8 +358,8 @@
             if (selectedProduct.dropdown_input_titles) {
                 selectedProduct.dropdown_input_titles.forEach((option, index) => {
                     let innerOptions = selectedProduct.dropdown_input_names[index];
-                    let isRequired = selectedProduct.checkbox_required[index] == "true";
-                    if(isRequired)haveRequiredFiled = true;
+                    let isRequired = selectedProduct.dropdown_required[index] == "true";
+                    if (isRequired) haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">
@@ -367,7 +374,8 @@
                     </div>`;
                 });
             }
-            if(haveRequiredFiled){
+            if (haveRequiredFiled) {
+                console.log('test');
                 var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
                 elementToRemove.classList.add('required');
             }
@@ -417,15 +425,51 @@
 
                 // Update the old total for this product
                 productTotals[selectedProduct.id] = productTotal;
-
+                productQuantity[selectedProduct.id] = quantity;
                 updateTotalCost();
             });
             // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
             $('#product_table').append(tableRow);
             $('#modal_here').append(ModalRow(selectedProduct));
+            $('#modal_here').on('change', 'input[type="checkbox"][name^="product_options"]', function() {
+                var price = $(this).data('price');
+                var product = $(this).data('product-id');
+                var isChecked = $(this).is(':checked');
+                console.log(isChecked,product,price);
+                if (isChecked) {
+                    if(price&&price > 0)totalCost += parseFloat(price * productQuantity[product]);
+                } else {
+                    if(price&&price > 0)totalCost -= parseFloat(price * productQuantity[product]);
+                }
+                updateTotalCost();
+            });
+            $('#modal_here').on('change', 'input[type="radio"][name^="product_options"]', function() {
+                var price = $(this).data('price');
+                var product = $(this).data('product-id');
+                var index = $(this).data('index');
+                console.log(price);
+                let subtotal = parseFloat(price * productQuantity[product]);
+                console.log(subtotal);
+                if (!oldProductSelectOptions[product]) {
+                    oldProductSelectOptions[product] = []; // Initialize as an array if not defined
+                }else{
+                    console.log(oldProductSelectOptions[product][index]);
+                    subtotal-= oldProductSelectOptions[product][index];
+                }
+                if (Array.isArray(oldProductSelectOptions[product])) {
+
+                    totalCost += subtotal;
+                    oldProductSelectOptions[product][index] = parseFloat(price * productQuantity[product]);
+                    updateTotalCost();
+                } else {
+                    console.error('oldProductSelectOptions[product] is not an array');
+                }
+            });
+
             // Update the total cost
             totalCost += parseFloat(selectedProduct.price);
             productTotals[selectedProduct.id] = selectedProduct.price;
+            productQuantity[selectedProduct.id] = 1;
             updateTotalCost();
             productSelect.val(null).trigger('change');
         });
