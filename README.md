@@ -7,6 +7,10 @@
 R-: Restaurant<br />
 RO: Restaurant Owner
 
+#### Links
+Production: https://khardl.com/ <br />
+Development: https://khardl4test.xyz/
+
 
 ### Setup:
 
