@@ -6,7 +6,7 @@ import {PiNoteFill} from "react-icons/pi"
 import {MdSend} from "react-icons/md"
 import ProductDetailItem from "./ProductDetailItem"
 import {FiMinusCircle} from "react-icons/fi"
-import {IoAddCircleOutline} from "react-icons/io5"
+import {IoAddCircleOutline, IoLockClosedOutline} from "react-icons/io5"
 import AxiosInstance from "../../../../axios/axios"
 import {toast} from "react-toastify"
 import {addItemToCart} from "../../../../redux/editor/cartSlice"
@@ -645,7 +645,14 @@ const ProductItem = ({
                       )}
                     </div>
                   ) : (
-                    <div />
+                    <div
+                      style={{
+                        backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
+                      }}
+                      className='w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer'
+                    >
+                      <IoLockClosedOutline size={26} />
+                    </div>
                   )}
                 </div>
               </div>
