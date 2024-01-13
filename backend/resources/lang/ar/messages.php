@@ -613,6 +613,10 @@ return [
     "Choose the subscription method"=>"اختار طريقة الاشتراك ",
     "Pay for new branches only for "=>"ادفع ثمن الفروع الجديدة فقط لمدة",
     "Renew Subscription"=>"تجديد الاشتراك",
-    "Renew the term of old branches + pay for new branches for one year including current branches"=>"تجديد مدة الفروع القديمة + سداد قيمة الفروع الجديدة لمدة سنة شاملة الفروع الحالية"
+    "Renew"=>" تجديد",
+    "Renew the term of old branches + pay for new branches for one year including old branches"=>"تجديد مدة الفروع القديمة + سداد قيمة الفروع الجديدة لمدة سنة شاملة الفروع القديمة",
+    "The price of renewing current branches"=>" سعر تجديد الفروع الحالية ",
+    "The price of new branches includes current branches for one year"=>" سعر الفروع الجديدة شاملة الفروع الحالية لمدة سنة "
+   
 ];
 

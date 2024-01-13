@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Subscription as CentralSubscription;
 
 class ROSubscription extends Model
 {
@@ -18,9 +19,16 @@ class ROSubscription extends Model
         "number_of_branches",
         "user_id",
         'status',
+        'type',
         'subscription_id' // central subscription id
     ];
+    //type
+    public const NEW ="new";
+    public const RENEW_TO_CURRENT_END_DATE ="renew_to_current_end_date";
+    public const RENEW_FROM_CURRENT_END_DATE ="renew_from_current_end_date";
+    public const RENEW_AFTER_ONE_YEAR ="one_year";
 
+    // status
     public const ACTIVE = 'active';
     public const SUSPEND = 'suspend';
     // other status in tap payment status
@@ -56,5 +64,34 @@ class ROSubscription extends Model
       
 
         return $numberOfDays * $dailyCost;
+    }
+    public static function serviceCalculate($type,$number_of_branches) {
+        $currentSubscription = ROSubscription::firstOrFail();
+        $centralSubscription = tenancy()->central(function()use($currentSubscription){
+            return CentralSubscription::find($currentSubscription->subscription_id);
+        });
+
+        if ($currentSubscription) {
+            if($type ==  ROSubscription::RENEW_TO_CURRENT_END_DATE){ 
+                $remainingDaysCost = $currentSubscription->calculateDaysLeftCost($centralSubscription->amount);
+                $totalCost = $number_of_branches * $remainingDaysCost;
+                return response()->json(['success' => true, 'cost' => number_format($totalCost, 2)]);
+
+            }else if($type  ==  ROSubscription::RENEW_FROM_CURRENT_END_DATE){
+                $remainingDaysCost = $currentSubscription->calculateDaysLeftCost();
+                $totalCost =$remainingDaysCost +  (($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount);
+                return response()->json(['success' => true, 'cost' => [
+                    'total'=>number_format($totalCost, 2),
+                    'remainingDaysCost'=>number_format($remainingDaysCost, 2),
+                    'newBranches'=>number_format(($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount, 2)
+                    
+                ]]);
+
+            }else {
+                return response()->json([],500);
+            }
+        }
+
+        return response()->json(['error' => __('You does not have an active subscription.')]);
     }
 }

@@ -100,8 +100,11 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     transaction: "txn_0001",
                     order: "{{$subscription->id}}",
                 },
-                hashstring:"",
-                metadata: {},
+              
+                metadata: {
+                    'subscription':'new',
+                    'n-branches':document.getElementById('factor').value,
+                },
                 receipt: {
                     email: false,
                     sms: true,
@@ -170,7 +173,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 items: [
                 {
                     id: "{{$subscription->id}}",
-                    name: "{{$subscription->name}}",
+                    name: "{{__('messages.Renew'). $subscription->name}}",
                     description: "",
                     quantity: document.getElementById('factor_renew').value,
                     amount_per_unit: "",
@@ -190,15 +193,15 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 charge: {
                 saveCard: true,
                 threeDSecure: true,
-                description: "{{__('messages.New subscription')}}",
+                description: "{{__('messages.Renew Subscription')}}",
                 statement_descriptor: "Sample",
                 reference: {
                     transaction: "txn_0001",
                     order: "{{$subscription->id}}",
                 },
-                hashstring:"",
+             
                 metadata: {
-                    'status':$('input[name=renewalOption]:checked').val(),
+                    'subscription':$('input[name=renewalOption]:checked').val(),
                     'n-branches':document.getElementById('factor_renew').value,
                 },
                 receipt: {
@@ -404,40 +407,42 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                 <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
                                                                             </div>
                                                                             <div class="modal-body d-flex justify-content-center">
-                                                                            
-                                                                                <div class="row">
-                                                                                    <div class="col-12 mt-3 mb-2">
-                                                                                        <label for="factor">{{__('messages.Choose the subscription method')}}</label>
-                                                                                        <div class="form-check mt-3 ">
-                                                                                            <input class="form-check-input" type="radio" name="renewalOption" id="renewToCurrentEndDate" value="renew_to_current_end_date" >
-                                                                                            <label class="form-check-label" for="renewToCurrentEndDate">
-                                                                                               {{__('messages.Pay for new branches only for ')}} {{$RO_subscription->dateLeft}}
-                                                                                            </label>
+                                                                                <form action="" method="" id="renewSubForm">
+                                                                                    <div class="row">
+                                                                                        <div class="col-12 mt-3 mb-2">
+                                                                                            <label for="factor">{{__('messages.Choose the subscription method')}}</label>
+                                                                                            <div class="form-check mt-3 ">
+                                                                                                <input class="form-check-input" type="radio" name="renewalOption" required id="renewToCurrentEndDate" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}" >
+                                                                                                <label class="form-check-label" for="renewToCurrentEndDate">
+                                                                                                {{__('messages.Pay for new branches only for ')}} {{$RO_subscription->dateLeft}}
+                                                                                                </label>
+                                                                                            </div>
+                                                                                            <div class="form-check mt-3">
+                                                                                                <input class="form-check-input" type="radio" name="renewalOption" required id="renewFromNow" value="{{\App\Models\ROSubscription::RENEW_FROM_CURRENT_END_DATE}}">
+                                                                                                <label class="form-check-label" for="renewFromNow">
+                                                                                                    {{__('messages.Renew the term of old branches + pay for new branches for one year including old branches')}} 
+                                                                                                </label>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="form-check mt-3">
-                                                                                            <input class="form-check-input" type="radio" name="renewalOption" id="renewFromNow" value="renew_from_now">
-                                                                                            <label class="form-check-label" for="renewFromNow">
-                                                                                                {{__('messages.Renew the term of old branches + pay for new branches for one year including current branches')}} 
-                                                                                            </label>
+                                                                                        <div class="col-12">
+                                                                                            <div class="form-group">
+                                                                                                <label for="factor">{{__('messages.Number of branches')}}</label>
+                                                                                                <input type="number" class="form-control" id="factor_renew" name="factor_renew"  value="1" min="1" onchange="calculateRenewPrice()">
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="col-12">
-                                                                                        <div class="form-group">
-                                                                                            <label for="factor">{{__('messages.Number of branches')}}</label>
-                                                                                            <input type="number" class="form-control" id="factor_renew" name="factor_renew" value="1" min="1" onchange="calculateRenewPrice()">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                 
-                                                                                  
-                                                                                    <div class="col-12 mt-3">
-                                                                                        <label for="factor">{{__('messages.total-price')}} </label>
-                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price_renew" name="price_renew" value="{{ $subscription->amount }}" readonly>
-                                                                                    </div>
-                                                                                    <div class="col-12 mt-3">
-                                                                                        <button class="btn btn-primary" onclick="renewSubscription()">{{__('messages.Renew Subscription')}}</button>
-                                                                                    </div>
                                                                                     
-                                                                                </div>
+                                                                                    
+                                                                                        <div class="col-12 mt-3">
+                                                                                            <label for="factor">{{__('messages.total-price')}} </label>
+                                                                                            <input type="text" readonly class="form-control bg-secondary" id="price_renew" name="price_renew" value="" readonly>
+                                                                                            <i id="costDesc" class="hidden"></i>
+                                                                                        </div>
+                                                                                        <div class="col-12 mt-3">
+                                                                                            <button class="btn btn-primary" type="submit">{{__('messages.Renew Subscription')}}</button>
+                                                                                        </div>
+                                                                                        
+                                                                                    </div>
+                                                                                </form>
                                                                             
                                                                                 
                                                                             </div>
@@ -853,7 +858,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             $('input[name=renewalOption]').change(function() {
                 calculateRenewPrice();
             });
-       
+            $('#renewSubForm').on('submit',function(e){
+                e.preventDefault();
+                renewSubscription();
+            });
             function calculateRenewPrice(){
                 var renewalOption = $('input[name=renewalOption]:checked').val();
 
@@ -864,7 +872,19 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     .replace(':number_of_branches',  document.getElementById('factor_renew').value),
                     success: function(response) {
                         const priceInput = document.getElementById('price_renew');
-                        priceInput.value = response.cost;
+                        if(response.cost['total']){
+                            priceInput.value = response.cost['total'];
+                            $('#costDesc').show();
+                            $('#costDesc').text("{{__('messages.The price of renewing current branches')}}"
+                            +response.cost['remainingDaysCost']+" + "
+                            +"{{__('messages.The price of new branches includes current branches for one year')}}"
+                            +response.cost['newBranches']
+                            );
+                        }else {
+                            priceInput.value = response.cost;
+                            $('#costDesc').hide();
+                        }
+                      
                     },
                     error: function(error) {
                         console.error('Error calculating cost: ' + error.responseText);

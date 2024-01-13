@@ -78,6 +78,7 @@ const VerificationPhone = () => {
             throw new Error(`${t('Code verification failed')}`)
          }
       } catch (error) {
+         // TODO @todo print error message 
          toast.error(`${t('Code verification failed')}`)
       }
    }

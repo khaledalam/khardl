@@ -614,6 +614,9 @@ return [
     "Choose the subscription method"=>"Choose the subscription method",
     "Pay for new branches only for "=>"Pay for new branches only for ",
     "Renew Subscription"=>"Renew Subscription",
-    "Renew the term of old branches + pay for new branches for one year including current branches"=>"Renew the term of old branches + pay for new branches for one year including current branches"
+    "Renew"=>"Renew ",
+    "Renew the term of old branches + pay for new branches for one year including old branches"=>"Renew the term of old branches + pay for new branches for one year including old branches",
+    "The price of renewing current branches"=>" The price of renewing current branches ",
+    "The price of new branches includes current branches for one year"=>" The price of new branches includes current branches for one year "
 
 ];
