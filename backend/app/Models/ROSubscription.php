@@ -46,4 +46,15 @@ class ROSubscription extends Model
         }
         return $leftString;
     }
+    public function calculateDaysLeftCost($amount = null){
+        $numberOfDays = $this->start_at->diffInDays($this->end_at);
+        if($amount){
+            $dailyCost = $amount / 365; 
+        }else {
+            $dailyCost = $this->amount / 365; 
+        }
+      
+
+        return $numberOfDays * $dailyCost;
+    }
 }

@@ -46,6 +46,7 @@
     "Payment failed, please try again":"فشلت عملية الدفع الرجاء المحاولة مرة اخري",
     ":monthsLeft months and :daysLeft days left":":monthsLeft شهور و :daysLeft أيام",
     ":monthsLeft months left":":monthsLeft شهور",
-    ":daysLeft left":":daysLeft أيام"
+    ":daysLeft left":":daysLeft أيام",
+    "You does not have an subscription.":"ليس لديك اي اشتراك"
 
 }

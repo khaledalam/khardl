@@ -30,6 +30,7 @@ use App\Models\ROSubscription;
 use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
+use App\Models\Subscription as CentralSubscription;
 
 class RestaurantController extends BaseController
 {
@@ -71,6 +72,27 @@ class RestaurantController extends BaseController
             'status'=> ROSubscription::ACTIVE
         ]);
         return redirect()->back()->with('success', __('Branches has been activated successfully'));
+    }
+    public function serviceCalculate($type,$number_of_branches){
+        $currentSubscription = ROSubscription::firstOrFail();
+        $centralSubscription = tenancy()->central(function()use($currentSubscription){
+            return CentralSubscription::find($currentSubscription->subscription_id);
+        });
+
+        if ($currentSubscription) {
+            if($type == 'renew_to_current_end_date'){ 
+                $remainingDaysCost = $currentSubscription->calculateDaysLeftCost($centralSubscription->amount);
+                $totalCost = $number_of_branches * $remainingDaysCost;
+            }else if($type == 'renew_from_now'){
+                $remainingDaysCost = $currentSubscription->calculateDaysLeftCost();
+                $totalCost =$remainingDaysCost +  (($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount);
+            }else {
+                return response()->json([],500);
+            }
+            return response()->json(['success' => true, 'cost' => number_format($totalCost, 2)]);
+        }
+
+        return response()->json(['error' => __('You does not have an active subscription.')]);
     }
     
 

@@ -12,9 +12,10 @@ rel="stylesheet"
 type="text/javascript"
 src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 ></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 @endpush
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function newSubscription(){
         goSell.config({
@@ -164,20 +165,20 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 id: '{{$customer_tap_id}}'
             },
             order: {
-                amount: document.getElementById('price').value,
+                amount: document.getElementById('price_renew').value,
                 currency: "SAR",
                 items: [
                 {
                     id: "{{$subscription->id}}",
                     name: "{{$subscription->name}}",
                     description: "",
-                    quantity: document.getElementById('factor').value,
-                    amount_per_unit: "{{$subscription->amount}}",
+                    quantity: document.getElementById('factor_renew').value,
+                    amount_per_unit: "",
                     // discount: {
                     //   type: "P",
                     //   value: "10%",
                     // },
-                    total_amount: document.getElementById('price').value,
+                    total_amount: document.getElementById('price_renew').value,
                 },
                 
                 ],
@@ -196,13 +197,16 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     order: "{{$subscription->id}}",
                 },
                 hashstring:"",
-                metadata: {},
+                metadata: {
+                    'status':$('input[name=renewalOption]:checked').val(),
+                    'n-branches':document.getElementById('factor_renew').value,
+                },
                 receipt: {
                     email: false,
                     sms: true,
                 },
                 redirect: "{{route('tap.payments_submit_card_details')}}",
-                post: null,
+                post: "{{route('webhook-client-tap-payment')}}",
                 },
             },
             });
@@ -384,14 +388,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                             </div>
                                                                           
                                                                     </div>
-                                                                    <script>
-                                                                         function updatePrice() {
-                                                                            const priceInput = document.getElementById('price');
-                                                                            const factorInput = document.getElementById('factor');
-                                                                            const factor = parseFloat(factorInput.value) || 1;
-                                                                            priceInput.value = "{{$subscription->amount}}" * factor;
-                                                                        }
-                                                                    </script>
+                                                                   
                                                                 </div>
                                                                         <!--end::Modal body-->
                                                             </div>
@@ -420,24 +417,24 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                         <div class="form-check mt-3">
                                                                                             <input class="form-check-input" type="radio" name="renewalOption" id="renewFromNow" value="renew_from_now">
                                                                                             <label class="form-check-label" for="renewFromNow">
-                                                                                                {{__('messages.Renew the term of old branches + pay for new branches for one year')}} 
+                                                                                                {{__('messages.Renew the term of old branches + pay for new branches for one year including current branches')}} 
                                                                                             </label>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-12">
                                                                                         <div class="form-group">
                                                                                             <label for="factor">{{__('messages.Number of branches')}}</label>
-                                                                                            <input type="number" class="form-control" id="factor" name="factor" value="1" min="1" onchange="updateRenewPrice()">
+                                                                                            <input type="number" class="form-control" id="factor_renew" name="factor_renew" value="1" min="1" onchange="calculateRenewPrice()">
                                                                                         </div>
                                                                                     </div>
                                                                                  
                                                                                   
                                                                                     <div class="col-12 mt-3">
                                                                                         <label for="factor">{{__('messages.total-price')}} </label>
-                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
+                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price_renew" name="price_renew" value="{{ $subscription->amount }}" readonly>
                                                                                     </div>
                                                                                     <div class="col-12 mt-3">
-                                                                                        <button class="btn btn-primary" >{{__('messages.Renew Subscription')}}</button>
+                                                                                        <button class="btn btn-primary" onclick="renewSubscription()">{{__('messages.Renew Subscription')}}</button>
                                                                                     </div>
                                                                                     
                                                                                 </div>
@@ -853,24 +850,34 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
         
         <script>
             // Execute the AJAX request when the radio button changes
-            // $('input[name=renewalOption]').change(function() {
-            //     var renewalOption = $('input[name=renewalOption]:checked').val();
+            $('input[name=renewalOption]').change(function() {
+                calculateRenewPrice();
+            });
+       
+            function calculateRenewPrice(){
+                var renewalOption = $('input[name=renewalOption]:checked').val();
 
-
-            //         var url = '/calculateCost/' + userId + '/' + branchesToAdd + '/' + renewalOption;
-
-                  
-            //         $.ajax({
-            //             type: 'GET',
-            //             url: url,
-            //             success: function(response) {
-            //                 console.log('Cost: ' + response.cost);
-            //             },
-            //             error: function(error) {
-            //                 console.error('Error calculating cost: ' + error.responseText);
-            //             }
-            //         });
-            // });
+                $.ajax({
+                    type: 'GET',
+                    url:  `{{ route('restaurant.service.calculate', ['type' => ':type','number_of_branches'=>':number_of_branches']) }}`
+                    .replace(':type', renewalOption)
+                    .replace(':number_of_branches',  document.getElementById('factor_renew').value),
+                    success: function(response) {
+                        const priceInput = document.getElementById('price_renew');
+                        priceInput.value = response.cost;
+                    },
+                    error: function(error) {
+                        console.error('Error calculating cost: ' + error.responseText);
+                    }
+                });
+            }
+         
+            function updatePrice() {
+                const priceInput = document.getElementById('price');
+                const factorInput = document.getElementById('factor');
+                const factor = parseFloat(factorInput.value) || 1;
+                priceInput.value = "{{$subscription->amount}}" * factor;
+            }
 
            
         </script>
