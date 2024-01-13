@@ -182,6 +182,7 @@ const SectionPanel = () => {
             inputClass='!w-full !h-[48px] !text-[1rem]'
           />{" "}
           <div className='mt-3'>
+           h3.
             <LogoAlignment
               iconSize={20}
               defaultValue={phoneNumber_alignment}

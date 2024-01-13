@@ -1,6 +1,5 @@
 import React, {Fragment, useContext, useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom"
-import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
 import ImgPlaceholder from "../../../../assets/imgPlaceholder.png"
 import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg"
 import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
@@ -16,11 +15,13 @@ import {
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 import {useTranslation} from "react-i18next"
 import HeaderEdit from "./HeaderEdit"
+import {BiCloudUpload} from "react-icons/bi"
 
 const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
+  const [isVideo, setIsVideo] = useState(false)
   const {t} = useTranslation()
   const language = useSelector((state) => state.languageMode.languageMode)
 
@@ -94,6 +95,10 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
     if (selectedBanner) {
       if (selectedBanner.type.includes("video")) {
         console.log("video", selectedBanner)
+        setIsVideo(true)
+        setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+      } else {
+        setIsVideo(false)
         setUploadSingleBanner(URL.createObjectURL(selectedBanner))
       }
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
@@ -262,16 +267,56 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
         <div className='w-full'>
           <Slider banner_images={banner_images} />
         </div>
+      ) : isVideo || (banner_image && banner_image?.type === "video") ? (
+        <div
+          className={`w-full min-h-[180px] max-h-[200px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
+        >
+          {uploadSingleBanner && (
+            <video
+              controls
+              className='absolute top-0 right-0 bottom-0 left-0 w-full max-h-[200px]'
+            >
+              <source src={uploadSingleBanner} type='video/mp4' />
+              Your browser does not support the video tag.
+            </video>
+          )}
+          <div
+            style={{
+              borderRadius: banner_shape === "sharp" ? 0 : 12,
+            }}
+            className='w-14 h-14 rounded-lg p-2 flex items-center justify-center bg-neutral-100 relative'
+          >
+            <label htmlFor='banner'>
+              <input
+                type='file'
+                name='banner'
+                id={"banner"}
+                accept='video/*, image/*'
+                onChange={handleBannerUpload}
+                className='hidden'
+                hidden
+              />
+              {uploadSingleBanner ? (
+                <IoCloseOutline
+                  size={28}
+                  className='text-red-500'
+                  onClick={clearBanner}
+                />
+              ) : (
+                <BiCloudUpload size={28} />
+              )}
+            </label>
+          </div>
+        </div>
       ) : (
         <div
           style={{
             backgroundColor: banner_background_color,
-            backgroundImage:
-              filetype !== "video" && uploadSingleBanner
-                ? `url(${uploadSingleBanner})`
-                : banner_image
-                ? `url(${banner_image})`
-                : `url(${bannerPlaceholder})`,
+            backgroundImage: uploadSingleBanner
+              ? `url(${uploadSingleBanner})`
+              : banner_image
+              ? `url(${banner_image?.url})`
+              : `url(${bannerPlaceholder})`,
             borderRadius: banner_shape === "sharp" ? 0 : 12,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
@@ -300,21 +345,12 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
                   uploadSingleBanner
                     ? uploadSingleBanner
                     : banner_image
-                    ? banner_image
+                    ? banner_image?.url
                     : ImgPlaceholder
                 }
                 alt={""}
                 className='w-full h-full object-cover'
               />
-
-              {/* <div className='w-full h-full bg-slate-50'>
-                  {uploadSingleBanner && (
-                    <video width='100%' height='100%' controls>
-                      <source src={uploadSingleBanner} type='video/mp4' />
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
-                </div> */}
             </label>
             {uploadSingleBanner && (
               <div className='absolute top-[-0.8rem] right-[-1rem]'>
@@ -330,8 +366,8 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
           </div>
         </div>
       )}
-      {/* Category */}
 
+      {/* Category */}
       <div
         className={`w-full h-[500px] flex ${
           category_alignment === "center"
@@ -509,9 +545,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
           </div>
         </div>
       </div>
-
       {/* social media */}
-
       <div
         style={{backgroundColor: footer_color}}
         className={`w-full min-h-[70px] px-3  rounded-xl flex ${

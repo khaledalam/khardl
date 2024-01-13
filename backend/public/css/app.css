@@ -4501,11 +4501,20 @@ details.collapse summary::-webkit-details-marker {
 .h-screen {
   height: 100vh;
 }
+.h-14 {
+  height: 3.5rem;
+}
 .max-h-\[150px\] {
   max-height: 150px;
 }
 .max-h-screen {
   max-height: 100vh;
+}
+.max-h-\[200px\] {
+  max-height: 200px;
+}
+.max-h-\[300px\] {
+  max-height: 300px;
 }
 .min-h-\[1\.3rem\] {
   min-height: 1.3rem;
@@ -4761,6 +4770,15 @@ details.collapse summary::-webkit-details-marker {
 }
 .w-screen {
   width: 100vw;
+}
+.w-6 {
+  width: 1.5rem;
+}
+.w-14 {
+  width: 3.5rem;
+}
+.w-1 {
+  width: 0.25rem;
 }
 .\!min-w-\[18\%\] {
   min-width: 18% !important;
