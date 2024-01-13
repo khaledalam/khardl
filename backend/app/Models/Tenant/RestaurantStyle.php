@@ -26,8 +26,8 @@ class RestaurantStyle extends Model
 
     public function getFileType($extension)
     {
-        $imageExtensions = ['png', 'jpg', 'jpeg'];
-        $videoExtensions = ['mp4', 'avi', 'mov', 'wmv', 'gif', 'webp'];
+        $imageExtensions = ['png', 'jpg', 'jpeg','gif', 'webp'];
+        $videoExtensions = ['mp4', 'avi', 'mov', 'wmv'];
 
         if (in_array($extension, $imageExtensions)) {
             return 'image';
