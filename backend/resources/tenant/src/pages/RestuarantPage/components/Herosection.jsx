@@ -1,4 +1,4 @@
-import React, {Fragment} from "react"
+import React, {Fragment, useEffect} from "react"
 import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
 import {useDispatch, useSelector} from "react-redux"
 import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
@@ -25,6 +25,12 @@ const Herosection = ({isMobile, categories}) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   }
+
+  useEffect(() => {
+    document.getElementById("vid") && document.getElementById("vid").play()
+    document.getElementById("vidSlider") &&
+      document.getElementById("vidSlider").play()
+  }, [])
 
   return (
     <div className='flex flex-col items-center justify-center'>
@@ -83,12 +89,20 @@ const Herosection = ({isMobile, categories}) => {
           >
             {restaurantStyle?.banner_image &&
             restaurantStyle?.banner_image?.type === "video" ? (
-              <video width='100%' height='100%' controls autoPlay>
+              <video
+                controls
+                id='vid'
+                loop
+                autoPlay
+                className={` ${
+                  isMobile ? "max-h-[300px] w-full" : "max-h-[470px] w-full"
+                }  `}
+              >
                 <source
                   src={
                     restaurantStyle?.banner_image
                       ? restaurantStyle?.banner_image?.url
-                      : imgBanner
+                      : ""
                   }
                 />
                 Your browser does not support the video tag.
@@ -128,7 +142,17 @@ const Herosection = ({isMobile, categories}) => {
                       {restaurantStyle?.banner_images &&
                       restaurantStyle?.banner_images?.length > 0 &&
                       restaurantStyle?.banner_images[index].type === "video" ? (
-                        <video width='100%' height='100%' controls autoPlay>
+                        <video
+                          controls
+                          id='vidSlider'
+                          loop
+                          autoPlay
+                          className={` ${
+                            isMobile
+                              ? "max-h-[300px] w-full"
+                              : "max-h-[470px] w-full"
+                          }  `}
+                        >
                           <source
                             src={
                               restaurantStyle?.banner_images &&

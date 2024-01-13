@@ -59,6 +59,7 @@ const Navbar = ({toggleSidebarCollapse}) => {
           return await fetch(image.url).then((r) => r.blob())
         })
       inputs.banner_images = await Promise.all(imagePromises)
+      console.log("inputs.banner_images", inputs.banner_images)
     } else {
       inputs.banner_images = ""
     }

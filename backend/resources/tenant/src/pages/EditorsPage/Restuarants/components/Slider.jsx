@@ -103,18 +103,24 @@ const Slider = ({banner_images}) => {
                     onChange={(e) => handleImagesUpload(e, index)}
                     className='hidden'
                   />
-                  {bannersUpload &&
-                  bannersUpload.length > 0 &&
-                  bannersUpload[index]?.type === "video" ? (
+                  {(bannersUpload &&
+                    bannersUpload.length > 0 &&
+                    bannersUpload[index]?.type === "video") ||
+                  (banner_images.length &&
+                    banner_images[index]?.type === "video") ? (
                     <>
                       <video
                         controls
+                        autoplay
+                        loop
                         className='absolute top-0 right-0 bottom-0 left-0 w-full max-h-[300px]'
                       >
                         <source
                           src={
                             bannersUpload[index]?.url
                               ? bannersUpload[index]?.url
+                              : banner_images[index]?.url
+                              ? banner_images[index]?.url
                               : ""
                           }
                           type='video/mp4'
@@ -182,7 +188,7 @@ const Slider = ({banner_images}) => {
                   <button
                     onClick={removeEachSlide}
                     disabled={sliderCount <= 2}
-                    className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex disabled:cursor-not-allowed leading-[0px] items-center justify-center text-lg absolute left-[47%] bottom-7'
+                    className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex disabled:cursor-not-allowed leading-[0px] items-center justify-center text-lg absolute left-[45%] laptopXL:left-[47%] bottom-7'
                   >
                     -
                   </button>

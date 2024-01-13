@@ -1,6 +1,4 @@
 import React, {useContext} from "react"
-import {MenuContext} from "react-flexible-sliding-menu"
-import {IoMenuOutline} from "react-icons/io5"
 import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
 import {useNavigate} from "react-router-dom"
 import {useSelector} from "react-redux"
@@ -11,6 +9,11 @@ const HeaderEdit = ({restaurantStyle, toggleSidebarCollapse}) => {
   const cartItemsCount = useSelector(
     (state) => state.categoryAPI.cartItemsCount
   )
+  const categories = useSelector((state) => state.categoryAPI.categories)
+
+  const handleGotoCart = () => {
+    navigate("/")
+  }
 
   return (
     <div
@@ -27,11 +30,13 @@ const HeaderEdit = ({restaurantStyle, toggleSidebarCollapse}) => {
         <RiMenuFoldFill size={30} className='text-neutral-400' />
       </div>
       <div
-        onClick={() => navigate("/cart")}
+        onClick={
+          categories && categories.length > 0 ? handleGotoCart : () => {}
+        }
         className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer'
       >
         <img src={cartHeaderImg} alt={"cart"} className='' />
-        {true && (
+        {cartItemsCount > 0 && (
           <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
             <div className='w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
               <span className='text-white font-bold text-xs'>
