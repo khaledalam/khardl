@@ -614,9 +614,12 @@ return [
     "Pay for new branches only for "=>"ادفع ثمن الفروع الجديدة فقط لمدة",
     "Renew Subscription"=>"تجديد الاشتراك",
     "Renew"=>" تجديد",
+    "Activate your branches"=> "تفعيل اشتراكك",
     "Renew the term of old branches + pay for new branches for one year including old branches"=>"تجديد مدة الفروع القديمة + سداد قيمة الفروع الجديدة لمدة سنة شاملة الفروع القديمة",
     "The price of renewing current branches"=>" سعر تجديد الفروع الحالية ",
-    "The price of new branches includes current branches for one year"=>" سعر الفروع الجديدة شاملة الفروع الحالية لمدة سنة "
-   
+    "The price of new branches includes current branches for one year"=>" سعر الفروع الجديدة شاملة الفروع الحالية لمدة سنة ",
+    "Subscribe to the available packages so that you can create branches"=>"قم بالاشتراك في الباقات المتاحة لكي تتمكن من انشاء الفروع",
+    "The current subscription period has expired, please renew in order to receive new orders"=>  "لقد تم انتهاء مدة الاشتراك الحالي ، الرجاء التجديد لكي تتلقي طلبات جديدة",
+    "Please activate the branches so that you can receive orders"=>"الرجاء تفعيل عمل الفروع لكي تتمكن من تلقي الطلبات"
 ];
 

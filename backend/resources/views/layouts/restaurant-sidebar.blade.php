@@ -417,7 +417,7 @@
         <!--begin::Wrapper-->
         <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         @include('restaurant.components.payment-tap-documents-alert')
-
+        @include('restaurant.components.subscription-alert')
         <!--begin::Header-->
             <div id="kt_header" class="header align-items-stretch">
                 <!--begin::Container-->

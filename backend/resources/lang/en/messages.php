@@ -615,8 +615,12 @@ return [
     "Pay for new branches only for "=>"Pay for new branches only for ",
     "Renew Subscription"=>"Renew Subscription",
     "Renew"=>"Renew ",
+    "Activate your branches"=> "Activate your branches",
     "Renew the term of old branches + pay for new branches for one year including old branches"=>"Renew the term of old branches + pay for new branches for one year including old branches",
     "The price of renewing current branches"=>" The price of renewing current branches ",
-    "The price of new branches includes current branches for one year"=>" The price of new branches includes current branches for one year "
+    "The price of new branches includes current branches for one year"=>" The price of new branches includes current branches for one year ",
+    "Subscribe to the available packages so that you can create branches"=>"Subscribe to the available packages so that you can create branches",
+    "The current subscription period has expired, please renew in order to receive new orders"=>  "The current subscription period has expired, please renew in order to receive new orders",
+    "Please activate the branches so that you can receive orders"=>"Please activate the branches so that you can receive orders"
 
 ];
