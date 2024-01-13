@@ -12,7 +12,7 @@ const HeaderEdit = ({restaurantStyle, toggleSidebarCollapse}) => {
   const categories = useSelector((state) => state.categoryAPI.categories)
 
   const handleGotoCart = () => {
-    navigate("/")
+    navigate("/cart")
   }
 
   return (

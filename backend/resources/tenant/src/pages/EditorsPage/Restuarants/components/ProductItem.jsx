@@ -76,6 +76,7 @@ const ProductItem = ({
   }, [qtyCount])
   const branch_id = localStorage.getItem("selected_branch_id")
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const categories = useSelector((state) => state.categoryAPI.categories)
 
   const checkboxItems = Object.keys(checkbox_input_names).map((key) => {
     const namesArray = checkbox_input_names[key]
@@ -598,50 +599,54 @@ const ProductItem = ({
                     <h3 className='text-[16px] font-bold'>{qtyCount}</h3>
                     <IoAddCircleOutline size={28} onClick={incrementQty} />
                   </div>
-                  <div
-                    style={{
-                      backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
-                    }}
-                    className='w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer'
-                    onClick={
-                      gotoCart ? () => navigate("/cart") : handleAddToCart
-                    }
-                  >
-                    <div className='w-[30px] h-[30px] cursor-pointer '>
-                      <img
-                        src={cartBgcolor ? imgCartWhite : imgCart}
-                        alt='product'
-                        className='w-full h-full object-contain '
-                      />
+                  {categories?.length > 0 ? (
+                    <div
+                      style={{
+                        backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
+                      }}
+                      className='w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer'
+                      onClick={
+                        gotoCart ? () => navigate("/cart") : handleAddToCart
+                      }
+                    >
+                      <div className='w-[30px] h-[30px] cursor-pointer '>
+                        <img
+                          src={cartBgcolor ? imgCartWhite : imgCart}
+                          alt='product'
+                          className='w-full h-full object-contain '
+                        />
+                      </div>
+                      {gotoCart ? (
+                        <h3
+                          style={{
+                            color: amountColor
+                              ? amountColor
+                              : cartBgcolor
+                              ? "white"
+                              : "red",
+                          }}
+                          className='text-xs line-clamp-1 md:text-[14px] font-bold'
+                        >
+                          Check Cart
+                        </h3>
+                      ) : (
+                        <h3
+                          style={{
+                            color: amountColor
+                              ? amountColor
+                              : cartBgcolor
+                              ? "white"
+                              : "red",
+                          }}
+                          className='text-[14px] font-bold'
+                        >
+                          {t("SAR")} {totalPrice && finalPrice}
+                        </h3>
+                      )}
                     </div>
-                    {gotoCart ? (
-                      <h3
-                        style={{
-                          color: amountColor
-                            ? amountColor
-                            : cartBgcolor
-                            ? "white"
-                            : "red",
-                        }}
-                        className='text-xs line-clamp-1 md:text-[14px] font-bold'
-                      >
-                        Check Cart
-                      </h3>
-                    ) : (
-                      <h3
-                        style={{
-                          color: amountColor
-                            ? amountColor
-                            : cartBgcolor
-                            ? "white"
-                            : "red",
-                        }}
-                        className='text-[14px] font-bold'
-                      >
-                        {t("SAR")} {totalPrice && finalPrice}
-                      </h3>
-                    )}
-                  </div>
+                  ) : (
+                    <div />
+                  )}
                 </div>
               </div>
             </Fragment>
