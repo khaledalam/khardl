@@ -173,7 +173,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     public function number_of_available_branches(): int
     {
-        return $this->ROSubscription->number_of_branches ?? 0;
+        if($this->ROSubscription?->number_of_branches){
+            return max(0, $this->ROSubscription?->number_of_branches - Branch::all()->count());
+        }
+        return 0;
     }
 
 

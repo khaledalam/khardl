@@ -15,6 +15,7 @@
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
     <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
+    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ global_asset('assets/css/AdminAndRestaurantAndWorker.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
@@ -469,7 +470,7 @@
                 @yield('content')
                 <!--end::Content-->
                 <!--begin::Footer-->
-                <div class="footer py-2 d-flex flex-lg-column" id="kt_footer">
+                <div class="footer mt-10 py-2 d-flex flex-lg-column" id="kt_footer">
                     <!--begin::Container-->
                     <div
                         class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
