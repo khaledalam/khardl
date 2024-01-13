@@ -42,7 +42,7 @@ import Editor from "./components/Customers/CustomersEditor/Editor"
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
-    dsn: "https://bd6670fdc311f04a40196b93a43be5ba@o1178747.ingest.sentry.io/4506484595818496",
+    dsn: "https://860125ea20f9254e5c411ffbdeb02c39@o4506502637420544.ingest.sentry.io/4506563222896640",
     integrations: [
         new Sentry.Replay(),
     ],

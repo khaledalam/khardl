@@ -1,13 +1,15 @@
-import {Fragment} from "react"
+import {Fragment, useContext} from "react"
 import {FaPlay} from "react-icons/fa"
 import {IoMenuOutline} from "react-icons/io5"
 import {useSelector} from "react-redux"
 import AxiosInstance from "../../../../axios/axios"
 import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
+import {MenuContext} from "react-flexible-sliding-menu"
 
 const Navbar = ({toggleSidebarCollapse}) => {
   const {t} = useTranslation()
+  const {toggleMenu} = useContext(MenuContext)
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   const handleSubmitResStyle = async (e) => {
@@ -34,6 +36,7 @@ const Navbar = ({toggleSidebarCollapse}) => {
     inputs.product_background_color = restuarantStyle.product_background_color
     inputs.page_category_color = restuarantStyle.page_category_color
     inputs.header_color = restuarantStyle.header_color
+    inputs.headerPosition = restuarantStyle.headerPosition
     inputs.footer_color = restuarantStyle.footer_color
     inputs.price_color = restuarantStyle.price_color
     inputs.text_fontFamily = restuarantStyle.text_fontFamily
@@ -49,11 +52,11 @@ const Navbar = ({toggleSidebarCollapse}) => {
       restuarantStyle?.bannersUpload &&
       restuarantStyle?.bannersUpload.length > 0
     ) {
-      const imagePromises = restuarantStyle?.bannersUpload.map(
-        async (image) => {
+      const imagePromises = restuarantStyle?.bannersUpload
+        .filter((banner) => banner !== undefined || banner !== null)
+        .map(async (image) => {
           return await fetch(image).then((r) => r.blob())
-        }
-      )
+        })
       inputs.banner_images = await Promise.all(imagePromises)
     } else {
       inputs.banner_images = ""
@@ -92,14 +95,14 @@ const Navbar = ({toggleSidebarCollapse}) => {
         <IoMenuOutline
           size={42}
           className='text-neutral-400 cursor-pointer'
-          onClick={toggleSidebarCollapse}
+          onClick={toggleMenu}
         />
         <div className='flex items-center gap-4 cursor-pointer'>
           <button
             onClick={() => window.open("/")}
-            className='btn btn-active p-3 bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200 flex items-center justify-center'
+            className='btn btn-active w-[100px] bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200'
           >
-            <FaPlay size={22} />
+            {t("Preview")}
           </button>
           <button
             onClick={handleSubmitResStyle}

@@ -112,7 +112,7 @@ const restuarantEditorSlice = createSlice({
     product_background_color: "white",
     header_color: "#ffffff",
     footer_color: "#ffffff",
-    price_color: "#ffffff",
+    price_color: "red",
 
     text_fontFamily: "Inter",
     text_fontWeight: 400,

@@ -24,7 +24,39 @@ class RestaurantStyle extends Model
         return $this->belongsTo(RestaurantUser::class);
     }
 
+    public function getFileType($extension)
+    {
+        $imageExtensions = ['png', 'jpg', 'jpeg','gif', 'webp'];
+        $videoExtensions = ['mp4', 'avi', 'mov', 'wmv'];
 
+        if (in_array($extension, $imageExtensions)) {
+            return 'image';
+        } elseif (in_array($extension, $videoExtensions)) {
+            return 'video';
+        }
+
+        // Default to 'unknown' or handle other types if needed
+        return 'unknown';
+    }
+
+    public function getBannerImageAttribute()
+    {
+        return [
+            'url' => $this->attributes['banner_image'],
+            'type' => $this->getFileType(pathinfo($this->attributes['banner_image'], PATHINFO_EXTENSION)),
+        ];
+    }
+
+    public function getBannerImagesAttribute()
+    {
+        $images = [];
+        foreach (json_decode($this->attributes['banner_images']) as $image) {
+            $new['type'] = $this->getFileType(pathinfo($image, PATHINFO_EXTENSION));
+            $new['url'] = $image;
+            $images[] = $new;
+        }
+        return $images;
+    }
 
 
 }
