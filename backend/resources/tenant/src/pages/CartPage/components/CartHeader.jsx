@@ -1,7 +1,10 @@
 import React from "react"
 import BigCart from "../../../assets/cartLgIcon.svg"
+import {useTranslation} from "react-i18next"
 
 const CartHeader = ({styles}) => {
+  const {t} = useTranslation()
+
   return (
     <div
       style={{backgroundColor: styles?.categoryDetail_cart_color}}
@@ -11,7 +14,7 @@ const CartHeader = ({styles}) => {
     >
       <div className='flex items-center gap-4'>
         <img src={BigCart} alt='cart' />
-        <h3 className='text-2xl'>Your Cart</h3>
+        <h3 className='text-2xl'>{t("Your Cart")}</h3>
       </div>
     </div>
   )
