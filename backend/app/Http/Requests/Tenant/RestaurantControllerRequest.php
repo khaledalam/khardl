@@ -43,6 +43,7 @@ class RestaurantControllerRequest extends FormRequest
             'categoryDetail_cart_color' => 'nullable|string',
             'page_color' => 'nullable|string',
             'page_category_color' => 'nullable|string',
+            'headerPosition' => 'nullable|string|in:relative,fixed',
             'header_color' => 'nullable|string',
             'footer_color' => 'nullable|string',
             'price_color' => 'nullable|string',
