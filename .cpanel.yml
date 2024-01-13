@@ -4,5 +4,5 @@ deployment:
     - export DEPLOYPATH=/home/khardl5/public_html/
     - export DEPLOYPATH=/home/khardl4test/public_html/
     - /bin/cp -R * $DEPLOYPATH
-    - php /home/khardl5/public_html/backend/artisan migrate:fresh --seed
-    - php /home/khardl5/public_html/backend/artisan create:tenant
+    - ./home/khardl5/public_html/deploy.sh
+    - ./home/khardl4test/public_html/deploy.sh
