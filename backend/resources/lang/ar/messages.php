@@ -371,7 +371,7 @@ return [
     "logo" => "شعار",
     "others" => "اخري",
     "blocked" => "محظور",
-    "blocked-user" => "تم حظر هدا الحساب",
+    "blocked-user" => "تم حظر هذا الحساب",
     "ro-user-no-tenant" => "حساب صاحب المطعم ليس لديه رابط موقع بعد",
     "Title"=>"اللقب",
     "Bank Account"=>"الحساب البنكي",
@@ -618,6 +618,7 @@ return [
     "Today" => "اليوم",
     "Last day" => "امس",
     "Last week" => "اخر اسبوع",
+    "Invalid email or password" => "البريد الإلكتروني أو كلمة السر خاطئة"
 
 ];
 
