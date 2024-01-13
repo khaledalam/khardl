@@ -618,5 +618,7 @@ return [
     "Today" => "Today",
     "Last day" => "Last day",
     "Last week" => "Last week",
+    "You need to have branches first" => "You need to have branches first",
+    "No available branches" => "No available branches"
 
 ];
