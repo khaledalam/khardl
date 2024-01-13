@@ -17,7 +17,7 @@ import {
 import {useTranslation} from "react-i18next"
 import HeaderEdit from "./HeaderEdit"
 
-const MainBoardEditor = ({categories}) => {
+const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
@@ -205,7 +205,10 @@ const MainBoardEditor = ({categories}) => {
     >
       {/* Header cart */}
       {headerPosition !== "fixed" && (
-        <HeaderEdit restaurantStyle={restuarantEditorStyle} />
+        <HeaderEdit
+          restaurantStyle={restuarantEditorStyle}
+          toggleSidebarCollapse={toggleSidebarCollapse}
+        />
       )}
       {/* logo */}
       <div
@@ -291,28 +294,27 @@ const MainBoardEditor = ({categories}) => {
                 className='hidden'
                 hidden
               />
-              {filetype === "video" ? (
-                <div className='w-full h-full bg-slate-50'>
+
+              <img
+                src={
+                  uploadSingleBanner
+                    ? uploadSingleBanner
+                    : banner_image
+                    ? banner_image
+                    : ImgPlaceholder
+                }
+                alt={""}
+                className='w-full h-full object-cover'
+              />
+
+              {/* <div className='w-full h-full bg-slate-50'>
                   {uploadSingleBanner && (
                     <video width='100%' height='100%' controls>
                       <source src={uploadSingleBanner} type='video/mp4' />
                       Your browser does not support the video tag.
                     </video>
                   )}
-                </div>
-              ) : (
-                <img
-                  src={
-                    uploadSingleBanner
-                      ? uploadSingleBanner
-                      : banner_image
-                      ? banner_image
-                      : ImgPlaceholder
-                  }
-                  alt={""}
-                  className='w-full h-full object-cover'
-                />
-              )}
+                </div> */}
             </label>
             {uploadSingleBanner && (
               <div className='absolute top-[-0.8rem] right-[-1rem]'>

@@ -1,13 +1,15 @@
-import {Fragment} from "react"
+import {Fragment, useContext} from "react"
 import {FaPlay} from "react-icons/fa"
 import {IoMenuOutline} from "react-icons/io5"
 import {useSelector} from "react-redux"
 import AxiosInstance from "../../../../axios/axios"
 import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
+import {MenuContext} from "react-flexible-sliding-menu"
 
 const Navbar = ({toggleSidebarCollapse}) => {
   const {t} = useTranslation()
+  const {toggleMenu} = useContext(MenuContext)
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   const handleSubmitResStyle = async (e) => {
@@ -93,7 +95,7 @@ const Navbar = ({toggleSidebarCollapse}) => {
         <IoMenuOutline
           size={42}
           className='text-neutral-400 cursor-pointer'
-          onClick={toggleSidebarCollapse}
+          onClick={toggleMenu}
         />
         <div className='flex items-center gap-4 cursor-pointer'>
           <button

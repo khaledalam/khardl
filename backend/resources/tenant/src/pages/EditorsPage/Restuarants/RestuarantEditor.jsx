@@ -117,11 +117,17 @@ export const RestuarantEditor = () => {
             <div className='w-full h-full  flex flex-col gap-2'>
               {restaurantStyle?.headerPosition === "fixed" && (
                 <div className='p-2'>
-                  <HeaderEdit restaurantStyle={restaurantStyle} />
+                  <HeaderEdit
+                    restaurantStyle={restaurantStyle}
+                    toggleSidebarCollapse={handleSidebarCollapse}
+                  />
                 </div>
               )}
               <div className=' h-full overflow-y-scroll hide-scroll'>
-                <MainBoardEditor categories={categories} />
+                <MainBoardEditor
+                  categories={categories}
+                  toggleSidebarCollapse={handleSidebarCollapse}
+                />
               </div>
             </div>
           )}

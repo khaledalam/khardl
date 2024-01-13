@@ -4,9 +4,9 @@ import {IoMenuOutline} from "react-icons/io5"
 import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
 import {useNavigate} from "react-router-dom"
 import {useSelector} from "react-redux"
+import {RiMenuFoldFill} from "react-icons/ri"
 
-const HeaderEdit = ({restaurantStyle}) => {
-  const {toggleMenu} = useContext(MenuContext)
+const HeaderEdit = ({restaurantStyle, toggleSidebarCollapse}) => {
   const navigate = useNavigate()
   const cartItemsCount = useSelector(
     (state) => state.categoryAPI.cartItemsCount
@@ -20,12 +20,11 @@ const HeaderEdit = ({restaurantStyle}) => {
       className='w-full min-h-[85px] z-10  rounded-xl flex items-center justify-between px-2'
     >
       <div
-        onClick={toggleMenu}
+        onClick={toggleSidebarCollapse}
         style={{fontWeight: restaurantStyle?.text_fontWeight}}
         className={`btn hover:bg-neutral-100 flex items-center gap-3 cursor-pointer`}
       >
-        <IoMenuOutline size={40} className='text-neutral-400' />
-        {/* <span className='text-sm'>{t("Show Navigation Bar To Edit")}</span> */}
+        <RiMenuFoldFill size={30} className='text-neutral-400' />
       </div>
       <div
         onClick={() => navigate("/cart")}

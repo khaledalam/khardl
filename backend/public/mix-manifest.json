@@ -1,8 +1,8 @@
 {
-    "/js/central.js": "/js/central.js?id=d31e654473d9ded1381f5698e65965f2",
-    "/js/tenant.js": "/js/tenant.js?id=beb309e00291e3f06ff8febf9bd64158",
-    "/css/index.css": "/css/index.css?id=57ff2cb304a90041f7a0d38f949b5f12",
-    "/css/app.css": "/css/app.css?id=1830f4613d4e6fb0784c643fc0c05527",
+    "/js/central.js": "/js/central.js",
+    "/js/tenant.js": "/js/tenant.js",
+    "/css/index.css": "/css/index.css",
+    "/css/app.css": "/css/app.css",
     "/Linestroke.svg": "/Linestroke.svg?id=8715a9dc777dc8005136fbe92d1449e6",
     "/Logo.svg": "/Logo.svg?id=9f58778b18dc8a6ceb2b784bde375954",
     "/asset-manifest.json": "/asset-manifest.json?id=ef4c1bcefc8ba6874daf4bc0ab7be845",
@@ -2184,6 +2184,7 @@
     "/images/Tiktok.svg": "/images/Tiktok.svg?id=4423f44f15eb2b582e79ca9a07e3c9b7",
     "/images/WebsiteAndApplication.webp": "/images/WebsiteAndApplication.webp?id=c4448443669331464182dac646ed75a6",
     "/images/Xtwitter.svg": "/images/Xtwitter.svg?id=8b4753b39e71c212e8a2bf2273118202",
+    "/images/banner-placeholder.jpg": "/images/banner-placeholder.jpg?id=c1466115da8b6a9bb2d53cc7e67799c3",
     "/images/bannerRestuarant.png": "/images/bannerRestuarant.png?id=e6932264b426134c66706b474fd707c6",
     "/images/bgRegisteration.webp": "/images/bgRegisteration.webp?id=ce77e0f4b28be9617a87e1999988305b",
     "/images/bgRegistration.webp": "/images/bgRegistration.webp?id=ce77e0f4b28be9617a87e1999988305b",
@@ -2209,6 +2210,7 @@
     "/images/image.webp": "/images/image.webp?id=d7db9a27780ae0b1af9572145a9f4d79",
     "/images/imageIcon.svg": "/images/imageIcon.svg?id=137109ff9c87b8ac6a0d0a3512fa97b4",
     "/images/imgFB.svg": "/images/imgFB.svg?id=b27904153a689bcfb5b37be4e0549f38",
+    "/images/imgPlaceholder.png": "/images/imgPlaceholder.png?id=7500d27b2de09b72a4e9517819e7d419",
     "/images/imgTelgram.svg": "/images/imgTelgram.svg?id=49453ef48979844f21534ad3c16406e6",
     "/images/imgYoutube.svg": "/images/imgYoutube.svg?id=9f0fbb3b3a917ed4444afe43a5179ed5",
     "/images/khardl_Logo.png": "/images/khardl_Logo.png?id=7309d678794e6ec84df3fdd664446bbe",
@@ -4234,7 +4236,7 @@
     "/media/technology-logos/Html5.png": "/media/technology-logos/Html5.png?id=b4a3ff7e36f190b0c7eb545f6154cfac",
     "/media/technology-logos/React.png": "/media/technology-logos/React.png?id=66d79d92233f04e128ea676dea1d93e0",
     "/media/technology-logos/VueJS.png": "/media/technology-logos/VueJS.png?id=d3e5fefbe4df2bd095731f8de30c9438",
-    "/mix-manifest.json": "/mix-manifest.json?id=ae4c35fc04c4b1c8a61864a2466e1bb7",
+    "/mix-manifest.json": "/mix-manifest.json?id=1e33f2c006d16bcb50d14bda733af5db",
     "/plugins/custom/cookiealert/cookiealert.bundle.css": "/plugins/custom/cookiealert/cookiealert.bundle.css?id=ee5818bd8e3e62108f9c60dd356c99e5",
     "/plugins/custom/cookiealert/cookiealert.bundle.js": "/plugins/custom/cookiealert/cookiealert.bundle.js?id=eddbeff68c5fd81397decbcd254d8db2",
     "/plugins/custom/cookiealert/cookiealert.bundle.rtl.css": "/plugins/custom/cookiealert/cookiealert.bundle.rtl.css?id=ee5818bd8e3e62108f9c60dd356c99e5",
@@ -4423,7 +4425,5 @@
     "/static/js/483.1448968e.chunk.js.map": "/static/js/483.1448968e.chunk.js.map?id=dd970c783fc4cff02cb2dea32e23c942",
     "/static/js/main.d3d127bb.js": "/static/js/main.d3d127bb.js?id=2482ea592fc44a12e0e4e4e8bfe6d539",
     "/static/js/main.d3d127bb.js.LICENSE.txt": "/static/js/main.d3d127bb.js.LICENSE.txt?id=d4736f9ca4b5e2223a5e00f1ae8a2b66",
-    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47",
-    "/images/imgPlaceholder.png": "/images/imgPlaceholder.png?id=7500d27b2de09b72a4e9517819e7d419",
-    "/images/banner-placeholder.jpg": "/images/banner-placeholder.jpg?id=c1466115da8b6a9bb2d53cc7e67799c3"
+    "/static/js/main.d3d127bb.js.map": "/static/js/main.d3d127bb.js.map?id=72b9ba8080ee7c5ceb0d2cc3d9e7dc47"
 }

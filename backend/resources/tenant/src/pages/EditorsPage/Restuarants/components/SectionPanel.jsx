@@ -53,28 +53,13 @@ const SectionPanel = () => {
         />
       </div>
       <div className='py-4 border-b border-neutral-300'>
-        <div className='flex flex-col gap-3 w-full px-2'>
+        <div className='flex items-center justify-between  w-[70%] px-2'>
           <h2 className='font-bold text-lg'>{t("Logo")}</h2>
-          <div className='mt-3'>
-            <PrimarySelect
-              label={t("Content")}
-              defaultValue={
-                category_alignment === "center"
-                  ? t("Center")
-                  : category_alignment === "left"
-                  ? t("Left")
-                  : category_alignment === "right"
-                  ? t("Right")
-                  : ""
-              }
-              handleChange={(value) => dispatch(logoAlignment(value))}
-              options={[
-                {value: "left", text: t("Left")},
-                {value: "center", text: t("Center")},
-                {value: "right", text: t("Right")},
-              ]}
-            />
-          </div>
+          <LogoAlignment
+            iconSize={20}
+            defaultValue={logo_alignment}
+            onChange={(value) => dispatch(logoAlignment(value))}
+          />
         </div>
       </div>
       <div className='py-4 border-b border-neutral-300'>
@@ -196,26 +181,13 @@ const SectionPanel = () => {
             containerClass='!w-full'
             inputClass='!w-full !h-[48px] !text-[1rem]'
           />{" "}
-        </div>
-        <div className='mt-3'>
-          <PrimarySelect
-            label={t("Content")}
-            defaultValue={
-              phoneNumber_alignment === "center"
-                ? t("Center")
-                : phoneNumber_alignment === "left"
-                ? t("Left")
-                : phoneNumber_alignment === "right"
-                ? t("Right")
-                : ""
-            }
-            handleChange={(value) => dispatch(phoneNumberAlignment(value))}
-            options={[
-              {value: "left", text: t("Left")},
-              {value: "center", text: t("Center")},
-              {value: "right", text: t("Right")},
-            ]}
-          />
+          <div className='mt-3'>
+            <LogoAlignment
+              iconSize={20}
+              defaultValue={phoneNumber_alignment}
+              onChange={(value) => dispatch(phoneNumberAlignment(value))}
+            />
+          </div>
         </div>
       </div>
     </div>
