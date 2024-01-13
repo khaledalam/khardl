@@ -620,7 +620,22 @@ return [
     "Last week" => "اخر اسبوع",
     "Invalid email or password" => "البريد الإلكتروني أو كلمة السر خاطئة",
     "You need to have branches first" => "يجب أن يكون لديك فروع أولاً",
-    "No available branches" => "لا يوجد فروع متاحة"
+    "No available branches" => "لا يوجد فروع متاحة",
+    "Tab business information" => "معلومات حساب تاب",
+    "Key" => "المرمز",
+    "Value" => "القيمة",
+    "Wallet ID" => "رقم المحفظة",
+    "Corporation" => "مؤسسة",
+    "Individual" => "فردية",
+    "Brands" => "العلامات التجارية",
+    "Your account information" => "معلومات حسابك",
+    "Middle name" => "الاسم الاوسط",
+    "Bank information" => "المعلومات المصرفية",
+    "Is licensed" => "مرخصة",
+    "Legal name" => "الاسم القانوني",
+    "Country" => "الدولة",
+    "Yes"=> "نعم",
+    "No" => "لا"
 
 ];
 
