@@ -7,7 +7,7 @@ import AxiosInstance from "../../axios/axios"
 import {useTranslation} from "react-i18next"
 import {useDispatch, useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
-import {toast} from "react-toastify"
+import {Helmet} from "react-helmet"
 import {setCartItemsData} from "../../redux/NewEditor/categoryAPISlice"
 import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
 
@@ -74,44 +74,55 @@ const CartPage = () => {
   console.log("address", address)
 
   return (
-    <div className='w-[98%] mx-auto mt-14'>
-    
-      {/* // TODO:  work on the new cart page  */}
-      <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
-        <CartHeader styles={restuarantStyle} />
-        {(!cartItems || cartItems.length === 0) && !isloading ? (
-          <div className='h-[40vh] w-full flex items-center justify-center'>
-            <div className='w-1/2 mx-auto flex flex-col items-center justify-center gap-6'>
-              <h3 className='text-3xl text-center '>Your cart is Empty. </h3>
-              <button
-                style={{
-                  backgroundColor: restuarantStyle?.categoryDetail_cart_color,
-                }}
-                onClick={() => navigate("/")}
-                className={`btn w-1/2  `}
-              >
-                Continue shopping
-              </button>
+    <>
+      <Helmet>
+        <title>{t("Your Cart")}</title>
+        <link
+          rel='icon'
+          type='image/png'
+          href={restuarantStyle.logo}
+          sizes='16x16'
+        />
+      </Helmet>
+      <div className='w-[98%] mx-auto mt-14'>
+        <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
+          <CartHeader styles={restuarantStyle} />
+          {(!cartItems || cartItems.length === 0) && !isloading ? (
+            <div className='h-[40vh] w-full flex items-center justify-center'>
+              <div className='w-1/2 mx-auto flex flex-col items-center justify-center gap-6'>
+                <h3 className='text-3xl text-center '>
+                  {t("Your cart is empty")}
+                </h3>
+                <button
+                  style={{
+                    backgroundColor: restuarantStyle?.categoryDetail_cart_color,
+                  }}
+                  onClick={() => navigate("/")}
+                  className={`btn w-1/2  `}
+                >
+                  {t("Continue Shopping")}
+                </button>
+              </div>
             </div>
-          </div>
-        ) : (
-          <Fragment>
-            <CartSection cartItems={cartItems} />
-            <PaymentSection
-              styles={restuarantStyle}
-              tap={tap}
-              paymentMethods={paymentMethodsData}
-              deliveryTypes={deliveryTypesData}
-              cartItems={cartItems}
-              fetchCartData={fetchCartData}
-              deliveryAddress={address}
-              isloading={isloading}
-              setIsLoading={setIsLoading}
-            />
-          </Fragment>
-        )}
+          ) : (
+            <Fragment>
+              <CartSection cartItems={cartItems} />
+              <PaymentSection
+                styles={restuarantStyle}
+                tap={tap}
+                paymentMethods={paymentMethodsData}
+                deliveryTypes={deliveryTypesData}
+                cartItems={cartItems}
+                fetchCartData={fetchCartData}
+                deliveryAddress={address}
+                isloading={isloading}
+                setIsLoading={setIsLoading}
+              />
+            </Fragment>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

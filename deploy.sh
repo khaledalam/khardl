@@ -1,4 +1,3 @@
-#!/usr/bin/bash
 
 # shellcheck disable=SC2164
 cd /home/khardl5/public_html/
@@ -44,7 +43,7 @@ php artisan optimize:clear
 
 
 # Alert discord
-./discord.sh \
+./scripts/discord.sh \
   --webhook-url="https://discord.com/api/webhooks/1190627943832100964/lc1t2A2Y9a-7TnLlMQC55oDjPhcmdiVQCyedOESLZ5UID-8ZBNbN75kiJm-k6vMZ_LUP" \
   --username "DeployLiveServerAlert" \
   --avatar "https://i.imgur.com/12jyR5Q.png" \
