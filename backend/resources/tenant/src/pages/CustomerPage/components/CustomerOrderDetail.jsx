@@ -83,7 +83,7 @@ const CustomerOrderDetail = ({orderId}) => {
                   )
                 </h3>
               </div>
-              <div className='w-full border-b border-black mb-2'>
+              <div className='w-full border-b border-black mb-2 overflow-x-scroll hide-scroll'>
                 <OrderDetailsTable
                   data={singleOrder.items}
                   language={language}

@@ -17,6 +17,7 @@
     <meta property="og:site_name" content="Kardl" />
     <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
     <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
+    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Fonts-->
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
@@ -220,44 +221,81 @@
                            </a>
                         </div>
                         <!-- menu -->
-                        @if(\App\Models\Tenant\Branch::first())
                         <div class="menu-item menu-accordion">
+                            @if( \App\Models\Tenant\Branch::first())
                             <a href="{{route('restaurant.menu',['branchId' => \App\Models\Tenant\Branch::where('is_primary',true)->first()->id])}}">
                                 <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M16 6.00008V4.2844C16 3.51587 16 3.13161 15.8387 2.88321C15.6976 2.66587 15.4776 2.5118 15.2252 2.45345C14.9366 2.38677 14.5755 2.51809 13.8532 2.78073L6.57982 5.4256C6.01064 5.63257 5.72605 5.73606 5.51615 5.91845C5.33073 6.07956 5.18772 6.28374 5.09968 6.51304C5 6.77264 5 7.07546 5 7.6811V12.0001M9 17.0001H15M9 13.5001H15M9 10.0001H15M8.2 21.0001H15.8C16.9201 21.0001 17.4802 21.0001 17.908 20.7821C18.2843 20.5903 18.5903 20.2844 18.782 19.9081C19 19.4802 19 18.9202 19 17.8001V9.20008C19 8.07997 19 7.51992 18.782 7.0921C18.5903 6.71577 18.2843 6.40981 17.908 6.21807C17.4802 6.00008 16.9201 6.00008 15.8 6.00008H8.2C7.0799 6.00008 6.51984 6.00008 6.09202 6.21807C5.71569 6.40981 5.40973 6.71577 5.21799 7.0921C5 7.51992 5 8.07997 5 9.20008V17.8001C5 18.9202 5 19.4802 5.21799 19.9081C5.40973 20.2844 5.71569 20.5903 6.09202 20.7821C6.51984 21.0001 7.07989 21.0001 8.2 21.0001Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                            </span>
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path d="M16 6.00008V4.2844C16 3.51587 16 3.13161 15.8387 2.88321C15.6976 2.66587 15.4776 2.5118 15.2252 2.45345C14.9366 2.38677 14.5755 2.51809 13.8532 2.78073L6.57982 5.4256C6.01064 5.63257 5.72605 5.73606 5.51615 5.91845C5.33073 6.07956 5.18772 6.28374 5.09968 6.51304C5 6.77264 5 7.07546 5 7.6811V12.0001M9 17.0001H15M9 13.5001H15M9 10.0001H15M8.2 21.0001H15.8C16.9201 21.0001 17.4802 21.0001 17.908 20.7821C18.2843 20.5903 18.5903 20.2844 18.782 19.9081C19 19.4802 19 18.9202 19 17.8001V9.20008C19 8.07997 19 7.51992 18.782 7.0921C18.5903 6.71577 18.2843 6.40981 17.908 6.21807C17.4802 6.00008 16.9201 6.00008 15.8 6.00008H8.2C7.0799 6.00008 6.51984 6.00008 6.09202 6.21807C5.71569 6.40981 5.40973 6.71577 5.21799 7.0921C5 7.51992 5 8.07997 5 9.20008V17.8001C5 18.9202 5 19.4802 5.21799 19.9081C5.40973 20.2844 5.71569 20.5903 6.09202 20.7821C6.51984 21.0001 7.07989 21.0001 8.2 21.0001Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </g>
+                                            </svg>
+                                        </span>
                                         <!--end::Svg Icon-->
                                     </span>
-
-                                        <span class="menu-title">{{__('messages.menu')}}</span>
+                                    <span class="menu-title">{{__('messages.menu')}}</span>
 
                                 </span>
-                             </a>
-                          </div>
-                          @endif
+                            </a>
+                            @else
+                            <a href="{{route('restaurant.no_branches')}}">
+                                <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path d="M16 6.00008V4.2844C16 3.51587 16 3.13161 15.8387 2.88321C15.6976 2.66587 15.4776 2.5118 15.2252 2.45345C14.9366 2.38677 14.5755 2.51809 13.8532 2.78073L6.57982 5.4256C6.01064 5.63257 5.72605 5.73606 5.51615 5.91845C5.33073 6.07956 5.18772 6.28374 5.09968 6.51304C5 6.77264 5 7.07546 5 7.6811V12.0001M9 17.0001H15M9 13.5001H15M9 10.0001H15M8.2 21.0001H15.8C16.9201 21.0001 17.4802 21.0001 17.908 20.7821C18.2843 20.5903 18.5903 20.2844 18.782 19.9081C19 19.4802 19 18.9202 19 17.8001V9.20008C19 8.07997 19 7.51992 18.782 7.0921C18.5903 6.71577 18.2843 6.40981 17.908 6.21807C17.4802 6.00008 16.9201 6.00008 15.8 6.00008H8.2C7.0799 6.00008 6.51984 6.00008 6.09202 6.21807C5.71569 6.40981 5.40973 6.71577 5.21799 7.0921C5 7.51992 5 8.07997 5 9.20008V17.8001C5 18.9202 5 19.4802 5.21799 19.9081C5.40973 20.2844 5.71569 20.5903 6.09202 20.7821C6.51984 21.0001 7.07989 21.0001 8.2 21.0001Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">{{__('messages.menu')}}</span>
+                                </span>
+                            </a>
+                            @endif
+                        </div>
                         <!-- menu -->
 
                         <!-- workers -->
-                        @if(\App\Models\Tenant\Branch::first())
-                            <div class="menu-item menu-accordion">
-                                <a href="{{route('restaurant.workers',['branchId' => \App\Models\Tenant\Branch::where('is_primary',true)->first()->id])}}">
+                        <div class="menu-item menu-accordion">
+                            @if(\App\Models\Tenant\Branch::first())
+                            <a href="{{route('restaurant.workers',['branchId' => \App\Models\Tenant\Branch::where('is_primary',true)->first()->id])}}">
                                 <span class="{{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($link == 'workers') ? '#c2da08' : '#000000' }}" class="bi bi-person" viewBox="0 0 16 16"> <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/> </svg>                                            </span>
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($link == 'workers') ? '#c2da08' : '#000000' }}" class="bi bi-person" viewBox="0 0 16 16">
+                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
                                         <!--end::Svg Icon-->
                                     </span>
-
-                                        <span class="menu-title">{{__('messages.staff-modification')}}</span>
-
+                                    <span class="menu-title">{{__('messages.staff-modification')}}</span>
                                 </span>
-                                </a>
-                            </div>
-                    @endif
+                            </a>
+                            @else
+                            <a href="{{route('restaurant.no_branches')}}">
+                                <span class="{{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($link == 'workers') ? '#c2da08' : '#000000' }}" class="bi bi-person" viewBox="0 0 16 16">
+                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                    <span class="menu-title">{{__('messages.staff-modification')}}</span>
+                                </span>
+                            </a>
+                            @endif
+                        </div>
+
                     <!-- menu -->
 
                         <!-- Orders -->
@@ -418,7 +456,7 @@
         <!--begin::Wrapper-->
         <div class="m-4 wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
         @include('restaurant.components.payment-tap-documents-alert')
-
+        @include('restaurant.components.subscription-alert')
         <!--begin::Header-->
             <div id="kt_header" class="header align-items-stretch">
                 <!--begin::Container-->
@@ -607,7 +645,7 @@
         @yield('content')
         <!--end::Content-->
             <!--begin::Footer-->
-            <div class="footer py-2 d-flex flex-lg-column" id="kt_footer">
+            <div class="footer mt-10 py-2 d-flex flex-lg-column" id="kt_footer">
                 <!--begin::Container-->
                 <div
                     class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">

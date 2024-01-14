@@ -1,4 +1,4 @@
-import React, {Fragment} from "react"
+import React, {Fragment, useEffect} from "react"
 import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
 import {useDispatch, useSelector} from "react-redux"
 import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
@@ -6,6 +6,7 @@ import imgBanner from "../../../assets/bannerRestuarant.png"
 import {useTranslation} from "react-i18next"
 import ReactSlider from "react-slick"
 import imgLogo from "../../../assets/khardl_Logo.png"
+
 const Herosection = ({isMobile, categories}) => {
   const dispatch = useDispatch()
   const {t} = useTranslation()
@@ -25,6 +26,12 @@ const Herosection = ({isMobile, categories}) => {
     slidesToScroll: 1,
   }
 
+  useEffect(() => {
+    document.getElementById("vid") && document.getElementById("vid").play()
+    document.getElementById("vidSlider") &&
+      document.getElementById("vidSlider").play()
+  }, [])
+
   return (
     <div className='flex flex-col items-center justify-center'>
       <div
@@ -32,6 +39,7 @@ const Herosection = ({isMobile, categories}) => {
           backgroundColor: restaurantStyle
             ? restaurantStyle?.banner_background_color
             : "inherit",
+          paddingTop: restaurantStyle?.headerPosition === "fixed" ? 70 : 16,
         }}
         className={
           "w-full  flex flex-col py-4 items-center justify-center gap-8"
@@ -79,15 +87,37 @@ const Herosection = ({isMobile, categories}) => {
               borderRadius: 12,
             }}
           >
-            <img
-              src={
-                restaurantStyle?.banner_image
-                  ? restaurantStyle?.banner_image
-                  : imgBanner
-              }
-              alt='banner'
-              className='w-full h-full object-cover'
-            />
+            {restaurantStyle?.banner_image &&
+            restaurantStyle?.banner_image?.type === "video" ? (
+              <video
+                controls
+                id='vid'
+                loop
+                autoPlay
+                className={` z-[5] ${
+                  isMobile ? "max-h-[300px] w-full" : "max-h-[470px] w-full"
+                }  `}
+              >
+                <source
+                  src={
+                    restaurantStyle?.banner_image
+                      ? restaurantStyle?.banner_image?.url
+                      : ""
+                  }
+                />
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <img
+                src={
+                  restaurantStyle?.banner_image
+                    ? restaurantStyle?.banner_image?.url
+                    : imgBanner
+                }
+                alt='banner'
+                className='w-full h-full object-cover'
+              />
+            )}
           </div>
         ) : restaurantStyle?.banner_type === t("Slider") ||
           restaurantStyle?.banner_type === "slider" ? (
@@ -109,19 +139,45 @@ const Herosection = ({isMobile, categories}) => {
                         isMobile ? "h-[300px]" : "h-[470px]"
                       } !block`}
                     >
-                      <div
-                        style={{
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: "cover",
-                          boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
-                          backgroundImage:
-                            restaurantStyle?.banner_images &&
-                            restaurantStyle?.banner_images?.length > 0
-                              ? `url(${restaurantStyle?.banner_images[index]})`
-                              : `url(${imgBanner})`,
-                        }}
-                        className={` h-full w-full rounded-md flex items-center justify-center   shadow-lg`}
-                      ></div>
+                      {restaurantStyle?.banner_images &&
+                      restaurantStyle?.banner_images?.length > 0 &&
+                      restaurantStyle?.banner_images[index].type === "video" ? (
+                        <video
+                          controls
+                          id='vidSlider'
+                          loop
+                          autoPlay
+                          className={` z-[5] ${
+                            isMobile
+                              ? "max-h-[300px] w-full"
+                              : "max-h-[470px] w-full"
+                          }  `}
+                        >
+                          <source
+                            src={
+                              restaurantStyle?.banner_images &&
+                              restaurantStyle.banner_images.length > 0
+                                ? restaurantStyle.banner_images[index]?.url
+                                : ""
+                            }
+                            type='video/mp4'
+                          />
+                        </video>
+                      ) : (
+                        <div
+                          style={{
+                            backgroundRepeat: "no-repeat",
+                            backgroundSize: "cover",
+                            boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
+                            backgroundImage:
+                              restaurantStyle?.banner_images &&
+                              restaurantStyle?.banner_images?.length > 0
+                                ? `url(${restaurantStyle?.banner_images[index].url})`
+                                : `url(${imgBanner})`,
+                          }}
+                          className={` h-full w-full rounded-md flex items-center justify-center   shadow-lg`}
+                        ></div>
+                      )}
                     </div>
                   ))}
               </ReactSlider>

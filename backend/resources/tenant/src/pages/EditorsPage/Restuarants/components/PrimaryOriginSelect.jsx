@@ -20,7 +20,7 @@ const PrimaryOriginSelect = ({
         className='select select-ghost w-full max-w-full bg-neutral-100 active:bg-neutral-100 hover:bg-neutral-100 focus-visible:border-none focus-within:border-none outline-none'
       >
         <option disabled selected>
-          font weight
+          {defaultValue}
         </option>
         {options.map((option, idx) => (
           <option key={idx} value={option.value}>

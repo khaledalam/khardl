@@ -45,6 +45,7 @@ class RestaurantControllerRequest extends FormRequest
             'page_category_color' => 'nullable|string',
             'headerPosition' => 'nullable|string|in:relative,fixed',
             'header_color' => 'nullable|string',
+            'headerPosition' => 'nullable|string|in:fixed,relative',
             'footer_color' => 'nullable|string',
             'price_color' => 'nullable|string',
             'selectedSocialIcons' => 'nullable|array',
@@ -65,7 +66,7 @@ class RestaurantControllerRequest extends FormRequest
                             return true;
                         }
                     }
-                }, 'required|mimes:png,jpg,jpeg|max:2048'),
+                }, 'required|mimes:png,jpg,jpeg,mp4,avi,mov,wmv,gif|max:4096'),
             ],
             'banner_images' => [
                 Rule::when(function ($attribute) use ($restaurantStyles) {
@@ -78,7 +79,7 @@ class RestaurantControllerRequest extends FormRequest
                     }
                 }, 'required|array'),
             ],
-            'banner_images.*' => 'mimes:png,jpg,jpeg|max:2048',
+            'banner_images.*' => 'mimes:png,jpg,jpeg,mp4,avi,mov,wmv,gif|max:4096',
         ];
     }
 

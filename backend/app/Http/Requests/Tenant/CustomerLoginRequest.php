@@ -14,7 +14,6 @@ class CustomerLoginRequest extends FormRequest
     }
     public function rules()
     {
-
         return [
             'phone' => 'required|exists:users',
         ];
@@ -24,5 +23,11 @@ class CustomerLoginRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->validatePhone();
+    }
+    public function messages()
+    {
+        return [
+            'phone.exists' => __("Phone number is not exist"),
+        ];
     }
 }
