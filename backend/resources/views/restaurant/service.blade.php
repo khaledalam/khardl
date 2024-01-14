@@ -302,7 +302,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
              
                 metadata: {
                     'subscription':"{{ \App\Models\ROSubscription::RENEW_AFTER_ONE_YEAR}}",
-                    'n-branches': "{{ $RO_subscription->number_of_branches }}",
+                    'n-branches': "{{ $RO_subscription->number_of_branches  ?? 0}}",
                 },
                 receipt: {
                     email: false,
