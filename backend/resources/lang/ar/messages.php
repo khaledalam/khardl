@@ -660,6 +660,22 @@ return [
     "You can subscription now" => "يمكنك الاشتراك الان",
     "You do not have subscription" => "ليس لديك اشتراك",
     "View services" => "عرض الخدمات",
+    "Tel" => "هاتف",
+    "Communication" => "التواصل",
+    "Website" => "الموقع الالكتروني",
+    "Khobar"    => "الخبر",
+    "Dahran"    => "الظهران",
+    "Hassa" => "الاحساء",
+    "Buridah"   => "بريدة",
+    "Tabuk" => "تبوك",
+    "Yanbu" => "ينبع",
+    "Makkah"    => "مكة",
+    "Taif"  => "الطائف",
+    "Abha"  => "ابها",
+    "Bulgrshi"  => "Bulgrshi",
+    "Kharj" => "الخرج",
+    "Al Madinah" => "المدينة",
+    "Khamis Mashit" => "خميس مشيط",
 
 ];
 

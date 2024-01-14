@@ -1,7 +1,21 @@
 /* ALL */
 
-@media (min-width: 1400px){
-    .container-xxl{
-        max-width: none!important;
+@media (min-width: 1400px) {
+    .container-xxl {
+        max-width: none !important;
     }
+}
+
+.delivery_companies .tab-pane .card-body {
+    max-height: 219px;
+    min-height: 219px;
+    overflow: auto;
+}
+
+.delivery_companies .tab-pane .card-body::-webkit-scrollbar-thumb {
+    background-color: #c2da08;
+    border-radius: 10px;
+}
+.delivery_companies .tab-pane .card-body table tr td ul li {
+    list-style-type: disclosure-closed;
 }

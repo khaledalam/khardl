@@ -226,7 +226,7 @@
                         </ul>
                         <!--begin::Navs-->
                     </div>
-                    <div class="tab-content">
+                    <div class="tab-content delivery_companies">
                         <div class="tab-pane fade show active" id="overview" role="tab-panel">
                             @include('admin.Restaurants.Overview.view')
                         </div>

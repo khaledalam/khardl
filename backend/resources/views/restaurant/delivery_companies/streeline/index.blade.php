@@ -137,7 +137,7 @@
                                     <span class="badge badge-lg badge-light-khardl">{{__('messages.Bulgrshi')}}</span>
                                     <span class="badge badge-lg badge-light-khardl">{{__('messages.Kharj')}}</span>
 
-                                    <img src="{{global_asset('delivery-companies/street-line/Riyadh_coverd_area.jpg')}}" alt="street-line coverage area riyadh image" />
+                                    <img class="mw-100" src="{{global_asset('delivery-companies/street-line/Riyadh_coverd_area.jpg')}}" alt="street-line coverage area riyadh image" />
 
                                 </div>
                                 <!--end::Info-->
@@ -177,21 +177,30 @@
                     <div class="timeline-label">
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-                            <div class="table-responsive">
+                            <div class="hover-scroll-overlay-y">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
-                                    <!--begin::Table body-->
-                                    <tbody class="fw-bold text-gray-600">
-                                        <!--begin::Payment method-->
-                                        <tr>
-                                            <td class="text-muted p-0 py-3">
-                                                <div class="d-flex flex-column align-items-center">
-                                                    Website form: <a href="https://alshrouqexpress.com/">https://alshrouqexpress.com/</a>
-                                                </div>
-                                            </td>
-                                            <td class="fw-bolder text-end py-0"></td>
+                                <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                                    <!--begin::Table head-->
+                                    <thead>
+                                        <!--begin::Table row-->
+                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                            <th class="text-start pe-3 min-w-100px"></th>
+                                            <th class="text-start pe-3 min-w-100px">{{ __('messages.Communication') }}</th>
                                         </tr>
-                                        <!--end::Payment method-->
+                                        <!--end::Table row-->
+                                    </thead>
+                                    <!--end::Table head-->
+                                    <!--begin::Table body-->
+                                    <tbody class="fw-bolder text-gray-600">
+                                        <!--begin::Item-->
+                                        <tr>
+                                            <td>
+                                                <span class="text-start">{{__('messages.Website')}}</span>
+                                            </td>
+                                            <td class="text-dark">
+                                                <a href="https://alshrouqexpress.com">https://alshrouqexpress.com</a>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                     <!--end::Table body-->
                                 </table>

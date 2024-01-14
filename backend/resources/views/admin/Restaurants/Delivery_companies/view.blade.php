@@ -1,4 +1,4 @@
-<div class="row g-6">
+<div class="row g-6 delivery_companies">
     {{-- NOTE: and variabile you added here note that you have to add it in tenant controller --}}
     <!--begin::Yeswa-->
     @if(isset($yeswa))
