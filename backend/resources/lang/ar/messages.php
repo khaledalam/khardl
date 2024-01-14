@@ -648,7 +648,8 @@ return [
     "Legal name" => "الاسم القانوني",
     "Country" => "الدولة",
     "Yes"=> "نعم",
-    "No" => "لا"
+    "No" => "لا",
+    "Your subscription has expired, please activate it before it is deactivated"=>"لقد انتهت صلاحية اشتراكك، يرجى تفعيله قبل ان يتم وقف تشغيله"
 
 ];
 

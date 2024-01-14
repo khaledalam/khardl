@@ -647,6 +647,7 @@ return [
     "Country" => "Country",
     "Yes" => "Yes",
     "No" => "No",
-    "Bank information" => "Bank information"
+    "Bank information" => "Bank information",
+    "Your subscription has expired, please activate it before it is deactivated"=>"Your subscription has expired, please activate it before it is deactivated"
 
 ];
