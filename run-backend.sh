@@ -41,7 +41,7 @@ done
 #
 
 
-ce backend;
+cd backend;
 
 rm ./composer.lock
 composer install
