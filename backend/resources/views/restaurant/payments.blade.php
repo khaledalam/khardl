@@ -1,16 +1,19 @@
 @extends('layouts.restaurant-sidebar')
 
 @section('title', __('messages.payments'))
-
+@section('css')
+<style>
+    .accordion-button:not(.collapsed)::after{
+        
+    }
+</style>
+@endsection
 @section('content')
 @if(session('success'))
 <div class="alert alert-success">
     {{ session('success') }}
 </div>
 @endif
-@php
-$user = Auth::user();
-@endphp
 @if ($business)
 @if($business?->status == 'Active')
 <!--begin::Content-->
@@ -178,50 +181,61 @@ $user = Auth::user();
                                                 </div>
                                                 <!--end::Card title-->
                                                 <!--begin::Card toolbar-->
-                                                {{-- <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                                        <!--begin::Search-->
-                                        <div class="d-flex align-items-center position-relative my-1">
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                                                </svg>
-                                            </span>
-                                            <!--end::Svg Icon-->
-                                            <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="transaction id" />
-                                        </div>
-                                        <!--end::Search-->
+                                                <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                                    {{-- <!--begin::Search-->
+                                                    <div class="d-flex align-items-center position-relative my-1">
+                                                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                                                        <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                                            </svg>
+                                                        </span>
+                                                        <!--end::Svg Icon-->
+                                                        <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="transaction id" />
+                                                    </div>
+                                                    <!--end::Search-->
 
-                                        <div class="w-100 mw-150px">
-                                            <!--begin::Select2-->
-                                            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Ranking" data-kt-ecommerce-order-filter="status">
-                                                <option></option>
-                                                <option value="old_to_new">old to new</option>
-                                                <option value="new_to_old">new to old</option>
-                                            </select>
-                                            <!--end::Select2-->
-                                        </div>
-
-
-                                        <div class="w-100 mw-150px">
-                                            <!--begin::Select2-->
-                                            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Invoice type" data-kt-ecommerce-order-filter="status">
-                                                <option></option>
-                                                <option value="Branches">Branches</option>
-                                                <option value="Apps">Apps</option>
-                                                <option value="Delivery">Delivery</option>
-                                                <option value="Transfer_to_bank_account">Transfer to bank account </option>
-                                            </select>
-                                            <!--end::Select2-->
-                                        </div>
+                                                    <div class="w-100 mw-150px">
+                                                        <!--begin::Select2-->
+                                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Ranking" data-kt-ecommerce-order-filter="status">
+                                                            <option></option>
+                                                            <option value="old_to_new">old to new</option>
+                                                            <option value="new_to_old">new to old</option>
+                                                        </select>
+                                                        <!--end::Select2-->
+                                                    </div>
 
 
+                                                    <div class="w-100 mw-150px">
+                                                        <!--begin::Select2-->
+                                                        <select class="form-select form-select-solid" data-control="select2" data-hide-search="true" data-placeholder="Invoice type" data-kt-ecommerce-order-filter="status">
+                                                            <option></option>
+                                                            <option value="Branches">Branches</option>
+                                                            <option value="Apps">Apps</option>
+                                                            <option value="Delivery">Delivery</option>
+                                                            <option value="Transfer_to_bank_account">Transfer to bank account </option>
+                                                        </select>
+                                                        <!--end::Select2-->
+                                                    </div> --}}
 
-                                        <!--begin::setting-->
-                                        <a href="#" class="btn btn-sm btn-khardl">Filter</a>
-                                        <!--end::setting-->
-                                    </div> --}}
+
+
+                                                    <!--begin::setting-->
+                                                    {{-- <a href="#" class="btn btn-sm btn-khardl">Filter</a> --}}
+                                                    <form method="GET">
+                                                        @csrf
+                                                        <div class="d-flex my-0">
+                                                            <input type="hidden" name="download" value="csv">
+                                                            <button type="submit" id="download_transactions" class="btn btn-success mx-2">
+                                                                <span class="indicator-label">{{ __('messages.Download') }} <i class="fa fa-download"></i></span>
+                                                                <span class="indicator-progress">{{ __('messages.please-wait')}}
+                                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                    <!--end::setting-->
+                                                </div>
                                                 <!--end::Card toolbar-->
                                             </div>
                                             <!--end::Card header-->
@@ -250,7 +264,7 @@ $user = Auth::user();
                                                             <tr>
                                                                 <!--begin::Item-->
                                                                 <td class="text-start">
-                                                                    {{ $invoice->subscription->name }}
+                                                                    {{ $invoice->subscription?->name }}
                                                                 </td>
                                                                 <td class="text-start">
                                                                     @if($invoice->status =='active')
