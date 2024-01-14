@@ -647,6 +647,17 @@ return [
     "Country" => "Country",
     "Yes" => "Yes",
     "No" => "No",
-    "Bank information" => "Bank information"
+    "Bank information" => "Bank information",
+    "Tab information" => "Tab information",
+    "Transactions information" => "Transactions information",
+    "Current subscription" => "Current subscription",
+    "Start date" => "Start date",
+    "End date" => "End date",
+    "Transactions" => "Transactions",
+    "Package" => "Package",
+    "Your subscription" => "Your subscription",
+    "You can subscription now" => "You can subscription now",
+    "You do not have subscription" => "You do not have subscription",
+    "View services" => "View services",
 
 ];

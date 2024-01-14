@@ -648,7 +648,18 @@ return [
     "Legal name" => "الاسم القانوني",
     "Country" => "الدولة",
     "Yes"=> "نعم",
-    "No" => "لا"
+    "No" => "لا",
+    "Tab information" => "معلومات تاب",
+    "Transactions information" => "معلومات المعاملات",
+    "Current subscription" => "الاشتراك الحالي",
+    "Start date" => "تاريخ البدا",
+    "End date" => "تاريخ الانتهاء",
+    "Transactions" => "المعاملات",
+    "Package" => "الباقة",
+    "Your subscription" => "اشتراكك",
+    "You can subscription now" => "يمكنك الاشتراك الان",
+    "You do not have subscription" => "ليس لديك اشتراك",
+    "View services" => "عرض الخدمات",
 
 ];
 
