@@ -675,5 +675,9 @@ return [
     "Kharj" => "Kharj",
     "Al Madinah" => "Al Madinah",
     "Khamis Mashit" => "Khamis Mashit",
+    "Have active restaurant" => "Have active restaurant",
+    "Have inactive restaurant" => "Have inactive restaurant",
+    "Verified email" => "Verified email",
+    "Not verified email" => "Not verified email",
 
 ];

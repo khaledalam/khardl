@@ -676,6 +676,9 @@ return [
     "Kharj" => "الخرج",
     "Al Madinah" => "المدينة",
     "Khamis Mashit" => "خميس مشيط",
-
+    "Have active restaurant" => "لديه مطعم نشط",
+    "Have inactive restaurant" => "لديه مطعم غير نشط",
+    "Verified email" => "بريد مفعل",
+    "Not verified email" => "بريد غير مفعل",
 ];
 
