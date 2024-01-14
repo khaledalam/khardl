@@ -46,6 +46,7 @@ class ROSubscription extends Model
         $diff=$this->start_at->diff($this->end_at);
         $monthsLeft = $diff->m + ($diff->y * 12);
         $daysLeft = $diff->d;
+        $leftString = "";
         if ($monthsLeft > 0 && $daysLeft > 0) {
             $leftString = __(":monthsLeft months and :daysLeft days left",['monthsLeft'=>$monthsLeft,'daysLeft'=>$daysLeft]);
         } elseif ($monthsLeft > 0) {

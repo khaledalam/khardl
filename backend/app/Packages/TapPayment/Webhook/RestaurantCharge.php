@@ -35,7 +35,7 @@ class RestaurantCharge
             $amount = $subscription->amount;
 
             if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE) {
-                $end_at = $subscription->end_at->addYear();
+                $end_at = $subscription->end_at->addDays(365);
                 $amount = $data['amount'];
             } elseif ($data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE) {
                 $amount += $data['amount'];
@@ -51,7 +51,7 @@ class RestaurantCharge
     {
         return [
             'start_at' => now(),
-            'end_at' => $endAt ?? now()->addYear(),
+            'end_at' => $endAt ?? now()->addDays(365),
             'amount' => $amount ?? $data['amount'],
             'number_of_branches' => $data['metadata']['n-branches'],
             'user_id' => $user->id,
