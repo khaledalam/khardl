@@ -43,6 +43,7 @@ use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use App\Http\Middleware\EnsureTraderRegistrationIsNotComplete;
+use App\Http\Middleware\RestaurantSubLive;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -118,6 +119,7 @@ class Kernel extends HttpKernel
         'worker' => Worker::class,
         'restaurantOrWorker' => RestaurantOrWorker::class,
         'restaurantLive' => RestaurantLive::class,
+        'restaurantSubLive' => RestaurantSubLive::class,
         'restaurantNotLive' => RestaurantNotLive::class,
         'permission' => CheckPermissions::class,
         'auth' => Authenticate::class,

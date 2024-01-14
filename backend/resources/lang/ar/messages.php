@@ -649,6 +649,8 @@ return [
     "Country" => "الدولة",
     "Yes"=> "نعم",
     "No" => "لا",
+    "Restaurant have no active subscription yet"=>"لا يوجد اشتراك فعال لهذا المطعم",
+    "Restaurant not in live mode yet"=>"لم يتم تفعيل المطعم الي الان",
     "Your subscription has expired, please activate it before it is deactivated"=>"لقد انتهت صلاحية اشتراكك، يرجى تفعيله قبل ان يتم وقف تشغيله"
 
 ];

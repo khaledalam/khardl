@@ -51,6 +51,8 @@
     "You does not have an subscription.":"ليس لديك اي اشتراك",
     "Invalid email or password":"البريد الإلكتروني أو كلمة السر خاطئة",
     "Only workers can logged in":"يمكن للعمال فقط تسجيل الدخول",
-    "Phone number is not exist":"رقم الهاتف غير موجود"
+    "Phone number is not exist":"رقم الهاتف غير موجود",
+    "Only restaurant owner can login":"فقط مالك المطعم يمكنه تسجيل الدخول",
+    "Restaurant is in a live mode":"المطعم بالفعل فعال"
 
 }

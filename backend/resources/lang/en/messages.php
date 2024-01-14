@@ -648,6 +648,8 @@ return [
     "Yes" => "Yes",
     "No" => "No",
     "Bank information" => "Bank information",
+    "Restaurant have no active subscription yet"=>   "Restaurant have no active subscription yet",
+    "Restaurant not in live mode yet"=>"Restaurant not in live mode yet",
     "Your subscription has expired, please activate it before it is deactivated"=>"Your subscription has expired, please activate it before it is deactivated"
 
 ];
