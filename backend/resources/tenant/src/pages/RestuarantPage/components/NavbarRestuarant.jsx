@@ -57,7 +57,7 @@ const NavbarRestuarant = () => {
           className='w-[50px] h-[50px] relative flex items-center justify-center cursor-pointer'
         >
           <img src={cartHeaderImg} alt={"cart"} className='' />
-          {true && (
+          {cartItemsCount > 0 && (
             <div className='absolute top-0 right-0'>
               <div className='w-[18px] h-[18px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
                 <span className='text-white font-bold text-xs'>
