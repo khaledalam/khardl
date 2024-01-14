@@ -31,6 +31,7 @@ use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 
+
 class RestaurantController extends BaseController
 {
     public function __construct(
@@ -57,14 +58,14 @@ class RestaurantController extends BaseController
     public function serviceDeactivate(){
         /** @var RestaurantUser $user */
         ROSubscription::first()->update([
-            'status'=> ROSubscription::SUSPEND
+            'status'=> ROSubscription::DEACTIVATE
         ]);
         return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
     }
     public function serviceActivate(){
         /** @var RestaurantUser $user */
         $subscription = ROSubscription::first();
-        if($subscription->status != 'suspend'){
+        if($subscription->status !=  ROSubscription::DEACTIVATE){
             return redirect()->back()->with('error', __('not allowed'));
         }
         ROSubscription::first()->update([
@@ -72,6 +73,10 @@ class RestaurantController extends BaseController
         ]);
         return redirect()->back()->with('success', __('Branches has been activated successfully'));
     }
+    public function serviceCalculate($type,$number_of_branches){
+        return ROSubscription::serviceCalculate($type,$number_of_branches);
+    }
+    
 
 
     public function delivery(){
@@ -240,7 +245,6 @@ class RestaurantController extends BaseController
     }
 
     public function addBranch(Request $request){
-
         if(!$this->can_create_branch()){
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
@@ -361,7 +365,9 @@ class RestaurantController extends BaseController
                 }
             }
         }
-
+        $sub = ROSubscription::first();
+        $sub->number_of_branches -=1;
+        $sub->save();
         return redirect()->back()->with('success', 'Branch successfully added.');
 
     }
@@ -370,8 +376,6 @@ class RestaurantController extends BaseController
         $sub = ROSubscription::first();
         if($sub && $sub->status == 'active'){
             if($sub->number_of_branches > 0){
-                $sub->number_of_branches -=1;
-                $sub->save();
                 return true;
             }
         }
