@@ -155,7 +155,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"page-modal"}
-              color={page_color}
+              color={`${t(page_color)}`}
               handleColorChange={(color) => dispatch(pageColor(color))}
             />
           </div>
@@ -165,7 +165,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"page_category"}
-              color={page_category_color}
+              color={`${t(page_category_color)}`}
               handleColorChange={(color) => dispatch(pageCategoryColor(color))}
             />
           </div>
@@ -175,7 +175,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"page_banner"}
-              color={banner_background_color}
+              color={`${t(banner_background_color)}`}
               handleColorChange={(color) => dispatch(bannerBgColor(color))}
             />
           </div>
@@ -185,7 +185,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"product_background_color"}
-              color={product_background_color}
+              color={`${t(product_background_color)}`}
               handleColorChange={(color) =>
                 dispatch(productBackgroundColor(color))
               }
@@ -197,7 +197,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"categoryAnimation"}
-              color={category_hover_color}
+              color={`${t(category_hover_color)}`}
               handleColorChange={(color) => dispatch(categoryHoverColor(color))}
             />
           </div>
@@ -207,7 +207,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"categoryDetails"}
-              color={categoryDetail_cart_color}
+              color={`${t(categoryDetail_cart_color)}`}
               handleColorChange={(color) =>
                 dispatch(categoryDetailCartColor(color))
               }
@@ -219,7 +219,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"price"}
-              color={price_color}
+              color={`${t(price_color)}`}
               defaultColor='red'
               handleColorChange={(color) => dispatch(priceColor(color))}
             />
@@ -230,7 +230,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"header"}
-              color={header_color}
+              color={`${t(header_color)}`}
               handleColorChange={(color) => dispatch(headerColor(color))}
             />
           </div>
@@ -240,7 +240,7 @@ const EditPanel = () => {
             </h3>
             <ColorPallete
               modalId={"footer_modal"}
-              color={footer_color}
+              color={`${t(footer_color)}`}
               handleColorChange={(color) => dispatch(footerColor(color))}
             />
           </div>
