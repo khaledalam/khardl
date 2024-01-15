@@ -226,7 +226,7 @@
                         </ul>
                         <!--begin::Navs-->
                     </div>
-                    <div class="tab-content delivery_companies">
+                    <div class="tab-content">
                         <div class="tab-pane fade show active" id="overview" role="tab-panel">
                             @include('admin.Restaurants.Overview.view')
                         </div>
@@ -236,7 +236,7 @@
                         <div class="tab-pane fade" id="customers" role="tab-panel">
                             @include('admin.Restaurants.Customer.view')
                         </div>
-                        <div class="tab-pane fade" id="delivery_companies" role="tab-panel">
+                        <div class="tab-pane fade delivery_companies" id="delivery_companies" role="tab-panel">
                             @include('admin.Restaurants.Delivery_companies.view')
                         </div>
                     </div>

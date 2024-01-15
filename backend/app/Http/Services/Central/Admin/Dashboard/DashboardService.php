@@ -48,7 +48,7 @@ class DashboardService
 
                 ) {
                 $setting = Setting::first();
-                if ($setting->is_live) {
+                if ($setting&&$setting->is_live) {
                     $restaurantsLive++;
                 }
 
