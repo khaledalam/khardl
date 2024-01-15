@@ -32,7 +32,8 @@ class CategoryController
                 if (Category::where('branch_id', request()->selected_branch_id)->exists()) {
                     $this->model = $this->model->where('branch_id', request()->selected_branch_id);
                 } else {
-                    $this->model = $this->model->where('branch_id', Branch::where('is_primary', true)->first()->id);
+//                    $this->model = $this->model->where('branch_id', Branch::where('is_primary', true)->first()->id);
+                    $this->model = new Category();
                 }
             }
         }
