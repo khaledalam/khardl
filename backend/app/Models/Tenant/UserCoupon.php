@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Models\Tenant;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Coupon extends Model
+class UserCoupon extends Model
 {
     use HasFactory;
-    protected $table = 'coupons';
-
-
-    protected $guarded = [];
-
 }

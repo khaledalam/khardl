@@ -1,4 +1,4 @@
-@if(!$user->isRestaurantOwner())
+@if(!Auth::user()->isRestaurantOwner())
     @include('layouts.worker-sidebar')
 @else
 <!DOCTYPE html>
