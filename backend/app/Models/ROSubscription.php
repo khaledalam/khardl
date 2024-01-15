@@ -46,7 +46,7 @@ class ROSubscription extends Model
         $diff=$this->start_at->diff($this->end_at);
         $monthsLeft = $diff->m + ($diff->y * 12);
         $daysLeft = $diff->d;
-        $leftString = "";
+        $leftString = '';
         if ($monthsLeft > 0 && $daysLeft > 0) {
             $leftString = __(":monthsLeft months and :daysLeft days left",['monthsLeft'=>$monthsLeft,'daysLeft'=>$daysLeft]);
         } elseif ($monthsLeft > 0) {
@@ -58,12 +58,13 @@ class ROSubscription extends Model
     }
     public function calculateDaysLeftCost($amount = null){
         $numberOfDays = $this->start_at->diffInDays($this->end_at);
+
         if($amount){
-            $dailyCost = $amount / 365; 
+            $dailyCost = $amount / 365;
         }else {
-            $dailyCost = $this->amount / 365; 
+            $dailyCost = $this->amount / 365;
         }
-      
+
 
         return $numberOfDays * $dailyCost;
     }
@@ -74,7 +75,7 @@ class ROSubscription extends Model
         });
 
         if ($currentSubscription) {
-            if($type ==  ROSubscription::RENEW_TO_CURRENT_END_DATE){ 
+            if($type ==  ROSubscription::RENEW_TO_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost($centralSubscription->amount);
                 $totalCost = $number_of_branches * $remainingDaysCost;
                 return response()->json(['success' => true, 'cost' => number_format($totalCost, 2)]);
@@ -86,7 +87,7 @@ class ROSubscription extends Model
                     'total'=>number_format($totalCost, 2),
                     'remainingDaysCost'=>number_format($remainingDaysCost, 2),
                     'newBranches'=>number_format(($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount, 2)
-                    
+
                 ]]);
 
             }else {
@@ -96,4 +97,13 @@ class ROSubscription extends Model
 
         return response()->json(['error' => __('You does not have an active subscription.')]);
     }
+    /* Start Relations */
+    public function getSubscriptionAttribute()
+    {
+        $subscription_id = $this->subscription_id;
+        return tenancy()->central(function ($tenant) use ($subscription_id) {
+            return Subscription::find($subscription_id);
+        });
+    }
+    /* End Relations */
 }

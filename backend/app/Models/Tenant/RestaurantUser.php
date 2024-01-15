@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use App\Models\ROSubscription;
+use App\Models\ROSubscriptionInvoice;
 use Carbon\Carbon;
 
 use App\Models\Tenant\Branch;
@@ -117,6 +118,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function ROSubscription()
     {
         return $this->hasOne(ROSubscription::class,'user_id','id');
+    }
+    public function ROSubscriptionInvoices()
+    {
+        return $this->hasMany(ROSubscriptionInvoice::class,'user_id','id')->orderBy('id','DESC');
     }
     public function hasPermissionWorker($permission)
     {
