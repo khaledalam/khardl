@@ -51,7 +51,7 @@ export const RestuarantEditor = () => {
   const fetchCategoriesData = async () => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch&selected_branch_id=${branch_id}`
+        `categories?items&user&branch${branch_id ? `&selected_branch_id=${branch_id}` : ''}`
       )
 
       console.log(
