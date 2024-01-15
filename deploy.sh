@@ -42,6 +42,9 @@ php artisan optimize:clear
 # nohup php /home/khardl5/public_html/backend/artisan queue:work --daemon &
 
 
+
+cd ..
+
 # Alert discord
 ./scripts/discord.sh \
   --webhook-url="https://discord.com/api/webhooks/1190627943832100964/lc1t2A2Y9a-7TnLlMQC55oDjPhcmdiVQCyedOESLZ5UID-8ZBNbN75kiJm-k6vMZ_LUP" \
