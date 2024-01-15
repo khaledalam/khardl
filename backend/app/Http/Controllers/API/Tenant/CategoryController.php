@@ -28,7 +28,7 @@ class CategoryController
             $this->model = Category::
                 orderBy('created_at', 'DESC')
                 ->orderBy('updated_at', 'DESC');
-            if (request()->has('selected_branch_id')) {
+            if (request()->has('selected_branch_id') && request()->selected_branch_id) {
                 if (Category::where('branch_id', request()->selected_branch_id)->exists()) {
                     $this->model = $this->model->where('branch_id', request()->selected_branch_id);
                 } else {
