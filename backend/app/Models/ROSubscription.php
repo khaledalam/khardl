@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Subscription as CentralSubscription;
+use App\Models\Tenant\RestaurantUser;
 
 class ROSubscription extends Model
 {
@@ -33,6 +34,10 @@ class ROSubscription extends Model
     public const DEACTIVATE = 'deactivate';
     public const SUSPEND = 'suspend';
     // other status in tap payment status
+
+    public function user(){
+        return $this->belongsTo(RestaurantUser::class);
+    }
     public function getStartAtAttribute()
     {
         return Carbon::parse($this->attributes['start_at']);
