@@ -147,39 +147,56 @@
                     <div class="timeline-label">
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-                            <div class="table-responsive">
+                            <div class="hover-scroll-overlay-y">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px">
+                                <table class="table align-middle table-row-dashed fs-6 gy-3" id="kt_table_widget_5_table">
+                                    <!--begin::Table head-->
+                                    <thead>
+                                        <!--begin::Table row-->
+                                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                            <th class="text-start pe-3 min-w-100px"></th>
+                                            <th class="text-start pe-3 min-w-100px">{{ __('messages.Communication') }}</th>
+                                        </tr>
+                                        <!--end::Table row-->
+                                    </thead>
+                                    <!--end::Table head-->
                                     <!--begin::Table body-->
-                                    <tbody class="fw-bold text-gray-600">
-                                    <!--begin::Payment method-->
-                                    <tr>
-                                        <td class="text-muted p-0 py-3">
-                                            <div class="d-flex flex-column align-items-center">
-                                                Tel: <a href="tel:+966544488721">+966 544488721</a><br />
-                                                Tel: <a href="tel:+966548983405">+966 548983405</a><br />
-                                                Tel: <a href="tel:+966571625192">+966 571625192</a><br />
-                                            </div>
-                                        </td>
-                                        <td class="fw-bolder text-end py-0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted p-0 py-3">
-                                            <div class="d-flex flex-column align-items-center">
-                                                Email: <a href="mailto:info@cervodelivery.com">info@cervodelivery.com</a>
-                                            </div>
-                                        </td>
-                                        <td class="fw-bolder text-end py-0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted p-0 py-3">
-                                            <div class="d-flex flex-column align-items-center">
-                                                Address: Hejra road - Madina<br />Monawra, Saudi Arabia
-                                            </div>
-                                        </td>
-                                        <td class="fw-bolder text-end py-0"></td>
-                                    </tr>
-                                    <!--end::Payment method-->
+                                    <tbody class="fw-bolder text-gray-600">
+                                        <!--begin::Item-->
+                                        <tr>
+                                            <td>
+                                                <span class="text-start">{{__('messages.Tel')}}</span>
+                                            </td>
+                                            <td class="text-dark">
+                                                <ul>
+                                                    <li>
+                                                        <a href="tel:+966544488721">+966 544488721</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="tel:+966548983405">+966 548983405</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="tel:+966571625192">+966 571625192</a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-start">{{__('messages.Email')}}</span>
+                                            </td>
+                                            <td class="text-dark">
+                                                <a href="mailto:info@cervodelivery.com">info@cervodelivery.com</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="text-start">{{__('messages.Address')}}</span>
+                                            </td>
+                                            <td class="text-dark">
+                                                <span>Address: Hejra road - Madina<br />Monawra, Saudi Arabia</span>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                     <!--end::Table body-->
                                 </table>

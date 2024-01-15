@@ -123,11 +123,19 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     }
     public function scopeWhenType($query,$type)
     {
-        return $query->when($type != null && ($type=='complete_step_1'||$type=='complete_step_2'), function ($q) use ($type) {
+        return $query->when($type != null, function ($q) use ($type) {
             if($type=='complete_step_1'){
                 return $q->whereDoesntHave('restaurant');
-            }else{
+            }elseif($type=='complete_step_2'){
                 return $q->whereHas('restaurant');
+            }elseif($type=='have_active_restaurant'){
+                /* TODO:Synced resources */
+            }elseif($type=='have_inactive_restaurant'){
+                /* TODO:Synced resources */
+            }elseif($type=='verified_email'){
+                return $q->where('email_verified_at','!=',null);
+            }elseif($type=='not_verified_email'){
+                return $q->where('email_verified_at',null);
             }
         });
     }
