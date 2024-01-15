@@ -21,3 +21,8 @@ composer.lock
 
 public/js/tenant.js
 public/mix-manifest.json
+public/js/central.js
+public/css/app.css
+public/css/index.css
+public/js/chunks/*.js
+public/js/tenant.js.LICENSE.txt
