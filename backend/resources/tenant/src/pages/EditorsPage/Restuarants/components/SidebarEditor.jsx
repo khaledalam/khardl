@@ -55,9 +55,9 @@ const SidebarEditor = () => {
             handleChange={handleChange}
             defaultValue={
               restaurantStyle.template === "template-1"
-                ? "Template 1"
-                : restaurantStyle.template === "template-2"
-                ? "Template 2"
+                ? t("Template 1")
+             : restaurantStyle.template === "template-2"
+                ? t("Template 2")
                 : restaurantStyle.template === "template-3"
                 ? "Template 3"
                 : " "
@@ -65,7 +65,7 @@ const SidebarEditor = () => {
             dropdownList={[
               {
                 value: "template-1",
-                text: "Template 1",
+                text: t("Template 1"),
               },
               // {
               //   value: "template-2",
