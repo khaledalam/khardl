@@ -205,7 +205,7 @@ Route::group([
 
 
     Route::group([
-        'middleware' => ['restaurantLive'],
+        'middleware' => ['restaurantLive','restaurantSubLive'],
     ], static function () {
         $groups = TenantSharedRoutesTrait::groups();
         foreach ($groups as $group) {

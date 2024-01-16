@@ -2,12 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Tenant\Setting;
 use Closure;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
-use Illuminate\Support\Facades\Auth;
+use App\Models\ROSubscription;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class RestaurantNotLive
@@ -19,17 +20,20 @@ class RestaurantNotLive
      */
     public function handle($request, Closure $next)
     {
-        $is_live = Setting::first()->is_live;
-        if ($is_live) {
-            if ($request->expectsJson()) {
-                return ResponseHelper::response([
-                    'message' => 'Restaurant is in a live mode',
-                    'is_loggedin' => false
-                ], ResponseHelper::HTTP_FORBIDDEN);
+        if(env('APP_ENV') != 'local'){
+            $is_live = Setting::first()->is_live;
+            if ($is_live && ROSubscription::where('status',ROSubscription::ACTIVE)->first()) {
+                if ($request->expectsJson()) {
+                    return ResponseHelper::response([
+                        'message' => __('Restaurant is in a live mode'),
+                        'is_loggedin' => false
+                    ], ResponseHelper::HTTP_FORBIDDEN);
+                }
+                return redirect()->back();
             }
-            return redirect()->back();
-        }
-       
+           
+        }    
+        
         return $next($request);
     }
 }
