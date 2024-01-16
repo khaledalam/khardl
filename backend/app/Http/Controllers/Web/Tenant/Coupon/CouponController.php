@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Tenant\Coupon;
 
 use App\Http\Controllers\Web\BaseController;
+use App\Http\Requests\Tenant\Coupon\CouponStoreFormRequest;
 use App\Http\Services\tenant\Coupon\CouponService;
 use Illuminate\Http\Request;
 
@@ -18,8 +19,8 @@ class CouponController extends BaseController
     {
         return $this->couponService->create();
     }
-    public function store(Request $request)
+    public function store(CouponStoreFormRequest $request)
     {
-        dd($request->all());
+        return $this->couponService->store($request);
     }
 }

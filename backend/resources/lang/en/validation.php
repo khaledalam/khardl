@@ -182,6 +182,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "fixed" => "Discount value",
+        "percentage" => "Percentage value",
+        "active_from" => "Active from",
+        "expire_at" => "Expire at"
+    ],
 
 ];

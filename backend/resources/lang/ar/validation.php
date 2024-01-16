@@ -129,8 +129,8 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-    ],
 
+    ],
     'attributes' => [
         'address'               => 'العنوان',
         'age'                   => 'العمر',
@@ -182,6 +182,10 @@ return [
         "identity_document" => "وثيقة الهوية",
         "pci_document" => "وثيقة PCI",
         "tax_document_user_upload" => "مستند الضريبة",
+        "fixed" => "قيمة الخصم",
+        "percentage" => "نسبة الخصم",
+        "active_from" => "تاريخ التنشيط",
+        "expire_at" => "تاريخ الانتهاء"
 
     ],
 ];
