@@ -38,6 +38,18 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $this->belongsTo(User::class);
     }
+
+    public function central_tenant_setting()
+    {
+        return $this->belongsToMany(
+            CentralTenantSetting::class,
+            'pivot_settings',
+            'tenant_id',
+            'global_setting_id',
+            'id',
+            'global_id'
+        );
+    }
     public function getNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";

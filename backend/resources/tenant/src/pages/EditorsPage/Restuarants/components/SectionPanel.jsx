@@ -181,7 +181,8 @@ const SectionPanel = () => {
             containerClass='!w-full'
             inputClass='!w-full !h-[48px] !text-[1rem]'
           />{" "}
-          <div className='mt-3'>
+          <div className='mt-4 flex items-center justify-between'>
+            <h3 className=''>{t("Content")}</h3>
             <LogoAlignment
               iconSize={20}
               defaultValue={phoneNumber_alignment}

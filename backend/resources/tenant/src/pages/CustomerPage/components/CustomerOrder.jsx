@@ -27,6 +27,10 @@ const CustomerOrder = () => {
     (state) => state.customerAPI.ordersMetadata
   )
 
+  useEffect(() => {
+    fetchOrderPerpage().then(() => {})
+  }, [])
+
   const fetchOrderPerpage = async () => {
     try {
       const ordersResponse = await AxiosInstance.get(
@@ -44,10 +48,6 @@ const CustomerOrder = () => {
     } finally {
     }
   }
-
-  useEffect(() => {
-    fetchOrderPerpage().then(() => {})
-  }, [])
 
   useEffect(() => {
     fetchOrderPerpage().then(() => {})
@@ -147,7 +147,7 @@ const CustomerOrder = () => {
           </div>
           <h3 className=''>
             {t("page")} {pageNumber} of{" "}
-            {ordersMetadata ? ordersMetadata?.total : 15}
+            {ordersMetadata ? ordersMetadata?.last_page : 1}
           </h3>
         </div>
         <div className='flex items-center gap-3'>
