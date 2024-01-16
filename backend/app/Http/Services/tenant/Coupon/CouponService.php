@@ -11,7 +11,8 @@ class CouponService
     use APIResponseTrait;
     public function index()
     {
-        return view('restaurant.coupons.index');
+        $coupons = Coupon::paginate(config('application.perPage') ?? 20);
+        return view('restaurant.coupons.index',compact('coupons'));
     }
     public function create()
     {
@@ -21,6 +22,10 @@ class CouponService
     {
         Coupon::create($this->request_data($request));
         return redirect()->route('coupons.index')->with(['success' => __('Coupon has been added successfully')]);
+    }
+    public function changeStatus(Coupon $coupon)
+    {
+        $coupon->toggleStatus();
     }
     private function request_data($request)
     {

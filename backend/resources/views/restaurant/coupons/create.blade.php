@@ -41,6 +41,11 @@
                                                                 <div class="card-title">
                                                                     <h2>{{ __('messages.Make a new coupon') }}</h2>
                                                                 </div>
+                                                                <div class="">
+                                                                    <a href="{{ route('coupons.index') }}">
+                                                                        <button class="btn btn-primary btn-sm">{{ __('messages.Back to list') }}</button>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                             <!--end::Card header-->
                                                             <form action="{{ route('coupons.store') }}" method="POST">
@@ -50,10 +55,10 @@
                                                                     <!--begin::Input group-->
                                                                     <div class="mb-10 fv-row">
                                                                         <!--begin::Label-->
-                                                                        <label class="required form-label">{{ __('messages.Coupon code') }}</label>
+                                                                        <label class="required form-label">{{ __('messages.Code') }}</label>
                                                                         <!--end::Label-->
                                                                         <!--begin::Input-->
-                                                                        <input type="text" name="code" required value="{{ old('code') }}" class="form-control mb-2" placeholder="Coupon code" />
+                                                                        <input type="text" name="code" required value="{{ old('code') }}" class="form-control mb-2" placeholder="{{ __('messages.Code') }}" />
                                                                         <!--end::Input-->
                                                                     </div>
                                                                     <!--end::Input group-->
@@ -102,7 +107,7 @@
                                                                                 <div class="mb-10 fv-row">
                                                                                     <div class="d-flex justify-content-between align-items-center">
                                                                                         <div>
-                                                                                            <label class="form-label">{{ __('messages.Maximum uses') }}</label>
+                                                                                            <label class="form-label">{{ __('messages.Max use') }}</label>
                                                                                             <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
                                                                                         </div>
                                                                                     </div>
@@ -113,7 +118,7 @@
                                                                                 <div class="mb-10 fv-row">
                                                                                     <div class="d-flex justify-content-between align-items-center">
                                                                                         <div>
-                                                                                            <label class="form-label">{{ __('messages.Maximum uses per user') }}</label>
+                                                                                            <label class="form-label">{{ __('messages.Max use per user') }}</label>
                                                                                             <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
                                                                                         </div>
                                                                                     </div>
@@ -124,7 +129,7 @@
                                                                                 <div class="mb-10 fv-row">
                                                                                     <div class="d-flex justify-content-between align-items-center">
                                                                                         <div>
-                                                                                            <label class="form-label">{{ __('messages.Maximum discount amount') }}</label>
+                                                                                            <label class="form-label">{{ __('messages.Max discount amount') }}</label>
                                                                                             <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
                                                                                         </div>
                                                                                     </div>
@@ -135,8 +140,8 @@
                                                                                 <div class="mb-10 fv-row">
                                                                                     <div class="d-flex justify-content-between align-items-center">
                                                                                         <div>
-                                                                                            <label class="form-label">{{ __('messages.Minimum cart total') }}</label>
-                                                                                            <small class="text-muted">({{ __('messages.No minimum if empty') }})</small>
+                                                                                            <label class="form-label">{{ __('messages.Minimum cart amount') }}</label>
+                                                                                            <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
                                                                                         </div>
                                                                                     </div>
                                                                                     <input type="number" name="minimum_cart_amount" value="{{ old('minimum_cart_amount') }}" class="form-control mb-2" placeholder="{{ __('messages.Cart total') }}" />

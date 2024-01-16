@@ -159,6 +159,7 @@ Route::group([
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
                 });
                 Route::resource('coupons',CouponController::class);
+                Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
