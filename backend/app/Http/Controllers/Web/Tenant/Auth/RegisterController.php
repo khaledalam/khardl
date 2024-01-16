@@ -98,7 +98,7 @@ class RegisterController extends BaseController
         // TODO @todo add tap customer to queue 
         CustomerTap::createWithModel($user);
         $success['name'] =  "$user->first_name $user->last_name";
-        Auth::login($user);
+        Auth::login($user,true);
         $this->sendVerificationSMSCode($request);
         return $this->sendResponse($success, 'Customer registered successfully.');
     }
