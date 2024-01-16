@@ -692,6 +692,7 @@ return [
     "Make a new coupon" => "انشا قسيمة خصم",
     "Cart total" => "المبلغ الكلي للعربة",
     "each_time" => "مرة",
-    "Coupons" => "قسائم الخصومات"
+    "Coupons" => "قسائم الخصومات",
+    "Update" => "تعديل"
 ];
 

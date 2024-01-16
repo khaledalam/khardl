@@ -691,6 +691,7 @@ return [
     "Make a new coupon" => "Make a new coupon",
     "Cart total" => "Cart total",
     "each_time" => "Time",
-    "Coupons" => "Coupons"
+    "Coupons" => "Coupons",
+    "Update" => "Update"
 
 ];

@@ -18,10 +18,20 @@ class CouponService
     {
         return view('restaurant.coupons.create');
     }
+    public function edit($request, $coupon)
+    {
+        return view('restaurant.coupons.edit',compact('coupon'));
+    }
     public function store($request)
     {
         Coupon::create($this->request_data($request));
-        return redirect()->route('coupons.index')->with(['success' => __('Coupon has been added successfully')]);
+        return redirect()->route('coupons.index')->with(['success' => __('Updated successfully')]);
+    }
+    public function update($request, $id)
+    {
+        $coupon = Coupon::findOrFail($id);
+        $coupon->update($this->request_data($request));
+        return redirect()->route('coupons.index')->with(['success' => __('Updated successfully')]);
     }
     public function changeStatus(Coupon $coupon)
     {

@@ -186,7 +186,8 @@ return [
         "fixed" => "Discount value",
         "percentage" => "Percentage value",
         "active_from" => "Active from",
-        "expire_at" => "Expire at"
+        "expire_at" => "Expire at",
+        "code" => "Coupon code"
     ],
 
 ];
