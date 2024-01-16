@@ -47,28 +47,34 @@ class SendRenewSubscriptionEmailJob implements ShouldQueue
                 'en' => '[ok] An email was sent to alert the restaurant owner to renew the subscription',
                 'ar' => '[تم] تم ارسال بريد لتنبيه صاحب المطعم بتجديد الاشتراك'
             ];
-            Log::create([
-                'user_id' => $this?->user?->id,
-                'action' => $actions,
-                'type' => LogTypes::RenewSubscriptionNotifySent,
-                'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
-
+            tenancy()->central(function()use($actions){
+                Log::create([
+                    'user_id' => $this?->user?->id,
+                    'action' => $actions,
+                    'type' => LogTypes::RenewSubscriptionNotifySent,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+    
+            });
+        
         } catch (\Exception $e) {
+            logger($e->getMessage());
             $actions = [
                 'en' => '[fail] An email was sent to alert the restaurant owner to renew the subscription',
                 'ar' => '[فشل] تم ارسال بريد لتنبيه صاحب المطعم بتجديد الاشتراك'
             ];
-            Log::create([
-                'action' => $actions,
-                'user_id' => $this?->user?->id,
-                'type' => LogTypes::RenewSubscriptionNotifyFail,
-                'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function()use($actions){
+                Log::create([
+                    'action' => $actions,
+                    'user_id' => $this?->user?->id,
+                    'type' => LogTypes::RenewSubscriptionNotifyFail,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
         }
     }
 }

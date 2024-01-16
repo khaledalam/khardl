@@ -46,7 +46,7 @@
                                                 We hope this message finds you well.
                                             </p>
                                             <p>
-                                                We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of {{$peroid}} days to renew your subscription.
+                                                We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has expired. To ensure the uninterrupted activity of your restaurant and to continue providing excellent service to your customers, we're offering you a grace period of {{$period}} days to renew your subscription.
                                             </p>
                                             <p>
                                                 To proceed with the renewal, please follow this link: <a href="{{ $url }}">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.

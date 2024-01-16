@@ -36,7 +36,7 @@ class ROSubscription extends Model
     // other status in tap payment status
 
     public function user(){
-        return $this->belongsTo(RestaurantUser::class);
+        return $this->belongsTo(RestaurantUser::class,'user_id');
     }
     public function getStartAtAttribute()
     {

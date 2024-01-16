@@ -33,23 +33,28 @@ class SuspendExpiredSubscription extends Command
         $days= CentralSetting::first()->active_days_after_sub_expired;
         $restaurants = Tenant::all();
         foreach($restaurants as $restaurant){
-            $restaurant->run(function() use($days){
+            $restaurant->run(function() use($days,$restaurant){
+              
                 $subscription = ROSubscription::where('status',ROSubscription::ACTIVE);
+                $subscriptionForSuspend = clone $subscription;
                 $activeSubscription = $subscription->first();
+               
+
                 // Send email to RO if the sub has expired
-                if($activeSubscription && $subscription->where('end_at',today())){
-          
+                if($activeSubscription && $subscription->where('end_at',today())->exists()){
+                  
                     SendRenewSubscriptionEmailJob::dispatch(
-                        user: $subscription->user,
+                        user: $activeSubscription->user,
                         restaurant_name: Setting::first()->restaurant_name,
-                        url : route('restaurant.service'),
+                        url : $restaurant->route('restaurant.service'),
                         period: $days 
                     );
             
                 }
+                
                 // switch the sub status to suspend if RO didn't activate the sub after $days days passed
-                if($activeSubscription &&  $subscription->where('end_at', now()->addDays($days))) {
-                    $subscription->update([
+                if($activeSubscription &&  $subscriptionForSuspend->whereDate('end_at', now()->addDays($days))->exists()) {
+                    $activeSubscription->update([
                         'status'=>ROSubscription::SUSPEND
                     ]);
                 }
@@ -59,3 +64,5 @@ class SuspendExpiredSubscription extends Command
         }
     }
 }
+
+
