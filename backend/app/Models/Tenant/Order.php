@@ -23,7 +23,12 @@ class Order extends Model
         'order_notes',
         'delivery_type_id',
         'vat',
-        'subtotal'
+        'subtotal',
+        'deliver_by',
+        'tracking_url',
+        'yeswa_ref',
+        'cervo_ref',
+        'streetline_ref'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     const STATUS = [

@@ -18,7 +18,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
     {
         $this->delivery_company = $delivery_company;
     }
-    abstract public function assignToDriver(Order $order,RestaurantUser $customer);
+    abstract public function assignToDriver(Order $order,RestaurantUser $customer):bool;
     abstract public static function processWebhook($payload);
     abstract public function verifyApiKey(string $api_key): bool;
 
@@ -29,6 +29,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
         }else {
             $response = Http::async()->$method($url,$data);
         }
+        
         return $response;
 
       
@@ -42,7 +43,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
             }else {
                 $response = Http::$method($url,$data);
             }
-            logger( json_decode($response->getBody(), true));
+          
             if($response->successful()){
                 $response =  json_decode($response->getBody(), true);
                 return [

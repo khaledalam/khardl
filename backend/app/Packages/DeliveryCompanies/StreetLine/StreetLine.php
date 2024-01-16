@@ -59,11 +59,20 @@ class StreetLine  extends AbstractDeliveryCompany
 
 
         ];
-        return $this->send(
+
+        $response = $this->sendSync(
             url:   $this->delivery_company->api_url."/$token/order/add",
             token: false,
             data: $data
         );
+        if($response['http_code'] == ResponseHelper::HTTP_OK){
+            $order->update([
+                'streetline_ref'=>$response['message']['order_id']
+            ]);
+            return true;
+        }else {
+            return false;
+        }
     }
     public function addWebhook($type = 'order_updated'){
         if(env('APP_ENV') == 'local'){
@@ -82,27 +91,39 @@ class StreetLine  extends AbstractDeliveryCompany
         );
     }
     public static function processWebhook($payload){
-        if($payload['status_id'] == self::STATUS_ORDER['Order delivered']){
-                Order::findOrFail($payload['client_order_id'])->update([
-                    'status'=>Order::COMPLETED
+        if(isset($payload["status_id"])  ){
+            $order = Order::findOrFail($payload['client_order_id']);
+            if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
+                $order->update([
+                    'deliver_by'=> class_basename(static::class),
                 ]);
+                if($payload['tracking_url']){
+                    $order->update([
+                        'tracking_url'=> $payload['tracking_url']
+                    ]); 
+                }
+                if($payload['status_id'] == self::STATUS_ORDER['Order delivered']){
+                        $order->update([
+                            'status'=>Order::COMPLETED
+                        ]);
 
-        }else if(
-            $payload['status_id'] == self::STATUS_ORDER['Arrived to pickup'] ||
-            $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
+                }else if(
+                    $payload['status_id'] == self::STATUS_ORDER['Arrived to pickup'] ||
+                    $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
+                        
+                        $order->update([
+                            'status'=>Order::ACCEPTED
+                        ]);
+                }else if(
+                    $payload['status_id'] == self::STATUS_ORDER['Order cancelled'] || 
+                    $payload['status_id'] == self::STATUS_ORDER['Order failed'] ){
+                    // Todo @todo
+                    $order->update([
+                        'status'=>Order::CANCELLED
+                    ]);
 
-                Order::findOrFail($payload['client_order_id'])->update([
-                    'status'=>Order::ACCEPTED
-                ]);
-        }else if(
-            $payload['status_id'] == self::STATUS_ORDER['Order cancelled'] ||
-            $payload['status_id'] == self::STATUS_ORDER['Driver acceptance timeout']  ||
-            $payload['status_id'] == self::STATUS_ORDER['Driver rejected the order'] ||
-            $payload['status_id'] == self::STATUS_ORDER['Order Unassigned'] ||
-            $payload['status_id'] == self::STATUS_ORDER['Order failed'] ){
-            // Todo @todo
-            // resend the order to any delivery companies or cancelled
-
+                }
+            }
         }
     }
     public function  verifyApiKey(string $api_key): bool{

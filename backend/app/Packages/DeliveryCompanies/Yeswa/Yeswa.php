@@ -16,7 +16,7 @@ class Yeswa  extends AbstractDeliveryCompany
         PaymentMethod::CREDIT_CARD=> 'PP',
     ];
 
-    public function assignToDriver(Order $order,RestaurantUser $customer){
+    public function assignToDriver(Order $order,RestaurantUser $customer):bool{
         $branch = $order->branch;
         if(env('APP_ENV') == 'local'){
             $data = [
@@ -48,7 +48,7 @@ class Yeswa  extends AbstractDeliveryCompany
             "dropoff_phone"=> $customer->phone,
             "dropoff_address"=> $customer->address,
             "order_amount"=> $order->total,
-            'client_id'=>$order->id, // instead if customer id
+            'client_id'=>$customer->id, // instead if customer id
             "payment_method"=>  self::CORRESPOND_METHODS[$order->payment_method->name]  ,
             // nullable
             // "dropoff_time"=> "",
@@ -59,28 +59,72 @@ class Yeswa  extends AbstractDeliveryCompany
             // "client_id"=> "",
         ];
 
-        return $this->send(
+        $response = $this->sendSync(
             url:  $this->delivery_company->api_url.'/create_trip/',
             token: false,
             data: $data
         );
+        if($response['http_code'] == ResponseHelper::HTTP_OK){
+            $order->update([
+                'yeswa_ref'=>$response['message']['data']['trip_ref']
+            ]);
+            return true;
+        }else {
+            return false;
+        }
 
     }
     public static function processWebhook($payload){
-        if($payload["deliveries"][0]['job_status']  == 'ACCEPTED'){
-            Order::findOrFail($payload['client_id'])->update([
-                'status'=>Order::ACCEPTED
-            ]);
-        }else if($payload["deliveries"][0]['job_status'] == 'SUCCESSFUL'){
-            Order::findOrFail($payload['client_id'])->update([
-                'status'=>Order::COMPLETED
-            ]);
-        }else if (
-            $payload["deliveries"][0]['job_status'] == 'CANCELLED'||
-            $payload["deliveries"][0]['job_status'] == 'DECLINED' ||
-            $payload["deliveries"][0]['job_status'] == 'FAILED' ){
-            // Todo @todo
-            // resend the order to any delivery companies or cancelled
+        if(isset($payload["deliveries"][0]['job_status'])  ){
+            $order = Order::findOrFail($payload['client_id']);
+            if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
+                
+                $order->update([
+                    'deliver_by'=> class_basename(static::class),
+                ]);
+                if($payload['deliveries'][0]['track']){
+                    $order->update([
+                        'tracking_url'=> $payload['deliveries'][0]['track']
+                    ]); 
+                }
+                if($payload["deliveries"][0]['job_status']  == 'ACCEPTED'){
+                    $order->update([
+                        'status'=>Order::ACCEPTED
+                    ]);
+                }else if($payload["deliveries"][0]['job_status'] == 'SUCCESSFUL'){
+                    $order->update([
+                        'status'=>Order::COMPLETED
+                    ]);
+                }else if ($payload["deliveries"][0]['job_status'] == 'FAILED' ){
+                    $order->update([
+                        'status'=>Order::CANCELLED
+                    ]);
+                }
+            }
+            
+        }
+    }
+    public function cancelOrder($id): bool{
+        try {
+            if(env('APP_ENV') == 'local'){
+                $data = [
+                    "api_key"=> env('YESWA_SECRET_API_KEY',''),
+                    'trip_ref'=>$id,
+                ];
+            }else {
+                $data = [
+                    "api_key"=> $this->delivery_company->api_key,
+                    'trip_ref'=>$id,
+                ];
+            }
+            $response = $this->sendSync(
+                url: $this->delivery_company->api_url . '/cancel_trip/',
+                token: false,
+                data:  $data
+            );
+            return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+        } catch (\Exception $e) {
+            return false;
         }
     }
     public function  verifyApiKey(string $api_key): bool{
@@ -97,5 +141,6 @@ class Yeswa  extends AbstractDeliveryCompany
             return false;
         }
     }
+        
 
 }
