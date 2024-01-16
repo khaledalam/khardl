@@ -85,7 +85,7 @@
 
                                 <!--begin::Streetline-->
                                 @if(isset($streetline))
-                                @include('restaurant.delivery_companies.streeline.index',['streetline' => $streetline,'isadmin' => 0])
+                                @include('restaurant.delivery_companies.streetline.index',['streetline' => $streetline,'isadmin' => 0])
                                 @endif
                                 <!--end::Streetline-->
                             </div>
