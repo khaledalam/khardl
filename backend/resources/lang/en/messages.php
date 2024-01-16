@@ -682,5 +682,19 @@ return [
     "Have inactive restaurant" => "Have inactive restaurant",
     "Verified email" => "Verified email",
     "Not verified email" => "Not verified email",
+    "Code" => "Code",
+    "Amount" => "Amount",
+    "Max discount amount" => "Max discount amount",
+    "Max use" => "Max use",
+    "Max use per user" => "Max use per user",
+    "Minimum cart amount" => "Minimum cart amount",
+    "Active from" => "Active from",
+    "Expire at" => "Expire at",
+    "No limit if empty" => "No limit if empty",
+    "Make a new coupon" => "Make a new coupon",
+    "Cart total" => "Cart total",
+    "each_time" => "Time",
+    "Coupons" => "Coupons",
+    "Update" => "Update"
 
 ];
