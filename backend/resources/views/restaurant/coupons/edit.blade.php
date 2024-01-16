@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', 'Coupons')
+@section('title', __('messages.Coupons'))
 
 @section('content')
 
