@@ -782,6 +782,7 @@ export const RestuarantHomePage = () => {
     try {
       AxiosInstance.get(`restaurant-style`).then((response) =>
         dispatch(changeRestuarantEditorStyle(response.data?.data))
+        
       );
       setisLoading(false);
     } catch (error) {
