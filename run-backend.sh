@@ -41,14 +41,20 @@ done
 #
 
 
-php backend/artisan migrate:fresh --seed
+cd backend;
 
-#php backend/artisan migrate:fresh --seed --database=mysql_testing
+rm ./composer.lock
+composer install
 
-php backend/artisan create:tenant
 
-#php backend/artisan create:tenant --testing=true
+php artisan migrate:fresh --seed
 
-php backend/artisan serv # --port 80
+#php artisan migrate:fresh --seed --database=mysql_testing
+
+php artisan create:tenant
+
+#php artisan create:tenant --testing=true
+
+php artisan serv # --port 80
 
 

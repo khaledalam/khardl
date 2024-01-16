@@ -452,8 +452,7 @@ class AdminController extends Controller
 
     public function restaurantOwnerManagement(Request $request)
     {
-        $admins = User::restaurantOwners()
-        ->whenType($request['type']??null)
+        $admins = User::whenType($request['type']??null)
         ->paginate(config('application.perPage')??20);
         $user = Auth::user();
         return view('admin.restaurant-owner-management', compact('user', 'admins'));

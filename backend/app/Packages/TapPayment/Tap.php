@@ -25,7 +25,6 @@ class Tap
                 ->$method($prefix_url.$url,$data);
             }
            
-            logger($response);
             if($response->successful()){
                 $response = json_decode($response->getBody(), true);
                 return [

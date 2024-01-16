@@ -78,9 +78,9 @@ const Login = () => {
          setSpinner(false)
          dispatch(changeLogState(false))
           dispatch(changeUserState(null))
-
+        console.log(error);
           setStatusCode(HTTP_NOT_AUTHENTICATED)
-         toast.error(`${t('Login failed')}`)
+          toast.error(`${error?.response?.data?.message || t('Login failed')}`)
       }
    }
    /////////////////////////////////////////////////////////////////////////////////////
@@ -109,10 +109,10 @@ const Login = () => {
                            >
                               {/* Input 1 */}
 
-                            
+
                               <div>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                    {t('Phone')} 
+                                    {t('Phone')}
                                  </h4>
                                  <input
                                     type='tel'
@@ -172,7 +172,7 @@ const Login = () => {
                                  </div>
                               </div> */}
 
-                           
+
                               <div className='flex flex-col justify-center items-center mt-4 mb-10'>
                                  <button
                                     type='submit'

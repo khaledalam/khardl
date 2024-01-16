@@ -2,44 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\Restaurant\ExportSubscriptionInvoice;
 use App\Jobs\SendApprovedBusinessEmailJob;
-use App\Mail\ApprovedBusiness;
-use App\Models\ROSubscription;
-use App\Models\Subscription as CentralSubscription;
-use App\Models\Domain;
 use App\Models\Tenant;
 use App\Models\Tenant\Setting;
-use App\Models\User;
-use LVR\CountryCode\Two;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use App\Models\Tenant\Tap\TapBusiness;
 use App\Models\Tenant\Tap\TapBusinessFile;
-use App\Models\TraderRequirement;
 use App\Packages\TapPayment\Business\Business;
-use App\Packages\TapPayment\Card\Card;
 use App\Packages\TapPayment\Charge\Charge;
 use App\Packages\TapPayment\File\File as TapFileAPI;
-use App\Packages\TapPayment\Controllers\FileController;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
-use App\Packages\TapPayment\Subscription\Subscription as TapSubscription;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TapController extends Controller
 {
-    public function payments()
+    public function payments(Request $request)
     {
         $user = Auth::user();
         $business = TapBusiness::first();
-        return view('restaurant.payments', compact('user','business'));
+        $businessFile = TapBusinessFile::first();
+        if ($user->ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
+            return $this->handleDownload($request, $user->ROSubscriptionInvoices);
+        }
+        return view('restaurant.payments', compact('user', 'business', 'businessFile'));
     }
+    private function handleDownload($request, $model)
+    {
+        try {
+            $todayDate = Carbon::now()->format('Y-m-d');
+            $filename = "subscription_invoice_$todayDate.csv";
 
+            return Excel::download(new ExportSubscriptionInvoice($model), $filename);
+        } catch (\Exception $e) {
+            logger($e);
+            return redirect()->route('tap.payments');
+        }
+    }
     public function payments_upload_tap_documents_get()
     {
         $user = Auth::user();
-        $tap_files =TapBusinessFile::first();
+        $tap_files = TapBusinessFile::first();
         $files = [
             'business_logo' => 'Business Logo',
             'customer_signature' => 'Customer Signature',
@@ -48,7 +54,7 @@ class TapController extends Controller
             'pci_document' => 'PCI Document',
             'tax_document_user_upload' => 'TAX Document User Upload',
         ];
-        return view('restaurant.payments_tap_create_business_upload_documents', compact('user','files','tap_files'));
+        return view('restaurant.payments_tap_create_business_upload_documents', compact('user', 'files', 'tap_files'));
     }
 
     public function payments_upload_tap_documents(Request $request)
@@ -56,7 +62,7 @@ class TapController extends Controller
         // @TODO: handle upload tap documents logic here...
 
         $validationRules = [
-            'business_logo' => 'required|mimes:jpeg,png,gif|file|max:16384',//16MB
+            'business_logo' => 'required|mimes:jpeg,png,gif|file|max:16384', //16MB
             'customer_signature' => 'required|mimes:gif,jpeg,png,pdf|file|max:16384',
             'dispute_evidence' => 'required|mimes:jpeg,png,pdf|file|max:16384',
             'identity_document' => 'required|mimes:jpeg,png,pdf|file|max:16384',
@@ -67,24 +73,24 @@ class TapController extends Controller
         $request->validate($validationRules);
 
         // Iterate through the keys
-        $files = ['id'=>1];
+        $files = ['id' => 1];
         foreach ($validationRules as $key => $rule) {
             $file = $request->file($key);
             $title = ucwords(str_replace('_', ' ', $key));
             $response = TapFileAPI::create([
-                'file'=>$file,
-                'purpose'=>$key,
-                'title'=>$title
+                'file' => $file,
+                'purpose' => $key,
+                'title' => $title
             ]);
-            if($response['http_code'] != ResponseHelper::HTTP_OK){
-                return redirect()->back()->with('error', 'Failed to upload '.$title);
+            if ($response['http_code'] != ResponseHelper::HTTP_OK) {
+                return redirect()->back()->with('error', 'Failed to upload ' . $title);
             }
-            $files[$key.'_path'] = store_image($file,TapBusinessFile::STORAGE,$key);
-            $files[$key.'_id'] =$response['message']['id'];
+            $files[$key . '_path'] = store_image($file, TapBusinessFile::STORAGE, $key);
+            $files[$key . '_id'] = $response['message']['id'];
         }
         TapBusinessFile::updateOrCreate([
-            'id'=>1
-        ],$files);
+            'id' => 1
+        ], $files);
 
         return redirect()->route("tap.payments_submit_tap_documents_get")->with('success', __('Files successfully added.'));
 
@@ -97,17 +103,17 @@ class TapController extends Controller
         $tenant_id = tenant()->id;
         $iban = '';
         $facility_name = '';
-        tenancy()->central(function()use($tenant_id,&$iban,&$facility_name){
+        tenancy()->central(function () use ($tenant_id, &$iban, &$facility_name) {
             $user = Tenant::find($tenant_id)->user;
-            $iban =  $user->traderRegistrationRequirement?->IBAN;
-            $facility_name =  $user->traderRegistrationRequirement?->facility_name;
+            $iban = $user->traderRegistrationRequirement?->IBAN;
+            $facility_name = $user->traderRegistrationRequirement?->facility_name;
         });
-        return view('restaurant.payments_tap_create_business_submit_documents', compact('iban','user','facility_name','restaurant_name'));
+        return view('restaurant.payments_tap_create_business_submit_documents', compact('iban', 'user', 'facility_name', 'restaurant_name'));
     }
 
     public function payments_submit_tap_documents(CreateBusinessRequest $request)
     {
-        $user= Auth::user();
+        $user = Auth::user();
 
         $data = $request->validated();
         $files = TapBusinessFile::first();
@@ -118,36 +124,36 @@ class TapController extends Controller
             'pci_document_id',
             'tax_document_user_upload_id',
         ];
-        foreach($types as $id){
+        foreach ($types as $id) {
             $data['entity']['documents'][] = [
-                'type'=>"License",
-                "files"=> [
+                'type' => "License",
+                "files" => [
                     $files->{$id}
                 ]
             ];
         }
         $user = Auth::user();
         $business = Business::create($data);
-        if($business['http_code'] != ResponseHelper::HTTP_OK){
+        if ($business['http_code'] != ResponseHelper::HTTP_OK) {
             return redirect()->back()
-            ->withErrors([
-                __('Failed to create business'),
-                $business['message']
-            ])
-            ->withInput($request->input());
+                ->withErrors([
+                    __('Failed to create business'),
+                    $business['message']
+                ])
+                ->withInput($request->input());
         }
 
         TapBusiness::create([
-            'data'=>$data,
-            'business_id'=>$business['message']['id'],
-            "destination_id"=>$business['message']['destination_id'],
-            "status"=>$business['message']['status'],
-            "entity_id"=>$business['message']['entity']['id'],
-            "wallet_id"=>$business['message']['entity']['wallets'][0]['id'],
-            'user_id'=>$user->id
+            'data' => $data,
+            'business_id' => $business['message']['id'],
+            "destination_id" => $business['message']['destination_id'],
+            "status" => $business['message']['status'],
+            "entity_id" => $business['message']['entity']['id'],
+            "wallet_id" => $business['message']['entity']['wallets'][0]['id'],
+            'user_id' => $user->id
         ]);
 
-        if($business['message']['status'] == 'Active'){
+        if ($business['message']['status'] == 'Active') {
             $user->tap_verified = true;
             $user->save();
             SendApprovedBusinessEmailJob::dispatch($user);
@@ -157,23 +163,24 @@ class TapController extends Controller
 
     }
 
-    public function payments_submit_card_details(Request $request){
+    public function payments_submit_card_details(Request $request)
+    {
         logger('tap controller');
-        if($request->tap_id){
+        if ($request->tap_id) {
             $charge = Charge::retrieve($request->tap_id);
-            if($charge['http_code'] == ResponseHelper::HTTP_OK){
-                if($charge['message']['status'] == 'CAPTURED'){// payment successful
+            if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
+                if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
                 } else {
                     return redirect()->route('restaurant.service')->with('error', __("The payment failed, and the subscription fee has not been paid"));
                 }
-               
+
             }
         }
 
-        // TODO @todo optimize 
+        // TODO @todo optimize
         // sleep(1); // sleep until tap webhook processed
-        
+
         // $subscription = ROSubscription::first();
         // if($subscription){
         //     if($subscription->status == 'active'){// payment successful

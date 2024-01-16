@@ -6,7 +6,7 @@ import {PiNoteFill} from "react-icons/pi"
 import {MdSend} from "react-icons/md"
 import ProductDetailItem from "./ProductDetailItem"
 import {FiMinusCircle} from "react-icons/fi"
-import {IoAddCircleOutline} from "react-icons/io5"
+import {IoAddCircleOutline, IoLockClosedOutline} from "react-icons/io5"
 import AxiosInstance from "../../../../axios/axios"
 import {toast} from "react-toastify"
 import {addItemToCart} from "../../../../redux/editor/cartSlice"
@@ -76,6 +76,7 @@ const ProductItem = ({
   }, [qtyCount])
   const branch_id = localStorage.getItem("selected_branch_id")
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const categories = useSelector((state) => state.categoryAPI.categories)
 
   const checkboxItems = Object.keys(checkbox_input_names).map((key) => {
     const namesArray = checkbox_input_names[key]
@@ -290,7 +291,7 @@ const ProductItem = ({
       <div
         style={{
           boxShadow: "4px 0px  10px 0px rgba(0, 0, 0, 0.25)",
-          borderRadius: shape === t("Sharp") ? 0 : 16,
+          borderRadius: shape === "sharp" ? 0 : 16,
         }}
         className='w-[250px] min-h-[138px] cursor-pointer'
         onClick={() => document.getElementById(id).showModal()}
@@ -357,7 +358,7 @@ const ProductItem = ({
                   ? "rounded-tr-lg rounded-bl-2xl "
                   : "rounded-tl-lg rounded-br-2xl"
               } ${
-                shape === t("Sharp") ? "!rounded-none" : ""
+                shape === "sharp" ? "!rounded-none" : ""
               }  flex items-center justify-center`}
             >
               <img
@@ -598,50 +599,61 @@ const ProductItem = ({
                     <h3 className='text-[16px] font-bold'>{qtyCount}</h3>
                     <IoAddCircleOutline size={28} onClick={incrementQty} />
                   </div>
-                  <div
-                    style={{
-                      backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
-                    }}
-                    className='w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer'
-                    onClick={
-                      gotoCart ? () => navigate("/cart") : handleAddToCart
-                    }
-                  >
-                    <div className='w-[30px] h-[30px] cursor-pointer '>
-                      <img
-                        src={cartBgcolor ? imgCartWhite : imgCart}
-                        alt='product'
-                        className='w-full h-full object-contain '
-                      />
+                  {categories?.length > 0 ? (
+                    <div
+                      style={{
+                        backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
+                      }}
+                      className='w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer'
+                      onClick={
+                        gotoCart ? () => navigate("/cart") : handleAddToCart
+                      }
+                    >
+                      <div className='w-[30px] h-[30px] cursor-pointer '>
+                        <img
+                          src={cartBgcolor ? imgCartWhite : imgCart}
+                          alt='product'
+                          className='w-full h-full object-contain '
+                        />
+                      </div>
+                      {gotoCart ? (
+                        <h3
+                          style={{
+                            color: amountColor
+                              ? amountColor
+                              : cartBgcolor
+                              ? "white"
+                              : "red",
+                          }}
+                          className='text-xs line-clamp-1 md:text-[14px] font-bold'
+                        >
+                          Check Cart
+                        </h3>
+                      ) : (
+                        <h3
+                          style={{
+                            color: amountColor
+                              ? amountColor
+                              : cartBgcolor
+                              ? "white"
+                              : "red",
+                          }}
+                          className='text-[14px] font-bold'
+                        >
+                          {t("SAR")} {totalPrice && finalPrice}
+                        </h3>
+                      )}
                     </div>
-                    {gotoCart ? (
-                      <h3
-                        style={{
-                          color: amountColor
-                            ? amountColor
-                            : cartBgcolor
-                            ? "white"
-                            : "red",
-                        }}
-                        className='text-xs line-clamp-1 md:text-[14px] font-bold'
-                      >
-                        Check Cart
-                      </h3>
-                    ) : (
-                      <h3
-                        style={{
-                          color: amountColor
-                            ? amountColor
-                            : cartBgcolor
-                            ? "white"
-                            : "red",
-                        }}
-                        className='text-[14px] font-bold'
-                      >
-                        {t("SAR")} {totalPrice && finalPrice}
-                      </h3>
-                    )}
-                  </div>
+                  ) : (
+                    <div
+                      style={{
+                        backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00",
+                      }}
+                      className='w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer'
+                    >
+                      <IoLockClosedOutline size={26} />
+                    </div>
+                  )}
                 </div>
               </div>
             </Fragment>

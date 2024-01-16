@@ -12,6 +12,7 @@ class LogsExport implements FromCollection, WithHeadings, WithMapping
     /**
     * @return \Illuminate\Support\Collection
     */
+    protected $model;
     public function __construct($model)
     {
         $this->model = $model;
@@ -29,13 +30,11 @@ class LogsExport implements FromCollection, WithHeadings, WithMapping
             __('messages.Type'),
             __('messages.Metadata'),
             __('messages.Date'),
-            // Add more columns as needed
         ];
     }
 
     public function map($log): array
     {
-        // Handle relations or format data as needed
         return [
             $log->id,
             $log->user?->full_name,

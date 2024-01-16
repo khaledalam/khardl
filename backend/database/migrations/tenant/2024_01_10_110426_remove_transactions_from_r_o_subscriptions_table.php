@@ -25,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('r_o_subscriptions', function (Blueprint $table) {
-            //
+            $table->string("cus_id");
+            $table->string("chg_id");
+            $table->string("card_id")->nullable();
+            $table->string("payment_agreement_id")->nullable();
         });
     }
 };

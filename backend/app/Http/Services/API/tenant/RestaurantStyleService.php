@@ -40,6 +40,7 @@ class RestaurantStyleService
             'page_color' => $request->page_color,
             'page_category_color' => $request->page_category_color,
             'header_color' => $request->header_color,
+            'headerPosition' => $request->headerPosition,
             'footer_color' => $request->footer_color,
             'price_color' => $request->price_color,
             'text_fontFamily' => $request->text_fontFamily,
@@ -49,6 +50,7 @@ class RestaurantStyleService
             'text_color' => $request->text_color,
             'product_background_color' => $request->product_background_color,
             'selectedSocialIcons' => $request->selectedSocialIcons,
+            'headerPosition' => $request->headerPosition,
             'user_id' => Auth::user()?->id
         ];
         if (isset($request->logo) && $request->logo) {

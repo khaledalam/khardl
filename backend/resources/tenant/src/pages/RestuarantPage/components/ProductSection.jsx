@@ -36,7 +36,7 @@ const ProductSection = ({categories, isMobile}) => {
                     <h3 className='font-semibold text-[1.5rem] relative'>
                       <span className='custom-underline'>{category?.name}</span>{" "}
                     </h3>
-                    <div className='w-[95%] mt-10 ml-auto grid grid-col-1 xl:grid-cols-3 gap-y-12 gap-x-6 py-10'>
+                    <div className='w-[95%] mt-10 ml-auto grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-6 py-10'>
                       {category?.items
                         ?.filter((item) => item.availability === 1)
                         .map((product, i) => (
@@ -160,7 +160,7 @@ const ProductSection = ({categories, isMobile}) => {
                             {category?.name}
                           </span>{" "}
                         </h3>
-                        <div className='w-[95%] mt-10 ml-auto grid grid-cols-2 laptopXL:grid-cols-3 gap-y-12 gap-x-6 py-10'>
+                        <div className='w-[95%] mt-10 ml-auto grid grid-col-1 md:grid-cols-2  laptopXL:grid-cols-3 gap-y-12 gap-x-6 py-10'>
                           {category?.items
                             ?.filter((item) => item.availability === 1)
                             .map((product, i) => (
