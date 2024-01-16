@@ -72,7 +72,7 @@ const OuterSidebarNav = ({ id }) => {
       )
 
       console.log(
-        "editor rest restaurantCategoriesResponse >>>",
+        "editor rest restaurantCategoriesResponse OuterSidebarNav",
         restaurantCategoriesResponse.data
       )
       if (restaurantCategoriesResponse.data) {

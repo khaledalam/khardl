@@ -16,6 +16,7 @@ import {
 import HeaderEdit from "./components/HeaderEdit"
 
 export const RestuarantEditor = () => {
+  console.log("Richaaa")
   const dispatch = useDispatch()
   const categories = useSelector((state) => state.categoryAPI.categories)
 
@@ -55,7 +56,7 @@ export const RestuarantEditor = () => {
       )
 
       console.log(
-        "editor rest restaurantCategoriesResponse >>>",
+        "editor rest restaurantCategoriesResponse RestuarantEditor",
         restaurantCategoriesResponse.data
       )
       if (restaurantCategoriesResponse.data) {
