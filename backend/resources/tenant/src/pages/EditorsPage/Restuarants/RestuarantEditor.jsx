@@ -55,7 +55,7 @@ export const RestuarantEditor = () => {
       )
 
       console.log(
-        "editor rest restaurantCategoriesResponse >>>",
+        "editor rest restaurantCategoriesResponse RestuarantEditor",
         restaurantCategoriesResponse.data
       )
       if (restaurantCategoriesResponse.data) {

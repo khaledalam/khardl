@@ -5,6 +5,7 @@ services:
     khardl_db:
 #        platform: 'linux/amd64'
         container_name: khardl_db
+        command: --max_allowed_packet=32505856
         image: mariadb
         restart: unless-stopped
         environment:
