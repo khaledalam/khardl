@@ -339,6 +339,21 @@
                                 </a>
                             </div>
                         </div>
+                           <!-- Coupons -->
+                           <div class="menu-item menu-accordion">
+                            <a href="{{route('coupons.index')}}">
+                                <span class="{{ ($link == 'coupons' ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="bi bi-cash-stack"></i>
+                                            </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                        <span class="menu-title">{{__('messages.Coupons')}}</span>
+                                </span>
+                            </a>
+                        </div>
                         <!-- Services -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.service')}}">
