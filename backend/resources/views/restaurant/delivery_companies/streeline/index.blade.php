@@ -92,6 +92,7 @@
                         <div class="d-flex flex-column gap-1">
                             <div class="fw-bolder text-muted">{{__('messages.summary')}}</div>
                             <p>{!! __('messages.delivery.street-line.summary') !!}</p>
+                            <a href="{{global_asset('delivery-companies/streetline/Yallow_Products.pdf')}}" class="btn btn-warning text-black text-hover-khardl" target="_blank">Profile.pdf</a>
                         </div>
                         <!--end::Notes-->
                     </div>
