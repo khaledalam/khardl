@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
     use MustVerifyEmailTrait, HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    protected $table ='users';
+    protected $table = 'users';
     protected $primaryKey = 'id';
     protected $guard_name = 'web';
     protected $fillable = [
@@ -62,18 +62,22 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password' => 'hashed',
     ];
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return $this->hasRole("Administrator");
     }
-    public function isRestaurantOwner(){
+    public function isRestaurantOwner()
+    {
         return $this->hasRole("Restaurant Owner");
     }
 
-    public function isBlocked(){
+    public function isBlocked()
+    {
         return $this->status === self::STATUS_BLOCKED;
     }
 
-    public function isActive(){
+    public function isActive()
+    {
         return $this->status === self::STATUS_ACTIVE;
     }
     public function getFullNameAttribute()
@@ -103,7 +107,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->verification_code === $code;
     }
-    public function restaurant(){
+    public function restaurant()
+    {
         return $this->hasOne(Tenant::class);
     }
 
@@ -117,25 +122,33 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     /* Scopes */
     public function scopeRestaurantOwners($query)
     {
-        return $query->whereHas('roles',function($q){
-            return $q->where("name","Restaurant Owner");
+        return $query->whereHas('roles', function ($q) {
+            return $q->where("name", "Restaurant Owner");
         });
     }
-    public function scopeWhenType($query,$type)
+    public function scopeWhenType($query, $type)
     {
         return $query->when($type != null, function ($q) use ($type) {
-            if($type=='complete_step_1'){
+            if ($type == 'complete_step_1') {
                 return $q->whereDoesntHave('restaurant');
-            }elseif($type=='complete_step_2'){
+            } elseif ($type == 'complete_step_2') {
                 return $q->whereHas('restaurant');
-            }elseif($type=='have_active_restaurant'){
-                /* TODO:Synced resources */
-            }elseif($type=='have_inactive_restaurant'){
-                /* TODO:Synced resources */
-            }elseif($type=='verified_email'){
-                return $q->where('email_verified_at','!=',null);
-            }elseif($type=='not_verified_email'){
-                return $q->where('email_verified_at',null);
+            } elseif ($type == 'have_active_restaurant') {
+                return $q->whereHas('restaurant', function ($subQ) {
+                    return $subQ->whereHas('central_tenant_setting', function ($subQ2) {
+                        return $subQ2->where('is_live', 1);
+                    });
+                });
+            } elseif ($type == 'have_inactive_restaurant') {
+                return $q->whereHas('restaurant', function ($subQ) {
+                    return $subQ->whereHas('central_tenant_setting', function ($subQ2) {
+                        return $subQ2->where('is_live', 0);
+                    });
+                });
+            } elseif ($type == 'verified_email') {
+                return $q->where('email_verified_at', '!=', null);
+            } elseif ($type == 'not_verified_email') {
+                return $q->where('email_verified_at', null);
             }
         });
     }

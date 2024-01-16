@@ -25,7 +25,7 @@ class RestaurantCharge
     public static function renewSubscription($data)
     {
         return self::processSubscription($data, function ($user, $data, $subscription) {
-            $subscription->update(self::getSubscriptionAttributes($user, $data));
+            $subscription->update(self::getSubscriptionAttributes($user, $data,$subscription));
         });
     }
     public static function buyNewBranches($data)
@@ -41,19 +41,19 @@ class RestaurantCharge
                 $amount += $data['amount'];
             }
 
-            $subscription->update(self::getSubscriptionAttributes($user, $data, $end_at, $amount));
+            $subscription->update(self::getSubscriptionAttributes($user, $data,$subscription, $end_at, $amount));
         });
     }
 
   
 
-    private static function getSubscriptionAttributes($user, $data, $endAt = null, $amount = null)
+    private static function getSubscriptionAttributes($user, $data, $subscription = null,$endAt = null, $amount = null)
     {
         return [
             'start_at' => now(),
             'end_at' => $endAt ?? now()->addDays(365),
             'amount' => $amount ?? $data['amount'],
-            'number_of_branches' => $data['metadata']['n-branches'],
+            'number_of_branches' => ($data['metadata']['n-branches'] == 0)?$subscription->number_of_branches :$data['metadata']['n-branches'],
             'user_id' => $user->id,
             'type' => $data['metadata']['subscription'],
             'status' => ROSubscription::ACTIVE,

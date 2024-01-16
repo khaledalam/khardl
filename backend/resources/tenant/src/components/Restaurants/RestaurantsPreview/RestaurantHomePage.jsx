@@ -25,7 +25,7 @@ const RestaurantHomePage = (props) => {
       )
 
       console.log(
-        "editor rest restaurantCategoriesResponse >>>",
+        "editor rest restaurantCategoriesResponse RestaurantHomePage",
         restaurantCategoriesResponse.data
       )
       if (restaurantCategoriesResponse.data) {

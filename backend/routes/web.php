@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
@@ -133,6 +134,8 @@ Route::get('/health', static function (){
 })->name('health');
 
 Route::get('/test', static function (){
+    return view('restaurant.promotions_full');
+    dd(Tenant::all()->first()->central_tenant_setting);
     return response()->json([
         'status' => 'test'
     ]);
@@ -242,9 +245,9 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::post('/store', [AdminController::class, 'subscriptionsStore'])->name('subscriptions.store');
                         Route::get('/{subscription}/show', [AdminController::class, 'subscriptionShow'])->name('subscriptions.show');
                         Route::patch('/{subscription}/update', [AdminController::class, 'subscriptionUpdate'])->name('subscriptions.update');
-    
+
                     });
-                   
+
                 });
 
             });

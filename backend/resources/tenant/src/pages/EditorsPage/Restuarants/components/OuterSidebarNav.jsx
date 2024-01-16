@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useEffect, useRef, useState} from "react"
+import React, { Fragment, useContext, useEffect, useRef, useState } from "react"
 import homeIcon from "../../../../assets/homeIcon.svg"
 import LoginIcon from "../../../../assets/login.svg"
 import logoutIcon from "../../../../assets/logout.svg"
@@ -6,26 +6,26 @@ import shopIcon from "../../../../assets/shopIcon.svg"
 import deliveryIcon from "../../../../assets/bikeDeliveryIcon.svg"
 import dashboardIcon from "../../../../assets/dashboardIcon.svg"
 import worldLangIcon from "../../../../assets/worldLang.svg"
-import {IoMenuOutline} from "react-icons/io5"
-import {HTTP_NOT_AUTHENTICATED} from "../../../../config"
-import {toast} from "react-toastify"
-import {useSelector, useDispatch} from "react-redux"
-import {useNavigate} from "react-router-dom"
-import {logout} from "../../../../redux/auth/authSlice"
-import {useAuthContext} from "../../../../components/context/AuthContext"
-import {useTranslation} from "react-i18next"
+import { IoMenuOutline } from "react-icons/io5"
+import { HTTP_NOT_AUTHENTICATED } from "../../../../config"
+import { toast } from "react-toastify"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { logout } from "../../../../redux/auth/authSlice"
+import { useAuthContext } from "../../../../components/context/AuthContext"
+import { useTranslation } from "react-i18next"
 import AxiosInstance from "../../../../axios/axios"
-import {changeLanguage} from "../../../../redux/languageSlice"
-import {MenuContext} from "react-flexible-sliding-menu"
+import { changeLanguage } from "../../../../redux/languageSlice"
+import { MenuContext } from "react-flexible-sliding-menu"
 import PrimarySelectWithIcon from "./PrimarySelectWithIcon"
-import {BiSolidUserAccount} from "react-icons/bi"
+import { BiSolidUserAccount } from "react-icons/bi"
 import {
   selectedCategoryAPI,
   setCategoriesAPI,
 } from "../../../../redux/NewEditor/categoryAPISlice"
 
-const OuterSidebarNav = ({id}) => {
-  const {setStatusCode} = useAuthContext()
+const OuterSidebarNav = ({ id }) => {
+  const { setStatusCode } = useAuthContext()
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
   const branches = restuarantStyle.branches
   let branch_id = localStorage.getItem("selected_branch_id")
@@ -34,9 +34,9 @@ const OuterSidebarNav = ({id}) => {
   const [pickUp, setPickUp] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-  const {closeMenu} = useContext(MenuContext)
+  const { closeMenu } = useContext(MenuContext)
 
   const currentLanguage = useSelector(
     (state) => state.languageMode.languageMode
@@ -68,11 +68,11 @@ const OuterSidebarNav = ({id}) => {
   const fetchCategoriesData = async (id) => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch&selected_branch_id=${id}`
+        `categories?items&user&branch${id ? `&selected_branch_id=${id}` : ''}`
       )
 
       console.log(
-        "editor rest restaurantCategoriesResponse >>>",
+        "editor rest restaurantCategoriesResponse OuterSidebarNav",
         restaurantCategoriesResponse.data
       )
       if (restaurantCategoriesResponse.data) {
@@ -100,11 +100,11 @@ const OuterSidebarNav = ({id}) => {
     e.preventDefault()
 
     try {
-      await dispatch(logout({method: "POST"}))
+      await dispatch(logout({ method: "POST" }))
         .unwrap()
         .then((res) => {
           setStatusCode(HTTP_NOT_AUTHENTICATED)
-          navigate("/", {replace: true})
+          navigate("/", { replace: true })
           closeMenu()
           toast.success("Logged out successfully")
         })
@@ -141,7 +141,10 @@ const OuterSidebarNav = ({id}) => {
       localStorage.setItem("selected_branch_id", branch.id)
     }
   }, [pickUp, branch])
-
+  const handleRedirect = () => {
+    console.log(window.location.href)
+    window.open(window.location.href+'summary');
+  }
   console.log("branches", branches)
   return (
     <div
@@ -175,8 +178,8 @@ const OuterSidebarNav = ({id}) => {
                 branches?.filter(
                   (branch) => branch.pickup_availability === 1
                 )[0]
-              ? `Branch ${branch_id}`
-              : ""
+                ? `Branch ${branch_id}`
+                : ""
           }
           onChange={(value) => setPickUp(value)}
           options={
@@ -195,8 +198,8 @@ const OuterSidebarNav = ({id}) => {
                 branches?.filter(
                   (branch) => branch.delivery_availability === 1
                 )[0]
-              ? `Branch ${branch_id}`
-              : ""
+                ? `Branch ${branch_id}`
+                : ""
           }
           onChange={(value) => setBranch(value)}
           options={
@@ -210,7 +213,8 @@ const OuterSidebarNav = ({id}) => {
           <Fragment>
             <div
               onClick={() => {
-                navigate("/dashboard")
+                handleRedirect()
+
                 closeMenu()
               }}
               className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '

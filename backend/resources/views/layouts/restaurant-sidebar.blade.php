@@ -186,7 +186,7 @@
                         </div>
                         <!-- Site Editor -->
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('site_editor')}}" target="_blank">
+                            <a href="{{route('restaurants.site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->

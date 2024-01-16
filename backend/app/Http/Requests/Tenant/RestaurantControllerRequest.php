@@ -26,7 +26,7 @@ class RestaurantControllerRequest extends FormRequest
             'banner_image_url' => 'nullable',
             'banner_images_urls' => 'nullable',
             'banner_images_urls.*' => 'nullable',
-            'phoneNumber' => 'required',
+            'phoneNumber' => 'nullable',
             'logo_alignment' => 'nullable|string|in:left,right,center',
             'phoneNumber_alignment' => 'nullable|string|in:left,right,center',
             'text_alignment' => 'nullable|string|in:left,right,center',
