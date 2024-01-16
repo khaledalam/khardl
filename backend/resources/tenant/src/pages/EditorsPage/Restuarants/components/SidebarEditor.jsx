@@ -59,7 +59,7 @@ const SidebarEditor = () => {
              : restaurantStyle.template === "template-2"
                 ? t("Template 2")
                 : restaurantStyle.template === "template-3"
-                ? "Template 3"
+                ? t("Template 3")
                 : " "
             }
             dropdownList={[

@@ -756,8 +756,7 @@ export const RestuarantHomePage = () => {
         `categories?items&user&branch${branch_id ? `&selected_branch_id=${branch_id}` : ''}`
       )
 
-      console.log("Richa", restaurantCategoriesResponse.data);
-      if (restaurantCategoriesResponse.data) {
+    if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
         dispatch(
           selectedCategoryAPI({
