@@ -35,7 +35,6 @@ class RestaurantStyleService
             'categoryDetail_alignment' => $request->categoryDetail_alignment,
             'categoryDetail_shape' => $request->categoryDetail_shape,
             'categoryDetail_cart_color' => $request->categoryDetail_cart_color,
-            'phoneNumber' => $request->phoneNumber,
             'phoneNumber_alignment' => $request->phoneNumber_alignment,
             'page_color' => $request->page_color,
             'page_category_color' => $request->page_category_color,
@@ -50,9 +49,11 @@ class RestaurantStyleService
             'text_color' => $request->text_color,
             'product_background_color' => $request->product_background_color,
             'selectedSocialIcons' => $request->selectedSocialIcons,
-            'headerPosition' => $request->headerPosition,
             'user_id' => Auth::user()?->id
         ];
+        if(isset($request->phoneNumber)){
+            $data['phoneNumber'] = $request->phoneNumber;
+        }
         if (isset($request->logo) && $request->logo) {
             $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
             $data['logo'] = $logo;
