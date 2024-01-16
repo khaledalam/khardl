@@ -78,10 +78,11 @@ const VerificationPhone = () => {
             throw new Error(`${t('Code verification failed')}`)
          }
       } catch (error) {
+         // TODO @todo print error message 
          toast.error(`${t('Code verification failed')}`)
       }
    }
-
+   // TODO @todo startTimer is still working after verification , look at console after verification
    const startTimer = () => {
       const timer = setInterval(() => {
          console.log(3);

@@ -36,7 +36,7 @@
                             <!--begin::Labels-->
                             <div class="d-flex flex-column content-justify-center w-100">
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-primary me-3"></div>
                                     <!--end::Bullet-->
@@ -53,7 +53,7 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-success me-3"></div>
                                     <!--end::Bullet-->
@@ -68,7 +68,7 @@
                                     </div>
                                     <!--end::Stats-->
                                 </div>
-                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3 my-3">
                                     <!--begin::Bullet-->
                                     <div class="bullet w-8px h-6px rounded-2 bg-info me-3"></div>
                                     <!--end::Bullet-->
@@ -85,18 +85,35 @@
                                 </div>
                                 <!--end::Label-->
                                 <!--begin::Label-->
-                                <div class="d-flex fs-6 fw-bold align-items-center">
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
                                     <!--begin::Bullet-->
-                                    <div class="bullet w-8px h-6px rounded-2 me-3 bg-danger"></div>
+                                    <div class="bullet w-8px h-6px rounded-2 me-3 bg-warning"></div>
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.cancelled')}}
+                                        {{ __('messages.Ready')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
                                     <div class="fw-boldest text-gray-700 text-xxl-end">
-                                        {{ $cancelledOrders }}
+                                        {{ $readyOrders }}
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Label-->
+                                <!--begin::Label-->
+                                <div class="d-flex fs-6 fw-bold align-items-center my-3">
+                                    <!--begin::Bullet-->
+                                    <div class="bullet w-8px h-6px rounded-2 me-3 bg-secondary"></div>
+                                    <!--end::Bullet-->
+                                    <!--begin::Label-->
+                                    <div class="text-gray-500 flex-grow-1 me-4">
+                                        {{ __('messages.received_by_restaurant')}}
+                                    </div>
+                                    <!--end::Label-->
+                                    <!--begin::Stats-->
+                                    <div class="fw-boldest text-gray-700 text-xxl-end">
+                                        {{ $receivedByResOrders }}
                                     </div>
                                     <!--end::Stats-->
                                 </div>
@@ -105,33 +122,9 @@
                             <!--end::Labels-->
                         </div>
                         <!--end::Card body-->
-                    </div>
-                    <!--end::Card widget 5-->
-                </div>
-                <div class="col-md-9">
-                    <!--begin::Card widget 4-->
-                    <div class="card card-flush h-md-100 mb-5 mb-xl-10">
-                        <!--end::Header-->
-                        <!--begin::Card body-->
-                        <div class="card-body pt-2 pb-4 d-flex align-items-center">
-                            <div class="container">
-                                <div class="card">
-                                    <div class="card-body p-0">
-                                        <h1>{{ $profitDays->options['chart_title'] }}</h1>
-                                        {!! $profitDays->renderHtml() !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Card body-->
-                    </div>
-                    <!--end::Card widget 4-->
-                </div>
-                <div class="col-md-12">
-                    <!--begin::Card widget 4-->
-                    <div class="card card-flush h-md-100 mb-5 mb-xl-10">
+
                         <!--begin::Header-->
-                        <div class="card-header pt-5">
+                        <div class="card-footer pt-5">
                             <!--begin::Title-->
                             <div class="card-title d-flex flex-column">
                                 <!--begin::Info-->
@@ -150,6 +143,12 @@
                             <!--end::Title-->
                         </div>
                         <!--end::Header-->
+                    </div>
+                    <!--end::Card widget 5-->
+                </div>
+                <div class="col-md-9">
+                    <!--begin::Card widget 4-->
+                    <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                         <!--begin::Card body-->
                         <div class="card-body pt-2 pb-4 d-flex align-items-center">
                             <div class="container">
@@ -157,6 +156,25 @@
                                     <div class="card-body p-0">
                                         <h1>{{ $profitMonths->options['chart_title'] }}</h1>
                                         {!! $profitMonths->renderHtml() !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Card widget 4-->
+                </div>
+                <div class="col-md-12">
+                    <!--begin::Card widget 4-->
+                    <div class="card card-flush h-md-100 mb-5 mb-xl-10">
+                        <!--end::Header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-2 pb-4 d-flex align-items-center">
+                            <div class="container">
+                                <div class="card">
+                                    <div class="card-body p-0">
+                                        <h1>{{ $profitDays->options['chart_title'] }}</h1>
+                                        {!! $profitDays->renderHtml() !!}
                                     </div>
                                 </div>
                             </div>

@@ -24,7 +24,7 @@ class CartController
     {
         return $this->cart->add($request);
     }
-  
+   
 
     public function edit($id)
     {

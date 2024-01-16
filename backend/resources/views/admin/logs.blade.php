@@ -57,6 +57,7 @@
 
                     </form>
                     <form method="GET" action="{{ route('admin.log') }}">
+                        @csrf
                         <div class="d-flex my-0">
                             <input type="hidden" name="download" value="csv">
                             <button type="submit" id="download_logs" class="btn btn-success mx-2">

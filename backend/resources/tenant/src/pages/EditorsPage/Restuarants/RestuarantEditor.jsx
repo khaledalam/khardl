@@ -13,6 +13,7 @@ import {
   getCartItemsCount,
   setCategoriesAPI,
 } from "../../../redux/NewEditor/categoryAPISlice"
+import HeaderEdit from "./components/HeaderEdit"
 
 export const RestuarantEditor = () => {
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ export const RestuarantEditor = () => {
   const isSidebarCollapse = useSelector(
     (state) => state.restuarantEditorStyle.collapse_sidebar
   )
+  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
   const template = useSelector((state) => state.restuarantEditorStyle.template)
 
   const handleSidebarCollapse = () => {
@@ -49,7 +51,7 @@ export const RestuarantEditor = () => {
   const fetchCategoriesData = async () => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch&selected_branch_id=${branch_id}`
+        `categories?items&user&branch${branch_id ? `&selected_branch_id=${branch_id}` : ''}`
       )
 
       console.log(
@@ -98,21 +100,36 @@ export const RestuarantEditor = () => {
   return (
     <div className='block'>
       <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
-      <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all'>
+      <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all hide-scroll'>
         <div
-          className={`transition-all ${
+          className={`transition-all h-full ${
             isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[18%]"
-          } xl:flex-[30%] laptopXL:flex-[25%] overflow--hidden bg-white h-full `}
+          } xl:flex-[30%] laptopXL:flex-[25%] overflow-x-hidden bg-white h-full `}
         >
           <SidebarEditor />
         </div>
         <div
-          className={` transition-all ${
+          className={` transition-all h-full ${
             isSidebarCollapse ? "flex-[100%] w-full" : "flex-[82%]"
-          } xl:flex-[70%] laptopXL:flex-[75%] overflow-x-hidden bg-neutral-200 h-full overflow-y-scroll hide-scroll`}
+          } xl:flex-[70%] laptopXL:flex-[75%] overflow-x-hidden bg-neutral-200`}
         >
           {template === "template-1" && (
-            <MainBoardEditor categories={categories} />
+            <div className='w-full h-full  flex flex-col gap-2'>
+              {restaurantStyle?.headerPosition === "fixed" && (
+                <div className='p-2'>
+                  <HeaderEdit
+                    restaurantStyle={restaurantStyle}
+                    toggleSidebarCollapse={handleSidebarCollapse}
+                  />
+                </div>
+              )}
+              <div className=' h-full overflow-y-scroll hide-scroll'>
+                <MainBoardEditor
+                  categories={categories}
+                  toggleSidebarCollapse={handleSidebarCollapse}
+                />
+              </div>
+            </div>
           )}
         </div>
       </div>

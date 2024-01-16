@@ -1,7 +1,7 @@
 import React, {Fragment, useContext, useEffect, useState} from "react"
 import {useNavigate} from "react-router-dom"
-import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
-import WhatsappIcon from "../../../../assets/whatsappImg.svg"
+import ImgPlaceholder from "../../../../assets/imgPlaceholder.png"
+import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg"
 import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
 import CategoryItem from "./CategoryItem"
 import ProductItem from "./ProductItem"
@@ -14,11 +14,14 @@ import {
   setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
 import {useTranslation} from "react-i18next"
+import HeaderEdit from "./HeaderEdit"
+import {BiCloudUpload} from "react-icons/bi"
 
-const MainBoardEditor = ({categories}) => {
+const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
+  const [isVideo, setIsVideo] = useState(false)
   const {t} = useTranslation()
   const language = useSelector((state) => state.languageMode.languageMode)
 
@@ -73,11 +76,6 @@ const MainBoardEditor = ({categories}) => {
     (state) => state.restuarantEditorStyle.logoUpload
   )
 
-  const filterCategory =
-    categories && categories.length > 0
-      ? categories?.filter((category) => category.id === selectedCategory.id)
-      : [{name: "", items: []}]
-
   const [uploadSingleBanner, setUploadSingleBanner] = useState(null)
 
   const handleLogoUpload = (event) => {
@@ -95,7 +93,14 @@ const MainBoardEditor = ({categories}) => {
     const selectedBanner = event.target.files[0]
 
     if (selectedBanner) {
-      setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+      if (selectedBanner.type.includes("video")) {
+        console.log("video", selectedBanner)
+        setIsVideo(true)
+        setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+      } else {
+        setIsVideo(false)
+        setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+      }
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
     }
   }
@@ -128,8 +133,71 @@ const MainBoardEditor = ({categories}) => {
     dispatch(setBannerUpload(null))
   }
 
+  const categoriesPlaceHolders = [
+    {
+      id: 1,
+      name: "category 1",
+      photo: ImgPlaceholder,
+    },
+    {
+      id: 2,
+      name: "category 2",
+      photo: ImgPlaceholder,
+    },
+    {
+      id: 3,
+      name: "category 3",
+      photo: ImgPlaceholder,
+    },
+    {
+      id: 4,
+      name: "category 2",
+      photo: ImgPlaceholder,
+    },
+    {
+      id: 5,
+      name: "category 3",
+      photo: ImgPlaceholder,
+    },
+  ]
+  const productPlaceHolders = [
+    {
+      id: 1,
+      description: "descriptiomn 1",
+      photo: ImgPlaceholder,
+      price: 176,
+      calories: 245,
+      availability: 1,
+    },
+    {
+      id: 2,
+      description: "descriptiomn 2",
+      photo: ImgPlaceholder,
+      price: 176,
+      calories: 245,
+      availability: 1,
+    },
+    {
+      id: 3,
+      description: "descriptiomn 3",
+      photo: ImgPlaceholder,
+      price: 176,
+      calories: 245,
+      availability: 1,
+    },
+  ]
+
+  const filterCategory =
+    categories && categories.length > 0
+      ? categories?.filter((category) => category.id === selectedCategory.id)
+      : [{name: "Product", items: productPlaceHolders}]
+
   console.log("bannner shape", banner_shape)
   console.log("font weight", text_fontWeight)
+
+  console.log("filterCategory", filterCategory)
+
+  const filetype = "video"
 
   return (
     <div
@@ -141,41 +209,12 @@ const MainBoardEditor = ({categories}) => {
       className='w-full p-4 flex flex-col gap-6 relative'
     >
       {/* Header cart */}
-      <div
-        style={{
-          backgroundColor: header_color,
-          position: headerPosition === "fixed" ? "absolute" : headerPosition,
-          top: 0,
-          left: 0,
-          right: 0,
-          width: "100%",
-        }}
-        className='w-full min-h-[85px]   rounded-xl flex items-center justify-between px-2'
-      >
-        <div
-          onClick={toggleMenu}
-          style={{fontWeight: text_fontWeight}}
-          className={`btn hover:bg-neutral-100 flex items-center gap-3`}
-        >
-          <IoMenuOutline size={40} className='text-neutral-400' />
-          <span className='text-sm'>{t("Show Navigation Bar To Edit")}</span>
-        </div>
-        <div
-          onClick={() => navigate("/cart")}
-          className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer'
-        >
-          <img src={cartHeaderImg} alt={"cart"} className='' />
-          {true && (
-            <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
-              <div className='w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
-                <span className='text-white font-bold text-xs'>
-                  {cartItemsCount}
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      {headerPosition !== "fixed" && (
+        <HeaderEdit
+          restaurantStyle={restuarantEditorStyle}
+          toggleSidebarCollapse={toggleSidebarCollapse}
+        />
+      )}
       {/* logo */}
       <div
         style={{backgroundColor: page_color}}
@@ -197,25 +236,25 @@ const MainBoardEditor = ({categories}) => {
             type='file'
             name='logo'
             id={"logo"}
-            accept='*/image'
+            accept='image/*'
             onChange={handleLogoUpload}
             className='hidden'
             hidden
           />
           <label htmlFor='logo'>
             <img
-              src={uploadLogo ? uploadLogo : logo}
+              src={uploadLogo ? uploadLogo : logo ? logo : ImgPlaceholder}
               alt={""}
               style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
               className='w-full h-full object-cover'
             />
           </label>
           {uploadLogo && (
-            <div className='absolute top-[-0.8rem] right-[-1rem]'>
+            <div className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'>
               <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
                 <IoCloseOutline
                   size={16}
-                  className='text-red-500'
+                  className='text-red-500 cursor-pointer'
                   onClick={clearLogo}
                 />
               </div>
@@ -228,13 +267,56 @@ const MainBoardEditor = ({categories}) => {
         <div className='w-full'>
           <Slider banner_images={banner_images} />
         </div>
+      ) : isVideo || (banner_image && banner_image?.type === "video") ? (
+        <div
+          className={`w-full min-h-[180px] max-h-[200px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
+        >
+          {uploadSingleBanner && (
+            <video
+              controls
+              className='absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]'
+            >
+              <source src={uploadSingleBanner} type='video/mp4' />
+              Your browser does not support the video tag.
+            </video>
+          )}
+          <div
+            style={{
+              borderRadius: banner_shape === "sharp" ? 0 : 12,
+            }}
+            className='w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative'
+          >
+            <label htmlFor='banner'>
+              <input
+                type='file'
+                name='banner'
+                id={"banner"}
+                accept='video/*, image/*'
+                onChange={handleBannerUpload}
+                className='hidden'
+                hidden
+              />
+              {uploadSingleBanner ? (
+                <IoCloseOutline
+                  size={28}
+                  className='text-red-500'
+                  onClick={clearBanner}
+                />
+              ) : (
+                <BiCloudUpload size={28} />
+              )}
+            </label>
+          </div>
+        </div>
       ) : (
         <div
           style={{
             backgroundColor: banner_background_color,
             backgroundImage: uploadSingleBanner
               ? `url(${uploadSingleBanner})`
-              : `url(${banner_image})`,
+              : banner_image
+              ? `url(${banner_image?.url})`
+              : `url(${bannerPlaceholder})`,
             borderRadius: banner_shape === "sharp" ? 0 : 12,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
@@ -252,13 +334,20 @@ const MainBoardEditor = ({categories}) => {
                 type='file'
                 name='banner'
                 id={"banner"}
-                accept='*/image'
+                accept='video/*, image/*'
                 onChange={handleBannerUpload}
                 className='hidden'
                 hidden
               />
+
               <img
-                src={uploadSingleBanner ? uploadSingleBanner : banner_image}
+                src={
+                  uploadSingleBanner
+                    ? uploadSingleBanner
+                    : banner_image
+                    ? banner_image?.url
+                    : ImgPlaceholder
+                }
                 alt={""}
                 className='w-full h-full object-cover'
               />
@@ -277,87 +366,8 @@ const MainBoardEditor = ({categories}) => {
           </div>
         </div>
       )}
+
       {/* Category */}
-      {/* {false ? (
-        <div
-          className={` w-full flex  p-2  ${
-            category_alignment ===t('Center')
-              ? "items-center justify-center"
-              : category_alignment ===t('Left')
-              ? "items-center justify-start"
-              : category_alignment ===t('Right')
-              ? "items-center justify-end"
-              : ""
-          }`}
-        >
-          <div
-            style={{
-              backgroundColor: page_category_color,
-              borderRadius: category_shape === t('Sharp') ? 0 : 12,
-            }}
-            className='w-[30%] py-3'
-          >
-            <div className='flex flex-col items-center gap-6'>
-              {categoryList.map((category, i) => (
-                <CategoryItem
-                  key={i}
-                  active={selectedCategory === category.name.toLowerCase()}
-                  name={category.name}
-                  imgSrc={category.imgSrc}
-                  alt={category.name}
-                  hoverColor={category_hover_color}
-                  onClick={() =>
-                    setSelectedCategory(category.name.toLowerCase())
-                  }
-                  textColor={text_color}
-                  textAlign={text_alignment}
-                  fontWeight={text_fontWeight}
-                  shape={category_shape}
-                  isGrid={true}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Fragment>
-          <div
-            style={{
-              backgroundColor: page_category_color,
-              // borderRadius: category_shape === t('Sharp') ? 0 : 12,
-            }}
-            className={`w-full min-h-[180px]  flex   ${
-              category_alignment ===t('Center')
-                ? "items-center justify-center"
-                : category_alignment ===t('Left')
-                ? "items-center justify-start"
-                : category_alignment ===t('Right')
-                ? "items-center justify-end"
-                : ""
-            }`}
-          >
-            <div className='flex items-center gap-6'>
-              {categoryList.map((category, i) => (
-                <CategoryItem
-                  key={i}
-                  active={selectedCategory === category.name.toLowerCase()}
-                  name={category.name}
-                  imgSrc={category.imgSrc}
-                  alt={category.name}
-                  hoverColor={category_hover_color}
-                  onClick={() =>
-                    setSelectedCategory(category.name.toLowerCase())
-                  }
-                  textColor={text_color}
-                  textAlign={text_alignment}
-                  fontWeight={text_fontWeight}
-                  shape={category_shape}
-                />
-              ))}
-            </div>
-          </div>
-        </Fragment>
-      )} */}
       <div
         className={`w-full h-[500px] flex ${
           category_alignment === "center"
@@ -390,30 +400,55 @@ const MainBoardEditor = ({categories}) => {
                   : "flex-col gap-6"
               } items-center `}
             >
-              {categories?.map((category, i) => (
-                <CategoryItem
-                  key={i}
-                  active={selectedCategory.id === category.id}
-                  name={category.name}
-                  imgSrc={category.photo}
-                  alt={category.name}
-                  hoverColor={category_hover_color}
-                  onClick={() =>
-                    dispatch(
-                      selectedCategoryAPI({
-                        name: category.name,
-                        id: category.id,
-                      })
-                    )
-                  }
-                  textColor={text_color}
-                  textAlign={text_alignment}
-                  fontWeight={text_fontWeight}
-                  shape={category_shape}
-                  isGrid={category_alignment === "center" ? false : true}
-                  fontSize={text_fontSize}
-                />
-              ))}
+              {categories && categories.length > 0
+                ? categories?.map((category, i) => (
+                    <CategoryItem
+                      key={i}
+                      active={selectedCategory.id === category.id}
+                      name={category.name}
+                      imgSrc={category.photo}
+                      alt={category.name}
+                      hoverColor={category_hover_color}
+                      onClick={() =>
+                        dispatch(
+                          selectedCategoryAPI({
+                            name: category.name,
+                            id: category.id,
+                          })
+                        )
+                      }
+                      textColor={text_color}
+                      textAlign={text_alignment}
+                      fontWeight={text_fontWeight}
+                      shape={category_shape}
+                      isGrid={category_alignment === "center" ? false : true}
+                      fontSize={text_fontSize}
+                    />
+                  ))
+                : categoriesPlaceHolders.map((category, i) => (
+                    <CategoryItem
+                      key={i}
+                      active={selectedCategory.id === category.id}
+                      name={category.name}
+                      imgSrc={category.photo}
+                      alt={category.name}
+                      hoverColor={category_hover_color}
+                      onClick={() =>
+                        dispatch(
+                          selectedCategoryAPI({
+                            name: category.name,
+                            id: category.id,
+                          })
+                        )
+                      }
+                      textColor={text_color}
+                      textAlign={text_alignment}
+                      fontWeight={text_fontWeight}
+                      shape={category_shape}
+                      isGrid={category_alignment === "center" ? false : true}
+                      fontSize={text_fontSize}
+                    />
+                  ))}
             </div>
           </div>
         </div>
@@ -510,84 +545,7 @@ const MainBoardEditor = ({categories}) => {
           </div>
         </div>
       </div>
-      {/* Products/ category details */}
-      {/* {categoryDetail_type === "grid" ? (
-        <div
-          className={`w-full flex bg-white ${
-            categoryDetail_alignment ===t('Center')
-              ? "items-center justify-center"
-              : categoryDetail_alignment === t('left')
-              ? "items-center justify-start"
-              : categoryDetail_alignment === t('right')
-              ? "items-center justify-end"
-              : ""
-          }
-        `}
-        >
-          <div className={``}>
-            <h3 className='font-semibold text-[1.5rem] text-center mb-4 relative capitalize'>
-              <span className='custom-underline'>{selectedCategory}</span>{" "}
-            </h3>
-
-            <div className={`flex flex-col gap-6 h-fit  py-4 px-2`}>
-              {filterProductList.map((product, i) => (
-                <ProductItem
-                  key={i}
-                  id={product.name + i}
-                  name={product.name}
-                  imgSrc={product.imgSrc}
-                  amount={product.amount}
-                  caloryInfo={product.caloryInfo}
-                  cartBgcolor={categoryDetail_cart_color}
-                  amountColor={price_color}
-                  shape={categoryDetail_shape}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div
-          style={{
-            borderRadius: categoryDetail_shape === "sharp" ? 0 : 12,
-          }}
-          className={`w-full h-fit bg-white   flex ${
-            categoryDetail_alignment ===t('Center')
-              ? "items-center justify-center"
-              : categoryDetail_alignment === t('left')
-              ? "items-center justify-start"
-              : categoryDetail_alignment === t('right')
-              ? "items-center justify-end"
-              : ""
-          }  `}
-        >
-          <div className='flex flex-col items-center justify-center'>
-            <h3 className='font-semibold text-[1.5rem] mb-4 relative capitalize'>
-              <span className='custom-underline'>{selectedCategory}</span>{" "}
-            </h3>
-
-            <div
-              className={`flex items-center gap-6 h-fit   flex-wrap py-4 px-2`}
-            >
-              {filterProductList.map((product, i) => (
-                <ProductItem
-                  key={i}
-                  id={product.name + i}
-                  name={product.name}
-                  imgSrc={product.imgSrc}
-                  amount={product.amount}
-                  caloryInfo={product.caloryInfo}
-                  cartBgcolor={categoryDetail_cart_color}
-                  amountColor={price_color}
-                  shape={categoryDetail_shape}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )} */}
       {/* social media */}
-
       <div
         style={{backgroundColor: footer_color}}
         className={`w-full min-h-[70px] px-3  rounded-xl flex ${
@@ -603,7 +561,7 @@ const MainBoardEditor = ({categories}) => {
         <div className='flex items-center gap-5'>
           {selectedSocialIcons?.map((socialMedia) => (
             <a
-              href={socialMedia.link}
+              href={socialMedia.link ? socialMedia.link : "javascript:void(0)"}
               key={socialMedia.id}
               className='cursor-pointer'
             >

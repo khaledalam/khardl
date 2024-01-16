@@ -12,6 +12,7 @@ class TapWebhookSignature implements SignatureValidator
     public function isValid(Request $request, WebhookConfig $config): bool
     {
         return true;
+        // @todo validate webhook
         // $data = $request->all();
         // logger($data);
         // if (strpos($data['id'] ?? '', 'chg') === 0) {  // charge end-point
@@ -35,8 +36,10 @@ class TapWebhookSignature implements SignatureValidator
         //     }
         //     else{
         //         logger("not passed");
+        //         logger($toBeHashedString);
         //         logger($request->headers);
         //         logger($myHashString);
+        //         logger($SecretAPIKey);
         //         return false;
         //     }
         // }else {

@@ -26,6 +26,7 @@ class CustomerDataService
         ->recent_orders()
         ->whenSearch($request['search']?? null)
         ->whenStatus($request['status']?? null)
+        ->WhenDateString($request['date_string']??null)
         ->whenPaymentStatus($request['payment_status']?? null)
         ->paginate(config('application.perPage')??20);
         return view('restaurant.customers_data.show', compact('user','restaurantUser','orders'));

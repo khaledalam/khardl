@@ -31,6 +31,7 @@ use App\Models\Tenant\DeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 
+
 class RestaurantController extends BaseController
 {
     public function __construct(
@@ -54,6 +55,29 @@ class RestaurantController extends BaseController
 
         return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription'));
     }
+    public function serviceDeactivate(){
+        /** @var RestaurantUser $user */
+        ROSubscription::first()->update([
+            'status'=> ROSubscription::DEACTIVATE
+        ]);
+        return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
+    }
+    public function serviceActivate(){
+        /** @var RestaurantUser $user */
+        $subscription = ROSubscription::first();
+        if($subscription->status !=  ROSubscription::DEACTIVATE){
+            return redirect()->back()->with('error', __('not allowed'));
+        }
+        ROSubscription::first()->update([
+            'status'=> ROSubscription::ACTIVE
+        ]);
+        return redirect()->back()->with('success', __('Branches has been activated successfully'));
+    }
+    public function serviceCalculate($type,$number_of_branches){
+        return ROSubscription::serviceCalculate($type,$number_of_branches);
+    }
+    
+
 
     public function delivery(){
         /** @var RestaurantUser $user */
@@ -62,7 +86,7 @@ class RestaurantController extends BaseController
         $cervo = DeliveryCompany::where("module",class_basename(Cervo::class))->first();
         $streetline = DeliveryCompany::where("module",class_basename(StreetLine::class))->first();
 
-        return view('restaurant.delivery',
+        return view('restaurant.delivery_companies.companies',
             compact('user','streetline','yeswa','cervo'));
     }
 
@@ -197,10 +221,7 @@ class RestaurantController extends BaseController
     public function branches(){
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
-        $branches =  DB::table('branches')
-        ->when($user->isWorker(), function (Builder $query, string $role)use($user) {
-            $query->where('id', $user->branch->id);
-        })
+        $branches =  Branch::iSWorker($user)
         ->get()
         ->sortByDesc('is_primary');
 
@@ -224,7 +245,6 @@ class RestaurantController extends BaseController
     }
 
     public function addBranch(Request $request){
-
         if(!$this->can_create_branch()){
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
@@ -345,7 +365,9 @@ class RestaurantController extends BaseController
                 }
             }
         }
-
+        $sub = ROSubscription::first();
+        $sub->number_of_branches -=1;
+        $sub->save();
         return redirect()->back()->with('success', 'Branch successfully added.');
 
     }
@@ -354,8 +376,6 @@ class RestaurantController extends BaseController
         $sub = ROSubscription::first();
         if($sub && $sub->status == 'active'){
             if($sub->number_of_branches > 0){
-                $sub->number_of_branches -=1;
-                $sub->save();
                 return true;
             }
         }
@@ -462,6 +482,11 @@ class RestaurantController extends BaseController
             $branch = Branch::find($user->branch->id);
         }
         return view('restaurant.menu', compact('user', 'categories', 'branch','branchId'));
+    }
+    public function noBranches()
+    {
+        $user = Auth::user();
+        return view('restaurant.no_branches', compact('user'));
     }
 
     public function getCategory(Request $request, $id, $branchId){
@@ -866,5 +891,5 @@ class RestaurantController extends BaseController
         ]);
 
     }
-    
+
 }

@@ -59,11 +59,30 @@ class Branch extends Model
     }
 
     public function orders(){
-        return $this->belongsToMany(Order::class);
+        return $this->hasMany(Order::class);
     }
     public function delivery_types(){
         return $this->belongsToMany(DeliveryType::class,'branches_delivery_types');
     }
+    /* Start Scope */
+    public function scopeISWorker($query, $user)
+    {
+        return $query->when($user->isWorker(), function ($q)use($user) {
+            $q->where('id', $user->branch->id);
+        });
+    }
+    /* End Scope */
+    /* Start attributes */
+    public function getTotalRevenuesAttribute()
+    {
+        $total = $this->orders()?->completed()?->sum('total');
+        return [
+                'number_formatted' => getAmount((float)$total),
+                'number' => $total
+        ];
+    }
+    /* End attributes */
+
 
 
 }

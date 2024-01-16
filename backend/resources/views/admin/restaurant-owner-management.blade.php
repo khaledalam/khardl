@@ -26,6 +26,10 @@
                                 <option value="">{{ __('messages.Select') }}</option>
                                 <option value="complete_step_1" {{ request('type') === 'complete_step_1' ? 'selected' : '' }}>{{ __('messages.Complete Step 1 only') }}</option>
                                 <option value="complete_step_2" {{ request('type') === 'complete_step_2' ? 'selected' : '' }}>{{ __('messages.Have restaurant') }}</option>
+                                <option value="have_active_restaurant" {{ request('type') === 'have_active_restaurant' ? 'selected' : '' }}>{{ __('messages.Have active restaurant') }}</option>
+                                <option value="have_inactive_restaurant" {{ request('type') === 'have_inactive_restaurant' ? 'selected' : '' }}>{{ __('messages.Have inactive restaurant') }}</option>
+                                <option value="verified_email" {{ request('type') === 'verified_email' ? 'selected' : '' }}>{{ __('messages.Verified email') }}</option>
+                                <option value="not_verified_email" {{ request('type') === 'not_verified_email' ? 'selected' : '' }}>{{ __('messages.Not verified email') }}</option>
                             </select>
                         </div>
                     </form>

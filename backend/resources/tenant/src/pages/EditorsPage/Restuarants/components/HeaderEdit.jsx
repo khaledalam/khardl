@@ -1,0 +1,53 @@
+import React, {useContext} from "react"
+import cartHeaderImg from "../../../../assets/cartBoldIcon.svg"
+import {useNavigate} from "react-router-dom"
+import {useSelector} from "react-redux"
+import {RiMenuFoldFill} from "react-icons/ri"
+
+const HeaderEdit = ({restaurantStyle, toggleSidebarCollapse}) => {
+  const navigate = useNavigate()
+  const cartItemsCount = useSelector(
+    (state) => state.categoryAPI.cartItemsCount
+  )
+  const categories = useSelector((state) => state.categoryAPI.categories)
+
+  const handleGotoCart = () => {
+    navigate("/cart")
+  }
+
+  return (
+    <div
+      style={{
+        backgroundColor: restaurantStyle?.header_color,
+      }}
+      className='w-full min-h-[85px] z-10  rounded-xl flex items-center justify-between px-2'
+    >
+      <div
+        onClick={toggleSidebarCollapse}
+        style={{fontWeight: restaurantStyle?.text_fontWeight}}
+        className={`btn hover:bg-neutral-100 flex items-center gap-3 cursor-pointer`}
+      >
+        <RiMenuFoldFill size={30} className='text-neutral-400' />
+      </div>
+      <div
+        onClick={
+          categories && categories.length > 0 ? handleGotoCart : () => {}
+        }
+        className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer'
+      >
+        <img src={cartHeaderImg} alt={"cart"} className='' />
+        {cartItemsCount > 0 && (
+          <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
+            <div className='w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
+              <span className='text-white font-bold text-xs'>
+                {cartItemsCount}
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default HeaderEdit

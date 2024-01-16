@@ -123,6 +123,7 @@ const Register = () => {
                                           {t('First name')} <span className="text-red-500">*</span>
                                        </h4>
                                        <input
+                                           minLength={3}
                                           className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                           placeholder={t('First name')}
                                           {...register('first_name', {
@@ -141,6 +142,7 @@ const Register = () => {
                                           {t('Last name')} <span className="text-red-500">*</span>
                                        </h4>
                                        <input
+                                           minLength={3}
                                           className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                           placeholder={t('Last name')}
                                           {...register('last_name', {

@@ -87,7 +87,7 @@ const EditPanel = () => {
             <h3 className='font-normal text-[14px] laptopXL:text-[1rem] '>
               {t("Banner")}
             </h3>
-            <PrimaryOriginSelect
+            <PrimarySelect
               widthStyle={"w-[50%]"}
               defaultValue={
                 banner_shape === "rounded"

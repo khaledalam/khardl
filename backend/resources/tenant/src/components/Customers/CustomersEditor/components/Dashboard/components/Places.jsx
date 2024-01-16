@@ -96,10 +96,6 @@ function PlacesAutoComplete({inputStyle}) {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    setValue(customerAddress)
-  }, [customerAddress])
-
   const handleSelect = async (address) => {
     setValue(address)
     clearSuggestions()
@@ -161,7 +157,7 @@ function PlacesAutoComplete({inputStyle}) {
           onChange={(e) => setValue(e.target.value)}
           disabled={!ready}
           className={inputStyle}
-          placeholder='Search an address...'
+          placeholder={customerAddress}
         />
         <div
           onClick={getPosition}

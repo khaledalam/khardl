@@ -94,6 +94,7 @@ Route::group([
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
+            Route::get('/no_branches', [RestaurantController::class, 'noBranches'])->middleware('permission:can_edit_menu')->name('restaurant.no_branches');
             Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
             Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->middleware('permission:can_edit_menu')->name('restaurant.get-category');
             Route::post('/category/add/{branchId}', [RestaurantController::class, 'addCategory'])->middleware('permission:can_edit_menu')->name('restaurant.add-category');
@@ -127,7 +128,10 @@ Route::group([
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
-             
+                Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
+                Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
+                Route::get('/service/{type}/{number_of_branches}/calculate', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
+
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
                 Route::post('/delivery/{module}/activate', [RestaurantController::class, 'deliveryActivate'])->name('restaurant.delivery.activate');
@@ -201,7 +205,7 @@ Route::group([
 
 
     Route::group([
-        'middleware' => ['restaurantLive'],
+        'middleware' => ['restaurantLive','restaurantSubLive'],
     ], static function () {
         $groups = TenantSharedRoutesTrait::groups();
         foreach ($groups as $group) {
@@ -246,6 +250,8 @@ Route::group([
                 Route::resource("carts",CartController::class)->only([
                     'index','store','destroy','update'
                 ]);
+                Route::post("orders/validate",[CustomerOrderController::class,'validateOrder'])->name('orders.validate');
+                Route::get("orders/payment/response",[CustomerOrderController::class,'paymentResponse'])->name('orders.payment');
                 Route::resource("orders",CustomerOrderController::class)->only([
                     'store', 'index'
                 ]);

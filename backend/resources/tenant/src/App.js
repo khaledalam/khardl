@@ -39,6 +39,18 @@ import NavbarRestuarant from "./pages/RestuarantPage/components/NavbarRestuarant
 import {CustomerPage} from "./pages/CustomerPage"
 import Editor from "./components/Customers/CustomersEditor/Editor"
 
+import * as Sentry from "@sentry/react";
+
+Sentry.init({
+    dsn: "https://860125ea20f9254e5c411ffbdeb02c39@o4506502637420544.ingest.sentry.io/4506563222896640",
+    integrations: [
+        new Sentry.Replay(),
+    ],
+    // Session Replay
+    replaysSessionSampleRate: 0.1, // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
+    replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
+});
+
 const App = () => {
   const Language = useSelector((state) => state.languageMode.languageMode)
   const direction = Language === "en" ? "ltr" : "rtl"
