@@ -17,7 +17,7 @@
                 {{__('messages.verified')}}
             </span>
             @else
-            <span class="badge badge badge-info px-4 py-3">
+            <span class="badge badge badge-secondary px-4 py-3">
                 {{__('messages.Not verified')}}
             </span>
             @endif
