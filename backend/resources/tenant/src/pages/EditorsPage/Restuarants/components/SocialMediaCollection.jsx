@@ -54,7 +54,7 @@ const SocialMediaCollection = ({showMedia}) => {
         </div>
       )}
       <div className='flex items-center gap-3 flex-wrap'>
-        {selectedSocialIcons.map(
+        {selectedSocialIcons && selectedSocialIcons?.map(
           (socialMedia) =>
             socialMedia.imgUrl !== "" && (
               <div
@@ -80,7 +80,7 @@ const SocialMediaCollection = ({showMedia}) => {
         )}
       </div>
       {selectedSocialIcons &&
-        selectedSocialIcons.map((socialMedia) => (
+        selectedSocialIcons?.map((socialMedia) => (
           <div className='' key={socialMedia.id}>
             {socialMedia.id === selectedMediaId && (
               <input

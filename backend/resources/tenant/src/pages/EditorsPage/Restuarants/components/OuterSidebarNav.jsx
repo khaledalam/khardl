@@ -68,7 +68,7 @@ const OuterSidebarNav = ({ id }) => {
   const fetchCategoriesData = async (id) => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch&selected_branch_id=${id}`
+        `categories?items&user&branch${id ? `&selected_branch_id=${id}` : ''}`
       )
 
       console.log(
