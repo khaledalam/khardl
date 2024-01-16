@@ -8,6 +8,7 @@ import ReactSlider from "react-slick"
 import imgLogo from "../../../assets/khardl_Logo.png"
 
 const Herosection = ({isMobile, categories}) => {
+
   const dispatch = useDispatch()
   const {t} = useTranslation()
   const selectedCategory = useSelector(
@@ -15,7 +16,7 @@ const Herosection = ({isMobile, categories}) => {
   )
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
-  console.log("restaurantStyle", restaurantStyle)
+  
 
   const settings = {
     dots: true,

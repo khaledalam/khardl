@@ -649,6 +649,10 @@ return [
     "Country" => "الدولة",
     "Yes"=> "نعم",
     "No" => "لا",
+    "Restaurant have no active subscription yet"=>"لا يوجد اشتراك فعال لهذا المطعم",
+    "Restaurant not in live mode yet"=>"لم يتم تفعيل المطعم الي الان",
+    "Your subscription has expired, please activate it before it is deactivated"=>"لقد انتهت صلاحية اشتراكك، يرجى تفعيله قبل ان يتم وقف تشغيله",
+
     "Tab information" => "معلومات تاب",
     "Transactions information" => "معلومات المعاملات",
     "Current subscription" => "الاشتراك الحالي",
@@ -680,5 +684,19 @@ return [
     "Have inactive restaurant" => "لديه مطعم غير نشط",
     "Verified email" => "بريد مفعل",
     "Not verified email" => "بريد غير مفعل",
+    "Code" => "الكود",
+    "Amount" => "القيمة",
+    "Max discount amount" => "اقصي قيمة للخصم",
+    "Max use" => "اقصي استخدام",
+    "Max use per user" => "اقصي استخدام لكل مستخدم",
+    "Minimum cart amount" => "اقل قيمة لاتمام الخصم ",
+    "Active from" => "نشط من",
+    "Expire at" => "ينتهي في",
+    "No limit if empty" => "لا يوجد حد إذا كان فارغا",
+    "Make a new coupon" => "انشا قسيمة خصم",
+    "Cart total" => "المبلغ الكلي للعربة",
+    "each_time" => "مرة",
+    "Coupons" => "قسائم الخصومات",
+    "Update" => "تعديل"
 ];
 

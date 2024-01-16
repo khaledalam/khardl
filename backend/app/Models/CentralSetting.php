@@ -16,6 +16,7 @@ class CentralSetting extends Model
         'live_chat_enabled',
         'new_branch_slot_price',
         'fee_flat_rate',
-        'fee_percentage'
+        'fee_percentage',
+        'active_days_after_sub_expired'
     ];
 }

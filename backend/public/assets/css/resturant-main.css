@@ -76,7 +76,7 @@
 }
 
 /* Style Wired */
-.slider {
+.switch .slider {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -90,7 +90,7 @@
     transition: .4s;
 }
 
-.slider:before {
+.switch .slider:before {
     position: absolute;
     content: "";
     width: 100%;
@@ -101,31 +101,61 @@
     transition: .4s;
 }
 
-input:checked+.slider:before {
+.switch input:checked+.slider:before {
     transform: translateX(15px);
     background: #c2da08;
 }
 
-input:checked+.slider {
+.switch input:checked+.slider {
     box-shadow: 0 0 0 2px #c2da08, 0 0 2px #c2da08;
 }
 
-/* Style Flat */
-.switch.flat .slider {
-    box-shadow: none;
+.switch-opposite input {
+    display: none;
 }
 
-.switch.flat .slider:before {
-    background: #FFF;
+.switch-opposite {
+    display: inline-block;
+    width: 40px;
+    height: 25px;
+    margin: 8px;
+    transform: translateY(50%);
+    position: relative;
+}
+.switch-opposite .slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 30px;
+    box-shadow: 0 0 0 2px #c2da08, 0 0 4px #c2da08;
+    cursor: pointer;
+    border: 4px solid transparent;
+    overflow: hidden;
+    transition: .4s;
 }
 
-.switch.flat input:checked+.slider:before {
-    background: white;
-}
-
-.switch.flat input:checked+.slider {
+.switch-opposite .slider:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
     background: #c2da08;
+    border-radius: 30px;
+    transform: translateX(15px);
+    transition: .4s;
 }
+
+.switch-opposite input:checked+.slider:before {
+    transform: translateX(-15px);
+    background: #777;
+}
+
+.switch-opposite input:checked+.slider {
+    box-shadow: 0 0 0 2px #777, 0 0 2px #777;
+}
+
 /* Branches */
 .revenues-container{
     cursor: pointer;

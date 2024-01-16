@@ -1,0 +1,19 @@
+
+input[type="text"]:-moz-placeholder {
+    text-align: right;
+}
+input[type="text"]:-ms-input-placeholder {
+    text-align: right;
+}
+input[type="text"]::-webkit-input-placeholder {
+    text-align: right;
+}
+input[type="number"]:-moz-placeholder {
+    text-align: right;
+}
+input[type="number"]:-ms-input-placeholder {
+    text-align: right;
+}
+input[type="number"]::-webkit-input-placeholder {
+    text-align: right;
+}
