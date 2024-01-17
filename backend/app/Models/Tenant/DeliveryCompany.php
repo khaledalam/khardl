@@ -46,6 +46,12 @@ class DeliveryCompany extends Model
             default => null
         };
     }
+    public function scopeWhenModule($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('coverage_area','LIKE','%'.$search. '%');
+        });
+    }
 
 
 
