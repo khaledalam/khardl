@@ -105,11 +105,9 @@
                                     <!--begin::Time-->
                                     <div class="fs-5 mb-3">{{__('messages.cover-area')}}</div>
                                     <!--end::Time-->
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Riyadh')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Jeddah')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Mecca')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Dammam')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Al-Ahsa')}}</span>
+                                    @foreach ($cervo?->coverage_area as $area)
+                                        <span class="badge badge-lg badge-light-khardl my-2">{{ $area }}</span>
+                                    @endforeach
                                 </div>
                                 <!--end::Info-->
                             </div>

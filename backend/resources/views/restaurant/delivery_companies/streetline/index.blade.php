@@ -118,27 +118,11 @@
                                     <!--begin::Time-->
                                     <div class="fs-5 mb-3">{{__('messages.cover-area')}}</div>
                                     <!--end::Time-->
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Riyadh')}} partially (check attached map)</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Jeddah')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Mecca')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Dammam')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Al-Ahsa')}}</span>
+                                    @foreach ($streetline?->coverage_area as $area)
+                                        <span class="badge badge-lg badge-light-khardl my-2">{{ $area }}</span>
+                                    @endforeach
 
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Khobar')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Dahran')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Hassa')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Buridah')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Tabuk')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Al Madinah')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Yanbu')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Makkah')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Taif')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Abha')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Khamis Mashit')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Bulgrshi')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Kharj')}}</span>
-
-                                    <img class="mw-100" src="{{global_asset('delivery-companies/street-line/Riyadh_coverd_area.jpg')}}" alt="street-line coverage area riyadh image" />
+                                    <img class="mw-100 my-3" src="{{global_asset('delivery-companies/street-line/Riyadh_coverd_area.jpg')}}" alt="street-line coverage area riyadh image" />
 
                                 </div>
                                 <!--end::Info-->
