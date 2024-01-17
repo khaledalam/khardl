@@ -748,15 +748,17 @@ export const RestuarantHomePage = () => {
 
   let branch_id = localStorage.getItem("selected_branch_id");
   // let branch_id = 2
-
+  console.log(restaurantStyle, "restaurantStyle");
   console.log("categories", categories);
   const fetchCategoriesData = async () => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
-        `categories?items&user&branch${branch_id ? `&selected_branch_id=${branch_id}` : ''}`
-      )
+        `categories?items&user&branch${
+          branch_id ? `&selected_branch_id=${branch_id}` : ""
+        }`
+      );
 
-    if (restaurantCategoriesResponse.data) {
+      if (restaurantCategoriesResponse.data) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
         dispatch(
           selectedCategoryAPI({
@@ -780,10 +782,10 @@ export const RestuarantHomePage = () => {
   };
   const fetchResStyleData = async () => {
     try {
-      AxiosInstance.get(`restaurant-style`).then((response) =>
-        dispatch(changeRestuarantEditorStyle(response.data?.data))
-        
-      );
+      AxiosInstance.get(`restaurant-style`).then((response) => {
+        console.log("DATA", response.data?.data);
+        dispatch(changeRestuarantEditorStyle(response.data?.data));
+      });
       setisLoading(false);
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)

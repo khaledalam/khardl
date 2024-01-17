@@ -96,7 +96,7 @@ const Herosection = ({isMobile, categories}) => {
                 loop
                 autoPlay
                 className={` z-[5] ${
-                  isMobile ? "max-h-[300px] w-full" : "max-h-[470px] w-full"
+                  isMobile ? "max-h-[300px] w-full" : "max-h-[350px] w-full"
                 }  `}
               >
                 <source
@@ -137,7 +137,7 @@ const Herosection = ({isMobile, categories}) => {
                     <div
                       key={index}
                       className={` ${
-                        isMobile ? "h-[300px]" : "h-[470px]"
+                        isMobile ? "h-[300px]" : "h-[350px]"
                       } !block`}
                     >
                       {restaurantStyle?.banner_images &&
@@ -151,7 +151,7 @@ const Herosection = ({isMobile, categories}) => {
                           className={` z-[5] ${
                             isMobile
                               ? "max-h-[300px] w-full"
-                              : "max-h-[470px] w-full"
+                              : "max-h-[350px] w-full"
                           }  `}
                         >
                           <source
