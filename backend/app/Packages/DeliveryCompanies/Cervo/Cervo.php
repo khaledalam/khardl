@@ -28,7 +28,7 @@ class Cervo  extends AbstractDeliveryCompany
         'CANCELED_BY_DRIVER'=>5,
     ];
 
-    public function assignToDriver(Order $order,RestaurantUser $customer){
+    public function assignToDriver(Order $order,RestaurantUser $customer):bool{
         $branch = $order->branch;
 
         if(env('APP_ENV') == 'local'){
@@ -84,13 +84,29 @@ class Cervo  extends AbstractDeliveryCompany
         }
      
     }
-    public static function processWebhook($payload){
+    public function cancelOrder($id): bool{
+        try {   
+            if(env('APP_ENV') == 'local'){
+                $token = env('CERVO_SECRET_API_KEY','');
+            }else {
+                $token = $this->delivery_company->api_key;
+            }
+            $response = $this->sendSync(
+                url: $this->delivery_company->api_url . '/cancelorder',
+                token: $token,
+                data:  [],  
+                method: 'get'
+            );
+            return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+        } catch (\Exception $e) {
+            logger($e->getMessage());
+        }
+    }
+    public function processWebhook($payload){
         if(isset($payload["order_status"])  ){
             $order = Order::findOrFail($payload['order_id']);
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-                $order->update([
-                    'deliver_by'=> class_basename(static::class),
-                ]);
+              
                 if($payload['tracking']){
                     $order->update([
                         'tracking_url'=> $payload['tracking']
@@ -98,8 +114,11 @@ class Cervo  extends AbstractDeliveryCompany
                 }
                 if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER'] || $payload["order_status"]  == self::STATUS_ORDER['ORDER_ON_HAND']){
                     $order->update([
-                        'status'=>Order::ACCEPTED
+                        'status'=>Order::ACCEPTED,
+                        'deliver_by'=> class_basename(static::class),
                     ]);
+                    $this->cancelOtherOrders("cervo",$order);
+                   
                 }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
                     $order->update([
                         'status'=>Order::COMPLETED

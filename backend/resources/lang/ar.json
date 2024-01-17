@@ -53,6 +53,8 @@
     "Only workers can logged in":"يمكن للعمال فقط تسجيل الدخول",
     "Phone number is not exist":"رقم الهاتف غير موجود",
     "Only restaurant owner can login":"فقط مالك المطعم يمكنه تسجيل الدخول",
-    "Restaurant is in a live mode":"المطعم بالفعل فعال"
-
+    "Restaurant is in a live mode":"المطعم بالفعل فعال",
+    "Too many verification attempts. Request a new verification code.":"عدد كبير جدًا من محاولات التحقق. اطلب رمز التحقق في يوم اخر.",
+    "There is no available delivery company":"لا توجد شركة توصيل متاحة",
+    "Order has been delivered to :companies, waiting for accepting ...":"تم تسليم الطلب إلى :companies في انتظار القبول..."
 }

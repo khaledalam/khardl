@@ -35,7 +35,7 @@ class DeliveryCompanies
         $assignedCompanies = [];
         foreach($deliveryCompanies as $company)  {   
             if($company->module?->assignToDriver($order,$customer)){
-                $assignedCompanies [] = $company->name;
+                $assignedCompanies[] = $company->name;
             }
         }
         //  companies that assigned to this order

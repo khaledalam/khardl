@@ -7,6 +7,8 @@ use App\Models\Tenant\Branch;
 use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\RestaurantUser;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
+use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 use App\Utils\ResponseHelper;
 
 class Yeswa  extends AbstractDeliveryCompany
@@ -48,7 +50,7 @@ class Yeswa  extends AbstractDeliveryCompany
             "dropoff_phone"=> $customer->phone,
             "dropoff_address"=> $customer->address,
             "order_amount"=> $order->total,
-            'client_id'=>$customer->id, // instead if customer id
+            'client_id'=>$order->id, // instead if customer id
             "payment_method"=>  self::CORRESPOND_METHODS[$order->payment_method->name]  ,
             // nullable
             // "dropoff_time"=> "",
@@ -74,28 +76,32 @@ class Yeswa  extends AbstractDeliveryCompany
         }
 
     }
-    public static function processWebhook($payload){
-        if(isset($payload["deliveries"][0]['job_status'])  ){
-            $order = Order::findOrFail($payload['client_id']);
+    public function processWebhook(array $payload){
+        $data = $payload['data']["deliveries"][0];
+        if(isset($data['job_status'])  ){
+            $order = Order::where('yeswa_ref',$payload['data']['trip_ref'])->first();
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
                 
-                $order->update([
-                    'deliver_by'=> class_basename(static::class),
-                ]);
-                if($payload['deliveries'][0]['track']){
+              
+                if($data['track']){
                     $order->update([
-                        'tracking_url'=> $payload['deliveries'][0]['track']
+                        'tracking_url'=> $data['track']
                     ]); 
                 }
-                if($payload["deliveries"][0]['job_status']  == 'ACCEPTED'){
+                if($data['job_status']  == 'ACCEPTED'){
                     $order->update([
-                        'status'=>Order::ACCEPTED
+                        'status'=>Order::ACCEPTED,
+                        'deliver_by'=> class_basename(static::class),
                     ]);
-                }else if($payload["deliveries"][0]['job_status'] == 'SUCCESSFUL'){
+
+                    $this->cancelOtherOrders("yeswa",$order);
+                  
+               
+                }else if($data['job_status'] == 'SUCCESSFUL'){
                     $order->update([
                         'status'=>Order::COMPLETED
                     ]);
-                }else if ($payload["deliveries"][0]['job_status'] == 'FAILED' ){
+                }else if ($data['job_status'] == 'FAILED' ){
                     $order->update([
                         'status'=>Order::CANCELLED
                     ]);
@@ -104,7 +110,7 @@ class Yeswa  extends AbstractDeliveryCompany
             
         }
     }
-    public function cancelOrder($id): bool{
+    public function  cancelOrder($id): bool{
         try {
             if(env('APP_ENV') == 'local'){
                 $data = [

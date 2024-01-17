@@ -132,7 +132,7 @@ class RegisterController extends BaseController
             ->whereDate('created_at', $today)->get();
 
         if (count($attempts) >= 3) {
-            return $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
+            return $this->sendError('Fail', __('Too many verification attempts. Request a new verification code.'));
         }
 
         $user = User::where('email', $request->email)->first();

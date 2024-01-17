@@ -16,16 +16,14 @@ class DeliveryCompaniesWebhookHandler extends ProcessWebhookJob
         logger($this->webhookCall);
         $data = json_decode($this->webhookCall, true)['payload'];
         logger($data);
-        if(isset($data['delivery_company'])){
-            // TODO @todo do logs or sms or notifications
-            // TODO @todo send tracking url to user to track his order
-            if(strpos($data['tracking_url'] ?? '', "https://api.streetline.app") === 0){    // the webhook coming from streetLine
-                StreetLine::processWebhook($data);
-            }else if ($data['delivery_company'] == 'Cervo') {// the webhook coming from cervo
-                Cervo::processWebhook($data);
-            }else if ($data['delivery_company'] == 'yeswa') {// the webhook coming from Yeswa
-                Yeswa::processWebhook($data);
-            }
+        // TODO @todo do logs or sms or notifications
+        // TODO @todo send tracking url to user to track his order
+        if(strpos($data['tracking_url'] ?? '', "https://api.streetline.app") === 0){    // the webhook coming from streetLine
+            (new StreetLine)->processWebhook($data);
+        }else if ($data['delivery_company'] == 'Cervo') {// the webhook coming from cervo
+            (new Cervo)->processWebhook($data);
+        }else if ($data['delivery_company'] == 'yeswa') {// the webhook coming from Yeswa
+            (new Yeswa)->processWebhook($data);
         }
        
     }

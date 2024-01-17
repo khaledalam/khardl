@@ -37,9 +37,9 @@ class DeliveryCompany extends Model
     function getModuleAttribute()
     {
         return match($this->attributes['module']){
-            class_basename(Cervo::class)=> new Cervo($this),
-            class_basename(StreetLine::class) => new StreetLine($this),
-            class_basename(Yeswa::class) => new Yeswa($this),
+            class_basename(Cervo::class)=> new Cervo(),
+            class_basename(StreetLine::class) => new StreetLine(),
+            class_basename(Yeswa::class) => new Yeswa(),
             default => null
         };
     }

@@ -80,7 +80,17 @@ class  OrderController extends BaseRepositoryController
 
         // Handle register order to all delivery companies
         if ($request->status == Order::RECEIVED_BY_RESTAURANT) {
-            // dd(DeliveryCompanies::assign($order,$user));
+            $deliveryCompanies = DeliveryCompanies::assign($order,$user);
+            if(empty($deliveryCompanies)){
+                if ($request->expectsJson()) {
+                    return $this->sendError('Fail', __('There is no available delivery company'));
+                }
+                return redirect()->back()->with('error',__('There is no available delivery company'));
+            }else {
+                $deliveryCompaniesDelivered = implode(" , ", $deliveryCompanies);
+                return $this->sendResponse(null, __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
+                return redirect()->back()->with('success', __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
+            }
         }
 
         if ($request->expectsJson()) {

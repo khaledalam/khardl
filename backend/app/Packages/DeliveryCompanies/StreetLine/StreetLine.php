@@ -26,7 +26,7 @@ class StreetLine  extends AbstractDeliveryCompany
         'Order Unassigned' => 19,
         'Order failed' => 20,
     ];
-    public function assignToDriver(Order $order,RestaurantUser $customer){
+    public function assignToDriver(Order $order,RestaurantUser $customer):bool{
         $branch = $order->branch;
         if(env('APP_ENV') == 'local'){
             $token = env('STREETLINE_SECRET_API_KEY','');
@@ -74,6 +74,24 @@ class StreetLine  extends AbstractDeliveryCompany
             return false;
         }
     }
+    public function cancelOrder($id): bool{
+        try {
+            if(env('APP_ENV') == 'local'){
+                $token =  env('STREETLINE_SECRET_API_KEY','');
+            }else {
+                $token = $this->delivery_company->api_key;
+            }
+            $response = $this->sendSync(
+                url:   $this->delivery_company->api_url."/$token/cancel/$id",
+                token: false,
+                data: [],
+                method: 'get'
+            );
+            return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
     public function addWebhook($type = 'order_updated'){
         if(env('APP_ENV') == 'local'){
             $token = env('STREETLINE_SECRET_API_KEY','');
@@ -90,13 +108,11 @@ class StreetLine  extends AbstractDeliveryCompany
             ]
         );
     }
-    public static function processWebhook($payload){
+    public function processWebhook($payload){
         if(isset($payload["status_id"])  ){
-            $order = Order::findOrFail($payload['client_order_id']);
+            $order =Order::where('streetline_ref',$payload['order_id'])->first();
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-                $order->update([
-                    'deliver_by'=> class_basename(static::class),
-                ]);
+              
                 if($payload['tracking_url']){
                     $order->update([
                         'tracking_url'=> $payload['tracking_url']
@@ -112,8 +128,11 @@ class StreetLine  extends AbstractDeliveryCompany
                     $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
                         
                         $order->update([
-                            'status'=>Order::ACCEPTED
+                            'status'=>Order::ACCEPTED,
+                            'deliver_by'=> class_basename(static::class),
                         ]);
+                        $this->cancelOtherOrders("streetline",$order);
+                       
                 }else if(
                     $payload['status_id'] == self::STATUS_ORDER['Order cancelled'] || 
                     $payload['status_id'] == self::STATUS_ORDER['Order failed'] ){
