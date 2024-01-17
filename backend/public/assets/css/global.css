@@ -19,3 +19,22 @@
 .delivery_companies .tab-pane .card-body table tr td ul li {
     list-style-type: disclosure-closed;
 }
+
+/* Branches */
+.revenues-container{
+    cursor: pointer;
+}
+.revenues-container .fw-bold {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    background-color: #1b1b28;
+    border-radius: 3px;
+    padding: 2px 10px;
+    color: #ffffff;
+    top: -20px;
+}
+
+.revenues-container:hover .fw-bold {
+    opacity: 1;
+}

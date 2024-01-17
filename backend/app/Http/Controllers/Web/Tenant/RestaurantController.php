@@ -773,6 +773,7 @@ class RestaurantController extends BaseController
             'can_modify_advertisements',
             'can_edit_menu',
             'can_control_payment',
+            'can_view_revenues'
 
         ];
 
