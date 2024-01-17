@@ -28,7 +28,8 @@ class OrderController
         return $this->order->create($request,$this->cart);
     }
     public function validateOrder(OrderRequest $request){
-        session(['order_customer_'.Auth::id() =>$request->all()]);
+
+        session([tenant()->id.'_order_customer_'.Auth::id() =>$request->all()]);
         return response()->json([],200);
     }
     public function index(){
@@ -79,7 +80,7 @@ class OrderController
     }
     public function paymentResponse(Request $request){
         try {
-            $cartData = session('order_customer_'.Auth::id());
+            $cartData = session(tenant()->id.'_order_customer_'.Auth::id());
             $request->merge($cartData);
             $orderRequest = new OrderRequest($request->all());
             $order = $this->order->create($orderRequest,$this->cart);
@@ -87,7 +88,7 @@ class OrderController
         }catch(\Exception $e){
             logger($e->getMessage());
         }
-        session()->forget(['order_customer_'.Auth::id()]);
+        session()->forget([tenant()->id.'_order_customer_'.Auth::id()]);
         $message = ($order->payment_status  == Payment::PAID)? __("The payment was successful, your order is pending"): __('Payment failed, please try again');
         return redirect()->route("home",[
             'status'=>($order->payment_status  == Payment::PAID)?true:false,

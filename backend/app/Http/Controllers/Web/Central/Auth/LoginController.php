@@ -56,7 +56,7 @@ class LoginController extends BaseController
 
         $credentials = request(['email', 'password']);
 
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt($credentials,true)) {
             return $this->sendError('Unauthorized.', ['error' => __('messages.Invalid email or password')]);
         }
 

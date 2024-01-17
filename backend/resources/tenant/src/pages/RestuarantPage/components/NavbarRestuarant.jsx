@@ -17,7 +17,7 @@ const NavbarRestuarant = () => {
     (state) => state.categoryAPI.cartItemsCount
   )
   const {header_color, headerPosition} = restaurantStyle
-  console.log("restuarant styles header", restaurantStyle)
+  console.log("restaurantStyle", restaurantStyle)
   useEffect(() => {
     const checkOrderQueryParam = () => {
       const queryParams = new URLSearchParams(window.location.search)

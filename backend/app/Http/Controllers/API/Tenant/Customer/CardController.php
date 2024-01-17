@@ -15,16 +15,23 @@ class CardController
     public function show()
     {
         $user = Auth::user();
-        $cards = TapCustomer::retrieve($user->tap_customer_id);
-        if($cards['http_code'] == ResponseHelper::HTTP_OK){
-            if(isset($cards['message']['cards'])){
-                return $this->sendResponse($cards['message']['cards'],true);
-                // TODO @todo update session to be one day
-                // Session::put('customer_card_'.$user->id,$cards['message']['cards'], $dailyExpiration);
-
+        $session = tenant()->id.'_card_customer_'.Auth::id();
+        if(session()->get($session)){
+            return session()->get($session);
+        }else {
+            $cards = TapCustomer::retrieve($user->tap_customer_id);
+            if($cards['http_code'] == ResponseHelper::HTTP_OK){
+                if(isset($cards['message']['cards'])){
+                    $response = $this->sendResponse($cards['message']['cards'],true);;
+                    session(["$session"=>$response]);
+                    return $response;
+                }
             }
+            $response = $this->sendError(__('No card found'));
+            session(["$session"=>$response]);
+            return $response;
         }
-        return $this->sendError(__('No card found'));
+        
     }
 
 

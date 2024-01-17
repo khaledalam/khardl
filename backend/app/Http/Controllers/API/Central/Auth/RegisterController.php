@@ -37,7 +37,7 @@ class RegisterController extends BaseController
         $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
         $success['name'] =  "$user->first_name $user->last_name";
         $user->assignRole('Restaurant Owner');
-        Auth::login($user);
+        Auth::login($user,true);
         if($promoter = PromoterIpAddress::where('ip_address',request()?->ip())){
             $promoter->update(['registered'=>true]);
         }

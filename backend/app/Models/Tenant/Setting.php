@@ -12,6 +12,7 @@ class Setting extends Model implements Syncable
 {
     use HasFactory, ResourceSyncing;
     protected $table= "settings";
+    protected $primaryKey = 'global_id';
     protected $fillable =[
         'is_live',
         'delivery_fee',
