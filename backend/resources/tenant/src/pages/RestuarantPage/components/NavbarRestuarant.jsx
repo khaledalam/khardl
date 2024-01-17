@@ -66,7 +66,7 @@ const NavbarRestuarant = () => {
           }`}
         >
           <div
-            className={`w-[60px] h-[60px]  ${
+            className={`w-[80px] h-[80px]  ${
               restaurantStyle?.logo_shape === "rounded" ||
               restaurantStyle?.logo_shape === t("Rounded")
                 ? "rounded-full"
