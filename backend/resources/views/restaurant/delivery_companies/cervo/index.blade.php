@@ -12,7 +12,7 @@
                 {{__('messages.verified')}}
             </span>
             @else
-            <span class="badge badge badge-info px-4 py-3">
+            <span class="badge badge badge-secondary px-4 py-3">
                 {{__('messages.Not verified')}}
             </span>
             @endif
@@ -79,6 +79,7 @@
                         <div class="d-flex flex-column gap-1">
                             <div class="fw-bolder text-muted">{{__('messages.summary')}}</div>
                             <p>{!! __('messages.delivery.cervo.summary') !!}</p>
+                            <a href="{{global_asset('delivery-companies/cervo/Cervo.pdf')}}" class="btn btn-warning text-black text-hover-khardl" target="_blank">Profile.pdf</a>
                         </div>
                         <!--end::Notes-->
                     </div>

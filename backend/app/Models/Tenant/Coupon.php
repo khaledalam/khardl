@@ -7,24 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coupon extends Model
 {
+    use HasFactory;
     protected $table = 'coupons';
 
-    protected $fillable = [
-        'code',
-        'description',
-        'type',
-        'value',
-        'minimum_order_amount',
-        'maximum_discount_amount',
-        'usage_limit',
-        'usage_count',
-        'start_date',
-        'end_date',
-        'is_active'
+    protected $casts = [
+        'active_from' => 'date',
+        'expire_at' => 'date',
     ];
-
-    public function orders()
+    protected $guarded = [];
+    /* Methods */
+    public function toggleStatus()
     {
-        return $this->hasMany(Order::class);
+        $this->status = !$this->status;
+        $this->save();
     }
 }

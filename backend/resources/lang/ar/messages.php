@@ -684,5 +684,19 @@ return [
     "Have inactive restaurant" => "لديه مطعم غير نشط",
     "Verified email" => "بريد مفعل",
     "Not verified email" => "بريد غير مفعل",
+    "Code" => "الكود",
+    "Amount" => "القيمة",
+    "Max discount amount" => "اقصي قيمة للخصم",
+    "Max use" => "اقصي استخدام",
+    "Max use per user" => "اقصي استخدام لكل مستخدم",
+    "Minimum cart amount" => "اقل قيمة لاتمام الخصم ",
+    "Active from" => "نشط من",
+    "Expire at" => "ينتهي في",
+    "No limit if empty" => "لا يوجد حد إذا كان فارغا",
+    "Make a new coupon" => "انشا قسيمة خصم",
+    "Cart total" => "المبلغ الكلي للعربة",
+    "each_time" => "مرة",
+    "Coupons" => "قسائم الخصومات",
+    "Update" => "تعديل"
 ];
 
