@@ -697,6 +697,9 @@ return [
     "Cart total" => "المبلغ الكلي للعربة",
     "each_time" => "مرة",
     "Coupons" => "قسائم الخصومات",
-    "Update" => "تعديل"
+    "Update" => "تعديل",
+    "You do not the availability to add new branch" => "لا يتوفر لديك إمكانية إضافة فرع جديد",
+    "You have to purchase new service" => "يجب عليك شراء خدمة جديدة",
+    "You can add new branches from services" => "يمكنك إضافة فروع جديدة من الخدمات"
 ];
 
