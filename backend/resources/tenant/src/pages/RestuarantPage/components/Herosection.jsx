@@ -96,7 +96,7 @@ const Herosection = ({isMobile, categories}) => {
                 loop
                 autoPlay
                 className={` z-[5] ${
-                  isMobile ? "max-h-[300px] w-full" : "max-h-[470px] w-full"
+                  isMobile ? "max-h-[300px] w-full" : "max-h-[350px] w-full"
                 }  `}
               >
                 <source
