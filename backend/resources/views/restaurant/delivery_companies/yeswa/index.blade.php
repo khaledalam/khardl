@@ -211,6 +211,24 @@
                                         <tr>
                                             <td class="text-muted p-0 py-3">
                                                 <div class="d-flex flex-column align-items-center">
+                                                    @if ($isadmin)
+                                                    <form  action="{{route('admin.delivery.activateAndDeactivate',['tenant'=> $restaurant->id])}}" method="POST" style="width: 100%">
+                                                        @csrf
+                                                        <input type="text" hidden value="Yeswa" class="form-control mb-2" name="module" id="">
+                                                        @if($yeswa?->status)
+                                                            {{ __('messages.Secret Key') }} <input type="text" readonly value="{{$yeswa?->api_key}}" class="form-control mb-2" name="api_key" id="">
+                                                        @else
+                                                            {{ __('messages.Secret Key') }} <input type="text"   class="form-control mb-2" name="api_key" value="{{$yeswa?->api_key}}">
+                                                        @endif
+                                                        <div class="d-flex justify-content-center">
+                                                            @if(!$yeswa?->status)
+                                                            <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("messages.Activate")}}</a>
+                                                            @else
+                                                                <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("messages.Deactivate")}}</a>
+                                                            @endif
+                                                        </div>
+                                                    </form>
+                                                    @else
                                                     <form action="{{route('restaurant.delivery.activate',['module'=>'Yeswa'])}}" method="POST" style="width: 100%">
                                                         @csrf
                                                         @if($yeswa?->status)
@@ -222,13 +240,13 @@
                                                         <div class="d-flex justify-content-center">
                                                             @if(!$yeswa?->status)
                                                             <button type="submit" class="btn btn-success text-white text-hover-white">{{__("messages.Activate")}}</a>
-                                                                @else
-                                                                <button type="submit" class="btn btn-danger  text-white text-hover-white">{{__("messages.Deactivate")}}</a>
-                                                                    @endif
+                                                            @else
+                                                            <button type="submit" class="btn btn-danger  text-white text-hover-white">{{__("messages.Deactivate")}}</a>
+                                                            @endif
                                                         </div>
                                                         @endif
                                                     </form>
-
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td class="fw-bolder text-end py-0"></td>
