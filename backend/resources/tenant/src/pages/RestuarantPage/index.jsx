@@ -834,7 +834,7 @@ export const RestuarantHomePage = () => {
 
   return (
     <>
-      <Helmet>
+      {/* <Helmet>
         <title>{t("Home")}</title>
         <link
           rel="icon"
@@ -842,7 +842,7 @@ export const RestuarantHomePage = () => {
           href={restaurantStyle.logo}
           sizes="16x16"
         />
-      </Helmet>
+      </Helmet> */}
 
       <div
         style={{

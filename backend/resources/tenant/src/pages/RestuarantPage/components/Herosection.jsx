@@ -46,7 +46,7 @@ const Herosection = ({isMobile, categories}) => {
           "w-full  flex flex-col py-4 items-center justify-center gap-8"
         }
       >
-        <div
+        {/* <div
           className={` w-full ${
             restaurantStyle?.logo_alignment === t("Center") ||
             restaurantStyle?.logo_alignment === "center"
@@ -76,7 +76,7 @@ const Herosection = ({isMobile, categories}) => {
               }`}
             />
           </div>
-        </div>
+        </div> */}
         {(restaurantStyle && restaurantStyle?.banner_type === "one-photo") ||
         (restaurantStyle && restaurantStyle?.banner_type === t("One-photo")) ? (
           <div

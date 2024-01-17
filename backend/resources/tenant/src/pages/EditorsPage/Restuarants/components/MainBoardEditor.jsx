@@ -16,8 +16,15 @@ import {
 import {useTranslation} from "react-i18next"
 import HeaderEdit from "./HeaderEdit"
 import {BiCloudUpload} from "react-icons/bi"
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+
 
 const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
+  const [showCropModal, setShowCropModal] = useState(false);
+  const [bannerToCrop, setBannerToCrop] = useState(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 16 / 9 });
+  const [completedCrop, setCompletedCrop] = useState(null);
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
@@ -86,24 +93,85 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
       dispatch(logoUpload(URL.createObjectURL(selectedLogo)))
     }
   }
+  
+  // const handleBannerUpload = (event) => {
+  //   event.preventDefault()
 
+  //   const selectedBanner = event.target.files[0]
+
+  //   if (selectedBanner) {
+  //     if (selectedBanner.type.includes("video")) {
+  //       console.log("video", selectedBanner)
+  //       setIsVideo(true)
+  //       setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+  //     } else {
+  //       setIsVideo(false)
+  //       setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+  //     }
+  //     dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
+  //   }
+  // }
   const handleBannerUpload = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const selectedBanner = event.target.files[0]
+    const selectedBanner = event.target.files[0];
 
     if (selectedBanner) {
       if (selectedBanner.type.includes("video")) {
-        console.log("video", selectedBanner)
-        setIsVideo(true)
-        setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+        setIsVideo(true);
+        setUploadSingleBanner(URL.createObjectURL(selectedBanner));
       } else {
-        setIsVideo(false)
-        setUploadSingleBanner(URL.createObjectURL(selectedBanner))
+        setIsVideo(false);
+        setUploadSingleBanner(URL.createObjectURL(selectedBanner));
+        setShowCropModal(true);
       }
-      dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
+      setBannerToCrop(selectedBanner);
     }
-  }
+  };
+
+  const handleCropComplete = (crop) => {
+    setCompletedCrop(crop);
+  };
+
+  const handleCloseCropModal = () => {
+    setShowCropModal(false);
+  };
+
+  const handleCropSave = (originalImage) => {
+    if (completedCrop?.width && completedCrop?.height) {
+      const canvas = document.createElement("canvas");
+      const scaleX = originalImage.width / originalImage.naturalWidth;
+      const scaleY = originalImage.height / originalImage.naturalHeight;
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = completedCrop.width;
+      canvas.height = completedCrop.height;
+
+      ctx.drawImage(
+        originalImage,
+        completedCrop.x * scaleX,
+        completedCrop.y * scaleY,
+        completedCrop.width * scaleX,
+        completedCrop.height * scaleY,
+        0,
+        0,
+        completedCrop.width,
+        completedCrop.height
+      );
+
+      const croppedImageBlob = new Promise((resolve) => {
+        canvas.toBlob((blob) => {
+          resolve(blob);
+        }, "image/jpeg");
+      });
+
+      croppedImageBlob.then((blob) => {
+      
+        dispatch(setBannerUpload(URL.createObjectURL(blob)));
+        setShowCropModal(false);
+      });
+    }
+  };
 
   useEffect(() => {
     if (language !== "en") {
@@ -198,7 +266,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
   console.log("filterCategory", filterCategory)
 
   const filetype = "video"
-
+console.log("Richa")
   return (
     <div
       style={{
@@ -242,12 +310,15 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
             hidden
           />
           <label htmlFor='logo'>
+          <ReactCrop crop={crop}>
+
             <img
               src={uploadLogo ? uploadLogo : logo ? logo : ImgPlaceholder}
               alt={""}
               style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
               className='w-full h-full object-cover'
             />
+            </ReactCrop>
           </label>
           {uploadLogo && (
             <div className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'>
