@@ -115,13 +115,12 @@ class Cervo  extends AbstractDeliveryCompany
                         'tracking_url'=> $payload['tracking']
                     ]); 
                 }
-                if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER'] || $payload["order_status"]  == self::STATUS_ORDER['ORDER_ON_HAND']){
+                if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER']){
                     $order->update([
                         'status'=>Order::ACCEPTED,
                         'deliver_by'=> class_basename(static::class),
                     ]);
- 
-                    $this->cancelOtherOrders("cervo",$order);
+                    $this->cancelOtherOrders("cervo",$order); 
                    
                 }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
                     $order->update([

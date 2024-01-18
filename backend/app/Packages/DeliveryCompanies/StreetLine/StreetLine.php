@@ -124,15 +124,13 @@ class StreetLine  extends AbstractDeliveryCompany
                             'status'=>Order::COMPLETED
                         ]);
 
-                }else if(
-                    $payload['status_id'] == self::STATUS_ORDER['Arrived to pickup'] ||
-                    $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
-                        
+                }else if( $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
                         $order->update([
                             'status'=>Order::ACCEPTED,
                             'deliver_by'=> class_basename(static::class),
                         ]);
                         $this->cancelOtherOrders("streetline",$order);
+
                        
                 }else if(
                     $payload['status_id'] == self::STATUS_ORDER['Order cancelled'] || 
