@@ -82,7 +82,7 @@ const App = () => {
         <div>
           <Routes>
             {" "}
-            {/* Public Routes */} <Route path='/' element={<Home />} />{" "}
+            {/* Public Routes */} <Route path='/' element={<Home />} />
             <Route path='/logout' element={<Logout />} />{" "}
             <Route path='/reset-password' element={<ForgotPassword />} />{" "}
             <Route
