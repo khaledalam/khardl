@@ -1,3 +1,14 @@
+RewriteEngine On
+
+# match any URL with www and rewrite it to https without the www
+RewriteCond %{HTTP_HOST} ^(www\.)(.*) [NC]
+RewriteRule (.*) https://%2%{REQUEST_URI} [L,R=301]
+
+# match urls that are non https (without the www)
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^(www\.)(.*) [NC]
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 <IfModule mod_rewrite.c>
     RewriteEngine on
     RewriteCond %{REQUEST_URI} !^backend/public
