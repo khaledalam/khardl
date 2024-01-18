@@ -20,10 +20,10 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   SecFilterScanPOST Off
 </IfModule>
 
-AuthType Basic
-AuthName "Secure Content"
-AuthUserFile /home/khardl4test/keys/.htpasswd
-require valid-user
+#AuthType Basic
+#AuthName "Secure Content"
+#AuthUserFile /home/khardl4test/keys/.htpasswd
+#require valid-user
 
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php81” package as the default “PHP” programming language.
