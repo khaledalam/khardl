@@ -215,6 +215,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::controller(RestaurantController::class)->group(function () {
                         Route::get('/restaurants/{tenant}','show')->middleware('permission:can_view_restaurants')->name('view-restaurants');
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
+                        Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                       });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::post('/save-revenue', [AdminController::class, 'saveRevenue'])->middleware('permission:can_settings')->name('save-revenue');

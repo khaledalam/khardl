@@ -30,6 +30,14 @@
                         </div>
                         <!--end::Row-->
                     </div>
+                    @if($available_branches == 0&&$branches->count())
+                    <div class="alert alert-warning text-center mx-4">
+                        <p>{{ __('messages.You can add new branches from services') }}</p>
+                        <a href="{{ route('restaurant.service') }}">
+                            <button type="button" class="btn btn-success btn-sm">{{ __('messages.View services') }}</button>
+                        </a>
+                    </div>
+                    @endif
                     <!--end::Body-->
                 </div>
             </div>
@@ -37,7 +45,7 @@
         </div>
         <!--end::Post-->
         <!--begin::Post-->
-        @foreach ($branches as $branch)
+        @forelse ($branches as $branch)
         <div class="post d-flex flex-column-fluid my-5" id="kt_post">
             <!--begin::Container-->
             <div id="kt_content_container" class="container-xxl">
@@ -457,10 +465,8 @@
             <!--end::Modal dialog-->
             </div>
             <!--end::Modal - New Target-->
-
-        @endforeach
-        <!--end::Post-->
-        @if ($branches == "[]")
+        @empty
+            @if ($available_branches>0)
             <div class="post d-flex flex-column-fluid mb-10" id="kt_post">
                 <div id="kt_content_container" class="container-xxl">
                     <div class="card card-flush border-0 h-md-100">
@@ -474,7 +480,26 @@
                     </div>
                 </div>
             </div>
-        @endif
+            @else
+            <div class="post d-flex flex-column-fluid mb-10" id="kt_post">
+                <div id="kt_content_container" class="container-xxl">
+                    <div class="card card-flush border-0 h-md-100">
+                        <div class="card-body py-15">
+                            <div class="row gx-9 h-100 p-15">
+                                <div class="alert alert-warning text-center">
+                                    <h4>{{ __('messages.You do not the availability to add new branch') }}</h4>
+                                    <p>{{ __('messages.You have to purchase new service') }}</p>
+                                    <a href="{{ route('restaurant.service') }}">
+                                        <button type="button" class="btn btn-success btn-sm">{{ __('messages.View services') }}</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+        @endforelse
         @if($available_branches > 0)
             <!--begin::Post-->
             <div class="post d-flex flex-column-fluid mt-10" id="kt_post">

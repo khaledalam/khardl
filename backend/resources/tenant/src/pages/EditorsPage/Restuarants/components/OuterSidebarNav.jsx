@@ -160,7 +160,7 @@ const OuterSidebarNav = ({ id }) => {
             navigate("/")
             closeMenu()
           }}
-          className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '
+          className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer ' style={{borderColor: restuarantStyle?.categoryDetail_cart_color }}
         >
           <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
             <img src={homeIcon} alt='home' />
@@ -217,7 +217,7 @@ const OuterSidebarNav = ({ id }) => {
 
                 closeMenu()
               }}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer ' style={{borderColor: restuarantStyle?.categoryDetail_cart_color }}
             >
               <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <img src={dashboardIcon} alt='home' />
@@ -229,9 +229,9 @@ const OuterSidebarNav = ({ id }) => {
           <Fragment>
             {/* <div
               onClick={() => navigate("/register")}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border cursor-pointer border-[#C0D123] items-center '
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border cursor-pointer  items-center '
             >
-              <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+  style={{borderColor: restuarantStyle?.categoryDetail_cart_color }}             <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <BiSolidUserAccount size={25} />
               </div>
               <h3 className=''> {t("Create an account")} </h3>
@@ -242,9 +242,9 @@ const OuterSidebarNav = ({ id }) => {
                 navigate("/login")
                 closeMenu()
               }}
-              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg cursor-pointer border border-[#C0D123] items-center '
-            >
-              <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+              className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg cursor-pointer border  items-center '
+              style={{borderColor: restuarantStyle?.categoryDetail_cart_color }}  >
+             <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <img src={LoginIcon} alt='home' />
               </div>
               <h3 className=''> {t("Login as Customer")} </h3>
@@ -252,9 +252,9 @@ const OuterSidebarNav = ({ id }) => {
 
             {/* <div
               onClick={() => navigate("/login-admins")}
-              className='w-[90%] mx-auto flex flex-row gap-3 cursor-pointer bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+              className='w-[90%] mx-auto flex flex-row gap-3 cursor-pointer bg-neutral-100 rounded-lg border  items-center '
             >
-              <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+  style={{borderColor: restuarantStyle?.categoryDetail_cart_color }}             <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
                 <img src={LoginIcon} alt='home' />
               </div>
               <h3 className=''> {t("Management Area")} </h3>
@@ -268,9 +268,9 @@ const OuterSidebarNav = ({ id }) => {
         >
           <div
             onClick={handleLanguageChange}
-            className='w-full mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center '
+            className='w-full mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center '  style={{borderColor: restuarantStyle?.categoryDetail_cart_color }}  
           >
-            <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
+          <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
               <img src={worldLangIcon} alt='language' />
             </div>
             <h3 className=''> {buttonText}</h3>
@@ -281,8 +281,8 @@ const OuterSidebarNav = ({ id }) => {
         <div className='w-full mb-20 cursor-pointer'>
           <div
             onClick={handleLogout}
-            className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer'
-          >
+            className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer'
+ style={{borderColor: restuarantStyle?.categoryDetail_cart_color }}          >
             <div className='w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center'>
               <img src={logoutIcon} alt='home' />
             </div>
