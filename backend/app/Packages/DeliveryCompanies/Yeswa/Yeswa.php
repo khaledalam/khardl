@@ -79,7 +79,7 @@ class Yeswa  extends AbstractDeliveryCompany
     public function processWebhook(array $payload){
         $data = $payload['data']["deliveries"][0];
         if(isset($data['job_status'])  ){
-            $order = Order::where('yeswa_ref',$payload['data']['trip_ref'])->first();
+            $order = Order::where('yeswa_ref',$payload['data']['trip_ref'])->firstOrFail();
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
                 
               

@@ -35,8 +35,8 @@ class Cervo  extends AbstractDeliveryCompany
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
                 "customer"=>"Testing customer",
-                "order_id"=>"Testing 27",
-                "id"=>"TESTING 27",
+                "order_id"=>"Testing $order->id",
+                "id"=>"Testing $order->id",
                 "lng"=>34.266593,
                 "lat"=>31.279708,
                 "storelat"=>31.277202,
@@ -100,13 +100,16 @@ class Cervo  extends AbstractDeliveryCompany
             return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
         } catch (\Exception $e) {
             logger($e->getMessage());
+            return false;
         }
     }
     public function processWebhook($payload){
         if(isset($payload["order_status"])  ){
-            $order = Order::findOrFail($payload['order_id']);
+
+            $order = Order::where('cervo_ref',$payload['order_id'])->first();
+
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-              
+  
                 if($payload['tracking']){
                     $order->update([
                         'tracking_url'=> $payload['tracking']
@@ -117,6 +120,7 @@ class Cervo  extends AbstractDeliveryCompany
                         'status'=>Order::ACCEPTED,
                         'deliver_by'=> class_basename(static::class),
                     ]);
+ 
                     $this->cancelOtherOrders("cervo",$order);
                    
                 }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){

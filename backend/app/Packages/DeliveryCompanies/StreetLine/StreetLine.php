@@ -82,7 +82,7 @@ class StreetLine  extends AbstractDeliveryCompany
                 $token = $this->delivery_company->api_key;
             }
             $response = $this->sendSync(
-                url:   $this->delivery_company->api_url."/$token/cancel/$id",
+                url:   $this->delivery_company->api_url."/$token/order/cancel/$id",
                 token: false,
                 data: [],
                 method: 'get'
@@ -110,9 +110,10 @@ class StreetLine  extends AbstractDeliveryCompany
     }
     public function processWebhook($payload){
         if(isset($payload["status_id"])  ){
-            $order =Order::where('streetline_ref',$payload['order_id'])->first();
+            $order =Order::where('streetline_ref',$payload['order_id'])->firstOrFail();
+    
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-              
+                
                 if($payload['tracking_url']){
                     $order->update([
                         'tracking_url'=> $payload['tracking_url']

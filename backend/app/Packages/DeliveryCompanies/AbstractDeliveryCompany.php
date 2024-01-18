@@ -51,7 +51,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
           
             if($response->successful()){
                 $response =  json_decode($response->getBody(), true);
-                logger($response);
+
                 return [
                     'http_code'=> ResponseHelper::HTTP_OK,
                     'message'=> $response
