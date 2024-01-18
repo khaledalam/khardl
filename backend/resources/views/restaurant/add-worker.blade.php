@@ -157,6 +157,15 @@
                                                           </div>
                                                           <!--end::Label-->
                                                       </div>
+                                                      <!--begin::Input group-->
+                                                      <div class="row mb-0 mt-5">
+                                                        <!--begin::Label-->
+                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                          <input class="form-check-input w-35px h-20px" type="checkbox" id="can_view_revenues" value="1" name="can_view_revenues">
+                                                            <label class="form-check-label" for="can_view_revenues">{{ __('messages.Can view revenues')}}</label>
+                                                        </div>
+                                                        <!--end::Label-->
+                                                    </div>
                                                       <!--end::Input group-->
                                                          <!--begin::Input group-->
                                                          <div class="row mb-0 mt-5">
