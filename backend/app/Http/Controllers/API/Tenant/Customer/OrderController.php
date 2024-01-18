@@ -4,12 +4,10 @@ namespace App\Http\Controllers\API\Tenant\Customer;
 
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
-use App\Models\Tenant\Order;
 use App\Models\Tenant\Payment;
 
 class OrderController
@@ -96,8 +94,6 @@ class OrderController
         ]);
 
     }
-
-
 
 
 }
