@@ -1,3 +1,14 @@
+RewriteEngine On
+
+# match any URL with www and rewrite it to https without the www
+RewriteCond %{HTTP_HOST} ^(www\.)(.*) [NC]
+RewriteRule (.*) https://%2%{REQUEST_URI} [L,R=301]
+
+# match urls that are non https (without the www)
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^(www\.)(.*) [NC]
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 <IfModule mod_rewrite.c>
     RewriteEngine on
     RewriteCond %{REQUEST_URI} !^backend/public
@@ -8,6 +19,11 @@
   SecFilterEngine Off
   SecFilterScanPOST Off
 </IfModule>
+
+AuthType Basic
+AuthName "Secure Content"
+AuthUserFile /home/khardl4test/keys/.htpasswd
+require valid-user
 
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php81” package as the default “PHP” programming language.
