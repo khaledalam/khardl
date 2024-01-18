@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Tenant\Customer;
 
+use App\Models\Tenant\Coupon;
 use App\Models\Tenant\DeliveryType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
@@ -27,23 +28,44 @@ class OrderRequest extends FormRequest
      */
     public function rules()
     {
-       
+
         return [
             'payment_method'=>'required',
             'delivery_type'=>'required',
             'shipping_address'=>'nullable',
             'order_notes'=>'nullable',
             'cart'=>'nullable',
-            'address'=>'nullable'
+            'address'=>'nullable',
+            'code' => [
+                'nullable',
+                'string',
+                'exists:coupons,code',
+                function ($attribute, $value, $fail) {
+                    if ($coupon = Coupon::where('code', $value)->first()) {
+                        if (!$coupon->validity) {
+                            $fail(__('The coupon has been expired'));
+                        }
+                        if (!$coupon->user_validity) {
+                            $fail(__('You have reached the maximum coupon use'));
+                        }
+                        if ($coupon->minimum_cart_amount) {
+                            $cart = (new CartRepository)->initiate();
+                            if ($cart->subTotal() < $coupon->minimum_cart_amount) {
+                                $fail(__('You must have at least subtotal :subtotal SAR to active this coupon', ['subtotal' => $coupon->minimum_cart_amount]));
+                            }
+                        }
+                    }
+                }
+            ]
         ];
     }
     public function withValidator($validator)
     {
-        
+
         $cart = CartRepository::get();
 
         $validator->after(function ($validator) use($cart){
-            
+
             $user = Auth::user();
             if(!$user->address || !$user->lat || !$user->lng){
                 $validator->errors()->add('address', __('Please update your location before place an order'));
@@ -61,7 +83,7 @@ class OrderRequest extends FormRequest
                 $validator->errors()->add('delivery_type', __('Invalid Delivery Type'));
                 return ;
             }
-           
+
             $cart->items()->map(function($cart_item)use($validator){
                 if(!$cart_item->item->availability){
                     $validator->errors()->add('cart', __(':name is not available',['name'=>$cart_item->item->name]));
@@ -72,10 +94,10 @@ class OrderRequest extends FormRequest
             //     $branch = $cart->branch();
             //     DeliveryCompanies::validateCustomerAddress($validator,$branch->lat,$branch->lng,$user->lat,$user->lng);
             // }
-            
+
         });
     }
 
 
-  
+
 }

@@ -25,7 +25,7 @@ class OrderRepository
     {
         DB::beginTransaction();
         try {
-         
+
             $user= $user ?? Auth::user();
             $subtotal = $cart->subTotal();
             $delivery = DeliveryType::where('name',$request->delivery_type)->first();
@@ -39,6 +39,8 @@ class OrderRepository
                 'subtotal' =>$subtotal,
                 'shipping_address'=>$request->shipping_address,
                 'order_notes'=>$request->order_notes,
+                'coupon_id' => $cart->coupon(),
+                'discount'  => $cart->discount(),
                 // TODO @todo update
                 'payment_status' => Payment::PENDING,
                 'status'=> Order::PENDING,
@@ -51,14 +53,14 @@ class OrderRepository
             $statusLog->saveOrFail();
 
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){
-               
+
 
                 // @TODO: fetch transaction fee percentage that need to be deduce from
                 // each TAP transaction from super admin dashboard settings
 
 
                 // @TODO: Create TAP charge
-              
+
                 $cart->trash();
 
                 DB::commit();
@@ -70,7 +72,7 @@ class OrderRepository
                     'transaction_id'=>$request->tap_id ?? null
                 ]);
                 $charge = Charge::retrieve($request->tap_id);
-               
+
                 if($charge['message']['status'] == 'CAPTURED'){
                     $order->update([
                         "payment_status"=> Payment::PAID
@@ -81,7 +83,7 @@ class OrderRepository
                         "payment_status"=> Payment::FAILED
                     ]);
                 }
-               
+
                 DB::commit();
                 return $order;
             }
