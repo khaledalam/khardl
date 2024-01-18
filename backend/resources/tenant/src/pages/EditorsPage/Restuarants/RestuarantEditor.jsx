@@ -16,6 +16,7 @@ import {
 import HeaderEdit from "./components/HeaderEdit"
 
 export const RestuarantEditor = () => {
+  
   const dispatch = useDispatch()
   const categories = useSelector((state) => state.categoryAPI.categories)
 
