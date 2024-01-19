@@ -1,38 +1,33 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ImgPlaceholder from "../../../../assets/imgPlaceholder.png";
-import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg";
-import { IoCloseOutline, IoMenuOutline } from "react-icons/io5";
-import CategoryItem from "./CategoryItem";
-import ProductItem from "./ProductItem";
-import { useSelector, useDispatch } from "react-redux";
-import { MenuContext } from "react-flexible-sliding-menu";
-import Slider from "./Slider";
-import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlice";
+import React, {Fragment, useContext, useEffect, useState} from "react"
+import {useNavigate} from "react-router-dom"
+import ImgPlaceholder from "../../../../assets/imgPlaceholder.png"
+import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg"
+import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
+import CategoryItem from "./CategoryItem"
+import ProductItem from "./ProductItem"
+import {useSelector, useDispatch} from "react-redux"
+import {MenuContext} from "react-flexible-sliding-menu"
+import Slider from "./Slider"
+import {selectedCategoryAPI} from "../../../../redux/NewEditor/categoryAPISlice"
 import {
   logoUpload,
   setBannerUpload,
-} from "../../../../redux/NewEditor/restuarantEditorSlice";
-import { useTranslation } from "react-i18next";
-import HeaderEdit from "./HeaderEdit";
-import { BiCloudUpload } from "react-icons/bi";
-import ReactCrop from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
+} from "../../../../redux/NewEditor/restuarantEditorSlice"
+import {useTranslation} from "react-i18next"
+import HeaderEdit from "./HeaderEdit"
+import {BiCloudUpload} from "react-icons/bi"
 
-const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
-  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 16 / 9 });
-  const [completedCrop, setCompletedCrop] = useState(null);
-
+const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
-  );
-  const [isVideo, setIsVideo] = useState(false);
-  const { t } = useTranslation();
-  const language = useSelector((state) => state.languageMode.languageMode);
+  )
+  const [isVideo, setIsVideo] = useState(false)
+  const {t} = useTranslation()
+  const language = useSelector((state) => state.languageMode.languageMode)
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { toggleMenu } = useContext(MenuContext);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {toggleMenu} = useContext(MenuContext)
 
   const {
     page_color,
@@ -68,29 +63,29 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
     socialMediaIcons_alignment,
     selectedSocialIcons,
     text_color,
-  } = restuarantEditorStyle;
-  console.log("restuarantEditorStyle", restuarantEditorStyle);
+  } = restuarantEditorStyle
+  console.log("restuarantEditorStyle", restuarantEditorStyle)
 
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
-  );
+  )
   const cartItemsCount = useSelector(
     (state) => state.categoryAPI.cartItemsCount
-  );
+  )
   const uploadLogo = useSelector(
     (state) => state.restuarantEditorStyle.logoUpload
-  );
+  )
 
-  const [uploadSingleBanner, setUploadSingleBanner] = useState(null);
+  const [uploadSingleBanner, setUploadSingleBanner] = useState(null)
 
   const handleLogoUpload = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const selectedLogo = event.target.files[0];
+    const selectedLogo = event.target.files[0]
     if (selectedLogo) {
-      dispatch(logoUpload(URL.createObjectURL(selectedLogo)));
+      dispatch(logoUpload(URL.createObjectURL(selectedLogo)))
     }
-  };
+  }
 
   const handleBannerUpload = (event) => {
     event.preventDefault()
@@ -109,42 +104,6 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
     }
   }
- 
-
- 
-
-  const handleCropSave = (originalImage) => {
-    console.log("handleCropSave");
-    console.log("handleCropSave ", completedCrop);
-    console.log("originalImage", originalImage);
-    const canvas = document.createElement("canvas");
-    const scaleX = originalImage.width / originalImage.naturalWidth;
-    const scaleY = originalImage.height / originalImage.naturalHeight;
-    const ctx = canvas.getContext("2d");
-
-    ctx.drawImage(
-      originalImage,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height
-    );
-
-    const croppedImageBlob = new Promise((resolve) => {
-      canvas.toBlob((blob) => {
-        console.log(blob, " blob");
-        resolve(blob);
-      }, "image/jpeg");
-    });
-
-    croppedImageBlob.then((blob) => {
-      dispatch(setBannerUpload(URL.createObjectURL(blob)));
-    });
-  };
 
   useEffect(() => {
     if (language !== "en") {
@@ -154,7 +113,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
             name: categories[0]?.name,
             id: categories && categories[0]?.id,
           })
-        );
+        )
       }
     } else {
       dispatch(
@@ -162,17 +121,17 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
           name: categories[0]?.name,
           id: categories && categories[0]?.id,
         })
-      );
+      )
     }
-  }, [language, dispatch, categories]);
+  }, [language, dispatch, categories])
 
   const clearLogo = () => {
-    dispatch(logoUpload(null));
-  };
+    dispatch(logoUpload(null))
+  }
   const clearBanner = () => {
-    setUploadSingleBanner(null);
-    dispatch(setBannerUpload(null));
-  };
+    setUploadSingleBanner(null)
+    dispatch(setBannerUpload(null))
+  }
 
   const categoriesPlaceHolders = [
     {
@@ -200,7 +159,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
       name: "category 3",
       photo: ImgPlaceholder,
     },
-  ];
+  ]
   const productPlaceHolders = [
     {
       id: 1,
@@ -226,20 +185,20 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
       calories: 245,
       availability: 1,
     },
-  ];
+  ]
 
   const filterCategory =
     categories && categories.length > 0
       ? categories?.filter((category) => category.id === selectedCategory.id)
-      : [{ name: "Product", items: productPlaceHolders }];
+      : [{name: "Product", items: productPlaceHolders}]
 
-  console.log("bannner shape", banner_shape);
-  console.log("font weight", text_fontWeight);
+  console.log("bannner shape", banner_shape)
+  console.log("font weight", text_fontWeight)
 
-  console.log("filterCategory", filterCategory);
+  console.log("filterCategory", filterCategory)
 
-  const filetype = "video";
-  console.log("Richa");
+  const filetype = "video"
+
   return (
     <div
       style={{
@@ -247,7 +206,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
         fontFamily: text_fontFamily,
         fontWeight: text_fontWeight,
       }}
-      className="w-full p-4 flex flex-col gap-6 relative"
+      className='w-full p-4 flex flex-col gap-6 relative'
     >
       {/* Header cart */}
       {headerPosition !== "fixed" && (
@@ -258,7 +217,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
       )}
       {/* logo */}
       <div
-        style={{ backgroundColor: page_color }}
+        style={{backgroundColor: page_color}}
         className={`w-full min-h-[100px]    rounded-xl flex ${
           logo_alignment === "center"
             ? "items-center justify-center"
@@ -270,26 +229,32 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
         } `}
       >
         <div
-          style={{ borderRadius: logo_shape === "sharp" ? 0 : 12 }}
-          className="w-[60px] h-[60px] p-2 bg-neutral-100 relative"
+          style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
+          className='w-[60px] h-[60px] p-2 bg-neutral-100 relative'
         >
           <input
-            type="file"
-            name="logo"
+            type='file'
+            name='logo'
             id={"logo"}
-            accept="image/*"
+            accept='image/*'
             onChange={handleLogoUpload}
-            className="hidden"
+            className='hidden'
             hidden
           />
-          <label htmlFor="logo"></label>
-
+          <label htmlFor='logo'>
+            <img
+              src={uploadLogo ? uploadLogo : logo ? logo : ImgPlaceholder}
+              alt={""}
+              style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
+              className='w-full h-full object-cover'
+            />
+          </label>
           {uploadLogo && (
-            <div className="absolute top-[-0.8rem] right-[-1rem] cursor-pointer">
-              <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
+            <div className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'>
+              <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
                 <IoCloseOutline
                   size={16}
-                  className="text-red-500 cursor-pointer"
+                  className='text-red-500 cursor-pointer'
                   onClick={clearLogo}
                 />
               </div>
@@ -299,7 +264,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
       </div>
       {/* banner */}
       {banner_type === "slider" ? (
-        <div className="w-full">
+        <div className='w-full'>
           <Slider banner_images={banner_images} />
         </div>
       ) : isVideo || (banner_image && banner_image?.type === "video") ? (
@@ -309,9 +274,9 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
           {uploadSingleBanner && (
             <video
               controls
-              className="absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]"
+              className='absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]'
             >
-              <source src={uploadSingleBanner} type="video/mp4" />
+              <source src={uploadSingleBanner} type='video/mp4' />
               Your browser does not support the video tag.
             </video>
           )}
@@ -319,22 +284,22 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
             style={{
               borderRadius: banner_shape === "sharp" ? 0 : 12,
             }}
-            className="w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative"
+            className='w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative'
           >
-            <label htmlFor="banner">
+            <label htmlFor='banner'>
               <input
-                type="file"
-                name="banner"
+                type='file'
+                name='banner'
                 id={"banner"}
-                accept="video/*, image/*"
+                accept='video/*, image/*'
                 onChange={handleBannerUpload}
-                className="hidden"
+                className='hidden'
                 hidden
               />
               {uploadSingleBanner ? (
                 <IoCloseOutline
                   size={28}
-                  className="text-red-500"
+                  className='text-red-500'
                   onClick={clearBanner}
                 />
               ) : (
@@ -362,16 +327,16 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
             style={{
               borderRadius: banner_shape === "sharp" ? 0 : 12,
             }}
-            className="w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative"
+            className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
           >
-            <label htmlFor="banner">
+            <label htmlFor='banner'>
               <input
-                type="file"
-                name="banner"
+                type='file'
+                name='banner'
                 id={"banner"}
-                accept="video/*, image/*"
+                accept='video/*, image/*'
                 onChange={handleBannerUpload}
-                className="hidden"
+                className='hidden'
                 hidden
               />
 
@@ -384,15 +349,15 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
                     : ImgPlaceholder
                 }
                 alt={""}
-                className="w-full h-full object-cover"
+                className='w-full h-full object-cover'
               />
             </label>
             {uploadSingleBanner && (
-              <div className="absolute top-[-0.8rem] right-[-1rem]">
-                <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
+              <div className='absolute top-[-0.8rem] right-[-1rem]'>
+                <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
                   <IoCloseOutline
                     size={16}
-                    className="text-red-500"
+                    className='text-red-500'
                     onClick={clearBanner}
                   />
                 </div>
@@ -426,7 +391,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
               backgroundColor: page_category_color,
               borderRadius: category_shape === "sharp" ? 0 : 12,
             }}
-            className="w-full py-3 flex items-center justify-center"
+            className='w-full py-3 flex items-center justify-center'
           >
             <div
               className={`flex ${
@@ -488,7 +453,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
           </div>
         </div>
         <div
-          style={{ backgroundColor: product_background_color }}
+          style={{backgroundColor: product_background_color}}
           className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${
             category_alignment === "left"
               ? "order-2 w-[75%]"
@@ -505,12 +470,12 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
             className={`w-full h-full flex flex-col items-center justify-center `}
           >
             <h3
-              style={{ fontWeight: text_fontWeight }}
+              style={{fontWeight: text_fontWeight}}
               className={`${
                 text_fontFamily ? text_fontFamily : "font-semibold"
               } text-[1.5rem] text-center my-4 relative capitalize`}
             >
-              <span className="custom-underline capitalize">
+              <span className='custom-underline capitalize'>
                 {selectedCategory.name}
               </span>{" "}
             </h3>
@@ -582,7 +547,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
       </div>
       {/* social media */}
       <div
-        style={{ backgroundColor: footer_color }}
+        style={{backgroundColor: footer_color}}
         className={`w-full min-h-[70px] px-3  rounded-xl flex ${
           socialMediaIcons_alignment === "center"
             ? "items-center justify-center"
@@ -593,18 +558,18 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
             : ""
         }`}
       >
-        <div className="flex items-center gap-5">
+        <div className='flex items-center gap-5'>
           {selectedSocialIcons?.map((socialMedia) => (
             <a
               href={socialMedia.link ? socialMedia.link : "javascript:void(0)"}
               key={socialMedia.id}
-              className="cursor-pointer"
+              className='cursor-pointer'
             >
-              <div className="w-[30px] h-[30px] rounded-full relative">
+              <div className='w-[30px] h-[30px] rounded-full relative'>
                 <img
                   src={socialMedia.imgUrl}
                   alt={"whatsapp"}
-                  className="w-full h-full object-cover"
+                  className='w-full h-full object-cover'
                 />
               </div>
             </a>
@@ -612,7 +577,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
         </div>
       </div>
       <div
-        style={{ backgroundColor: footer_color }}
+        style={{backgroundColor: footer_color}}
         className={`w-full min-h-[70px]  rounded-xl flex  ${
           phoneNumber_alignment === "center"
             ? "items-center justify-center"
@@ -631,23 +596,8 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
           {phoneNumber}
         </h3>
       </div>
-
-      <ReactCrop
-  crop={crop}
-  onChange={(c) => setCrop(c)}
-  onComplete={(c) => setCompletedCrop(c)}
->
-  <img
-    src={uploadLogo ? uploadLogo : logo ? logo : ImgPlaceholder}
-    alt={""}
-    style={{ borderRadius: logo_shape === "sharp" ? 0 : 12 }}
-    className="w-full h-full object-cover"
-  />
-</ReactCrop>
-<button onClick={handleCropSave}>Save</button>
-
     </div>
-  );
-};
+  )
+}
 
-export default MainBoardEditor;
+export default MainBoardEditor
