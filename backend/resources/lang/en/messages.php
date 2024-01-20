@@ -720,5 +720,8 @@ return [
     "Line 2"=>"Line 2",
     "Home"=>"Home",
     "Work"=>"Work",
-    "Date of birth"=>"Date of birth"
+    "Date of birth"=>"Date of birth",
+    "Bank Details"=>"Bank Details",
+    "Email Information"=>"Email Information",
+    "Birthday"=>"Birthday"
 ];
