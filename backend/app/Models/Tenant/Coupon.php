@@ -30,7 +30,7 @@ class Coupon extends Model
             && now()->startOfDay() >= $this->active_from
             && $this->expire_at >= now()->startOfDay();
         if (!$condition)
-            return !$condition;
+            return $condition;
         else {
             if ($this->max_use) {
                 return $this->users()->count() < $this->max_use;
@@ -49,7 +49,7 @@ class Coupon extends Model
     {
         $discount = $total;
         if ($this->type == CouponTypes::FIXED_COUPON->value) {
-            $discount = $total - $this->amount;
+            $discount = $this->amount;
         } elseif ($this->type == CouponTypes::PERCENTAGE_COUPON->value) {
             $discount = ($this->amount * $total) / 100;
         }

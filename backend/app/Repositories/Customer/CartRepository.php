@@ -155,7 +155,11 @@ class CartRepository
         $this->cart->save();
     }
     public function discount()
-    {   if(!$this->coupon())return 0;
+    {
+        if (!$this->coupon())
+            return 0;
+        if (!$this->coupon()->validity || !$this->coupon()->user_validity || $this->subTotal() < $this->coupon()->minimum_cart_amount)
+            return 0;
         return $this->coupon()->calculateDiscount($this->subTotal());
     }
     public function coupon()

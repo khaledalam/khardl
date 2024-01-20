@@ -19,6 +19,12 @@ class CouponController
         $coupon = Coupon::where('code', $request->code)->first();
         $discount = $coupon->calculateDiscount($subTotal);
         $cart->cart->update(['coupon_id' => $coupon->id]);
-        return $this->sendResponse($discount, __('Coupon has been applied'));
+        return $this->sendResponse([
+            'discount' => $discount,
+            'discount_type' => $coupon->type,
+            'minimum_cart_amount' => $coupon->minimum_cart_amount,
+            'max_discount_amount' => $coupon->max_discount_amount,
+            'after_total' => ($subTotal - $discount) > 0 ? $subTotal - $discount : 0
+        ], __('Coupon has been applied'));
     }
 }

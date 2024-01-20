@@ -36,27 +36,6 @@ class OrderRequest extends FormRequest
             'order_notes'=>'nullable',
             'cart'=>'nullable',
             'address'=>'nullable',
-            'code' => [
-                'nullable',
-                'string',
-                'exists:coupons,code',
-                function ($attribute, $value, $fail) {
-                    if ($coupon = Coupon::where('code', $value)->first()) {
-                        if (!$coupon->validity) {
-                            $fail(__('The coupon has been expired'));
-                        }
-                        if (!$coupon->user_validity) {
-                            $fail(__('You have reached the maximum coupon use'));
-                        }
-                        if ($coupon->minimum_cart_amount) {
-                            $cart = (new CartRepository)->initiate();
-                            if ($cart->subTotal() < $coupon->minimum_cart_amount) {
-                                $fail(__('You must have at least subtotal :subtotal SAR to active this coupon', ['subtotal' => $coupon->minimum_cart_amount]));
-                            }
-                        }
-                    }
-                }
-            ]
         ];
     }
     public function withValidator($validator)
