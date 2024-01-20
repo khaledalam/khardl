@@ -44,19 +44,20 @@ function FeaturesSection() {
 
   return (
     <>
-      <section className="mx-[100px] max-[1250px]:mx-[20px] flex flex-col items-center justify-center ">
-        <div className="grid grid-cols-2 gap-4">
+      <section className="mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col justify-start items-start">
-            <div className="flex">
-              <img className="h-[30%] m-2" src={Line1} alt="background" />
-              <h3 className="flex home-heading">{t("Khardl's services")}</h3>
+            <div className="flex items-center">
+              <img className="h-6 md:h-[30%] m-2" src={Line1} alt="background" />
+              <h3 className="flex home-heading text-2xl md:text-4xl">{t("Khardl's services")}</h3>
             </div>
 
-            <h3 className="text-[#342828] mt-4 text-medium">
+            <h3 className="text-[#342828] mt-4 text-md md:text-lg">
               {t("Khardl's services Details")}
             </h3>
             <img
-              className="w-[90%] h-auto max-w-[90%]"
+
+               className="w-full h-auto max-w-full md:max-w-[90%]"
               src={Group9}
               alt="background"
             />
@@ -66,9 +67,9 @@ function FeaturesSection() {
             {Features.map((card) => (
               <div
                 key={card.id}
-                className="bg-white shadow rounded-md p-4 w-[595px] h-[142px] flex items-center mt-5"
+                className="bg-white shadow rounded-md p-4 w-full md:w-[1/2] lg:w-[1/3] xl:w-[1/4] mx-2 my-4 flex flex-col md:flex-row items-center"
               >
-                <div>
+                <div className="w-full md:w-[50%] mb-4 md:mb-0 flex items-center justify-center">
                   <img
                     className="w-[50%] h-auto max-w-[50%]"
                     src={card.image}

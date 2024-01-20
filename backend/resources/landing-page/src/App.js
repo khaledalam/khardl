@@ -114,7 +114,7 @@ const App = () => {
         </div>{" "}
         {showFooter && !loading && (
           <div className='p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] '>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         )}{" "}
       </div>{" "}

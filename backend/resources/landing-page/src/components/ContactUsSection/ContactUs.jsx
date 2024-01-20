@@ -65,10 +65,12 @@ function ContactUs() {
               src={Group5}
               alt="background"
             />
-            {/* <div className="absolute top-0 left-[10%] transform -translate-x-1/2 text-white">
+            <div className="absolute top-0 left-[40%] transform -translate-x-1/2 text-white font-linden-hill ">
+
+
               <h3 className="contact-heading mt-2">Contact Information</h3>
               <h3 className="contact-text">{t("Footer")}</h3>
-            </div> */}
+            </div>
           </div>
 
           <div className="w-[100%] flex items-center justify-center">
