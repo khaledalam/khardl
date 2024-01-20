@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\Restaurant\ExportSubscriptionInvoice;
-use App\Jobs\SendApprovedBusinessEmailJob;
-use App\Models\Tenant;
-use App\Models\Tenant\Setting;
 use Carbon\Carbon;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Tenant\Tap\TapBusiness;
-use App\Models\Tenant\Tap\TapBusinessFile;
-use App\Packages\TapPayment\Business\Business;
-use App\Packages\TapPayment\Charge\Charge;
-use App\Packages\TapPayment\File\File as TapFileAPI;
-use App\Packages\TapPayment\Lead\Lead;
-use App\Packages\TapPayment\Requests\CreateBusinessRequest;
-use App\Packages\TapPayment\Requests\CreateLeadRequest;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Tenant\Tap\TapBusiness;
+use App\Packages\TapPayment\Lead\Lead;
+use App\Jobs\SendApprovedBusinessEmailJob;
+use App\Models\Tenant\Tap\TapBusinessFile;
+use App\Packages\TapPayment\Charge\Charge;
+use App\Packages\TapPayment\Business\Business;
+use App\Jobs\SendTAPLeadIDMerchantIDRequestEmailJob;
+use App\Packages\TapPayment\File\File as TapFileAPI;
+use App\Exports\Restaurant\ExportSubscriptionInvoice;
+use App\Packages\TapPayment\Requests\CreateLeadRequest;
+use App\Packages\TapPayment\Requests\CreateBusinessRequest;
 
 class TapController extends Controller
 {
@@ -207,6 +208,10 @@ class TapController extends Controller
             Setting::first()->update([
                 'lead_id'=> $response['message']['id']
             ]); 
+            SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
+                user: auth()->user,
+                lead_id :  $response['message']['id']
+            );
             // TODO @todo add to Log action
 
             return redirect()->route('restaurant.service')->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
