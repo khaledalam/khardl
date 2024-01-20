@@ -598,7 +598,7 @@ return [
     'loyalty-point-desc' => "كم عدد نقاط ولاء الطلب التي سيحصل عليها العميل لكل طلب",
     'cashback-per-amount-percentage' => 'نسبه استرداد النقود',
     'new-branch-slot-price' => 'سعر فرع جديد',
-    "Subscription has been updated"=>"تم تحديث الاشتراك بنجاج",
+    "Subscription has been updated"=>"تم تحديث الاشتراك بنجاح",
     "The subscription has been activated successfully"=>"تم تفعيل الاشتراك بنجاح ",
     "subscribed"=>"تم الاشتراك",
     "Number of available branches"=>"عدد الفروع المتاحة",
@@ -676,7 +676,7 @@ return [
     "Makkah"    => "مكة",
     "Taif"  => "الطائف",
     "Abha"  => "ابها",
-    "Bulgrshi"  => "Bulgrshi",
+    "Bulgrshi"  => "بلجرشي",
     "Kharj" => "الخرج",
     "Al Madinah" => "المدينة",
     "Khamis Mashit" => "خميس مشيط",
@@ -697,6 +697,10 @@ return [
     "Cart total" => "المبلغ الكلي للعربة",
     "each_time" => "مرة",
     "Coupons" => "قسائم الخصومات",
-    "Update" => "تعديل"
+    "Update" => "تعديل",
+    "You do not the availability to add new branch" => "لا يتوفر لديك إمكانية إضافة فرع جديد",
+    "You have to purchase new service" => "يجب عليك شراء خدمة جديدة",
+    "You can add new branches from services" => "يمكنك إضافة فروع جديدة من الخدمات",
+    "Can view revenues" => "يمكن مشاهدة الايرادات"
 ];
 

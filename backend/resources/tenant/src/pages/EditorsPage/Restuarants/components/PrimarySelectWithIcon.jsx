@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react"
 import {BiChevronDown} from "react-icons/bi"
-
+import { useSelector } from "react-redux"
 const PrimarySelectWithIcon = ({
   imgUrl,
   text,
@@ -10,17 +10,18 @@ const PrimarySelectWithIcon = ({
   onChange,
 }) => {
   const [isOpen, setisOpen] = useState(false)
-
+  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
   const handleDropdown = useCallback(() => {
     setisOpen((prev) => !prev)
   }, [])
   return (
-    <div className='w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border border-[#C0D123] items-center cursor-pointer '>
-      <div className='bg-[#C0D123] flex items-center gap-1  border-r border-[#C0D123]'>
+    <div style={{borderColor: restuarantStyle?.categoryDetail_cart_color }} className={`w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer `}>
+      <div style={{backgroundColor: restuarantStyle?.categoryDetail_cart_color, borderColor: restuarantStyle?.categoryDetail_cart_color }} className={` flex items-center gap-1  border-r `}>
         <div className='w-[50px] h-[50px] rounded-xl flex items-center justify-center'>
-          <img src={imgUrl} alt='deliveryIcon' />
+          <img src={imgUrl} alt='deliveryIcon' style={{ filter: 'invert(1)'}} />
+          
         </div>
-        <h3 className='capitalize pr-2 w-max'>{text}</h3>
+        <h3 className='capitalize pr-2 w-max' style={{color: '#fff'}}>{text}</h3>
       </div>
       <div
         className={`dropdown w-full border-none hover:border-none outline-none focus-visible:border-none focus-visible:outline-none`}
