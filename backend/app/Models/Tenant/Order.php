@@ -23,7 +23,9 @@ class Order extends Model
         'order_notes',
         'delivery_type_id',
         'vat',
-        'subtotal'
+        'subtotal',
+        'coupon_id',
+        'discount'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     const STATUS = [

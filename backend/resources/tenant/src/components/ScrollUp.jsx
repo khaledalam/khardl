@@ -4,7 +4,7 @@ import {AiOutlineArrowUp} from "react-icons/ai"
 
 const ScrollUp = () => {
   const Language = useSelector((state) => state.languageMode.languageMode)
-  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
+    const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
   const [scrollY, setScrollY] = useState(0)
   useEffect(() => {
@@ -28,8 +28,8 @@ const ScrollUp = () => {
     >
       <button
         style={{
-          background: restaurantStyle?.banner_background_color
-            ? restaurantStyle?.banner_background_color
+          background: restaurantStyle?.categoryDetail_cart_color
+            ? restaurantStyle?.categoryDetail_cart_color
             : "",
         }}
         onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}
@@ -37,7 +37,11 @@ const ScrollUp = () => {
           scrollY > scrollThreshold ? "block" : "hidden"
         }`}
       >
-        <AiOutlineArrowUp className='text-[#525252] text-[25px] max-[450px]:text-[20px]' />
+        <AiOutlineArrowUp className='text-[#525252] text-[25px] max-[450px]:text-[20px]'  style={{
+          color: restaurantStyle?.banner_background_color
+            ? restaurantStyle?.banner_background_color
+            : "",
+        }} />
       </button>
     </div>
   )

@@ -18,6 +18,7 @@ yarn-error.log
 /.idea
 /.vscode
 composer.lock
+package-lock.json
 
 public/js/tenant.js
 public/mix-manifest.json

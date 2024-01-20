@@ -187,7 +187,8 @@ return [
         "percentage" => "Percentage value",
         "active_from" => "Active from",
         "expire_at" => "Expire at",
-        "code" => "Coupon code"
+        "code" => "Coupon code",
+        "module" => "Delivery company"
     ],
 
 ];

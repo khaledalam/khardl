@@ -697,6 +697,10 @@ return [
     "each_time" => "Time",
     "Coupons" => "Coupons",
     "Update" => "Update",
+    "You do not the availability to add new branch" => "You do not the availability to add new branch",
+    "You have to purchase new service" => "You have to purchase new service",
+    "You can add new branches from services" => "You can add new branches from services",
+    "Can view revenues" => "Can view revenues",
 
 
     "Your estimated sales (Monthly)"=>"Your estimated sales (Monthly)",

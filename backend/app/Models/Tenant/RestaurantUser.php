@@ -137,7 +137,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->phone_verified_at != null;
     }
-
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class,'user_coupons','user_id');
+    }
     public function generateVerificationSMSCode()
     {
         $this->newAttempt();
