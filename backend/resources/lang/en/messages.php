@@ -720,5 +720,10 @@ return [
     "Line 2"=>"Line 2",
     "Home"=>"Home",
     "Work"=>"Work",
-    "Date of birth"=>"Date of birth"
+    "Date of birth"=>"Date of birth",
+    "Bank Details" => "Bank Details",
+    "Email Information" => "Email Information",
+    "Birthday" => "Birthday",
+    "Is this your primary email?" => "Is this your primary email?",
+    "Is this your primary number?" => "Is this your primary number?"
 ];
