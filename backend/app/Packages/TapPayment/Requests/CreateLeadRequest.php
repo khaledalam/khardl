@@ -133,12 +133,14 @@ class CreateLeadRequest  extends FormRequest
                     'technology_id' => env('TAP_PAYMENT_TECHNOLOGY_ID'),
                 ],
             ];
+       
         $this->prepareTerms();
         $this->merge([
             'brand' => array_merge_recursive($defaults['brand'], $this->brand),
             'entity' => array_merge_recursive($defaults['entity'], $this->entity),
             'user' => array_merge_recursive($defaults['user'], $this->user),
-            'payment_provider' => $defaults['payment_provider']
+            'payment_provider' => $defaults['payment_provider'],
+            'platforms'=>$defaults['platforms']
         ]);
         $this->merge([
             'brand'=>array_merge($this->brand,

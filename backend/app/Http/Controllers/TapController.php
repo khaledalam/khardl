@@ -201,6 +201,7 @@ class TapController extends Controller
     public function payments_submit_lead(CreateLeadRequest $request){
         $response = Lead::connect($request->all());
         if($response['http_code'] == ResponseHelper::HTTP_OK){
+            logger( $response['message']);
             Setting::first()->update([
                 'lead_id'=> $response['message']['id']
             ]); 
