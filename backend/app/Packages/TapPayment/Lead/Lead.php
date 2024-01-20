@@ -9,7 +9,7 @@ class Lead extends Tap implements LeadInterface
 {
 
     public static function connect(array $data) {
-        return self::send("/connect/lead/",[],'post');
+        return self::sendToLead("/connect/lead",$data,'post');
     }
 
 }

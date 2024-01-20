@@ -174,7 +174,9 @@ class TapController extends Controller
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
                 } else {
-                    return redirect()->route('restaurant.service')->with('error', __("The payment failed, and the subscription fee has not been paid"));
+                    return redirect()->route('restaurant.service')
+                 
+                    ->with('error', __("The payment failed, and the subscription fee has not been paid"));
                 }
 
             }
@@ -209,7 +211,9 @@ class TapController extends Controller
 
             return redirect()->route('restaurant.service')->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
         }
-        return redirect()->back()->with('error', $response['message']);
+        return redirect()->back()
+        ->withInput($request->input())
+        ->with('error', $response['message']);
 
     }
 

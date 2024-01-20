@@ -15,7 +15,7 @@ class CreateLeadRequest  extends FormRequest
      */
     public function rules()
     {
-       
+     
         return [
             'brand.operations.sales.period' => 'required|string',
             'brand.operations.sales.range.from' => 'required|string',
@@ -104,7 +104,7 @@ class CreateLeadRequest  extends FormRequest
                
             ],
             'entity' => [
-                'country' => 'SA',
+                'country' => 'AE',
                 'license' => [
                     'country' => 'SA',
                     'type' => 'commercial_registration',
@@ -116,7 +116,7 @@ class CreateLeadRequest  extends FormRequest
                 ],
                 'identification' => [
                     'type' => 'national_id',
-                    'issuer' => 'SA',
+                    'issuer' => 'AE',
                 ],
                 'phone' => [
                     'country_code' => '966',
@@ -151,8 +151,19 @@ class CreateLeadRequest  extends FormRequest
             'user'=>array_merge($this->user,
                 [
                     'address'=>[ $this->user['address']],
-                    'phone'=>[ $this->user['phone']],
-                    'email'=>[ $this->user['email']],
+                    'phone'=>[ 
+                        array_merge($this->user['phone'],
+                        [
+                            'primary'=>true
+                        ]
+                        )
+                    ],
+                    'email'=>[ 
+                        array_merge($this->user['email'],
+                    [
+                        'primary'=>true
+                    ]
+                    )],
             ]),
             'entity'=>array_merge($this->entity,[
                 'is_licensed'=>($this->is_licensed)?true:false
