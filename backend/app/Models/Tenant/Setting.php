@@ -19,7 +19,9 @@ class Setting extends Model implements Syncable
         'restaurant_name',
         'loyalty_points_per_order',
         'cashback_per_amount_percentage',
-        'global_id'
+        'global_id',
+        'merchant_id',
+        'lead_id'
     ];
     public $timestamps = false;
     public function getGlobalIdentifierKey()

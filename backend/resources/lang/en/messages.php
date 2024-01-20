@@ -342,7 +342,7 @@ return [
     "Is Licensed"=>"Is Licensed",
     "Is Business Licensed"=>"Is Business Licensed",
     "country"=>"Country",
-    "Contact Person"=>"Person Information",
+    "Contact Person"=>"Personal Information",
     "Title"=>"Title",
     "First Name"=>"First Name",
     "Middle Name"=>"Middle Name",
@@ -731,5 +731,8 @@ return [
     "Is this your primary email?" => "Is this your primary email?",
     "Is this your primary number?" => "Is this your primary number?",
     "You need to configure your payment account to access services" => "You need to configure your payment account to access services",
-    "Manage payment gateway" => "Manage payment gateway"
+    "Manage payment gateway" => "Manage payment gateway",
+    "From"=>'From',
+    'To'=>"To",
+        
 ];

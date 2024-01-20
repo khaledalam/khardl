@@ -11,7 +11,7 @@
 <!--begin::Content-->
 <div class="container content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
     <!--begin::Post-->
-    <form id="kt_modal_new_target_form" class="form" action="{{ route('tap.test-payment', ['id' => 'test']) }}" method="POST" enctype="multipart/form-data">
+    <form id="kt_modal_new_target_form" class="form"  method="POST" enctype="multipart/form-data" action="{{route('tap.payments_submit_lead')}}">
         @csrf
         <div class="row">
             <div class="col-md-6">
@@ -72,7 +72,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="brand[operations][sales][range][from]" value="{{old('brand.operations.sales.range.from')}}">
+                                <input type="number" class="form-control" name="brand[operations][sales][range][from]" placeholder="{{__('messages.From')}}" value="{{old('brand.operations.sales.range.from')}}">
                                 <div class="input-group-append">
                                     <span class="input-group-text" style="opacity:0.8;border-bottom-left-radius:0;border-top-left-radius:0">{{__('messages.SAR')}}</span>
 
@@ -81,7 +81,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="brand[operations][sales][range][to]" value="{{old('brand.operations.sales.range.to')}}">
+                                <input type="number" class="form-control" name="brand[operations][sales][range][to]" placeholder="{{__('messages.To')}}" value="{{old('brand.operations.sales.range.to')}}">
                                 <div class="input-group-append">
                                     <span class="input-group-text " style="opacity:0.8;border-bottom-left-radius:0;border-top-left-radius:0">{{__('messages.SAR')}}</span>
 
@@ -101,7 +101,7 @@
 
                     </label>
                     <!--end::Label-->
-                    <select id="countrySelect" class="form-select" name="entity[country]"></select>
+                    <select id="countrySelect" class="form-select" name="user[nationality]"></select>
                 </div>
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
@@ -144,7 +144,7 @@
                     <span class="">{{__('messages.Account number')}}<span class="text-danger h4"> * </span></span>
 
                 </label>
-                <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" required required value="{{old('wallet.bank.account_number')}}" />
+                <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" required required value="{{old('wallet.bank.account.number')}}" />
 
 
 
@@ -183,33 +183,12 @@
                         <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" {{old('entity.is_licensed')?'checked':''}} />
                     </label>
                 </div>
-                <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                    <h2 class="bold">{{__("messages.Terms and conditions")}}</h2>
-
-                </label>
-
-                <div class="form-check" style="margin:10px 0px">
-                    <input class="form-check-input" type="checkbox" id="flexCheckDefault"  {{ old('brand.terms') ? 'checked' : '' }} value="1" name="brand[terms][general]">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        {{__('messages.General approval')}}
-                    </label>
-                </div>
-                <div class="form-check" style="margin:10px 0px">
-                    <input class="form-check-input" type="checkbox" id="flexCheckChecked2" {{ old('brand.terms') ? 'checked' : '' }} value="1" name="brand[terms][chargeback]">
-                    <label class="form-check-label" for="flexCheckChecked2">
-                        {{__('messages.Charge Back')}}
-                    </label>
-                </div>
-                <div class="form-check" style="margin:10px 0px">
-                    <input class="form-check-input" type="checkbox" id="flexCheckChecked3" {{ old('brand.terms') ? 'checked' : '' }} value="1" name="brand[terms][refund]">
-                    <label class="form-check-label" for="flexCheckChecked3">
-                        {{__('messages.Refund')}}
-                    </label>
-                </div>
+                
 
             </div>
-
-
+           
+            <hr class="mt-4">
+            <br>
             <div class="col-md-6">
 
 
@@ -275,7 +254,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text border-left " style="border-radius: 0">
-                                <input type="text" readonly name="user[phone][country_code]" style="width: 40px;border:0;background-color:#f5f8fa" value="966">
+                                <input type="text" readonly  style="width: 40px;border:0;background-color:#f5f8fa" value="966">
                             </span>
                         </div>
                         <input type="text" class="form-control" required name="user[phone][number]" value="{{ old('user.phone.number') }}" />
@@ -296,14 +275,7 @@
                         <option value="WORK">{{__('messages.Work')}}</option>
                     </select>
                 </div>
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <!--begin::Label-->
-                    <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="is_licensed">
-                        <span class="required">{{__('messages.Is this your primary number?')}}</span>
-                        <!--end::Label-->
-                        <input id="is_licensed" type="checkbox" class="mx-2" name="user[phone][primary]" {{old('user.phone.primary')?'checked':''}} />
-                    </label>
-                </div>
+              
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
@@ -374,7 +346,7 @@
 
                     </label>
                     <!--end::Label-->
-                    <input type="text" class="form-control" requiredname="user[address][zip_code]" value="{{old('user.address.zip_code')}}" />
+                    <input type="text" class="form-control" required name="user[address][zip_code]" value="{{old('user.address.zip_code')}}" />
                 </div>
                 <!--end::Input group-->
                 <!--begin::Input group-->
@@ -397,7 +369,7 @@
 
                     </label>
                     <!--end::Label-->
-                    <select class="form-select mb-2" data-placeholder="test">
+                    <select class="form-select mb-2" data-placeholder="test" name="user[address][type]" >
                         <option value="HOME">{{__('messages.Home')}}</option>
                         <option value="WORK">{{__('messages.Work')}}</option>
                     </select>
@@ -426,6 +398,7 @@
 
                     </label>
                     <!--end::Label-->
+                 
                     <input type="email" class="form-control" required placeholder="{{__('messages.Email')}}" name="user[email][address]" value="{{old('user.email.address')}}" />
                 </div>
                 <div class="d-flex flex-column mb-8 fv-row">
@@ -440,15 +413,30 @@
                         <option value="WORK">{{__('messages.Work')}}</option>
                     </select>
                 </div>
-                <div class="d-flex flex-column mb-8 fv-row">
-                    <!--begin::Label-->
-                    <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="is_licensed">
-                        <span class="required">{{__('messages.Is this your primary email?')}}</span>
-                        <!--end::Label-->
-                        <input id="is_licensed" type="checkbox" class="mx-2" name="user[email][primary]" {{old('user.email.type')?'checked':''}} />
+              
+                <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
+                    <h2 class="bold">{{__("messages.Terms and conditions")}}</h2>
+
+                </label>
+
+                <div class="form-check" style="margin:10px 0px">
+                    <input class="form-check-input" type="checkbox" id="flexCheckDefault"  checked value="1" name="brand[terms][general]">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        {{__('messages.General approval')}}
                     </label>
                 </div>
-
+                <div class="form-check" style="margin:10px 0px">
+                    <input class="form-check-input" type="checkbox" id="flexCheckChecked2" checked value="1" name="brand[terms][chargeback]">
+                    <label class="form-check-label" for="flexCheckChecked2">
+                        {{__('messages.Charge Back')}}
+                    </label>
+                </div>
+                <div class="form-check" style="margin:10px 0px">
+                    <input class="form-check-input" type="checkbox" id="flexCheckChecked3" checked value="1" name="brand[terms][refund]">
+                    <label class="form-check-label" for="flexCheckChecked3">
+                        {{__('messages.Refund')}}
+                    </label>
+                </div>
             </div>
         </div>
 

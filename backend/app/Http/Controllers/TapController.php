@@ -15,7 +15,9 @@ use App\Models\Tenant\Tap\TapBusinessFile;
 use App\Packages\TapPayment\Business\Business;
 use App\Packages\TapPayment\Charge\Charge;
 use App\Packages\TapPayment\File\File as TapFileAPI;
+use App\Packages\TapPayment\Lead\Lead;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
+use App\Packages\TapPayment\Requests\CreateLeadRequest;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TapController extends Controller
@@ -195,6 +197,19 @@ class TapController extends Controller
     }
     public function payments_submit_lead_get(){
         return view('restaurant.payments_tap_create_lead');
+    }
+    public function payments_submit_lead(CreateLeadRequest $request){
+        $response = Lead::connect($request->all());
+        if($response['http_code'] == ResponseHelper::HTTP_OK){
+            Setting::first()->update([
+                'lead_id'=> $response['message']['id']
+            ]); 
+            // TODO @todo add to Log action
+
+            return redirect()->route('restaurant.service')->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
+        }
+        return redirect()->back()->with('error', $response['message']);
+
     }
 
 }

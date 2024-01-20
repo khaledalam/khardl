@@ -731,6 +731,8 @@ return [
     "You do not the availability to add new branch" => "لا يتوفر لديك إمكانية إضافة فرع جديد",
     "You have to purchase new service" => "يجب عليك شراء خدمة جديدة",
     "You can add new branches from services" => "يمكنك إضافة فروع جديدة من الخدمات",
-    "Can view revenues" => "يمكن مشاهدة الايرادات"
+    "Can view revenues" => "يمكن مشاهدة الايرادات",
+    "From"=>'من',
+    'To'=>"الي"
 ];
 
