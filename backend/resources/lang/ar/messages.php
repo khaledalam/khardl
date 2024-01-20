@@ -579,6 +579,7 @@ return [
     "Highest customers" => "الاعلي في العملاء",
     "Swift code" => "سويفت كود",
     "SWIFT code e.g. SWFT12345678909836435647" => "سويفت كود مثال : SWFT12345678909836435647",
+    "IBAN e.g. INBNK00045545555555555555"=>"IBAN e.g. INBNK00045545555555555555",
     "Account number" => "رقم الحساب",
     "Account Number e.g. DFGHGFVB876215bsdjhkn" => "رقم الحساب مثال : DFGHGFVB876215bsdjhkn",
     "configurations"=>"الاعدادات",

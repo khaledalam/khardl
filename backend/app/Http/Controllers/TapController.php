@@ -193,5 +193,8 @@ class TapController extends Controller
         // }
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
+    public function payments_submit_lead_get(){
+        return view('restaurant.payments_tap_create_lead');
+    }
 
 }

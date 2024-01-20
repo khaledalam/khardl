@@ -577,6 +577,7 @@ return [
     "Highest orders" => "Highest orders",
     "Swift code" => "Swift code",
     "SWIFT code e.g. SWFT12345678909836435647" => "SWIFT code e.g. SWFT12345678909836435647",
+    "IBAN e.g. INBNK00045545555555555555"=>"IBAN e.g. INBNK00045545555555555555",
     "Account number" => "Account number",
     "Account Number e.g. DFGHGFVB876215bsdjhkn" => "Account Number e.g. DFGHGFVB876215bsdjhkn",
     "configurations"=>"Configurations",
@@ -695,6 +696,29 @@ return [
     "Cart total" => "Cart total",
     "each_time" => "Time",
     "Coupons" => "Coupons",
-    "Update" => "Update"
+    "Update" => "Update",
 
+
+    "Your estimated sales (Monthly)"=>"Your estimated sales (Monthly)",
+    "Range"=>"Range",
+    "Nationality"=>"Nationality",
+    "Your Identification"=>"Your Identification",
+    "National ID"=>"National ID",
+    "Charge Back"=>"Charge Back",
+    "Refund"=>"Refund",
+    "General approval"=>"General approval",
+    "Terms and conditions"=>"Terms and conditions",
+    "Your website Channel"=>"Your website Channel",
+    "Facebook page, instagram, website"=>"Facebook page, instagram, website",
+    "Legal Entity (Commercial Registration)"=>"Legal Entity (Commercial Registration)",
+    "City"=>"City",
+    "Is Entity Licensed"=>"Is Entity Licensed",
+    "Bank Name"=>"Bank Name",
+    "Company Name"=>"Company Name",
+    "Zip Code"=>"Zip Code",
+    "Line 1"=>"Line 1",
+    "Line 2"=>"Line 2",
+    "Home"=>"Home",
+    "Work"=>"Work",
+    "Date of birth"=>"Date of birth"
 ];
