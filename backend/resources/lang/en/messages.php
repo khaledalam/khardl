@@ -723,5 +723,7 @@ return [
     "Date of birth"=>"Date of birth",
     "Bank Details"=>"Bank Details",
     "Email Information"=>"Email Information",
-    "Birthday"=>"Birthday"
+    "Birthday"=>"Birthday",
+    "Is this your primary email?" => "Is this your primary email?",
+    "Is this your primary number?" => "Is this your primary number?"
 ];
