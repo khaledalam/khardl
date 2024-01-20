@@ -601,9 +601,9 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             </div>
                                             @else
                                             <div class="alert alert-warning text-center">
-                                                <h3>{{ __('messages.You need to configure your TAP account payment to access services') }}</h3>
+                                                <h3>{{ __('messages.You need to configure your payment account to access services') }}</h3>
                                                 <a href="{{ route('tap.payments_submit_lead_get') }}">
-                                                    <button class="btn btn-primary btn-sm my-2">{{ __('messages.Manage TAP account') }}</button>
+                                                    <button class="btn btn-primary btn-sm my-2">{{ __('messages.Manage payment gateway') }}</button>
                                                 </a>
                                             </div>
                                             @endif
