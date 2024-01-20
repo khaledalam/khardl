@@ -725,5 +725,7 @@ return [
     "Email Information"=>"Email Information",
     "Birthday"=>"Birthday",
     "Is this your primary email?" => "Is this your primary email?",
-    "Is this your primary number?" => "Is this your primary number?"
+    "Is this your primary number?" => "Is this your primary number?",
+    "You need to configure your TAP account payment to access services" => "You need to configure your TAP account payment to access services",
+    "Manage TAP account" => "Manage TAP account"
 ];

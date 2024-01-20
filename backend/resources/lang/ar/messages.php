@@ -725,6 +725,8 @@ return [
     "Email Information" => "معلومات البريد الإلكتروني",
     "Birthday" => "تاريخ الميلاد",
     "Is this your primary email?" => "هل هذا بريدك الإلكتروني الأساسي؟",
-    "Is this your primary number?" => "هل هذا هو رقمك الأساسي؟"
+    "Is this your primary number?" => "هل هذا هو رقمك الأساسي؟",
+    "You need to configure your TAP account payment to access services" => "تحتاج إلى ظبط حساب تاب الخاص بك للوصول إلى الخدمات",
+    "Manage TAP account" => "إدارة حساب تاب"
 ];
 
