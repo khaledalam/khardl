@@ -19,7 +19,7 @@ use App\Http\Requests\Tenant\Customer\UpdateItemCartRequest;
 class CartRepository
 {
     /** @var Cart */
-    public $cart;
+    public Cart $cart;
     const VAT_PERCENTAGE = 15;
     use APIResponseTrait;
 
@@ -156,10 +156,16 @@ class CartRepository
     }
     public function discount()
     {
-        return 0;
-        // return $this->cart->discount;
+        if (!$this->coupon())
+            return 0;
+        if (!$this->coupon()->validity || !$this->coupon()->user_validity || $this->subTotal() < $this->coupon()->minimum_cart_amount)
+            return 0;
+        return $this->coupon()->calculateDiscount($this->subTotal());
     }
-
+    public function coupon()
+    {
+        return $this->cart?->coupon;
+    }
     public function subTotal()
     {
         return $this->cart->items->sum('total');
@@ -168,8 +174,8 @@ class CartRepository
     {
 
         $vat = self::VAT_PERCENTAGE;
-
-        return number_format((($subTotal ?? $this->subTotal() - $this->discount()) * $vat) / 100 , 2, '.', '');
+        $subTotal = $subTotal ?? $this->subTotal();
+        return number_format((($subTotal - $this->discount()) * $vat) / 100 , 2, '.', '');
     }
     public function total($subTotal = null)
     {

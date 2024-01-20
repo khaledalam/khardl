@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 
 use App\Http\Controllers\Web\Tenant\Coupon\CouponController;
+use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
@@ -262,6 +263,7 @@ Route::group([
                     'store',
                     'index'
                 ]);
+                Route::post("validate/coupon", [CustomerCouponController::class,'validateCoupon']);
                 Route::get("cards", [CustomerCardController::class, 'show'])->name('customer.cards');
             });
 

@@ -32,15 +32,6 @@
                                         <form action="{{ route('restaurant.delivery') }}" method="GET">
                                             @csrf
                                             <div class="d-flex align-items-center justify-content-center">
-                                                <!--begin::Input group-->
-                                                <div class="position-relative w-md-200px me-md-2">
-                                                    <select class="form-select form-select-solid">
-                                                        <option value="0" selected="selected">{{ __('messages.Contract') }}</option>
-                                                        <option value="1">{{ __('messages.Directly') }}</option>
-                                                        <option value="1">{{ __('messages.With khardl') }}</option>
-                                                    </select>
-                                                </div>
-                                                <!--end::Input group-->
                                                 <!--begin::Col-->
                                                 <div class="position-relative w-md-200px me-md-2">
                                                     <select class="form-select form-select-solid" name="area">
