@@ -17,7 +17,7 @@ class CheckPermissions
 
      public function handle(Request $request, Closure $next, $permission)
      {
-        if (!$request->user()->hasPermission($permission)) {
+        if ($request->user()&&!$request->user()->hasPermission($permission)) {
 
             if(app()->getLocale() === 'en'){
 
@@ -32,7 +32,7 @@ class CheckPermissions
                 return redirect()->back()->with('error', $message);
             }
         }
-    
+
         return $next($request);
      }
 

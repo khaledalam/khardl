@@ -77,6 +77,12 @@ class AuthenticationController extends Controller
         $user = auth()?->user();
 
         if ($user) {
+            $user?->restaurant->run(function($tenant){
+                $user = User::where('email',$tenant->email)->first();
+                if($user){
+                    $user->update(['force_logout' => 1]);
+                }
+            });
             Auth::logout();
             if ($request->expectsJson()) {
                 return ResponseHelper::response([
