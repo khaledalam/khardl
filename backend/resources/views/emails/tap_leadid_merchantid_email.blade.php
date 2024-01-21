@@ -9,8 +9,6 @@
     <meta name="description" content="Web site created using create-react-app" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
 
-    <link rel="stylesheet" href="login.css">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -36,22 +34,21 @@
                                 <div class="card-body mx-md-4 pb-5">
                                     <div class="text-center">
                                         <div class="logo">
-                                            <img src="chilis-restaurant-logo-png-4.png" style="width: 185px;"
+                                            <img src="{{global_asset('img/logo.png')}}" style="width: 185px;"
                                                 alt="logo">
                                         </div>
-                                        <h4 style="font-weight: 700;color: red" class="mt-4 mb-4 pb-1">NEW LEAD ID (automated email)</h4>
-                                        <p style="text-align: left;"><b>Hello TAP Team,</b><br/>
+                                        <h4 style="font-weight: 700;color: red" class="mt-4 mb-4 pb-1">New Lead</h4>
+                                        <p style="text-align: left;"><b>Hello TAP Team,</b><br/><br />
                                             New Lead ID has been created: {{$lead_id}}
-                                            <br/>
+                                            <br /><br />
                                             Please reply to his email with the Merchant ID of this Lead ID and add Merchant ID to Google Sheet below.
-                                            <br />
+                                            <br /><br />
                                             We appreciate your cooperation
                                         <div class="text-center mt-5">
                                             <a style="color: red; text-decoration: none;" href="https://docs.google.com/spreadsheets/d/1xfrMiXG5GYDirI-vGKWCesbjgxv6jV5fSkwEocrKnbA/edit?usp=sharing"><button
                                                     class="btn btn-outline-danger">Google Sheet</button></a>
                                         </div>
-                                        <br>
-                                        <br>
+                                        <br /> <br />
                                         <b style="text-align: left; display: flex; justify-content: left; align-items: start;">Thank you,</b><br />
                                         Development Team<br/>
                                         Khardl
