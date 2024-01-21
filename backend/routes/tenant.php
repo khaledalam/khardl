@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Web\Tenant\Coupon\CouponController;
 use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
@@ -283,6 +284,16 @@ Route::group([
 
     Route::get('/change-language/{locale}', static function ($locale) {
         App::setLocale($locale);
+        if(Auth::check()){
+            $user = Auth::user();
+            $user->update(['default_lang' => $locale]);
+            tenancy()->central(function ($tenant) use ($user,$locale) {
+                $user = User::where('email',$user->email)->first();
+                if($user){
+                    $user->update(['default_lang' => $locale]);
+                }
+            });
+        }
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');

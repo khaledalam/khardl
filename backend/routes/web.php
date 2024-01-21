@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
 use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
@@ -257,6 +258,16 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
     });
     Route::get('/change-language/{locale}', function ($locale) {
         App::setLocale($locale);
+        if(Auth::check()){
+            $user = Auth::user();
+            $user->update(['default_lang' => $locale]);
+            $user?->restaurant?->run(function($tenant) use($user,$locale){
+                $user = User::where('email',$user->email)->first();
+                if($user){
+                    $user->update(['default_lang' => $locale]);
+                }
+            });
+        }
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');

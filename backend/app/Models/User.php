@@ -36,7 +36,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'verification_code',
         'last_login',
         'address',
-        'force_logout'
+        'force_logout',
+        'default_lang'
     ];
     public const STORAGE = "user_files";
     public const STATUS_BLOCKED = "blocked";

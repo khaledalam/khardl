@@ -35,12 +35,14 @@ class AuthenticationController extends Controller
             }
             return ResponseHelper::response([
                 'message' => 'User is authenticated',
+                'default_locale'   => $user->default_lang,
                 'phone'=>$user->phone,
                 'is_loggedin' => true
             ], ResponseHelper::HTTP_OK);
         }
         return ResponseHelper::response([
             'message' => 'User is not authenticated',
+            'default_locale'   => app()->getLocale(),
             'is_loggedin' => false
         ], ResponseHelper::HTTP_NOT_AUTHENTICATED);
     }
