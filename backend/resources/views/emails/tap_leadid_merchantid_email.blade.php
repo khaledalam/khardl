@@ -42,7 +42,7 @@
                                             New Lead ID has been created: <b>{{$lead_id}}</b>
                                             <br /><br />
                                             Please reply to this email with the Merchant ID of this Lead ID and add Merchant ID to Google Sheet below.
-                                            <br /><br />
+                                            <br />
                                         <div class="text-center mt-5">
                                             <a style="color: red; text-decoration: none;" href="https://docs.google.com/spreadsheets/d/1xfrMiXG5GYDirI-vGKWCesbjgxv6jV5fSkwEocrKnbA/edit?usp=sharing"><button
                                                     class="btn btn-outline-info">Google Sheet</button></a>

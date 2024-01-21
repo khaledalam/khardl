@@ -20,7 +20,7 @@
 
             <!--begin::Wrapper-->
             <div class="d-flex flex-column flex-row-fluid" id="kt_wrapper">
-
+                
 
                 <!--begin::Content-->
                 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -36,7 +36,7 @@
                                     <div class="card card-flush h-md-100 mb-5 mb-xl-0">
                                         <!--begin::Form-->
                                         <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row"
-                                              action="{{route('promotions.save-settings')}}" method="POST">
+                                               method="POST">
                                             @csrf
                                             <!--begin::main column-->
                                             <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
@@ -158,7 +158,7 @@
 
                                             <!--begin::Actions-->
                                             <div class="d-flex justify-content-end">
-{{--                                                <button type="reset" class="btn btn-sm btn-light fw-bolder btn-active-light-khardl me-2" data-kt-search-element="advanced-options-form-cancel">Cancel</button>--}}
+                                            <button type="reset" class="btn btn-sm btn-light fw-bolder btn-active-light-khardl me-2" data-kt-search-element="advanced-options-form-cancel">Cancel</button>
                                                 <button type="submit" class="btn btn-sm btn-light fw-bolder btn btn-sm fw-bolder btn-khardl me-2" data-kt-search-element="advanced-options-form-cancel">{{__('messages.save')}}</button>
                                             </div>
                                             <!--end::Actions-->
