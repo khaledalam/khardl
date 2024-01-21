@@ -40,7 +40,7 @@ class TAPLeadIDToMerchantIDRequest extends Mailable
                 $name = 'Khardl TAP Merchant IDs'
             )->to([
 //                env('TAP_INTEGRATIONS_EMAIL', 'integrations@tap.company')
-            'khaledalam.net@gmail.com'
+            'khaledalam.net@gmail.com' // @TODO: remove this line
             ])
             ->cc([
                 'khaledalam.net@gmail.com',

@@ -40,28 +40,32 @@ class SendDeniedEmailJob implements ShouldQueue
                 'en' => '[ok] Sent denied email notification',
                 'ar' => '[تم] ارسال بريد بالرفض',
             ];
-            Log::create([
-                'user_id' => $this?->user?->id,
-                'action' => $action,
-                'type' => LogTypes::DenyUserSent,
-               'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'user_id' => $this?->user?->id,
+                    'action' => $action,
+                    'type' => LogTypes::DenyUserSent,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
 
         } catch (\Exception $e) {
             $action = [
                 'en' => '[fail] Sent denied email notification',
                 'ar' => '[فشل] ارسال بريد بالرفض',
             ];
-            Log::create([
-                'action' => $action,
-                'user_id' => $this?->user?->id,
-                'type' => LogTypes::DenyUserFail,
-               'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'action' => $action,
+                    'user_id' => $this?->user?->id,
+                    'type' => LogTypes::DenyUserFail,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
         }
     }
 }

@@ -3,10 +3,9 @@
 namespace App\Jobs;
 
 use App\Enums\Admin\LogTypes;
-use App\Mail\ApprovedEmail;
 use App\Mail\TAPLeadIDToMerchantIDRequest;
 use App\Models\Log;
-use App\Models\User;
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -24,7 +23,7 @@ class SendTAPLeadIDMerchantIDRequestEmailJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user, string $lead_id)
+    public function __construct(RestaurantUser $user, string $lead_id)
     {
         $this->user = $user;
         $this->lead_id = $lead_id;
@@ -42,29 +41,33 @@ class SendTAPLeadIDMerchantIDRequestEmailJob implements ShouldQueue
                 'en' => '[ok] Sent TAP lead id to merchant id email',
                 'ar' => '[تم] ارسال بريد لتحويل lead الي merchant',
             ];
-            Log::create([
-                'user_id' => $this?->user?->id,
-                'action' => $action,
-                'type' => LogTypes::TAPLeadIDMerchantIDSent,
-               'metadata' => [
-                   'email' => $this?->user?->email ?? null,
-                   'lead_id' => $this?->lead_id
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'user_id' => $this?->user?->id,
+                    'action' => $action,
+                    'type' => LogTypes::TAPLeadIDMerchantIDSent,
+                    'metadata' => [
+                        'email' => $this?->user?->email ?? null,
+                        'lead_id' => $this?->lead_id
+                    ]
+                ]);
+            });
 
         } catch (\Exception $e) {
             $action = [
                 'en' => '[fail] Sent TAP lead id to merchant id email',
                 'ar' => '[فشل] ارسال بريد لتحويل lead الي merchant',
             ];
-            Log::create([
-                'user_id' => $this?->user?->id,
-                'action' => $action,
-                'type' => LogTypes::TAPLeadIDMerchantIDFail,
-               'metadata' => [
-                    'email' => $this?->user?->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'user_id' => $this?->user?->id,
+                    'action' => $action,
+                    'type' => LogTypes::TAPLeadIDMerchantIDFail,
+                    'metadata' => [
+                        'email' => $this?->user?->email ?? null,
+                    ]
+                ]);
+            });
         }
     }
 }
