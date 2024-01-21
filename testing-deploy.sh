@@ -19,7 +19,7 @@ composer install
 
 # Setup backend
 php artisan migrate:fresh --seed
-php artisan tenants:migrate
+php artisan create:tenant
 
 php artisan optimize:clear
 
