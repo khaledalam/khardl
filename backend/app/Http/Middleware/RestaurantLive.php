@@ -33,12 +33,14 @@ class RestaurantLive
                 $user = $request->user();
                 if($user){
                     $url_redirect = route('dashboard');
-                    $url = "<a href='$url_redirect'>Go To Dashboard</a><br />";
+                    $messages =  __('messages.Go To Dashboard');
+                    $url = "<a href='$url_redirect'>$messages</a><br />";
                 }else {
                     $url_redirect = route('login-trial');
-                    $url = "<a href='$url_redirect'>Go To Login Restaurant Page</a><br />";
+                    $messages =  __('messages.Go To Login Restaurant Page');
+                    $url = "<a href='$url_redirect'>$messages</a><br />";
                 }
-                $message = __("Code ")." 02: ".__('messages.This Restaurant is not active, please contact web master') ;
+                $message = __("messages.Code ")." 02: ".__('messages.This Restaurant is not active, please contact web master') ;
                 $khardl = __('messages.Go To Main Khardl Website');
                 echo <<<HTML
                     <div style="text-align: center; height: 100vh; display: flex; flex-direction: column ; justify-content: center; align-items: center;">

@@ -742,5 +742,7 @@ return [
     "Code "=>"Code ",
     "Lead information"=>"Brand information",
     "Go To Main Khardl Website"=>"Go To Main Khardl Website",
+    "Go To Dashboard"=>"Go To Dashboard",
+    "Go To Login Restaurant Page"=>"Go To Login Restaurant Page",
     "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master"
 ];
