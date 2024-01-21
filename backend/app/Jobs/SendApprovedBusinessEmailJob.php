@@ -38,28 +38,32 @@ class SendApprovedBusinessEmailJob implements ShouldQueue
                 'en' => '[ok] Email approve business sent successfully',
                 'ar' => '[تم] تم ارسال بريد للموافقة علي الاعمال',
             ];
-            Log::create([
-                'user_id' => $this?->user?->id,
-                'action' => $actions,
-                'type' => LogTypes::ApproveBusinessSent,
-               'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($actions) {
+                Log::create([
+                    'user_id' => $this?->user?->id,
+                    'action' => $actions,
+                    'type' => LogTypes::ApproveBusinessSent,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
 
         } catch (\Exception $e) {
             $actions = [
                 'en' => '[fail] Email approve business sent successfully',
                 'ar' => '[فشل] تم ارسال بريد للموافقة علي الاعمال',
             ];
-            Log::create([
-                'action' => $actions,
-                'user_id' => $this?->user?->id,
-                'type' => LogTypes::ApproveBusinessFail,
-               'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($actions) {
+                Log::create([
+                    'action' => $actions,
+                    'user_id' => $this?->user?->id,
+                    'type' => LogTypes::ApproveBusinessFail,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
         }
     }
 }

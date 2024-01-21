@@ -40,28 +40,32 @@ class SendApprovedRestaurantEmailJob implements ShouldQueue
                 'en' => '[ok] Email sent for approve restaurant',
                 'ar' => '[تم] ارسال بريد بالموافقة علي المطعم',
             ];
-            Log::create([
-                'user_id'=> $this?->restaurant?->user?->id,
-                'action' => $action,
-                'type' => LogTypes::ActivateRestaurantNotifySent,
-                'metadata' => [
-                    'email' => $this->restaurant->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'user_id' => $this?->restaurant?->user?->id,
+                    'action' => $action,
+                    'type' => LogTypes::ActivateRestaurantNotifySent,
+                    'metadata' => [
+                        'email' => $this->restaurant->email ?? null,
+                    ]
+                ]);
+            });
 
         } catch(\Exception $e) {
             $action = [
                 'en' => '[fail] Email approve restaurant',
                 'ar' => '[فشل] ارسال بريد بالموافقة علي المطعم',
             ];
-            Log::create([
-                'user_id'=> $this?->restaurant?->user?->id,
-                'action' => $action,
-                'type' => LogTypes::ActivateRestaurantNotifyFail,
-                'metadata' => [
-                    'email' => $this->restaurant->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'user_id' => $this?->restaurant?->user?->id,
+                    'action' => $action,
+                    'type' => LogTypes::ActivateRestaurantNotifyFail,
+                    'metadata' => [
+                        'email' => $this->restaurant->email ?? null,
+                    ]
+                ]);
+            });
         }
     }
 }
