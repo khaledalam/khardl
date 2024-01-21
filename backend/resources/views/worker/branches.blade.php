@@ -78,6 +78,7 @@
                                             </div> --}}
                                             <!--end::Item-->
                                             <!--begin::Item-->
+                                            @if($user?->hasPermissionWorker('can_view_revenues'))
                                             <div class="d-flex align-items-center">
                                                 <!--begin::Symbol-->
                                                 <div class="symbol symbol-30px symbol-circle me-3">
@@ -100,14 +101,19 @@
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Info-->
-                                                <div class="m-0">
-                                                    <span
-                                                        class="fw-bold text-gray-400 d-block fs-8">{{ __('messages.revenue') }}</span>
-                                                    <span
-                                                        class="fw-bolder text-gray-800 fs-7">$TODO</span>
+                                                <div class="m-0 position-relative">
+                                                    <span class="fw-bold text-gray-400 d-block fs-8">{{ __('messages.revenue') }}</span>
+                                                    @if(isset($branch->total_revenues['number_formatted']))
+                                                    <div class="revenues-container">
+                                                        <span class="fw-bold d-block fs-8 branch_revenues fade">{{ $branch->total_revenues['number'] }} {{ __('messages.SAR') }}</span>
+                                                        <span class="fw-bolder text-gray-800 fs-7 branch_revenues_formatted">{{ $branch->total_revenues['number_formatted'] }} {{ __('messages.SAR') }}</span>
+                                                    </div>
+                                                    </span>
+                                                    @endif
                                                 </div>
                                                 <!--end::Info-->
                                             </div>
+                                            @endif
                                             <!--end::Item-->
                                         </div>
                                         <!--end::Items-->

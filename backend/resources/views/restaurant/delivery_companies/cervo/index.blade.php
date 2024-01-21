@@ -12,7 +12,7 @@
                 {{__('messages.verified')}}
             </span>
             @else
-            <span class="badge badge badge-info px-4 py-3">
+            <span class="badge badge badge-secondary px-4 py-3">
                 {{__('messages.Not verified')}}
             </span>
             @endif
@@ -79,6 +79,7 @@
                         <div class="d-flex flex-column gap-1">
                             <div class="fw-bolder text-muted">{{__('messages.summary')}}</div>
                             <p>{!! __('messages.delivery.cervo.summary') !!}</p>
+                            <a href="{{global_asset('delivery-companies/cervo/Cervo.pdf')}}" class="btn btn-warning text-black text-hover-khardl" target="_blank">Profile.pdf</a>
                         </div>
                         <!--end::Notes-->
                     </div>
@@ -104,11 +105,11 @@
                                     <!--begin::Time-->
                                     <div class="fs-5 mb-3">{{__('messages.cover-area')}}</div>
                                     <!--end::Time-->
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Riyadh')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Jeddah')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Mecca')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Dammam')}}</span>
-                                    <span class="badge badge-lg badge-light-khardl">{{__('messages.Al-Ahsa')}}</span>
+                                    @if(is_array($cervo?->coverage_area))
+                                        @foreach ($cervo?->coverage_area as $area)
+                                            <span class="badge badge-lg badge-light-khardl my-2">{{ $area }}</span>
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <!--end::Info-->
                             </div>
@@ -221,14 +222,15 @@
                                     <tr>
                                         <td class="text-muted p-0 py-3">
                                             <div class="d-flex flex-column align-items-center">
-                                                <form  action="{{route('restaurant.delivery.activate',['module'=>'Cervo'])}}" method="POST" style="width: 100%">
+                                                @if ($isadmin)
+                                                <form  action="{{route('admin.delivery.activateAndDeactivate',['tenant'=> $restaurant->id])}}" method="POST" style="width: 100%">
                                                     @csrf
+                                                    <input type="text" hidden value="Cervo" class="form-control mb-2" name="module" id="">
                                                     @if($cervo?->status)
                                                         {{ __('messages.Secret Key') }} <input type="text" readonly value="{{$cervo?->api_key}}" class="form-control mb-2" name="api_key" id="">
                                                     @else
                                                         {{ __('messages.Secret Key') }} <input type="text"   class="form-control mb-2" name="api_key" value="{{$cervo?->api_key}}">
                                                     @endif
-                                                    @if (!$isadmin)
                                                     <div class="d-flex justify-content-center">
                                                         @if(!$cervo?->status)
                                                         <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("messages.Activate")}}</a>
@@ -236,8 +238,24 @@
                                                             <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("messages.Deactivate")}}</a>
                                                         @endif
                                                     </div>
-                                                    @endif
                                                 </form>
+                                                @else
+                                                <form  action="{{route('restaurant.delivery.activate',['module'=>'Cervo'])}}" method="POST" style="width: 100%">
+                                                    @csrf
+                                                    @if($cervo?->status)
+                                                        {{ __('messages.Secret Key') }} <input type="text" readonly value="{{$cervo?->api_key}}" class="form-control mb-2" name="api_key" id="">
+                                                    @else
+                                                        {{ __('messages.Secret Key') }} <input type="text"   class="form-control mb-2" name="api_key" value="{{$cervo?->api_key}}">
+                                                    @endif
+                                                    <div class="d-flex justify-content-center">
+                                                        @if(!$cervo?->status)
+                                                        <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("messages.Activate")}}</a>
+                                                        @else
+                                                            <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("messages.Deactivate")}}</a>
+                                                        @endif
+                                                    </div>
+                                                </form>
+                                                @endif
                                             </div>
                                         </td>
                                         <td class="fw-bolder text-end py-0"></td>

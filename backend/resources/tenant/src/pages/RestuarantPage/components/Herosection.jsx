@@ -8,6 +8,7 @@ import ReactSlider from "react-slick"
 import imgLogo from "../../../assets/khardl_Logo.png"
 
 const Herosection = ({isMobile, categories}) => {
+
   const dispatch = useDispatch()
   const {t} = useTranslation()
   const selectedCategory = useSelector(
@@ -15,7 +16,7 @@ const Herosection = ({isMobile, categories}) => {
   )
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
-  console.log("restaurantStyle", restaurantStyle)
+  
 
   const settings = {
     dots: true,
@@ -45,7 +46,7 @@ const Herosection = ({isMobile, categories}) => {
           "w-full  flex flex-col py-4 items-center justify-center gap-8"
         }
       >
-        <div
+        {/* <div
           className={` w-full ${
             restaurantStyle?.logo_alignment === t("Center") ||
             restaurantStyle?.logo_alignment === "center"
@@ -75,7 +76,7 @@ const Herosection = ({isMobile, categories}) => {
               }`}
             />
           </div>
-        </div>
+        </div> */}
         {(restaurantStyle && restaurantStyle?.banner_type === "one-photo") ||
         (restaurantStyle && restaurantStyle?.banner_type === t("One-photo")) ? (
           <div
@@ -95,7 +96,7 @@ const Herosection = ({isMobile, categories}) => {
                 loop
                 autoPlay
                 className={` z-[5] ${
-                  isMobile ? "max-h-[300px] w-full" : "max-h-[470px] w-full"
+                  isMobile ? "max-h-[300px] w-full" : "max-h-[350px] w-full"
                 }  `}
               >
                 <source
@@ -136,7 +137,7 @@ const Herosection = ({isMobile, categories}) => {
                     <div
                       key={index}
                       className={` ${
-                        isMobile ? "h-[300px]" : "h-[470px]"
+                        isMobile ? "h-[300px]" : "h-[350px]"
                       } !block`}
                     >
                       {restaurantStyle?.banner_images &&
@@ -150,7 +151,7 @@ const Herosection = ({isMobile, categories}) => {
                           className={` z-[5] ${
                             isMobile
                               ? "max-h-[300px] w-full"
-                              : "max-h-[470px] w-full"
+                              : "max-h-[350px] w-full"
                           }  `}
                         >
                           <source

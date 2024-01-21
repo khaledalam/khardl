@@ -35,7 +35,7 @@ const Editor = () => {
     const fetchRestaurantStyles = async () => {
         const restaurantBranchesResponse = await AxiosInstance.get(`branches-site-editor`)
 
-        console.log("editor rest restaurantBranchesResponse >>>", restaurantBranchesResponse.data?.data)
+        console.log("editor rest restaurantBranchesResponse Editor", restaurantBranchesResponse.data?.data)
         if (restaurantBranchesResponse.data?.data) {
             setBranches(restaurantBranchesResponse.data?.data);
         }
@@ -45,7 +45,7 @@ const Editor = () => {
         try {
             const restaurantCategoriesResponse = await AxiosInstance.get(`categories?items&user&branch&selected_branch_id=${branch_id}`);
 
-            console.log("editor rest restaurantCategoriesResponse >>>", restaurantCategoriesResponse.data)
+            console.log("editor rest restaurantCategoriesResponse Editor", restaurantCategoriesResponse.data)
             if (restaurantCategoriesResponse.data) {
                 setCategories(restaurantCategoriesResponse.data?.data);
 

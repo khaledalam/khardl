@@ -1,4 +1,4 @@
-@if(!$user->isRestaurantOwner())
+@if(!Auth::user()->isRestaurantOwner())
     @include('layouts.worker-sidebar')
 @else
 <!DOCTYPE html>
@@ -21,9 +21,10 @@
     <!--begin::Fonts-->
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    <link href="{{ global_asset('assets/css/AdminAndRestaurantAndWorker.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ global_asset('assets/css/resturant-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
+        <link href="{{ global_asset('assets/css/global-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/resturant-main-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
@@ -185,7 +186,7 @@
                         </div>
                         <!-- Site Editor -->
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('site_editor')}}" target="_blank">
+                            <a href="{{route('restaurants.site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -337,6 +338,21 @@
                                     </div>
                                 </a>
                             </div>
+                        </div>
+                           <!-- Coupons -->
+                           <div class="menu-item menu-accordion">
+                            <a href="{{route('coupons.index')}}">
+                                <span class="{{ ($link == 'coupons' ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="bi bi-cash-stack"></i>
+                                            </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                        <span class="menu-title">{{__('messages.Coupons')}}</span>
+                                </span>
+                            </a>
                         </div>
                         <!-- Services -->
                         <div class="menu-item menu-accordion">

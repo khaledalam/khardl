@@ -1,0 +1,40 @@
+/* ALL */
+
+@media (min-width: 1400px) {
+    .container-xxl {
+        max-width: none !important;
+    }
+}
+
+.delivery_companies .tab-pane {
+    max-height: 241px;
+    min-height: 241px;
+    overflow: auto;
+}
+
+.delivery_companies .tab-pane::-webkit-scrollbar-thumb {
+    background-color: #c2da08;
+    border-radius: 10px;
+}
+.delivery_companies .tab-pane .card-body table tr td ul li {
+    list-style-type: disclosure-closed;
+}
+
+/* Branches */
+.revenues-container{
+    cursor: pointer;
+}
+.revenues-container .fw-bold {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    background-color: #1b1b28;
+    border-radius: 3px;
+    padding: 2px 10px;
+    color: #ffffff;
+    top: -20px;
+}
+
+.revenues-container:hover .fw-bold {
+    opacity: 1;
+}
