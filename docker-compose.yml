@@ -39,6 +39,13 @@ services:
 #    frontend:
 #        container_name: frontend
 
+    khardl_certbot:
+        container_name: khardl_certbot
+        image: certbot/certbot
+        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+        volumes:
+            - ./docker/certbot/conf:/etc/letsencrypt
+            - ./docker/certbot/www:/var/www/certbot
 volumes:
   db:
     driver: local

@@ -724,7 +724,11 @@
 @endif
 @else
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content1">
-    <h2 class="text-center pt-5"> {{ __('messages.Create TAP') }}<a href="{{ route('tap.payments_upload_tap_documents_get') }}"><u>{{ __('messages.business account') }}</u></a> {{ __('messages.first to access this page content!') }}</h2>
+    <h2 class="text-center pt-5"> 
+    
+     
+        {{-- {{ __('messages.Create TAP') }}<a href="{{ route('tap.payments_submit_lead_get') }}"><u>{{ __('messages.business account') }}</u></a> {{ __('messages.first to access this page content!') }} --}}
+    </h2>
 </div>
 
 
