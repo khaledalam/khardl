@@ -489,7 +489,8 @@ return [
     "K" => "الف",
     "M" => "مليون",
     "B" => "بليون",
-    "plan ends at" => "فترة صلاحيه العضويه تنتهي في",
+    "plan ends at" => "فترة صلاحيه الاشتراك تنتهي في",
+    "Plan"=>"الاشتراك",
     "metadata" => "البيانات الوصفية",
     "Support" => "الدعم",
     "About" => "من نحن",
@@ -733,6 +734,12 @@ return [
     "You can add new branches from services" => "يمكنك إضافة فروع جديدة من الخدمات",
     "Can view revenues" => "يمكن مشاهدة الايرادات",
     "From"=>'من',
-    'To'=>"الي"
+    'To'=>"الي",
+    "Your payment gateway account is currently waiting for approval"=>"في انتظار الموافقة علي بوابة الدفع الخاصة بك  ..",
+    "No subscription"=>"لا يوجد اشتراك",
+    'Payment gateway'=>  'بوابة الدفع',
+    "Merchant ID"=>"معرف التاجر لدي بوابة الدفع ",
+    "Lead ID"=>"معرف السجل التجاري",
+    "Lead information"=>"معلومات السجل التجاري"
 ];
 

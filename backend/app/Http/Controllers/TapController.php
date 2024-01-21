@@ -206,11 +206,12 @@ class TapController extends Controller
         if($response['http_code'] == ResponseHelper::HTTP_OK){
             logger( $response['message']);
             Setting::first()->update([
-                'lead_id'=> $response['message']['id']
+                'lead_id'=> $response['message']['id'],
+                'lead_response'=>$response['message']
             ]);
             SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
                 user: auth()->user(),
-                lead_id :  $response['message']['id']
+                lead_id :  $response['message']['id'],
             );
             // TODO @todo add to Log action
 
