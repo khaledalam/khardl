@@ -740,6 +740,9 @@ return [
     'Payment gateway'=>  'بوابة الدفع',
     "Merchant ID"=>"معرف التاجر لدي بوابة الدفع ",
     "Lead ID"=>"معرف السجل التجاري",
-    "Lead information"=>"معلومات السجل التجاري"
+    "Lead information"=>"معلومات السجل التجاري",
+    "Code "=>"رمز ",
+    "Go To Main Khardl Website"=>"الذهاب الي موقع خردل الرئيسي",
+    "This Restaurant is not active, please contact web master"=>"هذا المطعم غير فعال, الرجاء التواصل مع فريق تطوير الموقع"
 ];
 

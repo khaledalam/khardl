@@ -38,13 +38,14 @@ class RestaurantLive
                     $url_redirect = route('login-trial');
                     $url = "<a href='$url_redirect'>Go To Login Restaurant Page</a><br />";
                 }
-            
+                $message = __("Code ")." 02: ".__('messages.This Restaurant is not active, please contact web master') ;
+                $khardl = __('messages.Go To Main Khardl Website');
                 echo <<<HTML
                     <div style="text-align: center; height: 100vh; display: flex; flex-direction: column ; justify-content: center; align-items: center;">
-                    <h3 style="color: red;">This Restaurant is not in live mode yet!</h3>
+                    <h3 style="color: red;">$message</h3>
                     <br />
                     $url
-                    <a href="$central_url">Go To Main Khardl Website</a>
+                    <a href="$central_url">$khardl</a>
                     </div>
                     HTML;
                 die;

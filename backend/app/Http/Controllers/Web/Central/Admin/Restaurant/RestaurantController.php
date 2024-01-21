@@ -51,4 +51,17 @@ class RestaurantController extends Controller
         });
         return response()->json($lead_response,200);
     }
+    public function updateConfig(Tenant $tenant,Request $request){
+        // @TODO @todo (TAP) validate merchant through merchant api
+        $request->validate([
+            'merchant_id'=>"string|required"
+        ]);
+        $tenant->run(function()use($request){
+            Setting::first()->update([
+                'merchant_id'=>$request->merchant_id
+            ]);
+        });
+        return redirect()->back()->with('success',__('restaurant setting has been update successfully'));
+
+    }
 }

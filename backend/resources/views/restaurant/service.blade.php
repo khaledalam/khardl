@@ -350,7 +350,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             <!--end::Heading-->
 
                                             <!--begin::Row-->
-                                            @if($setting->lead_id&&$setting->merchant_id)
+                                            @if($setting->lead_id && $setting->merchant_id)
                                             <div class="row g-10">
 
                                                 <!--begin::Col-->
@@ -599,7 +599,15 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                     </div>
                                                 </div>
                                             </div>
+                                     
+                                            @elseif($setting->lead_id && !$setting->merchant_id)
+                                                <div class="alert alert-warning text-center">
+                                                    <h3>{{ __('messages.Your payment gateway account is currently waiting for approval') }}</h3>
+                                                    
+                                                </div>
+
                                             @else
+
                                             <div class="alert alert-warning text-center">
                                                 <h3>{{ __('messages.You need to configure your payment account to access services') }}</h3>
                                                 <a href="{{ route('tap.payments_submit_lead_get') }}">

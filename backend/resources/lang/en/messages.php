@@ -735,9 +735,12 @@ return [
     "Manage payment gateway" => "Manage payment gateway",
     "From"=>'From',
     'To'=>"To",
-    "Your payment gateway account is currently waiting for approval"=>"في انتظار الموافقة علي بوابة الدفع الخاصة بك  ..",
+    "Your payment gateway account is currently waiting for approval"=>"Your payment gateway account is currently waiting for approval",
     "No subscription"=>"No subscription",
     "Merchant ID"=>"Merchant ID",
     "Lead ID"=>"Lead ID",
-    "Lead information"=>"Brand information"
+    "Code "=>"Code ",
+    "Lead information"=>"Brand information",
+    "Go To Main Khardl Website"=>"Go To Main Khardl Website",
+    "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master"
 ];
