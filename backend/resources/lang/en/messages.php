@@ -738,6 +738,6 @@ return [
     "Your payment gateway account is currently waiting for approval"=>"في انتظار الموافقة علي بوابة الدفع الخاصة بك  ..",
     "No subscription"=>"No subscription",
     "Merchant ID"=>"Merchant ID",
-    "Lead ID"=>"Brand ID",
+    "Lead ID"=>"Lead ID",
     "Lead information"=>"Brand information"
 ];

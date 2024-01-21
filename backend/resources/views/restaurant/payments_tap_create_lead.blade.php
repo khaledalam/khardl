@@ -443,7 +443,6 @@
 
         <!--begin::Actions-->
         <div class="text-center">
-            <a href="{{route('tap.payments_upload_tap_documents_get')}}" type="button" id="prev_step_btn" class="btn btn-warning me-3">⬅ Back to step 1</a>
             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset ↻</button>
             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
                 <span class="indicator-label">Submit ✔️</span>

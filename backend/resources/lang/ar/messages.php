@@ -727,7 +727,7 @@ return [
     "Birthday" => "تاريخ الميلاد",
     "Is this your primary email?" => "هل هذا بريدك الإلكتروني الأساسي؟",
     "Is this your primary number?" => "هل هذا هو رقمك الأساسي؟",
-    "You need to configure your payment account to access services" => "تحتاج إلى ظبط حساب الدفع الخاص بك للوصول إلى الخدمات",
+    "You need to configure your payment account to access services" => "تحتاج إلى انشاء بوابة الدفع الخاص بك للوصول إلى الخدمات",
     "Manage payment gateway" => "إدارة بوابة الدفع",
     "You do not the availability to add new branch" => "لا يتوفر لديك إمكانية إضافة فرع جديد",
     "You have to purchase new service" => "يجب عليك شراء خدمة جديدة",
