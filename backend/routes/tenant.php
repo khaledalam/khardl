@@ -104,7 +104,7 @@ Route::group([
             Route::post('/category/{id}/{branchId}/add-item', [RestaurantController::class, 'addItem'])->middleware('permission:can_edit_menu')->name('restaurant.add-item');
             Route::delete('/category/{id}/delete-item', [RestaurantController::class, 'deleteItem'])->middleware('permission:can_edit_menu')->name('restaurant.delete-item');
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
-            Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
+            Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment','isLeadNotSubmitted'])->name('tap.payments');
             Route::get('/download/pdf', [DownloadController::class, 'downloadPDF'])
                 ->name("download.pdf");
             Route::group(['prefix' => '/branches'], function () {
@@ -119,15 +119,16 @@ Route::group([
 
                 // TAP Create Business
                 // Step 1: store files
-                Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get')->middleware('isBusinessSubmitted');
-                Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents')->middleware('isBusinessSubmitted');
+                // Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get')->middleware('isBusinessSubmitted');
+                // Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents')->middleware('isBusinessSubmitted');
 
-                // Step 2: create business
-                Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get')->middleware('isBusinessFilesSubmitted');
-                Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
+                // // Step 2: create business
+                // Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get')->middleware('isBusinessFilesSubmitted');
+                // Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
+
                 // Step 2 instead of business : Lead
-                Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get');
-                Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead');
+                Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get')->middleware('isLeadSubmitted');
+                Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
                  // Step 3: save cards
                 Route::get('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
 

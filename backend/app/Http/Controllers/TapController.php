@@ -26,12 +26,14 @@ class TapController extends Controller
     public function payments(Request $request)
     {
         $user = Auth::user();
-        $business = TapBusiness::first();
-        $businessFile = TapBusinessFile::first();
-        if ($user->ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
-            return $this->handleDownload($request, $user->ROSubscriptionInvoices);
-        }
-        return view('restaurant.payments', compact('user', 'business', 'businessFile'));
+        // $business = TapBusiness::first();
+        // $businessFile = TapBusinessFile::first();
+        // if ($user->ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
+        //     return $this->handleDownload($request, $user->ROSubscriptionInvoices);
+        // }
+        $business  =   null ;
+        // @TODO @todo there data not synced, business flow was deprecated'
+        return view('restaurant.payments', compact('user', 'business'));
     }
     private function handleDownload($request, $model)
     {
@@ -206,11 +208,12 @@ class TapController extends Controller
         if($response['http_code'] == ResponseHelper::HTTP_OK){
             logger( $response['message']);
             Setting::first()->update([
-                'lead_id'=> $response['message']['id']
+                'lead_id'=> $response['message']['id'],
+                'lead_response'=>$response['message']
             ]);
             SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
                 user: auth()->user(),
-                lead_id :  $response['message']['id']
+                lead_id :  $response['message']['id'],
             );
             // TODO @todo add to Log action
 

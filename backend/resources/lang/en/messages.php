@@ -271,7 +271,7 @@ return [
     "user-id"=>"User id",
     "search-for-place"=>"Search for place",
     'order-summary'=>'Order Summary',
-
+    'Payment gateway'=>  'Payment gateway',
     "date-added"=>"Date Added",
     'order-details'=>'Order Details',
     "shipping-method"=>'Shipping Method',
@@ -489,7 +489,8 @@ return [
     "K" => "K",
     "M" => "M",
     "B" => "B",
-    "plan ends at" => "Plan ends at",
+    "plan ends at" => "Subscription ends at",
+    "Plan"=>"Subscription",
     "metadata" => "metadata",
     "Support" => "Support",
     "About" => "About",
@@ -734,5 +735,14 @@ return [
     "Manage payment gateway" => "Manage payment gateway",
     "From"=>'From',
     'To'=>"To",
-        
+    "Your payment gateway account is currently waiting for approval"=>"Your payment gateway account is currently waiting for approval",
+    "No subscription"=>"No subscription",
+    "Merchant ID"=>"Merchant ID",
+    "Lead ID"=>"Lead ID",
+    "Code "=>"Code ",
+    "Lead information"=>"Brand information",
+    "Go To Main Khardl Website"=>"Go To Main Khardl Website",
+    "Go To Dashboard"=>"Go To Dashboard",
+    "Go To Login Restaurant Page"=>"Go To Login Restaurant Page",
+    "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master"
 ];

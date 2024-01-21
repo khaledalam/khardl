@@ -23,7 +23,6 @@ class CreateTenantAction
             "last_name" =>$user->last_name,
             "phone"=>$user->phone,
             'restaurant_name'=>$domain,
-            "trial_ends_at" => now()->addDays(30),
             "password" => $user->password,
         ]);
 
