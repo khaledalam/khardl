@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\Restaurant\ExportSubscriptionInvoice;
-use App\Jobs\SendApprovedBusinessEmailJob;
-use App\Models\Tenant;
-use App\Models\Tenant\Setting;
 use Carbon\Carbon;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Tenant\Tap\TapBusiness;
-use App\Models\Tenant\Tap\TapBusinessFile;
-use App\Packages\TapPayment\Business\Business;
-use App\Packages\TapPayment\Charge\Charge;
-use App\Packages\TapPayment\File\File as TapFileAPI;
-use App\Packages\TapPayment\Requests\CreateBusinessRequest;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Tenant\Tap\TapBusiness;
+use App\Packages\TapPayment\Lead\Lead;
+use App\Jobs\SendApprovedBusinessEmailJob;
+use App\Models\Tenant\Tap\TapBusinessFile;
+use App\Packages\TapPayment\Charge\Charge;
+use App\Packages\TapPayment\Business\Business;
+use App\Jobs\SendTAPLeadIDMerchantIDRequestEmailJob;
+use App\Packages\TapPayment\File\File as TapFileAPI;
+use App\Exports\Restaurant\ExportSubscriptionInvoice;
+use App\Packages\TapPayment\Requests\CreateLeadRequest;
+use App\Packages\TapPayment\Requests\CreateBusinessRequest;
 
 class TapController extends Controller
 {
@@ -172,7 +175,9 @@ class TapController extends Controller
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
                 } else {
-                    return redirect()->route('restaurant.service')->with('error', __("The payment failed, and the subscription fee has not been paid"));
+                    return redirect()->route('restaurant.service')
+
+                    ->with('error', __("The payment failed, and the subscription fee has not been paid"));
                 }
 
             }
@@ -192,6 +197,29 @@ class TapController extends Controller
         //     return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
         // }
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+    }
+    public function payments_submit_lead_get(){
+        return view('restaurant.payments_tap_create_lead');
+    }
+    public function payments_submit_lead(CreateLeadRequest $request){
+        $response = Lead::connect($request->all());
+        if($response['http_code'] == ResponseHelper::HTTP_OK){
+            logger( $response['message']);
+            Setting::first()->update([
+                'lead_id'=> $response['message']['id']
+            ]);
+            SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
+                user: auth()->user(),
+                lead_id :  $response['message']['id']
+            );
+            // TODO @todo add to Log action
+
+            return redirect()->route('restaurant.service')->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
+        }
+        return redirect()->back()
+        ->withInput($request->input())
+        ->with('error', $response['message']);
+
     }
 
 }

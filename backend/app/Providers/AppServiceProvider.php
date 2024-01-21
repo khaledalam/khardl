@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
 
 //        echo config()->get('database.default',);
 //        exit;
-
+        // \URL::forceScheme('https');
         $user = Auth::user();
         View::share('link', request()->segment(1));
         View::share('admin_link', request()->segment(2));
