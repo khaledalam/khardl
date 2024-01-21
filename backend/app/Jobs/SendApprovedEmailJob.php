@@ -39,28 +39,32 @@ class SendApprovedEmailJob implements ShouldQueue
                 'en' => '[ok] Sent approved email notification',
                 'ar' => '[تم] ارسال بريد للموافقة',
             ];
-            Log::create([
-                'user_id' => $this?->user?->id,
-                'action' => $action,
-                'type' => LogTypes::ApproveUserSent,
-               'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'user_id' => $this?->user?->id,
+                    'action' => $action,
+                    'type' => LogTypes::ApproveUserSent,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
 
         } catch (\Exception $e) {
             $action = [
                 'en' => '[fail] Sent approved email notification',
                 'ar' => '[فشل] ارسال بريد للموافقة',
             ];
-            Log::create([
-                'user_id' => $this?->user?->id,
-                'action' => $action,
-                'type' => LogTypes::ApproveUserFail,
-               'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'user_id' => $this?->user?->id,
+                    'action' => $action,
+                    'type' => LogTypes::ApproveUserFail,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
         }
     }
 }

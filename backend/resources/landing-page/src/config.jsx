@@ -2,7 +2,7 @@
 export const API_ENDPOINT =
     window.location.href.indexOf('khardl.com') > -1
         ? 'https://khardl.com'  // Live production
-        : (window.location.href.indexOf('khardl4test.xyz')
+        : (window.location.href.indexOf('khardl4test.xyz') > -1
             ? 'https://khardl4test.xyz' // Live test
             :'http://khardl:8000'); // Local
 

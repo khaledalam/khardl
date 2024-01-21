@@ -7,7 +7,6 @@ use App\Http\Services\Central\Admin\Dashboard\DashboardService;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
-
 {
     public function __construct(private DashboardService $dashboardService) {
     }

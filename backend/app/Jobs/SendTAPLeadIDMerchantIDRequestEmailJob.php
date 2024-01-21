@@ -3,8 +3,9 @@
 namespace App\Jobs;
 
 use App\Enums\Admin\LogTypes;
+use App\Mail\TAPLeadIDToMerchantIDRequest;
 use App\Models\Log;
-use App\Models\User;
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,18 +13,20 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendVerifyEmailJob implements ShouldQueue
+class SendTAPLeadIDMerchantIDRequestEmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $user;
+    protected $lead_id;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user)
+    public function __construct(RestaurantUser $user, string $lead_id)
     {
         $this->user = $user;
+        $this->lead_id = $lead_id;
     }
 
     /**
@@ -32,38 +35,36 @@ class SendVerifyEmailJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            // Send the email with the verification code
-            Mail::send('emails.verify', ['code' => $this->user?->verification_code, 'name' => "{$this?->user?->first_name} {$this?->user?->last_name}"], function ($message) {
-                $message->to($this?->user?->email);
-                $message->subject('Email Verification Code');
-            });
+            // Send request email TAP lead id to merchant id
+            Mail::send(new TAPLeadIDToMerchantIDRequest($this->lead_id));
             $action = [
-                'en' => '[ok] Sent verify restaurant user email',
-                'ar' => '[تم] ارسال بريد للتحقق من مستخدم المطعم',
+                'en' => '[ok] Sent TAP lead id to merchant id email',
+                'ar' => '[تم] ارسال بريد لتحويل lead الي merchant',
             ];
             tenancy()->central(function() use ($action) {
                 Log::create([
-                    'action' => $action,
                     'user_id' => $this?->user?->id,
-                    'type' => LogTypes::VerifyRestaurantUserSent,
+                    'action' => $action,
+                    'type' => LogTypes::TAPLeadIDMerchantIDSent,
                     'metadata' => [
-                        'email' => $this->user->email ?? null,
+                        'email' => $this?->user?->email ?? null,
+                        'lead_id' => $this?->lead_id
                     ]
                 ]);
             });
 
         } catch (\Exception $e) {
             $action = [
-                'en' => '[fail] Sent verify restaurant user email',
-                'ar' => '[فشل] ارسال بريد للتحقق من مستخدم المطعم',
+                'en' => '[fail] Sent TAP lead id to merchant id email',
+                'ar' => '[فشل] ارسال بريد لتحويل lead الي merchant',
             ];
             tenancy()->central(function() use ($action) {
                 Log::create([
                     'user_id' => $this?->user?->id,
                     'action' => $action,
-                    'type' => LogTypes::VerifyRestaurantUserFail,
+                    'type' => LogTypes::TAPLeadIDMerchantIDFail,
                     'metadata' => [
-                        'email' => $this->user->email ?? null,
+                        'email' => $this?->user?->email ?? null,
                     ]
                 ]);
             });

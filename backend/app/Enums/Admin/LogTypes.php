@@ -36,4 +36,6 @@ enum LogTypes: string
   case VerifyRestaurantUserFail  = 'Verify restaurant user fail';
   case RenewSubscriptionNotifySent ="Notify To Renew Subscription sent";
   case RenewSubscriptionNotifyFail ="Notify To Renew Subscription fail";
+  case TAPLeadIDMerchantIDSent ="TAP request to create Merchant ID from Lead ID sent";
+  case TAPLeadIDMerchantIDFail ="TAP request to create Merchant ID from Lead ID fail";
 }
