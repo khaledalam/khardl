@@ -10,14 +10,17 @@ use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RestaurantLive;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\isLeadSubmitted;
 use App\Http\Middleware\LanguageManager;
 use App\Http\Middleware\LocalizationApi;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\CheckPermissions;
 use Illuminate\Auth\Middleware\Authorize;
 use App\Http\Middleware\RestaurantNotLive;
+use App\Http\Middleware\RestaurantSubLive;
 use App\Http\Middleware\ValidateSignature;
 use Illuminate\Http\Middleware\HandleCors;
+use App\Http\Middleware\isLeadNotSubmitted;
 use App\Http\Middleware\RestaurantOrWorker;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Middleware\EnsurePhoneVerified;
@@ -43,8 +46,6 @@ use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use App\Http\Middleware\EnsureTraderRegistrationIsNotComplete;
-use App\Http\Middleware\isLeadSubmitted;
-use App\Http\Middleware\RestaurantSubLive;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -142,6 +143,7 @@ class Kernel extends HttpKernel
         'role' => RoleMiddleware::class,
         'isBusinessFilesSubmitted'=>IsBusinessFilesSubmitted::class,
         'isLeadSubmitted'=>isLeadSubmitted::class,
+        'isLeadNotSubmitted'=>isLeadNotSubmitted::class,
         'isBusinessSubmitted'=>IsBusinessSubmitted::class,
         "trans_api"=>LocalizationApi::class,
     ];

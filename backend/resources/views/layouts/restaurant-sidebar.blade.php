@@ -111,6 +111,7 @@
 <!--begin::Main-->
 <!--begin::Root-->
 <!--begin::Root-->
+   
 <div class="d-flex flex-column flex-root">
 
     <!--begin::Page-->
@@ -185,6 +186,16 @@
 
                         </div>
                         <!-- Site Editor -->
+                        <?php 
+                        $is_live = false; $has_sub = false ;
+                        tenant()->run(function() use (&$is_live,&$has_sub){
+                            $first_sub = \App\Models\ROSubscription::first();
+                            $has_sub = ( $first_sub && $first_sub->status  == \App\Models\ROSubscription::ACTIVE)?true:false;
+                            $is_live = App\Models\Tenant\Setting::first()->is_live;
+
+                        }); 
+                        ?>
+                        @if($is_live && $has_sub)
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurants.site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -201,6 +212,7 @@
                             </a>
 
                         </div>
+                        @endif
 
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
@@ -385,7 +397,7 @@
                             </a>
                         </div>
                         <!-- Promotions -->
-                        <div class="menu-item menu-accordion">
+                        {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.promotions')}}">
                                 <span class="{{ ($link == 'promotions' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -398,9 +410,9 @@
                                     <span class="menu-title">{{__('messages.promotions')}}</span>
                                 </span>
                             </a>
-                        </div>
+                        </div> --}}
                         <!-- QR maker -->
-                        <div class="menu-item menu-accordion">
+                        {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.qr')}}">
                                 <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -413,7 +425,7 @@
                                     <span class="menu-title">{{__('messages.qr-maker')}}</span>
                                 </span>
                             </a>
-                        </div>
+                        </div> --}}
                         <!-- Customer data -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('customers_data.list')}}">
@@ -426,7 +438,7 @@
                             </a>
                         </div>
                         <!-- Settings -->
-                        <div class="menu-item menu-accordion">
+                        {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.settings')}}">
                                 <span class="{{ ($link == 'settings' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -438,7 +450,7 @@
                                     <span class="menu-title">{{__('messages.settings')}}</span>
                                 </span>
                             </a>
-                        </div>
+                        </div> --}}
 
 
                         <!-- Payments -->
