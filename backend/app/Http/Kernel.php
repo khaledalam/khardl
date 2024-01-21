@@ -43,6 +43,7 @@ use App\Http\Middleware\EnsureTraderRegistrationIsComplete;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use App\Http\Middleware\EnsureTraderRegistrationIsNotComplete;
+use App\Http\Middleware\isLeadSubmitted;
 use App\Http\Middleware\RestaurantSubLive;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
@@ -140,6 +141,7 @@ class Kernel extends HttpKernel
         'notBlocked'=> EnsureUserIsNotBlocked::class,
         'role' => RoleMiddleware::class,
         'isBusinessFilesSubmitted'=>IsBusinessFilesSubmitted::class,
+        'isLeadSubmitted'=>isLeadSubmitted::class,
         'isBusinessSubmitted'=>IsBusinessSubmitted::class,
         "trans_api"=>LocalizationApi::class,
     ];

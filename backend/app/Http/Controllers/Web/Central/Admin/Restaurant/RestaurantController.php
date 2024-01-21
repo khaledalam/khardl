@@ -7,6 +7,7 @@ use App\Http\Requests\Central\Restaurant\ActivateAndDeactivateDeliveryFormReques
 use App\Http\Services\Central\Admin\Restaurant\RestaurantService;
 use App\Models\Tenant;
 use App\Models\Tenant\DeliveryCompany;
+use App\Models\Tenant\Setting;
 use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
@@ -43,5 +44,11 @@ class RestaurantController extends Controller
                 'success' => __($message, ['module' => __($request->module)]),
             ]);
         });
+    }
+    public function tapLead(Tenant $tenant){
+        $lead_response = $tenant->run(function(){
+            return Setting::first()->lead_response;
+        });
+        return response()->json($lead_response,200);
     }
 }

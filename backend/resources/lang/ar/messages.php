@@ -489,7 +489,8 @@ return [
     "K" => "الف",
     "M" => "مليون",
     "B" => "بليون",
-    "plan ends at" => "فترة صلاحيه العضويه تنتهي في",
+    "plan ends at" => "فترة صلاحيه الاشتراك تنتهي في",
+    "Plan"=>"الاشتراك",
     "metadata" => "البيانات الوصفية",
     "Support" => "الدعم",
     "About" => "من نحن",
@@ -726,13 +727,19 @@ return [
     "Birthday" => "تاريخ الميلاد",
     "Is this your primary email?" => "هل هذا بريدك الإلكتروني الأساسي؟",
     "Is this your primary number?" => "هل هذا هو رقمك الأساسي؟",
-    "You need to configure your payment account to access services" => "تحتاج إلى ظبط حساب الدفع الخاص بك للوصول إلى الخدمات",
+    "You need to configure your payment account to access services" => "تحتاج إلى انشاء بوابة الدفع الخاص بك للوصول إلى الخدمات",
     "Manage payment gateway" => "إدارة بوابة الدفع",
     "You do not the availability to add new branch" => "لا يتوفر لديك إمكانية إضافة فرع جديد",
     "You have to purchase new service" => "يجب عليك شراء خدمة جديدة",
     "You can add new branches from services" => "يمكنك إضافة فروع جديدة من الخدمات",
     "Can view revenues" => "يمكن مشاهدة الايرادات",
     "From"=>'من',
-    'To'=>"الي"
+    'To'=>"الي",
+    "Your payment gateway account is currently waiting for approval"=>"في انتظار الموافقة علي بوابة الدفع الخاصة بك  ..",
+    "No subscription"=>"لا يوجد اشتراك",
+    'Payment gateway'=>  'بوابة الدفع',
+    "Merchant ID"=>"معرف التاجر لدي بوابة الدفع ",
+    "Lead ID"=>"معرف السجل التجاري",
+    "Lead information"=>"معلومات السجل التجاري"
 ];
 

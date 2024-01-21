@@ -21,9 +21,14 @@ class Setting extends Model implements Syncable
         'cashback_per_amount_percentage',
         'global_id',
         'merchant_id',
-        'lead_id'
+        'lead_id',
+        'lead_response'
     ];
     public $timestamps = false;
+    protected $casts = [
+        'lead_response' => 'array',
+
+    ];
     public function getGlobalIdentifierKey()
     {
         return $this->getAttribute($this->getGlobalIdentifierKeyName());

@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Services\tenant\Restaurant\RestaurantService as TenantRestaurantService;
-
+use App\Models\ROSubscription;
 
 class RestaurantService
 {
@@ -22,7 +22,7 @@ class RestaurantService
         $query = Tenant::query()->with('primary_domain')
             ->whenSearch($request['search'] ?? null);
         $restaurants = $query->get();
-
+        // TODO @todo make sub active or not tag with search
         $tenants = [];
         if (isset($request['live']) && ($request['live'] == 1 || $request['live'] == 0)) {
             foreach ($restaurants as $restaurant) {
@@ -78,7 +78,9 @@ class RestaurantService
             $profitMonths,
             $yeswa,
             $cervo,
-            $streetline
+            $streetline,
+            $subscription,
+            $setting
         ] = $this->getRestaurantData($restaurant);
 
         $owner = $restaurant->user;
@@ -112,6 +114,8 @@ class RestaurantService
                 'yeswa',
                 'cervo',
                 'streetline',
+                'subscription',
+                'setting'
             )
         );
     }
@@ -139,6 +143,8 @@ class RestaurantService
             $yeswa = DeliveryCompany::where("module", class_basename(Yeswa::class))->first();
             $cervo = DeliveryCompany::where("module", class_basename(Cervo::class))->first();
             $streetline = DeliveryCompany::where("module", class_basename(StreetLine::class))->first();
+            $subscription = ROSubscription::first();
+            $setting = Setting::first();
             return [
                 $info['logo'],
                 $info['is_live'],
@@ -160,7 +166,9 @@ class RestaurantService
                 $profitMonths,
                 $yeswa,
                 $cervo,
-                $streetline
+                $streetline,
+                $subscription,
+                $setting
             ];
         });
 
