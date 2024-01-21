@@ -37,18 +37,19 @@
                                             <img src="{{global_asset('img/logo.png')}}" style="width: 185px;"
                                                 alt="logo">
                                         </div>
-                                        <h4 style="font-weight: 700;color: red" class="mt-4 mb-4 pb-1">New Lead</h4>
+                                        <h4 style="font-weight: 700;color: green;" class="mt-4 mb-4 pb-1">New LEAD</h4>
                                         <p style="text-align: left;"><b>Hello TAP Team,</b><br/><br />
-                                            New Lead ID has been created: {{$lead_id}}
+                                            New Lead ID has been created: <b>{{$lead_id}}</b>
                                             <br /><br />
-                                            Please reply to his email with the Merchant ID of this Lead ID and add Merchant ID to Google Sheet below.
+                                            Please reply to this email with the Merchant ID of this Lead ID and add Merchant ID to Google Sheet below.
                                             <br /><br />
-                                            We appreciate your cooperation
                                         <div class="text-center mt-5">
                                             <a style="color: red; text-decoration: none;" href="https://docs.google.com/spreadsheets/d/1xfrMiXG5GYDirI-vGKWCesbjgxv6jV5fSkwEocrKnbA/edit?usp=sharing"><button
-                                                    class="btn btn-outline-danger">Google Sheet</button></a>
+                                                    class="btn btn-outline-info">Google Sheet</button></a>
                                         </div>
-                                        <br /> <br />
+                                        <br /><br />
+                                        We appreciate your cooperation
+                                        <br /><br />
                                         <b style="text-align: left; display: flex; justify-content: left; align-items: start;">Thank you,</b><br />
                                         Development Team<br/>
                                         Khardl

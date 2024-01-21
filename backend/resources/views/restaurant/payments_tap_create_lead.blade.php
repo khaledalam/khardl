@@ -183,10 +183,10 @@
                         <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" {{old('entity.is_licensed')?'checked':''}} />
                     </label>
                 </div>
-                
+
 
             </div>
-           
+
             <hr class="mt-4">
             <br>
             <div class="col-md-6">
@@ -275,7 +275,7 @@
                         <option value="WORK">{{__('messages.Work')}}</option>
                     </select>
                 </div>
-              
+
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
@@ -378,11 +378,11 @@
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                        <span>{{__("messages.Line 2")}}</span>
+                        <span class="required">{{__("messages.Line 2")}}</span>
 
                     </label>
                     <!--end::Label-->
-                    <input type="text" class="form-control" name="user[address][line2]" value="{{old('user.address.line2')}}" />
+                    <input type="text" class="form-control" name="user[address][line2]" value="{{old('user.address.line2')}}" required/>
                 </div>
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
@@ -398,7 +398,7 @@
 
                     </label>
                     <!--end::Label-->
-                 
+
                     <input type="email" class="form-control" required placeholder="{{__('messages.Email')}}" name="user[email][address]" value="{{old('user.email.address')}}" />
                 </div>
                 <div class="d-flex flex-column mb-8 fv-row">
@@ -413,7 +413,7 @@
                         <option value="WORK">{{__('messages.Work')}}</option>
                     </select>
                 </div>
-              
+
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                     <h2 class="bold">{{__("messages.Terms and conditions")}}</h2>
 

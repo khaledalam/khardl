@@ -176,7 +176,7 @@ class TapController extends Controller
                     return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
                 } else {
                     return redirect()->route('restaurant.service')
-                 
+
                     ->with('error', __("The payment failed, and the subscription fee has not been paid"));
                 }
 
@@ -207,9 +207,9 @@ class TapController extends Controller
             logger( $response['message']);
             Setting::first()->update([
                 'lead_id'=> $response['message']['id']
-            ]); 
+            ]);
             SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
-                user: auth()->user,
+                user: auth()->user(),
                 lead_id :  $response['message']['id']
             );
             // TODO @todo add to Log action
