@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ForceLogOut;
 use App\Http\Middleware\Worker;
 use App\Http\Middleware\Restaurant;
 use App\Http\Middleware\TrimStrings;
@@ -91,6 +92,7 @@ class Kernel extends HttpKernel
             VerifyCsrfToken::class,
             SubstituteBindings::class,
             LanguageManager::class,
+            ForceLogOut::class
         ],
 
         'api' => [
@@ -102,7 +104,7 @@ class Kernel extends HttpKernel
         ],
         'tenant' => [
             InitializeTenancyByDomainOrSubdomain::class,
-            PreventAccessFromCentralDomains::class
+            PreventAccessFromCentralDomains::class,
         ],
 
         'universal' => [],
