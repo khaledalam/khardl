@@ -138,6 +138,7 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
+            'can_see_restaurant_owners'
         ];
 
         $insertData = [];
@@ -445,6 +446,7 @@ class AdminController extends Controller
             return $q->where("name","Administrator");
         })
         ->where('id','!=',Auth::id())
+        ->orderBy('id','DESC')
         ->paginate(15);
         $user = Auth::user();
         return view('admin.user-management', compact('user', 'admins'));
