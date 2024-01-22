@@ -276,8 +276,8 @@ class AdminController extends Controller
 
         SendApprovedRestaurantEmailJob::dispatch($restaurant);
         $actions = [
-            'en' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
-            'ar' => 'فعل مطعم المعرف ب: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
+            'en' => 'Has activate restaurant with an name of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->restaurant_name </a>",
+            'ar' => 'تم تفعيل المطعم بإسم: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->restaurant_name </a>",
         ];
         Log::create([
             'user_id' => Auth::id(),
