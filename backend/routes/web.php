@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
 use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
@@ -214,6 +215,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::get('/logs', [LogController::class, 'logs'])->middleware('permission:can_see_logs')->name('log');
                     Route::controller(RestaurantController::class)->group(function () {
                         Route::get('/restaurants/{tenant}','show')->middleware('permission:can_view_restaurants')->name('view-restaurants');
+                        Route::patch('/restaurants/{tenant}/config','updateConfig')->middleware('permission:can_view_restaurants')->name('update-restaurants-config');
+                        Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                       });
@@ -257,6 +260,16 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
     });
     Route::get('/change-language/{locale}', function ($locale) {
         App::setLocale($locale);
+        if(Auth::check()){
+            $user = Auth::user();
+            $user->update(['default_lang' => $locale]);
+            $user?->restaurant?->run(function($tenant) use($user,$locale){
+                $user = User::where('email',$user->email)->first();
+                if($user){
+                    $user->update(['default_lang' => $locale]);
+                }
+            });
+        }
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');

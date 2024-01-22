@@ -55,6 +55,13 @@
     "Coupon has been added successfully" :"تمت إضافة القسيمة بنجاح",
     "Updated successfully" :"تم التحديث بنجاح",
     "Only restaurant owner can login":"فقط مالك المطعم يمكنه تسجيل الدخول",
-    "Restaurant is in a live mode":"المطعم بالفعل فعال"
-
+    "Restaurant is in a live mode":"المطعم بالفعل فعال",
+    "There is no coupon code for ':code'":"لا يوجد قسيمة خصم للكوبون ':code'",
+    "The coupon has been expired" :"لقد انتهت صلاحية قسيمة الخصم",
+    "You have reached the maximum coupon use":"لقد وصلت إلى الحد الأقصى لاستخدام القسيمة",
+    "You must have at least subtotal :subtotal SAR to active this coupon" :"يجب أن يكون لديك على الأقل المجموع الفرعي :subtotal ريال لتفعيل هذه القسيمة",
+    "Coupon has been applied":"تم تطبيق القسيمة",
+    "Your tap account has been created successfully, waiting for approval and we will contact you then":"لقد تم إنشاء حساب Tap الخاص بك بنجاح، في انتظار الموافقة وسوف نتصل بك بعد ذلك",
+    "restaurant setting has been update successfully":"تم تحديث اعدادات الموقع بنجاح"
+    
 }

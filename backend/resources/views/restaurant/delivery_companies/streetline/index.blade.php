@@ -118,10 +118,11 @@
                                     <!--begin::Time-->
                                     <div class="fs-5 mb-3">{{__('messages.cover-area')}}</div>
                                     <!--end::Time-->
-                                    @foreach ($streetline?->coverage_area as $area)
-                                        <span class="badge badge-lg badge-light-khardl my-2">{{ $area }}</span>
-                                    @endforeach
-
+                                    @if(is_array($streetline?->coverage_area))
+                                        @foreach ($streetline?->coverage_area as $area)
+                                            <span class="badge badge-lg badge-light-khardl my-2">{{ $area }}</span>
+                                        @endforeach
+                                    @endif
                                     <img class="mw-100 my-3" src="{{global_asset('delivery-companies/street-line/Riyadh_coverd_area.jpg')}}" alt="street-line coverage area riyadh image" />
 
                                 </div>

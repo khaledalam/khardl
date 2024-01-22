@@ -54,8 +54,8 @@ class RestaurantController extends BaseController
         });
         $RO_subscription = ROSubscription::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
-
-        return view('restaurant.service', compact('user', 'RO_subscription', 'customer_tap_id', 'subscription'));
+        $setting  = Setting::first();
+        return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription','setting'));
     }
     public function serviceDeactivate()
     {
@@ -81,9 +81,6 @@ class RestaurantController extends BaseController
     {
         return ROSubscription::serviceCalculate($type, $number_of_branches);
     }
-
-
-
     public function delivery(Request $request)
     {
         /** @var RestaurantUser $user */

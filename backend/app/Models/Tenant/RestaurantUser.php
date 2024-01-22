@@ -44,7 +44,8 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'tap_customer_id',
         'tap_verified',
         'loyalty_points',
-        'cashback'
+        'cashback',
+        'default_lang'
     ];
     const STATUS = [
         self::ACTIVE,
@@ -137,7 +138,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->phone_verified_at != null;
     }
-
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class,'user_coupons','user_id');
+    }
     public function generateVerificationSMSCode()
     {
         $this->newAttempt();

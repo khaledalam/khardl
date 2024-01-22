@@ -41,28 +41,32 @@ class SendVerifyEmailJob implements ShouldQueue
                 'en' => '[ok] Sent verify restaurant user email',
                 'ar' => '[تم] ارسال بريد للتحقق من مستخدم المطعم',
             ];
-            Log::create([
-                'action' => $action,
-                'user_id' => $this?->user?->id,
-                'type' => LogTypes::VerifyRestaurantUserSent,
-               'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'action' => $action,
+                    'user_id' => $this?->user?->id,
+                    'type' => LogTypes::VerifyRestaurantUserSent,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
 
         } catch (\Exception $e) {
             $action = [
                 'en' => '[fail] Sent verify restaurant user email',
                 'ar' => '[فشل] ارسال بريد للتحقق من مستخدم المطعم',
             ];
-            Log::create([
-                'user_id' => $this?->user?->id,
-                'action' => $action,
-                'type' => LogTypes::VerifyRestaurantUserFail,
-               'metadata' => [
-                    'email' => $this->user->email ?? null,
-                ]
-            ]);
+            tenancy()->central(function() use ($action) {
+                Log::create([
+                    'user_id' => $this?->user?->id,
+                    'action' => $action,
+                    'type' => LogTypes::VerifyRestaurantUserFail,
+                    'metadata' => [
+                        'email' => $this->user->email ?? null,
+                    ]
+                ]);
+            });
         }
     }
 }

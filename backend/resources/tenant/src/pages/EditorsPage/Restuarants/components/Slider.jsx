@@ -9,7 +9,8 @@ import {
 import ReactSlider from "react-slick"
 import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg"
 import {BiCloudUpload} from "react-icons/bi"
-
+import Cropper from 'react-easy-crop'
+import getCroppedImg from './cropImage'
 const Slider = ({banner_images}) => {
   const bannersUpload =
     useSelector((state) => state.restuarantEditorStyle.bannersUpload) || []
@@ -19,6 +20,15 @@ const Slider = ({banner_images}) => {
     ) || ""
 
   const [sliderCount, setSliderCount] = useState(2)
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [rotation, setRotation] = useState(0)
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+  const [croppedImage, setCroppedImage] = useState(null)
+  const [uncroppedImage, setUncroppedImage] = useState(null)
+  const [isCropModalOpened, setIsCropModalOpened] = useState(false)
+  const [idxselected, setIdxselected] = useState(false)
+
   const dispatch = useDispatch()
 
   const handleImagesUpload = (event, idx) => {
@@ -35,6 +45,9 @@ const Slider = ({banner_images}) => {
         })
       )
     } else {
+      setUncroppedImage(URL.createObjectURL(selectedImage))
+      setIsCropModalOpened(true)
+      setIdxselected(idx)
       dispatch(
         setBannersUpload({
           index: idx,
@@ -61,6 +74,34 @@ const Slider = ({banner_images}) => {
     }
   }, [bannersUpload, sliderCount])
 
+  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels)
+  }
+  const showCroppedImage = async () => {
+    try {
+      
+      const croppedImage = await getCroppedImg(
+       uncroppedImage,
+        croppedAreaPixels,
+        rotation
+      )
+      console.log('donee', { croppedImage })
+      setUncroppedImage(null)
+      setIsCropModalOpened(false)
+     
+      dispatch( setBannersUpload({
+        index: idxselected,
+        image: {
+          type: "image",
+          url: croppedImage,
+        },
+      }))
+     
+      // setCroppedImage(croppedImage)
+    } catch (e) {
+      console.error(e)
+    }
+  }
   const settings = {
     dots: true,
     infinite: true,
@@ -203,6 +244,48 @@ const Slider = ({banner_images}) => {
             ))}
         </ReactSlider>
       </div>
+      {isCropModalOpened && <div class="modal  fixed w-full h-full top-0 left-0 flex items-center justify-center" style={{ opacity: 1, pointerEvents: 'all' }}>
+          <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+
+          <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+
+
+
+            <div class="modal-content py-4 text-left px-6">
+
+              <div class="flex justify-between items-center pb-3">
+                <p class="text-2xl font-bold">Crop Image!</p>
+                <div class="modal-close cursor-pointer z-50">
+                  <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div className={'cropper-container'}>
+
+                <Cropper
+                  image={uncroppedImage}
+                  crop={crop}
+                  rotation={rotation}
+                  zoom={zoom}
+                  aspect={4 / 3}
+                  onCropChange={setCrop}
+                  onRotationChange={setRotation}
+                  onCropComplete={onCropComplete}
+                  onZoomChange={setZoom}
+                />
+
+              </div>
+           
+
+              <div class="flex justify-end pt-2">
+
+                <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400"  onClick={()=>showCroppedImage()}>Save</button>
+              </div>
+
+            </div>
+          </div>
+        </div>}
     </div>
   )
 }
