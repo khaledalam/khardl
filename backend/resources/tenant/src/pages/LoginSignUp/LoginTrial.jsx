@@ -45,11 +45,11 @@ const LoginTrial = () => {
          } else {
             console.log("response?.data?.success false")
             setSpinner(false)
-            throw new Error(`${t('Login failed')}`)
+            toast.error(`${response?.data?.message || t('Login failed')}`)
          }
       } catch (error) {
          setSpinner(false)
-         toast.error(`${t('Login failed')}`)
+         toast.error(`${error?.response?.data?.message || t('Login failed')}`)
       }
    }
    /////////////////////////////////////////////////////////////////////////////////////
