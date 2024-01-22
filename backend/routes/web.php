@@ -135,12 +135,12 @@ Route::get('/health', static function (){
 })->name('health');
 
 Route::get('/test', static function (){
-    return view('restaurant.promotions_full');
-    dd(Tenant::all()->first()->central_tenant_setting);
     return response()->json([
         'status' => 'test'
     ]);
 })->name('test');
+
+
 
 Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
 Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
