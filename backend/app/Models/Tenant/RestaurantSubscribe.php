@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use App\Models\Subscription;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
