@@ -74,7 +74,9 @@ class OrderService
                 if(isset($request->product_options[$product]['dropdown_input'])){
                     $selectedDropdown = $request->product_options[$product]['dropdown_input'];
                 }
-                dd($selectedDropdown,$selectedCheckbox,$selectedRadio);
+                $selectedDropdown = $this->readyOptions($selectedDropdown);
+                $selectedRadio = $this->readyOptions($selectedRadio);
+                $selectedCheckbox = $this->readyOptionsNested($selectedCheckbox);
                 $addItemToCartRequest = new AddItemToCartRequest([
                     'item_id' => $product,
                     'quantity' => $quantity,
@@ -87,6 +89,22 @@ class OrderService
             }
         }
         return $new_cart;
+    }
+    public function readyOptionsNested($options)
+    {
+        foreach ($options as $key => $option) {
+            foreach ($option as $subKey => $subOption) {
+                $options[$key][$subKey] = [(int)$key,(int)$subKey];
+            }
+        }
+        return $options;
+    }
+    public function readyOptions($options)
+    {
+        foreach ($options as $key => $option) {
+            $options[$key] = [(int)$option,(int)$option];
+        }
+        return $options;
     }
     public function searchProducts($request)
     {

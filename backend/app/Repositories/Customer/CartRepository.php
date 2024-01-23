@@ -96,9 +96,12 @@ class CartRepository
     }
     public function loopingTroughSelectionOptions($item,$options,&$updatedOptions){
         $totalPrice = 0;
+        logger($options);
         foreach($options as $i=>$option){
+            logger($option);
             if($option)
                 foreach($option as $j=>$sub_option){
+                    logger($sub_option);
                     $updatedOptions [$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$j][0],$item->selection_input_prices[$i][$j]];
                     $updatedOptions [$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$j][1],$item->selection_input_prices[$i][$j]];
 
