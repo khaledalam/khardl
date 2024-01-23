@@ -28,6 +28,7 @@ class OrderController extends BaseController
     }
     public function store(StoreOrderFormRequest $request)
     {
+        dd($request->all());
         return $this->orderService->addOrder($request);
     }
     public function UnavailableProducts(Request $request){

@@ -28,7 +28,7 @@
                     <!--begin::Container-->
                     <div id="kt_content_container" class="container-xxl">
                         <!--begin::Form-->
-                        <form action="{{ route('restaurant.store') }}" method="POST" class="form d-flex flex-column flex-lg-row">
+                        <form action="{{ route('restaurant.order.store') }}" method="POST" class="form d-flex flex-column flex-lg-row">
                             @csrf
                             <!--begin::Aside column-->
                             <div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
@@ -204,6 +204,9 @@
                                 </div>
                             </div>
                             <!--end::Main column-->
+                            <div id="modal_here">
+
+                            </div>
                         </form>
                         <!--end::Form-->
                     </div>
@@ -217,9 +220,6 @@
         <!--end::Wrapper-->
     </div>
     <!--end::Page-->
-</div>
-<div id="modal_here">
-
 </div>
 <!--end::Root-->
 <!--end::Main-->
@@ -325,7 +325,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}]['checkbox_input'][${index}]" >
+                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][checkbox_input][${index}][]" >
                             <span class="product_option_price">{{ __('messages.SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -346,7 +346,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}]['selection_input'][${index}]">
+                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][selection_input][${index}]">
                             <span class="product_option_price">{{ __('messages.SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -362,8 +362,8 @@
                     if (isRequired) haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
-                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">
-                        <option>Select option</option>`;
+                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}][dropdown_input][${index}]">
+                        <option>{{ __('messages.Select option') }}</option>`;
                     innerOptions.forEach((option, innerIndex) => {
                         optionsHTML += `
                             <option value="${innerIndex}">${getLangName(option)}</option>
@@ -435,7 +435,7 @@
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
                 var isChecked = $(this).is(':checked');
-                console.log(isChecked,product,price);
+                console.log(isChecked,product,price,productQuantity[product]);
                 if (isChecked) {
                     if(price&&price > 0)totalCost += parseFloat(price * productQuantity[product]);
                 } else {
