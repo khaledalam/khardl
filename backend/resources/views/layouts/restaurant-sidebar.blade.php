@@ -1,4 +1,4 @@
-@if(!$user->isRestaurantOwner())
+@if(!Auth::user()->isRestaurantOwner())
     @include('layouts.worker-sidebar')
 @else
 <!DOCTYPE html>
@@ -21,9 +21,10 @@
     <!--begin::Fonts-->
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    <link href="{{ global_asset('assets/css/AdminAndRestaurantAndWorker.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ global_asset('assets/css/resturant-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
+        <link href="{{ global_asset('assets/css/global-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/resturant-main-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
@@ -110,6 +111,7 @@
 <!--begin::Main-->
 <!--begin::Root-->
 <!--begin::Root-->
+   
 <div class="d-flex flex-column flex-root">
 
     <!--begin::Page-->
@@ -184,8 +186,18 @@
 
                         </div>
                         <!-- Site Editor -->
+                        <?php 
+                        $is_live = false; $has_sub = false ;
+                        tenant()->run(function() use (&$is_live,&$has_sub){
+                            $first_sub = \App\Models\ROSubscription::first();
+                            $has_sub = ( $first_sub && $first_sub->status  == \App\Models\ROSubscription::ACTIVE)?true:false;
+                            $is_live = App\Models\Tenant\Setting::first()->is_live;
+
+                        }); 
+                        ?>
+                        @if($is_live && $has_sub)
                         <div class="menu-item menu-accordion">
-                            <a href="{{route('site_editor')}}" target="_blank">
+                            <a href="{{route('restaurants.site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -200,6 +212,7 @@
                             </a>
 
                         </div>
+                        @endif
 
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
@@ -338,6 +351,21 @@
                                 </a>
                             </div>
                         </div>
+                           <!-- Coupons -->
+                           <div class="menu-item menu-accordion">
+                            <a href="{{route('coupons.index')}}">
+                                <span class="{{ ($link == 'coupons' ) ? 'menu-link active' : 'menu-link ' }}">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon -->
+                                            <span class="svg-icon svg-icon-2">
+                                                <i class="bi bi-cash-stack"></i>
+                                            </span>
+                                        <!--end::Svg Icon-->
+                                    </span>
+                                        <span class="menu-title">{{__('messages.Coupons')}}</span>
+                                </span>
+                            </a>
+                        </div>
                         <!-- Services -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.service')}}">
@@ -369,7 +397,7 @@
                             </a>
                         </div>
                         <!-- Promotions -->
-                        <div class="menu-item menu-accordion">
+                        {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.promotions')}}">
                                 <span class="{{ ($link == 'promotions' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -382,9 +410,9 @@
                                     <span class="menu-title">{{__('messages.promotions')}}</span>
                                 </span>
                             </a>
-                        </div>
+                        </div> --}}
                         <!-- QR maker -->
-                        <div class="menu-item menu-accordion">
+                        {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.qr')}}">
                                 <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -397,7 +425,7 @@
                                     <span class="menu-title">{{__('messages.qr-maker')}}</span>
                                 </span>
                             </a>
-                        </div>
+                        </div> --}}
                         <!-- Customer data -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('customers_data.list')}}">
@@ -410,7 +438,7 @@
                             </a>
                         </div>
                         <!-- Settings -->
-                        <div class="menu-item menu-accordion">
+                        {{-- <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.settings')}}">
                                 <span class="{{ ($link == 'settings' ) ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -422,7 +450,7 @@
                                     <span class="menu-title">{{__('messages.settings')}}</span>
                                 </span>
                             </a>
-                        </div>
+                        </div> --}}
 
 
                         <!-- Payments -->

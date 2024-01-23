@@ -28,7 +28,9 @@ class Order extends Model
         'tracking_url',
         'yeswa_ref',
         'cervo_ref',
-        'streetline_ref'
+        'streetline_ref',
+        'coupon_id',
+        'discount'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     const STATUS = [

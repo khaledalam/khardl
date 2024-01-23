@@ -35,12 +35,14 @@ class AuthenticationController extends Controller
             }
             return ResponseHelper::response([
                 'message' => 'User is authenticated',
+                'default_locale'   => $user->default_lang,
                 'phone'=>$user->phone,
                 'is_loggedin' => true
             ], ResponseHelper::HTTP_OK);
         }
         return ResponseHelper::response([
             'message' => 'User is not authenticated',
+            'default_locale'   => app()->getLocale(),
             'is_loggedin' => false
         ], ResponseHelper::HTTP_NOT_AUTHENTICATED);
     }
@@ -53,8 +55,13 @@ class AuthenticationController extends Controller
     {
         /** @var ?User $user */
         $user = auth()?->user();
-
         if ($user) {
+            tenancy()->central(function ($tenant) {
+                $user = User::where('email',$tenant->email)->first();
+                if($user){
+                    $user->update(['force_logout' => 1]);
+                }
+            });
             Auth::logout();
             if ($request->expectsJson()) {
                 return ResponseHelper::response([

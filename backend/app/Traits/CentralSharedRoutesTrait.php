@@ -15,6 +15,7 @@ trait CentralSharedRoutesTrait
             'routes'=>[
                 ''=>"home",
                 'advantages'=>'advantages',
+                'restaurant-not-found'=>'restaurant_not_found',
                 'clients'=>'clients',
                 'services'=>'services',
                 'privacy'=>'privacy',

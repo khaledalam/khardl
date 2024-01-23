@@ -15,9 +15,10 @@
     <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
     <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    <link href="{{ global_asset('assets/css/AdminAndRestaurantAndWorker.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
+        <link href="{{ global_asset('assets/css/global-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/css/admin-main-ar.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}"rel="stylesheet" type="text/css" />
         <link href="{{ global_asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />
@@ -384,6 +385,7 @@
                                         class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                                         <!--begin::Title-->
                                         <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">
+                                            <a href="{{\URL::previous()}}" class="m-2"><i class="text-black fas fa-arrow-left"></i></a>
                                             @yield('title', 'Dashboard')
                                             <!--begin::Separator-->
                                             <span class="h-20px border-1 border-gray-200 border-start ms-3 mx-2 me-1"></span>

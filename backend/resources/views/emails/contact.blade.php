@@ -43,7 +43,7 @@
                                     </a>
                                 </td>
                             </tr>
-                            
+
                             <tr>
                                 <td style="padding-left:20px;padding-right:20px" align="center" valign="top" class="containtTable ui-sortable">
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tableDescription" style="">
@@ -79,6 +79,7 @@
                         </table>
                     </td>
                 </tr>
+                <br><br><small><i>This email was sent from an email address that can't receive emails. Please don't reply to this email.</i></small>
                 </tbody>
             </table>
         </td>

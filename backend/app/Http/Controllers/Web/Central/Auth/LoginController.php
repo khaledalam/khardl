@@ -56,7 +56,7 @@ class LoginController extends BaseController
 
         $credentials = request(['email', 'password']);
 
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt($credentials,true)) {
             return $this->sendError('Unauthorized.', ['error' => __('messages.Invalid email or password')]);
         }
 
@@ -73,7 +73,7 @@ class LoginController extends BaseController
             'user'=>$user
         ];
 
-        if(!$user?->traderRegistrationRequirement || ($user?->isRestaurantOwner() && !$user?->restaurant)) {
+        if((!$user?->traderRegistrationRequirement && $user?->isRestaurantOwner())|| ($user?->isRestaurantOwner() && !$user?->restaurant)) {
             $data['step2_status'] = 'incomplete';
         } else {
             $data['step2_status'] = 'completed';

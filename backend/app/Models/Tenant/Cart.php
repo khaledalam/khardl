@@ -14,6 +14,7 @@ class Cart extends Model
         'user_id',
         'branch_id',
         'total',
+        'coupon_id'
 
     ];
 
@@ -29,6 +30,10 @@ class Cart extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
 

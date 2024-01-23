@@ -10,6 +10,7 @@ const useAxiosAuth = () => {
 
    const privateRoute = ![
       '/',
+      '/restaurant-not-found',
       '/register',
       '/services',
       '/reset-password',

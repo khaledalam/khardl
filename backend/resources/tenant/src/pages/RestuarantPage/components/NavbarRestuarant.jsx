@@ -5,9 +5,11 @@ import {MenuContext} from "react-flexible-sliding-menu"
 import {useSelector} from "react-redux"
 import {useNavigate} from "react-router-dom"
 import {toast} from "react-toastify"
+import imgLogo from "../../../assets/khardl_Logo.png"
+import { useTranslation } from "react-i18next"
 const NavbarRestuarant = () => {
   const {toggleMenu} = useContext(MenuContext)
-
+  const {t} = useTranslation()
   const navigate = useNavigate()
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
   const toggleTheMenu = () => {
@@ -17,7 +19,7 @@ const NavbarRestuarant = () => {
     (state) => state.categoryAPI.cartItemsCount
   )
   const {header_color, headerPosition} = restaurantStyle
-  console.log("restuarant styles header", restaurantStyle)
+  console.log("restaurantStyle", restaurantStyle)
   useEffect(() => {
     const checkOrderQueryParam = () => {
       const queryParams = new URLSearchParams(window.location.search)
@@ -53,9 +55,42 @@ const NavbarRestuarant = () => {
           <IoMenuOutline size={38} className='text-white' />
         </div>
         <div
+          className={` w-full ${
+            restaurantStyle?.logo_alignment === t("Center") ||
+            restaurantStyle?.logo_alignment === "center"
+              ? " flex items-center justify-center"
+              : restaurantStyle?.logo_alignment === t("Left") ||
+                restaurantStyle?.logo_alignment === "left"
+              ? "items-center justify-start"
+              : "items-center justify-end"
+          }`}
+        >
+          <div
+            className={`w-[80px] h-[80px]  ${
+              restaurantStyle?.logo_shape === "rounded" ||
+              restaurantStyle?.logo_shape === t("Rounded")
+                ? "rounded-full"
+                : restaurantStyle?.logo_shape === "sharp" ||
+                  restaurantStyle?.logo_shape === t("Sharp")
+                ? "rounded-none"
+                : ""
+            }`}
+          >
+            <img
+              src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
+              alt='logo'
+              className={`w-full h-full object-cover ${
+                restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
+              }`}
+            />
+          </div>
+        </div>
+        
+        <div
           onClick={() => navigate("/cart")}
           className='w-[50px] h-[50px] relative flex items-center justify-center cursor-pointer'
         >
+          
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {cartItemsCount > 0 && (
             <div className='absolute top-0 right-0'>

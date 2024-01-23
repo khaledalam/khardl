@@ -25,24 +25,31 @@ class OrderRepository
     {
         DB::beginTransaction();
         try {
-         
+
             $user= $user ?? Auth::user();
             $subtotal = $cart->subTotal();
             $delivery = DeliveryType::where('name',$request->delivery_type)->first();
             $paymentMethod = PaymentMethod::where('name',$request->payment_method)?->first();
+            $coupon = $cart->coupon();
+            $discount = $cart->discount();
             $order = Order::create([
-                'user_id'=>$user->id,
-                'branch_id'=>$cart->branch()->id,
-                'payment_method_id'=> $paymentMethod?->id,
-                'delivery_type_id'=> $delivery->id,
-                'total' => $cart->total($subtotal)  + $delivery->cost,
-                'subtotal' =>$subtotal,
-                'shipping_address'=>$request->shipping_address,
-                'order_notes'=>$request->order_notes,
+                'user_id' => $user->id,
+                'branch_id' => $cart->branch()->id,
+                'payment_method_id' => $paymentMethod?->id,
+                'delivery_type_id' => $delivery->id,
+                'total' => $cart->total($subtotal) + $delivery->cost,
+                'subtotal' => $subtotal,
+                'shipping_address' => $request->shipping_address,
+                'order_notes' => $request->order_notes,
+                'coupon_id' => $coupon && $discount != 0 ? $coupon->id : null,
+                'discount' => $discount ? $discount : null,
                 // TODO @todo update
                 'payment_status' => Payment::PENDING,
-                'status'=> Order::PENDING,
+                'status' => Order::PENDING,
             ]);
+            if($discount&&$coupon){
+                $user->coupons()->attach($coupon->id);
+            }
             $cart->clone_to_order_items($order->id);
             $statusLog = new OrderStatusLogs();
             $statusLog->order_id = $order->id;
@@ -51,14 +58,14 @@ class OrderRepository
             $statusLog->saveOrFail();
 
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){
-               
+
 
                 // @TODO: fetch transaction fee percentage that need to be deduce from
                 // each TAP transaction from super admin dashboard settings
 
 
                 // @TODO: Create TAP charge
-              
+
                 $cart->trash();
 
                 DB::commit();
@@ -70,7 +77,7 @@ class OrderRepository
                     'transaction_id'=>$request->tap_id ?? null
                 ]);
                 $charge = Charge::retrieve($request->tap_id);
-               
+
                 if($charge['message']['status'] == 'CAPTURED'){
                     $order->update([
                         "payment_status"=> Payment::PAID
@@ -81,7 +88,7 @@ class OrderRepository
                         "payment_status"=> Payment::FAILED
                     ]);
                 }
-               
+
                 DB::commit();
                 return $order;
             }

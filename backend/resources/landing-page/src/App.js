@@ -6,6 +6,7 @@ import {ToastContainer} from "react-toastify"
 import Header from "./components/Header/Header"
 import Footer from "./components/Footer/Footer"
 import Home from "./pages/Home/Home"
+import RestaurantNotFound from "./pages/Home/RestaurantNotFound"
 import Advantages from "./pages/Advantages/Advantages"
 import Services from "./pages/Services/services"
 import FQA from "./pages/FQA/fqa"
@@ -51,6 +52,7 @@ const App = () => {
   const showFooter = ![
     "/login",
     "/register",
+    '/restaurant-not-found',
     "/reset-password",
     "/create-new-password",
     "/verification-email",
@@ -82,7 +84,9 @@ const App = () => {
         <div>
           <Routes>
             {" "}
-            {/* Public Routes */} <Route path='/' element={<Home />} />{" "}
+            {/* Public Routes */} 
+            <Route path='/' element={<Home />} />{" "}
+            <Route path='/restaurant-not-found' element={<RestaurantNotFound />} />{" "}
             <Route path='/logout' element={<Logout />} />{" "}
             <Route path='/reset-password' element={<ForgotPassword />} />{" "}
             <Route

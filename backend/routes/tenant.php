@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
@@ -11,6 +12,7 @@ use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Packages\TapPayment\Charge\Charge;
 use App\Http\Controllers\DownloadController;
 use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
@@ -18,6 +20,7 @@ use App\Http\Controllers\API\Tenant\ItemController;
 use App\Http\Controllers\API\Tenant\OrderController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
+use App\Packages\TapPayment\Controllers\CardController;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -25,21 +28,22 @@ use App\Http\Controllers\Web\Tenant\Auth\LoginController;
 use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Packages\TapPayment\Controllers\BusinessController;
+use App\Packages\TapPayment\Controllers\CustomerController;
 use App\Http\Controllers\API\Tenant\Customer\CartController;
 use App\Http\Controllers\API\Tenant\CustomerStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
+use App\Http\Controllers\Web\Tenant\Coupon\CouponController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
 use App\Http\Controllers\Web\Tenant\Auth\LoginCustomerController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
-use App\Http\Controllers\API\Tenant\Auth\LoginController  as APILoginController;
+use App\Http\Controllers\API\Tenant\Auth\LoginController as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
-use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
-use App\Packages\TapPayment\Controllers\CardController;
 use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
-use App\Packages\TapPayment\Controllers\CustomerController;
+use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
+use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,23 +57,23 @@ use App\Packages\TapPayment\Controllers\CustomerController;
 |
 */
 
-Route::get('/health', function (){
+Route::get('/health', function () {
     return response()->json([
         'status' => 'ok'
     ]);
 })->name('health');
 
 Route::group([
-    'middleware' => ['tenant','web'],
+    'middleware' => ['tenant', 'web'],
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
         return UserImpersonation::makeResponse($token);
     })->name("impersonate");
 
-    Route::get('login-trial', static function() {
+    Route::get('login-trial', static function () {
         return view("tenant");
-    })->name("login-trial")->middleware(['guest','restaurantNotLive']);
+    })->name("login-trial")->middleware(['guest', 'restaurantNotLive']);
     Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
     Route::post('login-admins', [LoginController::class, 'login']);
     // guest
@@ -79,7 +83,7 @@ Route::group([
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
     Route::middleware(['auth'])->group(function () {
-        Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
 
@@ -101,13 +105,13 @@ Route::group([
             Route::post('/category/{id}/{branchId}/add-item', [RestaurantController::class, 'addItem'])->middleware('permission:can_edit_menu')->name('restaurant.add-item');
             Route::delete('/category/{id}/delete-item', [RestaurantController::class, 'deleteItem'])->middleware('permission:can_edit_menu')->name('restaurant.delete-item');
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
-            Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
-            Route::get('/download/pdf',[DownloadController::class,'downloadPDF'])
-            ->name("download.pdf");
-            Route::group(['prefix'=>'/branches'], function(){
+            Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment','isLeadNotSubmitted'])->name('tap.payments');
+            Route::get('/download/pdf', [DownloadController::class, 'downloadPDF'])
+                ->name("download.pdf");
+            Route::group(['prefix' => '/branches'], function () {
                 // Route::get('/{branch}',[RestaurantController::class, 'branch'])->name('restaurant.branch');
-                Route::get('/orders/{order}',[RestaurantController::class, 'branchOrders'])->name('restaurant.branch.order');
-                Route::put('/orders/{order}/status',[OrderController::class,'updateStatus'])->name('restaurant.branch.order.status');
+                Route::get('/orders/{order}', [RestaurantController::class, 'branchOrders'])->name('restaurant.branch.order');
+                Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('restaurant.branch.order.status');
                 // Route::delete('/orders/{order}',[OrderController::class,'destroy'])->name('restaurant.branch.order.destroy');
 
             });
@@ -116,13 +120,17 @@ Route::group([
 
                 // TAP Create Business
                 // Step 1: store files
-                Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get')->middleware('isBusinessSubmitted');
-                Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents')->middleware('isBusinessSubmitted');
+                // Route::get('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents_get'])->name('tap.payments_upload_tap_documents_get')->middleware('isBusinessSubmitted');
+                // Route::post('/payments/tap-create-business-upload-documents', [TapController::class, 'payments_upload_tap_documents'])->name('tap.payments_upload_tap_documents')->middleware('isBusinessSubmitted');
 
-                // Step 2: create business
-                Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get')->middleware('isBusinessFilesSubmitted');
-                Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
-                // Step 3: save cards
+                // // Step 2: create business
+                // Route::get('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents_get'])->name('tap.payments_submit_tap_documents_get')->middleware('isBusinessFilesSubmitted');
+                // Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
+
+                // Step 2 instead of business : Lead
+                Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get')->middleware('isLeadSubmitted');
+                Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
+                 // Step 3: save cards
                 Route::get('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
 
 
@@ -130,7 +138,7 @@ Route::group([
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
                 Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
-                Route::get('/service/{type}/{number_of_branches}/calculate', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
+                Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
 
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
@@ -140,9 +148,9 @@ Route::group([
 
 
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
-                    Route::get('/customers-data','index')->name('list');
-                    Route::get('/customers-data/{restaurantUser}','show')->name('show');
-                    Route::put('/change-status/{restaurantUser}','update_status')->name('change-status');
+                    Route::get('/customers-data', 'index')->name('list');
+                    Route::get('/customers-data/{restaurantUser}', 'show')->name('show');
+                    Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
                 });
                 Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
                 Route::post('/update-settings', [RestaurantController::class, 'updateSettings'])->name('restaurant.update.settings');
@@ -156,21 +164,23 @@ Route::group([
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                     Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
-                  });
+                });
+                Route::resource('coupons',CouponController::class);
+                Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
-                Route::any('/callback',[TapController::class, 'callback'])->name('tap.callback');
+                Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
                 Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
 
                 Route::post('/restaurant-style', [RestaurantStyleController::class, 'save'])->name('restaurant.restaurant.style.save');
                 Route::post('/customer-style', [CustomerStyleController::class, 'save'])->name('restaurant.customer.style.save');
 
                 $group = TenantSharedRoutesTrait::getPrivateRoutes();
-                Route::middleware($group['middleware'])->group(function() use ($group){
+                Route::middleware($group['middleware'])->group(function () use ($group) {
                     foreach ($group['routes'] as $route => $name) {
-                        Route::get($route, static function(Request $request) {
+                        Route::get($route, static function (Request $request) {
                             return view('tenant');
                         })->name($name);
                     }
@@ -182,23 +192,23 @@ Route::group([
         });
 
         $group = TenantSharedRoutesTrait::getPrivateRoutes();
-        Route::middleware($group['middleware'])->group(function() use ($group){
+        Route::middleware($group['middleware'])->group(function () use ($group) {
             foreach ($group['routes'] as $route => $name) {
-                Route::get($route, static function(Request $request) {
+                Route::get($route, static function (Request $request) {
                     return view('tenant');
                 })->name($name);
             }
         });
-        Route::get('/download/file/{path?}',function($path){
-            try{
+        Route::get('/download/file/{path?}', function ($path) {
+            try {
                 return response()->download(storage_path("app/public/$path"));
-            }catch(Exception $e){
-                return redirect()->back()->with('error',__('File not exists !'));
+            } catch (Exception $e) {
+                return redirect()->back()->with('error', __('File not exists !'));
             }
 
         })
-        ->where('path', '(.*)')
-        ->name("download.file");
+            ->where('path', '(.*)')
+            ->name("download.file");
 
     });
 
@@ -209,9 +219,9 @@ Route::group([
     ], static function () {
         $groups = TenantSharedRoutesTrait::groups();
         foreach ($groups as $group) {
-            Route::middleware($group['middleware'])->group(function() use ($group){
+            Route::middleware($group['middleware'])->group(function () use ($group) {
                 foreach ($group['routes'] as $route => $name) {
-                    Route::get($route, static function(Request $request) {
+                    Route::get($route, static function (Request $request) {
                         return view('tenant');
                     })->name($name);
                 }
@@ -233,7 +243,7 @@ Route::group([
         Route::middleware('auth')->group(function () {
 
             Route::middleware('notVerifiedPhone')->group(function () {
-                Route::get('verification-phone', static function() {
+                Route::get('verification-phone', static function () {
                     return view("tenant");
                 })->name("verification-phone");
                 Route::post('phone/send-verify', [RegisterController::class, 'sendVerificationSMSCode']);
@@ -246,31 +256,46 @@ Route::group([
 
 
             Route::middleware('verifiedPhone')->group(function () {
-                Route::delete("carts/trash",[CartController::class,'trash'])->name('carts.trash');
-                Route::resource("carts",CartController::class)->only([
-                    'index','store','destroy','update'
+                Route::delete("carts/trash", [CartController::class, 'trash'])->name('carts.trash');
+                Route::resource("carts", CartController::class)->only([
+                    'index',
+                    'store',
+                    'destroy',
+                    'update'
                 ]);
-                Route::post("orders/validate",[CustomerOrderController::class,'validateOrder'])->name('orders.validate');
-                Route::get("orders/payment/response",[CustomerOrderController::class,'paymentResponse'])->name('orders.payment');
-                Route::resource("orders",CustomerOrderController::class)->only([
-                    'store', 'index'
+                Route::post("orders/validate", [CustomerOrderController::class, 'validateOrder'])->name('orders.validate');
+                Route::get("orders/payment/response", [CustomerOrderController::class, 'paymentResponse'])->name('orders.payment');
+                Route::resource("orders", CustomerOrderController::class)->only([
+                    'store',
+                    'index'
                 ]);
-                Route::get("cards",[CustomerCardController::class,'show'])->name('customer.cards');
+                Route::post("validate/coupon", [CustomerCouponController::class,'validateCoupon']);
+                Route::get("cards", [CustomerCardController::class, 'show'])->name('customer.cards');
             });
 
 
         });
         // TODO @todo prevent to access it from the website
-        Route::get('categories',[CategoryController::class,'index']);
-        Route::get('orders',[OrderController::class,'index']);
+        Route::get('categories', [CategoryController::class, 'index']);
+        Route::get('orders', [OrderController::class, 'index']);
 
-        Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class,'asset'])
-        ->where('path', '(.*)')
-        ->name('stancl.tenancy.asset');
+        Route::get('/tenancy/assets/{path?}', [TenantAssetsController::class, 'asset'])
+            ->where('path', '(.*)')
+            ->name('stancl.tenancy.asset');
     });
 
     Route::get('/change-language/{locale}', static function ($locale) {
         App::setLocale($locale);
+        if(Auth::check()){
+            $user = Auth::user();
+            $user->update(['default_lang' => $locale]);
+            tenancy()->central(function ($tenant) use ($user,$locale) {
+                $user = User::where('email',$user->email)->first();
+                if($user){
+                    $user->update(['default_lang' => $locale]);
+                }
+            });
+        }
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');
@@ -285,39 +310,42 @@ Route::middleware([
 ])->group(function () {
 
     // route name webhook-client-delivery-companies
-    Route::webhooks('delivery-webhook','delivery-companies');
+    Route::webhooks('delivery-webhook', 'delivery-companies');
     // route name  webhook-client-tap-payment
-    Route::webhooks('webhook-tap-actions','tap-payment');
+    Route::webhooks('webhook-tap-actions', 'tap-payment');
 
     // API
-    Route::prefix('api')->group(function(){
+    Route::prefix('api')->group(function () {
         Route::post('login', [APILoginController::class, 'login']);
 
 
-        Route::middleware('auth:sanctum')->group(function(){
-            Route::apiResource('categories',CategoryController::class)->only([
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::apiResource('categories', CategoryController::class)->only([
                 'index'
             ]);
-            Route::apiResource('orders',OrderController::class)->only([
+            Route::apiResource('orders', OrderController::class)->only([
                 'index'
             ]);
-            Route::get('orders/{order}/logs',[OrderController::class,'logs']);
+            Route::get('orders/{order}/logs', [OrderController::class, 'logs']);
 
-            Route::put('orders/{order}/status',[OrderController::class,'updateStatus']);
-            Route::put('items/{item}/availability',[ItemController::class,'updateAvailability']);
-            Route::put('branches/{branch}/delivery',[BranchController::class,'updateDelivery']);
-            Route::get('branches/{branch}/delivery',[BranchController::class,'getDeliveryAvailability']);
+            Route::put('orders/{order}/status', [OrderController::class, 'updateStatus']);
+            Route::put('items/{item}/availability', [ItemController::class, 'updateAvailability']);
+            Route::put('branches/{branch}/delivery', [BranchController::class, 'updateDelivery']);
+            Route::get('branches/{branch}/delivery', [BranchController::class, 'getDeliveryAvailability']);
             Route::post('logout', [APILoginController::class, 'logout']);
         });
-        Route::prefix('tap')->group(function(){
+        Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([
-                'store','show'
+                'store',
+                'show'
             ]);
             Route::apiResource('subscriptions', SubscriptionController::class)->only([
-                'store','show'
+                'store',
+                'show'
             ]);
             Route::apiResource('files', FileController::class)->only([
-                'store','show'
+                'store',
+                'show'
             ]);
 
         });

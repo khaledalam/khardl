@@ -19,7 +19,7 @@ class RestaurantSubLive
     {
         if(env('APP_ENV') != 'local'){
             $sub=ROSubscription::first();
-            if(!$sub|| $sub->status == ROSubscription::SUSPEND){
+            if(!$sub || $sub->status != ROSubscription::ACTIVE){
                 if ($request->expectsJson()) {
                     return ResponseHelper::response([
                         'message' => __('Restaurant have no active subscription yet'),
@@ -30,18 +30,22 @@ class RestaurantSubLive
                 $user = $request->user();
                 if($user){
                     $url_redirect = route('dashboard');
-                    $url = "<a href='$url_redirect'>Go To Dashboard</a><br />";
+                    $messages =  __('messages.Go To Dashboard');
+                    $url = "<a href='$url_redirect'>$messages</a><br />";
                 }else {
                     $url_redirect = route('login-trial');
-                    $url = "<a href='$url_redirect'>Go To Login Restaurant Page</a><br />";
+                    $messages =  __('messages.Go To Login Restaurant Page');
+                    $url = "<a href='$url_redirect'>$messages</a><br />";
                 }
-            
+                $message = __("messages.Code ")." 01: ".__('messages.This Restaurant is not active, please contact web master') ;
+                $khardl = __('messages.Go To Main Khardl Website');
+                
                 echo <<<HTML
                     <div style="text-align: center; height: 100vh; display: flex; flex-direction: column ; justify-content: center; align-items: center;">
-                    <h3 style="color: red;">This Restaurant is not active</h3>
+                    <h3 style="color: red;">$message</h3>
                     <br />
                     $url
-                    <a href="$central_url">Go To Main Khardl Website</a>
+                    <a href="$central_url">$khardl</a>
                     </div>
                     HTML;
                 die;

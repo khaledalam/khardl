@@ -13,6 +13,9 @@ class DeliveryCompany extends Model
     use HasTranslations;
     protected $table = 'delivery_companies';
     public $timestamps  = false;
+    protected $casts = [
+        'coverage_area' => 'array'
+    ];
     protected $fillable = [
         'id',
         'name',
@@ -27,13 +30,13 @@ class DeliveryCompany extends Model
         'api_key',
         'api_doc_url',
         'api_url',
-        //  TODO @todo no need for both of those fields 
+        //  TODO @todo no need for both of those fields
         'secret_key',
-       
-       
+
+
     ];
 
-    public $translatable = ['name', 'description'];
+    public $translatable = ['name', 'description','coverage_area'];
     function getModuleAttribute()
     {
         return match($this->attributes['module']){
@@ -42,6 +45,12 @@ class DeliveryCompany extends Model
             class_basename(Yeswa::class) => new Yeswa(),
             default => null
         };
+    }
+    public function scopeWhenModule($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('coverage_area','LIKE','%'.$search. '%');
+        });
     }
 
 

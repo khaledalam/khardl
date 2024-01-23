@@ -29,38 +29,32 @@
                                     <!--begin::Card body-->
                                     <div class="card-body">
                                         <!--begin::Compact form-->
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <!--begin::Input group-->
-                                            <div class="position-relative w-md-200px me-md-2">
-                                                <select class="form-select form-select-solid">
-                                                    <option value="0" selected="selected">{{ __('messages.Contract') }}</option>
-                                                    <option value="1">{{ __('messages.Directly') }}</option>
-                                                    <option value="1">{{ __('messages.With khardl') }}</option>
-                                                </select>
-                                            </div>
-                                            <!--end::Input group-->
-                                            <!--begin::Col-->
-                                            <div class="position-relative w-md-200px me-md-2">
-                                                <select class="form-select form-select-solid">
-                                                    <option value="0" selected="selected">{{ __('messages.Coverage areas') }}</option>
-                                                    <option value="1">City 1</option>
-                                                    <option value="1">City 2</option>
-                                                    <option value="1">City 3</option>
-                                                    <option value="1">City 4</option>
-                                                    <option value="1">City 5</option>
-                                                </select>
-                                            </div>
+                                        <form action="{{ route('restaurant.delivery') }}" method="GET">
+                                            @csrf
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <!--begin::Col-->
+                                                <div class="position-relative w-md-200px me-md-2">
+                                                    <select class="form-select form-select-solid" name="area">
+                                                        <option value="" selected>{{ __('messages.Coverage areas') }}</option>
+                                                        @foreach ($allCities as $city)
+                                                        <option value="{{ $city }}" {{ request('area') == $city ? 'selected' : '' }} >{{ $city }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                                            <!--begin:Action-->
-                                            <div class="d-flex align-items-center">
-                                                <button type="submit" class="btn btn-sm btn-khardl me-5">{{ __('messages.Filter') }}</button>
-                                            </div>
+                                                <!--begin:Action-->
+                                                <div class="d-flex align-items-center">
+                                                    <button type="submit" class="btn btn-sm btn-khardl me-5">{{ __('messages.Filter') }}</button>
+                                                </div>
 
-                                            <div class="d-flex align-items-center">
-                                                <button type="reset" class="btn btn-sm btn-secondary me-5">{{__('messages.Discard')}}</button>
+                                                <div class="d-flex align-items-center">
+                                                    <button type="reset" class="btn btn-sm btn-secondary me-5" >
+                                                    <a href="{{ route('restaurant.delivery') }}">{{__('messages.Discard')}}</a>
+                                                    </button>
+                                                </div>
+                                                <!--end:Action-->
                                             </div>
-                                            <!--end:Action-->
-                                        </div>
+                                        </form>
                                         <!--end::Compact form-->
 
                                     </div>
@@ -85,7 +79,7 @@
 
                                 <!--begin::Streetline-->
                                 @if(isset($streetline))
-                                @include('restaurant.delivery_companies.streeline.index',['streetline' => $streetline,'isadmin' => 0])
+                                @include('restaurant.delivery_companies.streetline.index',['streetline' => $streetline,'isadmin' => 0])
                                 @endif
                                 <!--end::Streetline-->
                             </div>
@@ -105,4 +99,12 @@
     <!--end::Root-->
     <!--end::Main-->
 
+@endsection
+@section('js')
+
+<script>
+    function refreshPage() {
+        location.reload();
+    }
+</script>
 @endsection

@@ -35,7 +35,7 @@
     ":module has been successfully activated":"تم تفعيل شركة الشحن :module",
     ":module has been successfully deactivated":"تم الغاء تفعيل شركة الشحن :module",
     "Location is required":"الموقع مطلوب",
-    "Api Key not correct, please contact :module support team to ensure about it":"الرقم السري غير صحيح، يرجى الاتصال بفريق دعم :moudle للتأكد من ذلك",
+    "Api Key not correct, please contact :module support team to ensure about it":"الرقم السري غير صحيح، يرجى الاتصال بفريق دعم :module للتأكد من ذلك",
     "A new Subscription has been created":"تمت اضافة اشتراك جديد بنجاح",
     "No card found":"لا يوجد بطاقة الكترونية متاحة",
     "The subscription has been activated successfully":"تم تفعيل الاشتراك بنجاح",
@@ -52,9 +52,19 @@
     "Invalid email or password":"البريد الإلكتروني أو كلمة السر خاطئة",
     "Only workers can logged in":"يمكن للعمال فقط تسجيل الدخول",
     "Phone number is not exist":"رقم الهاتف غير موجود",
+    "Coupon has been added successfully" :"تمت إضافة القسيمة بنجاح",
+    "Updated successfully" :"تم التحديث بنجاح",
     "Only restaurant owner can login":"فقط مالك المطعم يمكنه تسجيل الدخول",
     "Restaurant is in a live mode":"المطعم بالفعل فعال",
     "Too many verification attempts. Request a new verification code.":"عدد كبير جدًا من محاولات التحقق. اطلب رمز التحقق في يوم اخر.",
     "There is no available delivery company":"لا توجد شركة توصيل متاحة",
-    "Order has been delivered to :companies, waiting for accepting ...":"تم تسليم الطلب إلى :companies في انتظار القبول..."
+    "Order has been delivered to :companies, waiting for accepting ...":"تم تسليم الطلب إلى :companies في انتظار القبول...",
+    "There is no coupon code for ':code'":"لا يوجد قسيمة خصم للكوبون ':code'",
+    "The coupon has been expired" :"لقد انتهت صلاحية قسيمة الخصم",
+    "You have reached the maximum coupon use":"لقد وصلت إلى الحد الأقصى لاستخدام القسيمة",
+    "You must have at least subtotal :subtotal SAR to active this coupon" :"يجب أن يكون لديك على الأقل المجموع الفرعي :subtotal ريال لتفعيل هذه القسيمة",
+    "Coupon has been applied":"تم تطبيق القسيمة",
+    "Your tap account has been created successfully, waiting for approval and we will contact you then":"لقد تم إنشاء حساب Tap الخاص بك بنجاح، في انتظار الموافقة وسوف نتصل بك بعد ذلك",
+    "restaurant setting has been update successfully":"تم تحديث اعدادات الموقع بنجاح"
+    
 }
