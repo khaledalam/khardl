@@ -62,10 +62,26 @@ class OrderService
         $new_cart = (new CartRepository)->initiate($user->id);
         foreach ($products as $product => $quantities) {
             foreach ($quantities as $quantity) {
+                $selectedCheckbox = null;
+                if(isset($request->product_options[$product]['checkbox_input'])){
+                    $selectedCheckbox = $request->product_options[$product]['checkbox_input'];
+                }
+                $selectedRadio = null;
+                if(isset($request->product_options[$product]['selection_input'])){
+                    $selectedRadio = $request->product_options[$product]['selection_input'];
+                }
+                $selectedDropdown = null;
+                if(isset($request->product_options[$product]['dropdown_input'])){
+                    $selectedDropdown = $request->product_options[$product]['dropdown_input'];
+                }
+                dd($selectedDropdown,$selectedCheckbox,$selectedRadio);
                 $addItemToCartRequest = new AddItemToCartRequest([
                     'item_id' => $product,
                     'quantity' => $quantity,
                     'branch_id' => $request->branch_id,
+                    'selectedCheckbox' => $selectedCheckbox,
+                    'selectedRadio' => $selectedRadio,
+                    'selectedDropdown' => $selectedDropdown,
                 ]);
                 $new_cart->add($addItemToCartRequest);
             }
