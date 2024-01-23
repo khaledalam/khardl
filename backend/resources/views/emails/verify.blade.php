@@ -104,5 +104,6 @@
     </tr>
     </tbody>
 </table>
+<br><br><small><i>This email was sent from an email address that can't receive emails. Please don't reply to this email.</i></small>
 </body>
 </html>
