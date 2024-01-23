@@ -300,7 +300,7 @@
         }
 
         function getLangName($name) {
-            if (`{!! config('app.locale') !!}` == 'ar') return $name[1];
+            if ("{{ app()->getLocale() }}" == 'ar') return $name[1];
             return $name[0];
         }
 
