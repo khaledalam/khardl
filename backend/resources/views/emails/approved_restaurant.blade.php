@@ -38,21 +38,21 @@
                                         <div class="logo">
                                             <img src="{{ global_asset('img/logo.png') }}" style="width: 185px;"
                                                 alt="logo">
-                                                
+
                                         </div>
                                         <h4 style="font-weight: 700;color: green" class="mt-4 mb-4 pb-1">APPROVED</h4>
                                         <p style="text-align: left;"><b>Dear {{ $user->first_name }},</b><br>
 
-                    
+
                                             <p>
                                                 We are pleased to inform you that your restaurant has been approved and is now live on our platform.
                                                 Users can access your restaurant at the following URL: <a href="{{$url}}">{{$restaurant->restaurant_name}}</a>.
                                             </p>
-                                        
+
                                             <p>
                                                 Thank you for choosing our platform. If you have any questions or need further assistance, feel free to contact us.
                                             </p>
-                                        
+
                                             <p>
                                                 Best regards,<br>
                                                 Khardl
@@ -60,6 +60,7 @@
                                         <br>
                                         <br>
                                         <b style="text-align: left; display: flex; justify-content: left; align-items: start;">Thank you</b>
+                                        <br><br><small><i>This email was sent from an email address that can't receive emails. Please don't reply to this email.</i></small>
                                         </p>
                                     </div>
                                 </div>
