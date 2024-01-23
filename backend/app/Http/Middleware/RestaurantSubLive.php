@@ -19,7 +19,7 @@ class RestaurantSubLive
     {
         if(env('APP_ENV') != 'local'){
             $sub=ROSubscription::first();
-            if(!$sub|| $sub->status == ROSubscription::SUSPEND){
+            if(!$sub || $sub->status != ROSubscription::ACTIVE){
                 if ($request->expectsJson()) {
                     return ResponseHelper::response([
                         'message' => __('Restaurant have no active subscription yet'),
