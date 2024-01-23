@@ -73,12 +73,13 @@ class ROSubscription extends Model
 
         return $numberOfDays * $dailyCost;
     }
-    public static function serviceCalculate($type,$number_of_branches) {
-        $currentSubscription = ROSubscription::firstOrFail();
-        $centralSubscription = tenancy()->central(function()use($currentSubscription){
-            return CentralSubscription::find($currentSubscription->subscription_id);
+    public static function serviceCalculate($type,$number_of_branches,$subscription_id) {
+     
+        $centralSubscription = tenancy()->central(function()use($subscription_id){
+            return CentralSubscription::find($subscription_id);
         });
-
+        $currentSubscription = ROSubscription::first();
+       
         if ($currentSubscription) {
             if($type ==  ROSubscription::RENEW_TO_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost($centralSubscription->amount);
@@ -88,19 +89,27 @@ class ROSubscription extends Model
             }else if($type  ==  ROSubscription::RENEW_FROM_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost();
                 $totalCost =$remainingDaysCost +  (($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount);
-                return response()->json(['success' => true, 'cost' => [
+                return response()->json(['success' => true,  'number_of_branches'=>$number_of_branches,'cost' => [
                     'total'=>number_format($totalCost, 2),
                     'remainingDaysCost'=>number_format($remainingDaysCost, 2),
                     'newBranches'=>number_format(($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount, 2)
 
                 ]]);
 
+            }
+            else if($type  ==  ROSubscription::RENEW_AFTER_ONE_YEAR){
+                return response()->json(['success' => true,  'number_of_branches'=>$number_of_branches,'cost' => $currentSubscription->amount]);
+
             }else {
                 return response()->json([],500);
             }
+        }else {
+            return response()->json(['success' => true, 
+            'cost'=> $centralSubscription->amount * $number_of_branches,
+            'number_of_branches'=>$number_of_branches
+            ]);
         }
 
-        return response()->json(['error' => __('You does not have an active subscription.')]);
     }
     /* Start Relations */
     public function getSubscriptionAttribute()
