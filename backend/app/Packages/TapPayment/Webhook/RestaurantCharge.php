@@ -59,6 +59,8 @@ class RestaurantCharge
             'user_id' => $user->id,
             'type' => $data['metadata']['subscription'],
             'status' => ROSubscription::ACTIVE,
+            'reminder_email_sent'=>false,
+            'reminder_suspend_email_sent'=>false,
             'subscription_id' => $data['reference']['order'],
         ];
     }
