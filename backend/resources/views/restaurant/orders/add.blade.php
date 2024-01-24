@@ -346,7 +346,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][selection_input][${index}]">
+                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][selection_input][${index}]">
                             <span class="product_option_price">{{ __('messages.SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -447,15 +447,22 @@
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
                 var index = $(this).data('index');
+                var Innerindex = $(this).data('inner-index');
                 console.log(price);
                 let subtotal = parseFloat(price * productQuantity[product]);
                 console.log(subtotal);
+                console.log($(this).val);
                 if (!oldProductSelectOptions[product]) {
-                    oldProductSelectOptions[product] = []; // Initialize as an array if not defined
-                }else{
-                    console.log(oldProductSelectOptions[product][index]);
-                    subtotal-= oldProductSelectOptions[product][index];
+                    oldProductSelectOptions[product] = [];
                 }
+
+                if (typeof oldProductSelectOptions[product][index] === 'undefined' ||oldProductSelectOptions[product][index] === null) {
+                 oldProductSelectOptions[product][index] = [];
+                } else {
+                    console.log('Inneer : '+Innerindex);
+                    subtotal -= oldProductSelectOptions[product][index];
+                }
+                console.log(subtotal);
                 if (Array.isArray(oldProductSelectOptions[product])) {
 
                     totalCost += subtotal;
