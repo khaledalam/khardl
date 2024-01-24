@@ -12,7 +12,7 @@ npm run prod --silent
 
 # Handle backend
 rm ./composer.lock
-composer install
+composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
 
 
