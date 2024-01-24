@@ -6,28 +6,32 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-
-    private function dropID() {
-
-    }
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::table('settings', function (Blueprint $table) {
-            if (Schema::hasColumn('settings', 'id')) {
-                $table->dropPrimary();
-                $table->string('global_id')->primary()->unique()->index()->first();
-                $table->timestamps();
-            }
+            $table->string('global_id')->unique();
+            $table->timestamps();
         });
         try {
             $Cloning = Setting::first();
             if ($Cloning) {
                 $oldSetting = $Cloning;
                 $Cloning->delete();
+                Schema::table('settings', function (Blueprint $table) {
+                    if (Schema::hasColumn('settings', 'id')) {
+                        $table->dropPrimary();
+                    }
+                });
                 Setting::create($oldSetting->toArray());
+            } else {
+                Schema::table('settings', function (Blueprint $table) {
+                    if (Schema::hasColumn('settings', 'id')) {
+                        $table->dropColumn('id');
+                    }
+                });
             }
         } catch (\Exception $e) {
             throw $e;
