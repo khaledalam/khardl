@@ -82,42 +82,36 @@ class CartRepository
             'dropdown_options'=>$dropdown_options,
         ]);
     }
-    public function loopingTroughCheckboxOptions($item,$options,&$updatedOptions){
+    public function loopingTroughCheckboxOptions($item, $options, &$updatedOptions)
+    {
         $totalPrice = 0;
-        foreach($options as $i=>$option){
-            foreach($option as $j=>$sub_option){
-                $updatedOptions [$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$j][0],$item->checkbox_input_prices[$i][$j]];
-                $updatedOptions [$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$j][1],$item->checkbox_input_prices[$i][$j]];
+        foreach ($options as $i => $option) {
+            foreach ($option as $j => $sub_option) {
+                $updatedOptions[$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$sub_option][0], $item->checkbox_input_prices[$i][$sub_option]];
+                $updatedOptions[$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$sub_option][1], $item->checkbox_input_prices[$i][$sub_option]];
 
-                $totalPrice += (float) $item->checkbox_input_prices[$i][$j];
+                $totalPrice += (float) $item->checkbox_input_prices[$i][$sub_option];
             }
         }
-        return  $totalPrice;
+        return $totalPrice;
     }
-    public function loopingTroughSelectionOptions($item,$options,&$updatedOptions){
+    public function loopingTroughSelectionOptions($item, $options, &$updatedOptions)
+    {
         $totalPrice = 0;
-        logger($options);
-        foreach($options as $i=>$option){
-            logger($option);
-            if($option)
-                foreach($option as $j=>$sub_option){
-                    logger($sub_option);
-                    $updatedOptions [$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$j][0],$item->selection_input_prices[$i][$j]];
-                    $updatedOptions [$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$j][1],$item->selection_input_prices[$i][$j]];
-
-                    $totalPrice += (float) $item->selection_input_prices[$i][$j];
-                }
+        foreach ($options as $i => $option) {
+            $updatedOptions[$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$option][0], $item->selection_input_prices[$i][$option]];
+            $updatedOptions[$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$option][1], $item->selection_input_prices[$i][$option]];
+            $totalPrice += (float) $item->selection_input_prices[$i][$option];
         }
-        return  $totalPrice;
+        return $totalPrice;
     }
-    public function loopingTroughDropdownOptions($item,$options,&$updatedOptions){
-        foreach($options as $i=>$option){
-            if($option)
-                foreach($option as $j=>$sub_option){
-                    $updatedOptions [$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$j][0];
-                    $updatedOptions [$i]['ar'][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$j][1];
-
-                }
+    public function loopingTroughDropdownOptions($item, $options, &$updatedOptions)
+    {
+        foreach ($options as $i => $option) {
+            if($option!=null){
+                $updatedOptions[$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$option][0];
+                $updatedOptions[$i]['ar'][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$option][1];
+            }
         }
     }
     public function updateCartItem(CartItem $cartItem, $request)

@@ -74,9 +74,6 @@ class OrderService
                 if(isset($request->product_options[$product]['dropdown_input'])){
                     $selectedDropdown = $request->product_options[$product]['dropdown_input'];
                 }
-                $selectedDropdown = $this->readyOptions($selectedDropdown);
-                $selectedRadio = $this->readyOptions($selectedRadio);
-                $selectedCheckbox = $this->readyOptionsNested($selectedCheckbox);
                 $addItemToCartRequest = new AddItemToCartRequest([
                     'item_id' => $product,
                     'quantity' => $quantity,
@@ -89,7 +86,7 @@ class OrderService
             }
         }
         return $new_cart;
-    }
+    }/*
     public function readyOptionsNested($options)
     {
         foreach ($options as $key => $option) {
@@ -105,7 +102,7 @@ class OrderService
             $options[$key] = [(int)$option,(int)$option];
         }
         return $options;
-    }
+    } */
     public function searchProducts($request)
     {
         $items = Item::whenSearch($request['term'] ?? null)

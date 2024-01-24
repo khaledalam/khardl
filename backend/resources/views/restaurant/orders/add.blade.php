@@ -363,7 +363,7 @@
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}][dropdown_input][${index}]">
-                        <option>{{ __('messages.Select option') }}</option>`;
+                        <option value="">{{ __('messages.Select option') }}</option>`;
                     innerOptions.forEach((option, innerIndex) => {
                         optionsHTML += `
                             <option value="${innerIndex}">${getLangName(option)}</option>
