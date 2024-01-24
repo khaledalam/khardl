@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('r_o_subscription_invoices', function (Blueprint $table) {
-            //
+            $table->dropColumn('type');
         });
     }
 };
