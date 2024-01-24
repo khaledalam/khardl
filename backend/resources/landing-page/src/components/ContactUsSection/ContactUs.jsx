@@ -55,17 +55,13 @@ function ContactUs() {
     <>
       <section className="mx-[100px] max-[1250px]:mx-[20px] flex flex-col items-center justify-center ">
         <h3 className="home-heading">Contact Us</h3>
-        <h3 className="text-medium mb-4">
+        <h3 className="text-medium mb-11">
           Let us assist you in acquiring more clients at reduced rates.
         </h3>
         <div className="grid grid-cols-2 gap-4">
           <div className="relative">
-            <img
-              className="w-[100%] h-auto max-w-[100%]"
-              src={Group5}
-              alt="background"
-            />
-            <div className="absolute top-0 left-[40%] transform -translate-x-1/2 text-white font-linden-hill ">
+         
+            <div className="contact-footer-section">
 
 
               <h3 className="contact-heading mt-2">Contact Information</h3>

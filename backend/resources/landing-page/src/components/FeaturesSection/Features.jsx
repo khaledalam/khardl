@@ -49,15 +49,15 @@ function FeaturesSection() {
           <div className="flex flex-col justify-start items-start">
             <div className="flex items-center">
               <img className="h-6 md:h-[30%] m-2" src={Line1} alt="background" />
-              <h3 className="flex home-heading text-2xl md:text-4xl">{t("Khardl's services")}</h3>
+              <h3 className="feature-heading text-2xl md:text-4xl">{t("Learn about")} <span>{t("Khardl's services")}</span></h3>
             </div>
 
-            <h3 className="text-[#342828] mt-4 text-md md:text-lg">
+            <h3 className="text-[#342828] mt-4 text-md md:text-lg feature-description mr-11">
               {t("Khardl's services Details")}
             </h3>
             <img
 
-               className="w-full h-auto max-w-full md:max-w-[90%]"
+               className="w-full h-auto max-w-full md:max-w-[90%] mt-11"
               src={Group9}
               alt="background"
             />
@@ -67,7 +67,7 @@ function FeaturesSection() {
             {Features.map((card) => (
               <div
                 key={card.id}
-                className="bg-white shadow rounded-md p-4 w-full md:w-[1/2] lg:w-[1/3] xl:w-[1/4] mx-2 my-4 flex flex-col md:flex-row items-center"
+                className="feature-list-box p-4 w-full md:w-[1/2] lg:w-[1/3] xl:w-[1/4] mx-2 mb-11 flex flex-col md:flex-row items-center"
               >
                 <div className="w-full md:w-[50%] mb-4 md:mb-0 flex items-center justify-center">
                   <img
@@ -76,7 +76,7 @@ function FeaturesSection() {
                     alt="background"
                   />
                 </div>
-                <div className="ml-4">
+                <div className="ml-4 text-left">
                   <h3 className="text-[#000000] card-heading">{card.title}</h3>
                   <h3 className="text-[#342828] text-medium">{card.details}</h3>
                 </div>
@@ -90,15 +90,15 @@ function FeaturesSection() {
             src={Group7}
             alt="background"
           />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 text-center justify-center">
-            <h3 className="text-[#000000] ">
+          <div className="absolute feature-section-green top-1/2 left-1/2 transform -translate-x-1/2 text-center justify-center">
+            <h3 className="text-[#000000] mb-5">
               You can design your website or application independently, with no
               requirement for communication
             </h3>
 
             <button
               type="button"
-              className=" ml-[40%] flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-4"
+              className="cta-btn ml-[40%] flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2"
             >
               From Here
               <span className="ml-2">
@@ -108,23 +108,7 @@ function FeaturesSection() {
           </div>
         </div>
       </section>
-      {/* <section 
-    className='mx-[160px] max-[1250px]:mx-[20px] flex flex-col items-center justify-center '
-    data-aos='fade-up'
-    data-aos-delay='400' >
-        <MainText Title={t("Khardl's services")} SubTitle={t("Khardl's services Details")} />
-      <div className="grid max-sm:grid-cols-1 max-lg:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mx-4 mt-8 mb-[50px]">
-        {Features.map((Feature, index) => (
-          <Card
-            key={index}
-            FeatureImage={Feature.image}
-            FeatureTitle={Feature.title}
-            FeatureDetails={Feature.details}
-          />
-        ))}
-      </div>
-   
-    </section> */}
+     
     </>
   );
 }

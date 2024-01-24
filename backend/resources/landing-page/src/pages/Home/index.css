@@ -4,7 +4,7 @@ font-family: "Linden Hill";
 font-size: 46px;
 font-style: normal;
 font-weight: 400;
-line-height: 44px; 
+line-height: 54px; 
 }
 
 
@@ -13,11 +13,11 @@ font-family: "Linden Hill";
 font-size: 16px;
 font-style: normal;
 font-weight: 400;
-line-height: 34px; 
+line-height: 1.5; 
 }
 
 .card-heading{
-   text-align: center;
+   /* text-align: center; */
 font-family: "Linden Hill";
 font-size: 18px;
 font-style: normal;
