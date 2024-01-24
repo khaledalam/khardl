@@ -50,4 +50,6 @@ jobs:
     - name: Deploy
       run: |
         cd /home/khardl5/public_html/
+        git checkout -- .
+        git pull
         ./testing-deploy.sh
