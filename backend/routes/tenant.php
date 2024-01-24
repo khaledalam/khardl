@@ -112,6 +112,8 @@ Route::group([
                 // Route::get('/{branch}',[RestaurantController::class, 'branch'])->name('restaurant.branch');
                 Route::get('/orders/{order}', [RestaurantController::class, 'branchOrders'])->name('restaurant.branch.order');
                 Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('restaurant.branch.order.status');
+                Route::get('/orders/{status}/status', [OrderController::class, 'getStatus'])->name('restaurant.branch.order.getStatus');
+
                 // Route::delete('/orders/{order}',[OrderController::class,'destroy'])->name('restaurant.branch.order.destroy');
 
             });
