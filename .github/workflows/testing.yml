@@ -32,6 +32,7 @@ jobs:
       run: |
         mkdir -p backend/database
         touch backend/database/database.sqlite
+        php artisan migrate:fresh --seed
         php backend/artisan create:tenant
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
