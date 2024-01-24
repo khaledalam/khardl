@@ -34,6 +34,9 @@ jobs:
         touch backend/database/database.sqlite
         php backend/artisan migrate:fresh --seed
         php backend/artisan create:tenant
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: backend/database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
