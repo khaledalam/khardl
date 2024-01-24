@@ -1,0 +1,16 @@
+name: Production
+
+on:
+  push:
+    branches: [ "production" ]
+  pull_request:
+    branches: [ "production" ]
+
+jobs:
+  Deploy:
+    runs-on: [self-hosted]
+    steps:
+      - name: Deploy
+        run: |
+          cd /home/khardl4test/public_html/
+          ./deploy.sh
