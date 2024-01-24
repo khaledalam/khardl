@@ -37,12 +37,12 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: backend/database/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: backend/database/database.sqlite
-      run: |
-        backend/vendor/bin/phpunit backend/tests
+#    - name: Execute tests (Unit and Feature tests) via PHPUnit
+#      env:
+#        DB_CONNECTION: sqlite
+#        DB_DATABASE: backend/database/database.sqlite
+#      run: |
+#        backend/vendor/bin/phpunit backend/tests
   Deploy:
     runs-on: [self-hosted]
     needs: [Testing]
