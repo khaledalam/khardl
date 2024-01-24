@@ -11,6 +11,8 @@ return new class extends Migration {
         Schema::table('settings', function (Blueprint $table) {
             if (Schema::hasColumn('settings', 'id')) {
                 $table->dropPrimary();
+                $table->string('global_id')->unique()->primary();
+                $table->timestamps();
             }
         });
     }
@@ -19,10 +21,6 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('settings', function (Blueprint $table) {
-            $table->string('global_id')->unique();
-            $table->timestamps();
-        });
         try {
             $Cloning = Setting::first();
             if ($Cloning) {
