@@ -8,28 +8,28 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
 
     private function dropID() {
-        Schema::table('settings', function (Blueprint $table) {
-            if (Schema::hasColumn('settings', 'id')) {
-                $table->dropPrimary();
-                $table->string('global_id')->unique()->primary();
-                $table->timestamps();
-            }
-        });
+
     }
     /**
      * Run the migrations.
      */
     public function up(): void
     {
+        Schema::table('settings', function (Blueprint $table) {
+            if (Schema::hasColumn('settings', 'id')) {
+                $table->dropPrimary();
+                $table->unsignedInteger('id')->change();
+                $table->dropColumn('id');
+                $table->string('global_id')->primary()->unique()->index()->first();
+                $table->timestamps();
+            }
+        });
         try {
             $Cloning = Setting::first();
             if ($Cloning) {
                 $oldSetting = $Cloning;
                 $Cloning->delete();
-                $this->dropID();
                 Setting::create($oldSetting->toArray());
-            } else {
-                $this->dropID();
             }
         } catch (\Exception $e) {
             throw $e;
