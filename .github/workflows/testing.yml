@@ -45,6 +45,7 @@ jobs:
         backend/vendor/bin/phpunit backend/tests
   Deploy:
     runs-on: [self-hosted]
+    needs: [Testing]
     steps:
     - name: Deploy
       run: |
