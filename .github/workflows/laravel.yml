@@ -54,4 +54,5 @@ jobs:
       run: |
         pwd
         ls
-        /home/khardl5/public_html/testing-deploy.sh
+        cd /home/khardl5/public_html/
+        ./testing-deploy.sh
