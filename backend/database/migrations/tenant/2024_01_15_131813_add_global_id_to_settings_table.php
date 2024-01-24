@@ -6,6 +6,15 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
+
+    private function dropID() {
+        Schema::table('settings', function (Blueprint $table) {
+            if (Schema::hasColumn('settings', 'id')) {
+                $table->integer('id')->unsigned()->change();
+                $table->dropColumn('id');
+            }
+        });
+    }
     /**
      * Run the migrations.
      */
@@ -20,18 +29,10 @@ return new class extends Migration {
             if ($Cloning) {
                 $oldSetting = $Cloning;
                 $Cloning->delete();
-                Schema::table('settings', function (Blueprint $table) {
-                    if (Schema::hasColumn('settings', 'id')) {
-                        $table->dropColumn('id');
-                    }
-                });
+                $this->dropID();
                 Setting::create($oldSetting->toArray());
             } else {
-                Schema::table('settings', function (Blueprint $table) {
-                    if (Schema::hasColumn('settings', 'id')) {
-                        $table->dropColumn('id');
-                    }
-                });
+                $this->dropID();
             }
         } catch (\Exception $e) {
             throw $e;
