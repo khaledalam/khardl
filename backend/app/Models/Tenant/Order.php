@@ -41,6 +41,7 @@ class Order extends Model
         self::COMPLETED,
         self::READY
     ];
+    
     const PENDING = 'pending';
     const RECEIVED_BY_RESTAURANT = 'received_by_restaurant';
     const ACCEPTED = 'accepted';
@@ -128,7 +129,15 @@ class Order extends Model
         });
     }
     /* End Scoped */
-
+    public static function ChangeStatus($status){
+        return  match($status){
+            self::PENDING => [self::RECEIVED_BY_RESTAURANT,self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY],
+            self::RECEIVED_BY_RESTAURANT => [self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY],
+            self::ACCEPTED => [self::READY,self::COMPLETED,self::COMPLETED],
+            self::READY => [self::COMPLETED,self::CANCELLED],
+            default => []
+        };
+    }
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);
