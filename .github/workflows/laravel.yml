@@ -19,6 +19,7 @@ jobs:
     - name: Copy .env
       run: |
         pwd
+        ls
         php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Install Dependencies
@@ -30,6 +31,7 @@ jobs:
     - name: Create Database
       run: |
         pwd
+        ls
         mkdir -p database
         touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
@@ -38,4 +40,5 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: |
         pwd
+        ls
         vendor/bin/phpunit
