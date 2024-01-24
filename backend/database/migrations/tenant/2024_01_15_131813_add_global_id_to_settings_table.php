@@ -10,8 +10,7 @@ return new class extends Migration {
     private function dropID() {
         Schema::table('settings', function (Blueprint $table) {
             if (Schema::hasColumn('settings', 'id')) {
-                $table->integer('id')->unsigned()->change();
-                $table->dropColumn('id');
+                $table->dropPrimary();
             }
         });
     }
