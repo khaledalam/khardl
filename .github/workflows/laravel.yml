@@ -17,7 +17,10 @@ jobs:
         php-version: '8.0'
     - uses: actions/checkout@v3
     - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      run: |
+        pwd
+        php -r "file_exists('.env') || copy('.env.example', '.env');"
+
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --working-dir backend
     - name: Generate key
@@ -26,10 +29,13 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
     - name: Create Database
       run: |
+        pwd
         mkdir -p database
         touch database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
-      run: vendor/bin/phpunit
+      run: |
+        pwd
+        vendor/bin/phpunit
