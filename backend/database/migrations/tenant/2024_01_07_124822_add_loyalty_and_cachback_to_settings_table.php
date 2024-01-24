@@ -25,10 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('settings', function (Blueprint $table) {
-            $table->dropColumn('loyalty_points');
-            $table->dropColumn('loyalty_point_price');
-            $table->dropColumn('cashback_threshold');
-            $table->dropColumn('cashback_percentage');
+            $table->dropColumn(['loyalty_points', 'loyalty_point_price', 'cashback_threshold', 'cashback_percentage']);
         });
     }
 };
