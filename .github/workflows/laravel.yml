@@ -32,7 +32,7 @@ jobs:
     - name: Directory Permissions
       run: |
         mkdir -p backend/bootstrap/cache
-        chmod -R 777 storage backend/bootstrap/cache
+        chmod -R 777 backend/storage backend/bootstrap/cache
     - name: Create Database
       run: |
         pwd
