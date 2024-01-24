@@ -301,6 +301,7 @@ return [
     'preparations'=>'Preparations',
     'yes'=>'Yes',
     'no'=>'No',
+    "are-you-sure-you"=>"Are you sure ?",
     'are-you-sure-you-want-to-approve-order-status'=>'Are you sure you want to approve order status',
     'are-you-sure-you-want-to-cancel-order-status'=>'Are you sure you want to cancel order status',
     'are-you-sure-you-want-to-change-order-status'=>'Are you sure you want to change order status',

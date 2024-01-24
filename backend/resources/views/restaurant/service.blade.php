@@ -8,6 +8,8 @@
 href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css"
 rel="stylesheet"
 />
+<link href="{{ global_asset('js/custom/creditCard/main.css')}}"rel="stylesheet" type="text/css" />
+
 <script
 type="text/javascript"
 src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
@@ -17,349 +19,67 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 @endpush
 @push('scripts')
 <script>
-    function newSubscription(){
-        $.ajax({
-            type: 'GET',
-            url:  `{{ route('restaurant.service.calculate', ['type' => ':type','number_of_branches'=>':number_of_branches','subscription_id'=>':subscription_id']) }}`
-            .replace(':type', '{{\App\Models\ROSubscription::NEW}}')
-            .replace(':subscription_id', '{{$subscription->id}}')
-            .replace(':number_of_branches',  document.getElementById('factor').value),
-            success: function(response) {
-                
-                goSell.config({
-                    containerID: "root",
-                    gateway: {
-                        publicKey: "{{env('TAP_PUBLIC_API_KEY')}}",
-                        merchantId: null,
-                        language: "{{app()->getLocale()}}",
-                        contactInfo: true,
-                        supportedCurrencies: "all",
-                        supportedPaymentMethods: "all",
-                        saveCardOption: false,
-                        customerCards: true,
-                        notifications: "standard",
-                        callback: (response) => {
-                        console.log("response", response);
-                        },
-                        onClose: () => {
-                        console.log("onClose Event");
+    function submitPayment(){
+        Swal.fire({
+            text: '{{ __('messages.are-you-sure-you')}}',
+            icon: 'warning',
+     
+            showCancelButton: true,
+            inputPlaceholder: "{{ __('messages.Select an option') }}",
+            confirmButtonText: "{{ __('messages.yes') }}",
+            cancelButtonText: "{{ __('messages.no') }}"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                goSell.submit();
+            }
+        });
+       
+    }
+    goSell.goSellElements({
+        containerID:"root",
+        gateway:{
+            callback	: function(event){
+                $.ajax({
+                    url: '{{ route('tap.payments_submit_card_details', ['data'=>'__data__']) }}'
+                    .replace('__data__', JSON.stringify(event)),
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        '_token': '{{ csrf_token() }}', // Include the CSRF token
                     },
-                        backgroundImg: {
-                        url: "imgURL",
-                        opacity: "0.5",
-                        },
-                        labels: {
-                        cardNumber: "Card Number",
-                        expirationDate: "MM/YY",
-                        cvv: "CVV",
-                        cardHolder: "Name on Card",
-                        actionButton: "Pay",
-                        },
-                        style: {
-                        base: {
-                            color: "#535353",
-                            lineHeight: "18px",
-                            fontFamily: "sans-serif",
-                            fontSmoothing: "antialiased",
-                            fontSize: "16px",
-                            "::placeholder": {
-                            color: "rgba(0, 0, 0, 0.26)",
-                            fontSize: "15px",
-                            },
-                        },
-                        invalid: {
-                            color: "red",
-                            iconColor: "#fa755a ",
-                        },
-                        },
-                    },
-                    customer: {
-                        id: '{{$customer_tap_id}}'
-                    },
-                    order: {
-                        amount: response.cost,
-                        currency: "SAR",
-                        items: [
-                        {
-                            id: "{{$subscription->id}}",
-                            name: "{{$subscription->name}}",
-                            description: "",
-                            quantity: response.number_of_branches,
-                            amount_per_unit: "{{$subscription->amount}}",
-                            // discount: {
-                            //   type: "P",
-                            //   value: "10%",
-                            // },
-                            total_amount: response.cost,
-                        },
-
-                        ],
-                        shipping: null,
-                        taxes: null,
-                    },
-                    transaction: {
-                        mode: "charge",
-                        charge: {
-                        saveCard: true,
-                        threeDSecure: true,
-                        description: "{{__('messages.New subscription')}}",
-                        statement_descriptor: "Sample",
-                        reference: {
-                            transaction: "txn_0001",
-                            order: "{{$subscription->id}}",
-                        },
-
-                        metadata: {
-                            'subscription': '{{\App\Models\ROSubscription::NEW}}',
-                            'n-branches': response.number_of_branches,
-                        },
-                        receipt: {
-                            email: false,
-                            sms: true,
-                        },
-                        redirect: "{{route('tap.payments_submit_card_details')}}",
-                        post: "{{route('webhook-client-tap-payment')}}",
-                        },
-                    },
-                    });
-                    goSell.openLightBox();
-
+                });
             },
-            error: function(error) {
-                console.error('Error calculating cost: ' + error.responseText);
+            publicKey:"{{env('TAP_PAYMENT_TECHNOLOGY_PUBLIC_KEY')}}",
+            language: "{{app()->getLocale()}}",
+            supportedCurrencies: "all",
+            supportedPaymentMethods: "all",
+            notifications: 'standard',
+            style: {
+                base: {
+                    color: '#535353',
+                    lineHeight: '18px',
+                    fontFamily: 'sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: 'rgba(0, 0, 0, 0.26)',
+                        fontSize:'15px'
+                    }
+                },
+                invalid: {
+                    color: 'red',
+                    iconColor: '#fa755a '
+                }
             }
+        }
         });
-       
-    }
-
-    function BuyNewSlots(){
-        var renewalOption = $('input[name=renewalOption]:checked').val();
-
-        $.ajax({
-            type: 'GET',
-            url:  `{{ route('restaurant.service.calculate', ['type' => ':type','number_of_branches'=>':number_of_branches','subscription_id'=>':subscription_id']) }}`
-            .replace(':type', renewalOption)
-            .replace(':subscription_id', '{{$subscription->id}}')
-            .replace(':number_of_branches',  document.getElementById('factor_renew').value),
-            success: function(response) {
-        
-                goSell.config({
-                containerID: "root",
-                gateway: {
-                    publicKey: "{{env('TAP_PUBLIC_API_KEY')}}",
-                    merchantId: null,
-                    language: "{{app()->getLocale()}}",
-                    contactInfo: true,
-                    supportedCurrencies: "all",
-                    supportedPaymentMethods: "all",
-                    saveCardOption: false,
-                    customerCards: true,
-                    notifications: "standard",
-                    callback: (response) => {
-                    console.log("response", response);
-                    },
-                    onClose: () => {
-                    console.log("onClose Event");
-                    },
-                    backgroundImg: {
-                    url: "imgURL",
-                    opacity: "0.5",
-                    },
-                    labels: {
-                    cardNumber: "Card Number",
-                    expirationDate: "MM/YY",
-                    cvv: "CVV",
-                    cardHolder: "Name on Card",
-                    actionButton: "Pay",
-                    },
-                    style: {
-                    base: {
-                        color: "#535353",
-                        lineHeight: "18px",
-                        fontFamily: "sans-serif",
-                        fontSmoothing: "antialiased",
-                        fontSize: "16px",
-                        "::placeholder": {
-                        color: "rgba(0, 0, 0, 0.26)",
-                        fontSize: "15px",
-                        },
-                    },
-                    invalid: {
-                        color: "red",
-                        iconColor: "#fa755a ",
-                    },
-                    },
-                },
-                customer: {
-                    id: '{{$customer_tap_id}}'
-                },
-                order: {
-                    amount: response.cost['total'],
-                    currency: "SAR",
-                    items: [
-                    {
-                        id: "{{$subscription->id}}",
-                        name: "{{__('messages.Renew'). $subscription->name}}",
-                        description: "",
-                        quantity: response.number_of_branches,
-                        amount_per_unit: "",
-                        // discount: {
-                        //   type: "P",
-                        //   value: "10%",
-                        // },
-                        total_amount: response.cost['total'],
-                    },
-
-                    ],
-                    shipping: null,
-                    taxes: null,
-                },
-                transaction: {
-                    mode: "charge",
-                    charge: {
-                    saveCard: true,
-                    threeDSecure: true,
-                    description: "{{__('messages.Renew Subscription')}}",
-                    statement_descriptor: "Sample",
-                    reference: {
-                        transaction: "txn_0001",
-                        order: "{{$subscription->id}}",
-                    },
-
-                    metadata: {
-                        'subscription':$('input[name=renewalOption]:checked').val(),
-                        'n-branches' : response.number_of_branches
-                    },
-                    receipt: {
-                        email: false,
-                        sms: true,
-                    },
-                    redirect: "{{route('tap.payments_submit_card_details')}}",
-                    post: "{{route('webhook-client-tap-payment')}}",
-                    },
-                },
-                });
-            goSell.openLightBox();
-            }
-        });
-       
-    }
-    function renewSubscription(){
-        $.ajax({
-            type: 'GET',
-            url:  `{{ route('restaurant.service.calculate', ['type' => ':type','number_of_branches'=>':number_of_branches','subscription_id'=>':subscription_id']) }}`
-            .replace(':type', '{{\App\Models\ROSubscription::RENEW_AFTER_ONE_YEAR}}')
-            .replace(':subscription_id', '{{$subscription->id}}')
-            .replace(':number_of_branches',  '0'),
-            success: function(response) {
-                
-                goSell.config({
-                containerID: "root",
-                gateway: {
-                    publicKey: "{{env('TAP_PUBLIC_API_KEY')}}",
-                    merchantId: null,
-                    language: "{{app()->getLocale()}}",
-                    contactInfo: true,
-                    supportedCurrencies: "all",
-                    supportedPaymentMethods: "all",
-                    saveCardOption: false,
-                    customerCards: true,
-                    notifications: "standard",
-                    callback: (response) => {
-                    console.log("response", response);
-                    },
-                    onClose: () => {
-                    console.log("onClose Event");
-                    },
-                    backgroundImg: {
-                    url: "imgURL",
-                    opacity: "0.5",
-                    },
-                    labels: {
-                    cardNumber: "Card Number",
-                    expirationDate: "MM/YY",
-                    cvv: "CVV",
-                    cardHolder: "Name on Card",
-                    actionButton: "Pay",
-                    },
-                    style: {
-                    base: {
-                        color: "#535353",
-                        lineHeight: "18px",
-                        fontFamily: "sans-serif",
-                        fontSmoothing: "antialiased",
-                        fontSize: "16px",
-                        "::placeholder": {
-                        color: "rgba(0, 0, 0, 0.26)",
-                        fontSize: "15px",
-                        },
-                    },
-                    invalid: {
-                        color: "red",
-                        iconColor: "#fa755a ",
-                    },
-                    },
-                },
-                customer: {
-                    id: '{{$customer_tap_id}}'
-                },
-                order: {
-                    amount: response.cost,
-                    currency: "SAR",
-                    items: [
-                    {
-                        id: "{{$subscription->id}}",
-                        name: "{{__('messages.Renew'). $subscription->name}}",
-                        description: "",
-                        quantity: "",
-                        amount_per_unit: "",
-                        // discount: {
-                        //   type: "P",
-                        //   value: "10%",
-                        // },
-                        total_amount:  response.cost,
-                    },
-
-                    ],
-                    shipping: null,
-                    taxes: null,
-                },
-                transaction: {
-                    mode: "charge",
-                    charge: {
-                    saveCard: true,
-                    threeDSecure: true,
-                    description: "{{__('messages.Renew Subscription')}}",
-                    statement_descriptor: "Sample",
-                    reference: {
-                        subscription:'{{\App\Models\ROSubscription::RENEW_AFTER_ONE_YEAR}}',
-                        order: "{{$subscription->id}}",
-                    },
-
-                    metadata: {
-                        'subscription':"{{ \App\Models\ROSubscription::RENEW_AFTER_ONE_YEAR}}",
-                        'n-branches': response.number_of_branches,
-                    },
-                    receipt: {
-                        email: false,
-                        sms: true,
-                    },
-                    redirect: "{{route('tap.payments_submit_card_details')}}",
-                    post: "{{route('webhook-client-tap-payment')}}",
-                    },
-                },
-                });
-                    goSell.openLightBox();
-            }
-        });
-       
-    }
+  
 
 
 </script>
 
 @endpush
-     <div id="root"></div>
+   
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
         <div class="d-flex flex-column flex-root">
@@ -515,20 +235,22 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 
 
+                                                                            <div id="root"></div>
+                                                                            <p id="msg"></p>
 
-                                                                            <div class="form-group">
+                                                                            <div class="form-group mt-3">
                                                                                 <label for="factor">{{__('messages.Number of branches')}}</label>
-                                                                                <input type="number" class="form-control" id="factor" name="factor" value="1" min="1" onchange="updatePrice()">
+                                                                                <input type="number" class="form-control" id="factor" name="n_branches" value="1" min="1" onchange="updatePrice()" required>
                                                                             </div>
-
+                                                                            
                                                                             <div class="form-group">
                                                                                 <label for="factor">{{__('messages.total-price')}}</label>
                                                                                 <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
                                                                             </div>
 
-                                                                            <p id="msg"></p>
-
-                                                                            <button id="tap-btn" class="btn btn-khardl text-white " onclick="newSubscription()">{{__("messages.purchase")}}</button>
+                                                                           
+                                                                            <button id="tap-btn"  onclick="submitPayment()" class="btn btn-khardl text-white ">{{__("messages.purchase")}}</button>
+                                                                            
                                                                         </div>
 
                                                                     </div>
@@ -583,7 +305,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                     </div>
 
                                                                                 </div>
-                                                                            </form>
+                                                                          
 
 
                                                                         </div>

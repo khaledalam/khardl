@@ -48,6 +48,7 @@ return [
     'view' => 'التفاصيل',
     'delete' => 'حذف',
     'confirm-delete' => 'تأكيد الحذف',
+    "are-you-sure-you"=>"هل انت متأكد من فعل ذلك",
     'are-you-sure-you-want-to-delete-this-restaurant' => 'هل أنت متأكد أنك تريد حذف هذا المطعم؟',
     'cancel' => 'الغاء',
     'yes-delete-it' => '.نعم،احذف',
