@@ -1,4 +1,4 @@
-name: Laravel
+name: Testing
 
 on:
   push:
@@ -7,10 +7,8 @@ on:
     branches: [ "development" ]
 
 jobs:
-  laravel-tests:
-
+  Testing:
     runs-on: ubuntu-latest
-
     steps:
     - uses: shivammathur/setup-php@v2
       with:
@@ -18,8 +16,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Copy .env
       run: |
-        pwd
-        ls
         php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
 
     - name: Install Dependencies
@@ -31,12 +27,9 @@ jobs:
         php backend/artisan key:generate
     - name: Directory Permissions
       run: |
-        mkdir -p backend/bootstrap/cache
         chmod -R 777 backend/storage backend/bootstrap/cache
 #    - name: Create Database
 #      run: |
-#        pwd
-#        ls
 #        mkdir -p backend/database
 #        touch backend/database/database.sqlite
 #    - name: Execute tests (Unit and Feature tests) via PHPUnit
@@ -44,15 +37,11 @@ jobs:
 #        DB_CONNECTION: sqlite
 #        DB_DATABASE: backend/database/database.sqlite
 #      run: |
-#        pwd
-#        ls
 #        backend/vendor/bin/phpunit backend/tests
-  deploy:
+  Deploy-test:
     runs-on: [self-hosted]
     steps:
     - name: Deploy
       run: |
-        pwd
-        ls
         cd /home/khardl5/public_html/
         ./testing-deploy.sh
