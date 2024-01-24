@@ -15,27 +15,6 @@ return new class extends Migration {
             $table->string('global_id')->unique();
             $table->timestamps();
         });
-        try {
-            $Cloning = Setting::first();
-            if ($Cloning) {
-                $oldSetting = $Cloning;
-                $Cloning->delete();
-                Schema::table('settings', function (Blueprint $table) {
-                    if (Schema::hasColumn('settings', 'id')) {
-                        $table->dropPrimary();
-                    }
-                });
-                Setting::create($oldSetting->toArray());
-            } else {
-                Schema::table('settings', function (Blueprint $table) {
-                    if (Schema::hasColumn('settings', 'id')) {
-                        $table->dropColumn('id');
-                    }
-                });
-            }
-        } catch (\Exception $e) {
-            throw $e;
-        }
 
     }
 
@@ -46,6 +25,7 @@ return new class extends Migration {
     {
         Schema::table('settings', function (Blueprint $table) {
             $table->dropColumn('global_id');
+            $table->dropTimestamps();
 
         });
     }
