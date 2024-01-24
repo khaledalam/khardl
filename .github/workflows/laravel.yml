@@ -20,7 +20,7 @@ jobs:
       run: |
         pwd
         ls
-        php -r "file_exists('.env') || copy('.env.example', '.env');"
+        php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
 
     - name: Install Dependencies
       run: |
