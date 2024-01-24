@@ -21,16 +21,25 @@ class DeliveryCompanies
     }
     public static function  assign(Order $order, RestaurantUser $customer){
 
+        // $deliveryCompanies = self::all();
+        // $promises = false;
+        // foreach($deliveryCompanies as $company)  {   
+        //     $promises [] = $company->module?->assignToDriver($order,$customer);
+        // }
+        // if($promises){
+        //     // TODO @todo save to queue 
+        //     return Utils::unwrap($promises);
+        // }
+
         $deliveryCompanies = self::all();
-        $promises = false;
+        $assignedCompanies = [];
         foreach($deliveryCompanies as $company)  {   
-            $promises [] = $company->module?->assignToDriver($order,$customer);
+            if($company->module?->assignToDriver($order,$customer)){
+                $assignedCompanies[] = $company->name;
+            }
         }
-        if($promises){
-            // TODO @todo save to queue 
-            return Utils::unwrap($promises);
-        }
-        return $promises;
+        //  companies that assigned to this order
+        return $assignedCompanies;
     }
     public static function validateCustomerAddress(&$validator,$branchLat,$branchLng,$lat,$lng){
         $deliveryCompanies = self::all();

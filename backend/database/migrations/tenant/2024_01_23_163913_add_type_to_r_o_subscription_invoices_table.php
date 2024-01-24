@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('settings', function (Blueprint $table) {
-            $table->string("lead_id")->nullable();
-            $table->string("merchant_id")->nullable();
+        Schema::table('r_o_subscription_invoices', function (Blueprint $table) {
+            $table->string('type')->default("new");
         });
     }
 
@@ -22,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('settings', function (Blueprint $table) {
-            $table->dropColumn(['lead_id', 'merchant_id']);
+        Schema::table('r_o_subscription_invoices', function (Blueprint $table) {
+            $table->dropColumn('type');
         });
     }
 };

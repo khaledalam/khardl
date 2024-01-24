@@ -236,7 +236,7 @@
                                                                 <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
                                                             </div> --}}
                                                             <div class="menu-item px-3">
-                                                                <a href="#" onclick="showConfirmation({{$order->id}})" class="menu-link px-3" >{{__('messages.Changes status')}}</a>
+                                                                <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('messages.Changes status')}}</a>
                                                             </div>
 
                                                             <!--end::Menu item-->
@@ -257,29 +257,36 @@
                                         <input type="hidden" name="status" id="orderStatus" >
                                     </form>
                                     <script>
-                                        function showConfirmation(orderId) {
+                                        function showConfirmation(orderId,status) {
                                             event.preventDefault();
-                                            const statusOptions = @json(array_combine(\App\Models\Tenant\Order::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\Order::STATUS)));
+                                            $.ajax({
+                                                type: 'GET',
+                                                url:  `{{ route('restaurant.branch.order.getStatus', ['status'=>':status']) }}`
+                                                .replace(':status', status)
+                                                .replace(':orderId', orderId),
+                                                success: function(response) {
 
-                                            Swal.fire({
-                                                text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
-                                                icon: 'warning',
-                                                input: 'select',
-                                                showCancelButton: true,
-                                                inputOptions: statusOptions,
-                                                inputPlaceholder: "{{ __('messages.Select an option') }}",
-                                                confirmButtonText: "{{ __('messages.yes') }}",
-                                                cancelButtonText: "{{ __('messages.no') }}"
-                                            }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    const selectedStatus = result.value;
-                                                    document.getElementById('orderStatus').setAttribute('value',selectedStatus);
-                                                    var form = document.getElementById('approve-form');
-                                                    form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
-                                                    form.submit();
+                                                    Swal.fire({
+                                                        text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
+                                                        icon: 'warning',
+                                                        input: 'select',
+                                                        showCancelButton: true,
+                                                        inputOptions: response,
+                                                        inputPlaceholder: "{{ __('messages.Select an option') }}",
+                                                        confirmButtonText: "{{ __('messages.yes') }}",
+                                                        cancelButtonText: "{{ __('messages.no') }}"
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            const selectedStatus = result.value;
+                                                            document.getElementById('orderStatus').setAttribute('value',selectedStatus);
+                                                            var form = document.getElementById('approve-form');
+                                                            form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
+                                                            form.submit();
 
-                                                }
-                                            });
+                                                        }
+                                                    });
+                                            }});
+                                            
                                         }
                                     </script>
                                     {{ $orders->links('pagination::bootstrap-4') }}
@@ -451,6 +458,11 @@
 
 
 @push('scripts')
+
     <script src="{{ global_asset('assets/js/custom/apps/ecommerce/sales/listing.js')}}"></script>
+@endpush
+@push('styles')
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 @endpush
 @endsection

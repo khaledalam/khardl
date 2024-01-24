@@ -8,5 +8,6 @@ Button Text
 </x-mail::button>
 
 Thanks,<br>
-{{ config('app.name') }}
+    <br><br><small><i>This email was sent from an email address that can't receive emails. Please don't reply to this email.</i></small>
+    {{ config('app.name') }}
 </x-mail::message>

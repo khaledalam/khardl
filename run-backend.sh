@@ -28,7 +28,7 @@ done
 cd backend;
 
 rm ./composer.lock
-composer install
+composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
 
 php artisan migrate:fresh --seed

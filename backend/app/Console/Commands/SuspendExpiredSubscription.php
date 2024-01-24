@@ -7,6 +7,7 @@ use App\Models\CentralSetting;
 use App\Models\ROSubscription;
 use Illuminate\Console\Command;
 use App\Jobs\SendRenewSubscriptionEmailJob;
+use App\Jobs\SendRenewSuspendSubscriptionEmailJob;
 use App\Models\Tenant\Setting;
 
 class SuspendExpiredSubscription extends Command
@@ -36,28 +37,37 @@ class SuspendExpiredSubscription extends Command
             $restaurant->run(function() use($days,$restaurant){
               
                 $subscription = ROSubscription::where('status',ROSubscription::ACTIVE);
-                $subscriptionForSuspend = clone $subscription;
                 $activeSubscription = $subscription->first();
-               
 
                 // Send email to RO if the sub has expired
-                if($activeSubscription && $subscription->where('end_at',today())->exists()){
-                  
+                if($activeSubscription && $activeSubscription->end_at->isPast() && $activeSubscription->reminder_email_sent == false){
                     SendRenewSubscriptionEmailJob::dispatch(
                         user: $activeSubscription->user,
                         restaurant_name: Setting::first()->restaurant_name,
                         url : $restaurant->route('restaurant.service'),
                         period: $days 
                     );
+                    $activeSubscription->update([
+                        'reminder_email_sent'=>true
+                    ]);
             
                 }
-                
                 // switch the sub status to suspend if RO didn't activate the sub after $days days passed
-                if($activeSubscription &&  $subscriptionForSuspend->whereDate('end_at', now()->addDays($days))->exists()) {
+
+                if($activeSubscription  &&  $activeSubscription->end_at->addDays($days)->isPast() && $activeSubscription->reminder_suspend_email_sent == false ){
+                    SendRenewSuspendSubscriptionEmailJob::dispatch(
+                        user: $activeSubscription->user,
+                        restaurant_name: Setting::first()->restaurant_name,
+                        url : $restaurant->route('restaurant.service'),
+                    );
                     $activeSubscription->update([
-                        'status'=>ROSubscription::SUSPEND
+                        'status'=>ROSubscription::SUSPEND,
+                        'reminder_email_sent'=>true
                     ]);
+                    
                 }
+                
+
  
 
             });

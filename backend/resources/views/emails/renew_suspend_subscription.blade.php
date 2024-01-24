@@ -20,7 +20,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
-    <title>Approved Business</title>
+    <title>{{__("messages.Renew Subscription")}}</title>
 </head>
 
 <body>
@@ -36,28 +36,32 @@
                                 <div class="card-body mx-md-4 pb-5">
                                     <div class="text-center">
                                         <div class="logo">
-                                            <img src="{{ $restaurant_logo }}" style="width: 185px;"
+                                            <img src="{{ global_asset('img/logo.png') }}" style="width: 185px;"
                                                 alt="logo">
 
                                         </div>
 
-                                        <p style="text-align: left;"><b>Dear {{ $user->first_name }}</b><br>
+                                        <p style="text-align: left;">
+                                            <b>Dear {{ $user->first_name }}</b><br>
                                             <p>
-                                                We are delighted to inform you that your business request with reference {{$business->business_id}} has been successfully approved!
-                                                We appreciate your partnership and look forward to continuing our collaboration.
+                                                We hope this message finds you well.
                                             </p>
                                             <p>
-                                                To proceed with the next steps, we invite you to purchase your new subscription by following this url <a href="{{$subscription_url}}">here</a> . Our team is ready to assist you throughout the process and answer any questions you may have.
+                                                We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has been suspended. Unfortunately, this means your restaurant cannot receive any new orders.
+                                            </p>
+                                         
+                                            <p>
+                                                To proceed with the renewal and start receiving orders again, please follow this link: <a href="{{ $url }}">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.
                                             </p>
                                             <p>
-                                                Thank you for choosing our services. We value your business and are committed to providing you with the best experience.
+                                                Thank you for choosing our services. We value your partnership and look forward to continuing our collaboration.
                                             </p>
-
-
                                             <p>
                                                 Best regards,<br>
-                                                {{$restaurant_name}}
+                                                Khardl
                                             </p>
+                                            <br>
+                                        </p>
                                         <br>
                                         <br>
                                         <b style="text-align: left; display: flex; justify-content: left; align-items: start;">Thank you</b>
