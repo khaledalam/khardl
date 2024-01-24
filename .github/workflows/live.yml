@@ -13,7 +13,4 @@ jobs:
       - name: Deploy
         run: |
           cd /home/khardl4test/public_html/
-          git config --global --add safe.directory /home/khardl4test/public_html
-          git checkout -- .
-          git pull
           ./deploy.sh
