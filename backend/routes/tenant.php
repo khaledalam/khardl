@@ -3,8 +3,7 @@
 declare(strict_types=1);
 
 
-use App\Http\Controllers\Web\Tenant\Coupon\CouponController;
-use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
@@ -13,6 +12,7 @@ use App\Http\Controllers\TapController;
 use App\Traits\TenantSharedRoutesTrait;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Packages\TapPayment\Charge\Charge;
 use App\Http\Controllers\DownloadController;
 use Stancl\Tenancy\Features\UserImpersonation;
 use App\Http\Controllers\TenantAssetsController;
@@ -20,6 +20,7 @@ use App\Http\Controllers\API\Tenant\ItemController;
 use App\Http\Controllers\API\Tenant\OrderController;
 use App\Http\Controllers\API\Tenant\BranchController;
 use App\Http\Controllers\API\Tenant\CategoryController;
+use App\Packages\TapPayment\Controllers\CardController;
 use App\Packages\TapPayment\Controllers\FileController;
 use App\Http\Controllers\Web\Tenant\DashboardController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -27,9 +28,11 @@ use App\Http\Controllers\Web\Tenant\Auth\LoginController;
 use App\Http\Controllers\Web\Tenant\RestaurantController;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use App\Packages\TapPayment\Controllers\BusinessController;
+use App\Packages\TapPayment\Controllers\CustomerController;
 use App\Http\Controllers\API\Tenant\Customer\CartController;
 use App\Http\Controllers\API\Tenant\CustomerStyleController;
 use App\Http\Controllers\Web\Tenant\Auth\RegisterController;
+use App\Http\Controllers\Web\Tenant\Coupon\CouponController;
 use App\Http\Controllers\Web\Tenant\AuthenticationController;
 use App\Http\Controllers\API\Tenant\RestaurantStyleController;
 use App\Packages\TapPayment\Controllers\SubscriptionController;
@@ -38,10 +41,9 @@ use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
-use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
-use App\Packages\TapPayment\Controllers\CardController;
 use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
-use App\Packages\TapPayment\Controllers\CustomerController;
+use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
+use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,13 +105,15 @@ Route::group([
             Route::post('/category/{id}/{branchId}/add-item', [RestaurantController::class, 'addItem'])->middleware('permission:can_edit_menu')->name('restaurant.add-item');
             Route::delete('/category/{id}/delete-item', [RestaurantController::class, 'deleteItem'])->middleware('permission:can_edit_menu')->name('restaurant.delete-item');
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
-            Route::get('/payments', [TapController::class, 'payments'])->middleware('permission:can_control_payment')->name('tap.payments');
+            Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment','isLeadNotSubmitted'])->name('tap.payments');
             Route::get('/download/pdf', [DownloadController::class, 'downloadPDF'])
                 ->name("download.pdf");
             Route::group(['prefix' => '/branches'], function () {
                 // Route::get('/{branch}',[RestaurantController::class, 'branch'])->name('restaurant.branch');
                 Route::get('/orders/{order}', [RestaurantController::class, 'branchOrders'])->name('restaurant.branch.order');
                 Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('restaurant.branch.order.status');
+                Route::get('/orders/{status}/status', [OrderController::class, 'getStatus'])->name('restaurant.branch.order.getStatus');
+
                 // Route::delete('/orders/{order}',[OrderController::class,'destroy'])->name('restaurant.branch.order.destroy');
 
             });
@@ -136,7 +140,7 @@ Route::group([
                 Route::get('/service', [RestaurantController::class, 'services'])->name('restaurant.service');
                 Route::patch('/service/deactivate', [RestaurantController::class, 'serviceDeactivate'])->name('restaurant.service.deactivate');
                 Route::patch('/service/activate', [RestaurantController::class, 'serviceActivate'])->name('restaurant.service.activate');
-                Route::get('/service/{type}/{number_of_branches}/calculate', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
+                Route::get('/service/{type}/{number_of_branches}/calculate/{subscription_id}', [RestaurantController::class, 'serviceCalculate'])->name('restaurant.service.calculate');
 
 
                 Route::get('/delivery', [RestaurantController::class, 'delivery'])->name('restaurant.delivery');
@@ -284,6 +288,16 @@ Route::group([
 
     Route::get('/change-language/{locale}', static function ($locale) {
         App::setLocale($locale);
+        if(Auth::check()){
+            $user = Auth::user();
+            $user->update(['default_lang' => $locale]);
+            tenancy()->central(function ($tenant) use ($user,$locale) {
+                $user = User::where('email',$user->email)->first();
+                if($user){
+                    $user->update(['default_lang' => $locale]);
+                }
+            });
+        }
         Session::put('locale', $locale);
         return Redirect::back();
     })->name('change.language');

@@ -1,33 +1,41 @@
-import React, {Fragment, useContext, useEffect, useState} from "react"
-import {useNavigate} from "react-router-dom"
+import React, { Fragment, useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import ImgPlaceholder from "../../../../assets/imgPlaceholder.png"
 import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg"
-import {IoCloseOutline, IoMenuOutline} from "react-icons/io5"
+import { IoCloseOutline, IoMenuOutline } from "react-icons/io5"
 import CategoryItem from "./CategoryItem"
 import ProductItem from "./ProductItem"
-import {useSelector, useDispatch} from "react-redux"
-import {MenuContext} from "react-flexible-sliding-menu"
+import { useSelector, useDispatch } from "react-redux"
+import { MenuContext } from "react-flexible-sliding-menu"
 import Slider from "./Slider"
-import {selectedCategoryAPI} from "../../../../redux/NewEditor/categoryAPISlice"
+import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlice"
 import {
   logoUpload,
   setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice"
-import {useTranslation} from "react-i18next"
+import { useTranslation } from "react-i18next"
 import HeaderEdit from "./HeaderEdit"
-import {BiCloudUpload} from "react-icons/bi"
-
-const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
+import { BiCloudUpload } from "react-icons/bi"
+import Cropper from 'react-easy-crop'
+import getCroppedImg from './cropImage'
+const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
   const restuarantEditorStyle = useSelector(
     (state) => state.restuarantEditorStyle
   )
   const [isVideo, setIsVideo] = useState(false)
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const language = useSelector((state) => state.languageMode.languageMode)
-
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [rotation, setRotation] = useState(0)
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+  const [croppedImage, setCroppedImage] = useState(null)
+  const [uncroppedImage, setUncroppedImage] = useState(null)
+  const [isCropModalOpened, setIsCropModalOpened] = useState(false)
+  const [imgType, setImgType] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {toggleMenu} = useContext(MenuContext)
+  const { toggleMenu } = useContext(MenuContext)
 
   const {
     page_color,
@@ -64,8 +72,32 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
     selectedSocialIcons,
     text_color,
   } = restuarantEditorStyle
-  console.log("restuarantEditorStyle", restuarantEditorStyle)
-
+  
+  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels)
+  }
+  const showCroppedImage = async () => {
+    try {
+      
+      const croppedImage = await getCroppedImg(
+       uncroppedImage,
+        croppedAreaPixels,
+        rotation
+      )
+      console.log('donee', { croppedImage })
+      setUncroppedImage(null)
+      setIsCropModalOpened(false)
+      if(imgType == 'logoUpload'){
+        dispatch(logoUpload(croppedImage))
+      } else {
+        dispatch(setBannerUpload(croppedImage))
+        setUploadSingleBanner(croppedImage)
+      }
+      // setCroppedImage(croppedImage)
+    } catch (e) {
+      console.error(e)
+    }
+  }
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
   )
@@ -83,6 +115,9 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
 
     const selectedLogo = event.target.files[0]
     if (selectedLogo) {
+      setUncroppedImage(URL.createObjectURL(selectedLogo))
+      setIsCropModalOpened(true)
+      setImgType('logoUpload')
       dispatch(logoUpload(URL.createObjectURL(selectedLogo)))
     }
   }
@@ -99,6 +134,9 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
         setUploadSingleBanner(URL.createObjectURL(selectedBanner))
       } else {
         setIsVideo(false)
+        setUncroppedImage(URL.createObjectURL(selectedBanner))
+        setIsCropModalOpened(true)
+        setImgType('setBannerUpload')
         setUploadSingleBanner(URL.createObjectURL(selectedBanner))
       }
       dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
@@ -190,12 +228,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
   const filterCategory =
     categories && categories.length > 0
       ? categories?.filter((category) => category.id === selectedCategory.id)
-      : [{name: "Product", items: productPlaceHolders}]
-
-  console.log("bannner shape", banner_shape)
-  console.log("font weight", text_fontWeight)
-
-  console.log("filterCategory", filterCategory)
+      : [{ name: "Product", items: productPlaceHolders }]
 
   const filetype = "video"
 
@@ -217,19 +250,19 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
       )}
       {/* logo */}
       <div
-        style={{backgroundColor: page_color}}
-        className={`w-full min-h-[100px]    rounded-xl flex ${
-          logo_alignment === "center"
-            ? "items-center justify-center"
-            : logo_alignment === "left"
+        style={{ backgroundColor: page_color }}
+        className={`w-full min-h-[100px]    rounded-xl flex ${logo_alignment === "center"
+          ? "items-center justify-center"
+          : logo_alignment === "left"
             ? "items-center justify-start"
             : logo_alignment === "right"
-            ? "items-center justify-end"
-            : ""
-        } `}
+              ? "items-center justify-end"
+              : ""
+          } `}
       >
+     
         <div
-          style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
+          style={{ borderRadius: logo_shape === "sharp" ? 0 : 12 }}
           className='w-[60px] h-[60px] p-2 bg-neutral-100 relative'
         >
           <input
@@ -245,7 +278,7 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
             <img
               src={uploadLogo ? uploadLogo : logo ? logo : ImgPlaceholder}
               alt={""}
-              style={{borderRadius: logo_shape === "sharp" ? 0 : 12}}
+              style={{ borderRadius: logo_shape === "sharp" ? 0 : 12 }}
               className='w-full h-full object-cover'
             />
           </label>
@@ -315,8 +348,8 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
             backgroundImage: uploadSingleBanner
               ? `url(${uploadSingleBanner})`
               : banner_image
-              ? `url(${banner_image?.url})`
-              : `url(${bannerPlaceholder})`,
+                ? `url(${banner_image?.url})`
+                : `url(${bannerPlaceholder})`,
             borderRadius: banner_shape === "sharp" ? 0 : 12,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
@@ -345,8 +378,8 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
                   uploadSingleBanner
                     ? uploadSingleBanner
                     : banner_image
-                    ? banner_image?.url
-                    : ImgPlaceholder
+                      ? banner_image?.url
+                      : ImgPlaceholder
                 }
                 alt={""}
                 className='w-full h-full object-cover'
@@ -369,22 +402,20 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
 
       {/* Category */}
       <div
-        className={`w-full h-[500px] flex ${
-          category_alignment === "center"
-            ? "flex-col justify-center"
-            : "flex-row"
-        } items-center gap-8`}
+        className={`w-full h-[500px] flex ${category_alignment === "center"
+          ? "flex-col justify-center"
+          : "flex-row"
+          } items-center gap-8`}
       >
         <div
-          className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
-            category_alignment === "left"
-              ? "order-1 w-[25%]"
-              : category_alignment === "right"
+          className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${category_alignment === "left"
+            ? "order-1 w-[25%]"
+            : category_alignment === "right"
               ? "order-2 w-[25%]"
               : category_alignment === "center"
-              ? "w-full"
-              : "w-[25%]"
-          } `}
+                ? "w-full"
+                : "w-[25%]"
+            } `}
         >
           <div
             style={{
@@ -394,86 +425,82 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
             className='w-full py-3 flex items-center justify-center'
           >
             <div
-              className={`flex ${
-                category_alignment === "center"
-                  ? "flex-row gap-10 "
-                  : "flex-col gap-6"
-              } items-center `}
+              className={`flex ${category_alignment === "center"
+                ? "flex-row gap-10 "
+                : "flex-col gap-6"
+                } items-center `}
             >
               {categories && categories.length > 0
                 ? categories?.map((category, i) => (
-                    <CategoryItem
-                      key={i}
-                      active={selectedCategory.id === category.id}
-                      name={category.name}
-                      imgSrc={category.photo}
-                      alt={category.name}
-                      hoverColor={category_hover_color}
-                      onClick={() =>
-                        dispatch(
-                          selectedCategoryAPI({
-                            name: category.name,
-                            id: category.id,
-                          })
-                        )
-                      }
-                      textColor={text_color}
-                      textAlign={text_alignment}
-                      fontWeight={text_fontWeight}
-                      shape={category_shape}
-                      isGrid={category_alignment === "center" ? false : true}
-                      fontSize={text_fontSize}
-                    />
-                  ))
+                  <CategoryItem
+                    key={i}
+                    active={selectedCategory.id === category.id}
+                    name={category.name}
+                    imgSrc={category.photo}
+                    alt={category.name}
+                    hoverColor={category_hover_color}
+                    onClick={() =>
+                      dispatch(
+                        selectedCategoryAPI({
+                          name: category.name,
+                          id: category.id,
+                        })
+                      )
+                    }
+                    textColor={text_color}
+                    textAlign={text_alignment}
+                    fontWeight={text_fontWeight}
+                    shape={category_shape}
+                    isGrid={category_alignment === "center" ? false : true}
+                    fontSize={text_fontSize}
+                  />
+                ))
                 : categoriesPlaceHolders.map((category, i) => (
-                    <CategoryItem
-                      key={i}
-                      active={selectedCategory.id === category.id}
-                      name={category.name}
-                      imgSrc={category.photo}
-                      alt={category.name}
-                      hoverColor={category_hover_color}
-                      onClick={() =>
-                        dispatch(
-                          selectedCategoryAPI({
-                            name: category.name,
-                            id: category.id,
-                          })
-                        )
-                      }
-                      textColor={text_color}
-                      textAlign={text_alignment}
-                      fontWeight={text_fontWeight}
-                      shape={category_shape}
-                      isGrid={category_alignment === "center" ? false : true}
-                      fontSize={text_fontSize}
-                    />
-                  ))}
+                  <CategoryItem
+                    key={i}
+                    active={selectedCategory.id === category.id}
+                    name={category.name}
+                    imgSrc={category.photo}
+                    alt={category.name}
+                    hoverColor={category_hover_color}
+                    onClick={() =>
+                      dispatch(
+                        selectedCategoryAPI({
+                          name: category.name,
+                          id: category.id,
+                        })
+                      )
+                    }
+                    textColor={text_color}
+                    textAlign={text_alignment}
+                    fontWeight={text_fontWeight}
+                    shape={category_shape}
+                    isGrid={category_alignment === "center" ? false : true}
+                    fontSize={text_fontSize}
+                  />
+                ))}
             </div>
           </div>
         </div>
         <div
-          style={{backgroundColor: product_background_color}}
-          className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${
-            category_alignment === "left"
-              ? "order-2 w-[75%]"
-              : category_alignment === "right"
+          style={{ backgroundColor: product_background_color }}
+          className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${category_alignment === "left"
+            ? "order-2 w-[75%]"
+            : category_alignment === "right"
               ? "order-1 w-[75%]"
               : category_alignment === "center"
-              ? "w-full"
-              : "w-[75%]"
-          } ${
-            categoryDetail_shape === "sharp" ? "" : "rounded-lg"
-          } bg-white p-8`}
+                ? "w-full"
+                : "w-[75%]"
+            } ${categoryDetail_shape === "sharp" ? "" : "rounded-lg"
+            } bg-white p-8`}
         >
           <div
             className={`w-full h-full flex flex-col items-center justify-center `}
           >
             <h3
-              style={{fontWeight: text_fontWeight}}
-              className={`${
-                text_fontFamily ? text_fontFamily : "font-semibold"
-              } text-[1.5rem] text-center my-4 relative capitalize`}
+              style={{ fontWeight: text_fontWeight }}
+              className={`${text_fontFamily ? text_fontFamily : "font-semibold"
+                } text-[1.5rem] text-center my-4 relative capitalize`}
             >
               <span className='custom-underline capitalize'>
                 {selectedCategory.name}
@@ -481,11 +508,10 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
             </h3>
 
             <div
-              className={`flex  ${
-                category_alignment === "center"
-                  ? "flex-row flex-wrap gap-12"
-                  : "flex-col gap-6"
-              }  h-fit  p-4`}
+              className={`flex  ${category_alignment === "center"
+                ? "flex-row flex-wrap gap-12"
+                : "flex-col gap-6"
+                }  h-fit  p-4`}
             >
               {filterCategory &&
                 filterCategory[0]?.items
@@ -547,16 +573,15 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
       </div>
       {/* social media */}
       <div
-        style={{backgroundColor: footer_color}}
-        className={`w-full min-h-[70px] px-3  rounded-xl flex ${
-          socialMediaIcons_alignment === "center"
-            ? "items-center justify-center"
-            : socialMediaIcons_alignment === "left"
+        style={{ backgroundColor: footer_color }}
+        className={`w-full min-h-[70px] px-3  rounded-xl flex ${socialMediaIcons_alignment === "center"
+          ? "items-center justify-center"
+          : socialMediaIcons_alignment === "left"
             ? "items-center justify-start"
             : socialMediaIcons_alignment === "right"
-            ? "items-center justify-end"
-            : ""
-        }`}
+              ? "items-center justify-end"
+              : ""
+          }`}
       >
         <div className='flex items-center gap-5'>
           {selectedSocialIcons?.map((socialMedia) => (
@@ -577,25 +602,65 @@ const MainBoardEditor = ({categories, toggleSidebarCollapse}) => {
         </div>
       </div>
       <div
-        style={{backgroundColor: footer_color}}
-        className={`w-full min-h-[70px]  rounded-xl flex  ${
-          phoneNumber_alignment === "center"
-            ? "items-center justify-center"
-            : phoneNumber_alignment === "left"
+        style={{ backgroundColor: footer_color }}
+        className={`w-full min-h-[70px]  rounded-xl flex  ${phoneNumber_alignment === "center"
+          ? "items-center justify-center"
+          : phoneNumber_alignment === "left"
             ? "items-center justify-start"
             : phoneNumber_alignment === "right"
-            ? "items-center justify-end"
-            : ""
-        }`}
+              ? "items-center justify-end"
+              : ""
+          }`}
       >
         <h3
-          className={`${
-            text_fontFamily ? text_fontFamily : "font-semibold"
-          } text-lg`}
+          className={`${text_fontFamily ? text_fontFamily : "font-semibold"
+            } text-lg`}
         >
           {phoneNumber}
         </h3>
       </div>
+      {isCropModalOpened && <div class="modal  fixed w-full h-full top-0 left-0 flex items-center justify-center" style={{ opacity: 1, pointerEvents: 'all' }}>
+          <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+
+          <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+
+
+
+            <div class="modal-content py-4 text-left px-6">
+
+              <div class="flex justify-between items-center pb-3">
+                <p class="text-2xl font-bold">Crop Image!</p>
+                <div class="modal-close cursor-pointer z-50">
+                  <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div className={'cropper-container'}>
+
+                <Cropper
+                  image={uncroppedImage}
+                  crop={crop}
+                  rotation={rotation}
+                  zoom={zoom}
+                  aspect={4 / 3}
+                  onCropChange={setCrop}
+                  onRotationChange={setRotation}
+                  onCropComplete={onCropComplete}
+                  onZoomChange={setZoom}
+                />
+
+              </div>
+           
+
+              <div class="flex justify-end pt-2">
+
+                <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400"  onClick={()=>showCroppedImage()}>Save</button>
+              </div>
+
+            </div>
+          </div>
+        </div>}
     </div>
   )
 }

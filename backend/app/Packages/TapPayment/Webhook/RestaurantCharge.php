@@ -37,8 +37,10 @@ class RestaurantCharge
             if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE) {
                 $end_at = $subscription->end_at->addDays(365);
                 $amount = $data['amount'];
+                $data['metadata']['n-branches'] += $subscription->number_of_branches;
             } elseif ($data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE) {
                 $amount += $data['amount'];
+                $data['metadata']['n-branches'] += $subscription->number_of_branches;
             }
 
             $subscription->update(self::getSubscriptionAttributes($user, $data,$subscription, $end_at, $amount));
@@ -57,6 +59,8 @@ class RestaurantCharge
             'user_id' => $user->id,
             'type' => $data['metadata']['subscription'],
             'status' => ROSubscription::ACTIVE,
+            'reminder_email_sent'=>false,
+            'reminder_suspend_email_sent'=>false,
             'subscription_id' => $data['reference']['order'],
         ];
     }
@@ -81,6 +85,7 @@ class RestaurantCharge
                 'chg_id' => $data['id'],
                 'cus_id' => $user->tap_customer_id,
                 'card_id' => $data['card']['id'] ?? null,
+                'type' => $data['metadata']['subscription'],
                 'payment_agreement_id' => $data['payment_agreement']['id'] ?? null,
             ]);
 

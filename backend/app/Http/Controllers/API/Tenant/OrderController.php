@@ -41,7 +41,6 @@ class  OrderController extends BaseRepositoryController
     }
 
     public function updateStatus($order,Request $request){
-
         $request->validate([
             'status' => ['required',Rule::in(Order::STATUS)],
         ]);
@@ -51,7 +50,7 @@ class  OrderController extends BaseRepositoryController
             $query ->where('branch_id',$user->branch->id);
         })
         ->findOrFail($order);
-        $order->update(['status' => $request->status]);
+     
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
@@ -80,16 +79,34 @@ class  OrderController extends BaseRepositoryController
 
         // Handle register order to all delivery companies
         if ($request->status == Order::RECEIVED_BY_RESTAURANT) {
-            // dd(DeliveryCompanies::assign($order,$user));
+            $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
+            if(empty($deliveryCompanies)){
+                if ($request->expectsJson()) {
+                    return $this->sendError('Fail', __('There is no available delivery company'));
+                }
+                return redirect()->back()->with('error',__('There is no available delivery company'));
+            }else {
+                $deliveryCompaniesDelivered = implode(" , ", $deliveryCompanies);
+                $order->update(['status' => $request->status]);
+                if ($request->expectsJson()) {
+                    return $this->sendResponse(null, __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
+                }
+                
+              
+                return redirect()->back()->with('success', __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
+            }
         }
-
+        $order->update(['status' => $request->status]);
         if ($request->expectsJson()) {
             return $this->sendResponse(null, __('Order has been updated successfully.'));
         }
 
         return redirect()->back()->with('success',__('Order has been updated successfully.'));
     }
-
+    public function getStatus($status){
+        $statues = Order::ChangeStatus($status);
+        return response()->json(array_combine($statues,array_map(fn ($status) => __('messages.'.$status),$statues)),200);
+    }
     
 
 }

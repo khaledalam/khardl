@@ -29,7 +29,7 @@ class Tap
                 ->$method($prefix_url.$url,$data);
             }
            
-            if($response->successful() && isset($response['errors'])){
+            if($response->successful()){
                 $response = json_decode($response->getBody(), true);
                 return [
                     'http_code'=>ResponseHelper::HTTP_OK,
@@ -40,7 +40,7 @@ class Tap
            logger($e->getMessage());
         }
         
- 
+        
         if(isset($response['errors'][0])){
             if(isset($response['errors'][0]['description'])){
                 $errors =  $response['errors'][0]['description'];

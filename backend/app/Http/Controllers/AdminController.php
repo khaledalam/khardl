@@ -138,6 +138,7 @@ class AdminController extends Controller
             'can_settings',
             'can_edit_profile',
             'can_delete_restaurants',
+            'can_see_restaurant_owners'
         ];
 
         $insertData = [];
@@ -276,8 +277,8 @@ class AdminController extends Controller
 
         SendApprovedRestaurantEmailJob::dispatch($restaurant);
         $actions = [
-            'en' => 'Has activate restaurant with an ID of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
-            'ar' => 'فعل مطعم المعرف ب: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->id </a>",
+            'en' => 'Has activate restaurant with an name of: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->restaurant_name </a>",
+            'ar' => 'تم تفعيل المطعم بإسم: ' . "<a href=".route('admin.view-restaurants',['tenant'=>$restaurant->id])."> $restaurant->restaurant_name </a>",
         ];
         Log::create([
             'user_id' => Auth::id(),
@@ -445,6 +446,7 @@ class AdminController extends Controller
             return $q->where("name","Administrator");
         })
         ->where('id','!=',Auth::id())
+        ->orderBy('id','DESC')
         ->paginate(15);
         $user = Auth::user();
         return view('admin.user-management', compact('user', 'admins'));

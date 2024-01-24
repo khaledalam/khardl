@@ -44,7 +44,8 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'tap_customer_id',
         'tap_verified',
         'loyalty_points',
-        'cashback'
+        'cashback',
+        'default_lang'
     ];
     const STATUS = [
         self::ACTIVE,
@@ -182,7 +183,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function number_of_available_branches(): int
     {
         if($this->ROSubscription?->number_of_branches){
-            return max(0, $this->ROSubscription?->number_of_branches - Branch::all()->count());
+            return $this->ROSubscription?->number_of_branches;
         }
         return 0;
     }
