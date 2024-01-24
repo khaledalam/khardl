@@ -233,6 +233,7 @@
         var branch_id = "";
         var productTotals = {};
         var productQuantity = {};
+        var OptionsPrice = {};
         var oldProductSelectOptions = {};
         let cuurent_product = null;
 
@@ -418,7 +419,13 @@
                 var oldTotal = productTotals[selectedProduct.id] || 0;
                 // Update the total cost by subtracting the old total and adding the new total
                 var quantity = $(this).val();
-                var productTotal = parseFloat(selectedProduct.price) * quantity;
+                if(quantity > 2){
+                    var optionPrice = (OptionsPrice[selectedProduct.id] / (quantity - 1));
+                }else {
+                    var optionPrice = OptionsPrice[selectedProduct.id];
+                }
+                console.log(optionPrice);
+                var productTotal = (parseFloat(selectedProduct.price) + optionPrice)* quantity;
                 console.log(selectedProduct.id, totalCost);
                 totalCost = totalCost - oldTotal + productTotal;
                 console.log(oldTotal, quantity, productTotal, totalCost);
@@ -437,9 +444,19 @@
                 var isChecked = $(this).is(':checked');
                 console.log(isChecked,product,price,productQuantity[product]);
                 if (isChecked) {
-                    if(price&&price > 0)totalCost += parseFloat(price * productQuantity[product]);
+                    if(price&&price > 0){
+                        var subtotal = parseFloat(price * productQuantity[product]);
+                        totalCost += subtotal;
+                        OptionsPrice[product] += subtotal;
+                        productTotals[selectedProduct.id] +=subtotal;
+                    }
                 } else {
-                    if(price&&price > 0)totalCost -= parseFloat(price * productQuantity[product]);
+                    if(price&&price > 0){
+                        var subtotal = parseFloat(price * productQuantity[product]);
+                        totalCost -= subtotal;
+                        OptionsPrice[product] -= subtotal;
+                        productTotals[selectedProduct.id] -=subtotal;
+                    }
                 }
                 updateTotalCost();
             });
@@ -466,6 +483,8 @@
                 if (Array.isArray(oldProductSelectOptions[product])) {
 
                     totalCost += subtotal;
+                    OptionsPrice[product] += subtotal;
+                    productTotals[selectedProduct.id] +=subtotal;
                     oldProductSelectOptions[product][index] = parseFloat(price * productQuantity[product]);
                     updateTotalCost();
                 } else {
@@ -477,6 +496,7 @@
             totalCost += parseFloat(selectedProduct.price);
             productTotals[selectedProduct.id] = selectedProduct.price;
             productQuantity[selectedProduct.id] = 1;
+            OptionsPrice[selectedProduct.id] = 0;
             updateTotalCost();
             productSelect.val(null).trigger('change');
         });
