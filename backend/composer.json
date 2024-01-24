@@ -8,6 +8,7 @@
         "php": "^8.1",
         "archtechx/enums": "^0.3.2",
         "barryvdh/laravel-dompdf": "^2.0",
+        "doctrine/dbal": "^3.7",
         "guzzlehttp/guzzle": "^7.7",
         "laravel-validation-rules/country-codes": "^4.2",
         "laravel/framework": "^10.10",

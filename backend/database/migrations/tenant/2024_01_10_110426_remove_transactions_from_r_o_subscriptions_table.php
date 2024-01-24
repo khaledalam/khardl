@@ -12,10 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('r_o_subscriptions', function (Blueprint $table) {
-            $table->dropColumn('cus_id');
-            $table->dropColumn('chg_id');
-            $table->dropColumn('card_id');
-            $table->dropColumn('payment_agreement_id');
+            $table->dropColumn(['cus_id', 'chg_id', 'card_id', 'payment_agreement_id']);
         });
     }
 
