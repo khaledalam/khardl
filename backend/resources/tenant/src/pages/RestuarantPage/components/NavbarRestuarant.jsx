@@ -18,7 +18,7 @@ const NavbarRestuarant = () => {
   const cartItemsCount = useSelector(
     (state) => state.categoryAPI.cartItemsCount
   )
-  const {header_color, headerPosition} = restaurantStyle
+  const {header_color, headerPosition, categoryDetail_cart_color} = restaurantStyle
   console.log("restaurantStyle", restaurantStyle)
   useEffect(() => {
     const checkOrderQueryParam = () => {
@@ -50,7 +50,8 @@ const NavbarRestuarant = () => {
       >
         <div
           onClick={toggleTheMenu}
-          className='w-[40px] h-[40px]  bg-[#2A6E4F] rounded-lg cursor-pointer p-1 flex items-center justify-center'
+          style={{backgroundColor: categoryDetail_cart_color}}
+          className='w-[40px] h-[40px]   rounded-lg cursor-pointer p-1 flex items-center justify-center'
         >
           <IoMenuOutline size={38} className='text-white' />
         </div>

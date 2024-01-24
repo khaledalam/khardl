@@ -48,7 +48,7 @@ const App = () => {
   const fontFamily = "cairo, sans-serif"
   const location = useLocation()
   const {loading} = useAuthContext()
-  const showHeader = !["/policies", "/privacy"].includes(location.pathname)
+  const showHeader = ![''].includes(location.pathname)
   const showFooter = ![
     "/login",
     "/register",

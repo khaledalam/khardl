@@ -38,9 +38,9 @@
                                         <div class="logo">
                                             <img src="{{ $restaurant_logo }}" style="width: 185px;"
                                                 alt="logo">
-                                                
+
                                         </div>
-                                       
+
                                         <p style="text-align: left;"><b>Dear {{ $user->first_name }}</b><br>
                                             <p>
                                                 We are delighted to inform you that your business request with reference {{$business->business_id}} has been successfully approved!
@@ -52,8 +52,8 @@
                                             <p>
                                                 Thank you for choosing our services. We value your business and are committed to providing you with the best experience.
                                             </p>
-                                            
-                                        
+
+
                                             <p>
                                                 Best regards,<br>
                                                 {{$restaurant_name}}
@@ -61,6 +61,7 @@
                                         <br>
                                         <br>
                                         <b style="text-align: left; display: flex; justify-content: left; align-items: start;">Thank you</b>
+                                        <br><br><small><i>This email was sent from an email address that can't receive emails. Please don't reply to this email.</i></small>
                                         </p>
                                     </div>
                                 </div>
