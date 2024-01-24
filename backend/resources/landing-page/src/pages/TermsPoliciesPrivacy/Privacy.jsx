@@ -18,7 +18,7 @@ const Privacy = ({ onClose }) => {
   };
   return (
     <div>
-      <NavbarRestuarant />
+      {/* <NavbarRestuarant /> */}
       <div
         className="flex justify-center items-center px-[40px] max-[400px]:px-[20px]"
         style={{
