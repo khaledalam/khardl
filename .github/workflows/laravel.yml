@@ -37,8 +37,8 @@ jobs:
       run: |
         pwd
         ls
-        mkdir -p database
-        touch database/database.sqlite
+        mkdir -p backend/database
+        touch backend/database/database.sqlite
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: sqlite
