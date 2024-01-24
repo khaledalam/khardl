@@ -33,17 +33,25 @@ jobs:
       run: |
         mkdir -p backend/bootstrap/cache
         chmod -R 777 backend/storage backend/bootstrap/cache
-    - name: Create Database
+#    - name: Create Database
+#      run: |
+#        pwd
+#        ls
+#        mkdir -p backend/database
+#        touch backend/database/database.sqlite
+#    - name: Execute tests (Unit and Feature tests) via PHPUnit
+#      env:
+#        DB_CONNECTION: sqlite
+#        DB_DATABASE: backend/database/database.sqlite
+#      run: |
+#        pwd
+#        ls
+#        backend/vendor/bin/phpunit backend/tests
+  deploy:
+    runs-on: [self-hosted]
+    steps:
+    - name: Deploy
       run: |
         pwd
         ls
-        mkdir -p backend/database
-        touch backend/database/database.sqlite
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: backend/database/database.sqlite
-      run: |
-        pwd
-        ls
-        backend/vendor/bin/phpunit backend/tests
+        /home/khardl5/public_html/testing-deploy.sh
