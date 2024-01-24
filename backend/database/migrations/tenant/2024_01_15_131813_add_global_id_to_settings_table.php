@@ -18,8 +18,6 @@ return new class extends Migration {
         Schema::table('settings', function (Blueprint $table) {
             if (Schema::hasColumn('settings', 'id')) {
                 $table->dropPrimary();
-                $table->unsignedInteger('id')->change();
-                $table->dropColumn('id');
                 $table->string('global_id')->primary()->unique()->index()->first();
                 $table->timestamps();
             }
