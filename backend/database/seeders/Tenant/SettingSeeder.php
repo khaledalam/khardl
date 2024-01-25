@@ -14,6 +14,10 @@ class SettingSeeder extends Seeder
     public function run($assets,$restaurant_name): void
     {
         Setting::create([
+            'loyalty_points' => 0,
+            'loyalty_point_price'   => 0,
+            'cashback_threshold'    => 0,
+            'cashback_percentage'   => 0,
             'is_live' => false,
             'delivery_fee' => 0,
             'restaurant_name'=>$restaurant_name
