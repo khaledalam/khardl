@@ -20,6 +20,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 @push('scripts')
 <script>
     function submitPayment(){
+       
         Swal.fire({
             text: '{{ __('messages.are-you-sure-you')}}',
             icon: 'warning',
@@ -39,15 +40,21 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
         containerID:"root",
         gateway:{
             callback	: function(event){
-                $.ajax({
-                    url: '{{ route('tap.payments_submit_card_details', ['data'=>'__data__']) }}'
-                    .replace('__data__', JSON.stringify(event)),
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        '_token': '{{ csrf_token() }}', // Include the CSRF token
-                    },
-                });
+                if(event.card.id){
+                    $.ajax({
+                        url: "{{ route('tap.payments_submit_card_details') }}",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            token_id: event.id,
+                            card_id: event.card.id,
+                            merchant_id: event.merchant.id,
+                            n_branches: document.getElementById('n_branches').value,
+                            type: document.getElementById('type_of_sub').value,
+                            '_token': '{{ csrf_token() }}', // Include the CSRF token
+                        },
+                    });
+                }
             },
             publicKey:"{{env('TAP_PAYMENT_TECHNOLOGY_PUBLIC_KEY')}}",
             language: "{{app()->getLocale()}}",
@@ -177,7 +184,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                             <!--end::Modal dialog-->
                                                             <div>
                                                                 <div>
-                                                                    @if($RO_subscription?->status == \App\Models\ROSubscription::ACTIVE && !$RO_subscription->end_at->isPast())
+                                                                    @if($RO_subscription?->status == \App\Models\ROSubscription::ACTIVE )
                                                                     <div class="d-flex flex-column">
                                                                         <div class="d-flex justify-content-center mb-5">
                                                                             <form action="{{route('restaurant.service.deactivate')}}" method="POST">
@@ -220,7 +227,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                     <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
                                                                 </div> --}}
                                                             </div>
-
+                                                            @if(!$RO_subscription)
                                                             <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -237,10 +244,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                                                                             <div id="root"></div>
                                                                             <p id="msg"></p>
-
+                                                                            <input type="hidden" name="type_of_sub" id="type_of_sub" value="{{\App\Models\ROSubscription::NEW}}">
                                                                             <div class="form-group mt-3">
                                                                                 <label for="factor">{{__('messages.Number of branches')}}</label>
-                                                                                <input type="number" class="form-control" id="factor" name="n_branches" value="1" min="1" onchange="updatePrice()" required>
+                                                                                <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="updatePrice()" required>
                                                                             </div>
                                                                             
                                                                             <div class="form-group">
@@ -258,13 +265,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 </div>
                                                                 <!--end::Modal body-->
                                                             </div>
-                                                            @if($RO_subscription)
+                                                            @endif
+                                                            @if($RO_subscription && $RO_subscription->status != \App\Models\ROSubscription::SUSPEND)
                                                             <div class="modal fade" id="kt_modal_renew_sub" tabindex="-1" aria-hidden="true">
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                     <!--begin::Modal content-->
                                                                     <div class="modal-content rounded p-15">
-
+                                                                        <input type="hidden" name="type_of_sub" id="type_of_sub" >
                                                                         <!--begin::Modal header-->
                                                                         <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                             <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
@@ -290,14 +298,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                     <div class="col-12">
                                                                                         <div class="form-group">
                                                                                             <label for="factor">{{__('messages.Number of branches')}}</label>
-                                                                                            <input type="number" class="form-control" id="factor_renew" name="factor_renew" value="1" min="1" onchange="calculateRenewPrice()">
+                                                                                            <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="calculateRenewPrice()">
                                                                                         </div>
                                                                                     </div>
 
 
                                                                                     <div class="col-12 mt-3">
                                                                                         <label for="factor">{{__('messages.total-price')}} </label>
-                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price_renew" name="price_renew" value="" readonly>
+                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="" readonly>
                                                                                         <i id="costDesc" class="hidden"></i>
                                                                                     </div>
                                                                                     <div class="col-12 mt-3">
@@ -315,7 +323,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 <!--end::Modal body-->
                                                             </div>
                                                             @endif
-                                                            @if($RO_subscription)
+                                                            @if($RO_subscription && $RO_subscription->status == \App\Models\ROSubscription::SUSPEND)
                                                             <div class="modal fade" id="kt_modal_suspend_sub" tabindex="-1" aria-hidden="true">
                                                                 <!--begin::Modal dialog-->
                                                                 <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -331,7 +339,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                                                                                 <div class="col-12 mt-3">
                                                                                     <label for="factor">{{__('messages.total-price')}} </label>
-                                                                                    <input type="text" readonly class="form-control bg-secondary" id="price_suspend" name="price_suspend" value="{{$RO_subscription->amount}}" readonly>
+                                                                                    <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{$RO_subscription->amount}}" readonly>
 
                                                                                 </div>
                                                                                 <div class="col-12 mt-3">
@@ -481,22 +489,22 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             });
             function calculateRenewPrice(){
                 var renewalOption = $('input[name=renewalOption]:checked').val();
-
+                $('#type_of_sub').val(renewalOption);
                 $.ajax({
                     type: 'GET',
                     url:  `{{ route('restaurant.service.calculate', ['type' => ':type','number_of_branches'=>':number_of_branches','subscription_id'=>':subscription_id']) }}`
                     .replace(':type', renewalOption)
                     .replace(':subscription_id', '{{$subscription->id}}')
-                    .replace(':number_of_branches',  document.getElementById('factor_renew').value),
+                    .replace(':number_of_branches',  document.getElementById('n_branches').value),
                     success: function(response) {
-                        const priceInput = document.getElementById('price_renew');
-                        if(response.cost['total']){
-                            priceInput.value = response.cost['total'];
+                        const priceInput = document.getElementById('price');
+                        if(response.cost){
+                            priceInput.value = response.cost;
                             $('#costDesc').show();
                             $('#costDesc').text("{{__('messages.The price of renewing current branches')}}"
-                            +response.cost['remainingDaysCost']+" + "
+                            +response.remainingDaysCost +" + "
                             +"{{__('messages.The price of new branches includes current branches for one year')}}"
-                            +response.cost['newBranches']
+                            +response.newBranches
                             );
                         }else {
                             priceInput.value = response.cost;
@@ -512,7 +520,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
             function updatePrice() {
                 const priceInput = document.getElementById('price');
-                const factorInput = document.getElementById('factor');
+                const factorInput = document.getElementById('n_branches');
                 const factor = parseFloat(factorInput.value) || 1;
                 priceInput.value = "{{$subscription->amount}}" * factor;
             }

@@ -81,7 +81,7 @@ class ROSubscription extends Model
 
         return $numberOfDays * $dailyCost;
     }
-    public static function serviceCalculate($type,$number_of_branches,$subscription_id) {
+    public static function serviceCalculate($type,$number_of_branches,$subscription_id,$json = false) {
         if(!in_array($type,self::TYPES)){
             throw new Exception("Subscription type npt find in the list");
         }
@@ -94,31 +94,45 @@ class ROSubscription extends Model
             if($type ==  self::RENEW_TO_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost($centralSubscription->amount);
                 $totalCost = $number_of_branches * $remainingDaysCost;
-                return response()->json(['success' => true, 'cost' => number_format($totalCost, 2)]);
-
+                $data = ['cost' => number_format($totalCost, 2)];
+                if($json)
+                    return response()->json(['success' => true, $data]);
+                return $data;
             }else if($type  ==  self::RENEW_FROM_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost();
                 $totalCost =$remainingDaysCost +  (($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount);
-                return response()->json(['success' => true,  
-                    'number_of_branches'=>$number_of_branches,
-                    'cost' => number_format($totalCost, 2),
-                    'remainingDaysCost'=>number_format($remainingDaysCost, 2),
-                    'newBranches'=>number_format(($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount, 2)
-                ]);
+                $data =   [
+                'number_of_branches'=>$number_of_branches,
+                'cost' => number_format($totalCost, 2),
+                'remainingDaysCost'=>number_format($remainingDaysCost, 2),
+                'newBranches'=>number_format(($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount, 2)
+                ];
+                if($json)
+                return response()->json(['success' => true,$data]);
+                return $data;
 
             }
             else if($type  ==  self::RENEW_AFTER_ONE_YEAR){
-                return response()->json(['success' => true,  'number_of_branches'=>$number_of_branches,'cost' => $currentSubscription->amount]);
+                $data =[ 'number_of_branches'=>$number_of_branches,'cost' => $currentSubscription->amount];
+                if($json)
+                return response()->json(['success' => true,$data]);
+                return $data;
 
             }else {
-                return response()->json([],500);
+                $data =[ ];
+                if($json)
+                return response()->json(['success' => true,$data]);
+                return $data;
             }
         }else {
             // ROSubscription::NEW
-            return response()->json(['success' => true, 
-            'cost'=> $centralSubscription->amount * $number_of_branches,
-            'number_of_branches'=>$number_of_branches
-            ]);
+            $data =[
+                'cost'=> $centralSubscription->amount * $number_of_branches,
+                'number_of_branches'=>$number_of_branches
+             ];
+            if($json)
+            return response()->json(['success' => true,$data]);
+            return $data;
         }
 
     }

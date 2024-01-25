@@ -173,8 +173,9 @@ class TapController extends Controller
     
     public function payments_submit_card_details(SaveCardRequest $request)
     {
+        $data = $request->validated();
         if(env('APP_ENV') == 'local'){
-            $merchant_id = $request['merchant']['id'];
+            $merchant_id = $data['merchant_id'];
         }else {
             $merchant_id = Setting::first()->merchant_id;
         }
@@ -184,24 +185,24 @@ class TapController extends Controller
         });
         if($sub){
             if($sub->status == ROSubscription::SUSPEND ){
-                $data=  ROSubscription::serviceCalculate(ROSubscription::RENEW_AFTER_ONE_YEAR, 0 ,$centralSubscription->id);
+                $chargeData=  ROSubscription::serviceCalculate(ROSubscription::RENEW_AFTER_ONE_YEAR, 0 ,$centralSubscription->id);
             }else {
-                $data=  ROSubscription::serviceCalculate($request->type,  $request->n_branches,$centralSubscription->id);
+                $chargeData=  ROSubscription::serviceCalculate($data['type'],  $data['n_branches'],$centralSubscription->id);
             }
                 
         }else {
-            $data = ROSubscription::serviceCalculate(ROSubscription::NEW, $request->n_branches,$centralSubscription->id);
+            $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
         }
-        
+       
         $charge = TapCharge::create(
             data : [
-                'amount'=> $data['cost'],
+                'amount'=> $chargeData['cost'],
                 'metadata'=>[
                     'subscription'=> $request->type,
-                    'n-branches'=> $data['number_of_branches']
+                    'n-branches'=> $chargeData['number_of_branches']
                 ],
                 'reference'=>[
-                    'order'=>$centralSubscription->id
+                    'subscription'=>$centralSubscription->id
                 ],
             ],
             merchant_id: $merchant_id,

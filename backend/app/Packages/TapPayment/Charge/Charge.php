@@ -35,7 +35,7 @@ class Charge extends Tap implements ChargeInterface
             ]
             
             
-        ]);
+        ]+ $data);
     }
     public static function retrieve(string $charge_id): array {
         return self::send("/charges/$charge_id",[],'get');
