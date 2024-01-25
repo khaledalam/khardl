@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Tenant;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,6 +32,10 @@ use Illuminate\Support\Facades\Route;
 //    Route::post('register-step2', [RegisterController::class, 'stepTwo']);
 //
 //});
-
+use App\Http\Controllers\MobileAppController;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 //Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
+Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDomain::class]], static function() {
+    Route::get("/restaurants",[MobileAppController::class,'restaurants']);
+});

@@ -27,6 +27,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'restaurant_name'
         ];
     }
+    protected $appends = ['url'];
     public function primary_domain()
     {
         return $this->hasOne(Domain::class);
@@ -70,6 +71,9 @@ class Tenant extends BaseTenant implements TenantWithDatabase
                 'number' => $count
             ];
         });
+    }
+    public function getUrlAttribute(){
+        return tenant_route($this->primary_domain->domain .'.'.config("tenancy.central_domains")[0], 'home', [], true) . '/api';
     }
     public function route($route, $parameters = [], $absolute = true)
     {
