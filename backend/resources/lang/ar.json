@@ -11,7 +11,8 @@
     "(and :count more errors)":"و :count اخطاء اخري",
     ":name is not available":":name غير متاح",
     ":option is required":":option مطلوب",
-    "Maximum :option options is ":"يجب اختيار :option بحد اقصي ",
+    ":option is required for :item":":option مطلوب للمنتج :item",
+    "Maximum :option options for :item is ":"اقصي عدد خيارات للخبار :option للمنتح :item هو",
     "Please use this phone to login in into your account":"هذا الرقم موجود بالفعل اذهب لصفحة تسجيل الدخول",
     "Please update your location before place an order":"من فضلك قم بتحديث موقعك الحالي قبل اي طلب جديد",
     "This email is already registered with different phone": "تم استخدام هذا البريد مع رقم هاتف مختلف",
@@ -66,5 +67,5 @@
     "Coupon has been applied":"تم تطبيق القسيمة",
     "Your tap account has been created successfully, waiting for approval and we will contact you then":"لقد تم إنشاء حساب Tap الخاص بك بنجاح، في انتظار الموافقة وسوف نتصل بك بعد ذلك",
     "restaurant setting has been update successfully":"تم تحديث اعدادات الموقع بنجاح"
-    
+
 }

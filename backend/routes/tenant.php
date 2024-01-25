@@ -162,7 +162,7 @@ Route::group([
                 Route::controller(TenantOrderController::class)->group(function () {
                     Route::get('orders-all', 'index')->name('restaurant.orders_all');
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
-                    Route::post('orders-add', 'store')->name('restaurant.store');
+                    Route::post('orders-add', 'store')->name('restaurant.order.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                     Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
