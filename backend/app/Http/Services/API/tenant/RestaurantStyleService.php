@@ -36,6 +36,7 @@ class RestaurantStyleService
             'categoryDetail_shape' => $request->categoryDetail_shape,
             'categoryDetail_cart_color' => $request->categoryDetail_cart_color,
             'phoneNumber_alignment' => $request->phoneNumber_alignment,
+            'phoneNumber' => $request->phoneNumber,
             'page_color' => $request->page_color,
             'page_category_color' => $request->page_category_color,
             'header_color' => $request->header_color,
@@ -51,9 +52,6 @@ class RestaurantStyleService
             'selectedSocialIcons' => $request->selectedSocialIcons,
             'user_id' => Auth::user()?->id
         ];
-        if(isset($request->phoneNumber)){
-            $data['phoneNumber'] = $request->phoneNumber;
-        }
         if (isset($request->logo) && $request->logo) {
             $logo = tenant_asset(store_image($request->file('logo'), RestaurantStyle::STORAGE, 'logo'));
             $data['logo'] = $logo;

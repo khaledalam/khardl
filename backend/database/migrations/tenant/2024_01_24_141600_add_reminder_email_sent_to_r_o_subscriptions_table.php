@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('r_o_subscriptions', function (Blueprint $table) {
-            $table->dropColumn(['cus_id', 'chg_id', 'card_id', 'payment_agreement_id']);
+            $table->boolean("reminder_email_sent")->default(0);
+            $table->boolean("reminder_suspend_email_sent")->default(0);
         });
     }
 
@@ -22,10 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('r_o_subscriptions', function (Blueprint $table) {
-            $table->string("cus_id");
-            $table->string("chg_id");
-            $table->string("card_id")->nullable();
-            $table->string("payment_agreement_id")->nullable();
+            $table->dropColumn('reminder_email_sent');
+            $table->dropColumn('reminder_suspend_email_sent');
         });
     }
 };

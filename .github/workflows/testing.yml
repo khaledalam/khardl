@@ -28,10 +28,15 @@ jobs:
     - name: Directory Permissions
       run: |
         chmod -R 777 backend/storage backend/bootstrap/cache
-#    - name: Create Database
-#      run: |
-#        mkdir -p backend/database
-#        touch backend/database/database.sqlite
+    - name: Create Database
+      run: |
+        mkdir -p backend/database
+        touch backend/database/database.sqlite
+        php backend/artisan migrate:fresh --seed
+        php backend/artisan create:tenant
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: backend/database/database.sqlite
 #    - name: Execute tests (Unit and Feature tests) via PHPUnit
 #      env:
 #        DB_CONNECTION: sqlite
@@ -40,6 +45,7 @@ jobs:
 #        backend/vendor/bin/phpunit backend/tests
   Deploy:
     runs-on: [self-hosted]
+    needs: [Testing]
     steps:
     - name: Deploy
       run: |

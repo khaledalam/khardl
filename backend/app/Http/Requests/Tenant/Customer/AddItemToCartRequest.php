@@ -76,7 +76,7 @@ class AddItemToCartRequest extends FormRequest
         }
         return true;
     }
-    
+
     public function validateRadioOptions($validator,$item){
         $locale =  app()->getLocale();
         foreach($item->selection_required as $key=>$option){

@@ -504,8 +504,11 @@
                                             <!--end::Menu sub-->
                                         </div>
                                         <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <!--end::Menu item-->
+                                        @if($user?->hasPermission('can_see_logs'))
+                                        <div class="menu-item px-5 my-1">
+                                            <a href="{{ route('admin.log') }}" class="menu-link px-5">{{ __('messages.Logs') }}</a>
+                                        </div>
+                                        @endif
                                         <!--begin::Menu item-->
                                         <div class="separator my-2"></div>
                                         <div class="menu-item px-5">

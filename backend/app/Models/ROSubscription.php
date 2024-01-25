@@ -21,6 +21,8 @@ class ROSubscription extends Model
         "user_id",
         'status',
         'type',
+        'reminder_email_sent',
+        'reminder_suspend_email_sent',
         'subscription_id' // central subscription id
     ];
     //type
