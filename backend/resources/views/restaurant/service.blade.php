@@ -19,8 +19,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 @endpush
 @push('scripts')
 <script>
-    function submitPayment(){
-       
+    function submitPayment(e){
+        e.preventDefault();
         Swal.fire({
             text: '{{ __('messages.are-you-sure-you')}}',
             icon: 'warning',
@@ -41,19 +41,16 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
         gateway:{
             callback	: function(event){
                 if(event.card.id){
-                    $.ajax({
-                        url: "{{ route('tap.payments_submit_card_details') }}",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            token_id: event.id,
-                            card_id: event.card.id,
-                            merchant_id: event.merchant.id,
-                            n_branches: document.getElementById('n_branches').value,
-                            type: document.getElementById('type_of_sub').value,
-                            '_token': '{{ csrf_token() }}', // Include the CSRF token
-                        },
-                    });
+                    var waiting = document.querySelector('#waiting-item');
+                    waiting.style.display = 'block';
+                    var submitButton = document.querySelector('#pay');
+                    submitButton.disabled = true;
+                    document.getElementById('token_id').value = event.id;
+                    document.getElementById('merchant_id').value = event.merchant.id;
+                    document.getElementById('n_branches').value = document.getElementById('n_branches').value;
+                    document.getElementById('type').value = document.getElementById('type').value;
+                    document.getElementById('pay').submit();
+                    
                 }
             },
             publicKey:"{{env('TAP_PAYMENT_TECHNOLOGY_PUBLIC_KEY')}}",
@@ -193,6 +190,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                 @method('PATCH')
                                                                             </form>
 
+
+
                                                                         </div>
 
                                                                         <div>
@@ -227,139 +226,151 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                     <a href="#" class=" btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_cancle_branch">Cancle branch</a>
                                                                 </div> --}}
                                                             </div>
-                                                            @if(!$RO_subscription)
-                                                            <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
-                                                                <!--begin::Modal dialog-->
-                                                                <div class="modal-dialog modal-dialog-centered mw-650px">
-                                                                    <!--begin::Modal content-->
-                                                                    <div class="modal-content rounded p-15">
+                                                            <form action="{{route('tap.payments_submit_card_details')}}" method="POST" id="pay">
+                                                                @csrf
+                                                                <input type="hidden" name="token_id" id="token_id" value="">
 
-                                                                        <!--begin::Modal header-->
-                                                                        <div class="modal-header pb-0 border-0  d-flex justify-content-center">
-                                                                            <h5 class="modal-title text-center">{{$subscription->name}}</h5>
-                                                                        </div>
-                                                                        <div class="modal-body">
+                                                                <input type="hidden" name="merchant_id" id="merchant_id" value="">
+                                                                <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::NEW}}">
 
+                                                                @if(!$RO_subscription)
+                                                                    <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
+                                                                        <!--begin::Modal dialog-->
+                                                                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                                            <!--begin::Modal content-->
+                                                                            <div class="modal-content rounded p-15">
 
-
-                                                                            <div id="root"></div>
-                                                                            <p id="msg"></p>
-                                                                            <input type="hidden" name="type_of_sub" id="type_of_sub" value="{{\App\Models\ROSubscription::NEW}}">
-                                                                            <div class="form-group mt-3">
-                                                                                <label for="factor">{{__('messages.Number of branches')}}</label>
-                                                                                <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="updatePrice()" required>
-                                                                            </div>
-                                                                            
-                                                                            <div class="form-group">
-                                                                                <label for="factor">{{__('messages.total-price')}}</label>
-                                                                                <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
-                                                                            </div>
-
-                                                                           
-                                                                            <button id="tap-btn"  onclick="submitPayment()" class="btn btn-khardl text-white ">{{__("messages.purchase")}}</button>
-                                                                            
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                </div>
-                                                                <!--end::Modal body-->
-                                                            </div>
-                                                            @endif
-                                                            @if($RO_subscription && $RO_subscription->status != \App\Models\ROSubscription::SUSPEND)
-                                                            <div class="modal fade" id="kt_modal_renew_sub" tabindex="-1" aria-hidden="true">
-                                                                <!--begin::Modal dialog-->
-                                                                <div class="modal-dialog modal-dialog-centered mw-650px">
-                                                                    <!--begin::Modal content-->
-                                                                    <div class="modal-content rounded p-15">
-                                                                        <input type="hidden" name="type_of_sub" id="type_of_sub" >
-                                                                        <!--begin::Modal header-->
-                                                                        <div class="modal-header pb-0 border-0  d-flex justify-content-center">
-                                                                            <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
-                                                                        </div>
-                                                                        <div class="modal-body d-flex justify-content-center">
-                                                                            <form action="" method="" id="renewSubForm">
-                                                                                <div class="row">
-                                                                                    <div class="col-12 mt-3 mb-2">
-                                                                                        <label for="factor">{{__('messages.Choose the subscription method')}}</label>
-                                                                                        <div class="form-check mt-3 ">
-                                                                                            <input class="form-check-input" type="radio" name="renewalOption" required id="renewToCurrentEndDate" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}">
-                                                                                            <label class="form-check-label" for="renewToCurrentEndDate">
-                                                                                                {{__('messages.Pay for new branches only for ')}} {{$RO_subscription->dateLeft}}
-                                                                                            </label>
-                                                                                        </div>
-                                                                                        <div class="form-check mt-3">
-                                                                                            <input class="form-check-input" type="radio" name="renewalOption" required id="renewFromNow" value="{{\App\Models\ROSubscription::RENEW_FROM_CURRENT_END_DATE}}">
-                                                                                            <label class="form-check-label" for="renewFromNow">
-                                                                                                {{__('messages.Renew the term of old branches + pay for new branches for one year including old branches')}}
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-12">
-                                                                                        <div class="form-group">
-                                                                                            <label for="factor">{{__('messages.Number of branches')}}</label>
-                                                                                            <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="calculateRenewPrice()">
-                                                                                        </div>
-                                                                                    </div>
-
-
-                                                                                    <div class="col-12 mt-3">
-                                                                                        <label for="factor">{{__('messages.total-price')}} </label>
-                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="" readonly>
-                                                                                        <i id="costDesc" class="hidden"></i>
-                                                                                    </div>
-                                                                                    <div class="col-12 mt-3">
-                                                                                        <button class="btn btn-primary" type="submit">{{__('messages.Renew Subscription')}}</button>
-                                                                                    </div>
-
+                                                                                <!--begin::Modal header-->
+                                                                                <div class="modal-header pb-0 border-0  d-flex justify-content-center">
+                                                                                    <h5 class="modal-title text-center">{{$subscription->name}}</h5>
                                                                                 </div>
-                                                                          
+                                                                                <div class="modal-body">
 
 
-                                                                        </div>
 
-                                                                    </div>
-                                                                </div>
-                                                                <!--end::Modal body-->
-                                                            </div>
-                                                            @endif
-                                                            @if($RO_subscription && $RO_subscription->status == \App\Models\ROSubscription::SUSPEND)
-                                                            <div class="modal fade" id="kt_modal_suspend_sub" tabindex="-1" aria-hidden="true">
-                                                                <!--begin::Modal dialog-->
-                                                                <div class="modal-dialog modal-dialog-centered mw-650px">
-                                                                    <!--begin::Modal content-->
-                                                                    <div class="modal-content rounded p-15">
-
-                                                                        <!--begin::Modal header-->
-                                                                        <div class="modal-header pb-0 border-0  d-flex justify-content-center">
-                                                                            <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Renew Subscription')}})</h5>
-                                                                        </div>
-                                                                        <div class="modal-body d-flex justify-content-center">
-                                                                            <div class="row">
-
-                                                                                <div class="col-12 mt-3">
-                                                                                    <label for="factor">{{__('messages.total-price')}} </label>
-                                                                                    <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{$RO_subscription->amount}}" readonly>
-
-                                                                                </div>
-                                                                                <div class="col-12 mt-3">
-                                                                                    <div class="d-flex justify-content-center">
-                                                                                        <button class="btn btn-khardl text-white " onclick="renewSubscription()">{{__("messages.Renew Subscription")}}</button>
+                                                                                   
+                                                                                    <div class="form-group mt-3">
+                                                                                        <label for="factor">{{__('messages.Number of branches')}}</label>
+                                                                                        <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="updatePrice()" required>
                                                                                     </div>
+                                                                                    
+                                                                                    <div class="form-group">
+                                                                                        <label for="factor">{{__('messages.total-price')}}</label>
+                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
+                                                                                    </div>
+                                                                                    <div id="root"></div>
+                                                                                    <p id="msg"></p>
+                                                                                
+                                                                                    <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit"   onclick="submitPayment(event)" class="btn btn-khardl text-white ">
+                                                                                       
+                                                                                        <span class="indicator-label"> {{__("messages.purchase")}} ✔️</span>
+                                                                                        <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
+                                                                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                                    </button>
+                                                                                    
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <!--end::Modal body-->
+                                                                    </div>
+                                                               
+                                                                @elseif($RO_subscription && $RO_subscription->status != \App\Models\ROSubscription::SUSPEND)
+                                                                    <div class="modal fade" id="kt_modal_renew_sub" tabindex="-1" aria-hidden="true">
+                                                                        <!--begin::Modal dialog-->
+                                                                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                                            <!--begin::Modal content-->
+                                                                            <div class="modal-content rounded p-15">
+                                                                                
+                                                                                <!--begin::Modal header-->
+                                                                                <div class="modal-header pb-0 border-0  d-flex justify-content-center">
+                                                                                    <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
+                                                                                </div>
+                                                                                <div class="modal-body d-flex justify-content-center">
+                                                                                
+                                                                                        <div class="row">
+                                                                                            <div class="col-12 mt-3 mb-2">
+                                                                                                <label for="factor">{{__('messages.Choose the subscription method')}}</label>
+                                                                                                <div class="form-check mt-3 ">
+                                                                                                    <input class="form-check-input" type="radio" name="renewalOption" required id="renewToCurrentEndDate" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}">
+                                                                                                    <label class="form-check-label" for="renewToCurrentEndDate">
+                                                                                                        {{__('messages.Pay for new branches only for ')}} {{$RO_subscription->dateLeft}}
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                                <div class="form-check mt-3">
+                                                                                                    <input class="form-check-input" type="radio" name="renewalOption" required id="renewFromNow" value="{{\App\Models\ROSubscription::RENEW_FROM_CURRENT_END_DATE}}">
+                                                                                                    <label class="form-check-label" for="renewFromNow">
+                                                                                                        {{__('messages.Renew the term of old branches + pay for new branches for one year including old branches')}}
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="factor">{{__('messages.Number of branches')}}</label>
+                                                                                                    <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="calculateRenewPrice()">
+                                                                                                </div>
+                                                                                            </div>
+
+
+                                                                                            <div class="col-12 mt-3">
+                                                                                                <label for="factor">{{__('messages.total-price')}} </label>
+                                                                                                <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="" readonly>
+                                                                                                <i id="costDesc" class="hidden"></i>
+                                                                                            </div>
+                                                                                            <div class="col-12 mt-3">
+                                                                                                <button class="btn btn-primary" type="submit">{{__('messages.Renew Subscription')}}</button>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                
 
 
                                                                                 </div>
 
                                                                             </div>
-
-
                                                                         </div>
-
+                                                                        <!--end::Modal body-->
                                                                     </div>
-                                                                </div>
-                                                                <!--end::Modal body-->
-                                                            </div>
-                                                            @endif
+                                                                
+                                                                @elseif($RO_subscription && $RO_subscription->status == \App\Models\ROSubscription::SUSPEND)
+                                                                    <div class="modal fade" id="kt_modal_suspend_sub" tabindex="-1" aria-hidden="true">
+                                                                        <!--begin::Modal dialog-->
+                                                                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                                            <!--begin::Modal content-->
+                                                                            <div class="modal-content rounded p-15">
+
+                                                                                <!--begin::Modal header-->
+                                                                                <div class="modal-header pb-0 border-0  d-flex justify-content-center">
+                                                                                    <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Renew Subscription')}})</h5>
+                                                                                </div>
+                                                                                <div class="modal-body d-flex justify-content-center">
+                                                                                    <div class="row">
+
+                                                                                        <div class="col-12 mt-3">
+                                                                                            <label for="factor">{{__('messages.total-price')}} </label>
+                                                                                            <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{$RO_subscription->amount}}" readonly>
+
+                                                                                        </div>
+                                                                                        <div class="col-12 mt-3">
+                                                                                            <div class="d-flex justify-content-center">
+                                                                                                <button class="btn btn-khardl text-white " onclick="renewSubscription()">{{__("messages.Renew Subscription")}}</button>
+                                                                                            </div>
+
+
+                                                                                        </div>
+
+                                                                                    </div>
+
+
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--end::Modal body-->
+                                                                    </div>
+                                                                @endif
+                                                            </form>
 
 
                                                             <!--end::Select-->
@@ -489,7 +500,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             });
             function calculateRenewPrice(){
                 var renewalOption = $('input[name=renewalOption]:checked').val();
-                $('#type_of_sub').val(renewalOption);
+                $('#type').val(renewalOption);
                 $.ajax({
                     type: 'GET',
                     url:  `{{ route('restaurant.service.calculate', ['type' => ':type','number_of_branches'=>':number_of_branches','subscription_id'=>':subscription_id']) }}`

@@ -198,7 +198,7 @@ class TapController extends Controller
             data : [
                 'amount'=> $chargeData['cost'],
                 'metadata'=>[
-                    'subscription'=> $request->type,
+                    'subscription'=> $data['type'],
                     'n-branches'=> $chargeData['number_of_branches']
                 ],
                 'reference'=>[
@@ -206,7 +206,7 @@ class TapController extends Controller
                 ],
             ],
             merchant_id: $merchant_id,
-            token_id: $request->token_id
+            token_id: $data['token_id']
         );
         if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
             if ($charge['message']['status'] == 'CAPTURED') { // payment successful
@@ -216,6 +216,7 @@ class TapController extends Controller
                 ->with('error', __("The payment failed, and the subscription fee has not been paid"));
             }
         }
+   
      
         // TODO @todo optimize
         // sleep(1); // sleep until tap webhook processed

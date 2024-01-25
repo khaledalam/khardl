@@ -447,7 +447,7 @@
             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
                 <span class="indicator-label">{{__('messages.save-changes')}} ✔️</span>
                 <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
-                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
             </button>
         </div>
         <!--end::Actions-->

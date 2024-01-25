@@ -13,11 +13,11 @@ class SaveCardRequest extends FormRequest
         return true;
     }
     public function rules()
-    {
+    {   
+    
 
         return [
             'token_id' => 'required|string',
-            'card_id' => 'required|string',
             'n_branches'=> 'required|integer',
             'type'=>'required|string',
             'merchant_id'=>'required|string'
