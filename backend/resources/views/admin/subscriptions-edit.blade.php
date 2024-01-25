@@ -27,6 +27,12 @@
                 <div class="card-title">
                   <h2>{{ __('messages.New subscription')}}</h2>
                 </div>
+                <a href="{{ route('admin.subscriptions') }}">
+                    <button type="button" class="btn btn-primary btn-sm">
+                        <i class="fa fa-arrow-left"></i>
+                        {{ __('messages.Back to list') }}
+                    </button>
+                </a>
               </div>
               <!--end::Card header-->
               <!--begin::Card body-->
@@ -40,14 +46,14 @@
                         <input type="text" name="name_ar" class="form-control" required placeholder="{{ __('messages.Name (Arabic)')}}" value="{{ old('name_ar') ?? $subscription->getTranslation('name', 'ar')  }}" />
                         <div class="text-muted fs-7">{{ __('messages.Name (Arabic)')}} {{ __('messages.is-required')}}</div>
                     </div>
-                
+
                     <!-- English Name -->
                     <div class="mb-2" style="width: 50%; float: left;">
                         <label class="required form-label">{{ __('messages.Name (English)')}}</label>
                         <input type="text" name="name_en" class="form-control" required placeholder="{{ __('messages.Name (English)')}}" value="{{ old('name_en')  ?? $subscription->getTranslation('name', 'en')}}" />
                         <div class="text-muted fs-7">{{ __('messages.Name (English)')}} {{ __('messages.is-required')}}</div>
                     </div>
-                
+
                     <div style="clear: both;"></div> <!-- Clear the float -->
                 </div>
                   <!--end::Input group-->
@@ -64,15 +70,12 @@
                     <!--end::Description-->
                   </div>
                   <!--end::Input group-->
-                  
+
                               <div class="d-flex justify-content-end mt-3">
-                                  <!--begin::Button-->
-                                  <a href="{{ route('admin.subscriptions') }}"
-                                      id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{ __('messages.go-back')}}</a>
-                                  <!--end::Button-->
                                   <!--begin::Button-->
                                   <button type="submit" id="kt_ecommerce_add_product_submit"
                                       class="btn btn-primary">
+                                      <i class="bi bi-check2-square mx-1"></i>
                                       <span class="indicator-label">{{ __('messages.update') }}</span>
                                       <span class="indicator-progress">{{ __('messages.please-wait')}}
                                           <span

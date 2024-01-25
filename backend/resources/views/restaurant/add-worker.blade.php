@@ -27,6 +27,12 @@
                                             <div class="card-title">
                                                 <h2>{{ __('messages.add-worker')}}</h2>
                                             </div>
+                                            <a href="{{ route('restaurant.workers', ['branchId' => $branchId]) }}">
+                                                <button type="button" class="btn btn-primary btn-sm">
+                                                    <i class="fa fa-arrow-left"></i>
+                                                    {{ __('messages.Back to list') }}
+                                                </button>
+                                            </a>
                                         </div>
                                         <!--end::Card header-->
                                         <!--begin::Card body-->
@@ -193,13 +199,12 @@
                             <!--end::Tab pane-->
                             <div class="d-flex justify-content-end mt-3">
                                 <!--begin::Button-->
-                                <a href="{{ route('restaurant.workers', ['branchId' => $branchId]) }}"
-                                    id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{ __('messages.cancel')}}</a>
-                                <!--end::Button-->
-                                <!--begin::Button-->
                                 <button type="submit" id="kt_ecommerce_add_product_submit"
                                     class="btn btn-khardl">
-                                    <span class="indicator-label">{{ __('messages.save-changes')}}</span>
+                                    <span class="indicator-label">
+                                        <i class="bi bi-check2-square mx-1 text-black"></i>
+                                        {{ __('messages.save-changes')}}
+                                    </span>
                                     <span class="indicator-progress">{{ __('messages.please-wait') }}
                                         <span
                                             class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
