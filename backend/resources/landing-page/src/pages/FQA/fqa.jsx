@@ -44,7 +44,8 @@ const FQA = () => {
 
             <div className='pt-[80px]'>
                 <div className='p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] '>
-                    <HeaderSection title={t("FQA")} details={`${t("Home")} / ${t("FQA")}`} />
+                    {/* <HeaderSection title={t("FQA")} details={`${t("Home")} / ${t("FQA")}`} /> */}
+                    <h1 className='faq-header'>FQA <span>(Frequently Questioned Answer)</span></h1>
                 </div>
                 <div className='mt-6'
                 data-aos='fade-up'
