@@ -38,22 +38,22 @@ function PricesTable() {
                             <div className='flex flex-col items-start justify-start text-start'>
                                 <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
                                     <p>{t("Monthly")}</p>
-                                    <p><span className='price'>{299}</span><span className='small'> {t("SAR")}</span></p>
+                                    <p><span className='price'>{299}</span><span className='small'>{t("SAR")}</span></p>
                                 </div>
                                 <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
                                     <p>{t("3 months")}</p>
-                                    <p><span className='price'>{499} </span><span className='small'>{t("SAR")}</span></p>
+                                    <p><span className='price'>{499}</span><span className='small'>{t("SAR")}</span></p>
                                 </div>
                                 <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
                                     <p>{t("6 months")}</p>
                                     <p>
-                                        <span className='price'>{799}</span><span className='small'> {t("SAR")}</span>
+                                        <span className='price'>{799}</span><span className='small'>{t("SAR")}</span>
                                     </p>
                                 </div>
                                 <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
                                     <p>{t("12 months")}</p>
                                     <p>
-                                        <span className='price'>{1299} </span><span className='small'>{t("SAR")}</span>
+                                        <span className='price'>{1299}</span><span className='small'>{t("SAR")}</span>
                                     </p>
                                 </div>
                             </div>
