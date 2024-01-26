@@ -303,7 +303,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 44px;
-  
+
   margin-bottom: 30px;
 }
 
@@ -416,7 +416,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 34px;
- 
+
 }
 
 .faq-header {
@@ -429,7 +429,7 @@
   font-weight: 400;
   line-height: 44px;
   text-align: center;
-  
+
 }
 
 .faq-header span {
@@ -440,31 +440,34 @@
   font-style: normal;
   font-weight: 400;
   line-height: 44px;
- 
+
 }
-.mini-footer{
+
+.mini-footer {
   color: rgba(0, 0, 0, 0.77);
 
-text-align: justify;
-font-family: "Linden Hill";
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: 34px; 
-background: #C0D123;
-padding: 10px;
-width: 100%;
-text-align: center;
+  text-align: justify;
+  font-family: "Linden Hill";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  background: #C0D123;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
 }
-.new-register-bg{
+
+.new-register-bg {
   background-image: url('../src/assets/register.png');
   background-size: cover;
-    background-repeat: no-repeat;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-    background-color: #fff;
+  background-repeat: no-repeat;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  background-color: #fff;
 }
-.new-login-bg{
+
+.new-login-bg {
   background-image: url('../src/assets/login.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -473,32 +476,34 @@ text-align: center;
   background-color: #fff;
 }
 
-.new-form-ui h4{
+.new-form-ui h4 {
   color: rgba(0, 0, 0, 0.47);
 
-font-family: "Linden Hill";
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
-.new-form-ui input{
+
+.new-form-ui input {
   border-radius: 20px;
-border: 1px solid #C0D123;
+  border: 1px solid #C0D123;
 
-background: #F6F9EE;
-color: #000;
+  background: #F6F9EE;
+  color: #000;
 
-font-family: "Linden Hill";
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-margin-bottom: 20px;
+  font-family: "Linden Hill";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 20px;
 }
-.new-form-ui .submit-btn{
+
+.new-form-ui .submit-btn {
   color: #000;
 
   font-family: "Linden Hill";
@@ -511,17 +516,74 @@ margin-bottom: 20px;
   background: #C0D123;
   box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
 }
-.new-form-ui .submit-btn:hover{
+
+.new-form-ui .submit-btn:hover {
   background: #000;
   color: #C0D123;
 }
-.font-new{
+
+.font-new {
   font-family: "Linden Hill";
 }
+
 @media screen and (max-width: 768px) {
-  .new-login-bg, .new-register-bg{
+
+  .new-login-bg,
+  .new-register-bg {
     border-radius: 20px;
     background-position: center;
   }
-  
+
+}
+
+.price-box {
+  border-radius: 6px;
+  border: 1px solid #C0D123;
+  background: #FFF;
+  box-shadow: 3px 3px 10px 0px rgba(192, 209, 35, 0.81);
+  padding: 30px;
+  width: 80%;
+}
+
+.price-box .header {
+  color: #000;
+
+  font-family: "Linden Hill";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 113.333% */
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px dashed #8B8B8B;
+}
+
+.price-box .content {
+  color: rgba(0, 0, 0);
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
+}
+
+.price-box .small {
+  color: #8B8B8B;
+  font-family: "Linden Hill";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 340% */
+}
+
+.price-box .price {
+  color: #000;
+  font-family: "Linden Hill";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
 }
