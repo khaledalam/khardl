@@ -91,6 +91,7 @@
                             <!--begin::Button-->
                             <button type="submit" id="kt_ecommerce_add_product_submit"
                                     class="btn btn-primary">
+                                <i class="bi bi-check2-square mx-1"></i>
                                 <span class="indicator-label">{{ __('messages.save') }}</span>
                                 <span class="indicator-progress">{{ __('messages.please-wait')}}
                                           <span

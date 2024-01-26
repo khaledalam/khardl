@@ -28,7 +28,7 @@
                     <!--begin::Container-->
                     <div id="kt_content_container" class="container-xxl">
                         <!--begin::Form-->
-                        <form action="{{ route('restaurant.store') }}" method="POST" class="form d-flex flex-column flex-lg-row">
+                        <form action="{{ route('restaurant.order.store') }}" method="POST" class="form d-flex flex-column flex-lg-row">
                             @csrf
                             <!--begin::Aside column-->
                             <div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
@@ -204,6 +204,9 @@
                                 </div>
                             </div>
                             <!--end::Main column-->
+                            <div id="modal_here">
+
+                            </div>
                         </form>
                         <!--end::Form-->
                     </div>
@@ -218,9 +221,6 @@
     </div>
     <!--end::Page-->
 </div>
-<div id="modal_here">
-
-</div>
 <!--end::Root-->
 <!--end::Main-->
 
@@ -233,6 +233,7 @@
         var branch_id = "";
         var productTotals = {};
         var productQuantity = {};
+        var OptionsPrice = {};
         var oldProductSelectOptions = {};
         let cuurent_product = null;
 
@@ -300,7 +301,7 @@
         }
 
         function getLangName($name) {
-            if (`{!! config('app.locale') !!}` == 'ar') return $name[1];
+            if ("{{ app()->getLocale() }}" == 'ar') return $name[1];
             return $name[0];
         }
 
@@ -325,7 +326,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}]['checkbox_input'][${index}]" >
+                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][checkbox_input][${index}][]" >
                             <span class="product_option_price">{{ __('messages.SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -346,7 +347,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}]['selection_input'][${index}]">
+                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][selection_input][${index}]">
                             <span class="product_option_price">{{ __('messages.SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -362,8 +363,8 @@
                     if (isRequired) haveRequiredFiled = true;
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
-                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}]['dropdown_input'][${index}]">
-                        <option>Select option</option>`;
+                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}][dropdown_input][${index}]">
+                        <option value="">{{ __('messages.Select option') }}</option>`;
                     innerOptions.forEach((option, innerIndex) => {
                         optionsHTML += `
                             <option value="${innerIndex}">${getLangName(option)}</option>
@@ -418,7 +419,13 @@
                 var oldTotal = productTotals[selectedProduct.id] || 0;
                 // Update the total cost by subtracting the old total and adding the new total
                 var quantity = $(this).val();
-                var productTotal = parseFloat(selectedProduct.price) * quantity;
+                if(quantity > 2){
+                    var optionPrice = (OptionsPrice[selectedProduct.id] / (quantity - 1));
+                }else {
+                    var optionPrice = OptionsPrice[selectedProduct.id];
+                }
+                console.log(optionPrice);
+                var productTotal = (parseFloat(selectedProduct.price) + optionPrice)* quantity;
                 console.log(selectedProduct.id, totalCost);
                 totalCost = totalCost - oldTotal + productTotal;
                 console.log(oldTotal, quantity, productTotal, totalCost);
@@ -435,11 +442,21 @@
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
                 var isChecked = $(this).is(':checked');
-                console.log(isChecked,product,price);
+                console.log(isChecked,product,price,productQuantity[product]);
                 if (isChecked) {
-                    if(price&&price > 0)totalCost += parseFloat(price * productQuantity[product]);
+                    if(price&&price > 0){
+                        var subtotal = parseFloat(price * productQuantity[product]);
+                        totalCost += subtotal;
+                        OptionsPrice[product] += subtotal;
+                        productTotals[selectedProduct.id] +=subtotal;
+                    }
                 } else {
-                    if(price&&price > 0)totalCost -= parseFloat(price * productQuantity[product]);
+                    if(price&&price > 0){
+                        var subtotal = parseFloat(price * productQuantity[product]);
+                        totalCost -= subtotal;
+                        OptionsPrice[product] -= subtotal;
+                        productTotals[selectedProduct.id] -=subtotal;
+                    }
                 }
                 updateTotalCost();
             });
@@ -447,18 +464,27 @@
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
                 var index = $(this).data('index');
+                var Innerindex = $(this).data('inner-index');
                 console.log(price);
                 let subtotal = parseFloat(price * productQuantity[product]);
                 console.log(subtotal);
+                console.log($(this).val);
                 if (!oldProductSelectOptions[product]) {
-                    oldProductSelectOptions[product] = []; // Initialize as an array if not defined
-                }else{
-                    console.log(oldProductSelectOptions[product][index]);
-                    subtotal-= oldProductSelectOptions[product][index];
+                    oldProductSelectOptions[product] = [];
                 }
+
+                if (typeof oldProductSelectOptions[product][index] === 'undefined' ||oldProductSelectOptions[product][index] === null) {
+                 oldProductSelectOptions[product][index] = [];
+                } else {
+                    console.log('Inneer : '+Innerindex);
+                    subtotal -= oldProductSelectOptions[product][index];
+                }
+                console.log(subtotal);
                 if (Array.isArray(oldProductSelectOptions[product])) {
 
                     totalCost += subtotal;
+                    OptionsPrice[product] += subtotal;
+                    productTotals[selectedProduct.id] +=subtotal;
                     oldProductSelectOptions[product][index] = parseFloat(price * productQuantity[product]);
                     updateTotalCost();
                 } else {
@@ -470,6 +496,7 @@
             totalCost += parseFloat(selectedProduct.price);
             productTotals[selectedProduct.id] = selectedProduct.price;
             productQuantity[selectedProduct.id] = 1;
+            OptionsPrice[selectedProduct.id] = 0;
             updateTotalCost();
             productSelect.val(null).trigger('change');
         });
