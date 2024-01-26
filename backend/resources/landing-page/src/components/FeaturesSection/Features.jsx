@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import MainText from "../MainText";
 import { useTranslation } from "react-i18next";
 import driversApp from "../../assets/driversApp.webp";
@@ -41,7 +41,12 @@ function FeaturesSection() {
       details: `${t("Electronic payments Details")}`,
     },
   ];
+  const [isMobile, setIsMobile] = useState(false)
+useEffect(()=>{
+  const isMobile = window.innerWidth <= 1000
+  setIsMobile(!isMobile)
 
+},[])
   return (
     <>
       <section className="mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
@@ -84,7 +89,7 @@ function FeaturesSection() {
             ))}
           </div>
         </div>
-        <div className="relative">
+        <div className={`relative ${!isMobile ? 'hidden' : 'block'} `}>
           <img
             className="w-[100%] h-auto max-w-[100%]"
             src={Group7}

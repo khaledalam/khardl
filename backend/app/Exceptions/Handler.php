@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
             return  redirect()->back();
         }
         if ($exception instanceof TenantCouldNotBeIdentifiedException || $exception instanceof DomainOccupiedByOtherTenantException) {
-            return redirect()->route('home');
+            return redirect()->route('restaurant_not_found');
         }
 
         return parent::render($request, $exception);

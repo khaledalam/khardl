@@ -5,7 +5,6 @@
 
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
-
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -84,7 +83,7 @@
                                     <!--end::Info-->
                                 </div>
                                 <!--end::User-->
-                                <a class="btn btn-primary" href="{{ route('admin.restaurants') }}">{{ __('messages.Back to list') }}</a>
+                               
                             </div>
                             <!--end::Title-->
                             <!--begin::Stats-->
@@ -142,10 +141,17 @@
                                 </div>
                                 <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.plan ends at') }} :</span>
-                                        <span class="badge badge-dark p-2 fs-6">
-                                            {{ $restaurant->trial_ends_at?->format('Y-m-d') }}
-                                        </span>
+                                        @if($subscription && $subscription->status == \App\Models\ROSubscription::ACTIVE)
+                                            <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.plan ends at') }} :</span>
+                                            <span class="badge badge-success p-2 fs-6">
+                                                {{ $subscription->end_at?->format('Y-m-d') }}
+                                            </span>
+                                        @else 
+                                            <span class="fw-bold fs-6 text-black fw-bolder">{{__('messages.Plan')}}</span>
+                                            <span class="badge badge-dark p-2 fs-6">
+                                                {{__("messages.No subscription")}}
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <!--end::Wrapper-->
@@ -216,6 +222,9 @@
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#delivery_companies">{{ __('messages.Delivery companies')}}</a>
                             </li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#config">{{ __('messages.configurations')}}</a>
+                            </li>
                             @endif
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
@@ -239,6 +248,9 @@
                         <div class="tab-pane fade delivery_companies" id="delivery_companies" role="tab-panel">
                             @include('admin.Restaurants.Delivery_companies.view')
                         </div>
+                        <div class="tab-pane fade config" id="config" role="tab-panel">
+                            @include('admin.Restaurants.Configurations.config')
+                        </div>
                     </div>
                 </div>
                 <!--end::Container-->
@@ -250,6 +262,17 @@
 @endsection
 
 @section('javascript')
+<link rel="stylesheet" href="{{ global_asset('assets/css/data-tree.css')}}" />
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="{{ global_asset('assets/js/data-tree.js')}}"></script>
+<script>
+new DataTree({
+    fpath:'{{route("admin.view-restaurants-tap-lead",["tenant"=>$restaurant->id])}}',
+    container:'#tree',
+    json:true
+});
+</script>
 <script>
     function ActiveRestuarant() {
         event.preventDefault();

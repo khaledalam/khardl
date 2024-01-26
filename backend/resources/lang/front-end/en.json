@@ -65,6 +65,7 @@
   "Login failed": "Login failed",
   "Logout failed": "Logout failed",
   "Logout": "Logout",
+  "The requested restaurant does not exist. Please check the details and try again.":"The requested restaurant does not exist. Please check the details and try again.",
   "Account creation has been completed successfully": "Account creation has been completed successfully",
   "Account creation failed to complete": "Account creation failed to complete",
   "The password has been reset successfully": "The password has been reset successfully",

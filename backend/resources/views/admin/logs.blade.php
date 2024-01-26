@@ -130,6 +130,8 @@
                                                 <strong>{{ $log->metadata['live_chat_enabled'] }}</strong>
                                             </p>
                                             @endif
+                                        @else 
+                                        {{ implode(',',(array)$log->metadata)}}
                                         @endif
                                     </td>
                                 </tr>

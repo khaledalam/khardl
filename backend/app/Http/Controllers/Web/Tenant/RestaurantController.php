@@ -36,71 +36,92 @@ class RestaurantController extends BaseController
 {
     public function __construct(
         private RestaurantService $restaurantService
-      ) {
+    ) {
     }
-    public function index(){
+    public function index()
+    {
 
         return $this->restaurantService->index();
     }
 
-    public function services(){
+    public function services()
+    {
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        $subscription = tenancy()->central(function(){
+        $subscription = tenancy()->central(function () {
             return Subscription::first();
         });
         $RO_subscription = ROSubscription::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
-
-        return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription'));
+        $setting  = Setting::first();
+        
+        return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription','setting'));
     }
-    public function serviceDeactivate(){
+    public function serviceDeactivate()
+    {
         /** @var RestaurantUser $user */
         ROSubscription::first()->update([
-            'status'=> ROSubscription::DEACTIVATE
+            'status' => ROSubscription::DEACTIVATE
         ]);
         return redirect()->back()->with('success', __('Branches has been deactivated successfully'));
     }
-    public function serviceActivate(){
+    public function serviceActivate()
+    {
         /** @var RestaurantUser $user */
         $subscription = ROSubscription::first();
-        if($subscription->status !=  ROSubscription::DEACTIVATE){
+        if ($subscription->status != ROSubscription::DEACTIVATE) {
             return redirect()->back()->with('error', __('not allowed'));
         }
         ROSubscription::first()->update([
-            'status'=> ROSubscription::ACTIVE
+            'status' => ROSubscription::ACTIVE
         ]);
         return redirect()->back()->with('success', __('Branches has been activated successfully'));
     }
-    public function serviceCalculate($type,$number_of_branches){
-        return ROSubscription::serviceCalculate($type,$number_of_branches);
+    public function serviceCalculate($type, $number_of_branches,$subscription_id)
+    {
+        return ROSubscription::serviceCalculate($type, $number_of_branches,$subscription_id);
     }
-    
-
-
-    public function delivery(){
+    public function delivery(Request $request)
+    {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $yeswa = DeliveryCompany::where("module",class_basename(Yeswa::class))->first();
-        $cervo = DeliveryCompany::where("module",class_basename(Cervo::class))->first();
-        $streetline = DeliveryCompany::where("module",class_basename(StreetLine::class))->first();
+        $modules = [
+            class_basename(Yeswa::class),
+            class_basename(Cervo::class),
+            class_basename(StreetLine::class),
+        ];
 
-        return view('restaurant.delivery_companies.companies',
-            compact('user','streetline','yeswa','cervo'));
+        $deliveryCompanies = DeliveryCompany::whereIn('module', $modules)
+        ->whenModule($request['area']??null);
+        $yeswa = clone $deliveryCompanies;
+        $yeswa = $yeswa->where('module', 'Yeswa')->first();
+        $cervo = clone $deliveryCompanies;
+        $cervo = $cervo->where('module', 'Cervo')->first();
+        $streetline = clone $deliveryCompanies;
+        $streetline = $streetline->where('module', 'StreetLine')->first();
+        $allCities = $deliveryCompanies->pluck('coverage_area')->flatten()->unique();
+        return view(
+            'restaurant.delivery_companies.companies',
+            compact('user', 'streetline', 'yeswa', 'cervo', 'allCities')
+        );
     }
 
-    public function promotions(){
+    public function promotions()
+    {
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
         $settings = Setting::all()->firstOrFail();
 
-        return view('restaurant.promotions',
-            compact('user', 'settings'));
+        return view(
+            'restaurant.promotions',
+            compact('user', 'settings')
+        );
     }
 
-    public function updatePromotions(Request $request){
+    public function updatePromotions(Request $request)
+    {
 
         $request->validate([
             'loyalty_points' => 'required|numeric|min:0',
@@ -120,17 +141,21 @@ class RestaurantController extends BaseController
         return redirect()->back()->with('success', __('Restaurant promotions successfully updated.'));
     }
 
-    public function settings(){
+    public function settings()
+    {
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
         $settings = Setting::all()->firstOrFail();
 
-        return view('restaurant.settings',
-            compact('user', 'settings'));
+        return view(
+            'restaurant.settings',
+            compact('user', 'settings')
+        );
     }
 
-    public function updateSettings(Request $request){
+    public function updateSettings(Request $request)
+    {
 
         $request->validate([
             'delivery_fee' => 'required|numeric|min:0',
@@ -151,92 +176,112 @@ class RestaurantController extends BaseController
         return redirect()->back()->with('success', __('Restaurant settings successfully updated.'));
     }
 
-    public function settingsBranch(Branch $branch){
+    public function settingsBranch(Branch $branch)
+    {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $payment_methods = $branch->payment_methods->pluck('id','name');
-        $delivery_types = $branch->delivery_types->pluck('id','name');
+        $payment_methods = $branch->payment_methods->pluck('id', 'name');
+        $delivery_types = $branch->delivery_types->pluck('id', 'name');
 
-        return view('restaurant.settings_branch',
-            compact('user','branch','payment_methods', 'delivery_types'));
+        return view(
+            'restaurant.settings_branch',
+            compact('user', 'branch', 'payment_methods', 'delivery_types')
+        );
     }
 
-    public function updateSettingsBranch(Branch $branch,Request $request){
+    public function updateSettingsBranch(Branch $branch, Request $request)
+    {
         $payment_methods = null;
         $delivery_types = null;
-        foreach($request->payment_methods ?? [] as $method){
-            $payment_methods [] = PaymentMethod::where('name',$method)->first()->id;
+        foreach ($request->payment_methods ?? [] as $method) {
+            $payment_methods[] = PaymentMethod::where('name', $method)->first()->id;
         }
-        foreach($request->delivery_types ?? [] as $method){
-            $delivery_types [] = DeliveryType::where('name',$method)->first()->id;
+        foreach ($request->delivery_types ?? [] as $method) {
+            $delivery_types[] = DeliveryType::where('name', $method)->first()->id;
         }
         $branch->payment_methods()->sync($payment_methods);
         $branch->delivery_types()->sync($delivery_types);
 
-      return redirect()->back()->with('success', __('Branch settings successfully updated.'));
+        return redirect()->back()->with('success', __('Branch settings successfully updated.'));
 
     }
 
 
 
 
-    public function orders_all(){
+    public function orders_all()
+    {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders =  Order::orderBy('created_at','DESC')->paginate(10);
-        return view('restaurant.orders_all',
-            compact('user','orders'));
+        $orders = Order::orderBy('created_at', 'DESC')->paginate(10);
+        return view(
+            'restaurant.orders_all',
+            compact('user', 'orders')
+        );
     }
 
-    public function orders_add(){
+    public function orders_add()
+    {
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        return view('restaurant.orders_add',
-            compact('user'));
+        return view(
+            'restaurant.orders_add',
+            compact('user')
+        );
     }
 
-    public function branchOrders(Order $order){
+    public function branchOrders(Order $order)
+    {
 
         $user = Auth::user();
-        $order->load('user','items');
+        $order->load('user', 'items');
 
         $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
         $locale = app()->getLocale();
-        return view('restaurant.orders.show',
-            compact('user','order','locale','orderStatusLogs'));
+        return view(
+            'restaurant.orders.show',
+            compact('user', 'order', 'locale', 'orderStatusLogs')
+        );
     }
 
 
-    public function qr(){
+    public function qr()
+    {
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        return view('restaurant.qr',
-            compact('user'));
+        return view(
+            'restaurant.qr',
+            compact('user')
+        );
     }
 
 
 
-    public function branches(){
+    public function branches()
+    {
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
-        $branches =  Branch::iSWorker($user)
-        ->get()
-        ->sortByDesc('is_primary');
+        $branches = Branch::iSWorker($user)
+            ->get()
+            ->sortByDesc('is_primary');
 
-        return view(($user->isRestaurantOwner())?'restaurant.branches':'worker.branches',
-        compact('available_branches','user', 'branches')); //view('branches')
+        return view(
+            ($user->isRestaurantOwner()) ? 'restaurant.branches' : 'worker.branches',
+            compact('available_branches', 'user', 'branches')
+        ); //view('branches')
     }
 
-    public function branches_site_editor(){
+    public function branches_site_editor()
+    {
         $user = Auth::user();
 
         if (!$user->isRestaurantOwner()) {
             return $this->sendResponse(null, 'Bad request');
         }
 
-        $branches =  DB::table('branches')
+        $branches = DB::table('branches')
             ->get(['id', 'is_primary', 'name'])
             ->sortByDesc('is_primary');
 
@@ -244,8 +289,9 @@ class RestaurantController extends BaseController
 
     }
 
-    public function addBranch(Request $request){
-        if(!$this->can_create_branch()){
+    public function addBranch(Request $request)
+    {
+        if (!$this->can_create_branch()) {
 
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
@@ -256,61 +302,61 @@ class RestaurantController extends BaseController
             'address' => 'required|string',
             'location' => 'required',
             'copy_menu' => 'required',
-            'normal_from' => [ Rule::when($request->hours_option == 'normal','date_format:H:i')],
-            'normal_to' => [ Rule::when($request->hours_option == 'normal','date_format:H:i|after:normal_from')],
-            'saturday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
-            'saturday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:saturday_open')],
-            'sunday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
-            'sunday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:sunday_open')],
-            'monday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
-            'monday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:monday_open')],
-            'tuesday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
-            'tuesday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:tuesday_open')],
-            'wednesday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
-            'wednesday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:wednesday_open')],
-            'thursday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
-            'thursday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:thursday_open')],
-            'friday_open' => [ Rule::when($request->hours_option == 'custom','date_format:H:i')],
-            'friday_close' => [ Rule::when($request->hours_option == 'custom','date_format:H:i|after:friday_open')],
+            'normal_from' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i')],
+            'normal_to' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i|after:normal_from')],
+            'saturday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
+            'saturday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:saturday_open')],
+            'sunday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
+            'sunday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:sunday_open')],
+            'monday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
+            'monday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:monday_open')],
+            'tuesday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
+            'tuesday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:tuesday_open')],
+            'wednesday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
+            'wednesday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:wednesday_open')],
+            'thursday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
+            'thursday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:thursday_open')],
+            'friday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
+            'friday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:friday_open')],
         ]);
 
         list($lat, $lng) = explode(' ', $validatedData['location']);
 
-        $branchesExist = DB::table('branches')->where('is_primary',1)->exists();
+        $branchesExist = DB::table('branches')->where('is_primary', 1)->exists();
 
-        $time = function($time,$open = true)use($request){
-            if($request->hours_option == 'normal'){
-                if($open)
-                    return  Carbon::createFromFormat('H:i', $request->input('normal_from'))->format('H:i');
+        $time = function ($time, $open = true) use ($request) {
+            if ($request->hours_option == 'normal') {
+                if ($open)
+                    return Carbon::createFromFormat('H:i', $request->input('normal_from'))->format('H:i');
                 else
-                    return  Carbon::createFromFormat('H:i', $request->input('normal_to'))->format('H:i');
-            }else {
-                return  Carbon::createFromFormat('H:i', $time)->format('H:i');
+                    return Carbon::createFromFormat('H:i', $request->input('normal_to'))->format('H:i');
+            } else {
+                return Carbon::createFromFormat('H:i', $time)->format('H:i');
             }
         };
 
         $newBranchId = DB::table('branches')->insertGetId([
             'name' => $validatedData['name'],
             'phone' => $validatedData['phone'],
-            'address'=> $validatedData['address'],
+            'address' => $validatedData['address'],
             'lat' => (float) $lat,
             'lng' => (float) $lng,
 
             'is_primary' => !$branchesExist,
-            'saturday_open' => $time( $request->input('saturday_open')),
-            'saturday_close' => $time( $request->input('saturday_close'),false),
-            'sunday_open' =>$time( $request->input('sunday_open')),
-            'sunday_close' =>$time( $request->input('sunday_close'),false),
-            'monday_open' =>$time( $request->input('monday_open')),
-            'monday_close' => $time( $request->input('monday_close'),false),
-            'tuesday_open' =>$time( $request->input('tuesday_open')),
-            'tuesday_close' => $time( $request->input('tuesday_close'),false),
-            'wednesday_open' => $time( $request->input('wednesday_open')),
-            'wednesday_close' => $time( $request->input('wednesday_close'),false),
-            'thursday_open' =>$time( $request->input('thursday_open')),
-            'thursday_close' =>$time( $request->input('thursday_close'),false),
-            'friday_open' => $time( $request->input('friday_open')),
-            'friday_close' => $time( $request->input('friday_close'),false),
+            'saturday_open' => $time($request->input('saturday_open')),
+            'saturday_close' => $time($request->input('saturday_close'), false),
+            'sunday_open' => $time($request->input('sunday_open')),
+            'sunday_close' => $time($request->input('sunday_close'), false),
+            'monday_open' => $time($request->input('monday_open')),
+            'monday_close' => $time($request->input('monday_close'), false),
+            'tuesday_open' => $time($request->input('tuesday_open')),
+            'tuesday_close' => $time($request->input('tuesday_close'), false),
+            'wednesday_open' => $time($request->input('wednesday_open')),
+            'wednesday_close' => $time($request->input('wednesday_close'), false),
+            'thursday_open' => $time($request->input('thursday_open')),
+            'thursday_close' => $time($request->input('thursday_close'), false),
+            'friday_open' => $time($request->input('friday_open')),
+            'friday_close' => $time($request->input('friday_close'), false),
         ]);
 
         if ($validatedData['copy_menu'] != "None") {
@@ -348,7 +394,7 @@ class RestaurantController extends BaseController
                         'selection_input_prices' => $item->selection_input_prices,
                         'selection_input_titles' => $item->selection_input_titles,
                         'dropdown_required' => $item->dropdown_required,
-                        'dropdown_input_titles' =>$item->dropdown_input_titles,
+                        'dropdown_input_titles' => $item->dropdown_input_titles,
                         'dropdown_input_names' => $item->dropdown_input_names,
                         'user_id' => Auth::user()->id
                     ]);
@@ -366,16 +412,17 @@ class RestaurantController extends BaseController
             }
         }
         $sub = ROSubscription::first();
-        $sub->number_of_branches -=1;
+        $sub->number_of_branches -= 1;
         $sub->save();
         return redirect()->back()->with('success', 'Branch successfully added.');
 
     }
-    private function can_create_branch(){
+    private function can_create_branch()
+    {
         // redirect to payment gateway
         $sub = ROSubscription::first();
-        if($sub && $sub->status == 'active'){
-            if($sub->number_of_branches > 0){
+        if ($sub && $sub->status == 'active') {
+            if ($sub->number_of_branches > 0) {
                 return true;
             }
         }
@@ -435,13 +482,14 @@ class RestaurantController extends BaseController
             ->with('success', 'Branch updated successfully');
     }
 
-    public function updateBranchLocation(Request $request, $id){
+    public function updateBranchLocation(Request $request, $id)
+    {
 
         // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
         // return;
 
-        $lat = number_format((float)$request->input('lat'), 8, '.', '');
-        $lng = number_format((float)$request->input('lng'), 8, '.', '');
+        $lat = number_format((float) $request->input('lat'), 8, '.', '');
+        $lng = number_format((float) $request->input('lng'), 8, '.', '');
 
 
         DB::table('branches')
@@ -455,33 +503,35 @@ class RestaurantController extends BaseController
 
     }
 
-    public function menu($branchId){
+    public function menu($branchId)
+    {
 
         $user = Auth::user();
-//         if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
+        //         if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
 //             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
 //         }
 
         $categories = Category::
-        when($user->isWorker(), function (Builder $query, string $role)use($user, $branchId) {
-            if ($branchId) {
-                if ($branchId != $user->branch->id) return;
-            }
-
-            $query->where('branch_id', $user->branch->id) ->where('user_id', $user->id);
-        })
-            ->when($user->isRestaurantOwner(), function (Builder $query, string $role)use($user, $branchId) {
+            when($user->isWorker(), function (Builder $query, string $role) use ($user, $branchId) {
                 if ($branchId) {
-                    $query->where('branch_id', $branchId) ->where('user_id', $user->id);
+                    if ($branchId != $user->branch->id)
+                        return;
+                }
+
+                $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
+            })
+            ->when($user->isRestaurantOwner(), function (Builder $query, string $role) use ($user, $branchId) {
+                if ($branchId) {
+                    $query->where('branch_id', $branchId)->where('user_id', $user->id);
                 }
             })
-        ->get();
-        if($branchId){
+            ->get();
+        if ($branchId) {
             $branch = Branch::find($branchId);
-        }else {
+        } else {
             $branch = Branch::find($user->branch->id);
         }
-        return view('restaurant.menu', compact('user', 'categories', 'branch','branchId'));
+        return view('restaurant.menu', compact('user', 'categories', 'branch', 'branchId'));
     }
     public function noBranches()
     {
@@ -489,30 +539,32 @@ class RestaurantController extends BaseController
         return view('restaurant.no_branches', compact('user'));
     }
 
-    public function getCategory(Request $request, $id, $branchId){
+    public function getCategory(Request $request, $id, $branchId)
+    {
         $user = Auth::user();
 
-        if(!$user->isRestaurantOwner()  && $user->branch->id != $branchId){
+        if (!$user->isRestaurantOwner() && $user->branch->id != $branchId) {
             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         }
 
         $categories = Category::where('branch_id', $branchId)
-        ->orderByRaw("id = $id DESC")
-        ->get();
-        $selectedCategory = $categories->where('id',$id)->first();
+            ->orderByRaw("id = $id DESC")
+            ->get();
+        $selectedCategory = $categories->where('id', $id)->first();
         $items = Item::
-        where('user_id', $user->id)
-        ->where('category_id', $selectedCategory->id)
-        ->where('branch_id', $branchId)
-        ->orderBy('created_at','DESC')
-        ->orderBy('updated_at','DESC')
-        ->get();
+            where('user_id', $user->id)
+            ->where('category_id', $selectedCategory->id)
+            ->where('branch_id', $branchId)
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('updated_at', 'DESC')
+            ->get();
 
         return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
     }
 
 
-    public function addCategory(Request $request, $branchId){
+    public function addCategory(Request $request, $branchId)
+    {
 
 
         $validator = Validator::make($request->all(), [
@@ -546,8 +598,8 @@ class RestaurantController extends BaseController
         // if($userId != DB::table('branches')->where('id', $branchId)->value('user_id'))
         //     return;
         Category::create([
-            'name' =>trans_json( $request->input('name_en'), $request->input('name_ar')),
-            'photo' => $filename ? tenant_asset('categories/'.$filename) : null,
+            'name' => trans_json($request->input('name_en'), $request->input('name_ar')),
+            'photo' => $filename ? tenant_asset('categories/' . $filename) : null,
             'user_id' => $userId,
             'branch_id' => $branchId,
             'created_at' => now(),
@@ -557,30 +609,31 @@ class RestaurantController extends BaseController
         return redirect()->back()->with('success', 'Category successfully added.');
     }
 
-    public function addItem(Request $request, $id, $branchId){
+    public function addItem(Request $request, $id, $branchId)
+    {
 
         // if(Auth::user()->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
         //     return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
         // }
 
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
-       // TODO @todo validate the coming request
+        // TODO @todo validate the coming request
         // dd([
-            // $request->checkboxInputNameEn,
-            // $request->checkboxInputNameAr,
+        // $request->checkboxInputNameEn,
+        // $request->checkboxInputNameAr,
 
-            // 'checkbox_required' => ( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
-            // 'checkbox_input_titles' =>array_map(null,$request->checkboxInputTitleEn,$request->checkboxInputTitleAr),
-            // 'checkbox_input_maximum_choices' =>$request->input('checkboxInputMaximumChoice'),
-            // 'checkbox_input_names' => ($request->input('checkboxInputNameAr') )?  array_map(null,$request->checkboxInputNameEn,$request->checkboxInputNameAr) : null,
-            // 'checkbox_input_prices' =>($request->input('checkboxInputPrice') )? array_values($request->input('checkboxInputPrice')) : null,
-            // 'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
-            // 'selection_input_names' =>($request->input('selectionInputNameAr') )? array_map(null,$request->selectionInputNameEn,$request->selectionInputNameAr) : null,
-            // 'selection_input_prices' =>($request->input('selectionInputPrice') )? array_values($request->input('selectionInputPrice')) : null,
-            // 'selection_input_titles' => array_map(null,$request->selectionInputTitleEn,$request->selectionInputTitleAr),
-            // 'dropdown_required' =>( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
-            // 'dropdown_input_titles' => array_map(null,$request->dropdownInputTitleEn,$request->dropdownInputTitleAr),
-            // 'dropdown_input_names' =>($request->input('dropdownInputNameAr') )?array_map(null,$request->dropdownInputNameEn,$request->dropdownInputNameAr): null,
+        // 'checkbox_required' => ( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
+        // 'checkbox_input_titles' =>array_map(null,$request->checkboxInputTitleEn,$request->checkboxInputTitleAr),
+        // 'checkbox_input_maximum_choices' =>$request->input('checkboxInputMaximumChoice'),
+        // 'checkbox_input_names' => ($request->input('checkboxInputNameAr') )?  array_map(null,$request->checkboxInputNameEn,$request->checkboxInputNameAr) : null,
+        // 'checkbox_input_prices' =>($request->input('checkboxInputPrice') )? array_values($request->input('checkboxInputPrice')) : null,
+        // 'selection_required' =>( $request->input('selection_required'))?array_values( $request->input('selection_required')):null,
+        // 'selection_input_names' =>($request->input('selectionInputNameAr') )? array_map(null,$request->selectionInputNameEn,$request->selectionInputNameAr) : null,
+        // 'selection_input_prices' =>($request->input('selectionInputPrice') )? array_values($request->input('selectionInputPrice')) : null,
+        // 'selection_input_titles' => array_map(null,$request->selectionInputTitleEn,$request->selectionInputTitleAr),
+        // 'dropdown_required' =>( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
+        // 'dropdown_input_titles' => array_map(null,$request->dropdownInputTitleEn,$request->dropdownInputTitleAr),
+        // 'dropdown_input_names' =>($request->input('dropdownInputNameAr') )?array_map(null,$request->dropdownInputNameEn,$request->dropdownInputNameAr): null,
         // ]);
 
         if (DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id')) {
@@ -599,26 +652,26 @@ class RestaurantController extends BaseController
 
             try {
                 $itemData = [
-                    'photo' => tenant_asset('items/'.$filename),
+                    'photo' => tenant_asset('items/' . $filename),
                     'price' => $request->input('price'),
                     'calories' => $request->input('calories'),
-                    'name' =>trans_json( $request->input('item_name_en'), $request->input('item_name_ar')),
-                    'description' =>($request->input('description_en'))?trans_json( $request->input('description_en'), $request->input('description_ar')):null,
-                    'checkbox_required' =>( $request->input('checkbox_required'))?array_values( $request->input('checkbox_required')):null,
-                    'checkbox_input_titles' =>($request->checkboxInputTitleEn)?array_map(null, $request->checkboxInputTitleEn,  $request->checkboxInputTitleAr):null,
+                    'name' => trans_json($request->input('item_name_en'), $request->input('item_name_ar')),
+                    'description' => ($request->input('description_en')) ? trans_json($request->input('description_en'), $request->input('description_ar')) : null,
+                    'checkbox_required' => ($request->input('checkbox_required')) ? array_values($request->input('checkbox_required')) : null,
+                    'checkbox_input_titles' => ($request->checkboxInputTitleEn) ? array_map(null, $request->checkboxInputTitleEn, $request->checkboxInputTitleAr) : null,
                     'checkbox_input_maximum_choices' => $request->input('checkboxInputMaximumChoice'),
                     'checkbox_input_names' => $this->processOptions($request, 'checkboxInputNameEn', 'checkboxInputNameAr'),
                     'checkbox_input_prices' => $request->input('checkboxInputPrice') ? array_values($request->input('checkboxInputPrice')) : null,
-                    'selection_required' => $request->input('selection_required')?array_values( $request->input('selection_required')):null,
+                    'selection_required' => $request->input('selection_required') ? array_values($request->input('selection_required')) : null,
                     'selection_input_names' => $this->processOptions($request, 'selectionInputNameEn', 'selectionInputNameAr'),
                     'selection_input_prices' => $request->input('selectionInputPrice') ? array_values($request->input('selectionInputPrice')) : null,
-                    'selection_input_titles' =>(isset($request->selectionInputTitleEn))?array_map(null, $request->selectionInputTitleEn,  $request->selectionInputTitleAr):null,
-                    'dropdown_required' => ( $request->input('dropdown_required'))?array_values( $request->input('dropdown_required')):null,
-                    'dropdown_input_titles' =>(isset($request->dropdownInputTitleEn))?array_map(null, $request->dropdownInputTitleEn,  $request->dropdownInputTitleAr):null,
+                    'selection_input_titles' => (isset($request->selectionInputTitleEn)) ? array_map(null, $request->selectionInputTitleEn, $request->selectionInputTitleAr) : null,
+                    'dropdown_required' => ($request->input('dropdown_required')) ? array_values($request->input('dropdown_required')) : null,
+                    'dropdown_input_titles' => (isset($request->dropdownInputTitleEn)) ? array_map(null, $request->dropdownInputTitleEn, $request->dropdownInputTitleAr) : null,
                     'dropdown_input_names' => $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr'),
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
-                    'availability'=>($request->input('availability'))?true:false,
+                    'availability' => ($request->input('availability')) ? true : false,
                     'branch_id' => $branchId,
                     'created_at' => now(),
                     'updated_at' => now(),
@@ -635,16 +688,18 @@ class RestaurantController extends BaseController
         }
     }
 
-    function processOptions($request, $enKey, $arKey) {
+    function processOptions($request, $enKey, $arKey)
+    {
         return $request->input($arKey)
-            ? array_map(function($en,$ar){
+            ? array_map(function ($en, $ar) {
                 return array_map(function ($en, $ar) {
                     return [$en, $ar];
                 }, $en, $ar);
             }, $request->$enKey, $request->$arKey)
             : null;
     }
-    public function deleteCategory($id){
+    public function deleteCategory($id)
+    {
         $user = Auth::user();
 
         $selectedCategory = DB::table('categories')->where('id', $id)->first();
@@ -661,7 +716,8 @@ class RestaurantController extends BaseController
         }
     }
 
-    public function deleteItem($id){
+    public function deleteItem($id)
+    {
 
         $user = Auth::user();
 
@@ -727,13 +783,15 @@ class RestaurantController extends BaseController
         return redirect()->back()->with('success', 'Profile updated successfully');
     }
 
-    public function profile(){
+    public function profile()
+    {
         $user = Auth::user();
 
         return view('restaurant.profile', compact('user'));
     }
 
-    public function workers($branchId){
+    public function workers($branchId)
+    {
 
 
         $branch = Branch::findOrFail($branchId);
@@ -741,15 +799,16 @@ class RestaurantController extends BaseController
         // $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)
         // ->paginate(15);
         $workers = $branch->workers()
-        ->where('id','!=',$user->id)
-        ->whereHas('roles', function ($query) {
-            $query->where('name', 'Worker');
-        })
-        ->get();
-        return view('restaurant.workers', compact('user', 'workers', 'branchId','branch'));
+            ->where('id', '!=', $user->id)
+            ->whereHas('roles', function ($query) {
+                $query->where('name', 'Worker');
+            })
+            ->get();
+        return view('restaurant.workers', compact('user', 'workers', 'branchId', 'branch'));
     }
 
-    public function addWorker($branchId){
+    public function addWorker($branchId)
+    {
 
         $user = Auth::user();
 
@@ -762,7 +821,7 @@ class RestaurantController extends BaseController
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
         $input['phone_verified_at'] = null;
-        $input['branch_id']= $branchId;
+        $input['branch_id'] = $branchId;
         $user = RestaurantUser::create($input);
 
         $user->save();
@@ -773,6 +832,7 @@ class RestaurantController extends BaseController
             'can_modify_advertisements',
             'can_edit_menu',
             'can_control_payment',
+            'can_view_revenues'
 
         ];
 
@@ -786,13 +846,14 @@ class RestaurantController extends BaseController
 
         DB::table('permissions_worker')->insert($insertData);
 
-        if(app()->getLocale() === 'en')
-            return redirect()->route("restaurant.workers",$branchId)->with('success', 'Worker added successfully');
+        if (app()->getLocale() === 'en')
+            return redirect()->route("restaurant.workers", $branchId)->with('success', 'Worker added successfully');
         else
             return redirect()->back()->with('success', 'تمت إضافة موظف بنجاح');
     }
 
-    public function deleteWorker($id){
+    public function deleteWorker($id)
+    {
         try {
             DB::beginTransaction();
             DB::table('permissions_worker')->where('user_id', $id)->delete();
@@ -802,21 +863,22 @@ class RestaurantController extends BaseController
             DB::commit();
 
 
-            if(app()->getLocale() === 'en')
+            if (app()->getLocale() === 'en')
                 return redirect()->back()->with('success', 'Deleted successfully.');
             else
                 return redirect()->back()->with('success', 'حذف بنجاح.');
         } catch (\Exception $e) {
             DB::rollBack();
 
-            if(app()->getLocale() === 'en')
+            if (app()->getLocale() === 'en')
                 return redirect()->back()->with('error', 'Error deleting user and related records: ' . $e->getMessage());
             else
                 return redirect()->back()->with('error', 'خطأ في حذف المستخدم والسجلات ذات الصلة' . $e->getMessage());
         }
     }
 
-    public function updateWorker(Request $request, $id){
+    public function updateWorker(Request $request, $id)
+    {
 
         $selectedWorker = RestaurantUser::find($id);
 
@@ -846,7 +908,7 @@ class RestaurantController extends BaseController
 
         $user = Auth::user();
 
-        if(app()->getLocale() === 'en')
+        if (app()->getLocale() === 'en')
             return redirect()->back()->with([
                 'success' => 'Worker updated successfully',
             ])->with(compact('user'));
@@ -856,7 +918,8 @@ class RestaurantController extends BaseController
             ])->with(compact('user'));
     }
 
-    public function editWorker($id){
+    public function editWorker($id)
+    {
 
         $user = Auth::user();
 
@@ -867,27 +930,28 @@ class RestaurantController extends BaseController
         // }
         return view('restaurant.edit-worker', compact('worker', 'user'));
     }
-    public function deliveryActivate($module,Request $request){
+    public function deliveryActivate($module, Request $request)
+    {
 
         $request->validate([
-            'api_key'=>"required"
+            'api_key' => "required"
         ]);
-        $company = DeliveryCompany::where("module",$module)->first();
-        if($company->status  == false){
-            if(!$company->module->verifyApiKey($request->api_key)){
+        $company = DeliveryCompany::where("module", $module)->first();
+        if ($company->status == false) {
+            if (!$company->module->verifyApiKey($request->api_key)) {
                 return redirect()->back()->with([
-                    'error' => __("Api Key not correct, please contact :module support team to ensure about it",['module'=>$module]),
+                    'error' => __("Api Key not correct, please contact :module support team to ensure about it", ['module' => $module]),
                 ]);
             }
         }
 
         $company->update([
-            'status'=>!$company->status,
-            'api_key'=>$request->api_key
+            'status' => !$company->status,
+            'api_key' => $request->api_key
         ]);
-        $message = ($company->status)?__(':module has been successfully activated'):__(':module has been successfully deactivated');
+        $message = ($company->status) ? __(':module has been successfully activated') : __(':module has been successfully deactivated');
         return redirect()->back()->with([
-            'success' => __($message,['module'=>__($module)]),
+            'success' => __($message, ['module' => __($module)]),
         ]);
 
     }

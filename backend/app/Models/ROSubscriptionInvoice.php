@@ -19,6 +19,7 @@ class ROSubscriptionInvoice extends Model
         'card_id',
         'payment_agreement_id',
         'status',
+        'type',
         'subscription_id' // central subscription id
     ];
     /* Start Relations */

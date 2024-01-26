@@ -133,3 +133,16 @@ body::-webkit-scrollbar-track {
   -ms-transform: translateX(-135%);
   -o-transform: translateX(-135%);
 }
+
+
+
+.cropper-container{
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: #333;
+}
+.image-preview{
+  max-width: 300px;
+  width: 100%;
+}

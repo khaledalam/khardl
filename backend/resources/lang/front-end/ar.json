@@ -51,6 +51,7 @@
   "Login failed": "فشلت عملية تسجيل الدخول",
   "Logout": "تسجيل الخروج",
   "Logout failed": "فشلت عملية تسجيل الخروج",
+  "The requested restaurant does not exist. Please check the details and try again.":"المطعم المطلوب غير موجود. يرجى التحقق من التفاصيل والمحاولة مرة أخرى.",
   "Account creation has been completed successfully": "تم إكمال إنشاء الحساب بنجاح",
   "Account creation failed to complete": "فشل إكمال إنشاء الحساب",
   "The password has been reset successfully": "تم إعادة تعيين كلمة المرور بنجاح",

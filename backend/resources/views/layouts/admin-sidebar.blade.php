@@ -385,6 +385,7 @@
                                         class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                                         <!--begin::Title-->
                                         <h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">
+                                            <a href="{{\URL::previous()}}" class="m-2"><i class="text-black fas fa-arrow-left"></i></a>
                                             @yield('title', 'Dashboard')
                                             <!--begin::Separator-->
                                             <span class="h-20px border-1 border-gray-200 border-start ms-3 mx-2 me-1"></span>

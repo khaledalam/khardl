@@ -27,6 +27,8 @@ class OrderResource extends JsonResource
             'order_notes'=>$this->order_notes,
             'platform_fee' => '',
             'delivery_type' =>__('messages.'.$this->delivery_type->name),
+            'tracking_url'=>$this->tracking_url,
+            'deliver_by'=>$this->deliver_by,
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
 
