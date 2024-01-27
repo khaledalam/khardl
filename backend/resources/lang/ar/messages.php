@@ -757,6 +757,7 @@ return [
     "TAP request to create Merchant ID from Lead ID fail" => "فشل ارسال طلب تاب لاتشاء معرف العميل من معرف التاجر",
     "Update restaurant merchant id" => "تحديث معرف تاجر المطعم",
     "Restore" => "ارجاع",
-    "Are you sure you want to restore this coupon ?" => "هل أنت متأكد أنك تريد استعادة هذه القسيمة؟"
+    "Are you sure you want to restore this coupon ?" => "هل أنت متأكد أنك تريد استعادة هذه القسيمة؟",
+    "External URL" => "رابط خارجي"
 ];
 

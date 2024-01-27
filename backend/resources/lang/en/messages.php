@@ -756,5 +756,6 @@ return [
     "TAP request to create Merchant ID from Lead ID fail" => "TAP request to create Merchant ID from Lead ID fail",
     "Update restaurant merchant id" => "Update restaurant merchant id",
     "Restore" => "Restore",
-    "Are you sure you want to restore this coupon ?" => "Are you sure you want to restore this coupon ? "
+    "Are you sure you want to restore this coupon ?" => "Are you sure you want to restore this coupon ? ",
+    "External URL" => "External URL"
 ];

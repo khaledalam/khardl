@@ -107,6 +107,7 @@
                                               <th class="min-w-150px">{{ __('messages.url') }}</th>
                                               <th class="min-w-150px">{{ __('messages.entered') }}</th>
                                               <th class="min-w-150px">{{ __('messages.registered') }}</th>
+                                              <th class="min-w-150px">{{ __('messages.External URL') }}</th>
                                               <th class="min-w-150px text-end">{{ __('messages.actions')}}</th>
                                           </tr>
                                       </thead>
@@ -135,6 +136,13 @@
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $promoter->registered }}</span>
                                                 </td>
+                                                <td>
+                                                    <div>
+                                                        <a href="{{ route('global.promoter', ['name' => $promoter->name]) }}" target="_blank">
+                                                          <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
                                                 <td class="text-end">
                                                     <form class="delete-form justify-content-end" action="{{ route('admin.delete-promoter', ['id' => $promoter->id]) }}" method="POST">
                                                         @method('DELETE')
@@ -152,7 +160,6 @@
                                                         </button>
                                                       </form>
                                                 </td>
-
                                             </tr>
                                         @endforeach
                                       </tbody>
