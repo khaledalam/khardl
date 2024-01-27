@@ -33,6 +33,10 @@ class CouponController extends BaseController
     {
         return $this->couponService->update($request, $id);
     }
+    public function delete(Request $request, Coupon $coupon)
+    {
+        return $this->couponService->delete($coupon);
+    }
     public function changeStatus(Request $request,Coupon $coupon)
     {
         return $this->couponService->changeStatus($coupon);

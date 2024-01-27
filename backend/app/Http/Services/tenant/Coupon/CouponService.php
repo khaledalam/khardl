@@ -37,6 +37,11 @@ class CouponService
     {
         $coupon->toggleStatus();
     }
+    public function delete(Coupon $coupon)
+    {
+        $coupon->delete();
+        return redirect()->route('coupons.index')->with(['success' => __('Deleted successfully')]);
+    }
     private function request_data($request)
     {
         if($request->type == CouponTypes::FIXED_COUPON->value)$request['amount'] = $request['fixed'];
