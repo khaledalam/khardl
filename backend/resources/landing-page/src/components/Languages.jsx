@@ -4,15 +4,20 @@ import { changeLanguage } from '../redux/languageSlice';
 import Arabic from '../assets/saudiArabia.png';
 import English from '../assets/unitedKingdom.png';
 import Button from './Button';
+import AxiosInstance from '../axios/axios';
+
 
 function Languages() {
   const dispatch = useDispatch();
-  const currentLanguage = useSelector((state) => state.languageMode.languageMode);
+  const currentLanguage = localStorage.getItem("i18nextLng")
   const newLanguage = currentLanguage === 'en' ? 'ar' : 'en';
   const buttonText = currentLanguage === 'en' ? <img src={Arabic} width={"30px"} alt="Arabic" /> : <img src={English} width={"30px"} alt="English" />;
 
   const handleLanguageChange = () => {
-      dispatch(changeLanguage(newLanguage));
+    AxiosInstance.get(`/change-language/${newLanguage}`, {}).then(() => {
+      dispatch(changeLanguage(newLanguage))
+     
+    })
   };
 
   return (
