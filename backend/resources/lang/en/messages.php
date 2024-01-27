@@ -745,5 +745,7 @@ return [
     "Go To Dashboard"=>"Go To Dashboard",
     "Go To Login Restaurant Page"=>"Go To Login Restaurant Page",
     "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master",
-    "Select option" => "Select option"
+    "Select option" => "Select option",
+    "Deleted" => "Deleted",
+    "Uses" => "Uses"
 ];

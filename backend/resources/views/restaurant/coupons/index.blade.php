@@ -51,6 +51,7 @@
                                         <th class="px-3">{{ __('messages.ID') }}</th>
                                         <th>{{ __('messages.Code') }}</th>
                                         <th>{{ __('messages.Amount') }}</th>
+                                        <th>{{ __('messages.Uses') }}</th>
                                         <th>{{ __('messages.Max discount amount') }}</th>
                                         <th>{{ __('messages.Max use') }}</th>
                                         <th>{{ __('messages.Max use per user') }}</th>
@@ -71,8 +72,11 @@
                                                 {{ $coupon->id }}
                                             </a>
                                         </td>
-                                        <td class="text-black">
+                                        <td class="text-black @if($coupon->deleted_at) text-danger @endif">
                                             {{ $coupon->code }}
+                                            @if($coupon->deleted_at)
+                                            ({{ __('messages.Deleted') }})
+                                            @endif
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->type == \App\Enums\Admin\CouponTypes::FIXED_COUPON->value)
@@ -84,6 +88,9 @@
                                                 {{ $coupon->amount }}%
                                             </span>
                                             @endif
+                                        </td>
+                                        <td class="px-3">
+                                            <span>{{ $coupon->users()->count() }}</span>
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->max_discount_amount)

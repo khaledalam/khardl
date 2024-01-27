@@ -746,6 +746,8 @@ return [
     "Go To Login Restaurant Page"=>"الذهاب الي صفحة المطعم",
     "Go To Main Khardl Website"=>"الذهاب الي موقع خردل الرئيسي",
     "This Restaurant is not active, please contact web master"=>"هذا المطعم غير فعال, الرجاء التواصل مع فريق تطوير الموقع",
-    "Select option" => "حدد الخيار"
+    "Select option" => "حدد الخيار",
+    "Deleted" => "تم الحذف",
+    "Uses" => "الاستخدامات"
 ];
 
