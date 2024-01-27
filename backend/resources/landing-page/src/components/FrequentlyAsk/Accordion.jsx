@@ -4,11 +4,11 @@ import { BsPlus, BsDash } from "react-icons/bs";
 const Accordion = ({ question, answer, number, first }) => {
     const [isOpen, setIsOpen] = useState(first ? true : false);
     return (
-        <div className='my-8 max-sm:my-6'
+        <div className='my-2 item'
             data-aos='zoom-in'
             data-aos-delay='400' >
             <button
-                className={`flex flex-col w-full px-8 max-sm:px-4 py-6 ${!isOpen ? "pb-6" : "pb-2" } rounded-[16px] text-[18px] font-medium text-gray-700 bg-[var(--third)]  hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-50  border-t-1`}
+                className={`flex flex-col w-full px-8 max-sm:px-4 py-6 ${!isOpen ? "pb-6" : "pb-2" } rounded-[16px] text-[18px] font-medium text-gray-700    focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-50  border-t-1`}
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <div className='flex justify-between w-[100%]'>
@@ -18,9 +18,9 @@ const Accordion = ({ question, answer, number, first }) => {
                     </div>
                     <div className="flex-shrink-0">
                         {!isOpen ? (
-                            <BsPlus size={26} className='text-[var(--primary)]' />
+                            <BsPlus size={26} className='text-dark' />
                         ) : (
-                            <BsDash size={26} className='text-[var(--primary)]' />
+                            <BsDash size={26} className='text-dark' />
                         )}
                     </div>
                 </div>

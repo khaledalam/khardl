@@ -9,6 +9,7 @@ import WebsiteAndApplication from '../../assets/WebsiteAndApplication.webp';
 import Card from "./Card";
 
 function FeaturesSection() {
+ 
   const { t } = useTranslation();
   const Features = [
     {
