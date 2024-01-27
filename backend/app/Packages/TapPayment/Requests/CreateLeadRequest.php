@@ -17,9 +17,9 @@ class CreateLeadRequest  extends FormRequest
     public function rules()
     {
        
-     
+       
         return [
-            'test'=>'required',
+            
             'brand.name.ar' => 'required|string',
             'brand.name.en' => 'required|string',
 
@@ -75,8 +75,7 @@ class CreateLeadRequest  extends FormRequest
             'user.email.0.address' => 'required|string',
             'user.email.0.type' => 'required|string',
 
-            'brand.terms.*.term' => 'required|string',
-            'brand.terms.*.agree' => 'required|boolean',
+          
 
           
 
@@ -106,27 +105,45 @@ class CreateLeadRequest  extends FormRequest
                     'sales' => [
                         'period' => 'monthly',
                         'currency' => 'SAR',
+                     
                     ],
                 ],
                 'channel_services' => [
-                    'channel' => 'website',
+                    [
+                        'channel' => 'website',
+                        'address'=> route('home')
+                    ]
+                ],
+                "terms"=> [  
+                    [
+                        "term"=> "general",
+                        "agree"=> true
+                    ],
+                    [
+                        "term"=> "chargeback",
+                        "agree"=> true
+                    ],
+                    [
+                        "term"=> "refund",
+                        "agree"=> true
+                    ]
                 ],
                
             ],
             'entity' => [
-                'country' => 'AE',
+                'country' => 'SA',
                 'license' => [
                     'country' => 'SA',
                     'type' => 'commercial_registration',
                 ],
             ],
             'user' => [
-                'address' => [
+                'address' => [  
                     'country' => 'SA',
                 ],
                 'identification' => [
                     'type' => 'national_id',
-                    'issuer' => 'AE',
+                    'issuer' => $this->user['nationality'] ?? ''
                 ],
                 'phone' => [
                     'country_code' => '966',
@@ -144,7 +161,7 @@ class CreateLeadRequest  extends FormRequest
                 ],
             ];
        
-        $this->prepareTerms();
+    
         $this->merge([
             'brand' => array_merge_recursive($defaults['brand'], $this->brand),
             'entity' => array_merge_recursive($defaults['entity'], $this->entity),
@@ -153,11 +170,7 @@ class CreateLeadRequest  extends FormRequest
             'platforms'=>$defaults['platforms']
         ]);
         $this->merge([
-            'brand'=>array_merge($this->brand,
-               [
-                'channel_services'=>[$this->brand['channel_services']]
-               ]
-            ),
+           
             'user'=>array_merge($this->user,
                 [
                     'address'=>[ $this->user['address']],
@@ -183,26 +196,5 @@ class CreateLeadRequest  extends FormRequest
 
         
     }
-    public function prepareTerms(){
-        if(isset($this->brand['terms'])){
-            $updated = [];
-            foreach($this->brand['terms'] as $term=>$boolean){
-                $updated[]= [
-                    'term'=>$term,
-                    'agree'=>$boolean?true:false
-                ];
-                
-            }
-            $this->merge([
-              
-                'brand' => array_merge($this->brand, [
-                    'terms' => $updated,
-                ]),
-            ]);
-
-        }else {
-            return [];
-        }
-        
-    }
+    
 }

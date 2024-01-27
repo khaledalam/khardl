@@ -749,6 +749,7 @@ return [
     "Business Details"=>"بيانات السجل التجاري",
     "Personal Information"=>"المعلومات الشخصية",
     "This Restaurant is not active, please contact web master"=>"هذا المطعم غير فعال, الرجاء التواصل مع فريق تطوير الموقع",
-    "Select option" => "حدد الخيار"
+    "Select option" => "حدد الخيار",
+    "Please check all terms and conditions before submitting."=>"يرجى القبول بجميع الشروط والأحكام قبل الإرسال."
 ];
 

@@ -748,5 +748,6 @@ return [
     "Business Details"=>"Business Details",
     "Personal Information"=>"Personal Information",
     "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master",
-    "Select option" => "Select option"
+    "Select option" => "Select option",
+    "Please check all terms and conditions before submitting."=> "Please check all terms and conditions before submitting"
 ];

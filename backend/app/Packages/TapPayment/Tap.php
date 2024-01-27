@@ -69,6 +69,7 @@ class Tap
             if($response->successful()){
              
                 $response = json_decode($response->getBody(), true);
+                logger($response);
                 if(isset($response['errors'])){
                     throw new Exception("errors");
                 }
@@ -83,7 +84,7 @@ class Tap
         if($response instanceof Response){
           $response = json_decode($response->getBody(), true);
         }
-
+        logger($response);
         if(isset($response['errors'][0])){
             if(isset($response['errors'][0]['description'])){
                 $errors =  $response['errors'][0]['description'];

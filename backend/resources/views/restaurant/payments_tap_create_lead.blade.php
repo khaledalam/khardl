@@ -40,7 +40,7 @@
         
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control" placeholder="{{__('messages.Enter Business Name (EN)')}}" name="brand[name][en]" value="{{old('brand.name.en')}}" />
+                            <input type="text" class="form-control" placeholder="{{__('messages.Enter Business Name (EN)')}}" name="brand[name][en]" value="{{old('brand.name.en') ?? $restaurant_name}}" />
                         </div>
                         <!--end::Input group-->
         
@@ -52,20 +52,10 @@
         
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control" placeholder="{{__('messages.Enter Business Name (AR)')}}" name="brand[name][ar]" id="name_ar" value="{{old('brand.name.ar')}}" />
+                            <input type="text" class="form-control" placeholder="{{__('messages.Enter Business Name (AR)')}}" name="brand[name][ar]" id="name_ar" value="{{old('brand.name.ar') ?? $restaurant_name}}" />
                         </div>
                         <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                                <span> {{__("messages.Your website Channel")}}</span>
-        
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control" placeholder="{{__('messages.Facebook page, instagram, website')}}" name="brand[channel_services][address]" value="{{old('brand.channel_services.address')}}" />
-                        </div>
-                        <!--end::Input group-->
+                        
         
         
                     </div>
@@ -138,7 +128,7 @@
     
                                 </label>
                                 <!-- Input -->
-                                <input type="text" class="form-control" placeholder="{{ __('messages.Enter First Name') }}" name="user[name][first]" id="name_first" value="{{ old('user.name.first')  }}" />
+                                <input type="text" class="form-control" placeholder="{{ __('messages.Enter First Name') }}" name="user[name][first]" id="name_first" value="{{ old('user.name.first') ?? $user->first_name }}" />
                             </div>
     
                             <!-- Name middle input group -->
@@ -160,7 +150,7 @@
     
                                 </label>
                                 <!-- Input -->
-                                <input type="text" class="form-control" placeholder="{{ __('messages.Enter Last Name') }}" name="user[name][last]" id="name_last" value="{{ old('user.name.last')}}" />
+                                <input type="text" class="form-control" placeholder="{{ __('messages.Enter Last Name') }}" name="user[name][last]" id="name_last" value="{{ old('user.name.last')  ?? $user->last_name }}" />
                             </div>
                         </div>
                         <!--begin::Input group-->
@@ -178,7 +168,7 @@
                                         <input type="text" readonly  style="width: 40px;border:0;background-color:#f5f8fa" value="966">
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.number') }}" />
+                                <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($user->phone,3)}}" />
                             </div>
                         </div>
     
@@ -192,8 +182,8 @@
                             </label>
                             <!--end::Label-->
                             <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">
-                                <option value="HOME" {{old('user.phone.type') == 'HOME'? 'selected' :''}}>{{__('messages.Home')}}</option>
-                                <option value="WORK"  {{old('user.phone.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
+                                <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('messages.Home')}}</option>
+                                <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
                             </select>
                         </div>
     
@@ -256,7 +246,7 @@
     
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control" name="user[address][city]" value="{{old('user.address.city')}}" />
+                            <input type="text" class="form-control" name="user[address][city]" value="{{old('user.address.0.city')}}" />
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -267,7 +257,7 @@
     
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control" name="user[address][zip_code]" value="{{old('user.address.zip_code')}}" />
+                            <input type="text" class="form-control" name="user[address][zip_code]" value="{{old('user.address.0.zip_code')}}" />
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -278,7 +268,7 @@
     
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control" name="user[address][line1]" value="{{old('user.address.line1')}}" />
+                            <input type="text" class="form-control" name="user[address][line1]" value="{{old('user.address.0.line1')}}" />
                         </div>
                         <!--end::Input group-->
                         <!--end::Input group-->
@@ -303,7 +293,7 @@
     
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control" name="user[address][line2]" value="{{old('user.address.line2')}}" />
+                            <input type="text" class="form-control" name="user[address][line2]" value="{{old('user.address.0.line2')}}" />
                         </div>
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
@@ -320,7 +310,7 @@
                             </label>
                             <!--end::Label-->
     
-                            <input type="email" class="form-control" placeholder="{{__('messages.Email')}}" name="user[email][address]" value="{{old('user.email.address')}}" />
+                            <input type="email" class="form-control" placeholder="{{__('messages.Email')}}" name="user[email][address]" value="{{old('user.email.0.address') ?? $user->email}}" />
                         </div>
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
@@ -335,29 +325,7 @@
                             </select>
                         </div>
     
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("messages.Terms and conditions")}}</h2>
-    
-                        </label>
-    
-                        <div class="form-check" style="margin:10px 0px">
-                            <input class="form-check-input" type="checkbox" id="flexCheckDefault"  checked value="1" name="brand[terms][general]">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                {{__('messages.General approval')}}
-                            </label>
-                        </div>
-                        <div class="form-check" style="margin:10px 0px">
-                            <input class="form-check-input" type="checkbox" id="flexCheckChecked2" checked value="1" name="brand[terms][chargeback]">
-                            <label class="form-check-label" for="flexCheckChecked2">
-                                {{__('messages.Charge Back')}}
-                            </label>
-                        </div>
-                        <div class="form-check" style="margin:10px 0px">
-                            <input class="form-check-input" type="checkbox" id="flexCheckChecked3" checked value="1" name="brand[terms][refund]">
-                            <label class="form-check-label" for="flexCheckChecked3">
-                                {{__('messages.Refund')}}
-                            </label>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -439,12 +407,12 @@
                             <span class="">{{__('messages.Company Name')}}<span class="text-danger h4"> * </span></span>
         
                         </label>
-                        <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][name]" value="{{old('wallet.bank.account.name')}}" /><br />
+                        <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][name]" value="{{old('wallet.bank.account.name') ?? $facility_name}}" /><br />
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.IBAN')}}<span class="text-danger h4"> * </span></span>
         
                         </label>
-                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban')}}" /><br />
+                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}}" /><br />
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.Swift code')}}<span class="text-danger h4"> * </span></span>
         
@@ -459,9 +427,33 @@
         
         
                     </div>
+                    <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
+                        <h2 class="bold">{{__("messages.Terms and conditions")}}</h2>
+    
+                    </label>
+    
+                    <div class="form-check" style="margin:10px 0px">
+                        <input class="form-check-input" type="checkbox" id="flexCheckDefault"  checked value="1">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            {{__('messages.General approval')}}
+                        </label>
+                    </div>
+                    <div class="form-check" style="margin:10px 0px">
+                        <input class="form-check-input" type="checkbox" id="flexCheckChecked2" checked value="1">
+                        <label class="form-check-label" for="flexCheckChecked2">
+                            {{__('messages.Charge Back')}}
+                        </label>
+                    </div>
+                    <div class="form-check" style="margin:10px 0px">
+                        <input class="form-check-input" type="checkbox" id="flexCheckChecked3" checked value="1">
+                        <label class="form-check-label" for="flexCheckChecked3">
+                            {{__('messages.Refund')}}
+                        </label>
+                    </div>
                 </div>
+             
                 <!--begin::Actions-->
-                <div class="text-center">
+                <div class="text-center m-5">
                     <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary" id="kt_modal_new_target_next_step1">
                         <span class="indicator-label">{{ __('messages.Submit ✔️') }}</span>
                         
@@ -475,16 +467,7 @@
       
 
 
-        <!--begin::Actions-->
-        <div class="text-center">
-            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset ↻</button>
-            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                <span class="indicator-label">{{__('messages.save-changes')}} ✔️</span>
-                <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
-                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-            </button>
-        </div>
-        <!--end::Actions-->
+        
     </form>
     <!--end::Post-->
 </div>
@@ -543,7 +526,10 @@
     });
     document.getElementById('kt_modal_new_target_submit').addEventListener('click', function(event) {
         event.preventDefault();
-        
+        if (!areCheckboxesChecked()) {
+            alert(`{{__('messages.Please check all terms and conditions before submitting.')}}`);
+            return ;
+        }
         Swal.fire({
             title: '{{ __('messages.are-you-sure') }}',
             text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
@@ -559,6 +545,13 @@
             }
         });
     });
+    function areCheckboxesChecked() {
+        var checkbox1 = document.getElementById('flexCheckDefault');
+        var checkbox2 = document.getElementById('flexCheckChecked2');
+        var checkbox3 = document.getElementById('flexCheckChecked3');
+
+        return checkbox1.checked && checkbox2.checked && checkbox3.checked;
+    }
 </script>
 
 @push('scripts')
