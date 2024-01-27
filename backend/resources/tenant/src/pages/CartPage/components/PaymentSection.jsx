@@ -43,7 +43,9 @@ const PaymentSection = ({
   const [activeDeliveryType, setActiveDeliveryType] = useState("pickup")
   const [showTAPClientCard, setShowTAPClientCard] = useState(false)
   const language = useSelector((state) => state.languageMode.languageMode)
-
+  const callbackFunc = (response)=>{
+    console.log(response);
+  }
   // TODO @todo  get total price from backend 
   const getTotalPrice = () => {
     return cartItems
@@ -127,46 +129,12 @@ const PaymentSection = ({
             }));
             console.log(extractedData);
         
-            <GoSellElements
-            gateway={{
-              publicKey:"pk_test_Zzq7mShJgR49inPEblsICXay",
-              language:"ar",
-              supportedCurrencies: "all",
-              supportedPaymentMethods: "all",
-              notifications:'msg',
-              callback: this.callbackFunc,
-              labels:{
-                  cardNumber:"Card Number",
-                  expirationDate:"MM/YY",
-                  cvv:"CVV",
-                  cardHolder:"Name on Card",
-                  actionButton:"Pay"
-              },
-              style: {
-                  base: {
-                    color: '#535353',
-                    lineHeight: '18px',
-                    fontFamily: 'sans-serif',
-                    fontSmoothing: 'antialiased',
-                    fontSize: '16px',
-                    '::placeholder': {
-                      color: 'rgba(0, 0, 0, 0.26)',
-                      fontSize:'15px'
-                    }
-                  },
-                  invalid: {
-                    color: 'red',
-                    iconColor: '#fa755a '
-                  }
-              }
-            }}
-             />
+          
 
             //  <p id="msg"></p>
 
             // <button onClick={() => GoSellElements.submit()}>Submit</button>
-  
-            // goSell.submit();
+
         }
       
 
@@ -174,7 +142,8 @@ const PaymentSection = ({
       
         }
       } catch (error) {
-        toast.error(error.response.data.message)
+        // toast.error(error.response.data.message)
+        console.log(error);
       }
         
     }
@@ -209,7 +178,42 @@ const PaymentSection = ({
   return (
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
         <div id={"tap_charge_element"} />
-        
+        <p id="msg"></p>
+        <GoSellElements
+            gateway={{
+              publicKey:"pk_test_Zzq7mShJgR49inPEblsICXay",
+              language:"ar",
+              supportedCurrencies: "all",
+              supportedPaymentMethods: "all",
+              notifications:'msg',
+              callback: callbackFunc,
+              labels:{
+                  cardNumber:"Card Number",
+                  expirationDate:"MM/YY",
+                  cvv:"CVV",
+                  cardHolder:"Name on Card",
+                  actionButton:"Pay"
+              },
+              style: {
+                  base: {
+                    color: '#535353',
+                    lineHeight: '18px',
+                    fontFamily: 'sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                      color: 'rgba(0, 0, 0, 0.26)',
+                      fontSize:'15px'
+                    }
+                  },
+                  invalid: {
+                    color: 'red',
+                    iconColor: '#fa755a '
+                  }
+              }
+            }}
+             />
+             <button onClick={() => GoSellElements.submit()}>Submit</button>
       <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
         <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Select Payment Method"} isRequired>
