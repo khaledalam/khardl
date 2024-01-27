@@ -141,13 +141,24 @@
                                                 <div class="menu-item px-3">
                                                     <a href="{{ route('coupons.edit',$coupon->id) }}" class="menu-link px-3">{{ __('messages.Edit') }}</a>
                                                 </div>
+                                                @if(!$coupon->deleted_at)
                                                 <div class="menu-item px-3">
-                                                    <form class="delete-form" id="delete-coupon_{{ $coupon->id }}" action="{{ route('coupons.delete', ['coupon' => $coupon->id]) }}" method="POST">
+                                                    <form class="delete-form" id="delete_coupon_{{ $coupon->id }}" action="{{ route('coupons.delete', ['coupon' => $coupon->id]) }}" method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                     </form>
-                                                    <a href="#" onclick='showConfirmation("{{ $coupon->id }}")' class="menu-link px-3">{{__('messages.Delete')}}</a>
+                                                    <a href="#" onclick='DeleteCoupon("{{ $coupon->id }}")' class="menu-link px-3">{{__('messages.Delete')}}</a>
                                                 </div>
+                                                @endif
+                                                @if($coupon->deleted_at)
+                                                <div class="menu-item px-3">
+                                                    <form class="restore-form" id="restore_coupon_{{ $coupon->id }}" action="{{ route('coupons.restore', ['id' => $coupon->id]) }}" method="POST">
+                                                        @method('POST')
+                                                        @csrf
+                                                    </form>
+                                                    <a href="#" onclick='RestoreCoupon("{{ $coupon->id }}")' class="menu-link px-3">{{__('messages.Restore')}}</a>
+                                                </div>
+                                                @endif
                                             </div>
 
                                             <!--end::Menu-->
@@ -193,18 +204,35 @@
         });
     }
 
-    function showConfirmation(couponId) {
+    function DeleteCoupon(couponId) {
         event.preventDefault();
 
-        var form =  document.getElementById(`delete-coupon_${couponId}`);
+        var form =  document.getElementById(`delete_coupon_${couponId}`);
         Swal.fire({
             title: `{{ __("messages.Are you sure you want to delete this coupon ?") }}`
-            , text: "{{ __('messages.you-wont-be-able-to-undo-this') }}"
             , icon: 'warning'
             , showCancelButton: true
             , confirmButtonColor: '#d33'
             , cancelButtonColor: '#3085d6'
             , confirmButtonText: '{{ __("messages.delete") }}'
+            , cancelButtonText: '{{ __("messages.cancel") }}'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+    function RestoreCoupon(couponId) {
+        event.preventDefault();
+
+        var form =  document.getElementById(`restore_coupon_${couponId}`);
+        Swal.fire({
+            title: `{{ __("messages.Are you sure you want to restore this coupon ?") }}`
+            , icon: 'warning'
+            , showCancelButton: true
+            , confirmButtonColor: '#50cd89'
+            , cancelButtonColor: '#3085d6'
+            , confirmButtonText: '{{ __("messages.Restore") }}'
             , cancelButtonText: '{{ __("messages.cancel") }}'
         }).then((result) => {
             if (result.isConfirmed) {

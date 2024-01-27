@@ -755,6 +755,8 @@ return [
     "Notify To Renew Subscription fail" => "فشل الإخطار بتجديد الاشتراك",
     "TAP request to create Merchant ID from Lead ID sent" => "تم ارسال طلب تاب لانشاء معرف العميل من معرف التاجر",
     "TAP request to create Merchant ID from Lead ID fail" => "فشل ارسال طلب تاب لاتشاء معرف العميل من معرف التاجر",
-    "Update restaurant merchant id" => "تحديث معرف تاجر المطعم"
+    "Update restaurant merchant id" => "تحديث معرف تاجر المطعم",
+    "Restore" => "ارجاع",
+    "Are you sure you want to restore this coupon ?" => "هل أنت متأكد أنك تريد استعادة هذه القسيمة؟"
 ];
 
