@@ -141,7 +141,15 @@
                                                 <div class="menu-item px-3">
                                                     <a href="{{ route('coupons.edit',$coupon->id) }}" class="menu-link px-3">{{ __('messages.Edit') }}</a>
                                                 </div>
+                                                <div class="menu-item px-3">
+                                                    <form class="delete-form" id="delete-coupon_{{ $coupon->id }}" action="{{ route('coupons.delete', ['coupon' => $coupon->id]) }}" method="POST">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                    </form>
+                                                    <a href="#" onclick='showConfirmation("{{ $coupon->id }}")' class="menu-link px-3">{{__('messages.Delete')}}</a>
+                                                </div>
                                             </div>
+
                                             <!--end::Menu-->
                                         </td>
                                     </tr>
@@ -181,6 +189,26 @@
             }
             , error: function(error) {
                 console.error('Error toggling user status:', error);
+            }
+        });
+    }
+
+    function showConfirmation(couponId) {
+        event.preventDefault();
+
+        var form =  document.getElementById(`delete-coupon_${couponId}`);
+        Swal.fire({
+            title: `{{ __("messages.Are you sure you want to delete this coupon ?") }}`
+            , text: "{{ __('messages.you-wont-be-able-to-undo-this') }}"
+            , icon: 'warning'
+            , showCancelButton: true
+            , confirmButtonColor: '#d33'
+            , cancelButtonColor: '#3085d6'
+            , confirmButtonText: '{{ __("messages.delete") }}'
+            , cancelButtonText: '{{ __("messages.cancel") }}'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
             }
         });
     }
