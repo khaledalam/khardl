@@ -13,23 +13,19 @@ class CreateLeadRequest  extends FormRequest
      *
      * @return array
      */
+    protected $stopOnFirstFailure = true;
     public function rules()
     {
+       
      
         return [
-            'brand.operations.sales.period' => 'required|string',
-            'brand.operations.sales.range.from' => 'required|string',
-            'brand.operations.sales.range.to' => 'required|string',
-            'brand.operations.sales.currency' => 'required|string',
-
-            'brand.terms.*.term' => 'required|string',
-            'brand.terms.*.agree' => 'required|boolean',
-
+            'test'=>'required',
             'brand.name.ar' => 'required|string',
             'brand.name.en' => 'required|string',
 
             'brand.channel_services.0.channel' => 'required|string',
             'brand.channel_services.0.address' => 'required|string',
+            
 
             'entity.country' => 'required|string',
             'entity.license.number' => 'required|string',
@@ -39,11 +35,21 @@ class CreateLeadRequest  extends FormRequest
 
             'entity.is_licensed' => 'sometimes|nullable|boolean',
 
-            'wallet.bank.name' => 'required|string',
-            'wallet.bank.account.number' => 'required|string',
-            'wallet.bank.account.iban' => 'required|string',
-            'wallet.bank.account.name' => 'required|string',
-            'wallet.bank.account.swift' => 'required|string',
+            'brand.operations.sales.period' => 'required|string',
+            'brand.operations.sales.range.from' => 'required|string',
+            'brand.operations.sales.range.to' => 'required|string',
+            'brand.operations.sales.currency' => 'required|string',
+
+            'user.phone.0.country_code' => 'required|string',
+            'user.phone.0.number' => 'required|string',
+            'user.phone.0.type' => 'required|string',
+            // 'user.phone.0.primary' => 'sometimes|nullable|boolean',
+
+            'user.name.middle' => 'required|string',
+            'user.name.last' => 'required|string',
+            'user.name.lang' => 'required|string',
+            'user.name.title' => 'required|string',
+            'user.name.first' => 'required|string',
 
             'user.address.0.country' => 'required|string',
             'user.address.0.city' => 'required|string',
@@ -60,16 +66,7 @@ class CreateLeadRequest  extends FormRequest
 
             'user.nationality' => 'required|string',
 
-            'user.phone.0.country_code' => 'required|string',
-            'user.phone.0.number' => 'required|string',
-            'user.phone.0.type' => 'required|string',
-            // 'user.phone.0.primary' => 'sometimes|nullable|boolean',
-
-            'user.name.middle' => 'required|string',
-            'user.name.last' => 'required|string',
-            'user.name.lang' => 'required|string',
-            'user.name.title' => 'required|string',
-            'user.name.first' => 'required|string',
+           
 
             'user.birth.country' => 'required|string',
             'user.birth.city' => 'required|string',
@@ -77,7 +74,20 @@ class CreateLeadRequest  extends FormRequest
 
             'user.email.0.address' => 'required|string',
             'user.email.0.type' => 'required|string',
+
+            'brand.terms.*.term' => 'required|string',
+            'brand.terms.*.agree' => 'required|boolean',
+
+          
+
             // 'user.email.0.primary' => 'sometimes|nullable|boolean',
+
+
+            'wallet.bank.name' => 'required|string',
+            'wallet.bank.account.number' => 'required|string',
+            'wallet.bank.account.iban' => 'required|string',
+            'wallet.bank.account.name' => 'required|string',
+            'wallet.bank.account.swift' => 'required|string',
 
             'user.primary' => 'required|boolean',
 

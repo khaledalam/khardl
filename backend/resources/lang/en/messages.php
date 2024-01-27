@@ -745,5 +745,7 @@ return [
     "Go To Main Khardl Website"=>"Go To Main Khardl Website",
     "Go To Dashboard"=>"Go To Dashboard",
     "Go To Login Restaurant Page"=>"Go To Login Restaurant Page",
+    "Business Details"=>"Business Details",
+    "Personal Information"=>"Personal Information",
     "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master"
 ];
