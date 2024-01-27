@@ -249,7 +249,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
         />
       )}
       {/* logo */}
-      <div
+      {/* <div
         style={{ backgroundColor: page_color }}
         className={`w-full min-h-[100px]    rounded-xl flex ${logo_alignment === "center"
           ? "items-center justify-center"
@@ -294,7 +294,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
       {/* banner */}
       {banner_type === "slider" ? (
         <div className='w-full'>
