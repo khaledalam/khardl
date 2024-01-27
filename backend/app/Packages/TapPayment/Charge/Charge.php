@@ -32,6 +32,9 @@ class Charge extends Tap implements ChargeInterface
             ],
             'post'=>[
                 'url'=>route('webhook-client-tap-payment')
+            ],
+            'redirect'=>[
+                'url'=>route('tap.payments_redirect')
             ]
             
             

@@ -46,7 +46,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     var submitButton = document.querySelector('#pay');
                     submitButton.disabled = true;
                     document.getElementById('token_id').value = event.id;
-                    document.getElementById('merchant_id').value = event.merchant.id;
                     document.getElementById('n_branches').value = document.getElementById('n_branches').value;
                     document.getElementById('type').value = document.getElementById('type').value;
                     document.getElementById('pay').submit();
@@ -230,7 +229,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 @csrf
                                                                 <input type="hidden" name="token_id" id="token_id" value="">
 
-                                                                <input type="hidden" name="merchant_id" id="merchant_id" value="">
                                                                 <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::NEW}}">
 
                                                                 @if(!$RO_subscription)

@@ -15,7 +15,21 @@ use App\Models\Subscription as CentralSubscription;
 class RestaurantCharge
 {
     
-
+    public static function updateOrCreate($data){
+        if($data['metadata']['subscription'] == ROSubscription::NEW){ 
+            self::CreateNewSubscription($data);
+        }
+        // buy new branches
+        else if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE || $data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE ){
+            self::BuyNewBranches($data);
+        }
+        // activate sub to 1 year 
+        else if ($data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR){
+            self::RenewSubscription($data);
+        }else {
+            logger('error occur while process payment in subscription, type not defined');
+        }
+    }
     public static function createNewSubscription($data)
     {
         return self::processSubscription($data, function ($user, $data, $subscription) {
@@ -61,7 +75,7 @@ class RestaurantCharge
             'status' => ROSubscription::ACTIVE,
             'reminder_email_sent'=>false,
             'reminder_suspend_email_sent'=>false,
-            'subscription_id' => $data['reference']['order'],
+            'subscription_id' => $data['metadata']['subscription_id'],
         ];
     }
 
@@ -81,7 +95,7 @@ class RestaurantCharge
                 'number_of_branches' =>  $data['metadata']['n-branches'],
                 'user_id' => $user->id,
                 'status' => ($data['status'] == 'CAPTURED') ? ROSubscription::ACTIVE : $data['status'],
-                'subscription_id' => $data['reference']['order'],
+                'subscription_id' => $data['metadata']['subscription_id'],
                 'chg_id' => $data['id'],
                 'cus_id' => $user->tap_customer_id,
                 'card_id' => $data['card']['id'] ?? null,

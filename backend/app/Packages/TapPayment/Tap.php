@@ -13,7 +13,7 @@ class Tap
     public static function send(string $url,array $data,string $method = 'post',bool $withFiles = false){
         try {
             // TODO @todo change the api key to be related to restaurant not khardl
-            $secret_key =  env('TAP_SECRET_API_KEY','');
+            $secret_key =  env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY','');
             $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
             
             if($withFiles){
