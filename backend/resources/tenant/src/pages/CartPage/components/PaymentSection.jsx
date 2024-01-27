@@ -17,7 +17,7 @@ import {useNavigate} from "react-router-dom"
 import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
 
-import { GoSell } from "@tap-payments/gosell";
+import { GoSellElements } from "@tap-payments/gosell";
 
 
 const PaymentSection = ({
@@ -113,6 +113,7 @@ const PaymentSection = ({
             notes: notes,
             couponCode: couponCode,
           })
+         
           if (cartResponse.data) {
             console.log("tap_public_key", tap_public_key);
             const extractedData = cartItems.map((cardItem) => ({
@@ -126,88 +127,46 @@ const PaymentSection = ({
             }));
             console.log(extractedData);
         
-            goSell.config({
-                containerID: "tap_charge_element",
-                gateway: {
-                    publicKey: tap_public_key,
-                    merchantId: null,
-                    language: language,
-                    contactInfo: true,
-                    supportedCurrencies: "all",
-                    supportedPaymentMethods: "all",
-                    saveCardOption: true,
-                    customerCards: true,
-                    notifications: "standard",
-                    callback: (response) => {
-                        console.log("response", response);
-                    },
-                    onClose: () => {
-                        console.log("onClose Event");
-            
-                    },
-                    backgroundImg: {
-                        url: "imgURL",
-                        opacity: "0.5",
-                    },
-                    labels: {
-                        cardNumber: "Card Number",
-                        expirationDate: "MM/YY",
-                        cvv: "CVV",
-                        cardHolder: "Name on Card",
-                        actionButton: "Pay",
-                    },
-                    style: {
-                        base: {
-                            color: "#535353",
-                            lineHeight: "18px",
-                            fontFamily: "sans-serif",
-                            fontSmoothing: "antialiased",
-                            fontSize: "16px",
-                            "::placeholder": {
-                                color: "rgba(0, 0, 0, 0.26)",
-                                fontSize: "15px",
-                            },
-                        },
-                        invalid: {
-                            color: "red",
-                            iconColor: "#fa755a ",
-                        },
-                    },
-                },
-                customer: {
-                    id: tap.tap_customer_id,
-                },
-                order: {
-                    amount: getTotalPrice(),
-                    currency: "SAR",
-                    items: extractedData,
-                    shipping: null,
-                    taxes: null,
-                },
-                transaction: {
-                    mode: "charge",
-                    charge: {
-                        saveCard: true,
-                        threeDSecure: true,
-                        description: t("Order Details"),
-                        statement_descriptor: "Sample",
-                        reference: {
-                            transaction: "txn_0001",
-                            order: "ord_0001",
-                        },
-                        hashstring:"",
-                        metadata: {},
-                        receipt: {
-                            email: false,
-                            sms: true,
-                        },
-                        redirect: tap.redirect,
-                        post: null,
-                    },
-                },
-            });
+            <GoSellElements
+            gateway={{
+              publicKey:"pk_test_Zzq7mShJgR49inPEblsICXay",
+              language:"ar",
+              supportedCurrencies: "all",
+              supportedPaymentMethods: "all",
+              notifications:'msg',
+              callback: this.callbackFunc,
+              labels:{
+                  cardNumber:"Card Number",
+                  expirationDate:"MM/YY",
+                  cvv:"CVV",
+                  cardHolder:"Name on Card",
+                  actionButton:"Pay"
+              },
+              style: {
+                  base: {
+                    color: '#535353',
+                    lineHeight: '18px',
+                    fontFamily: 'sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                      color: 'rgba(0, 0, 0, 0.26)',
+                      fontSize:'15px'
+                    }
+                  },
+                  invalid: {
+                    color: 'red',
+                    iconColor: '#fa755a '
+                  }
+              }
+            }}
+             />
+
+            //  <p id="msg"></p>
+
+            // <button onClick={() => GoSellElements.submit()}>Submit</button>
   
-            goSell.openLightBox();
+            // goSell.submit();
         }
       
 
