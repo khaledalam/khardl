@@ -100,7 +100,6 @@ class RestaurantCharge
                 'cus_id' => $user->tap_customer_id,
                 'card_id' => $data['card']['id'] ?? null,
                 'type' => $data['metadata']['subscription'],
-                'payment_agreement_id' => $data['payment_agreement']['id'] ?? null,
             ]);
 
             DB::commit();

@@ -229,7 +229,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 @csrf
                                                                 <input type="hidden" name="token_id" id="token_id" value="">
 
-                                                                <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::NEW}}">
+                                                               
 
                                                                 @if(!$RO_subscription)
                                                                     <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
@@ -237,7 +237,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                             <!--begin::Modal content-->
                                                                             <div class="modal-content rounded p-15">
-
+                                                                                <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::NEW}}">
                                                                                 <!--begin::Modal header-->
                                                                                 <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                                     <h5 class="modal-title text-center">{{$subscription->name}}</h5>
@@ -280,7 +280,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                             <!--begin::Modal content-->
                                                                             <div class="modal-content rounded p-15">
-                                                                                
+                                                                                <input type="hidden" name="type" id="type" value="">
                                                                                 <!--begin::Modal header-->
                                                                                 <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                                     <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
@@ -316,10 +316,17 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                                 <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="" readonly>
                                                                                                 <i id="costDesc" class="hidden"></i>
                                                                                             </div>
+                                                                                            <div id="root"></div>
+                                                                                            <p id="msg"></p>
                                                                                             <div class="col-12 mt-3">
-                                                                                                <button class="btn btn-primary" type="submit">{{__('messages.Renew Subscription')}}</button>
+                                                                                                <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit" style="width:200px"  onclick="submitPayment(event)" class="btn btn-khardl text-white ">
+                                                                                       
+                                                                                                    <span class="indicator-label">{{__('messages.Renew Subscription')}} ✔️</span>
+                                                                                                    <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
+                                                                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                                                </button>
                                                                                             </div>
-
+                                                                                           
                                                                                         </div>
                                                                                 
 
@@ -337,6 +344,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                             <!--begin::Modal content-->
                                                                             <div class="modal-content rounded p-15">
+                                                                                <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::RENEW_AFTER_ONE_YEAR}}">
+                                                                                <input type="hidden" class="form-control" id="n_branches" name="n_branches" value="0">
 
                                                                                 <!--begin::Modal header-->
                                                                                 <div class="modal-header pb-0 border-0  d-flex justify-content-center">
@@ -348,11 +357,19 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                         <div class="col-12 mt-3">
                                                                                             <label for="factor">{{__('messages.total-price')}} </label>
                                                                                             <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{$RO_subscription->amount}}" readonly>
-
+                                                                                            <div id="root"></div>
+                                                                                            <p id="msg"></p>
                                                                                         </div>
                                                                                         <div class="col-12 mt-3">
                                                                                             <div class="d-flex justify-content-center">
-                                                                                                <button class="btn btn-khardl text-white " onclick="renewSubscription()">{{__("messages.Renew Subscription")}}</button>
+
+                                                                                            <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit"   onclick="submitPayment(event)" class="btn btn-khardl text-white ">
+                                                                                            
+                                                                                                <span class="indicator-label">{{__("messages.Renew Subscription")}}✔️</span>
+                                                                                                <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
+                                                                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                                                            </button>
+                                                                                            
                                                                                             </div>
 
 
@@ -507,7 +524,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     .replace(':number_of_branches',  document.getElementById('n_branches').value),
                     success: function(response) {
                         const priceInput = document.getElementById('price');
-                        if(response.cost){
+                        if(response.remainingDaysCost){
                             priceInput.value = response.cost;
                             $('#costDesc').show();
                             $('#costDesc').text("{{__('messages.The price of renewing current branches')}}"
