@@ -66,6 +66,7 @@
     "You must have at least subtotal :subtotal SAR to active this coupon" :"يجب أن يكون لديك على الأقل المجموع الفرعي :subtotal ريال لتفعيل هذه القسيمة",
     "Coupon has been applied":"تم تطبيق القسيمة",
     "Your tap account has been created successfully, waiting for approval and we will contact you then":"لقد تم إنشاء حساب Tap الخاص بك بنجاح، في انتظار الموافقة وسوف نتصل بك بعد ذلك",
-    "restaurant setting has been update successfully":"تم تحديث اعدادات الموقع بنجاح"
+    "restaurant setting has been update successfully":"تم تحديث اعدادات الموقع بنجاح",
+    "You card is not active please try another one":"بطاقتك غير نشطة، يرجى تجربة بطاقة أخرى"
 
 }
