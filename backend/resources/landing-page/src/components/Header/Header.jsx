@@ -95,7 +95,7 @@ const Header = () => {
 
    return (
       <nav className={`fixed gap-2 z-[9998] w-[100%] bg-white`}>
-         <div className='mx-auto flex items-center justify-between px-12 max-xl:px-4 py-2 '>
+         <div className='mx-auto flex items-center justify-between px-12 max-xl:px-4 py-2 custom-header'>
             <div className='min-[1000px]:hidden'>
                <label
                   className={`hamburger ${
@@ -166,6 +166,7 @@ const Header = () => {
                      title={t('FQA')}
                      activeLink={activeLink}
                   />
+                  
                </ul>
             </div>
             {isMobile && (
@@ -174,31 +175,39 @@ const Header = () => {
                   <div className='relative flex justify-center items-center gap-2 min-[1000px]:flex min-[1000px]:justify-center'>
                      {isLoggedIn ? (
                         <>
+                        <span className='!w-100 !px-[16px] !font-medium red-theme-button'>
                         <Button
                            title={t('Logout')}
                            onClick={handleLogout}
-                           classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium !bg-[var(--danger)] !text-white'
+                           classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium !bg-[var(--danger)] !text-white red-theme-button'
                         />
+                        </span>
+                        <span className='!w-100 !px-[16px] !font-medium green-theme-button'>
                         <Button
                               onClick={redirectToDashboard}
                               title={t('Dashboard')}
-                              classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
+                              classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium green-theme-button'
                            />
+                           </span>
                         </>
                      ) : (
                         <>
+                        <span className='!w-100 !px-[16px] !font-medium red-theme-button'>
                            <Button
                               title={t('Create an account')}
                               link='/register'
                               onClick={() => dispatch(setIsOpen(false))}
-                              classContainer='!text-[16px] !px-[16px] !py-[6px]'
+                              classContainer='!text-[16px] !px-[16px] !py-[6px] red-theme-button'
                            />
+                           </span>
+                           <span className='!w-100 !px-[16px] !font-medium green-theme-button'>
                            <Button
                               title={t('Login')}
                               link='/login'
                               onClick={() => dispatch(setIsOpen(false))}
-                              classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium '
+                              classContainer='!text-[16px] !px-[16px] !py-[6px] !font-medium green-theme-button'
                            />
+                           </span>
                         </>
                      )}
                   </div>
@@ -269,22 +278,26 @@ const Header = () => {
                            <Button
                               title={t('Logout')}
                               onClick={handleLogout}
-                              classContainer='!w-100 !px-[16px] !font-medium'
+                              classContainer='!w-100 !px-[16px] !font-medium red-theme-button'
                            />
                         ) : (
                            <>
-                              <Button
+                           <span className='!w-100 !px-[16px] !font-medium red-theme-button'>
+                           <Button
                                  title={t('Create an account')}
                                  link='/register'
                                  onClick={() => dispatch(setIsOpen(false))}
-                                 classContainer='!w-100 !px-[16px] !font-medium'
+                                 classContainer='!w-100 !px-[16px] !font-medium red-theme-button'
                               />
+                           </span>
+                           <span className='!w-100 !px-[16px] !font-medium green-theme-button'>
                               <Button
                                  title={t('Login')}
                                  link='/login'
                                  onClick={() => dispatch(setIsOpen(false))}
-                                 classContainer='!w-100 !px-[16px] !font-medium'
+                                 classContainer='!w-100 !px-[16px] !font-medium green-theme-button'
                               />
+                              </span>
                            </>
                         )}
                      </div>

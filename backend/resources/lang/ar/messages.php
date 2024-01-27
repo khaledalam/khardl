@@ -748,6 +748,7 @@ return [
     "Go To Main Khardl Website"=>"الذهاب الي موقع خردل الرئيسي",
     "Business Details"=>"بيانات السجل التجاري",
     "Personal Information"=>"المعلومات الشخصية",
-    "This Restaurant is not active, please contact web master"=>"هذا المطعم غير فعال, الرجاء التواصل مع فريق تطوير الموقع"
+    "This Restaurant is not active, please contact web master"=>"هذا المطعم غير فعال, الرجاء التواصل مع فريق تطوير الموقع",
+    "Select option" => "حدد الخيار"
 ];
 

@@ -98,13 +98,10 @@
                             <!--end::Tab pane-->
                             <div class="d-flex justify-content-end mt-3">
                                 <!--begin::Button-->
-                                <a href="{{ route('admin.user-management') }}"
-                                   id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{ __('messages.go-back')}}</a>
-                                <!--end::Button-->
-                                <!--begin::Button-->
                                 <button type="submit" id="kt_ecommerce_add_product_submit"
                                         class="btn btn-primary">
                                     <span class="indicator-label">{{ __('messages.save') }}</span>
+                                    <i class="bi bi-check2-square mx-1"></i>
                                     <span class="indicator-progress">{{ __('messages.please-wait')}}
                                           <span
                                               class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

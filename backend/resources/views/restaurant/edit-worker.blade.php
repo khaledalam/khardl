@@ -29,6 +29,12 @@
                             <div class="card-title">
                             <h2>{{ __('messages.edit-worker')}}</h2>
                             </div>
+                            <a href="{{ route('restaurant.workers', ['branchId' => App\Models\User::find($worker->id)->branch_id]) }}">
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-arrow-left"></i>
+                                    {{ __('messages.Back to list') }}
+                                </button>
+                            </a>
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
@@ -178,12 +184,9 @@
         <!--end::Tab pane-->
                               <div class="d-flex justify-content-end mt-3">
                                   <!--begin::Button-->
-                                  <a href="{{ route('restaurant.workers', ['branchId' => App\Models\User::find($worker->id)->branch_id]) }}"
-                                      id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{ __('messages.go-back')}}</a>
-                                  <!--end::Button-->
-                                  <!--begin::Button-->
                                   <button type="submit"  id="kt_ecommerce_add_product_submit"
                                       class="btn btn-khardl">
+                                      <i class="bi bi-check2-square mx-1 text-black"></i>
                                       <span class="indicator-label">{{ __('messages.edit-support')}}</span>
                                       <span class="indicator-progress">{{ __('messages.please-wait')}}
                                           <span
