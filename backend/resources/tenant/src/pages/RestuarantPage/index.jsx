@@ -1405,7 +1405,7 @@ export const RestuarantHomePage = () => {
       );
       // const restaurantCategoriesResponse =[];
 
-      if (restaurantCategoriesResponse.data) {
+      if (restaurantCategoriesResponse.data && restaurantCategoriesResponse.data?.data && restaurantCategoriesResponse.data?.data.length > 1) {
         dispatch(setCategoriesAPI(restaurantCategoriesResponse.data?.data));
         dispatch(
           selectedCategoryAPI({

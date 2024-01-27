@@ -59,7 +59,7 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
 
   const handleQuantityChange = async () => {
     try {
-      await AxiosInstance.put(`/carts`, {
+      await AxiosInstance.post(`/carts`, {
         item_id: cartItem.item_id,
         quantity: qtyCount,
         branch_id: cartItem.item.branch_id,
