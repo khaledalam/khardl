@@ -747,5 +747,10 @@ return [
     "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master",
     "Select option" => "Select option",
     "Delete" => "Delete",
-    "Are you sure you want to delete this coupon ?" => "Are you sure you want to delete this coupon ?"
+    "Are you sure you want to delete this coupon ?" => "Are you sure you want to delete this coupon ?",
+    "Notify To Renew Subscription sent" => "Notify To Renew Subscription sent",
+    "Notify To Renew Subscription fail" => "Notify To Renew Subscription fail",
+    "TAP request to create Merchant ID from Lead ID sent" => "TAP request to create Merchant ID from Lead ID sent",
+    "TAP request to create Merchant ID from Lead ID fail" => "TAP request to create Merchant ID from Lead ID fail",
+    "Update restaurant merchant id" => "Update restaurant merchant id"
 ];
