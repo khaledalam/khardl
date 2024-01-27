@@ -7,6 +7,7 @@ import React, {
 } from 'react'
 import { useDispatch } from 'react-redux'
 import { changeLogState } from '../../redux/auth/authSlice'
+import { changeLanguage } from '../../redux/languageSlice'
 import useAxiosAuth from '../../hooks/useAxiosAuth'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import {API_ENDPOINT, HTTP_NOT_AUTHENTICATED} from "../../config";
@@ -24,7 +25,9 @@ export const AuthContextProvider = (props) => {
        console.log("HERERE")
       try {
          const response = await axiosAuth.post( API_ENDPOINT + '/auth-validation')
-         console.log(response)
+         localStorage.setItem("i18nextLng",response?.data?.default_locale)
+         // dispatch(changeLanguage(response?.data?.default_locale))
+         
          setStatusCode(response?.status)
          dispatch(changeLogState(response?.data?.is_loggedin || false))
 

@@ -104,9 +104,10 @@ const Register = () => {
               {showPrivacy && <Privacy onClose={showPrivacyModal} />}
               {!showTerms && !showPrivacy &&
                 <div className='py-[20px] flex justify-center items-center'>
-                  <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[70%] max-[1200px]:w-[100%]'>
-                     <div className='relative flex justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
+                  <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse my-[80px] rounded-lg shadow-lg max-md:my-[60px] xl:max-w-[70%] max-[1200px]:w-[100%] bg-white'>
+                     <div className='relative flex justify-center items-center max-[860px]:w-[85vw] space-y-14  bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
                         <div className='mt-6 w-[100%]'>
+                        
                            <MainText
                               Title={t('Create an account')}
                               classTitle='!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]'
@@ -114,7 +115,7 @@ const Register = () => {
                            <div className='w-[100%] flex items-center justify-center mt-4'>
                               <form
                                  onSubmit={handleSubmit(onSubmit)}
-                                 className='w-[100%] flex flex-col gap-[14px] px-[15px]'
+                                 className='w-[100%] flex flex-col gap-[14px] px-[15px] new-form-ui'
                               >
                                  <div className='flex justify-stretch items-center gap-3 w-[100%]'>
                                     {/* First Input */}
@@ -322,6 +323,7 @@ const Register = () => {
                                        {...register('terms_and_policies', {
                                           required: true,
                                        })}
+                                       style={{margin:'0'}}
                                        className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'
                                     />
                                     <label
@@ -355,18 +357,18 @@ const Register = () => {
                                  <div className='flex-col flex justify-center items-center my-4'>
                                     <button
                                        type='submit'
-                                       className={`hover:bg-[#d6eb16] font-bold bg-[var(--primary)] flex justify-center items-center gap-[3px] rounded-full transition-all delay-100  py-2 px-6 text-[18px] leading-6`}
+                                       className={`hover:bg-[#d6eb16] font-bold bg-[var(--primary)] flex justify-center items-center gap-[3px] rounded-full transition-all delay-100  py-2 px-6 text-[18px] leading-6 submit-btn`}
                                     >
                                        {t('Create an account')}
                                     </button>
-                                    <p className='text-sm font-semibold mt-1'>
+                                    <p className='text-sm font-semibold font-new mt-1'>
                                        {t('You have an account?')}
                                        <Link to='/login'>
-                                          <input
+                                          <button
                                              type='submit'
                                              className='text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md '
-                                             value={t('Login')}
-                                          />
+                                             
+                                          >{t('Login')}</button>
                                        </Link>
                                     </p>
                                  </div>
@@ -401,19 +403,9 @@ const Register = () => {
                         )}
                      </div>
 
-                     <div className='flex justify-center items-center max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10 shadow-lg rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none'>
-                        <Link
-                           to='/'
-                           className='grid content-between space-y-6  transform transition-transform hover:-translate-y-2'
-                        >
-                           <img
-                              loading='lazy'
-                              className='w-[120px]'
-                              src={Logo}
-                              alt='Logo'
-                           />
-                        </Link>
-                        <div className='mt-6'>
+                     <div className='flex justify-center  max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10  rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none new-register-bg'>
+                       
+                        <div className='mt-11'>
                            <MainText
                               SubTitle={t('Register Details')}
                               classSubTitle='max-w-[380px] !text-[18px]  font-semibold !px-0'

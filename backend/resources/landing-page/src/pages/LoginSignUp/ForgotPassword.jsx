@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import AxiosInstance from "../../axios/axios";
 import {CgSpinner} from "react-icons/cg";
+import MainText from '../../components/MainText'
 
 const ForgotPassword = () => {
    const { t } = useTranslation()
@@ -61,17 +62,18 @@ const ForgotPassword = () => {
                <div className='py-[80px] max-md:py-[60px]'>
                   <div className='max-[860px]:w-[80vw] w-[450px] bg-white py-10 max-[860px]:px-2 shadow-lg rounded-2xl'>
                      <div className='px-8 mb-6 flex flex-col items-center text-center'>
-                        <img src={Logo} className='w-[80px]' alt='logo' />
-                        <h3 className='pt-8 mb-3 text-md font-bold'>
-                           {t('Forgot your password?')}
-                        </h3>
-                        <p className='text-sm text-gray-700'>
+                     <MainText
+                           Title={t('Forgot your password?')}
+                           classTitle='!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px] new-form-ui'
+                        />
+                      
+                        <p className='text-sm text-gray-700 mt-5'>
                            {t('Reset Text')}
                         </p>
                      </div>
                      <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className='px-8 pt-2 pb-2 bg-white rounded'
+                        className='px-8 pt-2 pb-2 bg-white rounded new-form-ui'
                      >
                         <div className='mb-6 text-center'>
 
@@ -97,7 +99,7 @@ const ForgotPassword = () => {
                            <button
                                disabled={loading}
                               type='submit'
-                              className={`hover:bg-[#d6eb16] w-fit font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px]`}
+                              className={`submit-btn hover:bg-[#d6eb16] w-fit font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px]`}
                            >
                                <span>{loading && (
                                    <div
