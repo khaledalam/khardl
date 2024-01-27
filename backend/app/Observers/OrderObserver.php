@@ -32,7 +32,6 @@ class OrderObserver
         if($setting->loyalty_points) $user->loyalty_points += ($order->total * $setting->loyalty_points);
         if($setting->cashback_percentage){
             if($order->total >= $setting->cashback_threshold){
-                logger('test');
                 $user->cashback += (($order->total * $setting->cashback_percentage) / 100.0);
             }
         }
