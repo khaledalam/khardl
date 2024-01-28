@@ -15,6 +15,8 @@ class UserSeeder extends Seeder
 {
     public const SUPER_ADMIN_USER_ID = 1;
     public const RESTAURANT_OWNER_USER_ID = 2;
+    public const RESTAURANT_OWNER_SECOND_USER_ID = 3;
+    public const RESTAURANT_OWNER_THIRD_USER_ID = 4;
 
     /**
      * Run the database seeds.
@@ -48,33 +50,10 @@ class UserSeeder extends Seeder
             'identity_of_owner_or_manager' => $faker->filePath(),
             'national_address' => $faker->address
         ]);
-        $user = User::create([
-            'id' => self::RESTAURANT_OWNER_USER_ID,
-            'first_name' => "Khardl",
-            'last_name' => "Restaurant",
-            'email' => "khardl@restaurant.com",
-            'email_verified_at' => now(),
-            'status'=> 'active',
-            'address' => 'test address',
-            'phone'=>'966222222222',
-            'position'=>"Restaurant Owner",
-            'restaurant_name' => 'first',
-            'password' => bcrypt('password'),
-            'remember_token' => Str::random(10),
-        ]);
-        $faker = (new Factory())::create();
-        TraderRequirement::create([
-            'user_id' => self::RESTAURANT_OWNER_USER_ID,
-            'IBAN' => $faker->iban,
-            'facility_name' => $faker->text,
-            'commercial_registration' => $faker->filePath(),
-            'tax_registration_certificate' => $faker->filePath(),
-            'bank_certificate' => $faker->filePath(),
-            'identity_of_owner_or_manager' => $faker->filePath(),
-            'national_address' => $faker->address
-        ]);
 
-        $user->assignRole(Role::findByName('Restaurant Owner'));
+        $this->createRO(self::RESTAURANT_OWNER_USER_ID, 'khardl', 'first');
+        $this->createRO(self::RESTAURANT_OWNER_SECOND_USER_ID, 'second', 'second');
+        $this->createRO(self::RESTAURANT_OWNER_THIRD_USER_ID, 'third', 'third');
 
         // old code permissions
         \DB::table('permissions')->insert([
@@ -94,5 +73,36 @@ class UserSeeder extends Seeder
             'can_see_restaurant_owners'=>true,
         ]);
 
+    }
+
+    private function createRO(string $id, string $name, string $restaurant_name): void
+    {
+        $user = User::create([
+            'id' => $id,
+            'first_name' => $name,
+            'last_name' => "Restaurant",
+            'email' => $name . "@restaurant.com",
+            'email_verified_at' => now(),
+            'status'=> 'active',
+            'address' => 'test address',
+            'phone'=>'966222222222',
+            'position'=>"Restaurant Owner",
+            'restaurant_name' => $restaurant_name,
+            'password' => bcrypt('password'),
+            'remember_token' => Str::random(10),
+        ]);
+        $faker = (new Factory())::create();
+        TraderRequirement::create([
+            'user_id' => $id,
+            'IBAN' => $faker->iban,
+            'facility_name' => $faker->text,
+            'commercial_registration' => $faker->filePath(),
+            'tax_registration_certificate' => $faker->filePath(),
+            'bank_certificate' => $faker->filePath(),
+            'identity_of_owner_or_manager' => $faker->filePath(),
+            'national_address' => $faker->address
+        ]);
+
+        $user->assignRole(Role::findByName('Restaurant Owner'));
     }
 }
