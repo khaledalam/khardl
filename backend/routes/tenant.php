@@ -168,6 +168,8 @@ Route::group([
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
                 });
                 Route::resource('coupons',CouponController::class);
+                Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete');
+                Route::post('coupons/restore/{id}',[CouponController::class,'restore'])->name('coupons.restore');
                 Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 

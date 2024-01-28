@@ -749,5 +749,17 @@ return [
     "Personal Information"=>"Personal Information",
     "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master",
     "Select option" => "Select option",
+    "Deleted" => "Deleted",
+    "Uses" => "Uses",
+    "Delete" => "Delete",
+    "Are you sure you want to delete this coupon ?" => "Are you sure you want to delete this coupon ?",
+    "Notify To Renew Subscription sent" => "Notify To Renew Subscription sent",
+    "Notify To Renew Subscription fail" => "Notify To Renew Subscription fail",
+    "TAP request to create Merchant ID from Lead ID sent" => "TAP request to create Merchant ID from Lead ID sent",
+    "TAP request to create Merchant ID from Lead ID fail" => "TAP request to create Merchant ID from Lead ID fail",
+    "Update restaurant merchant id" => "Update restaurant merchant id",
+    "Restore" => "Restore",
+    "Are you sure you want to restore this coupon ?" => "Are you sure you want to restore this coupon ? ",
+    "External URL" => "External URL",
     "Please check all terms and conditions before submitting."=> "Please check all terms and conditions before submitting"
 ];
