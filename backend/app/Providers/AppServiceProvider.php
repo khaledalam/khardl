@@ -61,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
         // \URL::forceScheme('https');
         $user = Auth::user();
         View::share('link', request()->segment(1));
+        View::share('sub_link', request()->segment(2));
         View::share('admin_link', request()->segment(2));
 
         View::share('user', $user);

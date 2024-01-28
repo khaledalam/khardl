@@ -207,7 +207,7 @@
                             </div>
                             @if($user?->hasPermissionWorker('can_modify_and_see_other_workers'))
                             <!-- Staff -->
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'workers' || $link == 'orders-add' || $link == 'unavailable-products') ? 'show' : '' }}">
                                 <span class="menu-link {{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -224,7 +224,7 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div class="menu-item">
-                                        <a class="menu-link"  href="{{route('restaurant.workers', ['branchId' => $user->branch->id]) }}">
+                                        <a class="{{ ($link == 'workers' && $sub_link !='add') ? 'menu-link active' : 'menu-link ' }}"  href="{{route('restaurant.workers', ['branchId' => $user->branch->id]) }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -232,7 +232,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="{{route('restaurant.get-workers', ['branchId' => $user->branch->id]) }}">
+                                        <a class="{{ ($sub_link == 'add') ? 'menu-link active' : 'menu-link ' }}" href="{{route('restaurant.get-workers', ['branchId' => $user->branch->id]) }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
