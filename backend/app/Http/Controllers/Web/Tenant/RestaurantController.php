@@ -80,7 +80,7 @@ class RestaurantController extends BaseController
     }
     public function serviceCalculate($type, $number_of_branches,$subscription_id)
     {
-        return ROSubscription::serviceCalculate($type, $number_of_branches,$subscription_id);
+        return ROSubscription::serviceCalculate($type, $number_of_branches,$subscription_id,true);
     }
     public function delivery(Request $request)
     {

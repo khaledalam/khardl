@@ -301,6 +301,7 @@ return [
     'preparations'=>'Preparations',
     'yes'=>'Yes',
     'no'=>'No',
+    "are-you-sure-you"=>"Are you sure ?",
     'are-you-sure-you-want-to-approve-order-status'=>'Are you sure you want to approve order status',
     'are-you-sure-you-want-to-cancel-order-status'=>'Are you sure you want to cancel order status',
     'are-you-sure-you-want-to-change-order-status'=>'Are you sure you want to change order status',
@@ -744,6 +745,8 @@ return [
     "Go To Main Khardl Website"=>"Go To Main Khardl Website",
     "Go To Dashboard"=>"Go To Dashboard",
     "Go To Login Restaurant Page"=>"Go To Login Restaurant Page",
+    "Business Details"=>"Business Details",
+    "Personal Information"=>"Personal Information",
     "This Restaurant is not active, please contact web master"=>"This Restaurant is not active, please contact web master",
     "Select option" => "Select option",
     "Deleted" => "Deleted",
@@ -762,5 +765,6 @@ return [
     "Deleted or not" => "Deleted or not",
     "Fixed" => "Fixed",
     "Percentage" => "Percentage",
-    "Availability" => "Availability"
+    "Availability" => "Availability",
+    "Please check all terms and conditions before submitting."=> "Please check all terms and conditions before submitting"
 ];

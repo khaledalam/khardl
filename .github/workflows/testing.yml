@@ -46,6 +46,7 @@ jobs:
   Deploy:
     runs-on: [self-hosted]
     needs: [Testing]
+    if: github.ref == 'refs/heads/development'
     steps:
     - name: Deploy
       run: |
