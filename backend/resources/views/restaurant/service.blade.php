@@ -43,8 +43,9 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 if(event.card.id){
                     var waiting = document.querySelector('#waiting-item');
                     waiting.style.display = 'block';
-                    var submitButton = document.querySelector('#pay');
+                    var submitButton = document.getElementById('tap-btn');
                     submitButton.disabled = true;
+            
                     document.getElementById('token_id').value = event.id;
                     document.getElementById('n_branches').value = document.getElementById('n_branches').value;
                     document.getElementById('type').value = document.getElementById('type').value;
@@ -259,7 +260,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                     <div id="root"></div>
                                                                                     <p id="msg"></p>
                                                                                 
-                                                                                    <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit"   onclick="submitPayment(event)" class="btn btn-khardl text-white ">
+                                                                                    <button id="tap-btn"   type="submit"   onclick="submitPayment(event)" class="btn btn-khardl text-white ">
                                                                                        
                                                                                         <span class="indicator-label"> {{__("messages.purchase")}} ✔️</span>
                                                                                         <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
