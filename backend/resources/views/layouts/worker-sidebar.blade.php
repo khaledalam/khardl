@@ -242,7 +242,7 @@
                                 </div>
                             </div>
                             @endif
-                            @if($user?->hasPermissionWorker('can_control_payment'))
+                            @if($user?->hasPermissionWorker('can_control_payment')&&App\Models\Tenant\Setting::first()->lead_id)
                             <!-- Payments -->
                             <div class="menu-item menu-accordion">
                                 <span class="menu-link">
