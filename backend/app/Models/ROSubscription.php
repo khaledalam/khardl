@@ -94,7 +94,7 @@ class ROSubscription extends Model
             if($type ==  self::RENEW_TO_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost($centralSubscription->amount);
                 $totalCost = $number_of_branches * $remainingDaysCost;
-                $data = ['cost' => number_format($totalCost, 2)];
+                $data = ['cost' => number_format($totalCost, 2),'number_of_branches'=>$number_of_branches];
                 if($json)
                 return response()->json($data);
                 return $data;
