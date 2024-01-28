@@ -198,9 +198,10 @@
                                                         </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
+                                                        {{-- TODO:Edit item --}}
+                                                    {{--     <div class="menu-item px-3">
                                                             <a href="https://google.com" class="menu-link px-3">{{ __('messages.edit') }}</a>
-                                                        </div>
+                                                        </div> --}}
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
 

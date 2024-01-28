@@ -762,6 +762,7 @@ return [
     "Not deleted" => "لم يتم حذفه",
     "Deleted or not" => "محذوف او لا",
     "Fixed" => "رقم ثابت",
-    "Percentage" => "نسبة مئوية"
+    "Percentage" => "نسبة مئوية",
+    "Availability" => "التوفر"
 ];
 
