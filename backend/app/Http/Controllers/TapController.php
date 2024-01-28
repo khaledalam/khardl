@@ -201,7 +201,8 @@ class TapController extends Controller
                 ],
             ],
             merchant_id: $merchant_id,
-            token_id: $data['token_id']
+            token_id: $data['token_id'],
+            redirect: route('tap.payments_redirect')
         );
         if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
             return redirect($charge['message']['transaction']['url']);

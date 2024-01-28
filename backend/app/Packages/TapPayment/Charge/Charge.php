@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Charge extends Tap implements ChargeInterface
 {
-    public static function create(array $data, string $merchant_id,string $token_id): array {
+    public static function create(array $data, string $merchant_id,string $token_id,string $redirect): array {
         return self::send("/charges",[
             'currency'=>"SAR",
             'customer_initiated'=> true,
@@ -34,8 +34,8 @@ class Charge extends Tap implements ChargeInterface
                 'url'=>route('webhook-client-tap-payment')
             ],
             'redirect'=>[
-                'url'=>route('tap.payments_redirect')
-            ]
+                'url'=>$redirect 
+            ] 
             
             
         ]+ $data);

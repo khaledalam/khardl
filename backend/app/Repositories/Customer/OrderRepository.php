@@ -73,22 +73,7 @@ class OrderRepository
 
             }else if ($cart->hasPaymentCreditCard($request->payment_method)){
                 // Do not commit any change , it should be saved into session
-                $order->update([
-                    'transaction_id'=>$request->tap_id ?? null
-                ]);
-                $charge = Charge::retrieve($request->tap_id);
-
-                if($charge['message']['status'] == 'CAPTURED'){
-                    $order->update([
-                        "payment_status"=> Payment::PAID
-                    ]);
-                    $cart->trash();
-                }else if ($charge['message']['status'] != 'CAPTURED'){
-                    $order->update([
-                        "payment_status"=> Payment::FAILED
-                    ]);
-                }
-
+               
                 DB::commit();
                 return $order;
             }

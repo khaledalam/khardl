@@ -43,9 +43,29 @@ const PaymentSection = ({
   const [activeDeliveryType, setActiveDeliveryType] = useState("pickup")
   const [showTAPClientCard, setShowTAPClientCard] = useState(false)
   const language = useSelector((state) => state.languageMode.languageMode)
-  const callbackFunc = (response)=>{
-    console.log(response);
+  const [spinner, setSpinner] = useState(false)
+  const callbackFunc = async (response)=>{
+    try {
+      setSpinner(true);
+    const redirect = await AxiosInstance.post(`/orders/payment/redirect`, {
+      payment_method: paymentMethod,
+      delivery_type: deliveryType,
+      notes: notes,
+      couponCode: couponCode,
+      token_id : response.id
+    })
+   
+    if (redirect.data) {
+      console.log("redirect ==>",redirect.data);
+      window.location.href = redirect.data;
+    }
+    } catch (error) {
+      setSpinner(false);
+      toast.error(error.response)
+    }
+    
   }
+  
   // TODO @todo  get total price from backend 
   const getTotalPrice = () => {
     return cartItems
@@ -117,19 +137,19 @@ const PaymentSection = ({
           })
          
           if (cartResponse.data) {
-            console.log("tap_public_key", tap_public_key);
-            const extractedData = cartItems.map((cardItem) => ({
-              id: cardItem.cart_id,
-              name: cardItem.item.name[language],
-              description: cardItem.item.description[language],
-              quantity: cardItem.quantity,
-              amount_per_unit: cardItem.price,
-              total_amount: cardItem.total + deliveryCost,
+      
+            // const extractedData = cartItems.map((cardItem) => ({
+            //   id: cardItem.cart_id,
+            //   name: cardItem.item.name[language],
+            //   description: cardItem.item.description[language],
+            //   quantity: cardItem.quantity,
+            //   amount_per_unit: cardItem.price,
+            //   total_amount: cardItem.total + deliveryCost,
             
-            }));
-            console.log(extractedData);
+            // }));
+ 
         
-          
+            document.getElementById('payment').showModal();
 
             //  <p id="msg"></p>
 
@@ -177,15 +197,49 @@ const PaymentSection = ({
 
   return (
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
+       <p id="msg"></p>
         <div id={"tap_charge_element"} />
-        <p id="msg"></p>
-        <GoSellElements
+       
+        <dialog id='payment' className='modal'>
+       
+        {spinner && (
+            <div
+                role='status'
+                style={{zIndex:1,height: 'fit-content'}}
+                className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[44.1%] left-1/2 w-[100%] h-[100%] '
+            >
+                <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
+                <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
+                  <svg
+                      aria-hidden='true'
+                      className='w-8 h-8 mr-2 text-gray-200 animate-spin fill-[var(--primary)]'
+                      viewBox='0 0 100 101'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                  >
+                      <path
+                        d='M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z'
+                        fill='currentColor'
+                      />
+                      <path
+                        d='M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z'
+                        fill='currentFill'
+                      />
+                  </svg>
+                </div>
+            </div>
+        )}
+        <div
+          style={{width: "50%", padding:'34px !important'}}
+          >
+            
+            <GoSellElements
             gateway={{
-              publicKey:"pk_test_Zzq7mShJgR49inPEblsICXay",
-              language:"ar",
+              publicKey: tap_public_key,
+              language: 'ar',
               supportedCurrencies: "all",
               supportedPaymentMethods: "all",
-              notifications:'msg',
+              notifications:'standard',
               callback: callbackFunc,
               labels:{
                   cardNumber:"Card Number",
@@ -213,7 +267,31 @@ const PaymentSection = ({
               }
             }}
              />
-             <button onClick={() => GoSellElements.submit()}>Submit</button>
+              <div
+              onClick={() => GoSellElements.submit()}
+              style={{backgroundColor: styles?.categoryDetail_cart_color, width: '100%', height:'45px',borderRadius:'1%'}}
+              className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${
+                styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
+              }`}
+            >
+              <div className='flex items-center gap-4'>
+                <div className='w-7 h-7'>
+                  <img
+                    src={orderIcon}
+                    alt=''
+                    className='w-full h-full object-contain'
+                  />
+                </div>
+                  
+                <h3 className='text-[1rem] font-medium text-black'>
+                  Place Order
+                </h3>
+              </div>
+            </div>
+           
+          </div>
+        </dialog>
+       
       <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
         <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Select Payment Method"} isRequired>
