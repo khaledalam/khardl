@@ -30,7 +30,9 @@ class Tap
             }
            
             if($response->successful()){
+            
                 $response = json_decode($response->getBody(), true);
+                logger($response);
                 return [
                     'http_code'=>ResponseHelper::HTTP_OK,
                     'message'=> $response
@@ -39,8 +41,9 @@ class Tap
         }catch(\Exception $e){
            logger($e->getMessage());
         }
-        
-        
+        $response = json_decode($response->getBody(), true);
+        logger($response);
+
         if(isset($response['errors'][0])){
             if(isset($response['errors'][0]['description'])){
                 $errors =  $response['errors'][0]['description'];
@@ -66,6 +69,7 @@ class Tap
             if($response->successful()){
              
                 $response = json_decode($response->getBody(), true);
+                logger($response);
                 if(isset($response['errors'])){
                     throw new Exception("errors");
                 }
@@ -80,7 +84,7 @@ class Tap
         if($response instanceof Response){
           $response = json_decode($response->getBody(), true);
         }
-
+        logger($response);
         if(isset($response['errors'][0])){
             if(isset($response['errors'][0]['description'])){
                 $errors =  $response['errors'][0]['description'];

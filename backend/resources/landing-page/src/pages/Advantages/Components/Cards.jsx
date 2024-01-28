@@ -38,7 +38,7 @@ function Cards() {
     return (
         <div className='mx-[160px] max-[1250px]:mx-[20px] max-sm:mx-[0px]'>
             <div
-                className="grid max-sm:grid-cols-2 max-sm:gap-x-4  max-sm:mx-0 max-lg:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-10 mx-4 mt-8 mb-[50px]">
+                className="grid max-sm:grid-cols-2 max-sm:gap-x-4  max-sm:mx-0 max-lg:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-10 mx-4 mt-8 mb-[50px]">
                 {Advantages.slice(0, Visible).map((advantage, index) => (
                     <div key={index}
                         data-aos='fade-up'
@@ -53,12 +53,12 @@ function Cards() {
             {Advantages.slice(0, Visible).length === Advantages.length ?
                 <div></div>
                 :
-                <div className="flex flex-col items-center justify-center"
+                <div className="flex flex-col items-center justify-center cta-btn-more"
                     data-aos='fade-up'
                     data-aos-delay='400'>
                     <Button
                         title={t("More")}
-                        classContainer="!border-none !px-12"
+                        classContainer="cta-btn-more"
                         onClick={showMoreItems}
                     />
                 </div>

@@ -11,7 +11,7 @@ class CouponService
     use APIResponseTrait;
     public function index()
     {
-        $coupons = Coupon::paginate(config('application.perPage') ?? 20);
+        $coupons = Coupon::withTrashed()->paginate(config('application.perPage') ?? 20);
         return view('restaurant.coupons.index',compact('coupons'));
     }
     public function create()
@@ -36,6 +36,17 @@ class CouponService
     public function changeStatus(Coupon $coupon)
     {
         $coupon->toggleStatus();
+    }
+    public function delete(Coupon $coupon)
+    {
+        $coupon->delete();
+        return redirect()->route('coupons.index')->with(['success' => __('Deleted successfully')]);
+    }
+    public function restore($id)
+    {
+        $coupon = Coupon::withTrashed()->findOrFail($id);
+        $coupon->restore();
+        return redirect()->route('coupons.index')->with(['success' => __('Restored successfully')]);
     }
     private function request_data($request)
     {
