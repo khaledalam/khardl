@@ -48,6 +48,7 @@ return [
     'view' => 'التفاصيل',
     'delete' => 'حذف',
     'confirm-delete' => 'تأكيد الحذف',
+    "are-you-sure-you"=>"هل انت متأكد من فعل ذلك",
     'are-you-sure-you-want-to-delete-this-restaurant' => 'هل أنت متأكد أنك تريد حذف هذا المطعم؟',
     'cancel' => 'الغاء',
     'yes-delete-it' => '.نعم،احذف',
@@ -745,6 +746,8 @@ return [
     "Go To Dashboard"=>"الذهاب الي لوحة التحكم",
     "Go To Login Restaurant Page"=>"الذهاب الي صفحة المطعم",
     "Go To Main Khardl Website"=>"الذهاب الي موقع خردل الرئيسي",
+    "Business Details"=>"بيانات السجل التجاري",
+    "Personal Information"=>"المعلومات الشخصية",
     "This Restaurant is not active, please contact web master"=>"هذا المطعم غير فعال, الرجاء التواصل مع فريق تطوير الموقع",
     "Select option" => "حدد الخيار",
     "Deleted" => "تم الحذف",
@@ -758,6 +761,7 @@ return [
     "Update restaurant merchant id" => "تحديث معرف تاجر المطعم",
     "Restore" => "ارجاع",
     "Are you sure you want to restore this coupon ?" => "هل أنت متأكد أنك تريد استعادة هذه القسيمة؟",
-    "External URL" => "رابط خارجي"
+    "External URL" => "رابط خارجي",
+    "Please check all terms and conditions before submitting."=>"يرجى القبول بجميع الشروط والأحكام قبل الإرسال."
 ];
 

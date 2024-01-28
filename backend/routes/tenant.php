@@ -133,7 +133,7 @@ Route::group([
                 Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get')->middleware('isLeadSubmitted');
                 Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
                  // Step 3: save cards
-                Route::get('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+                Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
 
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');

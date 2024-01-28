@@ -15,7 +15,7 @@ class TapWebhookHandler extends ProcessWebhookJob
      
         $data = json_decode($this->webhookCall, true)['payload'];
   
-        
+        logger($data);
         if (strpos($data['id'] ?? '', 'chg') === 0) { // charge end-point
             // metadata
             if(isset($data['metadata']['subscription'])){
