@@ -758,6 +758,10 @@ return [
     "Update restaurant merchant id" => "تحديث معرف تاجر المطعم",
     "Restore" => "ارجاع",
     "Are you sure you want to restore this coupon ?" => "هل أنت متأكد أنك تريد استعادة هذه القسيمة؟",
-    "External URL" => "رابط خارجي"
+    "External URL" => "رابط خارجي",
+    "Not deleted" => "لم يتم حذفه",
+    "Deleted or not" => "محذوف او لا",
+    "Fixed" => "رقم ثابت",
+    "Percentage" => "نسبة مئوية"
 ];
 
