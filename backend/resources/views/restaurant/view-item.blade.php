@@ -16,7 +16,6 @@
                         <div class="me-7 mb-4">
                             <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                                 <img alt="Logo" src="{{ $item->photo }}" />
-
                             </div>
                         </div>
                         <!--end::Pic-->
@@ -44,15 +43,6 @@
                                     {{ $item->price }}
                                     {{ __('messages.SAR') }}
                                 </a>
-                                {{-- <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
-                                        <span class="svg-icon svg-icon-4 me-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path opacity="0.3" d="M18.0624 15.3453L13.1624 20.7453C12.5624 21.4453 11.5624 21.4453 10.9624 20.7453L6.06242 15.3453C4.56242 13.6453 3.76242 11.4453 4.06242 8.94534C4.56242 5.34534 7.46242 2.44534 11.0624 2.04534C15.8624 1.54534 19.9624 5.24534 19.9624 9.94534C20.0624 12.0453 19.2624 13.9453 18.0624 15.3453Z" fill="currentColor" />
-                                                <path d="M12.0624 13.0453C13.7193 13.0453 15.0624 11.7022 15.0624 10.0453C15.0624 8.38849 13.7193 7.04535 12.0624 7.04535C10.4056 7.04535 9.06241 8.38849 9.06241 10.0453C9.06241 11.7022 10.4056 13.0453 12.0624 13.0453Z" fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->SA, Al-Riyadh</a> --}}
                                 <a href="#" class="d-flex align-items-center text-hover-success mb-2">
                                     <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                     <i class="bi bi-activity mx-2"></i>
@@ -64,6 +54,12 @@
                             <!--end::Info-->
                             <!--end::Title-->
                         </div>
+                        <a href="{{ route('restaurant.get-category',['id' => $item->category->id,'branchId' => $item->branch->id]) }}">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <i class="fa fa-arrow-left"></i>
+                                {{ __('messages.Back to list') }}
+                            </button>
+                        </a>
                         <!--end::Info-->
                     </div>
                 </div>
@@ -132,6 +128,79 @@
                                         @endif
                                     </td>
                                 </tr>
+                                @if ($item?->checkbox_input_titles)
+                                <tr>
+                                    <td>
+                                        <span class="text-start">{{__('messages.Checkbox')}}</span>
+                                    </td>
+                                    <td class="text-dark">
+                                        @foreach ($item?->checkbox_input_titles as $key => $option)
+                                        @if(isset($option[$key]))
+                                            <span>{{ $option[$key] }}</span>
+                                            @if(isset($item->checkbox_input_maximum_choices[$key]))
+                                                <small class="text-muted">({{ __('messages.Max') }} : <strong>{{ $item->checkbox_input_maximum_choices[$key] }}</strong>)</small>
+                                            @endif
+                                        @endif
+                                        <ul>
+                                            @foreach($item?->checkbox_input_names as $innerKey => $innerOption)
+                                            @if(isset($innerOption[$key][$innerKey]))
+                                            <li>
+                                                {{ $innerOption[$key][$innerKey] }}
+                                                @if(isset($item?->checkbox_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('messages.SAR') }})</span>@endif
+                                            </li>
+                                            @endif
+                                            @endforeach
+                                        </ul>
+                                        <br>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                @endif
+                                @if ($item?->selection_input_titles)
+                                <tr>
+                                    <td>
+                                        <span class="text-start">{{__('messages.Selection')}}</span>
+                                    </td>
+                                    <td class="text-dark">
+                                        @foreach ($item?->selection_input_titles as $key => $option)
+                                        @if(isset($option[$key]))<span>{{ $option[$key] }}</span>@endif
+                                        <ul>
+                                            @foreach($item?->selection_input_names as $innerKey => $innerOption)
+                                            @if(isset($innerOption[$key][$innerKey]))
+                                            <li>
+                                                <span>{{ $innerOption[$key][$innerKey] }}</span>
+                                                @if(isset($item?->selection_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('messages.SAR') }})</span>@endif
+                                            </li>
+                                            @endif
+                                            @endforeach
+                                        </ul>
+                                        <br>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                @endif
+                                @if ($item?->dropdown_input_titles)
+                                <tr>
+                                    <td>
+                                        <span class="text-start">{{__('messages.Dropdown')}}</span>
+                                    </td>
+                                    <td class="text-dark">
+                                        @foreach ($item?->dropdown_input_titles as $key => $option)
+                                        @if(isset($option[$key]))<span>{{ $option[$key] }}</span>@endif
+                                        <ul>
+                                            @foreach($item?->dropdown_input_names as $innerKey => $innerOption)
+                                            @if(isset($innerOption[$key][$innerKey]))
+                                            <li>
+                                                {{ $innerOption[$key][$innerKey] }}
+                                            </li>
+                                            @endif
+                                            @endforeach
+                                        </ul>
+                                        <br>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                @endif
                                 <!--end::Item-->
                             </tbody>
                             <!--end::Table body-->
