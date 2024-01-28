@@ -63,17 +63,17 @@
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
                                     <tr>
                                         <th class="px-3">{{ __('messages.ID') }}</th>
-                                        <th>{{ __('messages.Code') }}</th>
-                                        <th>{{ __('messages.Amount') }}</th>
-                                        <th>{{ __('messages.Uses') }}</th>
-                                        <th>{{ __('messages.Max discount amount') }}</th>
-                                        <th>{{ __('messages.Max use') }}</th>
-                                        <th>{{ __('messages.Max use per user') }}</th>
-                                        <th>{{ __('messages.Minimum cart amount') }}</th>
-                                        <th>{{ __('messages.Active from') }}</th>
-                                        <th>{{ __('messages.Expire at') }}</th>
-                                        <th>{{ __('messages.Status') }}</th>
-                                        <th>{{ __('messages.Actions') }}</th>
+                                        <th class="px-2">{{ __('messages.Code') }}</th>
+                                        <th class="px-2">{{ __('messages.Amount') }}</th>
+                                        <th class="px-2">{{ __('messages.Uses') }}</th>
+                                        <th class="px-2">{{ __('messages.Max discount amount') }}</th>
+                                        <th class="px-2">{{ __('messages.Max use') }}</th>
+                                        <th class="px-2">{{ __('messages.Max use per user') }}</th>
+                                        <th class="px-2">{{ __('messages.Minimum cart amount') }}</th>
+                                        <th class="px-2">{{ __('messages.Active from') }}</th>
+                                        <th class="px-2">{{ __('messages.Expire at') }}</th>
+                                        <th class="px-2">{{ __('messages.Status') }}</th>
+                                        <th class="px-2">{{ __('messages.Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <!--end::Thead-->

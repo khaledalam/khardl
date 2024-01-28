@@ -761,5 +761,5 @@ return [
     "Not deleted" => "Not deleted",
     "Deleted or not" => "Deleted or not",
     "Fixed" => "Fixed",
-    "Percentage " => "Percentage"
+    "Percentage" => "Percentage"
 ];
