@@ -57,7 +57,16 @@ class RestaurantController extends Controller
         return response()->json($lead_response,200);
     }
     public function updateConfig(Tenant $tenant,Request $request){
-        // @TODO @todo (TAP) validate merchant through merchant api
+        $message = $tenant->run(function(){
+            if(!Setting::first()->lead_id){
+                return __('This restaurant has no tap account on the server');
+            }
+            return false;
+        });
+        if($message){
+            return redirect()->back()->with('error',$message);
+        }
+        
         $request->validate([
             'merchant_id'=>"string|nullable"
         ]);
