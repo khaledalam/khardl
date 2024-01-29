@@ -55,7 +55,7 @@ const Cart = () => {
     };
 
     const handlePaymentMethodChange = (method) => {
-        setPaymentMethod(method.name);
+        setPaymentMethod(method?.name );
     }
 
     const handleDeliveryTypeChange = async (type) => {
@@ -63,7 +63,7 @@ const Cart = () => {
         setLoading(true);
 
         console.log(type?.cost)
-        setDeliveryType(type.name);
+        setDeliveryType(type?.name);
         setDeliveryCost(type?.cost);
 
         setLoading(false);
@@ -261,10 +261,10 @@ const Cart = () => {
                                                         <input
                                                             type="radio"
                                                             name="paymentMethod"
-                                                            value={method.name}
-                                                            checked={paymentMethod === method.name}
+                                                            value={method?.name}
+                                                            checked={paymentMethod === method?.name}
                                                             onChange={() => handlePaymentMethodChange(method)}
-                                                        /> {t(method.name)}
+                                                        /> {t(method?.name)}
                                                     </label>
                                             ))}
 
@@ -279,8 +279,8 @@ const Cart = () => {
                                                     <input
                                                         type="radio"
                                                         name="deliveryType"
-                                                        value={type.name}
-                                                        checked={deliveryType === type.name}
+                                                        value={type?.name}
+                                                        checked={deliveryType === type?.name}
                                                         onChange={() => handleDeliveryTypeChange(type)}
                                                     /> {t(type?.name)} <small>({type?.cost > 0 ? <>{type?.cost} {t('Halala')}</> : t('free')})</small>
                                                 </label>

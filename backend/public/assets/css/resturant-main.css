@@ -174,3 +174,8 @@
 .revenues-container:hover .fw-bold {
     opacity: 1;
 }
+/* Branches */
+.branches-google-maps .google_map{
+    height: 350px;
+    margin: 10px 0;
+}

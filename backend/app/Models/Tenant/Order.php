@@ -2,7 +2,6 @@
 
 namespace App\Models\Tenant;
 
-use App\Observers\OrderObserver;
 use Carbon\Carbon;
 use App\Models\Tenant\RestaurantUser;
 use Illuminate\Database\Eloquent\Model;
@@ -42,7 +41,7 @@ class Order extends Model
         self::COMPLETED,
         self::READY
     ];
-
+    
     const PENDING = 'pending';
     const RECEIVED_BY_RESTAURANT = 'received_by_restaurant';
     const ACCEPTED = 'accepted';
@@ -51,11 +50,7 @@ class Order extends Model
     const READY = 'ready';
 
 
-    protected static function boot()
-    {
-        parent::boot();
-        self::observe(OrderObserver::class);
-    }
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');

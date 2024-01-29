@@ -22,10 +22,7 @@ class Setting extends Model implements Syncable
         'global_id',
         'merchant_id',
         'lead_id',
-        'lead_response',
-        'cashback',
-        'loyalty_points',
-        'cashback_threshold'
+        'lead_response'
     ];
     public $timestamps = false;
     protected $casts = [
