@@ -777,5 +777,14 @@ return [
     "Cash-back" => "Cash-back",
     "get cash back when total is above this value" => "get cash back when total is above this value",
     "Start from" => "Start from",
-    "Cash back in percentage (%)" => "Cash back in percentage (%)"
+    "Cash back in percentage (%)" => "Cash back in percentage (%)",
+    "Entity name (English)" => "Entity name (English)",
+    "Entity Name (Arabic)" => "Entity Name (Arabic)",
+    "Mrs" => "Mrs",
+    "Miss" => "Miss",
+    "Ms" => "Ms",
+    "Dr" => "Dr",
+    "Prof" => "Prof",
+    "Sir" => "Sir",
+    "Madam" => "Madam"
 ];

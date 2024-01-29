@@ -118,7 +118,7 @@ return [
     'verified' => 'تم التحقق',
     'unverified' => 'لم يتم التحقق منه',
     'date-of-registration' => 'تاريخ التسجيل',
-    'IBAN'=>'رقم الحساب المصرفي الدولي',
+    'IBAN'=>'رقم الحساب المصرفي الدولي (IBAN)',
     'facility-name'=>'إسم المنشأة',
     'delivery-contract' => 'عقد التوصيل',
     'national-address' => 'العنوان الوطني',
@@ -778,6 +778,15 @@ return [
     "Cash-back" => "استرداد النقود",
     "get cash back when total is above this value" => "احصل على استرداد نقدي عندما يكون الإجمالي أعلى من هذه القيمة",
     "Start from" => "يبدأ من",
-    "Cash back in percentage (%)" => "الاسترداد النقدي بالنسبة المئوية (٪)"
+    "Cash back in percentage (%)" => "الاسترداد النقدي بالنسبة المئوية (٪)",
+    "Entity name (English)" => "اسم الكيان بالانجليزية",
+    "Entity Name (Arabic)" => "اسم الكيان بالعربية",
+    "Mrs" => "انسة متزوجة",
+    "Miss" => "انسة غير متزوجة",
+    "Ms" => "انسة",
+    "Dr" => "دكتور",
+    "Prof" => "بروفيسور",
+    "Sir" => "سيد اعمال",
+    "Madam" => "سيدة متزوجة"
 ];
 
