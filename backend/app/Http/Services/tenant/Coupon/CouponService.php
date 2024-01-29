@@ -4,14 +4,19 @@ namespace App\Http\Services\tenant\Coupon;
 use App\Enums\Admin\CouponTypes;
 use App\Models\Tenant\Coupon;
 use App\Traits\APIResponseTrait;
+use Illuminate\Http\Request;
 
 
 class CouponService
 {
     use APIResponseTrait;
-    public function index()
+    public function index(Request $request)
     {
-        $coupons = Coupon::withTrashed()->paginate(config('application.perPage') ?? 20);
+        $coupons = Coupon::whenSearch($request['search'] ?? null)
+        ->whenType($request['type'] ?? null)
+        ->whenIsDeleted($request['is_deleted'] ?? null)
+        ->withTrashed()
+        ->paginate(config('application.perPage') ?? 20);
         return view('restaurant.coupons.index',compact('coupons'));
     }
     public function create()

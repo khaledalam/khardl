@@ -762,6 +762,11 @@ return [
     "Restore" => "ارجاع",
     "Are you sure you want to restore this coupon ?" => "هل أنت متأكد أنك تريد استعادة هذه القسيمة؟",
     "External URL" => "رابط خارجي",
+    "Not deleted" => "لم يتم حذفه",
+    "Deleted or not" => "محذوف او لا",
+    "Fixed" => "رقم ثابت",
+    "Percentage" => "نسبة مئوية",
+    "Availability" => "التوفر",
     "Please check all terms and conditions before submitting."=>"يرجى القبول بجميع الشروط والأحكام قبل الإرسال."
 ];
 

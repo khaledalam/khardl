@@ -169,7 +169,9 @@
                                                  <td  class="text-center">
                                                     <div class="text-dark">
                                                         <!--begin::Heading-->
-                                                        <span class="fw-bolder text-start">{{ $item->name }}</span>
+                                                        <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
+                                                            <span class="fw-bolder text-start">{{ $item->name }}</span>
+                                                        </a>
                                                         <!--end::Heading-->
                                                     </div>
                                                 </td>
@@ -194,13 +196,14 @@
                                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                         <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="https://youtube.com" class="menu-link px-3">{{ __('messages.view') }}</a>
+                                                            <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('messages.view') }}</a>
                                                         </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
+                                                        {{-- TODO:Edit item --}}
+                                                    {{--     <div class="menu-item px-3">
                                                             <a href="https://google.com" class="menu-link px-3">{{ __('messages.edit') }}</a>
-                                                        </div>
+                                                        </div> --}}
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
 

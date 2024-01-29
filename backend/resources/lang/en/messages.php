@@ -761,5 +761,10 @@ return [
     "Restore" => "Restore",
     "Are you sure you want to restore this coupon ?" => "Are you sure you want to restore this coupon ? ",
     "External URL" => "External URL",
+    "Not deleted" => "Not deleted",
+    "Deleted or not" => "Deleted or not",
+    "Fixed" => "Fixed",
+    "Percentage" => "Percentage",
+    "Availability" => "Availability",
     "Please check all terms and conditions before submitting."=> "Please check all terms and conditions before submitting"
 ];

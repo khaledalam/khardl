@@ -63,4 +63,26 @@ class Coupon extends Model
     {
         return $this->belongsToMany(User::class, 'user_coupons');
     }
+    /* Scopes */
+    public function scopeWhenSearch($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('code', 'like', '%' . $search . '%');
+        });
+    }
+
+    public function scopeWhenType($query,$type)
+    {
+        return $query->when($type != null, function ($q) use ($type) {
+            return $q->where('type', $type);
+        });
+    }
+    public function scopeWhenIsDeleted($query,$is_deleted)
+    {
+        return $query->when($is_deleted != null, function ($q) use ($is_deleted) {
+            if($is_deleted)return $q->where('deleted_at','!=',null);
+            else $q->where('deleted_at',null);
+        });
+    }
+    /* Scopes */
 }
