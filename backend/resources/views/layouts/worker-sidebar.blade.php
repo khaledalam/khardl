@@ -187,27 +187,9 @@
                             </span>
                           </div>
                           @endif
-
-
-                            <!-- Promotions -->
-                            <div class="menu-item menu-accordion">
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                        <span class="svg-icon svg-icon-2">
-                                            <svg fill="#000000" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M15.1,2a1.68,1.68,0,0,1,1.71,1.63V4.85a1.68,1.68,0,0,1-1.63,1.71H10A3.4,3.4,0,0,0,6.56,9.81V42a3.4,3.4,0,0,0,3.25,3.41H42a3.4,3.4,0,0,0,3.41-3.25V36.9a1.68,1.68,0,0,1,1.63-1.71h1.22A1.67,1.67,0,0,1,50,36.82v6.35A6.82,6.82,0,0,1,43.18,50H8.83A6.82,6.82,0,0,1,2,43.18H2V8.83A6.83,6.83,0,0,1,8.82,2H15.1Z" fill-rule="evenodd"></path><path d="M38.11,21a2.23,2.23,0,1,0,2.25,2.23h0A2.22,2.22,0,0,0,38.14,21Z"></path><path d="M27.49,12.76A2.23,2.23,0,1,0,29.72,15a2.22,2.22,0,0,0-2.23-2.23Z"></path><path d="M49.1,16.87l-1.87-2.24a3.94,3.94,0,0,1-.93-2.31l-.22-2.86a3.66,3.66,0,0,0-3.35-3.41l-2.49-.2a5.3,5.3,0,0,1-3-1.28L35.35,2.91a3.68,3.68,0,0,0-4.79-.05L28.5,4.6a4.72,4.72,0,0,1-2.7,1.1l-2.67.18a3.69,3.69,0,0,0-3.42,3.36l-.19,2.44a5.28,5.28,0,0,1-1.29,3L16.6,16.59a3.67,3.67,0,0,0,0,4.78l1.77,2.14a4.42,4.42,0,0,1,1,2.54l.2,2.75a3.68,3.68,0,0,0,3.35,3.42l2.5.22a5.17,5.17,0,0,1,3,1.27l1.9,1.64a3.7,3.7,0,0,0,4.79,0l2.18-1.82a4.08,4.08,0,0,1,2.43-1l2.85-.21A3.68,3.68,0,0,0,46,29l.2-2.31a5.93,5.93,0,0,1,1.43-3.32l1.52-1.73A3.66,3.66,0,0,0,49.1,16.87ZM23.38,15a4.15,4.15,0,1,1,4.15,4.14h0A4.13,4.13,0,0,1,23.36,15v0Zm6,12.22a.39.39,0,0,1-.25.17H27.89a.33.33,0,0,1-.26-.16.29.29,0,0,1,0-.31L36.28,11a.4.4,0,0,1,.26-.16h1.29a.31.31,0,0,1,.15.42h0Zm12.94-4a4.15,4.15,0,1,1-4.17-4.12h0a4.13,4.13,0,0,1,4.12,4.15h0Z"></path></g></svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                    <a href="#">
-                                        <span class="menu-title">{{__('messages.promotions')}}</span>
-                                    </a>
-                                </span>
-
-                            </div>
                             @if($user?->hasPermissionWorker('can_modify_and_see_other_workers'))
                             <!-- Staff -->
-                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'workers' || $link == 'orders-add' || $link == 'unavailable-products') ? 'show' : '' }}">
                                 <span class="menu-link {{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -224,7 +206,7 @@
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                                     <div class="menu-item">
-                                        <a class="menu-link"  href="{{route('restaurant.workers', ['branchId' => $user->branch->id]) }}">
+                                        <a class="{{ ($link == 'workers' && $sub_link !='add') ? 'menu-link active' : 'menu-link ' }}"  href="{{route('restaurant.workers', ['branchId' => $user->branch->id]) }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -232,7 +214,7 @@
                                         </a>
                                     </div>
                                     <div class="menu-item">
-                                        <a class="menu-link" href="{{route('restaurant.get-workers', ['branchId' => $user->branch->id]) }}">
+                                        <a class="{{ ($sub_link == 'add') ? 'menu-link active' : 'menu-link ' }}" href="{{route('restaurant.get-workers', ['branchId' => $user->branch->id]) }}">
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
@@ -242,7 +224,7 @@
                                 </div>
                             </div>
                             @endif
-                            @if($user?->hasPermissionWorker('can_control_payment'))
+                            @if($user?->hasPermissionWorker('can_control_payment')&&App\Models\Tenant\Setting::first()->lead_id)
                             <!-- Payments -->
                             <div class="menu-item menu-accordion">
                                 <span class="menu-link">

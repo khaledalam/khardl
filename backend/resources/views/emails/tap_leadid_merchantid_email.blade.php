@@ -44,7 +44,7 @@
                                             Please reply to this email with the Merchant ID of this Lead ID and add Merchant ID to Google Sheet below.
                                             <br />
                                         <div class="text-center mt-5">
-                                            <a style="color: red; text-decoration: none;" href="https://docs.google.com/spreadsheets/d/15z09Bphnn6D6fEQSWa5jrlqzkdhbNsr5nrOyCmH2TVo/edit#gid=0"><button
+                                            <a style="color: red; text-decoration: none;" href="https://docs.google.com/spreadsheets/d/1xfrMiXG5GYDirI-vGKWCesbjgxv6jV5fSkwEocrKnbA/edit?usp=sharing"><button
                                                     class="btn btn-outline-info">Google Sheet</button></a>
                                         </div>
                                         <br /><br />
