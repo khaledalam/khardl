@@ -770,6 +770,14 @@ return [
     "Fixed" => "رقم ثابت",
     "Percentage" => "نسبة مئوية",
     "Availability" => "التوفر",
-    "Please check all terms and conditions before submitting."=>"يرجى القبول بجميع الشروط والأحكام قبل الإرسال."
+    "Please check all terms and conditions before submitting."=>"يرجى القبول بجميع الشروط والأحكام قبل الإرسال.",
+    "Loyalty points" => "نقاط الولاء",
+    "Loyalty points per 1 SAR" => "نقاط الولاء لكل 1 ريال سعودي",
+    "e.g 0.02" => "على سبيل المثال 0.02",
+    "Price per 1 loyalty point per purchase" => "السعر لكل نقطة ولاء واحدة عند الشراء",
+    "Cash-back" => "استرداد النقود",
+    "get cash back when total is above this value" => "احصل على استرداد نقدي عندما يكون الإجمالي أعلى من هذه القيمة",
+    "Start from" => "يبدأ من",
+    "Cash back in percentage (%)" => "الاسترداد النقدي بالنسبة المئوية (٪)"
 ];
 

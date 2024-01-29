@@ -769,5 +769,13 @@ return [
     "Fixed" => "Fixed",
     "Percentage" => "Percentage",
     "Availability" => "Availability",
-    "Please check all terms and conditions before submitting."=> "Please check all terms and conditions before submitting"
+    "Please check all terms and conditions before submitting."=> "Please check all terms and conditions before submitting",
+    "Loyalty points" => "Loyalty points",
+    "Loyalty points per 1 SAR" => "Loyalty points per 1 SAR",
+    "e.g 0.02" => "e.g 0.02",
+    "Price per 1 loyalty point per purchase" => "Price per 1 loyalty point per purchase",
+    "Cash-back" => "Cash-back",
+    "get cash back when total is above this value" => "get cash back when total is above this value",
+    "Start from" => "Start from",
+    "Cash back in percentage (%)" => "Cash back in percentage (%)"
 ];

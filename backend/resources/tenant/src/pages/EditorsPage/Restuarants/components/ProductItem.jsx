@@ -1,29 +1,29 @@
-import React, {Fragment, useCallback, useEffect, useState} from "react"
+import React, { Fragment, useCallback, useEffect, useState } from "react"
 import imgCart from "../../../../assets/headerCartIcon.svg"
 import imgCartWhite from "../../../../assets/cartWhiteIcon.svg"
 import imgHotFire from "../../../../assets/hot-fire.svg"
-import {PiNoteFill} from "react-icons/pi"
-import {MdSend} from "react-icons/md"
+import { PiNoteFill } from "react-icons/pi"
+import { MdSend } from "react-icons/md"
 import ProductDetailItem from "./ProductDetailItem"
-import {FiMinusCircle} from "react-icons/fi"
-import {IoAddCircleOutline, IoLockClosedOutline} from "react-icons/io5"
+import { FiMinusCircle } from "react-icons/fi"
+import { IoAddCircleOutline, IoLockClosedOutline } from "react-icons/io5"
 import AxiosInstance from "../../../../axios/axios"
-import {toast} from "react-toastify"
-import {addItemToCart} from "../../../../redux/editor/cartSlice"
-import {useDispatch, useSelector} from "react-redux"
-import {Link, useNavigate} from "react-router-dom"
-import {useTranslation} from "react-i18next"
+import { toast } from "react-toastify"
+import { addItemToCart } from "../../../../redux/editor/cartSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 import MainText from "../../../../components/MainText"
-import {changeLogState, changeUserState} from "../../../../redux/auth/authSlice"
+import { changeLogState, changeUserState } from "../../../../redux/auth/authSlice"
 import {
   HTTP_NOT_AUTHENTICATED,
   HTTP_NOT_VERIFIED,
   HTTP_OK,
   PREFIX_KEY,
 } from "../../../../config"
-import {useAuthContext} from "../../../../components/context/AuthContext"
-import {useForm} from "react-hook-form"
-import {getCartItemsCount} from "../../../../redux/NewEditor/categoryAPISlice"
+import { useAuthContext } from "../../../../components/context/AuthContext"
+import { useForm } from "react-hook-form"
+import { getCartItemsCount } from "../../../../redux/NewEditor/categoryAPISlice"
 
 const ProductItem = ({
   id,
@@ -55,8 +55,8 @@ const ProductItem = ({
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const language = useSelector((state) => state.languageMode.languageMode)
-  const {setStatusCode} = useAuthContext()
-  const {t} = useTranslation()
+  const { setStatusCode } = useAuthContext()
+  const { t } = useTranslation()
   const [feedback, setFeedback] = useState("")
   const [totalPrice, setTotalPrice] = useState(parseFloat(amount))
   const [qtyCount, setQtyCount] = useState(1)
@@ -88,6 +88,8 @@ const ProductItem = ({
     }))
   })
 
+
+
   const radioItems = Object.keys(selection_input_names).map((key) => {
     const namesArray = selection_input_names[key]
     const pricesArray = selection_input_prices[key]
@@ -104,16 +106,39 @@ const ProductItem = ({
       value: name,
     }))
   })
-
+  let selectedcheckboxitems = [];
+  let selectedradioitems = [];
+  let selecteddropdownitems = [];
   useEffect(() => {
-    let newTotal = totalPrice
-    for (const i in selectedCheckbox) {
-      for (const j in selectedCheckbox[i]) {
-        const [checkbox_index, index] = selectedCheckbox[i][j]
-        const price = checkboxItems[checkbox_index][index].price
-        newTotal += parseFloat(price)
+
+    if (checkboxItems.length > 0) {
+      selectedcheckboxitems = [];
+      for (let i = 0; i < checkboxItems.length; i++) {
+        selectedcheckboxitems.push([])
       }
     }
+    if (radioItems.length > 0) {
+      selectedradioitems = [];
+      for (let i = 0; i < radioItems.length; i++) {
+        selectedradioitems.push('')
+      }
+    }
+    if (dropdownItems.length > 0) {
+      selecteddropdownitems = [];
+      for (let i = 0; i < dropdownItems.length; i++) {
+        selecteddropdownitems.push('')
+      }
+    }
+  }, [checkboxItems, radioItems, dropdownItems])
+  useEffect(() => {
+    let newTotal = totalPrice
+    selectedCheckbox.map((mainItem, mainIndex) => {
+      mainItem.map((item, index) => {
+        const price = checkboxItems[mainIndex][item].price
+        newTotal += parseFloat(price)
+      })
+    })
+
     const total_new = newTotal
 
     setTotalPrice(newTotal - checkboxTotalPrice)
@@ -122,63 +147,120 @@ const ProductItem = ({
 
   useEffect(() => {
     let newTotal = totalPrice
-    for (const i in selectedRadio) {
-      for (const j in selectedRadio[i]) {
-        const [selection_index, index] = selectedRadio[i][j]
-        const price = radioItems[selection_index][index].price
+    let delIndex = null
+    selectedRadio.map((mainItem, mainIndex) => {
+      if (mainItem !== '') {
+        const price = radioItems[mainIndex][mainItem].price
         newTotal += parseFloat(price)
+      } else {
+        delIndex = mainIndex
       }
-    }
 
+    })
+    if (delIndex) {
+      let temparr = [...selectedRadio];
+      temparr.splice(delIndex,1)
+      setSelectedRadio(temparr)
+    }
+    let delIndexdp = null
+    selectedDropdown.map((mainItem, mainIndex) => {
+      if (mainItem !== '') {
+       console.log(mainItem)
+      } else {
+        delIndexdp = mainIndex
+      }
+
+    })
+    if (delIndexdp) {
+      let temparr = [...selectedDropdown];
+      temparr.splice(delIndexdp,1)
+      setSelectedDropdown(temparr)
+    }
+    
     const total_new = newTotal
 
     setTotalPrice(newTotal - radioTotalPrice)
     setRadioTotalPrice(total_new - totalPrice)
-  }, [selectedRadio])
+  }, [selectedRadio, selectedDropdown])
 
   const handleCheckboxChange = (checkbox_index, index, event) => {
-    let isChecked = event.target.checked
 
-    setSelectedCheckbox((prevSelectedCheckbox) => {
-      if (isChecked) {
-        const updatedCheckbox = [...prevSelectedCheckbox]
-        updatedCheckbox[checkbox_index] = {
-          ...(updatedCheckbox[checkbox_index] || {}),
-          [index]: [checkbox_index, index],
+    let isChecked = event.target.checked
+    let updatedCheckbox = []
+    if (selectedCheckbox.length > 0) {
+      updatedCheckbox = [...selectedCheckbox]
+    } else {
+      updatedCheckbox = [...selectedcheckboxitems]
+    }
+    if (isChecked) {
+      updatedCheckbox[checkbox_index] = [...updatedCheckbox[checkbox_index], index]
+    } else {
+      let delind = 0
+      updatedCheckbox[checkbox_index].map((item, i) => {
+        if (item == index) {
+          delind = i;
         }
-        return updatedCheckbox
-      } else {
-        const updatedCheckbox = [...prevSelectedCheckbox]
-        const {[index]: removedIndex, ...rest} =
-          updatedCheckbox[checkbox_index] || {}
-        if (Object.keys(rest).length === 0) {
-          delete updatedCheckbox[checkbox_index]
-        } else {
-          updatedCheckbox[checkbox_index] = rest
-        }
-        return updatedCheckbox
-      }
-    })
+      })
+      updatedCheckbox[checkbox_index].splice(delind, 1)
+    }
+    setSelectedCheckbox(updatedCheckbox)
+    // setSelectedCheckbox((prevSelectedCheckbox) => {
+    //   if (isChecked) {
+    //     const updatedCheckbox = [...prevSelectedCheckbox]
+    //     updatedCheckbox[checkbox_index] = {
+    //       ...(updatedCheckbox[checkbox_index] || {}),
+    //       [index]: [checkbox_index, index],
+    //     }
+    //     return updatedCheckbox
+    //   } else {
+    //     const updatedCheckbox = [...prevSelectedCheckbox]
+    //     const {[index]: removedIndex, ...rest} =
+    //       updatedCheckbox[checkbox_index] || {}
+    //     if (Object.keys(rest).length === 0) {
+    //       delete updatedCheckbox[checkbox_index]
+    //     } else {
+    //       updatedCheckbox[checkbox_index] = rest
+    //     }
+    //     return updatedCheckbox
+    //   }
+    // })
   }
 
   const handleRadioChange = (selection_index, index) => {
-    setSelectedRadio((prevSelectedRadio) => {
-      const updatedRadio = [...prevSelectedRadio]
-      updatedRadio[selection_index] = {
-        [index]: [selection_index, index],
-      }
-      return updatedRadio
-    })
+    let updatedRadio = []
+    if (selectedRadio.length > 0) {
+      updatedRadio = [...selectedRadio]
+    } else {
+      updatedRadio = [...selectedradioitems]
+    }
+    updatedRadio[selection_index] = index
+
+    setSelectedRadio(updatedRadio)
+
+    // setSelectedRadio((prevSelectedRadio) => {
+    //   const updatedRadio = [...prevSelectedRadio]
+    //   updatedRadio[selection_index] = index
+    //   return updatedRadio
+    // })
   }
-  const handleDropdownChange = (dropdown_index, event) => {
-    setSelectedDropdown((prevSelectedDropdown) => {
-      const index = parseInt(event.target.value, 10)
-      const updatedDropdown = [...prevSelectedDropdown]
-      updatedDropdown[dropdown_index] = {
-        [index]: [dropdown_index, index],
-      }
-      return updatedDropdown
-    })
+  const handleDropdownChange = (dropdown_index, index) => {
+    let updatedDropdown = []
+    if (selectedDropdown.length > 0) {
+      updatedDropdown = [...selectedDropdown]
+    } else {
+      updatedDropdown = [...selecteddropdownitems]
+    }
+    updatedDropdown[dropdown_index] = index
+
+    setSelectedDropdown(updatedDropdown)
+    // setSelectedDropdown((prevSelectedDropdown) => {
+    //   const index = parseInt(event.target.value, 10)
+    //   const updatedDropdown = [...prevSelectedDropdown]
+    //   updatedDropdown[dropdown_index] = {
+    //     [index]: [dropdown_index, index],
+    //   }
+    //   return updatedDropdown
+    // })
   }
 
   const finalPrice = qtyCount * totalPrice
@@ -197,7 +279,7 @@ const ProductItem = ({
 
   const handleAddToCart = async () => {
     try {
-      const response = await AxiosInstance.post(`/carts`, {
+      let payload = {
         item_id: id,
         quantity: qtyCount,
         branch_id: branch_id,
@@ -205,7 +287,9 @@ const ProductItem = ({
         selectedCheckbox: selectedCheckbox,
         selectedRadio: selectedRadio,
         selectedDropdown: selectedDropdown,
-      })
+      }
+    
+      const response = await AxiosInstance.post(`/carts`, payload)
 
       console.log("response ", response)
 
@@ -228,7 +312,7 @@ const ProductItem = ({
   const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm()
   const onSubmit = (data) => {
     AxiosInstance.post(`/login`, {
@@ -298,9 +382,8 @@ const ProductItem = ({
       >
         <div className='flex items-center justify-between pt-2'>
           <div
-            className={`flex flex-col gap-2 ${
-              language === "en" ? "pl-4" : "pr-4"
-            }`}
+            className={`flex flex-col gap-2 ${language === "en" ? "pl-4" : "pr-4"
+              }`}
           >
             <h3
               style={{
@@ -317,30 +400,28 @@ const ProductItem = ({
                 color: textColor,
                 fontSize:
                   fontSize &&
-                  typeof fontSize == "string" &&
-                  fontSize.includes("px")
+                    typeof fontSize == "string" &&
+                    fontSize.includes("px")
                     ? Number(fontSize.slice(0, 2)) - 3
                     : typeof fontSize == "number"
-                    ? fontSize - 3
-                    : 13,
+                      ? fontSize - 3
+                      : 13,
               }}
-              className={`${
-                textAlign === t("Center")
-                  ? "text-center"
-                  : textAlign === t("Left")
+              className={`${textAlign === t("Center")
+                ? "text-center"
+                : textAlign === t("Left")
                   ? "text-left"
                   : textAlign === t("Right")
-                  ? "text-right"
-                  : ""
-              }`}
+                    ? "text-right"
+                    : ""
+                }`}
             >
               {caloryInfo} Kcal
             </p>
           </div>
           <div
-            className={`w-[100px] h-[100px] ${
-              language === "en" ? "mr-[-1.8rem]" : "ml-[-1.8rem]"
-            }   bg-neutral-100 rounded-full p-1`}
+            className={`w-[100px] h-[100px] ${language === "en" ? "mr-[-1.8rem]" : "ml-[-1.8rem]"
+              }   bg-neutral-100 rounded-full p-1`}
           >
             <img
               src={imgSrc}
@@ -352,14 +433,12 @@ const ProductItem = ({
         <div className='flex-1 h-full'>
           <div className='flex gap-6 w-full'>
             <div
-              style={{backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00"}}
-              className={`w-[70px] h-[30px] p-1 ${
-                language === "en"
-                  ? "rounded-tr-lg rounded-bl-2xl "
-                  : "rounded-tl-lg rounded-br-2xl"
-              } ${
-                shape === "sharp" ? "!rounded-none" : ""
-              }  flex items-center justify-center`}
+              style={{ backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00" }}
+              className={`w-[70px] h-[30px] p-1 ${language === "en"
+                ? "rounded-tr-lg rounded-bl-2xl "
+                : "rounded-tl-lg rounded-br-2xl"
+                } ${shape === "sharp" ? "!rounded-none" : ""
+                }  flex items-center justify-center`}
             >
               <img
                 src={cartBgcolor ? imgCartWhite : imgCart}
@@ -368,7 +447,7 @@ const ProductItem = ({
               />
             </div>
             <h3
-              style={{color: amountColor ? amountColor : "red"}}
+              style={{ color: amountColor ? amountColor : "red" }}
               className='font-bold'
             >
               SAR {amount}
@@ -379,14 +458,13 @@ const ProductItem = ({
       {/* You can open the modal using document.getElementById('ID').showModal() method */}
       <dialog id={id} className='modal'>
         <div
-          style={{backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00"}}
-          className={`modal-box !p-0 rounded-[46px] w-[98%] mx-auto md:w-[440px] ${
-            checkboxItems[0]?.length > 0 ||
+          style={{ backgroundColor: cartBgcolor ? cartBgcolor : "#F2FF00" }}
+          className={`modal-box !p-0 rounded-[46px] w-[98%] mx-auto md:w-[440px] ${checkboxItems[0]?.length > 0 ||
             radioItems[0]?.length > 0 ||
             dropdownItems[0]?.length > 0
-              ? "h-[650px]"
-              : "h-[500px]"
-          } flex flex-col justify-end`}
+            ? "h-[650px]"
+            : "h-[500px]"
+            } flex flex-col justify-end`}
         >
           <form method='dialog'>
             {/* if there is a button in form, it will close the modal */}
@@ -398,13 +476,12 @@ const ProductItem = ({
           {isLoggedIn ? (
             <Fragment>
               <div
-                className={`bg-white w-full rounded-t-[80px]   ${
-                  checkboxItems[0]?.length > 0 ||
+                className={`bg-white w-full rounded-t-[80px]   ${checkboxItems[0]?.length > 0 ||
                   radioItems[0]?.length > 0 ||
                   dropdownItems[0]?.length > 0
-                    ? "h-[500px]"
-                    : "h-[380px]"
-                } `}
+                  ? "h-[500px]"
+                  : "h-[380px]"
+                  } `}
               >
                 <div className='w-[216px] h-[182px] mt-[-5.8rem] mx-auto bg-neutral-100 rounded-full p-1'>
                   <img
@@ -421,13 +498,13 @@ const ProductItem = ({
                   </div>
                   <div className='flex flex-row gap-1 items-end'>
                     <span
-                      style={{color: amountColor ? amountColor : "red"}}
+                      style={{ color: amountColor ? amountColor : "red" }}
                       className='text-[13px] font-bold'
                     >
                       {t("SAR")}{" "}
                     </span>
                     <span
-                      style={{color: amountColor ? amountColor : "red"}}
+                      style={{ color: amountColor ? amountColor : "red" }}
                       className='text-[17px] font-bold'
                     >
                       {totalPrice && finalPrice}
@@ -458,26 +535,77 @@ const ProductItem = ({
                 {(checkboxItems[0]?.length > 0 ||
                   radioItems[0]?.length > 0 ||
                   dropdownItems[0]?.length > 0) && (
-                  <div className='border border-neutral-400 px-6 my-4 h-[130px] overflow-x-hidden overflow-y-scroll hide-scroll'>
-                    <div className='flex flex-col gap-5 py-4'>
-                      {/* checkbox */}
-                      {checkbox_input_titles &&
-                        checkbox_input_titles.length > 0 &&
-                        checkbox_input_titles.map((title, checkbox_idx) => (
-                          <div id={"checkbox"} className='' key={checkbox_idx}>
-                            {title[0] && (
-                              <h3 className='text-[15px] font-bold mb-1'>
-                                {language === "en" ? title[0] : title[1]}
-                                {checkbox_required[checkbox_idx] === "true" && (
-                                  <span className='text-red-500'>*</span>
-                                )}
-                              </h3>
-                            )}
-                            <div className='flex flex-col gap-2'>
-                              {checkboxItems &&
-                                checkboxItems.length > 0 &&
-                                checkboxItems[checkbox_idx]?.map(
-                                  (item, idx) => (
+                    <div className='border border-neutral-400 px-6 my-4 h-[130px] overflow-x-hidden overflow-y-scroll hide-scroll'>
+                      <div className='flex flex-col gap-5 py-4'>
+                        {/* checkbox */}
+                        {checkbox_input_titles &&
+                          checkbox_input_titles.length > 0 &&
+                          checkbox_input_titles.map((title, checkbox_idx) => (
+                            <div id={"checkbox"} className='' key={checkbox_idx}>
+                              {title[0] && (
+                                <h3 className='text-[15px] font-bold mb-1'>
+                                  {language === "en" ? title[0] : title[1]}
+                                  {checkbox_required[checkbox_idx] === "true" && (
+                                    <span className='text-red-500'>*</span>
+                                  )}
+                                </h3>
+                              )}
+                              <div className='flex flex-col gap-2'>
+
+                                {checkboxItems &&
+                                  checkboxItems.length > 0 &&
+                                  checkboxItems[checkbox_idx]?.map(
+                                    (item, idx) => (
+                                      <ProductDetailItem
+                                        key={idx}
+                                        label={
+                                          language === "en"
+                                            ? item?.value[0]
+                                            : item?.value[1]
+                                        }
+                                        name={
+                                          "checkbox" + language === "en"
+                                            ? item?.value[0]
+                                            : item?.value[1]
+                                        }
+                                        price={
+                                          item.price === 0
+                                            ? t("Free")
+                                            : `${Number(item?.price)} ${t("SAR")}`
+                                        }
+                                        isCheckbox
+                                        onChange={(e) =>
+                                          handleCheckboxChange(
+                                            checkbox_idx,
+                                            idx,
+                                            e
+                                          )
+                                        }
+                                      />
+                                    )
+                                  )}
+                              </div>
+                            </div>
+                          ))}
+
+                        {/* selection  */}
+                        {selection_input_titles &&
+                          selection_input_titles.length > 0 &&
+                          selection_input_titles.map((title, selection_idx) => (
+                            <div id={"radio"} className='' key={selection_idx}>
+                              {title[0] && (
+                                <h3 className='text-[15px] font-bold mb-1'>
+                                  {language === "en" ? title[0] : title[1]}
+                                  {selection_required[selection_idx] ===
+                                    "true" && (
+                                      <span className='text-red-500'>*</span>
+                                    )}
+                                </h3>
+                              )}
+                              <div className='flex flex-col gap-2'>
+                                {radioItems &&
+                                  radioItems.length > 0 &&
+                                  radioItems[selection_idx]?.map((item, idx) => (
                                     <ProductDetailItem
                                       key={idx}
                                       label={
@@ -485,114 +613,63 @@ const ProductItem = ({
                                           ? item?.value[0]
                                           : item?.value[1]
                                       }
-                                      name={
-                                        "checkbox" + language === "en"
-                                          ? item?.value[0]
-                                          : item?.value[1]
-                                      }
+                                      name={"radio_item"}
                                       price={
                                         item.price === 0
                                           ? t("Free")
                                           : `${Number(item?.price)} ${t("SAR")}`
                                       }
-                                      isCheckbox
+                                      isRadio
                                       onChange={(e) =>
-                                        handleCheckboxChange(
-                                          checkbox_idx,
-                                          idx,
-                                          e
-                                        )
+                                        handleRadioChange(selection_idx, idx, e)
                                       }
                                     />
-                                  )
-                                )}
+                                  ))}
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
 
-                      {/* selection  */}
-                      {selection_input_titles &&
-                        selection_input_titles.length > 0 &&
-                        selection_input_titles.map((title, selection_idx) => (
-                          <div id={"radio"} className='' key={selection_idx}>
-                            {title[0] && (
-                              <h3 className='text-[15px] font-bold mb-1'>
-                                {language === "en" ? title[0] : title[1]}
-                                {selection_required[selection_idx] ===
-                                  "true" && (
-                                  <span className='text-red-500'>*</span>
-                                )}
-                              </h3>
-                            )}
-                            <div className='flex flex-col gap-2'>
-                              {radioItems &&
-                                radioItems.length > 0 &&
-                                radioItems[selection_idx]?.map((item, idx) => (
-                                  <ProductDetailItem
-                                    key={idx}
-                                    label={
-                                      language === "en"
-                                        ? item?.value[0]
-                                        : item?.value[1]
-                                    }
-                                    name={"radio_item"}
-                                    price={
-                                      item.price === 0
-                                        ? t("Free")
-                                        : `${Number(item?.price)} ${t("SAR")}`
-                                    }
-                                    isRadio
-                                    onChange={(e) =>
-                                      handleRadioChange(selection_idx, idx, e)
-                                    }
-                                  />
-                                ))}
+                        {/* dropdown */}
+                        {dropdown_input_titles &&
+                          dropdown_input_titles.length > 0 &&
+                          dropdown_input_titles.map((title, dropdown_idx) => (
+                            <div id={"dropdown"} className='' key={dropdown_idx}>
+                              {title[0] && (
+                                <h3 className='text-[15px] font-bold mb-1'>
+                                  {language === "en" ? title[0] : title[1]}
+                                  {dropdown_required[dropdown_idx] === "true" && (
+                                    <span className='text-red-500'>*</span>
+                                  )}
+                                </h3>
+                              )}
+                              <div className='flex flex-col gap-2 mb-3'>
+                                {dropdownItems &&
+                                  dropdownItems.length > 0 &&
+                                  dropdownItems[dropdown_idx][0]?.value[0] &&
+                                  dropdownItems?.map((item, idx) => (
+                                    <ProductDetailItem
+                                      key={idx}
+                                      isDropDown
+                                      language={language}
+                                      options={item}
+                                      onChange={(e) =>
+                                        handleDropdownChange(dropdown_idx, idx)
+                                      }
+                                    />
+                                  ))}
+                              </div>
                             </div>
-                          </div>
-                        ))}
-
-                      {/* dropdown */}
-                      {dropdown_input_titles &&
-                        dropdown_input_titles.length > 0 &&
-                        dropdown_input_titles.map((title, dropdown_idx) => (
-                          <div id={"dropdown"} className='' key={dropdown_idx}>
-                            {title[0] && (
-                              <h3 className='text-[15px] font-bold mb-1'>
-                                {language === "en" ? title[0] : title[1]}
-                                {dropdown_required[dropdown_idx] === "true" && (
-                                  <span className='text-red-500'>*</span>
-                                )}
-                              </h3>
-                            )}
-                            <div className='flex flex-col gap-2 mb-3'>
-                              {dropdownItems &&
-                                dropdownItems.length > 0 &&
-                                dropdownItems[dropdown_idx][0]?.value[0] &&
-                                dropdownItems?.map((item, idx) => (
-                                  <ProductDetailItem
-                                    key={idx}
-                                    isDropDown
-                                    language={language}
-                                    options={item}
-                                    onChange={(e) =>
-                                      handleDropdownChange(dropdown_idx, e)
-                                    }
-                                  />
-                                ))}
-                            </div>
-                          </div>
-                        ))}
+                          ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
                 <div
-                  className={`px-6 w-full flex items-center justify-between    ${
-                    checkboxItems[0]?.length > 0 ||
+                  className={`px-6 w-full flex items-center justify-between    ${checkboxItems[0]?.length > 0 ||
                     radioItems[0]?.length > 0 ||
                     dropdownItems[0]?.length > 0
-                      ? ""
-                      : "mt-5"
-                  } `}
+                    ? ""
+                    : "mt-5"
+                    } `}
                 >
                   <div className='flex items-center justify-between w-1/3 cursor-pointer'>
                     <FiMinusCircle size={28} onClick={decrementQty} />
@@ -622,8 +699,8 @@ const ProductItem = ({
                             color: amountColor
                               ? amountColor
                               : cartBgcolor
-                              ? "white"
-                              : "red",
+                                ? "white"
+                                : "red",
                           }}
                           className='text-xs line-clamp-1 md:text-[14px] font-bold'
                         >
@@ -635,8 +712,8 @@ const ProductItem = ({
                             color: amountColor
                               ? amountColor
                               : cartBgcolor
-                              ? "white"
-                              : "red",
+                                ? "white"
+                                : "red",
                           }}
                           className='text-[14px] font-bold'
                         >
@@ -682,7 +759,7 @@ const ProductItem = ({
                         {...register("phone", {
                           required: true,
                         })}
-                        style={{direction: "ltr"}}
+                        style={{ direction: "ltr" }}
                         minLength={9}
                         maxLength={13}
                       />
