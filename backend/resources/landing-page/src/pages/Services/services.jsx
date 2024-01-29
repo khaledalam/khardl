@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { Helmet } from 'react-helmet';
-import MainText from '../../components/MainText';
-import driversApp from '../../assets/driversApp.webp';
-import Branches from '../../assets/Branches.webp';
-import receiveRequests from '../../assets/receiveRequests.webp';
-import HeaderSection from '../../components/HeaderSection';
-import ContactUs from '../../components/ContactUsSection/ContactUs';
-import Card from '../../components/FeaturesSection/Card';
-import Button from '../../components/Button';
-import service1 from '../../assets/services1.png'
-import service2 from '../../assets/services2.png'
-import service3 from '../../assets/services3.png'
+import { Helmet } from "react-helmet";
+import MainText from "../../components/MainText";
+import driversApp from "../../assets/driversApp.webp";
+import Branches from "../../assets/Branches.webp";
+import receiveRequests from "../../assets/receiveRequests.webp";
+import HeaderSection from "../../components/HeaderSection";
+import ContactUs from "../../components/ContactUsSection/ContactUs";
+import Card from "../../components/FeaturesSection/Card";
+import Button from "../../components/Button";
+import service1 from "../../assets/services1.png";
+import service2 from "../../assets/services2.png";
+import service3 from "../../assets/services3.png";
 
 function Services() {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ function Services() {
       image: Branches,
       title: `${t("Each Branch")}`,
       Price: 388,
-    }
+    },
   ];
   const Fees = [
     {
@@ -50,7 +50,7 @@ function Services() {
     {
       title: `${t("12 months")}`,
       Price: 1299,
-    }
+    },
   ];
   return (
     <div>
@@ -59,45 +59,51 @@ function Services() {
         <meta name="description" content="khardl services" />
       </Helmet>
 
-      <div className='pt-[80px]'>
-        <div className='p-[30px]  pt-[60px] max-md:px-[5px] max-md:py-[40px] '>
-          <HeaderSection title={t("Services")} details={`${t("Home")} / ${t("Services")}`} />
+      <div className="pt-[80px]">
+        <div className="p-[30px]  pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
+          <HeaderSection
+            title={t("Services")}
+            details={`${t("Home")} / ${t("Services")}`}
+          />
         </div>
-        <div className='mt-22 mb-[130px]'>
-          <div className='mt-6'
-          data-aos='fade-up'
-          data-aos-delay='400' >
+        <div className="mt-22 mb-[130px]">
+          <div className="mt-6" data-aos="fade-up" data-aos-delay="400">
             <MainText SubTitle={t("Khardl's services Details")} />
           </div>
-          <div className='mx-[160px] max-[1250px]:mx-[20px]'>
-            <div 
-          data-aos='fade-up'
-          data-aos-delay='400'>
+          <div className="mx-[160px] max-[1250px]:mx-[20px]">
+            <div data-aos="fade-up" data-aos-delay="400">
               <img src={service1} />
             </div>
-            <div className='py-10 my-16' 
-          data-aos='fade-up'
-          data-aos-delay='400'>
-              <img src={service2} className='ml-auto'/>
+            <div
+              className="py-10 my-16"
+              data-aos="fade-up"
+              data-aos-delay="400"
+            >
+              <img src={service2} className="ml-auto" />
             </div>
-            <div 
-          data-aos='fade-up'
-          data-aos-delay='400'>
+            <div data-aos="fade-up" data-aos-delay="400">
               <img src={service3} />
             </div>
-           
           </div>
-          <div className='flex justify-center register-btn py-10 my-16'
-          data-aos='fade-up'
-          data-aos-delay='400' >
-            <Button title={t("Register now")} classContainer="!w-fit !border-none px-12" link="/login" />
+          <div
+            className="flex justify-center register-btn py-10 my-16"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            <Button
+              title={t("Register now")}
+              classContainer="!w-fit !border-none px-12"
+              link="/login"
+            />
           </div>
-          <hr className='w-[500px] register-hr'/>
+          <hr className="w-[500px] register-hr" />
         </div>
-        <ContactUs />
+        <div className=" flex flex-col justify-start items-center gap-[150px] pt-[80px]">
+          <ContactUs />
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default Services;

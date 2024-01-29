@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AdvantageCard from './AdvantageCard';
 import { useTranslation } from "react-i18next";
 import Button from '../../../components/Button';
+import { RiArrowDownDoubleFill } from 'react-icons/ri';
 
 function Cards() {
     const { t } = useTranslation();
@@ -9,6 +10,12 @@ function Cards() {
     const showMoreItems = () => {
         setVisible((prevValue) => prevValue + 5);
     }
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const isMobile = window.innerWidth <= 1000;
+      setIsMobile(!isMobile);
+    }, []);
     const Advantages = [
         { Advantage: `${t("Advantage 1")}` },
         { Advantage: `${t("Advantage 2")}` },
@@ -53,15 +60,21 @@ function Cards() {
             {Advantages.slice(0, Visible).length === Advantages.length ?
                 <div></div>
                 :
-                <div className="flex flex-col items-center justify-center cta-btn-more"
-                    data-aos='fade-up'
-                    data-aos-delay='400'>
-                    <Button
-                        title={t("More")}
-                        classContainer="cta-btn-more"
-                        onClick={showMoreItems}
-                    />
-                </div>
+                <div
+                className="flex flex-col items-center justify-center cta-btn-more"
+                data-aos="fade-up"
+                data-aos-delay="400"
+              >
+                <button
+                  onClick={showMoreItems}
+                  className={`flex gap-5 ${
+                    !isMobile ? "w-[100%]" : "w-fit"
+                  } justify-center cta-btn font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px] hover:bg-[#d6eb16]`}
+                >
+                  {t("More")}
+                  <RiArrowDownDoubleFill />
+                </button>
+              </div>
             }
         </div>
     )

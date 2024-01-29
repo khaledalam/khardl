@@ -64,10 +64,12 @@ useEffect(()=>{
   setIsMobile(!isMobile)
 
 },[])
+
+console.log("ContactUs")
   //  **displayed content**
   return (
     <>
-      <section className="mx-[100px] max-[1250px]:mx-[20px] flex flex-col items-center justify-center ">
+      <section className="mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
         <h3 className="home-heading">Contact Us</h3>
         <h3 className="text-medium mb-11">
           Let us assist you in acquiring more clients at reduced rates.
