@@ -15,7 +15,7 @@ class CouponController extends BaseController
     }
     public function index(Request $request)
     {
-        return $this->couponService->index();
+        return $this->couponService->index($request);
     }
     public function create(Request $request)
     {

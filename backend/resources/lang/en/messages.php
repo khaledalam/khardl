@@ -268,6 +268,7 @@ return [
     'restaurant'=>'Restaurant',
     "download-all"=>"Download All",
     'payment-method'=>"Payment Method",
+    'payment-status'=>"Payment Status",
     "user-id"=>"User id",
     "search-for-place"=>"Search for place",
     'order-summary'=>'Order Summary',
@@ -289,6 +290,8 @@ return [
     'subtotal'=>'Subtotal',
     'shipping-rate'=>'Shipping Rate',
     'discount'=>'Discount',
+    "paid" => "Paid",
+    "failed" => "Failed",
     "inclusive-VAT"=> "inclusive VAT",
     'vat'=>'VAT',
     'grand-total'=>'Grand Total',
@@ -761,5 +764,10 @@ return [
     "Restore" => "Restore",
     "Are you sure you want to restore this coupon ?" => "Are you sure you want to restore this coupon ? ",
     "External URL" => "External URL",
+    "Not deleted" => "Not deleted",
+    "Deleted or not" => "Deleted or not",
+    "Fixed" => "Fixed",
+    "Percentage" => "Percentage",
+    "Availability" => "Availability",
     "Please check all terms and conditions before submitting."=> "Please check all terms and conditions before submitting"
 ];

@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\OrderItem;
-use App\Models\Tenant\Payment;
-use App\Packages\TapPayment\Charge\Charge;
-use App\Packages\DeliveryCompanies\DeliveryCompanies;
 
 class OrderRepository
 {
@@ -44,7 +41,7 @@ class OrderRepository
                 'coupon_id' => $coupon && $discount != 0 ? $coupon->id : null,
                 'discount' => $discount ? $discount : null,
                 // TODO @todo update
-                'payment_status' => Payment::PENDING,
+                'payment_status' => PaymentMethod::PENDING,
                 'status' => Order::PENDING,
             ]);
             if($discount&&$coupon){
@@ -73,22 +70,7 @@ class OrderRepository
 
             }else if ($cart->hasPaymentCreditCard($request->payment_method)){
                 // Do not commit any change , it should be saved into session
-                $order->update([
-                    'transaction_id'=>$request->tap_id ?? null
-                ]);
-                $charge = Charge::retrieve($request->tap_id);
-
-                if($charge['message']['status'] == 'CAPTURED'){
-                    $order->update([
-                        "payment_status"=> Payment::PAID
-                    ]);
-                    $cart->trash();
-                }else if ($charge['message']['status'] != 'CAPTURED'){
-                    $order->update([
-                        "payment_status"=> Payment::FAILED
-                    ]);
-                }
-
+               
                 DB::commit();
                 return $order;
             }

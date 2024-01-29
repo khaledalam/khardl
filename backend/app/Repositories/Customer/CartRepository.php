@@ -218,10 +218,10 @@ class CartRepository
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],
-            'tap_information'=> [
-                'tap_customer_id'=>$this->cart->user->tap_customer_id,
-                'redirect'=>route('orders.payment')
-            ],
+            // 'tap_information'=> [
+            //     'tap_customer_id'=>$this->cart->user->tap_customer_id,
+            //     'redirect'=>route('orders.payment')
+            // ],
             'address' => $this->cart->user->address
         ], '');
     }
