@@ -173,7 +173,7 @@ Route::group([
                 Route::resource('coupons',CouponController::class)->withTrashed(['show','restore','edit','update']);
                 Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete')->withTrashed();
                 Route::post('coupons/restore/{coupon}',[CouponController::class,'restore'])->name('coupons.restore')->withTrashed();
-                Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status');
+                Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status')->withTrashed();
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
