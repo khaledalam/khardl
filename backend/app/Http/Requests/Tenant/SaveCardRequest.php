@@ -20,7 +20,7 @@ class SaveCardRequest extends FormRequest
             'token_id' => 'required|string',
             'n_branches'=> 'required|integer',
             'type'=>'required|string',
-            'merchant_id'=>'required|string'
+    
 
         ];
     }

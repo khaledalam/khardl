@@ -94,9 +94,9 @@ class ROSubscription extends Model
             if($type ==  self::RENEW_TO_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost($centralSubscription->amount);
                 $totalCost = $number_of_branches * $remainingDaysCost;
-                $data = ['cost' => number_format($totalCost, 2)];
+                $data = ['cost' => number_format($totalCost, 2),'number_of_branches'=>$number_of_branches];
                 if($json)
-                    return response()->json(['success' => true, $data]);
+                return response()->json($data);
                 return $data;
             }else if($type  ==  self::RENEW_FROM_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost();
@@ -108,20 +108,20 @@ class ROSubscription extends Model
                 'newBranches'=>number_format(($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount, 2)
                 ];
                 if($json)
-                return response()->json(['success' => true,$data]);
+                return response()->json($data);
                 return $data;
 
             }
             else if($type  ==  self::RENEW_AFTER_ONE_YEAR){
                 $data =[ 'number_of_branches'=>$number_of_branches,'cost' => $currentSubscription->amount];
                 if($json)
-                return response()->json(['success' => true,$data]);
+                return response()->json($data);
                 return $data;
 
             }else {
                 $data =[ ];
                 if($json)
-                return response()->json(['success' => true,$data]);
+                return response()->json($data);
                 return $data;
             }
         }else {
@@ -131,7 +131,7 @@ class ROSubscription extends Model
                 'number_of_branches'=>$number_of_branches
              ];
             if($json)
-            return response()->json(['success' => true,$data]);
+            return response()->json($data);
             return $data;
         }
 

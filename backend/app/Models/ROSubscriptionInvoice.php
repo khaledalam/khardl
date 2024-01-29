@@ -17,7 +17,6 @@ class ROSubscriptionInvoice extends Model
         "chg_id",
         'cus_id',
         'card_id',
-        'payment_agreement_id',
         'status',
         'type',
         'subscription_id' // central subscription id

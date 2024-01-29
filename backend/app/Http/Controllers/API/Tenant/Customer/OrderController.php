@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\API\Tenant\Customer;
 
 use Illuminate\Http\Request;
+use App\Utils\ResponseHelper;
+use App\Models\Tenant\Setting;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
-use App\Models\Tenant\Payment;
+use App\Models\Tenant\PaymentMethod;
+use App\Packages\TapPayment\Charge\Charge as TapCharge;
+use Exception;
 
 class OrderController
 {
@@ -27,7 +31,6 @@ class OrderController
     }
     public function validateOrder(OrderRequest $request){
 
-        session([tenant()->id.'_order_customer_'.Auth::id() =>$request->all()]);
         return response()->json([],200);
     }
     public function index(){
@@ -76,20 +79,65 @@ class OrderController
             'ok' => true
         ], '');
     }
-    public function paymentResponse(Request $request){
+    public function paymentRedirect(OrderRequest $request){
+        logger("payment redirect");
+        $request->validate([
+            'token_id'=>"string|required" // token id for tap payment
+        ]);
         try {
-            $cartData = session(tenant()->id.'_order_customer_'.Auth::id());
-            $request->merge($cartData);
-            $orderRequest = new OrderRequest($request->all());
-            $order = $this->order->create($orderRequest,$this->cart);
+            $merchant_id = Setting::first()->merchant_id;
+            $order = $this->order->create($request,$this->cart);
+            session([tenant()->id.'_order_customer_'.Auth::id() =>$order]);
+            $charge = TapCharge::create(
+                data : [
+                    'amount'=> $order->total,
+                    'metadata'=>[
+                        'order_id'=> $order->id,
+                        'customer_id'=>Auth::id()
+                    ],
+                ],
+                merchant_id: $merchant_id,
+                token_id: $request->token_id,
+                redirect: route('orders.payment.response')
+            );
+            if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
+                return response()->json($charge['message']['transaction']['url'],200);
+            }
+        }catch(Exception $e){
+            logger($e->getMessage());
+        }
+      
+        return redirect()->route("home",[
+            'status'=>false,
+            'message'=>__('Payment failed, please try again')
+        ]);
+    }
+    public function paymentResponse(Request $request,CartRepository $cart){
+        try {
+            logger("payment response here");
+            $order = session(tenant()->id.'_order_customer_'.Auth::id());
+            $charge = TapCharge::retrieve($request->tap_id);
 
+            if($charge['message']['status'] == 'CAPTURED'){
+                $order->update([
+                    "payment_status"=> PaymentMethod::PAID
+                ]);
+                $cart->trash();
+     
+            }else if ($charge['message']['status'] != 'CAPTURED'){
+                $order->update([
+                    "payment_status"=> PaymentMethod::FAILED
+                ]);
+            }
+            $message = ($order->payment_status  == PaymentMethod::PAID)? __("The payment was successful, your order is pending"): __('Payment failed, please try again');
         }catch(\Exception $e){
+            $message =__('Payment failed, please try again');
             logger($e->getMessage());
         }
         session()->forget([tenant()->id.'_order_customer_'.Auth::id()]);
-        $message = ($order->payment_status  == Payment::PAID)? __("The payment was successful, your order is pending"): __('Payment failed, please try again');
+        
         return redirect()->route("home",[
-            'status'=>($order->payment_status  == Payment::PAID)?true:false,
+            'status'=>(isset($order->payment_status ) && $order->payment_status  == PaymentMethod::PAID)?true:false,
             'message'=>$message
         ]);
 

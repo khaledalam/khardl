@@ -25,7 +25,7 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders = Order::recent()->paginate(config('application.perPage')??20);
+        $orders = Order::with('payment_method')->recent()->paginate(config('application.perPage')??20);
         return view('restaurant.orders.list', compact('user', 'orders'));
     }
 
