@@ -160,6 +160,7 @@ const ProductItem = ({
     if (delIndex) {
       let temparr = [...selectedRadio];
       temparr.splice(delIndex,1)
+      setSelectedRadio(temparr)
     }
     let delIndexdp = null
     selectedDropdown.map((mainItem, mainIndex) => {
@@ -173,6 +174,7 @@ const ProductItem = ({
     if (delIndexdp) {
       let temparr = [...selectedDropdown];
       temparr.splice(delIndexdp,1)
+      setSelectedDropdown(temparr)
     }
     
     const total_new = newTotal
@@ -286,7 +288,7 @@ const ProductItem = ({
         selectedRadio: selectedRadio,
         selectedDropdown: selectedDropdown,
       }
-      console.log()
+    
       const response = await AxiosInstance.post(`/carts`, payload)
 
       console.log("response ", response)
