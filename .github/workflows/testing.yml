@@ -52,3 +52,4 @@ jobs:
       run: |
         cd /home/khardl4test/public_html/
         ./deploy.sh
+
