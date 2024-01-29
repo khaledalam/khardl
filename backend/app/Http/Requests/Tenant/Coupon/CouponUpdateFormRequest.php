@@ -4,6 +4,7 @@ namespace App\Http\Requests\Tenant\Coupon;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\RequiredIf;
 
 class CouponUpdateFormRequest extends FormRequest
@@ -26,7 +27,8 @@ class CouponUpdateFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => ['required', 'string', 'max:100','unique:coupons,code,'.$this->coupon],
+            'code' => ['required', 'string', 'max:100',
+            Rule::unique('coupons')->ignore($this->coupon)->whereNull('deleted_at'),],
             'type' => ['required', 'in:fixed,percentage'],
             'fixed' => [new RequiredIf($this->type == 'fixed'), 'min:1', 'nullable', 'numeric'],
             'percentage' => [new RequiredIf($this->type == 'percentage'), 'nullable', 'min:1', 'numeric', 'max:100'],

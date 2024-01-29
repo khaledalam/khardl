@@ -32,9 +32,8 @@ class CouponService
         Coupon::create($this->request_data($request));
         return redirect()->route('coupons.index')->with(['success' => __('Updated successfully')]);
     }
-    public function update($request, $id)
+    public function update($request, Coupon $coupon)
     {
-        $coupon = Coupon::findOrFail($id);
         $coupon->update($this->request_data($request));
         return redirect()->route('coupons.index')->with(['success' => __('Updated successfully')]);
     }
@@ -47,9 +46,8 @@ class CouponService
         $coupon->delete();
         return redirect()->route('coupons.index')->with(['success' => __('Deleted successfully')]);
     }
-    public function restore($id)
+    public function restore(Coupon $coupon)
     {
-        $coupon = Coupon::withTrashed()->findOrFail($id);
         $coupon->restore();
         return redirect()->route('coupons.index')->with(['success' => __('Restored successfully')]);
     }

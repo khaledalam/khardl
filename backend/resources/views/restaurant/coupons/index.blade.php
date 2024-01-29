@@ -166,7 +166,7 @@
                                                 @endif
                                                 @if($coupon->deleted_at)
                                                 <div class="menu-item px-3">
-                                                    <form class="restore-form" id="restore_coupon_{{ $coupon->id }}" action="{{ route('coupons.restore', ['id' => $coupon->id]) }}" method="POST">
+                                                    <form class="restore-form" id="restore_coupon_{{ $coupon->id }}" action="{{ route('coupons.restore', ['coupon' => $coupon->id]) }}" method="POST">
                                                         @method('POST')
                                                         @csrf
                                                     </form>

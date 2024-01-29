@@ -170,9 +170,9 @@ Route::group([
                     Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
                 });
-                Route::resource('coupons',CouponController::class);
-                Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete');
-                Route::post('coupons/restore/{id}',[CouponController::class,'restore'])->name('coupons.restore');
+                Route::resource('coupons',CouponController::class)->withTrashed(['show','restore','edit','update']);
+                Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete')->withTrashed();
+                Route::post('coupons/restore/{coupon}',[CouponController::class,'restore'])->name('coupons.restore')->withTrashed();
                 Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
