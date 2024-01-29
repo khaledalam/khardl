@@ -14,15 +14,16 @@ class MobileAppController extends BaseController
         $restaurants = Tenant::has('primary_domain')->whereHas('central_tenant_setting', function ($query) {
             return $query->where('is_live', 1);
         });
-        
+
         if($request->has('name')){
-            $restaurants->where('restaurant_name', 'LIKE', "%{$request->name}%"); 
+            $restaurants->where('restaurant_name', 'LIKE', "%{$request->name}%");
         }
         return $this->sendResponse($restaurants->get()
         ->map(function ($restaurant) {
             return [
                 'restaurant_name' => $restaurant->restaurant_name,
-                'url' => $restaurant->getUrlAttribute(), 
+                'url' => $restaurant->getUrlAttribute(),
+                'logo' => $restaurant->restaurant_logo ?? global_asset('img/logo.png')
             ];
         }),'');
     }

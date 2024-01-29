@@ -44,7 +44,7 @@ use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderControll
 use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
-
+use App\Http\Controllers\Web\Tenant\Menu\Item\ItemController as AdminItemController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -102,8 +102,11 @@ Route::group([
             Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
             Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->middleware('permission:can_edit_menu')->name('restaurant.get-category');
             Route::post('/category/add/{branchId}', [RestaurantController::class, 'addCategory'])->middleware('permission:can_edit_menu')->name('restaurant.add-category');
-            Route::post('/category/{id}/{branchId}/add-item', [RestaurantController::class, 'addItem'])->middleware('permission:can_edit_menu')->name('restaurant.add-item');
-            Route::delete('/category/{id}/delete-item', [RestaurantController::class, 'deleteItem'])->middleware('permission:can_edit_menu')->name('restaurant.delete-item');
+            Route::name('restaurant.')->controller(AdminItemController::class)->group(function () {
+                Route::post('/category/{id}/{branchId}/add-item', 'store')->middleware('permission:can_edit_menu')->name('add-item');
+                Route::delete('/category/{id}/delete-item', 'delete')->middleware('permission:can_edit_menu')->name('delete-item');
+                Route::get('/item/{item}', 'show')->middleware('permission:can_edit_menu')->name('view-item');
+            });
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
             Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment','isLeadNotSubmitted'])->name('tap.payments');
             Route::get('/download/pdf', [DownloadController::class, 'downloadPDF'])
@@ -169,6 +172,8 @@ Route::group([
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
                 });
                 Route::resource('coupons',CouponController::class);
+                Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete');
+                Route::post('coupons/restore/{id}',[CouponController::class,'restore'])->name('coupons.restore');
                 Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status');
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
