@@ -35,10 +35,10 @@ const PaymentSection = ({
   const {t} = useTranslation()
   const [notes, setNotes] = useState("")
   const [couponCode, setCouponCode] = useState("")
-  const [deliveryType, setDeliveryType] = useState(deliveryTypes[1].name)
+  const [deliveryType, setDeliveryType] = useState(deliveryTypes[0]?.name)
   const [couponDiscountValue, setCouponDiscountValue] = useState(0)
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-  const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0].name)
+  const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]?.name)
   const [deliveryCost, setDeliveryCost] = useState(0)
   const [activeDeliveryType, setActiveDeliveryType] = useState("pickup")
   const [showTAPClientCard, setShowTAPClientCard] = useState(false)
@@ -191,8 +191,8 @@ const PaymentSection = ({
     return
   }
 
-  console.log("payment methods ", paymentMethods)
-  console.log("delivery methods", deliveryTypes)
+  // console.log("payment methods ", paymentMethods)
+  // console.log("delivery methods", deliveryTypes)
 
 
   return (

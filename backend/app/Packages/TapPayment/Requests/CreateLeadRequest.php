@@ -25,7 +25,8 @@ class CreateLeadRequest  extends FormRequest
 
             'brand.channel_services.0.channel' => 'required|string',
             'brand.channel_services.0.address' => 'required|string',
-            
+            // TODO @todo validation for terms
+
 
             'entity.country' => 'required|string',
             'entity.license.number' => 'required|string',
