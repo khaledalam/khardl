@@ -25,7 +25,7 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders = Order::recent()->paginate(config('application.perPage')??20);
+        $orders = Order::with('payment_method')->recent()->paginate(config('application.perPage')??20);
         return view('restaurant.orders.list', compact('user', 'orders'));
     }
 
@@ -62,16 +62,47 @@ class OrderService
         $new_cart = (new CartRepository)->initiate($user->id);
         foreach ($products as $product => $quantities) {
             foreach ($quantities as $quantity) {
+                $selectedCheckbox = null;
+                if(isset($request->product_options[$product]['checkbox_input'])){
+                    $selectedCheckbox = $request->product_options[$product]['checkbox_input'];
+                }
+                $selectedRadio = null;
+                if(isset($request->product_options[$product]['selection_input'])){
+                    $selectedRadio = $request->product_options[$product]['selection_input'];
+                }
+                $selectedDropdown = null;
+                if(isset($request->product_options[$product]['dropdown_input'])){
+                    $selectedDropdown = $request->product_options[$product]['dropdown_input'];
+                }
                 $addItemToCartRequest = new AddItemToCartRequest([
                     'item_id' => $product,
                     'quantity' => $quantity,
                     'branch_id' => $request->branch_id,
+                    'selectedCheckbox' => $selectedCheckbox,
+                    'selectedRadio' => $selectedRadio,
+                    'selectedDropdown' => $selectedDropdown,
                 ]);
                 $new_cart->add($addItemToCartRequest);
             }
         }
         return $new_cart;
+    }/*
+    public function readyOptionsNested($options)
+    {
+        foreach ($options as $key => $option) {
+            foreach ($option as $subKey => $subOption) {
+                $options[$key][$subKey] = [(int)$key,(int)$subKey];
+            }
+        }
+        return $options;
     }
+    public function readyOptions($options)
+    {
+        foreach ($options as $key => $option) {
+            $options[$key] = [(int)$option,(int)$option];
+        }
+        return $options;
+    } */
     public function searchProducts($request)
     {
         $items = Item::whenSearch($request['term'] ?? null)

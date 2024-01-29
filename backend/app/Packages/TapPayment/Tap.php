@@ -12,8 +12,12 @@ class Tap
 
     public static function send(string $url,array $data,string $method = 'post',bool $withFiles = false){
         try {
-            // TODO @todo change the api key to be related to restaurant not khardl
-            $secret_key =  env('TAP_SECRET_API_KEY','');
+            $secret_key =  env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY','');
+            // TODO @todo (tap) remove after make TAP_PAYMENT_TECHNOLOGY_SECRET_KEY live
+            if( strpos( $url, "/merchant" ) === 0){
+                $secret_key = env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY_LIVE','');
+            }
+            ///
             $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
             
             if($withFiles){
@@ -30,7 +34,9 @@ class Tap
             }
            
             if($response->successful()){
+            
                 $response = json_decode($response->getBody(), true);
+                logger($response);
                 return [
                     'http_code'=>ResponseHelper::HTTP_OK,
                     'message'=> $response
@@ -39,8 +45,9 @@ class Tap
         }catch(\Exception $e){
            logger($e->getMessage());
         }
-        
-        
+        $response = json_decode($response->getBody(), true);
+        logger($response);
+
         if(isset($response['errors'][0])){
             if(isset($response['errors'][0]['description'])){
                 $errors =  $response['errors'][0]['description'];
@@ -58,7 +65,7 @@ class Tap
     }
     public static function sendToLead(string $url,array $data,string $method = 'post',bool $withFiles = false){
         try {
-            $secret_key =env('TAP_SECRET_API_KEY_LIVE','');
+            $secret_key =env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY_LIVE','');
             $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
             
             $response = Http::withToken($secret_key)
@@ -66,6 +73,7 @@ class Tap
             if($response->successful()){
              
                 $response = json_decode($response->getBody(), true);
+                logger($response);
                 if(isset($response['errors'])){
                     throw new Exception("errors");
                 }
@@ -80,7 +88,7 @@ class Tap
         if($response instanceof Response){
           $response = json_decode($response->getBody(), true);
         }
-
+        logger($response);
         if(isset($response['errors'][0])){
             if(isset($response['errors'][0]['description'])){
                 $errors =  $response['errors'][0]['description'];

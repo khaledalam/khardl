@@ -4,6 +4,7 @@
   --danger: #d21d1d;
   --third: #F9F9F9;
 }
+
 /* @font-face {
   font-family: 'cairo';
   src: url('./assets/fonts/Cairo-VariableFont_slnt,wght.ttf') format('truetype');
@@ -15,6 +16,7 @@
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -22,8 +24,8 @@
 }
 
 ::selection {
-  background-color: #000000; 
-  color: var(--primary); 
+  background-color: #000000;
+  color: var(--primary);
 }
 
 .hamburger {
@@ -49,18 +51,539 @@
   stroke-linejoin: round;
   stroke-width: 3;
   transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-              stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .line-top-bottom {
   stroke-dasharray: 12 63;
 }
 
-.hamburger input:checked + svg {
+.hamburger input:checked+svg {
   transform: rotate(-45deg);
 }
 
-.hamburger input:checked + svg .line-top-bottom {
+.hamburger input:checked+svg .line-top-bottom {
   stroke-dasharray: 20 300;
   stroke-dashoffset: -32.42;
+}
+
+.custom-header ul li a {
+
+  color: #000;
+  font-family: "Linden Hill";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.custom-header ul li a.active {
+  color: #C0D123;
+}
+
+.new-translate-button a {
+  color: rgba(0, 0, 0, 0.77);
+
+  font-family: "Linden Hill";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.green-theme-button {
+  border-radius: 10px;
+  border: 1px solid #C0D123;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.16);
+  padding: 10px 38px;
+  line-height: 1;
+
+
+}
+
+.red-theme-button {
+  border-radius: 10px;
+  border: 1px solid #F00;
+  box-shadow: 0px 4px 4px 0px rgba(255, 0, 0, 0.15);
+  padding: 10px 38px;
+  line-height: 1;
+
+
+}
+
+.green-theme-button a,
+.red-theme-button a {
+  font-family: "Linden Hill";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.custom-round-bg {
+  background: url('../src/assets/Ellipse5.png');
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  padding-top: 30px;
+
+}
+
+.curly-arrow {
+  transform: translate(150px, 0px);
+  width: 10%;
+  max-width: 10%;
+}
+
+.feature-heading {
+  color: #000;
+
+  font-family: "Linden Hill";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 40px;
+  /* 133.333% */
+}
+
+.feature-heading span {
+  font-size: 38px;
+}
+
+.feature-description {
+  color: rgba(52, 40, 40, 0.77);
+
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2;
+  /* 187.5% */
+}
+
+.feature-list-box {
+  border-radius: 5px;
+  border: 1px solid;
+  background: #FFF;
+  box-shadow: none;
+  border-color: #fff;
+  transition: all ease-in-out 300ms;
+  position: relative;
+}
+
+.feature-list-box:hover {
+
+  border-color: #2BD123;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.09);
+}
+
+.feature-list-box:hover::after {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 3px;
+  border-radius: 10px;
+  background: linear-gradient(188deg, #FF3D00 4.42%, #C0D123 87.96%);
+  right: -30px;
+}
+
+.cta-btn,
+.cta-btn-more button {
+  color: #C0D123;
+
+  font-family: "Linden Hill";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 10px;
+  background: #000;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
+}
+
+.register-btn button {
+  color: #000;
+
+  font-family: "Linden Hill";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 10px;
+  background: #C0D123;
+  padding: 20px 30px;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
+  z-index: 999999;
+}
+
+.cta-btn-more button {
+  padding: 20px 30px;
+}
+
+.feature-section-green h3 {
+  color: #000;
+
+  text-align: center;
+  font-family: "Linden Hill";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+  /* 136.364% */
+  padding: 15px 25px;
+}
+
+.contact-footer-section {
+  background: url('../src/assets/Group5.png');
+  background-repeat: no-repeat;
+  padding: 30px;
+  min-height: 400px;
+  background-size: contain;
+}
+
+.contact-details {
+  display: flex;
+  margin-top: 20px;
+  color: #FFF;
+  text-align: justify;
+  font-family: "Linden Hill";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  gap: 10px;
+}
+
+.invert {
+  filter: invert(1);
+}
+
+.custom-form-design label {
+  color: #C0D123;
+
+  text-align: justify;
+  font-family: "Linden Hill";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 242.857% */
+}
+
+.custom-form-design input {
+  border-radius: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  background: transparent;
+  padding: 5px 0;
+}
+
+.custom-form-design input:hover,
+.custom-form-design input:focus {
+  border-bottom: 1px solid #C0D123;
+  outline: none;
+}
+
+.new-header {
+  background: url('../src/assets/circle.png');
+  background-repeat: no-repeat;
+  padding-left: 40px;
+  padding-top: 40px;
+}
+
+.new-header h2 {
+  color: #000;
+
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "Linden Hill";
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px;
+
+  margin-bottom: 30px;
+}
+
+.new-header p {
+  color: rgba(52, 40, 40, 0.77);
+
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
+  margin-left: 90px;
+
+}
+
+.main-page-text h2 {
+  color: rgba(52, 40, 40, 0.77);
+
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
+}
+
+.new-advantage-card {
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.32);
+  background-color: transparent;
+  box-shadow: none;
+  transition: all ease-in-out 300ms;
+
+
+}
+
+.new-advantage-card:hover {
+  border-radius: 10px;
+  background: #D5E7BC;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 0;
+}
+
+.new-advantage-card:hover .absolute {
+  background-color: #000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+
+.new-advantage-card .absolute {
+  background-color: #fff;
+  color: #000;
+  transition: all ease-in-out 300ms;
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
+}
+
+.new-advantage-card h2 {
+  color: rgba(52, 40, 40, 0.77);
+
+  text-align: center;
+  font-family: "Linden Hill";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+  /* 100% */
+}
+
+.new-delivery-card {
+  color: rgba(52, 40, 40, 0.77);
+
+  text-align: center;
+  font-family: "Linden Hill";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  /* 150% */
+}
+
+.register-hr {
+  height: 3px;
+  border: 1px solid;
+  background: #000;
+  border-radius: 10px;
+  margin: auto;
+  transform: translate(0, -135px);
+  z-index: -999;
+  position: relative;
+}
+
+.section-ask {
+  border-radius: 10px;
+  background: #C0D123;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.section-ask .item {
+  border-bottom: 1px solid rgba(139, 139, 139, 0.77);
+  color: #000;
+
+  font-family: "Linden Hill";
+  /* font-size: 21px; */
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+
+}
+
+.faq-header {
+  color: #000;
+
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "Linden Hill";
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px;
+  text-align: center;
+
+}
+
+.faq-header span {
+  color: #C0D123;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "Linden Hill";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px;
+
+}
+
+.mini-footer {
+  color: rgba(0, 0, 0, 0.77);
+
+  text-align: justify;
+  font-family: "Linden Hill";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  background: #C0D123;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.new-register-bg {
+  background-image: url('../src/assets/register.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  background-color: #fff;
+}
+
+.new-login-bg {
+  background-image: url('../src/assets/login.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  background-color: #fff;
+}
+
+.new-form-ui h4 {
+  color: rgba(0, 0, 0, 0.47);
+
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  margin-bottom: 10px;
+}
+
+.new-form-ui input {
+  border-radius: 20px;
+  border: 1px solid #C0D123;
+
+  background: #F6F9EE;
+  color: #000;
+
+  font-family: "Linden Hill";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 20px;
+}
+
+.new-form-ui .submit-btn {
+  color: #000;
+
+  font-family: "Linden Hill";
+  font-size: 18px;
+  font-style: normal;
+  border-radius: 20px;
+  width: 100%;
+  font-weight: 400;
+  line-height: normal;
+  background: #C0D123;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
+}
+
+.new-form-ui .submit-btn:hover {
+  background: #000;
+  color: #C0D123;
+}
+
+.font-new {
+  font-family: "Linden Hill";
+}
+
+@media screen and (max-width: 768px) {
+
+  .new-login-bg,
+  .new-register-bg {
+    border-radius: 20px;
+    background-position: center;
+  }
+
+}
+
+.price-box {
+  border-radius: 6px;
+  border: 1px solid #C0D123;
+  background: #FFF;
+  box-shadow: 3px 3px 10px 0px rgba(192, 209, 35, 0.81);
+  padding: 30px;
+  width: 80%;
+}
+
+.price-box .header {
+  color: #000;
+
+  font-family: "Linden Hill";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 113.333% */
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px dashed #8B8B8B;
+}
+
+.price-box .content {
+  color: rgba(0, 0, 0);
+  font-family: "Linden Hill";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 212.5% */
+}
+
+.price-box .small {
+  color: #8B8B8B;
+  font-family: "Linden Hill";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+  /* 340% */
+}
+
+.price-box .price {
+  color: #000;
+  font-family: "Linden Hill";
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
 }

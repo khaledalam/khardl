@@ -44,8 +44,7 @@ class RegisterNewTenant extends Command
         try {
             $seeder->run($name,$user->id);
         }catch(UniqueConstraintViolationException $e){
-            $this->error("The $name domain is occupied by another user. try use different tenant name `php artisan create:tenant {name}`");
-            $this->warn("make sure to add this subdomain to your hosts file");
+            $this->error($e->getMessage());
             return ;
         }
 

@@ -9,6 +9,10 @@ class PaymentMethod extends Model
 {
 
     protected $table = 'payment_methods';
+    
+    public const PENDING = 'pending';
+    public const PAID = 'paid';
+    public const FAILED = 'failed';
 
     protected $fillable = [
         'id',

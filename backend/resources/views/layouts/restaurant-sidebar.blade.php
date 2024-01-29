@@ -72,7 +72,7 @@
                 icon: type,
                 title: message,
                 showConfirmButton: false,
-                timer: 2000
+                timer: 3500
             });
         }
     </script>
@@ -111,7 +111,7 @@
 <!--begin::Main-->
 <!--begin::Root-->
 <!--begin::Root-->
-   
+
 <div class="d-flex flex-column flex-root">
 
     <!--begin::Page-->
@@ -186,14 +186,14 @@
 
                         </div>
                         <!-- Site Editor -->
-                        <?php 
+                        <?php
                         $is_live = false; $has_sub = false ;
                         tenant()->run(function() use (&$is_live,&$has_sub){
                             $first_sub = \App\Models\ROSubscription::first();
                             $has_sub = ( $first_sub && $first_sub->status  == \App\Models\ROSubscription::ACTIVE)?true:false;
                             $is_live = App\Models\Tenant\Setting::first()->is_live;
 
-                        }); 
+                        });
                         ?>
                         @if($is_live && $has_sub)
                         <div class="menu-item menu-accordion">
@@ -637,11 +637,6 @@
                                             <!--end::Menu item-->
                                         </div>
                                         <!--end::Menu sub-->
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-5 my-1">
-                                        <a href="log.html" class="menu-link px-5">{{ __('messages.Logs') }}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->

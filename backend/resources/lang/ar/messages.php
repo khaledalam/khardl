@@ -48,6 +48,7 @@ return [
     'view' => 'التفاصيل',
     'delete' => 'حذف',
     'confirm-delete' => 'تأكيد الحذف',
+    "are-you-sure-you"=>"هل انت متأكد من فعل ذلك",
     'are-you-sure-you-want-to-delete-this-restaurant' => 'هل أنت متأكد أنك تريد حذف هذا المطعم؟',
     'cancel' => 'الغاء',
     'yes-delete-it' => '.نعم،احذف',
@@ -269,6 +270,7 @@ return [
     'restaurant'=>'المطعم',
     'inactive'=>"غير فعال ",
     'payment-method'=>"وسيلة الدفع",
+    'payment-status'=>"حالة الدفع",
     "user-id"=>"معرف المستخدم",
     "search-for-place"=>"بحث عن الاماكن",
     'total-price'=>'السعر الكلي',
@@ -501,6 +503,8 @@ return [
     "All" => "الكل",
     "Un Paid" => "غير مدفوع",
     "Paid" => "مدفوع",
+    "paid" => "مدفوع",
+    "failed" => "فشلت",
     "Denied" => "مرفوض",
     "Expired" => "منتهية",
     "Failed" => "فشلت",
@@ -619,8 +623,8 @@ return [
     "Renew"=>" تجديد",
     "Activate your branches"=> "تفعيل اشتراكك",
     "Renew the term of old branches + pay for new branches for one year including old branches"=>"تجديد مدة الفروع القديمة + سداد قيمة الفروع الجديدة لمدة سنة شاملة الفروع القديمة",
-    "The price of renewing current branches"=>" سعر تجديد الفروع الحالية ",
-    "The price of new branches includes current branches for one year"=>" سعر الفروع الجديدة شاملة الفروع الحالية لمدة سنة ",
+    "The price of renewing current branches"=>" سعر تجديد الفروع القديمة ",
+    "The price of new branches includes current branches for one year"=>" سعر الفروع الجديدة شاملة الفروع القديمة لمدة سنة ",
     "Subscribe to the available packages so that you can create branches"=>"قم بالاشتراك في الباقات المتاحة لكي تتمكن من انشاء الفروع",
     "The current subscription period has expired, please renew in order to receive new orders"=>  "لقد تم انتهاء مدة الاشتراك الحالي ، الرجاء التجديد لكي تتلقي طلبات جديدة",
     "Please activate the branches so that you can receive orders"=>"الرجاء تفعيل عمل الفروع لكي تتمكن من تلقي الطلبات",
@@ -745,6 +749,10 @@ return [
     "Go To Dashboard"=>"الذهاب الي لوحة التحكم",
     "Go To Login Restaurant Page"=>"الذهاب الي صفحة المطعم",
     "Go To Main Khardl Website"=>"الذهاب الي موقع خردل الرئيسي",
-    "This Restaurant is not active, please contact web master"=>"هذا المطعم غير فعال, الرجاء التواصل مع فريق تطوير الموقع"
+    "Business Details"=>"بيانات السجل التجاري",
+    "Personal Information"=>"المعلومات الشخصية",
+    "This Restaurant is not active, please contact web master"=>"هذا المطعم غير فعال, الرجاء التواصل مع فريق تطوير الموقع",
+    "Select option" => "حدد الخيار",
+    "Please check all terms and conditions before submitting."=>"يرجى القبول بجميع الشروط والأحكام قبل الإرسال."
 ];
 

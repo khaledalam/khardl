@@ -112,6 +112,8 @@ Route::group([
                 // Route::get('/{branch}',[RestaurantController::class, 'branch'])->name('restaurant.branch');
                 Route::get('/orders/{order}', [RestaurantController::class, 'branchOrders'])->name('restaurant.branch.order');
                 Route::put('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('restaurant.branch.order.status');
+                Route::get('/orders/{status}/status', [OrderController::class, 'getStatus'])->name('restaurant.branch.order.getStatus');
+
                 // Route::delete('/orders/{order}',[OrderController::class,'destroy'])->name('restaurant.branch.order.destroy');
 
             });
@@ -131,7 +133,8 @@ Route::group([
                 Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get')->middleware('isLeadSubmitted');
                 Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
                  // Step 3: save cards
-                Route::get('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+                Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
+                Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
 
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
@@ -160,7 +163,7 @@ Route::group([
                 Route::controller(TenantOrderController::class)->group(function () {
                     Route::get('orders-all', 'index')->name('restaurant.orders_all');
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
-                    Route::post('orders-add', 'store')->name('restaurant.store');
+                    Route::post('orders-add', 'store')->name('restaurant.order.store');
                     Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
                     Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
                     Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
@@ -264,7 +267,9 @@ Route::group([
                     'update'
                 ]);
                 Route::post("orders/validate", [CustomerOrderController::class, 'validateOrder'])->name('orders.validate');
-                Route::get("orders/payment/response", [CustomerOrderController::class, 'paymentResponse'])->name('orders.payment');
+                Route::post("orders/payment/redirect", [CustomerOrderController::class, 'paymentRedirect'])->name('orders.payment.redirect');
+                Route::get("orders/payment/response", [CustomerOrderController::class, 'paymentResponse'])->name('orders.payment.response');
+               
                 Route::resource("orders", CustomerOrderController::class)->only([
                     'store',
                     'index'

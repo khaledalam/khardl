@@ -23,8 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('central_settings', function (Blueprint $table) {
-            $table->dropColumn('fee_flat_rate');
-            $table->dropColumn('fee_percentage');
+            $table->dropColumn(['fee_flat_rate', 'fee_percentage']);
         });
     }
 };

@@ -43,8 +43,9 @@ Sentry.init({
 });
 
 const App = () => {
+  console.log(localStorage.getItem("i18nextLng"))
   const Language = useSelector((state) => state.languageMode.languageMode)
-  const direction = Language === "en" ? "ltr" : "rtl"
+  const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl"
   const fontFamily = "cairo, sans-serif"
   const location = useLocation()
   const {loading} = useAuthContext()
@@ -118,10 +119,13 @@ const App = () => {
         </div>{" "}
         {showFooter && !loading && (
           <div className='p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] '>
-            <Footer />
+            {/* <Footer /> */}
+            
           </div>
         )}{" "}
+        
       </div>{" "}
+      <div className="mini-footer">All rights reserved - Khardl 2023</div>
     </div>
   )
 }

@@ -13,23 +13,20 @@ class CreateLeadRequest  extends FormRequest
      *
      * @return array
      */
+    protected $stopOnFirstFailure = true;
     public function rules()
     {
-     
+       
+       
         return [
-            'brand.operations.sales.period' => 'required|string',
-            'brand.operations.sales.range.from' => 'required|string',
-            'brand.operations.sales.range.to' => 'required|string',
-            'brand.operations.sales.currency' => 'required|string',
-
-            'brand.terms.*.term' => 'required|string',
-            'brand.terms.*.agree' => 'required|boolean',
-
+            
             'brand.name.ar' => 'required|string',
             'brand.name.en' => 'required|string',
 
             'brand.channel_services.0.channel' => 'required|string',
             'brand.channel_services.0.address' => 'required|string',
+            // TODO @todo validation for terms
+
 
             'entity.country' => 'required|string',
             'entity.license.number' => 'required|string',
@@ -39,11 +36,21 @@ class CreateLeadRequest  extends FormRequest
 
             'entity.is_licensed' => 'sometimes|nullable|boolean',
 
-            'wallet.bank.name' => 'required|string',
-            'wallet.bank.account.number' => 'required|string',
-            'wallet.bank.account.iban' => 'required|string',
-            'wallet.bank.account.name' => 'required|string',
-            'wallet.bank.account.swift' => 'required|string',
+            'brand.operations.sales.period' => 'required|string',
+            'brand.operations.sales.range.from' => 'required|string',
+            'brand.operations.sales.range.to' => 'required|string',
+            'brand.operations.sales.currency' => 'required|string',
+
+            'user.phone.0.country_code' => 'required|string',
+            'user.phone.0.number' => 'required|string',
+            'user.phone.0.type' => 'required|string',
+            // 'user.phone.0.primary' => 'sometimes|nullable|boolean',
+
+            'user.name.middle' => 'required|string',
+            'user.name.last' => 'required|string',
+            'user.name.lang' => 'required|string',
+            'user.name.title' => 'required|string',
+            'user.name.first' => 'required|string',
 
             'user.address.0.country' => 'required|string',
             'user.address.0.city' => 'required|string',
@@ -60,16 +67,7 @@ class CreateLeadRequest  extends FormRequest
 
             'user.nationality' => 'required|string',
 
-            'user.phone.0.country_code' => 'required|string',
-            'user.phone.0.number' => 'required|string',
-            'user.phone.0.type' => 'required|string',
-            // 'user.phone.0.primary' => 'sometimes|nullable|boolean',
-
-            'user.name.middle' => 'required|string',
-            'user.name.last' => 'required|string',
-            'user.name.lang' => 'required|string',
-            'user.name.title' => 'required|string',
-            'user.name.first' => 'required|string',
+           
 
             'user.birth.country' => 'required|string',
             'user.birth.city' => 'required|string',
@@ -77,7 +75,19 @@ class CreateLeadRequest  extends FormRequest
 
             'user.email.0.address' => 'required|string',
             'user.email.0.type' => 'required|string',
+
+          
+
+          
+
             // 'user.email.0.primary' => 'sometimes|nullable|boolean',
+
+
+            'wallet.bank.name' => 'required|string',
+            'wallet.bank.account.number' => 'required|string',
+            'wallet.bank.account.iban' => 'required|string',
+            'wallet.bank.account.name' => 'required|string',
+            'wallet.bank.account.swift' => 'required|string',
 
             'user.primary' => 'required|boolean',
 
@@ -96,27 +106,45 @@ class CreateLeadRequest  extends FormRequest
                     'sales' => [
                         'period' => 'monthly',
                         'currency' => 'SAR',
+                     
                     ],
                 ],
                 'channel_services' => [
-                    'channel' => 'website',
+                    [
+                        'channel' => 'website',
+                        'address'=> route('home')
+                    ]
+                ],
+                "terms"=> [  
+                    [
+                        "term"=> "general",
+                        "agree"=> true
+                    ],
+                    [
+                        "term"=> "chargeback",
+                        "agree"=> true
+                    ],
+                    [
+                        "term"=> "refund",
+                        "agree"=> true
+                    ]
                 ],
                
             ],
             'entity' => [
-                'country' => 'AE',
+                'country' => 'SA',
                 'license' => [
                     'country' => 'SA',
                     'type' => 'commercial_registration',
                 ],
             ],
             'user' => [
-                'address' => [
+                'address' => [  
                     'country' => 'SA',
                 ],
                 'identification' => [
                     'type' => 'national_id',
-                    'issuer' => 'AE',
+                    'issuer' => $this->user['nationality'] ?? ''
                 ],
                 'phone' => [
                     'country_code' => '966',
@@ -134,7 +162,7 @@ class CreateLeadRequest  extends FormRequest
                 ],
             ];
        
-        $this->prepareTerms();
+    
         $this->merge([
             'brand' => array_merge_recursive($defaults['brand'], $this->brand),
             'entity' => array_merge_recursive($defaults['entity'], $this->entity),
@@ -143,11 +171,7 @@ class CreateLeadRequest  extends FormRequest
             'platforms'=>$defaults['platforms']
         ]);
         $this->merge([
-            'brand'=>array_merge($this->brand,
-               [
-                'channel_services'=>[$this->brand['channel_services']]
-               ]
-            ),
+           
             'user'=>array_merge($this->user,
                 [
                     'address'=>[ $this->user['address']],
@@ -173,26 +197,5 @@ class CreateLeadRequest  extends FormRequest
 
         
     }
-    public function prepareTerms(){
-        if(isset($this->brand['terms'])){
-            $updated = [];
-            foreach($this->brand['terms'] as $term=>$boolean){
-                $updated[]= [
-                    'term'=>$term,
-                    'agree'=>$boolean?true:false
-                ];
-                
-            }
-            $this->merge([
-              
-                'brand' => array_merge($this->brand, [
-                    'terms' => $updated,
-                ]),
-            ]);
-
-        }else {
-            return [];
-        }
-        
-    }
+    
 }

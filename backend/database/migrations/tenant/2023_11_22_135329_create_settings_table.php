@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->id();
+            $table->string('global_id')->unique()->primary();
             $table->boolean('is_live')->default(false);
             $table->float('delivery_fee')->default(0);
 
             $table->string("restaurant_name");
+            $table->timestamps();
 
         });
     }

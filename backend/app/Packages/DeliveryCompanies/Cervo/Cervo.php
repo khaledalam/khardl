@@ -28,15 +28,15 @@ class Cervo  extends AbstractDeliveryCompany
         'CANCELED_BY_DRIVER'=>5,
     ];
 
-    public function assignToDriver(Order $order,RestaurantUser $customer){
+    public function assignToDriver(Order $order,RestaurantUser $customer):bool{
         $branch = $order->branch;
 
         if(env('APP_ENV') == 'local'){
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
                 "customer"=>"Testing customer",
-                "order_id"=>"Testing 6",
-                "id"=>"TESTING 6",
+                "order_id"=>"Testing $order->id",
+                "id"=>"Testing $order->id",
                 "lng"=>34.266593,
                 "lat"=>31.279708,
                 "storelat"=>31.277202,
@@ -69,26 +69,71 @@ class Cervo  extends AbstractDeliveryCompany
             "callback"=>"",
             "notes"=>"",
         ];
-        return $this->send(
+        $response = $this->sendSync(
             url:   $this->delivery_company->api_url.'/order',
             token: $token,
             data: $data
         );
+        if($response['http_code'] == ResponseHelper::HTTP_OK){
+            $order->update([
+                'cervo_ref'=>$response['message']
+            ]);
+            return true;
+        }else {
+            return false;
+        }
+     
     }
-    public static function processWebhook($payload){
-        if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER'] || $payload["order_status"]  == self::STATUS_ORDER['ORDER_ON_HAND']){
-            Order::findOrFail($payload['order_id'])->update([
-                'status'=>Order::ACCEPTED
-            ]);
-        }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
-            Order::findOrFail($payload['order_id'])->update([
-                'status'=>Order::COMPLETED
-            ]);
-        }else if (
-            $payload['order_status'] == self::STATUS_ORDER['CANCELLED'] ||
-            $payload['order_status'] == self::STATUS_ORDER['CANCELED_BY_DRIVER'] ){
-            // Todo @todo
-            // resend the order to any delivery companies or cancelled
+    public function cancelOrder($id): bool{
+        try {   
+            if(env('APP_ENV') == 'local'){
+                $token = env('CERVO_SECRET_API_KEY','');
+            }else {
+                $token = $this->delivery_company->api_key;
+            }
+            $response = $this->sendSync(
+                url: $this->delivery_company->api_url . '/cancelorder',
+                token: $token,
+                data:  [],  
+                method: 'get'
+            );
+            return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+        } catch (\Exception $e) {
+            logger($e->getMessage());
+            return false;
+        }
+    }
+    public function processWebhook($payload){
+        if(isset($payload["order_status"])  ){
+
+            $order = Order::where('cervo_ref',$payload['order_id'])->first();
+
+            if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
+  
+                if($payload['tracking']){
+                    $order->update([
+                        'tracking_url'=> $payload['tracking']
+                    ]); 
+                }
+                if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER']){
+                    $order->update([
+                        'status'=>Order::ACCEPTED,
+                        'deliver_by'=> class_basename(static::class),
+                    ]);
+                    $this->cancelOtherOrders("cervo",$order); 
+                   
+                }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
+                    $order->update([
+                        'status'=>Order::COMPLETED
+                    ]);
+                }else if (
+                    $payload['order_status'] == self::STATUS_ORDER['CANCELLED']){
+                    // Todo @todo
+                    $order->update([
+                        'status'=>Order::CANCELLED
+                    ]);
+                }
+            }
         }
 
     }

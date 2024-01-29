@@ -53,7 +53,7 @@ Sentry.init({
 
 const App = () => {
   const Language = useSelector((state) => state.languageMode.languageMode)
-  const direction = Language === "en" ? "ltr" : "rtl"
+  const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl"
   const fontFamily = "cairo, sans-serif"
   const location = useLocation()
   const {loading} = useAuthContext()
@@ -103,7 +103,7 @@ const App = () => {
   return (
     <MenuProvider
       MenuComponent={OuterSidebarNav}
-      direction={Language == "en" ? "left" : "right"}
+      direction={localStorage.getItem("i18nextLng") == "en" ? "left" : "right"}
       animation={"slide"} // 'slide' │ 'push' │ 'reveal'
       width={isMobile ? "80vw" : "25vw"}
     >
