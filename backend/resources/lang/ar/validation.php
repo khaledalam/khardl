@@ -187,7 +187,9 @@ return [
         "active_from" => "تاريخ التنشيط",
         "expire_at" => "تاريخ الانتهاء",
         "code" => "كود القسيمة",
-        "module" => "شركة التوصيل"
+        "module" => "شركة التوصيل",
+        "payment_methods" => "طرق الدفع",
+        "delivery_types" => "طرق التوصيل"
 
     ],
 ];
