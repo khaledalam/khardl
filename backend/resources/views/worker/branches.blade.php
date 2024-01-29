@@ -19,14 +19,14 @@
                     <!--begin::Body-->
                     <div class="card-body py-9">
                         <!--begin::Row-->
-                        <div class="row gx-9 h-100">
+                        <div class="row gx-9">
                             <!--begin::Col-->
-                            <div class="col-sm-6 mb-10 mb-sm-0">
+                            <div class="col-sm-6 branches-google-maps">
                                 <!--begin::Image-->
 
                                     <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
-                                        <input id="pac-input" class="form-control" type="text" placeholder="{{__('messages.search-for-place')}}">
-                                        <div id="map{{ $branch->id }}" style="width: 100%; height: 90%; border:0;"></div>
+                                        <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{__('messages.search-for-place')}}">
+                                        <div id="map{{ $branch->id }}" class="google_map"></div>
                                             <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
@@ -59,24 +59,6 @@
                                         <!--end::Heading-->
                                         <!--begin::Items-->
                                         <div class="d-flex align-items-center flex-wrap d-grid gap-2">
-                                            <!--begin::Item-->
-                                            {{-- <div class="d-flex align-items-center me-5 me-xl-13">
-                                                <!--begin::Symbol-->
-                                                <div class="symbol symbol-30px symbol-circle me-3">
-                                                    <img src="assets/media/avatars/300-3.jpg" class=""
-                                                        alt="" />
-                                                </div>
-                                                <!--end::Symbol-->
-                                                <!--begin::Info-->
-                                                <div class="m-0">
-                                                    <span
-                                                        class="fw-bold text-gray-400 d-block fs-8">Manager</span>
-                                                    <span class="fw-bolder text-gray-800 fs-7">Ibrahim
-                                                        Rogi</span>
-                                                </div>
-                                                <!--end::Info-->
-                                            </div> --}}
-                                            <!--end::Item-->
                                             <!--begin::Item-->
                                             @if($user?->hasPermissionWorker('can_view_revenues'))
                                             <div class="d-flex align-items-center">
@@ -135,16 +117,6 @@
                                                     <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('messages.edit-menu') }}</a>
                                                 </div>
                                             @endif
-                                            <!--end::Stat-->
-{{--                                            @if($user?->hasPermissionWorker('can_modify_advertisements'))--}}
-{{--                                            <!--begin::Stat-->--}}
-{{--                                            <div--}}
-{{--                                                class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 mb-3">--}}
-{{--                                                <a href="#" class="fs-6 text-700 fw-bolder">{{ __('messages.advertisement-modification') }}</a>--}}
-{{--                                            </div>--}}
-{{--                                            @endif--}}
-
-                                            <!--end::Stat-->
                                         </div>
                                         <!--end::Stats-->
                                         @if($user?->hasPermissionWorker('can_modify_working_time'))
@@ -611,96 +583,126 @@
           initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
         @endforeach
       </script>
-
-
     <script>
+         // Initialize based on the default selected option
 
+        document.addEventListener("DOMContentLoaded", (event) => {
+            let maps = {}; // Store maps in an object
+            let markers = {}; // Store markers in an object
 
+            function initializeMap(branchId, lat, lng) {
+                const latLng = new google.maps.LatLng(lat, lng);
 
-        const mapElement = document.getElementById('map');
-        const centerCoords = { lat: 24.7136, lng: 46.6753 }; // Default center coordinates
+                const map = new google.maps.Map(document.getElementById('map' + branchId), {
+                    center: latLng,
+                    zoom: 8,
+                });
 
-        // Check if the old('location') is not null
-        const locationValue = "{{ old('location') }}";
-        if (locationValue !== null && locationValue !== '') {
-            const locationArray = locationValue.split(' ');
-            if (locationArray.length === 2) {
-                // Update the center coordinates based on the old('location')
-                centerCoords.lat = parseFloat(locationArray[0]);
-                centerCoords.lng = parseFloat(locationArray[1]);
+                const input = document.getElementById("pac-input" + branchId);
+
+                const options = {
+                    fields: ["formatted_address", "geometry", "name"],
+                    strictBounds: false,
+                };
+                const autocomplete = new google.maps.places.Autocomplete(input, options);
+                autocomplete.bindTo("bounds", map);
+
+                const marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    draggable: true,
+                });
+
+                markers[branchId] = marker; // Store the marker for this branch
+                maps[branchId] = map; // Store the map for this branch
+
+                google.maps.event.addListener(marker, 'dragend', function () {
+                    updateLocationInput(marker.getPosition(), branchId);
+                });
+
+                // Add a click event listener to the map
+                google.maps.event.addListener(map, 'click', function (event) {
+                    marker.setPosition(event.latLng);
+                    updateLocationInput(event.latLng, branchId);
+                });
+                autocomplete.addListener("place_changed", () => {
+                    console.log('change location')
+                    // infowindow.close();
+                    marker.setVisible(false);
+
+                    const place = autocomplete.getPlace();
+
+                    if (!place.geometry || !place.geometry.location) {
+                        // User entered the name of a Place that was not suggested and
+                        // pressed the Enter key, or the Place Details request failed.
+                        window.alert("No details available for input: '" + place.name + "'");
+                        return;
+                    }
+                    const lat = place.geometry.location.lat();
+                    const lng = place.geometry.location.lng();
+                    selectedPlacePosition = new google.maps.LatLng(lat, lng);
+                    updateLocationInput(selectedPlacePosition, branchId);
+                    // If the place has a geometry, then present it on a map.
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    } else {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);
+                    }
+
+                    marker.setPosition(place.geometry.location);
+                    marker.setVisible(true);
+                    // infowindow.open(map, marker);
+                });
+
+                console.log("ok")
             }
-        }
 
-        const map = new google.maps.Map(mapElement, {
-            center: centerCoords,
-            zoom: 10, // Set an appropriate zoom level
-        });
+            function updateLocationInput(latLng, branchId) {
+                const latInput = document.getElementById('lat' + branchId);
+                const lngInput = document.getElementById('lng' + branchId);
+                latInput.value = latLng.lat();
+                lngInput.value = latLng.lng();
+                const locationInput = document.getElementById('location');
+                locationInput.value = `${lngInput.value }, ${latInput.value }`;
 
+            }
 
+            function updateLocation(branchId) {
+                const marker = markers[branchId];
+                const latInput = document.getElementById('lat' + branchId);
+                const lngInput = document.getElementById('lng' + branchId);
+                const lat = parseFloat(latInput.value);
+                const lng = parseFloat(lngInput.value);
 
-        const locationInput = document.getElementById('location');
-        const geocoder = new google.maps.Geocoder();
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    const latLng = new google.maps.LatLng(lat, lng);
+                    marker.setPosition(latLng);
+                    maps[branchId].setCenter(latLng);
 
-        let marker; // To store the dropped pin
-
-        // Create a PlacesService instance for autocomplete
-
-        // Listen for a place selection
-
-        google.maps.event.addListener(map, 'click', function (event) {
-
-            // If a marker exists, remove it
-        if (marker) {
-            marker.setMap(null);
-        }
-
-        // Create a new marker at the clicked location
-        marker = new google.maps.Marker({
-            map: map,
-            position: event.latLng,
-        });
-        const input = document.getElementById("pac-input");
-        const options = {
-            fields: ["formatted_address", "geometry", "name"],
-            strictBounds: false,
-        };
-        const autocomplete = new google.maps.places.Autocomplete(input, options);
-        autocomplete.bindTo("bounds", map);
-        autocomplete.addListener("place_changed", () => {
-                infowindow.close();
-                marker.setVisible(false);
-
-                const place = autocomplete.getPlace();
-
-                if (!place.geometry || !place.geometry.location) {
-                // User entered the name of a Place that was not suggested and
-                // pressed the Enter key, or the Place Details request failed.
-                window.alert("No details available for input: '" + place.name + "'");
-                return;
+                    $.ajax({
+                        url: '/branches/update-location/' + branchId,
+                        method: 'POST',
+                        data: {
+                            lat: lat,
+                            lng: lng,
+                        },
+                        success: function (response) {
+                            console.log('Location updated successfully:');
+                        },
+                        error: function (error) {
+                            console.error('Error updating location:', error);
+                        },
+                    });
                 }
-                const lat = place.geometry.location.lat();
-                const lng = place.geometry.location.lng();
-                selectedPlacePosition = { lat, lng };
-                updateLocationInput(selectedPlacePosition, branchId);
-                // If the place has a geometry, then present it on a map.
-                if (place.geometry.viewport) {
-                    map.fitBounds(place.geometry.viewport);
-                } else {
-                    map.setCenter(place.geometry.location);
-                    map.setZoom(17);
-                }
+            }
 
-                marker.setPosition(place.geometry.location);
-                marker.setVisible(true);
-                infowindow.open(map, marker);
+
+            // Initialize the maps for each branch
+            @foreach ($branches as $branch)
+                initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
+            @endforeach
+
         });
-
-        // Update the hidden input with the clicked location's latitude and longitude
-        locationInput.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
-    });
-
-
-
     </script>
-
 @endsection
