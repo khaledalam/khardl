@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
-use App\Http\Controllers\Web\Central\GlobalPromoterController;
-use App\Http\Controllers\Web\Central\PromoterController;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -141,7 +139,7 @@ Route::get('/test', static function (){
         'status' => 'test'
     ]);
 })->name('test');
-Route::get('promoter/{name}', [GlobalPromoterController::class, 'index'])->name('global.promoter');
+
 
 
 Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');

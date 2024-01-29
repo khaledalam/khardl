@@ -36,7 +36,7 @@
                                                 <!--begin::Inbox-->
                                                 <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
                                                     <span class="menu-link @if ($category->id === $selectedCategory->id) active @endif">
-                                                        <img src="{{ $category->photo ?? global_asset('img/category-icon.png') }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
+                                                        <img src="{{ $category->photo }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
                                                         <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
                                                     </span>
@@ -169,9 +169,7 @@
                                                  <td  class="text-center">
                                                     <div class="text-dark">
                                                         <!--begin::Heading-->
-                                                        <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}">
-                                                            <span class="fw-bolder text-start">{{ $item->name }}</span>
-                                                        </a>
+                                                        <span class="fw-bolder text-start">{{ $item->name }}</span>
                                                         <!--end::Heading-->
                                                     </div>
                                                 </td>
@@ -196,14 +194,13 @@
                                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                         <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('messages.view') }}</a>
+                                                            <a href="https://youtube.com" class="menu-link px-3">{{ __('messages.view') }}</a>
                                                         </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
-                                                        {{-- TODO:Edit item --}}
-                                                    {{--     <div class="menu-item px-3">
+                                                        <div class="menu-item px-3">
                                                             <a href="https://google.com" class="menu-link px-3">{{ __('messages.edit') }}</a>
-                                                        </div> --}}
+                                                        </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
 

@@ -19,9 +19,7 @@ composer install -q --no-ansi --no-interaction --no-scripts --no-progress --pref
 
 # Setup backend
 php artisan migrate:fresh --seed
-php artisan create:tenant first
-php artisan create:tenant second
-php artisan create:tenant third
+php artisan create:tenant
 
 php artisan optimize:clear
 
