@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\OrderItem;
-use App\Models\Tenant\Payment;
-use App\Packages\TapPayment\Charge\Charge;
-use App\Packages\DeliveryCompanies\DeliveryCompanies;
 
 class OrderRepository
 {
@@ -44,7 +41,7 @@ class OrderRepository
                 'coupon_id' => $coupon && $discount != 0 ? $coupon->id : null,
                 'discount' => $discount ? $discount : null,
                 // TODO @todo update
-                'payment_status' => Payment::PENDING,
+                'payment_status' => PaymentMethod::PENDING,
                 'status' => Order::PENDING,
             ]);
             if($discount&&$coupon){

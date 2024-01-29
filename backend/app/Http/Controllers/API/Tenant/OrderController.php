@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Faker\Provider\id_ID\Color;
 use Illuminate\Validation\Rule;
 use App\Traits\APIResponseTrait;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Tenant\PaymentMethod;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\OrderStatusLogs;
 use App\Repositories\API\OrderRepository;
 use Illuminate\Contracts\Database\Query\Builder;
@@ -62,7 +63,13 @@ class  OrderController extends BaseRepositoryController
                 $statusLog->class_name = 'text-secondary';
                 break;
             case Order::ACCEPTED:
+               
                 $statusLog->class_name = 'text-success';
+                if($order->payment_method->name ==  PaymentMethod::CASH_ON_DELIVERY){
+                    $order->update([
+                        'payment_status'=> PaymentMethod::PAID
+                    ]);
+                }
                 break;
             case Order::READY:
                 $statusLog->class_name = 'text-info';

@@ -130,6 +130,7 @@ class Order extends Model
     }
     /* End Scoped */
     public static function ChangeStatus($status){
+         // TODO @todo (order status) change payment status for RECEIVED from restaurant, prevent to change to comp,canc until it ready (cash on delivery)
         return  match($status){
             self::PENDING => [self::RECEIVED_BY_RESTAURANT,self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY],
             self::RECEIVED_BY_RESTAURANT => [self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY],

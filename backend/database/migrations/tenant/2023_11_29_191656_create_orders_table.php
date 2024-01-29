@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Tenant\Order;
-use App\Models\Tenant\Payment;
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('delivery_cost', 8, 2)->default(0);
             $table->integer('vat')->default(15);
             $table->enum('status',Order::STATUS)->default(Order::PENDING);
-            $table->string('payment_status')->default(Payment::PENDING);
+            $table->string('payment_status')->default(PaymentMethod::PENDING);
             $table->text('shipping_address')->nullable();
             $table->text('order_notes')->nullable();
 

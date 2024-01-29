@@ -4,13 +4,13 @@ namespace App\Http\Controllers\API\Tenant\Customer;
 
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
-use App\Models\Tenant\Payment;
 use App\Models\Tenant\Setting;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Customer\CartRepository;
 use App\Repositories\Customer\OrderRepository;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
+use App\Models\Tenant\PaymentMethod;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use Exception;
 
@@ -120,16 +120,16 @@ class OrderController
 
             if($charge['message']['status'] == 'CAPTURED'){
                 $order->update([
-                    "payment_status"=> Payment::PAID
+                    "payment_status"=> PaymentMethod::PAID
                 ]);
                 $cart->trash();
      
             }else if ($charge['message']['status'] != 'CAPTURED'){
                 $order->update([
-                    "payment_status"=> Payment::FAILED
+                    "payment_status"=> PaymentMethod::FAILED
                 ]);
             }
-            $message = ($order->payment_status  == Payment::PAID)? __("The payment was successful, your order is pending"): __('Payment failed, please try again');
+            $message = ($order->payment_status  == PaymentMethod::PAID)? __("The payment was successful, your order is pending"): __('Payment failed, please try again');
         }catch(\Exception $e){
             $message =__('Payment failed, please try again');
             logger($e->getMessage());
@@ -137,7 +137,7 @@ class OrderController
         session()->forget([tenant()->id.'_order_customer_'.Auth::id()]);
         
         return redirect()->route("home",[
-            'status'=>(isset($order->payment_status ) && $order->payment_status  == Payment::PAID)?true:false,
+            'status'=>(isset($order->payment_status ) && $order->payment_status  == PaymentMethod::PAID)?true:false,
             'message'=>$message
         ]);
 
