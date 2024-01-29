@@ -51,4 +51,4 @@ jobs:
     - name: Deploy
       run: |
         cd /home/khardl5/public_html/
-        ./testing-deploy.sh
+        ./deploy.sh
