@@ -36,11 +36,11 @@ class TAPLeadIDToMerchantIDRequest extends Mailable
     {
         return $this
             ->from(
-                $address = env('KHARDL_TAP_LEAD_ID_TO_MERCHANT_ID_EMAIL', 'tap.metchants@khardl.com'),
+                $address = env('KHARDL_TAP_LEAD_ID_TO_MERCHANT_ID_EMAIL', 'tap.merchants@khardl.com'),
                 $name = 'Khardl TAP Merchant IDs'
             )->to([
-                env('TAP_INTEGRATIONS_EMAIL', 'integrations@tap.company')
-//            'khaledalam.net@gmail.com' // @TODO: remove this line
+//                env('TAP_INTEGRATIONS_EMAIL', 'integrations@tap.company')
+            'khaledalam.net@gmail.com' // @TODO: remove this line
             ])
             ->cc([
                 'khaledalam.net@gmail.com',
