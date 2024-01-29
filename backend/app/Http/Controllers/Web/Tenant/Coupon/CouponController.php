@@ -15,7 +15,7 @@ class CouponController extends BaseController
     }
     public function index(Request $request)
     {
-        return $this->couponService->index();
+        return $this->couponService->index($request);
     }
     public function create(Request $request)
     {
@@ -32,6 +32,14 @@ class CouponController extends BaseController
     public function update(CouponUpdateFormRequest $request, $id)
     {
         return $this->couponService->update($request, $id);
+    }
+    public function delete(Request $request, Coupon $coupon)
+    {
+        return $this->couponService->delete($coupon);
+    }
+    public function restore(Request $request, $id)
+    {
+        return $this->couponService->restore($id);
     }
     public function changeStatus(Request $request,Coupon $coupon)
     {
