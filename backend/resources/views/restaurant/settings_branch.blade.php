@@ -64,7 +64,7 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]"  value="\App\Models\Tenant\PaymentMethod::CREDIT_CARD" {{($payment_methods[\App\Models\Tenant\PaymentMethod::CREDIT_CARD] ?? false)?'checked':''}}/>
+                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]"  value="{{\App\Models\Tenant\PaymentMethod::CREDIT_CARD}}" {{($payment_methods[\App\Models\Tenant\PaymentMethod::CREDIT_CARD] ?? false)?'checked':''}}/>
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
