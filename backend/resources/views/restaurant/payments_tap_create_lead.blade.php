@@ -120,12 +120,8 @@
                                 <select name="user[name][title]" id="user_title" class="form-select">
                                     <option value="Mr" {{ old('user.name.title') == 'Mr'? 'selected' :'' }}>{{ __('messages.Mr') }}</option>
                                     <option value="Mrs" {{ old('user.name.title') == 'Mrs'? 'selected' :'' }}>{{ __('messages.Mrs') }}</option>
-                                    <option value="Miss" {{ old('user.name.title') == 'Miss'? 'selected' :'' }}>{{ __('messages.Miss') }}</option>
-                                    <option value="Ms" {{ old('user.name.title') == 'Ms'? 'selected' :'' }}>{{ __('messages.Ms') }}</option>
                                     <option value="Dr" {{ old('user.name.title') == 'Dr'? 'selected' :'' }}>{{ __('messages.Dr') }}</option>
                                     <option value="Prof" {{ old('user.name.title') == 'ProfMr'? 'selected' :'' }}>{{ __('messages.Prof') }}</option>
-                                    <option value="Sir" {{ old('user.name.title') == 'Sir'? 'selected' :'' }}>{{ __('messages.Sir') }}</option>
-                                    <option value="Madam" {{ old('user.name.title') == 'Madam'? 'selected' :'' }}>{{ __('messages.Madam') }}</option>
                                 </select>
                             </div>
 

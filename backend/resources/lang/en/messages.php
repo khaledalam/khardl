@@ -781,10 +781,6 @@ return [
     "Entity name (English)" => "Entity name (English)",
     "Entity Name (Arabic)" => "Entity Name (Arabic)",
     "Mrs" => "Mrs",
-    "Miss" => "Miss",
-    "Ms" => "Ms",
     "Dr" => "Dr",
     "Prof" => "Prof",
-    "Sir" => "Sir",
-    "Madam" => "Madam"
 ];
