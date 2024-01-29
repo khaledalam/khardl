@@ -12,8 +12,12 @@ class Tap
 
     public static function send(string $url,array $data,string $method = 'post',bool $withFiles = false){
         try {
-            // TODO @todo change the api key to be related to restaurant not khardl
-            $secret_key =  env('TAP_SECRET_API_KEY','');
+            $secret_key =  env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY','');
+            // TODO @todo (tap) remove after make TAP_PAYMENT_TECHNOLOGY_SECRET_KEY live
+            if( strpos( $url, "/merchant" ) === 0){
+                $secret_key = env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY_LIVE','');
+            }
+            ///
             $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
             
             if($withFiles){
@@ -61,7 +65,7 @@ class Tap
     }
     public static function sendToLead(string $url,array $data,string $method = 'post',bool $withFiles = false){
         try {
-            $secret_key =env('TAP_SECRET_API_KEY_LIVE','');
+            $secret_key =env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY_LIVE','');
             $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
             
             $response = Http::withToken($secret_key)

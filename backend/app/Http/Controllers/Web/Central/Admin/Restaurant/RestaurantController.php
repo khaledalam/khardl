@@ -6,10 +6,12 @@ use App\Models\Log;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Enums\Admin\LogTypes;
+use App\Utils\ResponseHelper;
 use App\Models\Tenant\Setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\DeliveryCompany;
+use App\Packages\TapPayment\Merchant\Merchant as TapMerchant;
 use App\Http\Services\Central\Admin\Restaurant\RestaurantService;
 use App\Http\Requests\Central\Restaurant\ActivateAndDeactivateDeliveryFormRequest;
 
@@ -55,10 +57,23 @@ class RestaurantController extends Controller
         return response()->json($lead_response,200);
     }
     public function updateConfig(Tenant $tenant,Request $request){
-        // @TODO @todo (TAP) validate merchant through merchant api
+        $message = $tenant->run(function(){
+            if(!Setting::first()->lead_id){
+                return __('This restaurant has no tap account on the server');
+            }
+            return false;
+        });
+        if($message){
+            return redirect()->back()->with('error',$message);
+        }
+        
         $request->validate([
             'merchant_id'=>"string|nullable"
         ]);
+        $merchant = TapMerchant::retrieve($request->merchant_id);
+        if ($merchant['http_code'] != ResponseHelper::HTTP_OK) {
+            return redirect()->back()->with('error',__('Invalid Merchant id'));
+        }
         
         $oldMerchantId=$tenant->run(function()use($request){
             $setting = Setting::first();
