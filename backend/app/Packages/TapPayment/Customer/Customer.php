@@ -11,6 +11,7 @@ class Customer extends Tap implements CustomerInterface
 {
     
     const DEFAULT_CUSTOMER_ID = 'cus_TS06A2120240514u9NY2501307';
+    const DEFAULT_LIVE_CUSTOMER_ID = 'cus_LV04G3220242058l9M33001249';
     public static function create($data):array{
         return self::send('/customers',$data + [
             "currency"=>"SAR"

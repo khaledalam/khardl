@@ -23,6 +23,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $branch = Branch::find(BranchSeeder::BRANCH_ID);
+
+      
+        if(env('APP_ENV') == 'local'){
+            $customer_tap_id = Customer::DEFAULT_CUSTOMER_ID;
+        }else {
+            $customer_tap_id = Customer::DEFAULT_LIVE_CUSTOMER_ID;
+        }
         $user = RestaurantUser::create([
             'id' => self::RESTAURANT_WORKER_USER_ID,
             'first_name' => "Worker",
@@ -34,7 +41,7 @@ class UserSeeder extends Seeder
             'address' => 'test address',
             "lat"=>24.7136,
             "lng"=> 46.6753,
-            'tap_customer_id'=> Customer::DEFAULT_CUSTOMER_ID,
+            'tap_customer_id'=> $customer_tap_id,
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
@@ -62,7 +69,7 @@ class UserSeeder extends Seeder
             'address' => 'test address',
             "lat"=>24.7136,
             "lng"=> 46.6753,
-            'tap_customer_id'=> Customer::DEFAULT_CUSTOMER_ID,
+            'tap_customer_id'=> $customer_tap_id,
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
@@ -90,7 +97,7 @@ class UserSeeder extends Seeder
             'address' => 'test address',
             "lat"=>24.7136,
             "lng"=> 46.6753,
-            'tap_customer_id'=> Customer::DEFAULT_CUSTOMER_ID,
+            'tap_customer_id'=> $customer_tap_id,
             'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
             'remember_token' => Str::random(10),
         ]);
