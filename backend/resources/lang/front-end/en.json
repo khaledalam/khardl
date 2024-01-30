@@ -26,7 +26,7 @@
   "commissions": "commissions",
   "or": " or ",
   "mandatory subscriptions": "mandatory subscriptions",
-  "Create your website": "Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only.",
+  "Create your website": "Create your website and app with Khardl in minutes,",
   "Start Now": "Start Now",
   "view more": "View More",
   "Each point for an order": "Each point represents an order",
@@ -186,6 +186,9 @@
   "Excludes VAT": "Excludes value-added tax",
   "Includes VAT": "Includes value-added tax",
   "Unlimited points": "(Unlimited number of points for one year)",
+  
+  
+
   "points": "Points",
   "Location": "Location",
   "Applications": "Applications",
@@ -370,5 +373,8 @@
   "e.g.": "e.g.",
   "You will be redirect to your new restaurant in 3 sec ...": "You will be redirect to your new restaurant in 3 sec ...",
   "Management Area": "Login as Management Area",
-  "Login as Customer": "Login as Customer"
+  "Login as Customer": "Login as Customer",
+  "Unlock a pathway to":"Unlock a pathway to attracting more clients without paying",
+"start selling right away,":"start selling right away, and pay based on your orders only",
+"You can design your":"You can design your website or application independently, with no requirement for communication"
 }

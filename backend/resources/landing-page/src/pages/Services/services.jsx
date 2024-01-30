@@ -12,7 +12,7 @@ import Button from "../../components/Button";
 import service1 from "../../assets/services1.png";
 import service2 from "../../assets/services2.png";
 import service3 from "../../assets/services3.png";
-
+import Rectangle from "../../assets/Rectangle.png";
 function Services() {
   const { t } = useTranslation();
   const Features = [
@@ -60,11 +60,10 @@ function Services() {
       </Helmet>
 
       <div className="pt-[80px]">
-        <div className="p-[30px]  pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
-          <HeaderSection
-            title={t("Services")}
-            details={`${t("Home")} / ${t("Services")}`}
-          />
+        <div className="flex items-center justify-center h-[120px]">
+          <img src={Rectangle} className="absolute left-[40%]" alt=""></img>
+          <h2 className="services-heading z-10 relative">{t("Services")}</h2>
+          <img src={Rectangle} className="absolute right-[40%] mt-4" alt=""></img>
         </div>
         <div className="mt-22 mb-[130px]">
           <div className="mt-6" data-aos="fade-up" data-aos-delay="400">
