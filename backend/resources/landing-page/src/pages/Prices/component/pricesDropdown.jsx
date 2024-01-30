@@ -28,7 +28,7 @@ const PricesDropdown = () => {
 
       {isOpen && (
         <div
-          className="origin-top-right absolute  mt-2 w-50 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="origin-top-right absolute  mt-2 w-50 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none border border-solid border-[#C0D123]"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="options-menu"
@@ -36,28 +36,53 @@ const PricesDropdown = () => {
           <div className="py-1" role="none">
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123]"
               role="menuitem"
             >
-              Option 1
+              <div className="mt-2 flex justify-between items-start gap-4 min-w-[195px]">
+                <p>{t("Monthly")}</p>
+                <p>
+                  <span>{t("SAR")}</span>
+                  <span className="mt-2">{299}</span>
+                </p>
+              </div>
             </a>
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000]"
               role="menuitem"
             >
-              Option 2
+              <div className="mt-2 flex justify-between items-start gap-6 min-w-[195px]">
+                <p>{t("3 months")}</p>
+                <p>
+                  <span>{t("SAR")}</span>
+                  <span className="mt-2">{499}</span>
+                </p>
+              </div>
             </a>
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              className="block px-4 text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000]"
               role="menuitem"
             >
-              <div className="mt-2 flex justify-between items-start gap-6 min-w-[250px]">
+              <div className="mt-2 flex justify-between items-start gap-6 min-w-[195px]">
+                <p>{t("6 months")}</p>
+                <p>
+                  <span>{t("SAR")}</span>
+                  <span className="mt-2">{1299}</span>
+                </p>
+              </div>{" "}
+            </a>
+            <a
+              href="#"
+              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000]"
+              role="menuitem"
+            >
+              <div className="mt-2 flex justify-between items-start gap-6 min-w-[195px]">
                 <p>{t("12 months")}</p>
                 <p>
-                  <span className="price">{1299}</span>
-                  <span className="small">{t("SAR")}</span>
+                  <span>{t("SAR")}</span>
+                  <span className="mt-2">{1299}</span>
                 </p>
               </div>
             </a>

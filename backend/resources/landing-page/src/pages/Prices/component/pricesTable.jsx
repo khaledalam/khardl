@@ -46,22 +46,6 @@ function PricesTable() {
                   </p>
                   <PricesDropdown />
                 </div>
-                {/* <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
-                                    <p>{t("3 months")}</p>
-                                    <p><span className='price'>{499}</span><span className='small'>{t("SAR")}</span></p>
-                                </div>
-                                <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
-                                    <p>{t("6 months")}</p>
-                                    <p>
-                                        <span className='price'>{799}</span><span className='small'>{t("SAR")}</span>
-                                    </p>
-                                </div>
-                                <div className='mt-2 flex justify-between items-start gap-6 min-w-[250px]'>
-                                    <p>{t("12 months")}</p>
-                                    <p>
-                                        <span className='price'>{1299}</span><span className='small'>{t("SAR")}</span>
-                                    </p>
-                                </div> */}
               </div>
             </div>
           </div>
@@ -70,7 +54,7 @@ function PricesTable() {
               <p className="font-bold  content">{t("Receive Requests")}</p>
               <div className="flex justify-start items-center gap-2 text-start mt-1">
                 <FaStarOfLife size={10} className="text-red-500" />
-                <h2 className="text-[16px]">{t("Devices")}</h2>
+                <h2 className="text-[16px] text-[#8B8B8B]">{t("Devices2")}</h2>
               </div>
               <div className="flex flex-col items-start justify-start text-start">
                 <p>{t("Free")}</p>
