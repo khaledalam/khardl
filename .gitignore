@@ -37,3 +37,5 @@ backend/public/js/tenant.js.LICENSE.txt
 mix-manifest.json
 # DB backup
 db_backups/*.sql
+
+backend/bootstrap/cache/*
