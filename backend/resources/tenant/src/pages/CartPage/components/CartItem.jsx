@@ -59,11 +59,8 @@ const CartItem = ({cartItem, cartItems, language, isMobile, styles}) => {
 
   const handleQuantityChange = async () => {
     try {
-      await AxiosInstance.post(`/carts`, {
-        item_id: cartItem.item_id,
-        quantity: qtyCount,
-        branch_id: cartItem.item.branch_id,
-        notes: feedback,
+      await AxiosInstance.patch(`/carts/${cartItem.cart_id}`, {  
+        quantity: qtyCount
       })
         .then((e) => {
           // toast.success(`${t("Item quantity updated")}`)
