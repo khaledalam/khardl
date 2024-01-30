@@ -12,25 +12,27 @@ import {useTranslation} from "react-i18next"
 const CustomerDashboard = () => {
   const navigate = useNavigate()
   const {t} = useTranslation()
-  const ordersList = useSelector((state) => state.customerAPI.ordersList)
+    const ordersList = useSelector((state) => state.customerAPI.ordersList)
+    const cashback = useSelector((state) => state.auth.cashback);
+    const loyaltyPoints = useSelector((state) => state.auth.loyalty_points);
   const [orderLength, setOrderLength] = useState(6)
   const [isViewMore, setIsViewMore] = useState(false)
 
   const overviewInfo = [
-    {
-      id: 1,
-      title: t("Wallet"),
-      amount: 700,
-    },
+    // {
+    //   id: 1,
+    //   title: t("Wallet"),
+    //   amount: 700,
+    // },
     {
       id: 2,
       title: t("Loyalty Point"),
-      amount: 700,
+      amount: cashback || 0,
     },
     {
       id: 3,
       title: t("Total CashBack"),
-      amount: 700,
+      amount: loyaltyPoints || 0,
     },
   ]
 
