@@ -17,7 +17,7 @@ const PricesDropdown = () => {
         type="button"
         onClick={toggleDropdown}
         className="inline-flex justify-center w-[100%] rounded-full
-        border border-gray-300 shadow-sm px-4 py-2 bg-[#000000] text-sm font-medium text-[#C0D123] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        border border-[#C0D123] shadow-sm px-4 py-2 bg-[#000000] text-sm font-medium text-[#C0D123] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         id="dropdown"
         aria-haspopup="true"
         aria-expanded="true"
@@ -36,52 +36,52 @@ const PricesDropdown = () => {
           <div className="py-1" role="none">
             <a
               href="#"
-              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123]"
+              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:border border-[#C0D123]"
               role="menuitem"
             >
               <div className="mt-2 flex justify-between items-start gap-4 min-w-[195px]">
                 <p>{t("Monthly")}</p>
                 <p>
-                  <span>{t("SAR")}</span>
+                  <span className="text-[10px]">{t("SAR")}</span>
                   <span className="mt-2">{299}</span>
                 </p>
               </div>
             </a>
             <a
               href="#"
-              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000]"
+              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000] hover:border border-[#C0D123]"
               role="menuitem"
             >
               <div className="mt-2 flex justify-between items-start gap-6 min-w-[195px]">
                 <p>{t("3 months")}</p>
                 <p>
-                  <span>{t("SAR")}</span>
+                  <span className="text-[10px]">{t("SAR")}</span>
                   <span className="mt-2">{499}</span>
                 </p>
               </div>
             </a>
             <a
               href="#"
-              className="block px-4 text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000]"
+              className="block px-4 text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000] hover:border border-[#C0D123]"
               role="menuitem"
             >
               <div className="mt-2 flex justify-between items-start gap-6 min-w-[195px]">
                 <p>{t("6 months")}</p>
                 <p>
-                  <span>{t("SAR")}</span>
+                  <span className="text-[10px]">{t("SAR")}</span>
                   <span className="mt-2">{1299}</span>
                 </p>
-              </div>{" "}
+              </div>
             </a>
             <a
               href="#"
-              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000]"
+              className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000] hover:border border-[#C0D123]"
               role="menuitem"
             >
               <div className="mt-2 flex justify-between items-start gap-6 min-w-[195px]">
                 <p>{t("12 months")}</p>
                 <p>
-                  <span>{t("SAR")}</span>
+                  <span className="text-[10px]">{t("SAR")}</span>
                   <span className="mt-2">{1299}</span>
                 </p>
               </div>
