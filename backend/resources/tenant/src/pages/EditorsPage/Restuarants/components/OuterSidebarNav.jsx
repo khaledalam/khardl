@@ -143,7 +143,7 @@ const OuterSidebarNav = ({ id }) => {
   }, [pickUp, branch])
   const handleRedirect = () => {
     console.log(window.location.href)
-    window.open(window.location.href+'summary');
+    window.open(window.location.href+'dashboard');
   }
   console.log("branches", branches)
   return (
