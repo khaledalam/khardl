@@ -274,7 +274,7 @@ Route::group([
                 Route::post("orders/validate", [CustomerOrderController::class, 'validateOrder'])->name('orders.validate');
                 Route::post("orders/payment/redirect", [CustomerOrderController::class, 'paymentRedirect'])->name('orders.payment.redirect');
                 Route::get("orders/payment/response", [CustomerOrderController::class, 'paymentResponse'])->name('orders.payment.response');
-               
+
                 Route::resource("orders", CustomerOrderController::class)->only([
                     'store',
                     'index'
