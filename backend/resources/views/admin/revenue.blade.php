@@ -34,7 +34,7 @@
                                     <!--begin::Card body-->
 
                                     <div class="card-body pt-0">
-                                        <!--begin::Input group-->
+                                        {{-- <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
                                             <label class="form-label">{{ __('messages.flat-rate')}}</label>
@@ -60,7 +60,7 @@
                                             <div class="text-muted fs-7">{{__('messages.percentage-fee-explain')}} {{__('messages.e.g.')}} 2.4%</div>
                                             <!--end::Description-->
                                         </div>
-                                        <!--end::Input group-->
+                                        <!--end::Input group--> --}}
 
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">

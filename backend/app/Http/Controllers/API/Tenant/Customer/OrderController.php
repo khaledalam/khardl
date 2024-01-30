@@ -80,14 +80,12 @@ class OrderController
         ], '');
     }
     public function paymentRedirect(OrderRequest $request){
-        logger("payment redirect");
         $request->validate([
             'token_id'=>"string|required" // token id for tap payment
         ]);
         try {
             $merchant_id = Setting::first()->merchant_id;
             $order = $this->order->create($request,$this->cart);
-            session([tenant()->id.'_order_customer_'.Auth::id() =>$order]);
             $charge = TapCharge::create(
                 data : [
                     'amount'=> $order->total,
@@ -113,33 +111,24 @@ class OrderController
         ]);
     }
     public function paymentResponse(Request $request,CartRepository $cart){
-        try {
-            logger("payment response here");
-            $order = session(tenant()->id.'_order_customer_'.Auth::id());
+        if ($request->tap_id) {
+            $message = __('Payment failed, please try again');
+            $status = false;
             $charge = TapCharge::retrieve($request->tap_id);
+            if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
+                if ($charge['message']['status'] == 'CAPTURED') { // payment successful
+                    $cart->trash();
+                    $status = true;
+                    $message = __("The payment was successful, your order is pending");
+                }
 
-            if($charge['message']['status'] == 'CAPTURED'){
-                $order->update([
-                    "payment_status"=> PaymentMethod::PAID
-                ]);
-                $cart->trash();
-     
-            }else if ($charge['message']['status'] != 'CAPTURED'){
-                $order->update([
-                    "payment_status"=> PaymentMethod::FAILED
-                ]);
             }
-            $message = ($order->payment_status  == PaymentMethod::PAID)? __("The payment was successful, your order is pending"): __('Payment failed, please try again');
-        }catch(\Exception $e){
-            $message =__('Payment failed, please try again');
-            logger($e->getMessage());
+            return redirect()->route("home",[
+                'status'=>$status,
+                'message'=>$message
+            ]);
         }
-        session()->forget([tenant()->id.'_order_customer_'.Auth::id()]);
-        
-        return redirect()->route("home",[
-            'status'=>(isset($order->payment_status ) && $order->payment_status  == PaymentMethod::PAID)?true:false,
-            'message'=>$message
-        ]);
+        return redirect()->route("home");
 
     }
 

@@ -337,6 +337,7 @@
   "PICKUP By Car": "Pickup By Car",
   "Inclusive VAT": "Inclusive VAT",
   "Credit Card": "Credit Card",
+    "Online": "Online",
   "Cash on Delivery": "Cash on Delivery",
   "Place Order": "Place Order",
   "Are You sure you want to place the order?": "Are You sure you want to place the order?",
@@ -367,5 +368,8 @@
   "e.g.": "e.g.",
   "You will be redirect to your new restaurant in 3 sec ...": "You will be redirect to your new restaurant in 3 sec ...",
   "Management Area": "Login as Management Area",
-  "Login as Customer": "Login as Customer"
+  "Login as Customer": "Login as Customer",
+    "you are not signed with any delivery company yet": "You are not signed with any delivery company yet.",
+    "you are signed with delivery company": "You are signed with delivery companies already",
+    "not available": "Not available"
 }

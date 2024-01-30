@@ -20,10 +20,11 @@ use App\Models\Subscription as CentralSubscription;
 use App\Jobs\SendTAPLeadIDMerchantIDRequestEmailJob;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Exports\Restaurant\ExportSubscriptionInvoice;
+use App\Models\ROSubscriptionInvoice;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use App\Packages\TapPayment\Requests\CreateLeadRequest;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
-use App\Packages\TapPayment\Webhook\RestaurantCharge;
+
 
 class TapController extends Controller
 {
@@ -190,7 +191,7 @@ class TapController extends Controller
         }else {
             $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
         }
-       
+    
         $charge = TapCharge::create(
             data : [
                 'amount'=> $chargeData['cost'],
@@ -209,23 +210,6 @@ class TapController extends Controller
         }
    
      
-        // TODO @todo optimize
-        // sleep(1); // sleep until tap webhook processed
-
-        // if ($request->tap_id) {
-        //     $charge = Charge::retrieve($request->tap_id);
-        //     if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-        //         if ($charge['message']['status'] == 'CAPTURED') { // payment successful
-        //             return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
-        //         } else {
-        //             return redirect()->route('restaurant.service')
-
-        //             ->with('error', __("The payment failed, and the subscription fee has not been paid"));
-        //         }
-
-        //     }
-        // }
-
        
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
@@ -265,22 +249,19 @@ class TapController extends Controller
 
     }
     public function payments_redirect(Request $request){
-         if ($request->tap_id) {
+        if ($request->tap_id) {
             $charge = TapCharge::retrieve($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-                RestaurantCharge::updateOrCreate($charge['message']);
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
                 } else {
                     return redirect()->route('restaurant.service')
-
                     ->with('error', __("The payment failed, and the subscription fee has not been paid"));
                 }
 
             }
         }
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
-      
     }
 
 }
