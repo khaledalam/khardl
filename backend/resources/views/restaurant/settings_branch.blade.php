@@ -48,7 +48,7 @@
                                             <!--begin::Option-->
 {{--                                            <label class="form-check form-check-custom form-check-solid align-items-start">--}}
 {{--                                                <!--begin::Input-->--}}
-{{--                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]" value="Credit Card" {{($payment_methods['Credit Card'] ?? false)?'checked':''}} />--}}
+{{--                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]" value="Online" {{($payment_methods['Online'] ?? false)?'checked':''}} />--}}
 {{--                                                <!--end::Input-->--}}
 {{--                                                <!--begin::Label-->--}}
 {{--                                                <span class="form-check-label d-flex flex-column align-items-start">--}}
@@ -64,12 +64,12 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]"  value="\App\Models\Tenant\PaymentMethod::CREDIT_CARD" {{($payment_methods[\App\Models\Tenant\PaymentMethod::CREDIT_CARD] ?? false)?'checked':''}}/>
+                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]"  value="{{\App\Models\Tenant\PaymentMethod::ONLINE}}" {{($payment_methods[\App\Models\Tenant\PaymentMethod::ONLINE] ?? false)?'checked':''}}/>
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('messages.payment-by-bank-card-upon-delivery')}}</span>
-														<span class="text-muted fs-6">[{{__('messages.visa')}}, {{__('messages.master-card')}}, {{__('messages.mada')}}, {{__('messages.apple-pay')}}]</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('messages.payment-online')}}</span>
+{{--														<span class="text-muted fs-6">[{{__('messages.visa')}}, {{__('messages.master-card')}}, {{__('messages.mada')}}, {{__('messages.apple-pay')}}]</span>--}}
 													</span>
                                                 <!--end::Label-->
                                             </label>
@@ -106,6 +106,11 @@
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
 														<span class="fw-bolder fs-5 mb-0">{{__('messages.delivery')}}</span>
+                                                    @if(!\App\Packages\DeliveryCompanies\DeliveryCompanies::all()->count())
+                                                    <small style="color: red;">{{__('messages.you are not signed with any delivery company yet')}}</small>
+                                                    @else
+                                                        <small style="color: green;">{{__('messages.you are signed with delivery company')}}</small>
+                                                    @endif
 													</span>
                                                 <!--end::Label-->
                                             </label>
@@ -129,16 +134,16 @@
                                             <div class="separator separator-dashed my-6"></div>
                                             <!--end::Option-->
                                             <!--begin::Option-->
-                                            <label class="form-check form-check-custom form-check-solid align-items-start">
-                                                <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="delivery_types[]" value="{{\App\Models\Tenant\DeliveryType::PICKUP_BY_CAR}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP_BY_CAR] ?? false)?'checked':''}}  />
-                                                <!--end::Input-->
-                                                <!--begin::Label-->
-                                                <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('messages.pick-up-by-car')}}</span>
-													</span>
-                                                <!--end::Label-->
-                                            </label>
+{{--                                            <label class="form-check form-check-custom form-check-solid align-items-start">--}}
+{{--                                                <!--begin::Input-->--}}
+{{--                                                <input class="form-check-input me-3" type="checkbox" name="delivery_types[]" value="{{\App\Models\Tenant\DeliveryType::PICKUP_BY_CAR}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP_BY_CAR] ?? false)?'checked':''}}  />--}}
+{{--                                                <!--end::Input-->--}}
+{{--                                                <!--begin::Label-->--}}
+{{--                                                <span class="form-check-label d-flex flex-column align-items-start">--}}
+{{--														<span class="fw-bolder fs-5 mb-0">{{__('messages.pick-up-by-car')}}</span>--}}
+{{--													</span>--}}
+{{--                                                <!--end::Label-->--}}
+{{--                                            </label>--}}
                                         </div>
                                         <!--end::Card body-->
                                         <!--begin::Card footer-->

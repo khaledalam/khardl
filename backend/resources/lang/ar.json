@@ -68,5 +68,8 @@
     "Your tap account has been created successfully, waiting for approval and we will contact you then":"لقد تم إنشاء حساب Tap الخاص بك بنجاح، في انتظار الموافقة وسوف نتصل بك بعد ذلك",
     "restaurant setting has been update successfully":"تم تحديث اعدادات الموقع بنجاح",
     "You card is not active please try another one":"بطاقتك غير نشطة، يرجى تجربة بطاقة أخرى",
-    "Invalid Merchant id":"معرف التاجر غير صحيح"
+    "Invalid Merchant id":"معرف التاجر غير صحيح",
+    "Deleted successfully":"تم الحذف بنجاح",
+    "Restored successfully":"تمت الاستعادة بنجاح",
+    "This restaurant has no tap account on the server":"هذا المطعم ليس لديه حساب علي بوابة الدفع "
 }

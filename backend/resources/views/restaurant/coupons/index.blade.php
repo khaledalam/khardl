@@ -15,20 +15,34 @@
                 <!--begin::Card title-->
                 <div class="card-title">
                     <!--begin::Search-->
-                    <div class="d-flex align-items-center position-relative my-1">
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                        <span class="svg-icon svg-icon-1 position-absolute ms-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                        <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('messages.search')}}" />
-                    </div>
+                    <form action="">
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <input  type="text" value="{{ request('search') }}" name="search" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('messages.search')}}" />
+                            <!--end::Svg Icon-->
+                            <select name="is_deleted" class="form-select mx-2">
+                                <option value="" selected>{{ __('messages.Deleted or not') }}</option>
+                                <option value="0" {{ request('is_deleted') == "0" ? 'selected' : '' }}>{{ __('messages.Not deleted') }}</option>
+                                <option value="1" {{ request('is_deleted') == "1" ? 'selected' : '' }}>{{ __('messages.Deleted') }}</option>
+                            </select>
+                            <select name="type" class="form-select mx-2">
+                                <option value="" selected>{{ __('messages.Type') }}</option>
+                                <option value="fixed" {{ request('type') == "fixed" ? 'selected' : '' }}>{{ __('messages.Fixed') }}</option>
+                                <option value="percentage" {{ request('type') == "percentage" ? 'selected' : '' }}>{{ __('messages.Percentage') }}</option>
+                            </select>
+                            <button type="submit" class="btn btn-secondary"> {{ __('messages.Filter') }}</button>
+                        </div>
+                    </form>
                     <!--end::Search-->
                 </div>
-                <div class="mr-auto p-2">
+                <div class="mr-auto p-2 ">
                     <a href="{{ route('coupons.create') }}">
                         <button class="btn btn-sm btn-primary">
                             {{ __('messages.Add new') }}
@@ -49,16 +63,17 @@
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
                                     <tr>
                                         <th class="px-3">{{ __('messages.ID') }}</th>
-                                        <th>{{ __('messages.Code') }}</th>
-                                        <th>{{ __('messages.Amount') }}</th>
-                                        <th>{{ __('messages.Max discount amount') }}</th>
-                                        <th>{{ __('messages.Max use') }}</th>
-                                        <th>{{ __('messages.Max use per user') }}</th>
-                                        <th>{{ __('messages.Minimum cart amount') }}</th>
-                                        <th>{{ __('messages.Active from') }}</th>
-                                        <th>{{ __('messages.Expire at') }}</th>
-                                        <th>{{ __('messages.Status') }}</th>
-                                        <th>{{ __('messages.Actions') }}</th>
+                                        <th class="px-2">{{ __('messages.Code') }}</th>
+                                        <th class="px-2">{{ __('messages.Amount') }}</th>
+                                        <th class="px-2">{{ __('messages.Uses') }}</th>
+                                        <th class="px-2">{{ __('messages.Max discount amount') }}</th>
+                                        <th class="px-2">{{ __('messages.Max use') }}</th>
+                                        <th class="px-2">{{ __('messages.Max use per user') }}</th>
+                                        <th class="px-2">{{ __('messages.Minimum cart amount') }}</th>
+                                        <th class="px-2">{{ __('messages.Active from') }}</th>
+                                        <th class="px-2">{{ __('messages.Expire at') }}</th>
+                                        <th class="px-2">{{ __('messages.Status') }}</th>
+                                        <th class="px-2">{{ __('messages.Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <!--end::Thead-->
@@ -71,8 +86,11 @@
                                                 {{ $coupon->id }}
                                             </a>
                                         </td>
-                                        <td class="text-black">
+                                        <td class="text-black @if($coupon->deleted_at) text-danger @endif">
                                             {{ $coupon->code }}
+                                            @if($coupon->deleted_at)
+                                            ({{ __('messages.Deleted') }})
+                                            @endif
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->type == \App\Enums\Admin\CouponTypes::FIXED_COUPON->value)
@@ -84,6 +102,9 @@
                                                 {{ $coupon->amount }}%
                                             </span>
                                             @endif
+                                        </td>
+                                        <td class="px-3">
+                                            <span>{{ $coupon->users()->count() }}</span>
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->max_discount_amount)
@@ -134,7 +155,26 @@
                                                 <div class="menu-item px-3">
                                                     <a href="{{ route('coupons.edit',$coupon->id) }}" class="menu-link px-3">{{ __('messages.Edit') }}</a>
                                                 </div>
+                                                @if(!$coupon->deleted_at)
+                                                <div class="menu-item px-3">
+                                                    <form class="delete-form" id="delete_coupon_{{ $coupon->id }}" action="{{ route('coupons.delete', ['coupon' => $coupon->id]) }}" method="POST">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                    </form>
+                                                    <a href="#" onclick='DeleteCoupon("{{ $coupon->id }}")' class="menu-link px-3">{{__('messages.Delete')}}</a>
+                                                </div>
+                                                @endif
+                                                @if($coupon->deleted_at)
+                                                <div class="menu-item px-3">
+                                                    <form class="restore-form" id="restore_coupon_{{ $coupon->id }}" action="{{ route('coupons.restore', ['coupon' => $coupon->id]) }}" method="POST">
+                                                        @method('POST')
+                                                        @csrf
+                                                    </form>
+                                                    <a href="#" onclick='RestoreCoupon("{{ $coupon->id }}")' class="menu-link px-3">{{__('messages.Restore')}}</a>
+                                                </div>
+                                                @endif
                                             </div>
+
                                             <!--end::Menu-->
                                         </td>
                                     </tr>
@@ -174,6 +214,44 @@
             }
             , error: function(error) {
                 console.error('Error toggling user status:', error);
+            }
+        });
+    }
+
+    function DeleteCoupon(couponId) {
+        event.preventDefault();
+
+        var form = document.getElementById(`delete_coupon_${couponId}`);
+        Swal.fire({
+            title: `{{ __("messages.Are you sure you want to delete this coupon ?") }}`
+            , icon: 'warning'
+            , showCancelButton: true
+            , confirmButtonColor: '#d33'
+            , cancelButtonColor: '#3085d6'
+            , confirmButtonText: '{{ __("messages.delete") }}'
+            , cancelButtonText: '{{ __("messages.cancel") }}'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+
+    function RestoreCoupon(couponId) {
+        event.preventDefault();
+
+        var form = document.getElementById(`restore_coupon_${couponId}`);
+        Swal.fire({
+            title: `{{ __("messages.Are you sure you want to restore this coupon ?") }}`
+            , icon: 'warning'
+            , showCancelButton: true
+            , confirmButtonColor: '#50cd89'
+            , cancelButtonColor: '#3085d6'
+            , confirmButtonText: '{{ __("messages.Restore") }}'
+            , cancelButtonText: '{{ __("messages.cancel") }}'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
             }
         });
     }
