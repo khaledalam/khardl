@@ -54,7 +54,7 @@ const PaymentSection = ({
       couponCode: couponCode,
       token_id : response.id
     })
-   
+
     if (redirect.data) {
       console.log("redirect ==>",redirect.data);
       window.location.href = redirect.data;
@@ -63,10 +63,10 @@ const PaymentSection = ({
       setSpinner(false);
       toast.error(error.response)
     }
-    
+
   }
-  
-  // TODO @todo  get total price from backend 
+
+  // TODO @todo  get total price from backend
   const getTotalPrice = () => {
     return cartItems
       ? parseFloat(
@@ -91,7 +91,7 @@ const PaymentSection = ({
   const handlePaymentMethodChange = (method) => {
     setPaymentMethod(method.name)
 
-      if (method?.name == "Credit Card") {
+      if (method?.name == "Online") {
 
           setShowTAPClientCard(true);
       } else {
@@ -135,9 +135,9 @@ const PaymentSection = ({
             notes: notes,
             couponCode: couponCode,
           })
-         
+
           if (cartResponse.data) {
-      
+
             // const extractedData = cartItems.map((cardItem) => ({
             //   id: cardItem.cart_id,
             //   name: cardItem.item.name[language],
@@ -145,10 +145,10 @@ const PaymentSection = ({
             //   quantity: cardItem.quantity,
             //   amount_per_unit: cardItem.price,
             //   total_amount: cardItem.total + deliveryCost,
-            
+
             // }));
- 
-        
+
+
             document.getElementById('payment').showModal();
 
             //  <p id="msg"></p>
@@ -156,16 +156,16 @@ const PaymentSection = ({
             // <button onClick={() => GoSellElements.submit()}>Submit</button>
 
         }
-      
 
 
-      
+
+
         }
       } catch (error) {
         // toast.error(error.response.data.message)
         console.log(error);
       }
-        
+
     }
   }
 
@@ -199,9 +199,9 @@ const PaymentSection = ({
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
        <p id="msg"></p>
         <div id={"tap_charge_element"} />
-       
+
         <dialog id='payment' className='modal'>
-       
+
         {spinner && (
             <div
                 role='status'
@@ -232,7 +232,7 @@ const PaymentSection = ({
         <div
           style={{width: "50%", padding:'34px !important'}}
           >
-            
+
             <GoSellElements
             gateway={{
               publicKey: tap_public_key,
@@ -282,16 +282,16 @@ const PaymentSection = ({
                     className='w-full h-full object-contain'
                   />
                 </div>
-                  
+
                 <h3 className='text-[1rem] font-medium text-black'>
                   Place Order
                 </h3>
               </div>
             </div>
-           
+
           </div>
         </dialog>
-       
+
       <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
         <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Select Payment Method"} isRequired>
@@ -303,7 +303,7 @@ const PaymentSection = ({
                   : "border-[var(--primary)]"
               }`}
             >
-            
+
               {paymentMethods &&
                 paymentMethods.map((method) => (
                   <div
@@ -401,7 +401,7 @@ const PaymentSection = ({
       </div>
       {/* order notes */}
       <CartColumn headerTitle={"Order Notes"}>
-        
+
         <div
           className={`w-full border ${
             styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"
@@ -553,7 +553,7 @@ const PaymentSection = ({
                     className='w-full h-full object-contain'
                   />
                 </div>
-                  
+
                 <h3 className='text-[1rem] font-medium text-black'>
                   Place Order
                 </h3>

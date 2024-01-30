@@ -12,7 +12,7 @@ class DeliveryTypesSeeder extends Seeder
      */
     public const DELIVERY_TYPE_DELIVERY = 1;
     public const DELIVERY_TYPE_PICKUP = 2;
-    public const DELIVERY_TYPE_PICKUP_BY_CAR = 3;
+//    public const DELIVERY_TYPE_PICKUP_BY_CAR = 3;
 
     public function run(): void
     {
@@ -26,11 +26,11 @@ class DeliveryTypesSeeder extends Seeder
             'name' => DeliveryType::PICKUP,
             'cost' => 0
         ]);
-        DeliveryType::create([
-            'id' => self::DELIVERY_TYPE_PICKUP_BY_CAR,
-            'name' => DeliveryType::PICKUP_BY_CAR,
-            'cost' => 0
-        ]);
+//        DeliveryType::create([
+//            'id' => self::DELIVERY_TYPE_PICKUP_BY_CAR,
+//            'name' => DeliveryType::PICKUP_BY_CAR,
+//            'cost' => 0
+//        ]);
 
     }
 }

@@ -16,12 +16,12 @@ class DeliveryType extends Model
         'icon',
         'cost'
     ];
-    
+
     public $translatable = ['description'];
 
     const DELIVERY = 'Delivery';
     const PICKUP = 'PICKUP';
-    const PICKUP_BY_CAR = 'PICKUP By Car';
+//    const PICKUP_BY_CAR = 'PICKUP By Car';
 
     public function orders()
     {
