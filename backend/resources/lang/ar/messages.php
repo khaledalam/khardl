@@ -784,6 +784,7 @@ return [
     "Mrs" => "الانسة",
     "Dr" => "دكتور",
     "Prof" => "بروفيسور",
+    "Close" => "اغلاق",
     "you are not signed with any delivery company yet" => "انت لم تتعاقد مع اي شركه توصيل بعد",
     "you are signed with delivery company" => "انت متعاقد مع شركات توصيل بالفعل"
 ];

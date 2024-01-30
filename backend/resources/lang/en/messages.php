@@ -783,6 +783,7 @@ return [
     "Mrs" => "Mrs",
     "Dr" => "Dr",
     "Prof" => "Prof",
+    "Close" => "Close",
     "you are not signed with any delivery company yet" => " You are not signed with any delivery company yet.",
     "you are signed with delivery company" => "You are signed with delivery companies already"
 
