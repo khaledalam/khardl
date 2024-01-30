@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Tenant;
 
+use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
 use App\Models\Tenant\Item;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Order;
@@ -189,7 +190,7 @@ class RestaurantController extends BaseController
         );
     }
 
-    public function updateSettingsBranch(Branch $branch, Request $request)
+    public function updateSettingsBranch(UpdateBranchSettingFromRequest $request, Branch $branch)
     {
         $payment_methods = null;
         $delivery_types = null;

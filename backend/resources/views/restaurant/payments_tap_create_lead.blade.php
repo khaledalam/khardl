@@ -30,45 +30,45 @@
                     <div class="col-md-6">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("messages.Name")}}</h2>
-        
+
                         </label>
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Name (English)")}}</span>
-        
+                                <span class="required">{{__("messages.Entity name (English)")}}</span>
+
                             </label>
                             <!--end::Label-->
                             <input type="text" class="form-control" placeholder="{{__('messages.Enter Business Name (EN)')}}" name="brand[name][en]" value="{{old('brand.name.en') ?? $restaurant_name}}" />
                         </div>
                         <!--end::Input group-->
-        
+
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                                <span class="required"> {{__("messages.Name (Arabic)")}}</span>
-        
+                                <span class="required"> {{__("messages.Entity Name (Arabic)")}}</span>
+
                             </label>
                             <!--end::Label-->
                             <input type="text" class="form-control" placeholder="{{__('messages.Enter Business Name (AR)')}}" name="brand[name][ar]" id="name_ar" value="{{old('brand.name.ar') ?? $restaurant_name}}" />
                         </div>
                         <!--end::Input group-->
-                        
-        
-        
+
+
+
                     </div>
                     <div class="col-md-6">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("messages.Legal Entity (Commercial Registration)")}}</h2>
-        
+
                         </label>
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.Number")}}</span>
-        
+
                             </label>
                             <!--end::Label-->
                             <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number')}}" />
@@ -78,7 +78,7 @@
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.City")}}</span>
-        
+
                             </label>
                             <!--end::Label-->
                             <input type="text" class="form-control" name="entity[license][city]" value="{{old('entity.license.city')}}" />
@@ -93,8 +93,8 @@
                                 <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" {{old('entity.is_licensed')?'checked':''}} />
                             </label>
                         </div>
-        
-        
+
+
                     </div>
                 </div>
             </div>
@@ -105,49 +105,54 @@
 
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="contact_person_group">
                             <h2 class="bold">{{__('messages.Contact Person')}}</h2>
-    
+
                         </label>
-    
+
                         <div id="contact_person_group">
                             <!-- Name title input group -->
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!-- Label -->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_title">
                                     <span class="required">{{ __("messages.Title") }}</span>
-    
+
                                 </label>
                                 <!-- Input -->
-                                <input type="text" class="form-control" placeholder="{{ __('messages.Mr') }}" name="user[name][title]" id="name_title" value="{{ old('user.name.title')  ?? 'Mr'}}" />
+                                <select name="user[name][title]" id="user_title" class="form-select">
+                                    <option value="Mr" {{ old('user.name.title') == 'Mr'? 'selected' :'' }}>{{ __('messages.Mr') }}</option>
+                                    <option value="Mrs" {{ old('user.name.title') == 'Mrs'? 'selected' :'' }}>{{ __('messages.Mrs') }}</option>
+                                    <option value="Dr" {{ old('user.name.title') == 'Dr'? 'selected' :'' }}>{{ __('messages.Dr') }}</option>
+                                    <option value="Prof" {{ old('user.name.title') == 'ProfMr'? 'selected' :'' }}>{{ __('messages.Prof') }}</option>
+                                </select>
                             </div>
-    
+
                             <!-- Name first input group -->
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!-- Label -->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_first">
                                     <span class="required">{{ __("messages.First Name") }}</span>
-    
+
                                 </label>
                                 <!-- Input -->
                                 <input type="text" class="form-control" placeholder="{{ __('messages.Enter First Name') }}" name="user[name][first]" id="name_first" value="{{ old('user.name.first') ?? $user->first_name }}" />
                             </div>
-    
+
                             <!-- Name middle input group -->
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!-- Label -->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_middle">
                                     <span class="required">{{ __("messages.Middle Name") }}</span>
-    
+
                                 </label>
                                 <!-- Input -->
                                 <input type="text" class="form-control" placeholder="{{ __('messages.Enter Middle Name') }}" name="user[name][middle]" id="name_middle" value="{{ old('user.name.middle') }}" />
                             </div>
-    
+
                             <!-- Name last input group -->
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!-- Label -->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_last">
                                     <span class="required">{{ __("messages.Last Name") }}</span>
-    
+
                                 </label>
                                 <!-- Input -->
                                 <input type="text" class="form-control" placeholder="{{ __('messages.Enter Last Name') }}" name="user[name][last]" id="name_last" value="{{ old('user.name.last')  ?? $user->last_name }}" />
@@ -158,10 +163,10 @@
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.Phone Number")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
-    
+
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text border-left " style="border-radius: 0">
@@ -171,14 +176,14 @@
                                 <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($user->phone,3)}}" />
                             </div>
                         </div>
-    
+
                         <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.Type")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
                             <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">
@@ -186,20 +191,20 @@
                                 <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
                             </select>
                         </div>
-    
+
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                                 <h2 class="bold">{{__("messages.Birthday")}}</h2>
-    
+
                             </label>
-    
+
                             <!--end::Label-->
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="countrySelect">
                                     <span class="required">{{__('messages.country')}}</span>
-    
+
                                 </label>
                                 <!--end::Label-->
                                 <select id="countrySelect2" class="form-select"  placeholder="{{ __('messages.country') }}" name="user[birth][country]"></select>
@@ -209,7 +214,7 @@
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                     <span class="required">{{__("messages.City")}}</span>
-    
+
                                 </label>
                                 <!--end::Label-->
                                 <input type="text" class="form-control" placeholder="{{ __('messages.City') }}" name="user[birth][city]" value="{{old('user.birth.city')}}" />
@@ -219,31 +224,31 @@
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                     <span class="required">{{__("messages.Date of birth")}}</span>
-    
+
                                 </label>
                                 <!--end::Label-->
                                 <input type="date" name="user[birth][date]" class="form-control mb-2" value="{{ old('user.birth.date') }}" />
                             </div>
-    
-    
+
+
                         </div>
-    
-    
-    
-    
-    
+
+
+
+
+
                     </div>
                     <div class="col-md-6">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("messages.Address")}}</h2>
-    
+
                         </label>
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.City")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
                             <input type="text" class="form-control" name="user[address][city]" value="{{old('user.address.0.city')}}" />
@@ -254,7 +259,7 @@
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.Zip Code")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
                             <input type="text" class="form-control" name="user[address][zip_code]" value="{{old('user.address.0.zip_code')}}" />
@@ -265,7 +270,7 @@
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.Line 1")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
                             <input type="text" class="form-control" name="user[address][line1]" value="{{old('user.address.0.line1')}}" />
@@ -273,24 +278,24 @@
                         <!--end::Input group-->
                         <!--end::Input group-->
                         <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
+                     {{--    <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.Type")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
                             <select class="form-select mb-2" data-placeholder="test" name="user[address][type]" >
                                 <option value="HOME">{{__('messages.Home')}}</option>
                                 <option value="WORK">{{__('messages.Work')}}</option>
                             </select>
-                        </div>
+                        </div> --}}
                         <!--end::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.Line 2")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
                             <input type="text" class="form-control" name="user[address][line2]" value="{{old('user.address.0.line2')}}" />
@@ -298,34 +303,34 @@
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("messages.Email Information")}}</h2>
-    
+
                         </label>
-    
+
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.email")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
-    
+
                             <input type="email" class="form-control" placeholder="{{__('messages.Email')}}" name="user[email][address]" value="{{old('user.email.0.address') ?? $user->email}}" />
                         </div>
-                        <div class="d-flex flex-column mb-8 fv-row">
+                {{--         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__("messages.Type")}}</span>
-    
+
                             </label>
                             <!--end::Label-->
                             <select class="form-select mb-2" data-placeholder="test" name="user[email][type]">
                                 <option value="HOME" {{old('user.phone.type') == 'HOME'? 'selected' :''}}>{{__('messages.Home')}}</option>
                                 <option value="WORK"  {{old('user.phone.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
                             </select>
-                        </div>
-    
-                       
+                        </div> --}}
+
+
                     </div>
                 </div>
             </div>
@@ -334,15 +339,15 @@
                     <div class="col-md-6">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("messages.Your estimated sales (Monthly)")}}</h2>
-        
+
                         </label>
-        
+
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
                                 <span class="required">{{__("messages.Range")}}</span>
-        
+
                             </label>
                             <div class="row">
                                 <div class="col-md-6">
@@ -350,7 +355,7 @@
                                         <input type="number" class="form-control" name="brand[operations][sales][range][from]" placeholder="{{__('messages.From')}}" value="{{old('brand.operations.sales.range.from')}}">
                                         <div class="input-group-append">
                                             <span class="input-group-text" style="opacity:0.8;border-bottom-left-radius:0;border-top-left-radius:0">{{__('messages.SAR')}}</span>
-        
+
                                         </div>
                                     </div>
                                 </div>
@@ -359,7 +364,7 @@
                                         <input type="number" class="form-control" name="brand[operations][sales][range][to]" placeholder="{{__('messages.To')}}" value="{{old('brand.operations.sales.range.to')}}">
                                         <div class="input-group-append">
                                             <span class="input-group-text " style="opacity:0.8;border-bottom-left-radius:0;border-top-left-radius:0">{{__('messages.SAR')}}</span>
-        
+
                                         </div>
                                     </div>
                                 </div>
@@ -367,13 +372,13 @@
                         </div>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("messages.Your Identification")}}</h2>
-        
+
                         </label>
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="countrySelect">
                                 <span class="required">{{__('messages.Nationality')}}</span>
-        
+
                             </label>
                             <!--end::Label-->
                             <select id="countrySelect" class="form-select" name="user[nationality]"></select>
@@ -387,51 +392,51 @@
                             <input type="text" class="form-control" placeholder="{{__('messages.National ID')}}" name="user[identification][number]" value="{{old('user.identification.number')}}" />
                         </div>
                         <!--end::Input group-->
-        
-        
+
+
                     </div>
-                    
-                   
-        
+
+
+
                     <div class="col-md-6">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("messages.Bank Details")}}</h2>
-        
+
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.Bank Name')}}<span class="text-danger h4"> * </span></span>
-        
+
                         </label>
                         <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')}}" /><br />
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.Company Name')}}<span class="text-danger h4"> * </span></span>
-        
+
                         </label>
                         <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][name]" value="{{old('wallet.bank.account.name') ?? $facility_name}}" /><br />
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.IBAN')}}<span class="text-danger h4"> * </span></span>
-        
+
                         </label>
                         <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}}" /><br />
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.Swift code')}}<span class="text-danger h4"> * </span></span>
-        
+
                         </label>
                         <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][swift]" value="{{old('wallet.bank.account.swift')}}" /><br />
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.Account number')}}<span class="text-danger h4"> * </span></span>
-        
+
                         </label>
                         <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.number')}}" />
-        
-        
-        
+
+
+
                     </div>
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                         <h2 class="bold">{{__("messages.Terms and conditions")}}</h2>
-    
+
                     </label>
-    
+
                     <div class="form-check" style="margin:10px 0px">
                         <input class="form-check-input" type="checkbox" id="flexCheckDefault"  checked value="1">
                         <label class="form-check-label" for="flexCheckDefault">
@@ -451,23 +456,23 @@
                         </label>
                     </div>
                 </div>
-             
+
                 <!--begin::Actions-->
                 <div class="text-center m-5">
                     <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary" id="kt_modal_new_target_next_step1">
                         <span class="indicator-label">{{ __('messages.Submit ✔️') }}</span>
-                        
+
                         <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                 </div>
             </div>
           </div>
-         
-      
 
 
-        
+
+
+
     </form>
     <!--end::Post-->
 </div>
