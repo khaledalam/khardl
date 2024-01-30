@@ -1,8 +1,8 @@
 :root {
-  --primary: #C0D123;
-  --secondary: #B8CB0A20;
+  --primary: #c0d123;
+  --secondary: #b8cb0a20;
   --danger: #d21d1d;
-  --third: #F9F9F9;
+  --third: #f9f9f9;
 }
 
 /* @font-face {
@@ -58,17 +58,16 @@
   stroke-dasharray: 12 63;
 }
 
-.hamburger input:checked+svg {
+.hamburger input:checked + svg {
   transform: rotate(-45deg);
 }
 
-.hamburger input:checked+svg .line-top-bottom {
+.hamburger input:checked + svg .line-top-bottom {
   stroke-dasharray: 20 300;
   stroke-dashoffset: -32.42;
 }
 
 .custom-header ul li a {
-
   color: #000;
   font-family: "Linden Hill";
   font-size: 14px;
@@ -78,12 +77,11 @@
 }
 
 .custom-header ul li a.active {
-  color: #C0D123;
+  color: #c0d123;
 }
 
 .new-translate-button a {
   color: rgba(0, 0, 0, 0.77);
-
   font-family: "Linden Hill";
   font-size: 14px;
   font-style: normal;
@@ -91,24 +89,36 @@
   line-height: normal;
 }
 
-.green-theme-button {
+.green-theme-button:hover {
   border-radius: 10px;
-  border: 1px solid #C0D123;
+  background-color: #c0d123;
   box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.16);
   padding: 10px 38px;
   line-height: 1;
-
-
+  color: #fff;
+}
+.green-theme-button {
+  border-radius: 10px;
+  border: 1px solid #c0d123;
+  box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.16);
+  padding: 10px 38px;
+  line-height: 1;
 }
 
-.red-theme-button {
+.red-theme-button:hover {
   border-radius: 10px;
-  border: 1px solid #F00;
+  background-color: #f00;
   box-shadow: 0px 4px 4px 0px rgba(255, 0, 0, 0.15);
   padding: 10px 38px;
   line-height: 1;
-
-
+  color: #fff;
+}
+.red-theme-button {
+  border-radius: 10px;
+  border: 1px solid #f00;
+  box-shadow: 0px 4px 4px 0px rgba(255, 0, 0, 0.15);
+  padding: 10px 38px;
+  line-height: 1;
 }
 
 .green-theme-button a,
@@ -121,11 +131,10 @@
 }
 
 .custom-round-bg {
-  background: url('../src/assets/Ellipse5.png');
+  background: url("../src/assets/Ellipse5.png");
   background-repeat: no-repeat;
   padding-left: 30px;
   padding-top: 30px;
-
 }
 
 .curly-arrow {
@@ -163,7 +172,7 @@
 .feature-list-box {
   border-radius: 5px;
   border: 1px solid;
-  background: #FFF;
+  background: #fff;
   box-shadow: none;
   border-color: #fff;
   transition: all ease-in-out 300ms;
@@ -171,24 +180,23 @@
 }
 
 .feature-list-box:hover {
-
-  border-color: #2BD123;
+  border-color: #2bd123;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.09);
 }
 
 .feature-list-box:hover::after {
   position: absolute;
-  content: '';
+  content: "";
   height: 100%;
   width: 3px;
   border-radius: 10px;
-  background: linear-gradient(188deg, #FF3D00 4.42%, #C0D123 87.96%);
+  background: linear-gradient(188deg, #ff3d00 4.42%, #c0d123 87.96%);
   right: -30px;
 }
 
 .cta-btn,
 .cta-btn-more button {
-  color: #C0D123;
+  color: #c0d123;
 
   font-family: "Linden Hill";
   font-size: 18px;
@@ -209,7 +217,7 @@
   font-weight: 400;
   line-height: normal;
   border-radius: 10px;
-  background: #C0D123;
+  background: #c0d123;
   padding: 20px 30px;
   box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
   z-index: 999999;
@@ -233,17 +241,19 @@
 }
 
 .contact-footer-section {
-  background: url('../src/assets/Group5.png');
+  background: url("../src/assets/Group5.png");
   background-repeat: no-repeat;
   padding: 30px;
   min-height: 400px;
   background-size: contain;
+  min-width: 400px;
+  max-width: 500px;
 }
 
 .contact-details {
   display: flex;
   margin-top: 20px;
-  color: #FFF;
+  color: #fff;
   text-align: justify;
   font-family: "Linden Hill";
   font-size: 14px;
@@ -258,7 +268,7 @@
 }
 
 .custom-form-design label {
-  color: #C0D123;
+  color: #c0d123;
 
   text-align: justify;
   font-family: "Linden Hill";
@@ -283,12 +293,12 @@
 
 .custom-form-design input:hover,
 .custom-form-design input:focus {
-  border-bottom: 1px solid #C0D123;
+  border-bottom: 1px solid #c0d123;
   outline: none;
 }
 
 .new-header {
-  background: url('../src/assets/circle.png');
+  background: url("../src/assets/circle.png");
   background-repeat: no-repeat;
   padding-left: 40px;
   padding-top: 40px;
@@ -317,7 +327,6 @@
   line-height: 34px;
   /* 212.5% */
   margin-left: 90px;
-
 }
 
 .main-page-text h2 {
@@ -337,13 +346,11 @@
   background-color: transparent;
   box-shadow: none;
   transition: all ease-in-out 300ms;
-
-
 }
 
 .new-advantage-card:hover {
   border-radius: 10px;
-  background: #D5E7BC;
+  background: #d5e7bc;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border: 0;
 }
@@ -387,6 +394,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 21px;
+   
   /* 150% */
 }
 
@@ -403,7 +411,7 @@
 
 .section-ask {
   border-radius: 10px;
-  background: #C0D123;
+  background: #c0d123;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -416,7 +424,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: 34px;
-
 }
 
 .faq-header {
@@ -429,18 +436,16 @@
   font-weight: 400;
   line-height: 44px;
   text-align: center;
-
 }
 
 .faq-header span {
-  color: #C0D123;
+  color: #c0d123;
   font-variant-numeric: lining-nums proportional-nums;
   font-family: "Linden Hill";
   font-size: 30px;
   font-style: normal;
   font-weight: 400;
   line-height: 44px;
-
 }
 
 .mini-footer {
@@ -452,14 +457,14 @@
   font-style: normal;
   font-weight: 400;
   line-height: 34px;
-  background: #C0D123;
+  background: #c0d123;
   padding: 10px;
   width: 100%;
   text-align: center;
 }
 
 .new-register-bg {
-  background-image: url('../src/assets/register.png');
+  background-image: url("../src/assets/register.png");
   background-size: cover;
   background-repeat: no-repeat;
   border-top-left-radius: 50px;
@@ -468,7 +473,7 @@
 }
 
 .new-login-bg {
-  background-image: url('../src/assets/login.png');
+  background-image: url("../src/assets/login.png");
   background-size: cover;
   background-repeat: no-repeat;
   border-top-left-radius: 50px;
@@ -490,9 +495,9 @@
 
 .new-form-ui input {
   border-radius: 20px;
-  border: 1px solid #C0D123;
+  border: 1px solid #c0d123;
 
-  background: #F6F9EE;
+  background: #f6f9ee;
   color: #000;
 
   font-family: "Linden Hill";
@@ -513,13 +518,13 @@
   width: 100%;
   font-weight: 400;
   line-height: normal;
-  background: #C0D123;
+  background: #c0d123;
   box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
 }
 
 .new-form-ui .submit-btn:hover {
   background: #000;
-  color: #C0D123;
+  color: #c0d123;
 }
 
 .font-new {
@@ -527,19 +532,17 @@
 }
 
 @media screen and (max-width: 768px) {
-
   .new-login-bg,
   .new-register-bg {
     border-radius: 20px;
     background-position: center;
   }
-
 }
 
 .price-box {
   border-radius: 6px;
-  border: 1px solid #C0D123;
-  background: #FFF;
+  border: 1px solid #c0d123;
+  background: #fff;
   box-shadow: 3px 3px 10px 0px rgba(192, 209, 35, 0.81);
   padding: 30px;
   width: 80%;
@@ -556,7 +559,7 @@
   /* 113.333% */
   background-color: transparent;
   border: 0;
-  border-bottom: 1px dashed #8B8B8B;
+  border-bottom: 1px dashed #8b8b8b;
 }
 
 .price-box .content {
@@ -570,7 +573,7 @@
 }
 
 .price-box .small {
-  color: #8B8B8B;
+  color: #8b8b8b;
   font-family: "Linden Hill";
   font-size: 10px;
   font-style: normal;
@@ -586,4 +589,13 @@
   font-style: normal;
   font-weight: 400;
   line-height: 34px;
+}
+.login-background {
+  min-height: calc(100vh - 53px);
+}
+
+.header-link:hover {
+  color: #c0d123;
+  border-bottom-width: 2px;
+  border-bottom-color: #c0d123;
 }
