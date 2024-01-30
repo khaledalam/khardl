@@ -419,8 +419,8 @@ class AdminController extends Controller
     {
         $settings = CentralSetting::first();
 
-        $settings->fee_flat_rate = $request->fee_flat_rate;
-        $settings->fee_percentage = $request->fee_percentage;
+        /* $settings->fee_flat_rate = $request->fee_flat_rate;
+        $settings->fee_percentage = $request->fee_percentage; */
         $settings->new_branch_slot_price = $request->new_branch_slot_price;
         $settings->save();
         $actions = [

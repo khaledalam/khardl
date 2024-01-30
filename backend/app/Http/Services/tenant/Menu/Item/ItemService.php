@@ -102,7 +102,7 @@ class ItemService
 
             DB::table('items')->where('id', $id)->delete();
 
-            return redirect()->route('restaurant.menu', ['branchId' => $selectedItem->branch_id])->with('success', 'Item successfully deleted.');
+            return redirect()->route('restaurant.get-category', ['id' => $selectedItem->category_id,'branchId' => $selectedItem->branch_id])->with('success', 'Item successfully deleted.');
 
         } else {
             return redirect()->back()->with('error', 'You are not authorized to access that page.');
