@@ -44,8 +44,9 @@ class OrderController
             'firstName' => $user?->first_name,
             'lastName' => $user?->last_name,
             'phone' => $user?->phone,
-            'address' => $user?->address
-
+            'address' => $user?->address,
+            'cashback' => $user->cashback,
+            'loyalty_points' => $user->loyalty_points,
         ], '');
     }
 
@@ -104,7 +105,7 @@ class OrderController
         }catch(Exception $e){
             logger($e->getMessage());
         }
-      
+
         return redirect()->route("home",[
             'status'=>false,
             'message'=>__('Payment failed, please try again')

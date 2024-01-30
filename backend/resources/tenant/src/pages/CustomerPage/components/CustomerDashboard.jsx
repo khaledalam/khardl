@@ -2,10 +2,9 @@ import {BsChevronDoubleDown, BsChevronDoubleUp} from "react-icons/bs"
 import DashboardIcon from "../../../assets/dashboardBlockIcon.svg"
 import OrderTable from "./OrderTable"
 import {customerOrderData} from "../DATA"
-import {useCallback, useEffect, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import AxiosInstance from "../../../axios/axios"
 import {useNavigate} from "react-router-dom"
-import {updateOrderList} from "../../../redux/NewEditor/customerSlice"
 import {useDispatch, useSelector} from "react-redux"
 import {useTranslation} from "react-i18next"
 
@@ -13,12 +12,36 @@ const CustomerDashboard = () => {
   const navigate = useNavigate()
   const {t} = useTranslation()
     const ordersList = useSelector((state) => state.customerAPI.ordersList)
-    const cashback = useSelector((state) => state.auth.cashback);
-    const loyaltyPoints = useSelector((state) => state.auth.loyalty_points);
   const [orderLength, setOrderLength] = useState(6)
   const [isViewMore, setIsViewMore] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [cashback, setCashback] = useState(0)
+    const [loyaltyPoints, setLoyaltyPoints] = useState(0)
+
+    useEffect(() => {
+        fetchProfileData().then((r) => null)
+    }, [])
+
+    const fetchProfileData = async () => {
+        if (isLoading) return;
+        setIsLoading(true);
+
+        try {
+            const profileResponse = await AxiosInstance.get(`user`)
+
+            if (profileResponse.data) {
+                setCashback(profileResponse.data?.data?.cashback);
+                setLoyaltyPoints(profileResponse.data?.data?.loyalty_points);
+            }
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
   const overviewInfo = [
+      // @TODO: add wallet after handle pay with point and cashback
     // {
     //   id: 1,
     //   title: t("Wallet"),
@@ -27,14 +50,16 @@ const CustomerDashboard = () => {
     {
       id: 2,
       title: t("Loyalty Point"),
-      amount: cashback || 0,
+      amount: loyaltyPoints || 0,
     },
     {
       id: 3,
       title: t("Total CashBack"),
-      amount: loyaltyPoints || 0,
+      amount: cashback || 0,
     },
   ]
+
+
 
   // const onViewMore = useCallback(() => {
   //   setOrderLength((prev) => prev + 6)
@@ -53,7 +78,7 @@ const CustomerDashboard = () => {
         <img src={DashboardIcon} alt='dashboard' className='' />
         <h3 className='text-lg font-medium'>{t("Dashboard")}</h3>
       </div>
-      <div className='w-full md:w-[80%] laptopXL:w-[70%] mx-auto flex items-center justify-between  my-5'>
+      <div className='w-full md:w-[80%] laptopXL:w-[70%] mx-auto flex items-center justify-around my-5'>
         {overviewInfo.map((overview) => (
           <div
             key={overview.id}
@@ -63,7 +88,8 @@ const CustomerDashboard = () => {
               {overview.title}
             </h4>
             <h2 className='font-bold text-white text-center text-sm md:text-2xl'>
-              {t("SAR")} {overview.amount}
+              {t("SAR")} {!isLoading ? overview.amount :
+                <span className="loading loading-spinner text-secondary"/>}
             </h2>
           </div>
         ))}
