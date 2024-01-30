@@ -223,7 +223,6 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                       });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
-                    Route::post('/save-revenue', [AdminController::class, 'saveRevenue'])->middleware('permission:can_settings')->name('save-revenue');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
@@ -244,7 +243,6 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     ->name("download.pdf");
                     Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('toggle-status');
 
-                    Route::get('/revenue', [AdminController::class, 'revenue'])->name('revenue');
                     Route::controller(AdminController::class)->prefix('subscriptions')->group(function () {
                         Route::get('/', [AdminController::class, 'subscriptions'])->name('subscriptions');
                         Route::get('/create', [AdminController::class, 'subscriptionsCreate'])->name('subscriptions.create');
