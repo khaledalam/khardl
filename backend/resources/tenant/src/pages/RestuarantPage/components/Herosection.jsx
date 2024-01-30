@@ -1,22 +1,19 @@
-import React, {Fragment, useEffect} from "react"
-import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem"
-import {useDispatch, useSelector} from "react-redux"
-import {selectedCategoryAPI} from "../../../redux/NewEditor/categoryAPISlice"
-import imgBanner from "../../../assets/bannerRestuarant.png"
-import {useTranslation} from "react-i18next"
-import ReactSlider from "react-slick"
-import imgLogo from "../../../assets/khardl_Logo.png"
+import React, { Fragment, useEffect } from "react";
+import CategoryItem from "../../EditorsPage/Restuarants/components/CategoryItem";
+import { useDispatch, useSelector } from "react-redux";
+import { selectedCategoryAPI } from "../../../redux/NewEditor/categoryAPISlice";
+import imgBanner from "../../../assets/bannerRestuarant.png";
+import { useTranslation } from "react-i18next";
+import ReactSlider from "react-slick";
+import imgLogo from "../../../assets/khardl_Logo.png";
 
-const Herosection = ({isMobile, categories}) => {
-
-  const dispatch = useDispatch()
-  const {t} = useTranslation()
+const Herosection = ({ isMobile, categories }) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
   const selectedCategory = useSelector(
     (state) => state.categoryAPI.selected_category
-  )
-  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
-
-  
+  );
+  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
 
   const settings = {
     dots: true,
@@ -25,16 +22,16 @@ const Herosection = ({isMobile, categories}) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-  }
+  };
 
   useEffect(() => {
-    document.getElementById("vid") && document.getElementById("vid").play()
+    document.getElementById("vid") && document.getElementById("vid").play();
     document.getElementById("vidSlider") &&
-      document.getElementById("vidSlider").play()
-  }, [])
+      document.getElementById("vidSlider").play();
+  }, []);
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className="flex flex-col items-center justify-center">
       <div
         style={{
           backgroundColor: restaurantStyle
@@ -92,7 +89,7 @@ const Herosection = ({isMobile, categories}) => {
             restaurantStyle?.banner_image?.type === "video" ? (
               <video
                 controls
-                id='vid'
+                id="vid"
                 loop
                 autoPlay
                 className={` z-[5] ${
@@ -115,14 +112,14 @@ const Herosection = ({isMobile, categories}) => {
                     ? restaurantStyle?.banner_image?.url
                     : imgBanner
                 }
-                alt='banner'
-                className='w-full h-full object-cover'
+                alt="banner"
+                className="w-full h-full object-cover"
               />
             )}
           </div>
         ) : restaurantStyle?.banner_type === t("Slider") ||
           restaurantStyle?.banner_type === "slider" ? (
-          <div className='w-full'>
+          <div className="w-full">
             <div
               className={`w-5/6 mx-auto  ${
                 isMobile ? "" : " mb-8"
@@ -145,7 +142,7 @@ const Herosection = ({isMobile, categories}) => {
                       restaurantStyle?.banner_images[index].type === "video" ? (
                         <video
                           controls
-                          id='vidSlider'
+                          id="vidSlider"
                           loop
                           autoPlay
                           className={` z-[5] ${
@@ -161,7 +158,7 @@ const Herosection = ({isMobile, categories}) => {
                                 ? restaurantStyle.banner_images[index]?.url
                                 : ""
                             }
-                            type='video/mp4'
+                            type="video/mp4"
                           />
                         </video>
                       ) : (
@@ -199,28 +196,39 @@ const Herosection = ({isMobile, categories}) => {
             isMobile ? "overflow-x-scroll hide-scroll px-4" : ""
           } `}
         >
-          <div className={`flex items-center w-full  gap-8 my-5  `}>
-            {categories?.map((category, i) => (
-              <CategoryItem
-                key={i}
-                active={selectedCategory.id === category.id}
-                name={category.name}
-                imgSrc={category.photo}
-                alt={category.name}
-                hoverColor={restaurantStyle?.category_hover_color}
-                textColor={restaurantStyle?.text_color}
-                onClick={() =>
-                  dispatch(
-                    selectedCategoryAPI({name: category.name, id: category.id})
-                  )
-                }
-              />
-            ))}
+          <div className={`flex items-center w-full gap-8 my-5 `}>
+            {categories && categories.length > 0 ? (
+              categories.map((category, i) => (
+                <CategoryItem
+                  key={i}
+                  active={selectedCategory.id === category.id}
+                  name={category.name}
+                  imgSrc={category.photo}
+                  alt={category.name}
+                  hoverColor={restaurantStyle?.category_hover_color}
+                  textColor={restaurantStyle?.text_color}
+                  onClick={() =>
+                    dispatch(
+                      selectedCategoryAPI({
+                        name: category.name,
+                        id: category.id,
+                      })
+                    )
+                  }
+                />
+              ))
+            ) : (
+              <div className="w-full h-full items-center justify-center">
+                <p className="text-2xl font-medium text-center">
+                  No categories are existed at the moment
+                </p>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      )}  
     </div>
-  )
-}
+  );
+};
 
-export default Herosection
+export default Herosection;

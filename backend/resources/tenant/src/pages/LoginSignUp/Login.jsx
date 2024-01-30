@@ -88,11 +88,11 @@ const Login = () => {
    return (
       <div className='flex flex-col items-stretch justify-center'>
          <div
-            className='flex justify-center items-center px-[40px] max-md:px-[0px]'
+            className='flex justify-center items-center px-[40px] max-md:px-[0px] login-background'
             style={{
                backgroundImage: `url(${ContactUsCover})`,
                backgroundSize: 'cover',
-            }}
+              }}
          >
              <div className='py-[20px] flex justify-center items-center'>
                <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[60%] max-[1200px]:w-[100%]'>

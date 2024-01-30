@@ -53,6 +53,7 @@ function ContactUs() {
 
    //  **displayed content**
    return (
+      <section className="mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
       <div
          className='text-center w-[100%]'
          style={{
@@ -183,6 +184,7 @@ function ContactUs() {
             </div>
          </div>
       </div>
+      </section>
    )
 }
 

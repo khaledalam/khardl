@@ -68,11 +68,11 @@ useEffect(()=>{
             />
           </div>
 
-          <div className="mt-5">
+          <div className="mt-5 max-w-full ">
             {Features.map((card) => (
               <div
                 key={card.id}
-                className="feature-list-box p-4 w-full md:w-[1/2] lg:w-[1/3] xl:w-[1/4] mx-2 mb-11 flex flex-col md:flex-row items-center"
+                className="feature-list-box p-4 w-full md:w-[1/2] lg:w-[1/3] xl:w-[1/4] lg:ml-[20%] mb-11 flex flex-col md:flex-row items-center"
               >
                 <div className="w-full md:w-[50%] mb-4 md:mb-0 flex items-center justify-center">
                   <img

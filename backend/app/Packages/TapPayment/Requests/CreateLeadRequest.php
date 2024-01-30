@@ -16,10 +16,10 @@ class CreateLeadRequest  extends FormRequest
     protected $stopOnFirstFailure = true;
     public function rules()
     {
-       
-       
+
+
         return [
-            
+
             'brand.name.ar' => 'required|string',
             'brand.name.en' => 'required|string',
 
@@ -54,31 +54,31 @@ class CreateLeadRequest  extends FormRequest
 
             'user.address.0.country' => 'required|string',
             'user.address.0.city' => 'required|string',
-            'user.address.0.type' => 'required|string',
+            /* 'user.address.0.type' => 'required|string', */
             'user.address.0.zip_code' => 'required|string',
-          
+
             'user.address.0.line1' => 'required|string',
             'user.address.0.line2' => 'required|nullable',
-          
+
 
             'user.identification.number' => 'required|string',
-            'user.identification.type' => 'required|string', 
+            'user.identification.type' => 'required|string',
             'user.identification.issuer' => 'required|string',
 
             'user.nationality' => 'required|string',
 
-           
+
 
             'user.birth.country' => 'required|string',
             'user.birth.city' => 'required|string',
             'user.birth.date' => 'required|string|date_format:Y-m-d',
 
             'user.email.0.address' => 'required|string',
-            'user.email.0.type' => 'required|string',
+            /* 'user.email.0.type' => 'required|string', */
 
-          
 
-          
+
+
 
             // 'user.email.0.primary' => 'sometimes|nullable|boolean',
 
@@ -99,14 +99,14 @@ class CreateLeadRequest  extends FormRequest
     }
     public function prepareForValidation()
     {
-       
+
         $defaults = [
             'brand' => [
                 'operations' => [
                     'sales' => [
                         'period' => 'monthly',
                         'currency' => 'SAR',
-                     
+
                     ],
                 ],
                 'channel_services' => [
@@ -115,7 +115,7 @@ class CreateLeadRequest  extends FormRequest
                         'address'=> route('home')
                     ]
                 ],
-                "terms"=> [  
+                "terms"=> [
                     [
                         "term"=> "general",
                         "agree"=> true
@@ -129,7 +129,7 @@ class CreateLeadRequest  extends FormRequest
                         "agree"=> true
                     ]
                 ],
-               
+
             ],
             'entity' => [
                 'country' => 'SA',
@@ -139,20 +139,24 @@ class CreateLeadRequest  extends FormRequest
                 ],
             ],
             'user' => [
-                'address' => [  
-                    'country' => 'SA',
-                ],
-                'identification' => [
-                    'type' => 'national_id',
-                    'issuer' => $this->user['nationality'] ?? ''
-                ],
-                'phone' => [
-                    'country_code' => '966',
-                ],
-                'name' => [
-                    'lang' => app()->getLocale(),
-                ],
-                'primary' => true,
+                    'address' => [
+                        'country' => 'SA',
+                        'type' => $this->user['phone']['type'] ?? 'HOME'
+                    ],
+                    'identification' => [
+                        'type' => 'national_id',
+                        'issuer' => $this->user['nationality'] ?? ''
+                    ],
+                    'phone' => [
+                        'country_code' => '966',
+                    ],
+                    'name' => [
+                        'lang' => app()->getLocale(),
+                    ],
+                    'primary' => true,
+                    'email' => [
+                        'type' => $this->user['phone']['type'] ?? 'WORK'
+                    ]
                 ],
                 'platforms'=>[
                     env('TAP_PLATFORM_ID')
@@ -161,8 +165,8 @@ class CreateLeadRequest  extends FormRequest
                     'technology_id' => env('TAP_PAYMENT_TECHNOLOGY_ID'),
                 ],
             ];
-       
-    
+
+
         $this->merge([
             'brand' => array_merge_recursive($defaults['brand'], $this->brand),
             'entity' => array_merge_recursive($defaults['entity'], $this->entity),
@@ -171,18 +175,18 @@ class CreateLeadRequest  extends FormRequest
             'platforms'=>$defaults['platforms']
         ]);
         $this->merge([
-           
+
             'user'=>array_merge($this->user,
                 [
                     'address'=>[ $this->user['address']],
-                    'phone'=>[ 
+                    'phone'=>[
                         array_merge($this->user['phone'],
                         [
                             'primary'=>true
                         ]
                         )
                     ],
-                    'email'=>[ 
+                    'email'=>[
                         array_merge($this->user['email'],
                     [
                         'primary'=>true
@@ -195,7 +199,7 @@ class CreateLeadRequest  extends FormRequest
 
         ]);
 
-        
+
     }
-    
+
 }

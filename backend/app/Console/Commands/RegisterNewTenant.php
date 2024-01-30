@@ -34,8 +34,8 @@ class RegisterNewTenant extends Command
      */
     public function handle(TenantActionSeeder $seeder)
     {
-        $user = User::find(UserSeeder::RESTAURANT_OWNER_USER_ID);
         $name = $this->argument('name') ?? 'first';
+        $user = User::where('restaurant_name', '=', $name)->first();
 
         if(!$user){
             $this->error("No user registered, try run `php artisan migrate:fresh --seed`");
@@ -49,7 +49,7 @@ class RegisterNewTenant extends Command
         }
 
         // sign first user
-        $url = Tenant::latest()->first()->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID); //  USER restaurant owner id
+        $url = Tenant::where('restaurant_name', '=', $name)->first()->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID); //  USER restaurant owner id
         $this->info("Tenant has been created successfully, visit `$url`");
     }
 }

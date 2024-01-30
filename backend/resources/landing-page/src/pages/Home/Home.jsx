@@ -7,7 +7,6 @@ import ContactUs from "../../components/ContactUsSection/ContactUs";
 import "./index.css";
 
 const Home = () => {
-
   return (
     <div>
       <Helmet>
@@ -21,10 +20,11 @@ const Home = () => {
         </div>
         {/*<Clients />*/}
         <div className="p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
-
-        <Features />
+          <Features />
         </div>
-        <ContactUs />
+        <div className="p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
+          <ContactUs />
+        </div>
       </div>
     </div>
   );
