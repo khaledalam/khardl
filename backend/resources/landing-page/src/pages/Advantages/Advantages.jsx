@@ -68,8 +68,11 @@ function Advantages() {
         <div className="mt-6" data-aos="fade-up" data-aos-delay="400">
           <MainText SubTitle={t("features of Khardl")} />
         </div>
-        <div className="p-[30px]">
+        <div className="flex flex-col justify-start items-center gap-[150px] pt-[80px]">
+          <section className=" mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
+
           <Cards />
+          </section>
         </div>
         <div className=" flex flex-col justify-start items-center gap-[150px] pt-[80px]">
           {" "}
