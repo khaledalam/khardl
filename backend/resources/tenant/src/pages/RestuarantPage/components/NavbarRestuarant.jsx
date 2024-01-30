@@ -3,7 +3,7 @@ import cartHeaderImg from "../../../assets/cartBoldIcon.svg"
 import {IoMenuOutline} from "react-icons/io5"
 import {MenuContext} from "react-flexible-sliding-menu"
 import {useSelector} from "react-redux"
-import {useNavigate} from "react-router-dom"
+import {useNavigate,useSearchParams} from "react-router-dom"
 import {toast} from "react-toastify"
 import imgLogo from "../../../assets/khardl_Logo.png"
 import { useTranslation } from "react-i18next"
@@ -12,6 +12,7 @@ const NavbarRestuarant = () => {
   const {t} = useTranslation()
   const navigate = useNavigate()
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
+  const [searchParams, setSearchParams] = useSearchParams();
   const toggleTheMenu = () => {
     toggleMenu()
   }
@@ -22,16 +23,18 @@ const NavbarRestuarant = () => {
   console.log("restaurantStyle", restaurantStyle)
   useEffect(() => {
     const checkOrderQueryParam = () => {
-      const queryParams = new URLSearchParams(window.location.search)
 
-      if (queryParams.has("message")) {
-        if (queryParams.get("status") == 1) {
-          toast.success(queryParams.get("message"))
+
+      if (searchParams.has("message")) {
+        if (searchParams.get("status") == 1) {
+          toast.success(searchParams.get("message"))
         } else {
-          toast.error(queryParams.get("message"))
+          toast.error(searchParams.get("message"))
         }
-      } else {
-      }
+        searchParams.delete('message');
+        searchParams.delete('status');
+        setSearchParams(searchParams);
+      } 
     }
     checkOrderQueryParam()
   }, [])
