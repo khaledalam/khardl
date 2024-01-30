@@ -96,7 +96,7 @@ function Services() {
               link="/login"
             />
           </div>
-          <hr className="w-[500px] register-hr" />
+          <hr className="w-[500px] register-hr max-[1200px]:w-[90%]" />
         </div>
         <div className=" flex flex-col justify-start items-center gap-[150px] pt-[80px]">
           <ContactUs />
