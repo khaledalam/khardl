@@ -55,6 +55,8 @@ class AuthenticationController extends Controller
             return ResponseHelper::response([
                 'message' => 'User is authenticated',
                 'default_locale'   => $user->default_lang,
+                'cashback' => $user->cashback,
+                'loyalty_points' => $user->loyalty_points,
                 'is_loggedin' => true
             ], ResponseHelper::HTTP_OK);
         }
