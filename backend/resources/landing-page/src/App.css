@@ -394,7 +394,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 21px;
-   
+
   /* 150% */
 }
 
@@ -582,6 +582,14 @@
   /* 340% */
 }
 
+.price-box:hover p,
+.price-box:hover h1,
+.price-box:hover h2,
+.price-box:hover .price {
+  color: #fff;
+  /* filter: invert(1); */
+}
+
 .price-box .price {
   color: #000;
   font-family: "Linden Hill";
@@ -598,4 +606,13 @@
   color: #c0d123;
   border-bottom-width: 2px;
   border-bottom-color: #c0d123;
+}
+.services-heading{
+  color: #000;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-family: "Linden Hill";
+  font-size: 46px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 44px; /* 95.652% */
 }

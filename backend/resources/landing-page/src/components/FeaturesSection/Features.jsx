@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainText from "../MainText";
 import { useTranslation } from "react-i18next";
 import driversApp from "../../assets/driversApp.webp";
@@ -41,28 +41,32 @@ function FeaturesSection() {
       details: `${t("Electronic payments Details")}`,
     },
   ];
-  const [isMobile, setIsMobile] = useState(false)
-useEffect(()=>{
-  const isMobile = window.innerWidth <= 1000
-  setIsMobile(!isMobile)
-
-},[])
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 1000;
+    setIsMobile(!isMobile);
+  }, []);
   return (
     <>
       <section className="mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col justify-start items-start">
             <div className="flex items-center">
-              <img className="h-6 md:h-[30%] m-2" src={Line1} alt="background" />
-              <h3 className="feature-heading text-2xl md:text-4xl">{t("Learn about")} <span>{t("Khardl's services")}</span></h3>
+              <img
+                className="h-6 md:h-[30%] m-2"
+                src={Line1}
+                alt="background"
+              />
+              <h3 className="feature-heading text-2xl md:text-4xl">
+                {t("Learn about")} <span>{t("Khardl's services")}</span>
+              </h3>
             </div>
 
             <h3 className="text-[#342828] mt-4 text-md md:text-lg feature-description mr-11">
               {t("Khardl's services Details")}
             </h3>
             <img
-
-               className="w-full h-auto max-w-full md:max-w-[90%] mt-11"
+              className="w-full h-auto max-w-full md:max-w-[90%] mt-11"
               src={Group9}
               alt="background"
             />
@@ -89,7 +93,7 @@ useEffect(()=>{
             ))}
           </div>
         </div>
-        <div className={`relative ${!isMobile ? 'hidden' : 'block'} `}>
+        <div className={`relative ${!isMobile ? "hidden" : "block"} `}>
           <img
             className="w-[100%] h-auto max-w-[100%]"
             src={Group7}
@@ -113,7 +117,6 @@ useEffect(()=>{
           </div>
         </div>
       </section>
-     
     </>
   );
 }

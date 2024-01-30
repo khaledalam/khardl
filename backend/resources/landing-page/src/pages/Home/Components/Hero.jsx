@@ -1,4 +1,3 @@
-
 import React from "react";
 import logo from "../../../assets/Logo.webp";
 import HeroImg from "../../../assets/Hero.webp";
@@ -22,28 +21,30 @@ const Hero = () => {
     <section className="active">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
         <div className="relative flex flex-col justify-start items-start md:items-center md:ms-5 custom-round-bg">
-         
           <div className="md:relative">
             <h3 className="leading-10 text-4xl text-[#000000] mt-5 home-heading">
-              Unlock a pathway to attracting more clients without paying
-              <span className="text-[#C0D123] ms-1">commissions</span> or
+              {t("Unlock a pathway to")}
+              <span className="text-[#C0D123] ms-1">
+                {t("commissions")}
+              </span>{" "}
+              {t("or")}
               <span className="text-[#C0D123] flex items-center">
-                mandatory subscriptions
+                {t("mandatory subscriptions")}
                 <span className="inline-block ml-2 mt-2">
                   <img src={image60} alt="background" />
                 </span>
               </span>
             </h3>
             <h3 className="text-[#342828] text-base mt-4 text-medium mt-11">
-              Create your website and app with Khardl in minutes,
+              {t("Create your website")}
               <br />
-              start selling right away, and pay based on your orders only
+              {t("start selling right away,")}{" "}
             </h3>
             <button
               type="button"
               className="flex cta-btn mt-11 items-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-4"
             >
-              Start Now
+              {t("Start Now")}
               <span className="ml-2">
                 <HiChevronRight />
               </span>
