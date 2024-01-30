@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Khardl - Restaurant Area</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
+    <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
+    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
 {{--    <link rel="preconnect" href="https://fonts.googleapis.com" />--}}
 {{--        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />--}}
 {{--        <link--}}

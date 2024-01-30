@@ -7,6 +7,9 @@
     <title>Khardl</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
+    <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
+    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 {{--        <link--}}
 {{--            href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600&display=swap"--}}

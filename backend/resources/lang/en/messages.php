@@ -783,4 +783,5 @@ return [
     "Mrs" => "Mrs",
     "Dr" => "Dr",
     "Prof" => "Prof",
+    "Close" => "Close"
 ];
