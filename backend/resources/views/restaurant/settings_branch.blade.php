@@ -106,6 +106,11 @@
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
 														<span class="fw-bolder fs-5 mb-0">{{__('messages.delivery')}}</span>
+                                                    @if(!\App\Packages\DeliveryCompanies\DeliveryCompanies::all()->count())
+                                                    <small style="color: red;">{{__('messages.you are not signed with any delivery company yet')}}</small>
+                                                    @else
+                                                        <small style="color: green;">{{__('messages.you are signed with delivery company')}}</small>
+                                                    @endif
 													</span>
                                                 <!--end::Label-->
                                             </label>

@@ -35,12 +35,12 @@ const PaymentSection = ({
   const {t} = useTranslation()
   const [notes, setNotes] = useState("")
   const [couponCode, setCouponCode] = useState("")
-  const [deliveryType, setDeliveryType] = useState(deliveryTypes[0]?.name)
+    const [deliveryType, setDeliveryType] = useState("");
   const [couponDiscountValue, setCouponDiscountValue] = useState(0)
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-  const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]?.name)
+    const [paymentMethod, setPaymentMethod] = useState("")
   const [deliveryCost, setDeliveryCost] = useState(0)
-  const [activeDeliveryType, setActiveDeliveryType] = useState("pickup")
+  const [activeDeliveryType, setActiveDeliveryType] = useState("")
   const [showTAPClientCard, setShowTAPClientCard] = useState(false)
   const language = useSelector((state) => state.languageMode.languageMode)
   const [spinner, setSpinner] = useState(false)
@@ -332,13 +332,20 @@ const PaymentSection = ({
                           style={{}}
                           checked={
                             paymentMethods.length < 2 ||
-                            method.name === paymentMethod
+                            method?.name === paymentMethod
                           }
                           className={
                             "radio w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[var(--primary)] "
                           }
-                          onChange={() => handlePaymentMethodChange(method)}
+                          onChange={() => {
+                              if (!method?.is_active) {
+                                  alert(t('Not available'));
+                                  return;
+                              }
+                              handlePaymentMethodChange(method)
+                          }}
                         />
+                          {!method?.is_active && <small style={{color: 'red'}}>{t('Not available')}</small>}
                       </div>
                     </label>
                   </div>
@@ -358,7 +365,13 @@ const PaymentSection = ({
                         ? " bg-neutral-200 border border-neutral-300"
                         : "border border-neutral-200"
                     }`}
-                    onClick={() => handleDeliveryTypeChange(deliveryType)}
+                    onClick={() => {
+                        if (!deliveryType?.is_active) {
+                            alert(t('Not available'))
+                            return;
+                        }
+                        handleDeliveryTypeChange(deliveryType)
+                    }}
                   >
                     <div className='flex items-center gap-4'>
                       <div
@@ -391,6 +404,7 @@ const PaymentSection = ({
                             ? `${t("SAR")} ${deliveryType.cost}`
                             : `${t("Free")}`}
                         </p>
+                          {!deliveryType?.is_active && <small style={{color: 'red'}}>{t('Not available')}</small>}
                       </div>
                     </div>
                   </div>
