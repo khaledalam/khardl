@@ -346,6 +346,7 @@
   "PICKUP By Car": "التقاط الطلب في السياره",
   "Inclusive VAT": "شاملة ضريبة القيمة المضافة",
   "Credit Card": "بطاقة إئتمان",
+    "Online": "اون لاين",
   "My Card": "بطاقتي",
   "Cash on Delivery": "الدفع عند الاستلام",
   "Place Order": "تقديم الطلب",
@@ -382,5 +383,8 @@
   "e.g.": "علي سبيل المثال",
   "You will be redirect to your new restaurant in 3 sec ...": "سيتم توجيهك الي رابط مطعمك الجديد في خلال ٣ ثوان",
   "Management Area": "دخول الادارة",
-  "Login as Customer": "تسجيل الدخول كعميل"
+  "Login as Customer": "تسجيل الدخول كعميل",
+    "you are not signed with any delivery company yet": "انت لم تتعاقد مع اي شركه توصيل بعد",
+    "you are signed with delivery company": "انت متعاقد مع شركات توصيل بالفعل",
+    "not available": "غير متاح"
 }

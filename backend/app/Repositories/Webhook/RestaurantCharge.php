@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Packages\TapPayment\Webhook;
+namespace App\Repositories\Webhook;
 
 
 use Closure;
@@ -29,6 +29,7 @@ class RestaurantCharge
         }else {
             logger('error occur while process payment in subscription, type not defined');
         }
+        
     }
     public static function createNewSubscription($data)
     {

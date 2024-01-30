@@ -15,7 +15,7 @@ class Yeswa  extends AbstractDeliveryCompany
 {
     const CORRESPOND_METHODS = [
         PaymentMethod::CASH_ON_DELIVERY=> 'COD',
-        PaymentMethod::CREDIT_CARD=> 'PP',
+        PaymentMethod::ONLINE=> 'PP',
     ];
 
     public function assignToDriver(Order $order,RestaurantUser $customer):bool{
@@ -81,12 +81,12 @@ class Yeswa  extends AbstractDeliveryCompany
         if(isset($data['job_status'])  ){
             $order = Order::where('yeswa_ref',$payload['data']['trip_ref'])->firstOrFail();
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-                
-              
+
+
                 if($data['track']){
                     $order->update([
                         'tracking_url'=> $data['track']
-                    ]); 
+                    ]);
                 }
                 if($data['job_status']  == 'ACCEPTED'){
                     $order->update([
@@ -95,8 +95,8 @@ class Yeswa  extends AbstractDeliveryCompany
                     ]);
 
                     $this->cancelOtherOrders("yeswa",$order);
-                  
-               
+
+
                 }else if($data['job_status'] == 'SUCCESSFUL'){
                     $order->update([
                         'status'=>Order::COMPLETED
@@ -107,7 +107,7 @@ class Yeswa  extends AbstractDeliveryCompany
                     ]);
                 }
             }
-            
+
         }
     }
     public function  cancelOrder($id): bool{
@@ -147,6 +147,6 @@ class Yeswa  extends AbstractDeliveryCompany
             return false;
         }
     }
-        
+
 
 }

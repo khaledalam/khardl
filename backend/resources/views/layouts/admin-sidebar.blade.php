@@ -297,39 +297,23 @@
                             </div>
                             @endif
 
-
                             @if($user?->email === env('SUPER_MASTER_ADMIN_EMAIL'))
-                            <!-- Revenue -->
-                            <div class="menu-item menu-accordion">
-                                <a href="{{route('admin.revenue')}}">
-                                <span class="{{ ($admin_link == 'revenue' ) ? 'menu-link active' : 'menu-link ' }}">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                        <span class="svg-icon svg-icon-2">
-                                        <i class="bi bi-cash fa-lg"></i>
+                                <div class="menu-item menu-accordion">
+                                    <a href="{{route('admin.subscriptions')}}">
+                                    <span class="{{ ($admin_link == 'subscriptions' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="{{ ($admin_link == 'subscriptions' ) ? '#c2da08' : '#000000' }}" class="bi bi-cash" viewBox="0 0 16 16">
+                                                     <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/> <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/> </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
                                         </span>
-                                        <!--end::Svg Icon-->
+                                        <span class="menu-title">{{__('messages.subscriptions')}}</span>
                                     </span>
-                                    <span class="menu-title">{{__('messages.revenue')}}</span>
-                                </span>
-                                </a>
-                            </div>
-
+                                    </a>
+                                </div>
                             @endif
-                            <div class="menu-item menu-accordion">
-                                <a href="{{route('admin.subscriptions')}}">
-                                <span class="{{ ($admin_link == 'subscriptions' ) ? 'menu-link active' : 'menu-link ' }}">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
-                                        <span class="svg-icon svg-icon-2">
-                                        <i class="bi bi-card-checklist fa-lg"></i>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                    <span class="menu-title">{{__('messages.subscriptions')}}</span>
-                                </span>
-                                </a>
-                            </div>
 
                         </div>
                         <!--end::Menu-->

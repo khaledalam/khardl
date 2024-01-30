@@ -37,7 +37,7 @@ class RestaurantSubLive
                     $messages =  __('messages.Go To Login Restaurant Page');
                     $url = "<a href='$url_redirect'>$messages</a><br />";
                 }
-                $message = __("messages.Code ")." 01: ".__('messages.This Restaurant is not active, please contact web master') ;
+                $message = __("messages.Code ")." 01:(Sub) ".__('messages.This Restaurant is not active, please contact web master') ;
                 $khardl = __('messages.Go To Main Khardl Website');
                 
                 echo <<<HTML

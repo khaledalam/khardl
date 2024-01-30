@@ -27,3 +27,5 @@ public/css/app.css
 public/css/index.css
 public/js/chunks/*.js
 public/js/tenant.js.LICENSE.txt
+
+bootstrap/cache/*
