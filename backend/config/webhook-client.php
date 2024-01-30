@@ -1,5 +1,6 @@
 <?php
 
+use App\Repositories\Webhook\WebhookCall;
 use App\Repositories\Webhook\WebhookSignature;
 use App\Packages\TapPayment\Webhook\TapWebhookHandler;
 use App\Packages\TapPayment\Webhook\TapWebhookSignature;
@@ -37,5 +38,5 @@ return [
      *
      * 7 deletes all records after 1 week. Set to null if no models should be deleted.
      */
-    'delete_after_days' => 30,
+    'delete_after_days' => null,
 ];
