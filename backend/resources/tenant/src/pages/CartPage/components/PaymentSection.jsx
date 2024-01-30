@@ -35,10 +35,10 @@ const PaymentSection = ({
   const {t} = useTranslation()
   const [notes, setNotes] = useState("")
   const [couponCode, setCouponCode] = useState("")
-    const [deliveryType, setDeliveryType] = useState("");
+  const [deliveryType, setDeliveryType] = useState("");
   const [couponDiscountValue, setCouponDiscountValue] = useState(0)
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-    const [paymentMethod, setPaymentMethod] = useState("")
+  const [paymentMethod, setPaymentMethod] = useState("")
   const [deliveryCost, setDeliveryCost] = useState(0)
   const [activeDeliveryType, setActiveDeliveryType] = useState("")
   const [showTAPClientCard, setShowTAPClientCard] = useState(false)
