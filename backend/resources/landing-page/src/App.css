@@ -336,7 +336,7 @@
 
 .main-page-text h2 {
   color: rgba(52, 40, 40, 0.77);
-
+text-align: center;
   font-family: "Linden Hill";
   font-size: 16px;
   font-style: normal;
@@ -641,6 +641,7 @@
   .new-register-bg {
     border-radius: 20px;
     background-position: center;
+    background: #c0d123;
   }
   .home-heading,
   .feature-heading span {
@@ -652,4 +653,5 @@
   .services-img{
     width: 100%;
   }
+ 
 }
