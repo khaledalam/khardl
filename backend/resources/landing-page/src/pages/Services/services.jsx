@@ -9,10 +9,11 @@ import HeaderSection from "../../components/HeaderSection";
 import ContactUs from "../../components/ContactUsSection/ContactUs";
 import Card from "../../components/FeaturesSection/Card";
 import Button from "../../components/Button";
-import service1 from "../../assets/services1.png";
-import service2 from "../../assets/services2.png";
-import service3 from "../../assets/services3.png";
+import Group11 from "../../assets/Group11.png";
+import Group12 from "../../assets/Group12.png";
+import Group13 from "../../assets/Group13.png";
 import Rectangle from "../../assets/Rectangle.png";
+import ServicesButton from "./ServicesButton";
 function Services() {
   const { t } = useTranslation();
   const Features = [
@@ -63,7 +64,11 @@ function Services() {
         <div className="flex items-center justify-center h-[120px]">
           <img src={Rectangle} className="absolute left-[40%]" alt=""></img>
           <h2 className="services-heading z-10 relative">{t("Services")}</h2>
-          <img src={Rectangle} className="absolute right-[40%] mt-4" alt=""></img>
+          <img
+            src={Rectangle}
+            className="absolute right-[40%] mt-4 md:right-[40%]"
+            alt=""
+          ></img>
         </div>
         <div className="mt-22 mb-[130px]">
           <div className="mt-6" data-aos="fade-up" data-aos-delay="400">
@@ -71,20 +76,53 @@ function Services() {
           </div>
           {/* <div className="mx-[160px] max-[1250px]:mx-[20px]"> */}
           <div className="pt-[80px]">
-          <section className="mx-auto max-w-full md:max-w-[1250px]">
-            <div data-aos="fade-up" data-aos-delay="400">
-              <img src={service1} />
-            </div>
-            <div
-              className="py-10 my-16"
-              data-aos="fade-up"
-              data-aos-delay="400"
-            >
-              <img src={service2} className="ml-auto" />
-            </div>
-            <div data-aos="fade-up" data-aos-delay="400">
-              <img src={service3} />
-            </div>
+            <section className="mx-auto max-w-full md:max-w-[1250px]">
+              <div
+                className="services-img"
+                data-aos="fade-up"
+                data-aos-delay="400"
+                style={{
+                  backgroundImage: `url(${Group12})`,
+                }}
+              >
+                <div className="services-content justify-center items-end">
+                  <p className="text-[#000000] mt-[18%]">
+                    {t("Receive Requests")} <br />
+                    <ServicesButton text={t("Free")}  />
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="ml-auto mr-0 services-img"
+                data-aos="fade-up"
+                data-aos-delay="400"
+                style={{
+                  backgroundImage: `url(${Group11})`,
+                }}
+              >
+                <div className="services-content justify-center items-center mt-3">
+                  <p className="text-[#000000] mt-8">
+                  {t("Drivers App")} <br />
+                    <ServicesButton text={t("Free")}  />
+                  </p>
+                </div>
+              </div>
+              <div
+                className="services-img"
+                data-aos="fade-up"
+                data-aos-delay="400"
+                style={{
+                  backgroundImage: `url(${Group13})`,
+                }}
+              >
+                <div className="services-content justify-center items-center">
+                  <p className="text-[#000000] mt-14">
+                    {t("Each Branch")} <br />
+                    <ServicesButton text={t("Free")} />
+                  </p>
+                </div>
+              </div>
             </section>
           </div>
           <div

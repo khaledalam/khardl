@@ -46,7 +46,7 @@ const FQA = () => {
         <div className="p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
           {/* <HeaderSection title={t("FQA")} details={`${t("Home")} / ${t("FQA")}`} /> */}
           <h1 className="faq-header">
-            FAQ <span>(Frequently Asked Question)</span>
+            {t("FAQ")} <span>{t("Frequently Asked Question")}</span>
           </h1>
         </div>
         <div className="mt-6" data-aos="fade-up" data-aos-delay="400">

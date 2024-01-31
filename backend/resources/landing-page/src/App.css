@@ -5,8 +5,7 @@
   --third: #f9f9f9;
 }
 
-  @import url('https://fonts.googleapis.com/css2?family=Linden+Hill:ital@0;1&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Linden+Hill:ital@0;1&display=swap");
 
 /* @font-face {
   font-family: 'cairo';
@@ -252,7 +251,7 @@
   /* min-width: 400px;
   max-width: 500px; */
 }
-.contact-footer-section .contact-text{
+.contact-footer-section .contact-text {
   max-width: 400px;
 }
 
@@ -543,7 +542,8 @@
     border-radius: 20px;
     background-position: center;
   }
-  .home-heading, .feature-heading span{
+  .home-heading,
+  .feature-heading span {
     font-size: 26px !important;
   }
   .price-box .dropdown-custom{
@@ -622,7 +622,7 @@
   border-bottom-width: 2px;
   border-bottom-color: #c0d123;
 }
-.services-heading{
+.services-heading {
   color: #000;
   font-variant-numeric: lining-nums proportional-nums;
   font-family: "Linden Hill";
@@ -630,4 +630,18 @@
   font-style: normal;
   font-weight: 400;
   line-height: 44px; /* 95.652% */
+}
+.services-img {
+  position: relative;
+
+  background-repeat: no-repeat;
+  height: 250px;
+  color: #fff;
+  background-size: contain;
+  width: 50%;
+}
+.services-content {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }

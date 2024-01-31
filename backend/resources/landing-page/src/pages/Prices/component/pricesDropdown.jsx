@@ -22,7 +22,7 @@ const PricesDropdown = () => {
         aria-haspopup="true"
         aria-expanded="true"
       >
-        Monthly
+        {t("Monthly")}
         <IoChevronDownSharp />
       </button>
 
@@ -43,7 +43,7 @@ const PricesDropdown = () => {
                 <p>{t("Monthly")}</p>
                 <p>
                   <span className="text-[10px]">{t("SAR")}</span>
-                  <span className="mt-2">{299}</span>
+                  <span className="mt-2">{t("299")}</span>
                 </p>
               </div>
             </a>
@@ -56,7 +56,7 @@ const PricesDropdown = () => {
                 <p>{t("3 months")}</p>
                 <p>
                   <span className="text-[10px]">{t("SAR")}</span>
-                  <span className="mt-2">{499}</span>
+                  <span className="mt-2">{t("499")}</span>
                 </p>
               </div>
             </a>
@@ -69,7 +69,7 @@ const PricesDropdown = () => {
                 <p>{t("6 months")}</p>
                 <p>
                   <span className="text-[10px]">{t("SAR")}</span>
-                  <span className="mt-2">{1299}</span>
+                  <span className="mt-2">{t("799")}</span>
                 </p>
               </div>
             </a>
@@ -82,7 +82,7 @@ const PricesDropdown = () => {
                 <p>{t("12 months")}</p>
                 <p>
                   <span className="text-[10px]">{t("SAR")}</span>
-                  <span className="mt-2">{1299}</span>
+                  <span className="mt-2">{t("1299")}</span>
                 </p>
               </div>
             </a>

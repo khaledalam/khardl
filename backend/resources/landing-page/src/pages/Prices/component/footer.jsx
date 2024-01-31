@@ -7,7 +7,7 @@ const Footer = ({ FooterText }) => {
 
     return (
         <div className='w-[100%] max-md:w-[100%] text-center flex justify-around mt-10'>
-            <button className='p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg'>Get Started <FaChevronRight/></button>
+            <button className='p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg'>{t("Get Started")} <FaChevronRight/></button>
             {/* <div className="flex justify-center items-center gap-2 text-start bg-[var(--primary)] py-3 rounded-b-2xl font-bold border-[0.5px] border-gray-300">
                 <FaStarOfLife size={10} className="text-red-500" />
                 <h1>
