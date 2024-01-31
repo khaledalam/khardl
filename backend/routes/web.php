@@ -45,9 +45,24 @@ Route::get('/health', static function (){
     $commitDate = new \DateTime(trim(exec('git log -n1 --pretty=%ci HEAD')));
     $commitDate->setTimezone(new \DateTimeZone('Asia/Riyadh'));
 
+    exec('git rev-parse --verify HEAD 2> /dev/null', $output);
+    $hash = $output[0];
+
+    exec("git show $hash", $git_message);
+    $git_message_first_lines = [];
+    $idx = 0;
+    foreach ($git_message as $msg) {
+        $git_message_first_lines[] = $msg;
+        $idx++;
+        if ($idx > 5) break;
+    }
+
+
     return response()->json([
         'status' => 'ok',
         'last_commit_hash' => trim(exec('git log --pretty="%h" -n1 HEAD')),
+        'last_commit_hashfull' => $hash,
+        'last_commit_message' => $git_message_first_lines,
         'last_commit_url' => sprintf('https://github.com/mne-org/khardl/commit/%s', $commitHash),
         'last_commit_date' => sprintf('%s (timezone: Asia/Riyadh)', $commitDate->format('Y-m-d h:i:s A'))
     ]);

@@ -9,10 +9,11 @@ import HeaderSection from "../../components/HeaderSection";
 import ContactUs from "../../components/ContactUsSection/ContactUs";
 import Card from "../../components/FeaturesSection/Card";
 import Button from "../../components/Button";
-import service1 from "../../assets/services1.png";
-import service2 from "../../assets/services2.png";
-import service3 from "../../assets/services3.png";
-
+import Group11 from "../../assets/Group11.png";
+import Group12 from "../../assets/Group12.png";
+import Group13 from "../../assets/Group13.png";
+import Rectangle from "../../assets/Rectangle.png";
+import ServicesButton from "./ServicesButton";
 function Services() {
   const { t } = useTranslation();
   const Features = [
@@ -52,6 +53,7 @@ function Services() {
       Price: 1299,
     },
   ];
+  const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
   return (
     <div>
       <Helmet>
@@ -60,30 +62,73 @@ function Services() {
       </Helmet>
 
       <div className="pt-[80px]">
-        <div className="p-[30px]  pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
-          <HeaderSection
-            title={t("Services")}
-            details={`${t("Home")} / ${t("Services")}`}
-          />
+        <div className="flex items-center justify-center h-[120px]">
+          <img src={Rectangle} className="absolute left-[40%]" alt=""></img>
+          <h2 className="services-heading z-10 relative">{t("Services")}</h2>
+          <img
+            src={Rectangle}
+            className="absolute right-[40%] mt-4 md:right-[40%]"
+            alt=""
+          ></img>
         </div>
         <div className="mt-22 mb-[130px]">
           <div className="mt-6" data-aos="fade-up" data-aos-delay="400">
             <MainText SubTitle={t("Khardl's services Details")} />
           </div>
-          <div className="mx-[160px] max-[1250px]:mx-[20px]">
-            <div data-aos="fade-up" data-aos-delay="400">
-              <img src={service1} />
-            </div>
-            <div
-              className="py-10 my-16"
-              data-aos="fade-up"
-              data-aos-delay="400"
-            >
-              <img src={service2} className="ml-auto" />
-            </div>
-            <div data-aos="fade-up" data-aos-delay="400">
-              <img src={service3} />
-            </div>
+          {/* <div className="mx-[160px] max-[1250px]:mx-[20px]"> */}
+          <div className="pt-[80px]">
+            <section className="mx-auto max-w-full md:max-w-[1250px]">
+              <div
+                className="services-img"
+                data-aos="fade-up"
+                data-aos-delay="400"
+                style={{
+                  backgroundImage: `url(${Group12})`,
+                  marginRight: direction == 'rtl' ? 'auto' : ''
+                }}
+              >
+                <div className="services-content justify-center md:items-end items-end">
+                  <p className="text-[#000000] md:mt-[18%] mt-0 md:text-center text-left">
+                    {t("Receive Requests")} <br />
+                    <ServicesButton text={t("Free")}  />
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="ml-auto mr-0 services-img"
+                data-aos="fade-up"
+                data-aos-delay="400"
+                style={{
+                  backgroundImage: `url(${Group11})`,
+                 
+                }}
+              >
+                <div className="services-content justify-center items-end md:items-center mt-3">
+                  <p className="text-[#000000] md:mt-8 mt-0 md:text-center text-left">
+                  {t("Drivers App")} <br />
+                    <ServicesButton text={t("Free")}  />
+                  </p>
+                </div>
+              </div>
+              <div
+                className="services-img"
+                data-aos="fade-up"
+                data-aos-delay="400"
+                style={{
+                  backgroundImage: `url(${Group13})`,
+                  
+                  marginRight: direction == 'rtl' ? 'auto' : ''
+                }}
+              >
+                <div className="services-content justify-center items-end md:items-center">
+                  <p className="text-[#000000] md:mt-14 mt-0 md:text-center text-left">
+                    {t("Each Branch")} <br />
+                    <ServicesButton text={t("Free")} />
+                  </p>
+                </div>
+              </div>
+            </section>
           </div>
           <div
             className="flex justify-center register-btn py-10 my-16"
@@ -96,7 +141,7 @@ function Services() {
               link="/login"
             />
           </div>
-          <hr className="w-[500px] register-hr" />
+          <hr className="w-[500px] register-hr max-[1200px]:w-[90%]" />
         </div>
         <div className=" flex flex-col justify-start items-center gap-[150px] pt-[80px]">
           <ContactUs />
