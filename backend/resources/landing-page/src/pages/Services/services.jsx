@@ -85,8 +85,8 @@ function Services() {
                   backgroundImage: `url(${Group12})`,
                 }}
               >
-                <div className="services-content justify-center items-end">
-                  <p className="text-[#000000] mt-[18%]">
+                <div className="services-content justify-center md:items-end items-end">
+                  <p className="text-[#000000] md:mt-[18%] mt-0 md:text-center text-left">
                     {t("Receive Requests")} <br />
                     <ServicesButton text={t("Free")}  />
                   </p>
@@ -101,8 +101,8 @@ function Services() {
                   backgroundImage: `url(${Group11})`,
                 }}
               >
-                <div className="services-content justify-center items-center mt-3">
-                  <p className="text-[#000000] mt-8">
+                <div className="services-content justify-center items-end md:items-center mt-3">
+                  <p className="text-[#000000] md:mt-8 mt-0 md:text-center text-left">
                   {t("Drivers App")} <br />
                     <ServicesButton text={t("Free")}  />
                   </p>
@@ -116,8 +116,8 @@ function Services() {
                   backgroundImage: `url(${Group13})`,
                 }}
               >
-                <div className="services-content justify-center items-center">
-                  <p className="text-[#000000] mt-14">
+                <div className="services-content justify-center items-end md:items-center">
+                  <p className="text-[#000000] md:mt-14 mt-0 md:text-center text-left">
                     {t("Each Branch")} <br />
                     <ServicesButton text={t("Free")} />
                   </p>

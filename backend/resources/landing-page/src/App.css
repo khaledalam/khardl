@@ -536,20 +536,7 @@
   font-family: "Linden Hill";
 }
 
-@media screen and (max-width: 768px) {
-  .new-login-bg,
-  .new-register-bg {
-    border-radius: 20px;
-    background-position: center;
-  }
-  .home-heading,
-  .feature-heading span {
-    font-size: 26px !important;
-  }
-  .price-box .dropdown-custom{
-    left: -122px !important;
-  }
-}
+
 
 .price-box {
   border-radius: 6px;
@@ -559,6 +546,7 @@
   padding: 30px;
   width: 80%;
   transition: all ease-in-out 300ms;
+  font-family: "Linden Hill";
 }
 
 .price-box .header {
@@ -642,6 +630,23 @@
 }
 .services-content {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   height: 100%;
+}
+@media screen and (max-width: 768px) {
+  .new-login-bg,
+  .new-register-bg {
+    border-radius: 20px;
+    background-position: center;
+  }
+  .home-heading,
+  .feature-heading span {
+    font-size: 26px !important;
+  }
+  .price-box .dropdown-custom{
+    left: -122px !important;
+  }
+  .services-img{
+    width: 100%;
+  }
 }
