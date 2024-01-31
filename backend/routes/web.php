@@ -38,9 +38,18 @@ use App\Models\CentralSetting;
 |
 */
 
-Route::get('/health', function (){
+Route::get('/health', static function (){
+
+    $commitHash = trim(exec('git log --pretty="%h" -n1 HEAD'));
+
+    $commitDate = new \DateTime(trim(exec('git log -n1 --pretty=%ci HEAD')));
+    $commitDate->setTimezone(new \DateTimeZone('Asia/Riyadh'));
+
     return response()->json([
-        'status' => 'ok'
+        'status' => 'ok',
+        'last_commit_hash' => trim(exec('git log --pretty="%h" -n1 HEAD')),
+        'last_commit_url' => sprintf('https://github.com/mne-org/khardl/commit/%s', $commitHash),
+        'last_commit_date' => sprintf('%s (timezone: Asia/Riyadh)', $commitDate->format('Y-m-d h:i:s A'))
     ]);
 })->name('health');
 
@@ -129,18 +138,6 @@ Route::get('/health', function (){
 //     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 // });
 
-
-Route::get('/health', static function (){
-    return response()->json([
-        'status' => 'ok'
-    ]);
-})->name('health');
-
-Route::get('/test', static function (){
-    return response()->json([
-        'status' => 'test'
-    ]);
-})->name('test');
 Route::get('promoter/{name}', [GlobalPromoterController::class, 'index'])->name('global.promoter');
 
 

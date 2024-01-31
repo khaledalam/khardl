@@ -70,10 +70,10 @@ const CustomerProfile = () => {
   useEffect(() => {
     if (userProfile) {
       if (
-        firstName?.trim() === userProfile.firstName.trim() &&
-        lastName?.trim() === userProfile.lastName.trim() &&
-        phone?.trim() === userProfile.phone.trim() &&
-        address?.trim() === userProfile.address.trim()
+        firstName?.trim() === userProfile?.firstName.trim() &&
+        lastName?.trim() === userProfile?.lastName.trim() &&
+        phone?.trim() === userProfile?.phone.trim() &&
+        address?.trim() === userProfile?.address.trim()
       ) {
         setIsDisabled(true)
         dispatch(updateProfileSaveStatus(true))
