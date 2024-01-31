@@ -57,45 +57,84 @@ function ContactUs() {
       toast.error(`${t("Your contact information has not been sent")}`);
     }
   };
-  const [isMobile, setIsMobile] = useState(false)
-  
-useEffect(()=>{
-  const isMobile = window.innerWidth <= 1000
-  setIsMobile(!isMobile)
+  const [isMobile, setIsMobile] = useState(false);
 
-},[])
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 1000;
+    setIsMobile(!isMobile);
+  }, []);
 
-console.log("ContactUs")
+  console.log("ContactUs");
   //  **displayed content**
   return (
     <>
       <section className="mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
-        <h3 className="home-heading">Contact Us</h3>
+        <h3 className="home-heading">{t("Contact Us")}</h3>
         <h3 className="text-medium mb-11">
-          Let us assist you in acquiring more clients at reduced rates.
+          {t("Let us assist you in acquiring more clients at reduced rates")}.
         </h3>
-        <div className={`${!isMobile ? 'w-[100%]' : 'grid grid-cols-2 gap-4'}`}>
-          <div className={`relative ${!isMobile ? 'hidden' : 'block'} `} style={{background: 'radial-gradient(50% 50% at 50% 50%, #E6FF00 0%, #E6FF00 42.26%, rgba(230, 255, 0, 0.30) 48.28%, rgba(230, 255, 0, 0.00) 100%)'}}>
-
+        <div className={`${!isMobile ? "w-[100%]" : "grid grid-cols-2 gap-4"}`}>
+          <div
+            className={`relative ${!isMobile ? "hidden" : "block"} `}
+            style={{
+              background:
+                "radial-gradient(50% 50% at 50% 50%, #E6FF00 0%, #E6FF00 42.26%, rgba(230, 255, 0, 0.30) 48.28%, rgba(230, 255, 0, 0.00) 100%)",
+            }}
+          >
             <div className="contact-footer-section">
-
-
-              <h3 className="contact-heading text-left mt-2 mb-5">Contact Information</h3>
+              <h3 className="contact-heading text-left mt-2 mb-5">
+                {t("Contact Information")}
+              </h3>
               <h3 className="contact-text">{t("Footer")}</h3>
-              <div className="contact-details"><span><img src={call}/>
-              </span>(+966)121-212-121</div>
-              <div className="contact-details"><span><img src={mail}/>
-
-              </span>e.g.Khardl@gmail.com</div>
-              <div className="contact-details"><span><img src={location}/>
-
-              </span>e.g.Saudi Arabia</div>
+              <div className="contact-details">
+                <span>
+                  <img src={call} />
+                </span>
+                (+966)121-212-121
+              </div>
+              <div className="contact-details">
+                <span>
+                  <img src={mail} />
+                </span>
+                e.g.Khardl@gmail.com
+              </div>
+              <div className="contact-details">
+                <span>
+                  <img src={location} />
+                </span>
+                e.g.Saudi Arabia
+              </div>
               <div className="flex gap-3 mt-7">
-                <img src={facebook} width="24px" height={'24px'} className="social-ic"/>
-                <img src={xlogo} width="24px" height={'24px'} className="social-ic"/>
-                <img src={insta} width="24px" height={'24px'} className="social-ic invert"/>
-                <img src={youtube} width="24px" height={'24px'} className="social-ic"/>
-                <img src={linkedin} width="24px" height={'24px'} className="social-ic"/>
+                <img
+                  src={facebook}
+                  width="24px"
+                  height={"24px"}
+                  className="social-ic"
+                />
+                <img
+                  src={xlogo}
+                  width="24px"
+                  height={"24px"}
+                  className="social-ic"
+                />
+                <img
+                  src={insta}
+                  width="24px"
+                  height={"24px"}
+                  className="social-ic invert"
+                />
+                <img
+                  src={youtube}
+                  width="24px"
+                  height={"24px"}
+                  className="social-ic"
+                />
+                <img
+                  src={linkedin}
+                  width="24px"
+                  height={"24px"}
+                  className="social-ic"
+                />
               </div>
             </div>
           </div>
@@ -106,7 +145,7 @@ console.log("ContactUs")
               className="w-[100%]  flex flex-col gap-[22px] px-[15px] custom-form-design"
             >
               <div className="flex flex-col">
-                <label htmlFor="">Email</label>
+                <label htmlFor="">{t("Email")}</label>
                 <input
                   type="email"
                   className=" max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--secondary)]"
@@ -122,7 +161,7 @@ console.log("ContactUs")
               </div>
 
               <div className="flex flex-col">
-              <label htmlFor="">Phone Number</label>
+                <label htmlFor="">{t("Phone Number")}</label>
 
                 <input
                   type="tel"
@@ -142,7 +181,7 @@ console.log("ContactUs")
               </div>
 
               <div className="flex flex-col">
-              <label htmlFor="">Business Name</label>
+                <label htmlFor="">{t("Business name")}</label>
 
                 <input
                   type="text"
@@ -162,7 +201,7 @@ console.log("ContactUs")
               </div>
 
               <div className="flex flex-col">
-              <label htmlFor="">Responsible person Name</label>
+                <label htmlFor="">{t("Responsible person Name")}</label>
                 <input
                   type="text"
                   className=" max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--secondary)]"
@@ -189,7 +228,9 @@ console.log("ContactUs")
               <div className="flex justify-end ">
                 <button
                   type="submit"
-                  className={`flex gap-5 ${!isMobile ? 'w-[100%]':'w-fit' } justify-center cta-btn font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px] hover:bg-[#d6eb16]`}
+                  className={`flex gap-5 ${
+                    !isMobile ? "w-[100%]" : "w-fit"
+                  } justify-center cta-btn font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px] hover:bg-[#d6eb16]`}
                 >
                   {t("Send")} <HiChevronRight />
                 </button>
@@ -198,7 +239,6 @@ console.log("ContactUs")
           </div>
         </div>
       </section>
-      
     </>
   );
 }
