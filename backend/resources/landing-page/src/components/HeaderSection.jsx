@@ -4,7 +4,7 @@ import LogoPattern from '../assets/LogoPattern.webp';
 const HeaderSection = ({ title, details }) => {
 
   return (
-    <section className="mx-[160px] max-[1250px]:mx-[20px]">
+    <section className=" max-[1250px]:mx-[20px]">
       <div className="new-header">
         <h2>{title}</h2>
         <p>{details}</p>

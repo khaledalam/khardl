@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../../assets/Logo.webp'
 import ContactUsCover from '../../assets/ContactUsCover.webp'
 import { useTranslation } from 'react-i18next'
@@ -8,9 +8,11 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import AxiosInstance from "../../axios/axios";
-import {PREFIX_KEY} from "../../config";
+import { PREFIX_KEY } from "../../config";
+import { changeRestuarantEditorStyle } from '../../redux/NewEditor/restuarantEditorSlice'
+import imgLogo from "../../assets/khardl_Logo.png"
 
 const Register = () => {
    const navigate = useNavigate()
@@ -23,10 +25,11 @@ const Register = () => {
    } = useForm()
    const [openEyePassword, setOpenEyePassword] = useState(false)
    const [openEyeRePassword, setOpenEyeRePassword] = useState(false)
-
+   const [isLoading, setisLoading] = useState(true);
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
-
+   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
+   const dispatch = useDispatch()
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
    }
@@ -68,7 +71,37 @@ const Register = () => {
 
    }
    /////////////////////////////////////////////////////////////////////////////////////
-
+   const fetchResStyleData = async () => {
+      try {
+         AxiosInstance.get(`restaurant-style`).then((response) => {
+            console.log("DATA", response.data?.data);
+            dispatch(changeRestuarantEditorStyle(response.data?.data));
+         });
+         setisLoading(false);
+      } catch (error) {
+         // toast.error(`${t('Failed to send verification code')}`)
+         console.log(error);
+         setisLoading(false);
+      }
+   };
+   const fetchCartData = async () => {
+      try {
+         const cartResponse = await AxiosInstance.get(`carts`);
+         if (cartResponse.data) {
+            dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length));
+         }
+      } catch (error) {
+         // toast.error(`${t('Failed to send verification code')}`)
+         console.log(error);
+      }
+   };
+   /////////////////////////////////////////////////////////////////////////////////////
+   useEffect(() => {
+      fetchResStyleData();
+      fetchCartData().then(() => {
+         console.log("fetched cart item count successfully");
+      });
+   })
    return (
       <div className='flex flex-col items-stretch justify-center'>
          <div
@@ -106,7 +139,7 @@ const Register = () => {
                                     />
                                     {errors.first_name && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                           {errors.first_name.message ||   t('First name Error') }
+                                          {errors.first_name.message || t('First name Error')}
                                        </span>
                                     )}
                                  </div>
@@ -124,7 +157,7 @@ const Register = () => {
                                     />
                                     {errors.last_name && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {errors.last_name.message ||   t('Last name Error') }
+                                          {errors.last_name.message || t('Last name Error')}
                                        </span>
                                     )}
                                  </div>
@@ -137,24 +170,24 @@ const Register = () => {
                                  <input
                                     type='number'
                                     className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                                    placeholder={ t('e.g.') + ' +966 123456789'}
+                                    placeholder={t('e.g.') + ' +966 123456789'}
                                     {...register('phone', {
                                        required: true,
                                     })}
-                                    style={{direction:'ltr'}}
+                                    style={{ direction: 'ltr' }}
                                     minLength={9}
                                     maxLength={13}
                                  />
                                  {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       {errors.phone.message ||   t('Phone Error') }
+                                       {errors.phone.message || t('Phone Error')}
                                     </span>
                                  )}
                               </div>
-                              
+
 
                               {/* Input 6 */}
-                            
+
                               <div>
                                  <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                     {t('Email')}
@@ -167,7 +200,7 @@ const Register = () => {
                                  />
                                  {errors.email && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                        {errors.email.message ||   t('Email Error') }
+                                       {errors.email.message || t('Email Error')}
                                     </span>
                                  )}
                               </div>
@@ -251,10 +284,10 @@ const Register = () => {
                                  </div>
                               </div> */}
 
-                              
+
                               {errors.terms_and_policies && (
                                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                                 {errors.terms_and_policies.message ||   t('Approval Error') }
+                                    {errors.terms_and_policies.message || t('Approval Error')}
                                  </span>
                               )}
 
@@ -311,12 +344,34 @@ const Register = () => {
                         to='/'
                         className='grid content-between space-y-6  transform transition-transform hover:-translate-y-2'
                      >
-                        <img
-                           loading='lazy'
-                           className='w-[120px]'
-                           src={Logo}
-                           alt='Logo'
-                        />
+                        <div
+                           className={` w-full ${restaurantStyle?.logo_alignment === t("Center") ||
+                                 restaurantStyle?.logo_alignment === "center"
+                                 ? " flex items-center justify-center"
+                                 : restaurantStyle?.logo_alignment === t("Left") ||
+                                    restaurantStyle?.logo_alignment === "left"
+                                    ? "items-center justify-start"
+                                    : "items-center justify-end"
+                              }`}
+                        >
+                           <div
+                              className={`w-[80px] h-[80px]  ${restaurantStyle?.logo_shape === "rounded" ||
+                                    restaurantStyle?.logo_shape === t("Rounded")
+                                    ? "rounded-full"
+                                    : restaurantStyle?.logo_shape === "sharp" ||
+                                       restaurantStyle?.logo_shape === t("Sharp")
+                                       ? "rounded-none"
+                                       : ""
+                                 }`}
+                           >
+                              <img
+                                 src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
+                                 alt='logo'
+                                 className={`w-full h-full object-cover ${restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
+                                    }`}
+                              />
+                           </div>
+                        </div>
                      </Link>
                      <div className='mt-6'>
                         <MainText
