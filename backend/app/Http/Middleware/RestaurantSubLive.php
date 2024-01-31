@@ -17,7 +17,7 @@ class RestaurantSubLive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(env('APP_ENV') != 'local'){
+        if(env('APP_ENV') != 'local' &&$request->route()->getName() != 'stancl.tenancy.asset' && request()->segment(3) != 'restaurant-styles'){
             $sub=ROSubscription::first();
             if(!$sub || $sub->status != ROSubscription::ACTIVE){
                 if ($request->expectsJson()) {
@@ -39,7 +39,7 @@ class RestaurantSubLive
                 }
                 $message = __("messages.Code ")." 01:(Sub) ".__('messages.This Restaurant is not active, please contact web master') ;
                 $khardl = __('messages.Go To Main Khardl Website');
-                
+
                 echo <<<HTML
                     <div style="text-align: center; height: 100vh; display: flex; flex-direction: column ; justify-content: center; align-items: center;">
                     <h3 style="color: red;">$message</h3>
@@ -51,7 +51,7 @@ class RestaurantSubLive
                 die;
             }
         }
-       
+
         return $next($request);
     }
 }
