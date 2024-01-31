@@ -26,7 +26,7 @@ class PaymentMethodSeeder extends Seeder
         ]);
         PaymentMethod::create([
             'id'=> self::PAYMENT_METHOD_CC,
-            'name'=>PaymentMethod::CREDIT_CARD,
+            'name'=>PaymentMethod::ONLINE,
         ]);
 
     }

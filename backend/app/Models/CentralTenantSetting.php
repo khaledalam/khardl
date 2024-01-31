@@ -17,14 +17,7 @@ class CentralTenantSetting extends Model implements SyncMaster
 
     public $table = 'central_tenant_settings';
 
-    protected $fillable =[
-        'is_live',
-        'delivery_fee',
-        'restaurant_name',
-        'loyalty_points_per_order',
-        'cashback_per_amount_percentage',
-        'global_id'
-    ];
+    protected $guarded  =[];
 
     public function tenants(): BelongsToMany
     {
@@ -61,6 +54,9 @@ class CentralTenantSetting extends Model implements SyncMaster
             'loyalty_point_price',
             'cashback_threshold',
             'cashback_percentage',
+            'lead_id',
+            'merchant_id',
+            'lead_response'
         ];
     }
 }

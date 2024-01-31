@@ -271,10 +271,10 @@ class CartRepository
         return $paymentMethod == PaymentMethod::CASH_ON_DELIVERY;
     }
 
-    // Accept Credit card payment method
+    // Accept online payment method
     public function hasPaymentCreditCard($paymentMethod)
     {
-        return  $paymentMethod == PaymentMethod::CREDIT_CARD;
+        return  $paymentMethod == PaymentMethod::ONLINE;
     }
 
     public function hasPayment($name)

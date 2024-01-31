@@ -258,7 +258,7 @@ return [
     'qr-maker' => 'QR maker',
     'not_live'=>"Not live",
     'receipt' => 'Receipt',
-    'payment-in-cash-upon-receipt' => 'Payment in cash upon receipt',
+    'payment-in-cash-upon-receipt' => 'Payment upon receipt',
     'payment-gateway-approve-warning-text' => 'Your payment gateway business account is not approved yet, please',
     'payment-gateway-approve-warning-link-text' => 'submit your payment gateway documents.',
     'see-restaurant-owners'=>'See Restaurant owners',
@@ -298,7 +298,7 @@ return [
     "online"=>"Online",
     "cash"=>"Cash",
     "Cash on Delivery"=>"Cash on Delivery",
-    'Credit Card'=>"Credit Card",
+    'Online'=>"Online",
     'payment-address'=>'Payment Address',
     'shipping-address'=>'Shipping Address',
     'preparations'=>'Preparations',
@@ -314,7 +314,7 @@ return [
     'master-card'=>'Master card',
     'mada'=>'Mada',
     'apple-pay'=>'apple pay',
-    'payment-by-bank-card-upon-delivery'=>'Payment by bank card upon delivery',
+    'payment-online'=>'Payment online',
     'customer-reception-methods'=>'Customer reception methods',
     'pick-up-from-the-restaurant'=>'Pick up from the restaurant',
     'pick-up-by-car'=>"Pick up by Car",
@@ -783,4 +783,8 @@ return [
     "Mrs" => "Mrs",
     "Dr" => "Dr",
     "Prof" => "Prof",
+    "Close" => "Close",
+    "you are not signed with any delivery company yet" => " You are not signed with any delivery company yet.",
+    "you are signed with delivery company" => "You are signed with delivery companies already"
+
 ];

@@ -298,7 +298,7 @@ return [
     "online"=>"الكتروني",
     "cash"=>"كاش",
     "Cash on Delivery"=>"الدفع عن التوصيل",
-    'Credit Card'=>"بطاقة الكترونية",
+    'Online'=>"اون لاين",
     "Delivery"=>"توصيل",
     'payment-address'=>'عنوان الدفع',
     'shipping-address'=>'عنوان الشحن',
@@ -312,7 +312,7 @@ return [
     'master-card'=>'خدمة ماستر ائتمان',
     'mada'=>'خدمة مدي',
     'apple-pay'=>' خدمة ابل باي',
-    'payment-by-bank-card-upon-delivery'=>'الدفع عن طريق البطاقات المصرفية عند التسليم',
+    'payment-online'=>'الدفع اون لاين',
     'customer-reception-methods'=>'طرق استقبال طلبات العملاء',
     'pick-up-from-the-restaurant'=>'الاستلام من المطعم',
     'pick-up-by-car'=>"استلام بواسطة السيارة",
@@ -784,5 +784,8 @@ return [
     "Mrs" => "الانسة",
     "Dr" => "دكتور",
     "Prof" => "بروفيسور",
+    "Close" => "اغلاق",
+    "you are not signed with any delivery company yet" => "انت لم تتعاقد مع اي شركه توصيل بعد",
+    "you are signed with delivery company" => "انت متعاقد مع شركات توصيل بالفعل"
 ];
 
