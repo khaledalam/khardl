@@ -249,9 +249,12 @@
                                                             {{-- <div class="menu-item px-3">
                                                                 <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
                                                             </div> --}}
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('messages.Changes status')}}</a>
-                                                            </div>
+                                                            @if($order->status == \App\Models\Tenant\Order::CANCELLED || $order->status == \App\Models\Tenant\Order::COMPLETED  )
+                                                            @else 
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('messages.Changes status')}}</a>
+                                                                </div>
+                                                            @endif
 
                                                             <!--end::Menu item-->
                                                         </div>

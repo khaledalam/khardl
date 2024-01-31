@@ -12,6 +12,7 @@ use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\OrderStatusLogs;
 use App\Repositories\API\OrderRepository;
+use App\Http\Requests\OrderStatusChangeRequest;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Repositories\API\CustomerOrderRepository;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
@@ -41,10 +42,8 @@ class  OrderController extends BaseRepositoryController
         return $this->sendResponse($orderStatusLogs, __('Order status logs fetched'));
     }
 
-    public function updateStatus($order,Request $request){
-        $request->validate([
-            'status' => ['required',Rule::in(Order::STATUS)],
-        ]);
+    public function updateStatus($order,OrderStatusChangeRequest $request){
+    
         $user = Auth::user();
         $order = Order::
         when($user->isWorker(), function (Builder $query, string $role)use($user) {
