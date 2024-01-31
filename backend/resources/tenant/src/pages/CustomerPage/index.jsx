@@ -18,6 +18,7 @@ import MobileMenu from "./components/MobileMenu"
 import {useTranslation} from "react-i18next"
 
 export const CustomerPage = () => {
+  console.log("CustomerPage")
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {t} = useTranslation()
