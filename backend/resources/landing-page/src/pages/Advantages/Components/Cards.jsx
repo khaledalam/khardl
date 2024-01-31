@@ -43,7 +43,7 @@ function Cards() {
     ];
 
     return (
-        <div className='mx-[160px] max-[1250px]:mx-[20px] max-sm:mx-[0px]'>
+        <div className=' max-[1250px]:mx-[20px] max-sm:mx-[0px]'>
             <div
                 className="grid max-sm:grid-cols-2 max-sm:gap-x-4  max-sm:mx-0 max-lg:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-10 mx-4 mt-8 mb-[50px]">
                 {Advantages.slice(0, Visible).map((advantage, index) => (

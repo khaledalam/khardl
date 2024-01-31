@@ -59,7 +59,7 @@ function Advantages() {
       </Helmet>
 
       <div className="pt-[80px]">
-        <div className="p-[30px]  pt-[60px] max-md:px-[5px] max-md:py-[40px]">
+        <div className="  pt-[60px] max-md:px-[5px] max-md:py-[40px] max-w-full md:max-w-[1250px]" style={{margin:'auto'}}>
           <HeaderSection
             title={t("Advantages")}
             details={`${t("Home")} / ${t("Advantages")}`}
@@ -68,15 +68,18 @@ function Advantages() {
         <div className="mt-6" data-aos="fade-up" data-aos-delay="400">
           <MainText SubTitle={t("features of Khardl")} />
         </div>
-        <div className="p-[30px]">
+        <div className="flex flex-col justify-start items-center gap-[150px] pt-[80px]">
+          <section className=" mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
+
           <Cards />
+          </section>
         </div>
-        <div className=" flex flex-col justify-start items-center gap-[150px] pt-[80px]">
+        <div className="">
           {" "}
-          <section className="mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
+          <section className="max-w-full md:max-w-[1250px] md:mx-[100px] mx-auto" style={{margin:'auto'}}>
             <div className="mt-[60px]">
               <MainText Title={t("Geographical coverage areas")} />
-              <div className="mx-[160px] max-[1250px]:mx-[20px]">
+              <div className=" max-[1250px]:mx-[20px]">
                 <div className="grid items-center justify-center max-sm:grid-cols-2 max-sm:gap-4 max-md:grid-cols-2  max-lg:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-10 mx-4 mt-8 mb-[50px]">
                   {DeliveryAreas.slice(0, Visible).map((area, index) => (
                     <div
