@@ -9,7 +9,7 @@ class PaymentMethod extends Model
 {
 
     protected $table = 'payment_methods';
-    
+
     public const PENDING = 'pending';
     public const PAID = 'paid';
     public const FAILED = 'failed';
@@ -19,15 +19,15 @@ class PaymentMethod extends Model
         'name',
         'description',
         'icon',
-    
+
     ];
 
     public $translatable = ['description'];
 
     const CASH_ON_DELIVERY = 'Cash on Delivery';
-    const CREDIT_CARD = 'Credit Card';
+    const ONLINE = 'Online';
 
-  
+
     public function orders()
     {
         return $this->hasMany(Order::class);

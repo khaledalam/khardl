@@ -39,19 +39,6 @@ class AdminController extends Controller
         return view('admin.add-user', compact('user'));
     }
 
-    public function revenue()
-    {
-        $user = Auth::user();
-        $settings = CentralSetting::first();
-
-
-        if ($user?->email !== env('SUPER_MASTER_ADMIN_EMAIL')) {
-            return redirect()->back()->with('error', __('You are not allowed to access this page'));
-        }
-
-        return view('admin.revenue', compact('user', 'settings'));
-    }
-
     public function promoters(){
 
         $promoters = Promoter::paginate(15);
@@ -409,35 +396,10 @@ class AdminController extends Controller
             'type' => LogTypes::UpdateSettings
         ]);
 
-        if(app()->getLocale() === 'en')
+        if (app()->getLocale() === 'en')
             return redirect()->back()->with('success', 'Save settings successfully.');
         else
             return redirect()->back()->with('success', "حفظ الاعدادات بنجاح");
-    }
-
-    public function saveRevenue(Request $request)
-    {
-        $settings = CentralSetting::first();
-
-        $settings->fee_flat_rate = $request->fee_flat_rate;
-        $settings->fee_percentage = $request->fee_percentage;
-        $settings->new_branch_slot_price = $request->new_branch_slot_price;
-        $settings->save();
-        $actions = [
-            'en' => 'Update platform revenue settings',
-            'ar' => 'عدل علي اعدادات اربح'
-        ];
-        Log::create([
-            'user_id' => Auth::id(),
-            'action' => $actions,
-            'metadata' => $request->all(),
-            'type' => LogTypes::UpdateRevenueSettings
-        ]);
-
-        if(app()->getLocale() === 'en')
-            return redirect()->back()->with('success', 'Save revenue settings successfully.');
-        else
-            return redirect()->back()->with('success', "حفظ اعدادات الربح بنجاح");
     }
 
     public function userManagement()
@@ -713,6 +675,11 @@ class AdminController extends Controller
     }
     public function subscriptions(){
         $user = Auth::user();
+
+        if ($user?->email !== env('SUPER_MASTER_ADMIN_EMAIL')) {
+            return redirect()->back()->with('error', __('You are not allowed to access this page'));
+        }
+
         $subscriptions = Subscription::all();
         return view('admin.subscriptions', compact('subscriptions','user'));
     }

@@ -12,21 +12,7 @@ class Setting extends Model implements Syncable
 {
     use HasFactory, ResourceSyncing;
     protected $table= "settings";
-    protected $primaryKey = 'global_id';
-    protected $fillable =[
-        'is_live',
-        'delivery_fee',
-        'restaurant_name',
-        'loyalty_points_per_order',
-        'cashback_per_amount_percentage',
-        'global_id',
-        'merchant_id',
-        'lead_id',
-        'lead_response',
-        'cashback',
-        'loyalty_points',
-        'cashback_threshold'
-    ];
+    protected $guarded  =[];
     public $timestamps = false;
     protected $casts = [
         'lead_response' => 'array',
@@ -57,6 +43,9 @@ class Setting extends Model implements Syncable
             'loyalty_point_price',
             'cashback_threshold',
             'cashback_percentage',
+            'lead_id',
+            'merchant_id',
+            'lead_response'
         ];
     }
 

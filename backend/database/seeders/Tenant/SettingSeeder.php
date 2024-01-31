@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Tenant;
 
+use App\Models\CentralTenantSetting;
 use App\Models\Tenant\Setting;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,6 +15,7 @@ class SettingSeeder extends Seeder
     public function run($assets,$restaurant_name): void
     {
         Setting::create([
+            'id' => CentralTenantSetting::latest()->first()?->id + 1,
             'loyalty_points' => 0,
             'loyalty_point_price'   => 0,
             'cashback_threshold'    => 0,

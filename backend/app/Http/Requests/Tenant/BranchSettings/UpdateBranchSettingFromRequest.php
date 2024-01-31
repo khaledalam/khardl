@@ -29,8 +29,8 @@ class UpdateBranchSettingFromRequest extends FormRequest
         return [
             'payment_methods' => ['required','array'],
             'delivery_types' => ['required','array'],
-            'delivery_types.*' => ['in:Delivery,PICKUP,PICKUP By Car'],
-            'payment_methods.*' => ['in:Credit Card,Cash on Delivery'],
+            'delivery_types.*' => ['required', 'min:1', 'in:Delivery,PICKUP'],
+            'payment_methods.*' => ['required', 'min:1', 'in:Online,Cash on Delivery'],
         ];
     }
 

@@ -120,6 +120,7 @@
                 <label class="form-label" for="allowmarketing5">{{ __('messages.webhook-url')}}
                 </label>:
                 <input class="form-control form-control-solid" value="{{$webhook_url}}" type="url" id="allowmarketing5" name="webhook_url" />
+                <small>(for testing purposes)</small>
             </div>
             <!--begin::Label-->
         </div>
