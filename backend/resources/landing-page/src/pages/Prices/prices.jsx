@@ -27,7 +27,7 @@ function Prices() {
           <div className="mt-6" data-aos="fade-up" data-aos-delay="400">
             <MainText SubTitle={t("Khardl's services Details")} />
           </div>
-          <div className="mx-[160px] max-[1250px]:mx-[20px] mt-[30px]">
+          <div className="mx-[160px] max-[1250px]:mx-[20px] mt-[30px] max-w-full md:max-w-[1250px] " style={{margin:'auto'}}>
             <PricesTable />
           </div>
         </div>

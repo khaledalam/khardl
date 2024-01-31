@@ -546,6 +546,9 @@
   .home-heading, .feature-heading span{
     font-size: 26px !important;
   }
+  .price-box .dropdown-custom{
+    left: -122px !important;
+  }
 }
 
 .price-box {
@@ -599,7 +602,9 @@
   color: #fff;
   /* filter: invert(1); */
 }
-
+.price-box:hover .dropdown-custom{
+  background-color: #000;
+}
 .price-box .price {
   color: #000;
   font-family: "Linden Hill";

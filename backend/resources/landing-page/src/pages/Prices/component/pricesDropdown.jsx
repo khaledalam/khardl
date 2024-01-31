@@ -28,7 +28,7 @@ const PricesDropdown = () => {
 
       {isOpen && (
         <div
-          className="origin-top-right absolute  mt-2 w-50 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none border border-solid border-[#C0D123]"
+          className="origin-top-right dropdown-custom absolute  mt-2 w-50 rounded-md shadow-lg hover:bg-[#000] bg-white ring-1 ring-black ring-opacity-5 focus:outline-none border border-solid border-[#C0D123]"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="options-menu"

@@ -74,9 +74,9 @@ function Advantages() {
           <Cards />
           </section>
         </div>
-        <div className=" flex flex-col justify-start items-center gap-[150px] pt-[80px]">
+        <div className="">
           {" "}
-          <section className="mx-4 md:mx-[100px] max-w-full md:max-w-[1250px] flex flex-col items-center justify-center ">
+          <section className="max-w-[1250px] md:mx-[100px] mx-auto" style={{margin:'auto'}}>
             <div className="mt-[60px]">
               <MainText Title={t("Geographical coverage areas")} />
               <div className="mx-[160px] max-[1250px]:mx-[20px]">
