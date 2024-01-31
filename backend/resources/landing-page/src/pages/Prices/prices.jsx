@@ -17,7 +17,7 @@ function Prices() {
       </Helmet>
 
       <div className="pt-[80px]">
-        <div className="p-[30px]  pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
+        <div className="pt-[60px] max-md:px-[5px] max-md:py-[40px] max-w-full md:max-w-[1250px]" style={{margin:'auto'}}>
           <HeaderSection
             title={t("Prices")}
             details={`${t("Home")} / ${t("Prices")}`}
