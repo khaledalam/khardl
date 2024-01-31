@@ -69,7 +69,9 @@ function Services() {
           <div className="mt-6" data-aos="fade-up" data-aos-delay="400">
             <MainText SubTitle={t("Khardl's services Details")} />
           </div>
-          <div className="mx-[160px] max-[1250px]:mx-[20px]">
+          {/* <div className="mx-[160px] max-[1250px]:mx-[20px]"> */}
+          <div className="pt-[80px]">
+          <section className="mx-auto max-w-full md:max-w-[1250px]">
             <div data-aos="fade-up" data-aos-delay="400">
               <img src={service1} />
             </div>
@@ -83,6 +85,7 @@ function Services() {
             <div data-aos="fade-up" data-aos-delay="400">
               <img src={service3} />
             </div>
+            </section>
           </div>
           <div
             className="flex justify-center register-btn py-10 my-16"

@@ -3,7 +3,7 @@ import logo from "../../../assets/Logo.webp";
 import HeroImg from "../../../assets/Hero.webp";
 import HeroPitcureAr from "../../../assets/HeroPitcureAr.webp";
 import HeroPitcureEn from "../../../assets/HeroPitcureEn.webp";
-import HomeBackground from "../../../assets/HomeBackground.png";
+import HomeBackground from "../../../assets/new-home.png";
 import Ellipse5 from "../../../assets/Ellipse5.png";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/Button";
@@ -18,9 +18,9 @@ const Hero = () => {
   const Language = useSelector((state) => state.languageMode.languageMode);
 
   return (
-    <section className="active">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-        <div className="relative flex flex-col justify-start items-start md:items-center md:ms-5 custom-round-bg">
+    <section className="active ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center ">
+        <div className="relative flex flex-col justify-start items-start md:items-center custom-round-bg">
           <div className="md:relative">
             <h3 className="leading-10 text-4xl text-[#000000] mt-5 home-heading">
               {t("Unlock a pathway to")}

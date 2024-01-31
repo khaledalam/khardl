@@ -5,6 +5,9 @@
   --third: #f9f9f9;
 }
 
+  @import url('https://fonts.googleapis.com/css2?family=Linden+Hill:ital@0;1&display=swap');
+
+
 /* @font-face {
   font-family: 'cairo';
   src: url('./assets/fonts/Cairo-VariableFont_slnt,wght.ttf') format('truetype');
@@ -246,8 +249,11 @@
   padding: 30px;
   min-height: 400px;
   background-size: contain;
-  min-width: 400px;
-  max-width: 500px;
+  /* min-width: 400px;
+  max-width: 500px; */
+}
+.contact-footer-section .contact-text{
+  max-width: 400px;
 }
 
 .contact-details {
@@ -537,6 +543,9 @@
     border-radius: 20px;
     background-position: center;
   }
+  .home-heading, .feature-heading span{
+    font-size: 26px !important;
+  }
 }
 
 .price-box {
@@ -546,6 +555,7 @@
   box-shadow: 3px 3px 10px 0px rgba(192, 209, 35, 0.81);
   padding: 30px;
   width: 80%;
+  transition: all ease-in-out 300ms;
 }
 
 .price-box .header {
