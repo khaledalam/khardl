@@ -60,6 +60,10 @@ class Order extends Model
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
+    public function getTaxAmountAttribute()
+    {
+        return number_format((($this->subtotal - $this->discount) * $this->vat) / 100 , 2, '.', '');
+    }
 
     public function getUpdatedAtAttribute($value)
     {
@@ -152,6 +156,10 @@ class Order extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     public function products()
