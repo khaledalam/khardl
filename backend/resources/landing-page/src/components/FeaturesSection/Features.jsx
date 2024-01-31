@@ -99,14 +99,14 @@ function FeaturesSection() {
             src={Group7}
             alt="background"
           />
-          <div className="absolute feature-section-green top-1/2 left-1/2 transform -translate-x-1/2 text-center justify-center">
+          <div className="absolute flex items-center flex-col feature-section-green top-1/2 left-1/2 transform -translate-x-1/2 text-center justify-center">
             <h3 className="text-[#000000] mb-5">
               {t("You can design your website or application independently, with no requirement for communication")}
             </h3>
 
             <button
               type="button"
-              className="cta-btn ml-[40%] flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2"
+              className="cta-btn w-[50%]  flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2"
             >
               {t("From Here")}
               <span className="ml-2">

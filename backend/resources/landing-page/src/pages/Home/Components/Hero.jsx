@@ -16,7 +16,7 @@ import image62 from "../../../assets/image62.svg";
 const Hero = () => {
   const { t } = useTranslation();
   const Language = useSelector((state) => state.languageMode.languageMode);
-
+  const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
   return (
     <section className="active ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center ">
@@ -51,7 +51,7 @@ const Hero = () => {
             </button>
             <div className="md:ml-0 md:mt-2">
               <img
-                className=" h-auto  curly-arrow"
+                className={`h-auto  curly-arrow ${direction == 'rtl' ? 'rtl' : ''}`}
                 src={image62}
                 alt="background"
               />

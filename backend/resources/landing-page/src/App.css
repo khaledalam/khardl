@@ -633,6 +633,9 @@
   /* align-items: center; */
   height: 100%;
 }
+.curly-arrow.rtl{
+  transform: none;
+}
 @media screen and (max-width: 768px) {
   .new-login-bg,
   .new-register-bg {

@@ -53,6 +53,7 @@ function Services() {
       Price: 1299,
     },
   ];
+  const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
   return (
     <div>
       <Helmet>
@@ -83,6 +84,7 @@ function Services() {
                 data-aos-delay="400"
                 style={{
                   backgroundImage: `url(${Group12})`,
+                  marginRight: direction == 'rtl' ? 'auto' : ''
                 }}
               >
                 <div className="services-content justify-center md:items-end items-end">
@@ -99,6 +101,7 @@ function Services() {
                 data-aos-delay="400"
                 style={{
                   backgroundImage: `url(${Group11})`,
+                 
                 }}
               >
                 <div className="services-content justify-center items-end md:items-center mt-3">
@@ -114,6 +117,8 @@ function Services() {
                 data-aos-delay="400"
                 style={{
                   backgroundImage: `url(${Group13})`,
+                  
+                  marginRight: direction == 'rtl' ? 'auto' : ''
                 }}
               >
                 <div className="services-content justify-center items-end md:items-center">
