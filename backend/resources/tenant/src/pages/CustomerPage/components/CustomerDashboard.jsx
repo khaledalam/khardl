@@ -88,7 +88,7 @@ const CustomerDashboard = () => {
               {overview.title}
             </h4>
             <h2 className='font-bold text-white text-center text-sm md:text-2xl'>
-              {t("SAR")} {!isLoading ? overview.amount :
+              {!isLoading ? overview.amount :
                 <span className="loading loading-spinner text-secondary"/>}
             </h2>
           </div>
