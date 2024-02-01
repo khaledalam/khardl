@@ -20,8 +20,8 @@ composer install -q --no-ansi --no-interaction --no-scripts --no-progress --pref
 # Setup backend
 
 # to save data
-php artisan migrate
-php artisan tenants:migrate
+php artisan migrate --force
+php artisan tenants:migrate --force
 
 # to fresh data
 #php artisan migrate:fresh --seed
