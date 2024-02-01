@@ -19,10 +19,15 @@ function PricesTable() {
             <RowTable without />
           </div>
           <div className="flex justify-start items-center ms-2 gap-2 text-start mt-1">
-            <img src={checkboxImg} alt=""></img>
-            <h2 className="text-[16px] text-[#8B8B8B]">{t("Includes VAT")}</h2>
+            {/* <img src={checkboxImg} alt=""></img>
+            <h2 className="text-[16px] text-[#8B8B8B]">{t("Includes VAT")}</h2> */}
           </div>
           <Footer FooterText={t("Includes VAT")} />
+          <div style={{ display: "flex", justifyContent: "center" , marginTop:"85px"}}>
+            <button className="p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg">
+              {t("Get Started")}
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-center w-[100%] flex-grow h-[100%]">
@@ -51,33 +56,38 @@ function PricesTable() {
           <div className="content w-[100%] max-md:w-[100%]">
             <div className="flex flex-col items-center justify-start my-6">
               <div className="flex justify-start items-center gap-2 text-start mt-1">
-                <img src={checkboxImg} alt=""></img>
-                <h2 className="text-[16px] text-[#8B8B8B]">{t("Devices2")}</h2>
+                {/* <img src={checkboxImg} alt=""></img>
+                <h2 className="text-[16px] text-[#8B8B8B]">{t("Devices2")}</h2> */}
               </div>
               <div>
-              <div className="flex justify-start items-center gap-2 text-start mt-1">
-                <img src={Ellipse} alt=""></img>
-                <h3 className="text-[#C0D123]">{t("Free for Application")}</h3>
-              </div>
+                <div className="flex justify-start items-center gap-2 text-start mt-1">
+                  <img src={Ellipse} alt=""></img>
+                  <h3 className="text-[#C0D123]">
+                    {t("Free for Application")}
+                  </h3>
+                </div>
                 <div className="flex justify-start items-center gap-2 text-start mt-1">
                   <img src={Ellipse} alt=""></img>
                   <h3 className="text-[#C0D123]">
                     {t("for Driver's Application")}
                   </h3>
                 </div>
-                </div>
+              </div>
               <div className="ms-4">
                 <div className="flex justify-start items-center gap-2 text-start mt-1">
-                  <img src={checkboxImg} alt=""></img>
-                  <h2 className="text-[16px] text-[#8B8B8B]">
-                    {t("Includes VAT")}
-                  </h2>
+                  {/* <img src={checkboxImg} alt=""></img>
+                  <h2 className="text-[16px] text-[#8B8B8B]">{t("Includes VAT")}</h2> */}
                 </div>
               </div>
             </div>
           </div>
 
           <Footer FooterText={t("Includes VAT")} />
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <button className="p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg">
+              {t("Get Started")}
+            </button>
+          </div>
         </div>
       </div>
     </div>

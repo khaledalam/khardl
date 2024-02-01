@@ -90,7 +90,7 @@ function Services() {
                 <div className="services-content justify-center md:items-end items-end">
                   <p className="text-[#000000] md:mt-[18%] mt-0 md:text-center text-left">
                     {t("Receive Requests")} <br />
-                    <ServicesButton text={t("Free")}  />
+                    {/* <ServicesButton text={t("Free")}  /> */}
                   </p>
                 </div>
               </div>
@@ -107,7 +107,7 @@ function Services() {
                 <div className="services-content justify-center items-end md:items-center mt-3">
                   <p className="text-[#000000] md:mt-8 mt-0 md:text-center text-left">
                   {t("Drivers App")} <br />
-                    <ServicesButton text={t("Free")}  />
+                    {/* <ServicesButton text={t("Free")}  /> */}
                   </p>
                 </div>
               </div>
@@ -124,7 +124,7 @@ function Services() {
                 <div className="services-content justify-center items-end md:items-center">
                   <p className="text-[#000000] md:mt-14 mt-0 md:text-center text-left">
                     {t("Each Branch")} <br />
-                    <ServicesButton text={t("Free")} />
+                    {/* <ServicesButton text={t("Free")} /> */}
                   </p>
                 </div>
               </div>
@@ -138,7 +138,7 @@ function Services() {
             <Button
               title={t("Register now")}
               classContainer="!w-fit !border-none px-12"
-              link="/login"
+              link="/register"
             />
           </div>
           <hr className="w-[500px] register-hr max-[1200px]:w-[90%]" />
