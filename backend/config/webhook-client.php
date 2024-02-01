@@ -5,7 +5,7 @@ use App\Repositories\Webhook\WebhookSignature;
 use App\Packages\TapPayment\Webhook\TapWebhookHandler;
 use App\Packages\TapPayment\Webhook\TapWebhookSignature;
 use App\Packages\DeliveryCompanies\Webhook\DeliveryCompaniesWebhookHandler;
-
+use App\Repositories\Webhook\CustomWebhookCall;
 
 return [
     'configs' => [
@@ -16,7 +16,7 @@ return [
             'signature_validator' => TapWebhookSignature::class,
             'webhook_profile' => \Spatie\WebhookClient\WebhookProfile\ProcessEverythingWebhookProfile::class,
             'webhook_response' => \Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo::class,
-            'webhook_model' => \Spatie\WebhookClient\Models\WebhookCall::class,
+            'webhook_model' => \App\Repositories\Webhook\CustomWebhookCall::class,
             'store_headers' => [],
             'process_webhook_job' => TapWebhookHandler::class,
         ],
