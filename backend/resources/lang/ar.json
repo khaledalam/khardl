@@ -71,5 +71,8 @@
     "Invalid Merchant id":"معرف التاجر غير صحيح",
     "Deleted successfully":"تم الحذف بنجاح",
     "Restored successfully":"تمت الاستعادة بنجاح",
-    "This restaurant has no tap account on the server":"هذا المطعم ليس لديه حساب علي بوابة الدفع "
+    "This restaurant has no tap account on the server":"هذا المطعم ليس لديه حساب علي بوابة الدفع ",
+    "Invalid status transition. Allowed transitions: ":"غير مسموح بتغير الي هذه الحالة, الحالات القابلة لتغيرها ",
+    "Cannot change this status":"لا يمكن تغير هذه الحالة",
+    "The only available cases for changing the order status are receiving by the restaurant or canceling the order":"الحالات المتاحة فقط  لتغير حالة الطلب هما الاستلام من المطعم او الغاء الطلب"
 }
