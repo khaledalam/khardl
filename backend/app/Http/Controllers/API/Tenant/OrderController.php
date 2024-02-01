@@ -62,13 +62,7 @@ class  OrderController extends BaseRepositoryController
                 $statusLog->class_name = 'text-secondary';
                 break;
             case Order::ACCEPTED:
-               
                 $statusLog->class_name = 'text-success';
-                if($order->payment_method->name ==  PaymentMethod::CASH_ON_DELIVERY){
-                    $order->update([
-                        'payment_status'=> PaymentMethod::PAID
-                    ]);
-                }
                 break;
             case Order::READY:
                 $statusLog->class_name = 'text-info';
@@ -77,6 +71,11 @@ class  OrderController extends BaseRepositoryController
                 $statusLog->class_name = 'text-danger';
                 break;
             case Order::COMPLETED:
+                if($order->payment_method->name ==  PaymentMethod::CASH_ON_DELIVERY){
+                    $order->update([
+                        'payment_status'=> PaymentMethod::PAID
+                    ]);
+                }
                 $statusLog->class_name = 'text-primary';
                 break;
         }
