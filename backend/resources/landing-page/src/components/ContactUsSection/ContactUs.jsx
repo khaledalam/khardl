@@ -86,56 +86,21 @@ function ContactUs() {
                 {t("Contact Information")}
               </h3>
               <h3 className="contact-text">{t("Footer")}</h3>
-              <div className="contact-details">
-                <span>
-                  <img src={call} />
-                </span>
-                (+966)121-212-121
-              </div>
-              <div className="contact-details">
-                <span>
-                  <img src={mail} />
-                </span>
-                e.g.Khardl@gmail.com
-              </div>
-              <div className="contact-details">
-                <span>
-                  <img src={location} />
-                </span>
-                e.g.Saudi Arabia
-              </div>
-              <div className="flex gap-3 mt-7">
-                <img
-                  src={facebook}
-                  width="24px"
-                  height={"24px"}
-                  className="social-ic"
-                />
-                <img
-                  src={xlogo}
-                  width="24px"
-                  height={"24px"}
-                  className="social-ic"
-                />
-                <img
-                  src={insta}
-                  width="24px"
-                  height={"24px"}
-                  className="social-ic invert"
-                />
-                <img
-                  src={youtube}
-                  width="24px"
-                  height={"24px"}
-                  className="social-ic"
-                />
-                <img
-                  src={linkedin}
-                  width="24px"
-                  height={"24px"}
-                  className="social-ic"
-                />
-              </div>
+              {/* <div className="contact-details"><span><img src={call}/>
+              </span>(+966)121-212-121</div> */}
+              <div className="contact-details"><span><img src={mail}/>
+
+              </span>info@khardl.com</div>
+              {/* <div className="contact-details"><span><img src={location}/>
+
+              </span>e.g.Saudi Arabia</div> */}
+              {/* <div className="flex gap-3 mt-7">
+                <img src={facebook} width="24px" height={'24px'} className="social-ic"/>
+                <img src={xlogo} width="24px" height={'24px'} className="social-ic"/>
+                <img src={insta} width="24px" height={'24px'} className="social-ic invert"/>
+                <img src={youtube} width="24px" height={'24px'} className="social-ic"/>
+                <img src={linkedin} width="24px" height={'24px'} className="social-ic"/>
+              </div> */}
             </div>
           </div>
 

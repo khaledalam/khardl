@@ -53,7 +53,9 @@ const FQA = () => {
           <MainText SubTitle={t("FQA Details")} />
         </div>
         <div className="flex justify-center pb-16 max-sm:pb-4">
+          <section className="max-md:px-[5px] max-md:py-[40px] max-w-full md:max-w-[1250px]" style={{margin:'auto'}}>
           <SectionAsk data={faqsGeneral} />
+          </section>
         </div>
         <div className="flex flex-col justify-start items-center gap-[150px] pt-[80px]">
           <ContactUs />

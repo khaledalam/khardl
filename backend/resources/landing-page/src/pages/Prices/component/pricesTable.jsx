@@ -54,17 +54,19 @@ function PricesTable() {
                 <img src={checkboxImg} alt=""></img>
                 <h2 className="text-[16px] text-[#8B8B8B]">{t("Devices2")}</h2>
               </div>
+              <div>
               <div className="flex justify-start items-center gap-2 text-start mt-1">
                 <img src={Ellipse} alt=""></img>
                 <h3 className="text-[#C0D123]">{t("Free for Application")}</h3>
               </div>
-              <div className="ms-4">
                 <div className="flex justify-start items-center gap-2 text-start mt-1">
                   <img src={Ellipse} alt=""></img>
                   <h3 className="text-[#C0D123]">
                     {t("for Driver's Application")}
                   </h3>
                 </div>
+                </div>
+              <div className="ms-4">
                 <div className="flex justify-start items-center gap-2 text-start mt-1">
                   <img src={checkboxImg} alt=""></img>
                   <h2 className="text-[16px] text-[#8B8B8B]">

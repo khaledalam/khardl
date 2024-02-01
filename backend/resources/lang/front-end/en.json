@@ -186,7 +186,6 @@
   "Excludes VAT": "Excludes value-added tax",
   "Includes VAT": "Includes value-added tax",
   "Unlimited points": "(Unlimited number of points for one year)",
-
   "points": "Points",
   "Location": "Location",
   "Applications": "Applications",
@@ -341,7 +340,7 @@
   "PICKUP By Car": "Pickup By Car",
   "Inclusive VAT": "Inclusive VAT",
   "Credit Card": "Credit Card",
-    "Online": "Online",
+  "Online": "Online",
   "Cash on Delivery": "Cash on Delivery",
   "Place Order": "Place Order",
   "Are You sure you want to place the order?": "Are You sure you want to place the order?",
@@ -397,7 +396,9 @@
   "799": "799",
   "Application for Receiving Requests": "Application for Receiving Requests",
   "Driver's Application": "Driver's Application",
-    "you are not signed with any delivery company yet": "You are not signed with any delivery company yet.",
-    "you are signed with delivery company": "You are signed with delivery companies already",
-    "not available": "Not available"
+  "you are not signed with any delivery company yet": "You are not signed with any delivery company yet.",
+  "you are signed with delivery company": "You are signed with delivery companies already",
+  "not available": "Not available",
+  "Say something nice...":"Say something nice...",
+  "Check Cart":"Check Cart"
 }

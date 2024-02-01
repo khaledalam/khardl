@@ -11,6 +11,7 @@ import { HiChevronRight } from "react-icons/hi";
 import Group9 from "../../assets/Group9.png";
 import Group7 from "../../assets/Group7.png";
 import Line1 from "../../assets/Line1.png";
+import { Link } from "react-router-dom";
 
 function FeaturesSection() {
   const { t } = useTranslation();
@@ -99,20 +100,21 @@ function FeaturesSection() {
             src={Group7}
             alt="background"
           />
-          <div className="absolute feature-section-green top-1/2 left-1/2 transform -translate-x-1/2 text-center justify-center">
+          <div className="absolute flex items-center flex-col feature-section-green top-1/2 left-1/2 transform -translate-x-1/2 text-center justify-center">
             <h3 className="text-[#000000] mb-5">
               {t("You can design your website or application independently, with no requirement for communication")}
             </h3>
 
-            <button
-              type="button"
-              className="cta-btn ml-[40%] flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2"
+           
+            <Link to='/register'
+              className="cta-btn w-[50%]  flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2"
             >
               {t("From Here")}
               <span className="ml-2">
                 <HiChevronRight />
               </span>
-            </button>
+          
+            </Link>
           </div>
         </div>
       </section>

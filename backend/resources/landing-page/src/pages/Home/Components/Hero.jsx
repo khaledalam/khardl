@@ -16,7 +16,7 @@ import image62 from "../../../assets/image62.svg";
 const Hero = () => {
   const { t } = useTranslation();
   const Language = useSelector((state) => state.languageMode.languageMode);
-
+  const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
   return (
     <section className="active ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center ">
@@ -40,18 +40,20 @@ const Hero = () => {
               <br />
               {t("start selling right away,")}{" "}
             </h3>
-            <button
-              type="button"
-              className="flex cta-btn mt-11 items-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-4"
-            >
-              {t("Start Now")}
-              <span className="ml-2">
-                <HiChevronRight />
-              </span>
-            </button>
+            <Link to='/register'>
+              <button
+                type="button"
+                className="flex cta-btn mt-11 items-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-4"
+              >
+                {t("Start Now")}
+                <span className="ml-2">
+                  <HiChevronRight />
+                </span>
+              </button>
+            </Link>
             <div className="md:ml-0 md:mt-2">
               <img
-                className=" h-auto  curly-arrow"
+                className={`h-auto  curly-arrow ${direction == 'rtl' ? 'rtl' : ''}`}
                 src={image62}
                 alt="background"
               />

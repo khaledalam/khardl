@@ -12,12 +12,13 @@ const DeliveryAreaCard = ({ AreaName }) => {
         backgroundImage: `url(${isHovered ? OvalShapeHover : OvalShape})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
+        backgroundPosition: 'center',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="text-center flex flex-col items-center justify-center gap-3">
-        <h2 className="font-bold w-[75%]">{AreaName}</h2>
+        <h2 className="font-bold w-[75%] mt-6">{AreaName}</h2>
 
       </div>
     </div>
