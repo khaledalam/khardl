@@ -144,7 +144,7 @@
                                         @php
                                         $innerSelection = [];
                                         if(isset($item?->checkbox_input_names[$key])){
-                                            $innerSelection = $item?->checkbox_input_names[$key];
+                                        $innerSelection = $item?->checkbox_input_names[$key];
                                         }
                                         @endphp
                                         <ul>
@@ -180,7 +180,7 @@
                                             @php
                                             $innerSelection = [];
                                             if(isset($item?->selection_input_names[$key])){
-                                                $innerSelection = $item?->selection_input_names[$key];
+                                            $innerSelection = $item?->selection_input_names[$key];
                                             }
                                             @endphp
                                             @foreach($innerSelection as $innerKey => $innerOption)
@@ -213,11 +213,10 @@
                                             @php
                                             $innerSelection = [];
                                             if(isset($item?->dropdown_input_names[$key])){
-                                                $innerSelection = $item?->dropdown_input_names[$key];
+                                            $innerSelection = $item?->dropdown_input_names[$key];
                                             }
                                             @endphp
                                             @foreach($innerSelection as $innerKey => $innerOption)
-                                            @if(isset($innerOption[$key][$innerKey]))
                                             <li>
                                                 <span>
                                                     @if(app()->getLocale() == 'ar')
@@ -227,7 +226,6 @@
                                                     @endif
                                                 </span>
                                             </li>
-                                            @endif
                                             @endforeach
                                         </ul>
                                         <br>
