@@ -2,57 +2,21 @@
 
 namespace App\Repositories\Webhook;
 
-use Spatie\WebhookClient\Models\WebhookCall;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\MassPrunable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Spatie\WebhookClient\Exceptions\InvalidConfig;
+use Illuminate\Support\Facades\DB;
 use Spatie\WebhookClient\WebhookConfig;
-use Symfony\Component\HttpFoundation\HeaderBag;
+use Spatie\WebhookClient\Models\WebhookCall;
 
-/**
- * Class WebhookCall
- * @package Spatie\WebhookClient\Models
- *
- * @property-read int $id
- * @property string $name
- * @property string $url
- * @property array|null $headers
- * @property array|null $payload
- * @property array|null $exception
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static Builder|WebhookCall newModelQuery()
- * @method static Builder|WebhookCall newQuery()
- * @method static Builder|WebhookCall query()
- * @method static Builder|WebhookCall whereId($value)
- * @method static Builder|WebhookCall whereName($value)
- * @method static Builder|WebhookCall wherePayload($value)
- * @method static Builder|WebhookCall whereException($value)
- * @method static Builder|WebhookCall whereCreatedAt($value)
- * @method static Builder|WebhookCall whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-class CustomWebhookCall extends Model
+class CustomWebhookCall extends WebhookCall
 {
     // TODO @todo  (tap) delete non exceptions rows
-
-    use MassPrunable;
-
-    public $guarded = [];
-
-    protected $casts = [
-        'headers' => 'array',
-        'payload' => 'array',
-        'exception' => 'array',
-    ];
-
+    protected $table ="webhook_calls";
+    
     public static function storeWebhook(WebhookConfig $config, Request $request): WebhookCall
     {
         $headers = self::headersToStore($config, $request);
-
+        DB::beginTransaction();
         return self::create([
             'name' => $config->name,
             'url' => $request->fullUrl(),
@@ -61,37 +25,10 @@ class CustomWebhookCall extends Model
             'exception' => null,
         ]);
     }
-
-    public static function headersToStore(WebhookConfig $config, Request $request): array
-    {
-        $headerNamesToStore = $config->storeHeaders;
-
-        if ($headerNamesToStore === '*') {
-            return $request->headers->all();
-        }
-
-        $headerNamesToStore = array_map(
-            fn (string $headerName) => strtolower($headerName),
-            $headerNamesToStore,
-        );
-
-        return collect($request->headers->all())
-            ->filter(fn (array $headerValue, string $headerName) => in_array($headerName, $headerNamesToStore))
-            ->toArray();
-    }
-
-    public function headerBag(): HeaderBag
-    {
-        return new HeaderBag($this->headers ?? []);
-    }
-
-    public function headers(): HeaderBag
-    {
-        return $this->headerBag();
-    }
-
     public function saveException(Exception $exception): self
     {
+        DB::commit();
+       
         $this->exception = [
             'code' => $exception->getCode(),
             'message' => $exception->getMessage(),
@@ -99,28 +36,9 @@ class CustomWebhookCall extends Model
         ];
 
         $this->save();
-
+        \Sentry\captureException($exception);
         return $this;
-    }
-
-    public function clearException(): self
-    {
-        $this->exception = null;
-        logger('exception here');
-        $this->save();
-
-        return $this;
-    }
-
-    public function prunable()
-    {
-        $days = config('webhook-client.delete_after_days');
-
-        if (! is_int($days)) {
-            throw InvalidConfig::invalidPrunable($days);
-        }
-
-        return static::where('created_at', '<', now()->subDays($days));
     }
     
+
 }
