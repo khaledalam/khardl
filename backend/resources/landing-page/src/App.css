@@ -308,6 +308,11 @@
   padding-left: 40px;
   padding-top: 40px;
 }
+.header-ar {
+  background-position: right;
+  background-size: contain;
+  /* float: right; */
+}
 
 .new-header h2 {
   color: #000;
