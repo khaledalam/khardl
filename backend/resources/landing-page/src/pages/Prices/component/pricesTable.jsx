@@ -7,6 +7,7 @@ import { FaStarOfLife } from "react-icons/fa";
 import PricesDropdown from "./pricesDropdown";
 import checkboxImg from "../../../assets/checkboxImg.png";
 import Ellipse from "../../../assets/Ellipse.png";
+import { Link } from "react-router-dom";
 function PricesTable() {
   const { t } = useTranslation();
 
@@ -24,9 +25,11 @@ function PricesTable() {
           </div>
           <Footer FooterText={t("Includes VAT")} />
           <div style={{ display: "flex", justifyContent: "center" , marginTop:"85px"}}>
-            <button className="p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg">
+          <Link to='/register'>
+             <button className="p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg">
               {t("Get Started")}
             </button>
+           </Link>
           </div>
         </div>
       </div>
@@ -84,9 +87,11 @@ function PricesTable() {
 
           <Footer FooterText={t("Includes VAT")} />
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <button className="p-[10px] flex px-[30px] bg-[#C0D123] text-[#000000] rounded-lg">
+           <Link to='/register'>
+             <button className="p-[10px] flex px-[30px] bg-[#C0D123] hover:shadow text-[#000000] rounded-lg">
               {t("Get Started")}
             </button>
+           </Link>
           </div>
         </div>
       </div>

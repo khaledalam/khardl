@@ -67,7 +67,7 @@ function FeaturesSection() {
               {t("Khardl's services Details")}
             </h3>
             <img
-              className="w-full h-auto max-w-full md:max-w-[90%] mt-11"
+              className="w-full h-auto max-w-full md:max-w-[90%] mt-11 hide-on-mobile"
               src={Group9}
               alt="background"
             />
@@ -107,7 +107,7 @@ function FeaturesSection() {
 
            
             <Link to='/register'
-              className="cta-btn w-[50%]  flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2"
+              className="cta-btn w-[50%]  flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2 hover:bg-[#C0D123] hover:text-black"
             >
               {t("From Here")}
               <span className="ml-2">

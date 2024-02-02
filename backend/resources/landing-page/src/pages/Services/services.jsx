@@ -14,6 +14,7 @@ import Group12 from "../../assets/Group12.png";
 import Group13 from "../../assets/Group13.png";
 import Rectangle from "../../assets/Rectangle.png";
 import ServicesButton from "./ServicesButton";
+import { Link } from "react-router-dom";
 function Services() {
   const { t } = useTranslation();
   const Features = [
@@ -62,12 +63,12 @@ function Services() {
       </Helmet>
 
       <div className="pt-[80px]">
-        <div className="flex items-center justify-center h-[120px]">
-          <img src={Rectangle} className="absolute left-[40%]" alt=""></img>
+        <div className="flex items-center justify-center h-[120px] relative max-w-[320px] mx-auto">
+          <img src={Rectangle} className="absolute left-[10%]" alt=""></img>
           <h2 className="services-heading z-10 relative">{t("Services")}</h2>
           <img
             src={Rectangle}
-            className="absolute right-[40%] mt-4 md:right-[40%]"
+            className="absolute right-[10%] mt-4 md:right-[10%]"
             alt=""
           ></img>
         </div>
@@ -84,10 +85,11 @@ function Services() {
                 data-aos-delay="400"
                 style={{
                   backgroundImage: `url(${Group12})`,
-                  marginRight: direction == 'rtl' ? 'auto' : ''
+                  marginRight: direction == "rtl" ? "auto" : "",
                 }}
               >
-                <div className="services-content justify-center md:items-end items-end">
+               <div className="services-content justify-center items-end md:items-center mt-3">
+                {/* <div className="services-content justify-center md:items-end items-end"> */}
                   <p className="text-[#000000] md:mt-[18%] mt-0 md:text-center text-left">
                     {t("Receive Requests")} <br />
                     {/* <ServicesButton text={t("Free")}  /> */}
@@ -101,12 +103,11 @@ function Services() {
                 data-aos-delay="400"
                 style={{
                   backgroundImage: `url(${Group11})`,
-                 
                 }}
               >
                 <div className="services-content justify-center items-end md:items-center mt-3">
                   <p className="text-[#000000] md:mt-8 mt-0 md:text-center text-left">
-                  {t("Drivers App")} <br />
+                    {t("Drivers App")} <br />
                     {/* <ServicesButton text={t("Free")}  /> */}
                   </p>
                 </div>
@@ -117,8 +118,8 @@ function Services() {
                 data-aos-delay="400"
                 style={{
                   backgroundImage: `url(${Group13})`,
-                  
-                  marginRight: direction == 'rtl' ? 'auto' : ''
+
+                  marginRight: direction == "rtl" ? "auto" : "",
                 }}
               >
                 <div className="services-content justify-center items-end md:items-center">
@@ -131,16 +132,21 @@ function Services() {
             </section>
           </div>
           <div
-            className="flex justify-center register-btn py-10 my-16"
+            className="flex justify-center register-btn py-10 my-16 "
             data-aos="fade-up"
             data-aos-delay="400"
           >
-            <Button
-              title={t("Register now")}
-              classContainer="!w-fit !border-none px-12"
-              link="/register"
-            />
+            <Link to="/register">
+              <button
+                type="button"
+                className="shadow-2xl hover:bg-[#000] hover:text-[#C0D123]"
+              >
+                {t("Register now")}
+                <span className="ml-2"></span>
+              </button>
+            </Link>
           </div>
+
           <hr className="w-[500px] register-hr max-[1200px]:w-[90%]" />
         </div>
         <div className=" flex flex-col justify-start items-center gap-[150px] pt-[80px]">

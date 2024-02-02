@@ -43,7 +43,7 @@ const Hero = () => {
             <Link to='/register'>
               <button
                 type="button"
-                className="flex cta-btn mt-11 items-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-4"
+                className="flex cta-btn mt-11 items-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow-2xl shadow-[#C0D123] mt-4 hover:bg-[#C0D123] hover:text-black"
               >
                 {t("Start Now")}
                 <span className="ml-2">
