@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../../assets/Logo.webp'
 import ContactUsCover from '../../assets/ContactUsCover.webp'
 import { useTranslation } from 'react-i18next'
@@ -7,18 +7,21 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-toastify'
-import {PREFIX_KEY,HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";
+import { PREFIX_KEY, HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK } from "../../config";
 import { useSelector, useDispatch } from 'react-redux'
 import { changeLogState, changeUserState } from '../../redux/auth/authSlice'
 import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useAuthContext } from '../../components/context/AuthContext'
 import AxiosInstance from "../../axios/axios";
-
+import { changeRestuarantEditorStyle } from '../../redux/NewEditor/restuarantEditorSlice'
+import imgLogo from "../../assets/khardl_Logo.png"
 
 const Login = () => {
-    const [openEyePassword, setOpenEyePassword] = useState(false)
-    const [spinner, setSpinner] = useState(false)
-    const dispatch = useDispatch()
+   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
+   const [openEyePassword, setOpenEyePassword] = useState(false)
+   const [spinner, setSpinner] = useState(false)
+   const [isLoading, setisLoading] = useState(true);
+   const dispatch = useDispatch()
    const { setStatusCode } = useAuthContext()
 
    const { t } = useTranslation()
@@ -28,7 +31,7 @@ const Login = () => {
       handleSubmit,
       formState: { errors },
    } = useForm()
-    const Language = useSelector((state) => state.languageMode.languageMode)
+   const Language = useSelector((state) => state.languageMode.languageMode)
 
 
    const EyePassword = () => {
@@ -36,20 +39,32 @@ const Login = () => {
    }
 
    // **API POST REQUEST**
-
+   const fetchResStyleData = async () => {
+      try {
+         AxiosInstance.get(`restaurant-style`).then((response) => {
+            console.log("DATA", response.data?.data);
+            dispatch(changeRestuarantEditorStyle(response.data?.data));
+         });
+         setisLoading(false);
+      } catch (error) {
+         // toast.error(`${t('Failed to send verification code')}`)
+         console.log(error);
+         setisLoading(false);
+      }
+   };
    const onSubmit = async (data) => {
       try {
          setSpinner(true)
          const response = await AxiosInstance.post(`/login`, {
-           phone: data.phone,
+            phone: data.phone,
 
-           // remember_me: data.remember_me, // used only in API token-based
+            // remember_me: data.remember_me, // used only in API token-based
          });
 
          if (response?.data?.success) {
             const responseData = await response?.data;
             console.log(responseData)
-             localStorage.setItem(
+            localStorage.setItem(
                'user-info',
                JSON.stringify(responseData.data.user)
             )
@@ -57,34 +72,50 @@ const Login = () => {
                sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)
                setStatusCode(HTTP_NOT_VERIFIED)
                navigate('/verification-phone')
-            }else if (
+            } else if (
                responseData.data.user.status === 'active'
             ) {
                setStatusCode(HTTP_OK)
             } else {
                navigate('/error')
             }
-             dispatch(changeLogState(true))
-             dispatch(changeUserState(responseData?.data?.user || null))
+            dispatch(changeLogState(true))
+            dispatch(changeUserState(responseData?.data?.user || null))
 
             dispatch(setIsOpen(false))
             toast.success(`${t('You have been logged in successfully')}`)
          } else {
-             console.log("response?.data?.success false")
+            console.log("response?.data?.success false")
             setSpinner(false)
             throw new Error(`${t('Login failed')}`)
          }
       } catch (error) {
          setSpinner(false)
          dispatch(changeLogState(false))
-          dispatch(changeUserState(null))
-        console.log(error);
-          setStatusCode(HTTP_NOT_AUTHENTICATED)
-          toast.error(`${error?.response?.data?.message || t('Login failed')}`)
+         dispatch(changeUserState(null))
+         console.log(error);
+         setStatusCode(HTTP_NOT_AUTHENTICATED)
+         toast.error(`${error?.response?.data?.message || t('Login failed')}`)
       }
    }
+   const fetchCartData = async () => {
+      try {
+         const cartResponse = await AxiosInstance.get(`carts`);
+         if (cartResponse.data) {
+            dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length));
+         }
+      } catch (error) {
+         // toast.error(`${t('Failed to send verification code')}`)
+         console.log(error);
+      }
+   };
    /////////////////////////////////////////////////////////////////////////////////////
-
+   useEffect(() => {
+      fetchResStyleData();
+      fetchCartData().then(() => {
+         console.log("fetched cart item count successfully");
+      });
+   })
    return (
       <div className='flex flex-col items-stretch justify-center'>
          <div
@@ -92,7 +123,7 @@ const Login = () => {
             style={{
                backgroundImage: `url(${ContactUsCover})`,
                backgroundSize: 'cover',
-              }}
+            }}
          >
              <div className='py-[20px] flex justify-center items-center'>
                <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[80%] max-[1200px]:w-[100%]'>
@@ -126,7 +157,7 @@ const Login = () => {
                                  />
                                  {errors.phone && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                       { t('Phone Error') }
+                                       {t('Phone Error')}
                                     </span>
                                  )}
                               </div>
@@ -200,7 +231,7 @@ const Login = () => {
                            role='status'
                            className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[39%] max-[860px]:top-[39.5%] left-1/2 w-[100%] h-[100%] '
                         >
-                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'/>
+                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]' />
                            <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
                               <svg
                                  aria-hidden='true'
@@ -228,19 +259,47 @@ const Login = () => {
                         to='/'
                         className='grid content-between space-y-6  transform transition-transform hover:-translate-y-2'
                      >
-                        <img
+                        <div
+                           className={` w-full ${restaurantStyle?.logo_alignment === t("Center") ||
+                                 restaurantStyle?.logo_alignment === "center"
+                                 ? " flex items-center justify-center"
+                                 : restaurantStyle?.logo_alignment === t("Left") ||
+                                    restaurantStyle?.logo_alignment === "left"
+                                    ? "items-center justify-start"
+                                    : "items-center justify-end"
+                              }`}
+                        >
+                           <div
+                              className={`w-[80px] h-[80px]  ${restaurantStyle?.logo_shape === "rounded" ||
+                                    restaurantStyle?.logo_shape === t("Rounded")
+                                    ? "rounded-full"
+                                    : restaurantStyle?.logo_shape === "sharp" ||
+                                       restaurantStyle?.logo_shape === t("Sharp")
+                                       ? "rounded-none"
+                                       : ""
+                                 }`}
+                           >
+                              <img
+                                 src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
+                                 alt='logo'
+                                 className={`w-full h-full object-cover ${restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
+                                    }`}
+                              />
+                           </div>
+                        </div>
+                        {/* <img
                            loading='lazy'
                            className='w-[120px]'
-                           src={Logo}
+                           src={restaurantStyle?.logo ? restaurantStyle.logo : Logo}
                            alt='Logo'
-                        />
+                        /> */}
                      </Link>
-                     <div className='mt-6'>
+                     {/* <div className='mt-6'>
                         <MainText
                            SubTitle={t('Login Details')}
                            classSubTitle='max-w-[380px] !text-[18px] !px-0'
                         />
-                     </div>
+                     </div> */}
                   </div>
                </div>
             </div>
