@@ -44,17 +44,16 @@ const Login = () => {
            // remember_me: data.remember_me, // used only in API token-based
          });
 
-         console.log(response?.data?.success)
+         console.log(response?.data?.success, 'response?.data?.success')
          if (response?.data?.success) {
             const responseData = await response?.data;
-            console.log(responseData)
+            console.log(responseData,'const responseData = await response?.data;')
             localStorage.setItem(
                'user-info',
                JSON.stringify(responseData.data)
             )
             localStorage.setItem(
-               'user-role',
-               JSON.stringify(responseData.data.roles.name)
+               'user-role',responseData.data.user.roles[0].name
             )
             sessionStorage.setItem('email', responseData.data.user.email)
             setStatusCode(HTTP_OK);

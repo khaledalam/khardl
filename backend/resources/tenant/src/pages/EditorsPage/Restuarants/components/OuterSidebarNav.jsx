@@ -147,13 +147,16 @@ const OuterSidebarNav = ({ id }) => {
       localStorage.setItem("selected_branch_id", branch.id);
     }
   }, [pickUp, branch]);
-  const handleRedirect = () => {
-    console.log(window.location.href);
-    window.open(window.location.href + "dashboard");
+  const handleRedirect = (role) => {
+    if(role == 'Customer'){
+      navigate("/dashboard")
+    } else {
+      console.log(window.location.href);
+      window.open(window.location.href + "summary");
+    }
   };
-  console.log("branches", branches);
-  const role = localStorage.getItem("user-info");
- 
+  const role = localStorage.getItem("user-role");
+
   return (
     <div
       ref={refOuterNav}
@@ -187,8 +190,8 @@ const OuterSidebarNav = ({ id }) => {
                 branches?.filter(
                   (branch) => branch.pickup_availability === 1
                 )[0]
-              ? `Branch ${branch_id}`
-              : ""
+                ? `Branch ${branch_id}`
+                : ""
           }
           onChange={(value) => setPickUp(value)}
           options={
@@ -207,8 +210,8 @@ const OuterSidebarNav = ({ id }) => {
                 branches?.filter(
                   (branch) => branch.delivery_availability === 1
                 )[0]
-              ? `Branch ${branch_id}`
-              : ""
+                ? `Branch ${branch_id}`
+                : ""
           }
           onChange={(value) => setBranch(value)}
           options={
@@ -218,65 +221,67 @@ const OuterSidebarNav = ({ id }) => {
           }
         />
 
-       
-        
+
+
         {/* login */}
+      
         {isLoggedIn ? (
           <>
-          {role !== "customer" ? (
-          <Fragment>
-            <div
-              onClick={() => {
-                handleRedirect();
-                closeMenu();
-              }}
-              className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border items-center cursor-pointer"
-              style={{
-                borderColor: restuarantStyle?.categoryDetail_cart_color,
-              }}
-            >
-              <div className="w-[60px] h-[50px] rounded-xl p-2 flex items-center justify-center">
-                <img src={dashboardIcon} alt="home" />
-              </div>
-              <h3 className=""> {t("Dashboard")}</h3>
-            </div>
-          </Fragment>
-        ) : 
-        <Fragment>
-            <Fragment>
-          <div
-            onClick={() => {
-              handleRedirect();
+              
+              
+            {role == "Customer" ? (<>
+              <Fragment>
+                <div
+                  onClick={() => {
+                    handleRedirect(role);
+                    closeMenu();
+                  }}
+                  className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border items-center cursor-pointer"
+                  style={{
+                    borderColor: restuarantStyle?.categoryDetail_cart_color,
+                  }}
+                >
+                  <div className="w-[60px] h-[50px] rounded-xl p-2 flex items-center justify-center">
+                    <img src={dashboardIcon} alt="home" />
+                  </div>
+                  <h3 className=""> {t("Dashboard")}</h3>
+                </div>
+              </Fragment>
+           </> ) :
+              <Fragment>
+                <Fragment>
+                  <div
+                    onClick={() => {
+                      handleRedirect('Customer');
 
-              closeMenu();
-            }}
-            className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
-            style={{ borderColor: restuarantStyle?.categoryDetail_cart_color }}
-          >
-            <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
-              <img src={dashboardIcon} alt="home" />
-            </div>
-            <h3 className=""> {t("Dashboard Customer")}</h3>
-          </div>
-        </Fragment>
-        <Fragment>
-          <div
-            onClick={() => {
-              handleRedirect();
+                      closeMenu();
+                    }}
+                    className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
+                    style={{ borderColor: restuarantStyle?.categoryDetail_cart_color }}
+                  >
+                    <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
+                      <img src={dashboardIcon} alt="home" />
+                    </div>
+                    <h3 className="">{t("Dashboard Customer")}</h3>
+                  </div>
+                </Fragment>
+                <Fragment>
+                  <div
+                    onClick={() => {
+                      handleRedirect(role);
+                      closeMenu();
+                    }}
+                    className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
+                    style={{ borderColor: restuarantStyle?.categoryDetail_cart_color }}
+                  >
+                    <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
+                      <img src={dashboardIcon} alt="home" />
+                    </div>
+                    <h3 className=""> {t("Dashboard Admin")}</h3>
+                  </div>
+                </Fragment>
 
-              closeMenu();
-            }}
-            className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
-            style={{ borderColor: restuarantStyle?.categoryDetail_cart_color }}
-          >
-            <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
-              <img src={dashboardIcon} alt="home" />
-            </div>
-            <h3 className=""> {t("Dashboard Admin")}</h3>
-          </div>
-        </Fragment>
-            
-          </Fragment>}
+              </Fragment>}
           </>
         ) : (
           <Fragment>
