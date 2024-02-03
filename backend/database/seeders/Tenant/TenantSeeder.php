@@ -28,7 +28,7 @@ class TenantSeeder extends Seeder
 
         if(env('APP_ENV') == 'local'){
             $seeders= [
-             /*    RolesAndPermissionsSeeder::class,
+                RolesAndPermissionsSeeder::class,
                 SettingSeeder::class,
                 RestaurantStyleSeeder::class,
                 PaymentMethodSeeder::class,
@@ -39,7 +39,7 @@ class TenantSeeder extends Seeder
                 // make sure UserSeeder run before CategoryItemSeeder
                 CategoryItemSeeder::class,
                 OrderSeeder::class,
-                DeliveryCompanySeeder::class, */
+                DeliveryCompanySeeder::class,
                 DriverSeeder::class
             ];
         }else {
