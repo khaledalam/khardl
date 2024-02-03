@@ -1,7 +1,5 @@
-@if(Auth::user()->isWorker())
+@if(!Auth::user()->isRestaurantOwner())
     @include('layouts.worker-sidebar')
-@elseif(Auth::user()->isDriver())
-    @include('layouts.driver-sidebar')
 @else
 <!DOCTYPE html>
 <html @if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">

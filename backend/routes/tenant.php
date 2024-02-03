@@ -41,6 +41,7 @@ use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
+use App\Http\Controllers\Web\Tenant\Driver\Order\OrderController as DriverOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
@@ -195,7 +196,7 @@ Route::group([
                 });
             });
             Route::middleware('driver')->group(function () {
-                Route::controller(TenantOrderController::class)->group(function () {
+                Route::controller(DriverOrderController::class)->group(function () {
                     Route::get('orders-all', 'index')->name('restaurant.orders_all')->middleware('permission:can_see_orders');
                     Route::get('ready-orders', 'ready')->name('restaurant.ready_orders')->middleware('permission:can_see_orders');
                 });
