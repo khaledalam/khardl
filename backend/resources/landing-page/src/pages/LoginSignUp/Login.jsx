@@ -86,7 +86,7 @@ const Login = () => {
       }
    }
    /////////////////////////////////////////////////////////////////////////////////////
-
+   const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
    return (
       <div className='flex flex-col items-stretch justify-center'>
          <div
@@ -239,7 +239,7 @@ const Login = () => {
                         </div>
                      )}
                   </div>
-                  <div className='flex justify-center  max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10  rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none new-login-bg'>
+                  <div className={`flex justify-center  max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10  rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none new-login-bg ${direction}`}>
                     
                      <div className='mt-8'>
                         <MainText
