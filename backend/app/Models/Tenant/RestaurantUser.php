@@ -81,11 +81,20 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         if ($this->isRestaurantOwner())
             return true;
-        return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
+        if($this->isWorker()){
+            return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
+        }else if($this->isDriver()){
+            return DB::table('permissions_driver')->where('user_id', $this->id)->value($permission) === 1;
+        }
+        return false;
     }
     public function isRestaurantOwner()
     {
         return $this->hasRole("Restaurant Owner");
+    }
+    public function isDriver()
+    {
+        return $this->hasRole("Driver");
     }
     public function isWorker()
     {
@@ -129,6 +138,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         if ($this->isRestaurantOwner())
             return true;
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
+    }
+    public function hasPermissionDriver($permission)
+    {
+        if ($this->isRestaurantOwner())
+            return true;
+        return DB::table('permissions_driver')->where('user_id', $this->id)->value($permission) === 1;
     }
     public function scopeCustomers($query)
     {

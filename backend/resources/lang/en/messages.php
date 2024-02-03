@@ -788,5 +788,6 @@ return [
     "you are signed with delivery company" => "You are signed with delivery companies already",
     "Tax" => "Tax",
     "Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date"=>"Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date",
-    "Enter Number of days"=>"Enter Number of days"
+    "Enter Number of days"=>"Enter Number of days",
+    "Ready orders" => "Ready orders"
 ];

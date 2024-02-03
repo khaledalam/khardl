@@ -194,8 +194,11 @@ Route::group([
                     }
                 });
             });
-            Route::middleware('worker')->group(function () {
-
+            Route::middleware('driver')->group(function () {
+                Route::controller(TenantOrderController::class)->group(function () {
+                    Route::get('orders-all', 'index')->name('restaurant.orders_all')->middleware('permission:can_see_orders');
+                    Route::get('ready-orders', 'ready')->name('restaurant.ready_orders')->middleware('permission:can_see_orders');
+                });
             });
         });
 

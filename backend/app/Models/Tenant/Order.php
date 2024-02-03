@@ -100,6 +100,12 @@ class Order extends Model
     {
         return $query->where('status', self::READY);
     }
+    public function scopeDelivery($query)
+    {
+        return $query->whereHas('delivery_type',function($q){
+            return $q->where('name',DeliveryType::DELIVERY);
+        });
+    }
     public function scopeRecent($query)
     {
         return $query->orderBy('id', 'DESC');

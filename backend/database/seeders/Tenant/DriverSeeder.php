@@ -25,7 +25,7 @@ class DriverSeeder extends Seeder
             'last_name' => "Driver",
             'email' => "Driver@first.com",
             'phone_verified_at' => now(),
-            'phone' => '966121200',
+            'phone' => '966333333333',
             'status' => 'active',
             'address' => 'test address',
             "lat" => 24.7136,

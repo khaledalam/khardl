@@ -30,6 +30,10 @@ class OrderController extends BaseController
     {
         return $this->orderService->addOrder($request);
     }
+    public function ready()
+    {
+        return $this->orderService->ready();
+    }
     public function UnavailableProducts(Request $request){
         return $this->orderService->listUnavailableProducts($request);
     }
