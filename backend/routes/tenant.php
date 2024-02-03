@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -96,13 +97,11 @@ Route::group([
             Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
             Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
             Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
-            Route::controller(TenantOrderController::class)->group(function () {
-                Route::get('orders-all', 'index')->name('restaurant.orders_all');
-                Route::get('orders-add', 'create')->name('restaurant.orders_add');
-                Route::post('orders-add', 'store')->name('restaurant.order.store');
-                Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
-                Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
-                Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
+            Route::name('restaurant.drivers.')->controller(DriverController::class)->group(function () {
+                Route::get('drivers/{branchId}', 'index');
+                Route::get('drivers/add/{branchId}', 'create')->name('create');
+                Route::post('/drivers/add/{branchId}', 'store')->name('store');
+
             });
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
@@ -171,7 +170,6 @@ Route::group([
                 Route::post('/update-settings', [RestaurantController::class, 'updateSettings'])->name('restaurant.update.settings');
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
-
                 Route::controller(TenantOrderController::class)->group(function () {
                     Route::get('orders-all', 'index')->name('restaurant.orders_all');
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
