@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Khardl, Digital Ecosystem Solution For Restaurants, Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only">
+    <meta name="keywords" content="Khardl, Restaurants Ecosystem, food">
+    <meta name="author" content="Khardl">
+    <meta property="og:title" content="Khardl, Restaurants Ecosystem, food" />
+    <meta property="og:description" content="GKhardl, Digital Ecosystem Solution For Restaurants, Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only" />
+    <meta property="og:image" content="{{ global_asset('img/logo.png')}}" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Khardl - Restaurant Area</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
