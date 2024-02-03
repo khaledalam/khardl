@@ -98,7 +98,7 @@ Route::group([
             Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
             Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
             Route::name('restaurant.drivers.')->controller(DriverController::class)->group(function () {
-                Route::get('drivers/{branchId}', 'index');
+                Route::get('drivers/{branchId}', 'index')->name('index');
                 Route::get('drivers/add/{branchId}', 'create')->name('create');
                 Route::post('/drivers/add/{branchId}', 'store')->name('store');
 
@@ -203,7 +203,7 @@ Route::group([
             });
             Route::middleware('driver')->group(function () {
                 Route::controller(DriverOrderController::class)->group(function () {
-                    Route::get('orders-all', 'index')->name('restaurant.orders_all');
+                    Route::get('drivers-orders', 'index')->name('restaurant.orders_all');
                     Route::get('ready-orders', 'ready')->name('restaurant.ready_orders');
                     Route::post('completed-order/{order}', 'completeOrder')->name('restaurant.completeOrder');
                     Route::post('receive-order/{order}', 'receiveOrder')->name('restaurant.receiveOrder');

@@ -2,10 +2,12 @@
 
 namespace App\Http\Services\tenant\Driver;
 use App\Enums\Admin\CouponTypes;
+use App\Models\Tenant\Branch;
 use App\Models\Tenant\Coupon;
 use App\Models\Tenant\RestaurantUser;
 use App\Traits\APIResponseTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class DriverService
@@ -13,10 +15,12 @@ class DriverService
     use APIResponseTrait;
     public function index(Request $request,$branchId)
     {
-        $drivers = RestaurantUser::whereHas('Roles',function($q){
-            return $q->where('name', 'Driver');
-        })->where('branch_id',$branchId);
-        return view('restaurant.drivers.index',compact('drivers','branchId'));
+        $user = Auth::user();
+        $branch = Branch::findOrFail($branchId);
+        $drivers = $branch->drivers()
+            ->where('id', '!=', $user->id)
+            ->get();
+        return view('restaurant.drivers.index',compact('drivers','branchId','branch'));
     }
     public function create()
     {

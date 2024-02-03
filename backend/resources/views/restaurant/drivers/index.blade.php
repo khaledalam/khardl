@@ -28,7 +28,7 @@
                                      <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
                                  </svg>
                              </span>
-                             <!--end::Svg Icon-->{{ __('messages.new-worker') }}</a>
+                             <!--end::Svg Icon-->{{ __('messages.new-driver') }}</a>
                          </div>
                      </div>
                      <!--end::Header-->
