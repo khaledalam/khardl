@@ -24,7 +24,6 @@ class OrderService
     }
     public function ready()
     {
-        $user = Auth::user();
         $orders = Order::with('payment_method')->delivery()
         ->where('deliver_by', null)
         ->where('driver_id',null)

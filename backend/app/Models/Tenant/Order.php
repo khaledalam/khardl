@@ -40,7 +40,8 @@ class Order extends Model
         self::ACCEPTED,
         self::CANCELLED,
         self::COMPLETED,
-        self::READY
+        self::READY,
+        self::ON_THE_WAY,
     ];
 
     const PENDING = 'pending';
@@ -49,6 +50,7 @@ class Order extends Model
     const CANCELLED = 'cancelled';
     const COMPLETED = 'completed';
     const READY = 'ready';
+    const ON_THE_WAY = 'on_the_way';
 
 
     protected static function boot()
