@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web\Tenant\Driver\Order;
+namespace App\Http\Controllers\API\Tenant\Driver\Order;
 
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Services\tenant\Driver\Order\OrderService;

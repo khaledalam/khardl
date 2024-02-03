@@ -41,7 +41,7 @@ use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
-use App\Http\Controllers\Web\Tenant\Driver\Order\OrderController as DriverOrderController;
+use App\Http\Controllers\API\Tenant\Driver\Order\OrderController as DriverOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
@@ -96,6 +96,14 @@ Route::group([
             Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
             Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
             Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
+            Route::controller(TenantOrderController::class)->group(function () {
+                Route::get('orders-all', 'index')->name('restaurant.orders_all');
+                Route::get('orders-add', 'create')->name('restaurant.orders_add');
+                Route::post('orders-add', 'store')->name('restaurant.order.store');
+                Route::get('search-products', 'searchProducts')->name('restaurant.search_products');
+                Route::get('unavailable-products', 'UnavailableProducts')->name('restaurant.unavailable-products');
+                Route::post('change-availability/{item}', 'changeProductAvailability')->name('restaurant.change-availability');
+            });
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
