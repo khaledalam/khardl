@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import {useSelector} from "react-redux"
 import LogoPattern from '../assets/LogoPattern.webp';
 import logo from "../assets/Logo.webp";
-const RestaurantNotLive = () => {
-
+const RestaurantNotSubscribed = () => {
+  
     const { t } = useTranslation()
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   return (
@@ -19,10 +19,9 @@ const RestaurantNotLive = () => {
           <div style={{ height: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center',  }}>
             <div style={{ textAlign: 'center', backgroundImage: `url(${LogoPattern})`,  backgroundSize: "cover",padding: '31px 343px', position: 'relative', top:"10%"}}>
               <Helmet>
-                <title>{t('Restaurant is not live')}</title>
+                <title>{t('This restaurant has no subscription yet')}</title>
               </Helmet>
-            <h2 style={{ color: '#FF3D00' }}>{t('This restaurant is not active. Please contact the website development team.')}</h2>
-
+            <h2 style={{ color: '#FF3D00' ,}}>{t('This restaurant has no subscription yet.')}</h2>
               <div>
                 {/* TODO @todo change dashboard to panel */}
               {isLoggedIn
@@ -47,4 +46,4 @@ const RestaurantNotLive = () => {
   );
 };
 
-export default RestaurantNotLive;
+export default RestaurantNotSubscribed;

@@ -15,6 +15,7 @@ const useAxiosAuth = () => {
       '/reset-password',
       '/create-new-password',
       '/restaurant-not-live',
+      '/restaurant-not-subscribed',
       '/login-admins'
    ].includes(location.pathname)
 

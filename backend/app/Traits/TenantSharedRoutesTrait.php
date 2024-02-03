@@ -63,6 +63,7 @@ trait TenantSharedRoutesTrait
         return [
             'routes'=>[
                 'restaurant-not-live'=> 'restaurant-not-live',
+                'restaurant-not-subscribed'=> 'restaurant-not-subscribed',
             ],
             'middleware'=>[
                 
