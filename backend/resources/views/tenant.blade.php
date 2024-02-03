@@ -24,6 +24,7 @@
     <script>
         window.csrfToken = "{{ csrf_token() }}";
         const url_tenant = "{{request()->getSchemeAndHttpHost() }}"
+        const url_central = "{{env('APP_URL') }}"
         //        const url_tenant = "{{ preg_replace("/^http:/i", 'https:', request()->getSchemeAndHttpHost())}}";
         const tap_public_key = "{{env('TAP_PAYMENT_TECHNOLOGY_PUBLIC_KEY')}}";
     </script>

@@ -10,10 +10,11 @@ const useAxiosAuth = () => {
 
    const privateRoute = ![
       '/',
-       '/register',
-       '/register/:url',
+      '/register',
+      '/register/:url',
       '/reset-password',
       '/create-new-password',
+      '/restaurant-not-live',
       '/login-admins'
    ].includes(location.pathname)
 

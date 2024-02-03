@@ -10,6 +10,7 @@ import Login from "./pages/LoginSignUp/Login"
 import LoginAdmin from "./pages/LoginSignUp/LoginAdmin"
 import LoginTrial from "./pages/LoginSignUp/LoginTrial"
 import Register from "./pages/LoginSignUp/Register"
+import RestaurantNotLive from "./components/RestaurantNotLive"
 import VerificationPhone from "./pages/LoginSignUp/VerificationPhone"
 import Supports from "./components/Supports"
 import ScrollUp from "./components/ScrollUp"
@@ -72,6 +73,7 @@ const App = () => {
     "/privacy",
     "/site-editor/restaurants",
     "/site-editor/customers",
+    '/restaurant-not-live',
   ].includes(location.pathname)
   const showFooter = ![
     "/",
@@ -86,6 +88,7 @@ const App = () => {
     "/register/:url",
     "/reset-password",
     "/create-new-password",
+   
     "/verification-phone",
     "/policies",
     "/privacy",
@@ -132,6 +135,7 @@ const App = () => {
                 path='/create-new-password'
                 element={<Protected Cmp={CreateNewPassword} />}
               />
+              <Route path='/restaurant-not-live' element={<RestaurantNotLive />} />{" "}
               <Route path='/policies' element={<TermsPolicies />} />{" "}
               <Route path='/privacy' element={<Privacy />} />{" "}
               {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
