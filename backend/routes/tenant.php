@@ -197,8 +197,10 @@ Route::group([
             });
             Route::middleware('driver')->group(function () {
                 Route::controller(DriverOrderController::class)->group(function () {
-                    Route::get('orders-all', 'index')->name('restaurant.orders_all')->middleware('permission:can_see_orders');
-                    Route::get('ready-orders', 'ready')->name('restaurant.ready_orders')->middleware('permission:can_see_orders');
+                    Route::get('orders-all', 'index')->name('restaurant.orders_all');
+                    Route::get('ready-orders', 'ready')->name('restaurant.ready_orders');
+                    Route::post('completed-order/{order}', 'completeOrder')->name('restaurant.completeOrder');
+                    Route::post('receive-order/{order}', 'receiveOrder')->name('restaurant.receiveOrder');
                 });
             });
         });

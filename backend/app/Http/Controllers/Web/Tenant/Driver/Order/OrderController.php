@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web\Tenant\Driver\Order;
 
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Services\tenant\Driver\Order\OrderService;
+use App\Models\Tenant\Order;
+use Illuminate\Support\Facades\Request;
 
 class OrderController extends BaseController
 {
@@ -16,5 +18,13 @@ class OrderController extends BaseController
     public function ready()
     {
         return $this->orderService->ready();
+    }
+    public function completeOrder(Request $request, Order $order)
+    {
+        return $this->orderService->complete($request,$order);
+    }
+    public function receiveOrder(Request $request, Order $order)
+    {
+        return $this->orderService->receive($request,$order);
     }
 }
