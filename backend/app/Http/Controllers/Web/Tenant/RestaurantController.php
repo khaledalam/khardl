@@ -195,7 +195,6 @@ class RestaurantController extends BaseController
     {
         $payment_methods = null;
         $delivery_types = null;
-
         $paymentCash = PaymentMethod::where('name', PaymentMethod::CASH_ON_DELIVERY)->first();
         if (!in_array(PaymentMethod::CASH_ON_DELIVERY, $request->payment_methods)) {
             $paymentCash->is_active = false;
@@ -223,7 +222,7 @@ class RestaurantController extends BaseController
         // check if RO singed with some delivery company already or not yet
         // if not singed with any delivery company then disable delivery option
         $deliveryType = DeliveryType::where('name', DeliveryType::DELIVERY)->first();
-        if (!DeliveryCompanies::all()->count()) {
+        if (!DeliveryCompanies::all()->count() &&in_array(DeliveryType::DELIVERY,$request->delivery_types)) {
             $deliveryType->is_active = false;
             $deliveryType->helper_message = 'you are not signed with any delivery company yet';
             $deliveryType->save();

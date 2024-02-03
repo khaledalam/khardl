@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('settings', function (Blueprint $table) {
-            $table->string('global_id')->unique()->primary();
+            $table->id();
+            $table->string('global_id');
             $table->boolean('is_live')->default(false);
             $table->float('delivery_fee')->default(0);
 

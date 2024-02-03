@@ -7,17 +7,19 @@ const DeliveryAreaCard = ({ AreaName }) => {
 
   return (
     <div
-      className={`relative new-delivery-card bg-cover h-[150px] w-[100%] rounded-lg my-1  hover:translate-y-2 ease-in duration-200 flex flex-col items-center justify-center`}
+      className={`relative new-delivery-card bg-cover h-[150px] w-[100%] rounded-lg my-1  hover:translate-y-2 ease-in duration-200 flex flex-col items-center pt-10`}
       style={{
         backgroundImage: `url(${isHovered ? OvalShapeHover : OvalShape})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
+        backgroundPosition: 'center',
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="text-center flex flex-col items-center justify-center gap-3">
-        <h2 className="font-bold">{AreaName}</h2>
+        <h2 className="font-bold w-[75%] mt-6">{AreaName}</h2>
+
       </div>
     </div>
   );

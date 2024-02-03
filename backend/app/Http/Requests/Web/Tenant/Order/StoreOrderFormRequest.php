@@ -32,7 +32,7 @@ class StoreOrderFormRequest extends FormRequest
     }
     public function withValidator($validator)
     {
-        foreach ($this->product_options as $product => $options) {
+        foreach ($this->product_options ?? [] as $product => $options) {
             $item = Item::findOrFail($product);
             $validator->after(function ($validator) use ($item) {
 

@@ -36,7 +36,7 @@
                             <select id="actionsDropdown" name="action" class="form-select form-select-sm border-body bg-body w-250px me-5">
                                 <option value="" selected>{{ __('messages.All') }}</option>
                                 @foreach ($logTypes as $type)
-                                    <option {{ request('action') == $type ? 'selected' : '' }} value="{{ $type }}">{{ __('messages.'.$type) }}</option>
+                                <option {{ request('action') == $type ? 'selected' : '' }} value="{{ $type }}">{{ __('messages.'.$type) }}</option>
                                 @endforeach
                             </select>
                             <select id="actionsDropdown" name="perPage" class="form-select form-select-sm border-body bg-body w-100px me-5">
@@ -102,36 +102,66 @@
                                     </td>
                                     <td>
                                         @if($log->type!=null)
-                                            {{ __('messages.'.$log->type) }}
+                                        {{ __('messages.'.$log->type) }}
                                         @endif
                                     </td>
                                     <td>{{ $log->created_at }}</td>
                                     <td>
-                                        @if (isset($log->metadata['email']))
-                                            {{ $log->metadata['email'] }}
-                                        @elseif(isset($log->metadata['reason']))
-                                            <ul>
-                                                @foreach ($log->metadata['reason'] as $reason)
-                                                <li>
-                                                    {{ $reason }}
-                                                </li>
-                                                @endforeach
-                                            </ul>
-                                        @elseif($log->type == \App\Enums\Admin\LogTypes::UpdateSettings->value)
-                                            @if(isset($log->metadata['webhook_url']))
-                                            <p>
-                                                {{ __('messages.webhook-url') }} :
-                                                <strong>{{ $log->metadata['webhook_url'] }}</strong>
-                                            </p>
-                                            @endif
-                                            @if(isset($log->metadata['live_chat_enabled']))
-                                            <p>
-                                                {{ __('messages.live-chat') }} :
-                                                <strong>{{ $log->metadata['live_chat_enabled'] }}</strong>
-                                            </p>
-                                            @endif
-                                        @else 
-                                        {{ implode(',',(array)$log->metadata)}}
+                                        @if($log->metadata)
+                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_{{ $log->id }}">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <div class="modal fade" id="modal_{{ $log->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        @if($log->user)
+                                                        <a href="{{ route('admin.user-management-edit', ['id' => $log->user?->id]) }}" class="text-hover-primary text-gray-600">{{ $log->user?->full_name }}</a>
+                                                        @endif
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>
+                                                            {!! $log->action !!}
+                                                        </p>
+                                                        <hr>
+                                                        @if (isset($log->metadata['email']))
+                                                        {{ $log->metadata['email'] }}
+                                                        @elseif(isset($log->metadata['reason']))
+                                                        <ul>
+                                                            @foreach ($log->metadata['reason'] as $reason)
+                                                            <li>
+                                                                {{ $reason }}
+                                                            </li>
+                                                            @endforeach
+                                                        </ul>
+                                                        @elseif($log->type == \App\Enums\Admin\LogTypes::UpdateSettings->value)
+                                                        @if(isset($log->metadata['webhook_url']))
+                                                        <p>
+                                                            {{ __('messages.webhook-url') }} :
+                                                            <strong>{{ $log->metadata['webhook_url'] }}</strong>
+                                                        </p>
+                                                        @endif
+                                                        @if(isset($log->metadata['live_chat_enabled']))
+                                                        <p>
+                                                            {{ __('messages.live-chat') }} :
+                                                            <strong>{{ $log->metadata['live_chat_enabled'] }}</strong>
+                                                        </p>
+                                                        @endif
+                                                        @else
+                                                        {{ implode(',',(array)$log->metadata)}}
+                                                        @endif
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="modal-footer d-flex align-items-center justify-content-between">
+                                                            <button type="button" class="btn btn-secondary p-2 btn-sm" data-bs-dismiss="modal">
+                                                                {{ __('messages.Close') }}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         @endif
                                     </td>
                                 </tr>
@@ -157,10 +187,8 @@
     </div>
     <!--end::Post-->
 </div>
-
-<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Blob.js/1.1.1/blob.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <!--end::Content-->
 @endsection
+@push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+@endpush

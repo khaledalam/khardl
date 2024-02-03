@@ -38,9 +38,33 @@ use App\Models\CentralSetting;
 |
 */
 
-Route::get('/health', function (){
+Route::get('/health', static function (){
+
+    $commitHash = trim(exec('git log --pretty="%h" -n1 HEAD'));
+
+    $commitDate = new \DateTime(trim(exec('git log -n1 --pretty=%ci HEAD')));
+    $commitDate->setTimezone(new \DateTimeZone('Asia/Riyadh'));
+
+    exec('git rev-parse --verify HEAD 2> /dev/null', $output);
+    $hash = $output[0];
+
+    exec("git show $hash", $git_message);
+    $git_message_first_lines = [];
+    $idx = 0;
+    foreach ($git_message as $msg) {
+        $git_message_first_lines[] = $msg;
+        $idx++;
+        if ($idx > 5) break;
+    }
+
+
     return response()->json([
-        'status' => 'ok'
+        'status' => 'ok',
+        'last_commit_hash' => trim(exec('git log --pretty="%h" -n1 HEAD')),
+        'last_commit_hashfull' => $hash,
+        'last_commit_message' => $git_message_first_lines,
+        'last_commit_url' => sprintf('https://github.com/mne-org/khardl/commit/%s', $commitHash),
+        'last_commit_date' => sprintf('%s (timezone: Asia/Riyadh)', $commitDate->format('Y-m-d h:i:s A'))
     ]);
 })->name('health');
 
@@ -129,18 +153,6 @@ Route::get('/health', function (){
 //     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 // });
 
-
-Route::get('/health', static function (){
-    return response()->json([
-        'status' => 'ok'
-    ]);
-})->name('health');
-
-Route::get('/test', static function (){
-    return response()->json([
-        'status' => 'test'
-    ]);
-})->name('test');
 Route::get('promoter/{name}', [GlobalPromoterController::class, 'index'])->name('global.promoter');
 
 
@@ -223,7 +235,6 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
                       });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
-                    Route::post('/save-revenue', [AdminController::class, 'saveRevenue'])->middleware('permission:can_settings')->name('save-revenue');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
                     Route::post('/promoters', [AdminController::class, 'addPromoter'])->middleware('permission:can_promoters')->name('add-promoter');
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
@@ -244,7 +255,6 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     ->name("download.pdf");
                     Route::post('/toggle-status/{user}', [AdminController::class,'toggleStatus'])->middleware('permission:can_edit_admins')->name('toggle-status');
 
-                    Route::get('/revenue', [AdminController::class, 'revenue'])->name('revenue');
                     Route::controller(AdminController::class)->prefix('subscriptions')->group(function () {
                         Route::get('/', [AdminController::class, 'subscriptions'])->name('subscriptions');
                         Route::get('/create', [AdminController::class, 'subscriptionsCreate'])->name('subscriptions.create');
