@@ -125,8 +125,8 @@ const Login = () => {
                backgroundSize: 'cover',
             }}
          >
-            <div className='py-[20px] flex justify-center items-center'>
-               <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[60%] max-[1200px]:w-[100%]'>
+             <div className='py-[20px] flex justify-center items-center'>
+               <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[80%] max-[1200px]:w-[100%]'>
                   <div className='relative flex flex-col justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
                      <div className='mt-6 w-[100%]'>
                         <MainText
