@@ -125,7 +125,18 @@
             <!--begin::Label-->
         </div>
         <!--end::Input group-->
-
+      <!--begin::Input group-->
+      <div class="row mb-0 mt-5">
+        <!--begin::Label-->
+        <div class="form-text fv-row">
+            <label class="form-label" for="allowmarketing5">{{ __('messages.Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date')}}
+            </label>:
+            <input class="form-control form-control-solid" value="{{old('days_sub') ?? $active_days_after_sub_expired}}" type="number" id="allowmarketing5" name="active_days_after_sub_expired"  placeholder="{{__('messages.Enter Number of days')}}"/>
+  
+        </div>
+        <!--begin::Label-->
+    </div>
+    <!--end::Input group-->
 
     </div>
     <!--end::Card body-->
