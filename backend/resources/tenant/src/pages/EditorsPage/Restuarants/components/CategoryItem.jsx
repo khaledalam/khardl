@@ -15,6 +15,7 @@ const CategoryItem = ({
   shape,
   isGrid,
   fontSize,
+  valuekey,
 }) => {
   const [isHover, setIsHover] = useState(false)
   const {t} = useTranslation()
@@ -34,6 +35,7 @@ const CategoryItem = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
+      key={valuekey}
       className={`flex w-5/6 cursor-pointer ${
         isGrid ? "flex-row" : "flex-col"
       } gap-3 items-center`}

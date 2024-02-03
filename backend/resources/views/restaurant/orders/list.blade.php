@@ -117,7 +117,9 @@
                                             <th class="text-end min-w-70px">{{ __('messages.Branch') }}</th>
                                             <th class="text-end min-w-70px">{{ __('messages.Status') }}</th>
                                             <th class="text-end min-w-100px">{{ __('messages.payment-method') }}</th>
+                                            <th class="text-end min-w-100px">{{ __('messages.Delivery Type') }}</th>
                                             <th class="text-end min-w-100px">{{ __('messages.payment-status') }}</th>
+                                          
                                             <th class="text-end min-w-100px">{{ __('messages.Total') }}</th>
                                             <th class="text-end min-w-100px">{{ __('messages.Date') }}</th>
                                             <th class="text-end min-w-100px"><div class="btn btn-sm btn-khardl"><a href="{{ route('restaurant.orders_add') }}" class=" text-white">{{ __('messages.Add new') }}</a></div>
@@ -202,6 +204,8 @@
 
                                                     <td class="text-end pe-0">
                                                         <span class="fw-bolder">{{__('messages.'.$order->payment_method->name)}}</span>
+                                                    </td><td class="text-end pe-0">
+                                                        <span class="fw-bolder">{{__('messages.'.$order->delivery_type->name)}}</span>
                                                     </td>
                                                     <td class="text-end pe-0">
                                                         @if($order->payment_status == \App\Models\Tenant\PaymentMethod::PAID)
@@ -249,9 +253,12 @@
                                                             {{-- <div class="menu-item px-3">
                                                                 <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
                                                             </div> --}}
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('messages.Changes status')}}</a>
-                                                            </div>
+                                                            @if($order->status == \App\Models\Tenant\Order::CANCELLED || $order->status == \App\Models\Tenant\Order::COMPLETED  )
+                                                            @else 
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('messages.Changes status')}}</a>
+                                                                </div>
+                                                            @endif
 
                                                             <!--end::Menu item-->
                                                         </div>

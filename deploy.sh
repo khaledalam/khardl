@@ -17,8 +17,8 @@ composer install -q --no-ansi --no-interaction --no-scripts --no-progress --pref
 
 
 # Setup backend
-php artisan migrate
-php artisan tenants:migrate
+php artisan migrate --force
+php artisan tenants:migrate --force
 #php artisan db:seed
 
 php artisan optimize:clear

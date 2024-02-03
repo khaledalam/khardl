@@ -16,6 +16,8 @@ import insta from "../../assets/insta.png";
 import linkedin from "../../assets/linkedin.png";
 import facebook from "../../assets/facebook.png";
 import { HiChevronRight } from "react-icons/hi2";
+import { useSelector } from "react-redux";
+
 function ContactUs() {
   const { t } = useTranslation();
   const {
@@ -24,6 +26,7 @@ function ContactUs() {
     formState: { errors },
     reset,
   } = useForm();
+  const language = useSelector((state) => state.languageMode.languageMode);
 
   // **API POST REQUEST**
   const onSubmit = async (credentials) => {
@@ -82,15 +85,21 @@ function ContactUs() {
             }}
           >
             <div className="contact-footer-section">
-              <h3 className="contact-heading text-left mt-2 mb-5">
+              {/* <h3 className="contact-heading text-left mt-2 mb-5"> */}
+              {/* className={language === "en" ? "text-left" : " header-ar"} */}
+              <h3 className={`${language === "en" ? "text-left" : "header-ar"} mt-2 mb-5 contact-heading `}>
                 {t("Contact Information")}
               </h3>
+
               <h3 className="contact-text">{t("Footer")}</h3>
               {/* <div className="contact-details"><span><img src={call}/>
               </span>(+966)121-212-121</div> */}
-              <div className="contact-details"><span><img src={mail}/>
-
-              </span>info@khardl.com</div>
+              <div className="contact-details">
+                <span>
+                  <img src={mail} />
+                </span>
+                info@khardl.com
+              </div>
               {/* <div className="contact-details"><span><img src={location}/>
 
               </span>e.g.Saudi Arabia</div> */}
@@ -129,7 +138,7 @@ function ContactUs() {
                 <label htmlFor="">{t("Phone Number")}</label>
 
                 <input
-                  type="tel"
+                  type="text"
                   className=" max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--secondary)]"
                   placeholder={t("Phone")}
                   name="Phone"
@@ -195,9 +204,19 @@ function ContactUs() {
                   type="submit"
                   className={`flex gap-5 ${
                     !isMobile ? "w-[100%]" : "w-fit"
-                  } justify-center cta-btn font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px] hover:bg-[#d6eb16]`}
+                  } justify-center cta-btn font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px] hover:bg-[#d6eb16] hover:text-black`}
                 >
-                  {t("Send")} <HiChevronRight />
+                  {language === "en" ? (
+                    <>
+                      {t("Send")} <HiChevronRight />
+                    </>
+                  ) : (
+                    <>
+                      <HiChevronRight /> {t("Send")}
+                    </>
+                  )}
+                  {/* {t("Send")} 
+                  <HiChevronRight /> */}
                 </button>
               </div>
             </form>
