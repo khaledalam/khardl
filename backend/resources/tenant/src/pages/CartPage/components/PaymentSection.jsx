@@ -194,7 +194,16 @@ const PaymentSection = ({
   // console.log("payment methods ", paymentMethods)
   // console.log("delivery methods", deliveryTypes)
 
-
+const handleCouponCodeValidity  = async() => {
+try {
+  const response = await AxiosInstance.post(`/validate/coupon`, {
+    code: couponCode,
+  })
+  console.log(response)
+} catch (error) {
+  console.log(error)
+}
+}
   return (
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
        <p id="msg"></p>
@@ -436,7 +445,7 @@ const PaymentSection = ({
       </CartColumn>
       {/* address and coupon */}
       <div className='flex flex-col md:flex-row items-start gap-6'>
-        <div className='w-full  '>
+        <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Address"} isRequired>
             <div
               style={{borderColor: styles?.categoryDetail_cart_color}}
@@ -474,7 +483,7 @@ const PaymentSection = ({
             </div>{" "}
           </CartColumn>
         </div>
-        <div className='w-full lg:w-1/2 hidden'>
+        <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Coupon"}>
             <div
               style={{borderColor: styles?.categoryDetail_cart_color}}
@@ -489,10 +498,11 @@ const PaymentSection = ({
                   <Feedback
                     imgUrl={couponIcon}
                     placeholder={"Type your coupon code here"}
+                    onChange={(e)=> setCouponCode(e.target.value)}
                   />
                 </div>
                 <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
-                  <MdSend size={22} />
+                  <MdSend onClick={()=>handleCouponCodeValidity()} size={22} />
                 </div>
               </div>
             </div>{" "}
