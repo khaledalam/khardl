@@ -82,6 +82,14 @@ Route::group([
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
+    $groups = TenantSharedRoutesTrait::setUp();
+    Route::middleware($groups['middleware'])->group(function () use ($groups) {
+        foreach ($groups['routes'] as $route => $name) {
+            Route::get($route, static function (Request $request) {
+                return view('tenant');
+            })->name($name);
+        }
+    });
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -198,7 +206,8 @@ Route::group([
 
             });
         });
-
+        // TODO @todo (routes) duplicate routes same as line 188
+        // TODO @todo make it one function instead if for loop
         $group = TenantSharedRoutesTrait::getPrivateRoutes();
         Route::middleware($group['middleware'])->group(function () use ($group) {
             foreach ($group['routes'] as $route => $name) {
