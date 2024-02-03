@@ -3,6 +3,7 @@
 namespace Database\Seeders\Tenant;
 
 use App\Models\Tenant;
+use Database\Seeders\Tenant\DriverSeeder;
 use Illuminate\Database\Seeder;
 use App\Actions\CreateTenantAction;
 use Database\Seeders\Tenant\DeliveryCompanySeeder;
@@ -24,10 +25,10 @@ class TenantSeeder extends Seeder
             .'.'.config("tenancy.central_domains")[0]
         // route
             ,'stancl.tenancy.asset') . '/';
-        
+
         if(env('APP_ENV') == 'local'){
             $seeders= [
-                RolesAndPermissionsSeeder::class,
+             /*    RolesAndPermissionsSeeder::class,
                 SettingSeeder::class,
                 RestaurantStyleSeeder::class,
                 PaymentMethodSeeder::class,
@@ -38,7 +39,8 @@ class TenantSeeder extends Seeder
                 // make sure UserSeeder run before CategoryItemSeeder
                 CategoryItemSeeder::class,
                 OrderSeeder::class,
-                DeliveryCompanySeeder::class
+                DeliveryCompanySeeder::class, */
+                DriverSeeder::class
             ];
         }else {
             $seeders= [
@@ -47,7 +49,7 @@ class TenantSeeder extends Seeder
                 RestaurantStyleSeeder::class,
                 PaymentMethodSeeder::class,
                 DeliveryTypesSeeder::class,
-                DeliveryCompanySeeder::class
+                DeliveryCompanySeeder::class,
             ];
         }
         $this->call($seeders,false,[
