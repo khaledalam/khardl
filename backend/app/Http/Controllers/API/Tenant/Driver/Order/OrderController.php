@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\API\Tenant\Driver\Order;
 
 use App\Http\Controllers\Web\BaseController;
-use App\Http\Services\tenant\Driver\Order\OrderService;
+
+use App\Http\Services\API\tenant\Driver\Order\OrderService;
 use App\Models\Tenant\Order;
 use Illuminate\Support\Facades\Request;
 

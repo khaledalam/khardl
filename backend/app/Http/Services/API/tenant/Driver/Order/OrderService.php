@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\tenant\Driver\Order;
+namespace App\Http\Services\API\tenant\Driver\Order;
 
 use App\Models\Tenant\Order;
 use App\Traits\APIResponseTrait;
