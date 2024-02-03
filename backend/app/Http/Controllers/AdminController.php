@@ -373,9 +373,10 @@ class AdminController extends Controller
         $live_chat_enabled = $settings?->live_chat_enabled;
         $webhook_url = $settings?->webhook_url;
         $new_branch_slot_price = $settings?->new_branch_slot_price;
+        $active_days_after_sub_expired = $settings?->active_days_after_sub_expired;
 
 
-        return view('admin.settings', compact('user', 'live_chat_enabled', 'webhook_url', 'new_branch_slot_price'));
+        return view('admin.settings', compact('user', 'live_chat_enabled', 'webhook_url', 'new_branch_slot_price','active_days_after_sub_expired'));
     }
 
     public function saveSettings(Request $request)
@@ -384,6 +385,7 @@ class AdminController extends Controller
 
         $settings->live_chat_enabled = strtolower($request->live_chat_enabled) == 'on';
         $settings->webhook_url = $request->webhook_url;
+        $settings->active_days_after_sub_expired = $request->active_days_after_sub_expired ?? 7;
         $settings->save();
         $actions = [
             'en' => 'Update platform central settings',
