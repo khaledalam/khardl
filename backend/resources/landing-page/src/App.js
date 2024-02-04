@@ -125,7 +125,7 @@ const App = () => {
           </div>
         )}{" "}
       </div>{" "}
-      <div className="mini-footer">All rights reserved - Khardl 2023</div>
+      <div className="mini-footer">All rights reserved - Khardl {new Date().getFullYear()}</div>
     </div>
   );
 };
