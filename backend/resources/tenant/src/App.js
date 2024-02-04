@@ -8,7 +8,6 @@ import {ToastContainer} from "react-toastify"
 import Footer from "./components/Footer/Footer"
 import Login from "./pages/LoginSignUp/Login"
 import LoginAdmin from "./pages/LoginSignUp/LoginAdmin"
-import LoginTrial from "./pages/LoginSignUp/LoginTrial"
 import Register from "./pages/LoginSignUp/Register"
 import RestaurantNotLive from "./components/RestaurantNotLive"
 import RestaurantNotSubscribed from "./components/RestaurantNotSubscribed"
@@ -70,7 +69,6 @@ const App = () => {
 
   const showHeader = ![
     "/policies",
-    "/login-trial",
     "/dashboard",
     "/privacy",
     "/site-editor/restaurants",
@@ -86,7 +84,6 @@ const App = () => {
     "/site-editor/customers",
     "/login",
     "/login-admins",
-    "/login-trial",
     "/register",
     "/register/:url",
     "/reset-password",
@@ -146,7 +143,6 @@ const App = () => {
               {/*<Route path='/services' element={<Services />} />*/}{" "}
               {/*<Route path='/prices' element={<Prices />} />*/}{" "}
               {/*<Route path='/fqa' element={<FQA />} />*/}{" "}
-              <Route path='/login-trial' element={<LoginTrial />} />{" "}
               <Route element={<Layout />}>
                 <Route path='/login' element={<Login />} />{" "}
                 <Route path='/register' element={<Register />} />{" "}

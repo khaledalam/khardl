@@ -45,7 +45,7 @@ const useAxiosAuth = () => {
       (error) => {
           console.log("axiosAuth.interceptors.response", error?.response?.status);
 
-          if(window.location?.pathname.indexOf('login-trial') !== -1) {
+          if(window.location?.pathname.indexOf('login-admins') !== -1) {
               console.log("twetw");
               return;
           }
