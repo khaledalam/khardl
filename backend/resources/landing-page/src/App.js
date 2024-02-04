@@ -31,6 +31,7 @@ import Logout from "./components/Logout/Logout";
 import { useAuthContext } from "./components/context/AuthContext";
 
 import * as Sentry from "@sentry/react";
+import {t} from "i18next";
 
 Sentry.init({
   dsn:
@@ -125,7 +126,7 @@ const App = () => {
           </div>
         )}{" "}
       </div>{" "}
-      <div className="mini-footer">All rights reserved - Khardl {new Date().getFullYear()}</div>
+      <div className="mini-footer">{t("All rights reserved")}</div>
     </div>
   );
 };
