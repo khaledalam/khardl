@@ -71,9 +71,6 @@ Route::group([
         return UserImpersonation::makeResponse($token);
     })->name("impersonate");
 
-    Route::get('login-trial', static function () {
-        return view("tenant");
-    })->name("login-trial")->middleware(['guest', 'restaurantNotLive']);
     Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
     Route::post('login-admins', [LoginController::class, 'login']);
     // guest
