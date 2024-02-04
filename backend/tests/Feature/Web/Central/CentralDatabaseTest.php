@@ -8,7 +8,7 @@ use App\Actions\CreateTenantAction;
 use Illuminate\Support\Facades\Artisan;
 
 
-class DatabaseSetUpTest extends TestCase
+class CentralDatabaseTest extends TestCase
 {
   
     
@@ -40,7 +40,7 @@ class DatabaseSetUpTest extends TestCase
         );
         tenancy()->initialize($restaurant);
         $this->assertTrue(\Schema::hasTable('branches'));
-
+        tenancy()->end();
     }
 
 }
