@@ -789,5 +789,10 @@ return [
     "Tax" => "Tax",
     "Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date"=>"Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date",
     "Enter Number of days"=>"Enter Number of days",
-    "Ready orders" => "Ready orders"
+    "Ready orders" => "Ready orders",
+    "drivers" => "Drivers",
+    "new-driver" => "New driver",
+    "Orders" => "Orders",
+    "Delivered orders" => "Delivered orders",
+    "This month" => "This month"
 ];

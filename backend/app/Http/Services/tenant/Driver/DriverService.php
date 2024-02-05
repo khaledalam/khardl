@@ -13,14 +13,11 @@ use Illuminate\Support\Facades\Auth;
 class DriverService
 {
     use APIResponseTrait;
-    public function index(Request $request,$branchId)
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $branch = Branch::findOrFail($branchId);
-        $drivers = $branch->drivers()
-            ->where('id', '!=', $user->id)
-            ->get();
-        return view('restaurant.drivers.index',compact('drivers','branchId','branch'));
+        $drivers = RestaurantUser::drivers()->get();
+        return view('restaurant.drivers.index',compact('user','drivers'));
     }
     public function create()
     {

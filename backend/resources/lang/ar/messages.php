@@ -790,6 +790,11 @@ return [
     "Tax" => "قيمة الضريبة المضافة",
     "Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date"=>'تحديد مدة إلغاء تفعيل اشتراكات المطاعم بعد عدد الأيام من تاريخ انتهاء الصلاحية',
     "Enter Number of days"=>"اكتب عدد الايام",
-    "Ready orders" => "الطلبات الجاهزة"
+    "Ready orders" => "الطلبات الجاهزة",
+    "drivers" => "السائقين",
+    "new-driver" => "سائق جديد",
+    "Orders" => "الطلبات",
+    "Delivered orders" => "الطلبات المكتملة",
+    "This month" => "هذا الشهر"
 ];
 

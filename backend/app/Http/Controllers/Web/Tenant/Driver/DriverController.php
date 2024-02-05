@@ -14,11 +14,11 @@ class DriverController extends BaseController
 {
     public function __construct(private DriverService $driverService) {
     }
-    public function index(Request $request, $branchId)
+    public function index(Request $request)
     {
-        return $this->driverService->index($request,$branchId);
+        return $this->driverService->index($request);
     }
-    public function create(Request $request)
+    public function create(Request $request, $branchId)
     {
         return $this->driverService->create();
     }

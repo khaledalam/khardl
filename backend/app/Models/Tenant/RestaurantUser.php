@@ -113,6 +113,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     // {
     //     return $this->belongsToMany(Role::class,'roles');
     // }
+    public function scopeDrivers()
+    {
+        return $this->whereHas('roles',function($q){
+            return $q->where('name','Driver');
+        });
+    }
     public function branch()
     {
         return $this->belongsTo(Branch::class);
@@ -120,6 +126,18 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+    public function completed_orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'driver_id', 'id')->where('status',Order::COMPLETED);
+    }
+    public function monthly_orders()
+    {
+        return $this->completed_orders->whereBetween('created_at',
+        [
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth()
+        ]);
     }
     public function recent_orders()
     {

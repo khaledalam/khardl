@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', $branch->name.' | '. __('messages.drivers'))
+@section('title', __('messages.drivers'))
 
 @section('content')
 
@@ -16,11 +16,11 @@
                      <!--begin::Header-->
                      <div class="card-header border-0 pt-5">
                          <h3 class="card-title align-items-start flex-column">
-                             <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.drivers') }} - <small>{{__('messages.branch')}}: {{\App\Models\Tenant\Branch::find($branchId)?->name}}</small></span>
-                             <span class="text-muted mt-1 fw-bold fs-7">{{ count($drivers) }} {{ __('messages.drivers') }}</span>
+                             <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.drivers') }}
+                             <span class="text-muted mt-1 fw-bold fs-7">{{ __('messages.drivers') }}</span>
                          </h3>
                          <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('messages.Add') }}">
-                             <a href="{{ route('restaurant.drivers.create', ['branchId' => $branchId]) }}" class="btn btn-sm btn-light btn-active-khardl">
+                             <a href="{{ route('drivers.create') }}" class="btn btn-sm btn-light btn-active-khardl">
                              <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                              <span class="svg-icon svg-icon-3">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -44,6 +44,9 @@
                                          <th class="min-w-25px">#</th>
                                          <th class="min-w-200px">{{ __('messages.first-name') }}</th>
                                          <th class="min-w-150px">{{ __('messages.last-name') }}</th>
+                                         <th class="min-w-150px">{{ __('messages.Status') }}</th>
+                                         <th class="min-w-150px">{{ __('messages.Delivered orders') }}</th>
+                                         <th class="min-w-150px">{{ __('messages.This month') }}</th>
                                          <th class="min-w-150px">{{ __('messages.phone-number') }}</th>
                                          <th class="min-w-150px">{{ __('messages.email') }}</th>
                                          <th class="min-w-150px text-end">{{ __('messages.actions') }}</th>
@@ -68,7 +71,18 @@
                                                 <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->last_name }}</a>
                                             </td>
                                             <td>
-                                                <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->phone_number }}</a>
+                                                <span class="badge {{ $driver->status }}">
+                                                    {{__("messages.$driver->status")}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span>{{ $driver?->completed_orders?->count() }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ $driver?->monthly_orders()?->count() }}</span>
+                                            </td>
+                                            <td>
+                                                <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->phone }}</a>
                                             </td>
                                             <td>
                                                 <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->email }}</a>
