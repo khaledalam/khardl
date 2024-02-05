@@ -799,6 +799,7 @@ return [
     "Created successfully" => "تم الإنشاء بنجاح",
     "add-driver" => "اضافة سائق",
     "edit-driver" => "تعديل سائق",
-    "By name, email, phone" => "بالاسم والبريد والهاتف"
+    "By name, email, phone" => "بالاسم والبريد والهاتف",
+    "View and edit drivers" => "عرض وتحرير السائقين"
 ];
 

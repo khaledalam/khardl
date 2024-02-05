@@ -53,9 +53,14 @@ class DriverService
     }
     public function destroy($id)
     {
-        $driver = RestaurantUser::drivers()->findOrFail($id);
-        $driver->delete();
-        return redirect()->route('drivers.index')->with(['success' => __('Deleted successfully')]);
+        $user = RestaurantUser::user();
+        if($user->isRestaurantOwner()){
+            $driver = RestaurantUser::drivers()->findOrFail($id);
+            $driver->delete();
+            return redirect()->route('drivers.index')->with(['success' => __('Deleted successfully')]);
+        }else{
+            return redirect()->route('drivers.index');
+        }
     }
     private function request_data($request)
     {
