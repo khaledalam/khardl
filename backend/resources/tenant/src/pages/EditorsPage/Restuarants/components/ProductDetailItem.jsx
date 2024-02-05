@@ -15,7 +15,7 @@ const ProductDetailItem = ({
   return (
     <Fragment>
       {isCheckbox && (
-        <div className='form-control '>
+        <div className='form-control ' key={id}>
           <label className='label cursor-pointer flex items-center justify-between'>
             <p className='text-sm'>{label}</p>
             <div className='flex flex-row items-center gap-2 '>

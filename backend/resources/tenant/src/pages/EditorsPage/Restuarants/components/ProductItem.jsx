@@ -42,7 +42,7 @@ const ProductItem = ({
   checkbox_input_titles,
   checkbox_input_names,
   checkbox_input_prices,
-
+  valuekey,
   selection_required,
   selection_input_titles,
   selection_input_names,
@@ -66,6 +66,7 @@ const ProductItem = ({
   const [selectedCheckbox, setSelectedCheckbox] = useState([])
   const [selectedRadio, setSelectedRadio] = useState([])
   const [selectedDropdown, setSelectedDropdown] = useState([])
+  console.log(valuekey, 'valuekeykeyyyy')
   const incrementQty = useCallback(() => {
     setQtyCount((prev) => prev + 1)
   }, [])
@@ -373,6 +374,7 @@ const ProductItem = ({
   return (
     <Fragment>
       <div
+      key={valuekey}
         style={{
           boxShadow: "4px 0px  10px 0px rgba(0, 0, 0, 0.25)",
           borderRadius: shape === "sharp" ? 0 : 16,
@@ -512,7 +514,7 @@ const ProductItem = ({
                   </div>
                 </div>
                 <div className='w-[90%] mx-auto'>
-                  <h3 className='text-[1rem] font-bold mb-4'>Feedback</h3>
+                  <h3 className='text-[1rem] font-bold mb-4'>{t("feedback")}</h3>
                   <div className='w-full flex items-center gap-4'>
                     <div className='border border-neutral-200 rounded-lg w-full h-[48px] flex items-center gap-2 px-2'>
                       <PiNoteFill
@@ -521,7 +523,7 @@ const ProductItem = ({
                       />
                       <input
                         type='text'
-                        placeholder='Say something nice...'
+                        placeholder={t("Say something nice...")}
                         value={feedback}
                         onChange={(e) => setFeedback(e.target.value)}
                         className='input w-full  h-full rounded-none outline-none border-none focus-visible:border-none focus-within:border-none focus-within:outline-none'
@@ -704,7 +706,7 @@ const ProductItem = ({
                           }}
                           className='text-xs line-clamp-1 md:text-[14px] font-bold'
                         >
-                          Check Cart
+                          {t("Check Cart")}
                         </h3>
                       ) : (
                         <h3

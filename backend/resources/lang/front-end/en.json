@@ -20,7 +20,7 @@
   "Identity of the owner or manager": "Identity of the owner or manager",
   "delivery company?": "Would you like to register with a delivery company?",
   "You have an account?": "You have an account?",
-  "All rights reserved": "All rights reserved - Khardl 2023",
+  "All rights reserved": "All rights reserved - Khardl 2024",
   "Default Text": "This text is default This text is default This text is default This text is default This text is default This text is default .",
   "more clients": "Unlock a pathway to attracting more clients without paying",
   "commissions": "commissions",
@@ -311,6 +311,12 @@
   "Restaurant Editor": "Restaurant Editor",
   "Customer Editor": "Customer Editor",
   "No items in this category": "No items in this category",
+  "Restaurant is not live":"Restaurant is not live",
+  "This restaurant is not active. Please contact the website development team.":"This restaurant is not active. Please contact the website development team.",
+  "Restaurant is not live yet.":"Restaurant is not live yet.",
+  "Go To Login Restaurant Page":"Go To Login Restaurant Page",
+  "Main Khardl Website":"Main Khardl Website",
+  "This restaurant has no subscription yet.":"This restaurant has no subscription yet.",
   "delivery": "Delivery",
   "Delivery": "Delivery",
   "receipt": "Receipt",
@@ -398,5 +404,7 @@
   "Driver's Application": "Driver's Application",
   "you are not signed with any delivery company yet": "You are not signed with any delivery company yet.",
   "you are signed with delivery company": "You are signed with delivery companies already",
-  "not available": "Not available"
+  "not available": "Not available",
+  "Say something nice...":"Say something nice...",
+  "Check Cart":"Check Cart"
 }

@@ -6,8 +6,6 @@ use Tests\TestCase;
 
 class PhoneValidationTest extends TestCase
 {
-   
-
     /**
      * A basic feature test example.
      */

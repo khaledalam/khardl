@@ -484,7 +484,7 @@ const Privacy = ({ onClose }) => {
                 If you have any questions about this Privacy Policy, You can
                 contact us:
               </p>
-              <p>• By email: info@khardl.com</p>
+              <p>• By email: <a href={"mailto:contact-us@khardl.com"}>contact-us@khardl.com</a></p>
             </div>
           ) : (
             <div className="container">
@@ -904,7 +904,7 @@ const Privacy = ({ onClose }) => {
                 إذا كانت لديك أي أسئلة حول سياسة الخصوصية هذه، يمكنك الاتصال
                 بنا:
               </p>
-              <p>• عبر البريد الإلكتروني: info@khardl.com</p>
+              <p>• عبر البريد الإلكتروني: <a href={"mailto:contact-us@khardl.com"}>contact-us@khardl.com</a></p>
               <p></p>
             </div>
           )}

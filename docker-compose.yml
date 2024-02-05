@@ -17,6 +17,21 @@ services:
             - "3306:3306"
         volumes:
             - ./docker/database/data:/var/lib/mysql:z
+    khardl_testing:
+        #        platform: 'linux/amd64'
+        container_name: khardl_testing
+        command: --max_allowed_packet=32505856
+        image: mariadb
+        restart: unless-stopped
+        environment:
+            - MYSQL_DATABASE=${DB_TESTING_DATABASE}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+        ports:
+            - "${DB_TESTING_PORT}:3306"
+        volumes:
+            - ./docker/database_testing/data:/var/lib/mysql:z
 
 #    khardl_db_testing:
 #        #        platform: 'linux/amd64'
