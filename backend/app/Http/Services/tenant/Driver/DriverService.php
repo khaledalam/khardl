@@ -53,7 +53,7 @@ class DriverService
     }
     public function destroy($id)
     {
-        $user = RestaurantUser::user();
+        $user = Auth::user();
         if($user->isRestaurantOwner()){
             $driver = RestaurantUser::drivers()->findOrFail($id);
             $driver->delete();
