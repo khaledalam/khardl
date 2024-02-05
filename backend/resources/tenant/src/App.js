@@ -72,7 +72,6 @@ const App = () => {
     "/dashboard",
     "/privacy",
     "/site-editor/restaurants",
-    "/site-editor/customers",
     '/restaurant-not-live',
     '/restaurant-not-subscribed'
   ].includes(location.pathname)
@@ -81,14 +80,13 @@ const App = () => {
     "/cart",
     "/dashboard",
     "/site-editor/restaurants",
-    "/site-editor/customers",
     "/login",
     "/login-admins",
     "/register",
     "/register/:url",
     "/reset-password",
     "/create-new-password",
-   
+
     "/verification-phone",
     "/policies",
     "/privacy",
@@ -161,14 +159,9 @@ const App = () => {
                   element={<RestuarantEditor />}
                 />{" "}
                 {/* <Route
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          path='/site-editor/restaurants'
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          element={<EditorPage />}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        />{" "} */}{" "}
-                {/*/site-editor/customers/preview*/}{" "}
                 {/* <Route path='/dashboard' element={<CustomersPreview />} />{" "} */}{" "}
                 <Route path='/dashboard' element={<CustomerPage />} />{" "}
                 <Route path='/customers' element={<CustomerPage />} />{" "}
-                <Route path='/site-editor/customers' element={<Editor />} />{" "}
                 {/* <Route path='/customers' element={<CustomerPage />} />{" "} */}{" "}
               </Route>{" "}
             </Routes>{" "}

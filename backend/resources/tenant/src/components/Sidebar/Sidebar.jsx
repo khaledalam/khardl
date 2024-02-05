@@ -36,9 +36,9 @@ const Sidebar = () => {
     if (location.pathname?.indexOf(`/site-editor/restaurants`) > -1) {
       setTemplate("restaurants")
     }
-    if (location.pathname?.indexOf(`/site-editor/customers`) > -1) {
-      setTemplate("customers")
-    }
+    // if (location.pathname?.indexOf(`/site-editor/customers`) > -1) {
+    //   setTemplate("customers")
+    // }
   }, [location.pathname])
 
   const handleSaveStyle = async (e) => {
