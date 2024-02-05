@@ -15,7 +15,11 @@ class DriverService
     public function index(Request $request)
     {
         $user = Auth::user();
-        $drivers = RestaurantUser::drivers()->get();
+        $drivers = RestaurantUser::drivers()
+        ->whenSearch($request['search'] ?? null)
+        ->whenStatus($request['status'] ?? null)
+        ->orderBy('id','desc')
+        ->paginate(config('application.perPage') ?? 20);
         return view('restaurant.drivers.index',compact('user','drivers'));
     }
     public function create()
@@ -47,19 +51,11 @@ class DriverService
         $driver->update($data);
         return redirect()->route('drivers.index')->with(['success' => __('Updated successfully')]);
     }
-    public function changeStatus(Coupon $coupon)
+    public function destroy($id)
     {
-        $coupon->toggleStatus();
-    }
-    public function delete(Coupon $coupon)
-    {
-        $coupon->delete();
-        return redirect()->route('coupons.index')->with(['success' => __('Deleted successfully')]);
-    }
-    public function restore(Coupon $coupon)
-    {
-        $coupon->restore();
-        return redirect()->route('coupons.index')->with(['success' => __('Restored successfully')]);
+        $driver = RestaurantUser::drivers()->findOrFail($id);
+        $driver->delete();
+        return redirect()->route('drivers.index')->with(['success' => __('Deleted successfully')]);
     }
     private function request_data($request)
     {

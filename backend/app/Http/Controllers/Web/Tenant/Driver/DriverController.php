@@ -34,8 +34,8 @@ class DriverController extends BaseController
     {
         return $this->driverService->update($request, $driver);
     }
-    public function delete(Request $request, Coupon $coupon)
+    public function destroy(Request $request, $driver)
     {
-        return $this->driverService->delete($coupon);
+        return $this->driverService->destroy($driver);
     }
 }

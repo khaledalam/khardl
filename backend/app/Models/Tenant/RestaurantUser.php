@@ -113,12 +113,33 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     // {
     //     return $this->belongsToMany(Role::class,'roles');
     // }
+    /* Scopes */
     public function scopeDrivers()
     {
         return $this->whereHas('roles',function($q){
             return $q->where('name','Driver');
         });
     }
+    public function scopeCustomers($query)
+    {
+        return $query->whereDoesntHave('roles');
+    }
+    public function scopeWhenSearch($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('first_name', 'like', '%' . $search . '%')
+            ->orWhere('last_name', 'like', '%' . $search . '%')
+            ->orWhere('phone', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%');
+        });
+    }
+    public function scopeWhenStatus($query,$status)
+    {
+        return $query->when($status != null, function ($q) use ($status) {
+            return $q->where('status', 'like',$status);
+        });
+    }
+    /* Scopes */
     public function branch()
     {
         return $this->belongsTo(Branch::class);
@@ -162,10 +183,6 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         if ($this->isRestaurantOwner())
             return true;
         return DB::table('permissions_driver')->where('user_id', $this->id)->value($permission) === 1;
-    }
-    public function scopeCustomers($query)
-    {
-        return $query->whereDoesntHave('roles');
     }
     public function hasVerifiedPhone(): bool
     {

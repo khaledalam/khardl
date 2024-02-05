@@ -182,7 +182,7 @@
                                 </tbody>
                                 <!--end::Tbody-->
                             </table>
-                            {{ $coupons->links('pagination::bootstrap-4') }}
+                            {{ $coupons->withQueryString()->links('pagination::bootstrap-4') }}
                             <!--end::Table-->
                         </div>
                     </div>

@@ -798,4 +798,5 @@ return [
     "Created successfully" => "Created successfully",
     "add-driver" => "Add driver",
     "edit-driver" => "Edit driver",
+    "By name, email, phone" => "By name, email, phone"
 ];

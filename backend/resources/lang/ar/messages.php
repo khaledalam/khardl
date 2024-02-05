@@ -798,6 +798,7 @@ return [
     "This month" => "هذا الشهر",
     "Created successfully" => "تم الإنشاء بنجاح",
     "add-driver" => "اضافة سائق",
-    "edit-driver" => "تعديل سائق"
+    "edit-driver" => "تعديل سائق",
+    "By name, email, phone" => "بالاسم والبريد والهاتف"
 ];
 
