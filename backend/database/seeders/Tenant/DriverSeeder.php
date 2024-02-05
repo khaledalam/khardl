@@ -37,11 +37,5 @@ class DriverSeeder extends Seeder
         $user->save();
 
         $user->assignRole('Driver');
-        DB::table('permissions_driver')->insert([
-            'user_id' => $user->id,
-            'can_see_orders' => true,
-            'can_see_branches' => true,
-            'can_modify_and_see_other_drivers' => true
-        ]);
     }
 }
