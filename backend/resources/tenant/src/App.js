@@ -39,7 +39,6 @@ import OuterSidebarNav from "./pages/EditorsPage/Restuarants/components/OuterSid
 import CartPage from "./pages/CartPage"
 import NavbarRestuarant from "./pages/RestuarantPage/components/NavbarRestuarant"
 import {CustomerPage} from "./pages/CustomerPage"
-import Editor from "./components/Customers/CustomersEditor/Editor"
 
 import * as Sentry from "@sentry/react";
 
