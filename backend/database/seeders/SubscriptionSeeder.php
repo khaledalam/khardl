@@ -13,7 +13,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SubscriptionSeeder extends Seeder
 {
- 
+
     /**
      * Run the database seeds.
      */

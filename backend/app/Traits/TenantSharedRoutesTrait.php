@@ -22,6 +22,7 @@ trait TenantSharedRoutesTrait
                 'policies'=>'policies',
                 'prices'=>'prices',
                 'fqa'=>'fqa',
+               
             ],
             'middleware'=>[
             ]
@@ -57,6 +58,17 @@ trait TenantSharedRoutesTrait
             ]
         ];
 
+    }
+    public static function setUp(){
+        return [
+            'routes'=>[
+                'restaurant-not-live'=> 'restaurant-not-live',
+                'restaurant-not-subscribed'=> 'restaurant-not-subscribed',
+            ],
+            'middleware'=>[
+                
+            ]
+        ];
     }
 
 }

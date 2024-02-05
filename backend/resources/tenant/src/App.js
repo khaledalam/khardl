@@ -8,8 +8,10 @@ import {ToastContainer} from "react-toastify"
 import Footer from "./components/Footer/Footer"
 import Login from "./pages/LoginSignUp/Login"
 import LoginAdmin from "./pages/LoginSignUp/LoginAdmin"
-import LoginTrial from "./pages/LoginSignUp/LoginTrial"
 import Register from "./pages/LoginSignUp/Register"
+import RestaurantNotLive from "./components/RestaurantNotLive"
+import RestaurantNotSubscribed from "./components/RestaurantNotSubscribed"
+
 import VerificationPhone from "./pages/LoginSignUp/VerificationPhone"
 import Supports from "./components/Supports"
 import ScrollUp from "./components/ScrollUp"
@@ -67,11 +69,12 @@ const App = () => {
 
   const showHeader = ![
     "/policies",
-    "/login-trial",
     "/dashboard",
     "/privacy",
     "/site-editor/restaurants",
     "/site-editor/customers",
+    '/restaurant-not-live',
+    '/restaurant-not-subscribed'
   ].includes(location.pathname)
   const showFooter = ![
     "/",
@@ -81,11 +84,11 @@ const App = () => {
     "/site-editor/customers",
     "/login",
     "/login-admins",
-    "/login-trial",
     "/register",
     "/register/:url",
     "/reset-password",
     "/create-new-password",
+   
     "/verification-phone",
     "/policies",
     "/privacy",
@@ -132,13 +135,14 @@ const App = () => {
                 path='/create-new-password'
                 element={<Protected Cmp={CreateNewPassword} />}
               />
+              <Route path='/restaurant-not-live' element={<RestaurantNotLive />} />{" "}
+              <Route path='/restaurant-not-subscribed' element={<RestaurantNotSubscribed />} />{" "}
               <Route path='/policies' element={<TermsPolicies />} />{" "}
               <Route path='/privacy' element={<Privacy />} />{" "}
               {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
               {/*<Route path='/services' element={<Services />} />*/}{" "}
               {/*<Route path='/prices' element={<Prices />} />*/}{" "}
               {/*<Route path='/fqa' element={<FQA />} />*/}{" "}
-              <Route path='/login-trial' element={<LoginTrial />} />{" "}
               <Route element={<Layout />}>
                 <Route path='/login' element={<Login />} />{" "}
                 <Route path='/register' element={<Register />} />{" "}

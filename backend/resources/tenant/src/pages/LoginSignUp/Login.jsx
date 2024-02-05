@@ -115,7 +115,7 @@ const Login = () => {
       fetchCartData().then(() => {
          console.log("fetched cart item count successfully");
       });
-   })
+   },[])
    return (
       <div className='flex flex-col items-stretch justify-center'>
          <div
