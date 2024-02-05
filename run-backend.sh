@@ -31,7 +31,7 @@ rm ./composer.lock
 composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
 
-php artisan migrate:fresh --seed
+php artisan migrate:fresh --seed --force
 php artisan create:tenant first
 php artisan create:tenant second
 php artisan create:tenant third
