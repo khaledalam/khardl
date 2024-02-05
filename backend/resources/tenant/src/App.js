@@ -101,6 +101,7 @@ const App = () => {
   }
 
   return (
+    
     <MenuProvider
       MenuComponent={OuterSidebarNav}
       direction={localStorage.getItem("i18nextLng") == "en" ? "left" : "right"}
@@ -124,8 +125,10 @@ const App = () => {
           <div>
             <Routes>
               {" "}
+      
+
               {/* Public Routes */}{" "}
-              <Route path="/success" element={<SuccessPayment />} />
+             
               <Route path="/" element={<RestuarantHomePage />} />{" "}
               
               <Route path="/logout" element={<Logout />} />{" "}
