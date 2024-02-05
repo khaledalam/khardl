@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Http\Services\tenant\Driver;
-use App\Enums\Admin\CouponTypes;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\Coupon;
 use App\Models\Tenant\RestaurantUser;
 use App\Traits\APIResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 
 class DriverService
 {
@@ -30,8 +29,10 @@ class DriverService
     }
     public function store($request)
     {
-        Coupon::create($this->request_data($request));
-        return redirect()->route('coupons.index')->with(['success' => __('Updated successfully')]);
+        $driver = RestaurantUser::create($this->request_data($request));
+        $driver->password = Hash::make($request->password);
+        $driver->assignRole('Driver');
+        return redirect()->route('drivers.index')->with(['success' => __('Created successfully')]);
     }
     public function update($request, Coupon $coupon)
     {
@@ -54,18 +55,13 @@ class DriverService
     }
     private function request_data($request)
     {
-        if($request->type == CouponTypes::FIXED_COUPON->value)$request['amount'] = $request['fixed'];
-        else $request['amount'] = $request['percentage'];
         return $request->only([
-            'code',
-            'type',
-            'amount',
-            'max_use',
-            'max_use_per_user',
-            'minimum_cart_amount',
-            'max_discount_amount',
-            'active_from',
-            'expire_at',
+            'first_name',
+            'last_name',
+            'address',
+            'branch_id',
+            'email',
+            'phone',
         ]);
     }
 

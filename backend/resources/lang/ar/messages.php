@@ -795,6 +795,7 @@ return [
     "new-driver" => "سائق جديد",
     "Orders" => "الطلبات",
     "Delivered orders" => "الطلبات المكتملة",
-    "This month" => "هذا الشهر"
+    "This month" => "هذا الشهر",
+    "Created successfully" => "تم الإنشاء بنجاح"
 ];
 
