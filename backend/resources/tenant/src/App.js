@@ -41,6 +41,7 @@ import NavbarRestuarant from "./pages/RestuarantPage/components/NavbarRestuarant
 import {CustomerPage} from "./pages/CustomerPage"
 import Editor from "./components/Customers/CustomersEditor/Editor"
 import SuccessPayment from "./pages/SuccessPayment";
+import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
@@ -73,7 +74,9 @@ const App = () => {
     "/site-editor/restaurants",
     "/site-editor/customers",
     '/restaurant-not-live',
-    '/restaurant-not-subscribed'
+    '/restaurant-not-subscribed',
+    '/success'
+
   ].includes(location.pathname)
   const showFooter = ![
     "/",
@@ -91,6 +94,7 @@ const App = () => {
     "/verification-phone",
     "/policies",
     "/privacy",
+    '/success'
   ].includes(location.pathname);
 
   Aos.init({
@@ -142,6 +146,7 @@ const App = () => {
               <Route path='/restaurant-not-live' element={<RestaurantNotLive />} />{" "}
               <Route path='/restaurant-not-subscribed' element={<RestaurantNotSubscribed />} />{" "}
               <Route path="/success" element={<SuccessPayment />} />
+              <Route path="/failed" element={<FailedPayment />} />
               <Route path='/policies' element={<TermsPolicies />} />{" "}
               <Route path='/privacy' element={<Privacy />} />{" "}
               {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
