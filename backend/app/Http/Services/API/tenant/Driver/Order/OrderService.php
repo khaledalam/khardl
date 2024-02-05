@@ -18,6 +18,7 @@ class OrderService
         $user = Auth::user();
         $orders = Order::with('payment_method')
             ->where('driver_id', $user->id)
+            /* TODO: status , completed, rejected */
             ->delivery()
             ->recent()
             ->paginate(config('application.perPage') ?? 20);
@@ -29,6 +30,11 @@ class OrderService
             ->where('deliver_by', null)
             ->where('driver_id', null)
             ->receivedByRestaurant()
+            /*
+            (add in setting)
+            Less thant 5 min (update_at)
+            add column received_at
+            */
             ->recent()
             ->paginate(config('application.perPage') ?? 20);
         return $this->sendResponse(new OrderCollection($orders), '');

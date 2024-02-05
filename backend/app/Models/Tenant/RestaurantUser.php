@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
 use App\Packages\Msegat\Msegat;
+use Database\Factories\tenant\RestaurantUserFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
@@ -249,6 +250,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             $this->status = $status;
             $this->save();
         }
+    }
+    protected static function newFactory()
+    {
+      return RestaurantUserFactory::new();
     }
 }
 
