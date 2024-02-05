@@ -22,7 +22,7 @@ trait TenantSharedRoutesTrait
                 'policies'=>'policies',
                 'prices'=>'prices',
                 'fqa'=>'fqa',
-               
+
             ],
             'middleware'=>[
             ]
@@ -49,8 +49,6 @@ trait TenantSharedRoutesTrait
             'routes'=>[
                 '/site-editor/restaurants'=>"restaurants.site_editor",
                 '/site-editor/restaurants/preview'=>"restaurants.site_editor.preview",
-                '/site-editor/customers'=>"customers.site_editor",
-                '/site-editor/customers/preview'=>"customers.site_editor.preview",
                 '/site-editor'=>'site_editor',
             ],
             'middleware'=>[
@@ -66,7 +64,7 @@ trait TenantSharedRoutesTrait
                 'restaurant-not-subscribed'=> 'restaurant-not-subscribed',
             ],
             'middleware'=>[
-                
+
             ]
         ];
     }

@@ -40,12 +40,11 @@ mix.css(
     "public/css/index.css"
 ).version();
 
-mix.copy("resources/landing-page/public", "public");
-
+// mix.copy("resources/landing-page/public", "public");
 mix.js("resources/tenant/src/index.js", "public/js/tenant.js").version();
 mix.css(
     "resources/tenant/src/index.css",
     "public/css/index.css"
 ).version();
 
-mix.copy("resources/tenant/public", "public");
+// mix.copy("resources/tenant/public", "public");

@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react"
 import RestaurantsEditor from "../components/Restaurants/RestaurantsEditor/Editor"
-import CustomersEditor from "../components/Customers/CustomersEditor/Editor"
 import Header from "../components/Header/Header"
 import Sidebar from "../components/Sidebar/Sidebar"
 import {MdSettings} from "react-icons/md"
@@ -36,9 +35,9 @@ const EditorPage = () => {
     if (location.pathname === `/site-editor/restaurants`) {
       setTemplate("restaurants")
     }
-    if (location.pathname === `/site-editor/customers`) {
-      setTemplate("customers")
-    }
+    // if (location.pathname === `/site-editor/customers`) {
+    //   setTemplate("customers")
+    // }
     console.log("entered editorPage")
   }, [location.pathname])
 
@@ -85,7 +84,7 @@ const EditorPage = () => {
             } m-6 mt-[85px] rounded-[10px]`}
           >
             {template === "restaurants" && <RestaurantsEditor />}
-            {template === "customers" && <CustomersEditor />}
+            {/*{template === "customers" && <CustomersEditor />}*/}
           </div>
         </div>
       </div>

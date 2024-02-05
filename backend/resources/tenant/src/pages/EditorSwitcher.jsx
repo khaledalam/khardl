@@ -19,11 +19,11 @@ function EditorSwitcher() {
                 {t("Restaurant Editor")}
             </button>
          </Link>
-         <Link to='/site-editor/customers'>
-            <button className='bg-[var(--primary)] rounded-md p-2'>
-                {t("Customer Editor")}
-            </button>
-         </Link>
+         {/*<Link to='/site-editor/customers'>*/}
+         {/*   <button className='bg-[var(--primary)] rounded-md p-2'>*/}
+         {/*       {t("Customer Editor")}*/}
+         {/*   </button>*/}
+         {/*</Link>*/}
       </div>
    )
 }
