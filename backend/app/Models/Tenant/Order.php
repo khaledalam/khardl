@@ -60,6 +60,10 @@ class Order extends Model
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
     }
+    public function getTaxAmountAttribute()
+    {
+        return number_format((($this->subtotal - $this->discount) * $this->vat) / 100 , 2, '.', '');
+    }
 
     public function getUpdatedAtAttribute($value)
     {
@@ -135,11 +139,10 @@ class Order extends Model
     }
     /* End Scoped */
     public static function ChangeStatus($status){
-         // TODO @todo (order status) change payment status for RECEIVED from restaurant, prevent to change to comp,canc until it ready (cash on delivery)
         return  match($status){
             self::PENDING => [self::RECEIVED_BY_RESTAURANT,self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY],
             self::RECEIVED_BY_RESTAURANT => [self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY],
-            self::ACCEPTED => [self::READY,self::COMPLETED,self::COMPLETED],
+            self::ACCEPTED => [self::READY,self::COMPLETED,self::CANCELLED],
             self::READY => [self::COMPLETED,self::CANCELLED],
             default => []
         };
@@ -152,6 +155,10 @@ class Order extends Model
     public function branch()
     {
         return $this->belongsTo(Branch::class);
+    }
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     public function products()

@@ -17,7 +17,7 @@ class RestaurantSubLive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(env('APP_ENV') != 'local'){
+        if(env('APP_ENV') != 'local' &&$request->route()->getName() != 'stancl.tenancy.asset' && request()->segment(3) != 'restaurant-styles'){
             $sub=ROSubscription::first();
             if(!$sub || $sub->status != ROSubscription::ACTIVE){
                 if ($request->expectsJson()) {
@@ -26,32 +26,10 @@ class RestaurantSubLive
                         'is_loggedin' => false
                     ], ResponseHelper::HTTP_FORBIDDEN);
                 }
-                $central_url = env('APP_URL');
-                $user = $request->user();
-                if($user){
-                    $url_redirect = route('dashboard');
-                    $messages =  __('messages.Go To Dashboard');
-                    $url = "<a href='$url_redirect'>$messages</a><br />";
-                }else {
-                    $url_redirect = route('login-trial');
-                    $messages =  __('messages.Go To Login Restaurant Page');
-                    $url = "<a href='$url_redirect'>$messages</a><br />";
-                }
-                $message = __("messages.Code ")." 01:(Sub) ".__('messages.This Restaurant is not active, please contact web master') ;
-                $khardl = __('messages.Go To Main Khardl Website');
-                
-                echo <<<HTML
-                    <div style="text-align: center; height: 100vh; display: flex; flex-direction: column ; justify-content: center; align-items: center;">
-                    <h3 style="color: red;">$message</h3>
-                    <br />
-                    $url
-                    <a href="$central_url">$khardl</a>
-                    </div>
-                    HTML;
-                die;
+                return redirect()->route('restaurant-not-subscribed');
             }
         }
-       
+
         return $next($request);
     }
 }

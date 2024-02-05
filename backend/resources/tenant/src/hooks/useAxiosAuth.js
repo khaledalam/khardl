@@ -10,10 +10,13 @@ const useAxiosAuth = () => {
 
    const privateRoute = ![
       '/',
-       '/register',
-       '/register/:url',
+      '/register',
+      '/success',
+      '/register/:url',
       '/reset-password',
       '/create-new-password',
+      '/restaurant-not-live',
+      '/restaurant-not-subscribed',
       '/login-admins'
    ].includes(location.pathname)
 
@@ -43,7 +46,7 @@ const useAxiosAuth = () => {
       (error) => {
           console.log("axiosAuth.interceptors.response", error?.response?.status);
 
-          if(window.location?.pathname.indexOf('login-trial') !== -1) {
+          if(window.location?.pathname.indexOf('login-admins') !== -1) {
               console.log("twetw");
               return;
           }

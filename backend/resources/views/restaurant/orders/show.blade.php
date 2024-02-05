@@ -374,9 +374,182 @@
                                      </div>
                                      <!--end::Shipping address-->
                                  </div>
-                                 <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10 w-100">
+                                 <div class="row">
+                                    <div class="card card-flush col-md-12 my-2">
+                                        <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
+                                            <!--begin::Card header-->
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <h2>{{__('messages.order')}} #{{$order->id}}
+
+                                                        @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
+                                                            <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
+                                                        @elseif($order->status == \App\Models\Tenant\Order::PENDING)
+                                                            <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
+                                                        @elseif($order->status == \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
+                                                            <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.received_by_restaurant")}}</a>
+                                                        @elseif($order->status == \App\Models\Tenant\Order::CANCELLED)
+                                                            <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
+                                                        @elseif($order->status == \App\Models\Tenant\Order::READY)
+                                                            <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
+                                                        @elseif($order->status == \App\Models\Tenant\Order::COMPLETED)
+                                                            <a href="#"  class="btn btn-light-secondary btn-sm">{{__("messages.completed")}}</a>
+                                                        @endif
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                            <!--end::Card header-->
+                                            <!--begin::Card body-->
+                                            <div class="card-body pt-0">
+                                                <div class="table-responsive">
+                                                    <!--begin::Table-->
+                                                    <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
+                                                        <!--begin::Table head-->
+                                                        <thead>
+                                                            <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                                <th class="min-w-175px">{{__('messages.product')}}</th>
+                                                                {{-- <th class="min-w-100px text-end">SKU</th> --}}
+                                                                <th class="min-w-100px text-end">{{__('messages.id')}}</th>
+                                                                <th class="min-w-70px text-end">{{__('messages.QTY')}}</th>
+                                                                <th class="min-w-100px text-end">{{__('messages.unit-price')}}</th>
+                                                                <th class="min-w-100px text-end">{{__('messages.options-price')}}</th>
+                                                                <th class="min-w-100px text-end">{{__('messages.total')}}</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <!--end::Table head-->
+                                                        <!--begin::Table body-->
+                                                        <tbody class="fw-bold text-gray-600">
+                                                            <!--begin::Products-->
+                                                               @foreach ($order->items as $order_item)
+                                                                   <tr>
+                                                                       <!--begin::Product-->
+                                                                       <td>
+                                                                           <div class="d-flex align-items-center">
+                                                                               <!--begin::Thumbnail-->
+                                                                               <a href="#" class="symbol symbol-50px">
+                                                                                   <span class="symbol-label" style="background-image:url({{$order_item->item->photo}});"></span>
+                                                                               </a>
+                                                                               <!--end::Thumbnail-->
+                                                                               <!--begin::Title-->
+                                                                               <div class="ms-5">
+                                                                                   <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->name}}</a>
+                                                                                   <div class="fs-7 text-muted">{{__('messages.notes')}}: {{$order_item->notes ?? __('messages.NA')}}</div>
+
+                                                                               </div>
+
+                                                                               <!--end::Title-->
+                                                                           </div>
+                                                                           <div class="text-muted">
+
+                                                                               @if($order_item->checkbox_options)
+                                                                                   @foreach($order_item->checkbox_options as $value)
+                                                                                       <?php $option = array_keys($value[$locale]); ?>
+
+                                                                                       <ul class="list-group" style="border-radius: 0;">
+                                                                                           <li class="list-group-item" style="width: 100%; overflow: hidden;">
+
+                                                                                               <span >{{ $option[0] }}</span>:
+                                                                                               <i >{{ implode(', ', array_column($value[$locale][$option[0]], 0)) }}</span>
+                                                                                           </li>
+                                                                                       </ul>
+                                                                                   @endforeach
+
+                                                                               @endif
+                                                                               @if($order_item->selection_options)
+                                                                               @foreach($order_item->selection_options as $value)
+                                                                               <?php $option = array_keys($value[$locale]); ?>
+                                                                               <ul class="list-group" style="border-radius: 0;">
+                                                                                   <li class="list-group-item" style="width: 100%; overflow: hidden;">
+                                                                                       <span >{{ $option[0] }}</span>:
+
+                                                                                       <i >{{ $value[$locale][$option[0]][0] }}</span>
+                                                                                       </li>
+                                                                               </ul>
+                                                                               @endforeach
+                                                                               @endif
+                                                                               @if($order_item->dropdown_options)
+                                                                               @foreach($order_item->dropdown_options as $value)
+                                                                               <?php $option = array_keys($value[$locale]); ?>
+                                                                                   <ul class="list-group" style="border-radius: 0;">
+                                                                                       <li class="list-group-item" style="width: 100%; overflow: hidden;">
+                                                                                           <span >{{ $option[0] }}</span>:
+                                                                                           <i >{{$value[$locale][$option[0]]}}</span>
+
+                                                                                       </li>
+                                                                                   </ul>
+                                                                               @endforeach
+                                                                               @endif
+                                                                           </div>
+                                                                       </td>
+                                                                       <!--end::Product-->
+                                                                       <!--begin::SKU-->
+                                                                       <td class="text-end">{{$order_item->id}}</td>
+                                                                       <!--end::SKU-->
+                                                                       <!--begin::Quantity-->
+                                                                       <td class="text-end">{{$order_item->quantity}}</td>
+                                                                       <!--end::Quantity-->
+                                                                       <!--begin::Price-->
+                                                                       <td class="text-end">{{$order_item->price}}</td>
+                                                                       <!--end::Price-->
+                                                                       <!--begin::Price-->
+                                                                       <td class="text-end">{{$order_item->options_price}}</td>
+                                                                       <!--end::Price-->
+                                                                       <!--begin::Total-->
+                                                                       <td class="text-end">{{$order_item->total}}  {{__('messages.SAR')}}</td>
+                                                                       <!--end::Total-->
+                                                                   </tr>
+                                                               @endforeach
+
+                                                            <!--end::Products-->
+                                                            <!--begin::Subtotal-->
+                                                            <tr>
+                                                                <td colspan="4" class="text-end">{{__('messages.subtotal')}}</td>
+                                                                <td class="text-end">{{$order->subtotal}} {{__('messages.SAR')}} +</td>
+                                                            </tr>
+                                                            <!--end::Subtotal-->
+                                                            <!--begin::Shipping-->
+                                                            <tr>
+                                                                <td colspan="4" class="text-end">{{__('messages.shipping-rate')}}</td>
+                                                                <td class="text-end">{{$order->delivery_type->cost}} {{__('messages.SAR')}} +</td>
+                                                            </tr>
+                                                            <!--end::Shipping-->
+                                                            <!--begin::Shipping-->
+                                                            <tr>
+                                                                <td colspan="4" class="text-end">{{__('messages.discount')}}</td>
+                                                                <td class="text-end">
+                                                                    @if($order->coupon)
+                                                                    <a href="{{ route('coupons.edit',['coupon' => $order->coupon?->id]) }}" target="_blank">
+                                                                        ({{ $order->coupon?->code }})
+                                                                    </a>
+                                                                    @endif
+                                                                    {{ $order->discount ?? 0 }} {{__('messages.SAR')}} -
+                                                                </td>
+                                                            </tr>
+                                                            <!--end::Shipping-->
+                                                            <!--begin::Shipping-->
+                                                            <tr>
+                                                                <td colspan="4" class="text-end">{{__('messages.Tax')}}</td>
+                                                                <td class="text-end">{{ $order->tax_amount }} {{__('messages.SAR')}} +</td>
+                                                            </tr>
+                                                            <!--end::Shipping-->
+                                                            <!--begin::Grand total-->
+                                                            <tr>
+                                                                <td colspan="4" class="fs-3 text-dark text-end">{{__('messages.grand-total')}}</td>
+                                                                <td class="text-dark fs-3 fw-boldest text-end">{{$order->total }} {{__('messages.SAR')}}</td>
+                                                                <td> <i> {{App\Repositories\Customer\CartRepository::VAT_PERCENTAGE }} % <br> {{__('messages.inclusive-VAT')}}</i></td>
+                                                            </tr>
+                                                            <!--end::Grand total-->
+                                                        </tbody>
+                                                        <!--end::Table head-->
+                                                    </table>
+                                                    <!--end::Table-->
+                                                </div>
+                                            </div>
+                                            <!--end::Card body-->
+                                        </div>
+                                    </div>
                                      <!--begin::Payment address-->
-                                     <div class="card card-flush py-4 flex-row-fluid overflow-hidden w-100">
+                                     <div class="card card-flush col-md-12 my-2">
                                          <!--begin::List Widget 5-->
                                          <div class="card card-xl-stretch">
                                              <!--begin::Header-->
@@ -402,32 +575,6 @@
 
 
                                                  <div class="timeline-label">
-
-                                                     <!--begin::Item-->
-{{--                                                     <div class="timeline-item">--}}
-{{--                                                         <!--begin::Badge-->--}}
-{{--                                                         <div class="timeline-badge">--}}
-{{--                                                             <i class="fa fa-genderless text-info fs-1"></i>--}}
-{{--                                                         </div>--}}
-{{--                                                         <!--end::Badge-->--}}
-{{--                                                         <!--begin::Content-->--}}
-{{--                                                         <div class="d-block">--}}
-{{--                                                             <div>--}}
-{{--                                                                 <p class="fw-bolder text-gray-800 ps-3">Payment status--}}
-{{--                                                                 </p>--}}
-{{--                                                             </div>--}}
-
-{{--                                                             <div class="fw-mormal timeline-content text-muted ps-3">--}}
-{{--                                                                 <span class="badge badge-light-danger">Paid</span>--}}
-{{--                                                             </div>--}}
-{{--                                                             <div class="fw-mormal timeline-content text-muted ps-3">--}}
-{{--                                                                 <span class="badge badge-light-warning my-5">Payment when recieving</span>--}}
-{{--                                                             </div>--}}
-{{--                                                         </div>--}}
-{{--                                                         <!--end::Content-->--}}
-{{--                                                     </div>--}}
-{{--                                                     <!--end::Item-->--}}
-
                                                      @foreach($orderStatusLogs as $log)
                                                          <!--begin::Item-->
                                                          <div class="timeline-item">
@@ -462,166 +609,6 @@
                                      </div>
                                      <!--end::Payment address-->
                                      <!--begin::Shipping address-->
-                                     <div class="card card-flush py-4 flex-row-fluid overflow-hidden w-100">
-                                         <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
-                                             <!--begin::Card header-->
-                                             <div class="card-header">
-                                                 <div class="card-title">
-                                                     <h2>{{__('messages.order')}} #{{$order->id}}
-
-                                                         @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                                                             <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
-                                                         @elseif($order->status == \App\Models\Tenant\Order::PENDING)
-                                                             <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
-                                                         @elseif($order->status == \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
-                                                             <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.received_by_restaurant")}}</a>
-                                                         @elseif($order->status == \App\Models\Tenant\Order::CANCELLED)
-                                                             <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
-                                                         @elseif($order->status == \App\Models\Tenant\Order::READY)
-                                                             <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
-                                                         @elseif($order->status == \App\Models\Tenant\Order::COMPLETED)
-                                                             <a href="#"  class="btn btn-light-secondary btn-sm">{{__("messages.completed")}}</a>
-                                                         @endif
-                                                     </h2>
-                                                 </div>
-                                             </div>
-                                             <!--end::Card header-->
-                                             <!--begin::Card body-->
-                                             <div class="card-body pt-0">
-                                                 <div class="table-responsive">
-                                                     <!--begin::Table-->
-                                                     <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
-                                                         <!--begin::Table head-->
-                                                         <thead>
-                                                             <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                                 <th class="min-w-175px">{{__('messages.product')}}</th>
-                                                                 {{-- <th class="min-w-100px text-end">SKU</th> --}}
-                                                                 <th class="min-w-100px text-end">{{__('messages.id')}}</th>
-                                                                 <th class="min-w-70px text-end">{{__('messages.QTY')}}</th>
-                                                                 <th class="min-w-100px text-end">{{__('messages.unit-price')}}</th>
-                                                                 <th class="min-w-100px text-end">{{__('messages.options-price')}}</th>
-                                                                 <th class="min-w-100px text-end">{{__('messages.total')}}</th>
-                                                             </tr>
-                                                         </thead>
-                                                         <!--end::Table head-->
-                                                         <!--begin::Table body-->
-                                                         <tbody class="fw-bold text-gray-600">
-                                                             <!--begin::Products-->
-                                                                @foreach ($order->items as $order_item)
-                                                                    <tr>
-                                                                        <!--begin::Product-->
-                                                                        <td>
-                                                                            <div class="d-flex align-items-center">
-                                                                                <!--begin::Thumbnail-->
-                                                                                <a href="#" class="symbol symbol-50px">
-                                                                                    <span class="symbol-label" style="background-image:url({{$order_item->item->photo}});"></span>
-                                                                                </a>
-                                                                                <!--end::Thumbnail-->
-                                                                                <!--begin::Title-->
-                                                                                <div class="ms-5">
-                                                                                    <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->name}}</a>
-                                                                                    <div class="fs-7 text-muted">{{__('messages.notes')}}: {{$order_item->notes ?? __('messages.NA')}}</div>
-
-                                                                                </div>
-
-                                                                                <!--end::Title-->
-                                                                            </div>
-                                                                            <div class="text-muted">
-                                                                               
-                                                                                @if($order_item->checkbox_options)
-                                                                                    @foreach($order_item->checkbox_options as $value) 
-                                                                                        <?php $option = array_keys($value[$locale]); ?>
-
-                                                                                        <ul class="list-group" style="border-radius: 0;">
-                                                                                            <li class="list-group-item" style="width: 100%; overflow: hidden;">
-                                                                                             
-                                                                                                <span >{{ $option[0] }}</span>: 
-                                                                                                <i >{{ implode(', ', array_column($value[$locale][$option[0]], 0)) }}</span>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    @endforeach
-
-                                                                                @endif
-                                                                                @if($order_item->selection_options)
-                                                                                @foreach($order_item->selection_options as $value) 
-                                                                                <?php $option = array_keys($value[$locale]); ?>
-                                                                                <ul class="list-group" style="border-radius: 0;">
-                                                                                    <li class="list-group-item" style="width: 100%; overflow: hidden;">
-                                                                                        <span >{{ $option[0] }}</span>: 
-                                                                                        
-                                                                                        <i >{{ $value[$locale][$option[0]][0] }}</span>
-                                                                                        </li>
-                                                                                </ul>
-                                                                                @endforeach
-                                                                                @endif
-                                                                                @if($order_item->dropdown_options)
-                                                                                @foreach($order_item->dropdown_options as $value)
-                                                                                <?php $option = array_keys($value[$locale]); ?>
-                                                                                    <ul class="list-group" style="border-radius: 0;">
-                                                                                        <li class="list-group-item" style="width: 100%; overflow: hidden;">
-                                                                                            <span >{{ $option[0] }}</span>: 
-                                                                                            <i >{{$value[$locale][$option[0]]}}</span>
-
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                @endforeach
-                                                                                @endif
-                                                                            </div>
-                                                                        </td>
-                                                                        <!--end::Product-->
-                                                                        <!--begin::SKU-->
-                                                                        <td class="text-end">{{$order_item->id}}</td>
-                                                                        <!--end::SKU-->
-                                                                        <!--begin::Quantity-->
-                                                                        <td class="text-end">{{$order_item->quantity}}</td>
-                                                                        <!--end::Quantity-->
-                                                                        <!--begin::Price-->
-                                                                        <td class="text-end">{{$order_item->price}}</td>
-                                                                        <!--end::Price-->
-                                                                        <!--begin::Price-->
-                                                                        <td class="text-end">{{$order_item->options_price}}</td>
-                                                                        <!--end::Price-->
-                                                                        <!--begin::Total-->
-                                                                        <td class="text-end">{{$order_item->total}}  </td>
-                                                                        <!--end::Total-->
-                                                                    </tr>
-                                                                @endforeach
-
-                                                             <!--end::Products-->
-                                                             <!--begin::Subtotal-->
-                                                             <tr>
-                                                                 <td colspan="4" class="text-end">{{__('messages.subtotal')}}</td>
-                                                                 <td class="text-end">{{$order->subtotal}}</td>
-                                                             </tr>
-                                                             <!--end::Subtotal-->
-                                                             <!--begin::Shipping-->
-                                                             <tr>
-                                                                 <td colspan="4" class="text-end">{{__('messages.shipping-rate')}}</td>
-                                                                 <td class="text-end">{{$order->delivery_type->cost}}</td>
-                                                             </tr>
-                                                             <!--end::Shipping-->
-                                                             <!--begin::Shipping-->
-                                                             <tr>
-                                                                 <td colspan="4" class="text-end">{{__('messages.discount')}}</td>
-                                                                 <td class="text-end">TODO</td>
-                                                             </tr>
-                                                             <!--end::Shipping-->
-                                                             <!--begin::Grand total-->
-                                                             <tr>
-                                                                 <td colspan="4" class="fs-3 text-dark text-end">{{__('messages.grand-total')}}</td>
-                                                                 <td class="text-dark fs-3 fw-boldest text-end">{{$order->total }} </td>
-                                                                 <td> <i> {{App\Repositories\Customer\CartRepository::VAT_PERCENTAGE }} % <br> {{__('messages.inclusive-VAT')}}</i></td>
-                                                             </tr>
-                                                             <!--end::Grand total-->
-                                                         </tbody>
-                                                         <!--end::Table head-->
-                                                     </table>
-                                                     <!--end::Table-->
-                                                 </div>
-                                             </div>
-                                             <!--end::Card body-->
-                                         </div>
-                                     </div>
                                  </div>
                              </div>
                              <!--end::Orders-->

@@ -594,7 +594,7 @@ return [
     "New subscription"=>"اشتراك جديد",
     "Number of branches"=>"عدد الفروع",
     "purchase"=>"شراء",
-    "For each branch annually"=>"لكل فرع سنوياً",
+    "For each branch annually"=>"تطبيق لمطعمكً",
     "Enjoy benefiting from our services"=>"استمتع بالاستفادة من خدماتنا",
     "Buy now"=>"اشتري الان",
     "subscriptions"=>"الاشتراكات",
@@ -786,6 +786,9 @@ return [
     "Prof" => "بروفيسور",
     "Close" => "اغلاق",
     "you are not signed with any delivery company yet" => "انت لم تتعاقد مع اي شركه توصيل بعد",
-    "you are signed with delivery company" => "انت متعاقد مع شركات توصيل بالفعل"
+    "you are signed with delivery company" => "انت متعاقد مع شركات توصيل بالفعل",
+    "Tax" => "قيمة الضريبة المضافة",
+    "Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date"=>'تحديد مدة إلغاء تفعيل اشتراكات المطاعم بعد عدد الأيام من تاريخ انتهاء الصلاحية',
+    "Enter Number of days"=>"اكتب عدد الايام"
 ];
 

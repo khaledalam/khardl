@@ -44,13 +44,16 @@ const Login = () => {
            // remember_me: data.remember_me, // used only in API token-based
          });
 
-         console.log(response?.data?.success)
+         console.log(response?.data?.success, 'response?.data?.success')
          if (response?.data?.success) {
             const responseData = await response?.data;
-            console.log(responseData)
+            console.log(responseData,'const responseData = await response?.data;')
             localStorage.setItem(
                'user-info',
                JSON.stringify(responseData.data)
+            )
+            localStorage.setItem(
+               'user-role',responseData.data.user.roles[0].name
             )
             sessionStorage.setItem('email', responseData.data.user.email)
             setStatusCode(HTTP_OK);
@@ -81,7 +84,7 @@ const Login = () => {
             }}
          >
             <div className='py-[20px] flex justify-center items-center'>
-               <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[60%] max-[1200px]:w-[100%]'>
+               <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[80%] max-[1200px]:w-[100%]'>
                   <div className='relative flex flex-col justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
                      <div className='mt-6  w-[100%]'>
                         <MainText

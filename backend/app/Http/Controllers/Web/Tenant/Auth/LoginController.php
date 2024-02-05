@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Web\Tenant\Auth;
 
 use App\Http\Controllers\Web\BaseController;
+use App\Models\ROSubscription;
+use App\Models\Subscription;
+use App\Models\Tenant\Setting;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +54,7 @@ class LoginController extends BaseController
         if (!Auth::attempt($credentials,true)) {
             return $this->sendError( __('Invalid email or password'),[] );
         }
-        if(!Auth::user()->isRestaurantOwner()){
+        if(!Auth::user()->isRestaurantOwner() && (!Setting::first()->is_live || ROSubscription::first()->status != ROSubscription::ACTIVE)){
             Auth::logout();
             return $this->sendError(__('Only restaurant owner can login'), []);
         }

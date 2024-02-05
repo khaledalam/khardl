@@ -1,5 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
+@section('title', __('messages.payments'))
 @section('content')
 <h3 class="mb-13 mx-3">{{__('messages.STEP 2 → Submit Create TAP Business Account')}}</h3>
 @if(session('success'))
@@ -417,7 +418,7 @@
                             <span class="">{{__('messages.IBAN')}}<span class="text-danger h4"> * </span></span>
 
                         </label>
-                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}}" /><br />
+                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}" /><br />
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.Swift code')}}<span class="text-danger h4"> * </span></span>
 
@@ -546,6 +547,10 @@
             cancelButtonText: '{{ __('messages.cancel') }}'
         }).then((result) => {
             if (result.isConfirmed) {
+                const submitButton = document.getElementById('kt_modal_new_target_submit');
+                submitButton.setAttribute('disabled', 'disabled');
+                    // Show the loading indicator
+                document.getElementById('waiting-item').style.display = 'inline-block';
                 document.getElementById('kt_modal_new_target_form').submit();
             }
         });

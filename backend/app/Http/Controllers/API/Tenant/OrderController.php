@@ -12,6 +12,7 @@ use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\OrderStatusLogs;
 use App\Repositories\API\OrderRepository;
+use App\Http\Requests\OrderStatusChangeRequest;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Repositories\API\CustomerOrderRepository;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
@@ -41,10 +42,8 @@ class  OrderController extends BaseRepositoryController
         return $this->sendResponse($orderStatusLogs, __('Order status logs fetched'));
     }
 
-    public function updateStatus($order,Request $request){
-        $request->validate([
-            'status' => ['required',Rule::in(Order::STATUS)],
-        ]);
+    public function updateStatus($order,OrderStatusChangeRequest $request){
+    
         $user = Auth::user();
         $order = Order::
         when($user->isWorker(), function (Builder $query, string $role)use($user) {
@@ -63,13 +62,7 @@ class  OrderController extends BaseRepositoryController
                 $statusLog->class_name = 'text-secondary';
                 break;
             case Order::ACCEPTED:
-               
                 $statusLog->class_name = 'text-success';
-                if($order->payment_method->name ==  PaymentMethod::CASH_ON_DELIVERY){
-                    $order->update([
-                        'payment_status'=> PaymentMethod::PAID
-                    ]);
-                }
                 break;
             case Order::READY:
                 $statusLog->class_name = 'text-info';
@@ -78,6 +71,11 @@ class  OrderController extends BaseRepositoryController
                 $statusLog->class_name = 'text-danger';
                 break;
             case Order::COMPLETED:
+                if($order->payment_method->name ==  PaymentMethod::CASH_ON_DELIVERY){
+                    $order->update([
+                        'payment_status'=> PaymentMethod::PAID
+                    ]);
+                }
                 $statusLog->class_name = 'text-primary';
                 break;
         }

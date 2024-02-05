@@ -103,3 +103,8 @@ SELECT CONCAT('DROP DATABASE `', SCHEMA_NAME, '`;')
 FROM `information_schema`.`SCHEMATA`
 WHERE SCHEMA_NAME LIKE 'restaurant_%';
 ``` 
+
+- Add dummy sub:
+```sql
+INSERT INTO `r_o_subscriptions` (`id`, `start_at`, `end_at`, `amount`, `number_of_branches`, `subscription_id`, `user_id`, `status`, `created_at`, `updated_at`, `type`, `reminder_email_sent`, `reminder_suspend_email_sent`) VALUES (NULL, '2024-01-31', '2025-02-28', '10', '2', 'test_sub_id', '1', 'active', NULL, NULL, 'new', '0', '0')
+```
