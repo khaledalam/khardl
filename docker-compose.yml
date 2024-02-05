@@ -24,12 +24,12 @@ services:
         image: mariadb
         restart: unless-stopped
         environment:
-            - MYSQL_DATABASE=khardl_testing
+            - MYSQL_DATABASE=${DB_TESTING_DATABASE}
             - MYSQL_USER=${DB_USERNAME}
             - MYSQL_PASSWORD=${DB_PASSWORD}
             - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
         ports:
-            - "3307:3306"
+            - "${DB_TESTING_PORT}:3306"
         volumes:
             - ./docker/database_testing/data:/var/lib/mysql:z
 
