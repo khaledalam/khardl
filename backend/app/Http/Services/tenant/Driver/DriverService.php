@@ -21,7 +21,8 @@ class DriverService
     }
     public function create()
     {
-        return view('restaurant.coupons.create');
+        $branches = Branch::all();
+        return view('restaurant.drivers.create',compact('branches'));
     }
     public function edit($request, $coupon)
     {

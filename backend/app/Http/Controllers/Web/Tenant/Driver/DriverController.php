@@ -18,7 +18,7 @@ class DriverController extends BaseController
     {
         return $this->driverService->index($request);
     }
-    public function create(Request $request, $branchId)
+    public function create(Request $request)
     {
         return $this->driverService->create();
     }
