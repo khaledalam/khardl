@@ -31,7 +31,7 @@ class LoginController extends BaseController
         if (!Auth::attempt($credentials)) {
             return $this->sendError('Unauthorized.', ['error' => __('Invalid email or password')]);
         }
-        if(!Auth::user()->isWorker()){
+        if(!Auth::user()->isWorker()&&!Auth::user()->isDriver()){
             return $this->sendError('Unauthorized.', ['error' => __('Only workers can logged in')]);
         }
 

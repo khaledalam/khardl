@@ -201,14 +201,6 @@ Route::group([
                     }
                 });
             });
-            Route::middleware('driver')->group(function () {
-                Route::controller(DriverOrderController::class)->group(function () {
-                    Route::get('drivers-orders', 'index')->name('restaurant.orders_all');
-                    Route::get('ready-orders', 'ready')->name('restaurant.ready_orders');
-                    Route::post('completed-order/{order}', 'completeOrder')->name('restaurant.completeOrder');
-                    Route::post('receive-order/{order}', 'receiveOrder')->name('restaurant.receiveOrder');
-                });
-            });
         });
         // TODO @todo (routes) duplicate routes same as line 188
         // TODO @todo make it one function instead if for loop
@@ -356,6 +348,14 @@ Route::middleware([
             Route::put('branches/{branch}/delivery', [BranchController::class, 'updateDelivery']);
             Route::get('branches/{branch}/delivery', [BranchController::class, 'getDeliveryAvailability']);
             Route::post('logout', [APILoginController::class, 'logout']);
+            Route::middleware('driver')->group(function () {
+                Route::controller(DriverOrderController::class)->group(function () {
+                    Route::get('drivers-orders', 'index')->name('restaurant.orders_all');
+                    Route::get('ready-orders', 'ready')->name('restaurant.ready_orders');
+                    Route::post('complete-order/{order}', 'completeOrder')->name('restaurant.completeOrder');
+                    Route::post('receive-order/{order}', 'receiveOrder')->name('restaurant.receiveOrder');
+                });
+            });
         });
         Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([
