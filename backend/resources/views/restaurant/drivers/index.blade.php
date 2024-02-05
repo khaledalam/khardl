@@ -87,9 +87,9 @@
                                             <td>
                                                 <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $driver->email }}</a>
                                             </td>
-                                           {{--  <td>
+                                            <td>
                                                 <div class="d-flex justify-content-end flex-shrink-0">
-                                                    <a href="{{ route('restaurant.edit-worker', ['id' => $driver->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
+                                                    <a href="{{ route('drivers.edit', ['driver' => $driver->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-khardl btn-sm me-1">
                                                         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                         <span class="svg-icon svg-icon-3">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -117,7 +117,7 @@
                                                         </form>
                                                     @endif
                                                 </div>
-                                            </td> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                  </tbody>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Tenant\Driver;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\Tenant\Coupon\CouponUpdateFormRequest;
 use App\Http\Requests\Tenant\Driver\DriverStoreFormRequest;
+use App\Http\Requests\Tenant\Driver\DriverUpdateFormRequest;
 use App\Http\Services\tenant\Driver\DriverService;
 use App\Models\Tenant\Coupon;
 use Illuminate\Http\Request;
@@ -25,13 +26,13 @@ class DriverController extends BaseController
     {
         return $this->driverService->store($request);
     }
-    public function edit(Request $request, Coupon $coupon)
+    public function edit(Request $request, $driver)
     {
-        return $this->driverService->edit($request,$coupon);
+        return $this->driverService->edit($request,$driver);
     }
-    public function update(CouponUpdateFormRequest $request, Coupon $coupon)
+    public function update(DriverUpdateFormRequest $request, $driver)
     {
-        return $this->driverService->update($request, $coupon);
+        return $this->driverService->update($request, $driver);
     }
     public function delete(Request $request, Coupon $coupon)
     {

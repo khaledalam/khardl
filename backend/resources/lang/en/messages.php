@@ -795,5 +795,7 @@ return [
     "Orders" => "Orders",
     "Delivered orders" => "Delivered orders",
     "This month" => "This month",
-    "Created successfully" => "Created successfully"
+    "Created successfully" => "Created successfully",
+    "add-driver" => "Add driver",
+    "edit-driver" => "Edit driver",
 ];

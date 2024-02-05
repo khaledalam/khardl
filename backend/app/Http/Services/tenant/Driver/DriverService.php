@@ -23,9 +23,11 @@ class DriverService
         $branches = Branch::all();
         return view('restaurant.drivers.create',compact('branches'));
     }
-    public function edit($request, $coupon)
+    public function edit($request,$id)
     {
-        return view('restaurant.coupons.edit',compact('coupon'));
+        $driver = RestaurantUser::drivers()->findOrFail($id);
+        $branches = Branch::all();
+        return view('restaurant.drivers.edit',compact('branches','driver'));
     }
     public function store($request)
     {
@@ -34,10 +36,16 @@ class DriverService
         $driver->assignRole('Driver');
         return redirect()->route('drivers.index')->with(['success' => __('Created successfully')]);
     }
-    public function update($request, Coupon $coupon)
+    public function update($request, $id)
     {
-        $coupon->update($this->request_data($request));
-        return redirect()->route('coupons.index')->with(['success' => __('Updated successfully')]);
+        $driver = RestaurantUser::drivers()->findOrFail($id);
+        $data = $this->request_data($request);
+        $data['status'] = $request->status;
+        if(isset($request->password)){
+            $data['password'] = Hash::make($request->password);
+        }
+        $driver->update($data);
+        return redirect()->route('drivers.index')->with(['success' => __('Updated successfully')]);
     }
     public function changeStatus(Coupon $coupon)
     {

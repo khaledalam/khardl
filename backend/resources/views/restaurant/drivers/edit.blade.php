@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.add-driver'))
+@section('title', __('messages.edit-driver'))
 
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -10,7 +10,8 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Form-->
-            <form action="{{ route('drivers.store') }}" method="POST">
+            <form action="{{ route('drivers.update',['driver' => $driver->id]) }}" method="POST">
+                @method('PATCh')
                 @csrf
 
                 <!--begin::Main column-->
@@ -25,7 +26,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('messages.add-driver')}}</h2>
+                                            <h2>{{ __('messages.edit-driver')}}</h2>
                                         </div>
                                         <a href="{{ route('drivers.index') }}">
                                             <button type="button" class="btn btn-primary btn-sm">
@@ -43,7 +44,7 @@
                                             <label class="required form-label">{{ __('messages.first-name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('messages.first-name')}}" value="{{old('first_name')}}" required/>
+                                            <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('messages.first-name')}}" value="{{old('first_name') ?? $driver->first_name}}" required/>
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{ __('messages.first-name')}} {{ __('messages.is-required')}}</div>
@@ -56,7 +57,7 @@
                                             <label class="required form-label">{{ __('messages.last-name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('messages.last-name')}}" value="{{old('last_name')}}" required/>
+                                            <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('messages.last-name')}}" value="{{old('last_name') ?? $driver->last_name}}" required/>
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{ __('messages.last-name')}} {{ __('messages.is-required')}}</div>
@@ -69,7 +70,7 @@
                                             <label class="form-label">{{ __('messages.Address')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="address" class="form-control mb-2" placeholder="{{ __('messages.Address')}}" value="{{old('address')}}"  required/>
+                                            <input type="text" name="address" class="form-control mb-2" placeholder="{{ __('messages.Address')}}" value="{{old('address') ?? $driver->address }}"  required/>
                                             <!--end::Input-->
                                         </div>
                                         <div class="mb-10 fv-row">
@@ -80,7 +81,17 @@
                                             <div class="form-group">
                                                 <select name="branch_id" id="branch" class="form-select">
                                                     @foreach ($branches as $branch)
-                                                    <option value="{{ $branch->id }}" {{old('branch_id') == $branch->id ? 'selected' :''}} required>{{ $branch->name }}</option>
+                                                    <option value="{{ $branch->id }}"
+                                                        @if(old('branch_id'))
+                                                            @if($branch->id == old('branch_id'))
+                                                            {{ 'selected' }}
+                                                            @endif
+                                                        @else
+                                                            @if($branch->id == $driver->branch_id)
+                                                            {{ 'selected' }}
+                                                            @endif
+                                                        @endif
+                                                        required>{{ $branch->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -93,7 +104,7 @@
                                             <label class="required form-label">{{ __('messages.email')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('messages.email')}}" value="{{old('email')}}" required />
+                                            <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('messages.email')}}" value="{{old('email') ?? $driver->email}}" required />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{ __('messages.email')}}.</div>
@@ -104,14 +115,11 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('messages.password')}}</label>
+                                            <label class="form-label">{{ __('messages.password')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('messages.password')}}" value="{{old('password')}}" required/>
+                                            <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('messages.password')}}" value="{{old('password')}}"/>
                                             <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('messages.password')}} {{ __('messages.is-required')}}</div>
-                                            <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
 
@@ -121,11 +129,25 @@
                                             <label class="required form-label">{{ __('messages.phone-number')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="tel" minlength="9" maxlength="13" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="+966 123456789" required>
+                                            <input type="tel" minlength="9" maxlength="13" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') ?? $driver->phone }}" name="phone" id="phone" placeholder="+966 123456789" required>
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{ __('messages.phone-number')}} {{ __('messages.is-required')}}</div>
                                             <!--end::Description-->
+                                        </div>
+                                        <div class="mb-10 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="required form-label">{{ __('messages.Status')}}</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <div class="form-group">
+                                                <select name="status" id="status" class="form-select">
+                                                    <option value="active" {{ $driver->status == 'active' ? 'selected' : ''  }}>{{ __('messages.active') }}</option>
+                                                    <option value="inactive" {{ $driver->status == 'inactive' ? 'selected' : ''  }}>{{ __('messages.inactive') }}</option>
+                                                    <option value="suspended" {{ $driver->status == 'suspended' ? 'selected' : ''  }}>{{ __('messages.suspended') }}</option>
+                                                </select>
+                                            </div>
+                                            <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
                                     </div>

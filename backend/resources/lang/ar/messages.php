@@ -796,6 +796,8 @@ return [
     "Orders" => "الطلبات",
     "Delivered orders" => "الطلبات المكتملة",
     "This month" => "هذا الشهر",
-    "Created successfully" => "تم الإنشاء بنجاح"
+    "Created successfully" => "تم الإنشاء بنجاح",
+    "add-driver" => "اضافة سائق",
+    "edit-driver" => "تعديل سائق"
 ];
 
