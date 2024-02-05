@@ -1,45 +1,46 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { Routes, Route, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import Footer from "./components/Footer/Footer";
-import Login from "./pages/LoginSignUp/Login";
-import LoginAdmin from "./pages/LoginSignUp/LoginAdmin";
-import LoginTrial from "./pages/LoginSignUp/LoginTrial";
-import Register from "./pages/LoginSignUp/Register";
-import VerificationPhone from "./pages/LoginSignUp/VerificationPhone";
-import Supports from "./components/Supports";
-import ScrollUp from "./components/ScrollUp";
-import Aos from "aos";
-import "aos/dist/aos.css";
-import "react-phone-input-2/lib/style.css";
-import ForgotPassword from "./pages/LoginSignUp/ForgotPassword";
-import CreateNewPassword from "./pages/LoginSignUp/CreateNewPassword";
-import EditorPage from "./pages/EditorPage";
-import CustomersPreview from "./components/Customers/CustomersPreview/Preview";
-import EditorSwitcher from "./pages/EditorSwitcher";
-import Protected from "./Protected";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import Layout from "./components/Layout/Layout";
-import Logout from "./components/Logout/Logout";
-import { useAuthContext } from "./components/context/AuthContext";
-import TermsPolicies from "../../landing-page/src/pages/TermsPoliciesPrivacy/TermsPolicies";
-import Privacy from "../../landing-page/src/pages/TermsPoliciesPrivacy/Privacy";
-import Cart from "./components/Cart/Cart";
-import Header from "./components/Restaurants/RestaurantsPreview/components/header";
-import MenuProvider from "react-flexible-sliding-menu";
-import { RestuarantEditor } from "./pages/EditorsPage";
-import { RestuarantHomePage } from "./pages/RestuarantPage";
-import OuterSidebarNav from "./pages/EditorsPage/Restuarants/components/OuterSidebarNav";
-import CartPage from "./pages/CartPage";
-import NavbarRestuarant from "./pages/RestuarantPage/components/NavbarRestuarant";
-import { CustomerPage } from "./pages/CustomerPage";
-import Editor from "./components/Customers/CustomersEditor/Editor";
-import SuccessPayment from "./pages/SuccessPayment";
+import React, {useEffect, useState} from "react"
+import "./App.css"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import {Routes, Route, useLocation} from "react-router-dom"
+import {useSelector} from "react-redux"
+import {ToastContainer} from "react-toastify"
+import Footer from "./components/Footer/Footer"
+import Login from "./pages/LoginSignUp/Login"
+import LoginAdmin from "./pages/LoginSignUp/LoginAdmin"
+import Register from "./pages/LoginSignUp/Register"
+import RestaurantNotLive from "./components/RestaurantNotLive"
+import RestaurantNotSubscribed from "./components/RestaurantNotSubscribed"
 
+import VerificationPhone from "./pages/LoginSignUp/VerificationPhone"
+import Supports from "./components/Supports"
+import ScrollUp from "./components/ScrollUp"
+import Aos from "aos"
+import "aos/dist/aos.css"
+import "react-phone-input-2/lib/style.css"
+import ForgotPassword from "./pages/LoginSignUp/ForgotPassword"
+import CreateNewPassword from "./pages/LoginSignUp/CreateNewPassword"
+import EditorPage from "./pages/EditorPage"
+import CustomersPreview from "./components/Customers/CustomersPreview/Preview"
+import EditorSwitcher from "./pages/EditorSwitcher"
+import Protected from "./Protected"
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute"
+import Layout from "./components/Layout/Layout"
+import Logout from "./components/Logout/Logout"
+import {useAuthContext} from "./components/context/AuthContext"
+import TermsPolicies from "../../landing-page/src/pages/TermsPoliciesPrivacy/TermsPolicies"
+import Privacy from "../../landing-page/src/pages/TermsPoliciesPrivacy/Privacy"
+import Cart from "./components/Cart/Cart"
+import Header from "./components/Restaurants/RestaurantsPreview/components/header"
+import MenuProvider from "react-flexible-sliding-menu"
+import {RestuarantEditor} from "./pages/EditorsPage"
+import {RestuarantHomePage} from "./pages/RestuarantPage"
+import OuterSidebarNav from "./pages/EditorsPage/Restuarants/components/OuterSidebarNav"
+import CartPage from "./pages/CartPage"
+import NavbarRestuarant from "./pages/RestuarantPage/components/NavbarRestuarant"
+import {CustomerPage} from "./pages/CustomerPage"
+import Editor from "./components/Customers/CustomersEditor/Editor"
+import SuccessPayment from "./pages/SuccessPayment";
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
@@ -67,12 +68,13 @@ const App = () => {
 
   const showHeader = ![
     "/policies",
-    "/login-trial",
     "/dashboard",
     "/privacy",
     "/site-editor/restaurants",
     "/site-editor/customers",
-  ].includes(location.pathname);
+    '/restaurant-not-live',
+    '/restaurant-not-subscribed'
+  ].includes(location.pathname)
   const showFooter = ![
     "/",
     "/cart",
@@ -81,11 +83,11 @@ const App = () => {
     "/site-editor/customers",
     "/login",
     "/login-admins",
-    "/login-trial",
     "/register",
     "/register/:url",
     "/reset-password",
     "/create-new-password",
+   
     "/verification-phone",
     "/policies",
     "/privacy",
@@ -134,13 +136,15 @@ const App = () => {
                 path="/create-new-password"
                 element={<Protected Cmp={CreateNewPassword} />}
               />
-              <Route path="/policies" element={<TermsPolicies />} />{" "}
-              <Route path="/privacy" element={<Privacy />} />{" "}
+              <Route path='/restaurant-not-live' element={<RestaurantNotLive />} />{" "}
+              <Route path='/restaurant-not-subscribed' element={<RestaurantNotSubscribed />} />{" "}
+              <Route path="/success" element={<SuccessPayment />} />
+              <Route path='/policies' element={<TermsPolicies />} />{" "}
+              <Route path='/privacy' element={<Privacy />} />{" "}
               {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
               {/*<Route path='/services' element={<Services />} />*/}{" "}
               {/*<Route path='/prices' element={<Prices />} />*/}{" "}
               {/*<Route path='/fqa' element={<FQA />} />*/}{" "}
-              <Route path="/login-trial" element={<LoginTrial />} />{" "}
               <Route element={<Layout />}>
                 <Route path="/login" element={<Login />} />{" "}
                 <Route path="/register" element={<Register />} />{" "}
