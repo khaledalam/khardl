@@ -98,7 +98,7 @@ function ContactUs() {
                 <span>
                   <img src={mail} />
                 </span>
-                info@khardl.com
+                  <a href={"mailto:contact-us@khardl.com"}>contact-us@khardl.com</a>
               </div>
               {/* <div className="contact-details"><span><img src={location}/>
 
@@ -215,7 +215,7 @@ function ContactUs() {
                       <HiChevronRight /> {t("Send")}
                     </>
                   )}
-                  {/* {t("Send")} 
+                  {/* {t("Send")}
                   <HiChevronRight /> */}
                 </button>
               </div>
