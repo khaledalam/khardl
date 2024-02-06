@@ -11,9 +11,9 @@ import LoginAdmin from "./pages/LoginSignUp/LoginAdmin";
 import Register from "./pages/LoginSignUp/Register";
 import RestaurantNotLive from "./components/RestaurantNotLive";
 import RestaurantNotSubscribed from "./components/RestaurantNotSubscribed";
-
+import "aos/dist/aos.css"
+import "react-phone-input-2/lib/style.css"
 import VerificationPhone from "./pages/LoginSignUp/VerificationPhone";
-import Supports from "./components/Supports";
 import ScrollUp from "./components/ScrollUp";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -30,8 +30,6 @@ import Logout from "./components/Logout/Logout";
 import { useAuthContext } from "./components/context/AuthContext";
 import TermsPolicies from "../../landing-page/src/pages/TermsPoliciesPrivacy/TermsPolicies";
 import Privacy from "../../landing-page/src/pages/TermsPoliciesPrivacy/Privacy";
-import Cart from "./components/Cart/Cart";
-import Header from "./components/Restaurants/RestaurantsPreview/components/header";
 import MenuProvider from "react-flexible-sliding-menu";
 import { RestuarantEditor } from "./pages/EditorsPage";
 import { RestuarantHomePage } from "./pages/RestuarantPage";
@@ -39,7 +37,6 @@ import OuterSidebarNav from "./pages/EditorsPage/Restuarants/components/OuterSid
 import CartPage from "./pages/CartPage";
 import NavbarRestuarant from "./pages/RestuarantPage/components/NavbarRestuarant";
 import { CustomerPage } from "./pages/CustomerPage";
-// import Editor from "./components/Customers/CustomersEditor/Editor";
 import SuccessPayment from "./pages/SuccessPayment";
 import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
