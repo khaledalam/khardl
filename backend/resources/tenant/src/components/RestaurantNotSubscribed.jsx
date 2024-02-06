@@ -7,7 +7,7 @@ import LogoPattern from '../assets/LogoPattern.webp';
 import logo from "../assets/Logo.webp";
 import successBg from "../assets/successBg.png";
 import failedbanner from "../assets/restaurant-not-live.png";
-import arrowright from "../assets/arrowright.svg";
+import arrowright from "../assets/arrowRight.svg";
 import {API_ENDPOINT} from "../config";
 const RestaurantNotSubscribed = () => {
   const url_central = API_ENDPOINT;
