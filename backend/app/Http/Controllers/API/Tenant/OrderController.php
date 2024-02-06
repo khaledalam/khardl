@@ -43,14 +43,14 @@ class  OrderController extends BaseRepositoryController
     }
 
     public function updateStatus($order,OrderStatusChangeRequest $request){
-    
+
         $user = Auth::user();
         $order = Order::
         when($user->isWorker(), function (Builder $query, string $role)use($user) {
             $query ->where('branch_id',$user->branch->id);
         })
         ->findOrFail($order);
-     
+
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
@@ -84,6 +84,13 @@ class  OrderController extends BaseRepositoryController
 
         // Handle register order to all delivery companies
         if ($request->status == Order::RECEIVED_BY_RESTAURANT) {
+            /*
+            TODO: Add job to assign delivery company for order after X mins time in settings
+            if he already have custom drivers
+            Add option for priority
+            Add option for enable/disable drivers
+            Add option for enable/disable company drivers
+            */
             $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
             if(empty($deliveryCompanies)){
                 if ($request->expectsJson()) {
@@ -91,13 +98,14 @@ class  OrderController extends BaseRepositoryController
                 }
                 return redirect()->back()->with('error',__('There is no available delivery company'));
             }else {
+
                 $deliveryCompaniesDelivered = implode(" , ", $deliveryCompanies);
                 $order->update(['status' => $request->status]);
                 if ($request->expectsJson()) {
                     return $this->sendResponse(null, __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
                 }
-                
-              
+
+
                 return redirect()->back()->with('success', __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
             }
         }
@@ -112,6 +120,6 @@ class  OrderController extends BaseRepositoryController
         $statues = Order::ChangeStatus($status);
         return response()->json(array_combine($statues,array_map(fn ($status) => __('messages.'.$status),$statues)),200);
     }
-    
+
 
 }

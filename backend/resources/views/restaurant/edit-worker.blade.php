@@ -167,6 +167,14 @@
                                                                         </div>
                                                                         <!--end::Label-->
                                                                     </div>
+                                                                    <div class="row mb-0 mt-5">
+                                                                        <!--begin::Label-->
+                                                                        <div class="form-check form-check-solid form-switch fv-row">
+                                                                          <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_and_view_drivers" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_edit_and_view_drivers') == 1) checked  @endif name="can_edit_and_view_drivers">
+                                                                            <label class="form-check-label" for="can_edit_and_view_drivers">{{ __('messages.View and edit drivers') }}</label>
+                                                                        </div>
+                                                                        <!--end::Label-->
+                                                                    </div>
                                                                 </div>
                                                                 <!--end::Card body-->
                                                             </div>

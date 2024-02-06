@@ -463,7 +463,7 @@ return [
     "Select options for" => "اختر خيارات ل",
     "contact" => "التواصل",
     "Checkbox" => "خيارات(اختيار متعدد)",
-    "Selection" => "خيارات(اختبار واحد بسعر)",
+    "Selection" => "خيارات(اختيار واحد بسعر)",
     "Dropdown" => "خيارات(اختيار واحد بدون سعر)",
     "Calories" => "السعرات",
     "English" => "بالانجليزية",
@@ -789,6 +789,17 @@ return [
     "you are signed with delivery company" => "انت متعاقد مع شركات توصيل بالفعل",
     "Tax" => "قيمة الضريبة المضافة",
     "Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date"=>'تحديد مدة إلغاء تفعيل اشتراكات المطاعم بعد عدد الأيام من تاريخ انتهاء الصلاحية',
-    "Enter Number of days"=>"اكتب عدد الايام"
+    "Enter Number of days"=>"اكتب عدد الايام",
+    "Ready orders" => "الطلبات الجاهزة",
+    "drivers" => "السائقين",
+    "new-driver" => "سائق جديد",
+    "Orders" => "الطلبات",
+    "Delivered orders" => "الطلبات المكتملة",
+    "This month" => "هذا الشهر",
+    "Created successfully" => "تم الإنشاء بنجاح",
+    "add-driver" => "اضافة سائق",
+    "edit-driver" => "تعديل سائق",
+    "By name, email, phone" => "بالاسم والبريد والهاتف",
+    "View and edit drivers" => "عرض وتحرير السائقين"
 ];
 

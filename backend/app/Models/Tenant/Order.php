@@ -40,7 +40,7 @@ class Order extends Model
         self::ACCEPTED,
         self::CANCELLED,
         self::COMPLETED,
-        self::READY
+        self::READY,
     ];
 
     const PENDING = 'pending';
@@ -99,6 +99,12 @@ class Order extends Model
     public function scopeReady($query)
     {
         return $query->where('status', self::READY);
+    }
+    public function scopeDelivery($query)
+    {
+        return $query->whereHas('delivery_type',function($q){
+            return $q->where('name',DeliveryType::DELIVERY);
+        });
     }
     public function scopeRecent($query)
     {

@@ -18,19 +18,25 @@ use Tests\Feature\Web\Central\CentralDatabaseTest;
 
 abstract class TenantTestCase extends BaseTestCase
 {
-    use CreatesApplication,RefreshDatabase;
+    use CreatesApplication, RefreshDatabase;
 
     protected $tenancy = false;
+    protected $central_domain;
+    protected $port = 8000;
+    protected $baseURL;
 
     public function setUp(): void
     {
         parent::setUp();
-
         if ($this->tenancy) {
             $this->initializeTenancy();
+            $this->central_domain = env('CENTRAL_DOMAIN');
+            $url = 'http://' . tenancy()->tenant?->restaurant_name . '.' . $this->central_domain . ':' . $this->port . '/';
+            $this->baseURL = $url;
         }
     }
-    public function runCentral(Closure $fn){
+    public function runCentral(Closure $fn)
+    {
         return tenancy()->central($fn);
     }
     public function initializeTenancy()
@@ -40,5 +46,6 @@ abstract class TenantTestCase extends BaseTestCase
         $centralTest->test_create_new_restaurant();
         $restaurant = Tenant::first();
         tenancy()->initialize($restaurant);
+
     }
 }

@@ -8,7 +8,7 @@ use App\Utils\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class RestaurantOrWorker
+class Driver
 {
     /**
      * Handle an incoming request.
@@ -19,10 +19,10 @@ class RestaurantOrWorker
     {
         $user = $request->user();
         // // Check if the user is authenticated and has the "Restaurant Owner" role.
-        if ($user&&!$user->isWorker() && !$user->isRestaurantOwner() && !$user->isDriver()) {
+        if (!$user->isDriver()) {
             if ($request->expectsJson()) {
                 return ResponseHelper::response([
-                    'message' => 'Forbidden access dashboard',
+                    'message' => 'Forbidden access worker dashboard',
                     'is_loggedin' => true
                 ], ResponseHelper::HTTP_FORBIDDEN);
             }

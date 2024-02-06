@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Driver;
 use App\Http\Middleware\ForceLogOut;
 use App\Http\Middleware\Worker;
 use App\Http\Middleware\Restaurant;
@@ -121,6 +122,7 @@ class Kernel extends HttpKernel
         'admin' => AdminMiddleware::class,
         'restaurant' => Restaurant::class,
         'worker' => Worker::class,
+        'driver' => Driver::class,
         'restaurantOrWorker' => RestaurantOrWorker::class,
         'restaurantLive' => RestaurantLive::class,
         'restaurantSubLive' => RestaurantSubLive::class,
