@@ -157,6 +157,10 @@ class Order extends Model
             default => []
         };
     }
+    public function isDelivery()
+    {
+        return $this->delivery_type?->name == DeliveryType::DELIVERY;
+    }
     public function user()
     {
         return $this->belongsTo(RestaurantUser::class);

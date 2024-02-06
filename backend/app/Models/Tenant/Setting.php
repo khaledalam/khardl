@@ -46,7 +46,9 @@ class Setting extends Model implements Syncable
             'lead_id',
             'merchant_id',
             'lead_response',
-            'limit_delivery_company'
+            'limit_delivery_company',
+            'drivers_option',
+            'delivery_companies_option',
         ];
     }
 
