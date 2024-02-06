@@ -3,6 +3,7 @@
 namespace App\Http\Services\API\tenant\Driver\Order;
 
 use App\Models\Tenant\Order;
+use App\Models\Tenant\Setting;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
@@ -26,17 +27,16 @@ class OrderService
     }
     public function ready()
     {
-        $orders = Order::with('payment_method')->delivery()
+        $settings = Setting::first();
+        $limitDrivers = $settings->limit_delivery_company;
+        $query = Order::with('payment_method')->delivery()
             ->where('deliver_by', null)
             ->where('driver_id', null)
-            ->receivedByRestaurant()
-            /*
-            (add in setting)
-            Less thant 5 min (update_at)
-            add column received_at
-            */
-            ->recent()
-            ->paginate(config('application.perPage') ?? 20);
+            ->receivedByRestaurant();
+        if($limitDrivers&&$limitDrivers > 0){
+            $query->where('received_by_restaurant_at','>', now()->subMinutes($limitDrivers));
+        }
+        $orders = $query->recent()->paginate(config('application.perPage') ?? 20);
         return $this->sendResponse(new OrderCollection($orders), '');
     }
     public function complete(Request $request, Order $order)

@@ -84,6 +84,8 @@ class  OrderController extends BaseRepositoryController
 
         // Handle register order to all delivery companies
         if ($request->status == Order::RECEIVED_BY_RESTAURANT) {
+            $order->received_by_restaurant_at = now();
+            $order->save();
             /*
             TODO: Add job to assign delivery company for order after X mins time in settings
             if he already have custom drivers
@@ -91,7 +93,7 @@ class  OrderController extends BaseRepositoryController
             Add option for enable/disable drivers
             Add option for enable/disable company drivers
             */
-            $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
+            /* $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
             if(empty($deliveryCompanies)){
                 if ($request->expectsJson()) {
                     return $this->sendError('Fail', __('There is no available delivery company'));
@@ -107,7 +109,7 @@ class  OrderController extends BaseRepositoryController
 
 
                 return redirect()->back()->with('success', __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
-            }
+            } */
         }
         $order->update(['status' => $request->status]);
         if ($request->expectsJson()) {

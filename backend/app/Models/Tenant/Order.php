@@ -31,7 +31,8 @@ class Order extends Model
         'cervo_ref',
         'streetline_ref',
         'coupon_id',
-        'discount'
+        'discount',
+        'received_by_restaurant_at'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     const STATUS = [
