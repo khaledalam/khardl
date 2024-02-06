@@ -85,7 +85,8 @@ const App = () => {
     "/register/:url",
     "/reset-password",
     "/create-new-password",
-
+    "/restaurant-not-live",
+    "/restaurant-not-subscribed",
     "/verification-phone",
     "/policies",
     "/privacy",
