@@ -90,7 +90,7 @@
                                             <input type="number" min="1" name="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('messages.Number of minutes')}}" value="{{$settings->limit_delivery_company}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{__('messages.The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('messages.Default: :minutes minutes',['minutes' => config('application.limit_delivery_company')]) }})</div>
+                                            <div class="text-muted fs-7">{{__('messages.The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('messages.Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
