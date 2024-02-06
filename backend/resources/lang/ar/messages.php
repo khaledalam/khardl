@@ -800,6 +800,14 @@ return [
     "add-driver" => "اضافة سائق",
     "edit-driver" => "تعديل سائق",
     "By name, email, phone" => "بالاسم والبريد والهاتف",
-    "View and edit drivers" => "عرض وتحرير السائقين"
+    "View and edit drivers" => "عرض وتحرير السائقين",
+    "Delivery options" => "خيارات التوصيل",
+    "Max time for drivers to pickup order" => "أقصى وقت للسائقين لاستلام الطلب",
+    "The number of minutes for drivers so he can pick up order before order goes to delivery companies" => "عدد الدقائق لدي السائق لالتقاط الطلب قبل خروج الطلب الي شركات التوصيل",
+    "Number of minutes" => "عدد الدقائق",
+    "Max time for drivers to pickup order(in case if delivery companies exist and drivers)" => "الحد الأقصى للوقت الذي يستغرقه السائقون لاستلام الطلب (في حالة وجود شركات التوصيل والسائقين)",
+    "Default: :minutes minutes" => "الحالي : :minutes دقيقة",
+    "Delivery companies option" => "خيار شركات التوصيل",
+    "Drivers option" => "خيار السائقين"
 ];
 
