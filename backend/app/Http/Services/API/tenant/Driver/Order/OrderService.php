@@ -33,8 +33,11 @@ class OrderService
             ->where('deliver_by', null)
             ->where('driver_id', null)
             ->receivedByRestaurant();
-        if($limitDrivers&&$limitDrivers > 0){
-            $query->where('received_by_restaurant_at','>', now()->subMinutes($limitDrivers));
+        /* if setting limit drivers is exist
+        its mean that drivers have only (limit_delivery_company) minutes to receive order
+        after order status is changed to received by restaurant  */
+        if ($limitDrivers && $limitDrivers > 0) {
+            $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
         }
         $orders = $query->recent()->paginate(config('application.perPage') ?? 20);
         return $this->sendResponse(new OrderCollection($orders), '');
@@ -54,8 +57,15 @@ class OrderService
     public function receive(Request $request, Order $order)
     {
         /** @var RestaurantUser $user */
+        $settings = Setting::first();
+        $limitDrivers = $settings->limit_delivery_company;
         $user = Auth::user();
         if ($order->status != Order::COMPLETED && $order->driver_id == null) {
+            if ($limitDrivers && $limitDrivers > 0) {
+                if (!($order->received_by_restaurant_at > now()->subMinutes($limitDrivers))) {
+                    return $this->sendError('', __('You cannot pick up this order now because you have exceeded the time allowed for order pickup'));
+                }
+            }
             $order->status = Order::ACCEPTED;
             $order->driver_id = $user->id;
             $order->save();
