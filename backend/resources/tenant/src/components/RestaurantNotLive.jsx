@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LogoPattern from "../assets/LogoPattern.webp";
 import logo from "../assets/Logo.webp";
+import {API_ENDPOINT} from "../config";
 const RestaurantNotLive = () => {
-  const url_central = "https://khardl.com";
+  const url_central = API_ENDPOINT;
   const { t } = useTranslation();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   return (
