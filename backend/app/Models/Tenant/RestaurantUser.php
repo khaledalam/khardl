@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
 use App\Packages\Msegat\Msegat;
+use Database\Factories\tenant\RestaurantUserFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
@@ -81,11 +82,20 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         if ($this->isRestaurantOwner())
             return true;
-        return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
+        if($this->isWorker()){
+            return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
+        }else if($this->isDriver()){
+            return DB::table('permissions_driver')->where('user_id', $this->id)->value($permission) === 1;
+        }
+        return false;
     }
     public function isRestaurantOwner()
     {
         return $this->hasRole("Restaurant Owner");
+    }
+    public function isDriver()
+    {
+        return $this->hasRole("Driver");
     }
     public function isWorker()
     {
@@ -104,6 +114,33 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     // {
     //     return $this->belongsToMany(Role::class,'roles');
     // }
+    /* Scopes */
+    public function scopeDrivers()
+    {
+        return $this->whereHas('roles',function($q){
+            return $q->where('name','Driver');
+        });
+    }
+    public function scopeCustomers($query)
+    {
+        return $query->whereDoesntHave('roles');
+    }
+    public function scopeWhenSearch($query,$search)
+    {
+        return $query->when($search != null, function ($q) use ($search) {
+            return $q->where('first_name', 'like', '%' . $search . '%')
+            ->orWhere('last_name', 'like', '%' . $search . '%')
+            ->orWhere('phone', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%');
+        });
+    }
+    public function scopeWhenStatus($query,$status)
+    {
+        return $query->when($status != null, function ($q) use ($status) {
+            return $q->where('status', 'like',$status);
+        });
+    }
+    /* Scopes */
     public function branch()
     {
         return $this->belongsTo(Branch::class);
@@ -111,6 +148,18 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+    public function completed_orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'driver_id', 'id')->where('status',Order::COMPLETED);
+    }
+    public function monthly_orders()
+    {
+        return $this->completed_orders->whereBetween('created_at',
+        [
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth()
+        ]);
     }
     public function recent_orders()
     {
@@ -130,9 +179,11 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             return true;
         return DB::table('permissions_worker')->where('user_id', $this->id)->value($permission) === 1;
     }
-    public function scopeCustomers($query)
+    public function hasPermissionDriver($permission)
     {
-        return $query->whereDoesntHave('roles');
+        if ($this->isRestaurantOwner())
+            return true;
+        return DB::table('permissions_driver')->where('user_id', $this->id)->value($permission) === 1;
     }
     public function hasVerifiedPhone(): bool
     {
@@ -199,6 +250,10 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             $this->status = $status;
             $this->save();
         }
+    }
+    protected static function newFactory()
+    {
+      return RestaurantUserFactory::new();
     }
 }
 

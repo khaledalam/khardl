@@ -831,6 +831,7 @@ class RestaurantController extends BaseController
             'can_modify_working_time',
             'can_modify_advertisements',
             'can_edit_menu',
+            'can_edit_and_view_drivers'
         ];
 
         $updateData = [];

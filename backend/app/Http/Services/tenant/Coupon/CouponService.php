@@ -30,7 +30,7 @@ class CouponService
     public function store($request)
     {
         Coupon::create($this->request_data($request));
-        return redirect()->route('coupons.index')->with(['success' => __('Updated successfully')]);
+        return redirect()->route('coupons.index')->with(['success' => __('Created successfully')]);
     }
     public function update($request, Coupon $coupon)
     {
