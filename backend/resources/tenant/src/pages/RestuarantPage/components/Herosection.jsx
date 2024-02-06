@@ -220,7 +220,7 @@ const Herosection = ({ isMobile, categories }) => {
             ) : (
               <div className="w-full h-full items-center justify-center">
                 <p className="text-2xl font-medium text-center">
-                  No categories are existed at the moment
+                  { t("No categories to be found at the moment")}                  
                 </p>
               </div>
             )}

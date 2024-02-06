@@ -7,12 +7,13 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer/Footer";
 import Login from "./pages/LoginSignUp/Login";
+import { Helmet } from "react-helmet";
 import LoginAdmin from "./pages/LoginSignUp/LoginAdmin";
 import Register from "./pages/LoginSignUp/Register";
 import RestaurantNotLive from "./components/RestaurantNotLive";
 import RestaurantNotSubscribed from "./components/RestaurantNotSubscribed";
-import "aos/dist/aos.css"
-import "react-phone-input-2/lib/style.css"
+import "aos/dist/aos.css";
+import "react-phone-input-2/lib/style.css";
 import VerificationPhone from "./pages/LoginSignUp/VerificationPhone";
 import ScrollUp from "./components/ScrollUp";
 import Aos from "aos";
@@ -51,6 +52,7 @@ Sentry.init({
 });
 
 const App = () => {
+  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
   const Language = useSelector((state) => state.languageMode.languageMode);
   const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
   const fontFamily = "cairo, sans-serif";
@@ -102,88 +104,101 @@ const App = () => {
   if (loading) {
     return;
   }
-
   return (
-    <MenuProvider
-      MenuComponent={OuterSidebarNav}
-      direction={localStorage.getItem("i18nextLng") == "en" ? "left" : "right"}
-      animation={"slide"} // 'slide' │ 'push' │ 'reveal'
-      width={isMobile ? "80vw" : "25vw"}
-    >
-      <div
-        className="relative "
-        style={{
-          "::selection": {
-            backgroundColor: "#000000",
-            color: "#ffffff",
-          },
-          direction,
-          fontFamily,
-        }}
+    <>
+      <Helmet>
+        {/* <title>Login</title> */}
+        <link
+          rel="icon"
+          type="image/png"
+          href={restuarantStyle.logo}
+          sizes="16x16"
+        />
+      </Helmet>
+
+      <MenuProvider
+        MenuComponent={OuterSidebarNav}
+        direction={
+          localStorage.getItem("i18nextLng") == "en" ? "left" : "right"
+        }
+        animation={"slide"} // 'slide' │ 'push' │ 'reveal'
+        width={isMobile ? "80vw" : "25vw"}
       >
-        <div>
-          <ToastContainer theme="colored" />{" "}
-          {showHeader && <NavbarRestuarant />} {/*<Supports />*/} <ScrollUp />
+        <div
+          className="relative "
+          style={{
+            "::selection": {
+              backgroundColor: "#000000",
+              color: "#ffffff",
+            },
+            direction,
+            fontFamily,
+          }}
+        >
           <div>
-            <Routes>
-              {" "}
-              {/* Public Routes */}{" "}
-              <Route path="/" element={<RestuarantHomePage />} />{" "}
-              <Route path="/logout" element={<Logout />} />{" "}
-              <Route path="/reset-password" element={<ForgotPassword />} />{" "}
-              <Route
-                path="/create-new-password"
-                element={<Protected Cmp={CreateNewPassword} />}
-              />
-              <Route
-                path="/restaurant-not-live"
-                element={<RestaurantNotLive />}
-              />{" "}
-              <Route
-                path="/restaurant-not-subscribed"
-                element={<RestaurantNotSubscribed />}
-              />{" "}
-              <Route path="/success" element={<SuccessPayment />} />
-              <Route path="/failed" element={<FailedPayment />} />
-              <Route path="/policies" element={<TermsPolicies />} />{" "}
-              <Route path="/privacy" element={<Privacy />} />{" "}
-              {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
-              {/*<Route path='/services' element={<Services />} />*/}{" "}
-              {/*<Route path='/prices' element={<Prices />} />*/}{" "}
-              {/*<Route path='/fqa' element={<FQA />} />*/}{" "}
-              <Route element={<Layout />}>
-                <Route path="/login" element={<Login />} />{" "}
-                <Route path="/register" element={<Register />} />{" "}
-                <Route path="/login-admins" element={<LoginAdmin />} />{" "}
-              </Route>{" "}
-              {/*Editor*/}{" "}
-              <Route element={<PrivateRoute />}>
+            <ToastContainer theme="colored" />{" "}
+            {showHeader && <NavbarRestuarant />} {/*<Supports />*/} <ScrollUp />
+            <div>
+              <Routes>
+                {" "}
+                {/* Public Routes */}{" "}
+                <Route path="/" element={<RestuarantHomePage />} />{" "}
+                <Route path="/logout" element={<Logout />} />{" "}
+                <Route path="/reset-password" element={<ForgotPassword />} />{" "}
                 <Route
-                  path="/verification-phone"
-                  element={<VerificationPhone />}
-                />{" "}
-                <Route path="/site-editor" element={<EditorSwitcher />} />{" "}
-                <Route path="/cart" element={<CartPage />} />{" "}
+                  path="/create-new-password"
+                  element={<Protected Cmp={CreateNewPassword} />}
+                />
                 <Route
-                  path="/site-editor/restaurants"
-                  element={<RestuarantEditor />}
+                  path="/restaurant-not-live"
+                  element={<RestaurantNotLive />}
                 />{" "}
-                {/* <Route
+                <Route
+                  path="/restaurant-not-subscribed"
+                  element={<RestaurantNotSubscribed />}
+                />{" "}
+                <Route path="/success" element={<SuccessPayment />} />
+                <Route path="/failed" element={<FailedPayment />} />
+                <Route path="/policies" element={<TermsPolicies />} />{" "}
+                <Route path="/privacy" element={<Privacy />} />{" "}
+                {/*<Route path='/advantages' element={<Advantages />} />*/}{" "}
+                {/*<Route path='/services' element={<Services />} />*/}{" "}
+                {/*<Route path='/prices' element={<Prices />} />*/}{" "}
+                {/*<Route path='/fqa' element={<FQA />} />*/}{" "}
+                <Route element={<Layout />}>
+                  <Route path="/login" element={<Login />} />{" "}
+                  <Route path="/register" element={<Register />} />{" "}
+                  <Route path="/login-admins" element={<LoginAdmin />} />{" "}
+                </Route>{" "}
+                {/*Editor*/}{" "}
+                <Route element={<PrivateRoute />}>
+                  <Route
+                    path="/verification-phone"
+                    element={<VerificationPhone />}
+                  />{" "}
+                  <Route path="/site-editor" element={<EditorSwitcher />} />{" "}
+                  <Route path="/cart" element={<CartPage />} />{" "}
+                  <Route
+                    path="/site-editor/restaurants"
+                    element={<RestuarantEditor />}
+                  />{" "}
+                  {/* <Route
                 {/* <Route path='/dashboard' element={<CustomersPreview />} />{" "} */}{" "}
-                <Route path="/dashboard" element={<CustomerPage />} />{" "}
-                <Route path="/customers" element={<CustomerPage />} />{" "}
-                {/* <Route path='/customers' element={<CustomerPage />} />{" "} */}{" "}
-              </Route>{" "}
-            </Routes>{" "}
+                  <Route path="/dashboard" element={<CustomerPage />} />{" "}
+                  <Route path="/customers" element={<CustomerPage />} />{" "}
+                  {/* <Route path='/customers' element={<CustomerPage />} />{" "} */}{" "}
+                </Route>{" "}
+              </Routes>{" "}
+            </div>{" "}
+            {showFooter && !loading && (
+              <div className="p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
+                <Footer />
+              </div>
+            )}{" "}
           </div>{" "}
-          {showFooter && !loading && (
-            <div className="p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
-              <Footer />
-            </div>
-          )}{" "}
         </div>{" "}
-      </div>{" "}
-    </MenuProvider>
+      </MenuProvider>
+    </>
   );
 };
 
