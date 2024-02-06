@@ -31,6 +31,7 @@ class OrderResource extends JsonResource
             'deliver_by'=>$this->deliver_by,
             'driver_id'=>$this->driver_id,
             'created_at'=>$this->created_at,
+            'received_by_restaurant_at'=>$this->received_by_restaurant_at,
             'updated_at'=>$this->updated_at,
 
         ];

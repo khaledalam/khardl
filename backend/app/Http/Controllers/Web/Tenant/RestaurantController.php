@@ -143,41 +143,6 @@ class RestaurantController extends BaseController
         return redirect()->back()->with('success', __('Restaurant promotions successfully updated.'));
     }
 
-    public function settings()
-    {
-        /** @var RestaurantUser $user */
-        $user = Auth::user();
-
-        $settings = Setting::all()->firstOrFail();
-
-        return view(
-            'restaurant.settings',
-            compact('user', 'settings')
-        );
-    }
-
-    public function updateSettings(Request $request)
-    {
-
-        $request->validate([
-            'delivery_fee' => 'required|numeric|min:0',
-        ]);
-
-        $settings = Setting::all()->firstOrFail();
-
-        $settings->delivery_fee = $request->delivery_fee;
-        $settings->save();
-
-        $delivery = DeliveryType::where('name', DeliveryType::DELIVERY)->first();
-
-        if ($delivery) {
-            $delivery->cost = $settings->delivery_fee;
-            $delivery->save();
-        }
-
-        return redirect()->back()->with('success', __('Restaurant settings successfully updated.'));
-    }
-
     public function settingsBranch(Branch $branch)
     {
         /** @var RestaurantUser $user */

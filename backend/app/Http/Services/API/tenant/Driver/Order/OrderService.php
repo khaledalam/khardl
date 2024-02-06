@@ -3,22 +3,23 @@
 namespace App\Http\Services\API\tenant\Driver\Order;
 
 use App\Models\Tenant\Order;
+use App\Models\Tenant\Setting;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
 use App\Http\Resources\API\Tenant\Collection\Driver\OrderCollection;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class OrderService
 {
     use APIResponseTrait;
-    public function getList()
+    public function getList(Request $request)
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $orders = Order::with('payment_method')
             ->where('driver_id', $user->id)
-            /* TODO: status , completed, rejected */
+            ->whenStatus($request['status'] ?? null)
             ->delivery()
             ->recent()
             ->paginate(config('application.perPage') ?? 20);
@@ -26,17 +27,21 @@ class OrderService
     }
     public function ready()
     {
-        $orders = Order::with('payment_method')->delivery()
+        $settings = Setting::first();
+        $limitDrivers = $settings->limit_delivery_company;
+        $query = Order::with('payment_method')->delivery()
             ->where('deliver_by', null)
             ->where('driver_id', null)
-            ->receivedByRestaurant()
-            /*
-            (add in setting)
-            Less thant 5 min (update_at)
-            add column received_at
-            */
-            ->recent()
-            ->paginate(config('application.perPage') ?? 20);
+            ->receivedByRestaurant();
+        /* if setting limit drivers is exist
+        its mean that drivers have only (limit_delivery_company) minutes to receive order
+        after order status is changed to received by restaurant  */
+        if ($settings && $settings->delivery_companies_option && $limitDrivers && $limitDrivers > 0) {
+            $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
+        } elseif ($settings && $settings->drivers_option && $settings->delivery_companies_option && !$limitDrivers) {
+            $query->where('received_by_restaurant_at', '>', now()->subMinutes(config('application.limit_delivery_company') ?? 15));
+        }
+        $orders = $query->recent()->paginate(config('application.perPage') ?? 20);
         return $this->sendResponse(new OrderCollection($orders), '');
     }
     public function complete(Request $request, Order $order)
@@ -54,8 +59,15 @@ class OrderService
     public function receive(Request $request, Order $order)
     {
         /** @var RestaurantUser $user */
+        $settings = Setting::first();
+        $limitDrivers = $settings->limit_delivery_company;
         $user = Auth::user();
-        if ($order->status != Order::COMPLETED && $order->driver_id == null) {
+        if ($order->status != Order::COMPLETED && $order->driver_id == null && $order->deliver_by == null) {
+            if ($limitDrivers && $limitDrivers > 0) {
+                if (!($order->received_by_restaurant_at > now()->subMinutes($limitDrivers))) {
+                    return $this->sendError('', __('You cannot pick up this order now because you have exceeded the time allowed for order pickup'));
+                }
+            }
             $order->status = Order::ACCEPTED;
             $order->driver_id = $user->id;
             $order->save();

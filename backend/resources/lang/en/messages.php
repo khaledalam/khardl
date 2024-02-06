@@ -799,5 +799,12 @@ return [
     "add-driver" => "Add driver",
     "edit-driver" => "Edit driver",
     "By name, email, phone" => "By name, email, phone",
-    "View and edit drivers" => "View and edit drivers"
+    "View and edit drivers" => "View and edit drivers",
+    "Delivery options" => "Delivery options",
+    "Max time for drivers to pickup order(in case if delivery companies exist and drivers)" => "Max time for drivers to pickup order(in case if delivery companies exist and drivers)",
+    "The number of minutes for drivers so he can pick up order before order goes to delivery companies" => "The number of minutes for drivers so he can pick up order before order goes to delivery companies",
+    "Number of minutes" => "Number of minutes",
+    "Default: :minutes minutes" => "Default: :minutes minutes",
+    "Delivery companies option" => "Delivery companies option",
+    "Drivers option" => "Drivers option"
 ];
