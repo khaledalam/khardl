@@ -75,7 +75,8 @@ const App = () => {
     "/site-editor/customers",
     '/restaurant-not-live',
     '/restaurant-not-subscribed',
-    '/success'
+    '/success',
+    '/failed'
 
   ].includes(location.pathname)
   const showFooter = ![
@@ -94,7 +95,8 @@ const App = () => {
     "/verification-phone",
     "/policies",
     "/privacy",
-    '/success'
+    '/success',
+    '/failed'
   ].includes(location.pathname);
 
   Aos.init({
