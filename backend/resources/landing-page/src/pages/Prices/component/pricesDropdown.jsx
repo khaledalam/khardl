@@ -35,7 +35,7 @@ const PricesDropdown = () => {
         >
           <div className="py-1" role="none">
             <a
-              href="#"
+              // href=""
               className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:border border-[#C0D123]"
               role="menuitem"
             >
@@ -48,7 +48,7 @@ const PricesDropdown = () => {
               </div>
             </a>
             <a
-              href="#"
+              // href="#"
               className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000] hover:border border-[#C0D123]"
               role="menuitem"
             >
@@ -61,7 +61,7 @@ const PricesDropdown = () => {
               </div>
             </a>
             <a
-              href="#"
+              // href="#"
               className="block px-4 text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000] hover:border border-[#C0D123]"
               role="menuitem"
             >
@@ -74,7 +74,7 @@ const PricesDropdown = () => {
               </div>
             </a>
             <a
-              href="#"
+              // href="#"
               className="block px-4  text-sm text-[#C0D123] hover:bg-[#000000] hover:text-[#C0D123] hover:bg-[#0000] hover:border border-[#C0D123]"
               role="menuitem"
             >

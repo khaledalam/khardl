@@ -663,7 +663,7 @@ text-align: center;
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
-.new-login-bg.rtl .mt-11,
+.new-login-bg.rtl .mt-8,
 .new-register-bg.rtl .mt-11{
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);

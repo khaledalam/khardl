@@ -15,7 +15,7 @@ const RestaurantNotLive = () => {
         <div className="px-6 py-10 text-center md:text-right"
          >
           <div className="flex flex-col items-center justify-center gap-4">
-                  
+
           <div style={{ height: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center',  }}>
             <div style={{ textAlign: 'center', backgroundImage: `url(${LogoPattern})`,  backgroundSize: "cover",padding: '31px 343px', position: 'relative', top:"10%"}}>
               <Helmet>
@@ -35,8 +35,8 @@ const RestaurantNotLive = () => {
               }
               <Link to={url_central}>
                 <button style={{ color: 'black', backgroundColor: 'white', margin: '5px' }}>{t('Main Khardl Website')}</button>
-              </Link> 
-              
+              </Link>
+
               </div>
             </div>
           </div>
