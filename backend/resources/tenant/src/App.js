@@ -39,7 +39,7 @@ import OuterSidebarNav from "./pages/EditorsPage/Restuarants/components/OuterSid
 import CartPage from "./pages/CartPage";
 import NavbarRestuarant from "./pages/RestuarantPage/components/NavbarRestuarant";
 import { CustomerPage } from "./pages/CustomerPage";
-import Editor from "./components/Customers/CustomersEditor/Editor";
+// import Editor from "./components/Customers/CustomersEditor/Editor";
 import SuccessPayment from "./pages/SuccessPayment";
 import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
@@ -88,7 +88,8 @@ const App = () => {
     "/register/:url",
     "/reset-password",
     "/create-new-password",
-
+    "/restaurant-not-live",
+    "/restaurant-not-subscribed",
     "/verification-phone",
     "/policies",
     "/privacy",
