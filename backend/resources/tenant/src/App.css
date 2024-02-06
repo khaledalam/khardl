@@ -146,19 +146,25 @@ body::-webkit-scrollbar-track {
   max-width: 300px;
   width: 100%;
 }
-.failed-page-icon{
+.failed-page-icon, .res-failed-page-icon{
   transform: translate(0px, -70%);
 }
 .success-page-icon{
   transform: translate(0px, -80%);
 }
-@media screen and (max-width : 460px) {
+@media screen and (max-width : 440px) {
   .failed-page-icon, .success-page-icon{
     transform: translate(0px, -120%);
+  }
+  .res-failed-page-icon{
+    transform: translate(0px, -110%);
   }
 }
 @media (min-width : 461px) and (max-width : 768px) {
   .failed-page-icon, .success-page-icon{
+    transform: translate(0px, -70%);
+  }
+  .res-failed-page-icon{
     transform: translate(0px, -70%);
   }
 }
