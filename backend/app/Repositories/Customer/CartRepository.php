@@ -214,6 +214,11 @@ class CartRepository
         $settings = Setting::all()->firstOrFail();
         $items = $this->cart->items->load(['item']);
         return $this->sendResponse([
+            'sub_total' => $this->subTotal(),
+            'total' => $this->total(),
+            'tax' => $this->tax(),
+            'coupon' => $this->coupon(),
+            'discount' => $this->discount(),
             'items' => $items,
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
