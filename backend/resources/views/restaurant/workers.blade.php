@@ -68,7 +68,7 @@
                                                 <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $worker->last_name }}</a>
                                             </td>
                                             <td>
-                                                <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $worker->phone_number }}</a>
+                                                <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $worker->phone }}</a>
                                             </td>
                                             <td>
                                                 <a class="text-dark fw-bolder text-hover-khardl d-block fs-6">{{ $worker->email }}</a>

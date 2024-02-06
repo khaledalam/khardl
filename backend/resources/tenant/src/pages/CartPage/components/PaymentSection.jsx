@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import CartColumn from "./CartColumn"
 import CashDeliveryIcon from "../../../assets/CashDelivery.svg"
 import CardIcon from "../../../assets/Card.svg"
@@ -9,13 +9,13 @@ import LocationIcon from "../../../assets/locationPin.svg"
 import couponIcon from "../../../assets/coupon.svg"
 import trashIcon from "../../../assets/trashBin.svg"
 import orderIcon from "../../../assets/orderPlace.svg"
-import {MdSend} from "react-icons/md"
+import { MdSend } from "react-icons/md"
 import Feedback from "./Feedback"
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux"
 import AxiosInstance from "../../../axios/axios"
-import {useNavigate} from "react-router-dom"
-import {toast} from "react-toastify"
-import {useTranslation} from "react-i18next"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { useTranslation } from "react-i18next"
 
 import { GoSellElements } from "@tap-payments/gosell";
 
@@ -32,11 +32,11 @@ const PaymentSection = ({
   fetchCartData,
 }) => {
   const navigate = useNavigate()
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const [notes, setNotes] = useState("")
   const [couponCode, setCouponCode] = useState("")
   const [deliveryType, setDeliveryType] = useState("");
-  const [couponDiscountValue, setCouponDiscountValue] = useState(0)
+  const [couponDiscountValue, setCouponDiscountValue] = useState(null)
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const [paymentMethod, setPaymentMethod] = useState("")
   const [deliveryCost, setDeliveryCost] = useState(0)
@@ -44,21 +44,21 @@ const PaymentSection = ({
   const [showTAPClientCard, setShowTAPClientCard] = useState(false)
   const language = useSelector((state) => state.languageMode.languageMode)
   const [spinner, setSpinner] = useState(false)
-  const callbackFunc = async (response)=>{
+  const callbackFunc = async (response) => {
     try {
       setSpinner(true);
-    const redirect = await AxiosInstance.post(`/orders/payment/redirect`, {
-      payment_method: paymentMethod,
-      delivery_type: deliveryType,
-      notes: notes,
-      couponCode: couponCode,
-      token_id : response.id
-    })
+      const redirect = await AxiosInstance.post(`/orders/payment/redirect`, {
+        payment_method: paymentMethod,
+        delivery_type: deliveryType,
+        notes: notes,
+        couponCode: couponCode,
+        token_id: response.id
+      })
 
-    if (redirect.data) {
-      console.log("redirect ==>",redirect.data);
-      window.location.href = redirect.data;
-    }
+      if (redirect.data) {
+        console.log("redirect ==>", redirect.data);
+        window.location.href = redirect.data;
+      }
     } catch (error) {
       setSpinner(false);
       toast.error(error.response)
@@ -70,33 +70,33 @@ const PaymentSection = ({
   const getTotalPrice = () => {
     return cartItems
       ? parseFloat(
-          cartItems.reduce(
-            (total, item) =>
-              total + (item.price + item.options_price) * item.quantity,
-            0
-          )
-        ) + deliveryCost
-      : 0
-  }
-  const priceSummary = cartItems
-    ? parseFloat(
         cartItems.reduce(
           (total, item) =>
             total + (item.price + item.options_price) * item.quantity,
           0
         )
+      ) + deliveryCost - (couponDiscountValue && couponDiscountValue.discount ? couponDiscountValue.discount : 0)
+      : 0
+  }
+  const priceSummary = cartItems
+    ? parseFloat(
+      cartItems.reduce(
+        (total, item) =>
+          total + (item.price + item.options_price) * item.quantity,
+        0
       )
+    )
     : 0
 
   const handlePaymentMethodChange = (method) => {
     setPaymentMethod(method.name)
 
-      if (method?.name == "Online") {
+    if (method?.name == "Online") {
 
-          setShowTAPClientCard(true);
-      } else {
-          setShowTAPClientCard(false);
-      }
+      setShowTAPClientCard(true);
+    } else {
+      setShowTAPClientCard(false);
+    }
   }
 
   const handleDeliveryTypeChange = async (type) => {
@@ -112,23 +112,23 @@ const PaymentSection = ({
     if (window.confirm(t("Are You sure you want to place the order?"))) {
 
       try {
-        if(paymentMethod == 'Cash on Delivery'){
-            try {
-              const cartResponse = await AxiosInstance.post(`/orders`, {
-                payment_method: paymentMethod,
-                delivery_type: deliveryType,
-                notes: notes,
-                couponCode: couponCode,
-              })
-              if (cartResponse.data) {
-                toast.success(`${t("Order has been created successfully")}`)
-                navigate(`/dashboard#orders`)
-                // navigate(`/dashboard?OrderId=${cartResponse.data?.order?.id}#orders`);
-              }
-            } catch (error) {
-              toast.error(error.response.data.message)
+        if (paymentMethod == 'Cash on Delivery') {
+          try {
+            const cartResponse = await AxiosInstance.post(`/orders`, {
+              payment_method: paymentMethod,
+              delivery_type: deliveryType,
+              notes: notes,
+              couponCode: couponCode,
+            })
+            if (cartResponse.data) {
+              toast.success(`${t("Order has been created successfully")}`)
+              navigate(`/dashboard#orders`)
+              // navigate(`/dashboard?OrderId=${cartResponse.data?.order?.id}#orders`);
             }
-        }else {
+          } catch (error) {
+            toast.error(error.response.data.message)
+          }
+        } else {
           const cartResponse = await AxiosInstance.post(`/orders/validate`, {
             payment_method: paymentMethod,
             delivery_type: deliveryType,
@@ -155,7 +155,7 @@ const PaymentSection = ({
 
             // <button onClick={() => GoSellElements.submit()}>Submit</button>
 
-        }
+          }
 
 
 
@@ -181,7 +181,7 @@ const PaymentSection = ({
       await AxiosInstance.delete(`/carts/trash`, {}).finally(async () => {
         await fetchCartData().then((r) => null)
       })
-    } catch (error) {}
+    } catch (error) { }
     setIsLoading(false)
   }
 
@@ -194,126 +194,135 @@ const PaymentSection = ({
   // console.log("payment methods ", paymentMethods)
   // console.log("delivery methods", deliveryTypes)
 
-
+  const handleCouponCodeValidity = async () => {
+    try {
+      const response = await AxiosInstance.post(`/validate/coupon`, {
+        code: couponCode,
+      })
+      setCouponDiscountValue(response.data.data)
+      toast.success(`${t("Coupon Applied successfully")}`)
+      console.log(response)
+    } catch (error) {
+      toast.error(error.response.data.message)
+      console.log(error)
+    }
+  }
   return (
     <div className='w-full laptopXL:w-[75%] mx-auto my-5'>
-       <p id="msg"></p>
-        <div id={"tap_charge_element"} />
+      <p id="msg"></p>
+      <div id={"tap_charge_element"} />
 
-        <dialog id='payment' className='modal'>
+      <dialog id='payment' className='modal'>
 
         {spinner && (
-            <div
-                role='status'
-                style={{zIndex:1,height: 'fit-content'}}
-                className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[44.1%] left-1/2 w-[100%] h-[100%] '
-            >
-                <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
-                <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
-                  <svg
-                      aria-hidden='true'
-                      className='w-8 h-8 mr-2 text-gray-200 animate-spin fill-[var(--primary)]'
-                      viewBox='0 0 100 101'
-                      fill='none'
-                      xmlns='http://www.w3.org/2000/svg'
-                  >
-                      <path
-                        d='M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z'
-                        fill='currentColor'
-                      />
-                      <path
-                        d='M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z'
-                        fill='currentFill'
-                      />
-                  </svg>
-                </div>
+          <div
+            role='status'
+            style={{ zIndex: 1, height: 'fit-content' }}
+            className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[44.1%] left-1/2 w-[100%] h-[100%] '
+          >
+            <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
+            <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
+              <svg
+                aria-hidden='true'
+                className='w-8 h-8 mr-2 text-gray-200 animate-spin fill-[var(--primary)]'
+                viewBox='0 0 100 101'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z'
+                  fill='currentColor'
+                />
+                <path
+                  d='M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z'
+                  fill='currentFill'
+                />
+              </svg>
             </div>
+          </div>
         )}
         <div
-          style={{width: "50%", padding:'34px !important'}}
-          >
+          style={{ width: "50%", padding: '34px !important' }}
+        >
 
-            <GoSellElements
+          <GoSellElements
             gateway={{
               publicKey: tap_public_key,
               language: 'ar',
               supportedCurrencies: "all",
               supportedPaymentMethods: "all",
-              notifications:'standard',
+              notifications: 'standard',
               callback: callbackFunc,
-              labels:{
-                  cardNumber:"Card Number",
-                  expirationDate:"MM/YY",
-                  cvv:"CVV",
-                  cardHolder:"Name on Card",
-                  actionButton:"Pay"
+              labels: {
+                cardNumber: "Card Number",
+                expirationDate: "MM/YY",
+                cvv: "CVV",
+                cardHolder: "Name on Card",
+                actionButton: "Pay"
               },
               style: {
-                  base: {
-                    color: '#535353',
-                    lineHeight: '18px',
-                    fontFamily: 'sans-serif',
-                    fontSmoothing: 'antialiased',
-                    fontSize: '16px',
-                    '::placeholder': {
-                      color: 'rgba(0, 0, 0, 0.26)',
-                      fontSize:'15px'
-                    }
-                  },
-                  invalid: {
-                    color: 'red',
-                    iconColor: '#fa755a '
+                base: {
+                  color: '#535353',
+                  lineHeight: '18px',
+                  fontFamily: 'sans-serif',
+                  fontSmoothing: 'antialiased',
+                  fontSize: '16px',
+                  '::placeholder': {
+                    color: 'rgba(0, 0, 0, 0.26)',
+                    fontSize: '15px'
                   }
+                },
+                invalid: {
+                  color: 'red',
+                  iconColor: '#fa755a '
+                }
               }
             }}
-             />
-              <div
-              onClick={() => GoSellElements.submit()}
-              style={{backgroundColor: styles?.categoryDetail_cart_color, width: '100%', height:'45px',borderRadius:'1%'}}
-              className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${
-                styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
+          />
+          <div
+            onClick={() => GoSellElements.submit()}
+            style={{ backgroundColor: styles?.categoryDetail_cart_color, width: '100%', height: '45px', borderRadius: '1%' }}
+            className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
               }`}
-            >
-              <div className='flex items-center gap-4'>
-                <div className='w-7 h-7'>
-                  <img
-                    src={orderIcon}
-                    alt=''
-                    className='w-full h-full object-contain'
-                  />
-                </div>
-
-                <h3 className='text-[1rem] font-medium text-black'>
-                  Place Order
-                </h3>
+          >
+            <div className='flex items-center gap-4'>
+              <div className='w-7 h-7'>
+                <img
+                  src={orderIcon}
+                  alt=''
+                  className='w-full h-full object-contain'
+                />
               </div>
-            </div>
 
+              <h3 className='text-[1rem] font-medium text-black'>
+                Place Order
+              </h3>
+            </div>
           </div>
-        </dialog>
+
+        </div>
+      </dialog>
 
       <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
         <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Select Payment Method"} isRequired>
             <div
-              style={{borderColor: styles?.categoryDetail_cart_color}}
-              className={`border ${
-                styles?.categoryDetail_cart_color
+              style={{ borderColor: styles?.categoryDetail_cart_color }}
+              className={`border ${styles?.categoryDetail_cart_color
                   ? ""
                   : "border-[var(--primary)]"
-              }`}
+                }`}
             >
 
               {paymentMethods &&
                 paymentMethods.map((method) => (
                   <div
                     key={method.id}
-                    style={{borderColor: styles?.categoryDetail_cart_color}}
-                    className={`form-control w-fulll h-[62px] flex items-center justify-center border-b ${
-                      styles?.categoryDetail_cart_color
+                    style={{ borderColor: styles?.categoryDetail_cart_color }}
+                    className={`form-control w-fulll h-[62px] flex items-center justify-center border-b ${styles?.categoryDetail_cart_color
                         ? ""
                         : "border-[var(--primary)]"
-                    }}last:border-none`}
+                      }}last:border-none`}
                   >
                     <label className='label cursor-pointer w-[80%] mx-auto flex items-center justify-between '>
                       <div className='flex   w-full flex-row items-center justify-between px-3 '>
@@ -338,14 +347,14 @@ const PaymentSection = ({
                             "radio w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[var(--primary)] "
                           }
                           onChange={() => {
-                              if (!method?.is_active) {
-                                  alert(t('Not available'));
-                                  return;
-                              }
-                              handlePaymentMethodChange(method)
+                            if (!method?.is_active) {
+                              alert(t('Not available'));
+                              return;
+                            }
+                            handlePaymentMethodChange(method)
                           }}
                         />
-                          {!method?.is_active && <small style={{color: 'red'}}>{t('Not available')}</small>}
+                        {!method?.is_active && <small style={{ color: 'red' }}>{t('Not available')}</small>}
                       </div>
                     </label>
                   </div>
@@ -360,36 +369,34 @@ const PaymentSection = ({
                 deliveryTypes.map((deliveryType) => (
                   <div
                     key={deliveryType.id}
-                    className={`w-1/2 h-[118px] flex items-center justify-center cursor-pointer  ${
-                      activeDeliveryType === deliveryType.name.toLowerCase()
+                    className={`w-1/2 h-[118px] flex items-center justify-center cursor-pointer  ${activeDeliveryType === deliveryType.name.toLowerCase()
                         ? " bg-neutral-200 border border-neutral-300"
                         : "border border-neutral-200"
-                    }`}
+                      }`}
                     onClick={() => {
-                        if (!deliveryType?.is_active) {
-                            alert(t('Not available'))
-                            return;
-                        }
-                        handleDeliveryTypeChange(deliveryType)
+                      if (!deliveryType?.is_active) {
+                        alert(t('Not available'))
+                        return;
+                      }
+                      handleDeliveryTypeChange(deliveryType)
                     }}
                   >
                     <div className='flex items-center gap-4'>
                       <div
-                        className={`w-[50px] h-[50px]  ${
-                          activeDeliveryType === deliveryType.name.toLowerCase()
+                        className={`w-[50px] h-[50px]  ${activeDeliveryType === deliveryType.name.toLowerCase()
                             ? "bg-[#D9D9D9]"
                             : "bg-[#C0D12330]"
-                        } rounded-full p-2`}
+                          } rounded-full p-2`}
                       >
                         <img
                           src={
                             deliveryType.name.toLowerCase().includes("delivery")
                               ? BikeIcon
                               : deliveryType.name
-                                  .toLowerCase()
-                                  .includes("pickup")
-                              ? shopIcon
-                              : ""
+                                .toLowerCase()
+                                .includes("pickup")
+                                ? shopIcon
+                                : ""
                           }
                           alt={deliveryType.name}
                           className='w-full h-full object-contain'
@@ -404,7 +411,7 @@ const PaymentSection = ({
                             ? `${t("SAR")} ${deliveryType.cost}`
                             : `${t("Free")}`}
                         </p>
-                          {!deliveryType?.is_active && <small style={{color: 'red'}}>{t('Not available')}</small>}
+                        {!deliveryType?.is_active && <small style={{ color: 'red' }}>{t('Not available')}</small>}
                       </div>
                     </div>
                   </div>
@@ -417,9 +424,8 @@ const PaymentSection = ({
       <CartColumn headerTitle={"Order Notes"}>
 
         <div
-          className={`w-full border ${
-            styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"
-          }}h-[80px] flex items-center justify-center mb-6`}
+          className={`w-full border ${styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"
+            }}h-[80px] flex items-center justify-center mb-6`}
         >
           <div className='flex items-center gap-3 w-full p-3 lg:w-1/2 '>
             <div className='w-full'>
@@ -436,15 +442,14 @@ const PaymentSection = ({
       </CartColumn>
       {/* address and coupon */}
       <div className='flex flex-col md:flex-row items-start gap-6'>
-        <div className='w-full  '>
+        <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Address"} isRequired>
             <div
-              style={{borderColor: styles?.categoryDetail_cart_color}}
-              className={`w-full border ${
-                styles?.categoryDetail_cart_color
+              style={{ borderColor: styles?.categoryDetail_cart_color }}
+              className={`w-full border ${styles?.categoryDetail_cart_color
                   ? ""
                   : "border-[var(--primary)]"
-              }}h-[100px] flex items-center  py-4 justify-center mb-6`}
+                }}h-[100px] flex items-center  py-4 justify-center mb-6`}
             >
               <div className='flex items-center gap-3 p-3 w-full lg:w-1/2 '>
                 <div className='w-full'>
@@ -462,11 +467,10 @@ const PaymentSection = ({
                     backgroundColor: styles?.categoryDetail_cart_color,
                   }}
                   onClick={() => navigate("/dashboard#Profile")}
-                  className={` w-[60px] h-[48px] border cursor-pointer ${
-                    styles?.categoryDetail_cart_color
+                  className={` w-[60px] h-[48px] border cursor-pointer ${styles?.categoryDetail_cart_color
                       ? ""
                       : "border-[var(--primary)] bg-[var(--primary)]"
-                  }}  rounded-lg flex items-center justify-center`}
+                    }}  rounded-lg flex items-center justify-center`}
                 >
                   <img src={LocationIcon} alt='' />
                 </div>
@@ -474,25 +478,25 @@ const PaymentSection = ({
             </div>{" "}
           </CartColumn>
         </div>
-        <div className='w-full lg:w-1/2 hidden'>
+        <div className='w-full lg:w-1/2'>
           <CartColumn headerTitle={"Coupon"}>
             <div
-              style={{borderColor: styles?.categoryDetail_cart_color}}
-              className={`w-full border ${
-                styles?.categoryDetail_cart_color
+              style={{ borderColor: styles?.categoryDetail_cart_color }}
+              className={`w-full border ${styles?.categoryDetail_cart_color
                   ? ""
                   : "border-[var(--primary)]"
-              }}h-[100px] flex items-center justify-center mb-6`}
+                }}h-[100px] flex items-center justify-center mb-6`}
             >
               <div className='flex items-center gap-3 w-full lg:w-1/2 '>
                 <div className='w-full'>
                   <Feedback
                     imgUrl={couponIcon}
                     placeholder={"Type your coupon code here"}
+                    onChange={(e) => setCouponCode(e.target.value)}
                   />
                 </div>
                 <div className='w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center'>
-                  <MdSend size={22} />
+                  <MdSend onClick={() => handleCouponCodeValidity()} size={22} />
                 </div>
               </div>
             </div>{" "}
@@ -504,12 +508,11 @@ const PaymentSection = ({
         <CartColumn headerTitle={"Payment Summary"}>
           <div className='p-6 flex flex-col gap-4 border border-[var(--primary)'>
             <div
-              style={{borderColor: styles?.categoryDetail_cart_color}}
-              className={`flex flex-col gap-4 border-b pb-4 ${
-                styles?.categoryDetail_cart_color
+              style={{ borderColor: styles?.categoryDetail_cart_color }}
+              className={`flex flex-col gap-4 border-b pb-4 ${styles?.categoryDetail_cart_color
                   ? ""
                   : "border-[var(--primary)]"
-              }}`}
+                }}`}
             >
               <div className='flex items-start justify-between'>
                 <h3 className='text-[16px] font-normal'>Price</h3>
@@ -517,6 +520,12 @@ const PaymentSection = ({
                   {t("SAR")} {priceSummary}
                 </span>
               </div>
+              {couponDiscountValue && couponDiscountValue.discount ? <div className='flex items-start justify-between'>
+                <h3 className='text-[16px] font-normal'>Coupon Discount</h3>
+                <span className='text-[14px]'>
+                  {t("SAR")} {couponDiscountValue.discount}
+                </span>
+              </div> : null}
               <div className='flex items-start justify-between'>
                 <h3 className='text-[16px] font-normal'>Delivery fee</h3>
                 <span className='text-[14px]'>
@@ -551,13 +560,12 @@ const PaymentSection = ({
                 </h3>
               </div>
             </div>
-              {/*{showTAPClientCard && GoSell()}*/}
+            {/*{showTAPClientCard && GoSell()}*/}
             <div
               onClick={handlePlaceOrder}
-              style={{backgroundColor: styles?.categoryDetail_cart_color}}
-              className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${
-                styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
-              }`}
+              style={{ backgroundColor: styles?.categoryDetail_cart_color }}
+              className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
+                }`}
             >
               <div className='flex items-center gap-4'>
                 <div className='w-7 h-7'>

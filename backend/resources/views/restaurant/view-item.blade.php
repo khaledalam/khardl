@@ -136,16 +136,28 @@
                                     <td class="text-dark">
                                         @foreach ($item?->checkbox_input_titles as $key => $option)
                                         @if(isset($option[$key]))
-                                            <span>{{ $option[$key] }}</span>
-                                            @if(isset($item->checkbox_input_maximum_choices[$key]))
-                                                <small class="text-muted">({{ __('messages.Max') }} : <strong>{{ $item->checkbox_input_maximum_choices[$key] }}</strong>)</small>
-                                            @endif
+                                        <span>{{ $option[$key] }}</span>
+                                        @if(isset($item->checkbox_input_maximum_choices[$key]))
+                                        <small class="text-muted">({{ __('messages.Max') }} : <strong>{{ $item->checkbox_input_maximum_choices[$key] }}</strong>)</small>
                                         @endif
+                                        @endif
+                                        @php
+                                        $innerSelection = [];
+                                        if(isset($item?->checkbox_input_names[$key])){
+                                        $innerSelection = $item?->checkbox_input_names[$key];
+                                        }
+                                        @endphp
                                         <ul>
-                                            @foreach($item?->checkbox_input_names as $innerKey => $innerOption)
+                                            @foreach($innerSelection as $innerKey => $innerOption)
                                             @if(isset($innerOption[$key][$innerKey]))
                                             <li>
-                                                {{ $innerOption[$key][$innerKey] }}
+                                                <span>
+                                                    @if(app()->getLocale() == 'ar')
+                                                    {{ $innerOption[1] }}
+                                                    @else
+                                                    {{ $innerOption[0] }}
+                                                    @endif
+                                                </span>
                                                 @if(isset($item?->checkbox_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('messages.SAR') }})</span>@endif
                                             </li>
                                             @endif
@@ -165,13 +177,23 @@
                                         @foreach ($item?->selection_input_titles as $key => $option)
                                         @if(isset($option[$key]))<span>{{ $option[$key] }}</span>@endif
                                         <ul>
-                                            @foreach($item?->selection_input_names as $innerKey => $innerOption)
-                                            @if(isset($innerOption[$key][$innerKey]))
+                                            @php
+                                            $innerSelection = [];
+                                            if(isset($item?->selection_input_names[$key])){
+                                            $innerSelection = $item?->selection_input_names[$key];
+                                            }
+                                            @endphp
+                                            @foreach($innerSelection as $innerKey => $innerOption)
                                             <li>
-                                                <span>{{ $innerOption[$key][$innerKey] }}</span>
+                                                <span>
+                                                    @if(app()->getLocale() == 'ar')
+                                                    {{ $innerOption[1] }}
+                                                    @else
+                                                    {{ $innerOption[0] }}
+                                                    @endif
+                                                </span>
                                                 @if(isset($item?->selection_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('messages.SAR') }})</span>@endif
                                             </li>
-                                            @endif
                                             @endforeach
                                         </ul>
                                         <br>
@@ -188,12 +210,22 @@
                                         @foreach ($item?->dropdown_input_titles as $key => $option)
                                         @if(isset($option[$key]))<span>{{ $option[$key] }}</span>@endif
                                         <ul>
-                                            @foreach($item?->dropdown_input_names as $innerKey => $innerOption)
-                                            @if(isset($innerOption[$key][$innerKey]))
+                                            @php
+                                            $innerSelection = [];
+                                            if(isset($item?->dropdown_input_names[$key])){
+                                            $innerSelection = $item?->dropdown_input_names[$key];
+                                            }
+                                            @endphp
+                                            @foreach($innerSelection as $innerKey => $innerOption)
                                             <li>
-                                                {{ $innerOption[$key][$innerKey] }}
+                                                <span>
+                                                    @if(app()->getLocale() == 'ar')
+                                                    {{ $innerOption[1] }}
+                                                    @else
+                                                    {{ $innerOption[0] }}
+                                                    @endif
+                                                </span>
                                             </li>
-                                            @endif
                                             @endforeach
                                         </ul>
                                         <br>

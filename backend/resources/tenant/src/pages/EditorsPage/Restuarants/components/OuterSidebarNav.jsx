@@ -148,9 +148,13 @@ const OuterSidebarNav = ({ id }) => {
     }
   }, [pickUp, branch]);
   const handleRedirect = (role) => {
+    console.log(role);
     if(role == 'Customer'){
       navigate("/dashboard")
-    } else {
+    }
+    else if(role == 'Driver'){
+        window.open(window.location.href + "orders-all");
+    }else {
       console.log(window.location.href);
       window.open(window.location.href + "summary");
     }
@@ -224,11 +228,11 @@ const OuterSidebarNav = ({ id }) => {
 
 
         {/* login */}
-      
+
         {isLoggedIn ? (
           <>
-              
-              
+
+
             {role == "Customer" ? (<>
               <Fragment>
                 <div

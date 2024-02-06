@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -41,6 +42,7 @@ use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\Tenant\Customer\CustomerDataController;
 use App\Http\Controllers\API\Tenant\Auth\LoginController as APILoginController;
 use App\Http\Controllers\Web\Tenant\Order\OrderController as TenantOrderController;
+use App\Http\Controllers\API\Tenant\Driver\Order\OrderController as DriverOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CardController as CustomerCardController;
 use App\Http\Controllers\API\Tenant\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\API\Tenant\Customer\CouponController as CustomerCouponController;
@@ -100,6 +102,7 @@ Route::group([
             Route::post('/workers/add/{branchId}', [RestaurantController::class, 'generateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.generate-worker');
             Route::put('/workers/update/{id}', [RestaurantController::class, 'updateWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-worker');
             Route::get('/workers/edit/{id}', [RestaurantController::class, 'editWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.edit-worker');
+            Route::resource('drivers', DriverController::class)->middleware('permission:can_edit_and_view_drivers');
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
@@ -167,7 +170,6 @@ Route::group([
                 Route::post('/update-settings', [RestaurantController::class, 'updateSettings'])->name('restaurant.update.settings');
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
-
                 Route::controller(TenantOrderController::class)->group(function () {
                     Route::get('orders-all', 'index')->name('restaurant.orders_all');
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
@@ -198,9 +200,6 @@ Route::group([
                         })->name($name);
                     }
                 });
-            });
-            Route::middleware('worker')->group(function () {
-
             });
         });
         // TODO @todo (routes) duplicate routes same as line 188
@@ -349,6 +348,14 @@ Route::middleware([
             Route::put('branches/{branch}/delivery', [BranchController::class, 'updateDelivery']);
             Route::get('branches/{branch}/delivery', [BranchController::class, 'getDeliveryAvailability']);
             Route::post('logout', [APILoginController::class, 'logout']);
+            Route::middleware('driver')->group(function () {
+                Route::controller(DriverOrderController::class)->group(function () {
+                    Route::get('drivers-orders', 'index')->name('restaurant.orders_all');
+                    Route::get('ready-orders', 'ready')->name('restaurant.ready_orders');
+                    Route::post('complete-order/{order}', 'completeOrder')->name('restaurant.completeOrder');
+                    Route::post('receive-order/{order}', 'receiveOrder')->name('restaurant.receiveOrder');
+                });
+            });
         });
         Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([

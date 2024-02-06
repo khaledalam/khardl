@@ -51,6 +51,11 @@ class Branch extends Model
     public function workers(){
         return $this->hasMany(RestaurantUser::class);
     }
+    public function drivers(){
+        return $this->hasMany(RestaurantUser::class)->whereHas('roles', function ($query) {
+            $query->where('name', 'Driver');
+        });
+    }
     public function categories(){
         return $this->hasMany(Category::class);
     }

@@ -19,7 +19,7 @@ class RestaurantOrWorker
     {
         $user = $request->user();
         // // Check if the user is authenticated and has the "Restaurant Owner" role.
-        if ($user&&!$user->isWorker() && !$user->isRestaurantOwner()) {
+        if ($user&&!$user->isWorker() && !$user->isRestaurantOwner() && !$user->isDriver()) {
             if ($request->expectsJson()) {
                 return ResponseHelper::response([
                     'message' => 'Forbidden access dashboard',
