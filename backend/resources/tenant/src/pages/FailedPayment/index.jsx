@@ -1,7 +1,7 @@
 import React from "react";
 import successBg from "../../assets/successBg.png";
 import failedbanner from "../../assets/failedBanner.png";
-import arrowright from "../../assets/arrowright.svg";
+import arrowright from "../../assets/arrowRight.svg";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
@@ -30,7 +30,7 @@ const FailedPayment = () => {
                           src={failedbanner}
                           alt="logo"
                           className="mx-auto w-[80%] failed-page-icon"
-                          
+
                         />
                       </div>
                       <div className="flex flex-col items-center  text-center z-[3]">
