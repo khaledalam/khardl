@@ -42,6 +42,7 @@ class SettingService
     public function request_data($request)
     {
         if($request->delivery_companies_option == null)$request['delivery_companies_option'] = 0;
-        return $request->only(['delivery_fee','limit_delivery_company','delivery_companies_option']);
+        if($request->drivers_option == null)$request['drivers_option'] = 0;
+        return $request->only(['delivery_fee','limit_delivery_company','delivery_companies_option','drivers_option']);
     }
 }

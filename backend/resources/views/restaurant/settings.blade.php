@@ -87,7 +87,7 @@
                                             <label class="form-label">{{ __('messages.Max time for drivers to pickup order(in case if delivery companies exist and drivers)')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" min="1" name="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('messages.Number of minutes')}}" value="{{$settings->limit_delivery_company}}" />
+                                            <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('messages.Number of minutes')}}" value="{{$settings->limit_delivery_company}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{__('messages.The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('messages.Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
@@ -151,4 +151,35 @@
 
 </div>
 <!--end::Content-->
+@endsection
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to toggle the disabled attribute of limit_delivery_company input
+        function toggleLimitDeliveryCompany() {
+            var driversOptionCheckbox = document.getElementById('drivers_option');
+            var DeliveryCompaniesOptionCheckbox = document.getElementById('delivery_companies_option');
+            var limitDeliveryCompanyInput = document.getElementById('limit_delivery_company');
+            console.log(limitDeliveryCompanyInput);
+            console.log(driversOptionCheckbox);
+            // Check if the elements are found before setting properties
+            if (driversOptionCheckbox && limitDeliveryCompanyInput) {
+                // Enable/disable based on the state of the drivers option checkbox
+                limitDeliveryCompanyInput.disabled = (!driversOptionCheckbox.checked||!DeliveryCompaniesOptionCheckbox.checked);
+            }
+        }
+
+        // Call the function when the page loads
+        toggleLimitDeliveryCompany(); // Initial state
+
+        // Call the function whenever the drivers option checkbox state changes
+        document.getElementById('drivers_option').addEventListener('change', function() {
+            toggleLimitDeliveryCompany();
+        });
+        document.getElementById('delivery_companies_option').addEventListener('change', function() {
+            toggleLimitDeliveryCompany();
+        });
+    });
+</script>
+
 @endsection

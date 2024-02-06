@@ -807,7 +807,7 @@ return [
     "Number of minutes" => "عدد الدقائق",
     "Max time for drivers to pickup order(in case if delivery companies exist and drivers)" => "الحد الأقصى للوقت الذي يستغرقه السائقون لاستلام الطلب (في حالة وجود شركات التوصيل والسائقين)",
     "Default: :minutes minutes" => "الحالي : :minutes دقيقة",
-    "Delivery companies option" => "خيار شركات التوصيل",
-    "Drivers option" => "خيار السائقين"
+    "Delivery companies option" => "تفعيل شركات التوصيل",
+    "Drivers option" => "تفعيل السائقين"
 ];
 
