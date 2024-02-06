@@ -38,6 +38,7 @@ class DriverService
         $driver = RestaurantUser::create($this->request_data($request));
         $driver->password = Hash::make($request->password);
         $driver->assignRole('Driver');
+        $driver->save();
         return redirect()->route('drivers.index')->with(['success' => __('Created successfully')]);
     }
     public function update($request, $id)
