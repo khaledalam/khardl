@@ -289,6 +289,7 @@ Route::group([
                     'index'
                 ]);
                 Route::post("validate/coupon", [CustomerCouponController::class,'validateCoupon']);
+                Route::post("remove/coupon", [CustomerCouponController::class,'removeCoupon']);
                 Route::get("cards", [CustomerCardController::class, 'show'])->name('customer.cards');
             });
 
