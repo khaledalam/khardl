@@ -7,18 +7,18 @@ use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
 use App\Http\Resources\API\Tenant\Collection\Driver\OrderCollection;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class OrderService
 {
     use APIResponseTrait;
-    public function getList()
+    public function getList(Request $request)
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $orders = Order::with('payment_method')
             ->where('driver_id', $user->id)
-            /* TODO: status , completed, rejected */
+            ->whenStatus($request['status'] ?? null)
             ->delivery()
             ->recent()
             ->paginate(config('application.perPage') ?? 20);
