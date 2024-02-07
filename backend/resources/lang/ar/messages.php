@@ -808,6 +808,9 @@ return [
     "Max time for drivers to pickup order(in case if delivery companies exist and drivers)" => "الحد الأقصى للوقت الذي يستغرقه السائقون لاستلام الطلب (في حالة وجود شركات التوصيل والسائقين)",
     "Default: :minutes minutes" => "الحالي : :minutes دقيقة",
     "Delivery companies option" => "تفعيل شركات التوصيل",
-    "Drivers option" => "تفعيل السائقين"
+    "Drivers option" => "تفعيل السائقين",
+    "Go to Homepage" => "الذهاب الي الصفحة الرئيسية",
+    "You are not authorized to access this page." => "لا يمكن الوصول الي هذه الصفحة",
+    "Unauthorized" => "غير مصرح"
 ];
 
