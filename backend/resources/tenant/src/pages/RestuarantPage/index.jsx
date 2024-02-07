@@ -129,6 +129,7 @@ export const RestuarantHomePage = () => {
         style={{
           backgroundColor: restaurantStyle?.page_color,
           fontFamily: restaurantStyle.text_fontFamily,
+          minHeight:'calc(100vh - 230px)'
         }}
       >
         <Herosection isMobile={isMobile} categories={categories} />
@@ -136,8 +137,8 @@ export const RestuarantHomePage = () => {
           categories={categories }
           isMobile={isMobile}
         />
-        <FooterRestuarant />
       </div>
+        <FooterRestuarant />
     </>
   );
 };
