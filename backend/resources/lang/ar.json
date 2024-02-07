@@ -87,5 +87,7 @@
     "You reached the maximum uses for coupon":"لقد وصلت إلى الحد الأقصى لاستخدامات القسيمة",
     "Coupon has been expired":"لقد انتهت صلاحية القسيمة",
     "Coupon applied for only subtotal above :total":"يتم تطبيق الكوبون عندما يكون المجموع الفرعي اكثر من :total",
-    "Coupon removed successfully":"تمت إزالة القسيمة بنجاح"
+    "Coupon removed successfully":"تمت إزالة القسيمة بنجاح",
+    "Order has been cancelled successfully":"تم إلغاء الطلب بنجاح",
+    "You can not change this order status":"لا يمكنك تغيير حالة الطلب هذه"
 }
