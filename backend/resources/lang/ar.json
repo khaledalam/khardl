@@ -81,5 +81,11 @@
     "free":"حر ",
     "Order has been completed successfully" :"تم إكمال الطلب بنجاح",
     "You do not own this order":"أنت لا تملك هذا الطلب",
-    "Order has been received successfully":"تم استلام الطلب بنجاح"
+    "Order has been received successfully":"تم استلام الطلب بنجاح",
+    "You cannot pick up this order now because you have exceeded the time allowed for order pickup":"لا يمكنك استلام هذا الطلب الآن لأنك تعديت الوقت المسموح لالتقاط الطلب",
+    "Created successfully":"تم الإنشاء بنجاح",
+    "You reached the maximum uses for coupon":"لقد وصلت إلى الحد الأقصى لاستخدامات القسيمة",
+    "Coupon has been expired":"لقد انتهت صلاحية القسيمة",
+    "Coupon applied for only subtotal above :total":"يتم تطبيق الكوبون عندما يكون المجموع الفرعي اكثر من :total",
+    "Coupon removed successfully":"تمت إزالة القسيمة بنجاح"
 }

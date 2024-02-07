@@ -6,15 +6,16 @@ use App\Http\Controllers\Web\BaseController;
 
 use App\Http\Services\API\tenant\Driver\Order\OrderService;
 use App\Models\Tenant\Order;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+
 
 class OrderController extends BaseController
 {
     public function __construct(private OrderService $orderService) {
     }
-    public function index()
+    public function index(Request $request)
     {
-        return $this->orderService->getList();
+        return $this->orderService->getList($request);
     }
     public function ready()
     {

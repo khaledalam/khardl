@@ -32,7 +32,6 @@ class LoginTest extends TenantTestCase
             'Content-Type' => 'application/json',
             'Accept' => 'application/json'
         ]);
-        $response->dump();
         $response->assertOk();
     }
 

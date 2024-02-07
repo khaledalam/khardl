@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Artisan;
 
 class CentralDatabaseTest extends TestCase
 {
-  
-    
+
+
     public function test_central_database_is_freshed(): void
     {
         Artisan::call('migrate:fresh');
@@ -32,7 +32,7 @@ class CentralDatabaseTest extends TestCase
     }
     public function test_create_new_restaurant(): void
     {
-        $user = User::factory()->create(); 
+        $user = User::factory()->create();
         $restaurant =  (new CreateTenantAction)
         (
             user: $user,

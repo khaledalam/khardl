@@ -56,7 +56,10 @@ class CentralTenantSetting extends Model implements SyncMaster
             'cashback_percentage',
             'lead_id',
             'merchant_id',
-            'lead_response'
+            'lead_response',
+            'limit_delivery_company',
+            'drivers_option',
+            'delivery_companies_option',
         ];
     }
 }

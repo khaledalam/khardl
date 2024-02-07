@@ -19,6 +19,9 @@ const CartPage = () => {
   const [deliveryTypesData, setDeliveryTypesData] = useState(null)
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
 
+  const [cartCoupon, setCartCoupon] = useState(null)
+  const [appliedCoupon, setAppliedCoupon] = useState(null)
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {t} = useTranslation()
@@ -34,6 +37,11 @@ const CartPage = () => {
 
       console.log("cart >>>", cartResponse.data)
       if (cartResponse.data) {
+        
+        if(cartResponse.data.data.discount && cartResponse.data.data.coupon.id){
+          setCartCoupon(cartResponse.data.data.discount)
+          setAppliedCoupon(cartResponse.data.data.coupon)
+        }
         dispatch(setCartItemsData(cartResponse.data?.data.items))
         setPaymentMethodsData(cartResponse.data?.data?.payment_methods)
         setDeliveryTypesData(cartResponse.data?.data?.delivery_types)
@@ -70,8 +78,7 @@ const CartPage = () => {
     return <LoadingSpinner />
   }
 
-  console.log("cartItems", cartItems)
-  console.log("address", address)
+
 
   return (
     <>
@@ -109,6 +116,8 @@ const CartPage = () => {
               <CartSection cartItems={cartItems} />
               <PaymentSection
                 styles={restuarantStyle}
+                cartCoupon={cartCoupon}
+                appliedCoupon={appliedCoupon}
                 tap={tap}
                 paymentMethods={paymentMethodsData}
                 deliveryTypes={deliveryTypesData}

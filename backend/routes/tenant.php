@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
+use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -166,8 +167,11 @@ Route::group([
                     Route::get('/customers-data/{restaurantUser}', 'show')->name('show');
                     Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
                 });
-                Route::get('/settings', [RestaurantController::class, 'settings'])->name('restaurant.settings');
-                Route::post('/update-settings', [RestaurantController::class, 'updateSettings'])->name('restaurant.update.settings');
+                Route::name('restaurant.')->controller(SettingController::class)->group(function () {
+                    Route::get('/settings', 'settings')->name('settings');
+                    Route::post('/update-settings', 'updateSettings')->name('update.settings');
+                });
+
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
                 Route::controller(TenantOrderController::class)->group(function () {
@@ -285,6 +289,7 @@ Route::group([
                     'index'
                 ]);
                 Route::post("validate/coupon", [CustomerCouponController::class,'validateCoupon']);
+                Route::post("remove/coupon", [CustomerCouponController::class,'removeCoupon']);
                 Route::get("cards", [CustomerCardController::class, 'show'])->name('customer.cards');
             });
 

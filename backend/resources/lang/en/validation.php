@@ -188,7 +188,9 @@ return [
         "active_from" => "Active from",
         "expire_at" => "Expire at",
         "code" => "Coupon code",
-        "module" => "Delivery company"
+        "module" => "Delivery company",
+        "delivery_fee" => "Delivery fee",
+        "limit_delivery_company" => "Limit for drivers for pickup order"
     ],
 
 ];
