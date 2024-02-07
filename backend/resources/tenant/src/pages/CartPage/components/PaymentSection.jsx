@@ -30,6 +30,8 @@ const PaymentSection = ({
   isloading,
   setIsLoading,
   fetchCartData,
+  cartCoupon,
+  appliedCoupon,
 }) => {
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -75,7 +77,7 @@ const PaymentSection = ({
             total + (item.price + item.options_price) * item.quantity,
           0
         )
-      ) + deliveryCost - (couponDiscountValue && couponDiscountValue.discount ? couponDiscountValue.discount : 0)
+      ) + deliveryCost - (couponDiscountValue && couponDiscountValue.discount ? couponDiscountValue.discount : cartCoupon ? cartCoupon : 0)
       : 0
   }
   const priceSummary = cartItems
@@ -492,6 +494,7 @@ const PaymentSection = ({
                   <Feedback
                     imgUrl={couponIcon}
                     placeholder={"Type your coupon code here"}
+                    value={appliedCoupon.code}
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
                 </div>
@@ -524,6 +527,11 @@ const PaymentSection = ({
                 <h3 className='text-[16px] font-normal'>Coupon Discount</h3>
                 <span className='text-[14px]'>
                   {t("SAR")} {couponDiscountValue.discount}
+                </span>
+              </div> : cartCoupon ? <div className='flex items-start justify-between'>
+                <h3 className='text-[16px] font-normal'>Coupon Discount</h3>
+                <span className='text-[14px]'>
+                  {t("SAR")} {cartCoupon}
                 </span>
               </div> : null}
               <div className='flex items-start justify-between'>

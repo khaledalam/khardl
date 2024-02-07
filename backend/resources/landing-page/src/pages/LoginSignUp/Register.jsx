@@ -331,20 +331,20 @@ const Register = () => {
                                        className='text-sm font-medium text-gray-900'
                                     >
                                        {t('Approval')}
-                                       <button
+                                       <span
                                           onClick={() => showTermsModal()}
 
                                           className='text-[var(--primary)]'
                                        >
                                           {t('terms_and_policies')}
-                                       </button>
+                                       </span>
                                        {t('and')}
-                                       <button
+                                       <span
                                           onClick={() => showPrivacyModal()}
                                           className='text-[var(--primary)]'
                                        >
                                           {t('Privacy')}
-                                       </button>
+                                       </span>
                                     </label>
                                     <span className="text-red-500">*</span>
                                  </div>
