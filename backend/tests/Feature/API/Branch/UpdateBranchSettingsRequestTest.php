@@ -25,8 +25,17 @@ class UpdateBranchSettingsRequestTest extends WorkerBase
             'Content-Type' => 'application/json',
             'Accept' => 'application/json'
         ]);
-        $response->dump();
         $response->assertOk();
+        $response->assertJsonStructure([
+            'success',
+            'message',
+            'data'
+        ]);
+        $this->assertDatabaseHas('branches',[
+            'delivery_availability' => $data['delivery_availability'],
+            'pickup_availability' => $data['pickup_availability'],
+            'preparation_time_delivery' => $data['preparation_time_delivery'],
+        ]);
     }
 
 
