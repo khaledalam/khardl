@@ -554,7 +554,7 @@ class AdminController extends Controller
         $selectedOption = $request->input('options');
 
         if($selectedOption == null){
-            return redirect()->back()->with('error', 'You have to select one option at least!');
+            return redirect()->back()->with('error', __('You have to select one option at least!'));
         }
 
         if ($user?->email == env('SUPER_MASTER_ADMIN_EMAIL')) {
