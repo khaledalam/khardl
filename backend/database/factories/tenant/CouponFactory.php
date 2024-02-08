@@ -21,8 +21,8 @@ class CouponFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => fake()->randomElement(CouponTypes::values()),
-            'type' => fake()->name,
+            'code' => fake()->name,
+            'type' => fake()->randomElement(CouponTypes::values()),
             'amount' => fake()->numberBetween(1,30),
             'max_discount_amount' => fake()->numberBetween(50,200),
             'max_use_per_user' => fake()->numberBetween(1,5),

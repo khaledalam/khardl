@@ -34,7 +34,8 @@ class Order extends Model
         'streetline_ref',
         'coupon_id',
         'discount',
-        'received_by_restaurant_at'
+        'received_by_restaurant_at',
+        'driver_id'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [
