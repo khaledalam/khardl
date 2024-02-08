@@ -356,9 +356,7 @@ Route::middleware([
             Route::middleware('driver')->group(function () {
                 Route::controller(DriverOrderController::class)->group(function () {
                     Route::get('drivers-orders', 'index')->name('restaurant.orders_all');
-                    Route::get('ready-orders', 'ready')->name('restaurant.ready_orders');
-                    Route::post('complete-order/{order}', 'completeOrder')->name('restaurant.completeOrder');
-                    Route::post('receive-order/{order}', 'receiveOrder')->name('restaurant.receiveOrder');
+                    Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
                 });
             });
         });

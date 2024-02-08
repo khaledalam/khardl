@@ -17,16 +17,8 @@ class OrderController extends BaseController
     {
         return $this->orderService->getList($request);
     }
-    public function ready()
+    public function changeStatus(Request $request, Order $order)
     {
-        return $this->orderService->ready();
-    }
-    public function completeOrder(Request $request, Order $order)
-    {
-        return $this->orderService->complete($request,$order);
-    }
-    public function receiveOrder(Request $request, Order $order)
-    {
-        return $this->orderService->receive($request,$order);
+        return $this->orderService->changeStatus($request,$order);
     }
 }

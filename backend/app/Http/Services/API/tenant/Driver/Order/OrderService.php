@@ -17,52 +17,61 @@ class OrderService
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders = Order::with('payment_method')
-            ->where('driver_id', $user->id)
-            ->whenStatus($request['status'] ?? null)
+
+        $query = Order::with('payment_method')
             ->delivery()
-            ->recent()
-            ->paginate(config('application.perPage') ?? 20);
+            ->when($request->status == 'ready', function ($query) {
+                $settings = Setting::first();
+                $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
+
+                return $query
+                    ->where('deliver_by', null)
+                    ->where('driver_id', null)
+                    ->receivedByRestaurant()
+                    ->when($settings && $settings->delivery_companies_option && $limitDrivers > 0, function ($query) use ($limitDrivers) {
+                        return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
+                    });
+            })
+            ->when($request->status == 'all', function ($query) use ($user) {
+                return $query
+                    ->where('deliver_by', null)
+                    ->where(function ($query) use ($user) {
+                        $query->where('driver_id', $user->id)
+                            ->orWhereNull('driver_id');
+                    });
+            })
+            ->when($request->status == 'accepted' || $request->status == 'cancelled' || $request->status == 'completed', function ($query) use ($request) {
+                return $query->whenStatus($request->status);
+            })
+            ->recent();
+
+        $perPage = config('application.perPage', 20);
+        $orders = $query->paginate($perPage);
+
         return $this->sendResponse(new OrderCollection($orders), '');
     }
-    public function ready()
-    {
-        $settings = Setting::first();
-        $limitDrivers = $settings->limit_delivery_company;
-        $query = Order::with('payment_method')->delivery()
-            ->where('deliver_by', null)
-            ->where('driver_id', null)
-            ->receivedByRestaurant();
-        /* if setting limit drivers is exist
-        its mean that drivers have only (limit_delivery_company) minutes to receive order
-        after order status is changed to received by restaurant  */
-        if ($settings && $settings->delivery_companies_option && $limitDrivers && $limitDrivers > 0) {
-            $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
-        } elseif ($settings && $settings->drivers_option && $settings->delivery_companies_option && !$limitDrivers) {
-            $query->where('received_by_restaurant_at', '>', now()->subMinutes(config('application.limit_delivery_company') ?? 15));
-        }
-        $orders = $query->recent()->paginate(config('application.perPage') ?? 20);
-        return $this->sendResponse(new OrderCollection($orders), '');
-    }
-    public function complete(Request $request, Order $order)
+    /*
+    "accepted" when receive from restaurant (prerequisite "received_by_restaurant")
+    "completed" when the order is delivered (prerequisite "accepted")
+    "cancelled" when the order is cancelled from customer or issue exist (prerequisite "accepted")
+    */
+    public function changeStatus(Request $request, Order $order)
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        if ($order->status == Order::ACCEPTED && $order->status != Order::COMPLETED && $order->driver_id == $user->id) {
-            $order->status = Order::COMPLETED;
-            $order->save();
-            return $this->sendResponse('', __('Order has been completed successfully'));
-        } else {
-            return $this->sendError('', __('You do not own this order'));
-        }
-    }
-    public function receive(Request $request, Order $order)
-    {
-        /** @var RestaurantUser $user */
-        $settings = Setting::first();
-        $limitDrivers = $settings->limit_delivery_company;
-        $user = Auth::user();
-        if ($order->status != Order::COMPLETED && $order->driver_id == null && $order->deliver_by == null) {
+        if ($order->status == Order::ACCEPTED && $order->driver_id == $user->id) {
+            if($request->status == Order::COMPLETED){
+                $order->status = Order::COMPLETED;
+                $order->save();
+                return $this->sendResponse('', __('Order has been completed successfully'));
+            }elseif($request->status == Order::CANCELLED){
+                $order->status = Order::CANCELLED;
+                $order->save();
+                return $this->sendResponse('', __('Order has been cancelled successfully'));
+            }
+        }else if ($order->status == Order::RECEIVED_BY_RESTAURANT && $order->driver_id == null && $order->deliver_by == null) {
+            $settings = Setting::first();
+            $limitDrivers = $settings->limit_delivery_company;
             if ($limitDrivers && $limitDrivers > 0) {
                 if (!($order->received_by_restaurant_at > now()->subMinutes($limitDrivers))) {
                     return $this->sendError('', __('You cannot pick up this order now because you have exceeded the time allowed for order pickup'));
@@ -72,8 +81,7 @@ class OrderService
             $order->driver_id = $user->id;
             $order->save();
             return $this->sendResponse('', __('Order has been received successfully'));
-        } else {
-            return $this->sendError('', __('You do not own this order'));
         }
+        return $this->sendError('', __('You can not change this order status'));
     }
 }
