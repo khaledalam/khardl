@@ -236,7 +236,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         if($this->ROSubscription?->number_of_branches){
             return $this->ROSubscription?->number_of_branches;
         }
-        return 0;
+        return 1; // @TODO: give default 1 branch
     }
 
 
