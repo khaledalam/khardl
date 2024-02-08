@@ -13,7 +13,7 @@ class TapWebhookSignature implements SignatureValidator
     {
        
         $data = $request->all();
-        logger($data);
+        // logger($data);
         if (strpos($data['id'] ?? '', 'chg') === 0) {  // charge end-point
 
             $id = $data['id'];
@@ -31,11 +31,11 @@ class TapWebhookSignature implements SignatureValidator
             $myHashString = hash_hmac('sha256', $toBeHashedString, $SecretAPIKey);
     
             if($myHashString == $request->header('Hashstring')){
-                logger("passed");
+                // logger("passed");
                 return true;
             }
             else{
-                logger("not passed");
+                // logger("not passed");
                 // logger($toBeHashedString);
                 // logger($request->headers);
                 // logger($myHashString);
