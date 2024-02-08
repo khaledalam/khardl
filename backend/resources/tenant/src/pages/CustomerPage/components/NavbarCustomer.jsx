@@ -3,12 +3,18 @@ import {IoMenuOutline} from "react-icons/io5"
 import {useNavigate} from "react-router-dom"
 import cartHeaderImg from "../../../assets/cartBoldIcon.svg"
 import {MenuContext} from "react-flexible-sliding-menu"
+import {useSelector} from "react-redux"
+
 
 const NavbarCustomer = () => {
   const navigate = useNavigate()
   const {toggleMenu} = useContext(MenuContext)
+  const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
-  const cartItemsCount = 0
+  const cartItemsCount = useSelector(
+    (state) => state.categoryAPI.cartItemsCount
+  )
+  console.log("cartItemsCount",cartItemsCount)
   return (
     <div className='h-[70px] w-full bg-white flex items-center justify-between px-4 xl:px-8'>
       <IoMenuOutline
