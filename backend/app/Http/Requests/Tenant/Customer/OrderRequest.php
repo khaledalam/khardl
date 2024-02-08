@@ -54,6 +54,20 @@ class OrderRequest extends FormRequest
                 $validator->errors()->add('cart', __('Cart is empty'));
                 return ;
             }
+            if($cart->coupon()){
+                if (!$cart->coupon()->validity){
+                    $validator->errors()->add('cart', __('Coupon has been expired'));
+                    return ;
+                }
+                if (!$cart->coupon()->user_validity){
+                    $validator->errors()->add('cart', __('You reached the maximum uses for coupon'));
+                    return ;
+                }
+                if ($cart->subTotal() < $minimum = $cart->coupon()->minimum_cart_amount){
+                    $validator->errors()->add('cart', __('Coupon applied for only subtotal above :total',['total' => $minimum]).' '.__('messages.SAR'));
+                    return ;
+                }
+            }
             if(!$cart->hasPayment($this->payment_method)){
                 $validator->errors()->add('payment_method', __('Invalid payment method'));
                 return ;

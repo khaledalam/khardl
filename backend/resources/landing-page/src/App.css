@@ -89,6 +89,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  cursor: pointer;
+
 }
 
 .green-theme-button:hover {
@@ -105,6 +107,8 @@
   box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.16);
   padding: 10px 38px;
   line-height: 1;
+  cursor: pointer;
+
 }
 
 .red-theme-button:hover {
@@ -121,6 +125,7 @@
   box-shadow: 0px 4px 4px 0px rgba(255, 0, 0, 0.15);
   padding: 10px 38px;
   line-height: 1;
+  cursor: pointer;
 }
 
 .green-theme-button a,
@@ -130,6 +135,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  cursor: pointer;
+
 }
 
 .custom-round-bg {
@@ -207,6 +214,8 @@
   line-height: normal;
   border-radius: 10px;
   background: #000;
+  cursor: pointer;
+
   box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
 }
 
@@ -223,10 +232,15 @@
   padding: 20px 30px;
   box-shadow: 0px 4px 4px 0px rgba(192, 209, 35, 0.31);
   z-index: 999999;
+  cursor: pointer;
+
 }
 
 .cta-btn-more button {
   padding: 20px 30px;
+  
+  cursor: pointer;
+
 }
 
 .feature-section-green h3 {
@@ -307,6 +321,11 @@
   background-repeat: no-repeat;
   padding-left: 40px;
   padding-top: 40px;
+}
+.header-ar {
+  background-position: right;
+  background-size: contain;
+  /* float: right; */
 }
 
 .new-header h2 {
@@ -636,6 +655,20 @@ text-align: center;
 .curly-arrow.rtl{
   transform: none;
 }
+.hide-on-mobile{
+  display: block;
+}
+.new-login-bg.rtl,
+.new-register-bg.rtl {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.new-login-bg.rtl .mt-8,
+.new-register-bg.rtl .mt-11{
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 @media screen and (max-width: 768px) {
   .new-login-bg,
   .new-register-bg {
@@ -653,5 +686,7 @@ text-align: center;
   .services-img{
     width: 100%;
   }
- 
+  .hide-on-mobile{
+    display: none;
+  }
 }

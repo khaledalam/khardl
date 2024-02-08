@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Khardl, Digital Ecosystem Solution For Restaurants, Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only">
+    <meta name="keywords" content="Khardl, Restaurants Ecosystem, food">
+    <meta name="author" content="Khardl">
+    <meta property="og:title" content="Khardl - Digital Ecosystem Solution For Restaurants" />
+    <meta property="og:description" content="Khardl, Digital Ecosystem Solution For Restaurants, Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only" />
+    <meta property="og:image" content="{{ global_asset('img/logo.png')}}" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Khardl</title>
+    <title>Khardl - Digital Ecosystem Solution For Restaurants</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />

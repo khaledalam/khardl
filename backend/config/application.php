@@ -9,4 +9,5 @@ return [
   'experienceRange' => [0, 30],
   'perPage' => 10,
   'limitResults' => 10,
+  'limit_delivery_company'  => 15
 ];

@@ -90,7 +90,7 @@ const Register = () => {
 
    }
    /////////////////////////////////////////////////////////////////////////////////////
-
+   const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
    return (
       <div className='flex flex-col items-stretch justify-center'>
          <div
@@ -331,20 +331,20 @@ const Register = () => {
                                        className='text-sm font-medium text-gray-900'
                                     >
                                        {t('Approval')}
-                                       <button
+                                       <span
                                           onClick={() => showTermsModal()}
 
                                           className='text-[var(--primary)]'
                                        >
                                           {t('terms_and_policies')}
-                                       </button>
+                                       </span>
                                        {t('and')}
-                                       <button
+                                       <span
                                           onClick={() => showPrivacyModal()}
                                           className='text-[var(--primary)]'
                                        >
                                           {t('Privacy')}
-                                       </button>
+                                       </span>
                                     </label>
                                     <span className="text-red-500">*</span>
                                  </div>
@@ -403,7 +403,7 @@ const Register = () => {
                         )}
                      </div>
 
-                     <div className='flex justify-center  max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10  rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none new-register-bg'>
+                     <div className={`flex justify-center  max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10  rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none new-register-bg ${direction}`}>
                        
                         <div className='mt-11'>
                            <MainText

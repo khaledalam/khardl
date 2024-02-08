@@ -31,9 +31,9 @@ class CreateTenantAction
         ]);
 
     
-        $tenant->run(function ($tenant) {
-            // run actions through tenant scope
-        });
+        // $tenant->run(function ($tenant) {
+        //     // run actions through tenant scope
+        // });
 
         
 

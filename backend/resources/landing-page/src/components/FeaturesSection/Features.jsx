@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import MainText from "../MainText";
 import { useTranslation } from "react-i18next";
-import driversApp from "../../assets/driversApp.webp";
-import receiveRequests from "../../assets/receiveRequests.webp";
-import KhardlDelivery from "../../assets/KhardlDelivery.webp";
-import ElectronicPayments from "../../assets/ElectronicPayments.webp";
-import WebsiteAndApplication from "../../assets/WebsiteAndApplication.webp";
+import driversApp from "../../assets/image8.svg";
+import receiveRequests from "../../assets/image10.svg";
+import KhardlDelivery from "../../assets/image9.svg";
+import ElectronicPayments from "../../assets/image11.svg";
+import WebsiteAndApplication from "../../assets/image7.svg";
 import Card from "./Card";
 import { HiChevronRight } from "react-icons/hi";
 import Group9 from "../../assets/Group9.png";
 import Group7 from "../../assets/Group7.png";
 import Line1 from "../../assets/Line1.png";
+import { Link } from "react-router-dom";
 
 function FeaturesSection() {
   const { t } = useTranslation();
@@ -66,7 +67,7 @@ function FeaturesSection() {
               {t("Khardl's services Details")}
             </h3>
             <img
-              className="w-full h-auto max-w-full md:max-w-[90%] mt-11"
+              className="w-full h-auto max-w-full md:max-w-[90%] mt-11 hide-on-mobile"
               src={Group9}
               alt="background"
             />
@@ -80,12 +81,13 @@ function FeaturesSection() {
               >
                 <div className="w-full md:w-[50%] mb-4 md:mb-0 flex items-center justify-center">
                   <img
-                    className="w-[50%] h-auto max-w-[50%]"
+                    className="w-[20%] h-auto max-w-[20%]"
+                    // style={{ width: "20%" }}
                     src={card.image}
                     alt="background"
                   />
                 </div>
-                <div className="ml-4 text-left">
+                <div className="ml-0 " style={{ width: "300px" }}>
                   <h3 className="text-[#000000] card-heading">{card.title}</h3>
                   <h3 className="text-[#342828] text-medium">{card.details}</h3>
                 </div>
@@ -101,18 +103,20 @@ function FeaturesSection() {
           />
           <div className="absolute flex items-center flex-col feature-section-green top-1/2 left-1/2 transform -translate-x-1/2 text-center justify-center">
             <h3 className="text-[#000000] mb-5">
-              {t("You can design your website or application independently, with no requirement for communication")}
+              {t(
+                "You can design your website or application independently, with no requirement for communication"
+              )}
             </h3>
 
-            <button
-              type="button"
-              className="cta-btn w-[50%]  flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2"
+            <Link
+              to="/register"
+              className="cta-btn w-[50%]  flex items-center justify-center text-[#C0D123] bg-[#342828] rounded-md p-3 shadow shadow-[#C0D123] mt-2 hover:bg-[#C0D123] hover:text-black"
             >
               {t("From Here")}
               <span className="ml-2">
                 <HiChevronRight />
               </span>
-            </button>
+            </Link>
           </div>
         </div>
       </section>

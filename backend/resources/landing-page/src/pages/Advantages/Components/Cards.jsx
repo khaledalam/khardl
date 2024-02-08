@@ -69,7 +69,7 @@ function Cards() {
                   onClick={showMoreItems}
                   className={`flex gap-5 ${
                     !isMobile ? "w-[100%]" : "w-fit"
-                  } justify-center cta-btn font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px] hover:bg-[#d6eb16]`}
+                  } justify-center cta-btn font-bold bg-[var(--primary)] rounded-full transition-all delay-100  py-2 px-6 text-[15px] hover:bg-[#d6eb16] hover:text-black`}
                 >
                   {t("More")}
                   <RiArrowDownDoubleFill />

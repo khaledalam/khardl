@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
+use App\Jobs\AssignDeliveryCompany;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\Setting;
 use Illuminate\Http\Request;
 use Faker\Provider\id_ID\Color;
 use Illuminate\Validation\Rule;
@@ -43,14 +45,13 @@ class  OrderController extends BaseRepositoryController
     }
 
     public function updateStatus($order,OrderStatusChangeRequest $request){
-    
+
         $user = Auth::user();
         $order = Order::
         when($user->isWorker(), function (Builder $query, string $role)use($user) {
             $query ->where('branch_id',$user->branch->id);
         })
         ->findOrFail($order);
-     
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
@@ -83,23 +84,9 @@ class  OrderController extends BaseRepositoryController
         $statusLog->saveOrFail();
 
         // Handle register order to all delivery companies
-        if ($request->status == Order::RECEIVED_BY_RESTAURANT) {
-            $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
-            if(empty($deliveryCompanies)){
-                if ($request->expectsJson()) {
-                    return $this->sendError('Fail', __('There is no available delivery company'));
-                }
-                return redirect()->back()->with('error',__('There is no available delivery company'));
-            }else {
-                $deliveryCompaniesDelivered = implode(" , ", $deliveryCompanies);
-                $order->update(['status' => $request->status]);
-                if ($request->expectsJson()) {
-                    return $this->sendResponse(null, __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
-                }
-                
-              
-                return redirect()->back()->with('success', __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
-            }
+
+        if ($request->status == Order::RECEIVED_BY_RESTAURANT && $order->isDelivery() && $order?->branch?->delivery_availability) {
+            $this->handelDeliveryOrder($order,$request);
         }
         $order->update(['status' => $request->status]);
         if ($request->expectsJson()) {
@@ -112,6 +99,41 @@ class  OrderController extends BaseRepositoryController
         $statues = Order::ChangeStatus($status);
         return response()->json(array_combine($statues,array_map(fn ($status) => __('messages.'.$status),$statues)),200);
     }
-    
+
+    public function handelDeliveryOrder($order,$request)
+    {
+        $order->received_by_restaurant_at = now();
+        $order->save();
+        $settings = Setting::first();
+        if($settings && $settings->drivers_option && $settings->delivery_companies_option){
+            if($settings->limit_delivery_company){
+                AssignDeliveryCompany::dispatch($request->expectsJson(),$order,$request->status)->delay(now()->addMinutes($settings->limit_delivery_company));
+            }else{
+                AssignDeliveryCompany::dispatch($request->expectsJson(),$order,$request->status)->delay(now()->addMinutes(config('application.limit_delivery_company') ?? 15));
+            }
+        }elseif($settings && $settings->delivery_companies_option){
+            $order->deliver_by = "Waiting delivery company";
+            $order->save();
+            return $this->assignOrderToDC($request->expectsJson(),$order,$request->status);
+        }
+    }
+    private function assignOrderToDC($exceptJson,$order,$status)
+    {
+        $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
+        if(empty($deliveryCompanies)){
+            if ($exceptJson) {
+                return $this->sendError('Fail', __('There is no available delivery company'));
+            }
+            return redirect()->back()->with('error',__('There is no available delivery company'));
+        }else {
+            $deliveryCompaniesDelivered = implode(" , ", $deliveryCompanies);
+            $order->update(['status' => $status]);
+            if ($exceptJson) {
+                return $this->sendResponse(null, __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
+            }
+            return redirect()->back()->with('success', __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
+        }
+    }
+
 
 }

@@ -3,13 +3,14 @@
 namespace App\Models\Tenant;
 
 use App\Models\Tenant\PaymentMethod;
+use Database\Factories\tenant\BranchFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Branch extends Model
 {
-    // use HasTranslations;
+    use HasFactory;
     // TODO @todo soft deletes
     protected $table = 'branches';
 
@@ -51,6 +52,11 @@ class Branch extends Model
     public function workers(){
         return $this->hasMany(RestaurantUser::class);
     }
+    public function drivers(){
+        return $this->hasMany(RestaurantUser::class)->whereHas('roles', function ($query) {
+            $query->where('name', 'Driver');
+        });
+    }
     public function categories(){
         return $this->hasMany(Category::class);
     }
@@ -83,6 +89,9 @@ class Branch extends Model
     }
     /* End attributes */
 
-
+    protected static function newFactory()
+    {
+      return BranchFactory::new();
+    }
 
 }

@@ -31,16 +31,20 @@ class Order extends Model
         'cervo_ref',
         'streetline_ref',
         'coupon_id',
-        'discount'
+        'discount',
+        'received_by_restaurant_at'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
+    protected $casts = [
+        'received_by_restaurant_at' => 'datetime'
+    ];
     const STATUS = [
         self::PENDING,
         self::RECEIVED_BY_RESTAURANT,
         self::ACCEPTED,
         self::CANCELLED,
         self::COMPLETED,
-        self::READY
+        self::READY,
     ];
 
     const PENDING = 'pending';
@@ -100,6 +104,12 @@ class Order extends Model
     {
         return $query->where('status', self::READY);
     }
+    public function scopeDelivery($query)
+    {
+        return $query->whereHas('delivery_type',function($q){
+            return $q->where('name',DeliveryType::DELIVERY);
+        });
+    }
     public function scopeRecent($query)
     {
         return $query->orderBy('id', 'DESC');
@@ -146,6 +156,10 @@ class Order extends Model
             self::READY => [self::COMPLETED,self::CANCELLED],
             default => []
         };
+    }
+    public function isDelivery()
+    {
+        return $this->delivery_type?->name == DeliveryType::DELIVERY;
     }
     public function user()
     {

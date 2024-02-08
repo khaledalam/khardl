@@ -5,12 +5,13 @@ namespace Tests;
 use Exception;
 use Faker\Factory;
 use Faker\Generator;
+
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
-
+use Illuminate\Foundation\Testing\RefreshDatabase;
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication,RefreshDatabase;
 
     private Generator $faker;
 
@@ -18,14 +19,11 @@ abstract class TestCase extends BaseTestCase
     : void {
 
         parent::setUp();
+       
         $this->faker = Factory::create();
-        Artisan::call('migrate:refresh');
     }
 
     public function __get($key) {
-
-        if ($key === 'faker')
-            return $this->faker;
-        throw new Exception('Unknown Key Requested');
+        throw new Exception('attempted to read non-existing property:'. $key);
     }
 }
