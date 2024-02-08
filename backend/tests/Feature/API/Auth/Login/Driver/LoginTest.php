@@ -5,22 +5,14 @@ namespace Tests\Feature\API\Auth\Login\Driver;
 
 use App\Models\Tenant\RestaurantUser;
 use Spatie\Permission\Models\Role;
+use Tests\Feature\API\DriverBase;
 use Tests\TenantTestCase;
 
 
-class LoginTest extends TenantTestCase
+class LoginTest extends DriverBase
 {
 
     protected $tenancy = true;
-    public $driver;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->driver = RestaurantUser::factory()->create();
-        $role = Role::firstOrCreate(['name' => 'Driver']);
-        $this->driver->assignRole($role);
-    }
     public function test_login(): void
     {
         $path = $this->baseURL.'api/login';

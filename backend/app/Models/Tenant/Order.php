@@ -5,11 +5,13 @@ namespace App\Models\Tenant;
 use App\Observers\OrderObserver;
 use Carbon\Carbon;
 use App\Models\Tenant\RestaurantUser;
+use Database\Factories\tenant\OrderFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
+    use HasFactory;
     protected $table = 'orders';
 
     protected $fillable = [
@@ -192,6 +194,10 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+    protected static function newFactory()
+    {
+      return OrderFactory::new();
     }
 
 }
