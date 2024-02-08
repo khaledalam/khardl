@@ -161,6 +161,15 @@ const OuterSidebarNav = ({ id }) => {
   };
   const role = localStorage.getItem("user-role");
 
+
+  let pickupFirstBranch = branches?.filter(
+      (branch) => branch.pickup_availability === 1
+  )[0] || false;
+
+    let deliveryFirstBranch = branches?.filter(
+        (branch) => branch.delivery_availability === 1
+    )[0] || false;
+
   return (
     <div
       ref={refOuterNav}
@@ -191,10 +200,8 @@ const OuterSidebarNav = ({ id }) => {
             pickUp?.name
               ? `${pickUp.name}`
               : branches &&
-                branches?.filter(
-                  (branch) => branch.pickup_availability === 1
-                )[0]
-                ? `Branch ${branch_id}`
+                pickupFirstBranch
+                ? pickupFirstBranch?.name
                 : ""
           }
           onChange={(value) => setPickUp(value)}
@@ -211,10 +218,8 @@ const OuterSidebarNav = ({ id }) => {
             branch?.name
               ? `${branch.name}`
               : branches &&
-                branches?.filter(
-                  (branch) => branch.delivery_availability === 1
-                )[0]
-                ? `Branch ${branch_id}`
+                deliveryFirstBranch
+                ? deliveryFirstBranch?.name
                 : ""
           }
           onChange={(value) => setBranch(value)}

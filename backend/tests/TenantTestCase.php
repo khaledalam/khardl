@@ -18,7 +18,7 @@ use Tests\Feature\Web\Central\CentralDatabaseTest;
 
 abstract class TenantTestCase extends BaseTestCase
 {
-    use CreatesApplication, RefreshDatabase;
+    use CreatesApplication;
 
     protected $tenancy = false;
     protected $central_domain;
@@ -41,9 +41,9 @@ abstract class TenantTestCase extends BaseTestCase
     }
     public function initializeTenancy()
     {
-        $centralTest = new CentralDatabaseTest("Central");
+        /* $centralTest = new CentralDatabaseTest("Central");
         $centralTest->test_central_database_is_freshed();
-        $centralTest->test_create_new_restaurant();
+        $centralTest->test_create_new_restaurant(); */
         $restaurant = Tenant::first();
         tenancy()->initialize($restaurant);
 
