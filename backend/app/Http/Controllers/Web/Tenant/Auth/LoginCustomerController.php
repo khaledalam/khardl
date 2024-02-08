@@ -52,6 +52,7 @@ class LoginCustomerController extends BaseController
         Auth::loginUsingId($user->id,true);
         $user = Auth::user();
         $this->sendVerificationSMSCode($request);
+        $user->load(['roles']);
         $data = [
             'user'=>$user
         ];
