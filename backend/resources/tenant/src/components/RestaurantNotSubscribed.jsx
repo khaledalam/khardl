@@ -38,7 +38,7 @@ const RestaurantNotSubscribed = () => {
                   </div>
                   <div className="flex flex-col items-center  text-center z-[3]">
                     <h1 className="p-2 text-lg  mb-4  font-bold md:min-w-[700px] text-red-600">
-                      {t("This restaurant has no subscription yet")}
+                      {t("This restaurant has no subscription yet.")}
                     </h1>
                     <div className="flex gap-5">
                       <Link

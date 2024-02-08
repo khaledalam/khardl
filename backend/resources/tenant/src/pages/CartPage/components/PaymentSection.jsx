@@ -297,7 +297,7 @@ const PaymentSection = ({
               </div>
 
               <h3 className='text-[1rem] font-medium text-black'>
-                Place Order
+               {t('Place Order')}
               </h3>
             </div>
           </div>
@@ -307,7 +307,7 @@ const PaymentSection = ({
 
       <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Select Payment Method"} isRequired>
+          <CartColumn headerTitle={t('Select Payment Method')} isRequired>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`border ${styles?.categoryDetail_cart_color
@@ -365,7 +365,7 @@ const PaymentSection = ({
           </CartColumn>
         </div>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Select Delivery Type"} isRequired>
+          <CartColumn headerTitle={t('Select Delivery Type')} isRequired>
             <div className='w-full flex items-start gap-2 py-2'>
               {deliveryTypes &&
                 deliveryTypes.map((deliveryType) => (
@@ -423,7 +423,7 @@ const PaymentSection = ({
         </div>
       </div>
       {/* order notes */}
-      <CartColumn headerTitle={"Order Notes"}>
+      <CartColumn headerTitle={t("Order Notes")}>
 
         <div
           className={`w-full border ${styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"
@@ -445,7 +445,7 @@ const PaymentSection = ({
       {/* address and coupon */}
       <div className='flex flex-col md:flex-row items-start gap-6'>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Address"} isRequired>
+          <CartColumn headerTitle={t("Address")} isRequired>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`w-full border ${styles?.categoryDetail_cart_color
@@ -481,7 +481,7 @@ const PaymentSection = ({
           </CartColumn>
         </div>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Coupon"}>
+          <CartColumn headerTitle={t('Coupon')}>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`w-full border ${styles?.categoryDetail_cart_color
@@ -493,8 +493,8 @@ const PaymentSection = ({
                 <div className='w-full'>
                   <Feedback
                     imgUrl={couponIcon}
-                    placeholder={"Type your coupon code here"}
-                    value={appliedCoupon?.code}
+                    placeholder={t('Type your coupon code here')}
+                    value={appliedCoupon?.code ? appliedCoupon?.code : couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
                 </div>
@@ -508,7 +508,7 @@ const PaymentSection = ({
       </div>
       {/* payment summary */}
       <div className='w-full lg:w-1/2 mx-auto my-8'>
-        <CartColumn headerTitle={"Payment Summary"}>
+        <CartColumn headerTitle={t('Payment Summary')}>
           <div className='p-6 flex flex-col gap-4 border border-[var(--primary)'>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
@@ -518,24 +518,24 @@ const PaymentSection = ({
                 }}`}
             >
               <div className='flex items-start justify-between'>
-                <h3 className='text-[16px] font-normal'>Price</h3>
+                <h3 className='text-[16px] font-normal'>{t('price')}</h3>
                 <span className='text-[14px]'>
                   {t("SAR")} {priceSummary}
                 </span>
               </div>
               {couponDiscountValue && couponDiscountValue.discount ? <div className='flex items-start justify-between'>
-                <h3 className='text-[16px] font-normal'>Coupon Discount</h3>
+                <h3 className='text-[16px] font-normal'>{t('Coupon Discount')}</h3>
                 <span className='text-[14px]'>
                   {t("SAR")} {couponDiscountValue.discount}
                 </span>
               </div> : cartCoupon ? <div className='flex items-start justify-between'>
-                <h3 className='text-[16px] font-normal'>Coupon Discount</h3>
+                <h3 className='text-[16px] font-normal'>{t('Coupon Discount')}</h3>
                 <span className='text-[14px]'>
                   {t("SAR")} {cartCoupon}
                 </span>
               </div> : null}
               <div className='flex items-start justify-between'>
-                <h3 className='text-[16px] font-normal'>Delivery fee</h3>
+                <h3 className='text-[16px] font-normal'>{t('Delivery fee')}</h3>
                 <span className='text-[14px]'>
                   {t("SAR")} {deliveryCost}
                 </span>
@@ -543,7 +543,7 @@ const PaymentSection = ({
             </div>
             <div className=''>
               <div className='flex items-start justify-between'>
-                <h3 className='text-[1.125rem] font-bold'>Total Payment</h3>
+                <h3 className='text-[1.125rem] font-bold'>{t('Total Payment')}</h3>
                 <span className='text-[1.125rem] font-bold'>
                   {t("SAR")} {getTotalPrice()}
                 </span>
@@ -564,7 +564,7 @@ const PaymentSection = ({
                   />
                 </div>
                 <h3 className='text-[1rem] font-medium text-white'>
-                  Empty Cart
+                  {t('Empty Cart')}
                 </h3>
               </div>
             </div>
@@ -585,7 +585,7 @@ const PaymentSection = ({
                 </div>
 
                 <h3 className='text-[1rem] font-medium text-black'>
-                  Place Order
+                {t('Place Order')}
                 </h3>
               </div>
             </div>

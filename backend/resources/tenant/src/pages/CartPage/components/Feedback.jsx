@@ -1,5 +1,6 @@
 import React from "react"
 import {PiNoteFill} from "react-icons/pi"
+import {useTranslation} from "react-i18next"
 
 const Feedback = ({
   value,
@@ -9,6 +10,8 @@ const Feedback = ({
   isDisabled = false,
   isReadOnly = false,
 }) => {
+
+  const {t} = useTranslation()
   return (
     <div className='border border-neutral-200 rounded-lg w-full h-[48px] flex items-center gap-2 px-2'>
       {imgUrl ? (
@@ -22,7 +25,7 @@ const Feedback = ({
         type='text'
         disabled={isDisabled}
         readOnly={isReadOnly}
-        placeholder={placeholder ?? "Say something nice..."}
+        placeholder={placeholder || t("Say something nice...")}
         value={value}
         onChange={onChange}
         className='input w-full disabled:bg-transparent h-full rounded-none outline-none border-none focus-visible:border-none focus-within:border-none focus-within:outline-none'

@@ -163,7 +163,7 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
           <div className="w-full lg:w-5/6">
             <Feedback
               value={feedback}
-              placeholder={"Item notes : e.g. Please make the meat medium cook"}
+              placeholder={t("Item notes : e.g. Please make the meat medium cook")}
               onChange={(e) => setFeedback(e.target.value)}
             />
           </div>
@@ -182,7 +182,7 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
           </div>
         </div>
         <h3 className="font-bold">
-          Total: SAR{" "}
+        {t("Total")}:{t("SAR")}{" "}
           {cartItem.price * cartItem.quantity + cartItem.options_price}
         </h3>
       </div>
