@@ -806,5 +806,8 @@ return [
     "Number of minutes" => "Number of minutes",
     "Default: :minutes minutes" => "Default: :minutes minutes",
     "Delivery companies option" => "Delivery companies option",
-    "Drivers option" => "Drivers option"
+    "Drivers option" => "Drivers option",
+    "Go to Homepage" => "Go to Homepage",
+    "You are not authorized to access this page." => "You are not authorized to access this page.",
+    "Unauthorized" => "Unauthorized"
 ];
