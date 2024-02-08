@@ -37,7 +37,7 @@ const PaymentSection = ({
   const { t } = useTranslation()
   const [notes, setNotes] = useState("")
   const [couponCode, setCouponCode] = useState("")
-  const [deliveryType, setDeliveryType] = useState(deliveryTypes && deliveryTypes[0] ? deliveryTypes[0]?.name : "");
+  const [deliveryType, setDeliveryType] = useState( "");
   const [couponDiscountValue, setCouponDiscountValue] = useState(null)
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const [paymentMethod, setPaymentMethod] = useState(paymentMethods && paymentMethods[0] ? paymentMethods[0]?.name : "")
