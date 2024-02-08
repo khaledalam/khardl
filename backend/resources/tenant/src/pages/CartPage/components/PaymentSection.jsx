@@ -494,7 +494,7 @@ const PaymentSection = ({
                   <Feedback
                     imgUrl={couponIcon}
                     placeholder={"Type your coupon code here"}
-                    value={appliedCoupon.code}
+                    value={appliedCoupon?.code}
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
                 </div>
