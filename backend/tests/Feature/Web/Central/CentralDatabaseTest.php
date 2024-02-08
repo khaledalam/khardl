@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Web\Central;
 
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use App\Models\User;
 use App\Actions\CreateTenantAction;
@@ -36,7 +37,8 @@ class CentralDatabaseTest extends TestCase
         $restaurant =  (new CreateTenantAction)
         (
             user: $user,
-            domain: 'first'
+            domain: 'first',
+            tenantId: '140c813f-5794-4e47-8e28-3426ac01f1f8'
         );
         tenancy()->initialize($restaurant);
         $this->assertTrue(\Schema::hasTable('branches'));

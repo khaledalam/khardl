@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use App\Models\User;
+use Database\Factories\tenant\CouponFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -83,6 +84,10 @@ class Coupon extends Model
             if($is_deleted)return $q->where('deleted_at','!=',null);
             else $q->where('deleted_at',null);
         });
+    }
+    protected static function newFactory()
+    {
+      return CouponFactory::new();
     }
     /* Scopes */
 }

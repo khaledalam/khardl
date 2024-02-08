@@ -49,6 +49,7 @@ class LoginController extends BaseController
         } else {
             $token->expires_at = Carbon::now()->addWeeks(1);
         }
+        $user->load(['roles']);
         $data= [
             'user'=>$user,
             'token_type' => 'Bearer',
