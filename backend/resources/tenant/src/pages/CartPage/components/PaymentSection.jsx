@@ -365,7 +365,7 @@ const PaymentSection = ({
           </CartColumn>
         </div>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Select Delivery Type"} isRequired>
+          <CartColumn headerTitle={t('Select Delivery Type')} isRequired>
             <div className='w-full flex items-start gap-2 py-2'>
               {deliveryTypes &&
                 deliveryTypes.map((deliveryType) => (
@@ -494,7 +494,7 @@ const PaymentSection = ({
                   <Feedback
                     imgUrl={couponIcon}
                     placeholder={"Type your coupon code here"}
-                    value={appliedCoupon.code}
+                    value={appliedCoupon?.code ? appliedCoupon?.code : couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
                 </div>

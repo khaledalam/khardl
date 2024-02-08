@@ -128,7 +128,7 @@ const CustomerOrderDetail = ({orderId}) => {
                       </h3>
                     </div>
                     <div className='flex items-center justify-between border-b border-neutral-200 last:border-none p-2'>
-                      <h3 className='text-[1rem]'>Order notes</h3>
+                      <h3 className='text-[1rem]'>{t("Order notes")}</h3>
                       <h3 className='text-[1rem]'>
                         {singleOrder?.order_notes}
                       </h3>

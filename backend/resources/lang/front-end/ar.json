@@ -364,7 +364,7 @@
   "Notes": "ملاحظات",
   "N/A": "لا يوجد",
   "Notes item": "ملاحظات العنصر",
-  "Notes order": "ملاحظات الطلب",
+  "order Notes": "ملاحظات الطلب",
   "Address": "العنوان",
   "Change My Address": "غير عنواني",
   "Failed to processed the checkout": "فشل في اكتمال عمليه الدفع",
