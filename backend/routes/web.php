@@ -3,7 +3,6 @@
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
 use App\Http\Controllers\Web\Central\GlobalPromoterController;
-use App\Http\Controllers\Web\Central\PromoterController;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
