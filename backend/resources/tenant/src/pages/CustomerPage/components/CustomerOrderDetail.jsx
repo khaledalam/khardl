@@ -98,7 +98,7 @@ const CustomerOrderDetail = ({orderId}) => {
               <div className='w-full border border-[var(--customer)] rounded-xl'>
                 <div className='w-[80%] laptopXL:w-70% mx-auto py-5'>
                   <h3 className='font-bold text-lg text-center'>
-                    Payment Summary
+                  {t('Payment Summary')}                    
                   </h3>
                   <div className='w-full flex flex-col gap-4 '>
                     <div className='flex items-center justify-between border-b border-neutral-200 last:border-none p-2'>
@@ -128,7 +128,7 @@ const CustomerOrderDetail = ({orderId}) => {
                       </h3>
                     </div>
                     <div className='flex items-center justify-between border-b border-neutral-200 last:border-none p-2'>
-                      <h3 className='text-[1rem]'>Order notes</h3>
+                      <h3 className='text-[1rem]'>{t("Order Notes")}</h3>
                       <h3 className='text-[1rem]'>
                         {singleOrder?.order_notes}
                       </h3>

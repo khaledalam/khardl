@@ -357,7 +357,7 @@
   "Notes": "Notes",
   "N/A": "N/A",
   "Notes item": "Item notes",
-  "Notes order": "Order Notes",
+  "Order Notes": "Order Notes",
   "Address": "Address",
   "Change My Address": "Change my address",
   "Profile updated successfully": "Profile updated successfully",
@@ -409,5 +409,12 @@
   "Check Cart": "Check Cart",
   "Dashboard Admin": "Managment dashboard",
   "Dashboard Customer": "Dashboard Customer",
-  "No categories to be found at the moment": "No categories to be found at the moment"
+  "No categories to be found at the moment": "No categories to be found at the moment",
+  "Type your coupon code here": "Type your coupon code here",
+  "Item notes : e.g. Please make the meat medium cook": "Item notes : e.g. Please make the meat medium cook",
+  "Payment Summary": "Payment Summary",
+  "Coupon Discount": "Coupon Discount",
+  "Delivery fee": "Delivery fee",
+  "Total Payment": "Total Payment",
+  "Restaurant Login Page": "صفحة تسجيل دخول المطعم"
 }

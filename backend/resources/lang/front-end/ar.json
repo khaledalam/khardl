@@ -364,7 +364,7 @@
   "Notes": "ملاحظات",
   "N/A": "لا يوجد",
   "Notes item": "ملاحظات العنصر",
-  "Notes order": "ملاحظات الطلب",
+  "Order Notes": "ملاحظات الطلب",
   "Address": "العنوان",
   "Change My Address": "غير عنواني",
   "Failed to processed the checkout": "فشل في اكتمال عمليه الدفع",
@@ -425,5 +425,12 @@
   "Check Cart": "راجع العربه",
   "Dashboard Admin": "لوحة الإدارة",
   "Dashboard Customer": "عميل لوحة القيادة",
-  "No categories to be found at the moment": "لا توجد فئات يمكن العثور عليها في الوقت الراهن"
+  "No categories to be found at the moment": "لا توجد فئات يمكن العثور عليها في الوقت الراهن",
+  "Type your coupon code here": "اكتب رمز القسيمة الخاص بك هنا",
+  "Item notes : e.g. Please make the meat medium cook": "ملاحظات العنصر: على سبيل المثال. ",
+  "Payment Summary": "ملخص الدفع",
+  "Coupon Discount": "خصم القسيمة",
+  "Delivery fee": "رسوم التوصيل",
+  "Total Payment": "المبلغ الإجمالي",
+  "Restaurant Login Page": "صفحة تسجيل دخول المطعم"
 }
