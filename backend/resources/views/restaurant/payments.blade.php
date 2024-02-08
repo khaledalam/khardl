@@ -4,7 +4,7 @@
 @section('css')
 <style>
     .accordion-button:not(.collapsed)::after{
-        
+
     }
 </style>
 @endsection
@@ -14,8 +14,11 @@
     {{ session('success') }}
 </div>
 @endif
-@if ($business)
-@if($business?->status == 'Active')
+@php
+$tap_info = $settings->lead_response;
+@endphp
+@if ($settings->lead_id&&$settings->merchant_id)
+@if ($settings->lead_response)
 <!--begin::Content-->
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
@@ -366,120 +369,101 @@
                                                         <!--end::Table head-->
                                                         <!--begin::Table body-->
                                                         <tbody class="fw-bolder text-gray-600">
+                                                            @if (isset($tap_info['id']))
                                                             <tr>
                                                                 <!--begin::Item-->
                                                                 <td>
                                                                     <span class="text-start">{{__('Business ID')}}</span>
                                                                 </td>
                                                                 <td class="text-dark">
-                                                                    <span class="py-3 px-4 fs-23">{{ $business?->business_id }}</span>
-                                                                </td>
-                                                                <!--end::Item-->
-                                                            </tr>
-                                                            <tr>
-                                                                <!--begin::Item-->
-                                                                <td>
-                                                                    <span class="text-start">{{__('Destination ID')}}</span>
-                                                                </td>
-                                                                <td class="text-dark">
-                                                                    <span class="py-3 px-4 fs-23">{{ $business?->destination_id }}</span>
-                                                                </td>
-                                                                <!--end::Item-->
-                                                            </tr>
-                                                            <tr>
-                                                                <!--begin::Item-->
-                                                                <td>
-                                                                    <span class="text-start">{{__('messages.Wallet ID')}}</span>
-                                                                </td>
-                                                                <td class="text-dark">
-                                                                    <span class="py-3 px-4 fs-23">{{ $business?->wallet_id }}</span>
-                                                                </td>
-                                                                <!--end::Item-->
-                                                            </tr>
-                                                            @if (isset($business?->data['name']))
-                                                            <tr>
-                                                                <!--begin::Item-->
-                                                                <td>
-                                                                    <span class="text-start">{{__('messages.Name')}}</span>
-                                                                </td>
-                                                                <td class="text-dark">
-                                                                    <span class="py-3 px-4 fs-23">{{ $business?->data['name'][app()->getLocale()] }}</span>
+                                                                    <span class="py-3 px-4 fs-23">{{ $tap_info['id'] }}</span>
                                                                 </td>
                                                                 <!--end::Item-->
                                                             </tr>
                                                             @endif
-                                                            @if (isset($business?->data['type']))
+                                                            @if (isset($tap_info['brand']['name']))
                                                             <tr>
                                                                 <!--begin::Item-->
                                                                 <td>
-                                                                    <span class="text-start">{{__('messages.Type')}}</span>
+                                                                    <span class="text-start">{{__('Brand name')}}</span>
                                                                 </td>
                                                                 <td class="text-dark">
-                                                                    <span class="py-3 px-4 fs-23">{{ $business?->data['type'] == 'ind'? __('messages.Individual'):__('messages.Corporation') }}</span>
+                                                                    @if(app()->getLocale() == 'ar')
+                                                                    <span class="py-3 px-4 fs-23">{{ $tap_info['brand']['name']['ar'] }}</span>
+                                                                    @else
+                                                                    <span class="py-3 px-4 fs-23">{{ $tap_info['brand']['name']['en'] }}</span>
+                                                                    @endif
                                                                 </td>
                                                                 <!--end::Item-->
                                                             </tr>
                                                             @endif
-                                                            @if (isset($business?->data['brands']))
+                                                            @if (isset($tap_info['brand']['channel_services'][0]['channel'])&&isset($tap_info['brand']['channel_services'][0]['address']))
                                                             <tr>
                                                                 <!--begin::Item-->
                                                                 <td>
-                                                                    <span class="text-start">{{__('messages.Brands')}}</span>
+                                                                    <span class="text-start">{{__('Brand channel')}}</span>
                                                                 </td>
                                                                 <td class="text-dark">
-                                                                    <ul>
-                                                                        @foreach ($business?->data['brands'] as $brand)
-                                                                        <li>{{ $brand['name'][app()->getLocale()] }}</li>
-                                                                        @endforeach
-                                                                    </ul>
+                                                                    <span class="py-3 px-4 fs-23">{{ $tap_info['brand']['channel_services'][0]['channel'] }}</span>
+                                                                </td>
+                                                                <!--end::Item-->
+                                                            </tr>
+                                                            <tr>
+                                                                <!--begin::Item-->
+                                                                <td>
+                                                                    <span class="text-start">{{__('Brand address')}}</span>
+                                                                </td>
+                                                                <td class="text-dark">
+                                                                    <span class="py-3 px-4 fs-23">{{ $tap_info['brand']['channel_services'][0]['address'] }}</span>
                                                                 </td>
                                                                 <!--end::Item-->
                                                             </tr>
                                                             @endif
-                                                            @if (isset($business?->data['entity']['country']))
+                                                            @if (isset($tap_info['brand']['operations']['sales']['period'])&&isset($tap_info['brand']['operations']['sales']['range']))
                                                             <tr>
                                                                 <!--begin::Item-->
                                                                 <td>
-                                                                    <span class="text-start">{{__('messages.Country')}}</span>
+                                                                    <span class="text-start">{{__('Bussiness expected sales')}}</span>
                                                                 </td>
                                                                 <td class="text-dark">
-                                                                    <span class="py-3 px-4 fs-23">{{ $business?->data['entity']['country'] }}</span>
-                                                                </td>
-                                                                <!--end::Item-->
-                                                            </tr>
-                                                            @endif
-                                                            @if (isset($business?->data['entity']['legal_name'][app()->getLocale()]))
-                                                            <tr>
-                                                                <!--begin::Item-->
-                                                                <td>
-                                                                    <span class="text-start">{{__('messages.Legal name')}}</span>
-                                                                </td>
-                                                                <td class="text-dark">
-                                                                    <span class="py-3 px-4 fs-23">{{ $business?->data['entity']['legal_name'][app()->getLocale()] }}</span>
-                                                                </td>
-                                                                <!--end::Item-->
-                                                            </tr>
-                                                            @endif
-                                                            @if (isset($business?->data['entity']['is_licensed']))
-                                                            <tr>
-                                                                <!--begin::Item-->
-                                                                <td>
-                                                                    <span class="text-start">{{__('messages.Is licensed')}}</span>
-                                                                </td>
-                                                                @if($business?->data['entity']['is_licensed'])
-                                                                <td>
-                                                                    <span class="badge badge-success">
-                                                                        {{ __('messages.Yes') }}
+                                                                    <span class="py-3 px-4 fs-23">
+                                                                        {{ __('From') }}
+                                                                        {{ $tap_info['brand']['operations']['sales']['range']['from'] }}
+                                                                        {{ __('To') }}
+                                                                        {{ $tap_info['brand']['operations']['sales']['range']['to'] }}
+                                                                        {{ $tap_info['brand']['operations']['sales']['currency'] }} {{ $tap_info['brand']['operations']['sales']['period'] }}
                                                                     </span>
                                                                 </td>
-                                                                @else
+                                                                <!--end::Item-->
+                                                            </tr>
+                                                            @endif
+                                                            @if (isset($tap_info['entity']['country'])&&isset($tap_info['entity']['license']))
+                                                            <tr>
+                                                                <!--begin::Item-->
                                                                 <td>
-                                                                    <span class="badge badge-danger">
-                                                                        {{ __('messages.No') }}
+                                                                    <span class="text-start">{{__('Legal Entity (Commercial Registration)')}}</span>
+                                                                </td>
+                                                                <td class="text-dark">
+                                                                    <span class="py-3 px-4 fs-23">
+                                                                        <span class="py-3 px-4 fs-23">
+                                                                            {{ $tap_info['entity']['country'] }}
+                                                                            ({{ $tap_info['entity']['license']['city'] }})
+                                                                        </span>
+                                                                        <span class="py-3 px-4 fs-23">
+                                                                            (
+                                                                                @if($tap_info['entity']['is_licensed'])
+                                                                                <span>
+                                                                                    {{ __('Entity is Licensed') }}
+                                                                                </span>
+                                                                                @else
+                                                                                <span>
+                                                                                    {{ __('Entity is not Licensed') }}
+                                                                                </span>
+                                                                                @endif
+                                                                            )
+                                                                        </span>
                                                                     </span>
                                                                 </td>
-                                                                @endif
-
                                                                 <!--end::Item-->
                                                             </tr>
                                                             @endif
@@ -510,7 +494,7 @@
                                                     <div class="card-header pt-7">
                                                         <!--begin::Title-->
                                                         <h3 class="card-title align-items-start flex-column">
-                                                            <span class="card-label fw-bolder text-dark">{{ __('messages.Your account information') }}</span>
+                                                            <span class="card-label fw-bolder text-dark">{{ __('Your information') }}</span>
                                                         </h3>
                                                         <!--end::Title-->
                                                     </div>
@@ -533,74 +517,100 @@
                                                                 <!--end::Table head-->
                                                                 <!--begin::Table body-->
                                                                 <tbody class="fw-bolder text-gray-600">
-                                                                    @if (isset($business?->data['contact_person']['name']['last']))
+                                                                    @if (isset($tap_info['user']['name']))
                                                                     <tr>
                                                                         <!--begin::Item-->
                                                                         <td>
-                                                                            <span class="text-start">{{__('messages.Last name')}}</span>
+                                                                            <span class="text-start">{{__('Name')}}</span>
                                                                         </td>
                                                                         <td class="text-dark">
-                                                                            <span class="py-3 px-4 fs-23">{{ $business?->data['contact_person']['name']['last'] }}</span>
+                                                                            <span class="py-3 px-4 fs-23">
+                                                                                {{ __($tap_info['user']['name']['title']) }}.
+                                                                                {{ $tap_info['user']['name']['first'] }} {{ $tap_info['user']['name']['middle'] }} {{ $tap_info['user']['name']['last'] }}
+                                                                            </span>
                                                                         </td>
                                                                         <!--end::Item-->
                                                                     </tr>
                                                                     @endif
-                                                                    @if (isset($business?->data['contact_person']['name']['first']))
+                                                                    @if (isset($tap_info['user']['address'][0]))
                                                                     <tr>
                                                                         <!--begin::Item-->
                                                                         <td>
-                                                                            <span class="text-start">{{__('messages.First name')}}</span>
+                                                                            <span class="text-start">{{__('Country')}}</span>
                                                                         </td>
                                                                         <td class="text-dark">
-                                                                            <span class="py-3 px-4 fs-23">{{ $business?->data['contact_person']['name']['first'] }}</span>
+                                                                            <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['country'] }}
+                                                                            ({{ $tap_info['user']['address'][0]['type'] }})
+                                                                            </span>
+                                                                        </td>
+                                                                        <!--end::Item-->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <!--begin::Item-->
+                                                                        <td>
+                                                                            <span class="text-start">{{__('Cirty')}}</span>
+                                                                        </td>
+                                                                        <td class="text-dark">
+                                                                            <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['city'] }}</span>
+                                                                        </td>
+                                                                        <!--end::Item-->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <!--begin::Item-->
+                                                                        <td>
+                                                                            <span class="text-start">{{__('ZIP code')}}</span>
+                                                                        </td>
+                                                                        <td class="text-dark">
+                                                                            <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['zip_code'] }}</span>
+                                                                        </td>
+                                                                        <!--end::Item-->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <!--begin::Item-->
+                                                                        <td>
+                                                                            <span class="text-start">{{__('Line 1')}}</span>
+                                                                        </td>
+                                                                        <td class="text-dark">
+                                                                            <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['line1'] }}</span>
+                                                                        </td>
+                                                                        <!--end::Item-->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <!--begin::Item-->
+                                                                        <td>
+                                                                            <span class="text-start">{{__('Line 2')}}</span>
+                                                                        </td>
+                                                                        <td class="text-dark">
+                                                                            <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['line2'] }}</span>
                                                                         </td>
                                                                         <!--end::Item-->
                                                                     </tr>
                                                                     @endif
-                                                                    @if (isset($business?->data['contact_person']['name']['title']))
+                                                                    @if (isset($tap_info['user']['identification']))
                                                                     <tr>
                                                                         <!--begin::Item-->
                                                                         <td>
-                                                                            <span class="text-start">{{__('messages.Title')}}</span>
+                                                                            <span class="text-start">{{__('National id')}}</span>
                                                                         </td>
                                                                         <td class="text-dark">
-                                                                            <span class="py-3 px-4 fs-23">{{ $business?->data['contact_person']['name']['title'] }}</span>
+                                                                            <span class="py-3 px-4 fs-23">{{ $tap_info['user']['identification']['number'] }}
+                                                                            </span>
                                                                         </td>
                                                                         <!--end::Item-->
                                                                     </tr>
                                                                     @endif
-                                                                    @if (isset($business?->data['contact_person']['name']['middle']))
+                                                                    @if (isset($tap_info['user']['phone'][0]))
                                                                     <tr>
                                                                         <!--begin::Item-->
                                                                         <td>
-                                                                            <span class="text-start">{{__('messages.Middle name')}}</span>
+                                                                            <span class="text-start">{{__('Phone')}}</span>
                                                                         </td>
                                                                         <td class="text-dark">
-                                                                            <span class="py-3 px-4 fs-23">{{ $business?->data['contact_person']['name']['middle'] }}</span>
-                                                                        </td>
-                                                                        <!--end::Item-->
-                                                                    </tr>
-                                                                    @endif
-                                                                    @if (isset($business?->data['contact_person']['contact_info']['primary']['email']))
-                                                                    <tr>
-                                                                        <!--begin::Item-->
-                                                                        <td>
-                                                                            <span class="text-start">{{__('messages.Email')}}</span>
-                                                                        </td>
-                                                                        <td class="text-dark">
-                                                                            <span class="py-3 px-4 fs-23">{{ $business?->data['contact_person']['contact_info']['primary']['email'] }}</span>
-                                                                        </td>
-                                                                        <!--end::Item-->
-                                                                    </tr>
-                                                                    @endif
-                                                                    @if (isset($business?->data['contact_person']['contact_info']['primary']['phone']['number']))
-                                                                    <tr>
-                                                                        <!--begin::Item-->
-                                                                        <td>
-                                                                            <span class="text-start">{{__('messages.Phone')}}</span>
-                                                                        </td>
-                                                                        <td class="text-dark">
-                                                                            {{ $business?->data['contact_person']['contact_info']['primary']['phone']['country_code'] }}<span>-{{ $business?->data['contact_person']['contact_info']['primary']['phone']['number'] }}</span>
+                                                                            <span class="py-3 px-4 fs-23">
+                                                                                ({{ $tap_info['user']['phone'][0]['primary']  ? __('Primary') : __('Not primary')}})
+                                                                                {{ $tap_info['user']['phone'][0]['country_code'] }}-{{ $tap_info['user']['phone'][0]['number'] }}
+                                                                                ({{ $tap_info['user']['phone'][0]['type'] }})
+                                                                            </span>
                                                                         </td>
                                                                         <!--end::Item-->
                                                                     </tr>
@@ -724,9 +734,9 @@
 @endif
 @else
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content1">
-    <h2 class="text-center pt-5"> 
-    
-     
+    <h2 class="text-center pt-5">
+
+
         {{-- {{ __('messages.Create TAP') }}<a href="{{ route('tap.payments_submit_lead_get') }}"><u>{{ __('messages.business account') }}</u></a> {{ __('messages.first to access this page content!') }} --}}
     </h2>
 </div>

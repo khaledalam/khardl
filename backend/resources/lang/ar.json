@@ -119,6 +119,8 @@
     "The meal has been removed successfully.":"تم ازالة الوجبة بنجاح",
     "Cart items has been removed successfully.":"تم ازالة الوجبات من السلة بنجاح",
     "The order been created successfully.":"تم انشاء الطلب بنجاح",
-    "The order failed to complete":"فشل اتمام الطلب"
+    "The order failed to complete":"فشل اتمام الطلب",
+    "Brand" :"العلامة التجارية",
+    "Brand address" :"عنوان العلامة التجارية"
 
 }
