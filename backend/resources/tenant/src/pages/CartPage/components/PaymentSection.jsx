@@ -307,7 +307,7 @@ const PaymentSection = ({
 
       <div className='w-full flex flex-col lg:flex-row items-start gap-8 my-4'>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Select Payment Method"} isRequired>
+          <CartColumn headerTitle={t('Select Payment Method')} isRequired>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`border ${styles?.categoryDetail_cart_color
@@ -423,7 +423,7 @@ const PaymentSection = ({
         </div>
       </div>
       {/* order notes */}
-      <CartColumn headerTitle={"Order Notes"}>
+      <CartColumn headerTitle={t("Order Notes")}>
 
         <div
           className={`w-full border ${styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"
@@ -445,7 +445,7 @@ const PaymentSection = ({
       {/* address and coupon */}
       <div className='flex flex-col md:flex-row items-start gap-6'>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Address"} isRequired>
+          <CartColumn headerTitle={t("Address")} isRequired>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`w-full border ${styles?.categoryDetail_cart_color
@@ -481,7 +481,7 @@ const PaymentSection = ({
           </CartColumn>
         </div>
         <div className='w-full lg:w-1/2'>
-          <CartColumn headerTitle={"Coupon"}>
+          <CartColumn headerTitle={t('Coupon')}>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`w-full border ${styles?.categoryDetail_cart_color
