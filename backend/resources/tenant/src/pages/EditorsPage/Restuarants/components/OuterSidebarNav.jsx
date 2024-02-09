@@ -320,7 +320,7 @@ const OuterSidebarNav = ({ id }) => {
               <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
                 <img src={LoginIcon} alt="home" />
               </div>
-              <h3 className=""> {t("Login as Customer")} </h3>
+              <h3 className=""> {t("Login")} </h3>
             </div>
 
             {/* <div

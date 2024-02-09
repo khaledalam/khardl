@@ -725,7 +725,7 @@ const ProductItem = ({
                     }}
                     className="w-[45px] h-[45px] relative flex items-center justify-center rounded-lg cursor-pointer"
                   >
-                    <img src={cartHeaderImg} alt={"cart"} className="" />
+                    <img src={cartHeaderImg} alt={"cart"} className="" style={{filter:'invert(1)'}} />
                   </div>
 
                   {categories?.length > 0 ? (

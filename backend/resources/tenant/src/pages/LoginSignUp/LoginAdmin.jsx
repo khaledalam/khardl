@@ -60,6 +60,9 @@ const Login = () => {
             dispatch(changeLogState(true))
             dispatch(setIsOpen(false))
             toast.success(`${t('You have been logged in successfully')}`)
+            setTimeout(()=>{
+               window.location.reload()
+            },100)
             navigate('/summary')
          } else {
             console.log("response?.data?.success false")
