@@ -27,7 +27,7 @@ const NavbarCustomer = () => {
         className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer'
       >
         <img src={cartHeaderImg} alt={"cart"} className='' />
-        {true && (
+        {cartItemsCount > 0 &&  (
           <div className='absolute top-[-0.5rem] right-[-0.5rem]'>
             <div className='w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center'>
               <span className='text-white font-bold text-xs'>
