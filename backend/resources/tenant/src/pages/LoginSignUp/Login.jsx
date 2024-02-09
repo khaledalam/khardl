@@ -70,6 +70,10 @@ const Login = () => {
             )
             if (responseData.data.user.status === 'inactive') {
                sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)
+
+               const userRole = responseData.data.user.roles[0]?.name || 'Customer';
+               localStorage.setItem('user-role', userRole);
+               
                setStatusCode(HTTP_NOT_VERIFIED)
                navigate('/verification-phone')
             } else if (
