@@ -545,7 +545,7 @@ const PaymentSection = ({
                   <MdSend
                     onClick={() => {
                       if (couponCode === "") {
-                        toast.error(`${t("Please Cnter Coupon Code")}`);
+                        toast.error(`${t("Please Enter Coupon Code")}`);
                       } else {
                         handleCouponCodeValidity();
                       }

@@ -147,6 +147,7 @@ const OuterSidebarNav = ({ id }) => {
       localStorage.setItem("selected_branch_id", branch.id);
     }
   }, [pickUp, branch]);
+
   const handleRedirect = (role) => {
     console.log(role);
     if(role == 'Customer'){
@@ -216,19 +217,21 @@ const OuterSidebarNav = ({ id }) => {
           text={t("Delivery")}
           defaultValue={
             branch?.name
-              ? `${branch.name}`
-              : branches &&
-                deliveryFirstBranch
-                ? deliveryFirstBranch?.name
-                : ""
+            ? `${branch.name}`
+            : branches &&
+            deliveryFirstBranch
+            ? deliveryFirstBranch?.name
+            : ""
           }
           onChange={(value) => setBranch(value)}
           options={
             branches
-              ? branches?.filter((branch) => branch.delivery_availability === 1)
-              : []
+            ? branches?.filter((branch) => branch.delivery_availability === 1)
+            : []
           }
-        />
+          />
+          {console.log("branch",branches)}
+          {console.log("pickup",pickUp)}
 
 
 

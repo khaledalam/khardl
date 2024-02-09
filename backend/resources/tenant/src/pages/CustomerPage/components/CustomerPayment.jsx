@@ -46,7 +46,7 @@ const CustomerPayment = ({cardsList}) => {
           ))
         ) : (
           <div className='h-full w-full flex items-center justify-center'>
-            <h3 className='text-xl '>You have no saved card at the moment</h3>
+            <h3 className='text-xl '>{t('You have no saved card at the moment')}</h3>
           </div>
         )}
       </div>

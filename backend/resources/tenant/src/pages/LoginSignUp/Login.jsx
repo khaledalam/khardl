@@ -63,7 +63,7 @@ const Login = () => {
 
          if (response?.data?.success) {
             const responseData = await response?.data;
-            console.log(responseData)
+            console.log("login-response",responseData)
             localStorage.setItem(
                'user-info',
                JSON.stringify(responseData.data.user)
