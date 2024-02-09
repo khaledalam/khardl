@@ -60,6 +60,7 @@ const Login = () => {
             dispatch(changeLogState(true))
             dispatch(setIsOpen(false))
             toast.success(`${t('You have been logged in successfully')}`)
+            navigate('/summary')
          } else {
             console.log("response?.data?.success false")
             setSpinner(false)
