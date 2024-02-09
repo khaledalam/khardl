@@ -169,7 +169,7 @@ class CartRepository
     }
     public function tax($subTotal = null)
     {
-
+        return 0; // tax removed 
         $vat = self::VAT_PERCENTAGE;
         $subTotal = $subTotal ?? $this->subTotal();
         return number_format((($subTotal - $this->discount()) * $vat) / 100 , 2, '.', '');

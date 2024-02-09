@@ -32,7 +32,7 @@ class OrderService
                         return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
                     });
             })
-            ->when($request->status == 'all', function ($query) use ($user) {
+            ->when($request->status == 'all' || !$request->status, function ($query) use ($user) {
                 return $query
                     ->where('deliver_by', null)
                     ->where(function ($query) use ($user) {
