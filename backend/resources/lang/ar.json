@@ -141,5 +141,14 @@
     "Bank IBAN":"رقم الحساب المصرفي الدولي",
     "Bank SWIFT code":"رمز سويفت للبنك",
     "Bank account number":"رقم الحساب المصرفي",
-    "Your information":"معلوماتك"
+    "Your information":"معلوماتك",
+    "Entity is not Licensed":"الكيان غير مرخص",
+    "Entity is Licensed":"الكيان مرخص",
+    "HOME":"المنزل",
+    "Primary":"اساسي",
+    "Not primart":"غير اساسي",
+    "From":"من",
+    "To":"الي",
+    "SAR":"ريال",
+    "monthly":"شهري"
 }

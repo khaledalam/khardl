@@ -431,7 +431,7 @@ $tap_info = $settings->lead_response;
                                                                         {{ $tap_info['brand']['operations']['sales']['range']['from'] }}
                                                                         {{ __('To') }}
                                                                         {{ $tap_info['brand']['operations']['sales']['range']['to'] }}
-                                                                        {{ $tap_info['brand']['operations']['sales']['currency'] }} {{ $tap_info['brand']['operations']['sales']['period'] }}
+                                                                        {{ __($tap_info['brand']['operations']['sales']['currency']) }} {{ __($tap_info['brand']['operations']['sales']['period']) }}
                                                                     </span>
                                                                 </td>
                                                                 <!--end::Item-->
@@ -580,7 +580,7 @@ $tap_info = $settings->lead_response;
                                                                         </td>
                                                                         <td class="text-dark">
                                                                             <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['country'] }}
-                                                                            ({{ $tap_info['user']['address'][0]['type'] }})
+                                                                            ({{ __($tap_info['user']['address'][0]['type']) }})
                                                                             </span>
                                                                         </td>
                                                                         <!--end::Item-->
@@ -647,9 +647,8 @@ $tap_info = $settings->lead_response;
                                                                         </td>
                                                                         <td class="text-dark">
                                                                             <span class="py-3 px-4 fs-23">
-                                                                                ({{ $tap_info['user']['phone'][0]['primary']  ? __('Primary') : __('Not primary')}})
                                                                                 {{ $tap_info['user']['phone'][0]['country_code'] }}-{{ $tap_info['user']['phone'][0]['number'] }}
-                                                                                ({{ $tap_info['user']['phone'][0]['type'] }})
+                                                                                ({{ $tap_info['user']['phone'][0]['primary']  ? __('Primary') : __('Not primary')}} - {{ __($tap_info['user']['phone'][0]['type']) }})
                                                                             </span>
                                                                         </td>
                                                                         <!--end::Item-->
