@@ -138,6 +138,7 @@ const OuterSidebarNav = ({ id }) => {
 
   useEffect(() => {
     if (pickUp?.id) {
+      console.log("first time");
       fetchCategoriesData(pickUp.id);
       localStorage.setItem("selected_branch_id", pickUp.id);
     }
@@ -147,29 +148,27 @@ const OuterSidebarNav = ({ id }) => {
       localStorage.setItem("selected_branch_id", branch.id);
     }
   }, [pickUp, branch]);
+
   const handleRedirect = (role) => {
     console.log(role);
-    if(role == 'Customer'){
-      navigate("/dashboard")
-    }
-    else if(role == 'Driver'){
-        window.open(window.location.href + "orders-all");
-    }else {
+    if (role == "Customer") {
+      navigate("/dashboard");
+    } else if (role == "Driver") {
+      window.open(window.location.href + "orders-all");
+    } else {
       console.log(window.location.href);
       window.open(window.location.href + "summary");
     }
   };
   const role = localStorage.getItem("user-role");
 
+  let pickupFirstBranch =
+    branches?.filter((branch) => branch.pickup_availability === 1)[0] || false;
 
-  let pickupFirstBranch = branches?.filter(
-      (branch) => branch.pickup_availability === 1
-  )[0] || false;
-
-    let deliveryFirstBranch = branches?.filter(
-        (branch) => branch.delivery_availability === 1
-    )[0] || false;
-
+  let deliveryFirstBranch =
+    branches?.filter((branch) => branch.delivery_availability === 1)[0] ||
+    false;
+ 
   return (
     <div
       ref={refOuterNav}
@@ -199,10 +198,9 @@ const OuterSidebarNav = ({ id }) => {
           defaultValue={
             pickUp?.name
               ? `${pickUp.name}`
-              : branches &&
-                pickupFirstBranch
-                ? pickupFirstBranch?.name
-                : ""
+              : branches && pickupFirstBranch
+              ? pickupFirstBranch?.name
+              : ""
           }
           onChange={(value) => setPickUp(value)}
           options={
@@ -211,62 +209,68 @@ const OuterSidebarNav = ({ id }) => {
               : []
           }
         />
-        <PrimarySelectWithIcon
-          imgUrl={deliveryIcon}
-          text={t("Delivery")}
-          defaultValue={
-            branch?.name
-              ? `${branch.name}`
-              : branches &&
-                deliveryFirstBranch
+        {branches?.filter((branch) => branch.delivery_availability === 1) >
+        0 ? (
+          <PrimarySelectWithIcon
+            imgUrl={deliveryIcon}
+            text={t("Delivery")}
+            defaultValue={
+              branch?.name
+                ? `${branch.name}`
+                : branches && deliveryFirstBranch
                 ? deliveryFirstBranch?.name
                 : ""
-          }
-          onChange={(value) => setBranch(value)}
-          options={
-            branches
-              ? branches?.filter((branch) => branch.delivery_availability === 1)
-              : []
-          }
-        />
-
-
+            }
+            onChange={(value) => setBranch(value)}
+            options={
+              branches
+                ? branches?.filter(
+                    (branch) => branch.delivery_availability === 1
+                  )
+                : []
+            }
+          />
+        ) : null}
+        {console.log("branch", branches)}
+        {console.log("pickup", pickUp)}
 
         {/* login */}
 
         {isLoggedIn ? (
           <>
-
-
-            {role == "Customer" ? (<>
-              <Fragment>
-                <div
-                  onClick={() => {
-                    handleRedirect(role);
-                    closeMenu();
-                  }}
-                  className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border items-center cursor-pointer"
-                  style={{
-                    borderColor: restuarantStyle?.categoryDetail_cart_color,
-                  }}
-                >
-                  <div className="w-[60px] h-[50px] rounded-xl p-2 flex items-center justify-center">
-                    <img src={dashboardIcon} alt="home" />
+            {role == "Customer" ? (
+              <>
+                <Fragment>
+                  <div
+                    onClick={() => {
+                      handleRedirect(role);
+                      closeMenu();
+                    }}
+                    className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border items-center cursor-pointer"
+                    style={{
+                      borderColor: restuarantStyle?.categoryDetail_cart_color,
+                    }}
+                  >
+                    <div className="w-[60px] h-[50px] rounded-xl p-2 flex items-center justify-center">
+                      <img src={dashboardIcon} alt="home" />
+                    </div>
+                    <h3 className=""> {t("Dashboard")}</h3>
                   </div>
-                  <h3 className=""> {t("Dashboard")}</h3>
-                </div>
-              </Fragment>
-           </> ) :
+                </Fragment>
+              </>
+            ) : (
               <Fragment>
                 <Fragment>
                   <div
                     onClick={() => {
-                      handleRedirect('Customer');
+                      handleRedirect("Customer");
 
                       closeMenu();
                     }}
                     className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
-                    style={{ borderColor: restuarantStyle?.categoryDetail_cart_color }}
+                    style={{
+                      borderColor: restuarantStyle?.categoryDetail_cart_color,
+                    }}
                   >
                     <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
                       <img src={dashboardIcon} alt="home" />
@@ -281,7 +285,9 @@ const OuterSidebarNav = ({ id }) => {
                       closeMenu();
                     }}
                     className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
-                    style={{ borderColor: restuarantStyle?.categoryDetail_cart_color }}
+                    style={{
+                      borderColor: restuarantStyle?.categoryDetail_cart_color,
+                    }}
                   >
                     <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
                       <img src={dashboardIcon} alt="home" />
@@ -289,8 +295,8 @@ const OuterSidebarNav = ({ id }) => {
                     <h3 className=""> {t("Dashboard Admin")}</h3>
                   </div>
                 </Fragment>
-
-              </Fragment>}
+              </Fragment>
+            )}
           </>
         ) : (
           <Fragment>
@@ -317,7 +323,7 @@ const OuterSidebarNav = ({ id }) => {
               <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
                 <img src={LoginIcon} alt="home" />
               </div>
-              <h3 className=""> {t("Login as Customer")} </h3>
+              <h3 className=""> {t("Login")} </h3>
             </div>
 
             {/* <div

@@ -23,19 +23,24 @@ class TapWebhookSignature implements SignatureValidator
             $payment_reference = $data['reference']['payment'];
             $status = $data['status'];
             $created = $data['transaction']['created'];
-    
-            $SecretAPIKey = env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY');
+            
+            if(isset($data['metadata']['restaurant_id'])){
+                $SecretAPIKey = env('TAP_SECRET_API_KEY');
+            }else {
+                $SecretAPIKey = env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY');
+            }
+  
     
             $toBeHashedString = 'x_id'.$id.'x_amount'.number_format($amount, 2).'x_currency'.$currency.'x_gateway_reference'.$gateway_reference.'x_payment_reference'.$payment_reference.'x_status'.$status.'x_created'.$created.'';
             
             $myHashString = hash_hmac('sha256', $toBeHashedString, $SecretAPIKey);
     
             if($myHashString == $request->header('Hashstring')){
-                logger("passed");
+                // logger("passed");
                 return true;
             }
             else{
-                logger("not passed");
+                // logger("not passed");
                 // logger($toBeHashedString);
                 // logger($request->headers);
                 // logger($myHashString);
@@ -43,7 +48,7 @@ class TapWebhookSignature implements SignatureValidator
                 return false;
             }
         }else {
-            logger("error");
+            logger("error tap webhook signature");
             return false;
         }
         

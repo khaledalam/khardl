@@ -70,14 +70,7 @@ const SideNavbar = () => {
   const handleNavigate = (navItem) => {
     navigate(navItem.link)
   }
-  const handleWindowAlert = () => {
-    const stat = window.confirm(
-      t("Are you sure you want to leave the page before saving")
-    )
-    console.log("stat", stat)
-    setStatus(stat)
-    stat && dispatch(updateProfileSaveStatus(true))
-  }
+
 
   useEffect(() => {
     if (!status) {
@@ -96,9 +89,9 @@ const SideNavbar = () => {
             key={navItem.id}
             active={navItem.title === activeNavItem}
             onClick={
-              saveProfileChange
-                ? () => handleNavigate(navItem)
-                : handleWindowAlert
+              
+                () => handleNavigate(navItem)
+                
             }
             title={navItem.title}
             imgUrl={navItem.imgUrl}

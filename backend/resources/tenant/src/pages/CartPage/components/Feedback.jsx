@@ -7,6 +7,7 @@ const Feedback = ({
   onChange,
   placeholder,
   imgUrl,
+  defaultValue,
   isDisabled = false,
   isReadOnly = false,
 }) => {
@@ -27,6 +28,7 @@ const Feedback = ({
         readOnly={isReadOnly}
         placeholder={placeholder || t("Say something nice...")}
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         className='input w-full disabled:bg-transparent h-full rounded-none outline-none border-none focus-visible:border-none focus-within:border-none focus-within:outline-none'
       />

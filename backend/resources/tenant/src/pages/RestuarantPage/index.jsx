@@ -24,15 +24,16 @@ export const RestuarantHomePage = () => {
  
 
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
+  const branches = restaurantStyle.branches;
 
   let branch_id = localStorage.getItem("selected_branch_id");
   // let branch_id = 2
 
-  const fetchCategoriesData = async () => {
+  const fetchCategoriesData = async (id) => {
     try {
       const restaurantCategoriesResponse = await AxiosInstance.get(
         `categories?items&user&branch${
-          branch_id ? `&selected_branch_id=${branch_id}` : ""
+          branch_id ? `&selected_branch_id=${branch_id}` : id ? `&selected_branch_id=${id}` :  ""
         }`
       );
       // const restaurantCategoriesResponse =[];
@@ -48,7 +49,10 @@ export const RestuarantHomePage = () => {
         setisLoading(false);
         console.log(">> branch_id >>", branch_id);
 
-        if (!branch_id) {
+        if (!branch_id && id) {
+          branch_id = id;
+          localStorage.setItem("selected_branch_id", branch_id);
+        } else {
           branch_id = restaurantCategoriesResponse.data?.data[0]?.branch?.id;
           localStorage.setItem("selected_branch_id", branch_id);
         }
@@ -93,16 +97,35 @@ export const RestuarantHomePage = () => {
   };
 
   useEffect(() => {
-    fetchCategoriesData().then(() => {
-      console.log("fetched restuarant style successfully");
-    });
-
+    
     fetchResStyleData();
     fetchCartData().then(() => {
       console.log("fetched cart item count successfully");
     });
+    fetchCategoriesData().then(() => {
+      console.log("fetched restuarant style successfully");
+    });
   }, []);
 
+  let pickupFirstBranch =
+    branches?.filter((branch) => branch.pickup_availability === 1)[0] || false;
+
+  let deliveryFirstBranch =
+    branches?.filter((branch) => branch.delivery_availability === 1)[0] ||
+    false;
+  useEffect(() => {
+    if (
+      pickupFirstBranch &&
+      pickupFirstBranch?.id &&
+      !branch_id
+    ) {
+      fetchCategoriesData(pickupFirstBranch.id);
+    } else {
+      if (deliveryFirstBranch && deliveryFirstBranch?.id) {
+        fetchCategoriesData(deliveryFirstBranch.id);
+      }
+    }
+  }, [branches, pickupFirstBranch, deliveryFirstBranch]);
   console.log("isLoading", isLoading);
 
   if (isLoading || !restaurantStyle) {

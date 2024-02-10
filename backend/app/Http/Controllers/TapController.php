@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant\Order;
 use Carbon\Carbon;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
@@ -31,14 +32,15 @@ class TapController extends Controller
     public function payments(Request $request)
     {
         $user = Auth::user();
-        // $business = TapBusiness::first();
-        // $businessFile = TapBusinessFile::first();
-        // if ($user->ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
-        //     return $this->handleDownload($request, $user->ROSubscriptionInvoices);
-        // }
-        $business  =   null ;
-        // @TODO @todo there data not synced, business flow was deprecated'
-        return view('restaurant.payments', compact('user', 'business'));
+        $settings = Setting::first();
+        $orders = Order::onlineCash()
+        ->whenSearch($request['search']?? null)
+        ->whenStatus($request['status']?? null)
+        ->WhenDateString($request['date_string']??null)
+        ->whenPaymentStatus($request['payment_status']?? null)
+        ->recent()
+        ->paginate(config('application.perPage',10));
+        return view('restaurant.payments', compact('user', 'settings','orders'));
     }
     private function handleDownload($request, $model)
     {
@@ -172,7 +174,7 @@ class TapController extends Controller
         return redirect()->route('tap.payments')->with('success', __('New Business has been created successfully.'));
 
     }
-    
+
     public function payments_submit_card_details(SaveCardRequest $request)
     {
         $data = $request->validated();
@@ -187,30 +189,30 @@ class TapController extends Controller
             }else {
                 $chargeData=  ROSubscription::serviceCalculate($data['type'],  $data['n_branches'],$centralSubscription->id);
             }
-                
+
         }else {
             $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
         }
     
-        $charge = TapCharge::create(
+        $charge = TapCharge::createSub(
             data : [
                 'amount'=> $chargeData['cost'],
                 'metadata'=>[
+                    'restaurant_id'=> tenant()->id,
                     'subscription'=> $data['type'],
                     'n-branches'=> $chargeData['number_of_branches'],
                     'subscription_id'=>$centralSubscription->id
                 ],
             ],
-            merchant_id: $merchant_id,
             token_id: $data['token_id'],
             redirect: route('tap.payments_redirect')
         );
         if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
             return redirect($charge['message']['transaction']['url']);
         }
-   
-     
-       
+
+
+
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
     public function payments_submit_lead_get(){
@@ -227,7 +229,7 @@ class TapController extends Controller
         return view('restaurant.payments_tap_create_lead',compact('iban','facility_name','restaurant_name','user'));
     }
     public function payments_submit_lead(CreateLeadRequest $request){
-        
+
         $response = Lead::connect($request->all());
         if($response['http_code'] == ResponseHelper::HTTP_OK){
             logger( $response['message']);
@@ -250,7 +252,7 @@ class TapController extends Controller
     }
     public function payments_redirect(Request $request){
         if ($request->tap_id) {
-            $charge = TapCharge::retrieve($request->tap_id);
+            $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));

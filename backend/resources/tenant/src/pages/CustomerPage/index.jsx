@@ -65,9 +65,9 @@ export const CustomerPage = () => {
     }
   }
 
-  useEffect(() => {
-    navigate("/dashboard#Dashboard")
-  }, [])
+  // useEffect(() => {
+  //   navigate("/dashboard#Dashboard")
+  // }, [])
 
   const fetchCardsData = async () => {
     try {

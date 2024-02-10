@@ -109,7 +109,8 @@ const OrderTable = ({data}) => {
         </div>
       ) : (
         <div className='w-full h-[70vh] flex items-center justify-center'>
-          <span className='loading loading-spinner text-[var(--customer)]'></span>
+          <h3 className='my-4'>{t("No Recent Orders...")}</h3>
+          {/* <span className='loading loading-spinner text-[var(--customer)]'></span> */}
         </div>
       )}
     </Fragment>

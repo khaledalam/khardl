@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Footer from "./components/Footer/Footer";
@@ -59,7 +59,7 @@ const App = () => {
   const location = useLocation();
   const { loading } = useAuthContext();
   const [isMobile, setIsMobile] = useState(false);
-
+  const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -149,14 +149,18 @@ const App = () => {
                   path="/create-new-password"
                   element={<Protected Cmp={CreateNewPassword} />}
                 />
-                <Route
-                  path="/restaurant-not-live"
-                  element={<RestaurantNotLive />}
-                />{" "}
-                <Route
-                  path="/restaurant-not-subscribed"
-                  element={<RestaurantNotSubscribed />}
-                />{" "}
+
+                  
+                    <Route
+                      path="/restaurant-not-live"
+                      element={<RestaurantNotLive />}
+                    />
+                    <Route
+                      path="/restaurant-not-subscribed"
+                      element={<RestaurantNotSubscribed />}
+                    />
+                  
+                
                 <Route path="/success" element={<SuccessPayment />} />
                 <Route path="/failed" element={<FailedPayment />} />
                 <Route path="/policies" element={<TermsPolicies />} />{" "}

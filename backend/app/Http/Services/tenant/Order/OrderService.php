@@ -21,11 +21,17 @@ use App\Models\Tenant\RestaurantUser;
 class OrderService
 {
     use APIResponseTrait;
-    public function getList()
+    public function getList($request)
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $orders = Order::with('payment_method')->recent()->paginate(config('application.perPage')??20);
+        $orders = Order::with('payment_method')
+        ->recent()
+        ->whenSearch($request['search']?? null)
+        ->whenStatus($request['status']?? null)
+        ->WhenDateString($request['date_string']??null)
+        ->whenPaymentStatus($request['payment_status']?? null)
+        ->paginate(config('application.perPage')??20);
         return view('restaurant.orders.list', compact('user', 'orders'));
     }
     public function create()

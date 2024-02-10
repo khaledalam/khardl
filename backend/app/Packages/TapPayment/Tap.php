@@ -85,7 +85,43 @@ class Tap
         if($response instanceof Response){
           $response = json_decode($response->getBody(), true);
         }
-        logger($response);
+
+        if(isset($response['errors'][0])){
+            if(isset($response['errors'][0]['description'])){
+                $errors =  $response['errors'][0]['description'];
+            }else if (isset($response['errors'][0]['message'])){
+                $errors =  $response['errors'][0]['message'];
+            }
+        }else { 
+            $errors =  __("Failed to complete the process, please try again or contact Support Team");
+        }
+        return [
+            'http_code'=> ResponseHelper::HTTP_BAD_REQUEST,
+            'gateway_code'=> (isset($response['errors'][0]['code']))?$response['errors'][0]['code']: ResponseHelper::HTTP_BAD_REQUEST,
+            'message'=>  $errors
+        ];
+    }
+    public static function sendToSub(string $url,array $data,string $method = 'post'){
+        try {
+            $secret_key =  env('TAP_SECRET_API_KEY','');
+
+            $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
+            
+            $response = Http::withToken($secret_key)
+            ->$method($prefix_url.$url,$data);
+           
+            if($response->successful()){
+                $response = json_decode($response->getBody(), true);
+                return [
+                    'http_code'=>ResponseHelper::HTTP_OK,
+                    'message'=> $response
+                ];
+            }
+        }catch(\Exception $e){
+           logger($e->getMessage());
+        }
+        $response = json_decode($response->getBody(), true);
+
         if(isset($response['errors'][0])){
             if(isset($response['errors'][0]['description'])){
                 $errors =  $response['errors'][0]['description'];
