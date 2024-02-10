@@ -536,11 +536,7 @@ class RestaurantController extends BaseController
 
                 $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
             })
-            ->when($user->isRestaurantOwner(), function (Builder $query, string $role) use ($user, $branchId) {
-                if ($branchId) {
-                    $query->where('branch_id', $branchId)->where('user_id', $user->id);
-                }
-            })
+            
             ->get();
         if ($branchId) {
             $branch = Branch::find($branchId);
@@ -568,7 +564,14 @@ class RestaurantController extends BaseController
             ->get();
         $selectedCategory = $categories->where('id', $id)->first();
         $items = Item::
-            where('user_id', $user->id)
+            when($user->isWorker(), function (Builder $query, string $role) use ($user, $branchId) {
+                if ($branchId) {
+                    if ($branchId != $user->branch->id)
+                        return;
+                }
+
+                $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
+            })
             ->where('category_id', $selectedCategory->id)
             ->where('branch_id', $branchId)
             ->orderBy('created_at', 'DESC')
