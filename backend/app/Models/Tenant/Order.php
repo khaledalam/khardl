@@ -113,6 +113,12 @@ class Order extends Model
             return $q->where('name',DeliveryType::DELIVERY);
         });
     }
+    public function scopeOnlineCash($query)
+    {
+        return $query->whereHas('payment_method',function($q){
+            return $q->where('name',PaymentMethod::ONLINE);
+        });
+    }
     public function scopeRecent($query)
     {
         return $query->orderBy('id', 'DESC');

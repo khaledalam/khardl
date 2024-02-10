@@ -13,9 +13,9 @@ class OrderController extends BaseController
 {
     public function __construct(private OrderService $orderService) {
     }
-    public function index()
+    public function index(Request $request)
     {
-        return $this->orderService->getList();
+        return $this->orderService->getList($request);
     }
 
     public function create()
