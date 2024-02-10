@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\User;
@@ -322,7 +323,6 @@ Route::group([
 
 
 });
-
 Route::middleware([
     'api',
     'tenant',
@@ -354,11 +354,17 @@ Route::middleware([
             Route::get('branches/{branch}/delivery', [BranchController::class, 'getDeliveryAvailability']);
             Route::post('logout', [APILoginController::class, 'logout']);
             Route::middleware('driver')->group(function () {
-                Route::controller(DriverOrderController::class)->group(function () {
-                    Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
-                    Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
+                Route::prefix('driver')->group(function () {
+                    Route::controller(DriverOrderController::class)->group(function () {
+                        Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
+                        Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
+                    });
+                    Route::controller(ProfileController::class)->group(function () {
+                        Route::post('change-password', 'changePassword');
+                    });
                 });
             });
+
         });
         Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([
