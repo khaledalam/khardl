@@ -121,6 +121,25 @@
     "The order been created successfully.":"تم انشاء الطلب بنجاح",
     "The order failed to complete":"فشل اتمام الطلب",
     "Brand" :"العلامة التجارية",
-    "Brand address" :"عنوان العلامة التجارية"
-
+    "Brand address" :"عنوان العلامة التجارية",
+    "Brand name":"اسم العلامة التجارية",
+    "Brand channel":"مكان العلامة التجارية",
+    "Bussiness expected sales":"المبيعات المتوقعة للأعمال",
+    "Legal Entity (Commercial Registration)":"الكيان القانوني (السجل التجاري)",
+    "Name":"الاسم",
+    "Email":"البريد الالكتروني",
+    "Birthday":"تاريخ الميلاد",
+    "Birthday city":"مدينة الميلاد",
+    "Country":"الدولة",
+    "City":"المدينة",
+    "ZIP code":"الرمز البريدي",
+    "Line 1":"الخط الاول",
+    "Line 2":"الخط الثاني",
+    "National ID":"الرقم القومي",
+    "Phone":"الهاتف",
+    "Bank name":"اسم البنك",
+    "Bank IBAN":"رقم الحساب المصرفي الدولي",
+    "Bank SWIFT code":"رمز سويفت للبنك",
+    "Bank account number":"رقم الحساب المصرفي",
+    "Your information":"معلوماتك"
 }
