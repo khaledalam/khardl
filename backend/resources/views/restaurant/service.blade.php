@@ -31,6 +31,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             cancelButtonText: "{{ __('messages.no') }}"
         }).then((result) => {
             if (result.isConfirmed) {
+                
                 goSell.submit();
             }
         });
@@ -53,7 +54,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     
                 }
             },
-            publicKey:"{{env('TAP_PAYMENT_TECHNOLOGY_PUBLIC_KEY')}}",
+            publicKey:"{{env('TAP_PUBLIC_API_KEY')}}",
             language: "{{app()->getLocale()}}",
             supportedCurrencies: "all",
             supportedPaymentMethods: "all",
@@ -106,6 +107,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                     <div class="card-body p-lg-10">
                                         <!--begin::Plans-->
                                         <div class="d-flex flex-column">
+                                          
                                             <!--begin::Heading-->
                                             <div class="mb-13 text-center">
                                                 <h1 class="fs-2hx fw-bolder mb-5">{{__('messages.Enjoy benefiting from our services')}}</h1>
@@ -113,7 +115,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             <!--end::Heading-->
 
                                             <!--begin::Row-->
-                                            @if($setting->lead_id && $setting->merchant_id)
                                             <div class="row g-10">
 
                                                 <!--begin::Col-->
@@ -396,21 +397,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 </div>
                                             </div>
                                      
-                                            @elseif($setting->lead_id && !$setting->merchant_id)
-                                                <div class="alert alert-warning text-center">
-                                                    <h3>{{ __('messages.Your payment gateway account is currently waiting for approval') }}</h3>
-                                                    
-                                                </div>
-
-                                            @else
-
-                                            <div class="alert alert-warning text-center">
-                                                <h3>{{ __('messages.You need to configure your payment account to access services') }}</h3>
-                                                <a href="{{ route('tap.payments_submit_lead_get') }}">
-                                                    <button class="btn btn-primary btn-sm my-2">{{ __('messages.Manage payment gateway') }}</button>
-                                                </a>
-                                            </div>
-                                            @endif
+           
 
                                             <!--end::Row-->
                                         </div>

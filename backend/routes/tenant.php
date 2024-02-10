@@ -249,7 +249,7 @@ Route::group([
         Route::get('/cart', static function () {
             return view('tenant');
         })->name('cart');
-
+     
 
         Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
 
@@ -353,12 +353,12 @@ Route::middleware([
             Route::put('branches/{branch}/delivery', [BranchController::class, 'updateDelivery']);
             Route::get('branches/{branch}/delivery', [BranchController::class, 'getDeliveryAvailability']);
             Route::post('logout', [APILoginController::class, 'logout']);
-            Route::middleware('driver')->group(function () {
+            // Route::middleware('driver')->group(function () {
                 Route::controller(DriverOrderController::class)->group(function () {
                     Route::get('drivers-orders', 'index')->name('restaurant.orders_all');
                     Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
                 });
-            });
+            // });
         });
         Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([

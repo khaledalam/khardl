@@ -735,7 +735,7 @@ return [
     "Birthday"=>"Birthday",
     "Is this your primary email?" => "Is this your primary email?",
     "Is this your primary number?" => "Is this your primary number?",
-    "You need to configure your payment account to access services" => "You need to configure your payment account to access services",
+    "You need to configure your payment account to start selling" => "You need to configure your payment account to start selling",
     "Manage payment gateway" => "Manage payment gateway",
     "From"=>'From',
     'To'=>"To",
