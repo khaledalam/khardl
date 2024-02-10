@@ -41,6 +41,7 @@ class Order extends Model
     protected $casts = [
         'received_by_restaurant_at' => 'datetime'
     ];
+    protected $appends = ['cancelable'];
     const STATUS = [
         self::PENDING,
         self::RECEIVED_BY_RESTAURANT,
@@ -75,6 +76,17 @@ class Order extends Model
     public function getUpdatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+    public function getCancelableAttribute()
+    {
+        if($this->isDelivery()){
+            if(!$this->driver_id){
+                if($this->deliver_by == 'Yeswa'){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /* Start Scopes */
