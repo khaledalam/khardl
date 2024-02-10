@@ -72,7 +72,8 @@ Route::group([
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
-        return UserImpersonation::makeResponse($token);
+       UserImpersonation::makeResponse($token);
+       return redirect()->route('restaurant.service');
     })->name("impersonate");
 
     Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
@@ -353,18 +354,12 @@ Route::middleware([
             Route::put('branches/{branch}/delivery', [BranchController::class, 'updateDelivery']);
             Route::get('branches/{branch}/delivery', [BranchController::class, 'getDeliveryAvailability']);
             Route::post('logout', [APILoginController::class, 'logout']);
-            Route::middleware('driver')->group(function () {
-                Route::prefix('driver')->group(function () {
-                    Route::controller(DriverOrderController::class)->group(function () {
-                        Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
-                        Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
-                    });
-                    Route::controller(ProfileController::class)->group(function () {
-                        Route::post('change-password', 'changePassword');
-                    });
+            // Route::middleware('driver')->group(function () {
+                Route::controller(DriverOrderController::class)->group(function () {
+                    Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
+                    Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
                 });
-            });
-
+            // });
         });
         Route::prefix('tap')->group(function () {
             Route::apiResource('businesses', BusinessController::class)->only([

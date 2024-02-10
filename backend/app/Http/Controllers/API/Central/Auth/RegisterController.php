@@ -119,23 +119,19 @@ class RegisterController extends BaseController
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
-        $request->validate([
-            'email' => 'required|email|exists:users,email|min:10|max:255',
-        ]);
-
+       
         $today = Carbon::today();
-
+        $user = Auth::user();
         // You might want a new table to track verification code attempts.
         // Here, I'm assuming the table's name is `email_verification_tokens`.
         $attempts = DB::table('email_verification_tokens')
-            ->where('email', $request->email)
+            ->where('email', $user->email)
             ->whereDate('created_at', $today)->get();
 
         if (count($attempts) >= 3) {
             return $this->sendError('Fail', __('Too many verification attempts. Request a new verification code.'));
         }
 
-        $user = User::where('email', $request->email)->first();
 
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
@@ -159,11 +155,12 @@ class RegisterController extends BaseController
 
     public function verify(Request $request): JsonResponse
     {
+      
         $request->validate([
-            'email' => 'required|email|exists:users,email|min:10|max:255',
+            // 'email' => 'required|email|max:255',
             'code' => 'required|string|min:6|max:6', // Assuming a 6-digit code
         ]);
-        $user = User::where('email', $request->email)->first();
+        $user =Auth::user();
 
         // If the user has already verified their email
         if ($user->email_verified_at !== null) {

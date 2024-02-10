@@ -69,10 +69,10 @@ class CreateTenantAction
     public static function generateSubdomain($text){
         $transliterated = Str::slug($text);
 
-        $words = explode('-', $transliterated);
-        $firstWord = $words[0];
+        // $words = explode('-', $transliterated);
+        // $firstWord = $words[0];
 
-        return $firstWord;
+        return $transliterated;
     }
     protected function dropDatabase($databaseName)
     {

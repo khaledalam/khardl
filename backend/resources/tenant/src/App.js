@@ -60,7 +60,6 @@ const App = () => {
   const { loading } = useAuthContext();
   const [isMobile, setIsMobile] = useState(false);
   const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
-
   useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -154,11 +153,11 @@ const App = () => {
                   
                     <Route
                       path="/restaurant-not-live"
-                      element={isLoggedIn ? <Navigate replace to={'/'}/> : <RestaurantNotLive />}
+                      element={<RestaurantNotLive />}
                     />
                     <Route
                       path="/restaurant-not-subscribed"
-                      element={isLoggedIn ? <Navigate replace to={'/'}/> : <RestaurantNotSubscribed />}
+                      element={<RestaurantNotSubscribed />}
                     />
                   
                 

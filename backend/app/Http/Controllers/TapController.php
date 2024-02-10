@@ -193,17 +193,17 @@ class TapController extends Controller
         }else {
             $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
         }
-
-        $charge = TapCharge::create(
+    
+        $charge = TapCharge::createSub(
             data : [
                 'amount'=> $chargeData['cost'],
                 'metadata'=>[
+                    'restaurant_id'=> tenant()->id,
                     'subscription'=> $data['type'],
                     'n-branches'=> $chargeData['number_of_branches'],
                     'subscription_id'=>$centralSubscription->id
                 ],
             ],
-            merchant_id: $merchant_id,
             token_id: $data['token_id'],
             redirect: route('tap.payments_redirect')
         );
@@ -252,7 +252,7 @@ class TapController extends Controller
     }
     public function payments_redirect(Request $request){
         if ($request->tap_id) {
-            $charge = TapCharge::retrieve($request->tap_id);
+            $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
                     return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
