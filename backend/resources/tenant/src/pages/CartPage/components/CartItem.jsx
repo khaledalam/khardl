@@ -183,6 +183,7 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
         </div>
         <h3 className="font-bold">
         {t("Total")}:{t("SAR")}{" "}
+        {/* {cartItems? parseFloat(cartItems.reduce((total, item) =>total + (item.price + item.options_price) * item.quantity,0)): 0} */}
           {cartItem.price * cartItem.quantity + cartItem.options_price}
         </h3>
       </div>

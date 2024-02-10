@@ -30,7 +30,7 @@ export const AuthContextProvider = (props) => {
   const checkAuthenticated = useCallback(async () => {
     try {
       const response = await axiosAuth.post(API_ENDPOINT + "/auth-validation");
-      localStorage.setItem("i18nextLng",response?.data?.default_locale)
+      localStorage.setItem("i18nextLng", response?.data?.default_locale);
       console.log(statusCode);
       setStatusCode(response?.status);
       console.log(statusCode);
@@ -43,6 +43,7 @@ export const AuthContextProvider = (props) => {
     } catch (err) {
       console.log(err);
       setStatusCode(err?.response?.status);
+      localStorage.setItem("i18nextLng",err.response.data.default_locale || "ar");
       dispatch(changeLogState(err.response?.data?.is_loggedin || false));
       dispatch(changeUserState(err.response?.data?.user || null));
     } finally {
