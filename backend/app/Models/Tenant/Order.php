@@ -80,10 +80,8 @@ class Order extends Model
     public function getCancelableAttribute()
     {
         if($this->isDelivery()){
-            if(!$this->driver_id){
-                if($this->deliver_by == 'Yeswa'){
-                    return false;
-                }
+            if($this->deliver_by == 'Yeswa'){
+                return false;
             }
         }
         return true;
