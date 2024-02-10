@@ -84,7 +84,7 @@ class RestaurantCharge
     {
         DB::beginTransaction();
         try {
-            $user = RestaurantUser::where('tap_customer_id', $data['customer']['id'])->first();
+            $user = RestaurantUser::first();
             $subscription = ROSubscription::first();
             
             if ($data['status'] == 'CAPTURED') { // if payment successful
@@ -98,7 +98,7 @@ class RestaurantCharge
                 'status' => ($data['status'] == 'CAPTURED') ? ROSubscription::ACTIVE : $data['status'],
                 'subscription_id' => $data['metadata']['subscription_id'],
                 'chg_id' => $data['id'],
-                'cus_id' => $user->tap_customer_id,
+                'cus_id' => env('TAP_DEFAULT_CUSTOMER_ID'),
                 'card_id' => $data['card']['id'] ?? null,
                 'type' => $data['metadata']['subscription'],
             ]);

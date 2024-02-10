@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Str;
 use App\Rules\UniqueSubdomain;
 use App\Http\Requests\PhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
@@ -39,5 +40,9 @@ class RestaurantOwnerRegisterRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->validatePhone();
+    }
+    protected function passedValidation(): void
+    {
+        $this->replace(['restaurant_name' => Str::lower($this->restaurant_name)]);
     }
 }

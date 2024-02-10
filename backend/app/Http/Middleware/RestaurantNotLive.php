@@ -33,6 +33,7 @@ class RestaurantNotLive
             }
            
         }    
+            
         
         return $next($request);
     }
