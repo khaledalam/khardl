@@ -85,6 +85,7 @@
                             <th class="text-end min-w-100px">{{ __('messages.payment-status') }}</th>
 
                             <th class="text-end min-w-100px">{{ __('messages.Total') }}</th>
+                            <th class="text-end min-w-100px">{{ __('messages.Address') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Date') }}</th>
                             <th class="text-end min-w-100px">
                                 <a href="{{ route('restaurant.orders_add') }}">
@@ -190,6 +191,9 @@
                         <span class="fw-bolder">{{$order->total}} {{__('messages.sar')}}</span>
                         </td>
                         <!--end::Total=-->
+                        <td>
+                            <span class="fw-bolder">{{$order->shipping_address}}</span>
+                        </td>
                         <!--begin::Date Added=-->
                         <td class="text-end" data-order="2022-03-22">
                             <span class="fw-bolder">{{$order->created_at}}</span>
