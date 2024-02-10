@@ -735,6 +735,8 @@ return [
     "Birthday"=>"Birthday",
     "Is this your primary email?" => "Is this your primary email?",
     "Is this your primary number?" => "Is this your primary number?",
+    "Your restaurant will be activated after completing the review process"=>"Your restaurant will be activated after completing the review process",
+    "Khardl website"=>"Khardl website",
     "You need to configure your payment account to start selling" => "You need to configure your payment account to start selling",
     "Manage payment gateway" => "Manage payment gateway",
     "From"=>'From',
@@ -809,5 +811,6 @@ return [
     "Drivers option" => "Drivers option",
     "Go to Homepage" => "Go to Homepage",
     "You are not authorized to access this page." => "You are not authorized to access this page.",
-    "Unauthorized" => "Unauthorized"
+    "Unauthorized" => "Unauthorized",
+    "You must add a :branches to activate your subscription"=>"You must add a :branches to activate your subscription"
 ];

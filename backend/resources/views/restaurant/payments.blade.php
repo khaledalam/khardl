@@ -801,9 +801,7 @@ $tap_info = $settings->lead_response;
 <!--end::Content-->
 
 @else
-<div class="alert alert-success">
-    {{__('Your TAP account is pending.')}}
-</div>
+
 @endif
 @else
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content1">

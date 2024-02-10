@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
             'delivery_type' =>__('messages.'.$this->delivery_type->name),
             'tracking_url'=>$this->tracking_url,
             'deliver_by'=>$this->deliver_by,
+            'cancelable'=>$this->cancelable,
             'driver_id'=>$this->driver_id,
             'created_at'=>$this->created_at,
             'received_by_restaurant_at'=>$this->received_by_restaurant_at,

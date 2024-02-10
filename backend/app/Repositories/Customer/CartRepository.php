@@ -65,21 +65,34 @@ class CartRepository
             $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
 
-        return CartItem::updateOrCreate([
+        $existingCartItem = CartItem::where('item_id', $item->id)
+        ->where('cart_id', $this->cart->id)
+        ->where('checkbox_options', $checkbox_options)
+        ->where('selection_options', $selection_options)
+        ->where('dropdown_options', $dropdown_options)
+        ->first();
+
+        if ($existingCartItem) {
+            $quantity = $existingCartItem->quantity + $request['quantity'];
+            $total = ($item->price + $options_price) * $quantity;
+            $existingCartItem->update([
+                'quantity' => $quantity,
+                'total' => $total,
+            ]);
+            return $existingCartItem;
+        }
+
+        return CartItem::create([
             'item_id' => $item->id,
-            'checkbox_options'=>$checkbox_options,
-            'selection_options'=>$selection_options,
-            'dropdown_options'=>$dropdown_options,
-        ],[
             'cart_id' => $this->cart->id,
-            'price' =>$item->price,
-            'total' =>($item->price + $options_price) * $request['quantity'] ,
+            'price' => $item->price,
+            'total' => ($item->price + $options_price) * $request['quantity'],
             'quantity' => $request['quantity'],
             'notes' => $request['notes'] ?? null,
-            'options_price'=>$options_price,
-            'checkbox_options'=>$checkbox_options,
-            'selection_options'=>$selection_options,
-            'dropdown_options'=>$dropdown_options,
+            'options_price' => $options_price,
+            'checkbox_options' => $checkbox_options,
+            'selection_options' => $selection_options,
+            'dropdown_options' => $dropdown_options,
         ]);
     }
     public function loopingTroughCheckboxOptions($item, $options, &$updatedOptions)
@@ -169,7 +182,7 @@ class CartRepository
     }
     public function tax($subTotal = null)
     {
-        return 0; // tax removed 
+        return 0; // tax removed
         $vat = self::VAT_PERCENTAGE;
         $subTotal = $subTotal ?? $this->subTotal();
         return number_format((($subTotal - $this->discount()) * $vat) / 100 , 2, '.', '');
