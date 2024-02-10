@@ -63,13 +63,17 @@ const Login = () => {
 
          if (response?.data?.success) {
             const responseData = await response?.data;
-            console.log(responseData)
+            console.log("login-response",responseData)
             localStorage.setItem(
                'user-info',
                JSON.stringify(responseData.data.user)
             )
             if (responseData.data.user.status === 'inactive') {
                sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)
+
+               const userRole = responseData.data.user.roles[0]?.name || 'Customer';
+               localStorage.setItem('user-role', userRole);
+               
                setStatusCode(HTTP_NOT_VERIFIED)
                navigate('/verification-phone')
             } else if (

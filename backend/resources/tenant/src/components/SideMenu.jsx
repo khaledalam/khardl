@@ -214,7 +214,7 @@ export const SideMenu = () => {
                             }}
                         />
                         <Button
-                            title={t('Login as Customer')}
+                            title={t('Login')}
                             link='/login'
                             onClick={() => dispatch(setIsOpen(false))}
                             classContainer='!w-100 !px-[16px] !font-medium'

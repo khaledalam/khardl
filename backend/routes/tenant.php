@@ -355,7 +355,7 @@ Route::middleware([
             Route::post('logout', [APILoginController::class, 'logout']);
             // Route::middleware('driver')->group(function () {
                 Route::controller(DriverOrderController::class)->group(function () {
-                    Route::get('drivers-orders', 'index')->name('restaurant.orders_all');
+                    Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
                     Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
                 });
             // });

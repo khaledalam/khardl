@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LogoPattern from "../assets/LogoPattern.webp";
 import logo from "../assets/Logo.webp";
-import {API_ENDPOINT} from "../config";
+import { API_ENDPOINT } from "../config";
 const RestaurantNotLive = () => {
   const url_central = API_ENDPOINT;
   const { t } = useTranslation();
@@ -41,14 +41,18 @@ const RestaurantNotLive = () => {
                         {t("This restaurant is not active yet")}
                       </h1>
                       <div className="flex gap-5">
-                        <Link
-                          to={"/"}
-                          className={`flex items-center justify-center bg-[#ececec] cta-btn shadow-lg transition-all delay-100  py-2 px-6 text-[1rem] hover:bg-[#d6eb16] hover:text-black hover:bg-gray-50`}
-                        >
-                          {" "}
-                          {t("Restaurant Login Page")}
-                          <img src={arrowright} alt="" className="ml-2 h-4" />
-                        </Link>
+                        {isLoggedIn ? (
+                          ""
+                        ) : (
+                          <Link
+                            to={"/login-admins"}
+                            className={`flex items-center justify-center bg-[#ececec] cta-btn shadow-lg transition-all delay-100  py-2 px-6 text-[1rem] hover:bg-[#d6eb16] hover:text-black hover:bg-gray-50`}
+                          >
+                            {" "}
+                            {t("Restaurant Login Page")}
+                            <img src={arrowright} alt="" className="ml-2 h-4" />
+                          </Link>
+                        )}
                         <a
                           href={url_central}
                           className={`flex items-center justify-center bg-[#ececec] cta-btn shadow-lg transition-all delay-100  py-2 px-6 text-[1rem] hover:bg-[#d6eb16] hover:text-black hover:bg-gray-50`}
