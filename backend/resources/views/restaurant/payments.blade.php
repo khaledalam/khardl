@@ -23,11 +23,31 @@ $tap_info = $settings->lead_response;
 <div class="accordion" id="accordionExample">
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#paid_orders" aria-expanded="true" aria-controls="paid_orders">
+                {{ __('Online paid orders') }}
+            </button>
+        </h2>
+        <div id="paid_orders" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <!--begin::Content-->
+                @if($orders?->count())
+                @include('restaurant.orders.component.list_orders',['orders' => $orders])
+                @else
+                <div class="alert alert-warning text-center">
+                    <h4>{{ __('You do not have any online paid orders yet') }}</h4>
+                </div>
+                @endif
+
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#subscriptions" aria-expanded="true" aria-controls="subscriptions">
                 {{ __('messages.Your subscription') }}
             </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div id="subscriptions" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
                 <!--begin::Content-->
                 @if($user?->ROSubscription)
@@ -322,11 +342,11 @@ $tap_info = $settings->lead_response;
     </div>
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#tap_bussiness_info" aria-expanded="true" aria-controls="tap_bussiness_info">
                 {{ __('messages.Tab information') }}
             </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div id="tap_bussiness_info" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
                 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
                     <!--begin::Post-->
@@ -608,7 +628,7 @@ $tap_info = $settings->lead_response;
                                                                     <tr>
                                                                         <!--begin::Item-->
                                                                         <td>
-                                                                            <span class="text-start">{{__('Line 1')}}</span>
+                                                                            <span class="text-start">{{__('Address Line 1')}}</span>
                                                                         </td>
                                                                         <td class="text-dark">
                                                                             <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['line1'] }}</span>
@@ -618,7 +638,7 @@ $tap_info = $settings->lead_response;
                                                                     <tr>
                                                                         <!--begin::Item-->
                                                                         <td>
-                                                                            <span class="text-start">{{__('Line 2')}}</span>
+                                                                            <span class="text-start">{{__('Address Line 2')}}</span>
                                                                         </td>
                                                                         <td class="text-dark">
                                                                             <span class="py-3 px-4 fs-23">{{ $tap_info['user']['address'][0]['line2'] }}</span>
@@ -796,4 +816,13 @@ $tap_info = $settings->lead_response;
 
 
 @endif
+
+@push('scripts')
+
+    <script src="{{ global_asset('assets/js/custom/apps/ecommerce/sales/listing.js')}}"></script>
+@endpush
+@push('styles')
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+@endpush
 @endsection

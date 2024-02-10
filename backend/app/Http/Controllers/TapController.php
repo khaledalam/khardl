@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant\Order;
 use Carbon\Carbon;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
@@ -32,13 +33,14 @@ class TapController extends Controller
     {
         $user = Auth::user();
         $settings = Setting::first();
-        // $business = TapBusiness::first();
-        // $businessFile = TapBusinessFile::first();
-        // if ($user->ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
-        //     return $this->handleDownload($request, $user->ROSubscriptionInvoices);
-        // }
-        // @TODO @todo there data not synced, business flow was deprecated'
-        return view('restaurant.payments', compact('user', 'settings'));
+        $orders = Order::onlineCash()
+        ->whenSearch($request['search']?? null)
+        ->whenStatus($request['status']?? null)
+        ->WhenDateString($request['date_string']??null)
+        ->whenPaymentStatus($request['payment_status']?? null)
+        ->recent()
+        ->paginate(config('application.perPage',10));
+        return view('restaurant.payments', compact('user', 'settings','orders'));
     }
     private function handleDownload($request, $model)
     {

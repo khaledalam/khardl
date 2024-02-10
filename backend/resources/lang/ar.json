@@ -133,8 +133,8 @@
     "Country":"الدولة",
     "City":"المدينة",
     "ZIP code":"الرمز البريدي",
-    "Line 1":"الخط الاول",
-    "Line 2":"الخط الثاني",
+    "Address Line 1":"العنوان الاول",
+    "Address Line 2":"العنوان الثاني(الاضافي)",
     "National ID":"الرقم القومي",
     "Phone":"الهاتف",
     "Bank name":"اسم البنك",
@@ -150,5 +150,8 @@
     "From":"من",
     "To":"الي",
     "SAR":"ريال",
-    "monthly":"شهري"
+    "monthly":"شهري",
+    "You do not have any online paid orders yet":"ليس لديك أي طلبات مدفوعة عبر الإنترنت حتى الآن",
+    "Online paid orders":"الطلبات المدفوعة عبر الإنترنت",
+    "Search":"بحث"
 }
