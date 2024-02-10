@@ -1,5 +1,6 @@
 
 <?php $setting = \App\Models\Tenant\Setting::first();?>
+
 @if( !$setting->lead_id && !$setting->merchant_id)
 
 <div class="alert alert-warning text-center">
@@ -15,9 +16,18 @@
 </div>
 @endif
 @if ($sub=\App\Models\ROSubscription::first())
-    @if($sub->status !=  \App\Models\ROSubscription::ACTIVE)
-    <div class="alert alert-warning">
-        <span class="badge badge-danger mx-1">&#9432;</span>
+    @if($sub->status ==  \App\Models\ROSubscription::ACTIVE && \App\Models\Tenant\Branch::count() == 0)
+    <div class="alert alert-success">
+        <span class="badge badge-primary mx-1">&#9432;</span>
+      
+        {!! __('messages.You must add a :branches to activate your subscription',['branches'=>
+         "<a href='".route('restaurant.branches')."'>".__('messages.branches')."</a>"
+        ]) !!}
+    </a>
+    </div>
+    @elseif($sub->status !=  \App\Models\ROSubscription::ACTIVE)
+    <div class="alert alert-primary">
+        <span class="badge badge-info mx-1">&#9432;</span>
         @if($sub->status == \App\Models\ROSubscription::SUSPEND)
         {{__('messages.The current subscription period has expired, please renew in order to receive new orders')}} 
         @elseif($sub->status == \App\Models\ROSubscription::DEACTIVATE)
@@ -39,4 +49,11 @@
         {{__('messages.Subscribe to the available packages so that you can create branches')}} 
         <a href="{{route('restaurant.service')}}"><u>{{__('messages.Activate your branches')}}</u></a>.
     </div>
+@endif
+@if(!$setting->is_live)
+<div class="alert alert-warning">
+    <span class="badge badge-danger mx-1">&#9432;</span>
+    {{ __('messages.Your restaurant will be activated after completing the review process') }}
+
+</div>
 @endif
