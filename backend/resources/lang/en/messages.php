@@ -739,7 +739,7 @@ return [
     "Manage payment gateway" => "Manage payment gateway",
     "From"=>'From',
     'To'=>"To",
-    "Your payment gateway account is currently waiting for approval"=>"Your payment gateway account is currently waiting for approval",
+    "Your payment gateway account is currently waiting for approval to process selling orders"=>"Your payment gateway account is currently waiting for approval to process selling orders",
     "No subscription"=>"No subscription",
     "Merchant ID"=>"Merchant ID",
     "Lead ID"=>"Lead ID",

@@ -10,7 +10,7 @@
     </div>
 @elseif($setting->lead_id && !$setting->merchant_id)
 <div class="alert alert-warning text-center">
-    <h3>{{ __('messages.Your payment gateway account is currently waiting for approval') }}</h3>
+    <h3>{{ __('messages.Your payment gateway account is currently waiting for approval to process selling orders') }}</h3>
     
 </div>
 @endif

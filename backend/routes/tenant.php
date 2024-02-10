@@ -71,7 +71,8 @@ Route::group([
 ], static function () {
 
     Route::get('/impersonate/{token}', static function ($token) {
-        return UserImpersonation::makeResponse($token);
+       UserImpersonation::makeResponse($token);
+       return redirect()->route('restaurant.service');
     })->name("impersonate");
 
     Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');

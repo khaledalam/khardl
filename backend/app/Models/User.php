@@ -103,7 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function generateVerificationCode()
     {
         // TODO @todo create new email_verification_tokens record
-        $this->verification_code = Str::random(6);
+        $this->verification_code = sprintf("%06d", mt_rand(1, 999999));
         $this->save();
     }
 

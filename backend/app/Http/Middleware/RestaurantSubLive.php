@@ -21,6 +21,7 @@ class RestaurantSubLive
         // if(env('APP_ENV') != 'local' &&$request->route()->getName() != 'stancl.tenancy.asset' && request()->segment(3) != 'restaurant-styles'){
             $sub=ROSubscription::first();
             $setting = Setting::first();
+
             if(!$sub || $sub->status != ROSubscription::ACTIVE || !$setting->lead_id || !$setting->merchant_id){
                 if ($request->expectsJson()) {
                     return ResponseHelper::response([

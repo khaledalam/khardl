@@ -13,6 +13,9 @@ const RestaurantNotSubscribed = () => {
   const url_central = API_ENDPOINT;
   const { t } = useTranslation();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const redirectToService = () => {
+    window.open("/service");
+  };
   return (
     <div className="flex flex-col items-stretch justify-center ">
       <div
@@ -42,7 +45,14 @@ const RestaurantNotSubscribed = () => {
                       </h1>
                       <div className="flex gap-5">
                         {isLoggedIn ? (
-                          ""
+                            <Link
+                            onClick={redirectToService()}
+                            className={`flex items-center justify-center bg-[#ececec] cta-btn shadow-lg transition-all delay-100  py-2 px-6 text-[1rem] hover:bg-[#d6eb16] hover:text-black hover:bg-gray-50`}
+                          >
+                            {" "}
+                            {t("Dashboard")}
+                            <img src={arrowright} alt="" className="ml-2 h-4" />
+                          </Link>
                         ) : (
                           <Link
                             to={"/login-admins"}

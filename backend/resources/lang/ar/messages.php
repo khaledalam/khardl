@@ -739,7 +739,7 @@ return [
     "Can view revenues" => "يمكن مشاهدة الايرادات",
     "From"=>'من',
     'To'=>"الي",
-    "Your payment gateway account is currently waiting for approval"=>"في انتظار الموافقة علي بوابة الدفع الخاصة بك  ..",
+    "Your payment gateway account is currently waiting for approval to process selling orders"=>"في انتظار الموافقة علي بوابة الدفع الخاصة بك لتتمكن من البدأ في عمليات البيع  ..",
     "No subscription"=>"لا يوجد اشتراك",
     'Payment gateway'=>  'بوابة الدفع',
     "Merchant ID"=>"معرف التاجر لدي بوابة الدفع ",
