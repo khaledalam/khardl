@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 
+use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\User;
@@ -250,7 +251,7 @@ Route::group([
         Route::get('/cart', static function () {
             return view('tenant');
         })->name('cart');
-     
+
 
         Route::post('register', [RegisterController::class, 'register'])->name('tenant_register');
 
@@ -323,7 +324,6 @@ Route::group([
 
 
 });
-
 Route::middleware([
     'api',
     'tenant',
