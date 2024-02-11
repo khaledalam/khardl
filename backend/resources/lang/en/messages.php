@@ -604,7 +604,7 @@ return [
     'cashback-per-amount-percentage' => 'Cashback per order amount percentage',
     'new-branch-slot-price' => 'New branch slot price',
     "Subscription has been updated"=>"Subscription has been updated",
-    "The subscription has been activated successfully"=>"The subscription has been activated successfully",
+    "You can now add a branch"=>"You can now add a branch",
     "subscribed"=>"subscribed",
     "Number of available branches"=>"Number of available branches",
     "Received by restaurant" => "Received by restaurant",
