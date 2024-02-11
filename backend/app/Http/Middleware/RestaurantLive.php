@@ -30,10 +30,6 @@ class RestaurantLive
                 }
                 return redirect()->route('restaurant-not-live');
             }
-            else {
-                if(\Request::route()->getName() == 'restaurant-not-live')
-                    return redirect()->route('home');
-            }
         }
         return $next($request);
     }

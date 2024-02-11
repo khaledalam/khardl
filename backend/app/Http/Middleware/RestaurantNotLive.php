@@ -29,7 +29,7 @@ class RestaurantNotLive
                         'is_loggedin' => false
                     ], ResponseHelper::HTTP_FORBIDDEN);
                 }
-                return redirect()->back();
+                return redirect()->route('home');
             }
            
         }    
