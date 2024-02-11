@@ -112,7 +112,7 @@
                                                                                         <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="number" name="max_use" value="{{ old('max_use') ?? $coupon->max_use}}" class="form-control mb-2" placeholder="{{ __('messages.Max use') }}" />
+                                                                                <input type="number" min="1" name="max_use" value="{{ old('max_use') ?? $coupon->max_use}}" class="form-control mb-2" placeholder="{{ __('messages.Max use') }}" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
@@ -123,7 +123,7 @@
                                                                                         <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="number" name="max_use_per_user" value="{{ old('max_use_per_user') ?? $coupon->max_use_per_user }}" class="form-control mb-2" placeholder="{{ __('messages.Max use per user') }}" />
+                                                                                <input type="number" min="1" name="max_use_per_user" value="{{ old('max_use_per_user') ?? $coupon->max_use_per_user }}" class="form-control mb-2" placeholder="{{ __('messages.Max use per user') }}" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
@@ -134,7 +134,7 @@
                                                                                         <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="number" name="max_discount_amount" value="{{ old('max_discount_amount') ?? $coupon->max_discount_amount }}" class="form-control mb-2" placeholder="{{ __('messages.Amount') }}" />
+                                                                                <input type="number" min="1" name="max_discount_amount" value="{{ old('max_discount_amount') ?? $coupon->max_discount_amount }}" class="form-control mb-2" placeholder="{{ __('messages.Amount') }}" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
@@ -145,7 +145,7 @@
                                                                                         <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="number" name="minimum_cart_amount" value="{{ old('minimum_cart_amount') ?? $coupon->minimum_cart_amount }}" class="form-control mb-2" placeholder="{{ __('messages.Cart total') }}" />
+                                                                                <input type="number" min="1" name="minimum_cart_amount" value="{{ old('minimum_cart_amount') ?? $coupon->minimum_cart_amount }}" class="form-control mb-2" placeholder="{{ __('messages.Cart total') }}" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">

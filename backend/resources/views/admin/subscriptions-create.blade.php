@@ -62,7 +62,7 @@
                                             <label class="required form-label">{{ __('messages.Price')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" name="amount" class="form-control mb-2" required placeholder="{{ __('messages.Price')}}" value="{{old('amount')}}" />
+                                            <input type="number" min="1" name="amount" class="form-control mb-2" required placeholder="{{ __('messages.Price')}}" value="{{old('amount')}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{ __('messages.Price')}} {{ __('messages.is-required')}}</div>
