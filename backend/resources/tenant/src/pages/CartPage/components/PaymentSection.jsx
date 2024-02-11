@@ -360,7 +360,7 @@ const PaymentSection = ({
                           className=""
                         />
                         <span className="label-text text-[1rem]">
-                          {method.name}
+                          {t(`${method.name}`)}
                         </span>
                         <input
                           id={"cash_delivery"}
@@ -438,7 +438,7 @@ const PaymentSection = ({
                       </div>
                       <div className="flex flex-col">
                         <h3 className="text-[16px] font-medium capitalize">
-                          {deliveryType.name.toLowerCase()}
+                          {t(`${deliveryType.name.toLowerCase()}`)}
                         </h3>
                         <p className="text-[14px]">
                           {deliveryType.cost > 0
@@ -539,20 +539,21 @@ const PaymentSection = ({
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
                 </div>
-                <div className="w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center cursor-pointer">
-                  {/* <MdSend onClick={() => handleCouponCodeValidity()} size={22} /> */}
-                  {/* <span className='loading loading-spinner text-[var(--customer)]'></span> */}
-                  <MdSend
-                    onClick={() => {
-                      if (couponCode === "") {
-                        toast.error(`${t("Please Enter Coupon Code")}`);
-                      } else {
-                        handleCouponCodeValidity();
-                      }
-                    }}
-                    size={22}
-                  />
+                {/* <MdSend onClick={() => handleCouponCodeValidity()} size={22} /> */}
+                {/* <span className='loading loading-spinner text-[var(--customer)]'></span> */}
+                <div
+                  onClick={() => {
+                    if (couponCode === "") {
+                      toast.error(`${t("Please Enter Coupon Code")}`);
+                    } else {
+                      handleCouponCodeValidity();
+                    }
+                  }}
+                  className="w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center cursor-pointer"
+                >
+                  <MdSend size={22} />
                 </div>
+               
               </div>
             </div>{" "}
           </CartColumn>

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import i18n from '../translation/i18next';
 
 const initialState = {
-  languageMode: localStorage.getItem('i18nextLng') || "en",
+  languageMode: localStorage.getItem('i18nextLng') || "ar",
 };
 
 const languageSlice = createSlice({
