@@ -9,7 +9,7 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "cypress": "cypress open"
+        "cypress": "cypress run"
     },
     "devDependencies": {
         "@reduxjs/toolkit": "^1.9.5",
