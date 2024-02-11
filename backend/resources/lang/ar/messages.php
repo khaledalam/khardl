@@ -743,7 +743,7 @@ return [
     "Your payment gateway account is currently waiting for approval to process selling orders"=>"في انتظار الموافقة علي بوابة الدفع الخاصة بك لتتمكن من البدأ في عمليات البيع  ..",
     "No subscription"=>"لا يوجد اشتراك",
     'Payment gateway'=>  'بوابة الدفع',
-    "Merchant ID"=>"معرف التاجر لدي بوابة الدفع ",
+    "Merchant ID"=>"Merchant ID",
     "Lead ID"=>"معرف السجل التجاري",
     "Lead information"=>"معلومات السجل التجاري",
     "Code "=>"رمز ",
