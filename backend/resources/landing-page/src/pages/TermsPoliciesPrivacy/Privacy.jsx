@@ -14,9 +14,10 @@ const Privacy = ({ onClose }) => {
   const handleBack = () => {
     navigate("/");
   };
+
+
   return (
     <div>
-
       <div
         className="flex justify-center items-center px-[40px] max-[400px]:px-[20px]"
         style={{
