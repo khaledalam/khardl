@@ -157,5 +157,9 @@
     "Password has been changed successfully":"تم تغيير كلمة المرور بنجاح",
     "You do not have any active drivers":"ليس لديك اي سائقين نشطاء",
     "You have active drivers":"لديك  سائقين نشطاء",
-    "You can not activate pay online because payment account not active yet":"لا يمكنك تفعيل الدفع عبر الإنترنت لأن حساب الدفع غير نشط بعد"
+    "You can not activate pay online because payment account not active yet":"لا يمكنك تفعيل الدفع عبر الإنترنت لأن حساب الدفع غير نشط بعد",
+    "Preparation time":"وقت الاعداد",
+    "Time (H:M:S)":"الوقت (ثانية:دقيقة:ساعة)",
+    "Food preparation time":"وقت اعداد الطعام",
+    "prepare food takes how long time":"تحضير الطعام كم من الوقت يستغرق"
 }

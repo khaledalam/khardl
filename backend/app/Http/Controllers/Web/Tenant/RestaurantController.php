@@ -161,7 +161,8 @@ class RestaurantController extends BaseController
             'delivery_types',
             'hasActiveDrivers',
             'hasDeliveryCompanies',
-            'canPayOnline'
+            'canPayOnline',
+            'branch'
             )
         );
     }
@@ -227,7 +228,9 @@ class RestaurantController extends BaseController
         }
         $branch->payment_methods()->sync($payment_methods);
         $branch->delivery_types()->sync($delivery_types);
-
+        if($request->preparation_time_delivery){
+            $branch->update(['preparation_time_delivery' => $request->preparation_time_delivery]);
+        }
         return redirect()->back()->with('success', __('Branch settings successfully updated.'));
 
     }
