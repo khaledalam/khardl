@@ -39,3 +39,4 @@ mix-manifest.json
 db_backups/*.sql
 
 backend/bootstrap/cache/*
+backend/cypress/downloads/
