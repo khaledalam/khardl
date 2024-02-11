@@ -57,33 +57,24 @@ class RestaurantController extends Controller
         return response()->json($lead_response,200);
     }
     public function updateConfig(Tenant $tenant,Request $request){
-        $message = $tenant->run(function(){
-            if(!Setting::first()->lead_id){
-                return __('This restaurant has no tap account on the server');
+        
+    
+        if($request->merchant_id){
+            $merchant = TapMerchant::retrieve($request->merchant_id);
+            if ($merchant['http_code'] != ResponseHelper::HTTP_OK) {
+                return redirect()->back()->with('error',__('Invalid Merchant id'));
             }
-            return false;
-        });
-        if($message){
-            return redirect()->back()->with('error',$message);
         }
-        
-        $request->validate([
-            'merchant_id'=>"string|nullable"
-        ]);
-        $merchant = TapMerchant::retrieve($request->merchant_id);
-        if ($merchant['http_code'] != ResponseHelper::HTTP_OK) {
-            return redirect()->back()->with('error',__('Invalid Merchant id'));
-        }
-        
         $oldMerchantId=$tenant->run(function()use($request){
             $setting = Setting::first();
             $merchantId= $setting->merchant_id;
             $setting->update([
-                'merchant_id'=>$request->merchant_id
+                'merchant_id'=>$request->merchant_id,
+                'lead_id'=>$request->lead_id
             ]);
             return $merchantId;
           
-        });
+        }) ?? 'NULL';
         $actions = [
             'en' => "[ok] Admin has update old  merchant id ($oldMerchantId)",
             'ar' => "[تم] تم تحديث رقم التعريف القديم ($oldMerchantId) بوابة الدفع الخاصة بمطعم",
@@ -99,6 +90,7 @@ class RestaurantController extends Controller
             ]
             
         ]);
+       
         return redirect()->back()->with('success',__('restaurant setting has been update successfully'));
 
     }

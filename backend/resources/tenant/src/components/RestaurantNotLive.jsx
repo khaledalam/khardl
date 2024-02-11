@@ -55,7 +55,7 @@ const RestaurantNotLive = () => {
                          </Link>
                         ) : (
                           <Link
-                            to={"/login-admins"}
+                            to={"/login-trial"}
                             className={`flex items-center justify-center bg-[#ececec] cta-btn shadow-lg transition-all delay-100  py-2 px-6 text-[1rem] hover:bg-[#d6eb16] hover:text-black hover:bg-gray-50`}
                           >
                             {" "}

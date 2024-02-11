@@ -20,6 +20,7 @@ const useAxiosAuth = () => {
       '/fqa',
       '/policies',
       '/privacy',
+
    ].includes(location.pathname)
 
    const axiosAuth = axios.create({
