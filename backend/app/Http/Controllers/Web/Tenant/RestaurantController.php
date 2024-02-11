@@ -149,10 +149,20 @@ class RestaurantController extends BaseController
         $user = Auth::user();
         $payment_methods = $branch->payment_methods->pluck('id', 'name');
         $delivery_types = $branch->delivery_types->pluck('id', 'name');
-
+        $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
+        $hasDeliveryCompanies = DeliveryCompanies::all()->count();
+        $canPayOnline = Setting::first()?->merchant_id ? 1 : 0 ;
         return view(
             'restaurant.settings_branch',
-            compact('user', 'branch', 'payment_methods', 'delivery_types')
+            compact(
+            'user',
+            'branch',
+            'payment_methods',
+            'delivery_types',
+            'hasActiveDrivers',
+            'hasDeliveryCompanies',
+            'canPayOnline'
+            )
         );
     }
 
@@ -536,7 +546,7 @@ class RestaurantController extends BaseController
 
                 $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
             })
-            
+
             ->get();
         if ($branchId) {
             $branch = Branch::find($branchId);

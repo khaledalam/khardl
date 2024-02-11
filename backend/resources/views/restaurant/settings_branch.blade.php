@@ -64,12 +64,14 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]"  value="{{\App\Models\Tenant\PaymentMethod::ONLINE}}" {{($payment_methods[\App\Models\Tenant\PaymentMethod::ONLINE] ?? false)?'checked':''}}/>
+                                                <input class="form-check-input me-3" type="checkbox" @if(!$canPayOnline) {{ 'disabled' }} @endif  name="payment_methods[]"  value="{{\App\Models\Tenant\PaymentMethod::ONLINE}}" {{(isset($payment_methods[\App\Models\Tenant\PaymentMethod::ONLINE]) && $canPayOnline)?'checked':''}}/>
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
 														<span class="fw-bolder fs-5 mb-0">{{__('messages.payment-online')}}</span>
-{{--														<span class="text-muted fs-6">[{{__('messages.visa')}}, {{__('messages.master-card')}}, {{__('messages.mada')}}, {{__('messages.apple-pay')}}]</span>--}}
+                                                        @if(!$canPayOnline)
+                                                        <small style="color: red;">{{__('You can not activate pay online because payment account not active yet')}}</small>
+                                                        @endif
 													</span>
                                                 <!--end::Label-->
                                             </label>
@@ -101,15 +103,20 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY] ?? false)?'checked':''}}  />
+                                                <input class="form-check-input me-3" type="checkbox" @if(!($hasDeliveryCompanies||$hasActiveDrivers)) {{ 'disabled' }} @endif name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY] ?? false)?'checked':''}}  />
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
 														<span class="fw-bolder fs-5 mb-0">{{__('messages.delivery')}}</span>
-                                                    @if(!\App\Packages\DeliveryCompanies\DeliveryCompanies::all()->count())
+                                                    @if(!$hasDeliveryCompanies)
                                                     <small style="color: red;">{{__('messages.you are not signed with any delivery company yet')}}</small>
                                                     @else
                                                         <small style="color: green;">{{__('messages.you are signed with delivery company')}}</small>
+                                                    @endif
+                                                    @if(!$hasActiveDrivers)
+                                                    <small style="color: red;">{{__('You do not have any active drivers')}}</small>
+                                                    @else
+                                                        <small style="color: green;">{{__('You have active drivers')}}</small>
                                                     @endif
 													</span>
                                                 <!--end::Label-->
