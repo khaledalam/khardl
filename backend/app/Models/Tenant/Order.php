@@ -184,6 +184,12 @@ class Order extends Model
     {
         return $this->belongsTo(RestaurantUser::class);
     }
+    public function driver()
+    {
+        return $this->belongsTo(RestaurantUser::class)->whereHas('roles',function($q){
+            return $q->where('name','Driver');
+        });
+    }
 
     public function branch()
     {
