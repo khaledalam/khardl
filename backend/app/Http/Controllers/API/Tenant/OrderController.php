@@ -52,9 +52,13 @@ class  OrderController extends BaseRepositoryController
             $query ->where('branch_id',$user->branch->id);
         })
         ->findOrFail($order);
+        if($order->isDelivery()&&($request->status == Order::COMPLETED || $request->status == Order::CANCELLED)){
+            return $this->sendError('', __('Only drivers can change this order with this status'));
+        }
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
+        $order->update(['status' => $request->status]);
         switch ($request->status) {
             case Order::PENDING:
                 $statusLog->class_name = 'text-warning';
@@ -88,7 +92,6 @@ class  OrderController extends BaseRepositoryController
         if ($request->status == Order::RECEIVED_BY_RESTAURANT && $order->isDelivery() && $order?->branch?->delivery_availability) {
             $this->handelDeliveryOrder($order,$request);
         }
-        $order->update(['status' => $request->status]);
         if ($request->expectsJson()) {
             return $this->sendResponse(null, __('Order has been updated successfully.'));
         }
