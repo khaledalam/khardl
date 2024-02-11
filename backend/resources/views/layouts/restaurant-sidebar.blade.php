@@ -185,16 +185,7 @@
 
                         </div>
                         <!-- Site Editor -->
-                        <?php
-                        $is_live = false; $has_sub = false ;
-                        tenant()->run(function() use (&$is_live,&$has_sub){
-                            $first_sub = \App\Models\ROSubscription::first();
-                            $has_sub = ( $first_sub && $first_sub->status  == \App\Models\ROSubscription::ACTIVE)?true:false;
-                            $is_live = App\Models\Tenant\Setting::first()->is_live;
-
-                        });
-                        ?>
-                        @if($is_live && $has_sub)
+                      
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurants.site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -211,7 +202,7 @@
                             </a>
 
                         </div>
-                        @endif
+                  
 
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
