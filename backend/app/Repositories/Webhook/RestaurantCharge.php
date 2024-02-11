@@ -49,11 +49,12 @@ class RestaurantCharge
             $end_at = $subscription->end_at;
             $amount = $subscription->amount;
 
-            if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE) {
-                $end_at = $subscription->end_at->addDays(365);
-                $amount = $data['amount'];
-                $data['metadata']['n-branches'] += $subscription->number_of_branches;
-            } elseif ($data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE) {
+            // if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE) {
+            //     $end_at = $subscription->end_at->addDays(365);
+            //     $amount = $data['amount'];
+            //     $data['metadata']['n-branches'] += $subscription->number_of_branches;
+            // } 
+            if($data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE) {
                 $amount += $data['amount'];
                 $data['metadata']['n-branches'] += $subscription->number_of_branches;
             }
