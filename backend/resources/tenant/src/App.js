@@ -9,6 +9,7 @@ import Footer from "./components/Footer/Footer";
 import Login from "./pages/LoginSignUp/Login";
 import { Helmet } from "react-helmet";
 import LoginAdmin from "./pages/LoginSignUp/LoginAdmin";
+import LoginTrial from "./pages/LoginSignUp/LoginTrial";
 import Register from "./pages/LoginSignUp/Register";
 import RestaurantNotLive from "./components/RestaurantNotLive";
 import RestaurantNotSubscribed from "./components/RestaurantNotSubscribed";
@@ -75,6 +76,7 @@ const App = () => {
     "/restaurant-not-subscribed",
     "/success",
     "/failed",
+    '/login-trial',
   ].includes(location.pathname);
   const showFooter = ![
     "/",
@@ -82,7 +84,7 @@ const App = () => {
     "/dashboard",
     "/site-editor/restaurants",
     "/login",
-    "/login-admins",
+    "/login-trial",
     "/register",
     "/register/:url",
     "/reset-password",
@@ -160,7 +162,7 @@ const App = () => {
                       element={<RestaurantNotSubscribed />}
                     />
                   
-                
+                <Route path="/login-trial" element={<LoginTrial />} />{" "}
                 <Route path="/success" element={<SuccessPayment />} />
                 <Route path="/failed" element={<FailedPayment />} />
                 <Route path="/policies" element={<TermsPolicies />} />{" "}
