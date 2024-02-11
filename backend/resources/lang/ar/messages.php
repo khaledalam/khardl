@@ -605,7 +605,7 @@ return [
     'cashback-per-amount-percentage' => 'نسبه استرداد النقود',
     'new-branch-slot-price' => 'سعر فرع جديد',
     "Subscription has been updated"=>"تم تحديث الاشتراك بنجاح",
-    "The subscription has been activated successfully"=>"تم تفعيل الاشتراك بنجاح ",
+    "You can now add a branch"=>"يمكنك الان اضافه فرع",
     "subscribed"=>"تم الاشتراك",
     "Number of available branches"=>"عدد الفروع المتاحة",
     "Received by restaurant" => "تلقى من قبل المطعم",

@@ -61,7 +61,7 @@
                                                                         <label class="required form-label">{{ __('messages.Loyalty points per 1 SAR') }}</label>
                                                                         <!--end::label-->
                                                                         <!--begin::input-->
-                                                                        <input type="number" step="0.01" name="loyalty_points" class="form-control mb-2" placeholder="{{ __('messages.e.g 0.02') }}" value="{{$settings['loyalty_points']}}" />
+                                                                        <input type="number" min="1" step="0.01" name="loyalty_points" class="form-control mb-2" placeholder="{{ __('messages.e.g 0.02') }}" value="{{$settings['loyalty_points']}}" />
                                                                         <!--end::input-->
                                                                     </div>
                                                                     <!--begin::input group-->
@@ -72,7 +72,7 @@
                                                                         </label>
                                                                         <!--end::label-->
                                                                         <!--begin::input-->
-                                                                        <input type="number" step="0.01" name="loyalty_point_price" class="form-control mb-2" placeholder="1 {{ __('messages.SAR') }}" value="{{$settings['loyalty_point_price']}}" />
+                                                                        <input type="number" min="1" step="0.01" name="loyalty_point_price" class="form-control mb-2" placeholder="1 {{ __('messages.SAR') }}" value="{{$settings['loyalty_point_price']}}" />
                                                                         <!--end::input-->
                                                                     </div>
                                                                     <!--end::input group-->
@@ -117,7 +117,7 @@
                                                                         </label>
                                                                         <!--end::Label-->
                                                                         <!--begin::Input-->
-                                                                        <input type="number" step="0.01" name="cashback_threshold" class="form-control mb-2" placeholder="e.x. 50" value="{{$settings['cashback_threshold']}}" />
+                                                                        <input type="number" min="1" step="0.01" name="cashback_threshold" class="form-control mb-2" placeholder="e.x. 50" value="{{$settings['cashback_threshold']}}" />
                                                                         <!--end::Input-->
                                                                     </div>
                                                                     <!--end::Input group-->
@@ -137,7 +137,7 @@
                                                                         <label class="required form-label">{{ __('messages.Cash back in percentage (%)') }}</label>
                                                                         <!--end::Label-->
                                                                         <!--begin::Input-->
-                                                                        <input type="number" step="0.01" name="cashback_percentage" class="form-control mb-2" placeholder="e.x. 5%" value="{{$settings['cashback_percentage']}}" />
+                                                                        <input type="number" min="1" step="0.01" name="cashback_percentage" class="form-control mb-2" placeholder="e.x. 5%" value="{{$settings['cashback_percentage']}}" />
                                                                         <!--end::Input-->
                                                                     </div>
                                                                     <!--end::Input group-->
