@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\API\Tenant;
 
-use App\Models\Tenant\DeliveryType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -30,7 +29,7 @@ class OrderResource extends JsonResource
             'tracking_url'=>$this->tracking_url,
             'deliver_by'=>$this->deliver_by,
             'cancelable'=>$this->cancelable,
-            'driver_id'=>$this->driver_id,
+            'driver_id'=> new DriverResource($this->driver),
             'created_at'=>$this->created_at,
             'received_by_restaurant_at'=>$this->received_by_restaurant_at,
             'updated_at'=>$this->updated_at,

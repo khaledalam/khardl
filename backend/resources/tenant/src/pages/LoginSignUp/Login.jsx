@@ -68,6 +68,7 @@ const Login = () => {
                'user-info',
                JSON.stringify(responseData.data.user)
             )
+            localStorage.setItem('i18nextLng', response?.data?.data?.user?.default_lang ?? 'ar')
             if (responseData.data.user.status === 'inactive') {
                sessionStorage.setItem(PREFIX_KEY + 'phone', responseData?.data?.user?.phone)
 
@@ -220,7 +221,7 @@ const Login = () => {
                                     <Link to='/register'>
                                        <input
                                           type='submit'
-                                          className='hover:bg-[#d6eb16] text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md '
+                                          className='text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md '
                                           value={t('Create an account')}
                                        />
                                     </Link>
@@ -235,7 +236,7 @@ const Login = () => {
                            role='status'
                            className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[39%] max-[860px]:top-[39.5%] left-1/2 w-[100%] h-[100%] '
                         >
-                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]' />
+                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%] mt-[-11px]' />
                            <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
                               <svg
                                  aria-hidden='true'

@@ -121,6 +121,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
             return $q->where('name','Driver');
         });
     }
+    public function scopeActiveDrivers()
+    {
+        return $this->whereHas('roles',function($q){
+            return $q->where('name','Driver');
+        })->where('status','active');
+    }
     public function scopeCustomers($query)
     {
         return $query->whereDoesntHave('roles');
