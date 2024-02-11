@@ -258,8 +258,10 @@ class CartRepository
 
     public function paymentMethods(){
         $paymentMethods = $this->cart?->branch->payment_methods()->pluck('name')->toArray();
+      
         if($paymentMethods){
-            if ($index = array_search(PaymentMethod::ONLINE, $paymentMethods) !== false) {
+            $index = array_search(PaymentMethod::ONLINE, $paymentMethods);
+            if ($index !== false) {
                 $setting = Setting::first();
                 if($setting->merchant_id && $setting->lead_id){
                     return $this->cart?->branch?->payment_methods;
