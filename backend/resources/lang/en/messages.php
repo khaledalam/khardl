@@ -812,5 +812,7 @@ return [
     "Go to Homepage" => "Go to Homepage",
     "You are not authorized to access this page." => "You are not authorized to access this page.",
     "Unauthorized" => "Unauthorized",
-    "You must add a :branches to activate your subscription"=>"You must add a :branches to activate your subscription"
+    "You must add a :branches to activate your subscription"=>"You must add a :branches to activate your subscription",
+    "A period :period of term will be purchased to match the billing time"=>"A period of :period term will be purchased to match the billing time"
+
 ];

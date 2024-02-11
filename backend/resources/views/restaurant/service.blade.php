@@ -282,7 +282,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         <div class="modal-dialog modal-dialog-centered mw-650px">
                                                                             <!--begin::Modal content-->
                                                                             <div class="modal-content rounded p-15">
-                                                                                <input type="hidden" name="type" id="type" value="">
+                                                                                <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}">
                                                                                 <!--begin::Modal header-->
                                                                                 <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                                     <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
@@ -291,19 +291,15 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                 
                                                                                         <div class="row">
                                                                                             <div class="col-12 mt-3 mb-2">
-                                                                                                <label for="factor">{{__('messages.Choose the subscription method')}}</label>
-                                                                                                <div class="form-check mt-3 ">
-                                                                                                    <input class="form-check-input" type="radio" name="renewalOption" required id="renewToCurrentEndDate" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}">
-                                                                                                    <label class="form-check-label" for="renewToCurrentEndDate">
-                                                                                                        {{__('messages.Pay for new branches only for ')}} {{$RO_subscription->dateLeft}}
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                                <div class="form-check mt-3">
-                                                                                                    <input class="form-check-input" type="radio" name="renewalOption" required id="renewFromNow" value="{{\App\Models\ROSubscription::RENEW_FROM_CURRENT_END_DATE}}">
-                                                                                                    <label class="form-check-label" for="renewFromNow">
-                                                                                                        {{__('messages.Renew the term of old branches + pay for new branches for one year including old branches')}}
-                                                                                                    </label>
-                                                                                                </div>
+                                                                                                <div class="card">
+                                                                                                    <div class="card-body text-center text-bold font-weight-bold">
+                                                                                                        <strong> <h3>{{ __('messages.A period :period of term will be purchased to match the billing time',['period'=>$RO_subscription->dateLeft])}}</h3></strong>
+                                                                                                    </div>
+                                                                                                  </div>
+                                                                                               
+                                                                                              
+
+                                                                                              
                                                                                             </div>
                                                                                             <div class="col-12">
                                                                                                 <div class="form-group">
