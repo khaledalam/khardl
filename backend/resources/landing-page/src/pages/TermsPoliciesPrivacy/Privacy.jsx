@@ -7,8 +7,6 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import NavbarRestuarant from "../../../../tenant/src/pages/RestuarantPage/components/NavbarRestuarant";
-
 const Privacy = ({ onClose }) => {
   const Language = useSelector((state) => state.languageMode.languageMode);
   const navigate = useNavigate();
@@ -18,7 +16,7 @@ const Privacy = ({ onClose }) => {
   };
   return (
     <div>
-      {/* <NavbarRestuarant /> */}
+
       <div
         className="flex justify-center items-center px-[40px] max-[400px]:px-[20px]"
         style={{
