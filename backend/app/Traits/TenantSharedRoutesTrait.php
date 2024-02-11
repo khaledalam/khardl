@@ -52,7 +52,7 @@ trait TenantSharedRoutesTrait
                 '/site-editor'=>'site_editor',
             ],
             'middleware'=>[
-                'auth', 'restaurant','restaurantLive','restaurantSubLive'
+                'auth', 'restaurant',
             ]
         ];
 
