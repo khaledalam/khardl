@@ -814,6 +814,8 @@ return [
     "Unauthorized" => "غير مصرح",
     "Your restaurant will be activated after completing the review process"=>"سيتم تفعيل مطعمك بعد الانتهاء من عملية المراجعة",
     "Khardl website"=>"موقع خردل",
-    "You must add a :branches to activate your subscription"=>"يجب اضافة :branches لتفعيل اشتراكك"
+    "You must add a :branches to activate your subscription"=>"يجب اضافة :branches لتفعيل اشتراكك",
+    "A period :period of term will be purchased to match the billing time"=>"سيتم شراء مدة :period لمطابقة وقت الفاتورة "
+
 ];
 

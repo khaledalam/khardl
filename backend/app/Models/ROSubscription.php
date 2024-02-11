@@ -98,20 +98,21 @@ class ROSubscription extends Model
                 if($json)
                 return response()->json($data);
                 return $data;
-            }else if($type  ==  self::RENEW_FROM_CURRENT_END_DATE){
-                $remainingDaysCost = $currentSubscription->calculateDaysLeftCost();
-                $totalCost =$remainingDaysCost +  (($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount);
-                $data =   [
-                'number_of_branches'=>$number_of_branches,
-                'cost' => number_format($totalCost, 2),
-                'remainingDaysCost'=>number_format($remainingDaysCost, 2),
-                'newBranches'=>number_format(($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount, 2)
-                ];
-                if($json)
-                return response()->json($data);
-                return $data;
-
             }
+            // else if($type  ==  self::RENEW_FROM_CURRENT_END_DATE){
+            //     $remainingDaysCost = $currentSubscription->calculateDaysLeftCost();
+            //     $totalCost =$remainingDaysCost +  (($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount);
+            //     $data =   [
+            //     'number_of_branches'=>$number_of_branches,
+            //     'cost' => number_format($totalCost, 2),
+            //     'remainingDaysCost'=>number_format($remainingDaysCost, 2),
+            //     'newBranches'=>number_format(($centralSubscription->amount * $number_of_branches) + $currentSubscription->amount, 2)
+            //     ];
+            //     if($json)
+            //     return response()->json($data);
+            //     return $data;
+
+            // }
             else if($type  ==  self::RENEW_AFTER_ONE_YEAR){
                 $data =[ 'number_of_branches'=>$number_of_branches,'cost' => $currentSubscription->amount];
                 if($json)
