@@ -18,7 +18,7 @@ class RestaurantSubLive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if(env('APP_ENV') != 'local' &&$request->route()->getName() != 'stancl.tenancy.asset' && request()->segment(3) != 'restaurant-styles'){
+        if(env('APP_ENV') != 'local' &&$request->route()->getName() != 'stancl.tenancy.asset' && request()->segment(3) != 'restaurant-styles'){
             $sub=ROSubscription::first();
             $setting = Setting::first();
 
@@ -35,7 +35,7 @@ class RestaurantSubLive
                 if(\Request::route()->getName() == 'restaurant-not-subscribed')
                     return redirect()->route('home');
             }
-        // }
+        }
       
 
         return $next($request);

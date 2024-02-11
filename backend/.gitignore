@@ -29,3 +29,4 @@ public/js/chunks/*.js
 public/js/tenant.js.LICENSE.txt
 
 bootstrap/cache/*
+cypress/screenshots/
