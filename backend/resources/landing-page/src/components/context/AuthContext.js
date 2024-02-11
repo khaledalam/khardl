@@ -25,7 +25,7 @@ export const AuthContextProvider = (props) => {
        console.log("HERERE")
       try {
          const response = await axiosAuth.post( API_ENDPOINT + '/auth-validation')
-         localStorage.setItem("i18nextLng",response?.data?.default_locale)
+         localStorage.setItem('i18nextLng', response?.data?.default_locale ?? 'ar')              
          // dispatch(changeLanguage(response?.data?.default_locale))
          
          setStatusCode(response?.status)

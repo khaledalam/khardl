@@ -342,8 +342,8 @@
   "Payment": "Payment",
   "Display Order": "Display Order",
   "Select Delivery Type": "Select Delivery Type",
-  "PICKUP": "Pickup",
-  "PICKUP By Car": "Pickup By Car",
+  "pickup": "Pickup",
+  "pickup by car": "Pickup By Car",
   "Inclusive VAT": "Inclusive VAT",
   "Credit Card": "Credit Card",
   "Online": "Online",
@@ -421,5 +421,6 @@
   "You have no saved card at the moment": "You have no saved card at the moment",
   "Please Enter Coupon Code": "Please Enter Coupon Code",
   "Coupon Applied successfully": "Coupon Applied successfully",
-  "Search by shipping address": "Search by shipping address"
+  "Search by shipping address": "Search by shipping address",
+  "This restaurant is not active yet": "This restaurant is not active yet"
 }

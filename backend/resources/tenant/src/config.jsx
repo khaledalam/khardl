@@ -1,6 +1,6 @@
 // development
 export const API_ENDPOINT = url_tenant;
-
+export const WEBSITE_URL = 'https://khardl.com';
 export const PREFIX_KEY = 'khardl_tenant_';
 
 export const HTTP_OK            = 200;

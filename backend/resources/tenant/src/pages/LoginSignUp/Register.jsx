@@ -317,7 +317,7 @@ const Register = () => {
                            role='status'
                            className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[44.1%] left-1/2 w-[100%] h-[100%] '
                         >
-                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
+                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%] mt-[-24px]'></div>
                            <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
                               <svg
                                  aria-hidden='true'

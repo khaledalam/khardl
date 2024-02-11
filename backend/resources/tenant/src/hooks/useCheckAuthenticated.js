@@ -17,7 +17,7 @@ export default function useCheckAuthenticated() {
          try {
             const response = await axiosAuth.get('/auth-validation')
             console.log(response)
-            localStorage.setItem("i18nextLng",response?.data?.default_locale)
+            localStorage.setItem('i18nextLng', response?.data?.default_locale ?? 'ar')
              const isLoggedin = response?.data?.is_loggedin;
             setStatusCode(response?.status)
             dispatch(changeLogState(isLoggedin))
