@@ -13,7 +13,7 @@ class TapWebhookSignature implements SignatureValidator
     {
        
         $data = $request->all();
-        logger($data);
+        // logger($data);
         if (strpos($data['id'] ?? '', 'chg') === 0) {  // charge end-point
 
             $id = $data['id'];
