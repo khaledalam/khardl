@@ -28,10 +28,10 @@ jobs:
       run: |
         chmod -R 777 backend/storage backend/bootstrap/cache
     - name: Install dependencies
-        uses: cypress-io/github-action@v6
-        with:
-          # just perform install
-          runTests: false
+      uses: cypress-io/github-action@v6
+      with:
+        # just perform install
+        runTests: false
     - name: Cypress run
       uses: cypress-io/github-action@v6
       with:
