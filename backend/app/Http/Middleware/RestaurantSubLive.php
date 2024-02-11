@@ -18,17 +18,17 @@ class RestaurantSubLive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if(env('APP_ENV') != 'local' 
 
-        if($request->route()->getName() != 'stancl.tenancy.asset' && 
+        if(
+        env('APP_ENV') != 'local' &&
+        $request->route()->getName() != 'stancl.tenancy.asset' && 
         request()->segment(1) !=  'restaurant-style' &&
         request()->segment(1) !=  'categories' &&
         request()->segment(1) !=  'carts' 
         ){
             $sub=ROSubscription::first();
-            $setting = Setting::first();
-
-            if(!$sub || $sub->status != ROSubscription::ACTIVE || !$setting->lead_id || !$setting->merchant_id){
+        
+            if(!$sub || $sub->status != ROSubscription::ACTIVE){
                 if ($request->expectsJson()) {
                     return ResponseHelper::response([
                         'message' => __('Restaurant have no active subscription yet'),
@@ -37,9 +37,6 @@ class RestaurantSubLive
                 }
                 
                 return redirect()->route('restaurant-not-subscribed');
-            }else {
-                if(\Request::route()->getName() == 'restaurant-not-subscribed')
-                    return redirect()->route('home');
             }
         }
       

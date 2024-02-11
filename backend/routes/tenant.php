@@ -87,14 +87,9 @@ Route::group([
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
-    $groups = TenantSharedRoutesTrait::setUp();
-    Route::middleware($groups['middleware'])->group(function () use ($groups) {
-        foreach ($groups['routes'] as $route => $name) {
-            Route::get($route, static function (Request $request) {
-                return view('tenant');
-            })->name($name);
-        }
-    });
+    TenantSharedRoutesTrait::run( TenantSharedRoutesTrait::successOrFail());
+    TenantSharedRoutesTrait::run( TenantSharedRoutesTrait::NotLiveOrNotSubscribed());
+
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -203,15 +198,8 @@ Route::group([
 
             });
         });
-        // TODO @todo ( refactor ) make it one function instead if for loop
-        $group = TenantSharedRoutesTrait::getPrivateRoutes();
-        Route::middleware($group['middleware'])->group(function () use ($group) {
-            foreach ($group['routes'] as $route => $name) {
-                Route::get($route, static function (Request $request) {
-                    return view('tenant');
-                })->name($name);
-            }
-        });
+        TenantSharedRoutesTrait::run(TenantSharedRoutesTrait::siteEditor());
+     
         Route::get('/download/file/{path?}', function ($path) {
             try {
                 return response()->download(storage_path("app/public/$path"));
@@ -230,15 +218,10 @@ Route::group([
     Route::group([
         'middleware' => ['restaurantLive','restaurantSubLive'],
     ], static function () {
+      
         $groups = TenantSharedRoutesTrait::groups();
         foreach ($groups as $group) {
-            Route::middleware($group['middleware'])->group(function () use ($group) {
-                foreach ($group['routes'] as $route => $name) {
-                    Route::get($route, static function (Request $request) {
-                        return view('tenant');
-                    })->name($name);
-                }
-            });
+            TenantSharedRoutesTrait::run($group);
         }
 
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
