@@ -27,12 +27,19 @@ jobs:
     - name: Directory Permissions
       run: |
         chmod -R 777 backend/storage backend/bootstrap/cache
+    - name: Install dependencies
+        uses: cypress-io/github-action@v6
+        with:
+          # just perform install
+          runTests: false
     - name: Cypress run
       uses: cypress-io/github-action@v6
       with:
-        build: npm run build --prefix backend
-        start: npm start
+        install: false
+        build: npm run build
+        start: npm run cypress
         browser: chrome
+        working-directory: backend
     - name: Create Database
       run: |
         mkdir -p backend/database
