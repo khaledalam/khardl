@@ -68,10 +68,11 @@ class OrderRequest extends FormRequest
                     return ;
                 }
             }
-            if(!$cart->hasPayment($this->payment_method)){
+            if(!$cart->hasPaymentCreditCardWithTap($this->payment_method)){
                 $validator->errors()->add('payment_method', __('Invalid payment method'));
                 return ;
             }
+           
             if(!$cart->hasDelivery($this->delivery_type)){
                 $validator->errors()->add('delivery_type', __('Invalid Delivery Type'));
                 return ;

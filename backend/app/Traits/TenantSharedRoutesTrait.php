@@ -1,6 +1,7 @@
 <?php
 namespace App\Traits;
-
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 trait TenantSharedRoutesTrait
 {
     public static function groups(){
@@ -43,7 +44,7 @@ trait TenantSharedRoutesTrait
             ]
         ];
     }
-    public static function getPrivateRoutes(): array
+    public static function siteEditor(): array
     {
          return [
             'routes'=>[
@@ -57,11 +58,9 @@ trait TenantSharedRoutesTrait
         ];
 
     }
-    public static function setUp(){
+    public static function successOrFail(){
         return [
             'routes'=>[
-                'restaurant-not-live'=> 'restaurant-not-live',
-                'restaurant-not-subscribed'=> 'restaurant-not-subscribed',
                 'success' => 'success',
                 'failed' => 'failed',
             ],
@@ -70,5 +69,26 @@ trait TenantSharedRoutesTrait
             ]
         ];
     }
+    public static function NotLiveOrNotSubscribed(){
+        return [
+            'routes'=>[
+                'restaurant-not-live'=> 'restaurant-not-live',
+                'restaurant-not-subscribed'=> 'restaurant-not-subscribed',
+            ],
+            'middleware'=>[
+                'restaurantNotLive'
+            ]  
+        ];
+    }
+    public static function run($groups){
+        return Route::middleware($groups['middleware'])->group(function () use ($groups) {
+            foreach ($groups['routes'] as $route => $name) {
+                Route::get($route, static function (Request $request) {
+                    return view('tenant');
+                })->name($name);
+            }
+        });
+    }
+   
 
 }
