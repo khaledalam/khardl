@@ -39,7 +39,7 @@ jobs:
       with:
         install: false
         build: npm run dev
-        start: npm run cypress
+        start: npm run cypress:run
         browser: chrome
         working-directory: backend
     - name: Create Database
