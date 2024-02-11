@@ -198,18 +198,9 @@ Route::group([
                 Route::post('/restaurant-style', [RestaurantStyleController::class, 'save'])->name('restaurant.restaurant.style.save');
                 Route::post('/customer-style', [CustomerStyleController::class, 'save'])->name('restaurant.customer.style.save');
 
-                $group = TenantSharedRoutesTrait::getPrivateRoutes();
-                Route::middleware($group['middleware'])->group(function () use ($group) {
-                    foreach ($group['routes'] as $route => $name) {
-                        Route::get($route, static function (Request $request) {
-                            return view('tenant');
-                        })->name($name);
-                    }
-                });
             });
         });
-        // TODO @todo (routes) duplicate routes same as line 188
-        // TODO @todo make it one function instead if for loop
+        // TODO @todo ( refactor ) make it one function instead if for loop
         $group = TenantSharedRoutesTrait::getPrivateRoutes();
         Route::middleware($group['middleware'])->group(function () use ($group) {
             foreach ($group['routes'] as $route => $name) {

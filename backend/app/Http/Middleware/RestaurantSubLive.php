@@ -18,7 +18,13 @@ class RestaurantSubLive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(env('APP_ENV') != 'local' &&$request->route()->getName() != 'stancl.tenancy.asset' && request()->segment(3) != 'restaurant-styles'){
+        // if(env('APP_ENV') != 'local' 
+
+        if($request->route()->getName() != 'stancl.tenancy.asset' && 
+        request()->segment(1) !=  'restaurant-style' &&
+        request()->segment(1) !=  'categories' &&
+        request()->segment(1) !=  'carts' 
+        ){
             $sub=ROSubscription::first();
             $setting = Setting::first();
 
