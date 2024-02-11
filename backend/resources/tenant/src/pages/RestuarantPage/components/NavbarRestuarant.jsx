@@ -1,24 +1,51 @@
-import React, {Fragment, useContext, useEffect} from "react"
+import React, {Fragment, useContext, useEffect,useState} from "react"
 import cartHeaderImg from "../../../assets/cartBoldIcon.svg"
 import {IoMenuOutline} from "react-icons/io5"
 import {MenuContext} from "react-flexible-sliding-menu"
-import {useSelector} from "react-redux"
+import {useDispatch,useSelector} from "react-redux"
 import {useNavigate,useSearchParams} from "react-router-dom"
 import {toast} from "react-toastify"
 import imgLogo from "../../../assets/khardl_Logo.png"
 import { useTranslation } from "react-i18next"
+import {getCartItemsCount,} from "../../../redux/NewEditor/categoryAPISlice"
+import AxiosInstance from "../../../axios/axios"
+
+
 const NavbarRestuarant = () => {
   const {toggleMenu} = useContext(MenuContext)
   const {t} = useTranslation()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
   const [searchParams, setSearchParams] = useSearchParams();
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+
   const toggleTheMenu = () => {
     toggleMenu()
   }
-  const cartItemsCount = useSelector(
-    (state) => state.categoryAPI.cartItemsCount
-  )
+  // const cartItemsCount = useSelector(
+  //   (state) => state.categoryAPI.cartItemsCount
+  // )
+  const fetchCartData = async () => {
+    try {
+      const cartResponse = await AxiosInstance.get(`carts`)
+      if (cartResponse.data) {
+        const count = cartResponse.data?.data?.items?.length || 0;
+        dispatch(getCartItemsCount(count));
+        setCartItemsCount(count);
+      }
+    } catch (error) {
+      // toast.error(`${t('Failed to send verification code')}`)
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+  
+    fetchCartData().then(() => {
+      console.log("fetched cart items count successfully")
+    })
+  }, [])
   const {header_color, headerPosition, categoryDetail_cart_color} = restaurantStyle
   console.log("restaurantStyle", restaurantStyle)
   useEffect(() => {
