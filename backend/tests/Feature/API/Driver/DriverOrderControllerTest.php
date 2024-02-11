@@ -17,16 +17,16 @@ class DriverOrderControllerTest extends DriverBase
         $order = $this->createOrderForIndex(Order::RECEIVED_BY_RESTAURANT);
 
         // Test fetching all orders
-        $this->assertOrdersByStatusCount('api/drivers-orders', 1);
+        $this->assertOrdersByStatusCount('api/driver/drivers-orders', 1);
 
         // Test fetching orders with status 'ready'
-        $this->assertOrdersByStatusCount('api/drivers-orders?status=ready', 1);
+        $this->assertOrdersByStatusCount('api/driver/drivers-orders?status=ready', 1);
 
         // Assign the order to a driver and change its status
         $order->update(['driver_id' => $this->driver->id, 'status' => Order::ACCEPTED]);
 
         // Test fetching orders with status 'accepted'
-        $this->assertOrdersByStatusCount('api/drivers-orders?status=' . Order::ACCEPTED, 1);
+        $this->assertOrdersByStatusCount('api/driver/drivers-orders?status=' . Order::ACCEPTED, 1);
 
         // Assert database has the updated order
         $this->assertDatabaseHas('orders',[
@@ -85,7 +85,7 @@ class DriverOrderControllerTest extends DriverBase
 
     private function changeOrderStatus($order, $status)
     {
-        $path = $this->baseURL . "api/change-status/" . $order->id;
+        $path = $this->baseURL . "api/driver/change-status/" . $order->id;
         $response = $this->postJson($path, ['status' => $status]);
         $response->assertOk();
     }
