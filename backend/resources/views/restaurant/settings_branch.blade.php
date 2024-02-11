@@ -64,12 +64,14 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="payment_methods[]"  value="{{\App\Models\Tenant\PaymentMethod::ONLINE}}" {{($payment_methods[\App\Models\Tenant\PaymentMethod::ONLINE] ?? false)?'checked':''}}/>
+                                                <input class="form-check-input me-3" type="checkbox" @if(!$canPayOnline) {{ 'disabled' }} @endif  name="payment_methods[]"  value="{{\App\Models\Tenant\PaymentMethod::ONLINE}}" {{(isset($payment_methods[\App\Models\Tenant\PaymentMethod::ONLINE]) && $canPayOnline)?'checked':''}}/>
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
 														<span class="fw-bolder fs-5 mb-0">{{__('messages.payment-online')}}</span>
-{{--														<span class="text-muted fs-6">[{{__('messages.visa')}}, {{__('messages.master-card')}}, {{__('messages.mada')}}, {{__('messages.apple-pay')}}]</span>--}}
+                                                        @if(!$canPayOnline)
+                                                        <small style="color: red;">{{__('You can not activate pay online because payment account not active yet')}}</small>
+                                                        @endif
 													</span>
                                                 <!--end::Label-->
                                             </label>

@@ -151,6 +151,7 @@ class RestaurantController extends BaseController
         $delivery_types = $branch->delivery_types->pluck('id', 'name');
         $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
         $hasDeliveryCompanies = DeliveryCompanies::all()->count();
+        $canPayOnline = Setting::first()?->merchant_id ? 1 : 0 ;
         return view(
             'restaurant.settings_branch',
             compact(
@@ -160,6 +161,7 @@ class RestaurantController extends BaseController
             'delivery_types',
             'hasActiveDrivers',
             'hasDeliveryCompanies',
+            'canPayOnline'
             )
         );
     }
