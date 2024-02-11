@@ -101,15 +101,20 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY] ?? false)?'checked':''}}  />
+                                                <input class="form-check-input me-3" type="checkbox" @if(!($hasDeliveryCompanies||$hasActiveDrivers)) {{ 'disabled' }} @endif name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY] ?? false)?'checked':''}}  />
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
 														<span class="fw-bolder fs-5 mb-0">{{__('messages.delivery')}}</span>
-                                                    @if(!\App\Packages\DeliveryCompanies\DeliveryCompanies::all()->count())
+                                                    @if(!$hasDeliveryCompanies)
                                                     <small style="color: red;">{{__('messages.you are not signed with any delivery company yet')}}</small>
                                                     @else
                                                         <small style="color: green;">{{__('messages.you are signed with delivery company')}}</small>
+                                                    @endif
+                                                    @if(!$hasActiveDrivers)
+                                                    <small style="color: red;">{{__('You do not have any active drivers')}}</small>
+                                                    @else
+                                                        <small style="color: green;">{{__('You have active drivers')}}</small>
                                                     @endif
 													</span>
                                                 <!--end::Label-->
