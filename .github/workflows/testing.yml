@@ -31,7 +31,7 @@ jobs:
       uses: cypress-io/github-action@v6
       with:
         install: false
-        build: npm run build
+        build: npm run dev
         start: npm run cypress
         browser: chrome
         working-directory: backend
