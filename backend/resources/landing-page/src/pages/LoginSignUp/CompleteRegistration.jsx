@@ -52,6 +52,9 @@ function CompleteRegistration() {
     setLoading(true)
 
     try {
+        if(!selectedFiles.tax_registration_certificate){
+            selectedFiles.tax_registration_certificate = null;
+        }
       const response = await AxiosInstance.post(
         `/register-step2`,
         {
@@ -187,7 +190,6 @@ function CompleteRegistration() {
             <div className='w-[100%]'>
               <div className='mb-2 font-semibold'>
                 {t("Tax registration certificate")}{" "}
-                <span className='text-red-500'>*</span>
                 <p>
                   <small className='text-gray-500'>
                     <i>
@@ -200,9 +202,7 @@ function CompleteRegistration() {
                 type='file'
                 accept='application/pdf,image/*'
                 id='Input(2)'
-                {...register("tax_registration_certificate", {
-                  required: true,
-                })}
+                {...register("tax_registration_certificate")}
                 className='hidden'
                 onChange={(event) => {
                   setFileUploadSuccess({
