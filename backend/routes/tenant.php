@@ -199,7 +199,7 @@ Route::group([
             });
         });
         TenantSharedRoutesTrait::run(TenantSharedRoutesTrait::siteEditor());
-     
+
         Route::get('/download/file/{path?}', function ($path) {
             try {
                 return response()->download(storage_path("app/public/$path"));
@@ -218,7 +218,7 @@ Route::group([
     Route::group([
         'middleware' => ['restaurantLive','restaurantSubLive'],
     ], static function () {
-      
+
         $groups = TenantSharedRoutesTrait::groups();
         foreach ($groups as $group) {
             TenantSharedRoutesTrait::run($group);
@@ -335,7 +335,8 @@ Route::middleware([
                 Route::prefix('driver')->group(function () {
                     Route::controller(DriverOrderController::class)->group(function () {
                         Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
-                        Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
+                        Route::post('change-status/{order}', 'changeStatus')->name('changeStatus');
+                        Route::post('assign-order/{order}', 'assignOrder')->name('assign_order');
                     });
                     Route::controller(ProfileController::class)->group(function () {
                         Route::post('change-password', 'changePassword');

@@ -24,10 +24,10 @@ class OrderStatusChangeRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
- 
+
     {
         $order = Order::findOrFail($this->order);
-        
+
         return [
             'status' => [
                 'required',
@@ -45,13 +45,19 @@ class OrderStatusChangeRequest extends FormRequest
                         $order->delivery_type->name == DeliveryType::DELIVERY &&
                         $order->status == Order::PENDING &&
                         $value != Order::RECEIVED_BY_RESTAURANT  &&
-                        $value != Order::CANCELLED 
-                        
+                        $value != Order::CANCELLED &&
+                        $value != Order::REJECTED
+
                     ){
                         $fail(__("The only available cases for changing the order status are receiving by the restaurant or canceling the order"));
                     }
                 },
             ],
+            'reason' => [
+                Rule::requiredIf(function () use ($order) {
+                return $this->input('status') === Order::REJECTED;
+                })
+            ]
         ];
     }
 }
