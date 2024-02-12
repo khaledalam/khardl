@@ -20,7 +20,7 @@ jobs:
       - name: Set up MySQL
         run: |
           sudo systemctl start mysql
-          mysql -e 'CREATE DATABASE testdb;' -uroot -proot
+          mysql -e 'CREATE DATABASE khardl_testing;' -uroot -proot
           mysql -e 'SHOW DATABASES;' -uroot -proot
       - uses: actions/checkout@main
       - name: Copy .env
@@ -31,7 +31,7 @@ jobs:
         run: php backend/artisan key:generate
       - name: Prepare DB
         run: |
-          chmod -R 777 storage backend/bootstrap/cache
+          chmod -R 777 backend/storage backend/bootstrap/cache
           mkdir -p backend/database
           php backend/artisan migrate:fresh --seed
           php backend/artisan create:tenant
