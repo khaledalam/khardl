@@ -36,7 +36,9 @@ jobs:
           php backend/artisan migrate:fresh --seed
           php backend/artisan create:tenant
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        run: backend/vendor/bin/phpunit
+        run: |
+          cd backend;
+          ./vendor/bin/phpunit
   Testing:
     runs-on: ubuntu-latest
     steps:
