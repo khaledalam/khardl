@@ -20,8 +20,7 @@ class DeliveryTypesSeeder extends Seeder
             'id' => self::DELIVERY_TYPE_DELIVERY,
             'name' => DeliveryType::DELIVERY,
             'cost' => 50,
-            'is_active' => false,
-            'helper_message' => __('messages.you are not signed with any delivery company yet')
+
         ]);
         DeliveryType::create([
             'id' => self::DELIVERY_TYPE_PICKUP,

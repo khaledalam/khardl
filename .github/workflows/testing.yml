@@ -7,6 +7,38 @@ on:
     branches: [ "development" ]
 
 jobs:
+  laravel_tests:
+    runs-on: ubuntu-20.04
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: localhost
+      DB_PORT: 3306
+      DB_DATABASE: khardl_testing
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    steps:
+      - name: Set up MySQL
+        run: |
+          sudo systemctl start mysql
+          mysql -e 'CREATE DATABASE khardl_testing;' -uroot -proot
+          mysql -e 'SHOW DATABASES;' -uroot -proot
+      - uses: actions/checkout@main
+      - name: Copy .env
+        run: php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
+      - name: Install Dependencies
+        run: composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress
+      - name: Generate key
+        run: php backend/artisan key:generate
+      - name: Prepare DB
+        run: |
+          chmod -R 777 backend/storage backend/bootstrap/cache
+          mkdir -p backend/database
+          php backend/artisan migrate:fresh --seed
+          php backend/artisan create:tenant
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: |
+          cd backend;
+          ./vendor/bin/phpunit
   Testing:
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +65,6 @@ jobs:
       run: |
         cd backend;
         npm i -f --silent
-
     - name: Cypress run
       uses: cypress-io/github-action@v6
       with:
