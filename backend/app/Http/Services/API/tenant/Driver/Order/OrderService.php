@@ -27,7 +27,7 @@ class OrderService
                 return $query
                     ->where('deliver_by', null)
                     ->where('driver_id', null)
-                    ->receivedByRestaurant()
+                    ->readyForDriver()
                     ->when($settings && $settings->delivery_companies_option && $limitDrivers > 0, function ($query) use ($limitDrivers) {
                         return $query->where('received_by_restaurant_at', '>', now()->subMinutes($limitDrivers));
                     });
@@ -69,7 +69,7 @@ class OrderService
                 $order->save();
                 return $this->sendResponse('', __('Order has been cancelled successfully'));
             }
-        }else if ($order->status == Order::RECEIVED_BY_RESTAURANT && $order->driver_id == null && $order->deliver_by == null) {
+        }else if (($order->status == Order::RECEIVED_BY_RESTAURANT|| $order->status == Order::READY) && $order->driver_id == null && $order->deliver_by == null) {
             $settings = Setting::first();
             $limitDrivers = $settings->limit_delivery_company;
             if ($limitDrivers && $limitDrivers > 0) {

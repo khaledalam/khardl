@@ -105,6 +105,10 @@ class Order extends Model
     {
         return $query->where('status', self::RECEIVED_BY_RESTAURANT);
     }
+    public function scopeReadyForDriver($query)
+    {
+        return $query->where('status', self::RECEIVED_BY_RESTAURANT)->orWhere('status', self::READY);
+    }
 
     public function scopeAccepted($query)
     {
