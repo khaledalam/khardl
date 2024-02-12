@@ -31,7 +31,7 @@ jobs:
         run: php backend/artisan key:generate
       - name: Prepare DB
         run: |
-          chmod -R 777 storage backend/bootstrap/cache
+          chmod -R 777 backend/storage backend/bootstrap/cache
           mkdir -p backend/database
           php backend/artisan migrate:fresh --seed
           php backend/artisan create:tenant
