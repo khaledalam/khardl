@@ -194,7 +194,13 @@ return [
         "limit_delivery_company" => "الحد الاقصي للسائقين لالتقاط الطلب",
         "preparation_time_delivery" => "وقت اعداد الطلب",
         "confirm_password" => "تاكيد كلمة المرور",
-        "reason" => "السبب"
+        "reason" => "السبب",
+        "status" => "الحالة",
 
     ],
+    'values' => [
+        'status'=> [
+            'cancelled' => "الغاء"
+        ]
+    ]
 ];

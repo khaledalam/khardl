@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\API\tenant\Driver\Order;
 
+use App\Http\Requests\API\Driver\Order\ChangeStatusRequest;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\Setting;
 use App\Traits\APIResponseTrait;
@@ -55,32 +56,24 @@ class OrderService
     "completed" when the order is delivered (prerequisite "accepted")
     "cancelled" when the order is cancelled from customer or issue exist (prerequisite "accepted")
     */
-    public function changeStatus(Request $request, Order $order)
+    public function changeStatus(ChangeStatusRequest $request, Order $order)
     {
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        if ($order->status == Order::ACCEPTED && $order->driver_id == $user->id) {
-            if($request->status == Order::COMPLETED){
-                $order->status = Order::COMPLETED;
-                $order->save();
-                return $this->sendResponse('', __('Order has been completed successfully'));
-            }elseif($request->status == Order::CANCELLED){
-                $order->status = Order::CANCELLED;
-                $order->save();
-                return $this->sendResponse('', __('Order has been cancelled successfully'));
-            }
-        }else if (($order->status == Order::RECEIVED_BY_RESTAURANT|| $order->status == Order::READY) && $order->driver_id == null && $order->deliver_by == null) {
-            $settings = Setting::first();
-            $limitDrivers = $settings->limit_delivery_company;
-            if ($limitDrivers && $limitDrivers > 0) {
-                if (!($order->received_by_restaurant_at > now()->subMinutes($limitDrivers))) {
-                    return $this->sendError('', __('You cannot pick up this order now because you have exceeded the time allowed for order pickup'));
-                }
-            }
-            $order->status = Order::ACCEPTED;
+        if($request->status == Order::COMPLETED){
+            $order->status = Order::COMPLETED;
+            $order->save();
+            return $this->sendResponse('', __('Order has been completed successfully'));
+        }elseif($request->status == Order::CANCELLED){
+            $order->status = Order::CANCELLED;
+            $order->reject_or_cancel_reason = $request->reason;
+            $order->save();
+            return $this->sendResponse('', __('Order has been cancelled successfully'));
+        }elseif($request->status == Order::ACCEPTED){//Mean picked up
+            $order->status = $request->status;
             $order->driver_id = $user->id;
             $order->save();
-            return $this->sendResponse('', __('Order has been received successfully'));
+            return $this->sendResponse('', __('Order has been picked up successfully'));
         }
         return $this->sendError('', __('You can not change this order status'));
     }
