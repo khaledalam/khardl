@@ -7,16 +7,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-toastify'
-import { useSelector, useDispatch } from 'react-redux'
-import { changeLogState } from '../../redux/auth/authSlice'
-import { setIsOpen } from '../../redux/features/drawerSlice'
-import { useAuthContext } from '../../components/context/AuthContext'
-import { HTTP_NOT_VERIFIED, HTTP_NOT_AUTHENTICATED, HTTP_OK} from "../../config";
+import { useSelector } from 'react-redux'
 import AxiosInstance from "../../axios/axios";
 
-const Login = () => {
-   const dispatch = useDispatch()
-   const { setStatusCode } = useAuthContext()
+const LoginTrial = () => {
+
 
    const { t } = useTranslation()
    const navigate = useNavigate()
@@ -44,26 +39,9 @@ const Login = () => {
            // remember_me: data.remember_me, // used only in API token-based
          });
 
-         console.log(response?.data?.success, 'response?.data?.success')
+         console.log(response?.data?.success)
          if (response?.data?.success) {
-            const responseData = await response?.data;
-            console.log(responseData,'const responseData = await response?.data;')
-            localStorage.setItem(
-               'user-info',
-               JSON.stringify(responseData.data)
-            )
-            localStorage.setItem(
-               'user-role',responseData.data.user.roles[0].name
-            )
-            sessionStorage.setItem('email', responseData.data.user.email)
-            setStatusCode(HTTP_OK);
-            dispatch(changeLogState(true))
-            dispatch(setIsOpen(false))
-            toast.success(`${t('You have been logged in successfully')}`)
-            setTimeout(()=>{
-               window.location.reload()
-            },100)
-            navigate('/summary')
+            window.location.href ='/dashboard';
          } else {
             console.log("response?.data?.success false")
             setSpinner(false)
@@ -71,8 +49,6 @@ const Login = () => {
          }
       } catch (error) {
          setSpinner(false)
-         dispatch(changeLogState(false))
-         setStatusCode(HTTP_NOT_AUTHENTICATED)
          toast.error(`${error?.response?.data?.message || t('Login failed')}`)
       }
    }
@@ -90,7 +66,7 @@ const Login = () => {
             <div className='py-[20px] flex justify-center items-center'>
                <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse py-[80px] max-md:py-[60px] xl:max-w-[80%] max-[1200px]:w-[100%]'>
                   <div className='relative flex flex-col justify-center items-center max-[860px]:w-[85vw] space-y-14 shadow-lg bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
-                     <div className='mt-6  w-[100%]'>
+                     <div className='mt-6 w-[100%]'>
                         <MainText
                            Title={t('Login')}
                            classTitle='!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]'
@@ -161,25 +137,7 @@ const Login = () => {
                               </div>
 
                               <div className='flex justify-between items-center'>
-                                 {/*<div className='flex justify-between items-center gap-2'>*/}
-                                 {/*   <input*/}
-                                 {/*      id={`checkbox-1`}*/}
-                                 {/*      type='checkbox'*/}
-                                 {/*      {...register('remember_me')}*/}
-                                 {/*      className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'*/}
-                                 {/*   />*/}
-                                 {/*   <label*/}
-                                 {/*      htmlFor={`checkbox-1`}*/}
-                                 {/*      className='text-sm font-medium text-gray-900'*/}
-                                 {/*   >*/}
-                                 {/*      {t('remember me')}*/}
-                                 {/*   </label>*/}
-                                 {/*</div>*/}
-                                 <Link to='/reset-password'>
-                                    <label className='text-[14px] text-[var(--primary)] cursor-pointer'>
-                                       {t('Forgot your password?')}
-                                    </label>
-                                 </Link>
+
                               </div>
                               <div className='flex flex-col justify-center items-center mt-4 mb-10'>
                                  <button
@@ -188,18 +146,9 @@ const Login = () => {
                                  >
                                     {t('Login')}
                                  </button>
-                                 <p className='text-sm font-semibold  mt-1'>
-                                    {t("Don't have an account?")}
-                                    <Link to='/register'>
-                                       <input
-                                          type='submit'
-                                          className='text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md '
-                                          value={t('Create an account')}
-                                       />
-                                    </Link>
-                                 </p>
                               </div>
                            </form>
+
                         </div>
                      </div>
                      {spinner && (
@@ -207,7 +156,7 @@ const Login = () => {
                            role='status'
                            className='rounded-s-md  max-[860px]:rounded-b-lg max-[860px]:rounded-s-none absolute -translate-x-1/2 -translate-y-1/2 top-[39%] max-[860px]:top-[39.5%] left-1/2 w-[100%] h-[100%] '
                         >
-                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
+                           <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'/>
                            <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
                               <svg
                                  aria-hidden='true'
@@ -256,4 +205,4 @@ const Login = () => {
    )
 }
 
-export default Login
+export default LoginTrial

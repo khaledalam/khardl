@@ -38,7 +38,7 @@
                 <!--end::Label-->
                 <!--begin::Col-->
                 <div class="col-lg-8">
-                    <input type="text" class="form-control " readonly value="{{$setting->lead_id}}">
+                    <input type="text" class="form-control " name="lead_id" value="{{$setting->lead_id}}">
                 </div>
                 <!--end::Col-->
             </div>

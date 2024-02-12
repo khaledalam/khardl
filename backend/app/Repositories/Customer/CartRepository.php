@@ -257,6 +257,20 @@ class CartRepository
 
 
     public function paymentMethods(){
+        $paymentMethods = $this->cart?->branch->payment_methods()->pluck('name')->toArray();
+      
+        if($paymentMethods){
+            $index = array_search(PaymentMethod::ONLINE, $paymentMethods);
+            if ($index !== false) {
+                $setting = Setting::first();
+                if($setting->merchant_id && $setting->lead_id){
+                    return $this->cart?->branch?->payment_methods;
+                }else {
+                    return $this->cart?->branch->payment_methods()->where('id', '!=', $this->cart?->branch?->payment_methods[$index]->id)->get();
+                }
+            }
+        }
+      
         return $this->cart?->branch?->payment_methods;
     }
 
@@ -302,6 +316,11 @@ class CartRepository
             return $this->cart->branch->payment_methods->contains('id',$method->id);
         }
         return false;
+    }
+    public function hasPaymentCreditCardWithTap($name)
+    {
+        $setting = Setting::first();
+        return $this->hasPaymentCreditCard($name) && $setting->merchant_id && $setting->lead_id;
     }
 
     public function hasDelivery($type)

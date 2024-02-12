@@ -168,62 +168,38 @@ class RestaurantController extends BaseController
     }
 
     public function updateSettingsBranch(UpdateBranchSettingFromRequest $request, Branch $branch)
-    {
+    {   
         $payment_methods = null;
         $delivery_types = null;
-        $paymentCash = PaymentMethod::where('name', PaymentMethod::CASH_ON_DELIVERY)->first();
-        if (!in_array(PaymentMethod::CASH_ON_DELIVERY, $request->payment_methods)) {
-            $paymentCash->is_active = false;
-            $paymentCash->helper_message = 'not available';
-        } else {
-            $paymentCash->is_active = true;
-            $paymentCash->helper_message = null;
-        }
-        $paymentCash->save();
-
-        $paymentOnline = PaymentMethod::where('name', PaymentMethod::ONLINE)->first();
-        if (!in_array( PaymentMethod::ONLINE, $request->payment_methods)) {
-            $paymentOnline->is_active = false;
-            $paymentOnline->helper_message = 'not available';
-        } else {
-            $paymentOnline->is_active = true;
-            $paymentOnline->helper_message = null;
-        }
-        $paymentOnline->save();
-
+        $setting = Setting::first();
+        
         foreach ($request->payment_methods ?? [] as $method) {
+            if($method == PaymentMethod::ONLINE && (!$setting->lead_id  || !$setting->merchant_id)){
+                return redirect()->back()->with('error', __('You can not activate pay online because payment account not active yet'));
+            }
             $payment_methods[] = PaymentMethod::where('name', $method)->first()->id;
         }
-
-        // check if RO singed with some delivery company already or not yet
-        // if not singed with any delivery company then disable delivery option
-        $deliveryType = DeliveryType::where('name', DeliveryType::DELIVERY)->first();
-        if (!DeliveryCompanies::all()->count() &&in_array(DeliveryType::DELIVERY,$request->delivery_types)) {
-            $deliveryType->is_active = false;
-            $deliveryType->helper_message = 'you are not signed with any delivery company yet';
-            $deliveryType->save();
-            return redirect()->back()->with('error', __('messages.you are not signed with any delivery company yet'));
-        } else if(!in_array(DeliveryType::DELIVERY, $request->delivery_types)){
-            $deliveryType->is_active = false;
-            $deliveryType->helper_message = 'not available';
-            $deliveryType->save();
-        } else {
-            $deliveryType->is_active = true;
-            $deliveryType->helper_message = null;
-            $deliveryType->save();
-        }
-
-        $pickupType = DeliveryType::where('name', 'PICKUP')->first();
-        if (!in_array('PICKUP', $request->delivery_types)) {
-            $pickupType->is_active = false;
-            $pickupType->helper_message = 'not available';
-        } else {
-            $pickupType->is_active = true;
-            $pickupType->helper_message = null;
-        }
-        $pickupType->save();
-
+        $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
+        $hasDeliveryCompanies = DeliveryCompanies::all()->count();
+        $branch->update([
+            'delivery_availability'=>false,
+            'pickup_availability'=>false
+        ]);
         foreach ($request->delivery_types ?? [] as $method) {
+            if($method == DeliveryType::DELIVERY && !$hasActiveDrivers  && !$hasDeliveryCompanies){
+                return redirect()->back()->with('error', __('you are not signed with any delivery company as well as no active drivers'));
+            }
+            if($method == DeliveryType::DELIVERY && ($hasActiveDrivers  || $hasDeliveryCompanies)){
+                $branch->update([
+                    'delivery_availability'=>true
+                ]);
+            }
+        
+            if($method == DeliveryType::PICKUP){
+                $branch->update([
+                    'pickup_availability'=>true
+                ]);
+            }
             $delivery_types[] = DeliveryType::where('name', $method)->first()->id;
         }
         $branch->payment_methods()->sync($payment_methods);

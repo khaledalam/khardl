@@ -339,7 +339,7 @@
                                 <!--begin::Input-->
                                 <div class="position-relative d-flex align-items-center">
                                     <!--begin::Datepicker-->
-                                    <input type="number" required name="price" class="form-control form-control-solid ps-12" />
+                                    <input type="number" min="0" required name="price" class="form-control form-control-solid ps-12" />
                                     <!--end::Datepicker-->
                                 </div>
                                 <!--end::Input-->
@@ -348,7 +348,7 @@
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
                                 <label class="required fs-6 fw-bold mb-2">{{ __('messages.Calories') }}</label>
-                                <input type="number" required name="calories" class="form-control form-control-solid ps-12" />
+                                <input type="number" min="1" required name="calories" class="form-control form-control-solid ps-12" />
                             </div>
                             <!--end::Col-->
 
@@ -726,7 +726,7 @@
                             <input type="text" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[]" placeholder="{{ __('messages.Title in english') }}">
                             <input type="text" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[]" placeholder="{{ __('messages.Title in arabic') }}">
 
-                            <input type="number" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('messages.Max') }}">
+                            <input type="number" min="0" step="1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('messages.Max') }}">
                             <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
@@ -775,7 +775,7 @@
                     <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in english') }}">
                     <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in arabic') }}">
 
-                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Price') }}">
+                    <input type="number" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Price') }}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -785,7 +785,7 @@
                     <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
                     <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in arabic') }}">
 
-                    <input type="number"  required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Price') }}">
+                    <input type="number" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Price') }}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -883,7 +883,7 @@
                     <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
                     <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in arabic') }}">
 
-                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Price') }}">
+                    <input type="number" min="0" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Price') }}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;  }
@@ -893,7 +893,7 @@
                     <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
                     <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in arabic') }}">
 
-                    <input type="number"  required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Price') }}">
+                    <input type="number" min="0" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Price') }}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;

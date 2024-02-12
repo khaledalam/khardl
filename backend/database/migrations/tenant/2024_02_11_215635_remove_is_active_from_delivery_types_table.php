@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('central_tenant_settings', function (Blueprint $table) {
-            $table->string('restaurant_name')->unique()->change();
+        Schema::table('delivery_types', function (Blueprint $table) {
+            $table->dropColumn('is_active');
+            $table->dropColumn('helper_message');
         });
     }
 
@@ -21,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('central_tenant_settings', function (Blueprint $table) {
-            $table->string('restaurant_name')->change();
+        Schema::table('delivery_types', function (Blueprint $table) {
+            $table->boolean("is_active")->default(1);
+            $table->string("helper_message")->nullable();
         });
     }
 };

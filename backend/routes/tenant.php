@@ -78,20 +78,18 @@ Route::group([
 
     Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
     Route::post('login-admins', [LoginController::class, 'login']);
+    Route::get('/login-trial', static function () {
+        return view('tenant');
+    })->name('login-trial')->middleware('guest');
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
 
     Route::post('auth-validation', [AuthenticationController::class, 'auth_validation'])->name('auth_validation');
 
-    $groups = TenantSharedRoutesTrait::setUp();
-    Route::middleware($groups['middleware'])->group(function () use ($groups) {
-        foreach ($groups['routes'] as $route => $name) {
-            Route::get($route, static function (Request $request) {
-                return view('tenant');
-            })->name($name);
-        }
-    });
+    TenantSharedRoutesTrait::run( TenantSharedRoutesTrait::successOrFail());
+    TenantSharedRoutesTrait::run( TenantSharedRoutesTrait::NotLiveOrNotSubscribed());
+
     Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -200,15 +198,8 @@ Route::group([
 
             });
         });
-        // TODO @todo ( refactor ) make it one function instead if for loop
-        $group = TenantSharedRoutesTrait::getPrivateRoutes();
-        Route::middleware($group['middleware'])->group(function () use ($group) {
-            foreach ($group['routes'] as $route => $name) {
-                Route::get($route, static function (Request $request) {
-                    return view('tenant');
-                })->name($name);
-            }
-        });
+        TenantSharedRoutesTrait::run(TenantSharedRoutesTrait::siteEditor());
+
         Route::get('/download/file/{path?}', function ($path) {
             try {
                 return response()->download(storage_path("app/public/$path"));
@@ -227,15 +218,10 @@ Route::group([
     Route::group([
         'middleware' => ['restaurantLive','restaurantSubLive'],
     ], static function () {
+
         $groups = TenantSharedRoutesTrait::groups();
         foreach ($groups as $group) {
-            Route::middleware($group['middleware'])->group(function () use ($group) {
-                foreach ($group['routes'] as $route => $name) {
-                    Route::get($route, static function (Request $request) {
-                        return view('tenant');
-                    })->name($name);
-                }
-            });
+            TenantSharedRoutesTrait::run($group);
         }
 
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
@@ -349,7 +335,8 @@ Route::middleware([
                 Route::prefix('driver')->group(function () {
                     Route::controller(DriverOrderController::class)->group(function () {
                         Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
-                        Route::post('change-status/{order}', 'changeStatus')->name('restaurant.changeStatus');
+                        Route::post('change-status/{order}', 'changeStatus')->name('changeStatus');
+                        Route::post('assign-order/{order}', 'assignOrder')->name('assign_order');
                     });
                     Route::controller(ProfileController::class)->group(function () {
                         Route::post('change-password', 'changePassword');

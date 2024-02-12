@@ -42,7 +42,7 @@
                                             <label class="form-label">{{ __('messages.delivery-fee')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" step="0.1" name="delivery_fee" class="form-control mb-2" required placeholder="{{ __('messages.delivery-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['delivery_fee']}}" />
+                                            <input type="number" min="0" step="0.1" name="delivery_fee" class="form-control mb-2" required placeholder="{{ __('messages.delivery-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['delivery_fee']}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{__('messages.e.g.')}} 10.5 {{__('messages.sar')}}</div>

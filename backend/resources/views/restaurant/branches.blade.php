@@ -595,7 +595,7 @@
                 <!--begin::Col-->
                 <div class="col-md-12 fv-row">
                     <label class="required fs-6 fw-bold mb-2">{{ __('messages.location-branch') }}</label>
-                    <input id="pac-input-new_branch" class="form-control" type="text" placeholder="{{ __('messages.search-for-place')}}" name="address">
+                    <input id="pac-input-new_branch" class="form-control" type="text" required placeholder="{{ __('messages.search-for-place')}}" name="address">
                     <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
                     <input type="hidden" value="{{ old('location') }}" id="location" name="location">
                     <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
@@ -630,7 +630,7 @@
                 <div class="col-md-12 fv-row">
                     <div class="position-relative d-flex align-items-center">
                         <div class="card-body pt-0">
-                            <p class="form-label required fs-6 fw-bold mb-2">{{__("messages.time")}} </p>
+                            <p class="form-label required fs-6 fw-bold mb-2">{{__("messages.time")}}</p>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="hours_option" id="normalChoice" value="normal" checked>
                                 <label class="form-check-label" for="normalChoice">{{ __('messages.choose-time-for-all-days') }}</label>
@@ -640,6 +640,8 @@
                                 <input class="form-check-input" type="radio" name="hours_option" id="customChoice" value="custom">
                                 <label class="form-check-label" for="customChoice">{{ __('messages.choose-time-for-custom-days') }}</label>
                             </div>
+                            <br />
+                            <small>{{ __('messages.time-in-24-h') }}</small>
                         </div>
                     </div>
                 </div>
@@ -1021,16 +1023,20 @@
             const locationInput = document.getElementById('location');
 
             google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
+
+
                 // If a marker exists, remove it
                 if (markers['-new_branch']) {
                     markers['-new_branch'].setMap(null);
                 }
 
                 // Create a new marker at the clicked location
-                marker = new google.maps.Marker({
+                markers['-new_branch'] = new google.maps.Marker({
                     map: maps['-new_branch'],
                     position: event.latLng,
                 });
+
+                document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
 
                 // Update the hidden input with the clicked location's latitude and longitude
                 locationInput.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;

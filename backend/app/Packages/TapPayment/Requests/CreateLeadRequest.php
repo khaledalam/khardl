@@ -99,7 +99,7 @@ class CreateLeadRequest  extends FormRequest
     }
     public function prepareForValidation()
     {
-
+        // TODO @todo ( refactor ) 
         $defaults = [
             'brand' => [
                 'operations' => [

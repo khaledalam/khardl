@@ -18,8 +18,7 @@ class DeliveryType extends Model
         'description',
         'icon',
         'cost',
-        'is_active',
-        'helper_message'
+
     ];
 
     public $translatable = ['description'];

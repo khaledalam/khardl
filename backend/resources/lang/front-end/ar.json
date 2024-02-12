@@ -349,8 +349,8 @@
   "Select Payment Method": "اختر وسيله الدفع",
   "Payment": "مدفوعات",
   "Select Delivery Type": "اختر نوع التوصيل",
-  "PICKUP": "التقاط الطلب",
-  "PICKUP By Car": "التقاط الطلب في السياره",
+  "pickup": "التقاط الطلب",
+  "pickup by car": "التقاط الطلب في السياره",
   "Inclusive VAT": "شاملة ضريبة القيمة المضافة",
   "Credit Card": "بطاقة إئتمان",
   "Online": "اون لاين",
@@ -437,5 +437,6 @@
   "You have no saved card at the moment": "ليس لديك أي بطاقة محفوظة في الوقت الراهن",
   "Please Enter Coupon Code": "الرجاء إدخال رمز القسيمة",
   "Coupon Applied successfully": "تم تطبيق القسيمة بنجاح",
-  "Search by shipping address": "البحث عن طريق عنوان الشحن"
+  "Search by shipping address": "البحث عن طريق عنوان الشحن",
+  "This restaurant is not active yet": "هذا المطعم غير نشط بعد"
 }

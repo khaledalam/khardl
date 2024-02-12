@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('central_tenant_settings', function (Blueprint $table) {
-            $table->string('restaurant_name')->unique()->change();
+        Schema::table('r_o_subscription_invoices', function (Blueprint $table) {
+            $table->float("amount")->change();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('central_tenant_settings', function (Blueprint $table) {
-            $table->string('restaurant_name')->change();
+        Schema::table('r_o_subscription_invoices', function (Blueprint $table) {
+            $table->integer("amount")->change();
         });
     }
 };
