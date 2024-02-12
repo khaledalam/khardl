@@ -22,7 +22,7 @@ class DashboardService
 
         // not complete register step2
         $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
-
+        // TODO @todo save data in session 
         $restaurantsLive = 0;
         $customers = 0;
         $totalOrders = 0;
@@ -43,7 +43,7 @@ class DashboardService
                 &$acceptedOrders,
                 &$completedOrders,
                 &$cancelledOrders,
-                &$readyOrders,
+                &$readyOrders,  
                 &$receivedByResOrders,
 
                 ) {

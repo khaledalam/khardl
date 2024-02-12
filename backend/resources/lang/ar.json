@@ -158,5 +158,6 @@
     "Password has been changed successfully":"تم تغيير كلمة المرور بنجاح",
     "You do not have any active drivers":"ليس لديك اي سائقين نشطاء",
     "You have active drivers":"لديك  سائقين نشطاء",
+    "you are not signed with any delivery company as well as no active drivers":"انت لم تتعاقد مع اي شركه توصيل وليس لديك اي سائقين نشطاء بعد",
     "You can not activate pay online because payment account not active yet":"لا يمكنك تفعيل الدفع عبر الإنترنت لأن حساب الدفع غير نشط بعد"
 }
