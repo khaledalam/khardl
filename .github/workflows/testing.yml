@@ -37,7 +37,7 @@ jobs:
           php backend/artisan create:tenant
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
-          ./vendor/bin/phpunit --verbose -c backend/phpunit.xml
+          ./backend/vendor/bin/phpunit -c backend/phpunit.xml
   Testing:
     runs-on: ubuntu-latest
     steps:
