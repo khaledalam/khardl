@@ -49,6 +49,7 @@ class Order extends Model
         self::CANCELLED,
         self::COMPLETED,
         self::READY,
+        self::REJECTED,
     ];
 
     const PENDING = 'pending';
@@ -57,6 +58,7 @@ class Order extends Model
     const CANCELLED = 'cancelled';
     const COMPLETED = 'completed';
     const READY = 'ready';
+    const REJECTED = 'rejected';
 
 
     protected static function boot()
