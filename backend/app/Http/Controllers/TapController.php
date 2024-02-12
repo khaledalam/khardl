@@ -193,7 +193,7 @@ class TapController extends Controller
         }else {
             $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
         }
-    
+
         $charge = TapCharge::createSub(
             data : [
                 'amount'=> $chargeData['cost'],
@@ -255,7 +255,7 @@ class TapController extends Controller
             $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
-                    return redirect()->route('restaurant.service')->with('success', __('The subscription has been activated successfully'));
+                    return redirect()->route('restaurant.service')->with('success', __('You can now add a branch'));
                 } else {
                     return redirect()->route('restaurant.service')
                     ->with('error', __("The payment failed, and the subscription fee has not been paid"));

@@ -52,9 +52,20 @@ class  OrderController extends BaseRepositoryController
             $query ->where('branch_id',$user->branch->id);
         })
         ->findOrFail($order);
+        if($order->isDelivery()&&($request->status == Order::COMPLETED || $request->status == Order::CANCELLED)){
+            return $this->sendError('', __('Only drivers can change this order with this status'));
+        }
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
+        if($request->status == Order::REJECTED && $request->reason){
+            $order->update([
+                'status' => $request->status,
+                'reject_or_cancel_reason' => $request->reason
+            ]);
+        }else{
+            $order->update(['status' => $request->status]);
+        }
         switch ($request->status) {
             case Order::PENDING:
                 $statusLog->class_name = 'text-warning';
@@ -68,7 +79,7 @@ class  OrderController extends BaseRepositoryController
             case Order::READY:
                 $statusLog->class_name = 'text-info';
                 break;
-            case Order::CANCELLED:
+            case Order::CANCELLED || Order::REJECTED:
                 $statusLog->class_name = 'text-danger';
                 break;
             case Order::COMPLETED:
@@ -88,7 +99,6 @@ class  OrderController extends BaseRepositoryController
         if ($request->status == Order::RECEIVED_BY_RESTAURANT && $order->isDelivery() && $order?->branch?->delivery_availability) {
             $this->handelDeliveryOrder($order,$request);
         }
-        $order->update(['status' => $request->status]);
         if ($request->expectsJson()) {
             return $this->sendResponse(null, __('Order has been updated successfully.'));
         }
