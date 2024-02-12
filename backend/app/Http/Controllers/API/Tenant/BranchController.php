@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Traits\APIResponseTrait;
 use App\Http\Controllers\Controller;
+use App\Models\Tenant\DeliveryType;
 use Illuminate\Support\Facades\Auth;
 
 class BranchController extends Controller
@@ -18,6 +19,23 @@ class BranchController extends Controller
         $user = Auth::user();
         $branch = Branch::where('id',$branch)
         ->findOrFail($user->branch->id);
+        // if ($request->has('delivery_availability')) {
+        //     $deliveryTypeId = DeliveryType::where("name",DeliveryType::DELIVERY)->first()->id;
+        //     if($request->delivery_availability){
+        //         $branch->delivery_types()->syncWithoutDetaching($deliveryTypeId);
+        //     }else {
+        //         $branch->delivery_types()->detach($deliveryTypeId);
+        //     }
+        // }
+        // if ($request->has('pickup_availability')) {
+        //     $pickupId = DeliveryType::where("name",DeliveryType::PICKUP)->first()->id;
+        //     if($request->pickup_availability){
+
+        //         $branch->delivery_types()->syncWithoutDetaching($pickupId);
+        //     }else {
+        //         $branch->delivery_types()->detach($pickupId);
+        //     }
+        // }
         if ($request->has('delivery_availability')) {
             $updateData['delivery_availability'] = $request->input('delivery_availability');
         }
