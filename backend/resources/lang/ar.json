@@ -164,5 +164,7 @@
     "Order has assigned for someone else":"تم تعيين الطلب لشخص آخر",
     "Order has been picked up successfully":"تم التقاط الطلب بنجاح",
     "Order is not accepted yet":"لم يتم قبول الطلب بعد",
-    "Order is not for you":"الطلب ليس لك"
+    "Order is not for you":"الطلب ليس لك",
+    "You can not assign this order for you":"لا يمكنك تعيين هذا الطلب لك",
+    "Order has been assigned to you successfully":"لقد تم تعيين الطلب لك بنجاح"
 }

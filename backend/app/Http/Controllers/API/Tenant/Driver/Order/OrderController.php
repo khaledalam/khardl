@@ -22,4 +22,8 @@ class OrderController extends BaseController
     {
         return $this->orderService->changeStatus($request,$order);
     }
+    public function assignOrder(Request $request, Order $order)
+    {
+        return $this->orderService->assignOrder($request,$order);
+    }
 }

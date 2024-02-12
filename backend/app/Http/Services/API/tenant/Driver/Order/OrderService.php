@@ -77,4 +77,19 @@ class OrderService
         }
         return $this->sendError('', __('You can not change this order status'));
     }
+    public function assignOrder(Request $request, Order $order)
+    {
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+        if(
+            ($order->status == Order::RECEIVED_BY_RESTAURANT || $order->status == Order::READY)
+            && ($order->driver_id == null || $order->driver_id == $user->id)
+            && $order->deliver_by == null
+        ){
+            $order->driver_id = $user->id;
+            $order->save();
+            return $this->sendResponse('', __('Order has been assigned to you successfully'));
+        }
+        return $this->sendError('', __('You can not assign this order for you'));
+    }
 }
