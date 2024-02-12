@@ -9,7 +9,7 @@ use Tests\Feature\API\DriverBase;
 use Tests\TenantTestCase;
 
 
-class LoginTest extends DriverBase
+class DriverLoginTest extends DriverBase
 {
 
     protected $tenancy = true;
