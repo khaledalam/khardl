@@ -1,7 +1,10 @@
-describe('Test Tenant Homepage | Not Loggedin | Arabic Lang', () => {
-    it('Homepage First Section', () => {
-        cy.visit('http://first.khardl:8000');
-        // @TODO: test that it redirect to /restaurant-not-subscribed
-    });
+import {url} from '../url';
 
+describe('Test Central Homepage | Auth | Login page', () => {
+    it('test login with invalid email', () => {
+        cy.visit(url + '/login');
+        // cy.contains('EN').click();
+        cy.get('input[type="email"]').type('test');
+        cy.get('button[type="submit"]').click();
+    });
 });
