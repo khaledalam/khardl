@@ -58,7 +58,14 @@ class  OrderController extends BaseRepositoryController
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
-        $order->update(['status' => $request->status]);
+        if($request->status == Order::REJECTED && $request->reason){
+            $order->update([
+                'status' => $request->status,
+                'reject_or_cancel_reason' => $request->reason
+            ]);
+        }else{
+            $order->update(['status' => $request->status]);
+        }
         switch ($request->status) {
             case Order::PENDING:
                 $statusLog->class_name = 'text-warning';
@@ -72,7 +79,7 @@ class  OrderController extends BaseRepositoryController
             case Order::READY:
                 $statusLog->class_name = 'text-info';
                 break;
-            case Order::CANCELLED:
+            case Order::CANCELLED || Order::REJECTED:
                 $statusLog->class_name = 'text-danger';
                 break;
             case Order::COMPLETED:
