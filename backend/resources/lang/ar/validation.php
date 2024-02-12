@@ -193,7 +193,8 @@ return [
         "delivery_fee" => "عمولة التوصيل",
         "limit_delivery_company" => "الحد الاقصي للسائقين لالتقاط الطلب",
         "preparation_time_delivery" => "وقت اعداد الطلب",
-        "confirm_password" => "تاكيد كلمة المرور"
+        "confirm_password" => "تاكيد كلمة المرور",
+        "reason" => "السبب"
 
     ],
 ];
