@@ -37,8 +37,7 @@ class CentralLoginTest extends TestCase
         $tenant =  (new CreateTenantAction)
         (
             user: $user,
-            domain: $domain,
-            tenantId: '140c813f-5794-4e47-8e28-3426ac01f1f8'
+            domain: $domain
         );
         return $tenant;
     }
@@ -164,7 +163,7 @@ class CentralLoginTest extends TestCase
     public function test_login_has_not_trader_reg_incomplete_status()
     {
         $data = $this->data();
-        $role = Role::firstOrCreate(['name' => 'Restaurant Owner']);
+        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
         $user = $this->createUser([
             'email' => $data['email'],
             'password' => $data['password'],
@@ -178,7 +177,7 @@ class CentralLoginTest extends TestCase
     public function test_login_has_no_restaurant_incomplete_status()
     {
         $data = $this->data();
-        $role = Role::firstOrCreate(['name' => 'Restaurant Owner']);
+        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
         $user = $this->createUser([
             'email' => $data['email'],
             'password' => $data['password'],
@@ -191,7 +190,7 @@ class CentralLoginTest extends TestCase
     public function test_login_complete_as_restaurant_owner_status()
     {
         $data = $this->data();
-        $role = Role::firstOrCreate(['name' => 'Restaurant Owner']);
+        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
         $user = $this->createUser([
             'email' => $data['email'],
             'password' => $data['password'],
