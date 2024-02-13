@@ -257,8 +257,10 @@ class CartRepository
 
 
     public function paymentMethods(){
+        if(!$this->cart?->branch){
+            return null;
+        }
         $paymentMethods = $this->cart?->branch->payment_methods()->pluck('name')->toArray();
-      
         if($paymentMethods){
             $index = array_search(PaymentMethod::ONLINE, $paymentMethods);
             if ($index !== false) {
@@ -270,11 +272,14 @@ class CartRepository
                 }
             }
         }
-      
+
         return $this->cart?->branch?->payment_methods;
     }
 
     public function deliveryTypes(){
+        if(!$this->cart?->branch){
+            return null;
+        }
         return $this->cart?->branch?->delivery_types;
     }
 
