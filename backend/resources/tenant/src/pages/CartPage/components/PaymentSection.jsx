@@ -16,6 +16,8 @@ import AxiosInstance from "../../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import {  IoClose } from "react-icons/io5";
+
 
 import { GoSellElements } from "@tap-payments/gosell";
 import Places from "../../../components/Customers/CustomersEditor/components/Dashboard/components/Places";
@@ -201,9 +203,30 @@ const PaymentSection = ({
       setSpinner(false);
       console.log(response);
     } catch (error) {
+      setCouponDiscountValue(null)
+      setCouponCode(null)
       setSpinner(false);
       toast.error(error.response.data.message);
       console.log(error);
+    }
+  };
+  const removeCoupon = async () => {
+    if((couponCode && couponDiscountValue.discount) || appliedCoupon?.code){
+      try {
+        setSpinner(true);
+        const response = await AxiosInstance.post(`/remove/coupon`,);
+        toast.success(`${t("Coupon Removed successfully")}`);
+        setSpinner(false);
+        console.log(response);
+        window.location.reload(false)
+      } catch (error) {
+        setSpinner(false);
+        toast.error(error.response.data.message);
+        console.log(error);
+      }
+    } else{
+      setCouponDiscountValue(null)
+      setCouponCode(null)
     }
   };
   return (
@@ -569,7 +592,12 @@ const PaymentSection = ({
                 >
                   <MdSend size={22} />
                 </div>
-
+                {(appliedCoupon?.code || couponCode) && (<div
+                  onClick={() => { removeCoupon() }}
+                  className="w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center cursor-pointer"
+                ><IoClose size={25} className="cursor-pointer" />
+                </div>
+                )}
               </div>
             </div>{" "}
           </CartColumn>
