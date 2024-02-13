@@ -7,6 +7,7 @@ use App\Jobs\SendVerifyEmailJob;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 
@@ -16,6 +17,7 @@ class CentralRegisterTest extends TestCase
     {
         parent::setUp();
         Queue::fake();
+        Mail::fake();
     }
     private function data()
     {
@@ -58,23 +60,14 @@ class CentralRegisterTest extends TestCase
             'restaurant_name' => $data['restaurant_name'],
         ]);
         $user = User::where('email',$data['email'])->first();
+        $this->assertNotNull($user->verification_code);
+        $this->assertNotNull($user->roles->first());
         $this->assertSendVerifyEmailJobIsDispatched($user);
     }
     public function assertSendVerifyEmailJobIsDispatched($user)
     {
         Queue::assertPushed(SendVerifyEmailJob::class, function ($job) use ($user) {
             return $job->user->id == $user->id;
-        });
-    }
-
-    public function assertSendVerifyEmailJobSendsEmail($user)
-    {
-        // Given
-        Mail::fake();
-
-        // Then
-        Mail::assertSent(Mail::class, function ($mail) use ($user) {
-            return $mail->hasTo($user->email);
         });
     }
 
