@@ -1,7 +1,7 @@
 import React from "react";
 import imgWhatsapp from "../../../assets/whatsappImg.svg";
 import { useSelector } from "react-redux";
-import {API_ENDPOINT} from "../../../config";
+import {WEBSITE_URL} from "../../../config";
 
 const FooterRestuarant = () => {
   const language = useSelector((state) => state.languageMode.languageMode);
@@ -72,14 +72,14 @@ const FooterRestuarant = () => {
         {language === "en" ? (
           <h3 className="pl-16 text-[1rem] text-neutral-700 font-medium">Powered by{" "}
             <a
-            href={API_ENDPOINT}
+            href={WEBSITE_URL}
               className="text-neutral-400 text-sm cursor-pointer"
             >Khardl</a>
           </h3>
         ) : (
           <h3 className="pl-16 text-[1rem] text-neutral-700 font-medium">مشغل بواسطة{" "}
             <a
-              href={API_ENDPOINT}
+              href={WEBSITE_URL}
               className="text-neutral-400 text-sm cursor-pointer"
             >خردل</a>
           </h3>

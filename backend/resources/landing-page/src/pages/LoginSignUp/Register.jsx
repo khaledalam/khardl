@@ -13,6 +13,8 @@ import AxiosInstance from "../../axios/axios";
 import { Button } from '../../../../tenant/src/components/Customers/CustomersEditor/components/Dashboard/components/shared/Button'
 import TermsPolicies from  '../TermsPoliciesPrivacy/TermsPolicies';
 import Privacy from  '../TermsPoliciesPrivacy/Privacy';
+import infog from '../../assets/infog.svg'
+
 
 const Register = () => {
    const navigate = useNavigate()
@@ -44,6 +46,10 @@ const Register = () => {
 }
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
+
+   const [showTooltip, setShowTooltip] = useState(true);
+   const handleInputFocus = () => {setShowTooltip(true);};
+   const handleInputBlur = () => {setShowTooltip(false);};
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
@@ -168,7 +174,36 @@ const Register = () => {
                                        {...register('restaurant_name', {
                                           required: true,
                                        })}
+                                       onFocus={handleInputFocus}
+                                       onBlur={handleInputBlur}
                                     />
+                                    <span className='text-[#00000080] text-[10px] mt-1 ms-2'>
+                                       <img src={infog} alt="InfoIcon" className="inline-block align-middle" />
+                                       {' '}{t('* If your restaurant name is ABC the domain will be')}{" "}ABC.khardl.com                                       
+                                    </span>
+                                    {showTooltip && (
+                                       <div className="relative">
+                                          <div className={`absolute ${Language === "ar" ? "right-full" : "left-full"}`}>
+                                             <div id="tooltip3" role="tooltip" className={`z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out ${Language === "ar" ? "right-0" : "left-0"} ml-8 shadow-lg rounded p-3 text-white bg-[#000000]`}>
+                                                <svg className={`absolute ${Language === "ar" ? "right-0 rotate-180 right-[-0.5rem]" : "left-0"} -ml-2 bottom-0 top-0 h-full`} width="9px" height="16px" viewBox="0 0 9 16" version="1.1" xmlns="http://www.w3.org/2000/svg" >
+                                                   <g id="Page-1" stroke="none" strokeWidth="1" fill="black" fillRule="evenodd">
+                                                      <g id="Tooltips-" transform="translate(-874.000000, -1029.000000)" fill="black">
+                                                         <g id="Group-3-Copy-16" transform="translate(850.000000, 975.000000)">
+                                                            <g id="Group-2" transform="translate(24.000000, 0.000000)">
+                                                               <polygon id="Triangle" transform="translate(4.500000, 62.000000) rotate(-90.000000) translate(-4.500000, -62.000000) " points="4.5 57.5 12.5 66.5 -3.5 66.5"></polygon>
+                                                            </g>
+                                                         </g>
+                                                      </g>
+                                                   </g>
+                                                </svg>
+                                                <div className="ms-2 text-[13px] font-new text-[var(--customer)]">
+                                                   <p>{t('* Your restaurant name will  be your domain')}</p>
+                                                   <p>{t('* No spaces are allowed')}</p>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    )}
                                     {errors.restaurant_name && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
                                              {errors.restaurant_name.message ||   t('Restaurant name Error') }

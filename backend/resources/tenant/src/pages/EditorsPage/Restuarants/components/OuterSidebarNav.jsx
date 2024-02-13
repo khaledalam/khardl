@@ -152,7 +152,7 @@ const OuterSidebarNav = ({ id }) => {
   const handleRedirect = (role) => {
     console.log(role);
     if (role == "Customer") {
-      navigate("/dashboard");
+      navigate("/dashboard#Dashboard");
     } else if (role == "Driver") {
       window.open(window.location.href + "orders-all");
     } else {

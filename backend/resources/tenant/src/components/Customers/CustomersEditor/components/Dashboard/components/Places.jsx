@@ -63,7 +63,21 @@ function Map({inputStyle}) {
     borderRadius: 6,
   }
 
-  console.log("filterBranch", filterBranch)
+  
+  const dispatch = useDispatch();
+
+  const handleMarkerDragEnd = (event) => {
+    const { latLng } = event;
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+    dispatch(updateLatLng({ lat, lng }))
+  };
+  const handleMapClick = (event) => {
+    const { latLng } = event;
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+    dispatch(updateLatLng({ lat, lng }));
+  };
 
   return (
     <div className='w-full '>
@@ -76,8 +90,10 @@ function Map({inputStyle}) {
           zoom={10}
           center={selectedLatLng ? selectedLatLng : center}
           mapContainerStyle={containerStyle}
+          options={{ draggableCursor: 'pointer' }}          
+          onClick={handleMapClick}
         >
-          <MarkerF position={selectedLatLng ? selectedLatLng : center} />
+          <MarkerF position={selectedLatLng ? selectedLatLng : center} draggable={true} onDragEnd={handleMarkerDragEnd} />
         </GoogleMap>
       </div>
     </div>

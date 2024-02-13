@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
 import { GoSellElements } from "@tap-payments/gosell";
+import Places from "../../../components/Customers/CustomersEditor/components/Dashboard/components/Places";
 
 const PaymentSection = ({
   styles,
@@ -72,28 +73,28 @@ const PaymentSection = ({
   const getTotalPrice = () => {
     return cartItems
       ? parseFloat(
-          cartItems.reduce(
-            (total, item) =>
-              total + (item.price + item.options_price) * item.quantity,
-            0
-          )
-        ) +
-          deliveryCost -
-          (couponDiscountValue && couponDiscountValue.discount
-            ? couponDiscountValue.discount
-            : cartCoupon
-            ? cartCoupon
-            : 0)
-      : 0;
-  };
-  const priceSummary = cartItems
-    ? parseFloat(
         cartItems.reduce(
           (total, item) =>
             total + (item.price + item.options_price) * item.quantity,
           0
         )
+      ) +
+      deliveryCost -
+      (couponDiscountValue && couponDiscountValue.discount
+        ? couponDiscountValue.discount
+        : cartCoupon
+          ? cartCoupon
+          : 0)
+      : 0;
+  };
+  const priceSummary = cartItems
+    ? parseFloat(
+      cartItems.reduce(
+        (total, item) =>
+          total + (item.price + item.options_price) * item.quantity,
+        0
       )
+    )
     : 0;
 
   const handlePaymentMethodChange = (method) => {
@@ -176,7 +177,7 @@ const PaymentSection = ({
       await AxiosInstance.delete(`/carts/trash`, {}).finally(async () => {
         await fetchCartData().then((r) => null);
       });
-    } catch (error) {}
+    } catch (error) { }
     setIsLoading(false);
   };
 
@@ -309,9 +310,8 @@ const PaymentSection = ({
               height: "45px",
               borderRadius: "1%",
             }}
-            className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${
-              styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
-            }`}
+            className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
+              }`}
           >
             <div className="flex items-center gap-4">
               <div className="w-7 h-7">
@@ -335,22 +335,20 @@ const PaymentSection = ({
           <CartColumn headerTitle={t("Select Payment Method")} isRequired>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
-              className={`border ${
-                styles?.categoryDetail_cart_color
+              className={`border ${styles?.categoryDetail_cart_color
                   ? ""
                   : "border-[var(--primary)]"
-              }`}
+                }`}
             >
               {paymentMethods &&
                 paymentMethods.map((method) => (
                   <div
                     key={method.id}
                     style={{ borderColor: styles?.categoryDetail_cart_color }}
-                    className={`form-control w-fulll h-[62px] flex items-center justify-center border-b ${
-                      styles?.categoryDetail_cart_color
+                    className={`form-control w-fulll h-[62px] flex items-center justify-center border-b ${styles?.categoryDetail_cart_color
                         ? ""
                         : "border-[var(--primary)]"
-                    }}last:border-none`}
+                      }}last:border-none`}
                   >
                     <label className="label cursor-pointer w-[80%] mx-auto flex items-center justify-between ">
                       <div className="flex   w-full flex-row items-center justify-between px-3 ">
@@ -401,11 +399,10 @@ const PaymentSection = ({
                 deliveryTypes.map((deliveryType) => (
                   <div
                     key={deliveryType.id}
-                    className={`w-1/2 h-[118px] flex items-center justify-center cursor-pointer  ${
-                      activeDeliveryType === deliveryType.name.toLowerCase()
+                    className={`w-1/2 h-[118px] flex items-center justify-center cursor-pointer  ${activeDeliveryType === deliveryType.name.toLowerCase()
                         ? " bg-neutral-200 border border-neutral-300"
                         : "border border-neutral-200"
-                    }`}
+                      }`}
                     onClick={() => {
                       if (!deliveryType?.is_active) {
                         alert(t("Not available"));
@@ -416,21 +413,20 @@ const PaymentSection = ({
                   >
                     <div className="flex items-center gap-4">
                       <div
-                        className={`w-[50px] h-[50px]  ${
-                          activeDeliveryType === deliveryType.name.toLowerCase()
+                        className={`w-[50px] h-[50px]  ${activeDeliveryType === deliveryType.name.toLowerCase()
                             ? "bg-[#D9D9D9]"
                             : "bg-[#C0D12330]"
-                        } rounded-full p-2`}
+                          } rounded-full p-2`}
                       >
                         <img
                           src={
                             deliveryType.name.toLowerCase().includes("delivery")
                               ? BikeIcon
                               : deliveryType.name
-                                  .toLowerCase()
-                                  .includes("pickup")
-                              ? shopIcon
-                              : ""
+                                .toLowerCase()
+                                .includes("pickup")
+                                ? shopIcon
+                                : ""
                           }
                           alt={deliveryType.name}
                           className="w-full h-full object-contain"
@@ -461,9 +457,8 @@ const PaymentSection = ({
       {/* order notes */}
       <CartColumn headerTitle={t("Order Notes")}>
         <div
-          className={`w-full border ${
-            styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"
-          }}h-[80px] flex items-center justify-center mb-6`}
+          className={`w-full border ${styles?.categoryDetail_cart_color ? "" : "border-[var(--primary)]"
+            }}h-[80px] flex items-center justify-center mb-6`}
         >
           <div className="flex items-center gap-3 w-full p-3 lg:w-1/2 ">
             <div className="w-full">
@@ -484,11 +479,10 @@ const PaymentSection = ({
           <CartColumn headerTitle={t("Address")} isRequired>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
-              className={`w-full border ${
-                styles?.categoryDetail_cart_color
+              className={`w-full border ${styles?.categoryDetail_cart_color
                   ? ""
                   : "border-[var(--primary)]"
-              }}h-[100px] flex items-center  py-4 justify-center mb-6`}
+                }}h-[100px] flex items-center  py-4 justify-center mb-6`}
             >
               <div className="flex items-center gap-3 p-3 w-full lg:w-1/2 ">
                 <div className="w-full">
@@ -500,12 +494,12 @@ const PaymentSection = ({
                     isReadOnly
                   />
                 </div>
-                <div
+                {/* <div
                   style={{
                     borderColor: styles?.categoryDetail_cart_color,
                     backgroundColor: styles?.categoryDetail_cart_color,
                   }}
-                  onClick={() => navigate("/dashboard#Profile")}
+                  // onClick={() => navigate("/dashboard#Profile")}
                   className={` w-[60px] h-[48px] border cursor-pointer ${
                     styles?.categoryDetail_cart_color
                       ? ""
@@ -513,7 +507,30 @@ const PaymentSection = ({
                   }}  rounded-lg flex items-center justify-center`}
                 >
                   <img src={LocationIcon} alt="" />
+                </div> */}
+
+
+                {/* Open the modal using document.getElementById('ID').showModal() method */}
+                {/* The button to open modal */}
+                <label htmlFor="my_modal_7" className="btn">open modal</label>
+
+                {/* Put this part before </body> tag */}
+                <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+                <div className="modal" role="dialog">
+                  {/* <div className="modal-box "> */}
+                  <div className="modal-box w-11/12 max-w-5xl overflow-hidden">
+                  <Places inputStyle={
+              "input border-[var(--customer)] !w-full lg:!w-1/3 hover:border-[var(--customer)] focus-visible:border-[var(--customer)] outline-0 outline-none focus-visible:outline-none w-full"
+            } />
+                  </div>
+                  <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
                 </div>
+
+
+
+
+
+
               </div>
             </div>{" "}
           </CartColumn>
@@ -522,11 +539,10 @@ const PaymentSection = ({
           <CartColumn headerTitle={t("Coupon")}>
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
-              className={`w-full border ${
-                styles?.categoryDetail_cart_color
+              className={`w-full border ${styles?.categoryDetail_cart_color
                   ? ""
                   : "border-[var(--primary)]"
-              }}h-[100px] flex items-center justify-center mb-6`}
+                }}h-[100px] flex items-center justify-center mb-6`}
             >
               <div className="flex items-center gap-3 w-full lg:w-1/2 ">
                 <div className="w-full">
@@ -553,7 +569,7 @@ const PaymentSection = ({
                 >
                   <MdSend size={22} />
                 </div>
-               
+
               </div>
             </div>{" "}
           </CartColumn>
@@ -565,11 +581,10 @@ const PaymentSection = ({
           <div className="p-6 flex flex-col gap-4 border border-[var(--primary)">
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
-              className={`flex flex-col gap-4 border-b pb-4 ${
-                styles?.categoryDetail_cart_color
+              className={`flex flex-col gap-4 border-b pb-4 ${styles?.categoryDetail_cart_color
                   ? ""
                   : "border-[var(--primary)]"
-              }}`}
+                }}`}
             >
               <div className="flex items-start justify-between">
                 <h3 className="text-[16px] font-normal">{t("price")}</h3>
@@ -636,9 +651,8 @@ const PaymentSection = ({
             <div
               onClick={handlePlaceOrder}
               style={{ backgroundColor: styles?.categoryDetail_cart_color }}
-              className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${
-                styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
-              }`}
+              className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
+                }`}
             >
               <div className="flex items-center gap-4">
                 <div className="w-7 h-7">
