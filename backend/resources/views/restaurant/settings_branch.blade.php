@@ -103,7 +103,7 @@
                                             <!--begin::Option-->
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
-                                                <input class="form-check-input me-3" type="checkbox" @if(!($hasDeliveryCompanies||$hasActiveDrivers)) {{ 'disabled' }} @endif name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY] ?? false)?'checked':''}}  />
+                                                <input class="form-check-input me-3" type="checkbox" @if(!($hasDeliveryCompanies||$hasActiveDrivers)) {{ 'disabled' }} @endif name="delivery_types[]"  value="{{\App\Models\Tenant\DeliveryType::DELIVERY}}" {{(isset($delivery_types[\App\Models\Tenant\DeliveryType::DELIVERY]) &&  ($hasDeliveryCompanies||$hasActiveDrivers) )?'checked':''}}  />
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
@@ -140,17 +140,20 @@
                                             <!--begin::Option-->
                                             <div class="separator separator-dashed my-6"></div>
                                             <!--end::Option-->
-                                            <!--begin::Option-->
-{{--                                            <label class="form-check form-check-custom form-check-solid align-items-start">--}}
-{{--                                                <!--begin::Input-->--}}
-{{--                                                <input class="form-check-input me-3" type="checkbox" name="delivery_types[]" value="{{\App\Models\Tenant\DeliveryType::PICKUP_BY_CAR}}" {{($delivery_types[\App\Models\Tenant\DeliveryType::PICKUP_BY_CAR] ?? false)?'checked':''}}  />--}}
-{{--                                                <!--end::Input-->--}}
-{{--                                                <!--begin::Label-->--}}
-{{--                                                <span class="form-check-label d-flex flex-column align-items-start">--}}
-{{--														<span class="fw-bolder fs-5 mb-0">{{__('messages.pick-up-by-car')}}</span>--}}
-{{--													</span>--}}
-{{--                                                <!--end::Label-->--}}
-{{--                                            </label>--}}
+                                            <span class="text-active-gray-900" style="font-size: 18px !important;">{{__('Food preparation time')}}</span>
+                                            <small class="text-muted">{{ __('prepare food takes how long time') }}</small>
+
+                                            <div class="separator separator-dashed my-6"></div>
+                                            <label class="form-check form-check-custom form-check-solid align-items-start">
+                                                <!--begin::Input-->
+                                                <input type="text" class="form-control" name="preparation_time_delivery" id="prep-time" value="{{ $branch->preparation_time_delivery }}">
+                                                <!--end::Input-->
+                                                <!--begin::Label-->
+                                                <span class="form-check-label d-flex flex-column align-items-start">
+														<span class="fw-bolder fs-5 mb-0">{{__('Time (H:M:S)')}}</span>
+													</span>
+                                                <!--end::Label-->
+                                            </label>
                                         </div>
                                         <!--end::Card body-->
                                         <!--begin::Card footer-->
@@ -176,29 +179,24 @@
         <!--end::Page-->
     </div>
     <!--end::Root-->
-
-
-    <!--begin::Javascript-->
-    <script>
-        var hostUrl = "../assets/";
-    </script>
-    <!--begin::Global Javascript Bundle(used by all pages)-->
-    <script src="../assets/plugins/global/plugins.bundle.js"></script>
-    <script src="../assets/js/scripts.bundle.js"></script>
-    <!--end::Global Javascript Bundle-->
-    <!--begin::Page Vendors Javascript(used by this page)-->
-    <script src="../assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-    <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
-    <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="../assets/js/widgets.bundle.js"></script>
-    <script src="../assets/js/custom/widgets.js"></script>
-    <script src="../assets/js/custom/apps/chat/chat.js"></script>
-    <script src="../assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="../assets/js/custom/utilities/modals/create-app.js"></script>
-    <script src="../assets/js/custom/utilities/modals/users-search.js"></script>
-    <!--end::Page Custom Javascript-->
-    </body>
     <!--end::Body-->
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if preparation_time_delivery exists
+        var preparationTime = "{{ $branch->preparation_time_delivery ?? '' }}";
 
+        // Initialize the timepicker with the existing value or default value
+        flatpickr("#prep-time", {
+            enableTime: true,
+            noCalendar: true,
+            enableSeconds: true,
+            dateFormat: "H:i:S",
+            defaultDate: preparationTime || "00:00:00",
+            time_24hr: true
+        });
+    });
+    </script>
+@endsection
 @endsection

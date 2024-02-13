@@ -257,9 +257,13 @@ class CartRepository
 
 
     public function paymentMethods(){
+        if(!$this->cart?->branch){
+            return null;
+        }
         $paymentMethods = $this->cart?->branch->payment_methods()->pluck('name')->toArray();
         if($paymentMethods){
-            if ($index = array_search(PaymentMethod::ONLINE, $paymentMethods) !== false) {
+            $index = array_search(PaymentMethod::ONLINE, $paymentMethods);
+            if ($index !== false) {
                 $setting = Setting::first();
                 if($setting->merchant_id && $setting->lead_id){
                     return $this->cart?->branch?->payment_methods;
@@ -268,11 +272,14 @@ class CartRepository
                 }
             }
         }
-      
+
         return $this->cart?->branch?->payment_methods;
     }
 
     public function deliveryTypes(){
+        if(!$this->cart?->branch){
+            return null;
+        }
         return $this->cart?->branch?->delivery_types;
     }
 

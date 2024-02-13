@@ -50,7 +50,7 @@ class RegisterController extends BaseController
 
         $request->validate([
             'commercial_registration' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
-            'tax_registration_certificate' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
+            'tax_registration_certificate' => 'nullable|mimes:pdf,jpg,jpeg,png|max:16384',
             'bank_certificate' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
             'identity_of_owner_or_manager' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
             'national_address' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
@@ -119,7 +119,7 @@ class RegisterController extends BaseController
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
-       
+
         $today = Carbon::today();
         $user = Auth::user();
         // You might want a new table to track verification code attempts.
@@ -155,7 +155,7 @@ class RegisterController extends BaseController
 
     public function verify(Request $request): JsonResponse
     {
-      
+
         $request->validate([
             // 'email' => 'required|email|max:255',
             'code' => 'required|string|min:6|max:6', // Assuming a 6-digit code

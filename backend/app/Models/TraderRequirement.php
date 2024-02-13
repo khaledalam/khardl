@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Database\Factories\TraderRequirementFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TraderRequirement extends Model
 {
+    use HasFactory;
     protected $table = 'trader_requirements';
 
     protected $fillable = [
@@ -22,5 +25,9 @@ class TraderRequirement extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    protected static function newFactory()
+    {
+      return TraderRequirementFactory::new();
     }
 }

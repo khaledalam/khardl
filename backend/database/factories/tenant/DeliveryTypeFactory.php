@@ -22,8 +22,7 @@ class DeliveryTypeFactory extends Factory
         return [
             'name' => fake()->randomElement(['Delivery','PICKUP']),
             'cost' => fake()->numberBetween(0,100),
-            'is_active' => 1,
-            'helper_message' => fake()->text
+
         ];
     }
 }

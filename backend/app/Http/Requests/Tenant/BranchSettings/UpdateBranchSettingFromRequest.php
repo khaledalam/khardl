@@ -31,6 +31,7 @@ class UpdateBranchSettingFromRequest extends FormRequest
             'delivery_types' => ['required','array'],
             'delivery_types.*' => ['required', 'min:1', 'in:Delivery,PICKUP'],
             'payment_methods.*' => ['required', 'min:1', 'in:Online,Cash on Delivery'],
+            'preparation_time_delivery'=>'nullable|date_format:"H:i:s"'
         ];
     }
 

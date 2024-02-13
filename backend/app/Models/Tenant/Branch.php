@@ -2,10 +2,12 @@
 
 namespace App\Models\Tenant;
 
+use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\PaymentMethod;
-use Database\Factories\tenant\BranchFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Database\Factories\tenant\BranchFactory;
+use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Branch extends Model
@@ -42,9 +44,9 @@ class Branch extends Model
         'sunday_open',
         'sunday_close',
         'sunday_closed',
+        'preparation_time_delivery',
         'delivery_availability',
-        'pickup_availability',
-        'preparation_time_delivery'
+        'pickup_availability'
     ];
 
 
@@ -93,5 +95,15 @@ class Branch extends Model
     {
       return BranchFactory::new();
     }
+    // public function getDeliveryAvailabilityAttribute(){
+    //     $delivery= $this->delivery_types()->where('name',DeliveryType::DELIVERY)->count();
+    //     if(!$delivery) return false;
+    //     $hasActiveDrivers = RestaurantUser::activeDrivers()->get()->count();
+    //     $hasDeliveryCompanies = DeliveryCompanies::all()->count();
+    //     return $delivery  && ($hasDeliveryCompanies||$hasActiveDrivers);
+    // }
+    // public function getPickupAvailabilityAttribute(){
+    //     return ( $this->delivery_types()->where('name',DeliveryType::PICKUP)->count())?true:false;
+    // } 
 
 }
