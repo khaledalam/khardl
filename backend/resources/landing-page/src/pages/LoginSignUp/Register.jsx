@@ -47,7 +47,7 @@ const Register = () => {
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
 
-   const [showTooltip, setShowTooltip] = useState(true);
+   const [showTooltip, setShowTooltip] = useState(false);
    const handleInputFocus = () => {setShowTooltip(true);};
    const handleInputBlur = () => {setShowTooltip(false);};
 
@@ -171,13 +171,14 @@ const Register = () => {
                                     <input
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                        placeholder={t('Restaurant name')}
+                                       style={{marginBottom: 0}}
                                        {...register('restaurant_name', {
                                           required: true,
                                        })}
                                        onFocus={handleInputFocus}
                                        onBlur={handleInputBlur}
                                     />
-                                    <span className='text-[#00000080] text-[10px] mt-1 ms-2'>
+                                    <span className='text-[#00000080] text-[10px] ms-2' style={{marginBottom: '20px'}}>
                                        <img src={infog} alt="InfoIcon" className="inline-block align-middle" />
                                        {' '}{t('* If your restaurant name is ABC the domain will be')}{" "}ABC.khardl.com                                       
                                     </span>

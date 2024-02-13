@@ -517,7 +517,7 @@ const PaymentSection = ({
                     isReadOnly
                   />
                 </div>
-                {/* <div
+                <div
                   style={{
                     borderColor: styles?.categoryDetail_cart_color,
                     backgroundColor: styles?.categoryDetail_cart_color,
@@ -530,12 +530,12 @@ const PaymentSection = ({
                   }}  rounded-lg flex items-center justify-center`}
                 >
                   <img src={LocationIcon} alt="" />
-                </div> */}
+                </div>
 
 
                 {/* Open the modal using document.getElementById('ID').showModal() method */}
                 {/* The button to open modal */}
-                <label htmlFor="my_modal_7" className="btn">open modal</label>
+                {/* <label htmlFor="my_modal_7" className="btn">open modal</label> */}
 
                 {/* Put this part before </body> tag */}
                 <input type="checkbox" id="my_modal_7" className="modal-toggle" />

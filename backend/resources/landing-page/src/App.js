@@ -49,7 +49,8 @@ const App = () => {
   const fontFamily = "cairo, sans-serif";
   const location = useLocation();
   const { loading } = useAuthContext();
-  const showHeader = ![""].includes(location.pathname);
+  const showHeader = !["/complete-register",
+  "/verification-email",].includes(location.pathname);
   const showFooter = ![
     "/login",
     "/register",
