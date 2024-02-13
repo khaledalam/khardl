@@ -74,7 +74,7 @@ const Login = () => {
 
                const userRole = responseData.data.user.roles[0]?.name || 'Customer';
                localStorage.setItem('user-role', userRole);
-               
+
                setStatusCode(HTTP_NOT_VERIFIED)
                navigate('/verification-phone')
             } else if (
@@ -220,7 +220,7 @@ const Login = () => {
                                     {t("Don't have an account?")}
                                     <Link to='/register'>
                                        <input
-                                          type='submit'
+                                          type='button'
                                           className='text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md '
                                           value={t('Create an account')}
                                        />
