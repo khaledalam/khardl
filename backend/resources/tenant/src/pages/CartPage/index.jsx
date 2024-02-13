@@ -72,7 +72,6 @@ const CartPage = () => {
     fetchResStyleData().then(() => null)
   }, [])
 
-  const handleValidateCoupon = async () => {}
 
   if (isloading) {
     return <LoadingSpinner />

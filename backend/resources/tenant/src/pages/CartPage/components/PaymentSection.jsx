@@ -39,14 +39,14 @@ const PaymentSection = ({
   const { t } = useTranslation();
   const [notes, setNotes] = useState("");
   const [couponCode, setCouponCode] = useState("");
-  const [deliveryType, setDeliveryType] = useState("");
+  const [deliveryType, setDeliveryType] = useState("Pickup");
   const [couponDiscountValue, setCouponDiscountValue] = useState(null);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [paymentMethod, setPaymentMethod] = useState(
     paymentMethods && paymentMethods[0] ? paymentMethods[0]?.name : ""
   );
   const [deliveryCost, setDeliveryCost] = useState(0);
-  const [activeDeliveryType, setActiveDeliveryType] = useState("");
+  const [activeDeliveryType, setActiveDeliveryType] = useState("pickup");
   const [showTAPClientCard, setShowTAPClientCard] = useState(false);
   const language = useSelector((state) => state.languageMode.languageMode);
   const [spinner, setSpinner] = useState(false);
@@ -433,7 +433,7 @@ const PaymentSection = ({
                       }
                       handleDeliveryTypeChange(deliveryType);
                     }}
-                  >
+                  > 
                     <div className="flex items-center gap-4">
                       <div
                         className={`w-[50px] h-[50px]  ${activeDeliveryType === deliveryType.name.toLowerCase()
@@ -522,7 +522,7 @@ const PaymentSection = ({
                     borderColor: styles?.categoryDetail_cart_color,
                     backgroundColor: styles?.categoryDetail_cart_color,
                   }}
-                  // onClick={() => navigate("/dashboard#Profile")}
+                  onClick={() => navigate("/dashboard#Profile")}
                   className={` w-[60px] h-[48px] border cursor-pointer ${
                     styles?.categoryDetail_cart_color
                       ? ""
@@ -548,12 +548,6 @@ const PaymentSection = ({
                   </div>
                   <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
                 </div>
-
-
-
-
-
-
               </div>
             </div>{" "}
           </CartColumn>
