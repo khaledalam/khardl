@@ -3,17 +3,21 @@
 namespace Tests\Feature\Web\Central\Auth\Login;
 
 use App\Actions\CreateTenantAction;
-use App\Models\Domain;
-use App\Models\Tenant;
+use App\Jobs\SendVerifyEmailJob;
 use App\Models\TraderRequirement;
 use App\Models\User;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 
 class CentralLoginTest extends TestCase
 {
+    public function setUp():void
+    {
+        parent::setUp();
+        Queue::fake();
+    }
     private function data()
     {
         return [
@@ -56,6 +60,12 @@ class CentralLoginTest extends TestCase
                 'message' => 'Unauthorized.',
                 'is_loggedin' => false,
             ]);
+    }
+    public function assertSendVerifyEmailJobIsDispatched($id)
+    {
+        Queue::assertPushed(SendVerifyEmailJob::class, function ($job) use ($id) {
+            return $job->user->id == $id;
+        });
     }
     public function test_login(): void
     {
@@ -159,6 +169,7 @@ class CentralLoginTest extends TestCase
         $this->assertEquals(true, $response->getOriginalContent()['is_loggedin']);
         $this->assertEquals($user->verification_code, $past_code);
         $this->assertNotEquals($user->refresh()->verification_code, $past_code);
+        $this->assertSendVerifyEmailJobIsDispatched($response->getOriginalContent()['data']['user']->id);
     }
     public function test_login_has_not_trader_reg_incomplete_status()
     {
