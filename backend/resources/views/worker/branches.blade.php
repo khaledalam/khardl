@@ -4,7 +4,7 @@
 
 @section('content')
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E
    &libraries=places"></script>
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">

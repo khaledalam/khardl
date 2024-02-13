@@ -233,7 +233,7 @@ class CartRepository
             'coupon' => $this->coupon(),
             'discount' => $this->discount(),
             'items' => $items,
-            'payment_methods' => $this->paymentMethods(),
+//            'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],
             // 'tap_information'=> [
@@ -261,6 +261,7 @@ class CartRepository
             return null;
         }
         $paymentMethods = $this->cart?->branch->payment_methods()->pluck('name')->toArray();
+
         if($paymentMethods){
             $index = array_search(PaymentMethod::ONLINE, $paymentMethods);
             if ($index !== false) {

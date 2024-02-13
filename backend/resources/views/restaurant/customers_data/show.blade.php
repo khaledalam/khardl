@@ -362,7 +362,7 @@
 
 @endsection
 @section('js')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
 <script>
     $(document).ready(function() {
         const urlParams = new URLSearchParams(window.location.search);

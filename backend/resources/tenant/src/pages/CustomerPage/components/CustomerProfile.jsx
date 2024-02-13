@@ -17,11 +17,13 @@ const CustomerProfile = () => {
   const [firstName, setFirstName] = useState("John")
   const [lastName, setLastName] = useState("Doe")
   const [phone, setPhone] = useState("96611111111")
-  const address = useSelector((state) => state.customerAPI.address)
-  const addressLatLng = useSelector((state) => state.customerAPI.addressLatLng)
+    const address = useSelector((state) => state.customerAPI.address?.addressValue)
+    const customerAddress = useSelector((state) => state.customerAPI.address)
   const saveProfileChange = useSelector(
     (state) => state.customerAPI.saveProfileChanges
   )
+
+    console.log("customerAddress ::  ", customerAddress);
 
   const [isDisabled, setIsDisabled] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
@@ -47,9 +49,12 @@ const CustomerProfile = () => {
         setPhone(profileResponse.data?.data?.phone ?? t("N/A"))
         userProfileInfo["phone"] = profileResponse.data?.data?.phone
         dispatch(
-          updateCustomerAddress(profileResponse.data?.data?.address ?? t("N/A"))
+          updateCustomerAddress({
+              lat: profileResponse.data?.data?.address?.lat,
+              lng: profileResponse.data?.data?.address?.lng,
+              addressValue: profileResponse.data?.data?.address?.addressValue ?? t("N/A")})
         )
-        userProfileInfo["address"] = profileResponse.data?.data?.address
+        userProfileInfo["address"] = profileResponse.data?.data?.address?.addressValue
 
         console.log("userProfileInfo", userProfileInfo)
         localStorage.setItem("userProfileInfo", JSON.stringify(userProfileInfo))
@@ -69,11 +74,13 @@ const CustomerProfile = () => {
 
   useEffect(() => {
     if (userProfile) {
-      if (
-        firstName?.trim() === userProfile?.firstName?.trim() &&
+      if (firstName?.trim() === userProfile?.firstName?.trim() &&
         lastName?.trim() === userProfile?.lastName?.trim() &&
         phone?.trim() === userProfile?.phone?.trim() &&
-        address?.trim() === userProfile?.address?.trim()
+          customerAddress?.address?.addressValue?.trim() === userProfile?.addressValue?.trim() &&
+          customerAddress?.address?.lat === userProfile?.lat &&
+          customerAddress?.address?.lng === userProfile?.lng
+
       ) {
         setIsDisabled(true)
         dispatch(updateProfileSaveStatus(true))
@@ -82,6 +89,10 @@ const CustomerProfile = () => {
         console.log("not a match, values changes")
         setIsDisabled(false)
         dispatch(updateProfileSaveStatus(false))
+      }
+
+      if (customerAddress?.lat !== userProfile?.lat || customerAddress?.lng !== userProfile?.lng || customerAddress?.addressVAlue !== userProfile?.addressValue) {
+          setIsDisabled(false);
       }
     }
   }, [address, firstName, lastName, phone, userProfile])
@@ -97,12 +108,12 @@ const CustomerProfile = () => {
 
       try {
         await AxiosInstance.post(`/user`, {
-          address: address,
+          address: customerAddress && customerAddress?.addressValue,
           first_name: firstName,
           last_name: lastName,
           phone: phone,
-          lat: addressLatLng && addressLatLng?.lat,
-          lng: addressLatLng && addressLatLng?.lng,
+          lat: customerAddress && customerAddress?.lat,
+          lng: customerAddress && customerAddress?.lng,
         })
           .then((r) => {
             toast.success(t("Profile updated successfully"))

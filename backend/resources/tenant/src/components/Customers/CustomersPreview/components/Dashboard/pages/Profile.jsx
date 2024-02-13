@@ -47,7 +47,7 @@ const Profile = () => {
 
       try {
         await AxiosInstance.post(`/user`, {
-          address: customerAddress,
+          address: customerAddress?.addressValue,
           first_name: firstName,
           last_name: lastName,
           phone: phone,
