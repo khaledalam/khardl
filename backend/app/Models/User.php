@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Jobs\SendVerifyEmailJob;
 use App\Mail\verifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Str;
 use App\Models\TraderRequirement;
@@ -157,5 +158,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         });
     }
     /* Scopes */
-
+    protected static function newFactory()
+    {
+      return UserFactory::new();
+    }
 }
