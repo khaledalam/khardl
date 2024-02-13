@@ -2,11 +2,12 @@
 
 namespace Tests\Feature\Web\Central\Auth\Login;
 
+use App\Actions\CreateTenantAction;
 use App\Models\Domain;
 use App\Models\Tenant;
 use App\Models\TraderRequirement;
 use App\Models\User;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -33,20 +34,12 @@ class CentralLoginTest extends TestCase
     }
     private function createRestaurant($user, $domain)
     {
-        $tenant = Tenant::create([
-            'user_id' => $user->id,
-            'ready' => true,
-            'email' => $user->email,
-            "first_name" => $user->first_name,
-            "last_name" => $user->last_name,
-            "phone" => $user->phone,
-            'restaurant_name' => $domain,
-            "password" => $user->password,
-        ]);
-        $domain = Domain::create([
-            'domain' => $domain,
-            'tenant_id' => $tenant->id
-        ]);
+        $tenant =  (new CreateTenantAction)
+        (
+            user: $user,
+            domain: $domain,
+            tenantId: '140c813f-5794-4e47-8e28-3426ac01f1f8'
+        );
         return $tenant;
     }
     private function assertLoginSuccess($response, $email, $status = "completed")
