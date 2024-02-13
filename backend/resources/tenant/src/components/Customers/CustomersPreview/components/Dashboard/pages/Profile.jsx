@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react"
 import {useTranslation} from "react-i18next"
-import Maps from "../../../../../map"
 import AxiosInstance from "../../../../../../axios/axios"
 import {toast} from "react-toastify"
 import Places from "../../../../CustomersEditor/components/Dashboard/components/Places"
