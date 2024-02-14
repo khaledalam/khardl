@@ -117,6 +117,7 @@ const VerificationEmail = () => {
             style={{
                backgroundImage: `url(${ContactUsCover})`,
                backgroundSize: 'cover',
+               minHeight: '95vh',
             }}
          >
             <div className='py-[20px] flex justify-center items-center'>

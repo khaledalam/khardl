@@ -4,10 +4,10 @@ const customerAPISlice = createSlice({
   name: "customerAPI",
   initialState: {
     activeNavItem: "Dashboard",
-    address: "",
-    addressLatLng: {
+    address: {
       lat: 28.45,
       lng: 45.45,
+      addressValue: ""
     },
     ordersList: null,
     cardsList: [],
@@ -27,9 +27,6 @@ const customerAPISlice = createSlice({
     },
     updateCustomerAddress: (state, action) => {
       state.address = action.payload
-    },
-    updateLatLng: (state, action) => {
-      state.addressLatLng = action.payload
     },
     updateOrderList: (state, action) => {
       state.ordersList = action.payload
@@ -52,7 +49,6 @@ const customerAPISlice = createSlice({
 export const {
   setActiveNavItem,
   updateCustomerAddress,
-  updateLatLng,
   updateOrderList,
   updateCardsList,
   updateProfileSaveStatus,

@@ -261,6 +261,7 @@ class CartRepository
             return null;
         }
         $paymentMethods = $this->cart?->branch->payment_methods()->pluck('name')->toArray();
+
         if($paymentMethods){
             $index = array_search(PaymentMethod::ONLINE, $paymentMethods);
             if ($index !== false) {
