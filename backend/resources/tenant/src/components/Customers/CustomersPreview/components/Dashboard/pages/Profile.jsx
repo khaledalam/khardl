@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react"
 import {useTranslation} from "react-i18next"
-import Maps from "../../../../../map"
 import AxiosInstance from "../../../../../../axios/axios"
 import {toast} from "react-toastify"
 import Places from "../../../../CustomersEditor/components/Dashboard/components/Places"
@@ -48,7 +47,7 @@ const Profile = () => {
 
       try {
         await AxiosInstance.post(`/user`, {
-          address: customerAddress,
+          address: customerAddress?.addressValue,
           first_name: firstName,
           last_name: lastName,
           phone: phone,
@@ -114,7 +113,7 @@ const Profile = () => {
             <div className='py-4 px-8'>
               <div className='mb-6 font-bold w-[100%] h-1 bg-[var(--secondary)]' />
               <p className='mb-2 mt-4 mx-2'>{t("Address")}</p>
-              <div className='w-[100%] h-[400px]'>
+              <div className='w-[100%] h-[400px] flex'>
                 <Places
                   inputStyle={
                     "w-full text-[14px] bg-[var(--secondary)]  py-3 rounded-full px-4 appearance-none"

@@ -132,7 +132,7 @@ const Register = () => {
                                     </h4>
                                     <input
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                       placeholder={t('Last name')}
+                                       placeholder={t('First name')}
                                        {...register('first_name', {
                                           required: true,
                                        })}

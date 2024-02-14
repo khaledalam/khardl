@@ -28,9 +28,13 @@ jobs:
       - name: Install Dependencies
         run: composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress
       - name: Generate key
-        run: php backend/artisan key:generate
+        run: |
+          mkdir -p backend/bootstrap/cache
+          chmod -R 777 backend/storage backend/bootstrap/cache
+          php backend/artisan key:generate
       - name: Prepare DB
         run: |
+          mkdir -p backend/bootstrap/cache
           chmod -R 777 backend/storage backend/bootstrap/cache
           mkdir -p backend/database
           php backend/artisan migrate:fresh --seed
@@ -54,6 +58,7 @@ jobs:
         composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
       run: |
+        mkdir -p backend/bootstrap/cache
         php backend/artisan key:generate
     - name: Directory Permissions
       run: |
@@ -72,21 +77,6 @@ jobs:
         start: npm run cypress:run
         browser: chrome
         working-directory: backend
-    - name: Create Database
-      run: |
-        mkdir -p backend/database
-        touch backend/database/database.sqlite
-        php backend/artisan migrate:fresh --seed
-        php backend/artisan create:tenant
-      env:
-        DB_CONNECTION: sqlite
-        DB_DATABASE: backend/database/database.sqlite
-#    - name: Execute tests (Unit and Feature tests) via PHPUnit
-#      env:
-#        DB_CONNECTION: sqlite
-#        DB_DATABASE: backend/database/database.sqlite
-#      run: |
-#        backend/vendor/bin/phpunit backend/tests
   Deploy:
     runs-on: [self-hosted]
     needs: [Testing]

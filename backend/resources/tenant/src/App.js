@@ -59,12 +59,14 @@ const App = () => {
   const fontFamily = "cairo, sans-serif";
   const location = useLocation();
   const { loading } = useAuthContext();
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
+  const isMobile = window.innerWidth < 600
+  const isTablet = window.innerWidth > 601 && window.innerWidth < 1024 
   const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
   useEffect(() => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    setIsMobile(isMobile);
+    // setIsMobile(isMobile);
   }, []);
 
   const showHeader = ![
@@ -76,6 +78,7 @@ const App = () => {
     "/restaurant-not-subscribed",
     "/success",
     "/failed",
+    "/verification-phone",
     '/login-trial',
   ].includes(location.pathname);
   const showFooter = ![
@@ -124,7 +127,7 @@ const App = () => {
           localStorage.getItem("i18nextLng") == "en" ? "left" : "right"
         }
         animation={"slide"} // 'slide' │ 'push' │ 'reveal'
-        width={isMobile ? "80vw" : "25vw"}
+        width={isMobile ? "80vw" : isTablet ? '45vw':"25vw"}
       >
         <div
           className="relative "

@@ -21,7 +21,7 @@ class PaymentMethodFactory extends Factory
     {
         return [
             'name' => fake()->randomElement(['Cash on Delivery','Online']),
-            'is_active' => 1
+            // 'is_active' => 1
         ];
     }
 }

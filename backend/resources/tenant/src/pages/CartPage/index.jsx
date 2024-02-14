@@ -1,15 +1,16 @@
-import React, {Fragment, useCallback, useEffect, useState} from "react"
+import React, { Fragment, useCallback, useEffect, useState } from "react"
 import CartHeader from "./components/CartHeader"
 import CartSection from "./components/CartSection"
 import PaymentSection from "./components/PaymentSection"
 import LoadingSpinner from "./components/LoadingSpinner"
 import AxiosInstance from "../../axios/axios"
-import {useTranslation} from "react-i18next"
-import {useDispatch, useSelector} from "react-redux"
-import {useNavigate} from "react-router-dom"
-import {Helmet} from "react-helmet"
-import {setCartItemsData} from "../../redux/NewEditor/categoryAPISlice"
-import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice"
+import { useTranslation } from "react-i18next"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { Helmet } from "react-helmet"
+import { setCartItemsData } from "../../redux/NewEditor/categoryAPISlice"
+import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice"
+import { updateCustomerAddress } from "../../redux/NewEditor/customerSlice"
 
 const CartPage = () => {
   const [isloading, setIsLoading] = useState(false)
@@ -21,10 +22,11 @@ const CartPage = () => {
 
   const [cartCoupon, setCartCoupon] = useState(null)
   const [appliedCoupon, setAppliedCoupon] = useState(null)
+  const [userInfo, setUserInfo] = useState(null)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const language = useSelector((state) => state.languageMode.languageMode)
   const cartItems = useSelector((state) => state.categoryAPI.cartItemsData)
 
@@ -37,8 +39,8 @@ const CartPage = () => {
 
       console.log("cart >>>", cartResponse.data)
       if (cartResponse.data) {
-        
-        if(cartResponse.data.data.discount && cartResponse.data.data.coupon.id){
+
+        if (cartResponse.data.data.discount && cartResponse.data.data.coupon.id) {
           setCartCoupon(cartResponse.data.data.discount)
           setAppliedCoupon(cartResponse.data.data.coupon)
         }
@@ -67,12 +69,37 @@ const CartPage = () => {
     }
   }
 
+
+  const fetchProfileData = async () => {
+    setIsLoading(true)
+    const userProfileInfo = {}
+    try {
+      const profileResponse = await AxiosInstance.get(`user`)
+      console.log("profileResponse >>>", profileResponse.data)
+      if (profileResponse.data) {
+        dispatch(updateCustomerAddress({
+          lat: profileResponse.data?.data?.address?.lat,
+          lng: profileResponse.data?.data?.address?.lng,
+          addressValue: profileResponse.data?.data?.address?.addressValue ?? t("N/A")
+        })
+        )
+        userProfileInfo["address"] = profileResponse.data?.data?.address;
+        localStorage.setItem("userProfileInfo", JSON.stringify(userProfileInfo))
+      }
+      setUserInfo(profileResponse);
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   useEffect(() => {
     fetchCartData().then((r) => null)
     fetchResStyleData().then(() => null)
+    fetchProfileData().then((r) => null)
   }, [])
 
-  const handleValidateCoupon = async () => {}
 
   if (isloading) {
     return <LoadingSpinner />
@@ -115,6 +142,7 @@ const CartPage = () => {
             <Fragment>
               <CartSection cartItems={cartItems} />
               <PaymentSection
+                userInfo={userInfo}
                 styles={restuarantStyle}
                 cartCoupon={cartCoupon}
                 appliedCoupon={appliedCoupon}

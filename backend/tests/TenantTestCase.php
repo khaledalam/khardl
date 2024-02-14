@@ -2,37 +2,30 @@
 
 namespace Tests;
 
-use Exception;
-use Faker\Factory;
-use App\Models\User;
-
-use Faker\Generator;
 use App\Models\Tenant;
-use Spatie\Permission\Models\Role;
-use App\Actions\CreateTenantAction;
+use Illuminate\Support\Facades\URL;
 use Closure;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Tests\Feature\Web\Central\CentralDatabaseTest;
 
 abstract class TenantTestCase extends BaseTestCase
 {
-    use CreatesApplication,RefreshDatabase;
+    use CreatesApplication, RefreshDatabase;
 
     protected $tenancy = false;
     protected $central_domain;
     protected $port = 8000;
-    protected $baseURL;
 
     public function setUp(): void
     {
         parent::setUp();
         if ($this->tenancy) {
             $this->initializeTenancy();
+            $subdomain = tenancy()->tenant?->restaurant_name;
             $this->central_domain = env('CENTRAL_DOMAIN');
-            $url = 'http://' . tenancy()->tenant?->restaurant_name . '.' . $this->central_domain . ':' . $this->port . '/';
-            $this->baseURL = $url;
+            $url = 'http://'.$subdomain . '.' . $this->central_domain . ':' . $this->port;
+            URL::forceRootUrl($url);
         }
     }
     public function runCentral(Closure $fn)
@@ -47,5 +40,14 @@ abstract class TenantTestCase extends BaseTestCase
         $restaurant = Tenant::first();
         tenancy()->initialize($restaurant);
 
+    }
+    public function ownPostJson($uri,$data = [],$header = [])
+    {
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+        ];
+        $headers = array_merge($headers,$header);
+        return $this->postJson($uri,$data,$headers);
     }
 }

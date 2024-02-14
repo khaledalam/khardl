@@ -38,7 +38,6 @@ class CentralDatabaseTest extends TestCase
         (
             user: $user,
             domain: 'first',
-            tenantId: '140c813f-5794-4e47-8e28-3426ac01f1f8'
         );
         tenancy()->initialize($restaurant);
         $this->assertTrue(\Schema::hasTable('branches'));

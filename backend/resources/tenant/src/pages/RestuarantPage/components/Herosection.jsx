@@ -105,16 +105,16 @@ const Herosection = ({ isMobile, categories }) => {
                 />
                 Your browser does not support the video tag.
               </video>
-            ) : (
-              <img
+            ) : (<>
+              {restaurantStyle?.banner_image?.url && <img
                 src={
                   restaurantStyle?.banner_image
-                    ? restaurantStyle?.banner_image?.url
-                    : imgBanner
+                    && restaurantStyle?.banner_image?.url
+                    
                 }
                 alt="banner"
                 className="w-full h-full object-cover"
-              />
+              />}</>
             )}
           </div>
         ) : restaurantStyle?.banner_type === t("Slider") ||
@@ -162,19 +162,20 @@ const Herosection = ({ isMobile, categories }) => {
                           />
                         </video>
                       ) : (
-                        <div
-                          style={{
+                       <> 
+                         {restaurantStyle?.banner_images &&
+                          restaurantStyle?.banner_images?.length > 0
+                            && restaurantStyle?.banner_images[index].url && <div style={{
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "cover",
                             boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
                             backgroundImage:
                               restaurantStyle?.banner_images &&
                               restaurantStyle?.banner_images?.length > 0
-                                ? `url(${restaurantStyle?.banner_images[index].url})`
-                                : `url(${imgBanner})`,
+                                && restaurantStyle?.banner_images[index].url && `url(${restaurantStyle?.banner_images[index].url})`,
                           }}
                           className={` h-full w-full rounded-md flex items-center justify-center   shadow-lg`}
-                        ></div>
+                        ></div>}</>
                       )}
                     </div>
                   ))}

@@ -44,7 +44,11 @@ class OrderController
             'firstName' => $user?->first_name,
             'lastName' => $user?->last_name,
             'phone' => $user?->phone,
-            'address' => $user?->address,
+            'address' => [
+                'addressValue' => $user?->address,
+                'lat' => $user->lat,
+                'lng' => $user->lng,
+            ],
             'cashback' => $user->cashback,
             'loyalty_points' => $user->loyalty_points,
         ], '');

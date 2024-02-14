@@ -48,7 +48,7 @@ class DriverOrderControllerTest extends DriverBase
 
     private function assertOrdersByStatusCount($path, $expectedCount)
     {
-        $response = $this->getJson($this->baseURL . $path);
+        $response = $this->getJson($path);
         $response->assertOk();
         $response->assertJsonCount($expectedCount, 'data.data');
         $this->assertInstanceOf(OrderCollection::class, $response->getOriginalContent()['data']);
@@ -69,7 +69,7 @@ class DriverOrderControllerTest extends DriverBase
 
         // Change status to cancelled
         $order->update(['status' => Order::ACCEPTED]); // Reset status to ACCEPTED
-        $this->changeOrderStatus($order, Order::CANCELLED);
+        $this->changeOrderStatus($order, Order::CANCELLED,"Not found customer at :".fake()->streetAddress);
         $this->assertEquals(Order::CANCELLED, $order->refresh()->status);
     }
 
@@ -83,10 +83,10 @@ class DriverOrderControllerTest extends DriverBase
         ]);
     }
 
-    private function changeOrderStatus($order, $status)
+    private function changeOrderStatus($order, $status, $reason = null)
     {
-        $path = $this->baseURL . "api/driver/change-status/" . $order->id;
-        $response = $this->postJson($path, ['status' => $status]);
+        $path = "api/driver/change-status/" . $order->id;
+        $response = $this->postJson($path, ['status' => $status,'reason' => $reason]);
         $response->assertOk();
     }
 

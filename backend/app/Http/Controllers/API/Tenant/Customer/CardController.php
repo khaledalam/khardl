@@ -11,7 +11,7 @@ use App\Packages\TapPayment\Customer\Customer as TapCustomer;
 class CardController
 {
     use APIResponseTrait;
-    
+
     public function show()
     {
         $user = Auth::user();
@@ -27,11 +27,11 @@ class CardController
                     return $response;
                 }
             }
-            $response = $this->sendError(__('No card found'));
+            $response = $this->sendResponse(__('No card found'), true);
             session(["$session"=>$response]);
             return $response;
         }
-        
+
     }
 
 
