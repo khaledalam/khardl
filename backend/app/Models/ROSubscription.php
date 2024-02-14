@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\tenant\ROSubscriptionFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Subscription as CentralSubscription;
@@ -89,7 +90,7 @@ class ROSubscription extends Model
             return CentralSubscription::find($subscription_id);
         });
         $currentSubscription = ROSubscription::first();
-       
+
         if ($currentSubscription) {
             if($type ==  self::RENEW_TO_CURRENT_END_DATE){
                 $remainingDaysCost = $currentSubscription->calculateDaysLeftCost($centralSubscription->amount);
@@ -146,4 +147,8 @@ class ROSubscription extends Model
         });
     }
     /* End Relations */
+    protected static function newFactory()
+    {
+      return ROSubscriptionFactory::new();
+    }
 }

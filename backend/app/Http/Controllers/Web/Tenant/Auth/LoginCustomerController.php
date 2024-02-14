@@ -80,7 +80,7 @@ class LoginCustomerController extends BaseController
         $tokens = DB::table('phone_verification_tokens')
             ->where('user_id', $user->id)
             ->whereDate('created_at', $today)->get()->first();
-        if (isset($tokens) && $tokens->attempts >= 5) {
+        if (isset($tokens) && $tokens->attempts >= 3) {
             return false;
         }
         return true;
