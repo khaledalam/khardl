@@ -2,29 +2,11 @@
 
 namespace Tests;
 
-use App\Bootstrapper\AuthBootstrapper;
-use App\Models\Tenant\RestaurantUser;
-use App\Providers\TenancyAuthProvider;
-use App\Providers\TenancyAuthTestProvider;
-use Exception;
-use Faker\Factory;
-use App\Models\User;
-
-use Faker\Generator;
 use App\Models\Tenant;
-use Illuminate\Http\Request;
-use Illuminate\Support\Env;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
-use Mockery;
-use Spatie\Permission\Models\Role;
-use App\Actions\CreateTenantAction;
 use Closure;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Stancl\Tenancy\Facades\Tenancy;
-
 use Tests\Feature\Web\Central\CentralDatabaseTest;
 
 abstract class TenantTestCase extends BaseTestCase
@@ -58,5 +40,14 @@ abstract class TenantTestCase extends BaseTestCase
         $restaurant = Tenant::first();
         tenancy()->initialize($restaurant);
 
+    }
+    public function ownPostJson($uri,$data,$header = [])
+    {
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+        ];
+        $headers = array_merge($headers,$header);
+        return $this->postJson($uri,$data,$headers);
     }
 }
