@@ -236,8 +236,8 @@
                             </label>
                             <!--end::Label-->
                             <select class="form-select mb-2" data-placeholder="test" name="user[email][type]" >
-                                <option value="HOME" {{old('user.email.0.type') == 'HOME'? 'selected' :''}}>{{__('messages.Home')}}</option>
-                                <option value="WORK"  {{old('user.email.0.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
+                                <option value="HOME" {{old('user.email.type') == 'HOME'? 'selected' :''}}>{{__('messages.Home')}}</option>
+                                <option value="WORK"  {{old('user.email.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
                             </select>
                         </div>
                 {{--         <div class="d-flex flex-column mb-8 fv-row">

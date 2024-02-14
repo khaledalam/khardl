@@ -17,89 +17,68 @@ class CreateLeadRequest  extends FormRequest
     public function rules()
     {
 
-
-        return [
+        $rules = [
 
             'brand.name.ar' => 'required|string',
             'brand.name.en' => 'required|string',
 
             'brand.channel_services.0.channel' => 'required|string',
             'brand.channel_services.0.address' => 'required|string',
-            // TODO @todo validation for terms
 
-
-            'entity.country' => 'required|string',
-            'entity.license.number' => 'required|string',
-            'entity.license.country' => 'required|string',
-            'entity.license.city' => 'required|string',
-            'entity.license.type' => 'required|string',
-
-            'entity.is_licensed' => 'sometimes|nullable|boolean',
-
-            'brand.operations.sales.period' => 'required|string',
-            'brand.operations.sales.range.from' => 'required|string',
-            'brand.operations.sales.range.to' => 'required|string',
+            'brand.logo'=>"required|mimes:jpeg,bmp,png,gif,svg,pdf",
+          
             'brand.operations.sales.currency' => 'required|string',
 
-            'user.phone.0.country_code' => 'required|string',
-            'user.phone.0.number' => 'required|string',
-            'user.phone.0.type' => 'required|string',
-            // 'user.phone.0.primary' => 'sometimes|nullable|boolean',
-
-            'user.name.middle' => 'required|string',
-            'user.name.last' => 'required|string',
-            'user.name.lang' => 'required|string',
-            'user.name.title' => 'required|string',
-            'user.name.first' => 'required|string',
-
-            'user.address.0.country' => 'required|string',
-            'user.address.0.city' => 'required|string',
-            /* 'user.address.0.type' => 'required|string', */
-            'user.address.0.zip_code' => 'required|string',
-
-            'user.address.0.line1' => 'required|string',
-            'user.address.0.line2' => 'required|nullable',
-
-
-            'user.identification.number' => 'required|string',
-            'user.identification.type' => 'required|string',
-            'user.identification.issuer' => 'required|string',
-
-            'user.nationality' => 'required|string',
-
-
-
-            'user.birth.country' => 'required|string',
-            'user.birth.city' => 'required|string',
-            'user.birth.date' => 'required|string|date_format:Y-m-d',
-
-            'user.email.0.address' => 'required|string',
-            /* 'user.email.0.type' => 'required|string', */
-
-
-
-
-
-            // 'user.email.0.primary' => 'sometimes|nullable|boolean',
-
+            'entity.country' => 'required|string',
+            'entity.is_licensed' => 'nullable|boolean',
 
             'wallet.bank.name' => 'required|string',
             'wallet.bank.account.number' => 'required|string',
             'wallet.bank.account.iban' => 'required|string',
             'wallet.bank.account.name' => 'required|string',
-            'wallet.bank.account.swift' => 'required|string',
+            'wallet.bank.documents' => 'required|array',
+            'wallet.bank.documents.*.type' => 'required|string',
+            'wallet.bank.documents.*.number' => 'required|string',
+            'wallet.bank.documents.*.issuing_country' => 'required|string',
+            'wallet.bank.documents.*.issuing_date' => 'required|date',
+            'wallet.bank.documents.*.images' => 'required|array',
+            'wallet.bank.documents.*.images.*' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf',
+        
+            'user.name.last' => 'required|string',
+            'user.name.title' => 'required|string',
+            'user.name.first' => 'required|string',
 
-            'user.primary' => 'required|boolean',
+            'user.email.0.address' => 'required|string',
+            'user.email.0.type' => 'required|string',
+
+            'user.phone.0.country_code' => 'required|string',
+            'user.phone.0.number' => 'required|string',
+            'user.phone.0.type' => 'required|string',
+
 
             'platforms.*' => 'required|string',
-
             'payment_provider.technology_id' => 'required|string',
-            // 'payment_provider.settlement_by' => 'required|string',
         ];
+        if ($this->input('entity.is_licensed')) {
+            $rules = array_merge($rules, [
+                'entity.license.number' => 'required|string',
+                'entity.license.country' => 'required|string',
+                'entity.license.type' => 'required|string',
+                'entity.license.documents' => 'required|array',
+                'entity.license.documents.*.type' => 'required|string',
+                'entity.license.documents.*.number' => 'required|string',
+                'entity.license.documents.*.issuing_country' => 'required|string',
+                'entity.license.documents.*.issuing_date' => 'required|date',
+                'entity.license.documents.*.expiry_date' => 'required|date',
+
+            ]);
+        } 
+        return $rules;
     }
     public function prepareForValidation()
     {
-        dump($this->all());
+       
+        
 
         $defaults = [
             'brand' => [
@@ -146,12 +125,14 @@ class CreateLeadRequest  extends FormRequest
                         "name"=> $this->wallet['bank']['account']['name'] ?? null,
                     ],
                     'documents'=>[
-                        "type"=> "Bank Statement",
-                        "issuing_country"=> "SA",
-                        "number"=> $this->wallet['bank']['documents'][0]['number'] ?? null,
-                        "issuing_date"=> $this->wallet['bank']['documents'][0]['issuing_date'] ?? null,
-                        "images"=> [
-                            $this->wallet['bank']['documents'][0]['images'][0] ?? null,
+                        [
+                            "type"=> "Bank Statement",
+                            "issuing_country"=> "SA",
+                            "number"=> $this->wallet['bank']['documents'][0]['number'] ?? null,
+                            "issuing_date"=> $this->wallet['bank']['documents'][0]['issuing_date'] ?? null,
+                            "images"=> [
+                                $this->wallet['bank']['documents'][0]['images'][0] ?? null,
+                            ]
                         ]
                     ]
                 
@@ -159,15 +140,17 @@ class CreateLeadRequest  extends FormRequest
             ],
             'entity' => [
                 'country' => 'SA',
-                "is_licensed" => ($this->entity['is_licensed'])?true:false,
+                "is_licensed" => ($this->entity['is_licensed'] ?? false)?true:false,
             ],
             'user' => [
                    
                     'phone' => [
+                        [
                         'country_code' => '966',
                         "number"=> $this->user['phone']['number'] ?? null,
                         "type"=> $this->user['phone']['type'] ?? null,
                         "primary"=> true
+                        ]
                     ],
                     'name' => [
                         "title"=>$this->user['name']['title'] ?? null,
@@ -175,9 +158,11 @@ class CreateLeadRequest  extends FormRequest
                         "last"=>$this->user['name']['last'] ?? null,
                     ],
                     'email' => [
-                        'type' =>  $this->user['emai']['type'] ?? null,
+                      [
+                        'type' =>  $this->user['email']['type'] ?? null,
                         "address"=>$this->user['email']['address'] ?? null,
                         "primary"=> true
+                      ]
                     ]
                 ],
                 'platforms'=>[
@@ -187,26 +172,27 @@ class CreateLeadRequest  extends FormRequest
                     'technology_id' => env('TAP_PAYMENT_TECHNOLOGY_ID'),
                 ],
             ];
-        if($this->entity['is_licensed']){
+        if($this->entity['is_licensed'] ?? false){
             $defaults['entity']['license']= [
                 'country' => 'SA',
                 'type' => 'commercial_registration',
                 "number"=>$this->entity['license']['number'] ?? null,
                 "documents"=>[
+                   [
                     "type"=> "Memorandum of Association",
                     "issuing_country"=> "SA",
                     "number"=> $this->entity['license']['documents'][0]['number'] ?? null,
                     "issuing_date"=>  $this->entity['license']['documents'][0]['issuing_date'] ?? null,
                     "expiry_date"=> $this->entity['license']['documents'][0]['expiry_date'] ?? null,
+                   ]
                 ]
             ];
         }
-        dd($defaults);
-        $this->clear();
+        
         $this->replace($defaults);
-        dd(100,$this->all());
 
-       
+
+        
 
 
     }
