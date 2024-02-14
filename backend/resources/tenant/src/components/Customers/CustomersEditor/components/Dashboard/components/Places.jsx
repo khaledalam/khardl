@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from "react"
-import {GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api"
+import {GoogleMap, useLoadScript, MarkerF, useJsApiLoader } from "@react-google-maps/api"
 import usePlaceAutoComplete, {
   getGeocode,
   getLatLng,
@@ -26,8 +26,8 @@ const Places = ({inputStyle}) => {
   const [libraries, _] = useState(["places"]);
     const Language = useSelector((state) => state.languageMode.languageMode);
     const {t} = useTranslation()
-
-    const {isLoaded} = useLoadScript({
+    
+    const {isLoaded} = useJsApiLoader({
     googleMapsApiKey: "AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E",
       version: "weekly",
       language: Language || "ar",
