@@ -93,7 +93,7 @@ class RegisterController extends BaseController
     {
         $input = $request->validated();
         // $input['password'] = Hash::make($input['password']);
-        $input['status'] = 'inactive';
+        $input['status'] = RestaurantUser::INACTIVE;
         $user = RestaurantUser::create($input);
         // TODO @todo add tap customer to queue
         CustomerTap::createWithModel($user);
