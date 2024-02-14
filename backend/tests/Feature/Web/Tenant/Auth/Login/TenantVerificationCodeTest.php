@@ -84,7 +84,6 @@ class TenantVerificationCodeTest extends TenantTestCase
         $this->user->update(['phone_verified_at' => now()]);
         $data = ['otp' => '1234'];
         $response = $this->ownPostJson(self::path."/verify",$data);
-        $response->dump();
         $response->assertStatus(203)
         ->assertJson([
             "message" =>  "User is already verified his phone"
