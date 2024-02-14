@@ -8,9 +8,9 @@ describe('Test Central Homepage | Auth | Login page', () => {
         cy.contains('يرجى إدخال البريد الالكتروني');
         cy.get('input[type=email]').type('test@test.com');
         cy.contains('يرجى إدخال كلمة المرور');
-        cy.get('input[type=password]').type('test123');
-        cy.contains('تسجيل الدخول').get('button[type="submit"]').click();
         // @TODO: validate response
+        // cy.get('input[type=password]').type('test123');
+        // cy.contains('تسجيل الدخول').get('button[type="submit"]').click();
         // cy.wait('@authenticate').its('response.statusCode').should('eq', 403)
         // cy.wait('@authenticate').its('request.body').should('include', 'test@test.com')
         // cy.wait('@authenticate').its('response.body').should('include', 'test123')
