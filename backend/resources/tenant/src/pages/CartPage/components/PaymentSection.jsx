@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import {  IoClose } from "react-icons/io5";
+import './PaymentSection.css';
 
 
 import { GoSellElements } from "@tap-payments/gosell";
@@ -433,7 +434,7 @@ const PaymentSection = ({
                       }
                       handleDeliveryTypeChange(deliveryType);
                     }}
-                  > 
+                  >
                     <div className="flex items-center gap-4">
                       <div
                         className={`w-[50px] h-[50px]  ${activeDeliveryType === deliveryType.name.toLowerCase()
@@ -535,15 +536,15 @@ const PaymentSection = ({
 
                 {/* Open the modal using document.getElementById('ID').showModal() method */}
                 {/* The button to open modal */}
-                {/* <label htmlFor="my_modal_7" className="btn">open modal</label> */}
+                 <label htmlFor="my_modal_7" className="btn">open modal</label>
 
                 {/* Put this part before </body> tag */}
                 <input type="checkbox" id="my_modal_7" className="modal-toggle" />
                 <div className="modal" role="dialog">
                   {/* <div className="modal-box "> */}
-                  <div className="modal-box w-11/12 max-w-5xl overflow-hidden">
+                  <div className="modal-box w-11/12 max-w-5xl ">
                   <Places inputStyle={
-              "input border-[var(--customer)] !w-full lg:!w-1/3 hover:border-[var(--customer)] focus-visible:border-[var(--customer)] outline-0 outline-none focus-visible:outline-none w-full"
+              "input "
             } />
                   </div>
                   <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
