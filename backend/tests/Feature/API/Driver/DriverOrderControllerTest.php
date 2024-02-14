@@ -48,7 +48,7 @@ class DriverOrderControllerTest extends DriverBase
 
     private function assertOrdersByStatusCount($path, $expectedCount)
     {
-        $response = $this->getJson($this->baseURL . $path);
+        $response = $this->getJson($path);
         $response->assertOk();
         $response->assertJsonCount($expectedCount, 'data.data');
         $this->assertInstanceOf(OrderCollection::class, $response->getOriginalContent()['data']);
@@ -85,7 +85,7 @@ class DriverOrderControllerTest extends DriverBase
 
     private function changeOrderStatus($order, $status, $reason = null)
     {
-        $path = $this->baseURL . "api/driver/change-status/" . $order->id;
+        $path = "api/driver/change-status/" . $order->id;
         $response = $this->postJson($path, ['status' => $status,'reason' => $reason]);
         $response->assertOk();
     }

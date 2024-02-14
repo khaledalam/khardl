@@ -40,7 +40,7 @@ class Msegat
 
     }
     public static function sendOTP(string $number){
-        if(env("APP_ENV") == 'local'){
+        if(env("APP_ENV") == 'local' || env("APP_ENV") == 'testing'){
             return [
                 'http_code'=>ResponseHelper::HTTP_OK,
                 'message'=> [
@@ -50,7 +50,7 @@ class Msegat
                 ]
             ];
         }
-       
+
         return self::send("sendOTPCode.php",[
             'number'=> $number,
             'lang'=>env('MSEGAT_LANG','En')
@@ -66,7 +66,7 @@ class Msegat
         ]);
     }
     public static function verifyOTP(string $otp,?int $id){
-        if(env("APP_ENV") == 'local'){
+        if(env("APP_ENV") == 'local' ||  env("APP_ENV") == 'testing'){
             return [
                 'http_code'=>ResponseHelper::HTTP_OK,
                 'message'=> [

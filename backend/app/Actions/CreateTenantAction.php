@@ -14,11 +14,11 @@ class CreateTenantAction
 {
     public function __invoke(
         string $domain,
-        User $user,
-        $tenantId = null): Tenant
+        User $user): Tenant
 
     {
-        if($tenantId){
+        if(env('APP_ENV')=='testing'){
+            $tenantId = '140c813f-5794-4e47-8e28-3426ac01f1f8';
             $database = config('tenancy.database.prefix').$tenantId;
             if ($this->databaseExists($database)) {
                 $this->dropDatabase($database);

@@ -15,7 +15,7 @@ class UpdateBranchSettingsRequestTest extends WorkerBase
         $branch = Branch::factory()->create();
         $this->worker->branch_id = $branch->id;
         $this->worker->save();
-        $path = $this->baseURL."api/branches/$branch->id/delivery";
+        $path = "api/branches/$branch->id/delivery";
         $data = [
             'delivery_availability' => fake()->boolean,
             'pickup_availability' => fake()->boolean,
