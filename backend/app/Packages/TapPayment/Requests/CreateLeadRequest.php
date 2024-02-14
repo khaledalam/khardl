@@ -99,22 +99,17 @@ class CreateLeadRequest  extends FormRequest
     }
     public function prepareForValidation()
     {
-        // TODO @todo ( refactor ) 
+        dump($this->all());
+
         $defaults = [
             'brand' => [
+
                 'operations' => [
                     'sales' => [
-                        'period' => 'monthly',
                         'currency' => 'SAR',
-
                     ],
                 ],
-                'channel_services' => [
-                    [
-                        'channel' => 'website',
-                        'address'=> route('home')
-                    ]
-                ],
+                'logo'=>$this->brand['logo'] ?? null,
                 "terms"=> [
                     [
                         "term"=> "general",
@@ -129,33 +124,60 @@ class CreateLeadRequest  extends FormRequest
                         "agree"=> true
                     ]
                 ],
+                'name'=>[
+                    'ar'=>$this->brand['name']['ar']?? null,
+                    'en'=>$this->brand['name']['en']?? null,
+                ],
+                'channel_services' => [
+                    [
+                        'channel' => 'website',
+                        'address'=> route('home')
+                    ]
+                ],
+              
 
+            ],
+            'wallet' => [
+               'bank'=>[
+                    "name"=> $this->wallet['bank']['name'] ?? null,
+                    "account"=>[
+                        "number"=> $this->wallet['bank']['account']['number'] ?? null,
+                        "iban"=> $this->wallet['bank']['account']['iban'] ?? null,
+                        "name"=> $this->wallet['bank']['account']['name'] ?? null,
+                    ],
+                    'documents'=>[
+                        "type"=> "Bank Statement",
+                        "issuing_country"=> "SA",
+                        "number"=> $this->wallet['bank']['documents'][0]['number'] ?? null,
+                        "issuing_date"=> $this->wallet['bank']['documents'][0]['issuing_date'] ?? null,
+                        "images"=> [
+                            $this->wallet['bank']['documents'][0]['images'][0] ?? null,
+                        ]
+                    ]
+                
+               ]
             ],
             'entity' => [
                 'country' => 'SA',
-                'license' => [
-                    'country' => 'SA',
-                    'type' => 'commercial_registration',
-                ],
+                "is_licensed" => ($this->entity['is_licensed'])?true:false,
             ],
             'user' => [
-                    'address' => [
-                        'country' => 'SA',
-                        'type' => $this->user['phone']['type'] ?? 'HOME'
-                    ],
-                    'identification' => [
-                        'type' => 'national_id',
-                        'issuer' => $this->user['nationality'] ?? ''
-                    ],
+                   
                     'phone' => [
                         'country_code' => '966',
+                        "number"=> $this->user['phone']['number'] ?? null,
+                        "type"=> $this->user['phone']['type'] ?? null,
+                        "primary"=> true
                     ],
                     'name' => [
-                        'lang' => app()->getLocale(),
+                        "title"=>$this->user['name']['title'] ?? null,
+                        "first"=>$this->user['name']['first'] ?? null,
+                        "last"=>$this->user['name']['last'] ?? null,
                     ],
-                    'primary' => true,
                     'email' => [
-                        'type' => $this->user['phone']['type'] ?? 'WORK'
+                        'type' =>  $this->user['emai']['type'] ?? null,
+                        "address"=>$this->user['email']['address'] ?? null,
+                        "primary"=> true
                     ]
                 ],
                 'platforms'=>[
@@ -165,39 +187,26 @@ class CreateLeadRequest  extends FormRequest
                     'technology_id' => env('TAP_PAYMENT_TECHNOLOGY_ID'),
                 ],
             ];
+        if($this->entity['is_licensed']){
+            $defaults['entity']['license']= [
+                'country' => 'SA',
+                'type' => 'commercial_registration',
+                "number"=>$this->entity['license']['number'] ?? null,
+                "documents"=>[
+                    "type"=> "Memorandum of Association",
+                    "issuing_country"=> "SA",
+                    "number"=> $this->entity['license']['documents'][0]['number'] ?? null,
+                    "issuing_date"=>  $this->entity['license']['documents'][0]['issuing_date'] ?? null,
+                    "expiry_date"=> $this->entity['license']['documents'][0]['expiry_date'] ?? null,
+                ]
+            ];
+        }
+        dd($defaults);
+        $this->clear();
+        $this->replace($defaults);
+        dd(100,$this->all());
 
-
-        $this->merge([
-            'brand' => array_merge_recursive($defaults['brand'], $this->brand),
-            'entity' => array_merge_recursive($defaults['entity'], $this->entity),
-            'user' => array_merge_recursive($defaults['user'], $this->user),
-            'payment_provider' => $defaults['payment_provider'],
-            'platforms'=>$defaults['platforms']
-        ]);
-        $this->merge([
-
-            'user'=>array_merge($this->user,
-                [
-                    'address'=>[ $this->user['address']],
-                    'phone'=>[
-                        array_merge($this->user['phone'],
-                        [
-                            'primary'=>true
-                        ]
-                        )
-                    ],
-                    'email'=>[
-                        array_merge($this->user['email'],
-                    [
-                        'primary'=>true
-                    ]
-                    )],
-            ]),
-            'entity'=>array_merge($this->entity,[
-                'is_licensed'=>($this->is_licensed)?true:false
-            ])
-
-        ]);
+       
 
 
     }

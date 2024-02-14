@@ -780,8 +780,8 @@ return [
     "get cash back when total is above this value" => "احصل على استرداد نقدي عندما يكون الإجمالي أعلى من هذه القيمة",
     "Start from" => "يبدأ من",
     "Cash back in percentage (%)" => "الاسترداد النقدي بالنسبة المئوية (٪)",
-    "Entity name (English)" => "اسم الكيان بالانجليزية",
-    "Entity Name (Arabic)" => "اسم الكيان بالعربية",
+    "Restaurant name (English)" => "اسم المعطم بالانجليزية",
+    "Restaurant Name (Arabic)" => "اسم المعطم بالعربية",
     "Mrs" => "الانسة",
     "Dr" => "دكتور",
     "Prof" => "بروفيسور",
@@ -816,7 +816,15 @@ return [
     "Your restaurant will be activated after completing the review process"=>"سيتم تفعيل مطعمك بعد الانتهاء من عملية المراجعة",
     "Khardl website"=>"موقع خردل",
     "You must add a :branches to activate your subscription"=>"يجب اضافة :branches لتفعيل اشتراكك",
-    "A period :period of term will be purchased to match the billing time"=>"سيتم شراء مدة :period لمطابقة وقت الفاتورة "
-
+    "A period :period of term will be purchased to match the billing time"=>"سيتم شراء مدة :period لمطابقة وقت الفاتورة ",
+    "Restaurant Logo"=>"شعار المطعم",
+    "Bank Statement File"=>'ملف كشف حساب بنكي',
+    "Bank Statement"=>'كشف الحساب بنكي',
+    "Bank Statement Number"=>"رقم كشف الحساب",
+    "This Number used In"=>"هذا الرقم يستخدم ف",
+    "This Email used In"=>"هذا البريد يستخدم ف",
+    "Number of Memorandum of Association"=>"رقم عقد التأسيس",
+    "Issuing date"=>"تاريخ الإصدار",
+    "Expiry date"=>"تاريخ الانتهاء"
 ];
 

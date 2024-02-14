@@ -178,7 +178,6 @@ class TapController extends Controller
     public function payments_submit_card_details(SaveCardRequest $request)
     {
         $data = $request->validated();
-        $merchant_id = Setting::first()->merchant_id;
         $sub = ROSubscription::first();
         $centralSubscription = tenancy()->central(function(){
             return CentralSubscription::first();
