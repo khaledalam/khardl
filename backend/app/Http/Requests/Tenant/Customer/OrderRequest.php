@@ -44,9 +44,9 @@ class OrderRequest extends FormRequest
         $cart = CartRepository::get();
 
         $validator->after(function ($validator) use($cart){
-
             $user = Auth::user();
-            if(!$user->address || !$user->lat || !$user->lng){
+          
+            if($this->delivery_type != DeliveryType::PICKUP && (!$user->address || !$user->lat || !$user->lng)){
                 $validator->errors()->add('address', __('Please update your location before place an order'));
                 return ;
             }
@@ -68,7 +68,7 @@ class OrderRequest extends FormRequest
                     return ;
                 }
             }
-            if(!$cart->hasPaymentCreditCardWithTap($this->payment_method)){
+            if(!$cart->hasPayment($this->payment_method)){
                 $validator->errors()->add('payment_method', __('Invalid payment method'));
                 return ;
             }
