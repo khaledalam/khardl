@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
 use App\Http\Requests\RestaurantOwnerRegisterRequest;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends BaseController
 {
@@ -36,7 +37,8 @@ class RegisterController extends BaseController
         $user = User::create($input);
         $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
         $success['name'] =  "$user->first_name $user->last_name";
-        $user->assignRole('Restaurant Owner');
+        $role = Role::firstOrCreate(['name' => User::RESTAURANT_ROLE]);
+        $user->assignRole($role);
         Auth::login($user,true);
         if($promoter = PromoterIpAddress::where('ip_address',request()?->ip())){
             $promoter->update(['registered'=>true]);

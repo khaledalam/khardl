@@ -7,7 +7,6 @@ use Faker\Factory;
 use Faker\Generator;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 abstract class TestCase extends BaseTestCase
 {
@@ -19,7 +18,7 @@ abstract class TestCase extends BaseTestCase
     : void {
 
         parent::setUp();
-       
+
         $this->faker = Factory::create();
     }
 

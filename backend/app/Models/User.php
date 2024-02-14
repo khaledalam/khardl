@@ -40,11 +40,13 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'force_logout',
         'default_lang',
         'loyalty_points',
-        'cashback'
+        'cashback',
+        'email_verified_at'
     ];
     public const STORAGE = "user_files";
     public const STATUS_BLOCKED = "blocked";
     public const STATUS_ACTIVE = "active";
+    public const RESTAURANT_ROLE = "Restaurant Owner";
 
     /**
      * The attributes that should be hidden for serialization.
