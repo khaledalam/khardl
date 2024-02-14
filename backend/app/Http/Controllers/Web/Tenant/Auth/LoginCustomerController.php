@@ -50,26 +50,29 @@ class LoginCustomerController extends BaseController
         $user->phone_verified_at = null;
         $user->save();
         Auth::loginUsingId($user->id,true);
-        $user = Auth::user();
-        $this->sendVerificationSMSCode($request);
-        $user->load(['roles']);
-        $data = [
-            'user'=>$user
-        ];
-
-
-        return $this->sendResponse($data, __('User logged in successfully.'));
+        if($this->sendVerificationSMSCode($request)){
+            $user = Auth::user();
+            $user->load(['roles']);
+            $data = [
+                'user'=>$user
+            ];
+            return $this->sendResponse($data, __('User logged in successfully.'));
+        }else{
+            return $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
+        }
     }
 
     public function sendVerificationSMSCode(Request $request)
     {
         $user = Auth::user();
         if(!$this->checkAttempt($user)){
-            $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
+            Auth::logout();
+            return false;
         }
         if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', 'Request failed .');
         $user->msegat_id_verification = $id;
         $user->save();
+        return true;
     }
 
     public function checkAttempt($user){
@@ -77,7 +80,7 @@ class LoginCustomerController extends BaseController
         $tokens = DB::table('phone_verification_tokens')
             ->where('user_id', $user->id)
             ->whereDate('created_at', $today)->get()->first();
-        if (isset($tokens) && $tokens->attempts >= 3) {
+        if (isset($tokens) && $tokens->attempts >= 5) {
             return false;
         }
         return true;

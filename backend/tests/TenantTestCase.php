@@ -41,7 +41,7 @@ abstract class TenantTestCase extends BaseTestCase
         tenancy()->initialize($restaurant);
 
     }
-    public function ownPostJson($uri,$data,$header = [])
+    public function ownPostJson($uri,$data = [],$header = [])
     {
         $headers = [
             'Content-Type' => 'application/json',
