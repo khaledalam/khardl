@@ -375,18 +375,11 @@ const PaymentSection = ({
                             "radio w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[var(--primary)] "
                           }
                           onChange={() => {
-                            if (!method?.is_active) {
-                              alert(t("Not available"));
-                              return;
-                            }
+                          
                             handlePaymentMethodChange(method);
                           }}
                         />
-                        {!method?.is_active && (
-                          <small style={{ color: "red" }}>
-                            {t("Not available")}
-                          </small>
-                        )}
+                       
                       </div>
                     </label>
                   </div>
@@ -407,10 +400,7 @@ const PaymentSection = ({
                         : "border border-neutral-200"
                     }`}
                     onClick={() => {
-                      if (!deliveryType?.is_active) {
-                        alert(t("Not available"));
-                        return;
-                      }
+                 
                       handleDeliveryTypeChange(deliveryType);
                     }}
                   >
@@ -445,11 +435,7 @@ const PaymentSection = ({
                             ? `${t("SAR")} ${deliveryType.cost}`
                             : `${t("Free")}`}
                         </p>
-                        {!deliveryType?.is_active && (
-                          <small style={{ color: "red" }}>
-                            {t("Not available")}
-                          </small>
-                        )}
+                        
                       </div>
                     </div>
                   </div>
