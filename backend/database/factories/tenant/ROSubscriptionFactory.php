@@ -17,6 +17,8 @@ class ROSubscriptionFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = ROSubscription::class;
+
     public function definition(): array
     {
         $subscription_id = null;
@@ -29,8 +31,8 @@ class ROSubscriptionFactory extends Factory
             $subscription_id = $subscription->id;
         });
         return [
-            "start_at" => now(),
-            "end_at" => now(),
+            "start_at" => now()->format('Y-m-d'),
+            "end_at" => now()->format('Y-m-d'),
             'amount' => fake()->numberBetween(100,100),
             "number_of_branches" => fake()->numberBetween(1,10),
             "user_id" => RestaurantUser::factory(),
