@@ -55,20 +55,8 @@ const convertToAddress = async (lat, lng) => {
 
 function Map({inputStyle}) {
 
-   
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
   const customerAddress = useSelector((state) => state.customerAPI.address)
-   const [forceCenter, setForceCenter] = useState({
-        lat: customerAddress?.lat, // || 23.885942,
-        lng: customerAddress?.lng  // ||45.079162,
-    });
-    useEffect(() => {
-      setForceCenter({
-        lat: customerAddress?.lat,
-        lng: customerAddress?.lng
-      });
-    }, [customerAddress]);
-
 
   const branches = restuarantStyle.branches
   const filterBranch = branches?.filter(
@@ -182,10 +170,6 @@ function PlacesAutoComplete({inputStyle, inputRef, inputValueRef}) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         let lat = position.coords.latitude
         let lng = position.coords.longitude
-
-
-          console.log("position >>", position)
-
 
           dispatch(updateCustomerAddress({lat: lat, lng: lng}))
 
