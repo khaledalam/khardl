@@ -23,8 +23,6 @@ const CustomerProfile = () => {
     (state) => state.customerAPI.saveProfileChanges
   )
 
-    console.log("customerAddress ::  ", customerAddress);
-
   const [isDisabled, setIsDisabled] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -54,9 +52,8 @@ const CustomerProfile = () => {
               lng: profileResponse.data?.data?.address?.lng,
               addressValue: profileResponse.data?.data?.address?.addressValue ?? t("N/A")})
         )
-        userProfileInfo["address"] = profileResponse.data?.data?.address?.addressValue
+          userProfileInfo["address"] = profileResponse.data?.data?.address;
 
-        console.log("userProfileInfo", userProfileInfo)
         localStorage.setItem("userProfileInfo", JSON.stringify(userProfileInfo))
       }
     } catch (error) {
@@ -73,29 +70,26 @@ const CustomerProfile = () => {
   console.log("userProfile", userProfile)
 
   useEffect(() => {
-    if (userProfile) {
+
+      if (userProfile) {
+
       if (firstName?.trim() === userProfile?.firstName?.trim() &&
         lastName?.trim() === userProfile?.lastName?.trim() &&
         phone?.trim() === userProfile?.phone?.trim() &&
-          customerAddress?.address?.addressValue?.trim() === userProfile?.addressValue?.trim() &&
-          customerAddress?.address?.lat === userProfile?.lat &&
-          customerAddress?.address?.lng === userProfile?.lng
-
+          customerAddress?.addressValue?.trim() === userProfile?.address?.addressValue?.trim() &&
+          customerAddress?.lat === userProfile?.address?.lat &&
+          customerAddress?.lng === userProfile?.address?.lng
       ) {
-        setIsDisabled(true)
         dispatch(updateProfileSaveStatus(true))
         console.log("initial values matches userProfile")
+          setIsDisabled(true)
       } else {
         console.log("not a match, values changes")
         setIsDisabled(false)
         dispatch(updateProfileSaveStatus(false))
       }
-
-      if (customerAddress?.lat !== userProfile?.lat || customerAddress?.lng !== userProfile?.lng || customerAddress?.addressVAlue !== userProfile?.addressValue) {
-          setIsDisabled(false);
-      }
     }
-  }, [address, firstName, lastName, phone, userProfile])
+  }, [customerAddress, firstName, lastName, phone, userProfile])
 
   useEffect(() => {
     fetchProfileData().then((r) => null)
@@ -174,7 +168,7 @@ const CustomerProfile = () => {
         </div>
       </div>
       <h3 className='text-lg my-5 '>{t("Location")}</h3>
-      <div className='w-full bg-white shadow-md  min-h-[400px] h-full p-4'>
+      <div className='w-full bg-white shadow-md  min-h-[400px] h-full p-4 flex'>
         <div className='w-full flex flex-col gap-4'>
           <Places
             inputStyle={
@@ -193,7 +187,7 @@ const CustomerProfile = () => {
           </button>
           <button
             onClick={handleSaveProfile}
-            disabled={isDisabled || isLoading ? true : false}
+            disabled={isDisabled ||isLoading}
             className='w-[85px] p-2 bg-[var(--customer)] disabled:cursor-not-allowed disabled:bg-neutral-400 outline-none text-white rounded-lg'
           >
             {t("Save")}

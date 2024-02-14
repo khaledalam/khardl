@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react"
+import React, {useEffect, useMemo, useRef, useState} from "react"
 import {GoogleMap, useLoadScript, MarkerF} from "@react-google-maps/api"
 import usePlaceAutoComplete, {
   getGeocode,
@@ -17,12 +17,15 @@ import {
   updateCustomerAddress,
 } from "../../../../../../redux/NewEditor/customerSlice"
 import {MdLocationPin} from "react-icons/md"
+import ClipLoader from "react-spinners/ClipLoader";
+import {useTranslation} from "react-i18next";
+
 
 
 const Places = ({inputStyle}) => {
   const [libraries, _] = useState(["places"]);
     const Language = useSelector((state) => state.languageMode.languageMode);
-
+    const {t} = useTranslation()
 
     const {isLoaded} = useLoadScript({
     googleMapsApiKey: "AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E",
@@ -32,7 +35,7 @@ const Places = ({inputStyle}) => {
   });
 
   if (!isLoaded) {
-    return <div>Loading....</div>
+    return <div className={'m-auto flex items-center'}><ClipLoader color="#36d7b7" /> {t('Loading')}...</div>
   }
   return <Map inputStyle={inputStyle} />
 }
@@ -47,11 +50,15 @@ const convertToAddress = async (lat, lng) => {
             const geocode = await res.json();
 
             return geocode?.results[0]?.formatted_address || geocode?.plus_code?.compound_code || `${lat},${lng}`;
-
         });
 }
 
 function Map({inputStyle}) {
+
+    const [forceCenter, setForceCenter] = useState({
+        lat: customerAddress?.lat, // || 23.885942,
+        lng: customerAddress?.lng  // ||45.079162,
+    });
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
   const customerAddress = useSelector((state) => state.customerAPI.address)
 
@@ -61,7 +68,11 @@ function Map({inputStyle}) {
     (branch) => branch.pickup_availability === 1
   )[0]
 
+    const inputRef = useRef();
+    const inputValueRef = useRef();
+
   const center = useMemo(() => {
+      console.log("safasfasdtgdasghdsahgadfghdfshsd")
     if (filterBranch) {
         console.log("hererer filterBranch", );
       return {
@@ -73,7 +84,7 @@ function Map({inputStyle}) {
       lat: customerAddress?.lat, // || 23.885942,
       lng: customerAddress?.lng  // ||45.079162,
     }
-  }, [filterBranch])
+  }, [filterBranch, inputRef.current])
 
   const containerStyle = {
     width: "100%",
@@ -86,10 +97,12 @@ function Map({inputStyle}) {
 
   const dispatch = useDispatch();
 
+
   const handleMarkerDragEnd = async (event) => {
     const { latLng } = event;
     const lat = latLng.lat();
     const lng = latLng.lng();
+      dispatch(updateCustomerAddress({ lat: lat, lng: lng}));
     const addressText = await convertToAddress(lat, lng);
 
     dispatch(updateCustomerAddress({ lat: lat, lng: lng, addressValue: addressText }))
@@ -98,21 +111,25 @@ function Map({inputStyle}) {
     const { latLng } = event;
     const lat = latLng.lat();
     const lng = latLng.lng();
-    const addressText = await convertToAddress(lat, lng);
 
+     dispatch(updateCustomerAddress({ lat: lat, lng: lng}));
+    const addressText = await convertToAddress(lat, lng);
+    console.log("addressText >> ", addressText);
+      inputValueRef.current = addressText;
     dispatch(updateCustomerAddress({ lat: lat, lng: lng, addressValue: addressText }));
   };
 
+  console.log("Center:", center)
   return (
     <div className='w-full '>
       <div className='mb-6'>
-        <PlacesAutoComplete inputStyle={inputStyle} />
+        <PlacesAutoComplete inputStyle={inputStyle} inputRef={inputRef} inputValueRef={inputValueRef}/>
       </div>
 
       <div className='w-full h-full'>
         <GoogleMap
           zoom={10}
-          center={customerAddress ? customerAddress : center}
+          center={ customerAddress ? customerAddress : center }
           mapContainerStyle={containerStyle}
           options={{ draggableCursor: 'pointer' }}
           onClick={handleMapClick}
@@ -124,24 +141,31 @@ function Map({inputStyle}) {
   )
 }
 
-function PlacesAutoComplete({inputStyle}) {
-  const {
+function PlacesAutoComplete({inputStyle, inputRef, inputValueRef}) {
+    const customerAddress = useSelector((state) => state.customerAPI.address)
+    const {
     ready,
     value,
     setValue,
     suggestions: {status, data},
     clearSuggestions,
   } = usePlaceAutoComplete()
-  const customerAddress = useSelector((state) => state.customerAPI.address)
 
   const dispatch = useDispatch()
 
+    useEffect(() => {
+        setValue(inputValueRef.current)
+    }, [inputValueRef.current])
+
   const handleSelect = async (address) => {
-    setValue(address)
-    clearSuggestions()
+      setValue(address)
+
+      inputRef.current = address;
+
     const results = await getGeocode({address: address})
     const {lat, lng} = await getLatLng(results[0])
-    dispatch(updateCustomerAddress({lat: lat, lng: lng, addressValue: address}))
+    dispatch(updateCustomerAddress({lat: lat, lng: lng, addressValue: address}));
+      clearSuggestions()
   }
 
   const getPosition = () => {
@@ -150,11 +174,13 @@ function PlacesAutoComplete({inputStyle}) {
         let lat = position.coords.latitude
         let lng = position.coords.longitude
 
-        console.log("geolocation", position)
+
+          console.log("position >>", position)
+
+
+          dispatch(updateCustomerAddress({lat: lat, lng: lng}))
 
           const addressText = await convertToAddress(lat, lng);
-
-        console.log("DEBUG: address ", addressText);
 
         dispatch(updateCustomerAddress({lat: lat, lng: lng, addressValue: addressText}))
 

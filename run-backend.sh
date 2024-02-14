@@ -27,7 +27,6 @@ done
 
 cd backend;
 
-rm ./composer.lock
 composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
 
