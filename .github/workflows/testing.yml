@@ -29,12 +29,12 @@ jobs:
         run: composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress
       - name: Generate key
         run: |
-          mkdir -r backend/bootstrap/cache
+          mkdir -p backend/bootstrap/cache
           chmod -R 777 backend/storage backend/bootstrap/cache
           php backend/artisan key:generate
       - name: Prepare DB
         run: |
-          mkdir -r backend/bootstrap/cache
+          mkdir -p backend/bootstrap/cache
           chmod -R 777 backend/storage backend/bootstrap/cache
           mkdir -p backend/database
           php backend/artisan migrate:fresh --seed
