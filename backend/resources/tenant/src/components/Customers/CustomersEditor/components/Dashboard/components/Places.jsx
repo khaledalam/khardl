@@ -55,12 +55,19 @@ const convertToAddress = async (lat, lng) => {
 
 function Map({inputStyle}) {
 
-    const [forceCenter, setForceCenter] = useState({
+   
+  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
+  const customerAddress = useSelector((state) => state.customerAPI.address)
+   const [forceCenter, setForceCenter] = useState({
         lat: customerAddress?.lat, // || 23.885942,
         lng: customerAddress?.lng  // ||45.079162,
     });
-  const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
-  const customerAddress = useSelector((state) => state.customerAPI.address)
+    useEffect(() => {
+      setForceCenter({
+        lat: customerAddress?.lat,
+        lng: customerAddress?.lng
+      });
+    }, [customerAddress]);
 
 
   const branches = restuarantStyle.branches
@@ -129,12 +136,14 @@ function Map({inputStyle}) {
       <div className='w-full h-full'>
         <GoogleMap
           zoom={10}
-          center={ customerAddress ? customerAddress : center }
+          center={ customerAddress ? {lat: parseFloat(customerAddress.lat),lng: parseFloat(customerAddress.lng),} : center }
           mapContainerStyle={containerStyle}
           options={{ draggableCursor: 'pointer' }}
           onClick={handleMapClick}
         >
-          <MarkerF position={customerAddress ? customerAddress : center} draggable={true} onDragEnd={handleMarkerDragEnd} />
+          <MarkerF
+          position={ customerAddress ?{lat: parseFloat(customerAddress.lat),lng: parseFloat(customerAddress.lng),}:center}
+           draggable={true} onDragEnd={handleMarkerDragEnd} />
         </GoogleMap>
       </div>
     </div>

@@ -16,7 +16,7 @@ import AxiosInstance from "../../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import {  IoClose } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import './PaymentSection.css';
 
 
@@ -24,6 +24,7 @@ import { GoSellElements } from "@tap-payments/gosell";
 import Places from "../../../components/Customers/CustomersEditor/components/Dashboard/components/Places";
 
 const PaymentSection = ({
+  userInfo,
   styles,
   cartItems,
   tap,
@@ -51,6 +52,8 @@ const PaymentSection = ({
   const [showTAPClientCard, setShowTAPClientCard] = useState(false);
   const language = useSelector((state) => state.languageMode.languageMode);
   const [spinner, setSpinner] = useState(false);
+  const customerAddress = useSelector((state) => state.customerAPI.address)
+
   const callbackFunc = async (response) => {
     try {
       setSpinner(true);
@@ -212,7 +215,7 @@ const PaymentSection = ({
     }
   };
   const removeCoupon = async () => {
-    if((couponCode && couponDiscountValue.discount) || appliedCoupon?.code){
+    if ((couponCode && couponDiscountValue.discount) || appliedCoupon?.code) {
       try {
         setSpinner(true);
         const response = await AxiosInstance.post(`/remove/coupon`,);
@@ -225,11 +228,32 @@ const PaymentSection = ({
         toast.error(error.response.data.message);
         console.log(error);
       }
-    } else{
+    } else {
       setCouponDiscountValue(null)
       setCouponCode(null)
     }
   };
+  const changeAddress = async () => {
+    try {
+      await AxiosInstance.post(`/user`, {
+        address: customerAddress && customerAddress?.addressValue,
+        first_name: userInfo.data.data.firstName,
+        last_name: userInfo.data.data.lastName,
+        phone: userInfo.data.data.phone,
+        lat: customerAddress && customerAddress?.lat,
+        lng: customerAddress && customerAddress?.lng,
+      })
+        .then((r) => {
+          toast.success(t("Profile updated successfully"))
+        })
+        .finally((r) => {
+          setIsLoading(false)
+        })
+    } catch (error) {
+      toast.error(error.response.data.message)
+    }
+  }
+
   return (
     <div className="w-full laptopXL:w-[75%] mx-auto my-5">
       {spinner && (
@@ -360,8 +384,8 @@ const PaymentSection = ({
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`border ${styles?.categoryDetail_cart_color
-                  ? ""
-                  : "border-[var(--primary)]"
+                ? ""
+                : "border-[var(--primary)]"
                 }`}
             >
               {paymentMethods &&
@@ -370,8 +394,8 @@ const PaymentSection = ({
                     key={method.id}
                     style={{ borderColor: styles?.categoryDetail_cart_color }}
                     className={`form-control w-fulll h-[62px] flex items-center justify-center border-b ${styles?.categoryDetail_cart_color
-                        ? ""
-                        : "border-[var(--primary)]"
+                      ? ""
+                      : "border-[var(--primary)]"
                       }}last:border-none`}
                   >
                     <label className="label cursor-pointer w-[80%] mx-auto flex items-center justify-between ">
@@ -424,8 +448,8 @@ const PaymentSection = ({
                   <div
                     key={deliveryType.id}
                     className={`w-1/2 h-[118px] flex items-center justify-center cursor-pointer  ${activeDeliveryType === deliveryType.name.toLowerCase()
-                        ? " bg-neutral-200 border border-neutral-300"
-                        : "border border-neutral-200"
+                      ? " bg-neutral-200 border border-neutral-300"
+                      : "border border-neutral-200"
                       }`}
                     onClick={() => {
                       if (!deliveryType?.is_active) {
@@ -438,8 +462,8 @@ const PaymentSection = ({
                     <div className="flex items-center gap-4">
                       <div
                         className={`w-[50px] h-[50px]  ${activeDeliveryType === deliveryType.name.toLowerCase()
-                            ? "bg-[#D9D9D9]"
-                            : "bg-[#C0D12330]"
+                          ? "bg-[#D9D9D9]"
+                          : "bg-[#C0D12330]"
                           } rounded-full p-2`}
                       >
                         <img
@@ -504,8 +528,8 @@ const PaymentSection = ({
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`w-full border ${styles?.categoryDetail_cart_color
-                  ? ""
-                  : "border-[var(--primary)]"
+                ? ""
+                : "border-[var(--primary)]"
                 }}h-[100px] flex items-center  py-4 justify-center mb-6`}
             >
               <div className="flex items-center gap-3 p-3 w-full lg:w-1/2 ">
@@ -523,32 +547,40 @@ const PaymentSection = ({
                     borderColor: styles?.categoryDetail_cart_color,
                     backgroundColor: styles?.categoryDetail_cart_color,
                   }}
-                  onClick={() => navigate("/dashboard#Profile")}
-                  className={` w-[60px] h-[48px] border cursor-pointer ${
-                    styles?.categoryDetail_cart_color
-                      ? ""
-                      : "border-[var(--primary)] bg-[var(--primary)]"
+                  // onClick={() => navigate("/dashboard#Profile")}
+                  className={`btn w-[60px] h-[48px] border cursor-pointer ${styles?.categoryDetail_cart_color
+                    ? ""
+                    : "border-[var(--primary)] bg-[var(--primary)]"
                   }}  rounded-lg flex items-center justify-center`}
                 >
+                  <label htmlFor="my_modal_7" className="">
                   <img src={LocationIcon} alt="" />
+                  </label>
                 </div>
 
 
-                {/* Open the modal using document.getElementById('ID').showModal() method */}
                 {/* The button to open modal */}
-                 <label htmlFor="my_modal_7" className="btn">open modal</label>
-
-                {/* Put this part before </body> tag */}
                 <input type="checkbox" id="my_modal_7" className="modal-toggle" />
                 <div className="modal" role="dialog">
-                  {/* <div className="modal-box "> */}
                   <div className="modal-box w-11/12 max-w-5xl ">
-                  <Places inputStyle={
-              "input "
-            } />
+                    <Places inputStyle={
+                      "input "
+                    } />
+
+                    <div className="p-5 text-right">
+                      <button
+                        onClick={changeAddress}
+                      >
+                        <label htmlFor="my_modal_7" className='btn w-[85px] p-2 bg-[var(--customer)] disabled:cursor-not-allowed disabled:bg-neutral-400 outline-none text-white rounded-lg'
+                        >{t("Save")}</label>
+                      </button>
+                      <label htmlFor="my_modal_7" className="btn ms-3">{t("Close")}</label>
+                    </div>
+
                   </div>
                   <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
                 </div>
+
               </div>
             </div>{" "}
           </CartColumn>
@@ -558,8 +590,8 @@ const PaymentSection = ({
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`w-full border ${styles?.categoryDetail_cart_color
-                  ? ""
-                  : "border-[var(--primary)]"
+                ? ""
+                : "border-[var(--primary)]"
                 }}h-[100px] flex items-center justify-center mb-6`}
             >
               <div className="flex items-center gap-3 w-full lg:w-1/2 ">
@@ -605,8 +637,8 @@ const PaymentSection = ({
             <div
               style={{ borderColor: styles?.categoryDetail_cart_color }}
               className={`flex flex-col gap-4 border-b pb-4 ${styles?.categoryDetail_cart_color
-                  ? ""
-                  : "border-[var(--primary)]"
+                ? ""
+                : "border-[var(--primary)]"
                 }}`}
             >
               <div className="flex items-start justify-between">
