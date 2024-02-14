@@ -594,7 +594,7 @@ const PaymentSection = ({
                 : "border-[var(--primary)]"
                 }}h-[100px] flex items-center justify-center mb-6`}
             >
-              <div className="flex items-center gap-3 w-full lg:w-1/2 ">
+              <div className="flex items-center gap-3 p-6 w-full ">
                 <div className="w-full">
                   <Feedback
                     imgUrl={couponIcon}
