@@ -35,7 +35,6 @@ class TenantVerificationCodeTest extends TenantTestCase
     {
         $response = $this->ownPostJson(self::path."/send-verify");
         $response->assertOk();
-        $response->dump();
         $this->assertDatabaseHas('phone_verification_tokens',[
             'user_id' => $this->user->id,
             'created_at' => Carbon::today(),
@@ -50,12 +49,45 @@ class TenantVerificationCodeTest extends TenantTestCase
             'attempts' => 3
         ]);
         $response = $this->ownPostJson(self::path."/send-verify");
-        $response->dump();
         $response->assertStatus(403)
         ->assertJson([
             'success' => false,
             'message' => 'Fail',
             "data" =>  "Too many verification attempts. Request a new verification code."
+        ]);
+    }
+    public function test_verify_otp_success()
+    {
+        $data = ['otp' => '1234'];//testing valid 1234 otp
+        $response = $this->ownPostJson(self::path."/verify",$data);
+        $response->assertOk();
+        $this->assertDatabaseMissing('phone_verification_tokens',[
+            'user_id' => $this->user->id,
+        ]);
+    }
+    public function test_verify_otp_required()
+    {
+        $data = ['otp' => ''];
+        $response = $this->ownPostJson(self::path."/verify",$data);
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrors(['otp']);
+    }
+    public function test_verify_otp_is_4_digits()
+    {
+        $data = ['otp' => '123'];
+        $response = $this->ownPostJson(self::path."/verify",$data);
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrors(['otp']);
+    }
+    public function test_verify_otp_is_already_verified()
+    {
+        $this->user->update(['phone_verified_at' => now()]);
+        $data = ['otp' => '1234'];
+        $response = $this->ownPostJson(self::path."/verify",$data);
+        $response->dump();
+        $response->assertStatus(203)
+        ->assertJson([
+            "message" =>  "User is already verified his phone"
         ]);
     }
 }
