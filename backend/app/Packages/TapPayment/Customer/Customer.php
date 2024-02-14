@@ -21,7 +21,7 @@ class Customer extends Tap implements CustomerInterface
         return self::send("/customers/$customer_id",[],'get');
     }
     public static function createWithModel(RestaurantUser $user) {
-        if(env('APP_ENV') != 'local' && env('APP_ENV') != 'testing'){
+        if(env('APP_ENV') != 'local' ){
             $customer = self::create([
                 "first_name"=> $user->first_name,
                 "last_name"=> $user->last_name,
