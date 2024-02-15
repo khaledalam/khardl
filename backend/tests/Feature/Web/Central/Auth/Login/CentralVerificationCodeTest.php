@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 
-class VerificationCodeTest extends TestCase
+class CentralVerificationCodeTest extends TestCase
 {
     protected $user;
     public function setUp():void

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Web\Central\Auth\Login;
+namespace Tests\Feature\Web\Central\Auth\Register;
 
 use App\Actions\CreateTenantAction;
 use App\Jobs\SendVerifyEmailJob;
