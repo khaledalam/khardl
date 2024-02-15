@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
@@ -10,7 +11,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Item extends Model
 {
-    use HasTranslations;
+    use HasTranslations, HasFactory;
     protected $table = 'items';
 
     protected $fillable = [
