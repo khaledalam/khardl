@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\API\Auth\Login\Branch;
+namespace Tests\Feature\API\Branch;
 
 
 use App\Models\Tenant\Branch;

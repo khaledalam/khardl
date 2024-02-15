@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\API\Auth\Login\Branch;
+namespace Tests\Feature\API\Driver;
 
 
 use App\Http\Resources\API\Tenant\Collection\Driver\OrderCollection;
