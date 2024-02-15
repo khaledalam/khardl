@@ -8,9 +8,9 @@ import logo from "../assets/Logo.webp";
 import successBg from "../assets/successBg.png";
 import failedbanner from "../assets/restaurant-not-live.png";
 import arrowright from "../assets/arrowRight.svg";
-import { WEBSITE_URL } from "../config";
+import { API_ENDPOINT } from "../config";
 const RestaurantNotSubscribed = () => {
-  const url_central = WEBSITE_URL||'https://khardl.com';
+  const url_central = API_ENDPOINT;
   const { t } = useTranslation();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const redirectToService = () => {

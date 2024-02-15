@@ -80,6 +80,7 @@ const App = () => {
     "/failed",
     "/verification-phone",
     '/login-trial',
+    "/login-admins",
   ].includes(location.pathname);
   const showFooter = ![
     "/",
@@ -88,6 +89,7 @@ const App = () => {
     "/site-editor/restaurants",
     "/login",
     "/login-trial",
+    "/login-admins",
     "/register",
     "/register/:url",
     "/reset-password",
