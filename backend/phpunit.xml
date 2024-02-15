@@ -8,8 +8,14 @@
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="Feature_API">
+            <directory suffix="Test.php">./tests/Feature/API</directory>
+        </testsuite>
+        <testsuite name="Feature_WEB">
+            <directory suffix="Test.php">./tests/Feature/Web</directory>
+        </testsuite>
+        <testsuite name="Feature_SuperAdmin">
+            <directory suffix="Test.php">./tests/Feature/SuperAdmin</directory>
         </testsuite>
     </testsuites>
     <source>

@@ -9,7 +9,7 @@ use App\Packages\TapPayment\Customer\CustomerInterface;
 
 class Customer extends Tap implements CustomerInterface
 {
-    
+
     const DEFAULT_CUSTOMER_ID = 'cus_TS06A2120240514u9NY2501307';
     const DEFAULT_LIVE_CUSTOMER_ID = 'cus_LV04G3220242058l9M33001249';
     public static function create($data):array{
@@ -21,7 +21,7 @@ class Customer extends Tap implements CustomerInterface
         return self::send("/customers/$customer_id",[],'get');
     }
     public static function createWithModel(RestaurantUser $user) {
-        if(env('APP_ENV') != 'local'){
+        if(env('APP_ENV') != 'local' ){
             $customer = self::create([
                 "first_name"=> $user->first_name,
                 "last_name"=> $user->last_name,
@@ -36,9 +36,9 @@ class Customer extends Tap implements CustomerInterface
                 $user->save();
             }
         }else {
-            // TODO @todo Testing only , remove after set production 
+            // TODO @todo Testing only , remove after set production
             $user->tap_customer_id = self::DEFAULT_CUSTOMER_ID;
-            $user->save();  
+            $user->save();
         }
     }
 }
