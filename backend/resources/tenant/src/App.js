@@ -81,6 +81,8 @@ const App = () => {
     "/verification-phone",
     '/login-trial',
     "/login-admins",
+    "/summary"
+
   ].includes(location.pathname);
   const showFooter = ![
     "/",
@@ -101,6 +103,7 @@ const App = () => {
     "/privacy",
     "/success",
     "/failed",
+    "/summary"
   ].includes(location.pathname);
 
   Aos.init({

@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import bgRegistration from "../../assets/bgRegistration.webp"
+import bgRegistration from "../../assets/register-bg.png"
 import {useTranslation} from "react-i18next"
 import MainText from "../../components/MainText"
 import {FiUpload} from "react-icons/fi"
@@ -110,7 +110,7 @@ function CompleteRegistration() {
           backgroundSize: "cover",
         }}
       >
-        <div className='min-w-[60%] max-sm:min-w-[100%] flex h-[100%] flex-col justify-start items-center max-[860px]:w-[80vw] space-y-6 p-8 max-[860px]:p-4 '>
+        <div className='min-w-[60%] max-sm:min-w-[100%] flex h-[100%] flex-col justify-start items-center max-[860px]:w-[80vw] space-y-6 p-8 max-[860px]:p-4 bg-white m-6 rounded-2xl shadow-[0_-1px_8px_var(--primary)] '>
           <div className='mt-6 w-[100%]'>
             <MainText
               Title={t("Complete registration")}

@@ -64,6 +64,8 @@ const Login = () => {
                responseData.data.user.status === 'active'
             ) {
                 setStatusCode(HTTP_OK);
+             
+               //  navigate('/')
                // settimeout(() => {
                //     window.location.href = '/dashboard';
                //     //
