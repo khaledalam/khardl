@@ -47,22 +47,46 @@ class AddItemToCartTest extends TenantTestCase
         }
         return $option;
     }
+    private function itemOptionCheckbox(Item $item)
+    {
+        $option = [];
+        if(!$item->checkbox_required)return null;
+        foreach ($item->checkbox_required as $key => $value) {
+            if($value=="true"){
+                $optionNested = [];
+                $fakeIndexOption = fake()->numberBetween(0,count($item->checkbox_input_names[$key]) - 1);//Select one option
+                $optionNested[] = $fakeIndexOption;
+                $option[$key] = $optionNested;
+            }
+        }
+        return $option;
+    }
     public function test_add_item_to_cart_success()
     {
-        $item = $this->createItem();
-        $selectedCheckbox = $this->itemOption($item,'checkbox_required','checkbox_input_names');
-        $selectedRadio = $this->itemOption($item,'selection_required','selection_input_names');
-        $selectedDropdown = $this->itemOption($item,'dropdown_required','dropdown_input_names');
-        $response = $this->postJson(self::path,[
-            'item_id' => $item->id,
-            'quantity' => fake()->numberBetween(1,5),
-            'branch_id' => $this->user->branch->id,
-            'notes' => fake()->text,
-            'selectedCheckbox' => $selectedCheckbox,
-            'selectedRadio' => $selectedRadio,
-            'selectedDropdown' => $selectedDropdown,
-        ]);
-        $response->dump();
-        $response->assertOk();
+        for ($i=0; $i < 3; $i++) {
+            $item = $this->createItem();
+            $selectedCheckbox = $this->itemOptionCheckbox($item);
+            $selectedRadio = $this->itemOption($item,'selection_required','selection_input_names');
+            $selectedDropdown = $this->itemOption($item,'dropdown_required','dropdown_input_names');
+            $data = [
+                'item_id' => $item->id,
+                'quantity' => fake()->numberBetween(1,5),
+                'branch_id' => $this->user->branch->id,
+                'notes' => fake()->text,
+                'selectedCheckbox' => $selectedCheckbox,
+                'selectedRadio' => $selectedRadio,
+                'selectedDropdown' => $selectedDropdown,
+            ];
+            $response = $this->postJson(self::path,$data);
+            $this->assertDatabaseHas('carts',[
+                'user_id' => $this->user->id,
+            ]);
+            $this->assertDatabaseHas('cart_items',[
+                'notes' => $data['notes'],
+                'item_id' => $data['item_id'],
+                'quantity' => $data['quantity'],
+            ]);
+            $response->assertOk();
+        }
     }
 }
