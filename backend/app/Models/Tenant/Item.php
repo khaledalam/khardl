@@ -3,6 +3,7 @@
 namespace App\Models\Tenant;
 
 use App\Models\User;
+use Database\Factories\tenant\ItemFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -96,6 +97,10 @@ class Item extends Model
     {
         $this->availability = !$this->availability;
         $this->save();
+    }
+    protected static function newFactory()
+    {
+      return ItemFactory::new();
     }
     /* End Scopes */
 

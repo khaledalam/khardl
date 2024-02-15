@@ -20,7 +20,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->name,
-            'branch' => Branch::factory(),
+            'branch_id' => Branch::factory(),
             'user_id' => RestaurantUser::factory(),
         ];
     }

@@ -20,15 +20,89 @@ class ItemFactory extends Factory
      */
     public function definition(): array
     {
+        $hasCheckbox = fake()->numberBetween(0, 2);//  1 : 3 probability
+        $hasSelection = fake()->numberBetween(0, 2);//  1 : 3 probability
+        $hasDropdown = fake()->numberBetween(0, 2);//  1 : 3 probability
         return [
             'category_id' => Category::factory(),
             'branch_id' => Branch::factory(),
             'user_id' => RestaurantUser::factory(),
-            'price' => fake()->numberBetween(10,100),
-            'calories' => fake()->numberBetween(100,1000),
+            'price' => fake()->numberBetween(10, 100),
+            'calories' => fake()->numberBetween(100, 1000),
             'name' => fake()->name,
             'description' => fake()->text,
-            
+            'checkbox_required' => $hasCheckbox ? $this->dataOptionRequired($hasCheckbox) : null,
+            'checkbox_input_titles' => $hasCheckbox ? $this->dataOptionTitles($hasCheckbox) : null,
+            'checkbox_input_maximum_choices' => $hasCheckbox ? $this->dataOptionMaximumChoices($hasCheckbox) : null,
+            'checkbox_input_names' => $hasCheckbox ? $checkBoxNames = $this->dataOptionNames($hasCheckbox) : null,
+            'checkbox_input_prices' => $hasCheckbox ? $this->dataOptionPrices($hasCheckbox, $checkBoxNames) : null,
+            'selection_required' => $hasSelection ? $this->dataOptionRequired($hasSelection) : null,
+            'selection_input_titles' => $hasSelection ? $this->dataOptionTitles($hasSelection) : null,
+            'selection_input_names' => $hasSelection ? $selectionNames = $this->dataOptionNames($hasSelection) : null,
+            'selection_input_prices' => $hasSelection ? $this->dataOptionPrices($hasSelection, $selectionNames) : null,
+            'dropdown_required' => $hasDropdown ? $this->dataOptionRequired($hasDropdown) : null,
+            'dropdown_input_titles' => $hasDropdown ? $this->dataOptionTitles($hasDropdown) : null,
+            'dropdown_input_names' => $hasDropdown ? $this->dataOptionNames($hasDropdown) : null,
+            'availability' => fake()->boolean,
+            'photo' => 'http://first.khardl:8000/tenancy/assets/seeders/items/' . fake()->numberBetween(1, 10) . '.jpg'
         ];
+    }
+    private function dataOptionRequired($num)
+    {
+        $option = [];
+        for ($i = 0; $i < $num; $i++) {
+            if(fake()->boolean){
+                $option[] = "true";
+            }else{
+                $option[] = "false";
+            }
+        }
+        return $option;
+    }
+    private function dataOptionTitles($num)
+    {
+        $option = [];
+        for ($i = 0; $i < $num; $i++) {
+            $option[] = [
+                fake()->name,
+                fake()->name,
+            ];
+        }
+        return $option;
+    }
+    public function dataOptionMaximumChoices($num)
+    {
+        $option = [];
+        for ($i = 0; $i < $num; $i++) {
+            $option[] = (string) fake()->numberBetween(1, 3);
+        }
+        return $option;
+    }
+    public function dataOptionPrices($num, $names)
+    {
+        $option = [];
+        for ($i = 0; $i < $num; $i++) {
+            $option[$i] = [];
+            foreach ($names[$i] as $nestedKey => $nestedOption) {
+                $option[$i][$nestedKey] = fake()->numberBetween(1,30);
+            }
+        }
+        return $option;
+    }
+    public function dataOptionNames($num)
+    {
+        $option = [];
+        for ($i = 0; $i < $num; $i++) {
+            $option[$i] = [];
+            $nestedOptions = fake()->numberBetween(1, 4);
+            for ($ii = 0; $ii < $nestedOptions; $ii++) {
+                $option[$i][$ii] = [
+                    fake()->name,
+                    fake()->name,
+                ];
+            }
+
+        }
+        return $option;
     }
 }
