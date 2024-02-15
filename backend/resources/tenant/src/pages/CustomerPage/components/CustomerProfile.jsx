@@ -17,8 +17,8 @@ const CustomerProfile = () => {
   const [firstName, setFirstName] = useState("John")
   const [lastName, setLastName] = useState("Doe")
   const [phone, setPhone] = useState("96611111111")
-  const address = useSelector((state) => state.customerAPI.address)
-  const addressLatLng = useSelector((state) => state.customerAPI.addressLatLng)
+    const address = useSelector((state) => state.customerAPI.address?.addressValue)
+    const customerAddress = useSelector((state) => state.customerAPI.address)
   const saveProfileChange = useSelector(
     (state) => state.customerAPI.saveProfileChanges
   )
@@ -47,11 +47,13 @@ const CustomerProfile = () => {
         setPhone(profileResponse.data?.data?.phone ?? t("N/A"))
         userProfileInfo["phone"] = profileResponse.data?.data?.phone
         dispatch(
-          updateCustomerAddress(profileResponse.data?.data?.address ?? t("N/A"))
+          updateCustomerAddress({
+              lat: profileResponse.data?.data?.address?.lat,
+              lng: profileResponse.data?.data?.address?.lng,
+              addressValue: profileResponse.data?.data?.address?.addressValue ?? t("N/A")})
         )
-        userProfileInfo["address"] = profileResponse.data?.data?.address
+          userProfileInfo["address"] = profileResponse.data?.data?.address;
 
-        console.log("userProfileInfo", userProfileInfo)
         localStorage.setItem("userProfileInfo", JSON.stringify(userProfileInfo))
       }
     } catch (error) {
@@ -68,23 +70,26 @@ const CustomerProfile = () => {
   console.log("userProfile", userProfile)
 
   useEffect(() => {
-    if (userProfile) {
-      if (
-        firstName?.trim() === userProfile?.firstName?.trim() &&
+
+      if (userProfile) {
+
+      if (firstName?.trim() === userProfile?.firstName?.trim() &&
         lastName?.trim() === userProfile?.lastName?.trim() &&
         phone?.trim() === userProfile?.phone?.trim() &&
-        address?.trim() === userProfile?.address?.trim()
+          customerAddress?.addressValue?.trim() === userProfile?.address?.addressValue?.trim() &&
+          customerAddress?.lat === userProfile?.address?.lat &&
+          customerAddress?.lng === userProfile?.address?.lng
       ) {
-        setIsDisabled(true)
         dispatch(updateProfileSaveStatus(true))
         console.log("initial values matches userProfile")
+          setIsDisabled(true)
       } else {
         console.log("not a match, values changes")
         setIsDisabled(false)
         dispatch(updateProfileSaveStatus(false))
       }
     }
-  }, [address, firstName, lastName, phone, userProfile])
+  }, [customerAddress, firstName, lastName, phone, userProfile])
 
   useEffect(() => {
     fetchProfileData().then((r) => null)
@@ -97,12 +102,12 @@ const CustomerProfile = () => {
 
       try {
         await AxiosInstance.post(`/user`, {
-          address: address,
+          address: customerAddress && customerAddress?.addressValue,
           first_name: firstName,
           last_name: lastName,
           phone: phone,
-          lat: addressLatLng && addressLatLng?.lat,
-          lng: addressLatLng && addressLatLng?.lng,
+          lat: customerAddress && customerAddress?.lat,
+          lng: customerAddress && customerAddress?.lng,
         })
           .then((r) => {
             toast.success(t("Profile updated successfully"))
@@ -163,7 +168,7 @@ const CustomerProfile = () => {
         </div>
       </div>
       <h3 className='text-lg my-5 '>{t("Location")}</h3>
-      <div className='w-full bg-white shadow-md  min-h-[400px] h-full p-4'>
+      <div className='w-full bg-white shadow-md  min-h-[400px] h-full p-4 flex'>
         <div className='w-full flex flex-col gap-4'>
           <Places
             inputStyle={
@@ -182,7 +187,7 @@ const CustomerProfile = () => {
           </button>
           <button
             onClick={handleSaveProfile}
-            disabled={isDisabled || isLoading ? true : false}
+            disabled={isDisabled ||isLoading}
             className='w-[85px] p-2 bg-[var(--customer)] disabled:cursor-not-allowed disabled:bg-neutral-400 outline-none text-white rounded-lg'
           >
             {t("Save")}

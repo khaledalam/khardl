@@ -32,7 +32,7 @@ function RestaurantLocator() {
           {...viewport}
           onViewportChange={(newViewport) => setViewport(newViewport)}
           mapStyle="mapbox://styles/mapbox/streets-v11" // يمكنك استخدام أنماط الخريطة المختلفة من Mapbox
-          mapboxApiAccessToken={"AIzaSyB4IfCMfgHzQaHLHy59vALydLhvtjr0Om0"}
+          mapboxApiAccessToken={"AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E"}
         >
           {userLocation && (
             <Marker latitude={userLocation.latitude} longitude={userLocation.longitude}>

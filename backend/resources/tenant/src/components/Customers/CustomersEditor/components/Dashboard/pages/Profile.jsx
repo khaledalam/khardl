@@ -1,7 +1,6 @@
 import React from "react"
 import {useTranslation} from "react-i18next"
 import {useSelector} from "react-redux"
-import Places from "../components/Places"
 
 const Profile = () => {
   const {t} = useTranslation()

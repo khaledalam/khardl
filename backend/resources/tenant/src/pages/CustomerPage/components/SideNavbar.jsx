@@ -57,15 +57,15 @@ const SideNavbar = () => {
     },
   ]
 
-  if (window.location.href.indexOf("#Profile") > -1) {
-    dispatch(setActiveNavItem(t("Profile")))
-  } else if (window.location.href.indexOf("#Dashboard") > -1) {
-    dispatch(setActiveNavItem(t("Dashboard")))
-  } else if (window.location.href.indexOf("#Orders") > -1) {
-    dispatch(setActiveNavItem(t("Orders")))
-  } else if (window.location.href.indexOf("#Payment") > -1) {
-    dispatch(setActiveNavItem(t("Payment")))
-  }
+    const pages = ['Profile', 'Orders', 'Payment', 'Dashboard'];
+    pages.forEach(function(page) {
+        if (window.location.href.indexOf(`#${page.toLowerCase()}`) > -1
+            || window.location.href.indexOf(`#${page.toUpperCase()}`) > -1
+            || window.location.href.indexOf(`#${page.charAt(0).toUpperCase() + page.slice(1)}`) > -1
+        ) {
+            dispatch(setActiveNavItem(t(page)));
+        }
+    });
 
   const handleNavigate = (navItem) => {
     navigate(navItem.link)
@@ -89,9 +89,7 @@ const SideNavbar = () => {
             key={navItem.id}
             active={navItem.title === activeNavItem}
             onClick={
-              
                 () => handleNavigate(navItem)
-                
             }
             title={navItem.title}
             imgUrl={navItem.imgUrl}

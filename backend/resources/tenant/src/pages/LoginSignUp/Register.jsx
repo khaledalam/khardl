@@ -132,7 +132,7 @@ const Register = () => {
                                     </h4>
                                     <input
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                       placeholder={t('Last name')}
+                                       placeholder={t('First name')}
                                        {...register('first_name', {
                                           required: true,
                                        })}
@@ -302,7 +302,7 @@ const Register = () => {
                                     {t('You have an account?')}
                                     <Link to='/login'>
                                        <input
-                                          type='submit'
+                                          type='button'
                                           className='text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md '
                                           value={t('Login')}
                                        />

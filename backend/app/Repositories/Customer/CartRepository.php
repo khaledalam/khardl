@@ -261,6 +261,7 @@ class CartRepository
             return null;
         }
         $paymentMethods = $this->cart?->branch->payment_methods()->pluck('name')->toArray();
+
         if($paymentMethods){
             $index = array_search(PaymentMethod::ONLINE, $paymentMethods);
             if ($index !== false) {
@@ -317,16 +318,15 @@ class CartRepository
     public function hasPayment($name)
     {
         $method = PaymentMethod::where('name',$name)->first();
+        $setting = Setting::first();
+        if($this->hasPaymentCreditCard($name) && (!$setting->merchant_id || !$setting->lead_id)) 
+            return false;
         if($method){
             return $this->cart->branch->payment_methods->contains('id',$method->id);
         }
         return false;
     }
-    public function hasPaymentCreditCardWithTap($name)
-    {
-        $setting = Setting::first();
-        return $this->hasPaymentCreditCard($name) && $setting->merchant_id && $setting->lead_id;
-    }
+   
 
     public function hasDelivery($type)
     {

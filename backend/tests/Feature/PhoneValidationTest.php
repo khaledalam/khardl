@@ -12,7 +12,7 @@ class PhoneValidationTest extends TestCase
     public function test_phone_examples(): void
     {
         $response = $this->get('/');
-        
+
 
         $response->assertStatus(200);
     }
