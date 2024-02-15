@@ -80,6 +80,9 @@ const App = () => {
     "/failed",
     "/verification-phone",
     '/login-trial',
+    "/login-admins",
+    "/summary"
+
   ].includes(location.pathname);
   const showFooter = ![
     "/",
@@ -88,6 +91,7 @@ const App = () => {
     "/site-editor/restaurants",
     "/login",
     "/login-trial",
+    "/login-admins",
     "/register",
     "/register/:url",
     "/reset-password",
@@ -99,6 +103,7 @@ const App = () => {
     "/privacy",
     "/success",
     "/failed",
+    "/summary"
   ].includes(location.pathname);
 
   Aos.init({
@@ -153,6 +158,10 @@ const App = () => {
                 <Route
                   path="/create-new-password"
                   element={<Protected Cmp={CreateNewPassword} />}
+                />
+                <Route
+                  path="/summary"
+                  element={<div></div>}
                 />
 
                   

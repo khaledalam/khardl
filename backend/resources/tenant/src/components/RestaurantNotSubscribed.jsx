@@ -10,7 +10,7 @@ import failedbanner from "../assets/restaurant-not-live.png";
 import arrowright from "../assets/arrowRight.svg";
 import { WEBSITE_URL } from "../config";
 const RestaurantNotSubscribed = () => {
-  const url_central = WEBSITE_URL||'https://khardl.com';
+  const url_central = WEBSITE_URL;
   const { t } = useTranslation();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const redirectToService = () => {

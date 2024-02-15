@@ -11,8 +11,8 @@ import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import AxiosInstance from "../../axios/axios";
 import { Button } from '../../../../tenant/src/components/Customers/CustomersEditor/components/Dashboard/components/shared/Button'
-import TermsPolicies from  '../TermsPoliciesPrivacy/TermsPolicies';
-import Privacy from  '../TermsPoliciesPrivacy/Privacy';
+import TermsPolicies from '../TermsPoliciesPrivacy/TermsPolicies';
+import Privacy from '../TermsPoliciesPrivacy/Privacy';
 import infog from '../../assets/infog.svg'
 
 
@@ -36,20 +36,24 @@ const Register = () => {
       } else {
          setShowTerms(false);
       }
-  }
-  function showPrivacyModal() {
-   if (!showPrivacy) {
-      setShowPrivacy(true);
-   } else {
-      setShowPrivacy(false);
    }
-}
+   function showPrivacyModal() {
+      if (!showPrivacy) {
+         setShowPrivacy(true);
+      } else {
+         setShowPrivacy(false);
+      }
+   }
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
 
    const [showTooltip, setShowTooltip] = useState(false);
-   const handleInputFocus = () => {setShowTooltip(true);};
-   const handleInputBlur = () => {setShowTooltip(false);};
+   const handleInputFocus = () => { setShowTooltip(true); };
+   const handleInputBlur = () => { setShowTooltip(false); };
+   const [restaurantName, setRestaurantName] = useState('');
+   const [err, setErr] = useState();
+
+
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
@@ -58,15 +62,39 @@ const Register = () => {
       setOpenEyeRePassword(!openEyeRePassword)
    }
 
+   const slugify = (text) => {
+      return text.toString().toLowerCase()
+         .replace(/\s+/g, '-')
+         .replace(/[^\w-]+/g, '')
+         .replace(/--+/g, '-')
+         .replace(/^-+/, '')
+         .replace(/-+$/, '');
+   };
+
+   const onChangeHandler = (event) => {
+      const { value } = event.target;
+      const slugifiedName = slugify(value);
+      setRestaurantName(slugifiedName);
+
+      // Validation
+      if (!/^(?!.*--)[a-z0-9]+(?:[-\s][a-z0-9]+)*$/i.test(value)) {
+         setErr(t('Restaurant name Error'));
+      } else {
+         setErr("");
+      }
+   };
    /////////////////////////////////////////////////////////////////////////////////////
    // API POST REQUEST
    const onSubmit = async (data) => {
       try {
+         if(err){setErr(t('Restaurant name Error'));
+      return
+      }
          setSpinner(true);
          const response = await AxiosInstance.post(`/register`, {
             first_name: data.first_name,
             last_name: data.last_name,
-            restaurant_name: data.restaurant_name,
+            restaurant_name: restaurantName,
             position: data.position,
             email: data.email,
             phone: data.phone,
@@ -77,7 +105,7 @@ const Register = () => {
          console.log(response.data);
          toast.success(`${t('Account successfully created')}`)
          sessionStorage.setItem('email', data.email)
-          window.location.href = '/verification-email';
+         window.location.href = '/verification-email';
       } catch (error) {
          setSpinner(false);
          console.log(error);
@@ -106,14 +134,14 @@ const Register = () => {
                backgroundSize: 'cover',
             }}
          >
-              {showTerms && <TermsPolicies onClose={showTermsModal} />}
-              {showPrivacy && <Privacy onClose={showPrivacyModal} />}
-              {!showTerms && !showPrivacy &&
-                <div className='py-[20px] flex justify-center items-center'>
+            {showTerms && <TermsPolicies onClose={showTermsModal} />}
+            {showPrivacy && <Privacy onClose={showPrivacyModal} />}
+            {!showTerms && !showPrivacy &&
+               <div className='py-[20px] flex justify-center items-center'>
                   <div className='grid grid-cols-2 h-[100%] max-[860px]:flex max-[860px]:flex-col-reverse my-[80px] rounded-lg shadow-lg max-md:my-[60px] xl:max-w-[70%] max-[1200px]:w-[100%] bg-white'>
                      <div className='relative flex justify-center items-center max-[860px]:w-[85vw] space-y-14  bg-white p-8 max-[860px]:p-4 rounded-s-lg max-[860px]:rounded-b-lg max-[860px]:rounded-s-none '>
                         <div className='mt-6 w-[100%]'>
-                        
+
                            <MainText
                               Title={t('Create an account')}
                               classTitle='!text-[28px] !w-[50px] !h-[8px] bottom-[-10px] max-[1000px]:bottom-[0px] max-[500px]:bottom-[5px]'
@@ -130,7 +158,7 @@ const Register = () => {
                                           {t('First name')} <span className="text-red-500">*</span>
                                        </h4>
                                        <input
-                                           minLength={3}
+                                          minLength={3}
                                           className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                           placeholder={t('First name')}
                                           {...register('first_name', {
@@ -139,7 +167,7 @@ const Register = () => {
                                        />
                                        {errors.first_name && (
                                           <span className='text-red-500 text-xs mt-1 ms-2'>
-                                              {errors.first_name.message ||   t('First name Error') }
+                                             {errors.first_name.message || t('First name Error')}
                                           </span>
                                        )}
                                     </div>
@@ -149,7 +177,7 @@ const Register = () => {
                                           {t('Last name')} <span className="text-red-500">*</span>
                                        </h4>
                                        <input
-                                           minLength={3}
+                                          minLength={3}
                                           className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                           placeholder={t('Last name')}
                                           {...register('last_name', {
@@ -158,7 +186,7 @@ const Register = () => {
                                        />
                                        {errors.last_name && (
                                           <span className='text-red-500 text-xs mt-1 ms-2'>
-                                             {errors.last_name.message ||   t('Last name Error') }
+                                             {errors.last_name.message || t('Last name Error')}
                                           </span>
                                        )}
                                     </div>
@@ -168,19 +196,26 @@ const Register = () => {
                                     <h4 className='ms-2 text-[13px] font-semibold'>
                                        {t('Restaurant name')} <span className="text-red-500">*</span>
                                     </h4>
+                                    <div className='joined-input-group flex items-center justify-between'>
                                     <input
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                        placeholder={t('Restaurant name')}
-                                       style={{marginBottom: 0}}
-                                       {...register('restaurant_name', {
-                                          required: true,
-                                       })}
+                                       style={{ marginBottom: 0 }}
+                                       // {...register('restaurant_name', {
+                                       //    required: true,
+                                       //    validate: validateRestaurantName,
+                                       // })}
+                                       onChange={onChangeHandler}
                                        onFocus={handleInputFocus}
                                        onBlur={handleInputBlur}
                                     />
-                                    <span className='text-[#00000080] text-[10px] ms-2' style={{marginBottom: '20px'}}>
+                                    <span>.khardl.com</span>
+                                    </div>
+                                 
+
+                                    <span className='text-[#00000080] text-[10px] ms-2' style={{ marginBottom: '20px' }}>
                                        <img src={infog} alt="InfoIcon" className="inline-block align-middle" />
-                                       {' '}{t('* If your restaurant name is ABC the domain will be')}{" "}ABC.khardl.com                                       
+                                       {' '}{t('* If your restaurant name is ABC the domain will be')}{' '}{restaurantName ? restaurantName : 'abc'}.khardl.com
                                     </span>
                                     {showTooltip && (
                                        <div className="relative">
@@ -199,15 +234,19 @@ const Register = () => {
                                                 </svg>
                                                 <div className="ms-2 text-[13px] font-new text-[var(--customer)]">
                                                    <p>{t('* Your restaurant name will  be your domain')}</p>
-                                                   <p>{t('* No spaces are allowed')}</p>
                                                 </div>
                                              </div>
                                           </div>
                                        </div>
                                     )}
+                                     {err && (
+                                       <span className='text-red-500 text-xs mt-1 ms-2'>
+                                          {err || t('Restaurant name Error')}
+                                       </span>
+                                    )}
                                     {errors.restaurant_name && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                             {errors.restaurant_name.message ||   t('Restaurant name Error') }
+                                          {errors.restaurant_name.message || t('Restaurant name Error')}
                                        </span>
                                     )}
                                  </div>
@@ -226,7 +265,7 @@ const Register = () => {
                                     />
                                     {errors.position && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                        {errors.position.message ||   t('Position Error') }
+                                          {errors.position.message || t('Position Error')}
                                        </span>
                                     )}
                                  </div>
@@ -244,7 +283,7 @@ const Register = () => {
                                     />
                                     {errors?.email && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                           {errors?.email[0] ||   t('Email Error') }
+                                          {errors?.email[0] || t('Email Error')}
                                        </span>
                                     )}
                                  </div>
@@ -257,17 +296,17 @@ const Register = () => {
                                     <input
                                        type='number'
                                        className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                                       placeholder={ t('e.g.') + ' +966 123456789'}
+                                       placeholder={t('e.g.') + ' +966 123456789'}
                                        {...register('phone', {
                                           required: true,
                                        })}
-                                       style={{direction:'ltr'}}
+                                       style={{ direction: 'ltr' }}
                                        minLength={9}
                                        maxLength={13}
                                     />
                                     {errors.phone && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {errors.phone.message ||   t('Phone Error') }
+                                          {errors.phone.message || t('Phone Error')}
                                        </span>
                                     )}
                                  </div>
@@ -291,7 +330,7 @@ const Register = () => {
                                     />
                                     {errors.password && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {errors.password.message ||   t('Password Error') }
+                                          {errors.password.message || t('Password Error')}
                                        </span>
                                     )}
                                     <div
@@ -331,7 +370,7 @@ const Register = () => {
                                     />
                                     {errors.c_password && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {errors.c_password.message ||   t('Confirm password Error') }
+                                          {errors.c_password.message || t('Confirm password Error')}
                                        </span>
                                     )}
                                     <div
@@ -359,7 +398,7 @@ const Register = () => {
                                        {...register('terms_and_policies', {
                                           required: true,
                                        })}
-                                       style={{margin:'0'}}
+                                       style={{ margin: '0' }}
                                        className='accent-black w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  focus:ring-2'
                                     />
                                     <label
@@ -386,7 +425,7 @@ const Register = () => {
                                  </div>
                                  {errors.terms_and_policies && (
                                     <span className='text-red-500 text-xs mt-1 ms-2'>
-                                    {errors.terms_and_policies.message ||   t('Approval Error') }
+                                       {errors.terms_and_policies.message || t('Approval Error')}
                                     </span>
                                  )}
 
@@ -403,7 +442,7 @@ const Register = () => {
                                           <button
                                              type='submit'
                                              className='text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md '
-                                             
+
                                           >{t('Login')}</button>
                                        </Link>
                                     </p>
@@ -440,7 +479,7 @@ const Register = () => {
                      </div>
 
                      <div className={`flex justify-center  max-[860px]:w-[85vw] bg-[var(--primary)] p-8 space-y-10  rounded-e-lg max-[860px]:rounded-t-lg max-[860px]:rounded-e-none new-register-bg ${direction}`}>
-                       
+
                         <div className='mt-11'>
                            <MainText
                               SubTitle={t('Register Details')}
@@ -449,7 +488,7 @@ const Register = () => {
                         </div>
                      </div>
                   </div>
-               </div> }
+               </div>}
 
          </div>
       </div>

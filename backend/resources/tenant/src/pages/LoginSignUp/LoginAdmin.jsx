@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Logo from '../../assets/Logo.webp'
 import ContactUsCover from '../../assets/ContactUsCover.webp'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +13,8 @@ import { setIsOpen } from '../../redux/features/drawerSlice'
 import { useAuthContext } from '../../components/context/AuthContext'
 import { HTTP_NOT_VERIFIED, HTTP_NOT_AUTHENTICATED, HTTP_OK} from "../../config";
 import AxiosInstance from "../../axios/axios";
+import { changeRestuarantEditorStyle } from '../../redux/NewEditor/restuarantEditorSlice'
+import imgLogo from "../../assets/khardl_Logo.png"
 
 const Login = () => {
    const dispatch = useDispatch()
@@ -28,10 +30,29 @@ const Login = () => {
    const [openEyePassword, setOpenEyePassword] = useState(false)
    const Language = useSelector((state) => state.languageMode.languageMode)
    const [spinner, setSpinner] = useState(false)
+   const [isLoading, setisLoading] = useState(true);
+   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
 
    const EyePassword = () => {
       setOpenEyePassword(!openEyePassword)
    }
+
+   // **API GET RES. REQUEST**
+   const fetchResStyleData = async () => {
+      try {
+         setSpinner(true)
+         AxiosInstance.get(`restaurant-style`).then((response) => {
+            console.log("DATA", response.data?.data);
+            dispatch(changeRestuarantEditorStyle(response.data?.data));
+            setSpinner(false)
+         });
+         setisLoading(false);
+      } catch (error) {
+         console.log(error);
+         setSpinner(false)
+         setisLoading(false);
+      }
+   };
 
    // **API POST REQUEST**
 
@@ -76,6 +97,10 @@ const Login = () => {
          toast.error(`${error?.response?.data?.message || t('Login failed')}`)
       }
    }
+
+   useEffect(() => {
+      fetchResStyleData();
+   },[])
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
@@ -85,6 +110,7 @@ const Login = () => {
             style={{
                backgroundImage: `url(${ContactUsCover})`,
                backgroundSize: 'cover',
+               minHeight:'100vh'
             }}
          >
             <div className='py-[20px] flex justify-center items-center'>
@@ -235,18 +261,40 @@ const Login = () => {
                         to='/'
                         className='grid content-between space-y-6  transform transition-transform hover:-translate-y-2'
                      >
-                        <img
-                           loading='lazy'
-                           className='w-[120px]'
-                           src={Logo}
-                           alt='Logo'
-                        />
+                        <div
+                           className={` w-full ${restaurantStyle?.logo_alignment === t("Center") ||
+                                 restaurantStyle?.logo_alignment === "center"
+                                 ? " flex items-center justify-center"
+                                 : restaurantStyle?.logo_alignment === t("Left") ||
+                                    restaurantStyle?.logo_alignment === "left"
+                                    ? "items-center justify-start"
+                                    : "items-center justify-end"
+                              }`}
+                        >
+                           <div
+                              className={`w-[80px] h-[80px]  ${restaurantStyle?.logo_shape === "rounded" ||
+                                    restaurantStyle?.logo_shape === t("Rounded")
+                                    ? "rounded-full"
+                                    : restaurantStyle?.logo_shape === "sharp" ||
+                                       restaurantStyle?.logo_shape === t("Sharp")
+                                       ? "rounded-none"
+                                       : ""
+                                 }`}
+                           >
+                              <img
+                                 src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
+                                 alt='logo'
+                                 className={`w-full h-full object-cover ${restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
+                                    }`}
+                              />
+                           </div>
+                        </div>
                      </Link>
-                     <div className='mt-6'>
-                        <MainText
+                     <div className='mt-6 min-w-[480px]'>
+                        {/* <MainText
                            SubTitle={t('Login Details')}
                            classSubTitle='max-w-[380px] !text-[18px] !px-0'
-                        />
+                        /> */}
                      </div>
                   </div>
                </div>
