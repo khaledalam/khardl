@@ -51,7 +51,7 @@ class TenantLoginTest extends TenantTestCase
         DB::table('phone_verification_tokens')->insert([
             'user_id' => $this->user->id,
             'created_at' => Carbon::today(),
-            'attempts' => 5
+            'attempts' => 3
         ]);
         $data = [
             'phone' => $this->user->phone
