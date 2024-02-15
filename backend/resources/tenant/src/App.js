@@ -156,6 +156,10 @@ const App = () => {
                   path="/create-new-password"
                   element={<Protected Cmp={CreateNewPassword} />}
                 />
+                <Route
+                  path="/summary"
+                  element={<div></div>}
+                />
 
                   
                     <Route
