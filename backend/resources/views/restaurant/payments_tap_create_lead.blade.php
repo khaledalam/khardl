@@ -14,30 +14,29 @@
     <!--begin::Post-->
     <form id="kt_modal_new_target_form" class="form card"  method="POST" enctype="multipart/form-data" action="{{route('tap.payments_submit_lead')}}">
         @csrf
-        <ul class="nav nav-tabs fs-5" id="myTab" role="tablist">
+        
+        <ul class="nav nav-tabs fs-5" id="myTab" role="tablist" style="border-radius: 10%" >
+            <li class="nav-item fs-5" role="presentation">
+                <button class="nav-link active" id="profile-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{{__('messages.Personal Information')}}</button>
+              </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{__('messages.Business Details')}}</button>
+              <button class="nav-link " id="home-tab" style="font-family: system-ui;font-size: 19px;" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{__('messages.Business Details')}}</button>
             </li>
+           
             <li class="nav-item fs-5" role="presentation">
-              <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{{__('messages.Personal Information')}}</button>
-            </li>
-            <li class="nav-item fs-5" role="presentation">
-              <button class="nav-link" id="bank-tab" data-bs-toggle="tab" data-bs-target="#bank" type="button" role="tab" aria-controls="contact" aria-selected="false">{{__("messages.Bank Details")}}</button>
+              <button class="nav-link" id="bank-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#bank" type="button" role="tab" aria-controls="contact" aria-selected="false">{{__("messages.Bank Details")}}</button>
             </li>
           </ul>
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <div class="tab-content" id="myTabContent" style="background-color: aliceblue" >
+            <div class="tab-pane fade  " id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="row  m-4">
                     <div class="col-md-6">
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("messages.Name")}}</h2>
-
-                        </label>
+     
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Entity name (English)")}}</span>
+                                <span class="required">{{__("messages.Restaurant name (English)")}}</span>
 
                             </label>
                             <!--end::Label-->
@@ -49,7 +48,7 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                                <span class="required"> {{__("messages.Entity Name (Arabic)")}}</span>
+                                <span class="required"> {{__("messages.Restaurant Name (Arabic)")}}</span>
 
                             </label>
                             <!--end::Label-->
@@ -57,58 +56,84 @@
                         </div>
                         <!--end::Input group-->
 
-
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <span class="required">{{__('messages.Restaurant Logo')}}</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" ></i>
+                            </label>
+                            <!--end::Label-->
+                            <input type="file" class="form-control form-control-solid" required  name="brand[logo]" placeholder="Enter Target Title"  />
+                        </div>
 
                     </div>
                     <div class="col-md-6">
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("messages.Legal Entity (Commercial Registration)")}}</h2>
 
-                        </label>
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Number")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number')}}" />
-                        </div>
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.City")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control" name="entity[license][city]" value="{{old('entity.license.city')}}" />
-                        </div>
                         <!--end::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="is_licensed">
+                                <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" {{old('entity.is_licensed')?'checked':''}} />
+
                                 <span class="required">{{__('messages.Is Entity Licensed')}}</span>
                                 <!--end::Label-->
-                                <input type="hidden" name="entity[is_licensed]" value="{{false}}" />
-                                <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" {{old('entity.is_licensed')?'checked':''}} />
+                                
                             </label>
                         </div>
+                        <div id="entity"  style="display: none;">
 
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
+                                <h2 class="bold">{{__("messages.Legal Entity (Commercial Registration)")}}</h2>
+
+                            </label>
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__("messages.Number")}}</span>
+
+                                </label>
+                                <!--end::Label-->
+                                <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number')}}" />
+                            </div>
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__("messages.Number of Memorandum of Association")}}</span>
+
+                                </label>
+                                <!--end::Label-->
+                                <input type="text" class="form-control" name="entity[license][documents][0][number]" value="{{old('entity.license.documents.0.number')}}" />
+                            </div>
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__("messages.Issuing date")}}</span>
+
+                                </label>
+                                <!--end::Label-->
+                                <input type="date" name="entity[license][documents][0][issuing_date]" class="form-control mb-2" value="{{ old('entity.license.documents.0.issuing_date') }}" />
+                            </div>
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    <span class="required">{{__("messages.Expiry date")}}</span>
+
+                                </label>
+                                <!--end::Label-->
+                                <input type="date" name="entity[license][documents][0][expiry_date]" class="form-control mb-2" value="{{ old('entity.license.documents.0.expiry_date') }}" />
+                            </div>
+                        
+                        </div>
 
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="row   m-4">
                     <div class="col-md-6">
 
 
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="contact_person_group">
-                            <h2 class="bold">{{__('messages.Contact Person')}}</h2>
-
-                        </label>
-
+                       
                         <div id="contact_person_group">
                             <!-- Name title input group -->
                             <div class="d-flex flex-column mb-8 fv-row">
@@ -137,17 +162,7 @@
                                 <input type="text" class="form-control" placeholder="{{ __('messages.Enter First Name') }}" name="user[name][first]" id="name_first" value="{{ old('user.name.first') ?? $user->first_name }}" />
                             </div>
 
-                            <!-- Name middle input group -->
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!-- Label -->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_middle">
-                                    <span class="required">{{ __("messages.Middle Name") }}</span>
-
-                                </label>
-                                <!-- Input -->
-                                <input type="text" class="form-control" placeholder="{{ __('messages.Enter Middle Name') }}" name="user[name][middle]" id="name_middle" value="{{ old('user.name.middle') }}" />
-                            </div>
-
+                            
                             <!-- Name last input group -->
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!-- Label -->
@@ -159,80 +174,7 @@
                                 <input type="text" class="form-control" placeholder="{{ __('messages.Enter Last Name') }}" name="user[name][last]" id="name_last" value="{{ old('user.name.last')  ?? $user->last_name }}" />
                             </div>
                         </div>
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Phone Number")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text border-left " style="border-radius: 0">
-                                        <input type="text" readonly  style="width: 40px;border:0;background-color:#f5f8fa" value="966">
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($user->phone,3)}}" />
-                            </div>
-                        </div>
-
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Type")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-                            <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">
-                                <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('messages.Home')}}</option>
-                                <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
-                            </select>
-                        </div>
-
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                                <h2 class="bold">{{__("messages.Birthday")}}</h2>
-
-                            </label>
-
-                            <!--end::Label-->
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="countrySelect">
-                                    <span class="required">{{__('messages.country')}}</span>
-
-                                </label>
-                                <!--end::Label-->
-                                <select id="countrySelect2" class="form-select"  placeholder="{{ __('messages.country') }}" name="user[birth][country]"></select>
-                            </div>
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__("messages.City")}}</span>
-
-                                </label>
-                                <!--end::Label-->
-                                <input type="text" class="form-control" placeholder="{{ __('messages.City') }}" name="user[birth][city]" value="{{old('user.birth.city')}}" />
-                            </div>
-                            <!--begin::Input group-->
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__("messages.Date of birth")}}</span>
-
-                                </label>
-                                <!--end::Label-->
-                                <input type="date" name="user[birth][date]" class="form-control mb-2" value="{{ old('user.birth.date') }}" />
-                            </div>
-
-
-                        </div>
+                       
 
 
 
@@ -240,72 +182,40 @@
 
                     </div>
                     <div class="col-md-6">
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("messages.Address")}}</h2>
-
-                        </label>
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.City")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control" name="user[address][city]" value="{{old('user.address.0.city')}}" />
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Zip Code")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control" name="user[address][zip_code]" value="{{old('user.address.0.zip_code')}}" />
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Line 1")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control" name="user[address][line1]" value="{{old('user.address.0.line1')}}" />
-                        </div>
-                        <!--end::Input group-->
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                     {{--    <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Type")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-                            <select class="form-select mb-2" data-placeholder="test" name="user[address][type]" >
-                                <option value="HOME">{{__('messages.Home')}}</option>
-                                <option value="WORK">{{__('messages.Work')}}</option>
-                            </select>
-                        </div> --}}
-                        <!--end::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.Line 2")}}</span>
-
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control" name="user[address][line2]" value="{{old('user.address.0.line2')}}" />
-                        </div>
+                   
+                     <!--begin::Input group-->
+                     <div class="d-flex flex-column mb-8 fv-row">
                         <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("messages.Email Information")}}</h2>
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="required">{{__("messages.Phone Number")}}</span>
 
                         </label>
+                        <!--end::Label-->
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text border-left " style="border-radius: 0">
+                                    <input type="text" readonly  style="width: 40px;border:0;background-color:#f5f8fa" value="966">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($user->phone,3)}}" />
+                        </div>
+                    </div>
+
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <!--begin::Label-->
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="required">{{__("messages.This Number used In")}}</span>
+
+                        </label>
+                        <!--end::Label-->
+                        <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">
+                            <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('messages.Home')}}</option>
+                            <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
+                        </select>
+                    </div>
 
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
@@ -317,6 +227,18 @@
                             <!--end::Label-->
 
                             <input type="email" class="form-control" placeholder="{{__('messages.Email')}}" name="user[email][address]" value="{{old('user.email.0.address') ?? $user->email}}" />
+                        </div>
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <span class="required">{{__("messages.This Email used In")}}</span>
+
+                            </label>
+                            <!--end::Label-->
+                            <select class="form-select mb-2" data-placeholder="test" name="user[email][type]" >
+                                <option value="HOME" {{old('user.email.type') == 'HOME'? 'selected' :''}}>{{__('messages.Home')}}</option>
+                                <option value="WORK"  {{old('user.email.type') == 'WORK'? 'selected' :''}}>{{__('messages.Work')}}</option>
+                            </select>
                         </div>
                 {{--         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
@@ -337,73 +259,61 @@
             </div>
             <div class="tab-pane fade" id="bank" role="tabpanel" aria-labelledby="bank-tab">
                 <div class="row  m-4">
+                  
+
+
+
                     <div class="col-md-6">
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("messages.Your estimated sales (Monthly)")}}</h2>
+              
+                       
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
+                            <span class="">{{__('messages.IBAN')}}<span class="text-danger h4"> * </span></span>
 
                         </label>
-
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                                <span class="required">{{__("messages.Range")}}</span>
-
-                            </label>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input type="number" min="1" class="form-control" name="brand[operations][sales][range][from]" placeholder="{{__('messages.From')}}" value="{{old('brand.operations.sales.range.from')}}">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text" style="opacity:0.8;border-bottom-left-radius:0;border-top-left-radius:0">{{__('messages.SAR')}}</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <input type="number" min="1" class="form-control" name="brand[operations][sales][range][to]" placeholder="{{__('messages.To')}}" value="{{old('brand.operations.sales.range.to')}}">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text " style="opacity:0.8;border-bottom-left-radius:0;border-top-left-radius:0">{{__('messages.SAR')}}</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("messages.Your Identification")}}</h2>
+                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}" /><br />
+                        
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
+                            <span class="">{{__('messages.Account number')}}<span class="text-danger h4"> * </span></span>
 
                         </label>
+                        <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.number')}}" />
+                        <br>
+                                         
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
+                            <h4 class="bold">{{__("messages.Bank Statement")}}</h2>
+
+                        </label>
+             
+                          
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
+                            <span class="">{{__('messages.Bank Statement Number')}}<span class="text-danger h4"> * </span></span>
+
+                        </label>
+                        <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][documents][0][number]" value="{{old('wallet.bank.account.number')}}" />
+                       <br>
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="countrySelect">
-                                <span class="required">{{__('messages.Nationality')}}</span>
-
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <span class="required">{{__('messages.Bank Statement File')}}</span>
+                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
                             </label>
                             <!--end::Label-->
-                            <select id="countrySelect" class="form-select" name="user[nationality]"></select>
+                            <input type="file" class="form-control form-control-solid" required  name="wallet[bank][documents][0][images][]"   />
                         </div>
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("messages.National ID")}}</span>
+                                <span class="required">{{__("messages.Issuing date")}}</span>
+
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control" placeholder="{{__('messages.National ID')}}" name="user[identification][number]" value="{{old('user.identification.number')}}" />
+                            <input type="date" name="wallet[bank][documents][0][issuing_date]" class="form-control mb-2" value="{{ old('entity.license.documents.0.issuing_date') }}" />
                         </div>
-                        <!--end::Input group-->
+
 
 
                     </div>
-
-
-
                     <div class="col-md-6">
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("messages.Bank Details")}}</h2>
-
-                        </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('messages.Bank Name')}}<span class="text-danger h4"> * </span></span>
 
@@ -414,48 +324,31 @@
 
                         </label>
                         <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][name]" value="{{old('wallet.bank.account.name') ?? $facility_name}}" /><br />
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                            <span class="">{{__('messages.IBAN')}}<span class="text-danger h4"> * </span></span>
-
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
+                            <h2 class="bold">{{__("messages.Terms and conditions")}}</h2>
+    
                         </label>
-                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}" /><br />
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                            <span class="">{{__('messages.Swift code')}}<span class="text-danger h4"> * </span></span>
-
-                        </label>
-                        <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][swift]" value="{{old('wallet.bank.account.swift')}}" /><br />
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                            <span class="">{{__('messages.Account number')}}<span class="text-danger h4"> * </span></span>
-
-                        </label>
-                        <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.number')}}" />
-
-
-
+    
+                        <div class="form-check" style="margin:10px 0px">
+                            <input class="form-check-input" type="checkbox" id="flexCheckDefault"  checked value="1">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                {{__('messages.General approval')}}
+                            </label>
+                        </div>
+                        <div class="form-check" style="margin:10px 0px">
+                            <input class="form-check-input" type="checkbox" id="flexCheckChecked2" checked value="1">
+                            <label class="form-check-label" for="flexCheckChecked2">
+                                {{__('messages.Charge Back')}}
+                            </label>
+                        </div>
+                        <div class="form-check" style="margin:10px 0px">
+                            <input class="form-check-input" type="checkbox" id="flexCheckChecked3" checked value="1">
+                            <label class="form-check-label" for="flexCheckChecked3">
+                                {{__('messages.Refund')}}
+                            </label>
+                        </div>
                     </div>
-                    <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                        <h2 class="bold">{{__("messages.Terms and conditions")}}</h2>
-
-                    </label>
-
-                    <div class="form-check" style="margin:10px 0px">
-                        <input class="form-check-input" type="checkbox" id="flexCheckDefault"  checked value="1">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            {{__('messages.General approval')}}
-                        </label>
-                    </div>
-                    <div class="form-check" style="margin:10px 0px">
-                        <input class="form-check-input" type="checkbox" id="flexCheckChecked2" checked value="1">
-                        <label class="form-check-label" for="flexCheckChecked2">
-                            {{__('messages.Charge Back')}}
-                        </label>
-                    </div>
-                    <div class="form-check" style="margin:10px 0px">
-                        <input class="form-check-input" type="checkbox" id="flexCheckChecked3" checked value="1">
-                        <label class="form-check-label" for="flexCheckChecked3">
-                            {{__('messages.Refund')}}
-                        </label>
-                    </div>
+                   
                 </div>
 
                 <!--begin::Actions-->
@@ -483,42 +376,7 @@
     document.addEventListener('DOMContentLoaded', function(e) {
         e.preventDefault();
         let lang = '{{app()->getLocale()}}'
-        fetch(`https://raw.githubusercontent.com/amrsaeedhosny/countries/master/countries.json`)
-            .then(response => response.json())
-            .then(data => {
-                // Populate the select element with options
-                let countrySelect = document.getElementById('countrySelect');
-                let countrySelect2 = document.getElementById('countrySelect2');
-                data.forEach((country) => {
-
-                    let option = document.createElement('option');
-                    let option2 = document.createElement('option');
-
-                    option.value = country.alpha2_code;
-                    option.text = (lang == 'en') ? country.english_name : country.arabic_name;
-
-                    option2.value = country.alpha2_code;
-                    option2.text = (lang == 'en') ? country.english_name : country.arabic_name;
-                    if ('{{ old("user.birth.country") }}' || '{{ old("user.nationality") }}') {
-                        if (country.alpha2_code == '{{ old("user.nationality") }}') {
-                            option.selected = true;
-                        }
-                        if (country.alpha2_code == '{{ old("user.birth.country") }}') {
-                            option2.selected = true;
-                        }
-                    } else {
-                        if (country.alpha2_code == 'SA') {
-                            option.selected = true;
-                            option2.selected = true;
-                        }
-                    }
-
-                    countrySelect.add(option);
-                    countrySelect2.add(option2);
-                });
-            })
-            .catch(error => console.error('Error fetching country data:', error));
-
+        
 
         document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -562,12 +420,33 @@
 
         return checkbox1.checked && checkbox2.checked && checkbox3.checked;
     }
+    function toggleEntityVisibility() {
+        var entitySection = document.getElementById('entity');
+        var isLicensedCheckbox = document.getElementById('is_licensed');
+
+        if (isLicensedCheckbox.checked) {
+            entitySection.style.display = 'block'; // Show entity section if checkbox is checked
+        } else {
+            entitySection.style.display = 'none'; // Hide entity section if checkbox is not checked
+        }
+    }
+
+    // Attach event listener to is_licensed checkbox to toggle visibility of entity section
+    document.getElementById('is_licensed').addEventListener('change', toggleEntityVisibility);
+
+    // Initial call to toggleEntityVisibility to set initial visibility based on checkbox state
+    toggleEntityVisibility();
 </script>
 
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
 @endpush
 @push('styles')
+<style>
+   .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+        background: aliceblue !important;
+    }
+</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
 @endpush
 @endsection
