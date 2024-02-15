@@ -2,12 +2,7 @@
 
 namespace Tests\Feature\API\Auth\Login\Driver;
 
-
-use App\Models\Tenant\RestaurantUser;
-use Illuminate\Support\Facades\Config;
-use Spatie\Permission\Models\Role;
 use Tests\Feature\API\DriverBase;
-use Tests\TenantTestCase;
 
 
 class DriverLoginTest extends DriverBase

@@ -32,7 +32,7 @@ const PrimarySelectWithIcon = ({
           onClick={() => handleDropdown()}
           className='btn h-[30px] flex items-center w-full justify-between px-2 border-none hover:border-none outline-none focus-visible:border-none focus-visible:outline-none bg-neutral-100 active:bg-neutral-100 hover:bg-neutral-100'
         >
-          <span className=''>{defaultValue}</span>
+          <span className='text-ellipsis'>{defaultValue}</span>
           <span className=''>
             <BiChevronDown size={22} />
           </span>

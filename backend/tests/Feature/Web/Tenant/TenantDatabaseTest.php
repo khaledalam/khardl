@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Web\Central;
+namespace Tests\Feature\Web\Tenant;
 
 
 use Tests\TenantTestCase;
@@ -8,9 +8,9 @@ use Tests\TenantTestCase;
 
 class TenantDatabaseTest extends TenantTestCase
 {
-  
+
     protected $tenancy = true;
-    
+
     public function test_is_restaurant_exists(): void
     {
         $this->assertTrue(\Schema::hasTable('settings'));
@@ -22,6 +22,6 @@ class TenantDatabaseTest extends TenantTestCase
             $this->assertTrue(\Schema::hasTable('central_settings'));
         });
     }
-   
+
 
 }

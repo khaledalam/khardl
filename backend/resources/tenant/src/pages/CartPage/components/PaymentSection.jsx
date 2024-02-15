@@ -421,11 +421,11 @@ const PaymentSection = ({
                             "radio w-[1.38rem] h-[1.38rem] border-[3px] checked:bg-[var(--primary)] "
                           }
                           onChange={() => {
-                          
+
                             handlePaymentMethodChange(method);
                           }}
                         />
-                       
+
                       </div>
                     </label>
                   </div>
@@ -445,7 +445,7 @@ const PaymentSection = ({
                       : "border border-neutral-200"
                       }`}
                     onClick={() => {
-                 
+
                       handleDeliveryTypeChange(deliveryType);
                     }}
                   >
@@ -479,7 +479,7 @@ const PaymentSection = ({
                             ? `${t("SAR")} ${deliveryType.cost}`
                             : `${t("Free")}`}
                         </p>
-                        
+
                       </div>
                     </div>
                   </div>
@@ -508,7 +508,11 @@ const PaymentSection = ({
         </div>
       </CartColumn>
       {/* address and coupon */}
+
       <div className="flex flex-col md:flex-row items-start gap-6">
+        
+        {deliveryType && deliveryType === "Delivery" ? (
+         
         <div className="w-full lg:w-1/2">
           <CartColumn headerTitle={t("Address")} isRequired>
             <div
@@ -528,24 +532,23 @@ const PaymentSection = ({
                     isReadOnly
                   />
                 </div>
-                <div
-                  style={{
-                    borderColor: styles?.categoryDetail_cart_color,
-                    backgroundColor: styles?.categoryDetail_cart_color,
-                  }}
-                  // onClick={() => navigate("/dashboard#Profile")}
-                  className={`btn w-[60px] h-[48px] border cursor-pointer ${styles?.categoryDetail_cart_color
-                    ? ""
-                    : "border-[var(--primary)] bg-[var(--primary)]"
-                  }}  rounded-lg flex items-center justify-center`}
-                >
-                  <label htmlFor="my_modal_7" className="">
-                  <img src={LocationIcon} alt="" />
-                  </label>
-                </div>
 
+                  {/* The button to open modal */}
+                <label htmlFor="my_modal_7" className="cursor-pointer">
+                  <div
+                    style={{
+                      borderColor: styles?.categoryDetail_cart_color,
+                      backgroundColor: styles?.categoryDetail_cart_color,
+                    }}
+                    className={`btn w-[60px] h-[48px] border cursor-pointer ${styles?.categoryDetail_cart_color
+                      ? ""
+                      : "border-[var(--primary)] bg-[var(--primary)]"
+                      }}  rounded-lg flex items-center justify-center`}
+                  >
+                    <img src={LocationIcon} alt="" />
+                  </div>
+                </label>
 
-                {/* The button to open modal */}
                 <input type="checkbox" id="my_modal_7" className="modal-toggle" />
                 <div className="modal" role="dialog">
                   <div className="modal-box w-11/12 max-w-5xl ">
@@ -571,6 +574,9 @@ const PaymentSection = ({
             </div>{" "}
           </CartColumn>
         </div>
+         
+        ) : null}
+
         <div className="w-full lg:w-1/2">
           <CartColumn headerTitle={t("Coupon")}>
             <div
@@ -585,32 +591,30 @@ const PaymentSection = ({
                   <Feedback
                     imgUrl={couponIcon}
                     placeholder={t("Type your coupon code here")}
-                    defaultValue={
-                      appliedCoupon?.code ? appliedCoupon?.code : couponCode
-                    }
+                    value={appliedCoupon?.code}
                     onChange={(e) => setCouponCode(e.target.value)}
                   />
                 </div>
                 {/* <MdSend onClick={() => handleCouponCodeValidity()} size={22} /> */}
                 {/* <span className='loading loading-spinner text-[var(--customer)]'></span> */}
-                <div
-                  onClick={() => {
-                    if (couponCode === "") {
-                      toast.error(`${t("Please Enter Coupon Code")}`);
-                    } else {
-                      handleCouponCodeValidity();
-                    }
-                  }}
-                  className="w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center cursor-pointer"
-                >
-                  <MdSend size={22} />
-                </div>
-                {(appliedCoupon?.code || couponCode) && (<div
+              
+                {(appliedCoupon?.code || couponDiscountValue?.discount) ? (<div
                   onClick={() => { removeCoupon() }}
                   className="w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center cursor-pointer"
                 ><IoClose size={25} className="cursor-pointer" />
                 </div>
-                )}
+                ) :   <div
+                onClick={() => {
+                  if (couponCode === "") {
+                    toast.error(`${t("Please Enter Coupon Code")}`);
+                  } else {
+                    handleCouponCodeValidity();
+                  }
+                }}
+                className="w-[40px] h-[48px] border border-neutral-200 rounded-lg flex items-center justify-center cursor-pointer"
+              >
+                <MdSend size={22} />
+              </div>}
               </div>
             </div>{" "}
           </CartColumn>

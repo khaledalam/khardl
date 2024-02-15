@@ -79,7 +79,7 @@ const Herosection = ({ isMobile, categories }) => {
           <div
             className={`w-5/6 overflow-hidden shadow-lg  ${
               isMobile ? "h-[300px]" : "h-[471px] mb-8"
-            } laptopXL:w-[75%]`}
+            } laptopXL:w-[75%] skeleton`}
             style={{
               boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
               borderRadius: 12,

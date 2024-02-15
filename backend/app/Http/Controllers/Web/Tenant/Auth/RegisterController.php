@@ -93,13 +93,13 @@ class RegisterController extends BaseController
     {
         $input = $request->validated();
         // $input['password'] = Hash::make($input['password']);
-        $input['status'] = 'inactive';
+        $input['status'] = RestaurantUser::INACTIVE;
         $user = RestaurantUser::create($input);
-        // TODO @todo add tap customer to queue 
+        // TODO @todo add tap customer to queue
         CustomerTap::createWithModel($user);
         $success['name'] =  "$user->first_name $user->last_name";
+        $user->generateVerificationSMSCode();
         Auth::login($user,true);
-        $this->sendVerificationSMSCode($request);
         return $this->sendResponse($success, 'Customer registered successfully.');
     }
 
@@ -107,7 +107,7 @@ class RegisterController extends BaseController
     {
         $user = Auth::user();
         if(!$this->checkAttempt($user)){
-            $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
+            return $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
         }
         if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', 'Request failed .');
         $user->msegat_id_verification = $id;

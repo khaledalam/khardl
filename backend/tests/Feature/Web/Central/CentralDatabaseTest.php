@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Web\Central;
 
-use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use App\Models\User;
 use App\Actions\CreateTenantAction;
@@ -11,8 +10,6 @@ use Illuminate\Support\Facades\Artisan;
 
 class CentralDatabaseTest extends TestCase
 {
-
-
     public function test_central_database_is_freshed(): void
     {
         Artisan::call('migrate:fresh');

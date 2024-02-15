@@ -780,8 +780,8 @@ return [
     "get cash back when total is above this value" => "get cash back when total is above this value",
     "Start from" => "Start from",
     "Cash back in percentage (%)" => "Cash back in percentage (%)",
-    "Entity name (English)" => "Entity name (English)",
-    "Entity Name (Arabic)" => "Entity Name (Arabic)",
+    "Restaurant name (English)" => "Restaurant name (English)",
+    "Restaurant Name (Arabic)" => "Restaurant Name (Arabic)",
     "Mrs" => "Mrs",
     "Dr" => "Dr",
     "Prof" => "Prof",
@@ -813,6 +813,15 @@ return [
     "You are not authorized to access this page." => "You are not authorized to access this page.",
     "Unauthorized" => "Unauthorized",
     "You must add a :branches to activate your subscription"=>"You must add a :branches to activate your subscription",
-    "A period :period of term will be purchased to match the billing time"=>"A period of :period term will be purchased to match the billing time"
+    "A period :period of term will be purchased to match the billing time"=>"A period of :period term will be purchased to match the billing time",
+    "Restaurant Logo"=>"Restaurant Logo",
+    "Bank Statement File"=>"Bank Statement File",
+    "Bank Statement"=>"Bank Statement",
+    "Bank Statement Number"=> "Bank Statement Number",
+    "This Number used In"=>"This Number used In",
+    "This Email used In"=>"This Email used In",
+    "Number of Memorandum of Association"=>"Number of Memorandum of Association",
+    "Issuing date"=>"Issuing date",
+    "Expiry date"=>"Expiry date"
 
 ];

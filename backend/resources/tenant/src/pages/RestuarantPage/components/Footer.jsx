@@ -60,8 +60,8 @@ const FooterRestuarant = () => {
             {" "}
             <a
               href={`tel:${restaurantStyle?.phoneNumber}`}
-              style={{ color: restaurantStyle?.text_color }}
-              className="font-semibold cursor-pointer"
+              // style={{ color: restaurantStyle?.text_color }}
+              className="font-semibold cursor-pointer text-white"
             >
               {restaurantStyle?.phoneNumber}
             </a>
