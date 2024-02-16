@@ -288,7 +288,7 @@ const PaymentSection = ({
       <div id={"tap_charge_element"} />
 
       <dialog id="payment" className="modal">
-        <div className="modal-box p-9">
+        <div className="modal-box p-10">
         <form method="dialog">
       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>
