@@ -78,7 +78,13 @@ function Advantages() {
           {" "}
           <section className="max-w-full md:max-w-[1250px] md:mx-[100px] mx-auto" style={{margin:'auto'}}>
             <div className="mt-[60px]">
+              <div className="  relative">
+                <div className="h-16 bg-[#C0D123] w-1/2  absolute right-0">
+                </div>
+              <div className="mt-6 pt-4">
               <MainText Title={t("Geographical coverage areas")} />
+              </div>
+              </div>
               <div className=" max-[1250px]:mx-[20px]">
                 <div className="grid items-center justify-center max-sm:grid-cols-2 max-sm:gap-4 max-md:grid-cols-2  max-lg:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-10 mx-4 mt-8 mb-[50px]">
                   {DeliveryAreas.slice(0, Visible).map((area, index) => (
