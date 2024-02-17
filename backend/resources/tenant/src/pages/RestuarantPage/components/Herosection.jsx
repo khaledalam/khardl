@@ -77,9 +77,9 @@ const Herosection = ({ isMobile, categories }) => {
         {(restaurantStyle && restaurantStyle?.banner_type === "one-photo") ||
         (restaurantStyle && restaurantStyle?.banner_type === t("One-photo")) ? (
           <div
-            className={`w-5/6 overflow-hidden shadow-lg  ${
-              isMobile ? "h-[300px]" : "h-[471px] mb-8"
-            } laptopXL:w-[75%]`}
+            className={`w-full md:w-5/6 overflow-hidden shadow-lg  ${
+              isMobile ? "h-[250px]" : "h-[471px] mb-8"
+            } laptopXL:w-[75%] skeleton`}
             style={{
               boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
               borderRadius: 12,
@@ -121,7 +121,7 @@ const Herosection = ({ isMobile, categories }) => {
           restaurantStyle?.banner_type === "slider" ? (
           <div className="w-full">
             <div
-              className={`w-5/6 mx-auto  ${
+              className={`w-full md:w-5/6 mx-auto  ${
                 isMobile ? "" : " mb-8"
               } laptopXL:w-[75%]`}
             >
@@ -134,7 +134,7 @@ const Herosection = ({ isMobile, categories }) => {
                     <div
                       key={index}
                       className={` ${
-                        isMobile ? "h-[300px]" : "h-[350px]"
+                        isMobile ? "h-[250px]" : "h-[350px]"
                       } !block`}
                     >
                       {restaurantStyle?.banner_images &&

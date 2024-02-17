@@ -168,3 +168,9 @@ body::-webkit-scrollbar-track {
     transform: translate(0px, -70%);
   }
 }
+.text-ellipsis{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width:80px;
+}

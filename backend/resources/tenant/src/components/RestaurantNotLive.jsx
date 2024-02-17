@@ -10,7 +10,7 @@ import LogoPattern from "../assets/LogoPattern.webp";
 import logo from "../assets/Logo.webp";
 import { WEBSITE_URL } from "../config";
 const RestaurantNotLive = () => {
-  const url_central = WEBSITE_URL||'https://khardl.com';
+  const url_central = WEBSITE_URL;
   const { t } = useTranslation();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const redirectToDashboard = () => {

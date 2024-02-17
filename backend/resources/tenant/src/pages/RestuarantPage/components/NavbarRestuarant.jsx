@@ -86,7 +86,7 @@ const NavbarRestuarant = () => {
           <IoMenuOutline size={38} className='text-white' />
         </div>
         <div
-          className={` w-full ${
+          className={`w-full ${
             restaurantStyle?.logo_alignment === t("Center") ||
             restaurantStyle?.logo_alignment === "center"
               ? " flex items-center justify-center"
@@ -107,13 +107,21 @@ const NavbarRestuarant = () => {
                 : ""
             }`}
           >
-            <img
+            {restaurantStyle.logo ? (
+              <img
+                src={restaurantStyle.logo}
+                alt='logo'
+                className={`w-full h-full object-cover ${restaurantStyle.logo_shape === t("Sharp") ? "" : "rounded-full"
+                  }`}
+              />
+            ) : (<div className="skeleton w-16 h-16 rounded-full shrink-0"></div>)}
+            {/* <img
               src={restaurantStyle?.logo ? restaurantStyle.logo : imgLogo}
               alt='logo'
-              className={`w-full h-full object-cover ${
+              className={`skeleton w-full h-full object-cover ${
                 restaurantStyle?.logo_shape === t("Sharp") ? "" : "rounded-full"
               }`}
-            />
+            /> */}
           </div>
         </div>
         
