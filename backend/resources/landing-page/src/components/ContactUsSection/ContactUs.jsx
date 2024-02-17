@@ -47,6 +47,7 @@ function ContactUs() {
           },
         }
       );
+      console.log(data);
       if (data.response.ok) {
         // const responseData = await response.json()
         toast.success(

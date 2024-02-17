@@ -39,4 +39,5 @@ enum LogTypes: string
   case TAPLeadIDMerchantIDSent ="TAP request to create Merchant ID from Lead ID sent";
   case TAPLeadIDMerchantIDFail ="TAP request to create Merchant ID from Lead ID fail";
   case TAPRestaurantMerchantID ="Update restaurant merchant id";
+  case ContactUsForm ="Contact US Form";
 }
