@@ -64,7 +64,6 @@ class CartRepository
         if($request['selectedDropdown'] ?? false){
             $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
-
         $existingCartItem = CartItem::where('item_id', $item->id)
         ->where('cart_id', $this->cart->id)
         ->where('checkbox_options', $checkbox_options)
@@ -121,7 +120,7 @@ class CartRepository
     public function loopingTroughDropdownOptions($item, $options, &$updatedOptions)
     {
         foreach ($options as $i => $option) {
-            if($option!=null){
+            if($option!==null){
                 $updatedOptions[$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$option][0];
                 $updatedOptions[$i]['ar'][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$option][1];
             }
@@ -319,14 +318,14 @@ class CartRepository
     {
         $method = PaymentMethod::where('name',$name)->first();
         $setting = Setting::first();
-        if($this->hasPaymentCreditCard($name) && (!$setting->merchant_id || !$setting->lead_id)) 
+        if($this->hasPaymentCreditCard($name) && (!$setting->merchant_id || !$setting->lead_id))
             return false;
         if($method){
             return $this->cart->branch->payment_methods->contains('id',$method->id);
         }
         return false;
     }
-   
+
 
     public function hasDelivery($type)
     {
