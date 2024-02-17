@@ -38,7 +38,7 @@
                                             <th class="min-w-150px px-0">{{ __('messages.name') }}</th>
                                             <th class="min-w-150px px-0">{{ __('messages.email') }}</th>
                                             <th class="min-w-125px">{{ __('messages.phone') }}</th>
-                                            <th class="min-w-125px text-center">{{ __('messages.invoice') }}</th>
+                                            <th class="min-w-125px text-center">{{ __('Download file') }}</th>
                                         </tr>
                                     </thead>
                                     <!--end::Thead-->
