@@ -173,6 +173,7 @@ return [
         App\Providers\TenancyServiceProvider::class,
         TenancyAuthProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class
 
 
     ])->toArray(),
@@ -190,6 +191,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class
     ])->toArray(),
 
 ];
