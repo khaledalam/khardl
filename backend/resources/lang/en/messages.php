@@ -46,6 +46,7 @@ return [
     'earnings' => 'Earnings',
     'orders' => 'Orders',
     'actions' => 'Actions',
+    'Allow Login' => 'Allow Login',
     'view' => 'View',
     'delete' => 'Delete',
     'confirm-delete' => 'Confirm Delete',

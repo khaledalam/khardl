@@ -50,7 +50,7 @@
                                     <th class="min-w-150px">{{ __('messages.phone-number')}}</th>
                                     <th class="min-w-150px">{{ __('messages.email')}}</th>
                                     <th class="min-w-150px">{{ __('messages.restaurant')}}</th>
-                                    <th class="min-w-150px text-end">{{ __('messages.actions')}}</th>
+                                    <th class="min-w-150px text-end">{{ __('messages.Allow Login')}}</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
