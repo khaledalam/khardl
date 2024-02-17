@@ -425,6 +425,9 @@
   "This restaurant is not active yet": "This restaurant is not active yet.",
   "* Your restaurant name will  be your domain": "* Your restaurant name will  be your domain.",
   "* If your restaurant name is ABC the domain will be": "* If your restaurant name is ABC the domain will be",
-  "Loading":"Loading",
-  "Close": "Close"
+  "Loading": "Loading",
+  "Close": "Close",
+  "Done": "Done",
+  "Slide Added": "Slide Added",
+  "Image Removed": "Image Removed"
 }
