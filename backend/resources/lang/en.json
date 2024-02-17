@@ -1,1 +1,9 @@
-{}
+{
+    "rejected":"Rejected",
+    "cancelled":"Cancelled",
+    "accepted":"Accepted",
+    "ready":"Ready",
+    "pending":"Pending",
+    "received_by_restaurant":"Received by restaurant",
+    "completed":"Completed"
+}
