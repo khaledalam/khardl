@@ -443,5 +443,8 @@
   "* Your restaurant name will  be your domain": "* سيكون اسم مطعمك هو نطاقك",
   "* If your restaurant name is ABC the domain will be": "* إذا كان اسم مطعمك هو ABC فسيكون النطاق هو",
   "Loading": "جاري التحميل",
-  "Close": "يغلق"
+  "Close": "يغلق",
+  "Done": "منتهي",
+  "Slide Added": "تمت إضافة الشريحة",
+  "Image Removed": "تمت إزالة الصورة"
 }

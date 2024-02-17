@@ -177,7 +177,7 @@ class Order extends Model
     public static function ChangeStatus($status){
         return  match($status){
             self::PENDING => [self::RECEIVED_BY_RESTAURANT,self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY,self::REJECTED],
-            self::RECEIVED_BY_RESTAURANT => [self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY],
+            self::RECEIVED_BY_RESTAURANT => [self::ACCEPTED,self::CANCELLED,self::COMPLETED,self::READY,self::REJECTED],
             self::ACCEPTED => [self::READY,self::COMPLETED,self::CANCELLED],
             self::READY => [self::COMPLETED,self::CANCELLED],
             default => []

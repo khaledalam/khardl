@@ -11,6 +11,10 @@ import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg"
 import {BiCloudUpload} from "react-icons/bi"
 import Cropper from 'react-easy-crop'
 import getCroppedImg from './cropImage'
+import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
+
+
 const Slider = ({banner_images}) => {
   const bannersUpload =
     useSelector((state) => state.restuarantEditorStyle.bannersUpload) || []
@@ -18,6 +22,7 @@ const Slider = ({banner_images}) => {
     useSelector(
       (state) => state.restuarantEditorStyle.banner_background_color
     ) || ""
+  const { t } = useTranslation()
 
   const [sliderCount, setSliderCount] = useState(2)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
@@ -62,10 +67,13 @@ const Slider = ({banner_images}) => {
 
   const handleRemoveImages = (index) => {
     dispatch(removeBannersUpload({index}))
+    toast.success(`${t("Image Removed")}`);
+
   }
 
   const addMoreSlider = useCallback(() => {
     setSliderCount((prev) => prev + 1)
+    toast.success(`${t("Slide Added")}`);
   }, [])
 
   const removeEachSlide = useCallback(() => {
@@ -88,7 +96,8 @@ const Slider = ({banner_images}) => {
       console.log('donee', { croppedImage })
       setUncroppedImage(null)
       setIsCropModalOpened(false)
-     
+      
+      
       dispatch( setBannersUpload({
         index: idxselected,
         image: {
@@ -96,6 +105,7 @@ const Slider = ({banner_images}) => {
           url: croppedImage,
         },
       }))
+      toast.success(`${t("Done")}`);
      
       // setCroppedImage(croppedImage)
     } catch (e) {
@@ -233,12 +243,14 @@ const Slider = ({banner_images}) => {
                   >
                     -
                   </button>
-                  <div
-                    onClick={addMoreSlider}
+
+                  {bannersUpload.length > 0 ? (<div onClick={addMoreSlider} disabled={bannersUpload.length == 0}
                     className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7'
-                  >
-                    +
-                  </div>
+                  >+</div>) : banner_images.length > 0 ? (<div onClick={addMoreSlider} className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7'
+                  >+</div>) : (<div onClick={addMoreSlider} disabled={true}
+                    className='btn btn-circle w-[1.3rem] h-[1.3rem] min-h-[1.3rem] inline-flex leading-[0px] items-center justify-center text-lg absolute bottom-7'
+                  >+</div>)}
+
                 </div>
               </div>
             ))}
