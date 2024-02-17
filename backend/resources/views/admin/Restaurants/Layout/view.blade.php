@@ -6,7 +6,7 @@
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
     <!--begin::Post-->
-    <div class="post d-flex flex-column-fluid" id="kt_post">
+    <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_post">
         <!--begin::Container-->
         <div id="kt_content_container">
             <!--begin::Navbar-->
@@ -83,7 +83,7 @@
                                     <!--end::Info-->
                                 </div>
                                 <!--end::User-->
-                               
+
                             </div>
                             <!--end::Title-->
                             <!--begin::Stats-->
@@ -146,7 +146,7 @@
                                             <span class="badge badge-success p-2 fs-6">
                                                 {{ $subscription->end_at?->format('Y-m-d') }}
                                             </span>
-                                        @else 
+                                        @else
                                             <span class="fw-bold fs-6 text-black fw-bolder">{{__('messages.Plan')}}</span>
                                             <span class="badge badge-dark p-2 fs-6">
                                                 {{__("messages.No subscription")}}
