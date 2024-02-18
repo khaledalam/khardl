@@ -18,6 +18,7 @@ class LocalizationApi
         $local = ($request->hasHeader('localization'))?$request->header('localization'): app()->getLocale();
         app()->setLocale($local);
 
-        return $next($request);
+        // @TODO: remove header this. it's added to skip cors when run isolated react tenant and central apps
+        return $next($request)->header('Access-Control-Allow-Origin', '*');;
     }
 }
