@@ -24,7 +24,7 @@ class LanguageManager
         // @TODO: remove this. it's added to skip cors when run isolated react tenant and central apps
         if (env('APP_ENV') == 'local') {
             return $next($request)
-                ->header('Access-Control-Allow-Origin', '*')
+                ->header('Access-Control-Allow-Origin', '*');
         }
         return $next($request);
     }
