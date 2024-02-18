@@ -5,16 +5,16 @@ import {useSelector} from "react-redux";
 
 export function Taps({ children, contentClassName = "" }) {
   const { t } = useTranslation();
+  const [activeTap, setActiveTap] = useState(findActiveTap(children));
+  const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
 
-    const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
+  if (!styleDataRestaurant) return;
 
-    if (!styleDataRestaurant) return;
-
-    const selectedCategory = styleDataRestaurant?.category_style|| sessionStorage.getItem('selectedCategory');
-    const selectedAlignText = styleDataRestaurant?.font_alignment|| sessionStorage.getItem('selectedCategory');
+  const selectedCategory = styleDataRestaurant?.category_style|| sessionStorage.getItem('selectedCategory');
+  const selectedAlignText = styleDataRestaurant?.font_alignment|| sessionStorage.getItem('selectedCategory');
 
 
-    const GlobalShape = styleDataRestaurant?.buttons_style || sessionStorage.getItem('globalShape');
+  const GlobalShape = styleDataRestaurant?.buttons_style || sessionStorage.getItem('globalShape');
   const Color = styleDataRestaurant?.primary_color || sessionStorage.getItem('globalColor');
   const Language = sessionStorage.getItem('Language') || 'en';
 
@@ -30,7 +30,7 @@ export function Taps({ children, contentClassName = "" }) {
   function TapValidator(Tap) {
     return Tap.type.displayName === "Tap" ? true : false;
   }
-  const [activeTap, setActiveTap] = useState(findActiveTap(children));
+
   const isFirstTap = activeTap === 0;
   const isLastTap = activeTap === children.length - 1;
   const handleTabClick = (index) => {
@@ -115,14 +115,14 @@ export function Taps({ children, contentClassName = "" }) {
 }
 
 export function Tap({ children, activeTap, currentTap, setActiveTap, contentClassName = ""}) {
-
+    const { t } = useTranslation();
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
 
     if (!styleDataRestaurant) return;
     const selectedCategory = sessionStorage.getItem('selectedCategory');
   const Color = styleDataRestaurant?.primary_color || sessionStorage.getItem('globalColor');
   const GlobalShape = styleDataRestaurant?.buttons_style || sessionStorage.getItem('globalShape');
-  const { t } = useTranslation();
+
 
   return (
     <>

@@ -26,20 +26,10 @@ const Editor = () => {
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
 
   const dispatch = useDispatch();
-    const selectedCategory = sessionStorage.getItem('selectedCategory') || useSelector(getSelectedCategory);;
-    const selectedAlign = sessionStorage.getItem('selectedAlign') || useSelector(getSelectedAlign);
-    const Language = sessionStorage.getItem('Language') || useSelector((state) => state.languageMode.languageMode);;
+    const selectedCategory = useSelector(getSelectedCategory);;
+    const selectedAlign = useSelector(getSelectedAlign);
+    const Language = useSelector((state) => state.languageMode.languageMode);;
     const { t } = useTranslation();
-
-
-    const fetchRestaurantStyles = async () => {
-        const restaurantBranchesResponse = await AxiosInstance.get(`branches-site-editor`)
-
-        console.log("editor rest restaurantBranchesResponse Editor", restaurantBranchesResponse.data?.data)
-        if (restaurantBranchesResponse.data?.data) {
-            setBranches(restaurantBranchesResponse.data?.data);
-        }
-    }
 
     const fetchData = async () => {
         try {

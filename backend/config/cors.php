@@ -20,7 +20,8 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'https://ef50-156-207-122-41.ngrok-free.app'
+        'https://ef50-156-207-122-41.ngrok-free.app',
+        env('APP_ENV') === 'local' ? 'http://localhost:3000' : null
     ],
 
     'allowed_origins_patterns' => [],

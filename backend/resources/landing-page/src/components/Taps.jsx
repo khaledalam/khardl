@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
 export function Taps({ children, contentClassName = '' }) {
-   function findActiveTap(a) {
+    const [activeTap, setActiveTap] = useState(findActiveTap(children))
+    const [template, setTemplate] = useState('')
+    const location = useLocation()
+    const { branch_id } = useParams()
+
+    function findActiveTap(a) {
 
        console.log("findActiveTap", a);
 
@@ -18,10 +23,7 @@ export function Taps({ children, contentClassName = '' }) {
       return Tap.type.displayName === 'Tap' ? true : false
    }
 
-   const [activeTap, setActiveTap] = useState(findActiveTap(children))
-   const [template, setTemplate] = useState('')
-   const location = useLocation()
-   const { branch_id } = useParams()
+
 
    useEffect(() => {
       if (location.pathname === `/restaurants`) {

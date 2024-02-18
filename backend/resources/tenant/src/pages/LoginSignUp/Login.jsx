@@ -15,6 +15,7 @@ import { useAuthContext } from '../../components/context/AuthContext'
 import AxiosInstance from "../../axios/axios";
 import { changeRestuarantEditorStyle } from '../../redux/NewEditor/restuarantEditorSlice'
 import imgLogo from "../../assets/khardl_Logo.png"
+import { getCartItemsCount } from "../../redux/NewEditor/categoryAPISlice";
 
 const Login = () => {
    const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
