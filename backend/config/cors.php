@@ -15,13 +15,12 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', env('APP_ENV') == 'local' ? '*' : null],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
         'https://ef50-156-207-122-41.ngrok-free.app',
-        'http://localhost:3000/'
     ],
 
     'allowed_origins_patterns' => [],
