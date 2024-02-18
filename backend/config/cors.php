@@ -21,7 +21,7 @@ return [
 
     'allowed_origins' => [
         'https://ef50-156-207-122-41.ngrok-free.app',
-        env('APP_ENV') === 'local' ? 'http://localhost:3000' : null
+        'http://localhost:3000/'
     ],
 
     'allowed_origins_patterns' => [],
