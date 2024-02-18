@@ -20,9 +20,9 @@ class ItemFactory extends Factory
      */
     public function definition(): array
     {
-        $hasCheckbox = fake()->numberBetween(0, 2);//  1 : 3 probability
-        $hasSelection = fake()->numberBetween(0, 2);//  1 : 3 probability
-        $hasDropdown = fake()->numberBetween(0, 2);//  1 : 3 probability
+        $hasCheckbox = fake()->numberBetween(0, 2);//  1 : 2 probability
+        $hasSelection = fake()->numberBetween(0, 2);//  1 : 2 probability
+        $hasDropdown = fake()->numberBetween(0, 2);//  1 : 2 probability
         return [
             'category_id' => Category::factory(),
             'branch_id' => Branch::factory(),
@@ -47,19 +47,27 @@ class ItemFactory extends Factory
             'photo' => 'http://first.khardl:8000/tenancy/assets/seeders/items/' . fake()->numberBetween(1, 10) . '.jpg'
         ];
     }
-    private function dataOptionRequired($num)
+    public function dataOptionRequired($num,$is_required = null)
     {
         $option = [];
         for ($i = 0; $i < $num; $i++) {
-            if(fake()->boolean){
-                $option[] = "true";
+            if($is_required){
+                if($is_required){
+                    $option[] = "true";
+                }else{
+                    $option[] = "false";
+                }
             }else{
-                $option[] = "false";
+                if(fake()->boolean){
+                    $option[] = "true";
+                }else{
+                    $option[] = "false";
+                }
             }
         }
         return $option;
     }
-    private function dataOptionTitles($num)
+    public function dataOptionTitles($num)
     {
         $option = [];
         for ($i = 0; $i < $num; $i++) {
