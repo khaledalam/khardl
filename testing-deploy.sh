@@ -2,8 +2,9 @@
 # backup database
 ./db_backup.sh
 
-
+# pull changes
 git pull;
+
 
 cd backend;
 
