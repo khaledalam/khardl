@@ -29,6 +29,8 @@ class Restaurant
             return abort(403, 'Unauthorized');
         }
         // If the user is not a "Restaurant Owner" or has already fulfilled registration requirements, continue.
-        return $next($request);
+
+        // @TODO: remove header this. it's added to skip cors when run isolated react tenant and central apps
+        return $next($request)->header('Access-Control-Allow-Origin', '*');
     }
 }
