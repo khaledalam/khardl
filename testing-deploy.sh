@@ -1,9 +1,11 @@
 
+# pull changes
+git checkout -- .;
+git clean -fd;
+git pull;
+
 # backup database
 ./db_backup.sh
-
-# pull changes
-git pull;
 
 
 cd backend;
