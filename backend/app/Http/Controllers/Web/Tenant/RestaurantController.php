@@ -168,11 +168,11 @@ class RestaurantController extends BaseController
     }
 
     public function updateSettingsBranch(UpdateBranchSettingFromRequest $request, Branch $branch)
-    {   
+    {
         $payment_methods = null;
         $delivery_types = null;
         $setting = Setting::first();
-        
+
         foreach ($request->payment_methods ?? [] as $method) {
             if($method == PaymentMethod::ONLINE && (!$setting->lead_id  || !$setting->merchant_id)){
                 return redirect()->back()->with('error', __('You can not activate pay online because payment account not active yet'));
@@ -194,7 +194,7 @@ class RestaurantController extends BaseController
                     'delivery_availability'=>true
                 ]);
             }
-        
+
             if($method == DeliveryType::PICKUP){
                 $branch->update([
                     'pickup_availability'=>true
@@ -699,6 +699,7 @@ class RestaurantController extends BaseController
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'Worker');
             })
+            ->orderBy('id','desc')
             ->get();
         return view('restaurant.workers', compact('user', 'workers', 'branchId', 'branch'));
     }
@@ -725,13 +726,10 @@ class RestaurantController extends BaseController
         $permissions = [
             'can_modify_and_see_other_workers',
             'can_modify_working_time',
-            'can_modify_advertisements',
             'can_edit_menu',
             'can_control_payment',
             'can_view_revenues'
-
         ];
-
         $insertData = [];
 
         foreach ($permissions as $permission) {
@@ -742,10 +740,9 @@ class RestaurantController extends BaseController
 
         DB::table('permissions_worker')->insert($insertData);
 
-        if (app()->getLocale() === 'en')
-            return redirect()->route("restaurant.workers", $branchId)->with('success', 'Worker added successfully');
-        else
-            return redirect()->back()->with('success', 'تمت إضافة موظف بنجاح');
+        return redirect()->route('restaurant.workers',['branchId' => $user->branch_id])->with([
+            'success' => __('Added successfully'),
+        ]);
     }
 
     public function deleteWorker($id)
@@ -754,15 +751,16 @@ class RestaurantController extends BaseController
             DB::beginTransaction();
             DB::table('permissions_worker')->where('user_id', $id)->delete();
 
-            RestaurantUser::findOrFail($id)->delete();
+            $user = RestaurantUser::findOrFail($id);
+            $branch = $user->branch_id;
+            $user->delete();
 
             DB::commit();
 
 
-            if (app()->getLocale() === 'en')
-                return redirect()->back()->with('success', 'Deleted successfully.');
-            else
-                return redirect()->back()->with('success', 'حذف بنجاح.');
+            return redirect()->route('restaurant.workers',['branchId' => $branch])->with([
+                'success' => __('Deleted successfully'),
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -786,9 +784,9 @@ class RestaurantController extends BaseController
         $permissions = [
             'can_modify_and_see_other_workers',
             'can_modify_working_time',
-            'can_modify_advertisements',
             'can_edit_menu',
-            'can_edit_and_view_drivers'
+            'can_control_payment',
+            'can_view_revenues'
         ];
 
         $updateData = [];
@@ -802,17 +800,9 @@ class RestaurantController extends BaseController
             ->update($updateData);
 
         $selectedWorker->save();
-
-        $user = Auth::user();
-
-        if (app()->getLocale() === 'en')
-            return redirect()->back()->with([
-                'success' => 'Worker updated successfully',
-            ])->with(compact('user'));
-        else
-            return redirect()->back()->with([
-                'success' => 'Work updated successfully',
-            ])->with(compact('user'));
+        return redirect()->route('restaurant.workers',['branchId' => $selectedWorker->branch_id])->with([
+            'success' => __('Updated successfully'),
+        ]);
     }
 
     public function editWorker($id)
