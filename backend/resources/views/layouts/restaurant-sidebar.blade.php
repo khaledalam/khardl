@@ -185,7 +185,7 @@
 
                         </div>
                         <!-- Site Editor -->
-                      
+
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurants.site_editor')}}" target="_blank">
                                 <span class="{{ ($link == 'site-editor' ) ? 'menu-link active' : 'menu-link ' }}">
@@ -202,7 +202,7 @@
                             </a>
 
                         </div>
-                  
+
 
                        <!-- Branches -->
                        <div class="menu-item menu-accordion">
@@ -298,8 +298,9 @@
                             </a>
                             @endif
                         </div>
+                        {{-- //TODO: uncomment when driver app is ready --}}
                         <!-- drivers -->
-                        <div class="menu-item menu-accordion">
+                        {{-- <div class="menu-item menu-accordion">
                             @if(\App\Models\Tenant\Branch::first())
                             <a href="{{route('drivers.index')}}">
                                 <span class="{{ ($link == 'drivers') ? 'menu-link active' : 'menu-link ' }}">
@@ -327,7 +328,7 @@
                                 </span>
                             </a>
                             @endif
-                        </div>
+                        </div> --}}
 
                     <!-- menu -->
 
