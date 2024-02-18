@@ -165,9 +165,10 @@ class RegisterController extends BaseController
         $user =Auth::user();
 
         // If the user has already verified their email
-        if ($user->email_verified_at !== null) {
-            return $this->sendError('Fail', 'Email is already verified.');
-        }
+        // if ($user->email_verified_at !== null) {
+
+        //     return $this->sendError('Fail', 'Email is already verified.');
+        // }
 
         // Check the verification code
         if ($user->checkVerificationCode($request->code)) {

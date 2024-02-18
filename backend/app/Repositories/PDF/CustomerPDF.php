@@ -30,11 +30,11 @@ class CustomerPDF implements PdfPrintInterface
                 $data['customers'] = [RestaurantUser::findOrFail($this->id)];
                 return $data;
             }else{
-                $data['customers'] =   RestaurantUser::customers()->orderBy('created_at','DESC')->get();
+                $data['customers'] =   RestaurantUser::customers()->orderBy('id','DESC')->get();
                 return $data;
             }
         });
-       
+
     }
     public function view():string {
         return 'pdf.customers';
@@ -44,6 +44,6 @@ class CustomerPDF implements PdfPrintInterface
             return "{$this->restaurant->restaurant_name} - customers-$this->id ".Carbon::now()->format('d-m-Y h:i a').".pdf";
         }
         return "{$this->restaurant->restaurant_name} - customers ".Carbon::now()->format('d-m-Y h:i a').".pdf";
-       
+
     }
 }

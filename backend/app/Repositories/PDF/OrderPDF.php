@@ -8,7 +8,7 @@ use App\Models\Tenant\Order;
 use App\Models\Tenant\RestaurantStyle;
 
 class OrderPDF implements PdfPrintInterface
-{   
+{
     public $restaurant;
     public function __construct(
         public $tenant_id ,
@@ -29,11 +29,11 @@ class OrderPDF implements PdfPrintInterface
                 $data['orders'] = [ Order::with(['delivery_type:id,name','payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->findOrFail($this->id)];
                 return $data;
             }else{
-                $data['orders'] = Order::orderBy('created_at','DESC')->with(['delivery_type:id,name','payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->get();
+                $data['orders'] = Order::orderBy('id','DESC')->with(['delivery_type:id,name','payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->get();
                 return $data;
             }
         });
-       
+
     }
     public function view():string {
         return 'pdf.orders';
