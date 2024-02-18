@@ -3,6 +3,8 @@
 ./db_backup.sh
 
 
+git pull;
+
 cd backend;
 
 
