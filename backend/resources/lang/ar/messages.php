@@ -431,6 +431,7 @@ return [
     "Last login" => "اخر تسجيل",
     "Registration" => "تاريخ التسجيل",
     "Actions"  => "اجراءات",
+    "Allow Login"  => "سماح الدخول",
     "View" => "عرض",
     "Edit" => "تعديل",
     "Customer Summary" => "تفاصيل العميل",

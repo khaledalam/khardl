@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\Admin\LogTypes;
 use App\Models\ContactUs;
+use App\Models\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ContactUsController extends BaseController
@@ -23,6 +26,53 @@ class ContactUsController extends BaseController
 
         $contactUs = ContactUs::create($validator->validated());
 
+        $actions = [
+            'en' => 'Received a new contact us form inputs',
+            'ar' => 'استقبال مدخل جديد من نمذج تواصل معنا'
+        ];
+        Log::create([
+            'user_id' => Auth::id(),
+            'action' => $actions,
+            'type' => LogTypes::ContactUsForm
+        ]);
+
+        try {
+            $this->notifyDiscord($contactUs);
+        } catch (\Exception $e) {
+            $actions = [
+                'en' => 'Fail to send a new contact us form inputs to discord',
+                'ar' => 'فضل ارسال مدخل جديد من نمذج تواصل معنا الي discord'
+            ];
+            Log::create([
+                'user_id' => Auth::id(),
+                'action' => $actions,
+                'type' => LogTypes::ContactUsForm
+            ]);
+        }
+
         return $this->sendResponse(null, 'Contact information successfully submitted.');
+    }
+
+    private function notifyDiscord(ContactUs $contactUs): void
+    {
+        $webhook_url = env('CONTACT_US_DISCORD_WEBHOOK_URL', null);
+
+        $data = "Name: " . $contactUs->email . "\n"
+            . "Phone Number: " . $contactUs->phone_number . "\n"
+            . "Business name: " . $contactUs->business_name . "\n"
+            . "Responsible Person Name: " . $contactUs->responsible_person_name . "\n";
+        $msg = ["content" => $data];
+
+        $headers = array('Content-Type: application/json');
+
+        $ch = curl_init();
+        curl_setopt( $ch,CURLOPT_URL, $webhook_url );
+        curl_setopt( $ch,CURLOPT_POST, true );
+        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+//        curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $msg ) );
+        curl_exec( $ch );
+        curl_close( $ch );
     }
 }

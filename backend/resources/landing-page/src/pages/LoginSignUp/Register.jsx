@@ -196,22 +196,33 @@ const Register = () => {
                                     <h4 className='ms-2 text-[13px] font-semibold'>
                                        {t('Restaurant name')} <span className="text-red-500">*</span>
                                     </h4>
-                                    <div className='joined-input-group flex items-center justify-between'>
-                                    <input
-                                       className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                       placeholder={t('Restaurant name')}
-                                       style={{ marginBottom: 0 }}
-                                       // {...register('restaurant_name', {
-                                       //    required: true,
-                                       //    validate: validateRestaurantName,
-                                       // })}
-                                       onChange={onChangeHandler}
-                                       onFocus={handleInputFocus}
-                                       onBlur={handleInputBlur}
-                                    />
-                                    <span>.khardl.com</span>
+
+                                    {Language === 'en' ? (<div className='joined-input-group flex items-center justify-between'>
+                                       <input
+                                          className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                          placeholder={t('Restaurant name')}
+                                          style={{ marginBottom: 0 }}
+                                          // {...register('restaurant_name', {
+                                          //    required: true,
+                                          //    validate: validateRestaurantName,
+                                          // })}
+                                          onChange={onChangeHandler}
+                                          onFocus={handleInputFocus}
+                                          onBlur={handleInputBlur}
+                                       />
+                                       <span>.khardl.com</span>
+                                    </div>) : (<div className='joined-input-group flex items-center justify-between'>
+                                       <span>.khardl.com</span>
+                                       <input
+                                          className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                          placeholder={t('Restaurant name')}
+                                          style={{ marginBottom: 0 }}
+                                          onChange={onChangeHandler}
+                                          onFocus={handleInputFocus}
+                                          onBlur={handleInputBlur}
+                                       />
                                     </div>
-                                 
+                                    )}
 
                                     <span className='text-[#00000080] text-[10px] ms-2' style={{ marginBottom: '20px' }}>
                                        <img src={infog} alt="InfoIcon" className="inline-block align-middle" />
