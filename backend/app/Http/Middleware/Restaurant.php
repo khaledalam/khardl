@@ -30,7 +30,6 @@ class Restaurant
         }
         // If the user is not a "Restaurant Owner" or has already fulfilled registration requirements, continue.
 
-        // @TODO: remove header this. it's added to skip cors when run isolated react tenant and central apps
-        return $next($request)->header('Access-Control-Allow-Origin', '*');
+        return $next($request);
     }
 }
