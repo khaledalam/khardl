@@ -419,6 +419,8 @@ class AdminController extends Controller
     public function restaurantOwnerManagement(Request $request)
     {
         $admins = User::whenType($request['type']??null)
+        ->where('id','!=',1)
+        ->orderBy('id','desc')
         ->paginate(config('application.perPage')??20);
         $user = Auth::user();
         return view('admin.restaurant-owner-management', compact('user', 'admins'));
@@ -671,6 +673,7 @@ class AdminController extends Controller
     public function toggleStatus(User $user)
     {
         // Toggle the user status
+        if($user->id==1)return response()->json(['message' => 'Unauthorized']);
         $user->update(['status' => ($user->isBlocked())?'active':'blocked']);
 
         return response()->json(['isBlocked' => $user->isBlocked()]);
