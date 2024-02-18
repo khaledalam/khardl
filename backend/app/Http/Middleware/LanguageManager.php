@@ -21,6 +21,7 @@ class LanguageManager
             App::setLocale(session()->get('locale'));
         }
 
-        return $next($request);
+        // @TODO: remove header this. it's added to skip cors when run isolated react tenant and central apps
+        return $next($request)->header('Access-Control-Allow-Origin', '*');
     }
 }
