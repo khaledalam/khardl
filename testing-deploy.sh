@@ -1,5 +1,5 @@
 
-# pull changes
+# GIT pull changes
 git checkout -- .;
 git clean -fd;
 git pull;
