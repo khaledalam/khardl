@@ -25,7 +25,7 @@ class Cart extends Model
 
     public function items()
     {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(CartItem::class)->orderBy('id','desc');
     }
     public function branch()
     {

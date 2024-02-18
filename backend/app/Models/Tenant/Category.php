@@ -3,13 +3,14 @@
 namespace App\Models\Tenant;
 
 use Carbon\Carbon;
-use Spatie\Sluggable\SlugOptions;
+use Database\Factories\tenant\CategoryFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
 class Category extends Model
 {
-    use HasTranslations;
+    use HasTranslations,HasFactory;
 
     protected $table = 'categories';
 
@@ -49,6 +50,10 @@ class Category extends Model
     public function items()
     {
         return $this->hasMany(Item::class); //->where('availability', true);
+    }
+    protected static function newFactory()
+    {
+      return CategoryFactory::new();
     }
 
 }
