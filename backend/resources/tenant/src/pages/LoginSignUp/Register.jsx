@@ -13,6 +13,7 @@ import AxiosInstance from "../../axios/axios";
 import { PREFIX_KEY } from "../../config";
 import { changeRestuarantEditorStyle } from '../../redux/NewEditor/restuarantEditorSlice'
 import imgLogo from "../../assets/khardl_Logo.png"
+import { getCartItemsCount } from "../../redux/NewEditor/categoryAPISlice";
 
 const Register = () => {
    const navigate = useNavigate()

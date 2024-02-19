@@ -2,6 +2,7 @@
 
 namespace Database\Factories\tenant;
 
+use App\Models\Tenant\Branch;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -25,6 +26,7 @@ class RestaurantUserFactory extends Factory
             'status' => fake()->randomElement(['active', 'inactive', 'suspended']),
             'address' => fake()->address,
             'password' => bcrypt('password'),
+            'branch_id' => Branch::factory(),
             'remember_token' => Str::random(10),
         ];
     }

@@ -10,11 +10,10 @@ import { useNavigate } from 'react-router-dom'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 import { useSelector } from 'react-redux'
 import AxiosInstance from "../../axios/axios";
-import { Button } from '../../../../tenant/src/components/Customers/CustomersEditor/components/Dashboard/components/shared/Button'
+import { Button } from '../../components/ButtonComponent'
 import TermsPolicies from '../TermsPoliciesPrivacy/TermsPolicies';
 import Privacy from '../TermsPoliciesPrivacy/Privacy';
 import infog from '../../assets/infog.svg'
-
 
 const Register = () => {
    const navigate = useNavigate()

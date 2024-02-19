@@ -43,7 +43,6 @@ function Header() {
         setMenuOpen(!isMenuOpen);
     };
     const renderButton = (button, component, fill) => {
-        const { t } = useTranslation();
 
         const buttonStyle = {
             border: `1px solid ${button?.color}`,
