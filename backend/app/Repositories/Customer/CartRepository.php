@@ -336,6 +336,13 @@ class CartRepository
         }
         return false;
     }
+    public function count()
+    {
+        $count = $this->cart?->items->count();
+        return $this->sendResponse([
+            'count' => $count
+        ]);
+    }
 
 
 }
