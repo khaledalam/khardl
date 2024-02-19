@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CORS;
 use App\Http\Middleware\Driver;
 use App\Http\Middleware\ForceLogOut;
 use App\Http\Middleware\Worker;
@@ -71,8 +72,9 @@ class Kernel extends HttpKernel
 
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
+        CORS::class,
         TrustProxies::class,
-//        HandleCors::class, // @TODO: uncomment this line IMPORTANT
+        HandleCors::class,
         PreventRequestsDuringMaintenance::class,
         ValidatePostSize::class,
         TrimStrings::class,
@@ -90,7 +92,6 @@ class Kernel extends HttpKernel
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
-//            VerifyCsrfToken::class, // @TODO: uncomment this line IMPORTANT
             SubstituteBindings::class,
             LanguageManager::class,
             ForceLogOut::class
