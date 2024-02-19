@@ -196,6 +196,7 @@ return [
         "confirm_password" => "تاكيد كلمة المرور",
         "reason" => "السبب",
         "status" => "الحالة",
+        'url' => "الرابط"
 
     ],
     'values' => [

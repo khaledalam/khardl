@@ -8,6 +8,7 @@ use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
 use App\Http\Requests\Tenant\Customer\RemoveItemToCartRequest;
 use App\Http\Requests\Tenant\Customer\UpdateItemCartRequest;
 use App\Models\Tenant\CartItem;
+use Illuminate\Http\Request;
 
 class CartController
 {
@@ -24,25 +25,23 @@ class CartController
     {
         return $this->cart->add($request);
     }
-   
 
-    public function edit($id)
+    public function count(Request $request)
     {
-       
+        return $this->cart->count();
     }
 
-  
     public function update(CartItem $cart,UpdateItemCartRequest $request)
     {
         return $this->cart->update($cart,$request);
     }
 
     public function destroy($item)
-    {   
+    {
         return $this->cart->remove($item);
     }
     public function trash()
-    {   
+    {
         return $this->cart->trash();
     }
 }

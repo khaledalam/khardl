@@ -254,6 +254,7 @@ Route::group([
 
             Route::middleware('verifiedPhone')->group(function () {
                 Route::delete("carts/trash", [CartController::class, 'trash'])->name('carts.trash');
+                Route::get("carts/count", [CartController::class, 'count'])->name('carts.count');
                 Route::resource("carts", CartController::class)->only([
                     'index',
                     'store',
