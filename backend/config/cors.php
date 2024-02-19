@@ -15,13 +15,12 @@ return [
     |
     */
 
-    'paths' => ['*', 'api/*', 'sanctum/csrf-cookie', 'oauth/*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'https://ef50-156-207-122-41.ngrok-free.app',
-        'http://localhost:3000'
+        'https://ef50-156-207-122-41.ngrok-free.app'
     ],
 
     'allowed_origins_patterns' => [],
@@ -32,6 +31,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];
