@@ -72,7 +72,7 @@ class Kernel extends HttpKernel
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
         TrustProxies::class,
-//        HandleCors::class, // @TODO: uncomment this line IMPORTANT
+        HandleCors::class,
         PreventRequestsDuringMaintenance::class,
         ValidatePostSize::class,
         TrimStrings::class,
@@ -90,7 +90,7 @@ class Kernel extends HttpKernel
             AddQueuedCookiesToResponse::class,
             StartSession::class,
             ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
+//            VerifyCsrfToken::class, // @TODO: uncomment this line IMPORTANT
             SubstituteBindings::class,
             LanguageManager::class,
             ForceLogOut::class
