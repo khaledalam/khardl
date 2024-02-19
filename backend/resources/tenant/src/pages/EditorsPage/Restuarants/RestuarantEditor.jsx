@@ -78,7 +78,7 @@ export const RestuarantEditor = () => {
     try {
       const cartResponse = await AxiosInstance.get(`carts`)
       if (cartResponse.data) {
-        dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length))
+        // dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length))
       }
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)

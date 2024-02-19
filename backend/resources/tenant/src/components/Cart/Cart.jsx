@@ -17,9 +17,7 @@ const Cart = () => {
     const [notes, setNotes] = useState("");
     const [couponCode, setCouponCode] = useState("");
     const [couponDiscountValue, setCouponDiscountValue] = useState(0);
-
     const [deliveryCost, setDeliveryCost] = useState(0);
-
     const navigate = useNavigate()
     const {t} = useTranslation();
     const Language = useSelector((state) => state.languageMode.languageMode);
@@ -34,10 +32,8 @@ const Cart = () => {
     const fetchCartData = async () => {
         if (loading) return;
         setLoading(true);
-
         try {
             const cartResponse = await AxiosInstance.get(`carts`);
-
             console.log("cart >>>", cartResponse.data)
             if (cartResponse.data) {
                 setCartItems(cartResponse.data?.data.items);
@@ -45,7 +41,6 @@ const Cart = () => {
                 setDeliveryTypes(cartResponse.data?.data?.delivery_types)
                 setAddress(cartResponse.data?.data?.address ?? t('N/A'));
             }
-
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
             console.log(error);
@@ -54,6 +49,9 @@ const Cart = () => {
         }
     };
 
+    // const cartItemsCount = useSelector(
+    //     (state) => state.categoryAPI.cartItemsCount
+    //   )
     const handlePaymentMethodChange = (method) => {
         setPaymentMethod(method?.name );
     }

@@ -8,7 +8,7 @@ import { setCartItemsData } from "../../../redux/NewEditor/categoryAPISlice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
-const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
+const CartItem = ({ cartItem, cartItems, language, isMobile, styles, fetchCartData }) => {
   const [feedback, setFeedback] = useState(
     cartItem.notes !== null ? cartItem.notes : ""
   );
@@ -17,18 +17,6 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const fetchCartData = async () => {
-    try {
-      const cartResponse = await AxiosInstance.get(`carts`);
-
-      console.log("cart >>>", cartResponse.data);
-      if (cartResponse.data) {
-        dispatch(setCartItemsData(cartResponse.data?.data.items));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const checkbox_options_names =
     cartItem && cartItem?.checkbox_options !== null
@@ -109,7 +97,7 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
               src={cartItem?.item?.photo}
               alt=""
               className="w-full h-full object-cover rounded-full"
-            />
+              />
           </div>
           <div className="flex items-center justify-between w-[90px] lg:w-[120px] cursor-pointer laptopXL:w-[150px]">
             <BiMinusCircle size={25} onClick={decrementQty} />

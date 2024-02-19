@@ -30,6 +30,8 @@ const CartPage = () => {
   const language = useSelector((state) => state.languageMode.languageMode)
   const cartItems = useSelector((state) => state.categoryAPI.cartItemsData)
 
+  // console.log("useSelector",useSelector((state) => state.categoryAPI.cartItemsCount))
+
   const fetchCartData = async () => {
     if (isloading) return
     setIsLoading(true)
