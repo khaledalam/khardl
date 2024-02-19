@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Cors;
 use App\Http\Middleware\Driver;
 use App\Http\Middleware\ForceLogOut;
 use App\Http\Middleware\Worker;
@@ -77,6 +78,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        Cors::class
     ];
 
     /**
@@ -150,6 +152,7 @@ class Kernel extends HttpKernel
         'isLeadNotSubmitted'=>isLeadNotSubmitted::class,
         'isBusinessSubmitted'=>IsBusinessSubmitted::class,
         "trans_api"=>LocalizationApi::class,
+
     ];
 
 }
