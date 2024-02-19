@@ -18,7 +18,7 @@ class CORS
         $response = $next($request);
         $response->headers->set('Access-Control-Allow-Origin' , 'http://localhost:3000');
         $response->headers->set('Access-Control-Allow-Credentials' ,true);
-        $response->header('Access-Control-Allow-Headers', $request->header('Access-Control-Request-Headers'));
+        /* $response->header('Access-Control-Allow-Headers', $request->header('Access-Control-Request-Headers')); */
         $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
         return $response;
     }
