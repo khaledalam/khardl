@@ -152,7 +152,8 @@ Route::get('/health', static function (){
 //     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 // });
 
-Route::get('promoter/{name}', [GlobalPromoterController::class, 'index'])->name('global.promoter');
+Route::get('promoter/{name}', [GlobalPromoterController::class, 'show'])->name('global.promoter.show');
+Route::get('promoters', [GlobalPromoterController::class, 'index'])->name('global.promoters');
 
 
 Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
