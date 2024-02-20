@@ -3,7 +3,7 @@
 
 <head>
     <base href="" />
-    <title>{{ __('messages.khardl')}} | @yield('title', __('messages.dashboard'))</title>
+    <title>{{ __('khardl')}} | @yield('title', __('dashboard'))</title>
     <meta charset="utf-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -163,7 +163,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <a href="{{route('restaurant.branches')}}">
-                                        <span class="menu-title">{{__('messages.branches')}}</span>
+                                        <span class="menu-title">{{__('branches')}}</span>
                                     </a>
                                 </span>
                                 </div>
@@ -182,7 +182,7 @@
                                     <!--end::Svg Icon-->
                                 </span>
                                 <a href="{{route('restaurant.menu',['branchId' => $user->branch->id])}}">
-                                    <span class="menu-title">{{__('messages.menu')}}</span>
+                                    <span class="menu-title">{{__('menu')}}</span>
                                 </a>
                             </span>
                           </div>
@@ -201,7 +201,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{ __('messages.supports')}}</span>
+                                    <span class="menu-title">{{ __('supports')}}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -210,7 +210,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">{{ __('messages.all-supports')}}</span>
+                                            <span class="menu-title">{{ __('all-supports')}}</span>
                                         </a>
                                     </div>
                                     <div class="menu-item">
@@ -218,7 +218,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">{{ __('messages.add-supports')}}</span>
+                                            <span class="menu-title">{{ __('add-supports')}}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -235,7 +235,7 @@
                                                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">{{__('messages.drivers')}}</span>
+                                        <span class="menu-title">{{__('drivers')}}</span>
                                     </span>
                                 </a>
                                 @endif
@@ -254,7 +254,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
                                     <a href="{{route('tap.payments')}}">
-                                        <span class="menu-title">{{__('messages.payments')}}</span>
+                                        <span class="menu-title">{{__('payments')}}</span>
                                     </a>
                                 </span>
                             </div>
@@ -381,9 +381,9 @@
                                     <div class="menu-item px-5" data-kt-menu-trigger="hover"
                                             data-kt-menu-placement="left-start">
                                             <a href="#" class="menu-link px-5">
-                                                <span class="menu-title position-relative">{{ __('messages.language')}}
+                                                <span class="menu-title position-relative">{{ __('language')}}
                                                     <span
-                                                        class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('messages.english')}} @else {{ __('messages.arabic')}} @endif
+                                                        class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('english')}} @else {{ __('arabic')}} @endif
                                                         <img class="w-15px h-15px rounded-1 ms-2"
                                                             @if(app()->getLocale() != 'ar')
                                                                 src="{{ global_asset('assets/media/flags/united-kingdom.svg') }}"
@@ -403,7 +403,7 @@
                                                             <span class="symbol symbol-20px me-4">
                                                                 <img class="rounded-1"
                                                                     src={{ global_asset('assets/media/flags/united-kingdom.svg') }} alt="" />
-                                                            </span>{{ __('messages.english')}}</button>
+                                                            </span>{{ __('english')}}</button>
                                                     </form>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -415,7 +415,7 @@
                                                         class="w-100 menu-link d-flex px-5 active">
                                                         <span class="symbol symbol-20px me-4">
                                                             <img class="rounded-1" src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
-                                                                alt="" /> </span>{{ __('messages.arabic')}}</button>
+                                                                alt="" /> </span>{{ __('arabic')}}</button>
                                                     </form>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -427,7 +427,7 @@
                                     <div class="menu-item px-5">
                                         <a href="{{ route('tenant_logout_get') }}"
                                         class="menu-link px-5" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">{{ __('messages.sign-out')}}</a>
+                                        document.getElementById('logout-form').submit();">{{ __('sign-out')}}</a>
                                         <form id="logout-form" action="{{ route('tenant_logout_get') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
@@ -479,7 +479,7 @@
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">{{date('Y')}} ©</span>
                             <a href="#" target="_blank"
-                                class="text-gray-800 text-hover-khardl">{{__('messages.khardl')}}</a>
+                                class="text-gray-800 text-hover-khardl">{{__('khardl')}}</a>
                         </div>
                         <!--end::Copyright-->
                     </div>

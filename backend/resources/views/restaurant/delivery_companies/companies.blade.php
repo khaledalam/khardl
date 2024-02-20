@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.delivery-companies'))
+@section('title', __('delivery-companies'))
 
 @section('content')
 
@@ -35,7 +35,7 @@
                                                 <!--begin::Col-->
                                                 <div class="position-relative w-md-200px me-md-2">
                                                     <select class="form-select form-select-solid" name="area">
-                                                        <option value="" selected>{{ __('messages.Coverage areas') }}</option>
+                                                        <option value="" selected>{{ __('Coverage areas') }}</option>
                                                         @foreach ($allCities as $city)
                                                         <option value="{{ $city }}" {{ request('area') == $city ? 'selected' : '' }} >{{ $city }}</option>
                                                         @endforeach
@@ -44,12 +44,12 @@
 
                                                 <!--begin:Action-->
                                                 <div class="d-flex align-items-center">
-                                                    <button type="submit" class="btn btn-sm btn-khardl me-5">{{ __('messages.Filter') }}</button>
+                                                    <button type="submit" class="btn btn-sm btn-khardl me-5">{{ __('Filter') }}</button>
                                                 </div>
 
                                                 <div class="d-flex align-items-center">
                                                     <button type="reset" class="btn btn-sm btn-secondary me-5" >
-                                                    <a href="{{ route('restaurant.delivery') }}">{{__('messages.Discard')}}</a>
+                                                    <a href="{{ route('restaurant.delivery') }}">{{__('Discard')}}</a>
                                                     </button>
                                                 </div>
                                                 <!--end:Action-->

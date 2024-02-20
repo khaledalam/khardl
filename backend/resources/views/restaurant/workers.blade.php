@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', $branch->name.' | '. __('messages.workers'))
+@section('title', $branch->name.' | '. __('workers'))
 
 @section('content')
 
@@ -16,10 +16,10 @@
                      <!--begin::Header-->
                      <div class="card-header border-0 pt-5">
                          <h3 class="card-title align-items-start flex-column">
-                             <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.workers') }} - <small>{{__('messages.branch')}}: {{\App\Models\Tenant\Branch::find($branchId)?->name}}</small></span>
-                             <span class="text-muted mt-1 fw-bold fs-7">{{ count($workers) }} {{ __('messages.workers') }}</span>
+                             <span class="card-label fw-bolder fs-3 mb-1">{{ __('workers') }} - <small>{{__('branch')}}: {{\App\Models\Tenant\Branch::find($branchId)?->name}}</small></span>
+                             <span class="text-muted mt-1 fw-bold fs-7">{{ count($workers) }} {{ __('workers') }}</span>
                          </h3>
-                         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('messages.Add') }}">
+                         <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="{{ __('Add') }}">
                              <a href="{{ route('restaurant.get-workers', ['branchId' => $branchId]) }}" class="btn btn-sm btn-light btn-active-khardl">
                              <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                              <span class="svg-icon svg-icon-3">
@@ -28,7 +28,7 @@
                                      <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
                                  </svg>
                              </span>
-                             <!--end::Svg Icon-->{{ __('messages.new-worker') }}</a>
+                             <!--end::Svg Icon-->{{ __('new-worker') }}</a>
                          </div>
                      </div>
                      <!--end::Header-->
@@ -42,11 +42,11 @@
                                  <thead>
                                      <tr class="fw-bolder text-muted">
                                          <th class="min-w-25px">#</th>
-                                         <th class="min-w-200px">{{ __('messages.first-name') }}</th>
-                                         <th class="min-w-150px">{{ __('messages.last-name') }}</th>
-                                         <th class="min-w-150px">{{ __('messages.phone-number') }}</th>
-                                         <th class="min-w-150px">{{ __('messages.email') }}</th>
-                                         <th class="min-w-150px text-end">{{ __('messages.actions') }}</th>
+                                         <th class="min-w-200px">{{ __('first-name') }}</th>
+                                         <th class="min-w-150px">{{ __('last-name') }}</th>
+                                         <th class="min-w-150px">{{ __('phone-number') }}</th>
+                                         <th class="min-w-150px">{{ __('email') }}</th>
+                                         <th class="min-w-150px text-end">{{ __('actions') }}</th>
                                      </tr>
                                  </thead>
                                  <!--end::Table head-->
@@ -132,14 +132,14 @@
                         var form = button.closest('.delete-form');
 
                         Swal.fire({
-                            title: '{{ __('messages.are-you-sure') }}',
-                            text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
+                            title: '{{ __('are-you-sure') }}',
+                            text: "{{ __('you-wont-be-able-to-undo-this') }}",
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#d33',
                             cancelButtonColor: '#3085d6',
-                            confirmButtonText: '{{ __('messages.delete') }}',
-                            cancelButtonText: '{{ __('messages.cancel') }}'
+                            confirmButtonText: '{{ __('delete') }}',
+                            cancelButtonText: '{{ __('cancel') }}'
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 form.submit();

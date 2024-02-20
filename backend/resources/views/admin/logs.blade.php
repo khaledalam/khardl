@@ -1,7 +1,7 @@
 @extends('layouts.admin-sidebar')
 
 
-@section('title', __('messages.logs'))
+@section('title', __('logs'))
 
 @section('content')
 <!--begin::Content-->
@@ -18,14 +18,14 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <!--begin::Heading-->
                     <div class="card-title">
-                        <h3>{{ __('messages.logs') }}</h3>
+                        <h3>{{ __('logs') }}</h3>
                     </div>
                     <!--begin::Actions-->
                     <form method="GET" action="{{ route('admin.log') }}">
                         <div class="d-flex my-0">
                             <!--begin::Select-->
                             <select id="usersDropdown" name="user_id" class="form-select form-select-sm border-body bg-body w-150px me-5">
-                                <option value="" selected>{{ __('messages.All') }}</option>
+                                <option value="" selected>{{ __('All') }}</option>
                                 @foreach ($owners as $owner)
                                 <option value="{{ $owner->id }}" {{ request('user_id') == $owner->id ? 'selected' : '' }}>
                                     {{ $owner->id }} | {{ $owner->first_name }} {{ $owner->last_name }}
@@ -34,13 +34,13 @@
                             </select>
 
                             <select id="actionsDropdown" name="action" class="form-select form-select-sm border-body bg-body w-250px me-5">
-                                <option value="" selected>{{ __('messages.All') }}</option>
+                                <option value="" selected>{{ __('All') }}</option>
                                 @foreach ($logTypes as $type)
-                                <option {{ request('action') == $type ? 'selected' : '' }} value="{{ $type }}">{{ __('messages.'.$type) }}</option>
+                                <option {{ request('action') == $type ? 'selected' : '' }} value="{{ $type }}">{{ __(''.$type) }}</option>
                                 @endforeach
                             </select>
                             <select id="actionsDropdown" name="perPage" class="form-select form-select-sm border-body bg-body w-100px me-5">
-                                <option value="">{{ __('messages.Per page') }}</option>
+                                <option value="">{{ __('Per page') }}</option>
                                 <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
                                 <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
                                 <option value="50" {{ request('perPage') == 50 ? 'selected' : '' }}>50</option>
@@ -49,8 +49,8 @@
                             </select>
                             <!--end::Select-->
                             <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
-                                <span class="indicator-label">{{ __('messages.search') }}</span>
-                                <span class="indicator-progress">{{ __('messages.please-wait')}}
+                                <span class="indicator-label">{{ __('search') }}</span>
+                                <span class="indicator-progress">{{ __('please-wait')}}
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
@@ -61,8 +61,8 @@
                         <div class="d-flex my-0">
                             <input type="hidden" name="download" value="csv">
                             <button type="submit" id="download_logs" class="btn btn-success mx-2">
-                                <span class="indicator-label">{{ __('messages.Download') }}</span>
-                                <span class="indicator-progress">{{ __('messages.please-wait')}}
+                                <span class="indicator-label">{{ __('Download') }}</span>
+                                <span class="indicator-progress">{{ __('please-wait')}}
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
@@ -78,11 +78,11 @@
                             <!--begin::Thead-->
                             <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
                                 <tr>
-                                    <th class="min-w-200px">{{ __("messages.Customer") }}</th>
-                                    <th class="min-w-200px">{{ __('messages.actions') }}</th>
-                                    <th class="min-w-200px">{{ __('messages.Type') }}</th>
-                                    <th class="min-w-200px">{{ __('messages.date-and-time')}}</th>
-                                    <th class="min-w-200px">{{ __('messages.metadata')}}</th>
+                                    <th class="min-w-200px">{{ __("Customer") }}</th>
+                                    <th class="min-w-200px">{{ __('actions') }}</th>
+                                    <th class="min-w-200px">{{ __('Type') }}</th>
+                                    <th class="min-w-200px">{{ __('date-and-time')}}</th>
+                                    <th class="min-w-200px">{{ __('metadata')}}</th>
                                 </tr>
                             </thead>
                             <!--end::Thead-->
@@ -102,7 +102,7 @@
                                     </td>
                                     <td>
                                         @if($log->type!=null)
-                                        {{ __('messages.'.$log->type) }}
+                                        {{ __(''.$log->type) }}
                                         @endif
                                     </td>
                                     <td>{{ $log->created_at }}</td>
@@ -138,13 +138,13 @@
                                                         @elseif($log->type == \App\Enums\Admin\LogTypes::UpdateSettings->value)
                                                         @if(isset($log->metadata['webhook_url']))
                                                         <p>
-                                                            {{ __('messages.webhook-url') }} :
+                                                            {{ __('webhook-url') }} :
                                                             <strong>{{ $log->metadata['webhook_url'] }}</strong>
                                                         </p>
                                                         @endif
                                                         @if(isset($log->metadata['live_chat_enabled']))
                                                         <p>
-                                                            {{ __('messages.live-chat') }} :
+                                                            {{ __('live-chat') }} :
                                                             <strong>{{ $log->metadata['live_chat_enabled'] }}</strong>
                                                         </p>
                                                         @endif
@@ -155,7 +155,7 @@
                                                     <div class="modal-footer">
                                                         <div class="modal-footer d-flex align-items-center justify-content-between">
                                                             <button type="button" class="btn btn-secondary p-2 btn-sm" data-bs-dismiss="modal">
-                                                                {{ __('messages.Close') }}
+                                                                {{ __('Close') }}
                                                             </button>
                                                         </div>
                                                     </div>

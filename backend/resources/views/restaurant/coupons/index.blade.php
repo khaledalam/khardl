@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.Coupons'))
+@section('title', __('Coupons'))
 
 @section('content')
 <!--begin::Content-->
@@ -25,19 +25,19 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <input  type="text" value="{{ request('search') }}" name="search" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('messages.search')}}" />
+                            <input  type="text" value="{{ request('search') }}" name="search" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('search')}}" />
                             <!--end::Svg Icon-->
                             <select name="is_deleted" class="form-select mx-2">
-                                <option value="" selected>{{ __('messages.Deleted or not') }}</option>
-                                <option value="0" {{ request('is_deleted') == "0" ? 'selected' : '' }}>{{ __('messages.Not deleted') }}</option>
-                                <option value="1" {{ request('is_deleted') == "1" ? 'selected' : '' }}>{{ __('messages.Deleted') }}</option>
+                                <option value="" selected>{{ __('Deleted or not') }}</option>
+                                <option value="0" {{ request('is_deleted') == "0" ? 'selected' : '' }}>{{ __('Not deleted') }}</option>
+                                <option value="1" {{ request('is_deleted') == "1" ? 'selected' : '' }}>{{ __('Deleted') }}</option>
                             </select>
                             <select name="type" class="form-select mx-2">
-                                <option value="" selected>{{ __('messages.Type') }}</option>
-                                <option value="fixed" {{ request('type') == "fixed" ? 'selected' : '' }}>{{ __('messages.Fixed') }}</option>
-                                <option value="percentage" {{ request('type') == "percentage" ? 'selected' : '' }}>{{ __('messages.Percentage') }}</option>
+                                <option value="" selected>{{ __('Type') }}</option>
+                                <option value="fixed" {{ request('type') == "fixed" ? 'selected' : '' }}>{{ __('Fixed') }}</option>
+                                <option value="percentage" {{ request('type') == "percentage" ? 'selected' : '' }}>{{ __('Percentage') }}</option>
                             </select>
-                            <button type="submit" class="btn btn-secondary"> {{ __('messages.Filter') }}</button>
+                            <button type="submit" class="btn btn-secondary"> {{ __('Filter') }}</button>
                         </div>
                     </form>
                     <!--end::Search-->
@@ -45,7 +45,7 @@
                 <div class="mr-auto p-2 ">
                     <a href="{{ route('coupons.create') }}">
                         <button class="btn btn-sm btn-primary">
-                            {{ __('messages.Add new') }}
+                            {{ __('Add new') }}
                         </button>
                     </a>
                 </div>
@@ -62,18 +62,18 @@
                                 <!--begin::Thead-->
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
                                     <tr>
-                                        <th class="px-3">{{ __('messages.ID') }}</th>
-                                        <th class="px-2">{{ __('messages.Code') }}</th>
-                                        <th class="px-2">{{ __('messages.Amount') }}</th>
-                                        <th class="px-2">{{ __('messages.Uses') }}</th>
-                                        <th class="px-2">{{ __('messages.Max discount amount') }}</th>
-                                        <th class="px-2">{{ __('messages.Max use') }}</th>
-                                        <th class="px-2">{{ __('messages.Max use per user') }}</th>
-                                        <th class="px-2">{{ __('messages.Minimum cart amount') }}</th>
-                                        <th class="px-2">{{ __('messages.Active from') }}</th>
-                                        <th class="px-2">{{ __('messages.Expire at') }}</th>
-                                        <th class="px-2">{{ __('messages.Status') }}</th>
-                                        <th class="px-2">{{ __('messages.Actions') }}</th>
+                                        <th class="px-3">{{ __('ID') }}</th>
+                                        <th class="px-2">{{ __('Code') }}</th>
+                                        <th class="px-2">{{ __('Amount') }}</th>
+                                        <th class="px-2">{{ __('Uses') }}</th>
+                                        <th class="px-2">{{ __('Max discount amount') }}</th>
+                                        <th class="px-2">{{ __('Max use') }}</th>
+                                        <th class="px-2">{{ __('Max use per user') }}</th>
+                                        <th class="px-2">{{ __('Minimum cart amount') }}</th>
+                                        <th class="px-2">{{ __('Active from') }}</th>
+                                        <th class="px-2">{{ __('Expire at') }}</th>
+                                        <th class="px-2">{{ __('Status') }}</th>
+                                        <th class="px-2">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <!--end::Thead-->
@@ -89,13 +89,13 @@
                                         <td class="text-black @if($coupon->deleted_at) text-danger @endif">
                                             {{ $coupon->code }}
                                             @if($coupon->deleted_at)
-                                            ({{ __('messages.Deleted') }})
+                                            ({{ __('Deleted') }})
                                             @endif
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->type == \App\Enums\Admin\CouponTypes::FIXED_COUPON->value)
                                             <span class="text-success">
-                                                {{ $coupon->amount }} {{ __('messages.SAR') }}
+                                                {{ $coupon->amount }} {{ __('SAR') }}
                                             </span>
                                             @else
                                             <span class="text-primary">
@@ -108,22 +108,22 @@
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->max_discount_amount)
-                                            <span>{{ $coupon->max_discount_amount }} {{ __('messages.SAR') }}</span>
+                                            <span>{{ $coupon->max_discount_amount }} {{ __('SAR') }}</span>
                                             @endif
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->max_use)
-                                            <span>{{ $coupon->max_use }} {{ __('messages.each_time') }}</span>
+                                            <span>{{ $coupon->max_use }} {{ __('each_time') }}</span>
                                             @endif
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->max_use_per_user)
-                                            <span>{{ $coupon->max_use_per_user }} {{ __('messages.each_time') }}</span>
+                                            <span>{{ $coupon->max_use_per_user }} {{ __('each_time') }}</span>
                                             @endif
                                         </td>
                                         <td class="px-3">
                                             @if($coupon->minimum_cart_amount)
-                                            <span>{{ $coupon->minimum_cart_amount }} {{ __('messages.SAR') }}</span>
+                                            <span>{{ $coupon->minimum_cart_amount }} {{ __('SAR') }}</span>
                                             @endif
                                         </td>
                                         <td class="px-3">
@@ -141,7 +141,7 @@
                                             </span>
                                         </td>
                                         <td class="text-end">
-                                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.Actions') }}
+                                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                 <span class="svg-icon svg-icon-5 m-0">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -153,7 +153,7 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="{{ route('coupons.edit',$coupon->id) }}" class="menu-link px-3">{{ __('messages.Edit') }}</a>
+                                                    <a href="{{ route('coupons.edit',$coupon->id) }}" class="menu-link px-3">{{ __('Edit') }}</a>
                                                 </div>
                                                 @if(!$coupon->deleted_at)
                                                 <div class="menu-item px-3">
@@ -161,7 +161,7 @@
                                                         @method('DELETE')
                                                         @csrf
                                                     </form>
-                                                    <a href="#" onclick='DeleteCoupon("{{ $coupon->id }}")' class="menu-link px-3">{{__('messages.Delete')}}</a>
+                                                    <a href="#" onclick='DeleteCoupon("{{ $coupon->id }}")' class="menu-link px-3">{{__('Delete')}}</a>
                                                 </div>
                                                 @endif
                                                 @if($coupon->deleted_at)
@@ -170,7 +170,7 @@
                                                         @method('POST')
                                                         @csrf
                                                     </form>
-                                                    <a href="#" onclick='RestoreCoupon("{{ $coupon->id }}")' class="menu-link px-3">{{__('messages.Restore')}}</a>
+                                                    <a href="#" onclick='RestoreCoupon("{{ $coupon->id }}")' class="menu-link px-3">{{__('Restore')}}</a>
                                                 </div>
                                                 @endif
                                             </div>
@@ -223,13 +223,13 @@
 
         var form = document.getElementById(`delete_coupon_${couponId}`);
         Swal.fire({
-            title: `{{ __("messages.Are you sure you want to delete this coupon ?") }}`
+            title: `{{ __("Are you sure you want to delete this coupon ?") }}`
             , icon: 'warning'
             , showCancelButton: true
             , confirmButtonColor: '#d33'
             , cancelButtonColor: '#3085d6'
-            , confirmButtonText: '{{ __("messages.delete") }}'
-            , cancelButtonText: '{{ __("messages.cancel") }}'
+            , confirmButtonText: '{{ __("delete") }}'
+            , cancelButtonText: '{{ __("cancel") }}'
         }).then((result) => {
             if (result.isConfirmed) {
                 form.submit();
@@ -242,13 +242,13 @@
 
         var form = document.getElementById(`restore_coupon_${couponId}`);
         Swal.fire({
-            title: `{{ __("messages.Are you sure you want to restore this coupon ?") }}`
+            title: `{{ __("Are you sure you want to restore this coupon ?") }}`
             , icon: 'warning'
             , showCancelButton: true
             , confirmButtonColor: '#50cd89'
             , cancelButtonColor: '#3085d6'
-            , confirmButtonText: '{{ __("messages.Restore") }}'
-            , cancelButtonText: '{{ __("messages.cancel") }}'
+            , confirmButtonText: '{{ __("Restore") }}'
+            , cancelButtonText: '{{ __("cancel") }}'
         }).then((result) => {
             if (result.isConfirmed) {
                 form.submit();

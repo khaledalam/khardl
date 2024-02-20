@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.settings'))
+@section('title', __('settings'))
 
 @section('content')
 
@@ -30,7 +30,7 @@
                                 <!--begin::Card header-->
                                 <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_email_preferences" aria-expanded="true" aria-controls="kt_account_email_preferences">
                                     <div class="card-title m-0">
-                                        <h3 class="fw-bolder m-0">{{__('messages.settings')}}</h3>
+                                        <h3 class="fw-bolder m-0">{{__('settings')}}</h3>
                                     </div>
                                 </div>
                                 <!--begin::Card header-->
@@ -42,7 +42,7 @@
                                         @csrf
                                         <!--begin::Card body-->
                                         <div class="card-body border-top px-9 py-9">
-                                            <span class="text-active-gray-900" style="font-size: 18px !important;">{{__('messages.customer-payment-methods')}}</span>
+                                            <span class="text-active-gray-900" style="font-size: 18px !important;">{{__('customer-payment-methods')}}</span>
 
                                             <div class="separator separator-dashed my-6"></div>
                                             <!--begin::Option-->
@@ -52,8 +52,8 @@
 {{--                                                <!--end::Input-->--}}
 {{--                                                <!--begin::Label-->--}}
 {{--                                                <span class="form-check-label d-flex flex-column align-items-start">--}}
-{{--														<span class="fw-bolder fs-5 mb-0">{{__('messages.online-payment')}}</span>--}}
-{{--														<span class="text-muted fs-6">[{{__('messages.visa')}}, {{__('messages.master-card')}}, {{__('messages.mada')}}, {{__('messages.apple-pay')}}]</span>--}}
+{{--														<span class="fw-bolder fs-5 mb-0">{{__('online-payment')}}</span>--}}
+{{--														<span class="text-muted fs-6">[{{__('visa')}}, {{__('master-card')}}, {{__('mada')}}, {{__('apple-pay')}}]</span>--}}
 {{--													</span>--}}
 {{--                                                <!--end::Label-->--}}
 {{--                                            </label>--}}
@@ -68,7 +68,7 @@
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('messages.payment-online')}}</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('payment-online')}}</span>
                                                         @if(!$canPayOnline)
                                                         <small style="color: red;">{{__('You can not activate pay online because payment account not active yet')}}</small>
                                                         @endif
@@ -86,7 +86,7 @@
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('messages.payment-in-cash-upon-receipt')}}</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('payment-in-cash-upon-receipt')}}</span>
 													</span>
                                                 <!--end::Label-->
                                             </label>
@@ -95,7 +95,7 @@
                                             <div class="separator separator-dashed my-6"></div>
                                             <!--end::Option-->
                                             <div style="margin-top: 50px !important;">
-                                                <span class="text-active-gray-900" style="font-size: 18px !important;">{{__('messages.customer-reception-methods')}}</span>
+                                                <span class="text-active-gray-900" style="font-size: 18px !important;">{{__('customer-reception-methods')}}</span>
                                             </div>
 
                                             <div class="separator separator-dashed my-6"></div>
@@ -107,11 +107,11 @@
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('messages.delivery')}}</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('delivery')}}</span>
                                                     @if(!$hasDeliveryCompanies)
-                                                    <small style="color: red;">{{__('messages.you are not signed with any delivery company yet')}}</small>
+                                                    <small style="color: red;">{{__('you are not signed with any delivery company yet')}}</small>
                                                     @else
-                                                        <small style="color: green;">{{__('messages.you are signed with delivery company')}}</small>
+                                                        <small style="color: green;">{{__('you are signed with delivery company')}}</small>
                                                     @endif
                                                     @if(!$hasActiveDrivers)
                                                     <small style="color: red;">{{__('You do not have any active drivers')}}</small>
@@ -132,7 +132,7 @@
                                                 <!--end::Input-->
                                                 <!--begin::Label-->
                                                 <span class="form-check-label d-flex flex-column align-items-start">
-														<span class="fw-bolder fs-5 mb-0">{{__('messages.pick-up-from-the-restaurant')}}</span>
+														<span class="fw-bolder fs-5 mb-0">{{__('pick-up-from-the-restaurant')}}</span>
 													</span>
                                                 <!--end::Label-->
                                             </label>
@@ -158,8 +158,8 @@
                                         <!--end::Card body-->
                                         <!--begin::Card footer-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <button class="btn btn-light btn-active-light-primary me-2">{{__('messages.discard')}}</button>
-                                            <button class="btn btn-khardl px-6">{{__('messages.save-changes')}}</button>
+                                            <button class="btn btn-light btn-active-light-primary me-2">{{__('discard')}}</button>
+                                            <button class="btn btn-khardl px-6">{{__('save-changes')}}</button>
                                         </div>
                                         <!--end::Card footer-->
                                     </form>

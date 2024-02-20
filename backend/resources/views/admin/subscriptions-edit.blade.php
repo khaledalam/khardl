@@ -1,5 +1,5 @@
 @extends('layouts.admin-sidebar')
-@section('title', __('messages.New subscription'))
+@section('title', __('New subscription'))
 @section('content')
     <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -25,12 +25,12 @@
               <!--begin::Card header-->
               <div class="card-header">
                 <div class="card-title">
-                  <h2>{{ __('messages.New subscription')}}</h2>
+                  <h2>{{ __('New subscription')}}</h2>
                 </div>
                 <a href="{{ route('admin.subscriptions') }}">
                     <button type="button" class="btn btn-primary btn-sm">
                         <i class="fa fa-arrow-left"></i>
-                        {{ __('messages.Back to list') }}
+                        {{ __('Back to list') }}
                     </button>
                 </a>
               </div>
@@ -42,16 +42,16 @@
                   <div class="mb-10 fv-row">
                     <!-- Arabic Name -->
                     <div class="mb-2" style="width: 50%; float: left;">
-                        <label class="required form-label">{{ __('messages.Name (Arabic)')}}</label>
-                        <input type="text" name="name_ar" class="form-control" required placeholder="{{ __('messages.Name (Arabic)')}}" value="{{ old('name_ar') ?? $subscription->getTranslation('name', 'ar')  }}" />
-                        <div class="text-muted fs-7">{{ __('messages.Name (Arabic)')}} {{ __('messages.is-required')}}</div>
+                        <label class="required form-label">{{ __('Name (Arabic)')}}</label>
+                        <input type="text" name="name_ar" class="form-control" required placeholder="{{ __('Name (Arabic)')}}" value="{{ old('name_ar') ?? $subscription->getTranslation('name', 'ar')  }}" />
+                        <div class="text-muted fs-7">{{ __('Name (Arabic)')}} {{ __('is-required')}}</div>
                     </div>
 
                     <!-- English Name -->
                     <div class="mb-2" style="width: 50%; float: left;">
-                        <label class="required form-label">{{ __('messages.Name (English)')}}</label>
-                        <input type="text" name="name_en" class="form-control" required placeholder="{{ __('messages.Name (English)')}}" value="{{ old('name_en')  ?? $subscription->getTranslation('name', 'en')}}" />
-                        <div class="text-muted fs-7">{{ __('messages.Name (English)')}} {{ __('messages.is-required')}}</div>
+                        <label class="required form-label">{{ __('Name (English)')}}</label>
+                        <input type="text" name="name_en" class="form-control" required placeholder="{{ __('Name (English)')}}" value="{{ old('name_en')  ?? $subscription->getTranslation('name', 'en')}}" />
+                        <div class="text-muted fs-7">{{ __('Name (English)')}} {{ __('is-required')}}</div>
                     </div>
 
                     <div style="clear: both;"></div> <!-- Clear the float -->
@@ -60,13 +60,13 @@
                                                 <!--begin::Input group-->
                   <div class="mb-10 fv-row">
                     <!--begin::Label-->
-                    <label class="required form-label">{{ __('messages.Price')}}</label>
+                    <label class="required form-label">{{ __('Price')}}</label>
                     <!--end::Label-->
                     <!--begin::Input-->
-                    <input type="number" min="1" step="0.01" name="amount" class="form-control mb-2" required placeholder="{{ __('messages.Price')}}" value="{{old('amount')  ?? $subscription->amount}}" />
+                    <input type="number" min="1" step="0.01" name="amount" class="form-control mb-2" required placeholder="{{ __('Price')}}" value="{{old('amount')  ?? $subscription->amount}}" />
                     <!--end::Input-->
                     <!--begin::Description-->
-                    <div class="text-muted fs-7">{{ __('messages.Price')}} {{ __('messages.is-required')}}</div>
+                    <div class="text-muted fs-7">{{ __('Price')}} {{ __('is-required')}}</div>
                     <!--end::Description-->
                   </div>
                   <!--end::Input group-->
@@ -76,8 +76,8 @@
                                   <button type="submit" id="kt_ecommerce_add_product_submit"
                                       class="btn btn-primary">
                                       <i class="bi bi-check2-square mx-1"></i>
-                                      <span class="indicator-label">{{ __('messages.update') }}</span>
-                                      <span class="indicator-progress">{{ __('messages.please-wait')}}
+                                      <span class="indicator-label">{{ __('update') }}</span>
+                                      <span class="indicator-progress">{{ __('please-wait')}}
                                           <span
                                               class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                   </button>

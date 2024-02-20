@@ -23,7 +23,7 @@
                                       <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">
                                         <p class="btn btn-primary text-uppercase w-100 mb-10">
 
-                                                {{ __('messages.all-categories') }}
+                                                {{ __('all-categories') }}
 
                                         </p>
                                     </a>
@@ -60,7 +60,7 @@
                                                       </span>
                                                       <!--end::Svg Icon-->
                                                   </span>
-                                                  <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('messages.add-new-category') }}</button>
+                                                  <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('add-new-category') }}</button>
                                               </span>
                                               <!--end::Add label-->
                                               <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
@@ -68,29 +68,29 @@
                                                 <div id="categoryForm" class="mt-2" style="display: none !important;" >
                                                     <ul class="nav nav-tabs" id="languageTabs">
                                                         <li class="nav-item">
-                                                            <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('messages.english')}}</a>
+                                                            <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('english')}}</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('messages.arabic')}}</a>
+                                                            <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('arabic')}}</a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('messages.logo')}}</a>
+                                                            <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('logo')}}</a>
                                                         </li>
                                                     </ul>
                                                     <div class="tab-content mt-3">
                                                         <div class="tab-pane fade show active" id="en">
-                                                            <input type="text" class="form-control" placeholder="{{ __('messages.Enter text in English') }}" name="name_en">
+                                                            <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en">
                                                         </div>
                                                         <div class="tab-pane fade" id="ar">
-                                                            <input type="text" class="form-control" placeholder="{{ __('messages.Enter text in Arabic') }}" name="name_ar">
+                                                            <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
                                                         </div>
                                                         <div class="tab-pane fade" id="logo">
-                                                            <label>{{__('messages.category-logo')}}</label>
+                                                            <label>{{__('category-logo')}}</label>
                                                             <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" />
                                                         </div>
                                                     </div>
                                                     <div class="d-flex justify-content-center">
-                                                        <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('messages.save') }}</button>
+                                                        <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('save') }}</button>
                                                     </div>
                                                 </div>
                                               </form>
@@ -117,7 +117,7 @@
                                       <!--end::Actions-->
                                       <!--begin::Pagination-->
                                       <div class="d-flex align-items-center flex-wrap gap-2">
-                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('messages.add-new-item') }}
+                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('add-new-item') }}
                                               <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
                                               <span class="svg-icon svg-icon-2 me-3">
                                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -184,7 +184,7 @@
                                                   <!--end::Title-->
                                                   <!--begin::Date-->
                                                   <td class="text-center">
-                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.Actions') }}
+                                                    <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                     <span class="svg-icon svg-icon-5 m-0">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -196,13 +196,13 @@
                                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                         <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
-                                                            <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('messages.view') }}</a>
+                                                            <a href="{{ route('restaurant.view-item',['item' => $item->id]) }}" class="menu-link px-3">{{ __('view') }}</a>
                                                         </div>
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
                                                         {{-- TODO:Edit item --}}
                                                     {{--     <div class="menu-item px-3">
-                                                            <a href="https://google.com" class="menu-link px-3">{{ __('messages.edit') }}</a>
+                                                            <a href="https://google.com" class="menu-link px-3">{{ __('edit') }}</a>
                                                         </div> --}}
                                                         <!--end::Menu item-->
                                                         <!--begin::Menu item-->
@@ -211,7 +211,7 @@
                                                             <form class="delete-form" action="{{ route('restaurant.delete-item', ['id' => $item->id]) }}" method="POST">
                                                                 @method('DELETE')
                                                                 @csrf
-                                                                <a href="#" class="menu-link px-3 delete-button">{{ __('messages.delete') }}</a>
+                                                                <a href="#" class="menu-link px-3 delete-button">{{ __('delete') }}</a>
                                                             </form>
                                                         </div>
                                                         <!--end::Menu item-->
@@ -224,7 +224,7 @@
 
                                               <tr>
                                                   <td colspan="6" class="text-center">
-                                                      <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"> {{ __('messages.add-new-item') }} <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
+                                                      <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"> {{ __('add-new-item') }} <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
                                                           <span class="svg-icon svg-icon-2 me-3">
                                                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                   <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
@@ -279,16 +279,16 @@
                     <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse end-0 {{app()->getLocale() == 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
                         <!--begin::Demos drawer toggle-->
                         <button id="addCheckbox" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
-                            <span id="create_new_checkbox">+ {{ __('messages.Checkbox') }}</span>
+                            <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
                         </button>
                         <!--end::Demos drawer toggle-->
                         <!--begin::Help drawer toggle-->
                         <button id="addSelection" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Selection">
-                            <span id="create_new_selection">+ {{ __('messages.Selection') }}</span>
+                            <span id="create_new_selection">+ {{ __('Selection') }}</span>
                         </button>                        <!--end::Help drawer toggle-->
                         <!--begin::Purchase link-->
                         <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
-                            <span id="create_new_Dropdown">+ {{ __('messages.Dropdown') }}</span>
+                            <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
                         </button>
                         <!--end::Purchase link-->
                     </div>
@@ -300,7 +300,7 @@
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
                             <!--begin::Title-->
-                            <h1 class="mb-3">{{__('messages.create-new-items')}}</h1>
+                            <h1 class="mb-3">{{__('create-new-items')}}</h1>
                             <!--end::Title-->
                         </div>
                         <!--end::Heading-->
@@ -308,7 +308,7 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__('messages.item-photo')}}</span>
+                                <span class="required">{{__('item-photo')}}</span>
                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
                             </label>
                             <!--end::Label-->
@@ -321,7 +321,7 @@
                             <!--begin::Label-->
                             <div class="d-flex justify-content-between align-items-center">
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__('messages.item-availability')}}</span>
+                                    <span class="required">{{__('item-availability')}}</span>
                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify availability for an item"></i>
                                 </label>
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -335,7 +335,7 @@
                         <div class="row g-9 mb-8">
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.Price') }}</label>
+                                <label class="required fs-6 fw-bold mb-2">{{ __('Price') }}</label>
                                 <!--begin::Input-->
                                 <div class="position-relative d-flex align-items-center">
                                     <!--begin::Datepicker-->
@@ -347,7 +347,7 @@
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.Calories') }}</label>
+                                <label class="required fs-6 fw-bold mb-2">{{ __('Calories') }}</label>
                                 <input type="number" step="0.1" min="1" required name="calories" class="form-control form-control-solid ps-12" />
                             </div>
                             <!--end::Col-->
@@ -356,42 +356,42 @@
                         <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-bold mb-2">{{ __('messages.Name') }}</label>
+                            <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
 
                             <ul class="nav nav-tabs" >
                                 <li class="nav-item">
-                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('messages.English') }}</a>
+                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('English') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">{{ __('messages.Arabic') }}</a>
+                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">{{ __('Arabic') }}</a>
                                 </li>
                             </ul>
                             <div class="tab-content mt-3">
                                 <div class="tab-pane fade show active" id="name-en">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in english') }}"   name="item_name_en" />
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}"   name="item_name_en" />
                                 </div>
                                 <div class="tab-pane fade" id="name-ar">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in arabic') }}"   name="item_name_ar" />
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="item_name_ar" />
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-bold mb-2">{{ __("messages.Description") }}</label>
+                            <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
 
                             <ul class="nav nav-tabs" >
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">{{ __('messages.English') }}</a>
+                                    <a class="nav-link active" id="d-en-tab" data-bs-toggle="tab" href="#d-en">{{ __('English') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">{{ __('messages.Arabic') }}</a>
+                                    <a class="nav-link" id="d-ar-tab" data-bs-toggle="tab" href="#d-ar">{{ __('Arabic') }}</a>
                                 </li>
                             </ul>
                             <div class="tab-content mt-3">
                                 <div class="tab-pane fade show active" id="d-en">
-                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in english') }}"   name="description_en"></textarea>
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}"   name="description_en"></textarea>
                                 </div>
                                 <div class="tab-pane fade" id="d-ar">
-                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('messages.Enter name in arabic') }}"   name="description_ar"></textarea>
+                                    <textarea type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="description_ar"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -416,10 +416,10 @@
 
                         <!--begin::Actions-->
                         <div class="text-center">
-                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('messages.clear')}}</button>
+                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{__('clear')}}</button>
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                                <span class="indicator-label">{{__('messages.submit')}}</span>
-                                <span class="indicator-progress" id="waiting-item">{{ __('messages.Please wait...') }}
+                                <span class="indicator-label">{{__('submit')}}</span>
+                                <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
@@ -572,7 +572,7 @@
                             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</button>
                             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
                                 <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">{{ __('messages.Please wait...') }}
+                                <span class="indicator-progress">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
@@ -624,14 +624,14 @@
                             var form = button.closest('.delete-form');
 
                             Swal.fire({
-                                title: '{{ __('messages.are-you-sure') }}',
-                                text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
+                                title: '{{ __('are-you-sure') }}',
+                                text: "{{ __('you-wont-be-able-to-undo-this') }}",
                                 icon: 'warning',
                                 showCancelButton: true,
                                 confirmButtonColor: '#d33',
                                 cancelButtonColor: '#3085d6',
-                                confirmButtonText: '{{ __('messages.delete') }}',
-                                cancelButtonText: '{{ __('messages.cancel') }}'
+                                confirmButtonText: '{{ __('delete') }}',
+                                cancelButtonText: '{{ __('cancel') }}'
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     form.submit();
@@ -712,21 +712,21 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('messages.Checkbox') }} </span>
+                            <span class="">{{ __('Checkbox') }} </span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                             <input type="hidden" name="checkbox_required[${checkboxCount}]" value="false" />
-                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" id="" > {{ __('messages.Required') }}
+                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" id="" > {{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${checkboxCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[]" placeholder="{{ __('messages.Title in english') }}">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[]" placeholder="{{ __('messages.Title in arabic') }}">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleEn[]" placeholder="{{ __('Title in english') }}">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-65" name="checkboxInputTitleAr[]" placeholder="{{ __('Title in arabic') }}">
 
-                            <input type="number" min="0" step="0.1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('messages.Max') }}">
+                            <input type="number" min="0" step="0.1" required class="form-control form-control-solid mx-3 w-45" name="checkboxInputMaximumChoice[]" placeholder="{{ __('Max') }}">
                             <button class="delete-checkbox btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
                     </div>
@@ -734,7 +734,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${checkboxCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('messages.Add option') }}</a>
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
                     </div>
                 </div>
             `;
@@ -772,20 +772,20 @@
             if(isDeletable){
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in english') }}">
-                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in arabic') }}">
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Name in english') }}">
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Name in arabic') }}">
 
-                    <input type="number" min="0" step="0.1" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Price') }}">
+                    <input type="number" min="0" step="0.1" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
             }else {
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between mt-4">
-                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
-                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in arabic') }}">
+                    <input type="text"  required name="checkboxInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in english') }}">
+                    <input type="text"  required name="checkboxInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Name in arabic') }}">
 
-                    <input type="number" step="0.1" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Price') }}">
+                    <input type="number" step="0.1" min="0" required name="checkboxInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Price') }}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                 </div>
             `;
@@ -820,20 +820,20 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('messages.Selection') }}</span>
+                            <span class="">{{ __('Selection') }}</span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
-                            <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" > {{ __('messages.Required') }}
+                            <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" > {{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${selectionCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="{{ __('messages.Title in english') }}">
-                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="{{ __('messages.Title in arabic') }}">
+                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleEn[]" placeholder="{{ __('Title in english') }}">
+                            <input type="text"  required class="form-control form-control-solid mx-3 w-100" name="selectionInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}">
 
                             <button class="delete-selection btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
@@ -842,7 +842,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${selectionCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('messages.Add option') }}</a>
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
                     </div>
                 </div>
             `;
@@ -880,20 +880,20 @@
             if(isDeletable){
             optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
-                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in arabic') }}">
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in english') }}">
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
-                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Price') }}">
+                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
                     <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;  }
             else {
                 optionDiv.innerHTML = `
                 <div class="d-flex justify-content-between align-items-center mt-5">
-                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
-                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in arabic') }}">
+                    <input type="text" required  name="selectionInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in english') }}">
+                    <input type="text" required  name="selectionInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
-                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Price') }}">
+                    <input type="number" min="0" step="0.1" required name="selectionInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
                     <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                 </div>
             `;
@@ -927,20 +927,20 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('messages.Dropdown') }}</span>
+                            <span class="">{{ __('Dropdown') }}</span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
-                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" > {{ __('messages.Required') }}
+                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" > {{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
 
                     <div id="inputContainer${dropdownCount}">
                         <div class="input-container d-flex justify-content-between align-items-center hover-container my-3">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="{{ __('messages.Title in english') }}">
-                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="{{ __('messages.Title in arabic') }}">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleEn[]" placeholder="{{ __('Title in english') }}">
+                            <input type="text" required class="form-control form-control-solid mx-3 w-100" name="dropdownInputTitleAr[]"  placeholder="{{ __('Title in arabic') }}">
 
                             <button class="delete-dropdown btn btn-sm btn-white"><i class="fas fa-trash text-danger"></i></button>
                         </div>
@@ -949,7 +949,7 @@
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
                     <div class="options" id="${dropdownCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('messages.Add option') }}</a>
+                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
                     </div>
                 </div>
             `;
@@ -987,8 +987,8 @@
             if(isDeletable){
             optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('messages.Name in english') }}">
-                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in arabic') }}">
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Name in english') }}">
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
 
                         <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
@@ -996,8 +996,8 @@
             `; }else {
                 optionDiv.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('messages.Name in english') }}">
-                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('messages.Name in arabic') }}">
+                        <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in english') }}">
+                        <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Name in arabic') }}">
 
 
                         <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>

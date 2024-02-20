@@ -1,7 +1,7 @@
 @extends('layouts.admin-sidebar')
 
 
-@section('title', __('messages.restaurant-owner-management'))
+@section('title', __('restaurant-owner-management'))
 
 @section('content')
 <!--begin::Content-->
@@ -16,20 +16,20 @@
                 <!--begin::Header-->
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.restaurant-owners')}}</span>
-                        <span class="text-muted mt-1 fw-bold fs-7">{{ count($admins) }} {{ __('messages.restaurant-owners')}}</span>
+                        <span class="card-label fw-bolder fs-3 mb-1">{{ __('restaurant-owners')}}</span>
+                        <span class="text-muted mt-1 fw-bold fs-7">{{ count($admins) }} {{ __('restaurant-owners')}}</span>
                     </h3>
                     <form action="" method="GET" id="selectForm">
                         @csrf
                         <div class="card-toolbar form-group">
                             <select name="type"  id="selectType" class="form-select">
-                                <option value="">{{ __('messages.Select') }}</option>
-                                <option value="complete_step_1" {{ request('type') === 'complete_step_1' ? 'selected' : '' }}>{{ __('messages.Complete Step 1 only') }}</option>
-                                <option value="complete_step_2" {{ request('type') === 'complete_step_2' ? 'selected' : '' }}>{{ __('messages.Have restaurant') }}</option>
-                                <option value="have_active_restaurant" {{ request('type') === 'have_active_restaurant' ? 'selected' : '' }}>{{ __('messages.Have active restaurant') }}</option>
-                                <option value="have_inactive_restaurant" {{ request('type') === 'have_inactive_restaurant' ? 'selected' : '' }}>{{ __('messages.Have inactive restaurant') }}</option>
-                                <option value="verified_email" {{ request('type') === 'verified_email' ? 'selected' : '' }}>{{ __('messages.Verified email') }}</option>
-                                <option value="not_verified_email" {{ request('type') === 'not_verified_email' ? 'selected' : '' }}>{{ __('messages.Not verified email') }}</option>
+                                <option value="">{{ __('Select') }}</option>
+                                <option value="complete_step_1" {{ request('type') === 'complete_step_1' ? 'selected' : '' }}>{{ __('Complete Step 1 only') }}</option>
+                                <option value="complete_step_2" {{ request('type') === 'complete_step_2' ? 'selected' : '' }}>{{ __('Have restaurant') }}</option>
+                                <option value="have_active_restaurant" {{ request('type') === 'have_active_restaurant' ? 'selected' : '' }}>{{ __('Have active restaurant') }}</option>
+                                <option value="have_inactive_restaurant" {{ request('type') === 'have_inactive_restaurant' ? 'selected' : '' }}>{{ __('Have inactive restaurant') }}</option>
+                                <option value="verified_email" {{ request('type') === 'verified_email' ? 'selected' : '' }}>{{ __('Verified email') }}</option>
+                                <option value="not_verified_email" {{ request('type') === 'not_verified_email' ? 'selected' : '' }}>{{ __('Not verified email') }}</option>
                             </select>
                         </div>
                     </form>
@@ -45,12 +45,12 @@
                             <thead>
                                 <tr class="fw-bolder text-muted">
                                     <th class="min-w-25px">#</th>
-                                    <th class="min-w-200px">{{ __('messages.first-name')}}</th>
-                                    <th class="min-w-150px">{{ __('messages.last-name')}}</th>
-                                    <th class="min-w-150px">{{ __('messages.phone-number')}}</th>
-                                    <th class="min-w-150px">{{ __('messages.email')}}</th>
-                                    <th class="min-w-150px">{{ __('messages.restaurant')}}</th>
-                                    <th class="min-w-150px text-end">{{ __('messages.Allow Login')}}</th>
+                                    <th class="min-w-200px">{{ __('first-name')}}</th>
+                                    <th class="min-w-150px">{{ __('last-name')}}</th>
+                                    <th class="min-w-150px">{{ __('phone-number')}}</th>
+                                    <th class="min-w-150px">{{ __('email')}}</th>
+                                    <th class="min-w-150px">{{ __('restaurant')}}</th>
+                                    <th class="min-w-150px text-end">{{ __('Allow Login')}}</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -78,9 +78,9 @@
                                         <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $admin->email }}
                                             <br>
                                             @if(is_null($admin->email_verified_at))
-                                            <span class="badge badge-warning">{{ __('messages.unverified') }}</span>
+                                            <span class="badge badge-warning">{{ __('unverified') }}</span>
                                             @else
-                                            <span class="badge badge-success">{{ __('messages.verified') }}</span>
+                                            <span class="badge badge-success">{{ __('verified') }}</span>
                                             @endif
                                         </span>
                                     </td>
@@ -90,13 +90,13 @@
                                             {{ $admin->restaurant?->restaurant_name }}
                                             <br>
                                             @if ($admin->restaurant->is_live())
-                                            <span class="badge badge-success">{{ __('messages.active') }}</span>
+                                            <span class="badge badge-success">{{ __('active') }}</span>
                                             @else
-                                            <span class="badge badge-warning">{{ __('messages.inactive') }}</span>
+                                            <span class="badge badge-warning">{{ __('inactive') }}</span>
                                             @endif
                                         </a>
                                         @else
-                                        <span class="badge badge-secondary">{{ __('messages.Not complete step 2') }}</span>
+                                        <span class="badge badge-secondary">{{ __('Not complete step 2') }}</span>
                                         @endif
 
                                     </td>
@@ -155,16 +155,16 @@
 
             Swal.fire({
                 title: '{{ __('
-                messages.are - you - sure ') }}'
-                , text: "{{ __('messages.you-wont-be-able-to-undo-this') }}"
+                are - you - sure ') }}'
+                , text: "{{ __('you-wont-be-able-to-undo-this') }}"
                 , icon: 'warning'
                 , showCancelButton: true
                 , confirmButtonColor: '#d33'
                 , cancelButtonColor: '#3085d6'
                 , confirmButtonText: '{{ __('
-                messages.delete ') }}'
+                delete ') }}'
                 , cancelButtonText: '{{ __('
-                messages.cancel ') }}'
+                cancel ') }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

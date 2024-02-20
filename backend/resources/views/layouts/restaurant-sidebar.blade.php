@@ -5,7 +5,7 @@
 <html @if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">
 
 <head>
-    <title>{{ __('messages.khardl')}} | @yield('title', __('messages.dashboard'))</title>
+    <title>{{ __('khardl')}} | @yield('title', __('dashboard'))</title>
     <meta charset="utf-8" />
     <meta name="description" content="Kardl" />
     <meta name="keywords" content="Kardl" />
@@ -101,7 +101,7 @@
     function showAlert(type, messages) {
         Swal.fire({
             icon: type,
-            title: '<ul><li>' + messages.join('</li><li>') + '</li></ul><br>',
+            title: '<ul><li>' + join('</li><li>') + '</li></ul><br>',
             showConfirmButton: true,
             timer: 900000000
         });
@@ -179,7 +179,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                        <span class="menu-title ">{{__('messages.summary')}} </span>
+                                        <span class="menu-title ">{{__('summary')}} </span>
                                 </span>
                             </a>
 
@@ -197,7 +197,7 @@
                                         <!--end::Svg Icon-->
                                     </span>
 
-                                        <span class="menu-title">{{__('messages.site-editor')}} </span>
+                                        <span class="menu-title">{{__('site-editor')}} </span>
                                 </span>
                             </a>
 
@@ -219,7 +219,7 @@
                                         </span>
                                     <!--end::Svg Icon-->
                                 </span>
-                                <span class="menu-title">{{__('messages.branches')}}</span>
+                                <span class="menu-title">{{__('branches')}}</span>
                             </span>
                            </a>
                         </div>
@@ -241,7 +241,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.menu')}}</span>
+                                    <span class="menu-title">{{__('menu')}}</span>
 
                                 </span>
                             </a>
@@ -261,7 +261,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.menu')}}</span>
+                                    <span class="menu-title">{{__('menu')}}</span>
                                 </span>
                             </a>
                             @endif
@@ -280,7 +280,7 @@
                                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.staff-modification')}}</span>
+                                    <span class="menu-title">{{__('staff-modification')}}</span>
                                 </span>
                             </a>
                             @else
@@ -293,7 +293,7 @@
                                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.staff-modification')}}</span>
+                                    <span class="menu-title">{{__('staff-modification')}}</span>
                                 </span>
                             </a>
                             @endif
@@ -311,7 +311,7 @@
                                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.drivers')}}</span>
+                                    <span class="menu-title">{{__('drivers')}}</span>
                                 </span>
                             </a>
                             @else
@@ -324,7 +324,7 @@
                                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" /> </svg> </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.staff-modification')}}</span>
+                                    <span class="menu-title">{{__('staff-modification')}}</span>
                                 </span>
                             </a>
                             @endif
@@ -342,7 +342,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.orders')}}</span>
+                                    <span class="menu-title">{{__('orders')}}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -351,7 +351,7 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot {{ ($link == 'orders-all') ? 'bg-light' : '' }}"></span>
                                         </span>
-                                        <span class="menu-title">{{__('messages.orders-all')}}</span>
+                                        <span class="menu-title">{{__('orders-all')}}</span>
                                     </div>
                                 </a>
                                 <a href="{{route('restaurant.orders_add')}}">
@@ -359,7 +359,7 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot {{ ($link == 'orders-add') ? 'bg-light' : '' }}"></span>
                                         </span>
-                                        <span class="menu-title">{{__('messages.orders-add')}}</span>
+                                        <span class="menu-title">{{__('orders-add')}}</span>
                                     </div>
                                 </a>
                                 <a href="{{route('restaurant.unavailable-products')}}">
@@ -367,7 +367,7 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot {{ ($link == 'unavailable-products') ? 'bg-light' : '' }}"></span>
                                         </span>
-                                        <span class="menu-title">{{__('messages.Unavailable products')}}</span>
+                                        <span class="menu-title">{{__('Unavailable products')}}</span>
                                     </div>
                                 </a>
                             </div>
@@ -383,7 +383,7 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                        <span class="menu-title">{{__('messages.Coupons')}}</span>
+                                        <span class="menu-title">{{__('Coupons')}}</span>
                                 </span>
                             </a>
                         </div>
@@ -398,7 +398,7 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                        <span class="menu-title">{{__('messages.services')}}</span>
+                                        <span class="menu-title">{{__('services')}}</span>
                                 </span>
                             </a>
                         </div>
@@ -413,7 +413,7 @@
                                             </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.delivery-companies')}}</span>
+                                    <span class="menu-title">{{__('delivery-companies')}}</span>
                                 </span>
                             </a>
                         </div>
@@ -428,7 +428,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.promotions')}}</span>
+                                    <span class="menu-title">{{__('promotions')}}</span>
                                 </span>
                             </a>
                         </div> --}}
@@ -443,7 +443,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.qr-maker')}}</span>
+                                    <span class="menu-title">{{__('qr-maker')}}</span>
                                 </span>
                             </a>
                         </div> --}}
@@ -454,7 +454,7 @@
                                     <span class="menu-icon">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M1 5C1 3.34315 2.34315 2 4 2H8.43845C9.81505 2 11.015 2.93689 11.3489 4.27239L11.7808 6H13.5H20C21.6569 6 23 7.34315 23 9V10C23 10.5523 22.5523 11 22 11C21.4477 11 21 10.5523 21 10V9C21 8.44772 20.5523 8 20 8H13.5H11.7808H4C3.44772 8 3 8.44772 3 9V10V19C3 19.5523 3.44772 20 4 20H8C8.55228 20 9 20.4477 9 21C9 21.5523 8.55228 22 8 22H4C2.34315 22 1 20.6569 1 19V10V9V5ZM3 6.17071C3.31278 6.06015 3.64936 6 4 6H9.71922L9.40859 4.75746C9.2973 4.3123 8.89732 4 8.43845 4H4C3.44772 4 3 4.44772 3 5V6.17071ZM17 19C14.2951 19 13 20.6758 13 22C13 22.5523 12.5523 23 12 23C11.4477 23 11 22.5523 11 22C11 20.1742 12.1429 18.5122 13.9952 17.6404C13.3757 16.936 13 16.0119 13 15C13 12.7909 14.7909 11 17 11C19.2091 11 21 12.7909 21 15C21 16.0119 20.6243 16.936 20.0048 17.6404C21.8571 18.5122 23 20.1742 23 22C23 22.5523 22.5523 23 22 23C21.4477 23 21 22.5523 21 22C21 20.6758 19.7049 19 17 19ZM17 17C18.1046 17 19 16.1046 19 15C19 13.8954 18.1046 13 17 13C15.8954 13 15 13.8954 15 15C15 16.1046 15.8954 17 17 17Z" fill="{{ ($link == 'customers-data' ) ? '#c2da08' : '#000000' }}"></path> </g></svg>
                                     </span>
-                                    <span class="menu-title">{{__('messages.customers-data')}}</span>
+                                    <span class="menu-title">{{__('customers-data')}}</span>
                                 </span>
                             </a>
                         </div>
@@ -472,7 +472,7 @@
                                     <span class="menu-title">
 
 
-                                        {{__('messages.payments')}} </span>
+                                        {{__('payments')}} </span>
                                 </span>
                             </a>
                         </div>
@@ -486,7 +486,7 @@
                                         <svg fill="{{ ($link == 'settings' ) ? '#c2da08' : '#000000' }}" height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 482.568 482.568" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M116.993,203.218c13.4-1.8,26.8,2.8,36.3,12.3l24,24l22.7-22.6l-32.8-32.7c-5.1-5.1-5.1-13.4,0-18.5s13.4-5.1,18.5,0 l32.8,32.8l22.7-22.6l-24.1-24.1c-9.5-9.5-14.1-23-12.3-36.3c4-30.4-5.7-62.2-29-85.6c-23.8-23.8-56.4-33.4-87.3-28.8 c-4.9,0.7-6.9,6.8-3.4,10.3l30.9,30.9c14.7,14.7,14.7,38.5,0,53.1l-19,19c-14.7,14.7-38.5,14.7-53.1,0l-31-30.9 c-3.5-3.5-9.5-1.5-10.3,3.4c-4.6,30.9,5,63.5,28.8,87.3C54.793,197.518,86.593,207.218,116.993,203.218z"></path> <path d="M309.193,243.918l-22.7,22.6l134.8,134.8c5.1,5.1,5.1,13.4,0,18.5s-13.4,5.1-18.5,0l-134.8-134.8l-22.7,22.6l138.9,138.9 c17.6,17.6,46.1,17.5,63.7-0.1s17.6-46.1,0.1-63.7L309.193,243.918z"></path> <path d="M361.293,153.918h59.9l59.9-119.7l-29.9-29.9l-119.8,59.8v59.9l-162.8,162.3l-29.3-29.2l-118,118 c-24.6,24.6-24.6,64.4,0,89s64.4,24.6,89,0l118-118l-29.9-29.9L361.293,153.918z"></path> </g> </g> </g></svg>                                        </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{__('messages.settings')}}</span>
+                                    <span class="menu-title">{{__('settings')}}</span>
                                 </span>
                             </a>
                         </div>
@@ -616,9 +616,9 @@
                                     <div class="menu-item px-5" data-kt-menu-trigger="hover"
                                          data-kt-menu-placement="left-start">
                                         <a href="#" class="menu-link px-5">
-                                                <span class="menu-title position-relative">{{ __('messages.language')}}
+                                                <span class="menu-title position-relative">{{ __('language')}}
                                                     <span
-                                                        class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('messages.english')}} @else {{ __('messages.arabic')}} @endif
+                                                        class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('english')}} @else {{ __('arabic')}} @endif
                                                         <img class="w-15px h-15px rounded-1 ms-2"
                                                              @if(app()->getLocale() != 'ar')
                                                              src="{{ global_asset('assets/media/flags/united-kingdom.svg') }}"
@@ -638,7 +638,7 @@
                                                             <span class="symbol symbol-20px me-4">
                                                                 <img class="rounded-1"
                                                                      src={{ global_asset('assets/media/flags/united-kingdom.svg') }} alt="" />
-                                                            </span>{{ __('messages.english')}}</button>
+                                                            </span>{{ __('english')}}</button>
                                                 </form>
                                             </div>
                                             <!--end::Menu item-->
@@ -650,7 +650,7 @@
                                                             class="w-100 menu-link d-flex px-5 active">
                                                         <span class="symbol symbol-20px me-4">
                                                             <img class="rounded-1" src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
-                                                                 alt="" /> </span>{{ __('messages.arabic')}}</button>
+                                                                 alt="" /> </span>{{ __('arabic')}}</button>
                                                 </form>
                                             </div>
                                             <!--end::Menu item-->
@@ -662,7 +662,7 @@
                                     <div class="menu-item px-5">
                                         <a href="{{ route('tenant_logout_get') }}"
                                            class="menu-link px-5" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">{{ __('messages.sign-out')}}</a>
+                                        document.getElementById('logout-form').submit();">{{ __('sign-out')}}</a>
                                         <form id="logout-form" action="{{ route('tenant_logout_get') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
@@ -695,7 +695,7 @@
                     <div class="text-dark order-2 order-md-1">
                         <span class="text-muted fw-bold me-1">{{date('Y')}} ©</span>
                         <a href="/" target="_blank"
-                           class="text-gray-800 text-hover-khardl">{{__('messages.khardl')}}</a>
+                           class="text-gray-800 text-hover-khardl">{{__('khardl')}}</a>
                     </div>
                     <!--end::Copyright-->
                 </div>

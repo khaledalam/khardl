@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.Unavailable products'))
+@section('title', __('Unavailable products'))
 
 @section('content')
 
@@ -25,7 +25,7 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
-                        <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('messages.search')}}" />
+                        <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('search')}}" />
                     </div>
                     <!--end::Search-->
                 </div>
@@ -42,17 +42,17 @@
                                 <!--begin::Thead-->
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
                                     <tr>
-                                        <th>{{ __('messages.ID') }}</th>
-                                        <th>{{ __('messages.Image') }}</th>
-                                        <th>{{ __('messages.Name') }}</th>
-                                        <th>{{ __('messages.Price') }}</th>
-                                        <th>{{ __('messages.Status') }}</th>
-                                        <th>{{ __('messages.Category') }}</th>
-                                        <th>{{ __('messages.Branch') }}</th>
-                                        <th>{{ __('messages.User') }}</th>
-                                        <th>{{ __('messages.Calories') }}</th>
-                                        <th>{{ __('messages.Created at') }}</th>
-                                        <th>{{ __('messages.Actions') }}</th>
+                                        <th>{{ __('ID') }}</th>
+                                        <th>{{ __('Image') }}</th>
+                                        <th>{{ __('Name') }}</th>
+                                        <th>{{ __('Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
+                                        <th>{{ __('Category') }}</th>
+                                        <th>{{ __('Branch') }}</th>
+                                        <th>{{ __('User') }}</th>
+                                        <th>{{ __('Calories') }}</th>
+                                        <th>{{ __('Created at') }}</th>
+                                        <th>{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <!--end::Thead-->
@@ -110,14 +110,14 @@
                                         {{-- <td>{{ $customer->phone }}</td>
                                         <td>{{ $customer->email }}</td>
                                         <td>
-                                            <span class="badge {{ $customer->status }}">{{__("messages.$customer->status")}}</span>
+                                            <span class="badge {{ $customer->status }}">{{__("$customer->status")}}</span>
                                         </td>
                                         <td>{{ $customer->address }}</td>
                                         <td>{{ $customer->branch?->name }}</td>
                                         <td>{{ $customer->last_login?->format('Y-m-d') }}</td>
                                         <td>{{ $customer->created_at?->format('Y-m-d') }}</td> --}}
                                         <td class="text-end">
-                                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.Actions') }}
+                                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                                 <span class="svg-icon svg-icon-5 m-0">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -129,12 +129,12 @@
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">{{ __('messages.View') }}</a>
+                                                    <a href="#" class="menu-link px-3">{{ __('View') }}</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">{{ __('messages.Edit') }}</a>
+                                                    <a href="#" class="menu-link px-3">{{ __('Edit') }}</a>
                                                 </div>
                                             </div>
                                             <!--end::Menu-->

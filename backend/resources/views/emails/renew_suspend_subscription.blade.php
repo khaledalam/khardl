@@ -20,7 +20,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
-    <title>{{__("messages.Renew Subscription")}}</title>
+    <title>{{__("Renew Subscription")}}</title>
 </head>
 
 <body>
@@ -49,7 +49,7 @@
                                             <p>
                                                 We regret to inform you that your current subscription for the restaurant "{{ $restaurant_name }}" has been suspended. Unfortunately, this means your restaurant cannot receive any new orders.
                                             </p>
-                                         
+
                                             <p>
                                                 To proceed with the renewal and start receiving orders again, please follow this link: <a href="{{ $url }}">Renew Subscription</a>. Our team is ready to assist you throughout the process and answer any questions you may have.
                                             </p>

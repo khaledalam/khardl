@@ -45,7 +45,7 @@ class OrderRequest extends FormRequest
 
         $validator->after(function ($validator) use($cart){
             $user = Auth::user();
-          
+
             if($this->delivery_type != DeliveryType::PICKUP && (!$user->address || !$user->lat || !$user->lng)){
                 $validator->errors()->add('address', __('Please update your location before place an order'));
                 return ;
@@ -64,7 +64,7 @@ class OrderRequest extends FormRequest
                     return ;
                 }
                 if ($cart->subTotal() < $minimum = $cart->coupon()->minimum_cart_amount){
-                    $validator->errors()->add('cart', __('Coupon applied for only subtotal above :total',['total' => $minimum]).' '.__('messages.SAR'));
+                    $validator->errors()->add('cart', __('Coupon applied for only subtotal above :total',['total' => $minimum]).' '.__('SAR'));
                     return ;
                 }
             }
@@ -72,7 +72,7 @@ class OrderRequest extends FormRequest
                 $validator->errors()->add('payment_method', __('Invalid payment method'));
                 return ;
             }
-           
+
             if(!$cart->hasDelivery($this->delivery_type)){
                 $validator->errors()->add('delivery_type', __('Invalid Delivery Type'));
                 return ;

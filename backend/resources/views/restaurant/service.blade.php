@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.services'))
+@section('title', __('services'))
 
 @section('content')
 @push("styles")
@@ -22,20 +22,20 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
     function submitPayment(e){
         e.preventDefault();
         Swal.fire({
-            text: '{{ __('messages.are-you-sure-you')}}',
+            text: '{{ __('are-you-sure-you')}}',
             icon: 'warning',
-     
+
             showCancelButton: true,
-            inputPlaceholder: "{{ __('messages.Select an option') }}",
-            confirmButtonText: "{{ __('messages.yes') }}",
-            cancelButtonText: "{{ __('messages.no') }}"
+            inputPlaceholder: "{{ __('Select an option') }}",
+            confirmButtonText: "{{ __('yes') }}",
+            cancelButtonText: "{{ __('no') }}"
         }).then((result) => {
             if (result.isConfirmed) {
-                
+
                 goSell.submit();
             }
         });
-       
+
     }
     goSell.goSellElements({
         containerID:"root",
@@ -46,12 +46,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     waiting.style.display = 'block';
                     var submitButton = document.getElementById('tap-btn');
                     submitButton.disabled = true;
-            
+
                     document.getElementById('token_id').value = event.id;
                     document.getElementById('n_branches').value = document.getElementById('n_branches').value;
                     document.getElementById('type').value = document.getElementById('type').value;
                     document.getElementById('pay').submit();
-                    
+
                 }
             },
             publicKey:"{{env('TAP_PUBLIC_API_KEY')}}",
@@ -78,13 +78,13 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             }
         }
         });
-  
+
 
 
 </script>
 
 @endpush
-   
+
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
         <div class="d-flex flex-column flex-root">
@@ -107,10 +107,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                     <div class="card-body p-lg-10">
                                         <!--begin::Plans-->
                                         <div class="d-flex flex-column">
-                                          
+
                                             <!--begin::Heading-->
                                             <div class="mb-13 text-center">
-                                                <h1 class="fs-2hx fw-bolder mb-5">{{__('messages.Enjoy benefiting from our services')}}</h1>
+                                                <h1 class="fs-2hx fw-bolder mb-5">{{__('Enjoy benefiting from our services')}}</h1>
                                             </div>
                                             <!--end::Heading-->
 
@@ -163,11 +163,11 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 <!--begin::Price-->
                                                                 <div class="text-center">
 
-                                                                    <span class="mb-2 text-khardl">{{__('messages.SAR')}}</span>
+                                                                    <span class="mb-2 text-khardl">{{__('SAR')}}</span>
                                                                     @if($RO_subscription?->amount)
                                                                     <span class="fs-2x fw-bolder text-khardl text-center">{{$RO_subscription->amount}}</span>
                                                                     <br>
-                                                                    <span> {{__('messages.Number of available branches')}} <strong>{{$RO_subscription->number_of_branches}}</strong></span>
+                                                                    <span> {{__('Number of available branches')}} <strong>{{$RO_subscription->number_of_branches}}</strong></span>
                                                                     @else
                                                                     <span class="fs-2x fw-bolder text-khardl text-center">{{$subscription->amount}}</span>
                                                                     @endif
@@ -187,7 +187,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         <div class="d-flex justify-content-center mb-5">
                                                                             <form action="{{route('restaurant.service.deactivate')}}" method="POST">
                                                                                 @csrf
-                                                                                <button href="#" type="submit" class="btn btn-sm btn-danger"><i class="fa fa-pause"></i> {{__("messages.Deactivate")}}</button>
+                                                                                <button href="#" type="submit" class="btn btn-sm btn-danger"><i class="fa fa-pause"></i> {{__("Deactivate")}}</button>
                                                                                 @method('PATCH')
                                                                             </form>
 
@@ -196,20 +196,20 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         </div>
 
                                                                         <div>
-                                                                            <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_renew_sub"><i class="fas fa-plus"></i>{{__("messages.Add more branches")}}</a>
+                                                                            <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_renew_sub"><i class="fas fa-plus"></i>{{__("Add more branches")}}</a>
                                                                         </div>
 
                                                                     </div>
                                                                     @elseif($RO_subscription?->status == \App\Models\ROSubscription::ACTIVE && $RO_subscription->end_at->isPast())
                                                                     <a href="#" class="btn btn-sm btn-warning " data-bs-toggle="modal" data-bs-target="#kt_modal_suspend_sub"><svg style="margin-left:10px" xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="red" viewBox="0 0 512 512">
-                                                                            <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('messages.Renew Subscription')}}</a>
+                                                                            <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('Renew Subscription')}}</a>
 
                                                                     @elseif($RO_subscription?->status == \App\Models\ROSubscription::DEACTIVATE)
                                                                     <div class="row" style="width: 115%">
                                                                         <div class="col-6">
                                                                             <form action="{{route('restaurant.service.activate')}}" method="POST">
                                                                                 @csrf
-                                                                                <button href="#" type="submit" class="btn btn-sm btn-success"><i class="fa fa-play"></i> {{__("messages.Activate")}}</button>
+                                                                                <button href="#" type="submit" class="btn btn-sm btn-success"><i class="fa fa-play"></i> {{__("Activate")}}</button>
                                                                                 @method('PATCH')
                                                                             </form>
 
@@ -217,9 +217,9 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                     </div>
                                                                     @elseif($RO_subscription?->status == \App\Models\ROSubscription::SUSPEND)
                                                                     <a href="#" class="btn btn-sm btn-warning " data-bs-toggle="modal" data-bs-target="#kt_modal_suspend_sub"><svg style="margin-left:10px" xmlns="http://www.w3.org/2000/svg" height="16" width="16" fill="red" viewBox="0 0 512 512">
-                                                                            <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('messages.Renew Subscription')}}</a>
+                                                                            <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></svg>{{__('Renew Subscription')}}</a>
                                                                     @else
-                                                                    <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>{{__('messages.Buy now')}}</a>
+                                                                    <a href="#" class="btn btn-sm btn-khardl" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"><i class="fas fa-shopping-cart"></i>{{__('Buy now')}}</a>
                                                                     @endif
 
                                                                 </div>
@@ -231,7 +231,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 @csrf
                                                                 <input type="hidden" name="token_id" id="token_id" value="">
 
-                                                               
+
 
                                                                 @if(!$RO_subscription)
                                                                     <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
@@ -248,26 +248,26 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 
 
-                                                                                   
+
                                                                                     <div class="form-group mt-3">
-                                                                                        <label for="factor">{{__('messages.Number of branches')}}</label>
+                                                                                        <label for="factor">{{__('Number of branches')}}</label>
                                                                                         <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="updatePrice()" required>
                                                                                     </div>
-                                                                                    
+
                                                                                     <div class="form-group">
-                                                                                        <label for="factor">{{__('messages.total-price')}}</label>
+                                                                                        <label for="factor">{{__('total-price')}}</label>
                                                                                         <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
                                                                                     </div>
                                                                                     <div id="root"></div>
                                                                                     <p id="msg"></p>
-                                                                                
+
                                                                                     <button id="tap-btn"   type="submit"   onclick="submitPayment(event)" class="btn btn-khardl text-white ">
-                                                                                       
-                                                                                        <span class="indicator-label"> {{__("messages.purchase")}} ✔️</span>
-                                                                                        <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
+
+                                                                                        <span class="indicator-label"> {{__("purchase")}} ✔️</span>
+                                                                                        <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
                                                                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                                                     </button>
-                                                                                    
+
                                                                                 </div>
 
                                                                             </div>
@@ -275,7 +275,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         </div>
                                                                         <!--end::Modal body-->
                                                                     </div>
-                                                               
+
                                                                 @elseif($RO_subscription && $RO_subscription->status != \App\Models\ROSubscription::SUSPEND)
                                                                     <div class="modal fade" id="kt_modal_renew_sub" tabindex="-1" aria-hidden="true">
                                                                         <!--begin::Modal dialog-->
@@ -285,32 +285,32 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                 <input type="hidden" name="type" id="type" value="{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}">
                                                                                 <!--begin::Modal header-->
                                                                                 <div class="modal-header pb-0 border-0  d-flex justify-content-center">
-                                                                                    <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Adding new branches')}})</h5>
+                                                                                    <h5 class="modal-title text-center">{{$subscription->name}} ({{__('Adding new branches')}})</h5>
                                                                                 </div>
                                                                                 <div class="modal-body d-flex justify-content-center">
-                                                                                
+
                                                                                         <div class="row">
                                                                                             <div class="col-12 mt-3 mb-2">
                                                                                                 <div class="card">
                                                                                                     <div class="card-body text-center text-bold font-weight-bold">
-                                                                                                        <strong> <h3>{{ __('messages.A period :period of term will be purchased to match the billing time',['period'=>$RO_subscription->dateLeft])}}</h3></strong>
+                                                                                                        <strong> <h3>{{ __('A period :period of term will be purchased to match the billing time',['period'=>$RO_subscription->dateLeft])}}</h3></strong>
                                                                                                     </div>
                                                                                                   </div>
-                                                                                               
-                                                                                              
 
-                                                                                              
+
+
+
                                                                                             </div>
                                                                                             <div class="col-12">
                                                                                                 <div class="form-group">
-                                                                                                    <label for="factor">{{__('messages.Number of branches')}}</label>
+                                                                                                    <label for="factor">{{__('Number of branches')}}</label>
                                                                                                     <input type="number" class="form-control" id="n_branches" name="n_branches" value="1" min="1" onchange="calculateRenewPrice()">
                                                                                                 </div>
                                                                                             </div>
 
 
                                                                                             <div class="col-12 mt-3">
-                                                                                                <label for="factor">{{__('messages.total-price')}} </label>
+                                                                                                <label for="factor">{{__('total-price')}} </label>
                                                                                                 <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="" readonly>
                                                                                                 <i id="costDesc" class="hidden"></i>
                                                                                             </div>
@@ -318,15 +318,15 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                             <p id="msg"></p>
                                                                                             <div class="col-12 mt-3">
                                                                                                 <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit" style="width:200px"  onclick="submitPayment(event)" class="btn btn-khardl text-white ">
-                                                                                       
-                                                                                                    <span class="indicator-label">{{__('messages.Renew Subscription')}} ✔️</span>
-                                                                                                    <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
+
+                                                                                                    <span class="indicator-label">{{__('Renew Subscription')}} ✔️</span>
+                                                                                                    <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
                                                                                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                                                                 </button>
                                                                                             </div>
-                                                                                           
+
                                                                                         </div>
-                                                                                
+
 
 
                                                                                 </div>
@@ -335,7 +335,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                         </div>
                                                                         <!--end::Modal body-->
                                                                     </div>
-                                                                
+
                                                                 @elseif($RO_subscription && $RO_subscription->status == \App\Models\ROSubscription::SUSPEND)
                                                                     <div class="modal fade" id="kt_modal_suspend_sub" tabindex="-1" aria-hidden="true">
                                                                         <!--begin::Modal dialog-->
@@ -347,13 +347,13 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                                                                                 <!--begin::Modal header-->
                                                                                 <div class="modal-header pb-0 border-0  d-flex justify-content-center">
-                                                                                    <h5 class="modal-title text-center">{{$subscription->name}} ({{__('messages.Renew Subscription')}})</h5>
+                                                                                    <h5 class="modal-title text-center">{{$subscription->name}} ({{__('Renew Subscription')}})</h5>
                                                                                 </div>
                                                                                 <div class="modal-body d-flex justify-content-center">
                                                                                     <div class="row">
 
                                                                                         <div class="col-12 mt-3">
-                                                                                            <label for="factor">{{__('messages.total-price')}} </label>
+                                                                                            <label for="factor">{{__('total-price')}} </label>
                                                                                             <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{$RO_subscription->amount}}" readonly>
                                                                                             <div id="root"></div>
                                                                                             <p id="msg"></p>
@@ -362,12 +362,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                             <div class="d-flex justify-content-center">
 
                                                                                             <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit"   onclick="submitPayment(event)" class="btn btn-khardl text-white ">
-                                                                                            
-                                                                                                <span class="indicator-label">{{__("messages.Renew Subscription")}}✔️</span>
-                                                                                                <span class="indicator-progress" id="waiting-item">{{__('messages.please-wait')}}
+
+                                                                                                <span class="indicator-label">{{__("Renew Subscription")}}✔️</span>
+                                                                                                <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
                                                                                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                                                             </button>
-                                                                                            
+
                                                                                             </div>
 
 
@@ -392,8 +392,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                     </div>
                                                 </div>
                                             </div>
-                                     
-           
+
+
 
                                             <!--end::Row-->
                                         </div>
@@ -511,9 +511,9 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                         if(response.remainingDaysCost){
                             priceInput.value = response.cost;
                             $('#costDesc').show();
-                            $('#costDesc').text("{{__('messages.The price of renewing current branches')}}"
+                            $('#costDesc').text("{{__('The price of renewing current branches')}}"
                             +response.remainingDaysCost +" + "
-                            +"{{__('messages.The price of new branches includes current branches for one year')}}"
+                            +"{{__('The price of new branches includes current branches for one year')}}"
                             +response.newBranches
                             );
                         }else {
