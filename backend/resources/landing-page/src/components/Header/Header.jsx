@@ -191,22 +191,21 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <span className="!w-100 !px-[16px] !font-medium red-theme-button">
+                  <a href="/register" className="!w-100 !px-[16px] !font-medium red-theme-button">
                     <Button
                       title={t("Create an account")}
-                      link="/register"
                       onClick={() => dispatch(setIsOpen(false))}
                       classContainer="!text-[16px] !px-[16px] !py-[6px] red-theme-button"
                     />
-                  </span>
-                  <span className="!w-100 !px-[16px] !font-medium green-theme-button">
+                  </a>
+                  <a href="/login" className="!w-100 !px-[16px] !font-medium green-theme-button">
                     <Button
                       title={t("Login")}
-                      link="/login"
                       onClick={() => dispatch(setIsOpen(false))}
                       classContainer="!text-[16px] !px-[16px] !py-[6px] !font-medium green-theme-button"
                     />
-                  </span>
+                  </a>
+
                 </>
               )}
             </div>
