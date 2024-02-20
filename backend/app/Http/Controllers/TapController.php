@@ -229,14 +229,14 @@ class TapController extends Controller
     }
     public function payments_submit_lead(CreateLeadRequest $request){
 
-        
+
         $data = $request->all();
         $restaurant_logo = TapFileAPI::create([
             'file' => $request->file('brand.logo'),
             'purpose' => 'business_logo',
             'title' => "Restaurant Logo"
         ]);
-         
+
         $bank_statement = TapFileAPI::create([
             'file' => $request->file("wallet.bank.documents.0.images.0"),
             'purpose' => 'identity_document',
@@ -247,10 +247,10 @@ class TapController extends Controller
         }
         $data['brand']['logo']=$restaurant_logo['message']['id'];
         $data['wallet']['bank']['documents'][0]['images'][0]=$bank_statement['message']['id'];
-       
+
         $response = Lead::connect($data);
         if($response['http_code'] == ResponseHelper::HTTP_OK){
-          
+
             Setting::first()->update([
                 'lead_id'=> $response['message']['id'],
                 'lead_response'=>$response['message']
