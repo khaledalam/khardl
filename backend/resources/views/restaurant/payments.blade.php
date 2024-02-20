@@ -417,7 +417,7 @@ $tap_info = $settings->lead_response;
                                                                 <!--end::Item-->
                                                             </tr>
                                                             @endif
-                                                            @if (isset($tap_info['brand']['channel_services'][0]['channel'])&&isset($tap_info['brand']['channel_services'][0]['address']))
+                                                          {{--   @if (isset($tap_info['brand']['channel_services'][0]['channel'])&&isset($tap_info['brand']['channel_services'][0]['address']))
                                                             <tr>
                                                                 <!--begin::Item-->
                                                                 <td>
@@ -438,8 +438,8 @@ $tap_info = $settings->lead_response;
                                                                 </td>
                                                                 <!--end::Item-->
                                                             </tr>
-                                                            @endif
-                                                            @if (isset($tap_info['brand']['operations']['sales']['period'])&&isset($tap_info['brand']['operations']['sales']['range']))
+                                                            @endif --}}
+                                                            {{-- @if (isset($tap_info['brand']['operations']['sales']['period'])&&isset($tap_info['brand']['operations']['sales']['range']))
                                                             <tr>
                                                                 <!--begin::Item-->
                                                                 <td>
@@ -456,7 +456,7 @@ $tap_info = $settings->lead_response;
                                                                 </td>
                                                                 <!--end::Item-->
                                                             </tr>
-                                                            @endif
+                                                            @endif --}}
                                                             @if (isset($tap_info['entity']['country'])&&isset($tap_info['entity']['license']))
                                                             <tr>
                                                                 <!--begin::Item-->
@@ -467,7 +467,7 @@ $tap_info = $settings->lead_response;
                                                                     <span class="py-3 px-4 fs-23">
                                                                         <span class="py-3 px-4 fs-23">
                                                                             {{ $tap_info['entity']['country'] }}
-                                                                            ({{ $tap_info['entity']['license']['city'] }})
+{{--                                                                             ({{ $tap_info['entity']['license']['city'] }}) --}}
                                                                         </span>
                                                                         <span class="py-3 px-4 fs-23">
                                                                             (
@@ -546,7 +546,7 @@ $tap_info = $settings->lead_response;
                                                                         <td class="text-dark">
                                                                             <span class="py-3 px-4 fs-23">
                                                                                 {{ __($tap_info['user']['name']['title']) }}.
-                                                                                {{ $tap_info['user']['name']['first'] }} {{ $tap_info['user']['name']['middle'] }} {{ $tap_info['user']['name']['last'] }}
+                                                                                {{ $tap_info['user']['name']['first'] }} {{-- {{ $tap_info['user']['name']['middle'] }} --}} {{ $tap_info['user']['name']['last'] }}
                                                                             </span>
                                                                         </td>
                                                                         <!--end::Item-->
@@ -567,7 +567,7 @@ $tap_info = $settings->lead_response;
                                                                     </tr>
                                                                     @endif
                                                                     @if (isset($tap_info['user']['birth']))
-                                                                    <tr>
+                                                                    <{{-- tr>
                                                                         <!--begin::Item-->
                                                                         <td>
                                                                             <span class="text-start">{{__('Birthday')}}</span>
@@ -591,7 +591,7 @@ $tap_info = $settings->lead_response;
                                                                         </td>
                                                                         <!--end::Item-->
                                                                     </tr>
-                                                                    @endif
+                                                                    @endif --}}
                                                                     @if (isset($tap_info['user']['address'][0]))
                                                                     <tr>
                                                                         <!--begin::Item-->
@@ -646,7 +646,7 @@ $tap_info = $settings->lead_response;
                                                                         <!--end::Item-->
                                                                     </tr>
                                                                     @endif
-                                                                    @if (isset($tap_info['user']['identification']))
+                                                                  {{--   @if (isset($tap_info['user']['identification']))
                                                                     <tr>
                                                                         <!--begin::Item-->
                                                                         <td>
@@ -658,7 +658,7 @@ $tap_info = $settings->lead_response;
                                                                         </td>
                                                                         <!--end::Item-->
                                                                     </tr>
-                                                                    @endif
+                                                                    @endif --}}
                                                                     @if (isset($tap_info['user']['phone'][0]))
                                                                     <tr>
                                                                         <!--begin::Item-->
