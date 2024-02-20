@@ -22,7 +22,7 @@
     "Failed to complete the process, please try again or contact Support Team":"فشل إكمال العملية، يرجى المحاولة مرة اخري او الاتصال بفريق الدعم",
     "Your TAP account is approved. Congratulations!":"تمت موافقة حسابك التجاري في بوابة الدفع Tap , تهانينا !!",
     "Your TAP account is pending.":"في انتطار موافقة سجلك التجاري في بوابة دفع TAP, الرجاء الانتظار",
-    "Business ID":"Lead ID ",
+    "Business ID":"الرقم المعرف للأعمال",
     "Destination ID":"جهة الوصول",
     "User logged in successfully.":"تم تسجيل الدخول بنجاح",
     "Item has been updated successfully.":"تم تحديث المنتج بنجاح",
@@ -139,7 +139,7 @@
     "National ID":"الرقم القومي",
     "Phone":"الهاتف",
     "Bank name":"اسم البنك",
-    "Bank IBAN":"رقم الحساب المصرفي الدولي",
+    "Bank IBAN":"رقم الحساب المصرفي الدولي (IBAN)",
     "Bank SWIFT code":"رمز سويفت للبنك",
     "Bank account number":"رقم الحساب المصرفي",
     "Your information":"معلوماتك",
@@ -996,5 +996,8 @@
     "This Email used In":"هذا البريد يستخدم ف",
     "Number of Memorandum of Association":"رقم عقد التأسيس",
     "Issuing date":"تاريخ الإصدار",
-    "Expiry date":"تاريخ الانتهاء"
+    "Expiry date":"تاريخ الانتهاء",
+    "WORK":"العمل",
+    "Bank Issuing date":"تاريخ إصدار البنك",
+    "Legal entity number":"رقم الكيان القانوني"
 }
