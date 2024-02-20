@@ -35,6 +35,7 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles, fetchCartDa
     cartItem && cartItem?.selection_options !== null
       ? cartItem?.selection_options
           .map((option, key) => {
+            
             const namesArray =
               language === "en"
                 ? Object.values(option?.en)
@@ -43,8 +44,23 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles, fetchCartDa
           })[0]
           .map((option, idx) => ({ name: option[0] }))
       : [];
+      const selection_dropdown_names =
+      cartItem && cartItem?.dropdown_options !== null
+        ? cartItem?.dropdown_options
+            .map((option, key) => {
+              console.log(option, 'oooooooooooooooooo',Object.values(option?.en))
+
+              const namesArray =
+                language === "en"
+                  ? Object.values(option?.en)
+                  : Object.values(option?.ar);
+              return namesArray;
+            })[0]
+            .map((option, idx) => ({ name: option }))
+        : [];
   console.log("checkbox_options name", checkbox_options_names);
   console.log("selection_options name", selection_options_names);
+  console.log("selection_dropdown name", selection_dropdown_names);
 
   const handleQuantityChange = async newQuantity => {
     if (loading) return;
@@ -122,7 +138,7 @@ const decrementQty = () => {
         <h3 className="text-lg">
           {language === "en" ? cartItem.item.name.en : cartItem.item.name.ar}
           {(checkbox_options_names.length > 0 ||
-            selection_options_names.length > 0) && (
+            selection_options_names.length > 0 || selection_dropdown_names.length > 0) && (
             <span>
               <span className="mx-4">+</span>
               <span className="text-[15px]">
@@ -142,6 +158,19 @@ const decrementQty = () => {
                   )}
                 {selection_options_names.length > 0 &&
                   selection_options_names.map((option, i) => (
+                    <span key={i} className="font-normal">
+                      <span>{option.name}</span>
+                      {i > 0 && i < checkbox_options_names.length - 1 && (
+                        <span className="mx-3">+</span>
+                      )}
+                    </span>
+                  ))}{" "}
+                   {selection_options_names.length > 0 &&
+                  checkbox_options_names.length > 0 && selection_dropdown_names.length > 0 &&  (
+                    <span className="mx-3">+</span>
+                  )}
+                {selection_dropdown_names.length > 0 &&
+                  selection_dropdown_names.map((option, i) => (
                     <span key={i} className="font-normal">
                       <span>{option.name}</span>
                       {i > 0 && i < checkbox_options_names.length - 1 && (
