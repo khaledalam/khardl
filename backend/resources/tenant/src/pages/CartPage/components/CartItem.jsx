@@ -8,27 +8,16 @@ import { setCartItemsData } from "../../../redux/NewEditor/categoryAPISlice";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
-const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
+const CartItem = ({ cartItem, cartItems, language, isMobile, styles, fetchCartData }) => {
   const [feedback, setFeedback] = useState(
     cartItem.notes !== null ? cartItem.notes : ""
   );
   const [qtyCount, setQtyCount] = useState(cartItem.quantity);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const fetchCartData = async () => {
-    try {
-      const cartResponse = await AxiosInstance.get(`carts`);
-
-      console.log("cart >>>", cartResponse.data);
-      if (cartResponse.data) {
-        dispatch(setCartItemsData(cartResponse.data?.data.items));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const checkbox_options_names =
     cartItem && cartItem?.checkbox_options !== null
@@ -57,35 +46,46 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
   console.log("checkbox_options name", checkbox_options_names);
   console.log("selection_options name", selection_options_names);
 
-  const handleQuantityChange = async () => {
+  const handleQuantityChange = async newQuantity => {
+    if (loading) return;
+    setLoading(true);
     try {
-      await AxiosInstance.put(`/carts/${cartItem.id}`, {  
-        quantity: qtyCount
+
+      await AxiosInstance.put(`/carts/${cartItem.id}`, {
+        quantity: newQuantity
       })
         .then((e) => {
           // toast.success(`${t("Item quantity updated")}`)
           console.log("successfully", e);
         })
         .finally(async () => {
+          setLoading(false);
           await fetchCartData().then((r) => null);
         });
     } catch (error) {
       console.log("error: ", error);
     }
   };
-  const incrementQty = useCallback(() => {
-    setQtyCount((prev) => prev + 1);
-  }, []);
+  const incrementQty = () => {
+    const newQuantity = qtyCount + 1;
+  setQtyCount(newQuantity);
+    handleQuantityChange(newQuantity).then(r => null)
+};
 
-  const decrementQty = useCallback(() => {
-    if (qtyCount > 1) {
-      setQtyCount((prev) => prev - 1);
-    }
-  }, [qtyCount]);
+const decrementQty = () => {
+  if (qtyCount > 1) {
+      const newQuantity = qtyCount - 1;
+      setQtyCount(newQuantity);
+      handleQuantityChange(newQuantity).then(r => null)
+  }
+};
 
-  useEffect(() => {
-    handleQuantityChange();
-  }, [qtyCount]);
+
+  // useEffect(() => {
+  //   handleQuantityChange().then(r => null);
+  // }, [qtyCount]);
+
+
 
   const handleRemoveItem = async (cartItemId) => {
     try {
@@ -109,12 +109,12 @@ const CartItem = ({ cartItem, cartItems, language, isMobile, styles }) => {
               src={cartItem?.item?.photo}
               alt=""
               className="w-full h-full object-cover rounded-full"
-            />
+              />
           </div>
           <div className="flex items-center justify-between w-[90px] lg:w-[120px] cursor-pointer laptopXL:w-[150px]">
-            <BiMinusCircle size={25} onClick={decrementQty} />
+            <BiMinusCircle size={25} color={loading ? "gray" : "black"} onClick={e => !loading && decrementQty()} />
             <span>{cartItem.quantity}</span>
-            <IoAddCircleOutline size={25} onClick={incrementQty} />
+            <IoAddCircleOutline size={25} color={loading ? "gray" : "black"} onClick={e => !loading && incrementQty()} />
           </div>
         </div>
       </div>

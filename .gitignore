@@ -40,3 +40,4 @@ db_backups/*.sql
 
 backend/bootstrap/cache/*
 backend/cypress/downloads/
+backend/public/js/central.js.LICENSE.txt

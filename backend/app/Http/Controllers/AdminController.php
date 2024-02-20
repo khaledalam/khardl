@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Admin\LogTypes;
+use App\Http\Requests\Central\Promoter\AddPromoterFormRequest;
 use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
 use App\Jobs\SendDeniedEmailJob;
@@ -41,13 +42,14 @@ class AdminController extends Controller
 
     public function promoters(){
 
-        $promoters = Promoter::paginate(15);
+        $promoters = Promoter::orderBy('id','desc')
+        ->paginate(config('application.perPage') ?? 15);
 
         $user = Auth::user();
         return view('admin.promoters', compact('user', 'promoters'));
     }
 
-    public function addPromoter(Request $request){
+    public function addPromoter(AddPromoterFormRequest $request){
 
         $name = $request['name'];
         $url = $request['url'];
@@ -57,14 +59,6 @@ class AdminController extends Controller
                 $newURL = Str::random(16);
             }
             $url = $newURL;
-        }
-
-        if(DB::table('promoters')->where('url', $url)->exists()){
-
-            if(app()->getLocale() === 'en')
-                return redirect()->back()->with('error', 'URL already exists!');
-            else
-                return redirect()->back()->with('error', 'هذا الرابط موجود');
         }
 
         $insertData = [];
@@ -82,12 +76,7 @@ class AdminController extends Controller
             'action' => $actions,
             'type' => LogTypes::CreatePromoter
         ]);
-
-        if(app()->getLocale() === 'en')
-            return redirect()->back()->with('success', 'Promoter added successfully');
-        else
-            return redirect()->back()->with('success', 'تمت إضافة المروج بنجاح');
-
+        return redirect()->back()->with('success', __('Added successfully'));
     }
 
     public function generateUser(Request $request)
@@ -419,6 +408,8 @@ class AdminController extends Controller
     public function restaurantOwnerManagement(Request $request)
     {
         $admins = User::whenType($request['type']??null)
+        ->where('id','!=',1)
+        ->orderBy('id','desc')
         ->paginate(config('application.perPage')??20);
         $user = Auth::user();
         return view('admin.restaurant-owner-management', compact('user', 'admins'));
@@ -671,6 +662,7 @@ class AdminController extends Controller
     public function toggleStatus(User $user)
     {
         // Toggle the user status
+        if($user->id==1)return response()->json(['message' => 'Unauthorized']);
         $user->update(['status' => ($user->isBlocked())?'active':'blocked']);
 
         return response()->json(['isBlocked' => $user->isBlocked()]);

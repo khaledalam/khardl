@@ -198,5 +198,18 @@
     "Online":"عبر الانترنت",
     "PICKUP":"التقاط",
     "Delivery":"توصيل",
-    "order":"طلب"
+    "order":"طلب",
+    "Success":"تم بنجاح",
+    "Promoters":"المروجين",
+    "Promoter":"مروج",
+    "Type your name":"اكتب اسمك",
+    "Promoter page":"صفحة المروج",
+    "Get inforamtion":"احصل علي المعلومات",
+    "Not found promoter":"لم يتم العثور على المروج",
+    "You can view information of :name by click this":"اضغط علي هذا الرابط لمشاهدة معلومات :  :name",
+    "Information":"المعلومات",
+    "URL":"الرابط",
+    "The number of users who used the link":"عدد المستخدمين الذين استخدموا الرابط",
+    "Registered Users Count":"عدد المستخدمين المسجلين",
+    "Click here":"اظغط هنا"
 }

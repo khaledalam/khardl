@@ -7,14 +7,14 @@ use App\Utils\ResponseHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-trait APIResponseTrait 
+trait APIResponseTrait
 {
-    public function sendResponse($result, $message)
+    public function sendResponse($result, $message = null)
     {
         $response = [
             'success' => true,
             'data'    => $result,
-            'message' => $message,
+            'message' => $message ?? __('Success'),
         ];
         return response()->json($response);
     }

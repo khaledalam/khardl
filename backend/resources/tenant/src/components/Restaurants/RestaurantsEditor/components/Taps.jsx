@@ -6,6 +6,8 @@ import { FaArrowRight, FaArrowLeft, FaArrowDown, FaArrowUp } from 'react-icons/f
 import { useTranslation } from "react-i18next";
 
 export function Taps({ children, contentClassName = "" }) {
+  const [activeTap, setActiveTap] = useState(findActiveTap(children));
+  const Color = useSelector(globalColor);
   const selectedCategory = useSelector(getSelectedCategory);
   const { t } = useTranslation();
   const GlobalShape = useSelector(globalShape);
@@ -24,8 +26,7 @@ export function Taps({ children, contentClassName = "" }) {
   function TapValidator(Tap) {
     return Tap.type.displayName === "Tap" ? true : false;
   }
-  const [activeTap, setActiveTap] = useState(findActiveTap(children));
-  const Color = useSelector(globalColor);
+
   const isFirstTap = activeTap === 0;
   const isLastTap = activeTap === children.length - 1;
   const handleTabClick = (index) => {

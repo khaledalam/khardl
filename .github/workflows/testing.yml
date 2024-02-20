@@ -6,8 +6,12 @@ on:
   pull_request:
     branches: [ "development" ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  laravel_tests:
+  Testing-PHPUnit:
     runs-on: ubuntu-20.04
     env:
       DB_CONNECTION: mysql
@@ -42,7 +46,7 @@ jobs:
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
           ./backend/vendor/bin/phpunit -c backend/phpunit.xml
-  Testing:
+  Testing-Cypress:
     runs-on: ubuntu-latest
     steps:
     - uses: shivammathur/setup-php@v2
@@ -79,7 +83,7 @@ jobs:
         working-directory: backend
   Deploy:
     runs-on: [self-hosted]
-    needs: [Testing]
+    needs: [Testing-Cypress, Testing-PHPUnit]
     if: github.ref == 'refs/heads/development'
     steps:
     - name: Deploy

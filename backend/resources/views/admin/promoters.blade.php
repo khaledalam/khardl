@@ -53,7 +53,7 @@
                                                     <label class="required form-label">{{ __('messages.name') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" required id="nameInput" name="name" class="form-control mb-2" placeholder="{{ __('messages.name') }}" value="" />
+                                                    <input type="text" required id="nameInput" name="name" class="form-control mb-2" placeholder="{{ __('messages.name') }}" value="{{ old('name') }}" />
                                                     <!--end::Input-->
                                                     <!--begin::Description-->
                                                     <div class="text-muted fs-7">{{ __('messages.name') }} {{ __('messages.is-required') }}</div>
@@ -66,7 +66,7 @@
                                                     <label class="form-label">{{ __('messages.url') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" id="urlInput" name="url" class="form-control mb-2" placeholder="{{ __('messages.url-example') }}" value="" />
+                                                    <input type="text" id="urlInput" name="url" class="form-control mb-2" placeholder="{{ __('messages.url-example') }}" value="{{ old('url') }}" />
                                                     <!--end::Input-->
                                                     <!--begin::Description-->
                                                     <div class="text-muted fs-7">{{ __('messages.leave-empty-for-random-url') }}</div>
@@ -138,7 +138,7 @@
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <a href="{{ route('global.promoter', ['name' => $promoter->name]) }}" target="_blank">
+                                                        <a href="{{ route('global.promoter.show', ['name' => $promoter->name]) }}" target="_blank">
                                                           <i class="fa fa-eye"></i>
                                                         </a>
                                                     </div>

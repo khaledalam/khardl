@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Logo from "../../assets/Logo.webp";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../Button";
+import Button from "../ButtonComponent";
 import Li from "./Li";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveLink } from "../../redux/features/linkSlice";
@@ -191,22 +191,21 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  <span className="!w-100 !px-[16px] !font-medium red-theme-button">
+                  <a href="/register" className="!w-100 !px-[16px] !font-medium red-theme-button">
                     <Button
                       title={t("Create an account")}
-                      link="/register"
                       onClick={() => dispatch(setIsOpen(false))}
                       classContainer="!text-[16px] !px-[16px] !py-[6px] red-theme-button"
                     />
-                  </span>
-                  <span className="!w-100 !px-[16px] !font-medium green-theme-button">
+                  </a>
+                  <a href="/login" className="!w-100 !px-[16px] !font-medium green-theme-button">
                     <Button
                       title={t("Login")}
-                      link="/login"
                       onClick={() => dispatch(setIsOpen(false))}
                       classContainer="!text-[16px] !px-[16px] !py-[6px] !font-medium green-theme-button"
                     />
-                  </span>
+                  </a>
+
                 </>
               )}
             </div>

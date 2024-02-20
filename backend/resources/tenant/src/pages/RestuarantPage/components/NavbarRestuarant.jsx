@@ -29,9 +29,9 @@ const NavbarRestuarant = () => {
   // )
   const fetchCartData = async () => {
     try {
-      const cartResponse = await AxiosInstance.get(`carts`)
+      const cartResponse = await AxiosInstance.get(`carts/count`);
       if (cartResponse.data) {
-        const count = cartResponse.data?.data?.items?.length || 0;
+        const count = cartResponse.data?.data?.count || 0;
         dispatch(getCartItemsCount(count));
         setCartItemsCount(count);
       }
@@ -41,7 +41,7 @@ const NavbarRestuarant = () => {
     }
   }
   useEffect(() => {
-  
+
     fetchCartData().then(() => {
       console.log("fetched cart items count successfully")
     })
@@ -61,7 +61,7 @@ const NavbarRestuarant = () => {
         searchParams.delete('message');
         searchParams.delete('status');
         setSearchParams(searchParams);
-      } 
+      }
     }
     checkOrderQueryParam()
   }, [])
@@ -124,12 +124,12 @@ const NavbarRestuarant = () => {
             /> */}
           </div>
         </div>
-        
+
         <div
           onClick={() => navigate("/cart")}
           className='w-[50px] h-[50px] relative flex items-center justify-center cursor-pointer'
         >
-          
+
           <img src={cartHeaderImg} alt={"cart"} className='' />
           {cartItemsCount > 0 && (
             <div className='absolute top-0 right-0'>
