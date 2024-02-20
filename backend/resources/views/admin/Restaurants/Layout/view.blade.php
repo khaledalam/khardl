@@ -1,5 +1,5 @@
 @extends('layouts.admin-sidebar')
-@section('title', __('messages.view-restaurant'))
+@section('title', __('view-restaurant'))
 
 @section('content')
 
@@ -105,12 +105,12 @@
                                                 <i class="fa fa-arrow-down text-danger mx-2"></i>
                                                 @endif
                                                 <!--end::Svg Icon-->
-                                                <span class="restaurant_daily_earning fade">{{ $dailyEarning }} {{ __('messages.SAR') }}</span>
-                                                <div class="fs-2 fw-bolder">{{ getAmount((float)$dailyEarning) }} {{ __('messages.SAR') }}</div>
+                                                <span class="restaurant_daily_earning fade">{{ $dailyEarning }} {{ __('SAR') }}</span>
+                                                <div class="fs-2 fw-bolder">{{ getAmount((float)$dailyEarning) }} {{ __('SAR') }}</div>
                                             </div>
                                             <!--end::Number-->
                                             <!--begin::Label-->
-                                            <div class="fw-bold fs-6 text-gray-400">{{ __('messages.Daily earnings')}}</div>
+                                            <div class="fw-bold fs-6 text-gray-400">{{ __('Daily earnings')}}</div>
                                             <!--end::Label-->
                                         </div>
                                         <!--end::Stat-->
@@ -130,7 +130,7 @@
                                             </div>
                                             <!--end::Number-->
                                             <!--begin::Label-->
-                                            <div class="fw-bold fs-6 text-gray-400">{{ __('messages.Daily orders')}}</div>
+                                            <div class="fw-bold fs-6 text-gray-400">{{ __('Daily orders')}}</div>
                                             <!--end::Label-->
                                         </div>
                                         <!--end::Stat-->
@@ -142,14 +142,14 @@
                                 <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
                                         @if($subscription && $subscription->status == \App\Models\ROSubscription::ACTIVE)
-                                            <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.plan ends at') }} :</span>
+                                            <span class="fw-bold fs-6 text-black fw-bolder">{{ __('plan ends at') }} :</span>
                                             <span class="badge badge-success p-2 fs-6">
                                                 {{ $subscription->end_at?->format('Y-m-d') }}
                                             </span>
                                         @else
-                                            <span class="fw-bold fs-6 text-black fw-bolder">{{__('messages.Plan')}}</span>
+                                            <span class="fw-bold fs-6 text-black fw-bolder">{{__('Plan')}}</span>
                                             <span class="badge badge-dark p-2 fs-6">
-                                                {{__("messages.No subscription")}}
+                                                {{__("No subscription")}}
                                             </span>
                                         @endif
                                     </div>
@@ -159,13 +159,13 @@
                                 <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                                     @if (!is_null($restaurant->website_expire))
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.site-end-date')}}</span>
+                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('site-end-date')}}</span>
                                         <span class="badge badge-dark p-2 fs-6">{{$restaurant->website_expire}}</span>
                                     </div>
                                     @endif
                                     @if (!is_null($restaurant->mobile_expire))
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
-                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('messages.app-end-date')}}</span>
+                                        <span class="fw-bold fs-6 text-black fw-bolder">{{ __('app-end-date')}}</span>
                                         <span class="badge badge-dark p-2 fs-6">{{ $restaurant->mobile_expire}}</span>
                                     </div>
                                     @endif
@@ -173,7 +173,7 @@
                                 @elseif (!$is_live && !$restaurant?->user?->isBlocked())
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if($user?->hasPermission('can_approve_restaurants'))
-                                    <a id="active_restuarant" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3">{{ __('messages.approve')}}</a>
+                                    <a id="active_restuarant" class="badge badge-light-success  text-hover-white bg-hover-success p-5 m-3">{{ __('approve')}}</a>
                                     <form id="approve-form" data-loading="false" action="{{ route('admin.restaurant.activate', ['restaurant' => $restaurant->id]) }}" method="POST" style="display: inline">
                                         @csrf
                                         @method('PUT')
@@ -183,13 +183,13 @@
 
                                     <form action="{{ route('admin.denyUser', ['id' => $restaurant->id]) }}" method="POST" style="display: inline">
                                         @csrf
-                                        <button style="border: 0;" type="submit" class="badge badge-light-danger btn-confirm text-hover-white bg-hover-danger p-5 m-3">{{ __('messages.deny')}}</button>
+                                        <button style="border: 0;" type="submit" class="badge badge-light-danger btn-confirm text-hover-white bg-hover-danger p-5 m-3">{{ __('deny')}}</button>
                                     </form>
 
                                 </div>
                                 @elseif ($restaurant?->user?->isBlocked())
                                 <div class="d-flex justify-content-left w-100 mt-auto mb-2">
-                                    <span class="badge badge-danger p-2 fs-6">{{ __('messages.blocked')}}</span>
+                                    <span class="badge badge-danger p-2 fs-6">{{ __('blocked')}}</span>
                                 </div>
                                 @endif
                                 <!--end::Progress-->
@@ -205,25 +205,25 @@
                         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder">
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="tab" href="#overview">{{ __('messages.overview')}}</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="tab" href="#overview">{{ __('overview')}}</a>
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
                             @if ($is_live)
 
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#restuarant_orders">{{ __('messages.orders')}}</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#restuarant_orders">{{ __('orders')}}</a>
                             </li>
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#customers">{{ __('messages.customers')}}</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#customers">{{ __('customers')}}</a>
                             </li>
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#delivery_companies">{{ __('messages.Delivery companies')}}</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#delivery_companies">{{ __('Delivery companies')}}</a>
                             </li>
                             <li class="nav-item mt-2">
-                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#config">{{ __('messages.configurations')}}</a>
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#config">{{ __('configurations')}}</a>
                             </li>
                             @endif
                             <!--end::Nav item-->
@@ -281,12 +281,12 @@ new DataTree({
             return;
         }
         Swal.fire({
-            title: '{{ __('messages.confirm-approval') }}'
-            , text: '{{ __('messages.are-you-sure-you-want-to-approve-this-restaurant') }}'
+            title: '{{ __('confirm-approval') }}'
+            , text: '{{ __('are-you-sure-you-want-to-approve-this-restaurant') }}'
             , icon: 'warning'
             , showCancelButton: true
-            , confirmButtonText: '{{ __('messages.yes-approve-it') }}'
-            , cancelButtonText: '{{ __('messages.cancel') }}'
+            , confirmButtonText: '{{ __('yes-approve-it') }}'
+            , cancelButtonText: '{{ __('cancel') }}'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('approve-form').dataset.loading = "true";
@@ -305,30 +305,30 @@ new DataTree({
                     return;
                 }
                 Swal.fire({
-                    title: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
+                    title: "{{ __('you-wont-be-able-to-undo-this') }}",
                     showCancelButton: true,
-                    confirmButtonText: '{{ __('messages.yes-proceed') }}',
-                    cancelButtonText: '{{ __('messages.no-cancel') }}',
+                    confirmButtonText: '{{ __('yes-proceed') }}',
+                    cancelButtonText: '{{ __('no-cancel') }}',
                     html: `
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="commercial-registration-number">
-                            <label class="form-check-label" for="option1">{{ __('messages.commercial-registration-number') }}</label>
+                            <label class="form-check-label" for="option1">{{ __('commercial-registration-number') }}</label>
                         </div>
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="delivery-company-contract">
-                            <label class="form-check-label" for="option2">{{ __('messages.delivery-company-contract') }}</label>
+                            <label class="form-check-label" for="option2">{{ __('delivery-company-contract') }}</label>
                         </div>
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="tax-number">
-                            <label class="form-check-label" for="option3">{{ __('messages.tax-number') }}</label>
+                            <label class="form-check-label" for="option3">{{ __('tax-number') }}</label>
                         </div>
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="bank-certificate">
-                            <label class="form-check-label" for="option4">{{ __('messages.bank-certificate') }}</label>
+                            <label class="form-check-label" for="option4">{{ __('bank-certificate') }}</label>
                         </div>
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="option5" name="options[]" value="others">
-                            <label class="form-check-label" for="option5">{{ __('messages.others') }}</label>
+                            <label class="form-check-label" for="option5">{{ __('others') }}</label>
                         </div>
                     `,
                     preConfirm: function() {

@@ -1,7 +1,7 @@
 @extends('layouts.admin-sidebar')
 
 
-@section('title', __('messages.subscriptions'))
+@section('title', __('subscriptions'))
 
 @section('content')
   <!--begin::Content-->
@@ -16,8 +16,8 @@
    <!--begin::Header-->
    <div class="card-header border-0 pt-5">
      <h3 class="card-title align-items-start flex-column">
-       <span class="card-label fw-bolder fs-3 mb-1">{{ __('messages.subscriptions')}}</span>
-       <span class="text-muted mt-1 fw-bold fs-7">{{ count($subscriptions) }} {{ __('messages.subscriptions')}}</span>
+       <span class="card-label fw-bolder fs-3 mb-1">{{ __('subscriptions')}}</span>
+       <span class="text-muted mt-1 fw-bold fs-7">{{ count($subscriptions) }} {{ __('subscriptions')}}</span>
      </h3>
      <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a user">
        <a href="{{ route('admin.subscriptions.create') }}" class="btn btn-sm btn-light btn-active-primary">
@@ -28,7 +28,7 @@
            <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
          </svg>
        </span>
-       <!--end::Svg Icon-->{{ __('messages.New subscription')}}</a>
+       <!--end::Svg Icon-->{{ __('New subscription')}}</a>
      </div>
    </div>
    <!--end::Header-->
@@ -42,10 +42,10 @@
          <thead>
            <tr class="fw-bolder text-muted">
              <th class="min-w-25px">#</th>
-             <th class="min-w-200px">{{ __('messages.name')}}</th>
-             <th class="min-w-150px">{{ __('messages.Price')}}</th>
-             <th class="min-w-150px">{{ __('messages.actions')}}</th>
-             
+             <th class="min-w-200px">{{ __('name')}}</th>
+             <th class="min-w-150px">{{ __('Price')}}</th>
+             <th class="min-w-150px">{{ __('actions')}}</th>
+
             </tr>
          </thead>
          <!--end::Table head-->
@@ -66,8 +66,8 @@
               <td>
                 <span href="#" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $subscription->amount }}</span>
               </td>
-                                       
-               
+
+
               <td>
                 <a href="{{ route('admin.subscriptions.show', ['subscription' => $subscription->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                   <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
@@ -79,7 +79,7 @@
                   </span>
                   <!--end::Svg Icon-->
                 </a>
-               
+
               </td>
             </tr>
           @endforeach
@@ -106,18 +106,18 @@
               deleteButtons.forEach(function(button) {
                   button.addEventListener('click', function(event) {
                       event.preventDefault();
-                      
+
                       var form = button.closest('.delete-form');
-                      
+
                       Swal.fire({
-                          title: '{{ __('messages.are-you-sure') }}',
-                          text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
+                          title: '{{ __('are-you-sure') }}',
+                          text: "{{ __('you-wont-be-able-to-undo-this') }}",
                           icon: 'warning',
                           showCancelButton: true,
                           confirmButtonColor: '#d33',
                           cancelButtonColor: '#3085d6',
-                          confirmButtonText: '{{ __('messages.delete') }}',
-                          cancelButtonText: '{{ __('messages.cancel') }}'
+                          confirmButtonText: '{{ __('delete') }}',
+                          cancelButtonText: '{{ __('cancel') }}'
                       }).then((result) => {
                           if (result.isConfirmed) {
                               form.submit();

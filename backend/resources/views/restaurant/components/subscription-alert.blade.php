@@ -4,24 +4,24 @@
 @if( !$setting->lead_id && !$setting->merchant_id)
 
 <div class="alert alert-warning text-center">
-    <h3>{{ __('messages.You need to configure your payment account to start selling') }}</h3>
+    <h3>{{ __('You need to configure your payment account to start selling') }}</h3>
     <a href="{{ route('tap.payments_submit_lead_get') }}">
-        <button class="btn btn-primary btn-sm my-2">{{ __('messages.Manage payment gateway') }}</button>
+        <button class="btn btn-primary btn-sm my-2">{{ __('Manage payment gateway') }}</button>
     </a>
     </div>
 @elseif($setting->lead_id && !$setting->merchant_id)
 <div class="alert alert-warning text-center">
-    <h3>{{ __('messages.Your payment gateway account is currently waiting for approval to process selling orders') }}</h3>
-    
+    <h3>{{ __('Your payment gateway account is currently waiting for approval to process selling orders') }}</h3>
+
 </div>
 @endif
 @if ($sub=\App\Models\ROSubscription::first())
     @if($sub->status ==  \App\Models\ROSubscription::ACTIVE && \App\Models\Tenant\Branch::count() == 0)
     <div class="alert alert-success">
         <span class="badge badge-primary mx-1">&#9432;</span>
-      
-        {!! __('messages.You must add a :branches to activate your subscription',['branches'=>
-         "<a href='".route('restaurant.branches')."'>".__('messages.branches')."</a>"
+
+        {!! __('You must add a :branches to activate your subscription',['branches'=>
+         "<a href='".route('restaurant.branches')."'>".__('branches')."</a>"
         ]) !!}
     </a>
     </div>
@@ -29,31 +29,31 @@
     <div class="alert alert-primary">
         <span class="badge badge-info mx-1">&#9432;</span>
         @if($sub->status == \App\Models\ROSubscription::SUSPEND)
-        {{__('messages.The current subscription period has expired, please renew in order to receive new orders')}} 
+        {{__('The current subscription period has expired, please renew in order to receive new orders')}}
         @elseif($sub->status == \App\Models\ROSubscription::DEACTIVATE)
-        {{__('messages.Please activate the branches so that you can receive orders')}} 
+        {{__('Please activate the branches so that you can receive orders')}}
         @endif
-        <a href="{{route('restaurant.service')}}"><u>{{__('messages.Activate your branches')}}</u></a>.
+        <a href="{{route('restaurant.service')}}"><u>{{__('Activate your branches')}}</u></a>.
     </div>
     @elseif($sub->status ==  \App\Models\ROSubscription::ACTIVE && $sub->end_at->isPast())
         <div class="alert alert-warning">
             <span class="badge badge-danger mx-1">&#9432;</span>
-            {{__('messages.Your subscription has expired, please activate it before it is deactivated')}} 
-            <a href="{{route('restaurant.service')}}"><u>{{__('messages.Activate your branches')}}</u></a>.
+            {{__('Your subscription has expired, please activate it before it is deactivated')}}
+            <a href="{{route('restaurant.service')}}"><u>{{__('Activate your branches')}}</u></a>.
         </div>
     @endif
 @else
 
     <div class="alert alert-warning">
         <span class="badge badge-danger mx-1">&#9432;</span>
-        {{__('messages.Subscribe to the available packages so that you can create branches')}} 
-        <a href="{{route('restaurant.service')}}"><u>{{__('messages.Activate your branches')}}</u></a>.
+        {{__('Subscribe to the available packages so that you can create branches')}}
+        <a href="{{route('restaurant.service')}}"><u>{{__('Activate your branches')}}</u></a>.
     </div>
 @endif
 @if(!$setting->is_live)
 <div class="alert alert-warning">
     <span class="badge badge-danger mx-1">&#9432;</span>
-    {{ __('messages.Your restaurant will be activated after completing the review process') }}
+    {{ __('Your restaurant will be activated after completing the review process') }}
 
 </div>
 @endif

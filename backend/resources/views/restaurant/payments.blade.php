@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.payments'))
+@section('title', __('payments'))
 @section('css')
 <style>
     .accordion-button:not(.collapsed)::after{
@@ -44,7 +44,7 @@ $tap_info = $settings->lead_response;
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
             <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#subscriptions" aria-expanded="true" aria-controls="subscriptions">
-                {{ __('messages.Your subscription') }}
+                {{ __('Your subscription') }}
             </button>
         </h2>
         <div id="subscriptions" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -62,7 +62,7 @@ $tap_info = $settings->lead_response;
                                 <!--begin::Col-->
                                 <div class="col-md-12">
                                     <!--begin::Subtitle-->
-                                    <span class="text-gray-900 pt-3 fw-bolder    fs-17"><i class=""></i> {{ __('messages.Current subscription') }}</span>
+                                    <span class="text-gray-900 pt-3 fw-bolder    fs-17"><i class=""></i> {{ __('Current subscription') }}</span>
                                     <!--end::Subtitle-->
                                     <!--begin::Info-->
                                     <div class="card-body">
@@ -74,8 +74,8 @@ $tap_info = $settings->lead_response;
                                                 <thead>
                                                     <!--begin::Table row-->
                                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                        <th class="text-start pe-3 min-w-100px">{{ __('messages.Key') }}</th>
-                                                        <th class="text-start pe-3 min-w-100px">{{ __('messages.Value') }}</th>
+                                                        <th class="text-start pe-3 min-w-100px">{{ __('Key') }}</th>
+                                                        <th class="text-start pe-3 min-w-100px">{{ __('Value') }}</th>
                                                     </tr>
                                                     <!--end::Table row-->
                                                 </thead>
@@ -85,7 +85,7 @@ $tap_info = $settings->lead_response;
                                                     <!--begin::Item-->
                                                     <tr>
                                                         <td>
-                                                            <span class="text-start">{{__('messages.Number of branches')}}</span>
+                                                            <span class="text-start">{{__('Number of branches')}}</span>
                                                         </td>
                                                         <td class="text-dark">
                                                             <span class="py-3 px-4 fs-23">{{ $user?->ROSubscription?->number_of_branches }}</span>
@@ -96,7 +96,7 @@ $tap_info = $settings->lead_response;
                                                     <!--begin::Item-->
                                                     <tr>
                                                         <td>
-                                                            <span class="text-start">{{__('messages.Package')}}</span>
+                                                            <span class="text-start">{{__('Package')}}</span>
                                                         </td>
                                                         <td class="text-dark">
                                                             <span class="py-3 px-4 fs-23">{{ $user?->ROSubscription?->subscription?->name }}</span>
@@ -107,17 +107,17 @@ $tap_info = $settings->lead_response;
                                                     <!--begin::Item-->
                                                     <tr>
                                                         <td>
-                                                            <span class="text-start">{{__('messages.Price')}}</span>
+                                                            <span class="text-start">{{__('Price')}}</span>
                                                         </td>
                                                         <td class="text-dark">
-                                                            <span class="py-3 px-4 fs-23">{{ $user?->ROSubscription?->amount }} {{ __('messages.SAR') }}</span>
+                                                            <span class="py-3 px-4 fs-23">{{ $user?->ROSubscription?->amount }} {{ __('SAR') }}</span>
                                                         </td>
                                                     </tr>
                                                     <!--end::Item-->
                                                     <!--begin::Item-->
                                                     <tr>
                                                         <td>
-                                                            <span class="text-start">{{__('messages.Start date')}}</span>
+                                                            <span class="text-start">{{__('Start date')}}</span>
                                                         </td>
                                                         <td class="text-dark">
                                                             <span class="py-3 px-4 fs-23">{{ $user?->ROSubscription?->start_at?->format('Y-m-d') }}</span>
@@ -127,7 +127,7 @@ $tap_info = $settings->lead_response;
                                                     <!--begin::Item-->
                                                     <tr>
                                                         <td>
-                                                            <span class="text-start">{{__('messages.End date')}}</span>
+                                                            <span class="text-start">{{__('End date')}}</span>
                                                         </td>
                                                         <td class="text-dark">
                                                             <span class="py-3 px-4 fs-23">{{ $user?->ROSubscription?->end_at?->format('Y-m-d') }}</span>
@@ -137,13 +137,13 @@ $tap_info = $settings->lead_response;
                                                     <!--begin::Item-->
                                                     <tr>
                                                         <td>
-                                                            <span class="text-start">{{__('messages.Status')}}</span>
+                                                            <span class="text-start">{{__('Status')}}</span>
                                                         </td>
                                                         <td>
                                                             @if($user->ROSubscription?->status == 'active')
-                                                            <span class="py-3 px-4 fs-23 badge badge-success">{{ __('messages.'.$user?->ROSubscription?->status) }}</span>
+                                                            <span class="py-3 px-4 fs-23 badge badge-success">{{ __(''.$user?->ROSubscription?->status) }}</span>
                                                             @else
-                                                            <span class="py-3 px-4 fs-23 badge badge-danger">{{ __('messages.'.$user?->ROSubscription?->status) }}</span>
+                                                            <span class="py-3 px-4 fs-23 badge badge-danger">{{ __(''.$user?->ROSubscription?->status) }}</span>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -167,10 +167,10 @@ $tap_info = $settings->lead_response;
                 </div>
                 @else
                 <div class="alert alert-warning text-center">
-                    <h4>{{ __('messages.You do not have subscription') }}</h4>
-                    <p>{{ __('messages.You can subscription now') }}</p>
+                    <h4>{{ __('You do not have subscription') }}</h4>
+                    <p>{{ __('You can subscription now') }}</p>
                     <a href="{{ route('restaurant.service') }}">
-                        <button type="button" class="btn btn-success btn-sm">{{ __('messages.View services') }}</button>
+                        <button type="button" class="btn btn-success btn-sm">{{ __('View services') }}</button>
                     </a>
                 </div>
                 @endif
@@ -198,7 +198,7 @@ $tap_info = $settings->lead_response;
                                                 <div class="card-title">
                                                     <!--begin::Search-->
                                                     <div class="d-flex align-items-center position-relative my-1">
-                                                        <h3>{{ __('messages.Transactions') }}</h3>
+                                                        <h3>{{ __('Transactions') }}</h3>
                                                     </div>
                                                     <!--end::Search-->
                                                 </div>
@@ -251,8 +251,8 @@ $tap_info = $settings->lead_response;
                                                         <div class="d-flex my-0">
                                                             <input type="hidden" name="download" value="csv">
                                                             <button type="submit" id="download_transactions" class="btn btn-success mx-2">
-                                                                <span class="indicator-label">{{ __('messages.Download') }} <i class="fa fa-download"></i></span>
-                                                                <span class="indicator-progress">{{ __('messages.please-wait')}}
+                                                                <span class="indicator-label">{{ __('Download') }} <i class="fa fa-download"></i></span>
+                                                                <span class="indicator-progress">{{ __('please-wait')}}
                                                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                             </button>
                                                         </div>
@@ -272,11 +272,11 @@ $tap_info = $settings->lead_response;
                                                         <thead>
                                                             <!--begin::Table row-->
                                                             <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                                <th class="text-start pe-3 min-w-100px">{{ __('messages.Package') }}</th>
-                                                                <th class="text-start pe-3 min-w-100px">{{ __('messages.Status') }}</th>
-                                                                <th class="text-start pe-3 min-w-100px">{{ __('messages.Number of branches') }}</th>
-                                                                <th class="text-start pe-3 min-w-100px">{{ __('messages.Price') }}</th>
-                                                                <th class="text-start pe-3 min-w-100px">{{ __('messages.Date') }}</th>
+                                                                <th class="text-start pe-3 min-w-100px">{{ __('Package') }}</th>
+                                                                <th class="text-start pe-3 min-w-100px">{{ __('Status') }}</th>
+                                                                <th class="text-start pe-3 min-w-100px">{{ __('Number of branches') }}</th>
+                                                                <th class="text-start pe-3 min-w-100px">{{ __('Price') }}</th>
+                                                                <th class="text-start pe-3 min-w-100px">{{ __('Date') }}</th>
                                                             </tr>
                                                             <!--end::Table row-->
                                                         </thead>
@@ -291,9 +291,9 @@ $tap_info = $settings->lead_response;
                                                                 </td>
                                                                 <td class="text-start">
                                                                     @if($invoice->status =='active')
-                                                                    <span class="py-3 px-4 fs-23 badge badge-khardl">{{ __('messages.'.$invoice->status) }}</span>
+                                                                    <span class="py-3 px-4 fs-23 badge badge-khardl">{{ __(''.$invoice->status) }}</span>
                                                                     @else
-                                                                    <span class="py-3 px-4 fs-23 badge badge-light-khardl">{{ __('messages.'.$invoice->status) }}</span>
+                                                                    <span class="py-3 px-4 fs-23 badge badge-light-khardl">{{ __(''.$invoice->status) }}</span>
                                                                     @endif
                                                                 </td>
                                                                 <td>
@@ -303,7 +303,7 @@ $tap_info = $settings->lead_response;
                                                                 </td>
                                                                 <td class="text-start">
                                                                     <span class="py-3 px-4 fs-23 badge badge-light-success">
-                                                                        {{ $invoice->amount }} {{ __('messages.SAR') }}
+                                                                        {{ $invoice->amount }} {{ __('SAR') }}
                                                                     </span>
                                                                 </td>
                                                                 <td>
@@ -343,7 +343,7 @@ $tap_info = $settings->lead_response;
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
             <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#tap_bussiness_info" aria-expanded="true" aria-controls="tap_bussiness_info">
-                {{ __('messages.Tab information') }}
+                {{ __('Tab information') }}
             </button>
         </h2>
         <div id="tap_bussiness_info" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -366,7 +366,7 @@ $tap_info = $settings->lead_response;
                                             <div class="card-header pt-7">
                                                 <!--begin::Title-->
                                                 <h3 class="card-title align-items-start flex-column">
-                                                    <span class="card-label fw-bolder text-dark">{{ __('messages.Tab business information') }}</span>
+                                                    <span class="card-label fw-bolder text-dark">{{ __('Tab business information') }}</span>
                                                 </h3>
                                                 <!--end::Title-->
                                             </div>
@@ -381,8 +381,8 @@ $tap_info = $settings->lead_response;
                                                         <thead>
                                                             <!--begin::Table row-->
                                                             <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                                <th class="text-start pe-3 min-w-100px">{{ __('messages.Key') }}</th>
-                                                                <th class="text-start pe-3 min-w-100px">{{ __('messages.Value') }}</th>
+                                                                <th class="text-start pe-3 min-w-100px">{{ __('Key') }}</th>
+                                                                <th class="text-start pe-3 min-w-100px">{{ __('Value') }}</th>
                                                             </tr>
                                                             <!--end::Table row-->
                                                         </thead>
@@ -529,8 +529,8 @@ $tap_info = $settings->lead_response;
                                                                 <thead>
                                                                     <!--begin::Table row-->
                                                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                                        <th class="text-start pe-3 min-w-100px">{{ __('messages.Key') }}</th>
-                                                                        <th class="text-start pe-3 min-w-100px">{{ __('messages.Value') }}</th>
+                                                                        <th class="text-start pe-3 min-w-100px">{{ __('Key') }}</th>
+                                                                        <th class="text-start pe-3 min-w-100px">{{ __('Value') }}</th>
                                                                     </tr>
                                                                     <!--end::Table row-->
                                                                 </thead>
@@ -697,7 +697,7 @@ $tap_info = $settings->lead_response;
                                                     <div class="card-header pt-7">
                                                         <!--begin::Title-->
                                                         <h3 class="card-title align-items-start flex-column">
-                                                            <span class="card-label fw-bolder text-dark">{{ __('messages.Bank information') }}</span>
+                                                            <span class="card-label fw-bolder text-dark">{{ __('Bank information') }}</span>
                                                         </h3>
                                                         <!--end::Title-->
                                                     </div>
@@ -712,8 +712,8 @@ $tap_info = $settings->lead_response;
                                                                 <thead>
                                                                     <!--begin::Table row-->
                                                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                                        <th class="text-start pe-3 min-w-100px">{{ __('messages.Key') }}</th>
-                                                                        <th class="text-start pe-3 min-w-100px">{{ __('messages.Value') }}</th>
+                                                                        <th class="text-start pe-3 min-w-100px">{{ __('Key') }}</th>
+                                                                        <th class="text-start pe-3 min-w-100px">{{ __('Value') }}</th>
                                                                     </tr>
                                                                     <!--end::Table row-->
                                                                 </thead>
@@ -808,7 +808,7 @@ $tap_info = $settings->lead_response;
     <h2 class="text-center pt-5">
 
 
-        {{-- {{ __('messages.Create TAP') }}<a href="{{ route('tap.payments_submit_lead_get') }}"><u>{{ __('messages.business account') }}</u></a> {{ __('messages.first to access this page content!') }} --}}
+        {{-- {{ __('Create TAP') }}<a href="{{ route('tap.payments_submit_lead_get') }}"><u>{{ __('business account') }}</u></a> {{ __('first to access this page content!') }} --}}
     </h2>
 </div>
 

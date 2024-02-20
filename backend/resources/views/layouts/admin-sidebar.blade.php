@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html @if(app()->getLocale() === 'ar') dir="rtl" style="direction: rtl" @endif lang="{{ app()->getLocale() }}">
 <head>
-    <title>{{ __('messages.khardl')}} | @yield('title', __('messages.dashboard'))</title>
+    <title>{{ __('khardl')}} | @yield('title', __('dashboard'))</title>
     <meta charset="utf-8" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -154,7 +154,7 @@
                                         </span>
 
                                         <span class="menu-title">
-                                            {{ __('messages.dashboard')}}</span>
+                                            {{ __('dashboard')}}</span>
                                     </span>
                                 </a>
                             </div>
@@ -171,7 +171,7 @@
                                             <i class="fa fa-store"></i>
                                                 <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">{{ __('messages.restaurants')}} </span>
+                                        <span class="menu-title">{{ __('restaurants')}} </span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -182,7 +182,7 @@
                                                         <i class="fa fa-store"></i>
                                                     </span>
                                                 </span>
-                                                <span class="menu-title">{{ __('messages.all-restaurants')}}
+                                                <span class="menu-title">{{ __('all-restaurants')}}
                                                     {{--                                                    @if(($restaurantsAll  - $restaurantsLive) > 0)<span class="badge badge-danger mx-1">{{($restaurantsAll  - $restaurantsLive)}}</span>@endif--}}
                                                 </span>
                                             </a>
@@ -200,7 +200,7 @@
                                                         </span>
                                                         <!--end::Svg Icon-->
                                                     </span>
-                                                    <span class="menu-title">{{ __('messages.restaurant-owners')}}</span>
+                                                    <span class="menu-title">{{ __('restaurant-owners')}}</span>
                                                 </a>
                                             </div>
                                         @endif
@@ -220,7 +220,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{ __('messages.supports')}}</span>
+                                    <span class="menu-title">{{ __('supports')}}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -230,7 +230,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">{{ __('messages.all-supports')}}</span>
+                                                <span class="menu-title">{{ __('all-supports')}}</span>
                                             </a>
                                         </div>
                                     @endif
@@ -240,7 +240,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">{{ __('messages.add-supports')}}</span>
+                                            <span class="menu-title">{{ __('add-supports')}}</span>
                                         </a>
                                     </div>
                                     @endif
@@ -259,7 +259,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{ __('messages.promoters')}}</span>
+                                    <span class="menu-title">{{ __('promoters')}}</span>
                                 </span>
                             </a>
                             </div>
@@ -274,7 +274,7 @@
                                         <i class=" fa fa-history"></i>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{ __('messages.logs')}}</span>
+                                    <span class="menu-title">{{ __('logs')}}</span>
                                 </span>
                             </a>
                             </div>
@@ -291,7 +291,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{ __('messages.settings')}}</span>
+                                    <span class="menu-title">{{ __('settings')}}</span>
                                 </span>
                             </a>
                             </div>
@@ -309,7 +309,7 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">{{__('messages.subscriptions')}}</span>
+                                        <span class="menu-title">{{__('subscriptions')}}</span>
                                     </span>
                                     </a>
                                 </div>
@@ -438,16 +438,16 @@
 
                                         <div class="menu-item px-5 my-1">
                                             <a href="{{ route('admin.profile') }}"
-                                                class="menu-link px-5">{{ __('messages.profile')}}</a>
+                                                class="menu-link px-5">{{ __('profile')}}</a>
                                         </div>
                                         <!--end::Menu separator-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5" data-kt-menu-trigger="hover"
                                              data-kt-menu-placement="left-start">
                                             <a href="#" class="menu-link px-5">
-                                                <span class="menu-title position-relative">{{ __('messages.language')}}
+                                                <span class="menu-title position-relative">{{ __('language')}}
                                                     <span
-                                                        class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('messages.english')}} @else {{ __('messages.arabic')}} @endif
+                                                        class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('english')}} @else {{ __('arabic')}} @endif
                                                         <img class="w-15px h-15px rounded-1 ms-2"
                                                              @if(app()->getLocale() != 'ar')
                                                              src="{{ global_asset('assets/media/flags/united-kingdom.svg') }}"
@@ -467,7 +467,7 @@
                                                             <span class="symbol symbol-20px me-4">
                                                                 <img class="rounded-1"
                                                                      src={{ global_asset('assets/media/flags/united-kingdom.svg') }} alt="" />
-                                                            </span>{{ __('messages.english')}}</button>
+                                                            </span>{{ __('english')}}</button>
                                                     </form>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -479,7 +479,7 @@
                                                                 class="w-100 menu-link d-flex px-5 active">
                                                         <span class="symbol symbol-20px me-4">
                                                             <img class="rounded-1" src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
-                                                                 alt="" /> </span>{{ __('messages.arabic')}}</button>
+                                                                 alt="" /> </span>{{ __('arabic')}}</button>
                                                     </form>
                                                 </div>
                                                 <!--end::Menu item-->
@@ -489,7 +489,7 @@
                                         <!--end::Menu item-->
                                         @if($user?->hasPermission('can_see_logs'))
                                         <div class="menu-item px-5 my-1">
-                                            <a href="{{ route('admin.log') }}" class="menu-link px-5">{{ __('messages.Logs') }}</a>
+                                            <a href="{{ route('admin.log') }}" class="menu-link px-5">{{ __('Logs') }}</a>
                                         </div>
                                         @endif
                                         <!--begin::Menu item-->
@@ -497,7 +497,7 @@
                                         <div class="menu-item px-5">
                                             <a href="{{ route('logout') }}"
                                                 class="menu-link px-5" onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">{{ __('messages.sign-out')}}</a>
+                                                document.getElementById('logout-form').submit();">{{ __('sign-out')}}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                     @csrf
                                                 </form>
@@ -549,7 +549,7 @@
                         <div class="text-dark order-2 order-md-1">
                             <span class="text-muted fw-bold me-1">{{date('Y')}} ©</span>
                             <a href="https://www.khardl.com" target="_blank"
-                                class="text-gray-800 text-hover-primary">{{ __('messages.khardl')}}</a>
+                                class="text-gray-800 text-hover-primary">{{ __('khardl')}}</a>
                         </div>
                         <!--end::Copyright-->
                     </div>

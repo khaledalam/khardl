@@ -1,7 +1,7 @@
 @extends('layouts.admin-sidebar')
 
 
-@section('title', __('messages.edit-profile'))
+@section('title', __('edit-profile'))
 
 @section('content')
     <!--begin::Content-->
@@ -28,7 +28,7 @@
                                             <div class="card-header">
                                                 <div class="card-title w-100 d-flex justify-content-between align-items-center">
                                                     <div>
-                                                        <h2>{{ __('messages.edit-profile')}}</h2>
+                                                        <h2>{{ __('edit-profile')}}</h2>
                                                     </div>
                                                     <div>
                                                         <button type="submit" style="border: 0;" class="badge badge-primary p-3"><i class="fas fa-save text-white"></i></button>
@@ -41,27 +41,27 @@
                                                 <!--begin::Input group-->
                                                 <div class="mb-10 fv-row">
                                                     <!--begin::Label-->
-                                                    <label class="required form-label">{{ __('messages.first-name')}}</label>
+                                                    <label class="required form-label">{{ __('first-name')}}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('messages.first-name')}}" required value="{{ $user->first_name }}"/>
+                                                    <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('first-name')}}" required value="{{ $user->first_name }}"/>
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="mb-10 fv-row">
                                                     <!--begin::Label-->
-                                                    <label class="required form-label">{{ __('messages.last-name')}}</label>
+                                                    <label class="required form-label">{{ __('last-name')}}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('messages.last-name')}}" required value="{{ $user->last_name }}"/>
+                                                    <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('last-name')}}" required value="{{ $user->last_name }}"/>
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="mb-10 fv-row">
                                                     <!--begin::Label-->
-                                                    <label class="required form-label">{{ __('messages.phone-number')}}</label>
+                                                    <label class="required form-label">{{ __('phone-number')}}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
                                                     <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="05XXXXXXXX" required>
@@ -71,10 +71,10 @@
                                                 <!--begin::Input group-->
                                                 <div class="mb-10 fv-row">
                                                     <!--begin::Label-->
-                                                    <label class="required form-label">{{ __('messages.email')}}</label>
+                                                    <label class="required form-label">{{ __('email')}}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('messages.email')}}" required value="{{ $user->email }}"/>
+                                                    <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('email')}}" required value="{{ $user->email }}"/>
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
@@ -83,7 +83,7 @@
                                                     <!--begin::Wrapper-->
                                                     <div class="mb-1">
                                                         <!--begin::Label-->
-                                                        <label class="form-label fw-bolder text-dark fs-6">{{ __('messages.password')}}</label>
+                                                        <label class="form-label fw-bolder text-dark fs-6">{{ __('password')}}</label>
                                                         <!--end::Label-->
                                                         <!--begin::Input wrapper-->
                                                         <div class="position-relative mb-3">
@@ -105,7 +105,7 @@
                                                     </div>
                                                     <!--end::Wrapper-->
                                                     <!--begin::Hint-->
-                                                    <div class="text-muted">{{ __('messages.leave-empty-if-you-dont-want-to-change-password') }} <br> {{ __('messages.use-8-or-more-characters-with-a-mix-of-letters-numbers-symbols') }}</div>
+                                                    <div class="text-muted">{{ __('leave-empty-if-you-dont-want-to-change-password') }} <br> {{ __('use-8-or-more-characters-with-a-mix-of-letters-numbers-symbols') }}</div>
                                                     <!--end::Hint-->
                                                 </div>
                                                 <!--end::Input group=-->

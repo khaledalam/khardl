@@ -1,7 +1,7 @@
 @extends('layouts.restaurant-sidebar')
 
 @section('content')
-    <h3 class="mb-13 mx-3">{{ __('messages.STEP 1 → Upload Documents for Create TAP Business Account') }}</h3>
+    <h3 class="mb-13 mx-3">{{ __('STEP 1 → Upload Documents for Create TAP Business Account') }}</h3>
     @if(session('success'))
       <div class="alert alert-success">
         {{ session('success') }}
@@ -19,12 +19,12 @@
             <div class="d-flex flex-column mb-8 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="business_log">
-                    <span class="">{{ __('messages.'.$title) }}</span>
+                    <span class="">{{ __(''.$title) }}</span>
                     <span class="text-danger h4"> * </span>
-                    <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="{{ __('messages.'.$title) }}"></i>
+                    <i class="fas fa-exclamation-circle ms-2 fs-7 mx-3  " data-bs-toggle="tooltip" title="{{ __(''.$title) }}"></i>
                 </label>
                 <input id="business_log" accept="{{($name == 'business_logo')?'.gif':'.pdf'}},.jpeg,.png" type="file" class="form-control form-control-solid" name="{{$name}}" />
-                <small><i>{{ __('messages.Accept') }}: {{ ($name == 'business_logo')?'GIF':'PDF' }}, JPEG, PNG. {{ __('messages.size <= 16 MG') }}</i></small>
+                <small><i>{{ __('Accept') }}: {{ ($name == 'business_logo')?'GIF':'PDF' }}, JPEG, PNG. {{ __('size <= 16 MG') }}</i></small>
                 @if ($tap_files)
                     <a href="{{ route('download.file', ['path' => $tap_files->{$name.'_path'}]) }}"><span class="fw-bolder fs-6 text-gray-800 btn btn-sm btn-primary"><i class="fas fa-download"></i></span></a>
                 @endif
@@ -33,10 +33,10 @@
         @endforeach
        <!--begin::Actions-->
        <div class="text-center">
-        <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{ __('messages.Reset ↻') }}</button>
+        <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{ __('Reset ↻') }}</button>
         <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-            <span class="indicator-label">{{ __('messages.Upload ⬆') }}</span>
-            <span class="indicator-progress" id="waiting-item">{{ __('messages.Please wait...') }}
+            <span class="indicator-label">{{ __('Upload ⬆') }}</span>
+            <span class="indicator-progress" id="waiting-item">{{ __('Please wait...') }}
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
         @if($tap_files)

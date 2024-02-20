@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.customers-data'))
+@section('title', __('customers-data'))
 
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -16,12 +16,12 @@
                     <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-lg-n2 me-auto">
                         <!--begin:::Tab item-->
                         <li class="nav-item">
-                            <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" id="summary" href="#kt_ecommerce_sales_order_summary">{{ __('messages.Customer Summary') }}</a>
+                            <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" id="summary" href="#kt_ecommerce_sales_order_summary">{{ __('Customer Summary') }}</a>
                         </li>
                         <!--end:::Tab item-->
                         <!--begin:::Tab item-->
                         <li class="nav-item">
-                            <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" id="order_history" href="#kt_ecommerce_sales_order_history">{{ __('messages.Order History') }}</a>
+                            <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" id="order_history" href="#kt_ecommerce_sales_order_history">{{ __('Order History') }}</a>
                         </li>
                         <!--end:::Tab item-->
                     </ul>
@@ -37,7 +37,7 @@
                         <!--begin::Card header-->
                         <div class="card-header">
                             <div class="card-title">
-                                <h2>{{ __('messages.Customer') }}</h2>
+                                <h2>{{ __('Customer') }}</h2>
                             </div>
                         </div>
                         <!--end::Card header-->
@@ -59,7 +59,7 @@
                                                             <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->{{ __('messages.Customer') }}</div>
+                                                    <!--end::Svg Icon-->{{ __('Customer') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 <div class="d-flex align-items-center justify-content-end">
@@ -81,7 +81,7 @@
                                                             <path d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z" fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->{{ __('messages.Email') }}</div>
+                                                    <!--end::Svg Icon-->{{ __('Email') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 <a href="../../demo1/dist/apps/user-management/users/view.html" class="text-gray-600 text-hover-khardl">{{ $restaurantUser->email }}</a>
@@ -99,7 +99,7 @@
                                                             <path opacity="0.3" d="M19 4H5V20H19V4Z" fill="currentColor" />
                                                         </svg>
                                                     </span>
-                                                    <!--end::Svg Icon-->{{ __('messages.Phone') }}</div>
+                                                    <!--end::Svg Icon-->{{ __('Phone') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">+{{ $restaurantUser->phone }}</td>
                                         </tr>
@@ -110,11 +110,11 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-person-badge mx-2"></i>
-                                                    <!--end::Svg Icon-->{{ __('messages.Status') }}</div>
+                                                    <!--end::Svg Icon-->{{ __('Status') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 <span class="badge {{ $restaurantUser->status }}">
-                                                    {{__("messages.$restaurantUser->status")}}
+                                                    {{__("$restaurantUser->status")}}
                                                 </span>
                                             </td>
                                         </tr>
@@ -125,7 +125,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-house mx-2"></i>
-                                                    <!--end::Svg Icon-->{{ __('messages.Address') }}</div>
+                                                    <!--end::Svg Icon-->{{ __('Address') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 {{ $restaurantUser->address }}
@@ -136,7 +136,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-building mx-2"></i>
-                                                    <!--end::Svg Icon-->{{ __('messages.Branch') }}</div>
+                                                    <!--end::Svg Icon-->{{ __('Branch') }}</div>
                                             </td>
                                             @if($restaurantUser->branch)
                                             <td class="fw-bolder text-end">
@@ -151,7 +151,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                                     <i class="bi bi-clock-fill mx-2"></i>
-                                                    <!--end::Svg Icon-->{{ __('messages.Last login') }}</div>
+                                                    <!--end::Svg Icon-->{{ __('Last login') }}</div>
                                             </td>
                                             <td class="fw-bolder text-end">
                                                 {{ $restaurantUser->last_login?->format('Y-m-d') }}
@@ -186,7 +186,7 @@
                                     <div class="card-header">
                                         <div class="card-title">
                                             <h2>
-                                                <a href="https://www.google.com/maps" target="_blank">{{ __('messages.Customer Address') }}</a>
+                                                <a href="https://www.google.com/maps" target="_blank">{{ __('Customer Address') }}</a>
                                             </h2>
                                         </div>
                                     </div>
@@ -225,7 +225,7 @@
                                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                                         <!--begin::Card title-->
                                         <div class="card-title">
-                                            <h2>{{ __('messages.Order History') }}</h2>
+                                            <h2>{{ __('Order History') }}</h2>
                                         </div>
                                         <!--end::Card title-->
                                         <!--begin::Card toolbar-->
@@ -240,41 +240,41 @@
                                                     </svg>
                                                 </span>
                                                 <!--end::Svg Icon-->
-                                                <input type="text" name="search" value="{{ request('search')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('messages.search')}}" />
+                                                <input type="text" name="search" value="{{ request('search')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('search')}}" />
                                             </div>
                                             <div class="w-100 mw-150px">
                                                 <!--begin::Select2-->
                                                 <select class="form-select form-select-solid" name="status">
-                                                    <option value="">{{ __('messages.Status') }}</option>
-                                                    <option value="pending" {{ request('status') =='pending' ? 'selected':'' }}>{{ __('messages.Pending') }}</option>
-                                                    <option value="received_by_restaurant" {{ request('status') =='received_by_restaurant' ? 'selected':'' }}>{{ __('messages.received_by_restaurant') }}</option>
-                                                    <option value="ready" {{ request('status') =='ready' ? 'selected':'' }}>{{ __('messages.Ready') }}</option>
-                                                    <option value="accepted" {{ request('status') =='accepted' ? 'selected':'' }}>{{ __('messages.Accepted') }}</option>
-                                                    <option value="completed" {{ request('status') =='completed' ? 'selected':'' }}>{{ __('messages.Completed') }}</option>
-                                                    <option value="cancelled" {{ request('status') =='cancelled' ? 'selected':'' }}>{{ __('messages.Cancelled') }}</option>
+                                                    <option value="">{{ __('Status') }}</option>
+                                                    <option value="pending" {{ request('status') =='pending' ? 'selected':'' }}>{{ __('Pending') }}</option>
+                                                    <option value="received_by_restaurant" {{ request('status') =='received_by_restaurant' ? 'selected':'' }}>{{ __('received_by_restaurant') }}</option>
+                                                    <option value="ready" {{ request('status') =='ready' ? 'selected':'' }}>{{ __('Ready') }}</option>
+                                                    <option value="accepted" {{ request('status') =='accepted' ? 'selected':'' }}>{{ __('Accepted') }}</option>
+                                                    <option value="completed" {{ request('status') =='completed' ? 'selected':'' }}>{{ __('Completed') }}</option>
+                                                    <option value="cancelled" {{ request('status') =='cancelled' ? 'selected':'' }}>{{ __('Cancelled') }}</option>
                                                 </select>
                                                 <!--end::Select2-->
                                             </div>
                                             <div class="w-100 mw-150px">
                                                 <!--begin::Select2-->
                                                 <select class="form-select form-select-solid" name="payment_status">
-                                                    <option value="">{{ __('messages.Payment') }}</option>
-                                                    <option value="paid" {{ request('payment_status') =='paid' ? 'selected':'' }}>{{ __('messages.Paid') }}</option>
-                                                    <option value="pending" {{ request('payment_status') =='pending' ? 'selected':'' }}>{{ __('messages.Pending') }}</option>
+                                                    <option value="">{{ __('Payment') }}</option>
+                                                    <option value="paid" {{ request('payment_status') =='paid' ? 'selected':'' }}>{{ __('Paid') }}</option>
+                                                    <option value="pending" {{ request('payment_status') =='pending' ? 'selected':'' }}>{{ __('Pending') }}</option>
                                                 </select>
                                                 <!--end::Select2-->
                                             </div>
                                             <div class="w-100 mw-150px">
                                                 <!--begin::Select2-->
                                                 <select class="form-select form-select-solid" name="date_string">
-                                                    <option value="">{{ __('messages.Date') }}</option>
-                                                    <option value="today" {{ request('date_string') =='today' ? 'selected':'' }}>{{ __('messages.Today') }}</option>
-                                                    <option value="last_day" {{ request('date_string') =='last_day' ? 'selected':'' }}>{{ __('messages.Last day') }}</option>
-                                                    <option value="last_week" {{ request('date_string') =='last_week' ? 'selected':'' }}>{{ __('messages.Last week') }}</option>
+                                                    <option value="">{{ __('Date') }}</option>
+                                                    <option value="today" {{ request('date_string') =='today' ? 'selected':'' }}>{{ __('Today') }}</option>
+                                                    <option value="last_day" {{ request('date_string') =='last_day' ? 'selected':'' }}>{{ __('Last day') }}</option>
+                                                    <option value="last_week" {{ request('date_string') =='last_week' ? 'selected':'' }}>{{ __('Last week') }}</option>
                                                 </select>
                                                 <!--end::Select2-->
                                             </div>
-                                            <button class="btn btn-primary" type="submit">{{ __('messages.Search') }}</button>
+                                            <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
                                         </div>
                                         <!--end::Card toolbar-->
                                     </div>
@@ -288,14 +288,14 @@
                                             <!--begin::Table head-->
                                             <thead>
                                                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                    <th class="min-w-100px">{{ __('messages.ID') }}</th>
-                                                    <th class="min-w-100px">{{ __('messages.Date Added') }}</th>
-                                                    <th class="min-w-175px">{{ __('messages.Total') }}</th>
-                                                    <th class="min-w-100px">{{ __('messages.Branch') }}</th>
-                                                    <th class="min-w-70px">{{ __('messages.Status') }}</th>
-                                                    <th class="min-w-70px">{{ __('messages.Payment Status') }}</th>
-                                                    <th class="min-w-70px">{{ __('messages.Type') }}</th>
-                                                    <th class="min-w-70px">{{ __('messages.Address') }}</th>
+                                                    <th class="min-w-100px">{{ __('ID') }}</th>
+                                                    <th class="min-w-100px">{{ __('Date Added') }}</th>
+                                                    <th class="min-w-175px">{{ __('Total') }}</th>
+                                                    <th class="min-w-100px">{{ __('Branch') }}</th>
+                                                    <th class="min-w-70px">{{ __('Status') }}</th>
+                                                    <th class="min-w-70px">{{ __('Payment Status') }}</th>
+                                                    <th class="min-w-70px">{{ __('Type') }}</th>
+                                                    <th class="min-w-70px">{{ __('Address') }}</th>
                                                 </tr>
                                             </thead>
                                             <!--end::Table head-->
@@ -319,16 +319,16 @@
                                                     </td>
                                                     <td>
                                                         <span class="badge {{ $order->status }}">
-                                                            {{__("messages.$order->status")}}
+                                                            {{__("$order->status")}}
                                                         </span>
                                                     </td>
                                                     <td>
                                                         <span class="badge {{ $order->payment_status }}">
-                                                            {{__("messages.$order->payment_status")}}
+                                                            {{__("$order->payment_status")}}
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        {{ __('messages.'.$order->delivery_type?->name) }}
+                                                        {{ __(''.$order->delivery_type?->name) }}
                                                     </td>
                                                     <td>
                                                         {{ $order->shipping_address }}

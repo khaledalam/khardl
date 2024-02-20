@@ -1,7 +1,7 @@
 @extends('layouts.admin-sidebar')
 
 
-@section('title',  __('messages.profile'))
+@section('title',  __('profile'))
 
 @section('content')
   <!--begin::Content-->
@@ -26,7 +26,7 @@
                           <div class="card-header">
                             <div class="card-title w-100 d-flex justify-content-between align-items-center">
                               <div>
-                                  <h2>{{ __('messages.profile')}}</h2>
+                                  <h2>{{ __('profile')}}</h2>
                               </div>
                               <div>
                                   <a href="{{ route('admin.edit-profile') }}" class="badge badge-primary p-3"><i class="fas fa-edit text-white"></i></a>
@@ -40,40 +40,40 @@
                             <!--begin::Input group-->
                             <div class="mb-10 fv-row">
                               <!--begin::Label-->
-                              <label class="required form-label">{{ __('messages.first-name')}}</label>
+                              <label class="required form-label">{{ __('first-name')}}</label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('messages.first-name')}}" value="{{ $user->first_name }}" disabled/>
+                              <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('first-name')}}" value="{{ $user->first_name }}" disabled/>
                               <!--end::Input-->
                             </div>
                             <!--end::Input group-->
                                                           <!--begin::Input group-->
                             <div class="mb-10 fv-row">
                               <!--begin::Label-->
-                              <label class="required form-label">{{ __('messages.last-name')}}</label>
+                              <label class="required form-label">{{ __('last-name')}}</label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('messages.last-name')}}" value="{{ $user->last_name }}" disabled/>
+                              <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('last-name')}}" value="{{ $user->last_name }}" disabled/>
                               <!--end::Input-->
                             </div>
                             <!--end::Input group-->
                                                           <!--begin::Input group-->
                             <div class="mb-10 fv-row">
                               <!--begin::Label-->
-                              <label class="required form-label">{{ __('messages.phone-number')}}</label>
+                              <label class="required form-label">{{ __('phone-number')}}</label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" name="phone" class="form-control mb-2" placeholder="{{ __('messages.phone-number')}}" value="{{ $user->phone }}" disabled/>
+                              <input type="text" name="phone" class="form-control mb-2" placeholder="{{ __('phone-number')}}" value="{{ $user->phone }}" disabled/>
                               <!--end::Input-->
                             </div>
                             <!--end::Input group-->
                                                           <!--begin::Input group-->
                             <div class="mb-10 fv-row">
                               <!--begin::Label-->
-                              <label class="required form-label">{{ __('messages.email')}}</label>
+                              <label class="required form-label">{{ __('email')}}</label>
                               <!--end::Label-->
                               <!--begin::Input-->
-                              <input type="text" name="email" class="form-control mb-2" placeholder="{{ __('messages.email')}}" value="{{ $user->email }}" disabled/>
+                              <input type="text" name="email" class="form-control mb-2" placeholder="{{ __('email')}}" value="{{ $user->email }}" disabled/>
                               <!--end::Input-->
                             </div>
                             <!--end::Input group-->
@@ -83,7 +83,7 @@
                                                               <!--begin::Wrapper-->
                                                               <div class="mb-1">
                                                                   <!--begin::Label-->
-                                                                  <label class="form-label fw-bolder text-dark fs-6">{{ __('messages.password')}}</label>
+                                                                  <label class="form-label fw-bolder text-dark fs-6">{{ __('password')}}</label>
                                                                   <!--end::Label-->
                                                                   <!--begin::Input wrapper-->
                                                                   <div class="position-relative mb-3">

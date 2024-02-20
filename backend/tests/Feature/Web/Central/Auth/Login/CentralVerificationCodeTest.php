@@ -23,7 +23,11 @@ class CentralVerificationCodeTest extends TestCase
     }
     public function createUser($options = null): User
     {
-        return User::factory()->create($options);
+        $data = [
+            'status' => 'active',
+        ];
+        $data = array_merge($data,$options);
+        return User::factory()->create($data);
     }
     public function assertSendVerifyEmailJobIsDispatched($id)
     {

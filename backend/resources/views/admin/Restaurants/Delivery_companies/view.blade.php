@@ -26,7 +26,7 @@
         <div class="text-center p-5 ">
             <h5 class="">
                 <div class="alert alert-warning">
-                    {{ __('messages.Restaurant does not have any delivery companies yet') }}
+                    {{ __('Restaurant does not have any delivery companies yet') }}
                 </div>
             </h5>
         </div>
