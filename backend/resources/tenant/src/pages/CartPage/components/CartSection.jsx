@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react"
 import CartItem from "./CartItem"
 import {useSelector} from "react-redux"
-import { setCartItemsData } from "../../../redux/NewEditor/categoryAPISlice";
+import { setCartItemsData, getCartItemsCount } from "../../../redux/NewEditor/categoryAPISlice";
+import AxiosInstance from "../../../axios/axios";
+import { useDispatch } from "react-redux";
 
 const CartSection = ({cartItems}) => {
   const language = useSelector((state) => state.languageMode.languageMode)
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
+  const dispatch = useDispatch();
 
   const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
@@ -21,6 +24,12 @@ const CartSection = ({cartItems}) => {
       console.log("cart >>>", cartResponse.data?.data.items);
       if (cartResponse.data) {
         dispatch(setCartItemsData(cartResponse.data?.data.items));
+        const countresponse = await AxiosInstance.get(`carts/count`);
+        if (countresponse.data) {
+          const count = countresponse.data?.data?.count || 0;
+          dispatch(getCartItemsCount(count));
+          // setCartItemsCount(count);
+        }
       }
     } catch (error) {
       console.log(error);

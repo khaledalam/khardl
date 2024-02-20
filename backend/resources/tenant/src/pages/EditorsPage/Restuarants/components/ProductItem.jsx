@@ -298,8 +298,10 @@ const ProductItem = ({
       const response = await AxiosInstance.post(`/carts`, payload);
 
       console.log("response ", response);
+     
       if (response?.data) {
         toast.success(`${t("Item added to cart")}`);
+        dispatch(getCartItemsCount(response?.data.data.items.length));
         setGotoCart(true);
         // fetchCartData();
         setSpinner(false);
