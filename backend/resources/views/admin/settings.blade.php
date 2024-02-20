@@ -1,7 +1,7 @@
 @extends('layouts.admin-sidebar')
 
 
-@section('title',  __('messages.settings'))
+@section('title',  __('settings'))
 
 @section('content')
 <!--begin::Content-->
@@ -17,7 +17,7 @@
 {{--              <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">--}}
 {{--                  <!--begin::Card title-->--}}
 {{--                  <div class="card-title m-0">--}}
-{{--                      <h3 class="fw-bolder m-0">{{ __('messages.restaurants')}}</h3>--}}
+{{--                      <h3 class="fw-bolder m-0">{{ __('restaurants')}}</h3>--}}
 {{--                  </div>--}}
 {{--                  <!--end::Card title-->--}}
 {{--              </div>--}}
@@ -34,7 +34,7 @@
 {{--                              <!--begin::Label-->--}}
 {{--                                  <div class="form-check form-check-solid form-switch fv-row">--}}
 {{--                                      <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing2" checked="checked" />--}}
-{{--                                      <label class="form-check-label" for="allowmarketing2">{{ __('messages.selling-items')}}--}}
+{{--                                      <label class="form-check-label" for="allowmarketing2">{{ __('selling-items')}}--}}
 {{--                                      </label>--}}
 {{--                                  </div>--}}
 {{--                              <!--begin::Label-->--}}
@@ -46,7 +46,7 @@
 {{--                              <!--begin::Label-->--}}
 {{--                                  <div class="form-check form-check-solid form-switch fv-row">--}}
 {{--                                      <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing3" checked="checked" />--}}
-{{--                                      <label class="form-check-label" for="allowmarketing">{{ __('messages.login')}}--}}
+{{--                                      <label class="form-check-label" for="allowmarketing">{{ __('login')}}--}}
 {{--                                      </label>--}}
 {{--                                  </div>--}}
 {{--                              <!--begin::Label-->--}}
@@ -58,7 +58,7 @@
 {{--                              <!--begin::Label-->--}}
 {{--                                  <div class="form-check form-check-solid form-switch fv-row">--}}
 {{--                                      <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing4" checked="checked" />--}}
-{{--                                      <label class="form-check-label" for="allowmarketing4">{{ __('messages.registration')}}--}}
+{{--                                      <label class="form-check-label" for="allowmarketing4">{{ __('registration')}}--}}
 {{--                                      </label>--}}
 {{--                                  </div>--}}
 {{--                              <!--begin::Label-->--}}
@@ -70,8 +70,8 @@
 {{--                      <!--end::Card body-->--}}
 {{--                      <!--begin::Actions-->--}}
 {{--                      <div class="card-footer d-flex justify-content-end py-6 px-9">--}}
-{{--                          <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('messages.discard')}}</button>--}}
-{{--                          <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">{{ __('messages.save-changes')}}</button>--}}
+{{--                          <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>--}}
+{{--                          <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">{{ __('save-changes')}}</button>--}}
 {{--                      </div>--}}
 {{--                      <!--end::Actions-->--}}
 {{--                  </form>--}}
@@ -87,7 +87,7 @@
 <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
   <!--begin::Card title-->
   <div class="card-title m-0">
-    <h3 class="fw-bolder m-0">{{ __('messages.admin')}}</h3>
+    <h3 class="fw-bolder m-0">{{ __('admin')}}</h3>
   </div>
   <!--end::Card title-->
 </div>
@@ -106,7 +106,7 @@
         <!--begin::Label-->
           <div class="form-check form-check-solid form-switch fv-row">
             <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing5" name="live_chat_enabled" @if($live_chat_enabled) checked="checked" @endif}} />
-            <label class="form-check-label" for="allowmarketing5">{{ __('messages.show')}} {{ __('messages.live-chat')}}
+            <label class="form-check-label" for="allowmarketing5">{{ __('show')}} {{ __('live-chat')}}
                                           </label>
           </div>
         <!--begin::Label-->
@@ -117,7 +117,7 @@
         <div class="row mb-0 mt-5">
             <!--begin::Label-->
             <div class="form-text fv-row">
-                <label class="form-label" for="allowmarketing5">{{ __('messages.webhook-url')}}
+                <label class="form-label" for="allowmarketing5">{{ __('webhook-url')}}
                 </label>:
                 <input class="form-control form-control-solid" value="{{$webhook_url}}" type="url" id="allowmarketing5" name="webhook_url" />
                 <small>(for testing purposes)</small>
@@ -129,9 +129,9 @@
       <div class="row mb-0 mt-5">
         <!--begin::Label-->
         <div class="form-text fv-row">
-            <label class="form-label" for="allowmarketing5">{{ __('messages.Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date')}}
+            <label class="form-label" for="allowmarketing5">{{ __('Specify the duration of deactivation of restaurant subscriptions after the number of days from the expiration date')}}
             </label>:
-            <input class="form-control form-control-solid" value="{{old('days_sub') ?? $active_days_after_sub_expired}}" type="number" min="1" id="allowmarketing5" name="active_days_after_sub_expired"  placeholder="{{__('messages.Enter Number of days')}}"/>
+            <input class="form-control form-control-solid" value="{{old('days_sub') ?? $active_days_after_sub_expired}}" type="number" min="1" id="allowmarketing5" name="active_days_after_sub_expired"  placeholder="{{__('Enter Number of days')}}"/>
 
         </div>
         <!--begin::Label-->
@@ -142,10 +142,10 @@
     <!--end::Card body-->
     <!--begin::Actions-->
     <div class="card-footer d-flex justify-content-end py-6 px-9">
-      <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('messages.discard')}}</button>
+      <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>
       <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">
         <i class="bi bi-check2-square mx-1"></i>
-        {{ __('messages.save-changes')}}
+        {{ __('save-changes')}}
     </button>
     </div>
     <!--end::Actions-->
@@ -164,7 +164,7 @@
 {{--  <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">--}}
 {{--    <!--begin::Card title-->--}}
 {{--    <div class="card-title m-0">--}}
-{{--      <h3 class="fw-bolder m-0">{{ __('messages.customers')}}</h3>--}}
+{{--      <h3 class="fw-bolder m-0">{{ __('customers')}}</h3>--}}
 {{--    </div>--}}
 {{--    <!--end::Card title-->--}}
 {{--  </div>--}}
@@ -181,7 +181,7 @@
 {{--          <!--begin::Label-->--}}
 {{--            <div class="form-check form-check-solid form-switch fv-row">--}}
 {{--              <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing6" checked="checked" />--}}
-{{--              <label class="form-check-label" for="allowmarketing6">{{ __('messages.login')}}</label>--}}
+{{--              <label class="form-check-label" for="allowmarketing6">{{ __('login')}}</label>--}}
 {{--            </div>--}}
 {{--          <!--begin::Label-->--}}
 {{--        </div>--}}
@@ -192,7 +192,7 @@
 {{--          <!--begin::Label-->--}}
 {{--            <div class="form-check form-check-solid form-switch fv-row">--}}
 {{--              <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing7" checked="checked" />--}}
-{{--              <label class="form-check-label" for="allowmarketing7">{{ __('messages.registration')}}--}}
+{{--              <label class="form-check-label" for="allowmarketing7">{{ __('registration')}}--}}
 {{--                                            </label>--}}
 {{--            </div>--}}
 {{--          <!--begin::Label-->--}}
@@ -204,7 +204,7 @@
 {{--          <!--begin::Label-->--}}
 {{--            <div class="form-check form-check-solid form-switch fv-row">--}}
 {{--              <input class="form-check-input w-35px h-20px" type="checkbox" id="allowmarketing8" checked="checked" />--}}
-{{--              <label class="form-check-label" for="allowmarketing8">{{ __('messages.control-panel')}}--}}
+{{--              <label class="form-check-label" for="allowmarketing8">{{ __('control-panel')}}--}}
 {{--                                            </label>--}}
 {{--            </div>--}}
 {{--          <!--begin::Label-->--}}
@@ -216,8 +216,8 @@
 {{--      <!--end::Card body-->--}}
 {{--      <!--begin::Actions-->--}}
 {{--      <div class="card-footer d-flex justify-content-end py-6 px-9">--}}
-{{--        <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('messages.discard')}}</button>--}}
-{{--        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">{{ __('messages.save-changes')}}</button>--}}
+{{--        <button type="reset" class="btn btn-light btn-active-light-primary me-2">{{ __('discard')}}</button>--}}
+{{--        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">{{ __('save-changes')}}</button>--}}
 {{--      </div>--}}
 {{--      <!--end::Actions-->--}}
 {{--    </form>--}}

@@ -39,7 +39,7 @@ class OrderStatusChangeRequest extends FormRequest
                             $fail(__("Cannot change this status"));
                             return ;
                         }
-                        $fail(__("Invalid status transition. Allowed transitions: ") . implode(', ', array_map(fn($status)=>__('messages.'.$status),$allowedStatuses)));
+                        $fail(__("Invalid status transition. Allowed transitions: ") . implode(', ', array_map(fn($status)=>__(''.$status),$allowedStatuses)));
                     }
                     if(
                         $order->delivery_type->name == DeliveryType::DELIVERY &&

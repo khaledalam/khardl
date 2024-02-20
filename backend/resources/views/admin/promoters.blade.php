@@ -1,7 +1,7 @@
 @extends('layouts.admin-sidebar')
 
 
-@section('title', __('messages.promoters'))
+@section('title', __('promoters'))
 
 @section('content')
     <!--begin::Content-->
@@ -27,17 +27,17 @@
                                             <!--begin::Card header-->
                                             <div class="card-header">
                                                 <div class="card-title">
-                                                    <h2>{{ __('messages.add-a-promoter') }}</h2>
+                                                    <h2>{{ __('add-a-promoter') }}</h2>
                                                 </div>
                                                 <div class="d-flex align-items-center justify-content-end mt-3">
                                                     <!--begin::Button-->
-                                                    <a id="resetButton" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{ __('messages.reset') }}</a>
+                                                    <a id="resetButton" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{ __('reset') }}</a>
                                                     <!--end::Button-->
                                                     <!--begin::Button-->
                                                     <button type="submit" id="kt_ecommerce_add_product_submit"
                                                         class="btn btn-sm btn-primary">
-                                                        <span class="indicator-label">{{ __('messages.add') }}</span>
-                                                        <span class="indicator-progress">{{ __('messages.please-wait') }}
+                                                        <span class="indicator-label">{{ __('add') }}</span>
+                                                        <span class="indicator-progress">{{ __('please-wait') }}
                                                             <span
                                                                 class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
@@ -50,27 +50,27 @@
                                                 <!--begin::Input group-->
                                                 <div class="mb-10 fv-row">
                                                     <!--begin::Label-->
-                                                    <label class="required form-label">{{ __('messages.name') }}</label>
+                                                    <label class="required form-label">{{ __('name') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" required id="nameInput" name="name" class="form-control mb-2" placeholder="{{ __('messages.name') }}" value="{{ old('name') }}" />
+                                                    <input type="text" required id="nameInput" name="name" class="form-control mb-2" placeholder="{{ __('name') }}" value="{{ old('name') }}" />
                                                     <!--end::Input-->
                                                     <!--begin::Description-->
-                                                    <div class="text-muted fs-7">{{ __('messages.name') }} {{ __('messages.is-required') }}</div>
+                                                    <div class="text-muted fs-7">{{ __('name') }} {{ __('is-required') }}</div>
                                                     <!--end::Description-->
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="mb-10 fv-row">
                                                     <!--begin::Label-->
-                                                    <label class="form-label">{{ __('messages.url') }}</label>
+                                                    <label class="form-label">{{ __('url') }}</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" id="urlInput" name="url" class="form-control mb-2" placeholder="{{ __('messages.url-example') }}" value="{{ old('url') }}" />
+                                                    <input type="text" id="urlInput" name="url" class="form-control mb-2" placeholder="{{ __('url-example') }}" value="{{ old('url') }}" />
                                                     <!--end::Input-->
                                                     <!--begin::Description-->
-                                                    <div class="text-muted fs-7">{{ __('messages.leave-empty-for-random-url') }}</div>
-                                                    <div class="text-muted fs-7">{{ __('messages.url-should-be-unique') }}</div>
+                                                    <div class="text-muted fs-7">{{ __('leave-empty-for-random-url') }}</div>
+                                                    <div class="text-muted fs-7">{{ __('url-should-be-unique') }}</div>
                                                     <!--end::Description-->
                                                 </div>
                                                 <!--end::Input group-->
@@ -103,12 +103,12 @@
                                       <thead>
                                           <tr class="fw-bolder text-muted">
                                               <th class="min-w-25px">#</th>
-                                              <th class="min-w-200px">{{ __('messages.name') }}</th>
-                                              <th class="min-w-150px">{{ __('messages.url') }}</th>
-                                              <th class="min-w-150px">{{ __('messages.entered') }}</th>
-                                              <th class="min-w-150px">{{ __('messages.registered') }}</th>
-                                              <th class="min-w-150px">{{ __('messages.External URL') }}</th>
-                                              <th class="min-w-150px text-end">{{ __('messages.actions')}}</th>
+                                              <th class="min-w-200px">{{ __('name') }}</th>
+                                              <th class="min-w-150px">{{ __('url') }}</th>
+                                              <th class="min-w-150px">{{ __('entered') }}</th>
+                                              <th class="min-w-150px">{{ __('registered') }}</th>
+                                              <th class="min-w-150px">{{ __('External URL') }}</th>
+                                              <th class="min-w-150px text-end">{{ __('actions')}}</th>
                                           </tr>
                                       </thead>
                                       <!--end::Table head-->
@@ -198,14 +198,14 @@
                                 var form = button.closest('.delete-form');
 
                                 Swal.fire({
-                                    title: '{{ __('messages.are-you-sure') }}',
-                                    text: "{{ __('messages.you-wont-be-able-to-undo-this') }}",
+                                    title: '{{ __('are-you-sure') }}',
+                                    text: "{{ __('you-wont-be-able-to-undo-this') }}",
                                     icon: 'warning',
                                     showCancelButton: true,
                                     confirmButtonColor: '#d33',
                                     cancelButtonColor: '#3085d6',
-                                    confirmButtonText: '{{ __('messages.delete') }}',
-                                    cancelButtonText: '{{ __('messages.cancel') }}'
+                                    confirmButtonText: '{{ __('delete') }}',
+                                    cancelButtonText: '{{ __('cancel') }}'
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         form.submit();

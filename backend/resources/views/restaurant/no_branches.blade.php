@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.No available branches'))
+@section('title', __('No available branches'))
 
 @section('content')
 <!--begin::Content-->
@@ -16,7 +16,7 @@
                         <!--begin::Aside content-->
                         <div class="card-body" style="overflow-y: scroll;height: 20vh;">
                             <div class="alert alert-warning text-center">
-                                {{ __('messages.You need to have branches first') }}
+                                {{ __('You need to have branches first') }}
                             </div>
                         </div>
                         <!--end::Menu-->

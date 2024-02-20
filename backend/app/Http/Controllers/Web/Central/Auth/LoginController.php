@@ -63,7 +63,7 @@ class LoginController extends BaseController
         $user = Auth::user();
         if($user->isBlocked() ){
             Auth::logout();
-            return $this->sendError('Unauthorized.', ['error' => __('messages.blocked-user')]);
+            return $this->sendError('Unauthorized.', ['error' => __('blocked-user')]);
         }elseif(!$user->isActive()){
             $register = new RegisterController();
             $register->sendVerificationCode($request);

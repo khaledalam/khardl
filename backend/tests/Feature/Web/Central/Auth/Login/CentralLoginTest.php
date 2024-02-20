@@ -4,6 +4,7 @@ namespace Tests\Feature\Web\Central\Auth\Login;
 
 use App\Actions\CreateTenantAction;
 use App\Jobs\SendVerifyEmailJob;
+use App\Models\Tenant;
 use App\Models\TraderRequirement;
 use App\Models\User;
 use Illuminate\Support\Facades\Queue;
@@ -28,7 +29,11 @@ class CentralLoginTest extends TestCase
     }
     public function createUser($options = null): User
     {
-        return User::factory()->create($options);
+        $data = [
+            'status' => 'active',
+        ];
+        if($options)$data = array_merge($data,$options);
+        return User::factory()->create($data);
     }
     private function createTradeRegistration($id)
     {
@@ -38,10 +43,12 @@ class CentralLoginTest extends TestCase
     }
     private function createRestaurant($user, $domain)
     {
+        $tenant = Tenant::find('140c813f-5794-4e47-8e28-3426ac01f1f8');
+        if($tenant)$tenant->delete();
         $tenant =  (new CreateTenantAction)
         (
             user: $user,
-            domain: $domain
+            domain: $domain,
         );
         return $tenant;
     }
@@ -207,7 +214,7 @@ class CentralLoginTest extends TestCase
             'password' => $data['password'],
         ]);
         $user->assignRole($role);
-        $this->createRestaurant($user, 'first');
+        $this->createRestaurant($user, fake()->name);
         $this->createTradeRegistration($user->id);
         $response = $this->postJson('/login', $data);
         $this->assertLoginSuccess($response,$data['email'],"completed");

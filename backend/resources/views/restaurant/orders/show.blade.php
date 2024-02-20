@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.order-summary'))
+@section('title', __('order-summary'))
 
 @section('content')
 
@@ -29,7 +29,7 @@
                          <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-lg-n2 me-auto">
                              <!--begin:::Tab item-->
                              <li class="nav-item">
-                                 <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_summary">{{__('messages.order-summary')}}</a>
+                                 <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_sales_order_summary">{{__('order-summary')}}</a>
                              </li>
                              <!--end:::Tab item-->
 
@@ -52,15 +52,15 @@
                          <!--begin::Button-->
                          <a href="#" class="btn btn-active-light-khardl btn-sm">Edit Order</a>
                          @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                         <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
+                         <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("accepted")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
-                         <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
+                         <a href="#"  class="btn btn-light-warning btn-sm">{{__("pending")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
-                         <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
+                         <a href="#"  class="btn btn-light-danger btn-sm">{{__("cancelled")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::READY)
-                         <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
+                         <a href="#"  class="btn btn-light-info btn-sm">{{__("ready")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
-                         <a href="#"  class="btn btn-light-success btn-sm">{{__("messages.completed")}}</a>
+                         <a href="#"  class="btn btn-light-success btn-sm">{{__("completed")}}</a>
                          @endif
 
                          <!--end::Button-->
@@ -72,7 +72,7 @@
                              <!--begin::Card header-->
                              <div class="card-header">
                                  <div class="card-title">
-                                     <h2>{{__('messages.order-details')}} (#{{$order->id}})</h2>
+                                     <h2>{{__('order-details')}} (#{{$order->id}})</h2>
                                  </div>
                              </div>
                              <!--end::Card header-->
@@ -93,7 +93,7 @@
                                                                  <path d="M19 0.400024H1C0.4 0.400024 0 0.800024 0 1.40002V4.40002C0 5.00002 0.4 5.40002 1 5.40002H19C19.6 5.40002 20 5.00002 20 4.40002V1.40002C20 0.800024 19.6 0.400024 19 0.400024Z" fill="currentColor" />
                                                              </svg>
                                                          </span>
-                                                         <!--end::Svg Icon-->{{__('messages.branch')}}</div>
+                                                         <!--end::Svg Icon-->{{__('branch')}}</div>
                                                  </td>
                                                  <td class="fw-bolder text-end">{{$order->branch->name}}</td>
                                              </tr>
@@ -109,7 +109,7 @@
                                                              <path d="M19 0.400024H1C0.4 0.400024 0 0.800024 0 1.40002V4.40002C0 5.00002 0.4 5.40002 1 5.40002H19C19.6 5.40002 20 5.00002 20 4.40002V1.40002C20 0.800024 19.6 0.400024 19 0.400024Z" fill="currentColor" />
                                                          </svg>
                                                      </span>
-                                                     <!--end::Svg Icon-->{{__('messages.date-added')}}</div>
+                                                     <!--end::Svg Icon-->{{__('date-added')}}</div>
                                                  </td>
                                                  <td class="fw-bolder text-end">{{$order->created_at}}</td>
                                              </tr>
@@ -126,18 +126,18 @@
                                                              <path d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z" fill="currentColor" />
                                                          </svg>
                                                      </span>
-                                                     <!--end::Svg Icon-->{{__('messages.payment-method')}}</div>
+                                                     <!--end::Svg Icon-->{{__('payment-method')}}</div>
                                                  </td>
                                                  <td class="fw-bolder text-end">
-                                                     {{__('messages.'.$order->payment_method->name)}}
+                                                     {{__(''.$order->payment_method->name)}}
                                                      <svg width="24px" height="24px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg"><title>Visa icon</title><path d="M17.445 8.623c-.387-.146-.99-.301-1.74-.301-1.92 0-3.275.968-3.285 2.355-.012 1.02.964 1.594 1.701 1.936.757.35 1.01.57 1.008.885-.005.477-.605.693-1.162.693-.766 0-1.186-.107-1.831-.375l-.239-.111-.271 1.598c.466.195 1.306.362 2.175.375 2.041 0 3.375-.961 3.391-2.439.016-.813-.51-1.43-1.621-1.938-.674-.33-1.094-.551-1.094-.886 0-.296.359-.612 1.109-.612.645-.01 1.096.129 1.455.273l.18.081.271-1.544-.047.01zm4.983-.17h-1.5c-.467 0-.816.127-1.021.591l-2.885 6.534h2.041l.408-1.07 2.49.002c.061.25.24 1.068.24 1.068H24l-1.572-7.125zM9.66 8.393h1.943l-1.215 7.129H8.444L9.66 8.391v.002zm-4.939 3.929l.202.99 1.901-4.859h2.059l-3.061 7.115H3.768l-1.68-6.026c-.035-.103-.078-.173-.18-.237C1.34 9.008.705 8.766 0 8.598l.025-.15h3.131c.424.016.766.15.883.604l.682 3.273v-.003zm15.308.727l.775-1.994c-.01.02.16-.412.258-.68l.133.615.449 2.057h-1.615v.002z"/></svg>
 
                                                      @if($order->payment_status == \App\Models\Tenant\PaymentMethod::PAID)
-                                                     <span class="badge badge-success">{{__('messages.'.$order->payment_status)}}</span>
+                                                     <span class="badge badge-success">{{__(''.$order->payment_status)}}</span>
                                                      @elseif($order->payment_status == \App\Models\Tenant\PaymentMethod::FAILED)
-                                                     <span class="badge badge-danger">{{__('messages.'.$order->payment_status)}}</span>
+                                                     <span class="badge badge-danger">{{__(''.$order->payment_status)}}</span>
                                                      @elseif($order->payment_status ==  \App\Models\Tenant\PaymentMethod::PENDING)
-                                                         <span class="badge badge-warning">{{__('messages.'.$order->payment_status)}}</span>
+                                                         <span class="badge badge-warning">{{__(''.$order->payment_status)}}</span>
                                                      @endif
                                                  </td>
                                              </tr>
@@ -153,9 +153,9 @@
                                                              <path opacity="0.3" d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z" fill="currentColor" />
                                                          </svg>
                                                      </span>
-                                                     <!--end::Svg Icon-->{{__('messages.shipping-method')}}</div>
+                                                     <!--end::Svg Icon-->{{__('shipping-method')}}</div>
                                                  </td>
-                                                 <td class="fw-bolder text-end">{{__('messages.'.$order->delivery_type->name)}}</td>
+                                                 <td class="fw-bolder text-end">{{__(''.$order->delivery_type->name)}}</td>
                                              </tr>
                                              <!--end::Date-->
                                          </tbody>
@@ -172,7 +172,7 @@
                              <!--begin::Card header-->
                              <div class="card-header">
                                  <div class="card-title">
-                                     <h2>{{__('messages.customer-details')}}</h2>
+                                     <h2>{{__('customer-details')}}</h2>
                                  </div>
                              </div>
                              <!--end::Card header-->
@@ -194,7 +194,7 @@
                                                              <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="currentColor" />
                                                          </svg>
                                                      </span>
-                                                     <!--end::Svg Icon-->{{__('messages.customer')}}</div>
+                                                     <!--end::Svg Icon-->{{__('customer')}}</div>
                                                  </td>
                                                  <td class="fw-bolder text-end">
                                                      <div class="d-flex align-items-center justify-content-end">
@@ -237,7 +237,7 @@
                                                          </svg>
                                                      </span>
                                                      <!--end::Svg Icon-->
-                                                         {{__('messages.email')}}</div>
+                                                         {{__('email')}}</div>
                                                  </td>
                                                  <td class="fw-bolder text-end">
                                                      <a href="mailto:{{$order->user->email}}" class="text-gray-600 text-hover-khardl">{{$order->user->email}}</a>
@@ -255,7 +255,7 @@
                                                              <path opacity="0.3" d="M19 4H5V20H19V4Z" fill="currentColor" />
                                                          </svg>
                                                      </span>
-                                                     <!--end::Svg Icon-->{{__('messages.phone')}}</div>
+                                                     <!--end::Svg Icon-->{{__('phone')}}</div>
                                                  </td>
                                                  <td class="fw-bolder text-end">
                                                      <a href="tel:{{$order->user->phone}}" class="text-gray-600 text-hover-khardl">{{$order->user->phone}}</a>
@@ -276,7 +276,7 @@
                              <!--begin::Card header-->
                              <div class="card-header">
                                  <div class="card-title">
-                                     <h2>{{__('messages.documents')}}</h2>
+                                     <h2>{{__('documents')}}</h2>
                                  </div>
                              </div>
                              <!--end::Card header-->
@@ -299,7 +299,7 @@
                                                              <path d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z" fill="currentColor" />
                                                          </svg>
                                                      </span>
-                                                     <!--end::Svg Icon-->{{__('messages.invoice')}}
+                                                     <!--end::Svg Icon-->{{__('invoice')}}
                                                      <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="View the invoice generated by this order."></i></div>
                                                  </td>
                                                  <td class="fw-bolder text-end">
@@ -318,7 +318,7 @@
                                                              <path opacity="0.3" d="M20 18C20 19.1 19.1 20 18 20C16.9 20 16 19.1 16 18C16 16.9 16.9 16 18 16C19.1 16 20 16.9 20 18ZM15 4C15 3.4 14.6 3 14 3H3C2.4 3 2 3.4 2 4V13C2 13.6 2.4 14 3 14H15V4ZM6 16C4.9 16 4 16.9 4 18C4 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16Z" fill="currentColor" />
                                                          </svg>
                                                      </span>
-                                                     <!--end::Svg Icon-->{{__('messages.shipping')}}
+                                                     <!--end::Svg Icon-->{{__('shipping')}}
                                                      <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="View the shipping manifest generated by this order."></i></div>
                                                  </td>
                                                  <td class="fw-bolder text-end">
@@ -358,7 +358,7 @@
                                          <!--begin::Card header-->
                                          <div class="card-header">
                                              <div class="card-title">
-                                                 <h2>{{__('messages.shipping-address')}}</h2>
+                                                 <h2>{{__('shipping-address')}}</h2>
                                              </div>
                                          </div>
                                          <!--end::Card header-->
@@ -380,20 +380,20 @@
                                             <!--begin::Card header-->
                                             <div class="card-header">
                                                 <div class="card-title">
-                                                    <h2>{{__('messages.order')}} #{{$order->id}}
+                                                    <h2>{{__('order')}} #{{$order->id}}
 
                                                         @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                                                            <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("messages.accepted")}}</a>
+                                                            <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("accepted")}}</a>
                                                         @elseif($order->status == \App\Models\Tenant\Order::PENDING)
-                                                            <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.pending")}}</a>
+                                                            <a href="#"  class="btn btn-light-warning btn-sm">{{__("pending")}}</a>
                                                         @elseif($order->status == \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
-                                                            <a href="#"  class="btn btn-light-warning btn-sm">{{__("messages.received_by_restaurant")}}</a>
+                                                            <a href="#"  class="btn btn-light-warning btn-sm">{{__("received_by_restaurant")}}</a>
                                                         @elseif($order->status == \App\Models\Tenant\Order::CANCELLED)
-                                                            <a href="#"  class="btn btn-light-danger btn-sm">{{__("messages.cancelled")}}</a>
+                                                            <a href="#"  class="btn btn-light-danger btn-sm">{{__("cancelled")}}</a>
                                                         @elseif($order->status == \App\Models\Tenant\Order::READY)
-                                                            <a href="#"  class="btn btn-light-info btn-sm">{{__("messages.ready")}}</a>
+                                                            <a href="#"  class="btn btn-light-info btn-sm">{{__("ready")}}</a>
                                                         @elseif($order->status == \App\Models\Tenant\Order::COMPLETED)
-                                                            <a href="#"  class="btn btn-light-secondary btn-sm">{{__("messages.completed")}}</a>
+                                                            <a href="#"  class="btn btn-light-secondary btn-sm">{{__("completed")}}</a>
                                                         @endif
                                                     </h2>
                                                 </div>
@@ -407,13 +407,13 @@
                                                         <!--begin::Table head-->
                                                         <thead>
                                                             <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                                <th class="min-w-175px">{{__('messages.product')}}</th>
+                                                                <th class="min-w-175px">{{__('product')}}</th>
                                                                 {{-- <th class="min-w-100px text-end">SKU</th> --}}
-                                                                <th class="min-w-100px text-end">{{__('messages.id')}}</th>
-                                                                <th class="min-w-70px text-end">{{__('messages.QTY')}}</th>
-                                                                <th class="min-w-100px text-end">{{__('messages.unit-price')}}</th>
-                                                                <th class="min-w-100px text-end">{{__('messages.options-price')}}</th>
-                                                                <th class="min-w-100px text-end">{{__('messages.total')}}</th>
+                                                                <th class="min-w-100px text-end">{{__('id')}}</th>
+                                                                <th class="min-w-70px text-end">{{__('QTY')}}</th>
+                                                                <th class="min-w-100px text-end">{{__('unit-price')}}</th>
+                                                                <th class="min-w-100px text-end">{{__('options-price')}}</th>
+                                                                <th class="min-w-100px text-end">{{__('total')}}</th>
                                                             </tr>
                                                         </thead>
                                                         <!--end::Table head-->
@@ -433,7 +433,7 @@
                                                                                <!--begin::Title-->
                                                                                <div class="ms-5">
                                                                                    <a href="#" class="fw-bolder text-gray-600 text-hover-khardl">{{$order_item->item->name}}</a>
-                                                                                   <div class="fs-7 text-muted">{{__('messages.notes')}}: {{$order_item->notes ?? __('messages.NA')}}</div>
+                                                                                   <div class="fs-7 text-muted">{{__('notes')}}: {{$order_item->notes ?? __('NA')}}</div>
 
                                                                                </div>
 
@@ -495,7 +495,7 @@
                                                                        <td class="text-end">{{$order_item->options_price}}</td>
                                                                        <!--end::Price-->
                                                                        <!--begin::Total-->
-                                                                       <td class="text-end">{{$order_item->total}}  {{__('messages.SAR')}}</td>
+                                                                       <td class="text-end">{{$order_item->total}}  {{__('SAR')}}</td>
                                                                        <!--end::Total-->
                                                                    </tr>
                                                                @endforeach
@@ -503,40 +503,40 @@
                                                             <!--end::Products-->
                                                             <!--begin::Subtotal-->
                                                             <tr>
-                                                                <td colspan="4" class="text-end">{{__('messages.subtotal')}}</td>
-                                                                <td class="text-end">{{$order->subtotal}} {{__('messages.SAR')}} +</td>
+                                                                <td colspan="4" class="text-end">{{__('subtotal')}}</td>
+                                                                <td class="text-end">{{$order->subtotal}} {{__('SAR')}} +</td>
                                                             </tr>
                                                             <!--end::Subtotal-->
                                                             <!--begin::Shipping-->
                                                             <tr>
-                                                                <td colspan="4" class="text-end">{{__('messages.shipping-rate')}}</td>
-                                                                <td class="text-end">{{$order->delivery_type->cost}} {{__('messages.SAR')}} +</td>
+                                                                <td colspan="4" class="text-end">{{__('shipping-rate')}}</td>
+                                                                <td class="text-end">{{$order->delivery_type->cost}} {{__('SAR')}} +</td>
                                                             </tr>
                                                             <!--end::Shipping-->
                                                             <!--begin::Shipping-->
                                                             <tr>
-                                                                <td colspan="4" class="text-end">{{__('messages.discount')}}</td>
+                                                                <td colspan="4" class="text-end">{{__('discount')}}</td>
                                                                 <td class="text-end">
                                                                     @if($order->coupon)
                                                                     <a href="{{ route('coupons.edit',['coupon' => $order->coupon?->id]) }}" target="_blank">
                                                                         ({{ $order->coupon?->code }})
                                                                     </a>
                                                                     @endif
-                                                                    {{ $order->discount ?? 0 }} {{__('messages.SAR')}} -
+                                                                    {{ $order->discount ?? 0 }} {{__('SAR')}} -
                                                                 </td>
                                                             </tr>
                                                             <!--end::Shipping-->
                                                             <!--begin::Shipping-->
                                                             <tr>
-                                                                <td colspan="4" class="text-end">{{__('messages.Tax')}}</td>
-                                                                <td class="text-end">{{ $order->tax_amount }} {{__('messages.SAR')}} +</td>
+                                                                <td colspan="4" class="text-end">{{__('Tax')}}</td>
+                                                                <td class="text-end">{{ $order->tax_amount }} {{__('SAR')}} +</td>
                                                             </tr>
                                                             <!--end::Shipping-->
                                                             <!--begin::Grand total-->
                                                             <tr>
-                                                                <td colspan="4" class="fs-3 text-dark text-end">{{__('messages.grand-total')}}</td>
-                                                                <td class="text-dark fs-3 fw-boldest text-end">{{$order->total }} {{__('messages.SAR')}}</td>
-                                                                <td> <i> {{App\Repositories\Customer\CartRepository::VAT_PERCENTAGE }} % <br> {{__('messages.inclusive-VAT')}}</i></td>
+                                                                <td colspan="4" class="fs-3 text-dark text-end">{{__('grand-total')}}</td>
+                                                                <td class="text-dark fs-3 fw-boldest text-end">{{$order->total }} {{__('SAR')}}</td>
+                                                                <td> <i> {{App\Repositories\Customer\CartRepository::VAT_PERCENTAGE }} % <br> {{__('inclusive-VAT')}}</i></td>
                                                             </tr>
                                                             <!--end::Grand total-->
                                                         </tbody>
@@ -555,21 +555,21 @@
                                              <!--begin::Header-->
                                              <div class="card-header align-items-center border-0 mt-4">
                                                  <h3 class="card-title align-items-start flex-column">
-                                                     <span class="fw-bolder mb-2 text-dark">{{__('messages.preparations')}}</span>
+                                                     <span class="fw-bolder mb-2 text-dark">{{__('preparations')}}</span>
                                                  </h3>
                                              </div>
                                              <!--end::Header-->
                                              <!--begin::Body-->
                                              <div class="card-body pt-5">
                                                  @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                                                     <h3 class="btn btn-light-success btn-sm">{{__('messages.in-preparations')}}</h3>
+                                                     <h3 class="btn btn-light-success btn-sm">{{__('in-preparations')}}</h3>
                                                  @else
-                                                     <h3 class="btn btn-light-danger btn-sm">{{__('messages.not-in-preparations')}}</h3>
+                                                     <h3 class="btn btn-light-danger btn-sm">{{__('not-in-preparations')}}</h3>
                                                  @endif
 
                                                  <hr />
 
-                                                 <a href="#" onclick="showConfirmation({{$order->id}})" class="btn btn-info menu-link px-3" >{{__('messages.status')}}</a>
+                                                 <a href="#" onclick="showConfirmation({{$order->id}})" class="btn btn-info menu-link px-3" >{{__('status')}}</a>
 
                                                      <hr />
 
@@ -632,17 +632,17 @@
   <script>
       function showConfirmation(orderId) {
           event.preventDefault();
-          const statusOptions = @json(array_combine(\App\Models\Tenant\Order::STATUS,array_map(fn ($status) => __('messages.'.$status), \App\Models\Tenant\Order::STATUS)));
+          const statusOptions = @json(array_combine(\App\Models\Tenant\Order::STATUS,array_map(fn ($status) => __(''.$status), \App\Models\Tenant\Order::STATUS)));
 
           Swal.fire({
-              text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
+              text: '{{ __('are-you-sure-you-want-to-change-order-status')}}',
               icon: 'warning',
               input: 'select',
               showCancelButton: true,
               inputOptions: statusOptions,
               inputPlaceholder: 'Select an option',
-              confirmButtonText: '{{ __('messages.yes') }}',
-              cancelButtonText: '{{ __('messages.no') }}'
+              confirmButtonText: '{{ __('yes') }}',
+              cancelButtonText: '{{ __('no') }}'
           }).then((result) => {
               if (result.isConfirmed) {
                   const selectedStatus = result.value;

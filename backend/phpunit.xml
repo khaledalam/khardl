@@ -14,8 +14,8 @@
         <testsuite name="Feature_WEB">
             <directory suffix="Test.php">./tests/Feature/Web</directory>
         </testsuite>
-        <testsuite name="Feature_SuperAdmin">
-            <directory suffix="Test.php">./tests/Feature/SuperAdmin</directory>
+        <testsuite name="Feature_Global">
+            <directory suffix="Test.php">./tests/Feature/Global</directory>
         </testsuite>
     </testsuites>
     <source>

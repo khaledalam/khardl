@@ -20,7 +20,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
-    <title>{{__("messages.Renew Subscription")}}</title>
+    <title>{{__("Renew Subscription")}}</title>
 </head>
 
 <body>

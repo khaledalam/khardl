@@ -14,11 +14,11 @@
                         </g>
                     </svg>
                 </span>
-                {{__('messages.verified')}}
+                {{__('verified')}}
             </span>
             @else
             <span class="badge badge badge-secondary px-4 py-3">
-                {{__('messages.Not verified')}}
+                {{__('Not verified')}}
             </span>
             @endif
         </div>
@@ -33,7 +33,7 @@
                 <!--begin::Contact details-->
                 <div class="d-flex flex-column gap-2">
                     <!--begin::Name-->
-                    <h3 class="mb-0">{{__('messages.yeswa')}}</h3>
+                    <h3 class="mb-0">{{__('yeswa')}}</h3>
                     <!--end::Name-->
                     <!--begin::Activation-->
                     <div class="d-flex align-items-center gap-2">
@@ -49,7 +49,7 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
-                        <a href="#" class="text-muted text-hover-khardl">{{__('messages.activation-within')}} 48 {{__('messages.hour')}}</a>
+                        <a href="#" class="text-muted text-hover-khardl">{{__('activation-within')}} 48 {{__('hour')}}</a>
                     </div>
                     <!--end::Activation-->
                 </div>
@@ -60,23 +60,23 @@
             <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x fs-6 fw-bold mt-6 mb-8">
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                    <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" href="#kt_contact_view_Brief">{{__('messages.brief')}}</a>
+                    <a class="nav-link text-active-khardl pb-4 active" data-bs-toggle="tab" href="#kt_contact_view_Brief">{{__('brief')}}</a>
                 </li>
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_view_coverage_areas">{{__('messages.coverage')}}</a>
+                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_view_coverage_areas">{{__('coverage')}}</a>
                 </li>
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_view_prices">{{__('messages.prices')}}</a>
+                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_view_prices">{{__('prices')}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_contact">{{__("messages.contact")}}</a>
+                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_contact_contact">{{__("contact")}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_yeswa_configurations">{{__("messages.configurations")}}</a>
+                    <a class="nav-link text-active-khardl pb-4" data-bs-toggle="tab" href="#kt_yeswa_configurations">{{__("configurations")}}</a>
                 </li>
                 <!--end:::Tab item-->
 
@@ -90,8 +90,8 @@
                     <div class="d-flex flex-column gap-5 mt-7">
                         <!--begin::Notes-->
                         <div class="d-flex flex-column gap-1">
-                            <div class="fw-bolder text-muted">{{__('messages.summary')}}</div>
-                            <p>{!! __('messages.delivery.yeswa.summary') !!}</p>
+                            <div class="fw-bolder text-muted">{{__('summary')}}</div>
+                            <p>{!! __('delivery.yeswa.summary') !!}</p>
                             <a href="{{global_asset('delivery-companies/yeswa/Yeswa_Profile.pdf')}}" class="btn btn-warning text-black text-hover-khardl" target="_blank">Profile.pdf</a>
                         </div>
                         <!--end::Notes-->
@@ -114,7 +114,7 @@
                                 <!--begin::Info-->
                                 <div class="fw-bold ms-5 text-gray-600">
                                     <!--begin::Time-->
-                                    <div class="fs-5 mb-3">{{__('messages.cover-area')}}</div>
+                                    <div class="fs-5 mb-3">{{__('cover-area')}}</div>
                                     <!--end::Time-->
                                     @if(is_array($yeswa?->coverage_area))
                                         @foreach ($yeswa?->coverage_area as $area)
@@ -141,12 +141,12 @@
 
                         <div class="fw-bold ms-5 text-gray-600">
                             <!--begin::Time-->
-                            <div class="fs-5 mb-3">{{__('messages.main-cost')}}</div>
+                            <div class="fs-5 mb-3">{{__('main-cost')}}</div>
                             <!--end::Time-->
-                            <span class="badge badge-lg badge-light-khardl">17 {{__('messages.sar')}}</span>
+                            <span class="badge badge-lg badge-light-khardl">17 {{__('sar')}}</span>
                             <br /><br />
-                            <div class="fs-5 mb-3">{{__('messages.additional-cost')}}</div>
-                            <span class="badge badge-lg badge-light-khardl"> {{__('messages.na')}}</span>
+                            <div class="fs-5 mb-3">{{__('additional-cost')}}</div>
+                            <span class="badge badge-lg badge-light-khardl"> {{__('na')}}</span>
                         </div>
 
                     </div>
@@ -165,7 +165,7 @@
                                     <!--begin::Table row-->
                                     <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                         <th class="text-start pe-3 min-w-100px"></th>
-                                        <th class="text-start pe-3 min-w-100px">{{ __('messages.Communication') }}</th>
+                                        <th class="text-start pe-3 min-w-100px">{{ __('Communication') }}</th>
                                     </tr>
                                     <!--end::Table row-->
                                 </thead>
@@ -175,7 +175,7 @@
                                     <!--begin::Item-->
                                     <tr>
                                         <td>
-                                            <span class="text-start">{{__('messages.Tel')}}</span>
+                                            <span class="text-start">{{__('Tel')}}</span>
                                         </td>
                                         <td class="text-dark">
                                             <a href="tel:+966557767339">+966557767339</a>
@@ -183,7 +183,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="text-start">{{__('messages.Email')}}</span>
+                                            <span class="text-start">{{__('Email')}}</span>
                                         </td>
                                         <td class="text-dark">
                                             <a href="mailto:info@yeswa.net">info@yeswa.net</a>
@@ -216,15 +216,15 @@
                                                         @csrf
                                                         <input type="text" hidden value="Yeswa" class="form-control mb-2" name="module" id="">
                                                         @if($yeswa?->status)
-                                                            {{ __('messages.Secret Key') }} <input type="text" readonly value="{{$yeswa?->api_key}}" class="form-control mb-2" name="api_key" id="">
+                                                            {{ __('Secret Key') }} <input type="text" readonly value="{{$yeswa?->api_key}}" class="form-control mb-2" name="api_key" id="">
                                                         @else
-                                                            {{ __('messages.Secret Key') }} <input type="text"   class="form-control mb-2" name="api_key" value="{{$yeswa?->api_key}}">
+                                                            {{ __('Secret Key') }} <input type="text"   class="form-control mb-2" name="api_key" value="{{$yeswa?->api_key}}">
                                                         @endif
                                                         <div class="d-flex justify-content-center">
                                                             @if(!$yeswa?->status)
-                                                            <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("messages.Activate")}}</a>
+                                                            <button type="submit"  class="btn btn-success text-white text-hover-white" >{{__("Activate")}}</a>
                                                             @else
-                                                                <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("messages.Deactivate")}}</a>
+                                                                <button type="submit" class="btn btn-danger  text-white text-hover-white" >{{__("Deactivate")}}</a>
                                                             @endif
                                                         </div>
                                                     </form>
@@ -232,16 +232,16 @@
                                                     <form action="{{route('restaurant.delivery.activate',['module'=>'Yeswa'])}}" method="POST" style="width: 100%">
                                                         @csrf
                                                         @if($yeswa?->status)
-                                                        {{ __('messages.Secret Key') }} <input type="text" readonly value="{{$yeswa?->api_key}}" class="form-control mb-2" name="api_key" id="">
+                                                        {{ __('Secret Key') }} <input type="text" readonly value="{{$yeswa?->api_key}}" class="form-control mb-2" name="api_key" id="">
                                                         @else
-                                                        {{ __('messages.Secret Key') }} <input type="text" class="form-control mb-2" name="api_key" value="{{$yeswa?->api_key}}">
+                                                        {{ __('Secret Key') }} <input type="text" class="form-control mb-2" name="api_key" value="{{$yeswa?->api_key}}">
                                                         @endif
                                                         @if (!$isadmin)
                                                         <div class="d-flex justify-content-center">
                                                             @if(!$yeswa?->status)
-                                                            <button type="submit" class="btn btn-success text-white text-hover-white">{{__("messages.Activate")}}</a>
+                                                            <button type="submit" class="btn btn-success text-white text-hover-white">{{__("Activate")}}</a>
                                                             @else
-                                                            <button type="submit" class="btn btn-danger  text-white text-hover-white">{{__("messages.Deactivate")}}</a>
+                                                            <button type="submit" class="btn btn-danger  text-white text-hover-white">{{__("Deactivate")}}</a>
                                                             @endif
                                                         </div>
                                                         @endif

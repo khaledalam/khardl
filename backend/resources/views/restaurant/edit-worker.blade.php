@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.edit-worker'))
+@section('title', __('edit-worker'))
 
 @section('content')
 <!--begin::Content-->
@@ -27,12 +27,12 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('messages.edit-worker')}}</h2>
+                                            <h2>{{ __('edit-worker')}}</h2>
                                         </div>
                                         <a href="{{ route('restaurant.workers', ['branchId' => App\Models\User::find($worker->id)->branch_id]) }}">
                                             <button type="button" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-arrow-left"></i>
-                                                {{ __('messages.Back to list') }}
+                                                {{ __('Back to list') }}
                                             </button>
                                         </a>
                                     </div>
@@ -43,39 +43,39 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('messages.first-name')}}</label>
+                                            <label class="required form-label">{{ __('first-name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="first_name" class="form-control mb-2" required placeholder="{{ __('messages.first-name')}}" value="{{ $worker->first_name }}" />
+                                            <input type="text" name="first_name" class="form-control mb-2" required placeholder="{{ __('first-name')}}" value="{{ $worker->first_name }}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('messages.first-name')}} {{ __('messages.is-required')}}</div>
+                                            <div class="text-muted fs-7">{{ __('first-name')}} {{ __('is-required')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('messages.last-name')}}</label>
+                                            <label class="required form-label">{{ __('last-name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="last_name" class="form-control mb-2" required placeholder="{{ __('messages.last-name')}}" value="{{ $worker->last_name }}" />
+                                            <input type="text" name="last_name" class="form-control mb-2" required placeholder="{{ __('last-name')}}" value="{{ $worker->last_name }}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('messages.last-name')}} {{ __('messages.is-required')}}</div>
+                                            <div class="text-muted fs-7">{{ __('last-name')}} {{ __('is-required')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('messages.email')}}</label>
+                                            <label class="required form-label">{{ __('email')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="email" name="email" class="form-control mb-2" required placeholder="{{ __('messages.email')}}" value="{{ $worker->email }}" />
+                                            <input type="email" name="email" class="form-control mb-2" required placeholder="{{ __('email')}}" value="{{ $worker->email }}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('messages.email')}} {{ __('messages.is-required')}}</div>
+                                            <div class="text-muted fs-7">{{ __('email')}} {{ __('is-required')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
@@ -83,13 +83,13 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('messages.password')}}</label>
+                                            <label class="required form-label">{{ __('password')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="password" name="password" class="form-control mb-2" disabled minlength="8" placeholder="Password" value="***********" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('messages.password')}} {{ __('messages.is-not-possible-to-change')}}</div>
+                                            <div class="text-muted fs-7">{{ __('password')}} {{ __('is-not-possible-to-change')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
@@ -97,13 +97,13 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{ __('messages.phone-number')}}</label>
+                                            <label class="required form-label">{{ __('phone-number')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="tel" pattern="[0-9+]{10,14}" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 43" minlength="10" maxlength="14" class="form-control @error('phone') is-invalid @enderror" value="{{ $worker->phone }}" name="phone" id="phone" placeholder="05XXXXXXXX" required>
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('messages.phone-number')}} {{ __('messages.is-required')}}</div>
+                                            <div class="text-muted fs-7">{{ __('phone-number')}} {{ __('is-required')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
@@ -115,7 +115,7 @@
                                             <div class="card-header border-0 cursor-pointer mx-0 px-0" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                                                 <!--begin::Card title-->
                                                 <div class="card-title m-0">
-                                                    <h3 class="fw-bolder m-0">{{ __('messages.permission')}}</h3>
+                                                    <h3 class="fw-bolder m-0">{{ __('permission')}}</h3>
                                                 </div>
                                                 <!--end::Card title-->
                                             </div>
@@ -129,7 +129,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                           <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_menu" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_edit_menu') == 1) checked  @endif name="can_edit_menu">
-                                                            <label class="form-check-label" for="can_edit_menu">{{ __('messages.can-edit-the-menu') }}</label>
+                                                            <label class="form-check-label" for="can_edit_menu">{{ __('can-edit-the-menu') }}</label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -137,7 +137,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_and_see_other_workers" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_modify_and_see_other_workers') == 1) checked @endif name="can_modify_and_see_other_workers">
-                                                            <label class="form-check-label" for="can_modify_and_see_other_workers">{{ __('messages.can-modify-and-see-other-workers') }}</label>
+                                                            <label class="form-check-label" for="can_modify_and_see_other_workers">{{ __('can-modify-and-see-other-workers') }}</label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -145,7 +145,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_working_time" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_modify_working_time') == 1) checked @endif value="1" name="can_modify_working_time">
-                                                            <label class="form-check-label" for="can_modify_working_time">{{ __('messages.can-modify-working-time') }}</label>
+                                                            <label class="form-check-label" for="can_modify_working_time">{{ __('can-modify-working-time') }}</label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -153,7 +153,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_view_revenues" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_view_revenues') == 1) checked @endif value="1" name="can_view_revenues">
-                                                            <label class="form-check-label" for="can_view_revenues">{{ __('messages.Can view revenues')}}</label>
+                                                            <label class="form-check-label" for="can_view_revenues">{{ __('Can view revenues')}}</label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -161,7 +161,7 @@
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                             <input class="form-check-input w-35px h-20px" type="checkbox" id="can_control_payment" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_control_payment') == 1) checked @endif value="1" name="can_control_payment">
-                                                            <label class="form-check-label" for="can_control_payment">{{ __('messages.can-control-payment')}}</label>
+                                                            <label class="form-check-label" for="can_control_payment">{{ __('can-control-payment')}}</label>
                                                         </div>
                                                         <!--end::Label-->
                                                     </div>
@@ -173,7 +173,7 @@
                                                                         <!--begin::Label-->
                                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                                         <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_advertisements" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_modify_advertisements') == 1) checked  @endif name="can_modify_advertisements">
-                                                                            <label class="form-check-label" for="can_modify_advertisements">{{ __('messages.can-modify-advertisements') }}</label>
+                                                                            <label class="form-check-label" for="can_modify_advertisements">{{ __('can-modify-advertisements') }}</label>
                                                 </div>
                                                 <!--end::Label-->
                                             </div> --}}
@@ -185,7 +185,7 @@
                                                                         <!--begin::Label-->
                                                                         <div class="form-check form-check-solid form-switch fv-row">
                                                                           <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_and_view_drivers" value="1" @if (DB::table('permissions_worker')->where('user_id', $worker->id)->value('can_edit_and_view_drivers') == 1) checked  @endif name="can_edit_and_view_drivers">
-                                                                            <label class="form-check-label" for="can_edit_and_view_drivers">{{ __('messages.View and edit drivers') }}</label>
+                                                                            <label class="form-check-label" for="can_edit_and_view_drivers">{{ __('View and edit drivers') }}</label>
                                         </div>
                                         <!--end::Label-->
                                     </div> --}}
@@ -208,8 +208,8 @@
         <!--begin::Button-->
         <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-khardl">
             <i class="bi bi-check2-square mx-1 text-black"></i>
-            <span class="indicator-label">{{ __('messages.edit-support')}}</span>
-            <span class="indicator-progress">{{ __('messages.please-wait')}}
+            <span class="indicator-label">{{ __('edit-support')}}</span>
+            <span class="indicator-progress">{{ __('please-wait')}}
                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
         <!--end::Button-->
