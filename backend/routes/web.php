@@ -24,6 +24,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Central\DeliveryWebhookController;
 use App\Models\CentralSetting;
 
 /*
@@ -285,21 +286,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
         return Redirect::back();
     })->name('change.language');
 
-    Route::post('/delivery-webhook', static function (Request $request) {
-        try{
-            \Sentry\captureMessage('Webhook post from cervo');
-
-           $client = new \GuzzleHttp\Client();
-
-           $url = CentralSetting::first()->webhook_url ?? '';
-           $data = [ 'query' =>$request->all()+ ['delivery_company'=>request()->header('Delivery-Company') ?? '']];
-           $request = $client->request('post',$url,$data);
-        }
-        catch(Exception $e){
-
-        }
-        return response()->json(['message'=>"received"],200);
-    })->name('delivery.webhook-post');
+    Route::post('/delivery-webhook', [DeliveryWebhookController::class,'redirect'])->name('delivery.webhook-post');
 
 
 });
