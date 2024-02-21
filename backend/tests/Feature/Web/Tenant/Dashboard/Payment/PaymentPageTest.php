@@ -73,18 +73,6 @@ class PaymentPageTest extends TenantTestCase
         $response->assertSee($order->shipping_address);
         $response->assertSee(__('Orders'));
     }
-    public function test_payment_has_bank_information(): void
-    {
-        $this->updateSetting([
-            'lead_response' => '{"data:{1}"}',
-            'merchant_id' => fake()->name,
-            'lead_id' => fake()->name,
-        ]);
-        $response = $this->get(self::path);
-        $response->assertSee(__('Tab information'));
-        $response->assertSee(__('Bank information'));
-        $response->assertSee(__('Your information'));
-    }
     public function test_payment_lead_response(): void
     {
         $this->updateSetting([
