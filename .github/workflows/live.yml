@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: 🎉 Deploy
         runs-on: ubuntu-latest
-        environment: Testing
+        environment: Production
         steps:
           - name: 🚚 Get latest code
             uses: actions/checkout@v3
@@ -28,7 +28,7 @@ jobs:
               username: ${{ secrets.PROD_FTP_USERNAME }}
               password:
                 ${{ secrets.PROD_FTP_PASSWORD }}
-          - name: ⚙️ Apply Updated On Server
+          - name: ⚙️ Apply Updates On Server
             run: |
               cd /home/khardl5/public_html/
               ./deploy.sh
