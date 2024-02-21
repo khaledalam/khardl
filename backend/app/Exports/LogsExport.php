@@ -24,12 +24,12 @@ class LogsExport implements FromCollection, WithHeadings, WithMapping
     public function headings(): array
     {
         return [
-            __('messages.ID'),
-            __('messages.User'),
-            __('messages.Action'),
-            __('messages.Type'),
-            __('messages.Metadata'),
-            __('messages.Date'),
+            __('ID'),
+            __('User'),
+            __('Action'),
+            __('Type'),
+            __('Metadata'),
+            __('Date'),
         ];
     }
 
@@ -39,7 +39,7 @@ class LogsExport implements FromCollection, WithHeadings, WithMapping
             $log->id,
             $log->user?->full_name,
             $log->action,
-            __('messages.'.$log->type),
+            __(''.$log->type),
             $log->metadata,
             $log->created_at?->format('Y-m-d H'),
         ];

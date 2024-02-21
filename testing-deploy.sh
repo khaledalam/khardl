@@ -1,4 +1,9 @@
 
+# GIT pull changes
+git checkout -- .;
+git clean -fd;
+git pull;
+
 # backup database
 ./db_backup.sh
 

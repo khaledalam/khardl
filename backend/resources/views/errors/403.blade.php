@@ -50,9 +50,9 @@
 <body>
   <div class="error-container">
     <img style="max-height: 80px" src="{{ global_asset('images/Logo.webp') }}" alt="">
-    <h1 class="error-heading">403 - {{ __('messages.Unauthorized') }}</h1>
-    <p class="error-message">{{ __('messages.You are not authorized to access this page.') }}</p>
-    <a href="{{ route('home') }}" class="back-btn">{{ __('messages.Go to Homepage') }}</a>
+    <h1 class="error-heading">403 - {{ __('Unauthorized') }}</h1>
+    <p class="error-message">{{ __('You are not authorized to access this page.') }}</p>
+    <a href="{{ route('home') }}" class="back-btn">{{ __('Go to Homepage') }}</a>
   </div>
 </body>
 </html>

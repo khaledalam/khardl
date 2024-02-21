@@ -1,7 +1,7 @@
 <div class="row" id="kt_content">
 
     <!--begin::Post-->
-    <div class="post d-flex flex-column-fluid" id="kt_post">
+    <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_post">
         <!--begin::Container-->
         <div id="kt_content_container">
             <div id="kt_referred_users_tab_content" class="tab-content">
@@ -13,11 +13,11 @@
                         <!--begin::Card title-->
                         <div class="card-title m-0 d-flex justify-content-between align-items-center w-100">
                             <div>
-                                <h3 class="fw-bolder m-0"> {{ __('messages.orders') }}</h3>
+                                <h3 class="fw-bolder m-0"> {{ __('orders') }}</h3>
                             </div>
                             <div>
                                 <a href="{{route('admin.download.pdf',['type'=>'order','tenant_id'=>$restaurant->id])}}" class="btn btn-khardl">
-                                    <i class="fas fa-download me-1 text-black"></i> {{ __('messages.download-all') }}
+                                    <i class="fas fa-download me-1 text-black"></i> {{ __('download-all') }}
 
                                 </a>
                             </div>
@@ -32,13 +32,13 @@
                                     <!--begin::Thead-->
                                     <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
                                         <tr>
-                                            <th class="min-w-175px ps-9">{{ __('messages.date') }}</th>
-                                            <th class="min-w-125px px-0">{{ __('messages.order-id') }}</th>
-                                            <th class="min-w-150px px-0">{{ __('messages.status') }}</th>
-                                            <th class="min-w-150px px-0">{{ __('messages.name-branch') }}</th>
-                                            <th class="min-w-125px">{{ __('messages.total-price') }}</th>
-                                            <th class="min-w-125px">{{ __('messages.payment-method') }}</th>
-                                            <th class="min-w-125px text-center">{{ __('messages.invoice') }}</th>
+                                            <th class="min-w-175px ps-9">{{ __('date') }}</th>
+                                            <th class="min-w-125px px-0">{{ __('order-id') }}</th>
+                                            <th class="min-w-150px px-0">{{ __('status') }}</th>
+                                            <th class="min-w-150px px-0">{{ __('name-branch') }}</th>
+                                            <th class="min-w-125px">{{ __('total-price') }}</th>
+                                            <th class="min-w-125px">{{ __('payment-method') }}</th>
+                                            <th class="min-w-125px text-center">{{ __('invoice') }}</th>
                                         </tr>
                                     </thead>
                                     <!--end::Thead-->
@@ -51,14 +51,14 @@
                                             <td class="ps-0">{{ $order->id }}</td>
                                             <td class="ps-0">
                                                 <span class="badge {{ $order->status }}">
-                                                    {{__("messages.$order->status")}}
+                                                    {{__("$order->status")}}
                                                 </span>
                                             </td>
                                             <td class="ps-0">{{ $order->branch->name }}</td>
                                             <td class="text-success">{{ $order->total }}</td>
                                             <td>{{ $order->payment_method->name }}</td>
                                             <td class="text-center">
-                                                <a href="{{route('admin.download.pdf',['type'=>'order','id'=>$order->id,'tenant_id'=>$restaurant->id])}}" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl">{{ __('messages.download') }}</a>
+                                                <a href="{{route('admin.download.pdf',['type'=>'order','id'=>$order->id,'tenant_id'=>$restaurant->id])}}" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl">{{ __('download') }}</a>
                                             </td>
                                         </tr>
                                         @endforeach

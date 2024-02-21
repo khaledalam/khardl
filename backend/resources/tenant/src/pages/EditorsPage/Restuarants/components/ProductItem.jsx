@@ -249,7 +249,7 @@ const ProductItem = ({
     // })
   };
   const handleDropdownChange = (dropdown_index, index) => {
-    let updatedDropdown = [];
+        let updatedDropdown = [];
     if (selectedDropdown.length > 0) {
       updatedDropdown = [...selectedDropdown];
     } else {
@@ -270,17 +270,17 @@ const ProductItem = ({
 
   const finalPrice = qtyCount * totalPrice;
 
-  const fetchCartData = async () => {
-    try {
-      const cartResponse = await AxiosInstance.get(`carts`);
-      if (cartResponse.data) {
-        dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length));
-      }
-    } catch (error) {
-      // toast.error(`${t('Failed to send verification code')}`)
-      console.log(error);
-    }
-  };
+  // const fetchCartData = async () => {
+  //   try {
+  //     const cartResponse = await AxiosInstance.get(`carts`);
+  //     if (cartResponse.data) {
+  //       // dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length));
+  //     }
+  //   } catch (error) {
+  //     // toast.error(`${t('Failed to send verification code')}`)
+  //     console.log(error);
+  //   }
+  // };
 
   const handleAddToCart = async () => {
     try {
@@ -301,7 +301,7 @@ const ProductItem = ({
       if (response?.data) {
         toast.success(`${t("Item added to cart")}`);
         setGotoCart(true);
-        fetchCartData();
+        // fetchCartData();
         setSpinner(false);
       }
     } catch (error) {
@@ -830,6 +830,9 @@ const ProductItem = ({
             </div>
           )}
         </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
       </dialog>
     </Fragment>
   );

@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.settings'))
+@section('title', __('settings'))
 
 @section('content')
 
@@ -29,7 +29,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('messages.fees')}}</h2>
+                                            <h2>{{ __('fees')}}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -39,13 +39,13 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label">{{ __('messages.delivery-fee')}}</label>
+                                            <label class="form-label">{{ __('delivery-fee')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" min="0" step="0.1" name="delivery_fee" class="form-control mb-2" required placeholder="{{ __('messages.delivery-fee')}} {{__('messages.in')}} {{__('messages.sar')}}" value="{{$settings['delivery_fee']}}" />
+                                            <input type="number" min="0" step="0.1" name="delivery_fee" class="form-control mb-2" required placeholder="{{ __('delivery-fee')}} {{__('in')}} {{__('sar')}}" value="{{$settings['delivery_fee']}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{__('messages.e.g.')}} 10.5 {{__('messages.sar')}}</div>
+                                            <div class="text-muted fs-7">{{__('e.g.')}} 10.5 {{__('sar')}}</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
@@ -74,7 +74,7 @@
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h2>{{ __('messages.Delivery options')}}</h2>
+                                            <h2>{{ __('Delivery options')}}</h2>
                                         </div>
                                     </div>
                                     <!--end::Card header-->
@@ -84,13 +84,13 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="form-label">{{ __('messages.Max time for drivers to pickup order(in case if delivery companies exist and drivers)')}}</label>
+                                            <label class="form-label">{{ __('Max time for drivers to pickup order(in case if delivery companies exist and drivers)')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('messages.Number of minutes')}}" value="{{$settings->limit_delivery_company}}" />
+                                            <input type="number" min="1" name="limit_delivery_company" id="limit_delivery_company" class="form-control mb-2" placeholder="{{ __('Number of minutes')}}" value="{{$settings->limit_delivery_company}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{__('messages.The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('messages.Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
+                                            <div class="text-muted fs-7">{{__('The number of minutes for drivers so he can pick up order before order goes to delivery companies')}} ({{ __('Default: :minutes minutes',['minutes' => $settings->limit_delivery_company ?? config('application.limit_delivery_company')]) }})</div>
                                             <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
@@ -103,7 +103,7 @@
                                                 @if($settings->delivery_companies_option || old('delivery_companies_option') == "1")
                                                 {{ 'checked' }}
                                                 @endif>
-                                                <label class="form-check-label" for="delivery_companies_option">{{ __('messages.Delivery companies option')}}</label>
+                                                <label class="form-check-label" for="delivery_companies_option">{{ __('Delivery companies option')}}</label>
                                             </div>
                                             <!--end::Label-->
                                         </div>
@@ -114,7 +114,7 @@
                                                 @if($settings->drivers_option || old('drivers_option') == "1")
                                                 {{ 'checked' }}
                                                 @endif>
-                                                <label class="form-check-label" for="drivers_option">{{ __('messages.Drivers option')}}</label>
+                                                <label class="form-check-label" for="drivers_option">{{ __('Drivers option')}}</label>
                                             </div>
                                             <!--end::Label-->
                                         </div>
@@ -135,9 +135,9 @@
                 <div class="d-flex justify-content-end mt-3">
                     <!--begin::Button-->
                     <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
-                        <span class="indicator-label">{{ __('messages.save') }}</span>
+                        <span class="indicator-label">{{ __('save') }}</span>
                         <i class="bi bi-check2-square mx-1"></i>
-                        <span class="indicator-progress">{{ __('messages.please-wait')}}
+                        <span class="indicator-progress">{{ __('please-wait')}}
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                     <!--end::Button-->

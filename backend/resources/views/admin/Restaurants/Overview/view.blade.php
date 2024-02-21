@@ -25,7 +25,7 @@
                                 </div>
                                 <!--end::Info-->
                                 <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.total-orders')}}</span>
+                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('total-orders')}}</span>
                                 <!--end::Subtitle-->
                             </div>
                             <!--end::Title-->
@@ -42,7 +42,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.pending')}}
+                                        {{ __('pending')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -59,7 +59,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.completed')}}
+                                        {{ __('completed')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -74,7 +74,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.accepted')}}
+                                        {{ __('accepted')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -91,7 +91,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.Ready')}}
+                                        {{ __('Ready')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -108,7 +108,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.received_by_restaurant')}}
+                                        {{ __('received_by_restaurant')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -131,13 +131,13 @@
                                 <div class="d-flex align-items-center">
                                     <!--begin::Amount-->
                                     <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">
-                                        {{ getAmount((float)$salesThisMonth) }} {{ __('messages.SAR') }}
+                                        {{ getAmount((float)$salesThisMonth) }} {{ __('SAR') }}
                                     </span>
                                     <!--end::Amount-->
                                 </div>
                                 <!--end::Info-->
                                 <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.Sales This month')}}</span>
+                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('Sales This month')}}</span>
                                 <!--end::Subtitle-->
                             </div>
                             <!--end::Title-->
@@ -194,7 +194,7 @@
                 <div class="card-header cursor-pointer">
                     <!--begin::Card title-->
                     <div class="card-title m-0">
-                        <h3 class="fw-bolder m-0">{{ __('messages.restaurant-details') }}</h3>
+                        <h3 class="fw-bolder m-0">{{ __('restaurant-details') }}</h3>
                     </div>
                     <!--end::Card title-->
                 </div>
@@ -206,9 +206,9 @@
                     <div class="row mb-7">
                         <!--begin::Label-->
                         <label class="col-lg-4 fw-bold text-muted">@if (app()->getLocale() == 'en')
-                            {{ __('messages.restaurant-name') }}
+                            {{ __('restaurant-name') }}
                             @else
-                            {{ __('messages.the-name') }}
+                            {{ __('the-name') }}
                             @endif </label>
                         <!--end::Label-->
                         <!--begin::Col-->
@@ -219,7 +219,7 @@
                     </div>
                     <div class="row mb-1">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.domain') }}</label>
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('domain') }}</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
@@ -233,7 +233,7 @@
                     </div>
                     <div class="row mb-7">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.position') }}</label>
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('position') }}</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
@@ -245,16 +245,16 @@
                     <!--begin::Input group-->
                     <div class="row mb-7">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.email') }}
-                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('messages.email-must-be-verified') }}"></i></label>
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('email') }}
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('email-must-be-verified') }}"></i></label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
                             <span class="fw-bold text-gray-800 fs-6">{{ $restaurant->user->email }}</span>
                             @if(!is_null($restaurant->user->email_verified_at))
-                            <span class="badge badge-success">{{ __('messages.verified') }}</span>
+                            <span class="badge badge-success">{{ __('verified') }}</span>
                             @else
-                            <span class="badge badge-warning">{{ __('messages.unverified') }}</span>
+                            <span class="badge badge-warning">{{ __('unverified') }}</span>
                             @endif
                         </div>
                         <!--end::Col-->
@@ -263,7 +263,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-7">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.phone-number') }}</label>
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('phone-number') }}</label>
 
                         <!--end::Label-->
                         <!--begin::Col-->
@@ -277,17 +277,17 @@
                     <!--begin::Input group-->
                     <div class="row mb-7">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.status') }}
-                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('messages.status-must-be-active') }}"></i></label>
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('status') }}
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="{{ __('status-must-be-active') }}"></i></label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 d-flex align-items-center">
                             {{-- @if($restaurant->isApproved == 0)
-                                <span class="badge badge-warning">{{ __('messages.pending') }}</span> --}}
+                                <span class="badge badge-warning">{{ __('pending') }}</span> --}}
                             @if ($is_live)
-                            <span class="badge badge-success">{{ __('messages.active') }}</span>
+                            <span class="badge badge-success">{{ __('active') }}</span>
                             @else
-                            <span class="badge badge-warning">{{ __('messages.inactive') }}</span>
+                            <span class="badge badge-warning">{{ __('inactive') }}</span>
                             @endif
                         </div>
                         <!--end::Col-->
@@ -296,7 +296,7 @@
                     <!--begin::Input group-->
                     <div class="row mb-7">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.date-of-registration') }}</label>
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('date-of-registration') }}</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
@@ -307,7 +307,7 @@
                     <!--end::Input group-->
                     <div class="row mb-7">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.facility-name') }}
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('facility-name') }}
                             <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
                         <!--end::Label-->
                         <!--begin::Col-->
@@ -318,7 +318,7 @@
                     </div>
                     <div class="row mb-7">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('messages.IBAN') }}
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('IBAN') }}
                             <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
                         <!--end::Label-->
                         <!--begin::Col-->
@@ -335,13 +335,13 @@
                         <!--begin::Card title-->
                         <div class="card-title m-0 d-flex justify-content-between align-items-center w-100">
                             <div>
-                                <h3 class="fw-bolder m-0"> {{ __('messages.files') }}</h3>
+                                <h3 class="fw-bolder m-0"> {{ __('files') }}</h3>
                             </div>
                             <div>
                                 <a href="{{ route('admin.download.file',  ['path' =>\App\Models\User::STORAGE .'/'. $restaurant->user->id, 'fileName'=>$restaurant->restaurant_name.' - Trader requirements' ]) }}" class="btn btn-khardl ">
-                                    <i class="fas fa-download me-1 text-black"></i> {{ __('messages.download') }}
+                                    <i class="fas fa-download me-1 text-black"></i> {{ __('download') }}
                                     <span class="badge bg-success ms-1">
-                                        5 {{ __('messages.files') }}
+                                        5 {{ __('files') }}
                                     </span>
                                 </a>
                             </div>
@@ -360,19 +360,19 @@
                         <!--begin::Input group-->
                         <div class="col-md-6 mb-5">
                             <!--begin::Label-->
-                            <label class=" fw-bold text-muted">{{ __('messages.delivery-contract') }}
+                            <label class=" fw-bold text-muted">{{ __('delivery-contract') }}
                                 <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="">
-                                {{ __('messages.no-file-available') }}
+                                {{ __('no-file-available') }}
                             </div>
                             <!--end::Col-->
                         </div>
 
                         <div class="col-md-6 mb-5">
                             <!--begin::Label-->
-                            <label class=" fw-bold text-muted">{{ __('messages.national-address') }}
+                            <label class=" fw-bold text-muted">{{ __('national-address') }}
                                 <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
                             <!--end::Label-->
                             <!--begin::Col-->
@@ -380,7 +380,7 @@
                                 @if ($restaurant->user->traderRegistrationRequirement->national_address)
                                 <a href="{{ route('admin.download.file', ['path' =>$restaurant->user->traderRegistrationRequirement->national_address,'fileName'=>$restaurant->restaurant_name.' - National Address']) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                 @else
-                                {{ __('messages.no-file-available') }}
+                                {{ __('no-file-available') }}
                                 @endif
                             </div>
                             <!--end::Col-->
@@ -388,7 +388,7 @@
 
                         <div class="col-md-6 mb-5">
                             <!--begin::Label-->
-                            <label class="fw-bold text-muted">{{ __('messages.the-id-of-the-owner-of-manager') }}
+                            <label class="fw-bold text-muted">{{ __('the-id-of-the-owner-of-manager') }}
                                 <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
                             <!--end::Label-->
                             <!--begin::Col-->
@@ -397,7 +397,7 @@
                                 @if ($restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager)
                                 <a href="{{ route('admin.download.file', ['path' =>$restaurant->user->traderRegistrationRequirement->identity_of_owner_or_manager,'fileName'=>$restaurant->restaurant_name.' - Identity of owner or manager']) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                 @else
-                                {{ __('messages.no-file-available') }}
+                                {{ __('no-file-available') }}
                                 @endif
                             </div>
                             <!--end::Col-->
@@ -407,14 +407,14 @@
                         <!--begin::Input group-->
                         <div class="col-md-6 mb-5">
                             <!--begin::Label-->
-                            <label class="fw-bold text-muted">{{ __('messages.commercial-registration') }}</label>
+                            <label class="fw-bold text-muted">{{ __('commercial-registration') }}</label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="">
                                 @if ($restaurant->user->traderRegistrationRequirement->commercial_registration)
                                 <a href="{{ route('admin.download.file', ['path' =>$restaurant->user->traderRegistrationRequirement->commercial_registration,'fileName'=>$restaurant->restaurant_name.' - Commercial registeration']) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                 @else
-                                {{ __('messages.no-file-available') }}
+                                {{ __('no-file-available') }}
                                 @endif
                             </div>
                             <!--end::Col-->
@@ -423,14 +423,14 @@
                         <!--begin::Input group-->
                         <div class="col-md-6 mb-5">
                             <!--begin::Label-->
-                            <label class="fw-bold text-muted">{{ __('messages.tax-number') }}</label>
+                            <label class="fw-bold text-muted">{{ __('tax-number') }}</label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="">
                                 @if ($restaurant->user->traderRegistrationRequirement->tax_registration_certificate)
                                 <a href="{{ route('admin.download.file', ['path' =>$restaurant->user->traderRegistrationRequirement->tax_registration_certificate,'fileName'=>$restaurant->restaurant_name.' - Tax registeration certificate']) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                 @else
-                                {{ __('messages.no-file-available') }}
+                                {{ __('no-file-available') }}
                                 @endif
 
                             </div>
@@ -440,14 +440,14 @@
                         <!--begin::Input group-->
                         <div class="col-md-6 mb-5">
                             <!--begin::Label-->
-                            <label class="fw-bold text-muted">{{ __('messages.bank-certificate') }}</label>
+                            <label class="fw-bold text-muted">{{ __('bank-certificate') }}</label>
                             <!--end::Label-->
                             <!--begin::Col-->
                             <div class="">
                                 @if ($restaurant->user->traderRegistrationRequirement->bank_certificate)
                                 <a href="{{ route('admin.download.file', ['path' =>$restaurant->user->traderRegistrationRequirement->bank_certificate,'fileName'=>$restaurant->restaurant_name.' - Bank Certificate']) }}"><span class="fw-bolder fs-6 fw-bold btn btn-sm btn-khardll"><i class="fas fa-download text-black"></i></span></a>
                                 @else
-                                {{ __('messages.no-file-available') }}
+                                {{ __('no-file-available') }}
                                 @endif
                             </div>
                             <!--end::Col-->

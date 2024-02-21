@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.promotions'))
+@section('title', __('promotions'))
 
 @section('content')
 
@@ -49,7 +49,7 @@
                                                                 <!--begin::card header-->
                                                                 <div class="card-header">
                                                                     <div class="card-title">
-                                                                        <h2>{{ __('messages.Loyalty points') }}</h2>
+                                                                        <h2>{{ __('Loyalty points') }}</h2>
                                                                     </div>
                                                                 </div>
                                                                 <!--end::card header-->
@@ -58,21 +58,21 @@
                                                                     <!--begin::input group-->
                                                                     <div class="fv-row">
                                                                         <!--begin::label-->
-                                                                        <label class="required form-label">{{ __('messages.Loyalty points per 1 SAR') }}</label>
+                                                                        <label class="required form-label">{{ __('Loyalty points per 1 SAR') }}</label>
                                                                         <!--end::label-->
                                                                         <!--begin::input-->
-                                                                        <input type="number" min="1" step="0.01" name="loyalty_points" class="form-control mb-2" placeholder="{{ __('messages.e.g 0.02') }}" value="{{$settings['loyalty_points']}}" />
+                                                                        <input type="number" min="1" step="0.01" name="loyalty_points" class="form-control mb-2" placeholder="{{ __('e.g 0.02') }}" value="{{$settings['loyalty_points']}}" />
                                                                         <!--end::input-->
                                                                     </div>
                                                                     <!--begin::input group-->
                                                                     <div class="mb-10 fv-row">
                                                                         <!--begin::label-->
-                                                                        <label class="required form-label">{{__('messages.Price per 1 loyalty point per purchase')}}
-                                                                            <small class="text-muted">({{ __('messages.SAR') }})</small>
+                                                                        <label class="required form-label">{{__('Price per 1 loyalty point per purchase')}}
+                                                                            <small class="text-muted">({{ __('SAR') }})</small>
                                                                         </label>
                                                                         <!--end::label-->
                                                                         <!--begin::input-->
-                                                                        <input type="number" min="1" step="0.01" name="loyalty_point_price" class="form-control mb-2" placeholder="1 {{ __('messages.SAR') }}" value="{{$settings['loyalty_point_price']}}" />
+                                                                        <input type="number" min="1" step="0.01" name="loyalty_point_price" class="form-control mb-2" placeholder="1 {{ __('SAR') }}" value="{{$settings['loyalty_point_price']}}" />
                                                                         <!--end::input-->
                                                                     </div>
                                                                     <!--end::input group-->
@@ -103,7 +103,7 @@
                                                                 <!--begin::Card header-->
                                                                 <div class="card-header">
                                                                     <div class="card-title">
-                                                                        <h2>{{ __('messages.Cash-back') }}</h2>
+                                                                        <h2>{{ __('Cash-back') }}</h2>
                                                                     </div>
                                                                 </div>
                                                                 <!--end::Card header-->
@@ -112,8 +112,8 @@
                                                                     <!--begin::Input group-->
                                                                     <div class="fv-row">
                                                                         <!--begin::Label-->
-                                                                        <label class="required form-label">{{ __('messages.Start from') }}
-                                                                            <small class="text-muted">({{ __('messages.get cash back when total is above this value') }})</small>
+                                                                        <label class="required form-label">{{ __('Start from') }}
+                                                                            <small class="text-muted">({{ __('get cash back when total is above this value') }})</small>
                                                                         </label>
                                                                         <!--end::Label-->
                                                                         <!--begin::Input-->
@@ -134,7 +134,7 @@
                                                                     <!--begin::Input group-->
                                                                     <div class="mb-10 fv-row">
                                                                         <!--begin::Label-->
-                                                                        <label class="required form-label">{{ __('messages.Cash back in percentage (%)') }}</label>
+                                                                        <label class="required form-label">{{ __('Cash back in percentage (%)') }}</label>
                                                                         <!--end::Label-->
                                                                         <!--begin::Input-->
                                                                         <input type="number" min="1" step="0.01" name="cashback_percentage" class="form-control mb-2" placeholder="e.x. 5%" value="{{$settings['cashback_percentage']}}" />
@@ -154,7 +154,7 @@
                                             </div>
                                             <!--end::Main column-->
 
-                                            <button type="submit" class="btn btn-sm fw-bolder btn-khardl px-4">{{__('messages.save')}}</button>
+                                            <button type="submit" class="btn btn-sm fw-bolder btn-khardl px-4">{{__('save')}}</button>
                                         </form>
                                         <!--end::Form-->
                                     </div>

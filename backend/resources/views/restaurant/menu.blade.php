@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.menu'))
+@section('title', __('menu'))
 
 @section('content')
 <!--begin::Content-->
@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                         <div class="d-flex flex-wrap gap-1">
-                            <h3 class="text-primary">{{ __('messages.select-a-category') }}</h3>
+                            <h3 class="text-primary">{{ __('select-a-category') }}</h3>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('messages.add-new-category') }}</button>
+                                        <button class="menu-title fw-bold btn btn-sm" id="addCategoryButton">{{ __('add-new-category') }}</button>
                                     </span>
                                     <!--end::Add label-->
                                     <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
@@ -77,30 +77,30 @@
                                         <div id="categoryForm" class="mt-2" style="display: none !important;">
                                             <ul class="nav nav-tabs" id="languageTabs">
                                                 <li class="nav-item">
-                                                    <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('messages.english')}}</a>
+                                                    <a class="nav-link active required" id="en-tab" data-bs-toggle="tab" href="#en">{{__('english')}}</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('messages.arabic')}}</a>
+                                                    <a class="nav-link required" id="ar-tab" data-bs-toggle="tab" href="#ar">{{__('arabic')}}</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('messages.logo')}}</a>
+                                                    <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('logo')}}</a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content mt-3">
                                                 <div class="tab-pane fade show active" id="en">
-                                                    <input type="text" class="form-control" placeholder="{{ __('messages.Enter text in English') }}" name="name_en">
+                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en">
                                                 </div>
                                                 <div class="tab-pane fade" id="ar">
-                                                    <input type="text" class="form-control" placeholder="{{ __('messages.Enter text in Arabic') }}" name="name_ar">
+                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
                                                 </div>
                                                 <div class="tab-pane fade" id="logo">
-                                                    <label>{{__('messages.category-logo')}}</label>
+                                                    <label>{{__('category-logo')}}</label>
                                                     <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-center">
-                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('messages.save') }}</button>
+                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('save') }}</button>
                                         </div>
                                 </div>
                                 </form>
@@ -275,7 +275,7 @@
                         <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</button>
                         <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
                             <span class="indicator-label">Submit</span>
-                            <span class="indicator-progress">{{ __('messages.Please wait...') }}
+                            <span class="indicator-progress">{{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
                     </div>

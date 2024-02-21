@@ -41,12 +41,12 @@ class CartRepository
         }
         $item = Item::findOrFail($request->item_id);
         $this->createCartItem($item, $request->all());
-        return $this->sendResponse(null, __('The meal has been added successfully.'));
+        return $this->data(__('The meal has been added successfully.'));
     }
     public function update(CartItem $cartItem,UpdateItemCartRequest $request)
     {
         $this->updateCartItem($cartItem, $request->all());
-        return $this->sendResponse(null, __('The meal has been updated successfully.'));
+        return $this->data(__('The meal has been updated successfully.'));
     }
 
     public function createCartItem($item,$request):CartItem
@@ -65,13 +65,12 @@ class CartRepository
             $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
 
-        $existingCartItem = CartItem::where('item_id', $item->id)
-        ->where('cart_id', $this->cart->id)
-        ->where('checkbox_options', $checkbox_options)
-        ->where('selection_options', $selection_options)
-        ->where('dropdown_options', $dropdown_options)
-        ->first();
-
+        $query = CartItem::where('item_id', $item->id)
+        ->where('cart_id', $this->cart->id);
+        if($checkbox_options)$query->whereJsonContains('checkbox_options', $checkbox_options);
+        if($selection_options)$query->whereJsonContains('selection_options', $selection_options);
+        if($dropdown_options)$query->whereJsonContains('dropdown_options', $dropdown_options);
+        $existingCartItem = $query->first();
         if ($existingCartItem) {
             $quantity = $existingCartItem->quantity + $request['quantity'];
             $total = ($item->price + $options_price) * $quantity;
@@ -100,8 +99,8 @@ class CartRepository
         $totalPrice = 0;
         foreach ($options as $i => $option) {
             foreach ($option as $j => $sub_option) {
-                $updatedOptions[$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$sub_option][0], $item->checkbox_input_prices[$i][$sub_option]];
                 $updatedOptions[$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$sub_option][1], $item->checkbox_input_prices[$i][$sub_option]];
+                $updatedOptions[$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$sub_option][0], $item->checkbox_input_prices[$i][$sub_option]];
 
                 $totalPrice += (float) $item->checkbox_input_prices[$i][$sub_option];
             }
@@ -112,8 +111,8 @@ class CartRepository
     {
         $totalPrice = 0;
         foreach ($options as $i => $option) {
-            $updatedOptions[$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$option][0], $item->selection_input_prices[$i][$option]];
             $updatedOptions[$i]['ar'][$item->selection_input_titles[$i][1]] = [$item->selection_input_names[$i][$option][1], $item->selection_input_prices[$i][$option]];
+            $updatedOptions[$i]['en'][$item->selection_input_titles[$i][0]] = [$item->selection_input_names[$i][$option][0], $item->selection_input_prices[$i][$option]];
             $totalPrice += (float) $item->selection_input_prices[$i][$option];
         }
         return $totalPrice;
@@ -121,9 +120,9 @@ class CartRepository
     public function loopingTroughDropdownOptions($item, $options, &$updatedOptions)
     {
         foreach ($options as $i => $option) {
-            if($option!=null){
-                $updatedOptions[$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$option][0];
+            if($option!==null){
                 $updatedOptions[$i]['ar'][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$option][1];
+                $updatedOptions[$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$option][0];
             }
         }
     }
@@ -150,7 +149,8 @@ class CartRepository
         $this->cart->items()
             ->where('id', $id)
             ->delete();
-        return $this->sendResponse(null, __('The meal has been removed successfully.'));
+
+        return $this->data(__('The meal has been removed successfully.'));
     }
 
     public function trash(): JsonResponse
@@ -222,7 +222,7 @@ class CartRepository
 
 
 
-    public function data()
+    public function data($message = '')
     {
         $settings = Setting::all()->firstOrFail();
         $items = $this->cart->items->load(['item']);
@@ -241,7 +241,7 @@ class CartRepository
             //     'redirect'=>route('orders.payment')
             // ],
             'address' => $this->cart->user->address
-        ], '');
+        ], $message);
     }
     public function items()
     {
@@ -319,14 +319,14 @@ class CartRepository
     {
         $method = PaymentMethod::where('name',$name)->first();
         $setting = Setting::first();
-        if($this->hasPaymentCreditCard($name) && (!$setting->merchant_id || !$setting->lead_id)) 
+        if($this->hasPaymentCreditCard($name) && (!$setting->merchant_id || !$setting->lead_id))
             return false;
         if($method){
             return $this->cart->branch->payment_methods->contains('id',$method->id);
         }
         return false;
     }
-   
+
 
     public function hasDelivery($type)
     {
@@ -335,6 +335,13 @@ class CartRepository
             return $this->cart->branch->delivery_types->contains('id',$type->id);
         }
         return false;
+    }
+    public function count()
+    {
+        $count = $this->cart?->items->count();
+        return $this->sendResponse([
+            'count' => $count
+        ]);
     }
 
 

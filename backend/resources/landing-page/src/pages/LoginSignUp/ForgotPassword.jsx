@@ -50,7 +50,7 @@ const ForgotPassword = () => {
    /////////////////////////////////////////////////////////////////////////////////////
 
    return (
-      <div className='flex flex-col items-stretch justify-center'>
+      <div className='flex flex-col items-stretch justify-center h-screen'>
          <div
             className='flex justify-center items-center px-[40px] max-md:px-[0px]'
             style={{
@@ -60,7 +60,7 @@ const ForgotPassword = () => {
          >
             <div className='py-[20px] flex justify-center items-center'>
                <div className='py-[80px] max-md:py-[60px]'>
-                  <div className='max-[860px]:w-[80vw] w-[450px] bg-white py-10 max-[860px]:px-2 shadow-lg rounded-2xl'>
+                  <div className='max-[860px]:w-[80vw] w-[450px] bg-white py-10 max-[860px]:px-2 shadow-lg rounded-2xl shadow-[#C0D123]'>
                      <div className='px-8 mb-6 flex flex-col items-center text-center'>
                      <MainText
                            Title={t('Forgot your password?')}

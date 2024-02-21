@@ -14,11 +14,11 @@
                         <!--begin::Card title-->
                         <div class="card-title m-0 d-flex justify-content-between align-items-center w-100">
                             <div>
-                                <h3 class="fw-bolder m-0"> {{ __('messages.customers') }}</h3>
+                                <h3 class="fw-bolder m-0"> {{ __('customers') }}</h3>
                             </div>
                             <div>
                                 <a href="{{route('admin.download.pdf',['type'=>'customer','tenant_id'=>$restaurant->id])}}" class="btn btn-khardl">
-                                    <i class="fas fa-download me-1 text-black"></i> {{ __('messages.download-all') }}
+                                    <i class="fas fa-download me-1 text-black"></i> {{ __('download-all') }}
 
                                 </a>
                             </div>
@@ -33,12 +33,12 @@
                                     <!--begin::Thead-->
                                     <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
                                         <tr>
-                                            <th class="min-w-175px ps-9">{{ __('messages.date') }}</th>
-                                            <th class="min-w-125px px-0">{{ __('messages.user-id') }}</th>
-                                            <th class="min-w-150px px-0">{{ __('messages.name') }}</th>
-                                            <th class="min-w-150px px-0">{{ __('messages.email') }}</th>
-                                            <th class="min-w-125px">{{ __('messages.phone') }}</th>
-                                            <th class="min-w-125px text-center">{{ __('messages.invoice') }}</th>
+                                            <th class="min-w-175px ps-9">{{ __('date') }}</th>
+                                            <th class="min-w-125px px-0">{{ __('user-id') }}</th>
+                                            <th class="min-w-150px px-0">{{ __('name') }}</th>
+                                            <th class="min-w-150px px-0">{{ __('email') }}</th>
+                                            <th class="min-w-125px">{{ __('phone') }}</th>
+                                            <th class="min-w-125px text-center">{{ __('Download file') }}</th>
                                         </tr>
                                     </thead>
                                     <!--end::Thead-->
@@ -53,7 +53,7 @@
                                             <td class="ps-0">{{ $customer->email }}</td>
                                             <td class="text-success">{{ $customer->phone }}</td>
                                             <td class="text-center">
-                                                <a href="{{route('admin.download.pdf',['type'=>'customer','id'=>$customer->id,'tenant_id'=>$restaurant->id])}}" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl">{{ __('messages.download') }}</a>
+                                                <a href="{{route('admin.download.pdf',['type'=>'customer','id'=>$customer->id,'tenant_id'=>$restaurant->id])}}" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl">{{ __('download') }}</a>
                                             </td>
                                         </tr>
                                         @endforeach

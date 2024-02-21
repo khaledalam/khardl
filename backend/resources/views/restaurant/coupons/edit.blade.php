@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.Coupons'))
+@section('title', __('Coupons'))
 
 @section('content')
 
@@ -39,11 +39,11 @@
                                                         <!--begin::Card header-->
                                                         <div class="card-header">
                                                             <div class="card-title">
-                                                                <h2>{{ __('messages.Make a new coupon') }}</h2>
+                                                                <h2>{{ __('Make a new coupon') }}</h2>
                                                             </div>
                                                             <div class="">
                                                                 <a href="{{ route('coupons.index') }}">
-                                                                    <button class="btn btn-primary btn-sm">{{ __('messages.Back to list') }}</button>
+                                                                    <button class="btn btn-primary btn-sm">{{ __('Back to list') }}</button>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -56,10 +56,10 @@
                                                                 <!--begin::Input group-->
                                                                 <div class="mb-10 fv-row">
                                                                     <!--begin::Label-->
-                                                                    <label class="required form-label">{{ __('messages.Code') }}</label>
+                                                                    <label class="required form-label">{{ __('Code') }}</label>
                                                                     <!--end::Label-->
                                                                     <!--begin::Input-->
-                                                                    <input type="text" name="code" required value="{{ old('code') ?? $coupon->code }}" class="form-control mb-2" placeholder="{{ __('messages.Code') }}" />
+                                                                    <input type="text" name="code" required value="{{ old('code') ?? $coupon->code }}" class="form-control mb-2" placeholder="{{ __('Code') }}" />
                                                                     <!--end::Input-->
                                                                 </div>
                                                                 <!--end::Input group-->
@@ -94,7 +94,7 @@
                                                                                 <!--begin::Info-->
                                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                                     <div>
-                                                                                        <span>{{ __('messages.SAR') }}</span>
+                                                                                        <span>{{ __('SAR') }}</span>
                                                                                     </div>
                                                                                     <div class="sprout-container">
                                                                                         <input type="number" min="1" value="{{ old('fixed') ?? ($coupon->type =='fixed' ? $coupon->amount :'')}}" name="fixed" id="sarInput" class="form-control ml-2" step="1" placeholder="0" {{ $coupon->type=='percentage' ? 'disabled' : '' }} />
@@ -108,51 +108,51 @@
                                                                             <div class="mb-10 fv-row">
                                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                                     <div>
-                                                                                        <label class="form-label">{{ __('messages.Max use') }} </label>
-                                                                                        <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
+                                                                                        <label class="form-label">{{ __('Max use') }} </label>
+                                                                                        <small class="text-muted">({{ __('No limit if empty') }})</small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="number" min="1" name="max_use" value="{{ old('max_use') ?? $coupon->max_use}}" class="form-control mb-2" placeholder="{{ __('messages.Max use') }}" />
+                                                                                <input type="number" min="1" name="max_use" value="{{ old('max_use') ?? $coupon->max_use}}" class="form-control mb-2" placeholder="{{ __('Max use') }}" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="mb-10 fv-row">
                                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                                     <div>
-                                                                                        <label class="form-label">{{ __('messages.Max use per user') }}</label>
-                                                                                        <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
+                                                                                        <label class="form-label">{{ __('Max use per user') }}</label>
+                                                                                        <small class="text-muted">({{ __('No limit if empty') }})</small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="number" min="1" name="max_use_per_user" value="{{ old('max_use_per_user') ?? $coupon->max_use_per_user }}" class="form-control mb-2" placeholder="{{ __('messages.Max use per user') }}" />
+                                                                                <input type="number" min="1" name="max_use_per_user" value="{{ old('max_use_per_user') ?? $coupon->max_use_per_user }}" class="form-control mb-2" placeholder="{{ __('Max use per user') }}" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="mb-10 fv-row">
                                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                                     <div>
-                                                                                        <label class="form-label">{{ __('messages.Max discount amount') }}</label>
-                                                                                        <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
+                                                                                        <label class="form-label">{{ __('Max discount amount') }}</label>
+                                                                                        <small class="text-muted">({{ __('No limit if empty') }})</small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="number" min="1" name="max_discount_amount" value="{{ old('max_discount_amount') ?? $coupon->max_discount_amount }}" class="form-control mb-2" placeholder="{{ __('messages.Amount') }}" />
+                                                                                <input type="number" min="1" name="max_discount_amount" value="{{ old('max_discount_amount') ?? $coupon->max_discount_amount }}" class="form-control mb-2" placeholder="{{ __('Amount') }}" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="mb-10 fv-row">
                                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                                     <div>
-                                                                                        <label class="form-label">{{ __('messages.Minimum cart amount') }}</label>
-                                                                                        <small class="text-muted">({{ __('messages.No limit if empty') }})</small>
+                                                                                        <label class="form-label">{{ __('Minimum cart amount') }}</label>
+                                                                                        <small class="text-muted">({{ __('No limit if empty') }})</small>
                                                                                     </div>
                                                                                 </div>
-                                                                                <input type="number" min="1" name="minimum_cart_amount" value="{{ old('minimum_cart_amount') ?? $coupon->minimum_cart_amount }}" class="form-control mb-2" placeholder="{{ __('messages.Cart total') }}" />
+                                                                                <input type="number" min="1" name="minimum_cart_amount" value="{{ old('minimum_cart_amount') ?? $coupon->minimum_cart_amount }}" class="form-control mb-2" placeholder="{{ __('Cart total') }}" />
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-6">
                                                                             <div class="fv-row mt-5">
                                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                                     <div>
-                                                                                        <label class="required form-label">{{ __('messages.Active from') }}</label>
+                                                                                        <label class="required form-label">{{ __('Active from') }}</label>
                                                                                     </div>
                                                                                 </div>
                                                                                 <input type="date" name="active_from" class="form-control mb-2" value="{{ old('active_from') ?? $coupon->active_from?->format('Y-m-d') }}" />
@@ -163,7 +163,7 @@
                                                                             <div class="fv-row mt-5">
                                                                                 <div class="d-flex justify-content-between align-items-center">
                                                                                     <div>
-                                                                                        <label class="required form-label">{{ __('messages.Expire at') }}</label>
+                                                                                        <label class="required form-label">{{ __('Expire at') }}</label>
                                                                                     </div>
                                                                                 </div>
                                                                                 <input type="date" name="expire_at" class="form-control mb-2" value="{{ old('expire_at') ?? $coupon->expire_at?->format('Y-m-d') }}" />
@@ -173,7 +173,7 @@
                                                                     </div>
                                                                     <!--begin::Actions-->
                                                                     <div class="d-flex justify-content-end">
-                                                                        <button type="submit" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl" style="border:none" data-kt-search-element="advanced-options-form-cancel">{{ __('messages.Update') }}</button>
+                                                                        <button type="submit" class="badge badge-light-khardl p-4 text-hover-khardl bg-hover-khardl" style="border:none" data-kt-search-element="advanced-options-form-cancel">{{ __('Update') }}</button>
                                                                     </div>
                                                                     <!--end::Actions-->
 

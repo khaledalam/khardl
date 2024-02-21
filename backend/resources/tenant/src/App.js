@@ -30,8 +30,8 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Layout from "./components/Layout/Layout";
 import Logout from "./components/Logout/Logout";
 import { useAuthContext } from "./components/context/AuthContext";
-import TermsPolicies from "../../landing-page/src/pages/TermsPoliciesPrivacy/TermsPolicies";
-import Privacy from "../../landing-page/src/pages/TermsPoliciesPrivacy/Privacy";
+import TermsPolicies from "./pages/TermsPoliciesPrivacy/TermsPolicies";
+import Privacy from "./pages/TermsPoliciesPrivacy/Privacy";
 import MenuProvider from "react-flexible-sliding-menu";
 import { RestuarantEditor } from "./pages/EditorsPage";
 import { RestuarantHomePage } from "./pages/RestuarantPage";
@@ -61,7 +61,7 @@ const App = () => {
   const { loading } = useAuthContext();
   // const [isMobile, setIsMobile] = useState(false);
   const isMobile = window.innerWidth < 600
-  const isTablet = window.innerWidth > 601 && window.innerWidth < 1024 
+  const isTablet = window.innerWidth > 601 && window.innerWidth < 1024
   const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
   useEffect(() => {
     // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -164,7 +164,7 @@ const App = () => {
                   element={<div></div>}
                 />
 
-                  
+
                     <Route
                       path="/restaurant-not-live"
                       element={<RestaurantNotLive />}
@@ -173,7 +173,7 @@ const App = () => {
                       path="/restaurant-not-subscribed"
                       element={<RestaurantNotSubscribed />}
                     />
-                  
+
                 <Route path="/login-trial" element={<LoginTrial />} />{" "}
                 <Route path="/success" element={<SuccessPayment />} />
                 <Route path="/failed" element={<FailedPayment />} />

@@ -52,13 +52,13 @@ const ProductDetailItem = ({
           </label>
         </div>
       )}
-
       {isDropDown && (
         <select
           className='select w-full max-w-[90%] select-bordered cursor-pointer'
           onChange={onChange}
+          defaultValue=""
         >
-          <option disabled selected>
+          <option disabled value="">
             select option
           </option>
           {options.map((option, idx) => (

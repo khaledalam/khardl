@@ -4,6 +4,7 @@ namespace Tests\Feature\Web\Central\Auth\Register;
 
 use App\Actions\CreateTenantAction;
 use App\Jobs\SendVerifyEmailJob;
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
@@ -34,14 +35,19 @@ class CentralRegisterTest extends TestCase
     }
     public function createUser($options = null): User
     {
-        return User::factory()->create($options);
+        $data = [
+            'status' => 'active',
+        ];
+        if($options)$data = array_merge($data,$options);
+        return User::factory()->create($data);
     }
     private function createRestaurant($user, $domain)
     {
         $tenant =  (new CreateTenantAction)
         (
             user: $user,
-            domain: $domain
+            domain: $domain,
+            tenantId: '11111-11111-11111-11111-11111'
         );
         return $tenant;
     }

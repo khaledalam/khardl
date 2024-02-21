@@ -15,7 +15,7 @@ import {
   HTTP_NOT_AUTHENTICATED,
   HTTP_NOT_VERIFIED,
 } from "../../config";
-
+import { changeLanguage } from "../../redux/languageSlice";
 const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
@@ -30,7 +30,11 @@ export const AuthContextProvider = (props) => {
   const checkAuthenticated = useCallback(async () => {
     try {
       const response = await axiosAuth.post(API_ENDPOINT + "/auth-validation");
-      localStorage.setItem('i18nextLng', response?.data?.default_locale ?? 'ar')
+      if(response.data.is_loggedin){
+        localStorage.setItem('i18nextLng', response?.data?.default_locale ?? 'ar')
+        let newLanguage = response?.data?.default_locale;
+               dispatch(changeLanguage(newLanguage));
+      }
       console.log(statusCode);
       setStatusCode(response?.status);
       console.log(statusCode);
@@ -43,7 +47,7 @@ export const AuthContextProvider = (props) => {
     } catch (err) {
       console.log(err);
       setStatusCode(err?.response?.status);
-      localStorage.setItem("i18nextLng",err.response.data.default_locale || "ar");
+      // localStorage.setItem("i18nextLng",err.response.data.default_locale || "ar");
       dispatch(changeLogState(err.response?.data?.is_loggedin || false));
       dispatch(changeUserState(err.response?.data?.user || null));
     } finally {

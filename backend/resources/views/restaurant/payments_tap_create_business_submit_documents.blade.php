@@ -1,7 +1,7 @@
 @extends('layouts.restaurant-sidebar')
 
 @section('content')
-    <h3 class="mb-13 mx-3">{{__('messages.STEP 2 → Submit Create TAP Business Account')}}</h3>
+    <h3 class="mb-13 mx-3">{{__('STEP 2 → Submit Create TAP Business Account')}}</h3>
     @if(session('success'))
       <div class="alert alert-success">
         {{ session('success') }}
@@ -17,11 +17,11 @@
             <div class="d-flex flex-column mb-8 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_en">
-                    <span class="required">{{__("messages.Enter Business Name (EN)")}}</span>
+                    <span class="required">{{__("Enter Business Name (EN)")}}</span>
 
                 </label>
                 <!--end::Label-->
-                <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Business Name (EN)')}}" name="name[en]" id="name_en" value="{{old('name.en')  ?? $restaurant_name}}" />
+                <input type="text" class="form-control form-control-solid" required placeholder="{{__('Enter Business Name (EN)')}}" name="name[en]" id="name_en" value="{{old('name.en')  ?? $restaurant_name}}" />
             </div>
             <!--end::Input group-->
 
@@ -29,18 +29,18 @@
             <div class="d-flex flex-column mb-8 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                    <span >{{__("messages.Enter Business Name (AR)")}}</span>
+                    <span >{{__("Enter Business Name (AR)")}}</span>
 
                 </label>
                 <!--end::Label-->
-                <input type="text" class="form-control form-control-solid"  v placeholder="{{__('messages.Enter Business Name (AR)')}}" name="name[ar]" id="name_ar"  value="{{old('name.ar') ?? $restaurant_name}}"/>
+                <input type="text" class="form-control form-control-solid"  v placeholder="{{__('Enter Business Name (AR)')}}" name="name[ar]" id="name_ar"  value="{{old('name.ar') ?? $restaurant_name}}"/>
             </div>
             <!--end::Input group-->
 
 
             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                <h2 class="bold">{{__("messages.Entity")}}</h2>
-                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('messages.The entity details of the business')}}"></i>
+                <h2 class="bold">{{__("Entity")}}</h2>
+                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('The entity details of the business')}}"></i>
             </label>
 
             <div class="entity_group ">
@@ -59,11 +59,11 @@
             <div class="d-flex flex-column mb-8 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_en">
-                    <span class="required">{{__('messages.Legal Name (English)')}}</span>
+                    <span class="required">{{__('Legal Name (English)')}}</span>
 
                 </label>
                 <!--end::Label-->
-                <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Legal Name (EN)')}}" name="entity[legal_name][en]" value="{{old('entity.legal_name.en')}}" id="name_en" />
+                <input type="text" class="form-control form-control-solid" required placeholder="{{__('Enter Legal Name (EN)')}}" name="entity[legal_name][en]" value="{{old('entity.legal_name.en')}}" id="name_en" />
             </div>
             <!--end::Input group-->
 
@@ -71,11 +71,11 @@
             <div class="d-flex flex-column mb-8 fv-row">
                 <!--begin::Label-->
                 <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                    <span >{{__('messages.Legal Name (Arabic)')}}</span>
+                    <span >{{__('Legal Name (Arabic)')}}</span>
 
                 </label>
                 <!--end::Label-->
-                <input type="text" class="form-control form-control-solid"  placeholder="{{__('messages.Enter Legal Name (AR)')}}" name="entity[legal_name][ar]" value="{{old('entity.legal_name.ar')}}"  id="name_ar" />
+                <input type="text" class="form-control form-control-solid"  placeholder="{{__('Enter Legal Name (AR)')}}" name="entity[legal_name][ar]" value="{{old('entity.legal_name.ar')}}"  id="name_ar" />
             </div>
             <!--end::Input group-->
                 <input type="hidden" name="type" value="ind">
@@ -83,8 +83,8 @@
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="is_licensed">
-                        <span class="required">{{__('messages.Is Business Licensed')}}</span>
-                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('messages.Denote whether the business is licensed or not')}}"></i>
+                        <span class="required">{{__('Is Business Licensed')}}</span>
+                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="{{__('Denote whether the business is licensed or not')}}"></i>
                     <!--end::Label-->
                         <input  type="hidden" name="entity[is_licensed]" value="{{false}}"   />
                         <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]"   {{old('entity.is_licensed')?'checked':''}} />
@@ -135,7 +135,7 @@
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="countrySelect">
-                        <span class="required">{{__('messages.country')}}</span>
+                        <span class="required">{{__('country')}}</span>
 
                     </label>
                     <!--end::Label-->
@@ -159,21 +159,21 @@
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!--begin::Label-->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                        <span class="">{{__('messages.Bank Account')}}<span class="text-danger h4"> * </span></span>
+                        <span class="">{{__('Bank Account')}}<span class="text-danger h4"> * </span></span>
                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="The official documents related to the business."></i>
                     </label>
                     <!--end::Label-->
                     <input id="bank_account_iban" type="text" class="form-control form-control-solid" placeholder="IBAN e.g. INBNK00045545555555555555" name="entity[bank_account][iban]" required  value="{{old('entity.bank_account.iban') ?? $iban}}"/><br />
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                        <span class="">{{__('messages.Swift code')}}<span class="text-danger h4"> * </span></span>
+                        <span class="">{{__('Swift code')}}<span class="text-danger h4"> * </span></span>
                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="The official documents related to the business."></i>
                     </label>
-                    <input id="bank_account_swift_code" type="text" class="form-control form-control-solid" placeholder="{{ __('messages.SWIFT code e.g. SWFT12345678909836435647') }}" name="entity[bank_account][swift_code]" required  value="{{old('entity.bank_account.swift_code')}}" /><br />
+                    <input id="bank_account_swift_code" type="text" class="form-control form-control-solid" placeholder="{{ __('SWIFT code e.g. SWFT12345678909836435647') }}" name="entity[bank_account][swift_code]" required  value="{{old('entity.bank_account.swift_code')}}" /><br />
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                        <span class="">{{__('messages.Account number')}}<span class="text-danger h4"> * </span></span>
+                        <span class="">{{__('Account number')}}<span class="text-danger h4"> * </span></span>
                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="The official documents related to the business."></i>
                     </label>
-                    <input id="bank_account_number" type="text" class="form-control form-control-solid" placeholder="{{ __('messages.Account Number e.g. DFGHGFVB876215bsdjhkn') }}" name="entity[bank_account][account_number]" required value="{{old('entity.bank_account.account_number')}}" />
+                    <input id="bank_account_number" type="text" class="form-control form-control-solid" placeholder="{{ __('Account Number e.g. DFGHGFVB876215bsdjhkn') }}" name="entity[bank_account][account_number]" required value="{{old('entity.bank_account.account_number')}}" />
                 </div>
                 <!--end::Input group-->
 
@@ -200,7 +200,7 @@
             </div>
 
             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="contact_person_group">
-                <h2 class="bold">{{__('messages.Contact Person')}}</h2>
+                <h2 class="bold">{{__('Contact Person')}}</h2>
 
             </label>
 
@@ -209,48 +209,48 @@
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!-- Label -->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_title">
-                        <span class="required">{{ __("messages.Title") }}</span>
+                        <span class="required">{{ __("Title") }}</span>
 
                     </label>
                     <!-- Input -->
-                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('messages.Mr') }}" name="contact_person[name][title]" id="name_title" value="{{ old('contact_person.name.title')  ?? 'Mr'}}" />
+                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('Mr') }}" name="contact_person[name][title]" id="name_title" value="{{ old('contact_person.name.title')  ?? 'Mr'}}" />
                 </div>
 
                 <!-- Name first input group -->
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!-- Label -->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_first">
-                        <span class="required">{{ __("messages.First Name") }}</span>
+                        <span class="required">{{ __("First Name") }}</span>
 
                     </label>
                     <!-- Input -->
-                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('messages.Enter First Name') }}" name="contact_person[name][first]" id="name_first" value="{{ old('contact_person.name.first') ?? $user->first_name }}" />
+                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('Enter First Name') }}" name="contact_person[name][first]" id="name_first" value="{{ old('contact_person.name.first') ?? $user->first_name }}" />
                 </div>
 
                 <!-- Name middle input group -->
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!-- Label -->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_middle">
-                        <span class="required">{{ __("messages.Middle Name") }}</span>
+                        <span class="required">{{ __("Middle Name") }}</span>
 
                     </label>
                     <!-- Input -->
-                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('messages.Enter Middle Name') }}" name="contact_person[name][middle]" id="name_middle" value="{{ old('contact_person.name.middle') }}" />
+                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('Enter Middle Name') }}" name="contact_person[name][middle]" id="name_middle" value="{{ old('contact_person.name.middle') }}" />
                 </div>
 
                 <!-- Name last input group -->
                 <div class="d-flex flex-column mb-8 fv-row">
                     <!-- Label -->
                     <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_last">
-                        <span class="required">{{ __("messages.Last Name") }}</span>
+                        <span class="required">{{ __("Last Name") }}</span>
 
                     </label>
                     <!-- Input -->
-                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('messages.Enter Last Name') }}" name="contact_person[name][last]" id="name_last" value="{{ old('contact_person.name.last') ?? $user->last_name }}" />
+                    <input type="text" class="form-control form-control-solid" required placeholder="{{ __('Enter Last Name') }}" name="contact_person[name][last]" id="name_last" value="{{ old('contact_person.name.last') ?? $user->last_name }}" />
                 </div>
             </div>
             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="contact_info_group">
-                <h2 class="bold">{{__('messages.Contact Info')}}</h2>
+                <h2 class="bold">{{__('Contact Info')}}</h2>
 
             </label>
             <div id="contact_info_group">
@@ -258,11 +258,11 @@
                     <div class="d-flex flex-column mb-8 fv-row">
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="contact_person_primary_email">
-                            <span class="required">{{__("messages.email")}}</span>
+                            <span class="required">{{__("email")}}</span>
 
                         </label>
                         <!--end::Label-->
-                        <input type="email" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Your Email')}}" name="contact_person[contact_info][primary][email]" id="contact_person_primary_email" value="{{ old('contact_person.contact_info.primary.email') ?? $user->email }}" />
+                        <input type="email" class="form-control form-control-solid" required placeholder="{{__('Enter Your Email')}}" name="contact_person[contact_info][primary][email]" id="contact_person_primary_email" value="{{ old('contact_person.contact_info.primary.email') ?? $user->email }}" />
                     </div>
                     <!--end::Input group-->
 
@@ -273,7 +273,7 @@
                     <div class="d-flex flex-column mb-8 fv-row">
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="contact_person_primary_number">
-                            <span class="required">{{__("messages.Number")}}</span>
+                            <span class="required">{{__("Number")}}</span>
 
                         </label>
                         <!--end::Label-->
@@ -283,13 +283,13 @@
                                 <input type="text"  readonly name="contact_person[contact_info][primary][phone][country_code]" id="countryCodeInput" value="{{old('contact_person.contact_info.primary.phone.country_code')}}" style="width: 40px;border:0;background-color:#f5f8fa">
                             </span>
                         </div>
-                        <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Your Number')}}" name="contact_person[contact_info][primary][phone][number]"  id="contact_person_primary_number" value="{{ old('contact_person.contact_info.primary.phone.number') ?? substr($user->phone,3)}}" />
+                        <input type="text" class="form-control form-control-solid" required placeholder="{{__('Enter Your Number')}}" name="contact_person[contact_info][primary][phone][number]"  id="contact_person_primary_number" value="{{ old('contact_person.contact_info.primary.phone.number') ?? substr($user->phone,3)}}" />
                         </div>
                     </div>
                     <!--end::Input group-->
             </div>
             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="contact_person_group">
-                <h2 class="bold">{{__('messages.Brand')}}</h2>
+                <h2 class="bold">{{__('Brand')}}</h2>
 
             </label>
 
@@ -298,11 +298,11 @@
                     <div class="d-flex flex-column mb-8 fv-row">
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_en">
-                            <span class="required">{{__("messages.Brand Name (English)")}}</span>
+                            <span class="required">{{__("Brand Name (English)")}}</span>
 
                         </label>
                         <!--end::Label-->
-                        <input type="text" class="form-control form-control-solid" required placeholder="{{__('messages.Enter Brand Name (EN)')}}" name="brands[0][name][en]" id="name_en" value="{{old('brands.0.name.en') ?? $facility_name}}" />
+                        <input type="text" class="form-control form-control-solid" required placeholder="{{__('Enter Brand Name (EN)')}}" name="brands[0][name][en]" id="name_en" value="{{old('brands.0.name.en') ?? $facility_name}}" />
                     </div>
                     <!--end::Input group-->
 
@@ -310,11 +310,11 @@
                     <div class="d-flex flex-column mb-8 fv-row">
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                            <span >{{__("messages.Brand Name (Arabic)")}}</span>
+                            <span >{{__("Brand Name (Arabic)")}}</span>
 
                         </label>
                         <!--end::Label-->
-                        <input type="text" class="form-control form-control-solid"  placeholder="{{__('messages.Enter Brand Name (AR)')}}" name="brands[0][name][ar]" id="name_ar"  value="{{old('brands.0.name.ar') ?? $facility_name}}"/>
+                        <input type="text" class="form-control form-control-solid"  placeholder="{{__('Enter Brand Name (AR)')}}" name="brands[0][name][ar]" id="name_ar"  value="{{old('brands.0.name.ar') ?? $facility_name}}"/>
                     </div>
                     <!--end::Input group-->
             </div>
@@ -322,12 +322,12 @@
 
             <!--begin::Actions-->
             <div class="text-center">
-                <a href="{{route('tap.payments_upload_tap_documents_get')}}" type="button" id="prev_step_btn" class="btn btn-warning me-3">{{ __('messages.Back to step 1') }}</a>
-                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{ __('messages.Reset ↻') }}</button>
+                <a href="{{route('tap.payments_upload_tap_documents_get')}}" type="button" id="prev_step_btn" class="btn btn-warning me-3">{{ __('Back to step 1') }}</a>
+                <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{ __('Reset ↻') }}</button>
                 <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                    <span class="indicator-label">{{ __('messages.Submit ✔️') }}</span>
+                    <span class="indicator-label">{{ __('Submit ✔️') }}</span>
                     <span class="indicator-progress" id="waiting-item">
-                        {{ __('messages.Please wait...') }}
+                        {{ __('Please wait...') }}
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                 </button>
             </div>

@@ -1,9 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeLanguage } from '../redux/languageSlice';
-import Arabic from '../assets/saudiArabia.png';
-import English from '../assets/unitedKingdom.png';
-import Button from './Button';
+import Button from './ButtonComponent';
 import AxiosInstance from '../axios/axios';
 
 
@@ -16,7 +14,7 @@ function Languages() {
   const handleLanguageChange = () => {
     AxiosInstance.get(`/change-language/${newLanguage}`, {}).then(() => {
       dispatch(changeLanguage(newLanguage))
-     
+
     })
   };
 

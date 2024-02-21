@@ -123,7 +123,7 @@ class  OrderController extends BaseRepositoryController
     }
     public function getStatus($status){
         $statues = Order::ChangeStatus($status);
-        return response()->json(array_combine($statues,array_map(fn ($status) => __('messages.'.$status),$statues)),200);
+        return response()->json(array_combine($statues,array_map(fn ($status) => __(''.$status),$statues)),200);
     }
 
     public function handelDeliveryOrder($order,$request)

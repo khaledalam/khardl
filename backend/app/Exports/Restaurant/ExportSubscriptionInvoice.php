@@ -24,11 +24,11 @@ class ExportSubscriptionInvoice implements FromCollection,  WithHeadings, WithMa
     public function headings(): array
     {
         return [
-            __('messages.Package'),
-            __('messages.Status'),
-            __('messages.Number of branches'),
-            __('messages.Price'),
-            __('messages.Date'),
+            __('Package'),
+            __('Status'),
+            __('Number of branches'),
+            __('Price'),
+            __('Date'),
         ];
     }
 
@@ -36,9 +36,9 @@ class ExportSubscriptionInvoice implements FromCollection,  WithHeadings, WithMa
     {
         return [
             $invoice->subscription?->name,
-            __('messages.' . $invoice->status),
+            __('' . $invoice->status),
             $invoice->number_of_branches,
-            $invoice->amount.' '.__('messages.SAR'),
+            $invoice->amount.' '.__('SAR'),
             $invoice->created_at?->format('Y-m-d'),
         ];
     }
