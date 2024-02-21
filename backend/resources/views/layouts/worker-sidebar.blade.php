@@ -531,6 +531,10 @@
     <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
 
+    <script
+        src="https://js.sentry-cdn.com/860125ea20f9254e5c411ffbdeb02c39.min.js"
+        crossorigin="anonymous"
+    ></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
 </body>

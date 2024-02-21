@@ -603,6 +603,10 @@
     @yield('javascript')
     @yield('charts')
 
+    <script
+        src="https://js.sentry-cdn.com/860125ea20f9254e5c411ffbdeb02c39.min.js"
+        crossorigin="anonymous"
+    ></script>
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
 </body>
