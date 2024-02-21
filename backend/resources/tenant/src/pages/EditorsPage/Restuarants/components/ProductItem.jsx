@@ -291,6 +291,7 @@ const ProductItem = ({
       closeModal()
       if (response?.data) {
         toast.success(`${t("Item added to cart")}`);
+        dispatch(getCartItemsCount(response?.data.data.items.length));
         setGotoCart(true);
         setSpinner(false);
       }

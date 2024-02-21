@@ -14,16 +14,17 @@ const NavbarCustomer = () => {
   const navigate = useNavigate()
   const {toggleMenu} = useContext(MenuContext)
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
-  const [cartItemsCount, setCartItemsCount] = useState(0);
+  // const [cartItemsCount, setCartItemsCount] = useState(0);
   const cartItems = useSelector((state) => state.cart.items);
-
+  const cartItemsCount = useSelector(
+    (state) => state.categoryAPI.cartItemsCount
+  )
   const fetchCartData = async () => {
     try {
       const cartResponse = await AxiosInstance.get(`carts/count`);
       if (cartResponse.data) {
         const count = cartResponse.data?.data?.count || 0;
         dispatch(getCartItemsCount(count));
-        setCartItemsCount(count);
       }
     } catch (error) {
       // toast.error(`${t('Failed to send verification code')}`)
