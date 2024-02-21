@@ -21,6 +21,7 @@ const Herosection = ({ isMobile, categories }) => {
     autoplay: true,
     speed: 500,
     slidesToShow: 1,
+    arrows: false,
     slidesToScroll: 1,
   };
 
