@@ -52,12 +52,28 @@ class  OrderController extends BaseRepositoryController
             $query ->where('branch_id',$user->branch->id);
         })
         ->findOrFail($order);
+        $setting = Setting::first();
         if($order->isDelivery()&&($request->status == Order::COMPLETED || $request->status == Order::CANCELLED)){
             return $this->sendError('', __('Only drivers can change this order with this status'));
+        }
+        if ($request->status == Order::RECEIVED_BY_RESTAURANT && $order->isDelivery() && !$order?->branch?->delivery_availability) {
+            if ($request->expectsJson()) {
+                return $this->sendError('Fail', __('This branch does not support delivery'));
+            }
+            return redirect()->back()->with('error',__('This branch does not support delivery'));
+        }
+        if (!$setting->delivery_companies_option) {
+            if ($request->expectsJson()) {
+                return $this->sendError('Fail', __('Order delivery is not enabled in restaurant settings'));
+            }
+            return redirect()->back()->with('error',__('Order delivery is not enabled in restaurant settings'));
         }
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
+      
+        
+        
         if($request->status == Order::REJECTED && $request->reason){
             $order->update([
                 'status' => $request->status,
@@ -125,10 +141,16 @@ class  OrderController extends BaseRepositoryController
             $order->deliver_by = "Waiting delivery company";
             $order->save();
             return $this->assignOrderToDC($request->expectsJson(),$order,$request->status);
+        }else {
+            if ($request->expectsJson()) {
+                return $this->sendError('Fail', __('Restaurant does not have any delivery companies yet'));
+            }
+            return redirect()->back()->with('error',__('Restaurant does not have any delivery companies yet'));
         }
     }
     private function assignOrderToDC($exceptJson,$order,$status)
     {
+        
         $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
         if(empty($deliveryCompanies)){
             if ($exceptJson) {
