@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.qr-maker'))
+@section('title', __('qr-maker'))
 
 @section('content')
 

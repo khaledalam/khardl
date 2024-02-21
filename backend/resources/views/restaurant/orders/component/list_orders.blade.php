@@ -7,7 +7,7 @@
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h2>{{ __('messages.Orders') }}</h2>
+                    <h2>{{ __('Orders') }}</h2>
                 </div>
                 <!--end::Card title-->
                 <!--begin::Card toolbar-->
@@ -22,41 +22,41 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
-                        <input type="text" name="search" value="{{ request('search')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('messages.search')}}" />
+                        <input type="text" name="search" value="{{ request('search')??'' }}" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('search')}}" />
                     </div>
                     <div class="w-100 mw-150px">
                         <!--begin::Select2-->
                         <select class="form-select form-select-solid" name="status">
-                            <option value="">{{ __('messages.Status') }}</option>
-                            <option value="pending" {{ request('status') =='pending' ? 'selected':'' }}>{{ __('messages.Pending') }}</option>
-                            <option value="received_by_restaurant" {{ request('status') =='received_by_restaurant' ? 'selected':'' }}>{{ __('messages.received_by_restaurant') }}</option>
-                            <option value="ready" {{ request('status') =='ready' ? 'selected':'' }}>{{ __('messages.Ready') }}</option>
-                            <option value="accepted" {{ request('status') =='accepted' ? 'selected':'' }}>{{ __('messages.Accepted') }}</option>
-                            <option value="completed" {{ request('status') =='completed' ? 'selected':'' }}>{{ __('messages.Completed') }}</option>
-                            <option value="cancelled" {{ request('status') =='cancelled' ? 'selected':'' }}>{{ __('messages.Cancelled') }}</option>
+                            <option value="">{{ __('Status') }}</option>
+                            <option value="pending" {{ request('status') =='pending' ? 'selected':'' }}>{{ __('Pending') }}</option>
+                            <option value="received_by_restaurant" {{ request('status') =='received_by_restaurant' ? 'selected':'' }}>{{ __('received_by_restaurant') }}</option>
+                            <option value="ready" {{ request('status') =='ready' ? 'selected':'' }}>{{ __('Ready') }}</option>
+                            <option value="accepted" {{ request('status') =='accepted' ? 'selected':'' }}>{{ __('Accepted') }}</option>
+                            <option value="completed" {{ request('status') =='completed' ? 'selected':'' }}>{{ __('Completed') }}</option>
+                            <option value="cancelled" {{ request('status') =='cancelled' ? 'selected':'' }}>{{ __('Cancelled') }}</option>
                         </select>
                         <!--end::Select2-->
                     </div>
                     <div class="w-100 mw-150px">
                         <!--begin::Select2-->
                         <select class="form-select form-select-solid" name="payment_status">
-                            <option value="">{{ __('messages.Payment') }}</option>
-                            <option value="paid" {{ request('payment_status') =='paid' ? 'selected':'' }}>{{ __('messages.Paid') }}</option>
-                            <option value="pending" {{ request('payment_status') =='pending' ? 'selected':'' }}>{{ __('messages.Pending') }}</option>
+                            <option value="">{{ __('Payment') }}</option>
+                            <option value="paid" {{ request('payment_status') =='paid' ? 'selected':'' }}>{{ __('Paid') }}</option>
+                            <option value="pending" {{ request('payment_status') =='pending' ? 'selected':'' }}>{{ __('Pending') }}</option>
                         </select>
                         <!--end::Select2-->
                     </div>
                     <div class="w-100 mw-150px">
                         <!--begin::Select2-->
                         <select class="form-select form-select-solid" name="date_string">
-                            <option value="">{{ __('messages.Date') }}</option>
-                            <option value="today" {{ request('date_string') =='today' ? 'selected':'' }}>{{ __('messages.Today') }}</option>
-                            <option value="last_day" {{ request('date_string') =='last_day' ? 'selected':'' }}>{{ __('messages.Last day') }}</option>
-                            <option value="last_week" {{ request('date_string') =='last_week' ? 'selected':'' }}>{{ __('messages.Last week') }}</option>
+                            <option value="">{{ __('Date') }}</option>
+                            <option value="today" {{ request('date_string') =='today' ? 'selected':'' }}>{{ __('Today') }}</option>
+                            <option value="last_day" {{ request('date_string') =='last_day' ? 'selected':'' }}>{{ __('Last day') }}</option>
+                            <option value="last_week" {{ request('date_string') =='last_week' ? 'selected':'' }}>{{ __('Last week') }}</option>
                         </select>
                         <!--end::Select2-->
                     </div>
-                    <button class="btn btn-primary" type="submit">{{ __('messages.Search') }}</button>
+                    <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
                 </div>
                 <!--end::Card toolbar-->
             </div>
@@ -75,22 +75,22 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_sales_table .form-check-input" value="1" />
                                 </div>
                             </th>
-                            <th class="min-w-100px">{{ __('messages.ID') }}</th>
-                            <th class="min-w-175px">{{ __('messages.Customer') }}</th>
+                            <th class="min-w-100px">{{ __('ID') }}</th>
+                            <th class="min-w-175px">{{ __('Customer') }}</th>
                             {{-- <th class="text-end min-w-70px">Delivery Type</th> --}}
-                            <th class="text-end min-w-70px">{{ __('messages.Branch') }}</th>
-                            <th class="text-end min-w-70px">{{ __('messages.Status') }}</th>
-                            <th class="text-end min-w-100px">{{ __('messages.payment-method') }}</th>
-                            <th class="text-end min-w-100px">{{ __('messages.Delivery Type') }}</th>
-                            <th class="text-end min-w-100px">{{ __('messages.payment-status') }}</th>
+                            <th class="text-end min-w-70px">{{ __('Branch') }}</th>
+                            <th class="text-end min-w-70px">{{ __('Status') }}</th>
+                            <th class="text-end min-w-100px">{{ __('payment-method') }}</th>
+                            <th class="text-end min-w-100px">{{ __('Delivery Type') }}</th>
+                            <th class="text-end min-w-100px">{{ __('payment-status') }}</th>
 
-                            <th class="text-end min-w-100px">{{ __('messages.Total') }}</th>
-                            <th class="text-end min-w-100px">{{ __('messages.Address') }}</th>
-                            <th class="text-end min-w-100px">{{ __('messages.Date') }}</th>
+                            <th class="text-end min-w-100px">{{ __('Total') }}</th>
+                            <th class="text-end min-w-100px">{{ __('Address') }}</th>
+                            <th class="text-end min-w-100px">{{ __('Date') }}</th>
                             <th class="text-end min-w-100px">
                                 <a href="{{ route('restaurant.orders_add') }}">
                                     <button class="btn btn-success btn-sm" type="button">
-                                        {{ __('messages.Add new') }}
+                                        {{ __('Add new') }}
                                     </button>
                                 </a>
                             </th>
@@ -136,9 +136,9 @@
                         {{-- <td class="text-end pe-0" data-order="Refunded">
                             <!--begin::Badges-->
                             @if($order->delivery_type->name = 'delivery')
-                                <div class="badge badge-light-info">{{__("messages.delivery")}}</div>
+                                <div class="badge badge-light-info">{{__("delivery")}}</div>
                             @elseif($order->delivery_type = 'receive_from_branch')
-                                <div class="badge badge-light">{{__("messages.receive_from_branch")}}</div>
+                                <div class="badge badge-light">{{__("receive_from_branch")}}</div>
                             @endif
 
                             <!--end::Badges-->
@@ -154,17 +154,17 @@
                         <td class="text-end pe-0" data-order="Refunded">
                             <!--begin::Badges-->
                             @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                                <span class="badge badge-primary " >{{__("messages.accepted")}}</span>
+                                <span class="badge badge-primary " >{{__("accepted")}}</span>
                             @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
-                                <span class="badge badge-secondary ">{{__("messages.pending")}}</span>
+                                <span class="badge badge-secondary ">{{__("pending")}}</span>
                             @elseif($order->status ==  \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
-                                <span class="badge badge-warning ">{{__("messages.received_by_restaurant")}}</span>
+                                <span class="badge badge-warning ">{{__("received_by_restaurant")}}</span>
                             @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
-                                <span class="badge badge-danger ">{{__("messages.cancelled")}}</span>
+                                <span class="badge badge-danger ">{{__("cancelled")}}</span>
                             @elseif($order->status ==  \App\Models\Tenant\Order::READY)
-                                <span class="badge badge-info ">{{__("messages.ready")}}</span>
+                                <span class="badge badge-info ">{{__("ready")}}</span>
                             @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
-                                <span class="badge badge-success ">{{__("messages.completed")}}</span>
+                                <span class="badge badge-success ">{{__("completed")}}</span>
                             @endif
 
                             <!--end::Badges-->
@@ -172,23 +172,23 @@
                         <!--end::Status=-->
 
                         <td class="text-end pe-0">
-                            <span class="fw-bolder">{{__('messages.'.$order->payment_method->name)}}</span>
+                            <span class="fw-bolder">{{__(''.$order->payment_method->name)}}</span>
                         </td><td class="text-end pe-0">
-                            <span class="fw-bolder">{{__('messages.'.$order->delivery_type->name)}}</span>
+                            <span class="fw-bolder">{{__(''.$order->delivery_type->name)}}</span>
                         </td>
                         <td class="text-end pe-0">
                             @if($order->payment_status == \App\Models\Tenant\PaymentMethod::PAID)
-                            <span class="badge badge-success">{{__('messages.'.$order->payment_status)}}</span>
+                            <span class="badge badge-success">{{__(''.$order->payment_status)}}</span>
                             @elseif($order->payment_status == \App\Models\Tenant\PaymentMethod::FAILED)
-                            <span class="badge badge-danger">{{__('messages.'.$order->payment_status)}}</span>
+                            <span class="badge badge-danger">{{__(''.$order->payment_status)}}</span>
                             @elseif($order->payment_status ==  \App\Models\Tenant\PaymentMethod::PENDING)
-                                <span class="badge badge-warning">{{__('messages.'.$order->payment_status)}}</span>
+                                <span class="badge badge-warning">{{__(''.$order->payment_status)}}</span>
                             @endif
 
                         </td>
                         <!--begin::Total=-->
                         <td class="text-end pe-0">
-                        <span class="fw-bolder">{{$order->total}} {{__('messages.sar')}}</span>
+                        <span class="fw-bolder">{{$order->total}} {{__('sar')}}</span>
                         </td>
                         <!--end::Total=-->
                         <td>
@@ -201,7 +201,7 @@
                         <!--end::Date Added=-->
                         <!--begin::Action=-->
                         <td class="text-end">
-                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('messages.Actions') }}
+                            <a href="#" class="btn btn-sm btn-active-light-khardl" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{ __('Actions') }}
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                 <span class="svg-icon svg-icon-5 m-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -213,12 +213,12 @@
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a  href="{{route('restaurant.branch.order',['order'=>$order->id])}}" class="menu-link px-3">{{ __('messages.View') }}</a>
+                                    <a  href="{{route('restaurant.branch.order',['order'=>$order->id])}}" class="menu-link px-3">{{ __('View') }}</a>
                                 </div>
                                 <!--end::Menu item-->
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3">{{ __('messages.Edit') }}</a>
+                                    <a href="#" class="menu-link px-3">{{ __('Edit') }}</a>
                                 </div>
                                 <!--end::Menu item-->
                                 <!--begin::Menu item-->
@@ -228,7 +228,7 @@
                                 @if($order->status == \App\Models\Tenant\Order::CANCELLED || $order->status == \App\Models\Tenant\Order::COMPLETED  )
                                 @else
                                     <div class="menu-item px-3">
-                                        <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('messages.Changes status')}}</a>
+                                        <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('Changes status')}}</a>
                                     </div>
                                 @endif
 
@@ -259,14 +259,14 @@
                             success: function(response) {
 
                                 Swal.fire({
-                                    text: '{{ __('messages.are-you-sure-you-want-to-change-order-status')}}',
+                                    text: '{{ __('are-you-sure-you-want-to-change-order-status')}}',
                                     icon: 'warning',
                                     input: 'select',
                                     showCancelButton: true,
                                     inputOptions: response,
-                                    inputPlaceholder: "{{ __('messages.Select an option') }}",
-                                    confirmButtonText: "{{ __('messages.yes') }}",
-                                    cancelButtonText: "{{ __('messages.no') }}"
+                                    inputPlaceholder: "{{ __('Select an option') }}",
+                                    confirmButtonText: "{{ __('yes') }}",
+                                    cancelButtonText: "{{ __('no') }}"
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         const selectedStatus = result.value;

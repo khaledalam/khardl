@@ -43,11 +43,11 @@ if (!function_exists('getAmount')) {
         $input_count = substr_count($input, ',');
         if ($input_count != '0') {
             if ($input_count == '1') {
-                return substr($input, 0, -2) . ' '.__('messages.K');
+                return substr($input, 0, -2) . ' '.__('K');
             } else if ($input_count == '2') {
-                return substr($input, 0, -6) . ' '.__('messages.M');
+                return substr($input, 0, -6) . ' '.__('M');
             } else if ($input_count == '3') {
-                return substr($input, 0, -10) . ' '.__('messages.B');
+                return substr($input, 0, -10) . ' '.__('B');
             } else {
                 return;
             }

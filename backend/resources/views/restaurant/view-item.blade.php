@@ -41,14 +41,14 @@
                                 <a href="#" class="d-flex align-items-center text-hover-success me-5 mb-2">
                                     <i class="bi bi-cash mx-2"></i>
                                     {{ $item->price }}
-                                    {{ __('messages.SAR') }}
+                                    {{ __('SAR') }}
                                 </a>
                                 <a href="#" class="d-flex align-items-center text-hover-success mb-2">
                                     <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                     <i class="bi bi-activity mx-2"></i>
                                     <!--end::Svg Icon-->
                                     {{ $item->calories }}
-                                    {{ __('messages.Calories') }}
+                                    {{ __('Calories') }}
                                 </a>
                             </div>
                             <!--end::Info-->
@@ -57,7 +57,7 @@
                         <a href="{{ route('restaurant.get-category',['id' => $item->category->id,'branchId' => $item->branch->id]) }}">
                             <button type="button" class="btn btn-primary btn-sm">
                                 <i class="fa fa-arrow-left"></i>
-                                {{ __('messages.Back to list') }}
+                                {{ __('Back to list') }}
                             </button>
                         </a>
                         <!--end::Info-->
@@ -70,8 +70,8 @@
                             <thead>
                                 <!--begin::Table row-->
                                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                    <th class="text-start pe-3 min-w-100px">{{ __('messages.Key') }}</th>
-                                    <th class="text-start pe-3 min-w-100px">{{ __('messages.Value') }}</th>
+                                    <th class="text-start pe-3 min-w-100px">{{ __('Key') }}</th>
+                                    <th class="text-start pe-3 min-w-100px">{{ __('Value') }}</th>
                                 </tr>
                                 <!--end::Table row-->
                             </thead>
@@ -81,7 +81,7 @@
                                 <!--begin::Item-->
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('messages.Name')}}</span>
+                                        <span class="text-start">{{__('Name')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         <span class="py-3 px-4 fs-23">{{ $item->name }}</span>
@@ -90,7 +90,7 @@
                                 <!--end::Item-->
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('messages.Description')}}</span>
+                                        <span class="text-start">{{__('Description')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         <span class="py-3 px-4 fs-23">{{ $item->description }}</span>
@@ -99,7 +99,7 @@
                                 <!--begin::Item-->
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('messages.Branch')}}</span>
+                                        <span class="text-start">{{__('Branch')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         <span class="py-3 px-4 fs-23">{{ $item?->branch?->name }}</span>
@@ -109,7 +109,7 @@
                                 <!--begin::Item-->
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('messages.Category')}}</span>
+                                        <span class="text-start">{{__('Category')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         <span class="py-3 px-4 fs-23">{{ $item->category->name }}</span>
@@ -119,7 +119,7 @@
                                 <!--begin::Item-->
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('messages.Availability')}}</span>
+                                        <span class="text-start">{{__('Availability')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         @if(!$item->availability)<span class="badge badge-danger mx-1">Not available</span>
@@ -131,14 +131,14 @@
                                 @if ($item?->checkbox_input_titles)
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('messages.Checkbox')}}</span>
+                                        <span class="text-start">{{__('Checkbox')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         @foreach ($item?->checkbox_input_titles as $key => $option)
                                         @if(isset($option[$key]))
                                         <span>{{ $option[$key] }}</span>
                                         @if(isset($item->checkbox_input_maximum_choices[$key]))
-                                        <small class="text-muted">({{ __('messages.Max') }} : <strong>{{ $item->checkbox_input_maximum_choices[$key] }}</strong>)</small>
+                                        <small class="text-muted">({{ __('Max') }} : <strong>{{ $item->checkbox_input_maximum_choices[$key] }}</strong>)</small>
                                         @endif
                                         @endif
                                         @php
@@ -158,7 +158,7 @@
                                                     {{ $innerOption[0] }}
                                                     @endif
                                                 </span>
-                                                @if(isset($item?->checkbox_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('messages.SAR') }})</span>@endif
+                                                @if(isset($item?->checkbox_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('SAR') }})</span>@endif
                                             </li>
                                             @endif
                                             @endforeach
@@ -171,7 +171,7 @@
                                 @if ($item?->selection_input_titles)
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('messages.Selection')}}</span>
+                                        <span class="text-start">{{__('Selection')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         @foreach ($item?->selection_input_titles as $key => $option)
@@ -192,7 +192,7 @@
                                                     {{ $innerOption[0] }}
                                                     @endif
                                                 </span>
-                                                @if(isset($item?->selection_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('messages.SAR') }})</span>@endif
+                                                @if(isset($item?->selection_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('SAR') }})</span>@endif
                                             </li>
                                             @endforeach
                                         </ul>
@@ -204,7 +204,7 @@
                                 @if ($item?->dropdown_input_titles)
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('messages.Dropdown')}}</span>
+                                        <span class="text-start">{{__('Dropdown')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         @foreach ($item?->dropdown_input_titles as $key => $option)

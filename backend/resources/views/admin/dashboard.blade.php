@@ -1,5 +1,5 @@
 @extends('layouts.admin-sidebar')
-@section('title', __('messages.dashboard'))
+@section('title', __('dashboard'))
 @section('content')
 <!--begin::Content-->
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
@@ -23,7 +23,7 @@
                                 </div>
                                 <!--end::Info-->
                                 <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.total-orders')}}</span>
+                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('total-orders')}}</span>
                                 <!--end::Subtitle-->
                             </div>
                             <!--end::Title-->
@@ -40,7 +40,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.Completed')}}
+                                        {{ __('Completed')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -57,7 +57,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.Accepted')}}
+                                        {{ __('Accepted')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -74,7 +74,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.Pending')}}
+                                        {{ __('Pending')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -91,7 +91,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.Ready')}}
+                                        {{ __('Ready')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -107,7 +107,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.Received by restaurant')}}
+                                        {{ __('Received by restaurant')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -124,7 +124,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.Cancelled')}}
+                                        {{ __('Cancelled')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -161,7 +161,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.not_upload_register_files')}}
+                                        {{ __('not_upload_register_files')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -178,7 +178,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.live')}}
+                                        {{ __('live')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -196,7 +196,7 @@
                                     <!--end::Bullet-->
                                     <!--begin::Label-->
                                     <div class="text-gray-500 flex-grow-1 me-4">
-                                        {{ __('messages.not_live')}}
+                                        {{ __('not_live')}}
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Stats-->
@@ -226,7 +226,7 @@
                                 <div class="d-flex align-items-center">
                                     <!--begin::Currency-->
                                     <span
-                                        class="fs-4 fw-bold text-gray-400 me-1 align-self-start">{{ __('messages.sar')}}</span>
+                                        class="fs-4 fw-bold text-gray-400 me-1 align-self-start">{{ __('sar')}}</span>
                                     <!--end::Currency-->
                                     <!--begin::Amount-->
                                     <span
@@ -251,7 +251,7 @@
                                 </div>
                                 <!--end::Info-->
                                 <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.average-daily-sales')}}</span>
+                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('average-daily-sales')}}</span>
                                 <!--end::Subtitle-->
                             </div>
                             <!--end::Title-->
@@ -276,7 +276,7 @@
                                 <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{$customers}}</span>
                                 <!--end::Amount-->
                                 <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('messages.new-customers-this-month')}}</span>
+                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('new-customers-this-month')}}</span>
                                 <!--end::Subtitle-->
                             </div>
                             <!--end::Title-->
@@ -285,7 +285,7 @@
                         <!--begin::Card body-->
                         {{-- <div class="card-body d-flex flex-column justify-content-end pe-0">
                             <!--begin::Title-->
-                            <span class="fs-6 fw-boldest text-gray-800 d-block mb-2">{{ __('messages.todays-heroes')}}</span>
+                            <span class="fs-6 fw-boldest text-gray-800 d-block mb-2">{{ __('todays-heroes')}}</span>
                             <!--end::Title-->
                             <!--begin::Users group-->
                             <div class="symbol-group symbol-hover flex-nowrap">
@@ -342,8 +342,8 @@
                         <div class="card-header py-5">
                             <!--begin::Title-->
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bolder text-dark">{{ __('messages.sales-this-month')}}</span>
-                                <span class="text-gray-400 mt-1 fw-bold fs-6">{{ __('messages.users-from-all-channels')}}</span>
+                                <span class="card-label fw-bolder text-dark">{{ __('sales-this-month')}}</span>
+                                <span class="text-gray-400 mt-1 fw-bold fs-6">{{ __('users-from-all-channels')}}</span>
                             </h3>
                             <!--end::Title-->
                         </div>
@@ -354,7 +354,7 @@
                             <div class="px-9 mb-5">
                                 <!--begin::Statistics-->
                                 <div class="d-flex mb-2">
-                                    <span class="fs-4 fw-bold text-gray-400 me-1">{{ __('messages.sar')}}</span>
+                                    <span class="fs-4 fw-bold text-gray-400 me-1">{{ __('sar')}}</span>
                                     <span
                                         class="fs-2hx fw-bolder text-gray-800 me-2 lh-1 ls-n2">14,094</span>
                                 </div>

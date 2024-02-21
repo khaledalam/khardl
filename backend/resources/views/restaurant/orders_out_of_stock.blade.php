@@ -1,6 +1,6 @@
 @extends('layouts.restaurant-sidebar')
 
-@section('title', __('messages.products-out-of-stock'))
+@section('title', __('products-out-of-stock'))
 
 @section('content')
 
@@ -53,7 +53,7 @@
                                                                     </svg>
                                                                 </span>
                                                                     <!--end::Svg Icon-->
-                                                                    <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('messages.search')}}" />
+                                                                    <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('search')}}" />
                                                                 </div>
                                                                 <!--end::Search-->
                                                             </div>
@@ -61,7 +61,7 @@
 
                                                         </div>
                                                         <!--end::Card header-->
-                                                        <a href="#" class="btn btn-sm btn-khardl">{{__('messages.search')}}</a>
+                                                        <a href="#" class="btn btn-sm btn-khardl">{{__('search')}}</a>
                                                     </div>
                                                     <!--end::Toolbar-->
                                                 </div>
