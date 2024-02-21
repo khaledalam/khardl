@@ -101,7 +101,7 @@
     function showAlert(type, messages) {
         Swal.fire({
             icon: type,
-            title: '<ul><li>' + join('</li><li>') + '</li></ul><br>',
+            title: '<ul><li>' + messages.join('</li><li>') + '</li></ul><br>',
             showConfirmButton: true,
             timer: 900000000
         });
