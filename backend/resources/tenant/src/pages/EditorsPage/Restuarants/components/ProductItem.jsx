@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import { getCartItemsCount } from "../../../../redux/NewEditor/categoryAPISlice";
 import cartImg from "../../../../assets/cartLgIcon.svg";
 
+
 const ProductItem = ({
   id,
   imgSrc,
