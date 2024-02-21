@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Database\Factories\PromoterFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Promoter extends Model
 {
+    use HasFactory;
     protected $table = "promoters";
     protected $fillable = [
         'name',
@@ -24,5 +27,9 @@ class Promoter extends Model
     }
     public function users(){
         return $this->hasMany(PromoterIpAddress::class);
+    }
+    protected static function newFactory()
+    {
+      return PromoterFactory::new();
     }
 }

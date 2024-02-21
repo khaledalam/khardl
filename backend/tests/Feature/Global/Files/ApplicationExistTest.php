@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Global;
+namespace Tests\Feature\Global\Files;
 
 use Tests\TestCase;
 
