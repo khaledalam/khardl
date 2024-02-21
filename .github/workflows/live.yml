@@ -26,9 +26,8 @@ jobs:
             with:
               server: ${{ secrets.PROD_FTP_SERVER }}
               username: ${{ secrets.PROD_FTP_USERNAME }}
-              password:
-                ${{ secrets.PROD_FTP_PASSWORD }}
-          - name: ⚙️ Apply Updates On Server
-            run: |
-              cd /home/khardl5/public_html/
-              ./deploy.sh
+              password: ${{ secrets.PROD_FTP_PASSWORD }}
+      - name: ⚙️ Apply Updates On Server
+        run: |
+          cd /home/khardl5/public_html/
+          ./deploy.sh

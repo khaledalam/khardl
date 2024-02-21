@@ -96,9 +96,8 @@ jobs:
           with:
             server: ${{ secrets.TESTING_FTP_SERVER }}
             username: ${{ secrets.TESTING_FTP_USERNAME }}
-            password:
-              ${{ secrets.TESTING_FTP_PASSWORD }}
-        - name: ⚙️ Apply Updates On Server
-          run: |
-            cd /home/khardl4test/public_html/
-            ./testing-deploy.sh
+            password: ${{ secrets.TESTING_FTP_PASSWORD }}
+    - name: ⚙️ Apply Updates On Server
+      run: |
+        cd /home/khardl4test/public_html/
+        ./testing-deploy.sh
