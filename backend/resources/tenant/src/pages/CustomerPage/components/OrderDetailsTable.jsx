@@ -1,7 +1,10 @@
 import React from "react"
 import Eyes from "./Eyes"
+import { useTranslation } from "react-i18next";
+
 
 const OrderDetailsTable = ({data = [], language}) => {
+  const { t } = useTranslation();
   const getCheckbox = (id) => {
     const checkbox_options_names =
       data && data.length > 0 && data[id]?.checkbox_options !== null
@@ -78,7 +81,7 @@ const OrderDetailsTable = ({data = [], language}) => {
                 </td>
                 <td>
                   <h3 className=''>
-                    SAR {order?.price + order?.options_price}
+                  {t('SAR')} {order?.price + order?.options_price}
                   </h3>
                 </td>
                 <td>

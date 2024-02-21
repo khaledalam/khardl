@@ -19,9 +19,9 @@ const NavbarCustomer = () => {
 
   const fetchCartData = async () => {
     try {
-      const cartResponse = await AxiosInstance.get(`carts`)
+      const cartResponse = await AxiosInstance.get(`carts/count`);
       if (cartResponse.data) {
-        const count = cartResponse.data?.data?.items?.length || 0;
+        const count = cartResponse.data?.data?.count || 0;
         dispatch(getCartItemsCount(count));
         setCartItemsCount(count);
       }
@@ -30,6 +30,7 @@ const NavbarCustomer = () => {
       console.log(error)
     }
   }
+  
   useEffect(() => {
   
     fetchCartData().then(() => {

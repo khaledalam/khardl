@@ -103,12 +103,6 @@ const CartPage = () => {
   }, [])
 
 
-  if (isloading) {
-    return <LoadingSpinner />
-  }
-
-
-
   return (
     <>
       <Helmet>
@@ -123,6 +117,7 @@ const CartPage = () => {
       <div className='w-[98%] mx-auto mt-14'>
         <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
           <CartHeader styles={restuarantStyle} />
+          {/* {isloading?<LoadingSpinner />:null} */}
           {(!cartItems || cartItems.length === 0) && !isloading ? (
             <div className='h-[40vh] w-full flex items-center justify-center'>
               <div className='w-1/2 mx-auto flex flex-col items-center justify-center gap-6'>
@@ -161,6 +156,7 @@ const CartPage = () => {
           )}
         </div>
       </div>
+        
     </>
   )
 }

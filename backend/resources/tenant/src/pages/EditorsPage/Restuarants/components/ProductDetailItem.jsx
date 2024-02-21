@@ -38,7 +38,7 @@ const ProductDetailItem = ({
           <label className='label cursor-pointer flex items-center justify-between '>
             <p className='text-sm'>{label}</p>
             <div className='flex flex-row items-center gap-2 '>
-              <span className='label-text'>+ SAR {price}</span>
+              <span className='label-text'>+ {t('SAR')}&nbsp;{price}</span>
               <input
                 id={id}
                 type={isRadio ? "radio" : "text"}

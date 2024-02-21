@@ -27,9 +27,9 @@ const CustomerOrder = () => {
     (state) => state.customerAPI.ordersMetadata
   )
 
-  useEffect(() => {
-    fetchOrderPerpage().then(() => {})
-  }, [])
+  // useEffect(() => {
+  //   fetchOrderPerpage().then(() => {})
+  // }, [])
 
   const fetchOrderPerpage = async () => {
     try {

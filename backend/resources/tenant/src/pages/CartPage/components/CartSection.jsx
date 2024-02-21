@@ -26,7 +26,6 @@ const CartSection = ({cartItems}) => {
       console.log(error);
     }
   };
-console.log("cartItemsData",useSelector((state)=>state.categoryAPI.cartItemsData))
   return (
     <div
       style={{borderColor: restuarantStyle?.categoryDetail_cart_color}}

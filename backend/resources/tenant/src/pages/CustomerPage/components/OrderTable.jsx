@@ -74,7 +74,7 @@ const OrderTable = ({data}) => {
                     </td>
                     <td>
                       <h3 className='font-normal'>
-                        <span className='text-xs mr-1'>SAR</span>
+                        <span className='text-xs mr-1'>{t('SAR')}</span>
                         <span className='text-[1rem] text-[var(--customer)]'>
                           {order.total}
                         </span>

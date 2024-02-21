@@ -38,7 +38,7 @@ const CustomerProfile = () => {
     try {
       const profileResponse = await AxiosInstance.get(`user`)
 
-      console.log("profileResponse >>>", profileResponse.data)
+      console.log("profileResponse >>>PROFILE", profileResponse.data)
       if (profileResponse.data) {
         setFirstName(profileResponse.data?.data?.firstName ?? t("N/A"))
         userProfileInfo["firstName"] = profileResponse.data?.data?.firstName
@@ -121,15 +121,13 @@ const CustomerProfile = () => {
     }
   }
 
-  useEffect(() => {
-    if (saveProfileChange) {
-      handleReset()
-    }
-  }, [saveProfileChange])
+  // useEffect(() => {
+  //   if (saveProfileChange) {
+  //     handleReset()
+  //   }
+  // }, [saveProfileChange])
 
-  const handleReset = () => {
-    fetchProfileData()
-  }
+
   console.log("isDisabled", isDisabled)
   return (
     <div className='p-6'>
@@ -180,7 +178,7 @@ const CustomerProfile = () => {
       <div className='flex w-full items-center justify-end mt-10 mb-4'>
         <div className='flex items-center gap-5'>
           <button
-            onClick={handleReset}
+            onClick={fetchProfileData}
             className='w-[85px] p-2 !border border-solid border-[var(--customer)] bg-white outline-none rounded-lg'
           >
             {t("Cancel")}

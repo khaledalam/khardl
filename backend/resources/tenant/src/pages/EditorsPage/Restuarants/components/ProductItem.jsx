@@ -27,12 +27,13 @@ import {
 import { useAuthContext } from "../../../../components/context/AuthContext";
 import { useForm } from "react-hook-form";
 import { getCartItemsCount } from "../../../../redux/NewEditor/categoryAPISlice";
-import cartHeaderImg from "../../../../assets/cartBoldIcon.svg";
+import cartImg from "../../../../assets/cartLgIcon.svg";
 
 const ProductItem = ({
   id,
   imgSrc,
   name,
+  description,
   caloryInfo,
   amount,
   cartBgcolor,
@@ -269,18 +270,7 @@ const ProductItem = ({
   };
 
   const finalPrice = qtyCount * totalPrice;
-
-  // const fetchCartData = async () => {
-  //   try {
-  //     const cartResponse = await AxiosInstance.get(`carts`);
-  //     if (cartResponse.data) {
-  //       // dispatch(getCartItemsCount(cartResponse.data?.data?.items?.length));
-  //     }
-  //   } catch (error) {
-  //     // toast.error(`${t('Failed to send verification code')}`)
-  //     console.log(error);
-  //   }
-  // };
+  function closeModal() {document.getElementById(id).close();  }
 
   const handleAddToCart = async () => {
     try {
@@ -298,10 +288,10 @@ const ProductItem = ({
       const response = await AxiosInstance.post(`/carts`, payload);
 
       console.log("response ", response);
+      closeModal()
       if (response?.data) {
         toast.success(`${t("Item added to cart")}`);
         setGotoCart(true);
-        // fetchCartData();
         setSpinner(false);
       }
     } catch (error) {
@@ -404,6 +394,18 @@ const ProductItem = ({
             >
               {name}
             </h3>
+
+            <h3
+              style={{
+                fontSize: fontSize ? fontSize : 16,
+                color: textColor,
+                fontWeight: fontWeight ? fontWeight : 400,
+              }}
+              className="text-[1rem]"
+            >
+              {description}
+            </h3>
+
             <p
               style={{
                 color: textColor,
@@ -463,7 +465,7 @@ const ProductItem = ({
               style={{ color: amountColor ? amountColor : "red" }}
               className="font-bold"
             >
-              SAR {amount}
+              {t('SAR')} {amount}
             </h3>
           </div>
         </div>
@@ -535,6 +537,8 @@ const ProductItem = ({
                 </div>
                 <div className="flex flex-col items-center justify-center gap-2">
                   <h3 className="text-[17px] font-bold">{name}</h3>
+                  <h3 className="text-[17px]">{description}</h3>
+
                   <div className="flex flex-row items-center gap-2">
                     <img src={imgHotFire} alt="hot" className="" />
                     <span className="text-[11px]">{caloryInfo}</span>
@@ -725,7 +729,7 @@ const ProductItem = ({
                     }}
                     className="w-[45px] h-[45px] relative flex items-center justify-center rounded-lg cursor-pointer"
                   >
-                    <img src={cartHeaderImg} alt={"cart"} className="" style={{filter:'invert(1)'}} />
+                    <img src={cartImg} alt={"cart"} className="p-2" style={{filter:'invert(1)'}} />
                   </div>
 
                   {categories?.length > 0 ? (
