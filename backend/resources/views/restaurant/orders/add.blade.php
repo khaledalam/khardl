@@ -50,7 +50,7 @@
                                                 <label class="required form-label">{{ __('Phone Number') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="phone" type="number" name="phone" placeholder="{{ __('Phone') }}" class="form-control mb-2" value="" required />
+                                                <input id="phone" type="number" name="phone" placeholder="{{ __('Phone') }}" class="form-control mb-2" value="{{ old('phone') }}" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -58,7 +58,7 @@
                                                 <label class="required form-label">{{ __('First name') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="first_name" type="text" name="first_name" placeholder="{{ __('First name') }}" class="form-control mb-2" value="" required />
+                                                <input id="first_name" type="text" name="first_name" placeholder="{{ __('First name') }}" class="form-control mb-2" value="{{ old('first_name') }}" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -66,7 +66,7 @@
                                                 <label class="form-label">{{ __('Last name') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="last_name" type="text" name="last_name" placeholder="{{ __('Last name') }}" class="form-control mb-2" value="" />
+                                                <input id="last_name" type="text" name="last_name" placeholder="{{ __('Last name') }}" class="form-control mb-2" value="{{ old('last_name') }}" />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -76,7 +76,11 @@
                                                 <!--begin::Select2-->
                                                 <select class="form-select mb-2" data-hide-search="true" data-placeholder="Select Type" name="delivery_type_id" required>
                                                     @foreach ($deliveryTypes as $type)
-                                                    <option value="{{ $type->id }}">{{ __(''.$type->name) }}</option>
+                                                    <option value="{{ $type->id }}"
+                                                        @if (old('delivery_type_id') == $type->id)
+                                                            {{ 'selected' }}
+                                                        @endif
+                                                        >{{ __(''.$type->name) }}</option>
                                                     @endforeach
                                                 </select>
                                                 <!--end::Select2-->
@@ -88,7 +92,7 @@
                                                 <label class="required form-label">{{ __('Shipping address') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="" required />
+                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -98,7 +102,7 @@
                                                 <label class="form-label">{{ __('Order Notes') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <textarea name="order_notes" placeholder="{{ __('Notes') }}" class="form-control mb-2" value=""></textarea>
+                                                <textarea name="order_notes" placeholder="{{ __('Notes') }}" class="form-control mb-2" >{{ old('order_notes') }}</textarea>
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -147,7 +151,10 @@
                                             <select id="branchSelect" name="branch_id" required class="form-select" style="width: 300px;">
                                                 <option>{{ __('Select branch') }}</option>
                                                 @foreach ($branches as $branch)
-                                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                <option value="{{ $branch->id }}"
+                                                    @if (old('branch_id')==$branch->id)
+                                                        {{ 'selected' }}
+                                                    @endif>{{ $branch->name }}</option>
                                                 @endforeach
                                             </select>
                                             <div class="separator"></div>
@@ -363,24 +370,23 @@
                     let innerOptions = selectedProduct.dropdown_input_names[index];
                     let isRequired = selectedProduct.dropdown_required[index] == "true";
                     if (isRequired) haveRequiredFiled = true;
+                    console.log(selectedProduct.dropdown_required[index],isRequired,innerOptions);
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
-                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}][dropdown_input][${index}]">
+                    optionsHTML += `
+                    <select class="form-select" name="product_options[${selectedProduct.id}][dropdown_input][${index}]">
                         <option value="">{{ __('Select option') }}</option>`;
                     innerOptions.forEach((option, innerIndex) => {
-                        optionsHTML += `
-                            <option value="${innerIndex}">${getLangName(option)}</option>
-                            `;
+                        optionsHTML += `<option value="${innerIndex}">${getLangName(option)}</option>`;
                     });
                     optionsHTML += `</select>`;
-                    optionsHTML += `
-                    </div>`;
+                    optionsHTML += `</div>`;
                 });
             }
             if (haveRequiredFiled) {
                 console.log('test');
-                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
-                elementToRemove.classList.add('required');
+                var addRequired = document.getElementById(`options_${selectedProduct.id}`);
+                addRequired.classList.add('required');
             }
             return `
         <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}" tabindex="-1" aria-hidden="true">
@@ -415,7 +421,6 @@
 
             // Append the selected product to the table
             var tableRow = TableRow(selectedProduct);
-            /* var ModalRow = ModalRow(selectedProduct); */
             $('#product_table').on('input', `input[name="products[${selectedProduct.id}][]"]`, function() {
                 // Update the total cost when the quantity changes
                 var oldTotal = productTotals[selectedProduct.id] || 0;
@@ -531,6 +536,58 @@
         function updateTotalCost() {
             $('#kt_ecommerce_edit_order_total_price').text(totalCost.toFixed(2));
         }
+        function initializeProducts(branch_id){
+            return $('#productSelect').select2({
+                    placeholder: "{{ __('Search for a product...') }}"
+                    , ajax: {
+                        url: '/search-products?branch_id=' + branch_id
+                        , dataType: 'json'
+                        , delay: 250
+                        , processResults: function(data) {
+                            return {
+                                results: $.map(data.data, function(product) {
+                                    return {
+                                        text: product.name
+                                        , id: product.id
+                                        , data: product
+                                    };
+                                })
+                            };
+                        }
+                        , error: function(xhr, textStatus, errorThrown) {
+                            console.error('Error fetching product details:', errorThrown);
+                        }
+                        , cache: true
+                    }
+                });
+        }
+        function getOldProductData() {
+            var products = {!! json_encode(old('products')) !!};
+            if(products) {
+                Object.keys(products).forEach(key => {
+                    $.ajax({
+                        url: `/get-product-by-id/${key}`,
+                        type: 'GET',
+                        success: function(data) {
+                            var product = data.data;
+                            console.log(product);
+                            var tableRow = TableRow(product);
+                            $('#product_table').append(tableRow);
+                            var modalRow = ModalRow(product);
+                            $('#modal_here').append(modalRow);
+                            totalCost += parseFloat(product.price);
+                            productTotals[product.id] = parseFloat(product.price);
+                            productQuantity[product.id] = 1;
+                            OptionsPrice[product.id] = 0;
+                        },
+                        error: function(xhr, status, error) {
+                            console.error( error);
+                        }
+                    });
+                });
+            }
+        }
+        getOldProductData();
     });
 
 </script>

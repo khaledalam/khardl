@@ -87,7 +87,6 @@ class OrderService
                     'selectedRadio' => $selectedRadio,
                     'selectedDropdown' => $selectedDropdown,
                 ]);
-                $new_cart->add($addItemToCartRequest);
             }
         }
         return $new_cart;
@@ -116,6 +115,10 @@ class OrderService
             ->get();
         logger($items);
         return $this->sendResponse(ItemResource::collection($items), '');
+    }
+    public function getProduct($request, Item $item)
+    {
+        return $this->sendResponse(new ItemResource($item), '');
     }
     private function checkUser($request)
     {
