@@ -12,10 +12,23 @@ concurrency:
 
 jobs:
   Deploy:
-    runs-on: [self-hosted]
+    runs-on: [ self-hosted ]
     if: github.ref == 'refs/heads/production'
     steps:
-      - name: Deploy
-        run: |
-          cd /home/khardl5/public_html/
-          ./deploy.sh
+      - name: 🎉 Deploy
+        runs-on: ubuntu-latest
+        environment: Testing
+        steps:
+          - name: 🚚 Get latest code
+            uses: actions/checkout@v3
+          - name: 📂 Sync files
+            uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+            with:
+              server: ${{ secrets.PROD_FTP_SERVER }}
+              username: ${{ secrets.PROD_FTP_USERNAME }}
+              password:
+                ${{ secrets.PROD_FTP_PASSWORD }}
+          - name: ⚙️ Apply Updated On Server
+            run: |
+              cd /home/khardl5/public_html/
+              ./deploy.sh
