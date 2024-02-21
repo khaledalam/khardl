@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class GlobalPromoterController extends Controller
 {
-    private const AttemptsCount = 10;
+    public const AttemptsCount = 10;
     public function index(Request $request)
     {
         if($this->haveFailedAttempts(self::AttemptsCount)){
