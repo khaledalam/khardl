@@ -198,7 +198,7 @@ const Herosection = ({ isMobile, categories }) => {
             isMobile ? "overflow-x-scroll hide-scroll px-4" : ""
           } `}
         >
-          <div className={`flex items-center w-full gap-8 my-5 `}>
+          <div className={`flex items-center w-full gap-8 my-5 category-scroller-section`}>
             {categories && categories.length > 0 ? (
               categories.map((category, i) => (
                 <CategoryItem

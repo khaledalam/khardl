@@ -174,3 +174,15 @@ body::-webkit-scrollbar-track {
   text-overflow: ellipsis;
   max-width:80px;
 }
+.category-scroller-section{
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  min-height: 130px;
+  padding: 0 15px;
+}
+.category-scroller-section::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
