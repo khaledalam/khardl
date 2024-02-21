@@ -295,6 +295,8 @@
                 data-bs-toggle="modal"
                 id="options_${selectedProduct.id}"
                 data-bs-target="#kt_modal_select_options_${selectedProduct.id}"></i>
+                <i class="bi bi-trash btn-sm btn btn-danger remove-product-btn"
+                data-product="${selectedProduct.id}"></i>
             </td>
            </tr>
         `;
@@ -419,11 +421,11 @@
                 var oldTotal = productTotals[selectedProduct.id] || 0;
                 // Update the total cost by subtracting the old total and adding the new total
                 var quantity = $(this).val();
-                if(quantity > 2){
+/*                 if(quantity > 2){
                     var optionPrice = (OptionsPrice[selectedProduct.id] / (quantity - 1));
                 }else {
-                    var optionPrice = OptionsPrice[selectedProduct.id];
-                }
+                } */
+                var optionPrice = OptionsPrice[selectedProduct.id];
                 console.log(optionPrice);
                 var productTotal = (parseFloat(selectedProduct.price) + optionPrice)* quantity;
                 console.log(selectedProduct.id, totalCost);
@@ -433,6 +435,7 @@
                 // Update the old total for this product
                 productTotals[selectedProduct.id] = productTotal;
                 productQuantity[selectedProduct.id] = quantity;
+                console.log(productTotals);
                 updateTotalCost();
             });
             // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
@@ -494,7 +497,8 @@
 
             // Update the total cost
             totalCost += parseFloat(selectedProduct.price);
-            productTotals[selectedProduct.id] = selectedProduct.price;
+            productTotals[selectedProduct.id] = parseFloat(selectedProduct.price);
+            console.log(productTotals);
             productQuantity[selectedProduct.id] = 1;
             OptionsPrice[selectedProduct.id] = 0;
             updateTotalCost();
@@ -513,6 +517,15 @@
             totalCost = 0;
             updateTotalCost();
 
+        });
+        $('#product_table').on('click', '.remove-product-btn', function() {
+            var productId = $(this).data('product');
+            var productTotal = productTotals[productId];
+            console.log(productTotal);
+            totalCost -= parseFloat(productTotal);
+            delete productTotals[productId];
+            $(this).closest('tr').remove();
+            updateTotalCost();
         });
 
         function updateTotalCost() {
