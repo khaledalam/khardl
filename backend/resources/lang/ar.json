@@ -999,5 +999,7 @@
     "Expiry date":"تاريخ الانتهاء",
     "WORK":"العمل",
     "Bank Issuing date":"تاريخ إصدار البنك",
-    "Legal entity number":"رقم الكيان القانوني"
+    "Legal entity number":"رقم الكيان القانوني",
+    "This branch does not support delivery":"هذا الفرع لا يدعم التوصيل",
+    "Order delivery is not enabled in restaurant settings":"توصيل الطلبات غير مفعل في اعدادات المطعم"
 }
