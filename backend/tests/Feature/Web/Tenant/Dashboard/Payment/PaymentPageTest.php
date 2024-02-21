@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Web\Tenant\Auth\Dashboard\Payment;
 
+use App\Models\ROSubscription;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\RestaurantUser;
@@ -33,65 +34,86 @@ class PaymentPageTest extends TenantTestCase
     {
         return Order::factory()->create($options);
     }
+    public function createSubscription($options = null): ROSubscription
+    {
+        return ROSubscription::factory()->create($options);
+    }
     public function updateSetting($options)
     {
         $setting = Setting::first();
         $setting->update($options);
         return $setting->refresh();
     }
-     public function test_payment_page_exist(): void
-     {
-         $response = $this->get(self::path);
-         $response->isOk();
-     }
-     public function test_payment_page_redirection(): void
-     {
-         $order = $this->createOrder([
-             'payment_method_id' => PaymentMethod::factory(['name' => 'Online'])
-         ]);
-         $response = $this->get(self::path);
-         $response->assertSee('Redirecting to');
-         $response->assertSee('tap-create-lead');
-     }
-      public function test_payment_has_orders(): void
-      {
-          $order = $this->createOrder([
-              'payment_method_id' => PaymentMethod::factory(['name' => 'Online'])
-          ]);
-          $this->updateSetting([
-              'lead_response' => '{"data:{1}"}',
-              'merchant_id' => fake()->name,
-              'lead_id' => fake()->name,
-          ]);
-          $response = $this->get(self::path);
-          $response->isOk();
-          $response->assertSee($order->shipping_address);
-          $response->assertSee(__('Orders'));
-      }
-      public function test_payment_has_bank_information(): void
-      {
-          $this->updateSetting([
-              'lead_response' => '{"data:{1}"}',
-              'merchant_id' => fake()->name,
-              'lead_id' => fake()->name,
-          ]);
-          $response = $this->get(self::path);
-          $response->assertSee(__('Tab information'));
-          $response->assertSee(__('Bank information'));
-          $response->assertSee(__('Your information'));
-      }
+    public function test_payment_page_exist(): void
+    {
+        $response = $this->get(self::path);
+        $response->isOk();
+    }
+    public function test_payment_page_redirection(): void
+    {
+        $order = $this->createOrder([
+            'payment_method_id' => PaymentMethod::factory(['name' => 'Online'])
+        ]);
+        $response = $this->get(self::path);
+        $response->assertSee('Redirecting to');
+        $response->assertSee('tap-create-lead');
+    }
+    public function test_payment_has_orders(): void
+    {
+        $order = $this->createOrder([
+            'payment_method_id' => PaymentMethod::factory(['name' => 'Online'])
+        ]);
+        $this->updateSetting([
+            'lead_response' => '{"data:{1}"}',
+            'merchant_id' => fake()->name,
+            'lead_id' => fake()->name,
+        ]);
+        $response = $this->get(self::path);
+        $response->isOk();
+        $response->assertSee($order->shipping_address);
+        $response->assertSee(__('Orders'));
+    }
+    public function test_payment_has_bank_information(): void
+    {
+        $this->updateSetting([
+            'lead_response' => '{"data:{1}"}',
+            'merchant_id' => fake()->name,
+            'lead_id' => fake()->name,
+        ]);
+        $response = $this->get(self::path);
+        $response->assertSee(__('Tab information'));
+        $response->assertSee(__('Bank information'));
+        $response->assertSee(__('Your information'));
+    }
     public function test_payment_lead_response(): void
     {
         $this->updateSetting([
-            'lead_response' => $this->constantLeadResponse(),
+            'lead_response' => json_decode($this->constantLeadResponse()),
             'merchant_id' => fake()->name,
             'lead_id' => fake()->name,
         ]);
         $response = $this->get(self::path);
         $setting = Setting::first();
-        $tap_response = json_decode($setting->lead_response,true);
+        $tap_response = $setting->lead_response;
         $this->assertNotEquals($tap_response['id'], null);
         $this->assertNotEquals($tap_response['brand'], null);
+        $response->assertSee($tap_response['id']);
+        $response->assertSee($tap_response['brand']['name']['ar']);
+        $response->assertSee($tap_response['brand']['name']['ar']);
+        $response->assertSee($tap_response['entity']['license']['number']);
+        $response->assertSee($tap_response['entity']['license']['documents'][1]['number']);
+        $response->assertSee($tap_response['entity']['license']['documents'][1]['issuing_date']);
+        $response->assertSee($tap_response['entity']['license']['documents'][1]['expiry_date']);
+        $response->assertSee($tap_response['user']['name']['first']);
+        $response->assertSee($tap_response['user']['email'][0]['address']);
+        $response->assertSee($tap_response['user']['phone'][0]['country_code']);
+        $response->assertSee($tap_response['user']['phone'][0]['number']);
+        $response->assertSee($tap_response['wallet']['bank']['name']);
+        $response->assertSee($tap_response['wallet']['bank']['account']['iban']);
+        $response->assertSee($tap_response['wallet']['bank']['account']['number']);
+        $response->assertSee($tap_response['wallet']['bank']['account']['name']);
+        $response->assertSee($tap_response['wallet']['bank']['documents'][0]['number']);
+        $response->assertSee($tap_response['wallet']['bank']['documents'][0]['issuing_date']);
     }
     private function constantLeadResponse()
     {
@@ -213,6 +235,24 @@ class PaymentPageTest extends TenantTestCase
             }
         }';
     }
+    public function test_has_subscription(): void
+    {
+        $this->updateSetting([
+            'lead_response' => $this->constantLeadResponse(),
+            'merchant_id' => fake()->name,
+            'lead_id' => fake()->name,
+        ]);
+        //Assign subscription
+        $subscription = $this->createSubscription([
+            'user_id' => $this->user->id
+        ]);
+        $response = $this->get(self::path);
+        $response->assertSee($subscription->number_of_branches);
+        $response->assertSee($subscription->amount);
+        $response->assertSee($subscription->subscription->name);
+        $response->assertSee($subscription->start_at->format('Y-m-d'));
+        $response->assertSee($subscription->end_at->format('Y-m-d'));
 
+    }
 
 }
