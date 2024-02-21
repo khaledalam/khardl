@@ -1,5 +1,5 @@
 import React, {Fragment} from "react"
-
+import { useTranslation } from "react-i18next";
 const ProductDetailItem = ({
   price,
   label,
@@ -12,6 +12,7 @@ const ProductDetailItem = ({
   isDropDown,
   options,
 }) => {
+  const { t } = useTranslation();
   return (
     <Fragment>
       {isCheckbox && (

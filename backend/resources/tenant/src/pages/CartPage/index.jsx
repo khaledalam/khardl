@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet"
-import { setCartItemsData } from "../../redux/NewEditor/categoryAPISlice"
+import { setCartItemsData, getCartItemsCount } from "../../redux/NewEditor/categoryAPISlice"
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice"
 import { updateCustomerAddress } from "../../redux/NewEditor/customerSlice"
 
@@ -47,6 +47,7 @@ const CartPage = () => {
           setAppliedCoupon(cartResponse.data.data.coupon)
         }
         dispatch(setCartItemsData(cartResponse.data?.data.items))
+        dispatch(getCartItemsCount(cartResponse.data?.data.items.length))
         setPaymentMethodsData(cartResponse.data?.data?.payment_methods)
         setDeliveryTypesData(cartResponse.data?.data?.delivery_types)
         setAddress(cartResponse.data?.data?.address ?? t("N/A"))

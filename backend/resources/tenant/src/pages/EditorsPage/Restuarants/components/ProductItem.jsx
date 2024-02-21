@@ -479,8 +479,8 @@ const ProductItem = ({
             checkboxItems[0]?.length > 0 ||
             radioItems[0]?.length > 0 ||
             dropdownItems[0]?.length > 0
-              ? "h-[650px]"
-              : "h-[500px]"
+              ? "h-[700px]"
+              : "h-[550px]"
           } flex flex-col justify-end`}
         >
           <form method="dialog">
@@ -525,8 +525,8 @@ const ProductItem = ({
                   checkboxItems[0]?.length > 0 ||
                   radioItems[0]?.length > 0 ||
                   dropdownItems[0]?.length > 0
-                    ? "h-[500px]"
-                    : "h-[380px]"
+                    ? "h-[550px]"
+                    : "h-[430px]"
                 } `}
               >
                 <div className="w-[216px] h-[182px] mt-[-5.8rem] mx-auto bg-neutral-100 rounded-full p-1">
