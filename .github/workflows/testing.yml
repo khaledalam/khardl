@@ -86,7 +86,6 @@ jobs:
     if: github.ref == 'refs/heads/development'
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-    environment: Testing
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
