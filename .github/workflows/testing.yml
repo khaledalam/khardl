@@ -98,6 +98,6 @@ jobs:
   Deploy-Apply:
     needs: [Deploy]
     name: ⚙️ Apply Updates On Server
-      run: |
-        cd /home/khardl4test/public_html/
-        ./testing-deploy.sh
+    run: |
+      cd /home/khardl4test/public_html/
+      ./testing-deploy.sh

@@ -28,6 +28,6 @@ jobs:
   Deploy-Apply:
     needs: [ Deploy ]
     name: ⚙️ Apply Updates On Server
-      run: |
-        cd /home/khardl5/public_html/
-        ./deploy.sh
+    run: |
+      cd /home/khardl5/public_html/
+      ./deploy.sh
