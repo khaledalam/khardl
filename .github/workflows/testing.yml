@@ -96,6 +96,7 @@ jobs:
           username: ${{ secrets.TESTING_FTP_USERNAME }}
           password: ${{ secrets.TESTING_FTP_PASSWORD }}
   Deploy-Apply:
+    runs-on: [self-hosted]
     needs: [Deploy]
     steps:
       - name: ⚙️ Apply Updates On Server

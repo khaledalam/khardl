@@ -26,6 +26,7 @@ jobs:
           username: ${{ secrets.PROD_FTP_USERNAME }}
           password: ${{ secrets.PROD_FTP_PASSWORD }}
   Deploy-Apply:
+    runs-on: [self-hosted]
     needs: [ Deploy ]
     steps:
       - name: ⚙️ Apply Updates On Server
