@@ -6,6 +6,7 @@ namespace Tests\Feature\API;
 use App\Models\Tenant\RestaurantUser;
 use Spatie\Permission\Models\Role;
 use Tests\TenantTestCase;
+use Tests\TestUtils;
 
 
 class DriverBase extends TenantTestCase
@@ -16,6 +17,7 @@ class DriverBase extends TenantTestCase
 
     public function setUp(): void
     {
+        TestUtils::setTestingTenant();
         parent::setUp();
         $this->driver = RestaurantUser::factory()->create();
         $role = Role::firstOrCreate(['name' => 'Driver']);

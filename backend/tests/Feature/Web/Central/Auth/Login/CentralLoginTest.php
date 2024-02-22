@@ -10,12 +10,15 @@ use App\Models\User;
 use Illuminate\Support\Facades\Queue;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
+use Tests\TestUtils;
 
 
 class CentralLoginTest extends TestCase
 {
     public function setUp():void
     {
+        TestUtils::setTestingCentral();
+
         parent::setUp();
         Queue::fake();
     }
