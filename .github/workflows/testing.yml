@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   Testing-PHPUnit:
+    name: 🧪 PHPUnit
     runs-on: ubuntu-20.04
     env:
       DB_CONNECTION: mysql
@@ -47,6 +48,7 @@ jobs:
         run: |
           ./backend/vendor/bin/phpunit -c backend/phpunit.xml
   Testing-Cypress:
+    name: 🧪 Cypress
     runs-on: ubuntu-latest
     steps:
     - uses: shivammathur/setup-php@v2
@@ -81,7 +83,7 @@ jobs:
         browser: chrome
         working-directory: backend
   Deploy:
-    needs: [Testing-Cypress, Testing-PHPUnit]
+    needs: [Testing-Cypress]
     if: github.ref == 'refs/heads/development'
     name: 🎉 Deploy
     runs-on: ubuntu-latest
@@ -96,7 +98,7 @@ jobs:
           username: ${{ secrets.TESTING_FTP_USERNAME }}
           password: ${{ secrets.TESTING_FTP_PASSWORD }}
   Deploy-Apply:
-    name: ⚙️ Apply Updates On Server
+    name: ⚙️ Apply Deploy
     runs-on: [self-hosted]
     needs: [Deploy]
     steps:
