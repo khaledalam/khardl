@@ -20,6 +20,8 @@ const NavbarRestuarant = () => {
   const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
   const [searchParams, setSearchParams] = useSearchParams();
   // const [cartItemsCount, setCartItemsCount] = useState(0);
+  const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
+
 
   const toggleTheMenu = () => {
     toggleMenu()
@@ -28,16 +30,20 @@ const NavbarRestuarant = () => {
     (state) => state.categoryAPI.cartItemsCount
   )
   const fetchCartData = async () => {
-    try {
-      const cartResponse = await AxiosInstance.get(`carts/count`);
-      if (cartResponse.data) {
-        const count = cartResponse.data?.data?.count || 0;
-        dispatch(getCartItemsCount(count));
-        // setCartItemsCount(count);
+    if (isLoggedIn == true) {
+      try {
+        const cartResponse = await AxiosInstance.get(`carts/count`);
+        if (cartResponse.data) {
+          const count = cartResponse.data?.data?.count || 0;
+          dispatch(getCartItemsCount(count));
+          // setCartItemsCount(count);
+        }
+      } catch (error) {
+        // toast.error(`${t('Failed to send verification code')}`)
+        console.log(error)
       }
-    } catch (error) {
-      // toast.error(`${t('Failed to send verification code')}`)
-      console.log(error)
+    } else {
+      console.log("user Unauthenticated")
     }
   }
   useEffect(() => {

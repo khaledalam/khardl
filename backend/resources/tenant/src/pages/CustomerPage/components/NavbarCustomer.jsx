@@ -19,21 +19,27 @@ const NavbarCustomer = () => {
   const cartItemsCount = useSelector(
     (state) => state.categoryAPI.cartItemsCount
   )
+  const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
+
   const fetchCartData = async () => {
-    try {
-      const cartResponse = await AxiosInstance.get(`carts/count`);
-      if (cartResponse.data) {
-        const count = cartResponse.data?.data?.count || 0;
-        dispatch(getCartItemsCount(count));
+    if (isLoggedIn == true) {
+      try {
+        const cartResponse = await AxiosInstance.get(`carts/count`);
+        if (cartResponse.data) {
+          const count = cartResponse.data?.data?.count || 0;
+          dispatch(getCartItemsCount(count));
+        }
+      } catch (error) {
+        // toast.error(`${t('Failed to send verification code')}`)
+        console.log(error)
       }
-    } catch (error) {
-      // toast.error(`${t('Failed to send verification code')}`)
-      console.log(error)
+    } else {
+      console.log("user Unauthenticated")
     }
   }
-  
+
   useEffect(() => {
-  
+
     fetchCartData().then(() => {
       console.log("fetched cart items count successfully")
     })
