@@ -26,10 +26,11 @@ jobs:
           username: ${{ secrets.PROD_FTP_USERNAME }}
           password: ${{ secrets.PROD_FTP_PASSWORD }}
   Deploy-Apply:
+    name: ⚙️ Apply Updates On Server
     runs-on: [self-hosted]
     needs: [ Deploy ]
     steps:
-      - name: ⚙️ Apply Updates On Server
+      - name: ⚙️ DB backup and App apply changes
         run: |
           cd /home/khardl5/public_html/
           ./deploy.sh
