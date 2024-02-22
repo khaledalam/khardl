@@ -93,7 +93,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          protocol: ftps
+          protocol: ftp
           server: ${{ secrets.TESTING_FTP_SERVER }}
           username: ${{ secrets.TESTING_FTP_USERNAME }}
           password: ${{ secrets.TESTING_FTP_PASSWORD }}
