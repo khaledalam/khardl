@@ -15,7 +15,6 @@ jobs:
     if: github.ref == 'refs/heads/production'
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-    environment: Production
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
