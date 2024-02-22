@@ -81,23 +81,23 @@ jobs:
         browser: chrome
         working-directory: backend
   Deploy:
-    runs-on: [self-hosted]
     needs: [Testing-Cypress, Testing-PHPUnit]
     if: github.ref == 'refs/heads/development'
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    environment: Testing
     steps:
-    - name: 🎉 Deploy
-      runs-on: ubuntu-latest
-      environment: Testing
-      steps:
-        - name: 🚚 Get latest code
-          uses: actions/checkout@v3
-        - name: 📂 Sync files
-          uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-          with:
-            server: ${{ secrets.TESTING_FTP_SERVER }}
-            username: ${{ secrets.TESTING_FTP_USERNAME }}
-            password: ${{ secrets.TESTING_FTP_PASSWORD }}
-    - name: ⚙️ Apply Updates On Server
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.TESTING_FTP_SERVER }}
+          username: ${{ secrets.TESTING_FTP_USERNAME }}
+          password: ${{ secrets.TESTING_FTP_PASSWORD }}
+  Deploy-Apply:
+    needs: [Deploy]
+    name: ⚙️ Apply Updates On Server
       run: |
         cd /home/khardl4test/public_html/
         ./testing-deploy.sh
