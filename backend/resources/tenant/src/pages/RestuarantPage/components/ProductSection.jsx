@@ -46,7 +46,8 @@ const ProductSection = ({ categories, isMobile }) => {
                                 key={product.id}
                                 valuekey={product.id}
                                 id={product.id}
-                                name={product.description}
+                                name={product.name}
+                                description={product.description}
                                 imgSrc={product.photo}
                                 amount={product.price}
                                 caloryInfo={product.calories}
@@ -176,7 +177,8 @@ const ProductSection = ({ categories, isMobile }) => {
                                 key={product.id}
                                 valuekey={product.id}
                                 id={product.id}
-                                name={product.description}
+                                name={product.name}
+                                description={product.description}
                                 imgSrc={product.photo}
                                 amount={product.price}
                                 caloryInfo={product.calories}

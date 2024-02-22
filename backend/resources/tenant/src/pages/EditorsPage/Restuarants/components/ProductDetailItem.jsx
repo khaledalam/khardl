@@ -1,5 +1,5 @@
 import React, {Fragment} from "react"
-
+import { useTranslation } from "react-i18next";
 const ProductDetailItem = ({
   price,
   label,
@@ -12,6 +12,7 @@ const ProductDetailItem = ({
   isDropDown,
   options,
 }) => {
+  const { t } = useTranslation();
   return (
     <Fragment>
       {isCheckbox && (
@@ -19,7 +20,7 @@ const ProductDetailItem = ({
           <label className='label cursor-pointer flex items-center justify-between'>
             <p className='text-sm'>{label}</p>
             <div className='flex flex-row items-center gap-2 '>
-              <span className='label-text'>+ SAR {price}</span>
+              <span className='label-text'>+ {t('SAR')}{price}</span>
               <input
                 id={id}
                 type={isCheckbox ? "checkbox" : "text"}
@@ -38,7 +39,7 @@ const ProductDetailItem = ({
           <label className='label cursor-pointer flex items-center justify-between '>
             <p className='text-sm'>{label}</p>
             <div className='flex flex-row items-center gap-2 '>
-              <span className='label-text'>+ SAR {price}</span>
+              <span className='label-text'>+ {t('SAR')}&nbsp;{price}</span>
               <input
                 id={id}
                 type={isRadio ? "radio" : "text"}

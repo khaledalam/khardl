@@ -52,17 +52,17 @@ export const CustomerPage = () => {
   }, [orderId])
 
   const fetchOrdersData = async () => {
-    try {
-      const ordersResponse = await AxiosInstance.get(`orders?items&item`)
+  try {
+  const ordersResponse = await AxiosInstance.get(`orders?items&item`)
 
-      console.log("ordersResponse >>>", ordersResponse.data)
-      if (ordersResponse.data) {
-        dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
-      }
+  console.log("ordersResponse >>>", ordersResponse.data)
+  if (ordersResponse.data) {
+  dispatch(updateOrderList(Object.values(ordersResponse?.data?.data)))
+  }
     } catch (error) {
-      console.log(error)
-    } finally {
-    }
+  console.log(error)
+  } finally {
+  }
   }
 
   // useEffect(() => {
@@ -70,21 +70,21 @@ export const CustomerPage = () => {
   // }, [])
 
   const fetchCardsData = async () => {
-    try {
-      const cardsResponse = await AxiosInstance.get(`cards`)
+  try {
+  const cardsResponse = await AxiosInstance.get(`cards`)
 
-      console.log("cardsResponse >>>", cardsResponse.data)
-      if (cardsResponse.data) {
-        dispatch(updateCardsList(Object.values(cardsResponse?.data?.data)))
-      }
+  console.log("cardsResponse >>>", cardsResponse.data)
+  if (cardsResponse.data) {
+  dispatch(updateCardsList(Object.values(cardsResponse?.data?.data)))
+  }
     } catch (error) {
-      console.log(error)
-    } finally {
-    }
+  console.log(error)
+  } finally {
+  }
   }
   useEffect(() => {
-    fetchOrdersData().then(() => {})
-    fetchCardsData().then(() => {})
+  fetchOrdersData().then(() => {})
+  fetchCardsData().then(() => {})
   }, [])
 
   return (

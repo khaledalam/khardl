@@ -11,13 +11,14 @@ import trashIcon from "../../../assets/trashBin.svg";
 import orderIcon from "../../../assets/orderPlace.svg";
 import { MdSend } from "react-icons/md";
 import Feedback from "./Feedback";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import AxiosInstance from "../../../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
 import './PaymentSection.css';
+import {updateCustomerAddress,} from "../../../redux/NewEditor/customerSlice"
 
 
 import { GoSellElements } from "@tap-payments/gosell";
@@ -38,6 +39,7 @@ const PaymentSection = ({
   appliedCoupon,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const { t } = useTranslation();
   const [notes, setNotes] = useState("");
   const [couponCode, setCouponCode] = useState("");
@@ -244,7 +246,13 @@ const PaymentSection = ({
         lng: customerAddress && customerAddress?.lng,
       })
         .then((r) => {
-          toast.success(t("Profile updated successfully"))
+          dispatch(
+            updateCustomerAddress({
+                lat: customerAddress && customerAddress?.lat,
+                lng:customerAddress && customerAddress?.lng,
+                addressValue:customerAddress && customerAddress?.addressValue ,
+              }))
+           toast.success(t("Profile updated successfully"))
         })
         .finally((r) => {
           setIsLoading(false)
@@ -537,12 +545,12 @@ const PaymentSection = ({
                 : "border-[var(--primary)]"
                 }}h-[100px] flex items-center  py-4 justify-center mb-6`}
             >
-              <div className="flex items-center gap-3 p-3 w-full lg:w-1/2 ">
+              <div className="flex items-center gap-3 p-2 w-full">
                 <div className="w-full">
                   <Feedback
                     imgUrl={pinLocate}
                     placeholder={"Jeddah xxxyyyzzzz street"}
-                    value={deliveryAddress}
+                    value={customerAddress.addressValue}
                     isDisabled
                     isReadOnly
                   />
