@@ -1,9 +1,3 @@
-
-# GIT pull changes
-git checkout -- .;
-git clean -fd;
-git pull;
-
 # backup database
 ./db_backup.sh
 
@@ -19,7 +13,6 @@ npm run dev --silent
 # Handle backend
 #rm ./composer.lock
 composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
 
 
 # Setup backend

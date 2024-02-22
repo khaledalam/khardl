@@ -19,6 +19,7 @@ abstract class TenantTestCase extends BaseTestCase
 
     public function setUp(): void
     {
+        TestUtils::setTestingTenant();
         parent::setUp();
         if ($this->tenancy) {
             $this->initializeTenancy();
