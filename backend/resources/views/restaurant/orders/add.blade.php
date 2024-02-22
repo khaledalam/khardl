@@ -265,6 +265,9 @@
                             productQuantity[product.id] = 1;
                             OptionsPrice[product.id] = 0;
                             updateTotalCost();
+                            //Track options
+                            //Track on change qty
+                            onChangeQty(product);
                         },
                         error: function(xhr, status, error) {
                             console.error( error);
@@ -272,7 +275,7 @@
                     });
                 });
                 var current_branch = $('#branchSelect').val();
-                productSelect = initializeProductSelect(current_branch);
+                productSelect = initializeProductSelect(current_branch,false);
             }else{
                 productSelect = initializeProductSelect();
             }
@@ -304,10 +307,13 @@
                 });
         }
 
-        function initializeProductSelect(branch_id = "") {
+        function initializeProductSelect(branch_id = "",trackChange = true) {
             if (branch_id == "") {
                 return $('#productSelect').select2();
             } else {
+                if(trackChange){
+
+                }
                 return $('#productSelect').select2({
                     placeholder: "{{ __('Search for a product...') }}",
                     ajax: {
@@ -475,22 +481,12 @@
         </div>
     `;
         }
-        productSelect.on('select2:select', function(e) {
-            // Get the selected product data
-            console.log(e);
-            var selectedProduct = e.params.data.data;
-
-            // Append the selected product to the table
-            var tableRow = TableRow(selectedProduct);
+        function onChangeQty(selectedProduct){
             $('#product_table').on('input', `input[name="products[${selectedProduct.id}][]"]`, function() {
                 // Update the total cost when the quantity changes
                 var oldTotal = productTotals[selectedProduct.id] || 0;
                 // Update the total cost by subtracting the old total and adding the new total
                 var quantity = $(this).val();
-/*                 if(quantity > 2){
-                    var optionPrice = (OptionsPrice[selectedProduct.id] / (quantity - 1));
-                }else {
-                } */
                 var optionPrice = OptionsPrice[selectedProduct.id];
                 console.log(optionPrice);
                 var productTotal = (parseFloat(selectedProduct.price) + optionPrice)* quantity;
@@ -504,9 +500,8 @@
                 console.log(productTotals);
                 updateTotalCost();
             });
-            // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
-            $('#product_table').append(tableRow);
-            $('#modal_here').append(ModalRow(selectedProduct));
+        }
+        function onChangeCheckBox(){
             $('#modal_here').on('change', 'input[type="checkbox"][name^="product_options"]', function() {
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
@@ -515,20 +510,23 @@
                 if (isChecked) {
                     if(price&&price > 0){
                         var subtotal = parseFloat(price * productQuantity[product]);
+                        console.log(subtotal);
                         totalCost += subtotal;
                         OptionsPrice[product] += subtotal;
-                        productTotals[selectedProduct.id] +=subtotal;
+                        productTotals[product] +=subtotal;
                     }
                 } else {
                     if(price&&price > 0){
                         var subtotal = parseFloat(price * productQuantity[product]);
                         totalCost -= subtotal;
                         OptionsPrice[product] -= subtotal;
-                        productTotals[selectedProduct.id] -=subtotal;
+                        productTotals[product] -=subtotal;
                     }
                 }
                 updateTotalCost();
             });
+        }
+        function onChangeRadio(){
             $('#modal_here').on('change', 'input[type="radio"][name^="product_options"]', function() {
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
@@ -553,13 +551,26 @@
 
                     totalCost += subtotal;
                     OptionsPrice[product] += subtotal;
-                    productTotals[selectedProduct.id] +=subtotal;
+                    productTotals[product] +=subtotal;
                     oldProductSelectOptions[product][index] = parseFloat(price * productQuantity[product]);
                     updateTotalCost();
                 } else {
                     console.error('oldProductSelectOptions[product] is not an array');
                 }
             });
+        }
+        productSelect.on('select2:select', function(e) {
+            // Get the selected product data
+            console.log(e);
+            var selectedProduct = e.params.data.data;
+            //Track on change qty
+            onChangeQty(selectedProduct);
+            // Append the selected product to the table
+            var tableRow = TableRow(selectedProduct);
+            // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
+            $('#product_table').append(tableRow);
+            $('#modal_here').append(ModalRow(selectedProduct));
+
 
             // Update the total cost
             totalCost += parseFloat(selectedProduct.price);
@@ -596,6 +607,10 @@
         function updateTotalCost() {
             $('#kt_ecommerce_edit_order_total_price').text(totalCost.toFixed(2));
         }
+        //Track on change checkbox
+        onChangeCheckBox();
+        //Track on change Radio
+        onChangeRadio();
     });
 
 </script>
