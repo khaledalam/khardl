@@ -35,8 +35,8 @@ class Cervo  extends AbstractDeliveryCompany
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
                 "customer"=>"Testing customer",
-                "order_id"=>"Testing 4$order->id",
-                "id"=>"Testing 4$order->id",
+                "order_id"=>"Testing 21/2/$order->id",
+                "id"=>"Testing 21/2/$order->id",
                 "lng"=>34.266593,
                 "lat"=>31.279708,
                 "storelat"=>31.277202,
@@ -66,9 +66,10 @@ class Cervo  extends AbstractDeliveryCompany
             "ispaid"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "NO PAID": "PAID",
             "status"=>self::STATUS_ORDER['NEW'],
             // nullable
-            "callback"=>route('webhook-client-delivery-companies'),
+            "callback"=>route('webhook-client-delivery-companies').'?delivery_company=Cervo',
             "notes"=>"",
         ];
+
 
         $response = $this->sendSync(
             url:   $this->delivery_company->api_url.'/order',
