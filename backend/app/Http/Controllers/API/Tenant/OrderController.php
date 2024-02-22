@@ -113,7 +113,7 @@ class  OrderController extends BaseRepositoryController
         // Handle register order to all delivery companies
 
         if ($request->status == Order::RECEIVED_BY_RESTAURANT && $order->isDelivery() && $order?->branch?->delivery_availability) {
-            $this->handelDeliveryOrder($order,$request);
+            return $this->handelDeliveryOrder($order,$request);
         }
         if ($request->expectsJson()) {
             return $this->sendResponse(null, __('Order has been updated successfully.'));
