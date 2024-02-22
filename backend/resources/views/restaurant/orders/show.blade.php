@@ -510,7 +510,7 @@
                                                             <!--begin::Shipping-->
                                                             <tr>
                                                                 <td colspan="4" class="text-end">{{__('shipping-rate')}}</td>
-                                                                <td class="text-end">{{$order->delivery_type->cost}} {{__('SAR')}} +</td>
+                                                                <td class="text-end">{{$order->delivery_cost}} {{__('SAR')}} +</td>
                                                             </tr>
                                                             <!--end::Shipping-->
                                                             <!--begin::Shipping-->

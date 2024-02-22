@@ -244,7 +244,8 @@
         var OptionsPrice = {};
         var oldProductSelectOptions = {};
         let cuurent_product = null;
-        var productSelect = null
+        var productSelect = null;
+        var product_copies = {};
         function getOldProductData() {
             var products = {!! json_encode(old('products')) !!};
             var branch_id = "";
@@ -361,7 +362,7 @@
             <td>
                 <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
                     <div class="ms-5">
-                        <input type="number" class="form-control product_quantity" min="1" name="products[${selectedProduct.id}][]" value="1" />
+                        <input type="number" class="form-control product_quantity" min="1" name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]" value="1" />
                     </div>
                 </div>
             </td>
@@ -369,7 +370,7 @@
                 <i class="bi bi-eye btn-sm btn btn-success"
                 data-bs-toggle="modal"
                 id="options_${selectedProduct.id}"
-                data-bs-target="#kt_modal_select_options_${selectedProduct.id}"></i>
+                data-bs-target="#kt_modal_select_options_${selectedProduct.id}_${product_copies[selectedProduct.id]}"></i>
                 <i class="bi bi-trash btn-sm btn btn-danger remove-product-btn"
                 data-product="${selectedProduct.id}"></i>
             </td>
@@ -403,7 +404,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][checkbox_input][${index}][]" >
+                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][checkbox_input][${index}][]" >
                             <span class="product_option_price">{{ __('SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -424,7 +425,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][selection_input][${index}]">
+                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][selection_input][${index}]">
                             <span class="product_option_price">{{ __('SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -442,7 +443,7 @@
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
                     optionsHTML += `
-                    <select class="form-select" name="product_options[${selectedProduct.id}][dropdown_input][${index}]">
+                    <select class="form-select" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][dropdown_input][${index}]">
                         <option value="">{{ __('Select option') }}</option>`;
                     innerOptions.forEach((option, innerIndex) => {
                         optionsHTML += `<option value="${innerIndex}">${getLangName(option)}</option>`;
@@ -457,7 +458,7 @@
                 addRequired.classList.add('required');
             }
             return `
-        <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}_${product_copies[selectedProduct.id]}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mw-650px">
                 <div class="modal-content rounded">
                     <div class="modal-header pb-0 border-0 justify-content-end">
@@ -563,6 +564,14 @@
             // Get the selected product data
             console.log(e);
             var selectedProduct = e.params.data.data;
+            //initiate number of copies of same product
+            console.log(product_copies[selectedProduct.id]);
+            if(typeof product_copies[selectedProduct.id] === 'undefined'){
+                product_copies[selectedProduct.id] = 1;
+            }else{
+                product_copies[selectedProduct.id]++;
+            }
+            console.log(product_copies[selectedProduct.id]);
             //Track on change qty
             onChangeQty(selectedProduct);
             // Append the selected product to the table

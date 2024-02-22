@@ -32,36 +32,36 @@ class StoreOrderFormRequest extends FormRequest
     }
     public function withValidator($validator)
     {
-        logger($this->products);
-        foreach ($this->products ?? [] as $key => $value) {
+        foreach ($this->products ?? [] as $key => $copies) {
             $item = Item::findOrFail($key);
-            $validator->after(function ($validator) use ($item) {
-
-                if ($item->checkbox_required) {
-                    if (!$this->validateCheckboxOptions($validator, $item)) {
-                        return;
+            foreach ($copies as $innerKey => $copy) {
+                $validator->after(function ($validator) use ($item, $innerKey) {
+                    if ($item->checkbox_required) {
+                        if (!$this->validateCheckboxOptions($validator, $item, $innerKey)) {
+                            return;
+                        }
                     }
-                }
-                if ($item->selection_required) {
-                    if (!$this->validateRadioOptions($validator, $item)) {
-                        return;
+                    if ($item->selection_required) {
+                        if (!$this->validateRadioOptions($validator, $item, $innerKey)) {
+                            return;
+                        }
                     }
-                }
-                if ($item->dropdown_required) {
-                    if (!$this->validateDropdownOptions($validator, $item)) {
-                        return;
+                    if ($item->dropdown_required) {
+                        if (!$this->validateDropdownOptions($validator, $item, $innerKey)) {
+                            return;
+                        }
                     }
-                }
-            });
+                });
+            }
         }
 
     }
 
-    public function validateCheckboxOptions($validator, $item)
+    public function validateCheckboxOptions($validator, $item, $copy)
     {
         $locale = app()->getLocale();
         foreach ($item->checkbox_required as $key => $option) {
-            if ($option == 'true' && !isset($this->product_options[$item->id]['checkbox_input'][$key])) {
+            if ($option == 'true' && !isset($this->product_options[$item->id][$copy]['checkbox_input'][$key])) {
                 $validator->errors()->add('selectedCheckbox', __(':option is required for :item', [
                     'option' => ($locale == 'en') ? $item->checkbox_input_titles[$key][0] : $item->checkbox_input_titles[$key][1],
                     'item' => $item->name
@@ -79,11 +79,11 @@ class StoreOrderFormRequest extends FormRequest
         return true;
     }
 
-    public function validateRadioOptions($validator, $item)
+    public function validateRadioOptions($validator, $item, $copy)
     {
         $locale = app()->getLocale();
         foreach ($item->selection_required as $key => $option) {
-            if ($option == 'true' && !isset($this->product_options[$item->id]['selection_input'][$key])) {
+            if ($option == 'true' && !isset($this->product_options[$item->id][$copy]['selection_input'][$key])) {
                 $validator->errors()->add('selectedRadio', __(':option is required for :item', [
                     'option' => ($locale == 'en') ? $item->selection_input_titles[$key][0] : $item->selection_input_titles[$key][1],
                     'item' => $item->name
@@ -93,11 +93,11 @@ class StoreOrderFormRequest extends FormRequest
         }
         return true;
     }
-    public function validateDropdownOptions($validator, $item)
+    public function validateDropdownOptions($validator, $item, $copy)
     {
         $locale = app()->getLocale();
         foreach ($item->dropdown_required as $key => $option) {
-            if ($option == 'true' && !isset($this->product_options[$item->id]['dropdown_input'][$key]) ?? false) {
+            if ($option == 'true' && !isset($this->product_options[$item->id][$copy]['dropdown_input'][$key]) ?? false) {
                 $validator->errors()->add('selectedDropdown', __(':option is required for :item', [
                     'option' => ($locale == 'en') ? $item->dropdown_input_titles[$key][0] : $item->dropdown_input_titles[$key][1],
                     'item' => $item->name

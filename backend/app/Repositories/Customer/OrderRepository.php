@@ -42,6 +42,7 @@ class OrderRepository
                 'discount' => $discount ? $discount : null,
                 // TODO @todo update
                 'payment_status' => PaymentMethod::PENDING,
+                'vat' => $cart->tax(),
                 'status' => Order::PENDING,
             ]);
             if($discount&&$coupon){
@@ -70,7 +71,7 @@ class OrderRepository
 
             }else if ($cart->hasPaymentCreditCard($request->payment_method)){
                 // Do not commit any change , it should be saved into session
-               
+
                 DB::commit();
                 return $order;
             }
