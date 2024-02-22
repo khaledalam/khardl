@@ -14,7 +14,7 @@ class TenancyAuthProvider extends ServiceProvider
      */
     public function register(): void
     {
-        if(request()->getHost() == config('tenancy.central_domains')[0] || env('TESTING_CENTRAL') == '1'){
+        if(request()->getHost() == config('tenancy.central_domains')[0] && env('TESTING_CENTRAL') == '1'){
             app('config')->set('auth.providers.users.model', User::class);
         } else {
             app('config')->set('auth.providers.users.model', RestaurantUser::class);
