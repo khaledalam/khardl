@@ -97,7 +97,8 @@ jobs:
           password: ${{ secrets.TESTING_FTP_PASSWORD }}
   Deploy-Apply:
     needs: [Deploy]
-    name: ⚙️ Apply Updates On Server
-    run: |
-      cd /home/khardl4test/public_html/
-      ./testing-deploy.sh
+    steps:
+      - name: ⚙️ Apply Updates On Server
+        run: |
+          cd /home/khardl4test/public_html/
+          ./testing-deploy.sh
