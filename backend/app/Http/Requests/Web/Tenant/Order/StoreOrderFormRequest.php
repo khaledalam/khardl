@@ -32,8 +32,9 @@ class StoreOrderFormRequest extends FormRequest
     }
     public function withValidator($validator)
     {
-        foreach ($this->product_options ?? [] as $product => $options) {
-            $item = Item::findOrFail($product);
+        logger($this->products);
+        foreach ($this->products ?? [] as $key => $value) {
+            $item = Item::findOrFail($key);
             $validator->after(function ($validator) use ($item) {
 
                 if ($item->checkbox_required) {

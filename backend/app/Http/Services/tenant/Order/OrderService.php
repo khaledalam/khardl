@@ -87,6 +87,7 @@ class OrderService
                     'selectedRadio' => $selectedRadio,
                     'selectedDropdown' => $selectedDropdown,
                 ]);
+                $new_cart->add($addItemToCartRequest);
             }
         }
         return $new_cart;

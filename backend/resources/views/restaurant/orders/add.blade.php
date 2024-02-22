@@ -234,47 +234,109 @@
 @endsection
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/default-passive-events"></script>
+
 <script>
     $(document).ready(function() {
         var totalCost = 0.00;
-        var branch_id = "";
         var productTotals = {};
         var productQuantity = {};
         var OptionsPrice = {};
         var oldProductSelectOptions = {};
         let cuurent_product = null;
+        var productSelect = null
+        function getOldProductData() {
+            var products = {!! json_encode(old('products')) !!};
+            var branch_id = "";
+            if(products) {
+                Object.keys(products).forEach(key => {
+                    $.ajax({
+                        url: `/get-product-by-id/${key}`,
+                        type: 'GET',
+                        success: function(data) {
+                            var product = data.data;
+                            branch_id = product.branch.id;
+                            var tableRow = TableRow(product);
+                            $('#product_table').append(tableRow);
+                            var modalRow = ModalRow(product);
+                            $('#modal_here').append(modalRow);
+                            totalCost += parseFloat(product.price);
+                            productTotals[product.id] = parseFloat(product.price);
+                            productQuantity[product.id] = 1;
+                            OptionsPrice[product.id] = 0;
+                            updateTotalCost();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error( error);
+                        }
+                    });
+                });
+                var current_branch = $('#branchSelect').val();
+                productSelect = initializeProductSelect(current_branch);
+            }else{
+                productSelect = initializeProductSelect();
+            }
+        }
+        getOldProductData();
+        function initializeProducts(branch_id){
+            return $('#productSelect').select2({
+                placeholder: "{{ __('Search for a product...') }}"
+                , ajax: {
+                    url: '/search-products?branch_id=' + branch_id
+                    , dataType: 'json'
+                    , delay: 250
+                    , processResults: function(data) {
+                        return {
+                            results: $.map(data.data, function(product) {
+                                return {
+                                    text: product.name
+                                    , id: product.id
+                                    , data: product
+                                };
+                            })
+                        };
+                    }
+                    , error: function(xhr, textStatus, errorThrown) {
+                        console.error('Error fetching product details:', errorThrown);
+                    }
+                    , cache: true
+                }
+                });
+        }
 
-        function initializeProductSelect() {
-
+        function initializeProductSelect(branch_id = "") {
             if (branch_id == "") {
                 return $('#productSelect').select2();
             } else {
                 return $('#productSelect').select2({
-                    placeholder: "{{ __('Search for a product...') }}"
-                    , ajax: {
-                        url: '/search-products?branch_id=' + branch_id
-                        , dataType: 'json'
-                        , delay: 250
-                        , processResults: function(data) {
+                    placeholder: "{{ __('Search for a product...') }}",
+                    ajax: {
+                        url: '/search-products?branch_id=' + branch_id,
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function(data) {
                             return {
                                 results: $.map(data.data, function(product) {
                                     return {
-                                        text: product.name
-                                        , id: product.id
-                                        , data: product
+                                        text: product.name,
+                                        id: product.id,
+                                        data: product
                                     };
                                 })
                             };
-                        }
-                        , error: function(xhr, textStatus, errorThrown) {
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
                             console.error('Error fetching product details:', errorThrown);
-                        }
-                        , cache: true
+                        },
+                        cache: true
                     }
-                });
+                }).on('wheel', function(e) {
+                    // Prevent default behavior of the 'wheel' event
+                    e.preventDefault();
+                }, { passive: true }); // Mark the event listener as passive
             }
-
         }
+
 
         function TableRow(selectedProduct) {
             return `
@@ -413,7 +475,6 @@
         </div>
     `;
         }
-        var productSelect = initializeProductSelect();
         productSelect.on('select2:select', function(e) {
             // Get the selected product data
             console.log(e);
@@ -512,9 +573,8 @@
         $('#branchSelect').change(function() {
             var branchId = $(this).val();
             // Update branch_id variable
-            branch_id = branchId; // Destroy and recreate productSelect with the updated URL
             productSelect.select2('destroy');
-            productSelect = initializeProductSelect();
+            productSelect = initializeProductSelect(branchId);
 
             // Clear and refresh productSelect
             productSelect.val(null).trigger('change');
@@ -536,58 +596,6 @@
         function updateTotalCost() {
             $('#kt_ecommerce_edit_order_total_price').text(totalCost.toFixed(2));
         }
-        function initializeProducts(branch_id){
-            return $('#productSelect').select2({
-                    placeholder: "{{ __('Search for a product...') }}"
-                    , ajax: {
-                        url: '/search-products?branch_id=' + branch_id
-                        , dataType: 'json'
-                        , delay: 250
-                        , processResults: function(data) {
-                            return {
-                                results: $.map(data.data, function(product) {
-                                    return {
-                                        text: product.name
-                                        , id: product.id
-                                        , data: product
-                                    };
-                                })
-                            };
-                        }
-                        , error: function(xhr, textStatus, errorThrown) {
-                            console.error('Error fetching product details:', errorThrown);
-                        }
-                        , cache: true
-                    }
-                });
-        }
-        function getOldProductData() {
-            var products = {!! json_encode(old('products')) !!};
-            if(products) {
-                Object.keys(products).forEach(key => {
-                    $.ajax({
-                        url: `/get-product-by-id/${key}`,
-                        type: 'GET',
-                        success: function(data) {
-                            var product = data.data;
-                            console.log(product);
-                            var tableRow = TableRow(product);
-                            $('#product_table').append(tableRow);
-                            var modalRow = ModalRow(product);
-                            $('#modal_here').append(modalRow);
-                            totalCost += parseFloat(product.price);
-                            productTotals[product.id] = parseFloat(product.price);
-                            productQuantity[product.id] = 1;
-                            OptionsPrice[product.id] = 0;
-                        },
-                        error: function(xhr, status, error) {
-                            console.error( error);
-                        }
-                    });
-                });
-            }
-        }
-        getOldProductData();
     });
 
 </script>
