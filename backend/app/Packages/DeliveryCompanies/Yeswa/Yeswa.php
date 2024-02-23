@@ -10,6 +10,7 @@ use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 use App\Utils\ResponseHelper;
+use Exception;
 
 class Yeswa  extends AbstractDeliveryCompany
 {
@@ -18,7 +19,7 @@ class Yeswa  extends AbstractDeliveryCompany
         PaymentMethod::ONLINE=> 'PP',
     ];
 
-    public function assignToDriver(Order $order,RestaurantUser $customer):bool{
+    public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool{
         $branch = $order->branch;
         if(env('APP_ENV') == 'local'){
             $data = [
@@ -29,7 +30,7 @@ class Yeswa  extends AbstractDeliveryCompany
                 "pickup_longitude"=>  30.14,
                 "dropoff_latitude"=>  27.05,
                 "dropoff_longitude"=>  30.14,
-                'client_id'=>"testing 21/2/".$order->id,
+                'client_id'=>"testing 22/2/".$order->id,
 
             ];
         }else {
@@ -44,6 +45,8 @@ class Yeswa  extends AbstractDeliveryCompany
 
             ];
         }
+        if($duplicated)
+            $data['client_id'] = "Duplicated $order->id";
         $data += [
             "api_key"=> $this->delivery_company->api_key,
             "pickup_phone"=> $branch->phone,
@@ -72,6 +75,8 @@ class Yeswa  extends AbstractDeliveryCompany
                 'yeswa_ref'=>$response['message']['data']['trip_ref']
             ]);
             return true;
+        }else if ($response['http_code'] == ResponseHelper::HTTP_BAD_REQUEST && $response['message'] == 'Order duplicated'){
+            throw new Exception('Order duplicated');
         }else {
             return false;
         }
@@ -103,8 +108,10 @@ class Yeswa  extends AbstractDeliveryCompany
                         'status'=>Order::COMPLETED
                     ]);
                 }else if ($data['job_status'] == 'FAILED' ){
+                    if($order->status != Order::ACCEPTED)
                     $order->update([
-                        'status'=>Order::CANCELLED
+                        'status'=>Order::CANCELLED,
+                        'reject_or_cancel_reason'=>'Cancelled by Yeswa'
                     ]);
                 }
             }
