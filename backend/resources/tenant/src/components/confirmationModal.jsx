@@ -13,7 +13,7 @@ const ConfirmationModal = ({ isOpen, message, onClose, onConfirm }) => {
     <div className='backdrop-custom'>
       <div className="modal-box confirm-modal">
         <h3 className="font-bold text-lg"></h3>
-        <p className="py-4 text-center flex items-start">
+        <p className="py-4  flex ">
           <img src={infog} alt="InfoIcon" className="inline-block align-middle w-5" />
           <span className='p-2 text-[20px]'>{message}</span>
         </p>
