@@ -26,7 +26,7 @@ class StreetLine  extends AbstractDeliveryCompany
         'Order Unassigned' => 19,
         'Order failed' => 20,
     ];
-    public function assignToDriver(Order $order,RestaurantUser $customer):bool{
+    public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool{
         $branch = $order->branch;
         if(env('APP_ENV') == 'local'){
             $token = env('STREETLINE_SECRET_API_KEY','');

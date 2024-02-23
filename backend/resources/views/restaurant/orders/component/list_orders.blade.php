@@ -174,7 +174,33 @@
                         <td class="text-end pe-0">
                             <span class="fw-bolder">{{__(''.$order->payment_method->name)}}</span>
                         </td><td class="text-end pe-0">
-                            <span class="fw-bolder">{{__(''.$order->delivery_type->name)}}</span>
+                            <span class="fw-bolder">
+                             
+                                @if($order->delivery_type->name == \App\Models\Tenant\DeliveryType::DELIVERY)
+                                    {{__(''.$order->delivery_type->name)}}
+                                    @if($order->status == \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
+                                        <?php $delivery_companies = $order->getAcceptedDelivery();?>
+                                        @if($delivery_companies)
+                                        <br>
+                                        ( {{__('Sent to ') . $delivery_companies}})
+                                        @endif
+                                    @elseif($order->status == \App\Models\Tenant\Order::ACCEPTED)
+                                    <?php $delivery_companies = $order->getAcceptedDelivery();?>
+                                    @if($delivery_companies)
+                                    <br>
+                                       ( {{__('Accepted by ') . $delivery_companies}})
+                                    @endif
+                            
+                                    @elseif($order->status == \App\Models\Tenant\Order::COMPLETED || $order->status == \App\Models\Tenant\Order::CANCELLED)
+                                        @if($order->deliver_by)
+                                        <br>
+                                        ( {{__('Assigned to ') . __($order->deliver_by)}})
+                                        @endif
+                                    @endif
+                                @else
+                                    {{__(''.$order->delivery_type->name)}}
+                                @endif
+                            </span>
                         </td>
                         <td class="text-end pe-0">
                             @if($order->payment_status == \App\Models\Tenant\PaymentMethod::PAID)

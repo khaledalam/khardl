@@ -28,15 +28,16 @@ class Cervo  extends AbstractDeliveryCompany
         'CANCELED_BY_DRIVER'=>5,
     ];
 
-    public function assignToDriver(Order $order,RestaurantUser $customer):bool{
+    public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool{
+       
         $branch = $order->branch;
 
         if(env('APP_ENV') == 'local'){
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
                 "customer"=>"Testing customer",
-                "order_id"=>"Testing 21/2/$order->id",
-                "id"=>"Testing 21/2/$order->id",
+                "order_id"=>"Testing 22/2/$order->id",
+                "id"=>"Testing 22/2/$order->id",
                 "lng"=>34.266593,
                 "lat"=>31.279708,
                 "storelat"=>31.277202,
@@ -56,6 +57,12 @@ class Cervo  extends AbstractDeliveryCompany
                 "address"=>$customer->address,
             ];
         }
+        if($duplicated){
+            $data['id'] = "Duplicated $order->id";
+            $data['order_id'] = "Duplicated $order->id";
+        }
+      
+
         $data += [
 
             "date"=>now()->format('Y-m-d H:i:s'),
@@ -70,7 +77,7 @@ class Cervo  extends AbstractDeliveryCompany
             "notes"=>"",
         ];
 
-
+        
         $response = $this->sendSync(
             url:   $this->delivery_company->api_url.'/order',
             token: $token,
@@ -131,9 +138,11 @@ class Cervo  extends AbstractDeliveryCompany
                 }else if (
                     $payload['order_status'] == self::STATUS_ORDER['CANCELLED']){
                     // Todo @todo
-                    $order->update([
-                        'status'=>Order::CANCELLED
-                    ]);
+                    if($order->status != Order::ACCEPTED)
+                        $order->update([
+                            'status'=>Order::CANCELLED,
+                            'reject_or_cancel_reason'=>'Cancelled by Cervo'
+                        ]);
                 }
             }
         }
