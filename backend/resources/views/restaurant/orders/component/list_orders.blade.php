@@ -4,6 +4,17 @@
     <div class="card card-flush py-4 flex-row-fluid">
         <form action="">
             @csrf
+            <div class="modal fade show d-none" id="spinner" tabindex="-1" aria-hidden="false">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="spinner-border m-auto" role="status" >
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    <!--end::Modal content-->
+                </div>
+                <!--end::Modal dialog-->
+            </div>
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                 <!--begin::Card title-->
                 <div class="card-title">
@@ -61,6 +72,8 @@
                 <!--end::Card toolbar-->
             </div>
         </form>
+     
+      
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body pt-0">
@@ -299,6 +312,8 @@
                                         document.getElementById('orderStatus').setAttribute('value',selectedStatus);
                                         var form = document.getElementById('approve-form');
                                         form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
+                                        document.getElementById('spinner').classList.remove("d-none");
+                                        document.getElementById('spinner').classList.add("d-block");
                                         form.submit();
 
                                     }
