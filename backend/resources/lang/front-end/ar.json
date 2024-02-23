@@ -447,5 +447,10 @@
   "Done": "منتهي",
   "Slide Added": "تمت إضافة الشريحة",
   "Image Removed": "تمت إزالة الصورة",
-  "PICKUP":"التقاط"
+  "PICKUP":"التقاط",
+  "Confirm": "يتأكد",
+  "ok": "نعم",
+  "Enable location permissions for this website in your browser settings.": "تمكين أذونات الموقع لهذا الموقع في إعدادات المتصفح الخاص بك.",
+  "Sorry, Geolocation is not supported by your browser. You can continue by typing your location on the map.": "عذرًا، لا يدعم متصفحك تحديد الموقع الجغرافي. ",
+  "Unable to access your location. You can continue by typing your location on the map.": "غير قادر على الوصول إلى موقعك. "
 }

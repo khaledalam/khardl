@@ -5,11 +5,9 @@ import AxiosInstance from "../../../axios/axios"
 import {toast} from "react-toastify"
 import {useTranslation} from "react-i18next"
 import Places from "../../../components/Customers/CustomersEditor/components/Dashboard/components/Places"
-import {
-  updateCustomerAddress,
-  updateProfileSaveStatus,
-} from "../../../redux/NewEditor/customerSlice"
+import {updateCustomerAddress,updateProfileSaveStatus,} from "../../../redux/NewEditor/customerSlice"
 import {useSelector, useDispatch} from "react-redux"
+import ConfirmationModal from "../../../components/confirmationModal"
 
 const CustomerProfile = () => {
   const {t} = useTranslation()
@@ -17,14 +15,14 @@ const CustomerProfile = () => {
   const [firstName, setFirstName] = useState("John")
   const [lastName, setLastName] = useState("Doe")
   const [phone, setPhone] = useState("96611111111")
-    const address = useSelector((state) => state.customerAPI.address?.addressValue)
-    const customerAddress = useSelector((state) => state.customerAPI.address)
-  const saveProfileChange = useSelector(
-    (state) => state.customerAPI.saveProfileChanges
-  )
+  const address = useSelector((state) => state.customerAPI.address?.addressValue)
+  const customerAddress = useSelector((state) => state.customerAPI.address)
+  const saveProfileChange = useSelector((state) => state.customerAPI.saveProfileChanges)
 
   const [isDisabled, setIsDisabled] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+
 
   const userProfile =
     JSON.parse(localStorage.getItem("userProfileInfo")) || null
@@ -95,8 +93,12 @@ const CustomerProfile = () => {
     fetchProfileData().then((r) => null)
   }, [])
 
+  const saveProfile = async () => {
+    setModalOpen(true);
+  };
+
   const handleSaveProfile = async () => {
-    if (window.confirm(t("Are You sure you want to save profile changes?"))) {
+    setModalOpen(false);
       if (isLoading) return
       setIsLoading(true)
 
@@ -118,7 +120,6 @@ const CustomerProfile = () => {
       } catch (error) {
         toast.error(error.response.data.message)
       }
-    }
   }
 
   // useEffect(() => {
@@ -184,7 +185,7 @@ const CustomerProfile = () => {
             {t("Cancel")}
           </button>
           <button
-            onClick={handleSaveProfile}
+            onClick={saveProfile}
             disabled={isDisabled ||isLoading}
             className='w-[85px] p-2 bg-[var(--customer)] disabled:cursor-not-allowed disabled:bg-neutral-400 outline-none text-white rounded-lg'
           >
@@ -192,6 +193,12 @@ const CustomerProfile = () => {
           </button>
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={modalOpen}
+        message={t("Are You sure you want to save profile changes?")}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleSaveProfile}
+      />
     </div>
   )
 }

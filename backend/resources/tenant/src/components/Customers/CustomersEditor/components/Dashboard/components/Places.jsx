@@ -18,7 +18,8 @@ import {
 } from "../../../../../../redux/NewEditor/customerSlice"
 import {MdLocationPin} from "react-icons/md"
 import ClipLoader from "react-spinners/ClipLoader";
-import {useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next"
+import ConfirmationModal from "../../../../../confirmationModal"
 
 
 
@@ -139,6 +140,10 @@ function Map({inputStyle}) {
 }
 
 function PlacesAutoComplete({inputStyle, inputRef, inputValueRef}) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const { t } = useTranslation();
+
     const customerAddress = useSelector((state) => state.customerAPI.address)
     const {
     ready,
@@ -164,6 +169,14 @@ function PlacesAutoComplete({inputStyle, inputRef, inputValueRef}) {
     dispatch(updateCustomerAddress({lat: lat, lng: lng, addressValue: address}));
       clearSuggestions()
   }
+  const handleAlert = (message) => {
+    setModalMessage(message);
+    setModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setModalMessage('')
+  };
 
   const getPosition = () => {
     if (navigator.geolocation) {
@@ -179,7 +192,9 @@ function PlacesAutoComplete({inputStyle, inputRef, inputValueRef}) {
 
       }, positionError)
     } else {
-      window.alert("Sorry,Geolocation is not supported by your browser")
+      handleAlert(
+        'Sorry, Geolocation is not supported by your browser. You can continue by typing your location on the map.'
+      );
     }
   }
 
@@ -187,13 +202,13 @@ function PlacesAutoComplete({inputStyle, inputRef, inputValueRef}) {
     if (navigator.permissions) {
       navigator.permissions.query({name: "geolocation"}).then((res) => {
         if (res.state === "denied") {
-          window.alert(
-            "Enable location permissions for this website in your browser settings"
-          )
+          handleAlert(
+            'Enable location permissions for this website in your browser settings.'
+          );
         } else {
-          alert(
-            "Unable to access your location, you can continue by typing your location on the map"
-          )
+          handleAlert(
+            'Unable to access your location. You can continue by typing your location on the map.'
+          );
         }
       })
     }
@@ -202,6 +217,11 @@ function PlacesAutoComplete({inputStyle, inputRef, inputValueRef}) {
   return (
     <Combobox onSelect={handleSelect}>
       <div className='flex items-center gap-8'>
+      <ConfirmationModal
+        isOpen={modalOpen}
+        message={t(modalMessage)}
+        onClose={handleCloseModal}
+      />
         <ComboboxInput
           type='text'
           name='location'

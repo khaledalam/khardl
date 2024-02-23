@@ -4,6 +4,8 @@ import AxiosInstance from "../../../../../../axios/axios"
 import {toast} from "react-toastify"
 import Places from "../../../../CustomersEditor/components/Dashboard/components/Places"
 import {useSelector} from "react-redux";
+import ConfirmationModal from "../../../../../confirmationModal"
+
 
 const Profile = () => {
   const {t} = useTranslation()
@@ -12,6 +14,8 @@ const Profile = () => {
   const [lastName, setLastName] = useState("")
   const [phone, setPhone] = useState("")
   const [selected, setSelected] = useState(null)
+  const [modalOpen, setModalOpen] = useState(false);
+
 
     const customerAddress = useSelector((state) => state.customerAPI.address)
 
@@ -19,6 +23,10 @@ const Profile = () => {
     useEffect(() => {
     fetchProfileData().then((r) => null)
   }, [])
+  const saveProfile = async () => {
+    if (loading) return;    
+    setModalOpen(true);
+  };
 
   const fetchProfileData = async () => {
     if (loading) return
@@ -41,7 +49,8 @@ const Profile = () => {
   }
 
   const handleSaveProfile = async () => {
-    if (window.confirm(t("Are You sure you want to save profile changes?"))) {
+
+    setModalOpen(false);
       if (loading) return
       setLoading(true)
 
@@ -63,7 +72,6 @@ const Profile = () => {
       } catch (error) {
         toast.error(error.response.data.message)
       }
-    }
   }
 
   return (
@@ -125,7 +133,7 @@ const Profile = () => {
 
           <button
             disabled={loading}
-            onClick={() => handleSaveProfile()}
+            onClick={() => saveProfile}
             className={
               "text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"
             }
@@ -134,6 +142,12 @@ const Profile = () => {
           </button>
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={modalOpen}
+        message={t("Are You sure you want to save profile changes?")}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleSaveProfile}
+      />
     </div>
   )
 }
