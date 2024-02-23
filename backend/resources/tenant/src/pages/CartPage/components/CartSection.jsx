@@ -1,11 +1,14 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import CartItem from "./CartItem"
-import {useSelector} from "react-redux"
-import { setCartItemsData } from "../../../redux/NewEditor/categoryAPISlice";
+import { useSelector } from "react-redux"
+import { setCartItemsData, getCartItemsCount } from "../../../redux/NewEditor/categoryAPISlice";
+import AxiosInstance from "../../../axios/axios";
+import { useDispatch } from "react-redux";
 
-const CartSection = ({cartItems}) => {
+const CartSection = ({ cartItems }) => {
   const language = useSelector((state) => state.languageMode.languageMode)
   const restuarantStyle = useSelector((state) => state.restuarantEditorStyle)
+  const dispatch = useDispatch();
 
   const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
@@ -21,20 +24,21 @@ const CartSection = ({cartItems}) => {
       console.log("cart >>>", cartResponse.data?.data.items);
       if (cartResponse.data) {
         dispatch(setCartItemsData(cartResponse.data?.data.items));
+
+        dispatch(getCartItemsCount(cartResponse.data?.data.items.length));
+
       }
     } catch (error) {
       console.log(error);
     }
   };
-console.log("cartItemsData",useSelector((state)=>state.categoryAPI.cartItemsData))
   return (
     <div
-      style={{borderColor: restuarantStyle?.categoryDetail_cart_color}}
-      className={`${
-        restuarantStyle?.categoryDetail_cart_color
+      style={{ borderColor: restuarantStyle?.categoryDetail_cart_color }}
+      className={`${restuarantStyle?.categoryDetail_cart_color
           ? ""
           : "border-[var(--primary)]"
-      } border rounded-lg w-full laptopXL:w-[75%] mx-auto my-5`}
+        } border rounded-lg w-full laptopXL:w-[75%] mx-auto my-5`}
     >
       {cartItems &&
         cartItems.map((cartItem) => (
@@ -45,7 +49,7 @@ console.log("cartItemsData",useSelector((state)=>state.categoryAPI.cartItemsData
             cartItems={cartItems}
             language={language}
             isMobile={isMobile}
-            fetchCartData= {fetchCartData}
+            fetchCartData={fetchCartData}
           />
         ))}
     </div>

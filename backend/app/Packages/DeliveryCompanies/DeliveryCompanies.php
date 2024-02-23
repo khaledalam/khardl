@@ -7,10 +7,12 @@ use App\Models\Tenant\Order;
 use App\Models\Tenant\RestaurantUser;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
+use Exception;
 use GuzzleHttp\Promise\Utils;
 
 class DeliveryCompanies
-{
+{   
+    
     public static function all(){
         return DeliveryCompany::where('status',true)
         ->whereNotNull('module')
@@ -34,9 +36,23 @@ class DeliveryCompanies
         $deliveryCompanies = self::all();
         $assignedCompanies = [];
         foreach($deliveryCompanies as $company)  {   
-            if($company->module?->assignToDriver($order,$customer)){
-                $assignedCompanies[] = $company->name;
+       
+            try {
+                if($company->module?->assignToDriver($order,$customer)){
+                    $assignedCompanies[] = $company->name;
+                }
+            }catch(Exception $e){
+                if($e->getMessage() == 'Order duplicated'){
+                    if($company->module?->assignToDriver($order,$customer,true)){
+                        $assignedCompanies[] = $company->name;
+                        continue;
+                    }
+                }
+                \Sentry\captureMessage(`error occur while assign $order->id to $company->name`);
+                \Sentry\captureException($e);
+                continue;
             }
+           
         }
         //  companies that assigned to this order
         return $assignedCompanies;

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Helmet } from "react-helmet"
-import { setCartItemsData } from "../../redux/NewEditor/categoryAPISlice"
+import { setCartItemsData, getCartItemsCount } from "../../redux/NewEditor/categoryAPISlice"
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice"
 import { updateCustomerAddress } from "../../redux/NewEditor/customerSlice"
 
@@ -47,6 +47,7 @@ const CartPage = () => {
           setAppliedCoupon(cartResponse.data.data.coupon)
         }
         dispatch(setCartItemsData(cartResponse.data?.data.items))
+        dispatch(getCartItemsCount(cartResponse.data?.data.items.length))
         setPaymentMethodsData(cartResponse.data?.data?.payment_methods)
         setDeliveryTypesData(cartResponse.data?.data?.delivery_types)
         setAddress(cartResponse.data?.data?.address ?? t("N/A"))
@@ -103,12 +104,6 @@ const CartPage = () => {
   }, [])
 
 
-  if (isloading) {
-    return <LoadingSpinner />
-  }
-
-
-
   return (
     <>
       <Helmet>
@@ -123,6 +118,7 @@ const CartPage = () => {
       <div className='w-[98%] mx-auto mt-14'>
         <div className='w-full lg:w-[70%] laptopXL:w-[80%] mx-auto'>
           <CartHeader styles={restuarantStyle} />
+          {/* {isloading?<LoadingSpinner />:null} */}
           {(!cartItems || cartItems.length === 0) && !isloading ? (
             <div className='h-[40vh] w-full flex items-center justify-center'>
               <div className='w-1/2 mx-auto flex flex-col items-center justify-center gap-6'>
@@ -161,6 +157,7 @@ const CartPage = () => {
           )}
         </div>
       </div>
+        
     </>
   )
 }

@@ -93,6 +93,7 @@ const decrementQty = () => {
       const newQuantity = qtyCount - 1;
       setQtyCount(newQuantity);
       handleQuantityChange(newQuantity).then(r => null)
+
   }
 };
 
@@ -105,11 +106,14 @@ const decrementQty = () => {
 
   const handleRemoveItem = async (cartItemId) => {
     try {
-      const response = await AxiosInstance.delete(`/carts/` + cartItemId, {});
+      const response = await AxiosInstance.delete(`/carts/` + cartItemId, {})
+      
       if (response?.data) {
         const updatedCart = cartItems.filter((item) => item.id !== cartItemId);
         dispatch(setCartItemsData(updatedCart));
+        await fetchCartData().then((r) => null);
         toast.success(`${t("Item removed from cart")}`);
+
       }
     } catch (error) {
       console.log("err removing item from cart", error);

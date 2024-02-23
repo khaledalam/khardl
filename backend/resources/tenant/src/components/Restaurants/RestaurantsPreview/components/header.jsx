@@ -19,18 +19,17 @@ import { MenuContext } from "react-flexible-sliding-menu";
 
 function Header() {
     const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-    const [cartItemsCount, setCartItemsCount] = useState(0);
     const { toggleMenu } = useContext(MenuContext);
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const navigate = useNavigate();
     const styleDataRestaurant = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
     const GlobalColor = styleDataRestaurant?.primary_color || sessionStorage.getItem('globalColor');
-
+    const cartItemsCount = useSelector((state) => state.categoryAPI.cartItemsCount)
 
     useEffect(() => {
         fetchData().then(r => null);
-        fetchCartData().then(r => null);
+        // fetchCartData().then(r => null);
     }, []);
 
     const toggleTheMenu = () => {
@@ -38,18 +37,6 @@ function Header() {
         setIsSideMenuOpen(!isSideMenuOpen);
     }
 
-
-    const fetchCartData = async () => {
-        try {
-            const cartResponse = await AxiosInstance.get(`carts`);
-            if (cartResponse.data) {
-                setCartItemsCount(cartResponse.data?.data?.items?.length);
-            }
-        } catch (error) {
-            // toast.error(`${t('Failed to send verification code')}`)
-            console.log(error);
-        }
-    };
 
     const fetchData = async () => {
 
