@@ -186,11 +186,6 @@ const PaymentSection = ({
 
   const handleEmptyCart = async () => {
     if (isloading) return;
-
-    // if (!window.confirm(t("Are you sure to empty cart items?"))) {
-    //   return;
-    // }
-
     try {
       setIsLoading(true);
       await AxiosInstance.delete(`/carts/trash`, {}).finally(async () => {
@@ -201,8 +196,6 @@ const PaymentSection = ({
   };
 
   if (!isLoggedIn) {
-    // window.confirm("You need to login first");
-    // navigate("/login");
     setShowAlert(true);
     return;
   }
