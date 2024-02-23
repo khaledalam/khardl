@@ -48,8 +48,7 @@ const PaymentSection = ({
   const [couponDiscountValue, setCouponDiscountValue] = useState(null);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [paymentMethod, setPaymentMethod] = useState(
-    paymentMethods && paymentMethods[0] ? paymentMethods[0]?.name : ""
-  );
+    paymentMethods && paymentMethods[0] ? paymentMethods[0]?.name : "Cash on Delivery");
   const [deliveryCost, setDeliveryCost] = useState(0);
   const [activeDeliveryType, setActiveDeliveryType] = useState("pickup");
   const [showTAPClientCard, setShowTAPClientCard] = useState(false);
@@ -673,7 +672,7 @@ const PaymentSection = ({
       />
       <ConfirmationModal
         isOpen={showAlert}
-        message={t("Are You sure you want to place the order?")}
+        message={t("You need to login first")}
         onClose={() => {
           setShowAlert(false);
           navigate('/login');
