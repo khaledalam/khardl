@@ -174,3 +174,31 @@ body::-webkit-scrollbar-track {
   text-overflow: ellipsis;
   max-width:80px;
 }
+.category-scroller-section{
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  min-height: 130px;
+  padding: 0 15px;
+}
+.category-scroller-section::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
+}
+.confirm-modal{
+max-height: 220px !important;
+}
+.backdrop-custom{
+  position: fixed;
+  z-index: 99999;
+  background-color: #00000050;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

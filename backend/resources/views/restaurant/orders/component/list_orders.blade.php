@@ -4,6 +4,17 @@
     <div class="card card-flush py-4 flex-row-fluid">
         <form action="">
             @csrf
+            <div class="modal fade show d-none" id="spinner" tabindex="-1" aria-hidden="false">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="spinner-border m-auto" role="status" >
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    <!--end::Modal content-->
+                </div>
+                <!--end::Modal dialog-->
+            </div>
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                 <!--begin::Card title-->
                 <div class="card-title">
@@ -61,6 +72,8 @@
                 <!--end::Card toolbar-->
             </div>
         </form>
+
+
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body pt-0">
@@ -161,7 +174,33 @@
                         <td class="text-end pe-0">
                             <span class="fw-bolder">{{__(''.$order->payment_method->name)}}</span>
                         </td><td class="text-end pe-0">
-                            <span class="fw-bolder">{{__(''.$order->delivery_type->name)}}</span>
+                            <span class="fw-bolder">
+
+                                @if($order->delivery_type->name == \App\Models\Tenant\DeliveryType::DELIVERY)
+                                    {{__(''.$order->delivery_type->name)}}
+                                    @if($order->status == \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
+                                        <?php $delivery_companies = $order->getAcceptedDelivery();?>
+                                        @if($delivery_companies)
+                                        <br>
+                                        ( {{__('Sent to ') . $delivery_companies}})
+                                        @endif
+                                    @elseif($order->status == \App\Models\Tenant\Order::ACCEPTED)
+                                    <?php $delivery_companies = $order->getAcceptedDelivery();?>
+                                    @if($delivery_companies)
+                                    <br>
+                                       ( {{__('Accepted by ') . $delivery_companies}})
+                                    @endif
+
+                                    @elseif($order->status == \App\Models\Tenant\Order::COMPLETED || $order->status == \App\Models\Tenant\Order::CANCELLED)
+                                        @if($order->deliver_by)
+                                        <br>
+                                        ( {{__('Assigned to ') . __($order->deliver_by)}})
+                                        @endif
+                                    @endif
+                                @else
+                                    {{__(''.$order->delivery_type->name)}}
+                                @endif
+                            </span>
                         </td>
                         <td class="text-end pe-0">
                             @if($order->payment_status == \App\Models\Tenant\PaymentMethod::PAID)
@@ -264,7 +303,8 @@
                                             console.log('sssss');
                                             $('#reasonInputContainer').append(reasonInput.clone());
                                         }
-
+                                        document.getElementById('spinner').classList.remove("d-none");
+                                        document.getElementById('spinner').classList.add("d-block");
                                         form.submit();
 
                                     }

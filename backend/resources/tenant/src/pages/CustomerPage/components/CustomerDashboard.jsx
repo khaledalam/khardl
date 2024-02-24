@@ -18,7 +18,10 @@ const CustomerDashboard = () => {
   const [cashback, setCashback] = useState(0);
   const [loyaltyPoints, setLoyaltyPoints] = useState(0);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetchProfileData().then((r) => null);
+  // }, []);
+   useEffect(() => {
     fetchProfileData().then((r) => null);
   }, []);
 
@@ -28,6 +31,7 @@ const CustomerDashboard = () => {
 
     try {
       const profileResponse = await AxiosInstance.get(`user`);
+      console.log("profileResponse >>>DASHBOARD", profileResponse.data)
 
       if (profileResponse.data) {
         setCashback(profileResponse.data?.data?.cashback);

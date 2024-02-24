@@ -6,6 +6,7 @@ namespace Tests\Feature\API;
 use App\Models\Tenant\RestaurantUser;
 use Spatie\Permission\Models\Role;
 use Tests\TenantTestCase;
+use Tests\TestUtils;
 
 
 class DriverBase extends TenantTestCase

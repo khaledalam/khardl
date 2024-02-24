@@ -25,4 +25,14 @@ abstract class TestCase extends BaseTestCase
     public function __get($key) {
         throw new Exception('attempted to read non-existing property:'. $key);
     }
+
+    public static function setTestingCentral(): void
+    {
+        putenv('TESTING_CENTRAL=1');
+    }
+
+    public static function setTestingTenant(): void
+    {
+        putenv('TESTING_CENTRAL=0');
+    }
 }

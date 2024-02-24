@@ -35,8 +35,6 @@ class AssignDeliveryCompany implements ShouldQueue
     {
         /* Not assigned driver yet */
         if($this->order->refresh()->driver_id==null){
-            $this->order->deliver_by = "Waiting delivery company";
-            $this->order->save();
             $orderController = new OrderController();
             $orderController->assignOrderToDC($this->exceptJson,$this->order,$this->status);
         }

@@ -6,7 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tests\TenantTestCase;
-
+use Tests\TestUtils;
 
 
 class TenantLoginTest extends TenantTestCase
@@ -65,6 +65,5 @@ class TenantLoginTest extends TenantTestCase
             "data" =>  "Too many verification attempts. Request a new verification code."
         ]);
     }
-
 
 }

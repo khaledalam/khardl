@@ -230,5 +230,13 @@ class Order extends Model
     {
       return OrderFactory::new();
     }
+    public function getAcceptedDelivery(){
+        $data = [];
+        (!$this->cervo_ref)?:$data[]=__('Cervo');
+        (!$this->yeswa_ref)?:$data[]=__('Yeswa');
+        (!$this->streetline_ref)?:$data[]=__('StreetLine');
+        if(empty($data)) return false;
+        return implode(",", $data);
+    }
 
 }

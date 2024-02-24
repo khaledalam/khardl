@@ -13,6 +13,7 @@ use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 use App\Packages\DeliveryCompanies\DeliveryCompanyInterface;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
+use Exception;
 
 abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
 {
@@ -21,7 +22,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
     {
         $this->delivery_company = DeliveryCompany::where('module',class_basename($this))->firstOrFail();
     }
-    abstract public function assignToDriver(Order $order,RestaurantUser $customer):bool;
+    abstract public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool | Exception;
     abstract public function verifyApiKey(string $api_key): bool;
     abstract public function cancelOrder($id): bool;
     abstract public function processWebhook(array $payload);
@@ -49,9 +50,9 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
                 $response = Http::$method($url,$data);
             }
           
+         
             if($response->successful()){
                 $response =  json_decode($response->getBody(), true);
-
                 return [
                     'http_code'=> ResponseHelper::HTTP_OK,
                     'message'=> $response
