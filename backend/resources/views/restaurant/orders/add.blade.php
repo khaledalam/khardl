@@ -243,6 +243,7 @@
         var productQuantity = {};
         var OptionsPrice = {};
         var oldProductSelectOptions = {};
+        var QtyWhenChange = {};
         let cuurent_product = null;
         var productSelect = null;
         var product_copies = {};
@@ -516,14 +517,14 @@
                         var subtotal = parseFloat(price * productQuantity[product][copy]);
                         console.log(subtotal);
                         totalCost += subtotal;
-                        OptionsPrice[product][copy] += subtotal;
+                        OptionsPrice[product][copy] += parseFloat(price);
                         productTotals[product][copy] +=subtotal;
                     }
                 } else {
                     if(price&&price > 0){
                         var subtotal = parseFloat(price * productQuantity[product][copy]);
                         totalCost -= subtotal;
-                        OptionsPrice[product][copy] -= subtotal;
+                        OptionsPrice[product][copy] -= parseFloat(price);
                         productTotals[product][copy] -=subtotal;
                     }
                 }
@@ -544,27 +545,34 @@
                 console.log($(this).val);
                 if (typeof oldProductSelectOptions[product] === 'undefined') {
                     oldProductSelectOptions[product] = {};
+                    QtyWhenChange[product] = {};
                 }
 
                 if (typeof oldProductSelectOptions[product][copy] === 'undefined') {
                     oldProductSelectOptions[product][copy] = [];
+                    QtyWhenChange[product][copy] = {};
                 }
 
 
 
                 if (typeof oldProductSelectOptions[product][copy][index] === 'undefined' ||oldProductSelectOptions[product][copy][index] === null) {
-                 oldProductSelectOptions[product][copy][index] = [];
+                    oldProductSelectOptions[product][copy][index] = [];
+                    QtyWhenChange[product][copy][index] = {};
+                    OptionsPrice[product][copy] += parseFloat(price);
                 } else {
                     console.log('Inneer : '+Innerindex);
-                    subtotal -= oldProductSelectOptions[product][copy][index];
+                    /*
+                    We need to get price of last change and the quantity of last change multiply of current qty
+                     */
+                    subtotal -= (oldProductSelectOptions[product][copy][index] / QtyWhenChange[product][copy][index] ) * productQuantity[product][copy];
+                    OptionsPrice[product][copy] += parseFloat(price) - (oldProductSelectOptions[product][copy][index] / QtyWhenChange[product][copy][index] );
                 }
                 console.log(subtotal);
                 if (Array.isArray(oldProductSelectOptions[product][copy])) {
-
                     totalCost += subtotal;
-                    OptionsPrice[product][copy] += subtotal;
                     productTotals[product][copy] +=subtotal;
                     oldProductSelectOptions[product][copy][index] = parseFloat(price * productQuantity[product][copy]);
+                    QtyWhenChange[product][copy][index] = productQuantity[product][copy];
                     updateTotalCost();
                 } else {
                     console.error('oldProductSelectOptions[product] is not an array');
