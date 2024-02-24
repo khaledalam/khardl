@@ -27,14 +27,12 @@ class DeliveryWebhookController extends Controller
                     ]
                 ];
                 $request = $client->request('post',$url,$data);
-                return response()->json(['message'=>"received"],200);
-            } else {      // production url webhook
-                $client = new \GuzzleHttp\Client();
-                $data = [ 
-                    'query' =>$request->all() + 
-                    ['delivery_company'=>request()->header('Delivery-Company') ?? '']
-                ];
-            }
+            }      // production url webhook
+            $client = new \GuzzleHttp\Client();
+            $data = [ 
+                'query' =>$request->all() + 
+                ['delivery_company'=>request()->header('Delivery-Company') ?? '']
+            ];
             if(request()->header('Delivery-Company') == 'yeswa') {
                 $tenant_id = request()->header('Origin-Id') ?? false;
                 if(!$tenant_id){
