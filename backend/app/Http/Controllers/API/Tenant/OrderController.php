@@ -62,18 +62,12 @@ class  OrderController extends BaseRepositoryController
             }
             return redirect()->back()->with('error',__('This branch does not support delivery'));
         }
-        if (!$setting->delivery_companies_option) {
-            if ($request->expectsJson()) {
-                return $this->sendError('Fail', __('Order delivery is not enabled in restaurant settings'));
-            }
-            return redirect()->back()->with('error',__('Order delivery is not enabled in restaurant settings'));
-        }
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
-      
-        
-        
+
+
+
         if($request->status == Order::REJECTED && $request->reason){
             $order->update([
                 'status' => $request->status,
@@ -127,7 +121,7 @@ class  OrderController extends BaseRepositoryController
 
     public function handelDeliveryOrder($order,$request)
     {
-      
+
         $settings = Setting::first();
         if($settings && $settings->drivers_option && $settings->delivery_companies_option){
             if($settings->limit_delivery_company){
@@ -146,7 +140,7 @@ class  OrderController extends BaseRepositoryController
     }
     private function assignOrderToDC($exceptJson,$order,$status)
     {
-        
+
         $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
         if(empty($deliveryCompanies)){
             if ($exceptJson) {
@@ -156,7 +150,7 @@ class  OrderController extends BaseRepositoryController
         }else {
             $deliveryCompaniesDelivered = implode(" , ", $deliveryCompanies);
             $order->update(['status' => $status,'received_by_restaurant_at'=> now()]);
-       
+
             if ($exceptJson) {
                 return $this->sendResponse(null, __("Order has been delivered to :companies, waiting for accepting ...",["companies"=>$deliveryCompaniesDelivered]));
             }
