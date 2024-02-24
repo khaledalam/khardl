@@ -429,5 +429,10 @@
   "Close": "Close",
   "Done": "Done",
   "Slide Added": "Slide Added",
-  "Image Removed": "Image Removed"
+  "Image Removed": "Image Removed",
+  "Confirm": "Confirm",
+  "ok": "OK",
+  "Enable location permissions for this website in your browser settings.": "Enable location permissions for this website in your browser settings.",
+  "Sorry, Geolocation is not supported by your browser. You can continue by typing your location on the map.": "Sorry, Geolocation is not supported by your browser. You can continue by typing your location on the map.",
+  "Unable to access your location. You can continue by typing your location on the map.": "Unable to access your location. You can continue by typing your location on the map."
 }

@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { IoClose } from "react-icons/io5";
 import './PaymentSection.css';
 import {updateCustomerAddress,} from "../../../redux/NewEditor/customerSlice"
+import ConfirmationModal from "../../../components/confirmationModal"
 
 
 import { GoSellElements } from "@tap-payments/gosell";
@@ -47,14 +48,19 @@ const PaymentSection = ({
   const [couponDiscountValue, setCouponDiscountValue] = useState(null);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [paymentMethod, setPaymentMethod] = useState(
-    paymentMethods && paymentMethods[0] ? paymentMethods[0]?.name : ""
-  );
+    paymentMethods && paymentMethods[0] ? paymentMethods[0]?.name : "Cash on Delivery");
   const [deliveryCost, setDeliveryCost] = useState(0);
   const [activeDeliveryType, setActiveDeliveryType] = useState("pickup");
   const [showTAPClientCard, setShowTAPClientCard] = useState(false);
   const language = useSelector((state) => state.languageMode.languageMode);
   const [spinner, setSpinner] = useState(false);
   const customerAddress = useSelector((state) => state.customerAPI.address)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+
+
 
   const callbackFunc = async (response) => {
     try {
@@ -121,9 +127,10 @@ const PaymentSection = ({
     setActiveDeliveryType(type.name.toLowerCase());
   };
 
+  const placeOrder = async () => {setConfirm(true);};
   const handlePlaceOrder = async () => {
-    if (window.confirm(t("Are You sure you want to place the order?"))) {
       try {
+        setConfirm(false)
         if (paymentMethod == "Cash on Delivery") {
           try {
             const cartResponse = await AxiosInstance.post(`/orders`, {
@@ -170,16 +177,15 @@ const PaymentSection = ({
         toast.error(error.response.data.message);
         console.log(error);
       }
-    }
+  };
+
+  const emptyCart = async () => {
+    // if (loading) return;
+    setModalOpen(true);
   };
 
   const handleEmptyCart = async () => {
     if (isloading) return;
-
-    if (!window.confirm(t("Are you sure to empty cart items?"))) {
-      return;
-    }
-
     try {
       setIsLoading(true);
       await AxiosInstance.delete(`/carts/trash`, {}).finally(async () => {
@@ -190,8 +196,7 @@ const PaymentSection = ({
   };
 
   if (!isLoggedIn) {
-    window.confirm("You need to login first");
-    navigate("/login");
+    setShowAlert(true);
     return;
   }
 
@@ -644,6 +649,29 @@ const PaymentSection = ({
         </div>
       </div>
       {/* payment summary */}
+
+      <ConfirmationModal
+        isOpen={modalOpen}
+        message={t('Are you sure to empty cart items?')}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleEmptyCart}
+      />
+
+      <ConfirmationModal
+        isOpen={confirm}
+        message={t("Are You sure you want to place the order?")}
+        onClose={() => setConfirm(false)}
+        onConfirm={handlePlaceOrder}
+      />
+      <ConfirmationModal
+        isOpen={showAlert}
+        message={t("You need to login first")}
+        onClose={() => {
+          setShowAlert(false);
+          navigate('/login');
+        }}
+      />
+
       <div className="w-full lg:w-1/2 mx-auto my-8">
         <CartColumn headerTitle={t("Payment Summary")}>
           <div className="p-6 flex flex-col gap-4 border border-[var(--primary)">
@@ -699,7 +727,7 @@ const PaymentSection = ({
           </div>
           <div className="w-full h-[45px] flex items-center gap-2 my-2">
             <div
-              onClick={handleEmptyCart}
+              onClick={emptyCart}
               className="w-full lg:w-1/2 h-full flex cursor-pointer items-center justify-center bg-[var(--danger)]"
             >
               <div className="flex items-center gap-4">
@@ -715,9 +743,12 @@ const PaymentSection = ({
                 </h3>
               </div>
             </div>
+
+          
+
             {/*{showTAPClientCard && GoSell()}*/}
             <div
-              onClick={handlePlaceOrder}
+              onClick={placeOrder}
               style={{ backgroundColor: styles?.categoryDetail_cart_color }}
               className={`w-full lg:w-1/2 h-full flex items-center cursor-pointer justify-center ${styles?.categoryDetail_cart_color ? "" : "bg-[var(--primary)]"
                 }`}
