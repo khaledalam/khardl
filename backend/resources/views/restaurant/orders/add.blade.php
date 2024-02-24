@@ -374,7 +374,7 @@
                 data-bs-target="#kt_modal_select_options_${selectedProduct.id}_${product_copies[selectedProduct.id]}"></i>
                 <i class="bi bi-trash btn-sm btn btn-danger remove-product-btn"
                 data-product="${selectedProduct.id}"
-                data-copies="${product_copies[selectedProduct.id]}"></i>
+                data-copy="${product_copies[selectedProduct.id]}"></i>
             </td>
            </tr>
         `;
@@ -540,9 +540,6 @@
                 var Innerindex = $(this).data('inner-index');
                 console.log(price);
                 let subtotal = parseFloat(price * productQuantity[product][copy]);
-                console.log(subtotal);
-                console.log(copy);
-                console.log($(this).val);
                 if (typeof oldProductSelectOptions[product] === 'undefined') {
                     oldProductSelectOptions[product] = {};
                     QtyWhenChange[product] = {};
@@ -567,7 +564,6 @@
                     subtotal -= (oldProductSelectOptions[product][copy][index] / QtyWhenChange[product][copy][index] ) * productQuantity[product][copy];
                     OptionsPrice[product][copy] += parseFloat(price) - (oldProductSelectOptions[product][copy][index] / QtyWhenChange[product][copy][index] );
                 }
-                console.log(subtotal);
                 if (Array.isArray(oldProductSelectOptions[product][copy])) {
                     totalCost += subtotal;
                     productTotals[product][copy] +=subtotal;
@@ -632,10 +628,10 @@
         });
         $('#product_table').on('click', '.remove-product-btn', function() {
             var productId = $(this).data('product');
-            var productTotal = productTotals[productId];
-            console.log(productTotal);
+            var copy = $(this).data('copy');
+            var productTotal = productTotals[productId][copy];
             totalCost -= parseFloat(productTotal);
-            delete productTotals[productId];
+            delete productTotals[productId][copy];
             $(this).closest('tr').remove();
             updateTotalCost();
         });
