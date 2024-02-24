@@ -249,32 +249,53 @@
         var product_copies = {};
         function getOldProductData() {
             var products = {!! json_encode(old('products')) !!};
+            console.log(products);
             var branch_id = "";
             if(products) {
                 Object.keys(products).forEach(key => {
-                    $.ajax({
-                        url: `/get-product-by-id/${key}`,
-                        type: 'GET',
-                        success: function(data) {
-                            var product = data.data;
-                            branch_id = product.branch.id;
-                            var tableRow = TableRow(product);
-                            $('#product_table').append(tableRow);
-                            var modalRow = ModalRow(product);
-                            $('#modal_here').append(modalRow);
-                            totalCost += parseFloat(product.price);
-                            productTotals[product.id] = parseFloat(product.price);
-                            productQuantity[product.id] = 1;
-                            OptionsPrice[product.id] = 0;
-                            updateTotalCost();
-                            //Track options
-                            //Track on change qty
-                            onChangeQty(product);
-                        },
-                        error: function(xhr, status, error) {
-                            console.error( error);
+                    if (typeof products[key] === 'object' && !Array.isArray(products[key])) {
+                        var flag = 1;
+                        var product = {};
+                        for (let copy in products[key]) {
+                            if (products[key].hasOwnProperty(copy)) {
+                                let qty = products[key][copy];
+                                $.ajax({
+                                    url: `/get-product-by-id/${key}`,
+                                    type: 'GET',
+                                    success: function(data) {
+                                        product = data.data;
+                                        branch_id = product.branch.id;
+                                        product_copies[product.id] = copy;
+                                        var tableRow = TableRow(product,qty);
+                                        $('#product_table').append(tableRow);
+                                        var modalRow = ModalRow(product);
+                                        $('#modal_here').append(modalRow);
+                                        totalCost += parseFloat(product.price) * qty;
+                                        if (!productTotals[product.id]) {
+                                            productTotals[product.id] = {};
+                                        }
+                                        if (!productQuantity[product.id]) {
+                                            productQuantity[product.id] = {};
+                                        }
+                                        if (!OptionsPrice[product.id]) {
+                                            OptionsPrice[product.id] = {};
+                                        }
+                                        productTotals[product.id][copy] = parseFloat(product.price) * qty;
+                                        productQuantity[product.id][copy] = qty;
+                                        OptionsPrice[product.id][copy] = 0;
+                                        updateTotalCost();
+                                        //Track on change qty
+                                        onChangeQty(product);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error( error);
+                                    }
+                                });
+                            }
                         }
-                    });
+                    } else {
+                        console.error("Value corresponding to key is not an object or is an array");
+                    }
                 });
                 var current_branch = $('#branchSelect').val();
                 productSelect = initializeProductSelect(current_branch,false);
@@ -346,7 +367,7 @@
         }
 
 
-        function TableRow(selectedProduct) {
+        function TableRow(selectedProduct,qty = 1) {
             return `
            <tr>
             <td>
@@ -363,7 +384,7 @@
             <td>
                 <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
                     <div class="ms-5">
-                        <input type="number" class="form-control product_quantity" min="1" data-copy="${product_copies[selectedProduct.id]}" name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]" value="1" />
+                        <input type="number" class="form-control product_quantity" min="1" data-copy="${product_copies[selectedProduct.id]}" name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]" value="${qty}" />
                     </div>
                 </div>
             </td>
@@ -629,8 +650,10 @@
         $('#product_table').on('click', '.remove-product-btn', function() {
             var productId = $(this).data('product');
             var copy = $(this).data('copy');
-            var productTotal = productTotals[productId][copy];
-            totalCost -= parseFloat(productTotal);
+            console.log(productId,copy);
+            subtotal  = productTotals[productId][copy];
+            console.log(subtotal);
+            totalCost -= parseFloat(subtotal);
             delete productTotals[productId][copy];
             $(this).closest('tr').remove();
             updateTotalCost();
