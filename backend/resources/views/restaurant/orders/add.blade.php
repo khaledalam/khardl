@@ -362,17 +362,18 @@
             <td>
                 <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
                     <div class="ms-5">
-                        <input type="number" class="form-control product_quantity" min="1" name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]" value="1" />
+                        <input type="number" class="form-control product_quantity" min="1" data-copy="${product_copies[selectedProduct.id]}" name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]" value="1" />
                     </div>
                 </div>
             </td>
             <td>
                 <i class="bi bi-eye btn-sm btn btn-success"
                 data-bs-toggle="modal"
-                id="options_${selectedProduct.id}"
+                id="options_${selectedProduct.id}_${product_copies[selectedProduct.id]}"
                 data-bs-target="#kt_modal_select_options_${selectedProduct.id}_${product_copies[selectedProduct.id]}"></i>
                 <i class="bi bi-trash btn-sm btn btn-danger remove-product-btn"
-                data-product="${selectedProduct.id}"></i>
+                data-product="${selectedProduct.id}"
+                data-copies="${product_copies[selectedProduct.id]}"></i>
             </td>
            </tr>
         `;
@@ -388,7 +389,7 @@
             let haveRequiredFiled = false;
             let optionsHTML = '';
             if (!selectedProduct.checkbox_input_titles && !selectedProduct.selection_input_titles && !selectedProduct.dropdown_input_titles) {
-                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
+                var elementToRemove = document.getElementById(`options_${selectedProduct.id}_${product_copies[selectedProduct.id]}`);
                 elementToRemove.remove();
                 return '';
             }
@@ -404,7 +405,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][checkbox_input][${index}][]" >
+                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-copy="${product_copies[selectedProduct.id]}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][checkbox_input][${index}][]" >
                             <span class="product_option_price">{{ __('SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -425,7 +426,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][selection_input][${index}]">
+                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-copy="${product_copies[selectedProduct.id]}"  data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][selection_input][${index}]">
                             <span class="product_option_price">{{ __('SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -454,7 +455,7 @@
             }
             if (haveRequiredFiled) {
                 console.log('test');
-                var addRequired = document.getElementById(`options_${selectedProduct.id}`);
+                var addRequired = document.getElementById(`options_${selectedProduct.id}_${product_copies[selectedProduct.id]}`);
                 addRequired.classList.add('required');
             }
             return `
@@ -483,12 +484,14 @@
     `;
         }
         function onChangeQty(selectedProduct){
-            $('#product_table').on('input', `input[name="products[${selectedProduct.id}][]"]`, function() {
+            $('#product_table').on('input', `input[name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]"]`, function() {
+                console.log('get here');
+                var copy = $(this).data('copy');
                 // Update the total cost when the quantity changes
-                var oldTotal = productTotals[selectedProduct.id] || 0;
+                var oldTotal = productTotals[selectedProduct.id][copy] || 0;
                 // Update the total cost by subtracting the old total and adding the new total
                 var quantity = $(this).val();
-                var optionPrice = OptionsPrice[selectedProduct.id];
+                var optionPrice = OptionsPrice[selectedProduct.id][copy];
                 console.log(optionPrice);
                 var productTotal = (parseFloat(selectedProduct.price) + optionPrice)* quantity;
                 console.log(selectedProduct.id, totalCost);
@@ -496,8 +499,8 @@
                 console.log(oldTotal, quantity, productTotal, totalCost);
 
                 // Update the old total for this product
-                productTotals[selectedProduct.id] = productTotal;
-                productQuantity[selectedProduct.id] = quantity;
+                productTotals[selectedProduct.id][copy] = productTotal;
+                productQuantity[selectedProduct.id][copy] = quantity;
                 console.log(productTotals);
                 updateTotalCost();
             });
@@ -506,22 +509,22 @@
             $('#modal_here').on('change', 'input[type="checkbox"][name^="product_options"]', function() {
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
+                var copy = $(this).data('copy');
                 var isChecked = $(this).is(':checked');
-                console.log(isChecked,product,price,productQuantity[product]);
                 if (isChecked) {
                     if(price&&price > 0){
-                        var subtotal = parseFloat(price * productQuantity[product]);
+                        var subtotal = parseFloat(price * productQuantity[product][copy]);
                         console.log(subtotal);
                         totalCost += subtotal;
-                        OptionsPrice[product] += subtotal;
-                        productTotals[product] +=subtotal;
+                        OptionsPrice[product][copy] += subtotal;
+                        productTotals[product][copy] +=subtotal;
                     }
                 } else {
                     if(price&&price > 0){
-                        var subtotal = parseFloat(price * productQuantity[product]);
+                        var subtotal = parseFloat(price * productQuantity[product][copy]);
                         totalCost -= subtotal;
-                        OptionsPrice[product] -= subtotal;
-                        productTotals[product] -=subtotal;
+                        OptionsPrice[product][copy] -= subtotal;
+                        productTotals[product][copy] -=subtotal;
                     }
                 }
                 updateTotalCost();
@@ -532,28 +535,36 @@
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
                 var index = $(this).data('index');
+                var copy = $(this).data('copy');
                 var Innerindex = $(this).data('inner-index');
                 console.log(price);
-                let subtotal = parseFloat(price * productQuantity[product]);
+                let subtotal = parseFloat(price * productQuantity[product][copy]);
                 console.log(subtotal);
+                console.log(copy);
                 console.log($(this).val);
-                if (!oldProductSelectOptions[product]) {
-                    oldProductSelectOptions[product] = [];
+                if (typeof oldProductSelectOptions[product] === 'undefined') {
+                    oldProductSelectOptions[product] = {};
                 }
 
-                if (typeof oldProductSelectOptions[product][index] === 'undefined' ||oldProductSelectOptions[product][index] === null) {
-                 oldProductSelectOptions[product][index] = [];
+                if (typeof oldProductSelectOptions[product][copy] === 'undefined') {
+                    oldProductSelectOptions[product][copy] = [];
+                }
+
+
+
+                if (typeof oldProductSelectOptions[product][copy][index] === 'undefined' ||oldProductSelectOptions[product][copy][index] === null) {
+                 oldProductSelectOptions[product][copy][index] = [];
                 } else {
                     console.log('Inneer : '+Innerindex);
-                    subtotal -= oldProductSelectOptions[product][index];
+                    subtotal -= oldProductSelectOptions[product][copy][index];
                 }
                 console.log(subtotal);
-                if (Array.isArray(oldProductSelectOptions[product])) {
+                if (Array.isArray(oldProductSelectOptions[product][copy])) {
 
                     totalCost += subtotal;
-                    OptionsPrice[product] += subtotal;
-                    productTotals[product] +=subtotal;
-                    oldProductSelectOptions[product][index] = parseFloat(price * productQuantity[product]);
+                    OptionsPrice[product][copy] += subtotal;
+                    productTotals[product][copy] +=subtotal;
+                    oldProductSelectOptions[product][copy][index] = parseFloat(price * productQuantity[product][copy]);
                     updateTotalCost();
                 } else {
                     console.error('oldProductSelectOptions[product] is not an array');
@@ -583,10 +594,18 @@
 
             // Update the total cost
             totalCost += parseFloat(selectedProduct.price);
-            productTotals[selectedProduct.id] = parseFloat(selectedProduct.price);
-            console.log(productTotals);
-            productQuantity[selectedProduct.id] = 1;
-            OptionsPrice[selectedProduct.id] = 0;
+            if (typeof productTotals[selectedProduct.id] === 'undefined') {
+                productTotals[selectedProduct.id] = {};
+            }
+            productTotals[selectedProduct.id][product_copies[selectedProduct.id]] = parseFloat(selectedProduct.price);
+            if (typeof productQuantity[selectedProduct.id] === 'undefined') {
+                productQuantity[selectedProduct.id] = {};
+            }
+            if (typeof OptionsPrice[selectedProduct.id] === 'undefined') {
+                OptionsPrice[selectedProduct.id] = {};
+            }
+            productQuantity[selectedProduct.id][product_copies[selectedProduct.id]] = 1;
+            OptionsPrice[selectedProduct.id][product_copies[selectedProduct.id]] = 0;
             updateTotalCost();
             productSelect.val(null).trigger('change');
         });
