@@ -153,20 +153,7 @@
                         <!--begin::Status=-->
                         <td class="text-end pe-0" data-order="Refunded">
                             <!--begin::Badges-->
-                            @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
-                                <span class="badge badge-primary " >{{__("accepted")}}</span>
-                            @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
-                                <span class="badge badge-secondary ">{{__("pending")}}</span>
-                            @elseif($order->status ==  \App\Models\Tenant\Order::RECEIVED_BY_RESTAURANT)
-                                <span class="badge badge-warning ">{{__("received_by_restaurant")}}</span>
-                            @elseif($order->status ==  \App\Models\Tenant\Order::CANCELLED)
-                                <span class="badge badge-danger ">{{__("cancelled")}}</span>
-                            @elseif($order->status ==  \App\Models\Tenant\Order::READY)
-                                <span class="badge badge-info ">{{__("ready")}}</span>
-                            @elseif($order->status ==  \App\Models\Tenant\Order::COMPLETED)
-                                <span class="badge badge-success ">{{__("completed")}}</span>
-                            @endif
-
+                            <span class="badge {{ $order->status }} ">{{__($order->status)}}</span>
                             <!--end::Badges-->
                         </td>
                         <!--end::Status=-->
@@ -225,8 +212,7 @@
                                 {{-- <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" data-kt-ecommerce-order-filter="delete_row">Delete</a>
                                 </div> --}}
-                                @if($order->status == \App\Models\Tenant\Order::CANCELLED || $order->status == \App\Models\Tenant\Order::COMPLETED  )
-                                @else
+                                @if($order->status != \App\Models\Tenant\Order::CANCELLED && $order->status != \App\Models\Tenant\Order::COMPLETED && $order->status != \App\Models\Tenant\Order::REJECTED  )
                                     <div class="menu-item px-3">
                                         <a href="#" onclick='showConfirmation("{{$order->id}}","{{$order->status}}")' class="menu-link px-3" >{{__('Changes status')}}</a>
                                     </div>
@@ -247,6 +233,7 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="status" id="orderStatus" >
+                    <div id="reasonInputContainer"></div>
                 </form>
                 <script>
                     function showConfirmation(orderId,status) {
@@ -257,7 +244,6 @@
                             .replace(':status', status)
                             .replace(':orderId', orderId),
                             success: function(response) {
-
                                 Swal.fire({
                                     text: '{{ __('are-you-sure-you-want-to-change-order-status')}}',
                                     icon: 'warning',
@@ -266,13 +252,19 @@
                                     inputOptions: response,
                                     inputPlaceholder: "{{ __('Select an option') }}",
                                     confirmButtonText: "{{ __('yes') }}",
-                                    cancelButtonText: "{{ __('no') }}"
+                                    cancelButtonText: "{{ __('no') }}",
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         const selectedStatus = result.value;
                                         document.getElementById('orderStatus').setAttribute('value',selectedStatus);
                                         var form = document.getElementById('approve-form');
-                                        form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId)
+                                        form.action = `{{ route('restaurant.branch.order.status', ['order' => ':orderId']) }}`.replace(':orderId', orderId);
+                                        const reasonInput = $('input[name="reason"]');
+                                        if (reasonInput.length) {
+                                            console.log('sssss');
+                                            $('#reasonInputContainer').append(reasonInput.clone());
+                                        }
+
                                         form.submit();
 
                                     }
@@ -280,6 +272,30 @@
                         }});
 
                     }
+                    $(document).on('change','.swal2-select',function(){
+                        var val = $('option:selected',this).val();
+                        console.log(val);
+                        // Check if the selected value is "rejected"
+                        if (val == 'rejected') {
+                            // Add input if it doesn't exist
+                            if (!$('input[name="reason"]').length) {
+                                var input = `
+                                <label for="name" class="reject_reason_label">
+                                    <h4 class="my-4">
+                                        {{ __("Reject reason") }}
+                                        <span class="text-danger">*</span>
+                                    </h4>
+                                </label>
+                                <input type="text" name="reason" class="form-control" required placeholder="{{ __("Reason") }}">`;
+                                $(this).after(input);
+                                $('#reasonInputContainer').html(input);
+                            }
+                        } else {
+                            // Remove input if it exists
+                            $('input[name="reason"]').remove();
+                            $('.reject_reason_label').remove();
+                        }
+                    });
                 </script>
                 {{ $orders->withQueryString()->links('pagination::bootstrap-4') }}
                 <!--end::Table-->
