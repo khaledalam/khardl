@@ -18,6 +18,7 @@
 }
 
 .badge.suspended,
+.badge.rejected  ,
 .badge.cancelled {
     color: #fff;
     background-color: #f1416c;

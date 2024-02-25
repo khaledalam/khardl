@@ -50,7 +50,7 @@
                                                 <label class="required form-label">{{ __('Phone Number') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="phone" type="number" name="phone" placeholder="{{ __('Phone') }}" class="form-control mb-2" value="" required />
+                                                <input id="phone" type="number" name="phone" placeholder="{{ __('Phone') }}" class="form-control mb-2" value="{{ old('phone') }}" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -58,7 +58,7 @@
                                                 <label class="required form-label">{{ __('First name') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="first_name" type="text" name="first_name" placeholder="{{ __('First name') }}" class="form-control mb-2" value="" required />
+                                                <input id="first_name" type="text" name="first_name" placeholder="{{ __('First name') }}" class="form-control mb-2" value="{{ old('first_name') }}" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -66,7 +66,7 @@
                                                 <label class="form-label">{{ __('Last name') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="last_name" type="text" name="last_name" placeholder="{{ __('Last name') }}" class="form-control mb-2" value="" />
+                                                <input id="last_name" type="text" name="last_name" placeholder="{{ __('Last name') }}" class="form-control mb-2" value="{{ old('last_name') }}" />
                                                 <!--end::Editor-->
                                             </div>
                                             <div class="fv-row">
@@ -76,7 +76,11 @@
                                                 <!--begin::Select2-->
                                                 <select class="form-select mb-2" data-hide-search="true" data-placeholder="Select Type" name="delivery_type_id" required>
                                                     @foreach ($deliveryTypes as $type)
-                                                    <option value="{{ $type->id }}">{{ __(''.$type->name) }}</option>
+                                                    <option value="{{ $type->id }}"
+                                                        @if (old('delivery_type_id') == $type->id)
+                                                            {{ 'selected' }}
+                                                        @endif
+                                                        >{{ __(''.$type->name) }}</option>
                                                     @endforeach
                                                 </select>
                                                 <!--end::Select2-->
@@ -88,7 +92,7 @@
                                                 <label class="required form-label">{{ __('Shipping address') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="" required />
+                                                <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" required />
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -98,7 +102,7 @@
                                                 <label class="form-label">{{ __('Order Notes') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Editor-->
-                                                <textarea name="order_notes" placeholder="{{ __('Notes') }}" class="form-control mb-2" value=""></textarea>
+                                                <textarea name="order_notes" placeholder="{{ __('Notes') }}" class="form-control mb-2" >{{ old('order_notes') }}</textarea>
                                                 <!--end::Editor-->
                                             </div>
                                             <!--end::Input group-->
@@ -147,7 +151,10 @@
                                             <select id="branchSelect" name="branch_id" required class="form-select" style="width: 300px;">
                                                 <option>{{ __('Select branch') }}</option>
                                                 @foreach ($branches as $branch)
-                                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                <option value="{{ $branch->id }}"
+                                                    @if (old('branch_id')==$branch->id)
+                                                        {{ 'selected' }}
+                                                    @endif>{{ $branch->name }}</option>
                                                 @endforeach
                                             </select>
                                             <div class="separator"></div>
@@ -227,49 +234,140 @@
 @endsection
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/default-passive-events"></script>
+
 <script>
     $(document).ready(function() {
         var totalCost = 0.00;
-        var branch_id = "";
         var productTotals = {};
         var productQuantity = {};
         var OptionsPrice = {};
         var oldProductSelectOptions = {};
+        var QtyWhenChange = {};
         let cuurent_product = null;
+        var productSelect = null;
+        var product_copies = {};
+        function getOldProductData() {
+            var products = {!! json_encode(old('products')) !!};
+            console.log(products);
+            var branch_id = "";
+            if(products) {
+                Object.keys(products).forEach(key => {
+                    if (typeof products[key] === 'object' && !Array.isArray(products[key])) {
+                        var flag = 1;
+                        var product = {};
+                        for (let copy in products[key]) {
+                            if (products[key].hasOwnProperty(copy)) {
+                                let qty = products[key][copy];
+                                $.ajax({
+                                    url: `/get-product-by-id/${key}`,
+                                    type: 'GET',
+                                    success: function(data) {
+                                        product = data.data;
+                                        branch_id = product.branch.id;
+                                        product_copies[product.id] = copy;
+                                        var tableRow = TableRow(product,qty);
+                                        $('#product_table').append(tableRow);
+                                        var modalRow = ModalRow(product);
+                                        $('#modal_here').append(modalRow);
+                                        totalCost += parseFloat(product.price) * qty;
+                                        if (!productTotals[product.id]) {
+                                            productTotals[product.id] = {};
+                                        }
+                                        if (!productQuantity[product.id]) {
+                                            productQuantity[product.id] = {};
+                                        }
+                                        if (!OptionsPrice[product.id]) {
+                                            OptionsPrice[product.id] = {};
+                                        }
+                                        productTotals[product.id][copy] = parseFloat(product.price) * qty;
+                                        productQuantity[product.id][copy] = qty;
+                                        OptionsPrice[product.id][copy] = 0;
+                                        updateTotalCost();
+                                        //Track on change qty
+                                        onChangeQty(product);
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error( error);
+                                    }
+                                });
+                            }
+                        }
+                    } else {
+                        console.error("Value corresponding to key is not an object or is an array");
+                    }
+                });
+                var current_branch = $('#branchSelect').val();
+                productSelect = initializeProductSelect(current_branch,false);
+            }else{
+                productSelect = initializeProductSelect();
+            }
+        }
+        getOldProductData();
+        function initializeProducts(branch_id){
+            return $('#productSelect').select2({
+                placeholder: "{{ __('Search for a product...') }}"
+                , ajax: {
+                    url: '/search-products?branch_id=' + branch_id
+                    , dataType: 'json'
+                    , delay: 250
+                    , processResults: function(data) {
+                        return {
+                            results: $.map(data.data, function(product) {
+                                return {
+                                    text: product.name
+                                    , id: product.id
+                                    , data: product
+                                };
+                            })
+                        };
+                    }
+                    , error: function(xhr, textStatus, errorThrown) {
+                        console.error('Error fetching product details:', errorThrown);
+                    }
+                    , cache: true
+                }
+                });
+        }
 
-        function initializeProductSelect() {
-
+        function initializeProductSelect(branch_id = "",trackChange = true) {
             if (branch_id == "") {
                 return $('#productSelect').select2();
             } else {
+                if(trackChange){
+
+                }
                 return $('#productSelect').select2({
-                    placeholder: "{{ __('Search for a product...') }}"
-                    , ajax: {
-                        url: '/search-products?branch_id=' + branch_id
-                        , dataType: 'json'
-                        , delay: 250
-                        , processResults: function(data) {
+                    placeholder: "{{ __('Search for a product...') }}",
+                    ajax: {
+                        url: '/search-products?branch_id=' + branch_id,
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function(data) {
                             return {
                                 results: $.map(data.data, function(product) {
                                     return {
-                                        text: product.name
-                                        , id: product.id
-                                        , data: product
+                                        text: product.name,
+                                        id: product.id,
+                                        data: product
                                     };
                                 })
                             };
-                        }
-                        , error: function(xhr, textStatus, errorThrown) {
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
                             console.error('Error fetching product details:', errorThrown);
-                        }
-                        , cache: true
+                        },
+                        cache: true
                     }
-                });
+                }).on('wheel', function(e) {
+                    // Prevent default behavior of the 'wheel' event
+                    e.preventDefault();
+                }, { passive: true }); // Mark the event listener as passive
             }
-
         }
 
-        function TableRow(selectedProduct) {
+
+        function TableRow(selectedProduct,qty = 1) {
             return `
            <tr>
             <td>
@@ -286,15 +384,18 @@
             <td>
                 <div class="d-flex align-items-center" data-kt-ecommerce-edit-order-filter="product" data-kt-ecommerce-edit-order-id="product_${selectedProduct.id}">
                     <div class="ms-5">
-                        <input type="number" class="form-control product_quantity" min="1" name="products[${selectedProduct.id}][]" value="1" />
+                        <input type="number" class="form-control product_quantity" min="1" data-copy="${product_copies[selectedProduct.id]}" name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]" value="${qty}" />
                     </div>
                 </div>
             </td>
             <td>
                 <i class="bi bi-eye btn-sm btn btn-success"
                 data-bs-toggle="modal"
-                id="options_${selectedProduct.id}"
-                data-bs-target="#kt_modal_select_options_${selectedProduct.id}"></i>
+                id="options_${selectedProduct.id}_${product_copies[selectedProduct.id]}"
+                data-bs-target="#kt_modal_select_options_${selectedProduct.id}_${product_copies[selectedProduct.id]}"></i>
+                <i class="bi bi-trash btn-sm btn btn-danger remove-product-btn"
+                data-product="${selectedProduct.id}"
+                data-copy="${product_copies[selectedProduct.id]}"></i>
             </td>
            </tr>
         `;
@@ -310,7 +411,7 @@
             let haveRequiredFiled = false;
             let optionsHTML = '';
             if (!selectedProduct.checkbox_input_titles && !selectedProduct.selection_input_titles && !selectedProduct.dropdown_input_titles) {
-                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
+                var elementToRemove = document.getElementById(`options_${selectedProduct.id}_${product_copies[selectedProduct.id]}`);
                 elementToRemove.remove();
                 return '';
             }
@@ -326,7 +427,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][checkbox_input][${index}][]" >
+                            <input class="form-check-input" id="option_price" type="checkbox" value="${innerIndex}" data-price="${price}" data-copy="${product_copies[selectedProduct.id]}" data-product-id="${selectedProduct.id}" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][checkbox_input][${index}][]" >
                             <span class="product_option_price">{{ __('SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -347,7 +448,7 @@
                         optionsHTML += `<div class="form-check mb-2">`;
                         optionsHTML += `
                             <label class="form-check-label">${getLangName(option)}</label>
-                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][selection_input][${index}]">
+                            <input class="form-check-input" type="radio" value="${innerIndex}" data-index="${index}" data-inner-index="${innerIndex}" data-copy="${product_copies[selectedProduct.id]}"  data-price="${price}" data-product-id="${selectedProduct.id}"  name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][selection_input][${index}]">
                             <span class="product_option_price">{{ __('SAR') }} ${price}</span>
                             `;
                         optionsHTML += `</div>`;
@@ -361,27 +462,26 @@
                     let innerOptions = selectedProduct.dropdown_input_names[index];
                     let isRequired = selectedProduct.dropdown_required[index] == "true";
                     if (isRequired) haveRequiredFiled = true;
+                    console.log(selectedProduct.dropdown_required[index],isRequired,innerOptions);
                     optionsHTML += `<div class="mb-4">
                                 <h6 class="${isRequired ? 'required' : ''}">${getLangName(option)}</h6>`;
-                    optionsHTML += `<select class="form-select" name="product_options[${selectedProduct.id}][dropdown_input][${index}]">
+                    optionsHTML += `
+                    <select class="form-select" name="product_options[${selectedProduct.id}][${product_copies[selectedProduct.id]}][dropdown_input][${index}]">
                         <option value="">{{ __('Select option') }}</option>`;
                     innerOptions.forEach((option, innerIndex) => {
-                        optionsHTML += `
-                            <option value="${innerIndex}">${getLangName(option)}</option>
-                            `;
+                        optionsHTML += `<option value="${innerIndex}">${getLangName(option)}</option>`;
                     });
                     optionsHTML += `</select>`;
-                    optionsHTML += `
-                    </div>`;
+                    optionsHTML += `</div>`;
                 });
             }
             if (haveRequiredFiled) {
                 console.log('test');
-                var elementToRemove = document.getElementById(`options_${selectedProduct.id}`);
-                elementToRemove.classList.add('required');
+                var addRequired = document.getElementById(`options_${selectedProduct.id}_${product_copies[selectedProduct.id]}`);
+                addRequired.classList.add('required');
             }
             return `
-        <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="kt_modal_select_options_${selectedProduct.id}_${product_copies[selectedProduct.id]}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered mw-650px">
                 <div class="modal-content rounded">
                     <div class="modal-header pb-0 border-0 justify-content-end">
@@ -405,25 +505,15 @@
         </div>
     `;
         }
-        var productSelect = initializeProductSelect();
-        productSelect.on('select2:select', function(e) {
-            // Get the selected product data
-            console.log(e);
-            var selectedProduct = e.params.data.data;
-
-            // Append the selected product to the table
-            var tableRow = TableRow(selectedProduct);
-            /* var ModalRow = ModalRow(selectedProduct); */
-            $('#product_table').on('input', `input[name="products[${selectedProduct.id}][]"]`, function() {
+        function onChangeQty(selectedProduct){
+            $('#product_table').on('input', `input[name="products[${selectedProduct.id}][${product_copies[selectedProduct.id]}]"]`, function() {
+                console.log('get here');
+                var copy = $(this).data('copy');
                 // Update the total cost when the quantity changes
-                var oldTotal = productTotals[selectedProduct.id] || 0;
+                var oldTotal = productTotals[selectedProduct.id][copy] || 0;
                 // Update the total cost by subtracting the old total and adding the new total
                 var quantity = $(this).val();
-                if(quantity > 2){
-                    var optionPrice = (OptionsPrice[selectedProduct.id] / (quantity - 1));
-                }else {
-                    var optionPrice = OptionsPrice[selectedProduct.id];
-                }
+                var optionPrice = OptionsPrice[selectedProduct.id][copy];
                 console.log(optionPrice);
                 var productTotal = (parseFloat(selectedProduct.price) + optionPrice)* quantity;
                 console.log(selectedProduct.id, totalCost);
@@ -431,81 +521,124 @@
                 console.log(oldTotal, quantity, productTotal, totalCost);
 
                 // Update the old total for this product
-                productTotals[selectedProduct.id] = productTotal;
-                productQuantity[selectedProduct.id] = quantity;
+                productTotals[selectedProduct.id][copy] = productTotal;
+                productQuantity[selectedProduct.id][copy] = quantity;
+                console.log(productTotals);
                 updateTotalCost();
             });
-            // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
-            $('#product_table').append(tableRow);
-            $('#modal_here').append(ModalRow(selectedProduct));
+        }
+        function onChangeCheckBox(){
             $('#modal_here').on('change', 'input[type="checkbox"][name^="product_options"]', function() {
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
+                var copy = $(this).data('copy');
                 var isChecked = $(this).is(':checked');
-                console.log(isChecked,product,price,productQuantity[product]);
                 if (isChecked) {
                     if(price&&price > 0){
-                        var subtotal = parseFloat(price * productQuantity[product]);
+                        var subtotal = parseFloat(price * productQuantity[product][copy]);
+                        console.log(subtotal);
                         totalCost += subtotal;
-                        OptionsPrice[product] += subtotal;
-                        productTotals[selectedProduct.id] +=subtotal;
+                        OptionsPrice[product][copy] += parseFloat(price);
+                        productTotals[product][copy] +=subtotal;
                     }
                 } else {
                     if(price&&price > 0){
-                        var subtotal = parseFloat(price * productQuantity[product]);
+                        var subtotal = parseFloat(price * productQuantity[product][copy]);
                         totalCost -= subtotal;
-                        OptionsPrice[product] -= subtotal;
-                        productTotals[selectedProduct.id] -=subtotal;
+                        OptionsPrice[product][copy] -= parseFloat(price);
+                        productTotals[product][copy] -=subtotal;
                     }
                 }
                 updateTotalCost();
             });
+        }
+        function onChangeRadio(){
             $('#modal_here').on('change', 'input[type="radio"][name^="product_options"]', function() {
                 var price = $(this).data('price');
                 var product = $(this).data('product-id');
                 var index = $(this).data('index');
+                var copy = $(this).data('copy');
                 var Innerindex = $(this).data('inner-index');
                 console.log(price);
-                let subtotal = parseFloat(price * productQuantity[product]);
-                console.log(subtotal);
-                console.log($(this).val);
-                if (!oldProductSelectOptions[product]) {
-                    oldProductSelectOptions[product] = [];
+                let subtotal = parseFloat(price * productQuantity[product][copy]);
+                if (typeof oldProductSelectOptions[product] === 'undefined') {
+                    oldProductSelectOptions[product] = {};
+                    QtyWhenChange[product] = {};
                 }
 
-                if (typeof oldProductSelectOptions[product][index] === 'undefined' ||oldProductSelectOptions[product][index] === null) {
-                 oldProductSelectOptions[product][index] = [];
+                if (typeof oldProductSelectOptions[product][copy] === 'undefined') {
+                    oldProductSelectOptions[product][copy] = [];
+                    QtyWhenChange[product][copy] = {};
+                }
+
+
+
+                if (typeof oldProductSelectOptions[product][copy][index] === 'undefined' ||oldProductSelectOptions[product][copy][index] === null) {
+                    oldProductSelectOptions[product][copy][index] = [];
+                    QtyWhenChange[product][copy][index] = {};
+                    OptionsPrice[product][copy] += parseFloat(price);
                 } else {
                     console.log('Inneer : '+Innerindex);
-                    subtotal -= oldProductSelectOptions[product][index];
+                    /*
+                    We need to get price of last change and the quantity of last change multiply of current qty
+                     */
+                    subtotal -= (oldProductSelectOptions[product][copy][index] / QtyWhenChange[product][copy][index] ) * productQuantity[product][copy];
+                    OptionsPrice[product][copy] += parseFloat(price) - (oldProductSelectOptions[product][copy][index] / QtyWhenChange[product][copy][index] );
                 }
-                console.log(subtotal);
-                if (Array.isArray(oldProductSelectOptions[product])) {
-
+                if (Array.isArray(oldProductSelectOptions[product][copy])) {
                     totalCost += subtotal;
-                    OptionsPrice[product] += subtotal;
-                    productTotals[selectedProduct.id] +=subtotal;
-                    oldProductSelectOptions[product][index] = parseFloat(price * productQuantity[product]);
+                    productTotals[product][copy] +=subtotal;
+                    oldProductSelectOptions[product][copy][index] = parseFloat(price * productQuantity[product][copy]);
+                    QtyWhenChange[product][copy][index] = productQuantity[product][copy];
                     updateTotalCost();
                 } else {
                     console.error('oldProductSelectOptions[product] is not an array');
                 }
             });
+        }
+        productSelect.on('select2:select', function(e) {
+            // Get the selected product data
+            console.log(e);
+            var selectedProduct = e.params.data.data;
+            //initiate number of copies of same product
+            console.log(product_copies[selectedProduct.id]);
+            if(typeof product_copies[selectedProduct.id] === 'undefined'){
+                product_copies[selectedProduct.id] = 1;
+            }else{
+                product_copies[selectedProduct.id]++;
+            }
+            console.log(product_copies[selectedProduct.id]);
+            //Track on change qty
+            onChangeQty(selectedProduct);
+            // Append the selected product to the table
+            var tableRow = TableRow(selectedProduct);
+            // Append the table row to your table (replace 'your-table-id' with the actual ID of your table)
+            $('#product_table').append(tableRow);
+            $('#modal_here').append(ModalRow(selectedProduct));
+
 
             // Update the total cost
             totalCost += parseFloat(selectedProduct.price);
-            productTotals[selectedProduct.id] = selectedProduct.price;
-            productQuantity[selectedProduct.id] = 1;
-            OptionsPrice[selectedProduct.id] = 0;
+            if (typeof productTotals[selectedProduct.id] === 'undefined') {
+                productTotals[selectedProduct.id] = {};
+            }
+            productTotals[selectedProduct.id][product_copies[selectedProduct.id]] = parseFloat(selectedProduct.price);
+            if (typeof productQuantity[selectedProduct.id] === 'undefined') {
+                productQuantity[selectedProduct.id] = {};
+            }
+            if (typeof OptionsPrice[selectedProduct.id] === 'undefined') {
+                OptionsPrice[selectedProduct.id] = {};
+            }
+            productQuantity[selectedProduct.id][product_copies[selectedProduct.id]] = 1;
+            OptionsPrice[selectedProduct.id][product_copies[selectedProduct.id]] = 0;
             updateTotalCost();
             productSelect.val(null).trigger('change');
         });
         $('#branchSelect').change(function() {
             var branchId = $(this).val();
             // Update branch_id variable
-            branch_id = branchId; // Destroy and recreate productSelect with the updated URL
             productSelect.select2('destroy');
-            productSelect = initializeProductSelect();
+            productSelect = initializeProductSelect(branchId);
 
             // Clear and refresh productSelect
             productSelect.val(null).trigger('change');
@@ -514,10 +647,25 @@
             updateTotalCost();
 
         });
+        $('#product_table').on('click', '.remove-product-btn', function() {
+            var productId = $(this).data('product');
+            var copy = $(this).data('copy');
+            console.log(productId,copy);
+            subtotal  = productTotals[productId][copy];
+            console.log(subtotal);
+            totalCost -= parseFloat(subtotal);
+            delete productTotals[productId][copy];
+            $(this).closest('tr').remove();
+            updateTotalCost();
+        });
 
         function updateTotalCost() {
             $('#kt_ecommerce_edit_order_total_price').text(totalCost.toFixed(2));
         }
+        //Track on change checkbox
+        onChangeCheckBox();
+        //Track on change Radio
+        onChangeRadio();
     });
 
 </script>

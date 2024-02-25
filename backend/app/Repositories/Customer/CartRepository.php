@@ -20,7 +20,7 @@ class CartRepository
 {
     /** @var Cart */
     public Cart $cart;
-    const VAT_PERCENTAGE = 15;
+    const VAT_PERCENTAGE = 0;
     use APIResponseTrait;
 
     public  function initiate($user = null)
@@ -178,14 +178,17 @@ class CartRepository
     }
     public function subTotal()
     {
-        return $this->cart->items->sum('total');
+        return $this->cart->refresh()->items->sum('total');
     }
     public function tax($subTotal = null)
     {
-        return 0; // tax removed
         $vat = self::VAT_PERCENTAGE;
-        $subTotal = $subTotal ?? $this->subTotal();
-        return number_format((($subTotal - $this->discount()) * $vat) / 100 , 2, '.', '');
+        if($vat){
+            $subTotal = $subTotal ?? $this->subTotal();
+            return number_format((($subTotal - $this->discount()) * $vat) / 100 , 2, '.', '');
+        }else{
+            return 0;
+        }
     }
     public function total($subTotal = null)
     {
@@ -204,7 +207,7 @@ class CartRepository
 
 
     public function clone_to_order_items($order_id):void {
-        $this->cart->items->map(function($cart_item)use($order_id){
+        $this->cart->refresh()->items->map(function($cart_item)use($order_id){
             OrderRepository::clone_cart_items(
                 order_id : $order_id,
                 item_id : $cart_item->item_id,

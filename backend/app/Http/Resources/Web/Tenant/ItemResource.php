@@ -21,6 +21,7 @@ class ItemResource extends JsonResource
             'price' => $this->price,
             'calories' => $this->calories,
             'name' => $this->name,
+            'branch' => $this->branch,
             'availability' => $this->availability,
             'checkbox_required' => $this->checkbox_required,
             'checkbox_input_titles' => $this->checkbox_input_titles,
