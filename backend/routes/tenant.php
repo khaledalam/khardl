@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
+use App\Http\Controllers\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\User;
@@ -66,6 +67,9 @@ Route::get('/health', function () {
         'status' => 'ok'
     ]);
 })->name('health');
+
+Route::get('/send-notification', [PushNotificationController::class, 'sendPushNotification']);
+
 
 Route::group([
     'middleware' => ['tenant', 'web'],
