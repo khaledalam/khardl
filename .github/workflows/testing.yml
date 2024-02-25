@@ -83,6 +83,7 @@ jobs:
         browser: chrome
         working-directory: backend
   Deploy:
+    needs: [Testing-PHPUnit, Testing-Cypress]
     if: github.ref == 'refs/heads/development'
     name: 🎉 Deploy
     runs-on: ubuntu-latest
@@ -97,6 +98,10 @@ jobs:
           server: ${{ secrets.TESTING_FTP_SERVER }}
           username: ${{ secrets.TESTING_FTP_USERNAME }}
           password: ${{ secrets.TESTING_FTP_PASSWORD }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            backend/public/**
   Deploy-Apply:
     name: ⚙️ Apply Deploy
     runs-on: [self-hosted]
