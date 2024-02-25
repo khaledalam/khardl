@@ -82,24 +82,25 @@ jobs:
         start: npm run cypress:run
         browser: chrome
         working-directory: backend
-#  Deploy:
-#    if: github.ref == 'refs/heads/development'
-#    name: 🎉 Deploy
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: 🚚 Get latest code
-#        uses: actions/checkout@v3
-#      - name: 📂 Sync files
-#        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-#        with:
-#          protocol: ftp
-#          server: ${{ secrets.TESTING_FTP_SERVER }}
-#          username: ${{ secrets.TESTING_FTP_USERNAME }}
-#          password: ${{ secrets.TESTING_FTP_PASSWORD }}
+  Deploy:
+    needs: [Testing-Cypress]
+    if: github.ref == 'refs/heads/development'
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v3
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          protocol: ftp
+          server: ${{ secrets.TESTING_FTP_SERVER }}
+          username: ${{ secrets.TESTING_FTP_USERNAME }}
+          password: ${{ secrets.TESTING_FTP_PASSWORD }}
   Deploy-Apply:
     name: ⚙️ Apply Deploy
     runs-on: [self-hosted]
-    needs: [Testing-PHPUnit, Testing-Cypress]
+    needs: [Deploy]
     steps:
       - name: ⚙️ DB backup and App apply changes
         run: |
