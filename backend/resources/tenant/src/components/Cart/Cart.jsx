@@ -5,6 +5,7 @@ import AxiosInstance from "../../axios/axios";
 import './Cart.css'
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import ConfirmationModal from '../../components/confirmationModal';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -22,12 +23,17 @@ const Cart = () => {
     const {t} = useTranslation();
     const Language = useSelector((state) => state.languageMode.languageMode);
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+    const [modalOpen, setModalOpen] = useState(false);
 
 
     useEffect(() => {
         fetchCartData().then(r => null);
     }, []);
 
+    const emptyCart = async () => {
+        if (loading) return;    
+        setModalOpen(true);
+      };
 
     const fetchCartData = async () => {
         if (loading) return;
@@ -137,11 +143,11 @@ const Cart = () => {
 
 
     const handleEmptyCart = async () => {
-        if (loading)return;
+        // if (loading)return;
 
-        if (!confirm(t("Are you sure to empty cart items?"))) {
-           return;
-        }
+        // if (!confirm(t("Are you sure to empty cart items?"))) {
+        //    return;
+        // }
 
         try{
         setLoading(true);
@@ -357,10 +363,17 @@ const Cart = () => {
 
                                         <button
                                             disabled={cartItems?.length < 1}
-                                            onClick={() => handleEmptyCart()}
+                                            onClick={() => emptyCart()}
                                             className={"text-[15px] text-black p-3 my-4 shadow-[0_-1px_8px_#b8cb0aa4] cursor-pointer w-fit rounded-md bg-[#b8cb0aa4] flex items-center justify-center overflow-hidden transform transition-transform hover:-translate-x-1"}>
                                             <span>🗑️ {t('Empty Cart')}</span>
                                         </button>
+
+                                    <ConfirmationModal
+                                        isOpen={modalOpen}
+                                        message={t('Are you sure to empty cart items?')}
+                                        onClose={() => setModalOpen(false)}
+                                        onConfirm={handleEmptyCart}
+                                    />
 
                                     </div>
 

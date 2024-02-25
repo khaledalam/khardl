@@ -17,7 +17,6 @@ class DriverBase extends TenantTestCase
 
     public function setUp(): void
     {
-        TestUtils::setTestingTenant();
         parent::setUp();
         $this->driver = RestaurantUser::factory()->create();
         $role = Role::firstOrCreate(['name' => 'Driver']);

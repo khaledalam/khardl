@@ -36,7 +36,8 @@ class Order extends Model
         'discount',
         'received_by_restaurant_at',
         'driver_id',
-        'reject_or_cancel_reason'
+        'reject_or_cancel_reason',
+        'delivery_cost'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [

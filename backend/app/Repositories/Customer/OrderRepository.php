@@ -35,6 +35,7 @@ class OrderRepository
                 'payment_method_id' => $paymentMethod?->id,
                 'delivery_type_id' => $delivery->id,
                 'total' => $cart->total($subtotal) + $delivery->cost,
+                'delivery_cost' => $delivery->cost,
                 'subtotal' => $subtotal,
                 'shipping_address' => $request->shipping_address,
                 'order_notes' => $request->order_notes,
@@ -42,6 +43,7 @@ class OrderRepository
                 'discount' => $discount ? $discount : null,
                 // TODO @todo update
                 'payment_status' => PaymentMethod::PENDING,
+                'vat' => $cart->tax(),
                 'status' => Order::PENDING,
             ]);
             if($discount&&$coupon){
@@ -70,7 +72,7 @@ class OrderRepository
 
             }else if ($cart->hasPaymentCreditCard($request->payment_method)){
                 // Do not commit any change , it should be saved into session
-               
+
                 DB::commit();
                 return $order;
             }

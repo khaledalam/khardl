@@ -26,6 +26,10 @@ class OrderController extends BaseController
     {
         return $this->orderService->searchProducts($request);
     }
+    public function getProduct(Request $request,Item $item)
+    {
+        return $this->orderService->getProduct($request,$item);
+    }
     public function store(StoreOrderFormRequest $request)
     {
         return $this->orderService->addOrder($request);

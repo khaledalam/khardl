@@ -6,6 +6,7 @@ use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
 use App\Http\Resources\Web\Tenant\ItemResource;
 use App\Models\Tenant\Branch;
+use App\Models\Tenant\Cart;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
@@ -66,18 +67,18 @@ class OrderService
         $products = $request->products;
         $new_cart = (new CartRepository)->initiate($user->id);
         foreach ($products as $product => $quantities) {
-            foreach ($quantities as $quantity) {
+            foreach ($quantities as $key => $quantity) {
                 $selectedCheckbox = null;
-                if(isset($request->product_options[$product]['checkbox_input'])){
-                    $selectedCheckbox = $request->product_options[$product]['checkbox_input'];
+                if(isset($request->product_options[$product][$key]['checkbox_input'])){
+                    $selectedCheckbox = $request->product_options[$product][$key]['checkbox_input'];
                 }
                 $selectedRadio = null;
-                if(isset($request->product_options[$product]['selection_input'])){
-                    $selectedRadio = $request->product_options[$product]['selection_input'];
+                if(isset($request->product_options[$product][$key]['selection_input'])){
+                    $selectedRadio = $request->product_options[$product][$key]['selection_input'];
                 }
                 $selectedDropdown = null;
-                if(isset($request->product_options[$product]['dropdown_input'])){
-                    $selectedDropdown = $request->product_options[$product]['dropdown_input'];
+                if(isset($request->product_options[$product][$key]['dropdown_input'])){
+                    $selectedDropdown = $request->product_options[$product][$key]['dropdown_input'];
                 }
                 $addItemToCartRequest = new AddItemToCartRequest([
                     'item_id' => $product,
@@ -116,6 +117,10 @@ class OrderService
             ->get();
         logger($items);
         return $this->sendResponse(ItemResource::collection($items), '');
+    }
+    public function getProduct($request, Item $item)
+    {
+        return $this->sendResponse(new ItemResource($item), '');
     }
     private function checkUser($request)
     {
