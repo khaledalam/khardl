@@ -17,7 +17,7 @@ jobs:
     env:
       DB_CONNECTION: mysql
       DB_HOST: localhost
-      DB_PORT: 3306
+      DB_PORT: 3307
       DB_DATABASE: khardl_testing
       DB_USERNAME: root
       DB_PASSWORD: root
@@ -83,10 +83,10 @@ jobs:
         browser: chrome
         working-directory: backend
   Deploy:
-    needs: [Testing-Cypress]
     if: github.ref == 'refs/heads/development'
     name: 🎉 Deploy
     runs-on: ubuntu-latest
+    environment: Testing
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v3
