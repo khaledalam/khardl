@@ -86,3 +86,4 @@ const RestaurantNotSubscribed = () => {
 };
 
 export default RestaurantNotSubscribed;
+
