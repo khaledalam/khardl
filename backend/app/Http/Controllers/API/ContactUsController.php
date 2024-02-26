@@ -4,19 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Enums\Admin\LogTypes;
 use App\Jobs\SendContactUsEmailJob;
-use App\Mail\ContactUsMail;
 use App\Models\ContactUs;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class ContactUsController extends BaseController
 {
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|min:10|max:255',
             'phone_number' => 'required|string|min:10|max:255',
@@ -28,7 +25,7 @@ class ContactUsController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $contactUs = ContactUs::create($validator->validated());
+        ContactUs::create($validator->validated());
 
         $actions = [
             'en' => 'Received a new contact us form inputs',
@@ -38,7 +35,6 @@ class ContactUsController extends BaseController
             'user_id' => Auth::id(),
             'action' => $actions,
             'type' => LogTypes::ContactUsForm,
-            'meta' => json_encode($contactUs)
         ]);
 
 
