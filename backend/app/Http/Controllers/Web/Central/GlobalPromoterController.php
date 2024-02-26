@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 class GlobalPromoterController extends Controller
 {
     public const AttemptsCount = 10;
+    public const PerMin = 5;
     public function index(Request $request)
     {
         if($this->haveFailedAttempts(self::AttemptsCount)){
@@ -45,13 +46,13 @@ class GlobalPromoterController extends Controller
     {
         return  DB::table('promoters_failed_attempts')
         ->where('ip_address', request()?->ip())
-        ->where('updated_at', '>=', Carbon::now()->subMinutes(30))
+        ->where('updated_at', '>=', Carbon::now()->subMinutes(self::PerMin))
         ->where('attempts','>=', $attempts)
         ->first();
     }
     public function increaseFailedAttempts()
     {
-        $tenMinutesAgo = Carbon::now()->subMinutes(30);
+        $tenMinutesAgo = Carbon::now()->subMinutes(self::PerMin);
         $hasFailed = DB::table('promoters_failed_attempts')
             ->where('ip_address', request()?->ip())
             ->where('updated_at', '>=', $tenMinutesAgo)->first();
