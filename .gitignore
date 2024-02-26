@@ -42,3 +42,5 @@ backend/bootstrap/cache/*
 backend/cypress/downloads/
 backend/public/js/central.js.LICENSE.txt
 backend/firebase-debug.log
+
+.ftpquota
