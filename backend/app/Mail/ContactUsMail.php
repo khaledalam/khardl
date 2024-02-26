@@ -45,8 +45,8 @@ class ContactUsMail extends Mailable
     public function build()
     {
         return $this->to([
-//               env('SUPER_MASTER_ADMIN_EMAIL')
-             'khaledalam.net@gmail.com' // @TODO: remove this line
+               env('SUPER_MASTER_ADMIN_EMAIL')
+//             'khaledalam.net@gmail.com' // @TODO: remove this line
             ])
             ->cc([
                 'khaledalam.net@gmail.com',
