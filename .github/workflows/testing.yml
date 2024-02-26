@@ -49,7 +49,7 @@ jobs:
         run: |
           cd ./backend
           php artisan serv &
-          ./vendor/bin/phpunit -c backend/phpunit.xml
+          ./vendor/bin/phpunit -c phpunit.xml
   Testing-Cypress:
     name: 🧪 Cypress
     runs-on: ubuntu-latest
