@@ -160,6 +160,9 @@ Route::get('promoters', [GlobalPromoterController::class, 'index'])->name('globa
 Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
 Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
 
+Route::post('contact-us', [ContactUsController::class, 'store']);
+
+
 //-----------------------------------------------------------------------------------------------------------------------
 Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDomain::class]], static function() {
     $groups = CentralSharedRoutesTrait::groups();
@@ -188,8 +191,6 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
 
         Route::post('password/forgot', [ResetPasswordController::class, 'forgot']);
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('throttle:passwordReset');
-
-        Route::post('contact-us', [ContactUsController::class, 'store']);
 
     });
 
