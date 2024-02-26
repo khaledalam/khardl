@@ -42,10 +42,10 @@ jobs:
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
-          sudo echo "127.0.0.1 khard" | sudo tee -a /etc/hosts
-          sudo echo "127.0.0.1 first.khard" | sudo tee -a /etc/hosts
-          sudo echo "127.0.0.1 second.khard" | sudo tee -a /etc/hosts
-          sudo echo "127.0.0.1 third.khard" | sudo tee -a /etc/hosts
+          sudo echo "10.1.0.24 khard" | sudo tee -a /etc/hosts
+          sudo echo "10.1.0.24 first.khard" | sudo tee -a /etc/hosts
+          sudo echo "10.1.0.24 second.khard" | sudo tee -a /etc/hosts
+          sudo echo "10.1.0.24 third.khard" | sudo tee -a /etc/hosts
           cat /etc/hosts
           cd ./backend
           php artisan serv &
