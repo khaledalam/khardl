@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Enums\Admin\LogTypes;
+use App\Jobs\SendContactUsEmailJob;
 use App\Mail\ContactUsMail;
 use App\Models\ContactUs;
 use App\Models\Log;
@@ -15,6 +16,7 @@ class ContactUsController extends BaseController
 {
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|min:10|max:255',
             'phone_number' => 'required|string|min:10|max:255',
@@ -39,12 +41,13 @@ class ContactUsController extends BaseController
             'meta' => json_encode($contactUs)
         ]);
 
-        Mail::send(new ContactUsMail(
+
+        SendContactUsEmailJob::dispatch(
             email: $request->email,
             phone_number: $request->phone_number,
             business_name: $request->business_name,
             responsible_person_name: $request->responsible_person_name
-        ));
+        );
 
         // @TODO: remove Discord notification code
 //        try {
