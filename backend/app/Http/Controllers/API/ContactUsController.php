@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Enums\Admin\LogTypes;
+use App\Mail\ContactUsMail;
 use App\Models\ContactUs;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class ContactUsController extends BaseController
@@ -33,22 +35,31 @@ class ContactUsController extends BaseController
         Log::create([
             'user_id' => Auth::id(),
             'action' => $actions,
-            'type' => LogTypes::ContactUsForm
+            'type' => LogTypes::ContactUsForm,
+            'meta' => json_encode($contactUs)
         ]);
 
-        try {
-            $this->notifyDiscord($contactUs);
-        } catch (\Exception $e) {
-            $actions = [
-                'en' => 'Fail to send a new contact us form inputs to discord',
-                'ar' => 'فضل ارسال مدخل جديد من نمذج تواصل معنا الي discord'
-            ];
-            Log::create([
-                'user_id' => Auth::id(),
-                'action' => $actions,
-                'type' => LogTypes::ContactUsForm
-            ]);
-        }
+        Mail::send(new ContactUsMail(
+            email: $request->email,
+            phone_number: $request->phone_number,
+            business_name: $request->business_name,
+            responsible_person_name: $request->responsible_person_name
+        ));
+
+        // @TODO: remove Discord notification code
+//        try {
+//            $this->notifyDiscord($contactUs);
+//        } catch (\Exception $e) {
+//            $actions = [
+//                'en' => 'Fail to send a new contact us form inputs to discord',
+//                'ar' => 'فضل ارسال مدخل جديد من نمذج تواصل معنا الي discord'
+//            ];
+//            Log::create([
+//                'user_id' => Auth::id(),
+//                'action' => $actions,
+//                'type' => LogTypes::ContactUsForm
+//            ]);
+//        }
 
         return $this->sendResponse(null, 'Contact information successfully submitted.');
     }
