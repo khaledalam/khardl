@@ -2,19 +2,10 @@ import React, { useEffect, useState } from "react";
 import ContactUsCover from "../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import MainText from "../MainText";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-// import { useApiContext } from '../../pages/context';
 import Axios from "../../axios/axios";
-import call from "../../assets/call.png";
-import location from "../../assets/location.png";
 import mail from "../../assets/mail.png";
-import youtube from "../../assets/youtube.png";
-import xlogo from "../../assets/x.png";
-import insta from "../../assets/insta.png";
-import linkedin from "../../assets/linkedin.png";
-import facebook from "../../assets/facebook.png";
 import { HiChevronRight } from "react-icons/hi2";
 import { useSelector } from "react-redux";
 
@@ -48,7 +39,7 @@ function ContactUs() {
         }
       );
       console.log(data);
-      if (data.response.ok) {
+      if (data.success) {
         // const responseData = await response.json()
         toast.success(
           `${t("Your contact information has been sent successfully")}`
