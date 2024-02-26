@@ -30,23 +30,26 @@ jobs:
       - uses: actions/checkout@main
       - name: Copy .env
         run: php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
-      - name: Install Dependencies
-        run: composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress
-      - name: Generate key
+      - name: Install Dependencies and Config DB
         run: |
+          composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress
           mkdir -p backend/bootstrap/cache
           chmod -R 777 backend/storage backend/bootstrap/cache
           php backend/artisan key:generate
-      - name: Prepare DB
-        run: |
-          mkdir -p backend/bootstrap/cache
-          chmod -R 777 backend/storage backend/bootstrap/cache
           mkdir -p backend/database
           php backend/artisan migrate:fresh --seed
           php backend/artisan create:tenant
+      - name: Add hosts to /etc/hosts
+        run: |
+          sudo echo "127.0.0.1 khard" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 first.khard" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 second.khard" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 third.khard" | sudo tee -a /etc/hosts
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
-          ./backend/vendor/bin/phpunit -c backend/phpunit.xml
+          cd ./backend
+          php artisan serv &
+          ./vendor/bin/phpunit -c backend/phpunit.xml
   Testing-Cypress:
     name: 🧪 Cypress
     runs-on: ubuntu-latest
