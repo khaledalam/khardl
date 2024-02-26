@@ -39,8 +39,6 @@
                                         </div>
                                         <h4 style="font-weight: 700;color: green;" class="mt-4 mb-4 pb-1">New Contact Us form input</h4>
                                         <p style="text-align: left;"><b>Hello,</b><br/><br />
-
-                                            <br /><br />
                                             <b>Email:</b> {{$email}}<br/>
                                             <b>Phone Number:</b> {{$phone_number}}<br/>
                                             <b>Business Name:</b> {{$business_name}}<br/>
