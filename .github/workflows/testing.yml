@@ -39,14 +39,14 @@ jobs:
           mkdir -p backend/database
           php backend/artisan migrate:fresh --seed
           php backend/artisan create:tenant
-      - name: Add hosts to /etc/hosts
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
           sudo echo "127.0.0.1 khard" | sudo tee -a /etc/hosts
           sudo echo "127.0.0.1 first.khard" | sudo tee -a /etc/hosts
           sudo echo "127.0.0.1 second.khard" | sudo tee -a /etc/hosts
           sudo echo "127.0.0.1 third.khard" | sudo tee -a /etc/hosts
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
-        run: |
+          cat /etc/hosts
           cd ./backend
           php artisan serv &
           ./vendor/bin/phpunit -c phpunit.xml
