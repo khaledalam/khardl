@@ -7,8 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * This is used to send Lead ID to TAP so that they provide use with Merchant ID for now,
- * till their API be public
+ * This is used to send contact us form inputs to super admin email
  */
 class ContactUsMail extends Mailable
 {
@@ -54,6 +53,6 @@ class ContactUsMail extends Mailable
                 'aldahman.ibrahim@gmail.com',
             ])
             ->subject('Khardl | Contact Us request')
-            ->view('emails.tap_leadid_merchantid_email');
+            ->view('emails.contactus_email');
     }
 }

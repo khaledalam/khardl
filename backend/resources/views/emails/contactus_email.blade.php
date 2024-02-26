@@ -37,9 +37,9 @@
                                             <img src="{{global_asset('img/logo.png')}}" style="width: 185px;"
                                                 alt="logo">
                                         </div>
-                                        <h4 style="font-weight: 700;color: green;" class="mt-4 mb-4 pb-1">New LEAD</h4>
+                                        <h4 style="font-weight: 700;color: green;" class="mt-4 mb-4 pb-1">New Contact Us form input</h4>
                                         <p style="text-align: left;"><b>Hello,</b><br/><br />
-                                            New Contact Us form inputs
+
                                             <br /><br />
                                             <b>Email:</b> {{$email}}<br/>
                                             <b>Phone Number:</b> {{$phone_number}}<br/>
