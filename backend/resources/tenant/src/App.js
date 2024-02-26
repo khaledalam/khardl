@@ -22,8 +22,6 @@ import "aos/dist/aos.css";
 import "react-phone-input-2/lib/style.css";
 import ForgotPassword from "./pages/LoginSignUp/ForgotPassword";
 import CreateNewPassword from "./pages/LoginSignUp/CreateNewPassword";
-import EditorPage from "./pages/EditorPage";
-import CustomersPreview from "./components/Customers/CustomersPreview/Preview";
 import EditorSwitcher from "./pages/EditorSwitcher";
 import Protected from "./Protected";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -42,6 +40,19 @@ import { CustomerPage } from "./pages/CustomerPage";
 import SuccessPayment from "./pages/SuccessPayment";
 import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
+
+import { initializeApp } from "firebase/app";
+const firebaseConfig = {
+    apiKey: "AIzaSyD7xao9Wm2JTWWJwS5IvgNYWJWiSh48mwM",
+    authDomain: "khardl.firebaseapp.com",
+    projectId: "khardl",
+    storageBucket: "khardl.appspot.com",
+    messagingSenderId: "1002899768051",
+    appId: "1:1002899768051:web:9b50b863cddbe6fef82d86",
+    measurementId: "G-Z55421NDE7"
+};
+// Initialize Firebase
+const firstbaseApp = initializeApp(firebaseConfig);
 
 Sentry.init({
   dsn:

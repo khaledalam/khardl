@@ -4,7 +4,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 import Home from "./pages/Home/Home";
 import RestaurantNotFound from "./pages/Home/RestaurantNotFound";
 import Advantages from "./pages/Advantages/Advantages";
@@ -16,7 +15,6 @@ import CompleteRegistration from "./pages/LoginSignUp/CompleteRegistration";
 import VerificationEmail from "./pages/LoginSignUp/VerificationEmail";
 import TermsPolicies from "./pages/TermsPoliciesPrivacy/TermsPolicies";
 import Privacy from "./pages/TermsPoliciesPrivacy/Privacy";
-import Supports from "./components/Supports";
 import ScrollUp from "./components/ScrollUp";
 import Prices from "./pages/Prices/prices";
 import Aos from "aos";
@@ -32,6 +30,18 @@ import { useAuthContext } from "./components/context/AuthContext";
 
 import * as Sentry from "@sentry/react";
 import {t} from "i18next";
+import { initializeApp } from "firebase/app";
+const firebaseConfig = {
+    apiKey: "AIzaSyD7xao9Wm2JTWWJwS5IvgNYWJWiSh48mwM",
+    authDomain: "khardl.firebaseapp.com",
+    projectId: "khardl",
+    storageBucket: "khardl.appspot.com",
+    messagingSenderId: "1002899768051",
+    appId: "1:1002899768051:web:9b50b863cddbe6fef82d86",
+    measurementId: "G-Z55421NDE7"
+};
+// Initialize Firebase
+const firstbaseApp = initializeApp(firebaseConfig);
 
 Sentry.init({
   dsn:
