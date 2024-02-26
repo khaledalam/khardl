@@ -14,6 +14,8 @@ class ApplicationExistTest extends TestCase
 
         echo 'APP_URL: ' . env('APP_URL');
 
+        exec('curl -I http://khardl:8000');
+
         $response = $this->get(env('APP_URL'));
         $response->assertStatus(200);
     }
