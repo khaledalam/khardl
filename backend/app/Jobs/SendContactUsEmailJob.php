@@ -61,7 +61,6 @@ class SendContactUsEmailJob implements ShouldQueue
                 'user_id' => Auth::id(),
                 'action' => $actions,
                 'type' => LogTypes::ContactUsForm,
-                'meta' => json_encode($contactUs)
             ]);
 
         } catch (\Exception $e) {
@@ -73,7 +72,6 @@ class SendContactUsEmailJob implements ShouldQueue
                 'user_id' => Auth::id(),
                 'action' => $actions,
                 'type' => LogTypes::ContactUsForm,
-                'meta' => json_encode($contactUs)
             ]);
         }
     }
