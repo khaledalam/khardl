@@ -134,7 +134,7 @@ const CartPage = () => {
                         <div className="h-[40vh] w-full flex items-center justify-center">
                             <div className="w-1/2 mx-auto flex flex-col items-center justify-center gap-6">
                                 <h3 className="text-3xl text-center ">
-                                    {t("Your cart is empty")}
+                                    {!isloading && t("Your cart is empty")}
                                 </h3>
                                 {isloading ? (
                                     <div className="skeleton btn w-1/2 w-full shrink-0"></div>
@@ -142,10 +142,7 @@ const CartPage = () => {
                                     <button
                                         style={{
                                             backgroundColor:
-                                                restuarantStyle?.categoryDetail_cart_color ===
-                                                "#F2FF00"
-                                                    ? "white"
-                                                    : restuarantStyle?.categoryDetail_cart_color,
+                                                restuarantStyle?.categoryDetail_cart_color,
                                         }}
                                         onClick={() => navigate("/")}
                                         className={`btn w-1/2`}

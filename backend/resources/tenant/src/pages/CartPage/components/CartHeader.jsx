@@ -12,10 +12,7 @@ const CartHeader = ({ styles, isloading }) => {
             ) : (
                 <div
                     style={{
-                        backgroundColor:
-                            styles?.categoryDetail_cart_color === "#F2FF00"
-                                ? "white"
-                                : styles?.categoryDetail_cart_color,
+                        backgroundColor: styles?.categoryDetail_cart_color,
                     }}
                     className={`w-full laptopXL:w-[75%] mx-auto h-[85px] rounded-lg flex items-center justify-center`}
                 >
