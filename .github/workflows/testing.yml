@@ -47,11 +47,7 @@ jobs:
           sudo echo "127.0.0.1 third.khardl" | sudo tee -a /etc/hosts
           cat /etc/hosts
           cd ./backend
-          php artisan serv &
-          curl -I http://127.0.0.1
-          curl -I http://khardl
-
-#          ./vendor/bin/phpunit -c phpunit.xml
+          php artisan test
 #  Testing-Cypress:
 #    name: 🧪 Cypress
 #    runs-on: ubuntu-20.04
