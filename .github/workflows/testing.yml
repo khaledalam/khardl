@@ -48,8 +48,6 @@ jobs:
           cat /etc/hosts
           cd ./backend
           php artisan serv &
-
-#          curl -I http://khardl:8000
           curl -I http://127.0.0.1:8000
 
 #          ./vendor/bin/phpunit -c phpunit.xml
