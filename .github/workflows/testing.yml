@@ -39,13 +39,16 @@ jobs:
           php backend/artisan migrate:fresh --seed
           php backend/artisan create:tenant
 
-      - name: Execute tests (Unit and Feature tests) via PHPUnit
+      - name: Serve Laravel application
         run: |
           sudo echo "127.0.0.1 khardl" | sudo tee -a /etc/hosts
           sudo echo "127.0.0.1 first.khardl" | sudo tee -a /etc/hosts
           sudo echo "127.0.0.1 second.khardl" | sudo tee -a /etc/hosts
           sudo echo "127.0.0.1 third.khardl" | sudo tee -a /etc/hosts
-          cat /etc/hosts
+          php artisan serve --host=0.0.0.0 --port=8000
+
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: |
           cd ./backend
           php artisan test
   Testing-Cypress:
