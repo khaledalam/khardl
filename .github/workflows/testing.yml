@@ -45,7 +45,7 @@ jobs:
           sudo echo "127.0.0.1 first.khardl" | sudo tee -a /etc/hosts
           sudo echo "127.0.0.1 second.khardl" | sudo tee -a /etc/hosts
           sudo echo "127.0.0.1 third.khardl" | sudo tee -a /etc/hosts
-          php artisan serve --host=0.0.0.0 --port=8000
+          php backend/artisan serve --host=0.0.0.0 --port=8000
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
