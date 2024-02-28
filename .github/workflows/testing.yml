@@ -28,31 +28,29 @@ jobs:
           mysql -e 'CREATE DATABASE khardl_testing;' -uroot -proot
           mysql -e 'SHOW DATABASES;' -uroot -proot
       - uses: actions/checkout@main
-      - name: Copy .env
-        run: php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
       - name: Install Dependencies and Config DB
         run: |
-          composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress
+          php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
+          composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress --ignore-platform-reqs
           mkdir -p backend/bootstrap/cache
+          mkdir -p backend/database
           chmod -R 777 backend/storage backend/bootstrap/cache
           php backend/artisan key:generate
-          mkdir -p backend/database
           php backend/artisan migrate:fresh --seed
           php backend/artisan create:tenant
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
-          sudo echo "10.1.0.24 khard" | sudo tee -a /etc/hosts
-          sudo echo "10.1.0.24 first.khard" | sudo tee -a /etc/hosts
-          sudo echo "10.1.0.24 second.khard" | sudo tee -a /etc/hosts
-          sudo echo "10.1.0.24 third.khard" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 khardl" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 first.khardl" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 second.khardl" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 third.khardl" | sudo tee -a /etc/hosts
           cat /etc/hosts
           cd ./backend
-          php artisan serv &
-          ./vendor/bin/phpunit -c phpunit.xml
+          php artisan test
   Testing-Cypress:
     name: 🧪 Cypress
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: shivammathur/setup-php@v2
       with:
@@ -85,31 +83,35 @@ jobs:
         start: npm run cypress:run
         browser: chrome
         working-directory: backend
-  Deploy:
-    needs: [Testing-PHPUnit, Testing-Cypress]
-    if: github.ref == 'refs/heads/development'
-    name: 🎉 Deploy
-    runs-on: ubuntu-latest
-    environment: Testing
-    steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v3
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          protocol: ftp
-          server: ${{ secrets.TESTING_FTP_SERVER }}
-          username: ${{ secrets.TESTING_FTP_USERNAME }}
-          password: ${{ secrets.TESTING_FTP_PASSWORD }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            backend/public/**
-  Deploy-Apply:
+#  Deploy:
+#    needs:
+#    if: github.ref == 'refs/heads/development'
+#    name: 🎉 Deploy
+#    runs-on: ubuntu-20.04
+#    environment: Testing
+#    steps:
+#      - name: 🚚 Get latest code
+#        uses: actions/checkout@v3
+#      - name: 📂 Sync files
+#        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+#        with:
+#          protocol: ftp
+#          server: ${{ secrets.TESTING_FTP_SERVER }}
+#          username: ${{ secrets.TESTING_FTP_USERNAME }}
+#          password: ${{ secrets.TESTING_FTP_PASSWORD }}
+#          exclude: |
+#            **/.git*
+#            **/.git*/**
+#            backend/public/**
+  Apply-Changes:
     name: ⚙️ Apply Deploy
     runs-on: [self-hosted]
-    needs: [Deploy]
+    needs: [Testing-PHPUnit, Testing-Cypress]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Git Pull
+        run: git pull origin development
       - name: ⚙️ DB backup and App apply changes
         run: |
           cd /home/khardl4test/public_html/

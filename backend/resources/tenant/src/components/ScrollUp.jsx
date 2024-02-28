@@ -1,50 +1,59 @@
-import React, {useEffect, useState} from "react"
-import {useSelector} from "react-redux"
-import {AiOutlineArrowUp} from "react-icons/ai"
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { AiOutlineArrowUp } from "react-icons/ai";
 
 const ScrollUp = () => {
-  const Language = useSelector((state) => state.languageMode.languageMode)
-    const restaurantStyle = useSelector((state) => state.restuarantEditorStyle)
+    const Language = useSelector((state) => state.languageMode.languageMode);
+    const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
 
-  const [scrollY, setScrollY] = useState(0)
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
-  const scrollThreshold = 200
+    const [scrollY, setScrollY] = useState(0);
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+    const scrollThreshold = 200;
 
-  return (
-    <div
-      className={`z-[999] fixed max-[450px]:bottom-3  bottom-6 ${
-        Language === "en"
-          ? "left-6 max-[450px]:left-4"
-          : "right-6 max-[450px]:right-4"
-      }  `}
-    >
-      <button
-        style={{
-          background: restaurantStyle?.categoryDetail_cart_color
-            ? restaurantStyle?.categoryDetail_cart_color
-            : "",
-        }}
-        onClick={() => window.scrollTo({top: 0, behavior: "smooth"})}
-        className={`p-[6px]  shadow-lg cursor-pointer w-fit rounded-md  flex flex-col items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-2  ${
-          scrollY > scrollThreshold ? "block" : "hidden"
-        }`}
-      >
-        <AiOutlineArrowUp className='text-[#525252] text-[25px] max-[450px]:text-[20px]'  style={{
-          color: restaurantStyle?.banner_background_color
-            ? restaurantStyle?.banner_background_color
-            : "",
-        }} />
-      </button>
-    </div>
-  )
-}
+    return (
+        <div
+            className={`z-[999] fixed max-[450px]:bottom-3  bottom-6 ${
+                Language === "en"
+                    ? "left-6 max-[450px]:left-4"
+                    : "right-6 max-[450px]:right-4"
+            }  `}
+        >
+            {restaurantStyle?.categoryDetail_cart_color !== "#FFFFFF" ? (
+                <button
+                    style={{
+                        background: restaurantStyle?.categoryDetail_cart_color
+                            ? restaurantStyle?.categoryDetail_cart_color
+                            : "",
+                    }}
+                    onClick={() =>
+                        window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                    className={`p-[6px]  shadow-lg cursor-pointer w-fit rounded-md  flex flex-col items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-2  ${
+                        scrollY > scrollThreshold ? "block" : "hidden"
+                    }`}
+                >
+                    <AiOutlineArrowUp
+                        className="text-[#525252] text-[25px] max-[450px]:text-[20px]"
+                        style={{
+                            color: restaurantStyle?.banner_background_color
+                                ? restaurantStyle?.banner_background_color
+                                : "",
+                        }}
+                    />
+                </button>
+            ) : (
+                <div className="skeleton w-12 h-12 shrink-0"></div>
+            )}
+        </div>
+    );
+};
 
-export default ScrollUp
+export default ScrollUp;
