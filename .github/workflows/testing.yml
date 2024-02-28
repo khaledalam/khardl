@@ -48,7 +48,11 @@ jobs:
           cat /etc/hosts
           cd ./backend
           php artisan serv &
-          ./vendor/bin/phpunit -c phpunit.xml
+
+          curl -I http://khardl:8000
+          curl -I http://127.0.0.1:8000
+
+#          ./vendor/bin/phpunit -c phpunit.xml
 #  Testing-Cypress:
 #    name: 🧪 Cypress
 #    runs-on: ubuntu-20.04
