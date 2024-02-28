@@ -41,10 +41,10 @@ jobs:
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: |
-          sudo echo "localhost khard" | sudo tee -a /etc/hosts
-          sudo echo "localhost first.khard" | sudo tee -a /etc/hosts
-          sudo echo "localhost second.khard" | sudo tee -a /etc/hosts
-          sudo echo "localhost third.khard" | sudo tee -a /etc/hosts
+          sudo echo "localhost khardl" | sudo tee -a /etc/hosts
+          sudo echo "localhost first.khardl" | sudo tee -a /etc/hosts
+          sudo echo "localhost second.khardl" | sudo tee -a /etc/hosts
+          sudo echo "localhost third.khardl" | sudo tee -a /etc/hosts
           cat /etc/hosts
           cd ./backend
           php artisan serv &
