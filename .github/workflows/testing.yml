@@ -13,7 +13,7 @@ concurrency:
 jobs:
   Testing-PHPUnit:
     name: 🧪 PHPUnit
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       DB_CONNECTION: mysql
       DB_HOST: localhost
@@ -32,7 +32,7 @@ jobs:
         run: php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
       - name: Install Dependencies and Config DB
         run: |
-          composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress
+          composer install --working-dir=backend -q --no-ansi --no-interaction --no-scripts --no-progress --ignore-platform-reqs
           mkdir -p backend/bootstrap/cache
           chmod -R 777 backend/storage backend/bootstrap/cache
           php backend/artisan key:generate
@@ -52,7 +52,7 @@ jobs:
           ./vendor/bin/phpunit -c phpunit.xml
   Testing-Cypress:
     name: 🧪 Cypress
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: shivammathur/setup-php@v2
       with:
@@ -89,7 +89,7 @@ jobs:
 #    needs: [Testing-PHPUnit, Testing-Cypress]
 #    if: github.ref == 'refs/heads/development'
 #    name: 🎉 Deploy
-#    runs-on: ubuntu-latest
+#    runs-on: ubuntu-20.04
 #    environment: Testing
 #    steps:
 #      - name: 🚚 Get latest code
