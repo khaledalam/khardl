@@ -5,8 +5,8 @@ killall -9 php
 # MAC M1 --platform linux/amd64
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
-docker-compose down --remove-orphans
-docker-compose up -d --build --remove-orphans
+docker compose down --remove-orphans
+docker compose --env-file ./backend/.env up -d --build --remove-orphans
 
 # confirm docker db is connected with laravel and up and running
 REAL="MySQL server has gone away"
@@ -18,8 +18,8 @@ while true; do
         break
     else
         # If the command fails, the MySQL server is not available yet
-        echo "MySQL server is unavailable. Retrying in 1 second..."
-        sleep 1
+        echo "MySQL server is unavailable. Retrying in 4 seconds..."
+        sleep 4
     fi
 done
 
