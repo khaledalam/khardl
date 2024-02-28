@@ -48,43 +48,43 @@ jobs:
           cat /etc/hosts
           cd ./backend
           php artisan test
-#  Testing-Cypress:
-#    name: 🧪 Cypress
-#    runs-on: ubuntu-20.04
-#    steps:
-#    - uses: shivammathur/setup-php@v2
-#      with:
-#        php-version: '8.3'
-#    - uses: actions/checkout@v4
-#    - name: Copy .env
-#      run: |
-#        php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
-#    - name: ⚙ 󠁶󠁥󠁷󠁿Install Dependencies
-#      run: |
-#        cd backend
-#        composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-#    - name: 🔑 Generate key
-#      run: |
-#        mkdir -p backend/bootstrap/cache
-#        php backend/artisan key:generate
-#    - name: 🔑 Directory Permissions
-#      run: |
-#        chmod -R 777 backend/storage backend/bootstrap/cache
-#    - uses: actions/checkout@v4
-#    - name: ⚙ Install root dependencies
-#      run: |
-#        cd backend;
-#        npm i -f --silent
-#    - name: 🧪 Cypress run
-#      uses: cypress-io/github-action@v6
-#      with:
-#        install: false
-#        build: npm run dev
-#        start: npm run cypress:run
-#        browser: chrome
-#        working-directory: backend
+  Testing-Cypress:
+    name: 🧪 Cypress
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+    - uses: actions/checkout@v4
+    - name: Copy .env
+      run: |
+        php -r "file_exists('backend/.env') || copy('backend/.env.example', 'backend/.env');"
+    - name: ⚙ 󠁶󠁥󠁷󠁿Install Dependencies
+      run: |
+        cd backend
+        composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    - name: 🔑 Generate key
+      run: |
+        mkdir -p backend/bootstrap/cache
+        php backend/artisan key:generate
+    - name: 🔑 Directory Permissions
+      run: |
+        chmod -R 777 backend/storage backend/bootstrap/cache
+    - uses: actions/checkout@v4
+    - name: ⚙ Install root dependencies
+      run: |
+        cd backend;
+        npm i -f --silent
+    - name: 🧪 Cypress run
+      uses: cypress-io/github-action@v6
+      with:
+        install: false
+        build: npm run dev
+        start: npm run cypress:run
+        browser: chrome
+        working-directory: backend
 #  Deploy:
-#    needs: [Testing-PHPUnit, Testing-Cypress]
+#    needs:
 #    if: github.ref == 'refs/heads/development'
 #    name: 🎉 Deploy
 #    runs-on: ubuntu-20.04
@@ -103,12 +103,16 @@ jobs:
 #            **/.git*
 #            **/.git*/**
 #            backend/public/**
-#  Deploy-Apply:
-#    name: ⚙️ Apply Deploy
-#    runs-on: [self-hosted]
-#    needs: [Deploy]
-#    steps:
-#      - name: ⚙️ DB backup and App apply changes
-#        run: |
-#          cd /home/khardl4test/public_html/
-#          ./testing-deploy.sh
+  Apply-Changes:
+    name: ⚙️ Apply Deploy
+    runs-on: [self-hosted]
+    needs: [Testing-PHPUnit, Testing-Cypress]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Git Pull
+        run: git pull origin development
+      - name: ⚙️ DB backup and App apply changes
+        run: |
+          cd /home/khardl4test/public_html/
+          ./testing-deploy.sh
