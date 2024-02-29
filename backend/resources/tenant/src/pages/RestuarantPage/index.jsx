@@ -40,14 +40,10 @@ export const RestuarantHomePage = () => {
             );
             // const restaurantCategoriesResponse =[];
 
-            restaurantCategoriesResponse.data?.data.map((cat, i) =>
-                console.log(`oneCatInPage: ${cat.name}`)
-            );
-
             if (
                 restaurantCategoriesResponse.data &&
                 restaurantCategoriesResponse.data?.data &&
-                restaurantCategoriesResponse.data?.data.length > 1
+                restaurantCategoriesResponse.data?.data.length > 0
             ) {
                 dispatch(
                     setCategoriesAPI(restaurantCategoriesResponse.data?.data)
