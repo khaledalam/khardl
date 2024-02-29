@@ -40,6 +40,10 @@ export const RestuarantHomePage = () => {
             );
             // const restaurantCategoriesResponse =[];
 
+            restaurantCategoriesResponse.data?.data.map((cat, i) =>
+                console.log(`oneCatInPage: ${cat.name}`)
+            );
+
             if (
                 restaurantCategoriesResponse.data &&
                 restaurantCategoriesResponse.data?.data &&
