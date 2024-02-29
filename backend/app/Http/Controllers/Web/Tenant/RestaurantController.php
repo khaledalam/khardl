@@ -109,9 +109,8 @@ class RestaurantController extends BaseController
         );
     }
 
-    public function promotions()
+    /* public function promotions()
     {
-        /** @var RestaurantUser $user */
         $user = Auth::user();
 
         $settings = Setting::all()->firstOrFail();
@@ -120,7 +119,7 @@ class RestaurantController extends BaseController
             'restaurant.promotions',
             compact('user', 'settings')
         );
-    }
+    } */
 
     public function updatePromotions(Request $request)
     {
