@@ -17,6 +17,7 @@ services:
             - "3306:3306"
         volumes:
             - ./docker/database/data:/var/lib/mysql:z
+
     khardl_testing:
         #        platform: 'linux/amd64'
         container_name: khardl_testing

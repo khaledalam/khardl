@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web\Tenant\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Packages\Msegat\Msegat;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,9 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Tenant\OTPRequest;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Web\BaseController;
-use App\Packages\TapPayment\Customer\Customer as CustomerTap;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\Tenant\CustomerRegisterRequest;
+use App\Packages\TapPayment\Customer\Customer as CustomerTap;
 use App\Http\Controllers\API\Central\Auth\RegisterController as RegisterControllerCentral;
 
 
@@ -138,7 +139,7 @@ class RegisterController extends BaseController
         $tokens = DB::table('phone_verification_tokens')
         ->where('user_id', $user->id)
         ->whereDate('created_at', $today)->get()->first();
-        if (isset($tokens) && $tokens->attempts >= 3) {
+        if (isset($tokens) && $tokens->attempts >= 3 && !in_array($user->phone,Msegat::ALLOWED_NUMBERS)) {
             return false;
         }
         return true;

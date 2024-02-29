@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Web\Tenant\Auth;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Packages\Msegat\Msegat;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
 use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Web\BaseController;
 use App\Http\Requests\Tenant\CustomerLoginRequest;
-use Illuminate\Support\Facades\DB;
 
 class LoginCustomerController extends BaseController
 {
@@ -80,7 +81,7 @@ class LoginCustomerController extends BaseController
         $tokens = DB::table('phone_verification_tokens')
             ->where('user_id', $user->id)
             ->whereDate('created_at', $today)->get()->first();
-        if (isset($tokens) && $tokens->attempts >= 3) {
+        if (isset($tokens) && $tokens->attempts >= 3  && !in_array($user->phone,Msegat::ALLOWED_NUMBERS))  {
             return false;
         }
         return true;

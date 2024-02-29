@@ -18,8 +18,8 @@ yarn-error.log
 /.idea
 /.vscode
 .DS_Store
-docker/database
-docker/database_testing
+backend/docker/database
+backend/docker/database_testing
 frontend/temp
 frontend/package-lock.json
 .htaccess
@@ -42,3 +42,5 @@ backend/bootstrap/cache/*
 backend/cypress/downloads/
 backend/public/js/central.js.LICENSE.txt
 backend/firebase-debug.log
+
+.ftpquota
