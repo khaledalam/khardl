@@ -8,10 +8,6 @@ import ReactSlider from "react-slick";
 import imgLogo from "../../../assets/khardl_Logo.png";
 
 const Herosection = ({ isMobile, categories, isCatLoading }) => {
-    categories.map((category, i) =>
-        console.log(`oneCatInSection: ${category.name}`)
-    );
-
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const selectedCategory = useSelector(
