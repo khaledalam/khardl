@@ -494,6 +494,7 @@ class RestaurantController extends BaseController
 
         $lat = number_format((float) $request->input('lat'), 8, '.', '');
         $lng = number_format((float) $request->input('lng'), 8, '.', '');
+        $address = $request->input('location');
 
 
         DB::table('branches')
@@ -501,6 +502,7 @@ class RestaurantController extends BaseController
             ->update([
                 'lat' => $lat,
                 'lng' => $lng,
+                'address' => $address
             ]);
 
         return redirect()->back()->with('success', 'Location successfully changed.');

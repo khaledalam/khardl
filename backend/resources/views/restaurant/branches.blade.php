@@ -56,12 +56,13 @@
                         <div class="row gx-9">
                             <!--begin::Col-->
                             <div class="col-sm-6 branches-google-maps">
-                                <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}">
+                                <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}" value="{{$branch->address}}">
                                 <div id="map{{ $branch->id }}" class="google_map" ></div>
                                 <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
                                         @csrf
                                         <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
                                         <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
+                                        <input type="hidden" id="location{{ $branch->id }}" name="location" value="{{ $branch->address }}" />
                                         <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl mt-3 w-100">{{ __('save-location')}}</button>
                                 </form>
                             </div>
@@ -597,7 +598,7 @@
                     <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>
                     <input id="pac-input-new_branch" class="form-control" type="text" required placeholder="{{ __('search-for-place')}}" name="address">
                     <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
-                    <input type="hidden" value="{{ old('location') }}" id="location" name="location">
+                    <input type="hidden" value="{{ old('location') }}" id="location-new_branch" name="location">
                     <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
                     <input type="hidden" id="lng-new_branch" name="lng-new_branch" />
                     <!--end::Input-->
@@ -953,14 +954,41 @@
                 console.log("ok")
             }
 
-            function updateLocationInput(latLng, branchId) {
+            async function convertToAddress(lat, lng){
+
+                return await fetch(
+                    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCFkagJ1zc4jW9N3lRNlIyAIJJcNpOwecE`
+                )
+                    .then(async (res) => {
+                        const geocode = await res.json();
+                        return geocode?.results[0]?.formatted_address || geocode?.plus_code?.compound_code || `${lat},${lng}`;
+                    });
+            }
+
+            async function updateLocationInput(latLng, branchId) {
+
                 const latInput = document.getElementById('lat' + branchId);
                 const lngInput = document.getElementById('lng' + branchId);
                 latInput.value = latLng.lat();
                 lngInput.value = latLng.lng();
-                const locationInput = document.getElementById('location');
-                locationInput.value = `${lngInput.value }, ${latInput.value }`;
 
+                const addressFromLatLng = await convertToAddress(latLng.lat(), latLng.lng());
+
+                console.log("addressFromLatLng", addressFromLatLng)
+
+
+                const locationInput = document.getElementById('location' + branchId);
+
+                if (locationInput) {
+                    locationInput.value = addressFromLatLng;
+                }
+
+                const locationInputBranch = document.getElementById('pac-input' + branchId);
+
+
+                if (locationInputBranch) {
+                    locationInputBranch.value = addressFromLatLng;
+                }
             }
 
             function updateLocation(branchId) {
