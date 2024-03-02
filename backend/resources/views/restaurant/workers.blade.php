@@ -41,7 +41,7 @@
                                  <!--begin::Table head-->
                                  <thead>
                                      <tr class="fw-bolder text-muted">
-                                         <th class="min-w-25px">#</th>
+                                         <th class="min-w-25px">{{ __('id') }}</th>
                                          <th class="min-w-200px">{{ __('first-name') }}</th>
                                          <th class="min-w-150px">{{ __('last-name') }}</th>
                                          <th class="min-w-150px">{{ __('phone-number') }}</th>

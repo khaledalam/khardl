@@ -21,22 +21,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 <script>
     function submitPayment(e){
         e.preventDefault();
-        Swal.fire({
-            text: '{{ __('are-you-sure-you')}}',
-            icon: 'warning',
 
-            showCancelButton: true,
-            inputPlaceholder: "{{ __('Select an option') }}",
-            confirmButtonText: "{{ __('yes') }}",
-            cancelButtonText: "{{ __('no') }}"
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-                goSell.submit();
-            }
-        });
-
+        goSell.submit();
     }
+
     goSell.goSellElements({
         containerID:"root",
         gateway:{
@@ -256,7 +244,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                                                                                     <div class="form-group">
                                                                                         <label for="factor">{{__('total-price')}}</label>
-                                                                                        <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
+                                                                                        <input type="text" class="form-control bg-secondary" id="price" name="price" value="{{ $subscription->amount }}" readonly>
                                                                                     </div>
                                                                                     <div id="root"></div>
                                                                                     <p id="msg"></p>

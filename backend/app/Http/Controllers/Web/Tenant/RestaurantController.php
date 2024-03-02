@@ -698,7 +698,7 @@ class RestaurantController extends BaseController
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'Worker');
             })
-            ->orderBy('id','desc')
+            ->orderBy('id','asc')
             ->get();
         return view('restaurant.workers', compact('user', 'workers', 'branchId', 'branch'));
     }

@@ -43,11 +43,8 @@
                                                 <label class="required form-label">{{ __('first-name')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('first-name')}}" value="{{old('first_name')}}" />
+                                                <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('first-name')}}" value="{{old('first_name')}}" required/>
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('first-name')}} {{ __('is-required')}}</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Input group-->
@@ -56,11 +53,8 @@
                                                 <label class="required form-label">{{ __('last-name')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('last-name')}}" value="{{old('last_name')}}" />
+                                                <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('last-name')}}" value="{{old('last_name')}}" required/>
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('last-name')}} {{ __('is-required')}}</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Input group-->
@@ -69,11 +63,8 @@
                                                 <label class="required form-label">{{ __('email')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('email')}}" value="{{old('email')}}" />
+                                                <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('email')}}" value="{{old('email')}}" required />
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('email')}}.</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
 
@@ -82,12 +73,23 @@
                                                 <!--begin::Label-->
                                                 <label class="required form-label">{{ __('password')}}</label>
                                                 <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('password')}}" value="{{old('password')}}" />
-                                                <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('password')}} {{ __('is-required')}}</div>
-                                                <!--end::Description-->
+{{--                                                <div class="d-flex">--}}
+{{--                                                <!--begin::Input-->--}}
+{{--                                                <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('password')}}" value="{{old('password')}}" />--}}
+{{--                                                <!--end::Input-->--}}
+{{--                                                <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">--}}
+{{--                                                    <i class="bi bi-eye-slash fs-2"></i>--}}
+{{--                                                    <i class="bi bi-eye fs-2 d-none"></i>--}}
+{{--                                                </span>--}}
+{{--                                                </div>--}}
+
+                                                <div class="position-relative mb-3" data-kt-password-meter="true">
+                                                    <input class="form-control" type="password" name="password" autocomplete="off" placeholder="{{ __('password')}}" value="{{old('password')}}" required/>
+                                                    <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                                        <i class="bi bi-eye-slash fs-2"></i>
+                                                        <i class="bi bi-eye fs-2 d-none"></i>
+                                                    </span>
+                                                </div>
                                             </div>
                                             <!--end::Input group-->
 
@@ -97,11 +99,8 @@
                                                 <label class="required form-label">{{ __('phone-number')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="tel" minlength="9" maxlength="13" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="+966 123456789" required>
+                                                <input type="tel" minlength="9" maxlength="13" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="+966 123456789" required />
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('phone-number')}} {{ __('is-required')}}</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
 
@@ -124,7 +123,8 @@
                                                       <div class="row mb-0 mt-5">
                                                           <!--begin::Label-->
                                                           <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_menu" value="1"  name="can_edit_menu">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_edit_menu" value="1"
+                                                                   name="can_edit_menu" {{old('can_edit_menu') ? 'checked' : ''}}>
                                                               <label class="form-check-label" for="can_edit_menu">{{ __('can-edit-the-menu')}}</label>
                                                           </div>
                                                           <!--end::Label-->
@@ -147,7 +147,8 @@
                                                       <div class="row mb-0 mt-5">
                                                           <!--begin::Label-->
                                                           <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_and_see_other_workers" value="1"  name="can_modify_and_see_other_workers">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_and_see_other_workers" value="1"
+                                                                   name="can_modify_and_see_other_workers" {{old('can_modify_and_see_other_workers') ? 'checked' : ''}}>
                                                               <label class="form-check-label" for="can_modify_and_see_other_workers">{{ __('can-modify-and-see-other-workers')}}</label>
                                                           </div>
                                                           <!--end::Label-->
@@ -158,7 +159,8 @@
                                                       <div class="row mb-0 mt-5">
                                                           <!--begin::Label-->
                                                           <div class="form-check form-check-solid form-switch fv-row">
-                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_working_time" value="1" name="can_modify_working_time">
+                                                            <input class="form-check-input w-35px h-20px" type="checkbox" id="can_modify_working_time" value="1"
+                                                                   name="can_modify_working_time" {{old('can_modify_working_time') ? 'checked' : ''}}>
                                                               <label class="form-check-label" for="can_modify_working_time">{{ __('can-modify-working-time')}}</label>
                                                           </div>
                                                           <!--end::Label-->
@@ -167,7 +169,8 @@
                                                       <div class="row mb-0 mt-5">
                                                         <!--begin::Label-->
                                                         <div class="form-check form-check-solid form-switch fv-row">
-                                                          <input class="form-check-input w-35px h-20px" type="checkbox" id="can_view_revenues" value="1" name="can_view_revenues">
+                                                          <input class="form-check-input w-35px h-20px" type="checkbox" id="can_view_revenues" value="1"
+                                                                 name="can_view_revenues" {{old('can_view_revenues') ? 'checked' : ''}}>
                                                             <label class="form-check-label" for="can_view_revenues">{{ __('Can view revenues')}}</label>
                                                         </div>
                                                         <!--end::Label-->
@@ -177,7 +180,8 @@
                                                          <div class="row mb-0 mt-5">
                                                             <!--begin::Label-->
                                                             <div class="form-check form-check-solid form-switch fv-row">
-                                                              <input class="form-check-input w-35px h-20px" type="checkbox" id="can_control_payment" value="1" name="can_control_payment">
+                                                              <input class="form-check-input w-35px h-20px" type="checkbox" id="can_control_payment" value="1"
+                                                                     name="can_control_payment" {{old('can_control_payment') ? 'checked' : ''}}>
                                                                 <label class="form-check-label" for="can_control_payment">{{ __('can-control-payment')}}</label>
                                                             </div>
                                                             <!--end::Label-->
