@@ -45,9 +45,6 @@
                                                 <!--begin::Input-->
                                                 <input type="text" name="first_name" class="form-control mb-2" placeholder="{{ __('first-name')}}" value="{{old('first_name')}}" />
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('first-name')}} {{ __('is-required')}}</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Input group-->
@@ -58,9 +55,6 @@
                                                 <!--begin::Input-->
                                                 <input type="text" name="last_name" class="form-control mb-2" placeholder="{{ __('last-name')}}" value="{{old('last_name')}}" />
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('last-name')}} {{ __('is-required')}}</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Input group-->
@@ -71,9 +65,6 @@
                                                 <!--begin::Input-->
                                                 <input type="email" name="email" class="form-control mb-2" placeholder="{{ __('email')}}" value="{{old('email')}}" />
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('email')}}.</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
 
@@ -85,9 +76,6 @@
                                                 <!--begin::Input-->
                                                 <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('password')}}" value="{{old('password')}}" />
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('password')}} {{ __('is-required')}}</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
 
@@ -99,9 +87,6 @@
                                                 <!--begin::Input-->
                                                 <input type="tel" minlength="9" maxlength="13" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" id="phone" placeholder="+966 123456789" required>
                                                 <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">{{ __('phone-number')}} {{ __('is-required')}}</div>
-                                                <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
 
