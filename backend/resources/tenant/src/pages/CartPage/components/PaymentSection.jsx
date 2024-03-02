@@ -43,7 +43,7 @@ const PaymentSection = ({
     const { t } = useTranslation();
     const [notes, setNotes] = useState("");
     const [couponCode, setCouponCode] = useState("");
-    const [deliveryType, setDeliveryType] = useState("Pickup");
+    const [deliveryType, setDeliveryType] = useState("PICKUP");
     const [couponDiscountValue, setCouponDiscountValue] = useState(null);
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const [paymentMethod, setPaymentMethod] = useState(
@@ -57,6 +57,9 @@ const PaymentSection = ({
     const language = useSelector((state) => state.languageMode.languageMode);
     const [spinner, setSpinner] = useState(false);
     const customerAddress = useSelector((state) => state.customerAPI.address);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [confirm, setConfirm] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
 
     const callbackFunc = async (response) => {
         try {
@@ -128,7 +131,9 @@ const PaymentSection = ({
     };
 
     const placeOrder = async () => {
-        setConfirm(true);
+        paymentMethod === "Cash on Delivery"
+            ? setConfirm(true)
+            : handlePlaceOrder();
     };
     const handlePlaceOrder = async () => {
         try {
@@ -739,7 +744,27 @@ const PaymentSection = ({
                 </div>
             </div>
             {/* payment summary */}
+            <ConfirmationModal
+                isOpen={modalOpen}
+                message={t("Are you sure to empty cart items?")}
+                onClose={() => setModalOpen(false)}
+                onConfirm={handleEmptyCart}
+            />
 
+            <ConfirmationModal
+                isOpen={confirm}
+                message={t("Are You sure you want to place the order?")}
+                onClose={() => setConfirm(false)}
+                onConfirm={handlePlaceOrder}
+            />
+            <ConfirmationModal
+                isOpen={showAlert}
+                message={t("You need to login first")}
+                onClose={() => {
+                    setShowAlert(false);
+                    navigate("/login");
+                }}
+            />
             <div className="w-full lg:w-1/2 mx-auto my-8">
                 <CartColumn headerTitle={t("Payment Summary")}>
                     <div className="p-6 flex flex-col gap-4 border border-[var(--primary)">
