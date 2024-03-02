@@ -296,7 +296,6 @@ class RestaurantController extends BaseController
     public function addBranch(Request $request)
     {
         if (!$this->can_create_branch()) {
-
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
 
@@ -304,7 +303,8 @@ class RestaurantController extends BaseController
             'name' => 'required|string|max:255',
             'phone' => 'required|string',
             'address' => 'required|string',
-            'location' => 'required',
+            'lat-new_branch' => 'required',
+            'lng-new_branch' => 'required',
             'copy_menu' => 'required',
             'normal_from' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i')],
             'normal_to' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i|after:normal_from')],
@@ -324,8 +324,6 @@ class RestaurantController extends BaseController
             'friday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:friday_open')],
         ]);
 
-        list($lat, $lng) = explode(' ', $validatedData['location']);
-
         $branchesExist = DB::table('branches')->where('is_primary', 1)->exists();
 
         $time = function ($time, $open = true) use ($request) {
@@ -343,8 +341,8 @@ class RestaurantController extends BaseController
             'name' => $validatedData['name'],
             'phone' => $validatedData['phone'],
             'address' => $validatedData['address'],
-            'lat' => (float) $lat,
-            'lng' => (float) $lng,
+            'lat' => (float) $validatedData['lat-new_branch'],
+            'lng' => (float) $validatedData['lng-new_branch'],
 
             'is_primary' => !$branchesExist,
             'saturday_open' => $time($request->input('saturday_open')),
