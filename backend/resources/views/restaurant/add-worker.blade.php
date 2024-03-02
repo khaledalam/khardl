@@ -73,9 +73,23 @@
                                                 <!--begin::Label-->
                                                 <label class="required form-label">{{ __('password')}}</label>
                                                 <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('password')}}" value="{{old('password')}}" />
-                                                <!--end::Input-->
+{{--                                                <div class="d-flex">--}}
+{{--                                                <!--begin::Input-->--}}
+{{--                                                <input type="password" name="password" class="form-control mb-2" placeholder="{{ __('password')}}" value="{{old('password')}}" />--}}
+{{--                                                <!--end::Input-->--}}
+{{--                                                <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">--}}
+{{--                                                    <i class="bi bi-eye-slash fs-2"></i>--}}
+{{--                                                    <i class="bi bi-eye fs-2 d-none"></i>--}}
+{{--                                                </span>--}}
+{{--                                                </div>--}}
+
+                                                <div class="position-relative mb-3" data-kt-password-meter="true">
+                                                    <input class="form-control" type="password" name="password" autocomplete="off" placeholder="{{ __('password')}}" value="{{old('password')}}" />
+                                                    <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                                        <i class="bi bi-eye-slash fs-2"></i>
+                                                        <i class="bi bi-eye fs-2 d-none"></i>
+                                                    </span>
+                                                </div>
                                             </div>
                                             <!--end::Input group-->
 
