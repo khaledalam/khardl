@@ -113,7 +113,7 @@ class OrderService
     {
         $items = Item::whenSearch($request['term'] ?? null)
             ->whenBranch($request['branch_id'] ?? null)
-            ->take(5)
+//            ->take(5)
             ->get();
         logger($items);
         return $this->sendResponse(ItemResource::collection($items), '');
