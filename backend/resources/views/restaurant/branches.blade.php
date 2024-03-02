@@ -56,12 +56,13 @@
                         <div class="row gx-9">
                             <!--begin::Col-->
                             <div class="col-sm-6 branches-google-maps">
-                                <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}">
+                                <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}" value="{{$branch->address}}">
                                 <div id="map{{ $branch->id }}" class="google_map" ></div>
                                 <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
                                         @csrf
                                         <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
                                         <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
+                                        <input type="hidden" id="location{{ $branch->id }}" name="location" value="{{ $branch->address }}" />
                                         <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl mt-3 w-100">{{ __('save-location')}}</button>
                                 </form>
                             </div>
@@ -267,13 +268,13 @@
                                 <div class="tab-pane fade show active" id="kt_tab_pane_{{$branch->id}}_1" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('from') }} </label>
-                                            <input type="time" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="saturday_open"  required />
+                                            <label>{{ __('from') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="saturday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('to') }} </label>
-                                            <input type="time" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="saturday_close"  required />
+                                            <label>{{ __('to') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="saturday_close"  required />
 
                                         </div>
                                     </div>
@@ -291,13 +292,13 @@
                                 <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_2" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('from') }} </label>
-                                            <input type="time" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="sunday_open"  required />
+                                            <label>{{ __('from') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="sunday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('to') }} </label>
-                                            <input type="time" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="sunday_close"  required />
+                                            <label>{{ __('to') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="sunday_close"  required />
 
                                         </div>
                                     </div>
@@ -315,13 +316,13 @@
                                 <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_3" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('from') }} </label>
-                                            <input type="time" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="monday_open"  required />
+                                            <label>{{ __('from') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="monday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('to') }} </label>
-                                            <input type="time" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="monday_close"  required />
+                                            <label>{{ __('to') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="monday_close"  required />
 
                                         </div>
                                     </div>
@@ -339,13 +340,13 @@
                                 <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_4" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('from') }} </label>
-                                            <input type="time" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="tuesday_open"  required />
+                                            <label>{{ __('from') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="tuesday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('to') }} </label>
-                                            <input type="time" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="tuesday_close"  required />
+                                            <label>{{ __('to') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="tuesday_close"  required />
 
                                         </div>
                                     </div>
@@ -363,13 +364,13 @@
                                 <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_5" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('from') }} </label>
-                                            <input type="time" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="wednesday_open"  required />
+                                            <label>{{ __('from') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="wednesday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('to') }} </label>
-                                            <input type="time" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="wednesday_close"  required />
+                                            <label>{{ __('to') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="wednesday_close"  required />
 
                                         </div>
                                     </div>
@@ -387,13 +388,13 @@
                                 <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_6" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('from') }} </label>
-                                            <input type="time" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="thursday_open"  required />
+                                            <label>{{ __('from') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="thursday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('to') }} </label>
-                                            <input type="time" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="thursday_close"  required />
+                                            <label>{{ __('to') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="thursday_close"  required />
                                         </div>
                                     </div>
 
@@ -410,13 +411,13 @@
                                 <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_7" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('from') }} </label>
-                                            <input type="time" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="friday_open"  required />
+                                            <label>{{ __('from') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="friday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label for="">{{ __('to') }} </label>
-                                            <input type="time" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="friday_close"  required />
+                                            <label>{{ __('to') }} </label>
+                                            <input type="time" step="900" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="friday_close"  required />
                                         </div>
                                     </div>
 
@@ -597,7 +598,6 @@
                     <label class="required fs-6 fw-bold mb-2">{{ __('location-branch') }}</label>
                     <input id="pac-input-new_branch" class="form-control" type="text" required placeholder="{{ __('search-for-place')}}" name="address">
                     <div style="width: 100%; height: 250px;" id="map-new_branch"></div>
-                    <input type="hidden" value="{{ old('location') }}" id="location" name="location">
                     <input type="hidden" id="lat-new_branch" name="lat-new_branch" />
                     <input type="hidden" id="lng-new_branch" name="lng-new_branch" />
                     <!--end::Input-->
@@ -640,8 +640,7 @@
                                 <input class="form-check-input" type="radio" name="hours_option" id="customChoice" value="custom">
                                 <label class="form-check-label" for="customChoice">{{ __('choose-time-for-custom-days') }}</label>
                             </div>
-                            <br />
-                            <small>{{ __('time-in-24-h') }}</small>
+{{--                            <small>{{ __('time-in-24-h') }}</small>--}}
                         </div>
                     </div>
                 </div>
@@ -651,12 +650,12 @@
                     <div class=" d-flex justify-content-between w-100">
                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                             <label for="normal_from">{{ __('from') }}  </label>
-                            <input type="time" class="form-control form-control-solid"  name="normal_from" id="normal_from"   />
+                            <input type="time" step="900" class="form-control form-control-solid"  name="normal_from" id="normal_from" value="09:00"  />
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                             <label for="normal_to">{{ __('to') }}  </label>
-                            <input type="time" class="form-control form-control-solid"  name="normal_to" id="normal_to"   />
+                            <input type="time" step="900" class="form-control form-control-solid"  name="normal_to" id="normal_to" value="20:00"  />
 
                         </div>
                     </div>
@@ -694,12 +693,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="saturday_open">{{ __('from') }} </label>
-                                    <input type="time" class="form-control form-control-solid"  name="saturday_open" id="saturday_open"   />
+                                    <input type="time" step="900" class="form-control form-control-solid"  name="saturday_open" id="saturday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="saturday_close">{{ __('to') }} </label>
-                                    <input type="time" class="form-control form-control-solid"  name="saturday_close" id="saturday_close"   />
+                                    <input type="time" step="900" class="form-control form-control-solid"  name="saturday_close" id="saturday_close"   />
 
                                 </div>
                             </div>
@@ -709,12 +708,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="sunday_open">{{ __('from') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="sunday_open" id="sunday_open"   />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="sunday_open" id="sunday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="sunday_close">{{ __('to') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="sunday_close" id="sunday_close"   />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="sunday_close" id="sunday_close"   />
 
                                 </div>
                             </div>
@@ -724,12 +723,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="monday_open">{{ __('from') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="monday_open" id="monday_open"   />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="monday_open" id="monday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="monday_close">{{ __('to') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="monday_close" id="monday_close"   />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="monday_close" id="monday_close"   />
 
                                 </div>
                             </div>
@@ -739,12 +738,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="tuesday_open">{{ __('from') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="tuesday_open" id="tuesday_open"   />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="tuesday_open" id="tuesday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="tuesday_close">{{ __('to') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="tuesday_close" id="tuesday_close"   />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="tuesday_close" id="tuesday_close"   />
                                 </div>
                             </div>
                         </div>
@@ -753,12 +752,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="wednesday_open">{{ __('from') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="wednesday_open" id="wednesday_open"  />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="wednesday_open" id="wednesday_open"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="wednesday_close">{{ __('to') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="wednesday_close" id="wednesday_close"  />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="wednesday_close" id="wednesday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -767,12 +766,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="thursday_open">{{ __('from') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="thursday_open" id="thursday_open"   />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="thursday_open" id="thursday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="thursday_close">{{ __('to') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="thursday_close" id="thursday_close"  />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="thursday_close" id="thursday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -781,12 +780,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="friday_open">{{ __('from') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="friday_open" id="friday_open"  />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="friday_open" id="friday_open"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="friday_close">{{ __('to') }} </label>
-                                    <input type="time" class="form-control form-control-solid "  name="friday_close" id="friday_close"  />
+                                    <input type="time" step="900" class="form-control form-control-solid "  name="friday_close" id="friday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -846,13 +845,13 @@
         var customChoiceTabs = document.getElementById('customChoiceTabs');
         var customChoiceContent = document.getElementById('customChoiceContent');
         function setRequiredForCustomChoice(required) {
-            var customInputs = customChoiceContent.querySelectorAll('input[type="time"]');
+            var customInputs = customChoiceContent.querySelectorAll('input[type="time" step="900"]');
             customInputs.forEach(function (input) {
                 input.required = required;
             });
         }
         function setRequiredForNormalChoice(required) {
-            var customInputs = normalChoiceSection.querySelectorAll('input[type="time"]');
+            var customInputs = normalChoiceSection.querySelectorAll('input[type="time" step="900"]');
             customInputs.forEach(function (input) {
                 input.required = required;
             });
@@ -953,14 +952,38 @@
                 console.log("ok")
             }
 
-            function updateLocationInput(latLng, branchId) {
+            async function convertToAddress(lat, lng){
+
+                return await fetch(
+                    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCFkagJ1zc4jW9N3lRNlIyAIJJcNpOwecE`
+                )
+                    .then(async (res) => {
+                        const geocode = await res.json();
+                        return geocode?.results[0]?.formatted_address || geocode?.plus_code?.compound_code || `${lat},${lng}`;
+                    });
+            }
+
+            async function updateLocationInput(latLng, branchId) {
+
                 const latInput = document.getElementById('lat' + branchId);
                 const lngInput = document.getElementById('lng' + branchId);
                 latInput.value = latLng.lat();
                 lngInput.value = latLng.lng();
-                const locationInput = document.getElementById('location');
-                locationInput.value = `${lngInput.value }, ${latInput.value }`;
 
+                const addressFromLatLng = await convertToAddress(latLng.lat(), latLng.lng());
+
+                const locationInput = document.getElementById('location' + branchId);
+
+                if (locationInput) {
+                    locationInput.value = addressFromLatLng;
+                }
+
+                const locationInputBranch = document.getElementById('pac-input' + branchId);
+
+
+                if (locationInputBranch) {
+                    locationInputBranch.value = addressFromLatLng;
+                }
             }
 
             function updateLocation(branchId) {
@@ -1000,30 +1023,16 @@
 
 
             // New branch popup
-            const centerCoords = {lat: 24.7136, lng: 46.6753}; // Default center coordinates
+            const centerCoords = {lat: 24.7136, lng: 46.6753, address: '8779 Street Number 74, Al Olaya, 2593, Riyadh 12214, Saudi Arabia'}; // Default center coordinates
             initializeMap('-new_branch', centerCoords?.lat, centerCoords?.lng);
 
-            // Check if the old('location') is not null
-            const locationValue = "{{ old('location') }}";
-            if (locationValue !== null && locationValue !== '') {
-                const locationArray = locationValue.split(' ');
-                if (locationArray.length === 2) {
-                    // Update the center coordinates based on the old('location')
-                    centerCoords.lat = parseFloat(locationArray[0]);
-                    centerCoords.lng = parseFloat(locationArray[1]);
-
-                    document.getElementById('lat-new_branch').value = centerCoords.lat;
-                    document.getElementById('lng-new_branch').value = centerCoords.lat;
-
-                    console.log(document.getElementById('lat-new_branch').value);
-                }
-            }
+            document.getElementById('lat-new_branch').value = centerCoords.lat;
+            document.getElementById('lng-new_branch').value = centerCoords.lat;
+            document.getElementById('pac-input-new_branch').value = centerCoords.address;
 
 
-            const locationInput = document.getElementById('location');
 
             google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
-
 
                 // If a marker exists, remove it
                 if (markers['-new_branch']) {
@@ -1034,13 +1043,29 @@
                 markers['-new_branch'] = new google.maps.Marker({
                     map: maps['-new_branch'],
                     position: event.latLng,
+                    draggable: true,
                 });
 
-                document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
+                // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
+
+                const latnew_branch = document.getElementById('lat-new_branch' );
+                const lngnew_branch = document.getElementById('lng-new_branch' );
 
                 // Update the hidden input with the clicked location's latitude and longitude
-                locationInput.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
+                latnew_branch.value = `${event.latLng.lat()}`;
+                lngnew_branch.value = `${event.latLng.lng()}`;
             });
+
+
+            function updateTimeInput() {
+                var timeInput = document.getElementById("timeInput");
+                var timeValue = timeInput.value.split(":");
+                var hours = parseInt(timeValue[0], 10);
+
+                if (hours < 10) {
+                    timeInput.value = "0" + hours + ":" + timeValue[1];
+                }
+            }
 
         });
 
