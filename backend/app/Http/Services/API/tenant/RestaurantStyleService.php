@@ -82,7 +82,30 @@ class RestaurantStyleService
 
             $data->logo_url = $data->logo_url ?: $data->logo;
             // get branches of restaurant
-            $data['branches'] = Branch::all(['name', 'id', 'lat', 'lng', 'preparation_time_delivery','delivery_availability', 'pickup_availability']);
+            $data['branches'] = Branch::all([
+                'name', 'id', 'lat', 'lng', 'preparation_time_delivery','delivery_availability', 'pickup_availability',
+                'monday_open',
+                'monday_close',
+                'monday_closed',
+                'tuesday_open',
+                'tuesday_close',
+                'tuesday_closed',
+                'wednesday_open',
+                'wednesday_close',
+                'wednesday_closed',
+                'thursday_open',
+                'thursday_close',
+                'thursday_closed',
+                'friday_open',
+                'friday_close',
+                'friday_closed',
+                'saturday_open',
+                'saturday_close',
+                'saturday_closed',
+                'sunday_open',
+                'sunday_close',
+                'sunday_closed',
+            ]);
         }
 
         return $this->sendResponse($data, __('Restaurant style fetched successfully.'));
