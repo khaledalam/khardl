@@ -84,7 +84,13 @@ const Login = () => {
             setTimeout(()=>{
                window.location.reload()
             },100)
-            navigate('/summary')
+
+             // worker
+             if (responseData.data.user?.roles[0]?.name?.toLowerCase() == 'worker') {
+                 navigate('/branches')
+             } else {
+                 navigate('/summary')
+             }
          } else {
             console.log("response?.data?.success false")
             setSpinner(false)
