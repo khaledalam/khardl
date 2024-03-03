@@ -31,5 +31,5 @@ jobs:
       - name: ⚙️ DB backup and App apply changes
         run: |
           cd /home/khardl5/public_html/
-          git pullhttps://${{secrets.GITHUB_TOK}}@github.com/khardl.git production
+          git pull https://${{secrets.GITHUB_TOK}}@github.com/khardl.git production
           ./deploy.sh
