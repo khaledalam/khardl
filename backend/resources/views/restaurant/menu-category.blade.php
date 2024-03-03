@@ -317,6 +317,28 @@
                         <!--end::Input group-->
 
                         <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8">
+                            <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
+
+                            <ul class="nav nav-tabs" >
+                                <li class="nav-item">
+                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('English') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">{{ __('Arabic') }}</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane fade show active" id="name-en">
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}"   name="item_name_en" />
+                                </div>
+                                <div class="tab-pane fade" id="name-ar">
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="item_name_ar" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <div class="d-flex justify-content-between align-items-center">
@@ -354,27 +376,7 @@
 
                         </div>
                         <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-bold mb-2">{{ __('Name') }}</label>
 
-                            <ul class="nav nav-tabs" >
-                                <li class="nav-item">
-                                    <a class="nav-link active required" id="name-en-tab" data-bs-toggle="tab" href="#name-en">{{ __('English') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link required" id="name-ar-tab" data-bs-toggle="tab" href="#name-ar">{{ __('Arabic') }}</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content mt-3">
-                                <div class="tab-pane fade show active" id="name-en">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}"   name="item_name_en" />
-                                </div>
-                                <div class="tab-pane fade" id="name-ar">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="item_name_ar" />
-                                </div>
-                            </div>
-                        </div>
                         <div class="d-flex flex-column mb-8">
                             <label class="fs-6 fw-bold mb-2">{{ __("Description") }}</label>
 
@@ -396,7 +398,6 @@
                             </div>
                         </div>
                         <!--end::Input group-->
-
 
 
                         <div id="checkboxes">
