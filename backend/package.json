@@ -9,7 +9,7 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "cypress:run": "cypress run --browser chrome",
+        "cypress:run": "cypress run --browser chrome --headless",
         "cypress:open": "cypress open"
     },
     "devDependencies": {
