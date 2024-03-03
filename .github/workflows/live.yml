@@ -30,7 +30,6 @@ jobs:
     steps:
       - name: ⚙️ DB backup and App apply changes
         run: |
-          cat ~/.ssh/id_rsa.pub
           cd /home/khardl5/public_html/
-          git pull
+          git pull "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           ./deploy.sh
