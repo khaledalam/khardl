@@ -105,6 +105,7 @@ class RestaurantStyleService
                 'sunday_open',
                 'sunday_close',
                 'sunday_closed',
+                'is_primary'
             ]);
         }
 
