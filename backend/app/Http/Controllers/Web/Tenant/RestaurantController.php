@@ -561,7 +561,7 @@ class RestaurantController extends BaseController
         }
 
         $categories = Category::where('branch_id', $branchId)
-            ->orderByRaw("id = $id DESC")
+//            ->orderByRaw("id = $id DESC")
             ->get();
         $selectedCategory = $categories->where('id', $id)->first();
         $items = Item::
