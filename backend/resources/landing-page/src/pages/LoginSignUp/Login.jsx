@@ -46,25 +46,25 @@ const Login = () => {
 
          console.log(response?.data?.success)
          if (response?.data?.success) {
-            const responseData = await response?.data;
+            const responseData = response?.data;
             console.log(responseData)
             localStorage.setItem(
                'user-info',
-               JSON.stringify(responseData.data)
+               JSON.stringify(responseData?.data?.user)
             )
-            if (responseData.data.user.status === 'inactive') {
-               sessionStorage.setItem('email', responseData.data.user.email)
+            if (responseData?.data?.user?.status === 'inactive') {
+               sessionStorage.setItem('email', responseData?.data?.user?.email)
                setStatusCode(HTTP_NOT_VERIFIED)
                navigate('/verification-email')
-            } else if (responseData.data.step2_status === 'incomplete') {
+            } else if (responseData?.data?.step2_status === 'incomplete') {
                setStatusCode(HTTP_NOT_ACCEPTED)
                navigate('/complete-register')
             } else if (
-               responseData.data.step2_status === 'completed' &&
-               responseData.data.user.status === 'active'
+               responseData?.data?.step2_status === 'completed' &&
+               responseData.data?.user?.status === 'active'
             ) {
                 setStatusCode(HTTP_OK);
-             
+
                //  navigate('/')
                // settimeout(() => {
                //     window.location.href = '/dashboard';

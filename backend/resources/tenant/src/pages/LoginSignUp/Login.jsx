@@ -63,11 +63,11 @@ const Login = () => {
          });
 
          if (response?.data?.success) {
-            const responseData = await response?.data;
+            const responseData = response?.data;
             console.log("login-response",responseData)
             localStorage.setItem(
                'user-info',
-               JSON.stringify(responseData.data.user)
+               JSON.stringify(responseData?.data?.user)
             )
             localStorage.setItem('i18nextLng', response?.data?.data?.user?.default_lang ?? 'ar')
             if (responseData.data.user.status === 'inactive') {
@@ -104,7 +104,7 @@ const Login = () => {
          toast.error(`${error?.response?.data?.message || t('Login failed')}`)
       }
    }
-  
+
    /////////////////////////////////////////////////////////////////////////////////////
    useEffect(() => {
       fetchResStyleData();

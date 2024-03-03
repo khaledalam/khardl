@@ -321,9 +321,9 @@ const ProductItem = ({
         if (response?.data?.success) {
           const responseData = response?.data;
           console.log(responseData);
-          localStorage.setItem("user-info", JSON.stringify(responseData.data));
+          localStorage.setItem("user-info", JSON.stringify(responseData?.data?.user));
 
-          console.log(">>> herer ", responseData.data.user.status);
+          console.log(">>> herer ", responseData?.data?.user?.status);
 
           if (responseData.data.user.status === "inactive") {
             sessionStorage.setItem(

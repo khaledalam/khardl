@@ -65,18 +65,17 @@ const Login = () => {
            // remember_me: data.remember_me, // used only in API token-based
          });
 
-         console.log(response?.data?.success, 'response?.data?.success')
          if (response?.data?.success) {
-            const responseData = await response?.data;
+            const responseData = response?.data;
             console.log(responseData,'const responseData = await response?.data;')
             localStorage.setItem(
                'user-info',
-               JSON.stringify(responseData.data)
+               JSON.stringify(responseData?.data?.user)
             )
             localStorage.setItem(
-               'user-role',responseData.data.user.roles[0].name
+               'user-role',responseData?.data?.user?.roles[0]?.name
             )
-            sessionStorage.setItem('email', responseData.data.user.email)
+            sessionStorage.setItem('email', responseData?.data?.user?.email)
             setStatusCode(HTTP_OK);
             dispatch(changeLogState(true))
             dispatch(setIsOpen(false))

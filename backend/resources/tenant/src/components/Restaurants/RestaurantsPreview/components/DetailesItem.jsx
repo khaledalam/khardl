@@ -72,20 +72,20 @@ const DetailesItem = ({
       console.log("response: ", response)
 
       if (response?.data?.success) {
-        const responseData = await response?.data
+        const responseData = response?.data
         console.log(responseData)
-        localStorage.setItem("user-info", JSON.stringify(responseData.data))
+        localStorage.setItem("user-info", JSON.stringify(responseData?.data?.user))
 
-        console.log(">>> herer ", responseData.data.user.status)
+        console.log(">>> herer ", responseData?.data?.user?.status)
 
-        if (responseData.data.user.status === "inactive") {
+        if (responseData?.data?.user?.status === "inactive") {
           sessionStorage.setItem(
             PREFIX_KEY + "phone",
             responseData?.data?.user?.phone
           )
           setStatusCode(HTTP_NOT_VERIFIED)
           navigate("/verification-phone")
-        } else if (responseData.data.user.status === "active") {
+        } else if (responseData?.data?.user?.status === "active") {
           sessionStorage.setItem(
             PREFIX_KEY + "phone",
             responseData?.data?.user?.phone

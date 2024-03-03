@@ -14,6 +14,7 @@ jobs:
   Deploy:
     name: ⚙️ Apply Deploy
     runs-on: [self-hosted]
+    if: github.ref == 'refs/heads/production'
     steps:
       - name: ⚙️ DB backup and App apply changes
         run: |
