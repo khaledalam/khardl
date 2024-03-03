@@ -29,7 +29,8 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - name: ⚙️ DB backup and App apply changes
+      - uses: actions/checkout@v2
         run: |
           cd /home/khardl5/public_html/
-          git pull "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git pull
           ./deploy.sh
