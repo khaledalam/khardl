@@ -716,7 +716,7 @@
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                             <input type="hidden" name="checkbox_required[${checkboxCount}]" value="false" />
-                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" id="" > {{ __('Required') }}
+                            <input type="checkbox" name="checkbox_required_input[${checkboxCount}]" id="" >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
@@ -825,7 +825,7 @@
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="selection_required[${selectionCount}]" value="false" />
-                            <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" > {{ __('Required') }}
+                            <input type="checkbox" name="selection_required_input[${selectionCount}]" id="" >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
@@ -932,7 +932,7 @@
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
                             <input type="hidden" name="dropdown_required[${dropdownCount}]" value="false" />
-                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" > {{ __('Required') }}
+                            <input type="checkbox" name="dropdown_required_input[${dropdownCount}]" id="" >&nbsp;{{ __('Required') }}
                         </label>
                     </div>
                     <!--end::Label-->
