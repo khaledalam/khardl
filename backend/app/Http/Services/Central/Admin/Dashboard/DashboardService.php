@@ -24,7 +24,6 @@ class DashboardService
         $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
         // TODO @todo save data in session
         $restaurantsLive = 0;
-        $customers = 0;
         $totalOrders = 0;
         $pendingOrders = 0;
         $completedOrders = 0;
@@ -36,7 +35,6 @@ class DashboardService
         foreach ($restaurantsAll as $restaurant) {
             $restaurant->run(static function ($tenant) use (
                 &$restaurantsLive,
-                &$customers,
                 &$totalOrders,
                 $self,
                 &$pendingOrders,

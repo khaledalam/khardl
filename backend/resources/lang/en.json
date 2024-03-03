@@ -6,6 +6,7 @@
     "khardl" : "Khardl",
     "dashboard" : "Dashboard",
     "restaurants" : "Restaurants",
+    "restaurant-singular" : "Restaurant",
     "all-restaurants" : "All Restaurants",
     "all-branches" : "All Branches",
     "supports" : "Admins",

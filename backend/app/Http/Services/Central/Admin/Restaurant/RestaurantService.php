@@ -22,6 +22,8 @@ class RestaurantService
         $query = Tenant::query()->with('primary_domain')
             ->whenSearch($request['search'] ?? null);
         $restaurants = $query->get();
+        $totalRestaurantsCount = count($restaurants);
+
         // TODO @todo make sub active or not tag with search
         $tenants = [];
         if (isset($request['live']) && ($request['live'] == 1 || $request['live'] == 0)) {
@@ -52,7 +54,7 @@ class RestaurantService
         }
         $user = Auth::user();
 
-        return view('admin.restaraunts', compact('restaurants', 'user'));
+        return view('admin.restaraunts', compact('restaurants', 'user', 'totalRestaurantsCount'));
     }
     public function show(Tenant $tenant)
     {
