@@ -114,6 +114,6 @@ jobs:
       - name: ⚙️ DB backup and App apply changes
         run: |
           cd /home/khardl4test/public_html/
-          git pull https://${{secrets.TOK}}@github.com/${GITHUB_REPOSITORY}.git production
+          git pull https://${{secrets.TOK}}@github.com/${GITHUB_REPOSITORY}.git development
           echo "-----\n";
           ./testing-deploy.sh
