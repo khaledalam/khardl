@@ -11,20 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-#  Deploy:
-#    if: github.ref == 'refs/heads/production'
-#    name: 🎉 Deploy
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: 🚚 Get latest code
-#        uses: actions/checkout@v3
-#      - name: 📂 Sync files
-#        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-#        with:
-#          server: ${{ secrets.PROD_FTP_SERVER }}
-#          username: ${{ secrets.PROD_FTP_USERNAME }}
-#          password: ${{ secrets.PROD_FTP_PASSWORD }}
-  Deploy-Apply:
+  Deploy:
     name: ⚙️ Apply Deploy
     runs-on: [self-hosted]
     steps:
@@ -32,4 +19,5 @@ jobs:
         run: |
           cd /home/khardl5/public_html/
           git pull https://${{secrets.TOK}}@github.com/${GITHUB_REPOSITORY}.git production
-#          ./deploy.sh
+          echo "-----\n";
+          ./deploy.sh
