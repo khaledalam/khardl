@@ -276,7 +276,7 @@
                 <!--begin::Modal header-->
                 <!--begin::Modal body-->
                 <div class="modal-body px-10 px-lg-15 pt-0 pb-15">
-                    <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse end-0 {{app()->getLocale() == 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
+                    <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2  flex-row-reverse start-0 {{app()->getLocale() != 'ar'?' transform-90':'transform-270'}} mt-20 gap-2">
                         <!--begin::Demos drawer toggle-->
                         <button id="addCheckbox" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Checkbox">
                             <span id="create_new_checkbox">+ {{ __('Checkbox') }}</span>
