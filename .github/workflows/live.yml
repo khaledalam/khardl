@@ -29,7 +29,6 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - name: ⚙️ DB backup and App apply changes
-      - uses: actions/checkout@v2
         run: |
           cd /home/khardl5/public_html/
           git pullhttps://${{secrets.GITHUB_TOK}}@github.com/khardl.git production
