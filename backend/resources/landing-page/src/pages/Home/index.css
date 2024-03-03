@@ -1,44 +1,43 @@
-.home-heading{
-font-variant-numeric: lining-nums proportional-nums;
-font-family: "Linden Hill";
-font-size: 46px;
-font-style: normal;
-font-weight: 400;
-line-height: 54px; 
+.home-heading {
+    font-variant-numeric: lining-nums proportional-nums;
+    font-family: "gessBold";
+    font-size: 46px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 54px;
 }
 
-
-.text-medium{
-font-family: "Linden Hill";
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 1.5; 
+.text-medium {
+    font-family: "gess";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
-.card-heading{
-   /* text-align: center; */
-font-family: "Linden Hill";
-font-size: 18px;
-font-style: normal;
-font-weight: 400;
-line-height: 34px;
+.card-heading {
+    /* text-align: center; */
+    font-family: "gessBold";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 34px;
 }
-.contact-heading{
-    color: #FFF;
-/* text-align: center; */
-font-family: "Linden Hill";
-font-size: 30px;
-font-style: normal;
-font-weight: 400;
-line-height: 34px; /* 113.333% */
+.contact-heading {
+    color: #fff;
+    /* text-align: center; */
+    font-family: "gess";
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 34px; /* 113.333% */
 }
 
-.contact-text{
-    color: #FFF;
-font-family: "Linden Hill";
-font-size: 11px;
-font-style: normal;
-font-weight: 400;
-line-height: 21px; /* 190.909% */
+.contact-text {
+    color: #fff;
+    font-family: "gess";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px; /* 190.909% */
 }
