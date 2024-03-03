@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web\Tenant;
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
 use App\Models\Tenant\Item;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
+use Database\Seeders\Tenant\DeliveryTypesSeeder;
+use Database\Seeders\Tenant\PaymentMethodSeeder;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
@@ -416,6 +418,17 @@ class RestaurantController extends BaseController
         $sub = ROSubscription::first();
         $sub->number_of_branches -= 1;
         $sub->save();
+
+        $branch = Branch::where('id', $newBranchId)->first();
+
+        // Set default payment method and delivery type
+        $branch->payment_methods()->sync([
+            PaymentMethodSeeder::PAYMENT_METHOD_COD,
+        ]);
+        $branch->delivery_types()->sync([
+            DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
+        ]);
+
         return redirect()->back()->with('success', 'Branch successfully added.');
 
     }
