@@ -54,6 +54,6 @@ APP_ENV=$(cat ./backend/.env | grep 'APP_ENV=')
   --webhook-url="https://discord.com/api/webhooks/1190627943832100964/lc1t2A2Y9a-7TnLlMQC55oDjPhcmdiVQCyedOESLZ5UID-8ZBNbN75kiJm-k6vMZ_LUP" \
   --username "DeployTesting" \
   --avatar "https://static.thenounproject.com/png/1907459-200.png" \
-  --text "New deploy occurred on [Testing Server]! | https://khardl4test.xyz | $APP_ENV"
+  --text "New deploy occurred on [Testing Server]! | khardl4test.xyz | $APP_ENV"
 
 
