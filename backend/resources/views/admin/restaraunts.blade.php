@@ -65,7 +65,7 @@
             <div class="d-flex flex-wrap flex-stack pb-7">
                 <!--begin::Title-->
                 <div class="d-flex flex-wrap align-items-center my-1">
-                    <h3 class="fw-bolder me-5 my-1">{{ $restaurants->count() }} {{ __('restaurants-found')}}</h3>
+                    <h3 class="fw-bolder me-5 my-1">{{ $restaurants->count() }} {{ __('restaurants-found')}} ({{__('from')}} {{$totalRestaurantsCount}} {{__('restaurant-singular')}})</h3>
                 </div>
                 <!--end::Title-->
                 <!--begin::Controls-->

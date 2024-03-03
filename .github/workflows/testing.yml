@@ -106,16 +106,14 @@ jobs:
 #            **/.git*
 #            **/.git*/**
 #            backend/public/**
-  Apply-Changes:
-    name: ⚙️ Apply Deploy
+  Deploy:
+    name: ⚙️ Deploy
     runs-on: [self-hosted]
     needs: [Testing-PHPUnit, Testing-Cypress]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Git Pull
-        run: git pull origin development
       - name: ⚙️ DB backup and App apply changes
         run: |
           cd /home/khardl4test/public_html/
+          git pull https://${{secrets.TOK}}@github.com/${GITHUB_REPOSITORY}.git production
+          echo "-----\n";
           ./testing-deploy.sh

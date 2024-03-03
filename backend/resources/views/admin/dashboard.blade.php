@@ -273,10 +273,10 @@
                             <!--begin::Title-->
                             <div class="card-title d-flex flex-column">
                                 <!--begin::Amount-->
-                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{$customers}}</span>
+                                <span class="fs-2hx fw-bolder text-dark me-2 lh-1 ls-n2">{{$restaurantsAll}}</span>
                                 <!--end::Amount-->
                                 <!--begin::Subtitle-->
-                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('new-customers-this-month')}}</span>
+                                <span class="text-gray-400 pt-1 fw-bold fs-6">{{ __('restaurants-count')}}</span>
                                 <!--end::Subtitle-->
                             </div>
                             <!--end::Title-->

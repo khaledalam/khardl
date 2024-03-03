@@ -22,9 +22,8 @@ class DashboardService
 
         // not complete register step2
         $restaurantsOwnersNotUploadFiles = User::doesntHave('traderRegistrationRequirement')->count();
-        // TODO @todo save data in session 
+        // TODO @todo save data in session
         $restaurantsLive = 0;
-        $customers = 0;
         $totalOrders = 0;
         $pendingOrders = 0;
         $completedOrders = 0;
@@ -36,14 +35,13 @@ class DashboardService
         foreach ($restaurantsAll as $restaurant) {
             $restaurant->run(static function ($tenant) use (
                 &$restaurantsLive,
-                &$customers,
                 &$totalOrders,
                 $self,
                 &$pendingOrders,
                 &$acceptedOrders,
                 &$completedOrders,
                 &$cancelledOrders,
-                &$readyOrders,  
+                &$readyOrders,
                 &$receivedByResOrders,
 
                 ) {
@@ -52,8 +50,8 @@ class DashboardService
                     $restaurantsLive++;
                 }
 
-                $currentMonth = Carbon::now()->month;
-                $customers += RestaurantUser::customers()->whereMonth('created_at', '=', $currentMonth)->count();
+//                $currentMonth = Carbon::now()->month;
+//                $customers += RestaurantUser::customers()->whereMonth('created_at', '=', $currentMonth)->count();
                 $orders = Order::query();
                 $pendingOrders += $self->getOrderStatusCount(clone $orders, 'pending');
                 $acceptedOrders += $self->getOrderStatusCount(clone $orders, 'accepted');
@@ -75,7 +73,6 @@ class DashboardService
                 'restaurantsAll',
                 'restaurantsOwnersNotUploadFiles',
                 'restaurantsLive',
-                'customers',
                 'totalOrders',
                 'acceptedOrders',
                 'pendingOrders',
