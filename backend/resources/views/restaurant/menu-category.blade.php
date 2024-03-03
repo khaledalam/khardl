@@ -400,6 +400,7 @@
                         <!--end::Input group-->
 
 
+
                         <div id="checkboxes">
                             <!-- Checkbox elements will be dynamically added here -->
 
@@ -709,6 +710,7 @@
             const checkboxDiv = document.createElement('div');
             checkboxDiv.className = 'd-flex flex-column mb-8 fv-row';
             checkboxDiv.innerHTML = `
+                <hr />
                 <div class="d-flex flex-column fv-row">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
@@ -734,9 +736,8 @@
                     <div id="inputContainer${checkboxCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
-                    <div class="options" id="${checkboxCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
-                    </div>
+                    <div class="options" id="${checkboxCount}" ></div><br />
+                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -817,6 +818,7 @@
             const selectionDiv = document.createElement('div');
             selectionDiv.className = 'd-flex flex-column mb-8 fv-row';
             selectionDiv.innerHTML = `
+                <hr />
                 <div class="d-flex flex-column fv-row">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
@@ -842,9 +844,8 @@
                     <div id="inputContainer${selectionCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
-                    <div class="options" id="${selectionCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
-                    </div>
+                    <div class="options" id="${selectionCount}" ></div><br />
+                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -924,6 +925,7 @@
             const dropdownDiv = document.createElement('div');
             dropdownDiv.className = 'd-flex flex-column mb-8 fv-row';
             dropdownDiv.innerHTML = `
+                <hr />
                 <div class="d-flex flex-column fv-row">
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
@@ -949,9 +951,8 @@
                     <div id="inputContainer${dropdownCount}">
                         <!-- Existing ShakePass11 elements will be dynamically added here -->
                     </div>
-                    <div class="options" id="${dropdownCount}">
-                        <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
-                    </div>
+                    <div class="options" id="${dropdownCount}" ></div><br />
+                    <a class="btn btn-sm btn-khardl add-option w-100">+ {{ __('Add option') }}</a>
                 </div>
             `;
 
@@ -991,7 +992,6 @@
                         <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Name in english') }}">
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
-
                         <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>
             `; }else {
@@ -999,7 +999,6 @@
                     <div class="d-flex justify-content-between align-items-center mt-5">
                         <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in english') }}">
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Name in arabic') }}">
-
 
                         <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>
