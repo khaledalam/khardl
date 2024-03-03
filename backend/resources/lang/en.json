@@ -738,7 +738,7 @@
     "Is this your primary number?" : "Is this your primary number?",
     "Your restaurant will be activated after completing the review process":"Your restaurant will be activated after completing the review process",
     "Khardl website":"Khardl website",
-    "You need to configure your payment account to start selling" : "You need to configure your payment account to start selling",
+    "You need to configure your payment account to start selling" : "You need to activate the payment gateway to enable your customers to pay online.",
     "Manage payment gateway" : "Manage payment gateway",
     "From":"From",
     "To":"To",
