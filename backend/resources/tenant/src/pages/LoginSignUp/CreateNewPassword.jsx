@@ -42,7 +42,7 @@ const CreateNewPassword = () => {
              token: data.token
          })
          if (response.data.success) {
-          
+
             sessionStorage.removeItem( 'email')
             navigate('/login-admins')
             toast.success(`${t('The password has been reset successfully')}`)
@@ -118,7 +118,7 @@ const CreateNewPassword = () => {
                                        : 'text'
                                  }
                                  className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
-                                 placeholder={t('password')}
+                                 placeholder={t('Password')}
                                  {...register('password', { required: true })}
                               />
                               {errors.password && (
