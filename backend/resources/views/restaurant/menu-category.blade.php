@@ -288,7 +288,7 @@
                         </button>                        <!--end::Help drawer toggle-->
                         <!--begin::Purchase link-->
                         <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
-                            <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
+                            <span id="create_new_Dropdown">+ {{ __('Dropdown (without price)') }}</span>
                         </button>
                         <!--end::Purchase link-->
                     </div>
@@ -930,7 +930,7 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('Dropdown') }}</span>
+                            <span class="">{{ __('Dropdown (without price)') }}</span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
