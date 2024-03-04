@@ -229,11 +229,9 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     public function newAttempt()
     {
-        $user = Auth::user();
-
         $attempt = DB::table('phone_verification_tokens')
             ->where([
-                ['user_id', '=', $user->id],
+                ['user_id', '=', $this->id],
                 ['created_at', '>=', Carbon::now()->subMinutes(15)]
             ])->first();
 
@@ -249,7 +247,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
         DB::table('phone_verification_tokens')
             ->updateOrInsert([
-                'user_id' => $user->id,
+                'user_id' => $this->id,
                 'created_at' => Carbon::now(),
             ],
             [
