@@ -57,9 +57,13 @@ export const RestuarantHomePage = () => {
                 console.log(">> branch_id >>", branch_id);
 
                 if (!branch_id && id) {
+                    //if no branch id in local storage and id passed to fetch cats
+                    //then set local storage to this id
                     branch_id = id;
                     localStorage.setItem("selected_branch_id", branch_id);
                 } else {
+                    //if there is branch id or no branch id and no id passed
+                    //then set branch in local storage to this in cat response
                     branch_id =
                         restaurantCategoriesResponse.data?.data[0]?.branch?.id;
                     localStorage.setItem("selected_branch_id", branch_id);
@@ -100,22 +104,23 @@ export const RestuarantHomePage = () => {
         });
     }, []);
 
-    let pickupFirstBranch =
-        branches?.filter((branch) => branch.pickup_availability === 1)[0] ||
-        false;
+    // let pickupFirstBranch =
+    //     branches?.filter((branch) => branch.pickup_availability === 1)[0] ||
+    //     false;
 
-    let deliveryFirstBranch =
-        branches?.filter((branch) => branch.delivery_availability === 1)[0] ||
-        false;
-    useEffect(() => {
-        if (pickupFirstBranch && pickupFirstBranch?.id && !branch_id) {
-            fetchCategoriesData(pickupFirstBranch.id);
-        } else {
-            if (deliveryFirstBranch && deliveryFirstBranch?.id) {
-                fetchCategoriesData(deliveryFirstBranch.id);
-            }
-        }
-    }, [branches, pickupFirstBranch, deliveryFirstBranch]);
+    // let deliveryFirstBranch =
+    //     branches?.filter((branch) => branch.delivery_availability === 1)[0] ||
+    //     false;
+
+    // useEffect(() => {
+    //     if (pickupFirstBranch && pickupFirstBranch?.id && !branch_id) {
+    //         fetchCategoriesData(pickupFirstBranch.id);
+    //     } else {
+    //         if (deliveryFirstBranch && deliveryFirstBranch?.id) {
+    //             fetchCategoriesData(deliveryFirstBranch.id);
+    //         }
+    //     }
+    // }, [branches, pickupFirstBranch, deliveryFirstBranch]);
 
     if (isLoading || !restaurantStyle) {
         return (
