@@ -84,6 +84,8 @@
         "mapbox-gl": "^2.15.0",
         "mobx": "^6.12.0",
         "mobx-react": "^9.1.0",
+        "moment": "^2.30.1",
+        "moment-range": "^4.0.2",
         "react-spinners": "^0.13.8"
     },
     "keywords": [

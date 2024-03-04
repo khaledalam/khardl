@@ -29,19 +29,179 @@ import {
     selectedCategoryAPI,
     setCategoriesAPI,
 } from "../../../../redux/NewEditor/categoryAPISlice";
+import * as Moment from "moment";
+import { extendMoment } from "moment-range";
 
 const OuterSidebarNav = ({ id }) => {
+    const moment = extendMoment(Moment);
+
     const { setStatusCode } = useAuthContext();
 
     const restuarantStyle = useSelector((state) => {
-        console.log("restaurantStyleFromSidebar", state.restuarantEditorStyle);
         return state.restuarantEditorStyle;
     });
-    const branches = restuarantStyle.branches;
+
+    const branches = (function () {
+        try {
+            let tempBranches = [...restuarantStyle.branches];
+            const branchesWithAvailability = tempBranches.map((branch) => {
+                let isClosed = false;
+                var currentDate = new Date();
+                var currentHour = moment();
+
+                switch (currentDate.getDay()) {
+                    case 0:
+                        isClosed = branch.sunday_closed !== 0;
+                        if (!isClosed) {
+                            const startSunday = moment(
+                                branch.sunday_open,
+                                "HH:mm:ss"
+                            );
+                            const endSunday = moment(
+                                branch.sunday_close,
+                                "HH:mm:ss"
+                            );
+
+                            const sundayRange = moment.range(
+                                startSunday,
+                                endSunday
+                            );
+                            isClosed = !sundayRange.contains(currentHour);
+                        }
+                        break;
+                    case 1:
+                        isClosed = branch.monday_closed !== 0;
+                        if (!isClosed) {
+                            const startMonday = moment(
+                                branch.monday_open,
+                                "HH:mm:ss"
+                            );
+                            const endMonday = moment(
+                                branch.monday_close,
+                                "HH:mm:ss"
+                            );
+
+                            const mondayRange = moment.range(
+                                startMonday,
+                                endMonday
+                            );
+                            isClosed = !mondayRange.contains(currentHour);
+                        }
+                        break;
+                    case 2:
+                        isClosed = branch.tuesday_closed !== 0;
+                        if (!isClosed) {
+                            const startTuesday = moment(
+                                branch.tuesday_open,
+                                "HH:mm:ss"
+                            );
+                            const endTuesday = moment(
+                                branch.tuesday_close,
+                                "HH:mm:ss"
+                            );
+
+                            const tuesdayRange = moment.range(
+                                startTuesday,
+                                endTuesday
+                            );
+                            isClosed = !tuesdayRange.contains(currentHour);
+                        }
+                        break;
+                    case 3:
+                        isClosed = branch.wednesday_closed !== 0;
+                        if (!isClosed) {
+                            const startWednesday = moment(
+                                branch.wednesday_open,
+                                "HH:mm:ss"
+                            );
+                            const endWednesday = moment(
+                                branch.wednesday_close,
+                                "HH:mm:ss"
+                            );
+
+                            const wednesdayRange = moment.range(
+                                startWednesday,
+                                endWednesday
+                            );
+                            isClosed = !wednesdayRange.contains(currentHour);
+                        }
+                        break;
+                    case 4:
+                        isClosed = branch.thursday_closed !== 0;
+                        if (!isClosed) {
+                            const startThursday = moment(
+                                branch.thursday_closed,
+                                "HH:mm:ss"
+                            );
+                            const endThursday = moment(
+                                branch.thursday_close,
+                                "HH:mm:ss"
+                            );
+
+                            const thursdayRange = moment.range(
+                                startThursday,
+                                endThursday
+                            );
+                            isClosed = !thursdayRange.contains(currentHour);
+                        }
+                        break;
+                    case 5:
+                        isClosed = branch.friday_closed !== 0;
+                        if (!isClosed) {
+                            const startFriday = moment(
+                                branch.friday_closed,
+                                "HH:mm:ss"
+                            );
+                            const endFriday = moment(
+                                branch.friday_close,
+                                "HH:mm:ss"
+                            );
+
+                            const fridayRange = moment.range(
+                                startFriday,
+                                endFriday
+                            );
+                            isClosed = !fridayRange.contains(currentHour);
+                        }
+                        break;
+                    case 6:
+                        isClosed = branch.saturday_closed !== 0;
+                        if (!isClosed) {
+                            const startSaturday = moment(
+                                branch.saturday_closed,
+                                "HH:mm:ss"
+                            );
+                            const endSaturday = moment(
+                                branch.saturday_close,
+                                "HH:mm:ss"
+                            );
+
+                            const saturdayRange = moment.range(
+                                startSaturday,
+                                endSaturday
+                            );
+                            isClosed = !saturdayRange.contains(currentHour);
+                        }
+                        break;
+                    default:
+                        return branch;
+                }
+
+                return {
+                    ...branch,
+                    isClosed: `${isClosed ? "*" : ""}`,
+                };
+            });
+            return branchesWithAvailability;
+        } catch (err) {
+            console.log(err);
+        }
+    })();
+
     let branch_id = localStorage.getItem("selected_branch_id");
 
-    const [branch, setBranch] = useState(null);
-    const [pickUp, setPickUp] = useState(null);
+    const [selectedDeliveryBranch, setSelectedDeliveryBranch] = useState(null);
+    const [selectedPickUpBranch, setSelectedPickBranch] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -57,6 +217,16 @@ const OuterSidebarNav = ({ id }) => {
     useEffect(() => {
         document.addEventListener("keydown", hideOnEscape, true);
         document.addEventListener("click", hideOnClickOutside, true);
+
+        const firstPickupBranch = pickupFirstBranch();
+        const firstDeliveryBranch = deliveryFirstBranch();
+        if (firstPickupBranch) {
+            setSelectedPickBranch(firstPickupBranch);
+            setSelectedDeliveryBranch(null);
+        } else {
+            setSelectedDeliveryBranch(firstDeliveryBranch);
+            setSelectedPickBranch(null);
+        }
     }, []);
 
     // hide on ESC press
@@ -146,17 +316,19 @@ const OuterSidebarNav = ({ id }) => {
     };
 
     useEffect(() => {
-        if (pickUp?.id) {
-            console.log("first time");
-            fetchCategoriesData(pickUp.id);
-            localStorage.setItem("selected_branch_id", pickUp.id);
+        if (selectedPickUpBranch?.id) {
+            fetchCategoriesData(selectedPickUpBranch.id);
+            localStorage.setItem("selected_branch_id", selectedPickUpBranch.id);
         }
 
-        if (branch?.id) {
-            fetchCategoriesData(branch?.id);
-            localStorage.setItem("selected_branch_id", branch.id);
+        if (selectedDeliveryBranch?.id) {
+            fetchCategoriesData(selectedDeliveryBranch?.id);
+            localStorage.setItem(
+                "selected_branch_id",
+                selectedDeliveryBranch.id
+            );
         }
-    }, [pickUp, branch]);
+    }, [selectedPickUpBranch, selectedDeliveryBranch]);
 
     const handleRedirect = (role) => {
         console.log(role);
@@ -171,13 +343,53 @@ const OuterSidebarNav = ({ id }) => {
     };
     const role = localStorage.getItem("user-role");
 
-    let pickupFirstBranch =
-        branches?.filter((branch) => branch.pickup_availability === 1)[0] ||
-        false;
+    let pickupFirstBranch = () => {
+        const defaultBranches = branches?.filter(
+            (branch) =>
+                branch.is_primary === 1 && branch.pickup_availability === 1
+        );
+        if (defaultBranches.length > 0) {
+            return defaultBranches[0];
+        } else {
+            return branches?.filter(
+                (branch) => branch.pickup_availability === 1
+            )[0];
+        }
+    };
 
-    let deliveryFirstBranch =
-        branches?.filter((branch) => branch.delivery_availability === 1)[0] ||
-        false;
+    let deliveryFirstBranch = () => {
+        const defaultBranches = branches?.filter(
+            (branch) =>
+                branch.is_primary === 1 && branch.delivery_availability === 1
+        );
+        if (defaultBranches.length > 0) {
+            return defaultBranches[0];
+        } else {
+            return branches?.filter(
+                (branch) => branch.delivery_availability === 1
+            )[0];
+        }
+    };
+
+    const getPickUpDefaultVal = () => {
+        if (selectedDeliveryBranch?.name) return "";
+        if (selectedPickUpBranch?.name) {
+            return selectedPickUpBranch.name + selectedPickUpBranch.isClosed;
+        } else {
+            return pickupFirstBranch().name + pickupFirstBranch().isClosed;
+        }
+    };
+
+    const getDeliveryDefaultVal = () => {
+        if (selectedPickUpBranch?.name) return "";
+        if (selectedDeliveryBranch?.name) {
+            return (
+                selectedDeliveryBranch.name + selectedDeliveryBranch.isClosed
+            );
+        } else {
+            return deliveryFirstBranch().name + deliveryFirstBranch().isClosed;
+        }
+    };
 
     return (
         <div
@@ -211,14 +423,11 @@ const OuterSidebarNav = ({ id }) => {
                     <PrimarySelectWithIcon
                         imgUrl={shopIcon}
                         text={t("PICKUP")}
-                        defaultValue={
-                            pickUp?.name
-                                ? `${pickUp.name}`
-                                : branches && pickupFirstBranch
-                                ? pickupFirstBranch?.name
-                                : ""
-                        }
-                        onChange={(value) => setPickUp(value)}
+                        defaultValue={getPickUpDefaultVal()}
+                        onChange={(value) => {
+                            setSelectedPickBranch(value);
+                            setSelectedDeliveryBranch(null);
+                        }}
                         options={
                             branches
                                 ? branches?.filter(
@@ -229,19 +438,16 @@ const OuterSidebarNav = ({ id }) => {
                         }
                     />
                 ) : null}
-
+                {/* delivery */}
                 {branches?.some((e) => e.delivery_availability === 1) ? (
                     <PrimarySelectWithIcon
                         imgUrl={deliveryIcon}
                         text={t("Delivery")}
-                        defaultValue={
-                            branch?.name
-                                ? `${branch.name}`
-                                : branches && deliveryFirstBranch
-                                ? deliveryFirstBranch?.name
-                                : ""
-                        }
-                        onChange={(value) => setBranch(value)}
+                        defaultValue={getDeliveryDefaultVal()}
+                        onChange={(value) => {
+                            setSelectedDeliveryBranch(value);
+                            setSelectedPickBranch(null);
+                        }}
                         options={
                             branches
                                 ? branches?.filter(
@@ -252,8 +458,6 @@ const OuterSidebarNav = ({ id }) => {
                         }
                     />
                 ) : null}
-                {console.log("branch", branches)}
-                {console.log("pickup", pickUp)}
 
                 {/* login */}
 
