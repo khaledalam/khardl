@@ -339,7 +339,7 @@ p {
     color: #000;
 
     font-variant-numeric: lining-nums proportional-nums;
-    font-family: "gess";
+    font-family: "gessBold";
     font-size: 46px;
     font-style: normal;
     font-weight: 400;
@@ -637,7 +637,7 @@ p {
 .services-heading {
     color: #000;
     font-variant-numeric: lining-nums proportional-nums;
-    font-family: "gess";
+    font-family: "gessBold";
     font-size: 46px;
     font-style: normal;
     font-weight: 400;
