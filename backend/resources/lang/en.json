@@ -12,6 +12,7 @@
     "supports" : "Admins",
     "all-supports" : "All Admins",
     "add-supports" : "Add Admin",
+    "all-workers" : "All Workers",
     "promoters" : "Promoters",
     "logs" : "Logs",
     "settings" : "Settings",

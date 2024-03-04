@@ -201,7 +201,7 @@
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title">{{ __('supports')}}</span>
+                                    <span class="menu-title">{{ __('workers')}}</span>
                                     <span class="menu-arrow"></span>
                                 </span>
                                 <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -210,7 +210,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">{{ __('all-supports')}}</span>
+                                            <span class="menu-title">{{ __('all-workers')}}</span>
                                         </a>
                                     </div>
                                     <div class="menu-item">
@@ -218,7 +218,7 @@
                                             <span class="menu-bullet">
                                                 <span class="bullet bullet-dot"></span>
                                             </span>
-                                            <span class="menu-title">{{ __('add-supports')}}</span>
+                                            <span class="menu-title">{{ __('add-worker')}}</span>
                                         </a>
                                     </div>
                                 </div>
