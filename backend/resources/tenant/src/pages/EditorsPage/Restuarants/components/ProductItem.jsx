@@ -320,7 +320,7 @@ const ProductItem = ({
       .then((response) => {
         if (response?.data?.success) {
           const responseData = response?.data;
-          console.log(responseData);
+          console.log(">>", responseData);
           localStorage.setItem("user-info", JSON.stringify(responseData?.data?.user));
 
           console.log(">>> herer ", responseData?.data?.user?.status);

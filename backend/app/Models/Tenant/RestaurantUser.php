@@ -11,6 +11,7 @@ use App\Utils\ResponseHelper;
 use App\Packages\Msegat\Msegat;
 use Database\Factories\tenant\RestaurantUserFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -228,10 +229,29 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
 
     public function newAttempt()
     {
-        DB::table('phone_verification_tokens')->updateOrInsert([
-            'user_id' => $this->id,
-            'created_at' => Carbon::today(),
-        ],
+        $user = Auth::user();
+
+        $attempt = DB::table('phone_verification_tokens')
+            ->where([
+                ['user_id', '=', $user->id],
+                ['created_at', '>=', Carbon::now()->subMinutes(15)]
+            ])->first();
+
+        if ($attempt) {
+            DB::table('phone_verification_tokens')
+                ->where('id', '=', $attempt?->id)
+                ->update([
+                    'created_at' => Carbon::now(),
+                    'attempts' => $attempt->attempts + 1,
+                ]);
+            return;
+        }
+
+        DB::table('phone_verification_tokens')
+            ->updateOrInsert([
+                'user_id' => $user->id,
+                'created_at' => Carbon::now(),
+            ],
             [
                 'attempts' => DB::raw('attempts + 1'),
             ]);
