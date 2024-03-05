@@ -31,7 +31,7 @@
                                                 @csrf
                                                 <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
                                                 <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
-                                                <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl mt-3 w-100">{{ __('save-location')}}</button>
+                                                <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl my-4 w-100">{{ __('save-location')}}</button>
                                             </form>
                                     </div>
                                 <!--end::Image-->
