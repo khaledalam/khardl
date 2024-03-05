@@ -701,13 +701,12 @@ class RestaurantController extends BaseController
     public function workers($branchId)
     {
 
-
         $branch = Branch::findOrFail($branchId);
         $user = Auth::user();
         // $workers = User::where('role', 2)->where('restaurant_name', $user->restaurant_name)->where('branch_id', $branchId)
         // ->paginate(15);
         $workers = $branch->workers()
-            ->where('id', '!=', $user->id)
+//            ->where('id', '!=', $user->id)
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'Worker');
             })
@@ -785,8 +784,12 @@ class RestaurantController extends BaseController
 
     public function updateWorker(Request $request, $id)
     {
-
         $selectedWorker = RestaurantUser::find($id);
+
+        $user = Auth::user();
+        if ($user?->id == $selectedWorker?->id) {
+            return redirect()->back()->with('error', __('not allowed'));
+        }
 
         $selectedWorker->first_name = $request->input('first_name');
         $selectedWorker->last_name = $request->input('last_name');
@@ -819,10 +822,13 @@ class RestaurantController extends BaseController
 
     public function editWorker($id)
     {
-
         $user = Auth::user();
 
         $worker = RestaurantUser::findOrFail($id);
+
+        if ($user?->id == $worker?->id) {
+            return redirect()->back()->with('error', __('not allowed'));
+        }
 
         // if($worker->role != 2){
         //     return abort(404);

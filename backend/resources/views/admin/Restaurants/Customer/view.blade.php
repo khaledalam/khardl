@@ -33,7 +33,7 @@
                                     <!--begin::Thead-->
                                     <thead class="border-gray-200 fs-5 fw-bold bg-lighten">
                                         <tr>
-                                            <th class="min-w-175px ps-9">{{ __('date') }}</th>
+                                            <th class="min-w-175px ps-9">{{ __('date-and-time') }}</th>
                                             <th class="min-w-125px px-0">{{ __('user-id') }}</th>
                                             <th class="min-w-150px px-0">{{ __('name') }}</th>
                                             <th class="min-w-150px px-0">{{ __('email') }}</th>
@@ -47,7 +47,7 @@
                                         @foreach ($customers as $customer)
 
                                         <tr>
-                                            <td class="ps-9">{{ $customer->created_at->format('Y-m-d') }}</td>
+                                            <td class="ps-9">{{ $customer->created_at->format('Y-m-d H:i:s') }}</td>
                                             <td class="ps-0">{{ $customer->id }}</td>
                                             <td class="ps-0">{{ $customer->full_name }}</td>
                                             <td class="ps-0">{{ $customer->email }}</td>

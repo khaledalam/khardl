@@ -44,7 +44,7 @@ const Login = () => {
            // remember_me: data.remember_me, // used only in API token-based
          });
 
-         console.log(response?.data?.success)
+         console.log(">>>>", response?.data?.success)
          if (response?.data?.success) {
             const responseData = response?.data;
             console.log(responseData)

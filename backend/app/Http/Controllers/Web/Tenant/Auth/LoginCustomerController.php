@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web\Tenant\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Packages\Msegat\Msegat;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
@@ -58,9 +57,9 @@ class LoginCustomerController extends BaseController
                 'user'=>$user
             ];
             return $this->sendResponse($data, __('User logged in successfully.'));
-        }else{
-            return $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
         }
+
+        return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
     }
 
     public function sendVerificationSMSCode(Request $request)
@@ -77,10 +76,12 @@ class LoginCustomerController extends BaseController
     }
 
     public function checkAttempt($user){
-        $today = Carbon::today();
         $tokens = DB::table('phone_verification_tokens')
-            ->where('user_id', $user->id)
-            ->whereDate('created_at', $today)->get()->first();
+            ->where([
+                ['user_id', '=', $user->id],
+                ['created_at', '>=', Carbon::now()->subMinutes(15)]
+            ])->get()->first();
+
         if (isset($tokens) && $tokens->attempts >= 3  && !in_array($user->phone,Msegat::ALLOWED_NUMBERS))  {
             return false;
         }

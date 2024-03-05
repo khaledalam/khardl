@@ -62,7 +62,7 @@ class TenantLoginTest extends TenantTestCase
             'success' => false,
             'message' => 'Fail',
             'is_loggedin' => false,
-            "data" =>  "Too many verification attempts. Request a new verification code."
+            "data" =>  __('Too many attempts. Request a new verification code after 15 minutes from now.')
         ]);
     }
 

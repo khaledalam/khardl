@@ -108,7 +108,7 @@ class RegisterController extends BaseController
     {
         $user = Auth::user();
         if(!$this->checkAttempt($user)){
-            return $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
+            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
         if(!$id= $user->generateVerificationSMSCode()) return $this->sendError('Fail', 'Request failed .');
         $user->msegat_id_verification = $id;
@@ -123,7 +123,7 @@ class RegisterController extends BaseController
             return $this->sendError('Fail', 'Phone is already verified.');
         }
         if(!$this->checkAttempt($user)){
-            return $this->sendError('Fail', 'Too many verification attempts. Request a new verification code.');
+            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
         // Check the verification code
         if (!$user->checkVerificationSMSCode($request->otp))

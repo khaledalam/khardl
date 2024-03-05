@@ -227,10 +227,10 @@ const Register = () => {
                                        <img src={infog} alt="InfoIcon" className="inline-block align-middle" />
                                        {' '}{t('* If your restaurant name is ABC the domain will be')}{' '}{restaurantName ? restaurantName : 'abc'}.khardl.com
                                     </span>
-                                    {showTooltip && (
-                                       <div className="relative">
+                                    {window.innerWidth > 870 && showTooltip && (
+                                       <div className="relative d-none">
                                           <div className={`absolute ${Language === "ar" ? "right-full" : "left-full"}`}>
-                                             <div id="tooltip3" role="tooltip" className={`z-20 -mt-20 w-64 absolute transition duration-150 ease-in-out ${Language === "ar" ? "right-0" : "left-0"} ml-8 shadow-lg rounded p-3 text-white bg-[#000000]`}>
+                                             <div id="tooltip3" role="tooltip" style={{marginTop: '-4rem', width: '18rem'}} className={`z-20 absolute transition duration-150 ease-in-out ${Language === "ar" ? "right-2" : "left-2"} shadow-lg rounded p-3 text-white bg-[#000000]`}>
                                                 <svg className={`absolute ${Language === "ar" ? "right-0 rotate-180 right-[-0.5rem]" : "left-0"} -ml-2 bottom-0 top-0 h-full`} width="9px" height="16px" viewBox="0 0 9 16" version="1.1" xmlns="http://www.w3.org/2000/svg" >
                                                    <g id="Page-1" stroke="none" strokeWidth="1" fill="black" fillRule="evenodd">
                                                       <g id="Tooltips-" transform="translate(-874.000000, -1029.000000)" fill="black">
