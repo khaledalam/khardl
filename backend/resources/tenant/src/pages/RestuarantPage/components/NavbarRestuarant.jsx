@@ -72,7 +72,7 @@ const NavbarRestuarant = () => {
             <div
                 style={{
                     backgroundColor: header_color ? header_color : "white",
-                    position: headerPosition,
+                    position: "relative",
                     top: 0,
                     left: 0,
                     right: 0,
