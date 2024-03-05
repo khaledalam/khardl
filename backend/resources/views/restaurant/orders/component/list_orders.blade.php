@@ -22,7 +22,7 @@
                 </div>
                 <!--end::Card title-->
                 <!--begin::Card toolbar-->
-                <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                <div class="card-toolbar flex-row-fluid justify-content-start gap-5" @if(app()->getLocale() === 'ar') style=" flex-direction: revert;" @endif>
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
