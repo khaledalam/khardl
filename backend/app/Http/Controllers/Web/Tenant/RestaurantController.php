@@ -97,7 +97,7 @@ class RestaurantController extends BaseController
         ];
 
         $deliveryCompanies = DeliveryCompany::whereIn('module', $modules)
-        ->whenModule($request['area']??null);
+        ->whenModule($request['area'] ?? null);
         $yeswa = clone $deliveryCompanies;
         $yeswa = $yeswa->where('module', 'Yeswa')->first();
         $cervo = clone $deliveryCompanies;

@@ -35,7 +35,7 @@
                                                 <!--begin::Col-->
                                                 <div class="position-relative w-md-200px me-md-2">
                                                     <select class="form-select form-select-solid" name="area">
-                                                        <option value="" selected>{{ __('Coverage areas') }}</option>
+                                                        <option value="" selected>{{ __('All areas') }}</option>
                                                         @foreach ($allCities as $city)
                                                         <option value="{{ $city }}" {{ request('area') == $city ? 'selected' : '' }} >{{ $city }}</option>
                                                         @endforeach
