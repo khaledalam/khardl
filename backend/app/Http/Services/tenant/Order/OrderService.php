@@ -48,7 +48,7 @@ class OrderService
         $user = $this->checkUser($request);
         $cart = $this->createCart($request, $user);
         $this->createOrder($request, $cart, $user);
-        return redirect()->route('restaurant.orders_all');
+        return redirect()->route('restaurant.orders_all')->with('success',__('Order has been created successfully'));
     }
     private function createOrder($request, $cart, $user)
     {

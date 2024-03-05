@@ -127,7 +127,10 @@ class  OrderController extends BaseRepositoryController
             }else{
                 AssignDeliveryCompany::dispatch($request->expectsJson(),$order,$request->status)->delay(now()->addMinutes(config('application.limit_delivery_company') ?? 15));
             }
+            $order->update(['status' => $request->status]);
+            return redirect()->back()->with('success',__('Order has been updated successfully.'));
         }elseif($settings && $settings->delivery_companies_option){
+            $order->update(['status' => $request->status]);
             return $this->assignOrderToDC($request->expectsJson(),$order,$request->status);
         }else {
             if ($request->expectsJson()) {
@@ -136,7 +139,7 @@ class  OrderController extends BaseRepositoryController
             return redirect()->back()->with('error',__('Restaurant does not have any delivery companies yet'));
         }
     }
-    private function assignOrderToDC($exceptJson,$order,$status)
+    public function assignOrderToDC($exceptJson,$order,$status)
     {
 
         $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
