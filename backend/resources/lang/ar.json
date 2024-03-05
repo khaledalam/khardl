@@ -1009,5 +1009,6 @@
     "This branch does not support delivery":"هذا الفرع لا يدعم التوصيل",
     "Order delivery is not enabled in restaurant settings":"توصيل الطلبات غير مفعل في اعدادات المطعم",
     "Reject reason":"سبب الرفض",
-    "Reason":"السبب"
+    "Reason":"السبب",
+    "Order has been created successfully":"تم انشاء الطلب بنجاح"
 }
