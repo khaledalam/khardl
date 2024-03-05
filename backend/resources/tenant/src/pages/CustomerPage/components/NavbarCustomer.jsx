@@ -6,10 +6,10 @@ import {MenuContext} from "react-flexible-sliding-menu"
 import {useDispatch,useSelector} from "react-redux"
 import AxiosInstance from "../../../axios/axios"
 import {getCartItemsCount,} from "../../../redux/NewEditor/categoryAPISlice"
+import MobileMenu from "../components/MobileMenu"
 
 
-
-const NavbarCustomer = () => {
+const NavbarCustomer = ({customerDashboard = false}) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {toggleMenu} = useContext(MenuContext)
@@ -45,16 +45,15 @@ const NavbarCustomer = () => {
     })
   }, [])
 
-  // const cartItemsCount = useSelector(
-  //   (state) => state.categoryAPI.cartItemsCount
-  // )
+
   return (
     <div className='h-[70px] w-full bg-white flex items-center justify-between px-4 xl:px-8'>
-      <IoMenuOutline
-        size={42}
-        className='text-neutral-400 cursor-pointer  xl:ml-16'
-        onClick={toggleMenu}
-      />
+        {customerDashboard && <MobileMenu/>}
+        {window.innerWidth > 700 && <IoMenuOutline
+            size={42}
+            className='text-neutral-400 cursor-pointer xl:ml-16'
+            onClick={toggleMenu}
+        />}
       <div
         onClick={() => navigate("/cart")}
         className='w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer'

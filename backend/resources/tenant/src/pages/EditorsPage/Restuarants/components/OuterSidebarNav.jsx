@@ -1,41 +1,27 @@
-import React, {
-    Fragment,
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import React, {Fragment, useContext, useEffect, useRef, useState,} from "react";
 import homeIcon from "../../../../assets/homeIcon.svg";
 import LoginIcon from "../../../../assets/login.svg";
-import logoutIcon from "../../../../assets/logout.svg";
 import shopIcon from "../../../../assets/shopIcon.svg";
 import deliveryIcon from "../../../../assets/bikeDeliveryIcon.svg";
 import dashboardIcon from "../../../../assets/dashboardIcon.svg";
 import worldLangIcon from "../../../../assets/worldLang.svg";
-import { IoMenuOutline } from "react-icons/io5";
-import { HTTP_NOT_AUTHENTICATED } from "../../../../config";
-import { toast } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../../../../redux/auth/authSlice";
-import { useAuthContext } from "../../../../components/context/AuthContext";
-import { useTranslation } from "react-i18next";
+import {IoMenuOutline} from "react-icons/io5";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {useAuthContext} from "../../../../components/context/AuthContext";
+import {useTranslation} from "react-i18next";
 import AxiosInstance from "../../../../axios/axios";
-import { changeLanguage } from "../../../../redux/languageSlice";
-import { MenuContext } from "react-flexible-sliding-menu";
+import {changeLanguage} from "../../../../redux/languageSlice";
+import {MenuContext} from "react-flexible-sliding-menu";
 import PrimarySelectWithIcon from "./PrimarySelectWithIcon";
-import { BiSolidUserAccount } from "react-icons/bi";
-import {
-    selectedCategoryAPI,
-    setCategoriesAPI,
-} from "../../../../redux/NewEditor/categoryAPISlice";
+import {selectedCategoryAPI, setCategoriesAPI,} from "../../../../redux/NewEditor/categoryAPISlice";
 import * as Moment from "moment";
-import { extendMoment } from "moment-range";
+import {extendMoment} from "moment-range";
+import LogoutButton from "../../../../components/Logout/LogoutButton";
+import LanguageButton from "../../../../components/LanguageButton";
 
 const OuterSidebarNav = ({ id }) => {
     const moment = extendMoment(Moment);
-
-    const { setStatusCode } = useAuthContext();
 
     const restuarantStyle = useSelector((state) => {
         return state.restuarantEditorStyle;
@@ -44,7 +30,7 @@ const OuterSidebarNav = ({ id }) => {
     const branches = (function () {
         try {
             let tempBranches = [...restuarantStyle.branches];
-            const branchesWithAvailability = tempBranches.map((branch) => {
+            return tempBranches.map((branch) => {
                 let isClosed = false;
                 var currentDate = new Date();
                 var currentHour = moment();
@@ -192,7 +178,6 @@ const OuterSidebarNav = ({ id }) => {
                     isClosed: `${isClosed ? "*" : ""}`,
                 };
             });
-            return branchesWithAvailability;
         } catch (err) {
             console.log(err);
         }
@@ -281,23 +266,7 @@ const OuterSidebarNav = ({ id }) => {
             console.log(error);
         }
     };
-    const handleLogout = async (e) => {
-        e.preventDefault();
 
-        try {
-            await dispatch(logout({ method: "POST" }))
-                .unwrap()
-                .then((res) => {
-                    setStatusCode(HTTP_NOT_AUTHENTICATED);
-                    navigate("/", { replace: true });
-                    closeMenu();
-                    toast.success("Logged out successfully");
-                });
-        } catch (err) {
-            console.error(err.message);
-            toast.error(`${t("Logout failed")}`);
-        }
-    };
 
     const newLanguage = currentLanguage === "en" ? "ar" : "en";
     const buttonText =
@@ -306,14 +275,6 @@ const OuterSidebarNav = ({ id }) => {
         ) : (
             <span title="English">EN</span>
         );
-
-    const handleLanguageChange = async () => {
-        AxiosInstance.get(`/change-language/${newLanguage}`, {}).then(() => {
-            dispatch(changeLanguage(newLanguage));
-            fetchCategoriesData(branch_id);
-            closeMenu();
-        });
-    };
 
     useEffect(() => {
         if (selectedPickUpBranch?.id) {
@@ -348,7 +309,7 @@ const OuterSidebarNav = ({ id }) => {
             (branch) =>
                 branch.is_primary === 1 && branch.pickup_availability === 1
         );
-        if (defaultBranches.length > 0) {
+        if (defaultBranches?.length > 0) {
             return defaultBranches[0];
         } else {
             return branches?.filter(
@@ -362,7 +323,7 @@ const OuterSidebarNav = ({ id }) => {
             (branch) =>
                 branch.is_primary === 1 && branch.delivery_availability === 1
         );
-        if (defaultBranches.length > 0) {
+        if (defaultBranches?.length > 0) {
             return defaultBranches[0];
         } else {
             return branches?.filter(
@@ -580,45 +541,14 @@ const OuterSidebarNav = ({ id }) => {
             </div> */}
                     </Fragment>
                 )}
-                <label
-                    htmlFor={id}
-                    aria-label="close sidebar"
-                    className="w-[90%] mx-auto drawer-button rounded-lg p-1 flex items-center justify-center cursor-pointer"
-                >
-                    <div
-                        onClick={handleLanguageChange}
-                        className="w-full mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center "
-                        style={{
-                            borderColor:
-                                restuarantStyle?.categoryDetail_cart_color,
-                        }}
-                    >
-                        <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
-                            <img src={worldLangIcon} alt="language" />
-                        </div>
-                        <h3 className=""> {buttonText}</h3>
-                    </div>
-                </label>
+
+                <LanguageButton id={id}/>
+
             </div>
-            {isLoggedIn ? (
-                <div className="w-full mb-20 cursor-pointer">
-                    <div
-                        onClick={handleLogout}
-                        className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer"
-                        style={{
-                            borderColor:
-                                restuarantStyle?.categoryDetail_cart_color,
-                        }}
-                    >
-                        <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
-                            <img src={logoutIcon} alt="home" />
-                        </div>
-                        <h3 className="">{t("Logout")}</h3>
-                    </div>
-                </div>
-            ) : (
-                <div></div>
-            )}
+
+
+            <LogoutButton outerSidebarNav={true}/>
+
         </div>
     );
 };

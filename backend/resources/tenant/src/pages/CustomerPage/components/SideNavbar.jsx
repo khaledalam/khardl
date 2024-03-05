@@ -15,6 +15,13 @@ import {
 } from "../../../redux/NewEditor/customerSlice"
 import {useNavigate} from "react-router-dom"
 import {useTranslation} from "react-i18next"
+import logoutIcon from "../../../assets/logout.svg";
+import {logout} from "../../../redux/auth/authSlice";
+import {HTTP_NOT_AUTHENTICATED} from "../../../config";
+import {toast} from "react-toastify";
+import {useAuthContext} from "../../../components/context/AuthContext";
+import LogoutButton from "../../../components/Logout/LogoutButton";
+import LanguageButton from "../../../components/LanguageButton";
 
 const SideNavbar = () => {
   const dispatch = useDispatch()
@@ -26,7 +33,7 @@ const SideNavbar = () => {
     (state) => state.customerAPI.saveProfileChanges
   )
 
-  const navItems = [
+    const navItems = [
     {
       id: 1,
       imgUrl: DashboardBlack,
@@ -71,7 +78,6 @@ const SideNavbar = () => {
     navigate(navItem.link)
   }
 
-
   useEffect(() => {
     if (!status) {
       dispatch(updateProfileSaveStatus(false))
@@ -97,6 +103,16 @@ const SideNavbar = () => {
           />
         ))}
       </div>
+
+        <div className={"lg:hidden mt-5"}>
+
+            <LanguageButton id={"test"}/>
+
+            <div className={"w-[100%] mx-auto p-1 mt-5"}>
+                <LogoutButton outerSidebarNav={false}/>
+            </div>
+
+        </div>
     </div>
   )
 }

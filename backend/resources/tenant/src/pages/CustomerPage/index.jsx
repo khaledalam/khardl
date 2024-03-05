@@ -14,7 +14,6 @@ import {
   updateOrderList,
 } from "../../redux/NewEditor/customerSlice"
 import AxiosInstance from "../../axios/axios"
-import MobileMenu from "./components/MobileMenu"
 import {useTranslation} from "react-i18next"
 
 export const CustomerPage = () => {
@@ -89,8 +88,7 @@ export const CustomerPage = () => {
 
   return (
     <div>
-      <NavbarCustomer />
-      <MobileMenu />
+      <NavbarCustomer customerDashboard={true}/>
       <div className='flex bg-white h-[calc(100vh-75px)] w-full transition-all'>
         <div
           className={`transition-all ${
