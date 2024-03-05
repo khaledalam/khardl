@@ -53,7 +53,7 @@ class TenantVerificationCodeTest extends TenantTestCase
         ->assertJson([
             'success' => false,
             'message' => 'Fail',
-            "data" =>  "Too many verification attempts. Request a new verification code."
+            "data" =>  __('Too many attempts. Request a new verification code after 15 minutes from now.')
         ]);
     }
     public function test_verify_otp_success()

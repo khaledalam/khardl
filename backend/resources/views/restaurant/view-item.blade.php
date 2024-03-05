@@ -204,7 +204,7 @@
                                 @if ($item?->dropdown_input_titles)
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('Dropdown')}}</span>
+                                        <span class="text-start">{{__('Dropdown (without price)')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         @foreach ($item?->dropdown_input_titles as $key => $option)

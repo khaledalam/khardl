@@ -2,9 +2,6 @@
 
 namespace Database\Factories\tenant;
 
-use App\Models\Tenant\Branch;
-use App\Models\Tenant\PaymentMethod;
-use App\Models\Tenant\RestaurantUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

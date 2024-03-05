@@ -434,7 +434,7 @@ function CompleteRegistration() {
             <div className='w-[100%] flex flex-col items-start gap-4'>
               <div className='w-[100%]'>
                 <div className='mb-2 font-semibold'>
-                  {t("BANK IBAN")}
+                  {t("Bank IBAN")}
                   <span className='text-red-500'>*</span>
                 </div>
                 <input

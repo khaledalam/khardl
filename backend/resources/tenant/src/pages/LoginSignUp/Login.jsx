@@ -62,6 +62,8 @@ const Login = () => {
             // remember_me: data.remember_me, // used only in API token-based
          });
 
+         console.log("tetetete");
+
          if (response?.data?.success) {
             const responseData = response?.data;
             console.log("login-response",responseData)
@@ -96,12 +98,12 @@ const Login = () => {
             throw new Error(`${t('Login failed')}`)
          }
       } catch (error) {
+          console.log("error response > ", error?.response);
          setSpinner(false)
          dispatch(changeLogState(false))
          dispatch(changeUserState(null))
-         console.log(error);
          setStatusCode(HTTP_NOT_AUTHENTICATED)
-         toast.error(`${error?.response?.data?.message || t('Login failed')}`)
+         toast.error(`${error?.response?.data?.data || error?.response?.data?.message  || t('Login failed')}`)
       }
    }
 

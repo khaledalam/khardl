@@ -5,6 +5,8 @@ killall -9 php
 # MAC M1 --platform linux/amd64
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
+docker stop $(docker ps -q)
+
 docker compose -f backend/docker-compose.yml down --remove-orphans
 docker compose -f backend/docker-compose.yml up -d --build --remove-orphans
 

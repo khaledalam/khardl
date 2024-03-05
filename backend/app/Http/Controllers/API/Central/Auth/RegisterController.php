@@ -127,11 +127,13 @@ class RegisterController extends BaseController
         // You might want a new table to track verification code attempts.
         // Here, I'm assuming the table's name is `email_verification_tokens`.
         $attempts = DB::table('email_verification_tokens')
-            ->where('email', $user->email)
-            ->whereDate('created_at', $today)->get();
+            ->where([
+                ['email', '=', $user?->email],
+                ['created_at', '>=', Carbon::now()->subMinutes(15)]
+            ]);
 
         if (count($attempts) >= 3) {
-            return $this->sendError('Fail', __('Too many verification attempts. Request a new verification code.'));
+            return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
 
 
