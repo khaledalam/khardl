@@ -39,8 +39,8 @@ class Yeswa  extends AbstractDeliveryCompany
                 "pickup_latitude"=> $branch->lat,
                 "pickup_longitude"=>  $branch->lng,
                 "dropoff_name"=> $customer->fullName,
-                "dropoff_latitude"=> $order->lat,
-                "dropoff_longitude"=> $order->lng,
+                "dropoff_latitude"=> $order->lat ?? "",
+                "dropoff_longitude"=> $order->lng ?? "",
                 'client_id'=>$order->id,
 
             ];
@@ -137,8 +137,14 @@ class Yeswa  extends AbstractDeliveryCompany
                 token: false,
                 data:  $data
             );
-            return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+            if($response['http_code'] == ResponseHelper::HTTP_OK ){
+                return true;
+            }else {
+                \Sentry\captureMessage("Yeswa cannot cancel order #$id for restaurant #".tenant()->id);
+                return false;
+            }
         } catch (\Exception $e) {
+            \Sentry\captureException($e);
             return false;
         }
     }
