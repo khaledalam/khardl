@@ -53,22 +53,22 @@
                                                 <input id="phone" type="number" name="phone" placeholder="{{ __('Phone') }}" class="form-control mb-2" value="{{ old('phone') }}" required />
                                                 <!--end::Editor-->
                                             </div>
-                                            <div class="fv-row">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">{{ __('First name') }}</label>
-                                                <!--end::Label-->
-                                                <!--begin::Editor-->
-                                                <input id="first_name" type="text" name="first_name" placeholder="{{ __('First name') }}" class="form-control mb-2" value="{{ old('first_name') }}" required />
-                                                <!--end::Editor-->
-                                            </div>
-                                            <div class="fv-row">
-                                                <!--begin::Label-->
-                                                <label class="form-label">{{ __('Last name') }}</label>
-                                                <!--end::Label-->
-                                                <!--begin::Editor-->
-                                                <input id="last_name" type="text" name="last_name" placeholder="{{ __('Last name') }}" class="form-control mb-2" value="{{ old('last_name') }}" />
-                                                <!--end::Editor-->
-                                            </div>
+{{--                                            <div class="fv-row">--}}
+{{--                                                <!--begin::Label-->--}}
+{{--                                                <label class="required form-label">{{ __('First name') }}</label>--}}
+{{--                                                <!--end::Label-->--}}
+{{--                                                <!--begin::Editor-->--}}
+{{--                                                <input id="first_name" type="text" name="first_name" placeholder="{{ __('First name') }}" class="form-control mb-2" value="{{ old('first_name') }}" required />--}}
+{{--                                                <!--end::Editor-->--}}
+{{--                                            </div>--}}
+{{--                                            <div class="fv-row">--}}
+{{--                                                <!--begin::Label-->--}}
+{{--                                                <label class="form-label">{{ __('Last name') }}</label>--}}
+{{--                                                <!--end::Label-->--}}
+{{--                                                <!--begin::Editor-->--}}
+{{--                                                <input id="last_name" type="text" name="last_name" placeholder="{{ __('Last name') }}" class="form-control mb-2" value="{{ old('last_name') }}" />--}}
+{{--                                                <!--end::Editor-->--}}
+{{--                                            </div>--}}
                                             <div class="fv-row">
                                                 <!--begin::Label-->
                                                 <label class="required form-label">{{ __('Delivery Type') }}</label>
