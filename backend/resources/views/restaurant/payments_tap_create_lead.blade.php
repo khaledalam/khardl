@@ -250,8 +250,6 @@
                 <div class="row  m-4">
 
 
-
-
                     <div class="col-md-12">
 
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
@@ -328,9 +326,6 @@
           </div>
 
 
-
-
-
     </form>
     <!--end::Post-->
 </div>
@@ -354,10 +349,10 @@
     });
     document.getElementById('kt_modal_new_target_submit').addEventListener('click', function(event) {
         event.preventDefault();
-        if (!areCheckboxesChecked()) {
-            alert(`{{__('Please check all terms and conditions before submitting.')}}`);
-            return ;
-        }
+        {{--if (!areCheckboxesChecked()) {--}}
+        {{--    alert(`{{__('Please check all terms and conditions before submitting.')}}`);--}}
+        {{--    return ;--}}
+        {{--}--}}
         Swal.fire({
             title: '{{ __('are-you-sure') }}',
             text: "{{ __('you-wont-be-able-to-undo-this') }}",
@@ -377,13 +372,15 @@
             }
         });
     });
-    function areCheckboxesChecked() {
-        var checkbox1 = document.getElementById('flexCheckDefault');
-        var checkbox2 = document.getElementById('flexCheckChecked2');
-        var checkbox3 = document.getElementById('flexCheckChecked3');
 
-        return checkbox1.checked && checkbox2.checked && checkbox3.checked;
-    }
+    // function areCheckboxesChecked() {
+    //     var checkbox1 = document.getElementById('flexCheckDefault');
+    //     var checkbox2 = document.getElementById('flexCheckChecked2');
+    //     var checkbox3 = document.getElementById('flexCheckChecked3');
+    //
+    //     return checkbox1.checked && checkbox2.checked && checkbox3.checked;
+    // }
+
     function toggleEntityVisibility() {
         var entitySection = document.getElementById('entity');
         var isLicensedCheckbox = document.getElementById('is_licensed');
