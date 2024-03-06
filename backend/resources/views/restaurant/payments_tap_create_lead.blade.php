@@ -20,7 +20,7 @@
                 <button class="nav-link active" id="profile-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{{__('1')}}. {{__('Personal Information')}}</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link " id="home-tab" style="font-family: system-ui;font-size: 19px;" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{__('2')}}. {{__('Business Details')}}</button>
+              <button class="nav-link " id="home-tab" style="font-family: system-ui;font-size: 19px;" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{__('2')}}. {{__('Restaurant Information')}}</button>
             </li>
 
             <li class="nav-item fs-5" role="presentation">
