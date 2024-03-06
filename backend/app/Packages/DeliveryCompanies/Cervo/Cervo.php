@@ -90,6 +90,7 @@ class Cervo  extends AbstractDeliveryCompany
             ]);
             return true;
         }else {
+            \Sentry\captureMessage(json_encode($response['message']));
             return false;
         }
      
