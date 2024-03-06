@@ -29,8 +29,8 @@
           </ul>
           <div class="tab-content" id="myTabContent" style="background-color: aliceblue" >
             <div class="tab-pane fade  " id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="row  m-4">
-                    <div class="col-md-6">
+                <div class="row m-4">
+                    <div class="col-md-12">
 
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
@@ -57,6 +57,16 @@
                         <!--end::Input group-->
 
                         <div class="d-flex flex-column mb-8 fv-row">
+                            <label clas s="d-flex align-items-center fs-6 fw-bold mb-2" for="is_licensed">
+                                <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" {{old('entity.is_licensed')?'checked':''}} />
+
+                                <span class="required">{{__('Is Entity Licensed')}}</span>
+                                <!--end::Label-->
+
+                            </label>
+                        </div>
+
+                        <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                                 <span class="required">{{__('Restaurant Logo')}}</span>
@@ -64,21 +74,6 @@
                             </label>
                             <!--end::Label-->
                             <input type="file" class="form-control form-control-solid" required  name="brand[logo]" placeholder="Enter Target Title"  />
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-
-                        <!--end::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="is_licensed">
-                                <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" {{old('entity.is_licensed')?'checked':''}} />
-
-                                <span class="required">{{__('Is Entity Licensed')}}</span>
-                                <!--end::Label-->
-
-                            </label>
                         </div>
 
                         <div id="entity"  style="display: none;">
@@ -131,8 +126,7 @@
             </div>
             <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="row   m-4">
-                    <div class="col-md-6">
-
+                    <div class="col-md-12">
 
 
                         <div id="contact_person_group">
@@ -176,44 +170,42 @@
                             </div>
                         </div>
 
-                    </div>
-                    <div class="col-md-6">
 
-                     <!--begin::Input group-->
-                     <div class="d-flex flex-column mb-8 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">{{__("Phone Number")}}</span>
+                        <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-8 fv-row">
+                            <!--begin::Label-->
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                <span class="required">{{__("Phone Number")}}</span>
 
-                        </label>
-                        <!--end::Label-->
+                            </label>
+                            <!--end::Label-->
 
-                        <div class="input-group">
-                            <div class="input-group-prepend">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
                                 <span class="input-group-text border-left " style="border-radius: 0">
                                     <input type="text" readonly  style="width: 40px;border:0;background-color:#f5f8fa" value="966">
                                 </span>
+                                </div>
+                                <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($user->phone,3)}}" />
                             </div>
-                            <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($user->phone,3)}}" />
                         </div>
-                    </div>
 
-                    <!--end::Input group-->
-                    <!--begin::Input group-->
-{{--                    <div class="d-flex flex-column mb-8 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
-{{--                            <span class="required">{{__("This Number used In")}}</span>--}}
-
-{{--                        </label>--}}
-{{--                        <!--end::Label-->--}}
-{{--                        <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">--}}
-{{--                            <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>--}}
-{{--                            <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-
+                        <!--end::Input group-->
                         <!--begin::Input group-->
+                    {{--                    <div class="d-flex flex-column mb-8 fv-row">--}}
+                    {{--                        <!--begin::Label-->--}}
+                    {{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
+                    {{--                            <span class="required">{{__("This Number used In")}}</span>--}}
+
+                    {{--                        </label>--}}
+                    {{--                        <!--end::Label-->--}}
+                    {{--                        <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">--}}
+                    {{--                            <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>--}}
+                    {{--                            <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>--}}
+                    {{--                        </select>--}}
+                    {{--                    </div>--}}
+
+                    <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -225,30 +217,30 @@
                             <input type="email" class="form-control" placeholder="{{__('Email')}}" name="user[email][address]" value="{{old('user.email.0.address') ?? $user->email}}" />
                         </div>
 
-{{--                        <div class="d-flex flex-column mb-8 fv-row">--}}
-{{--                            <!--begin::Label-->--}}
-{{--                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
-{{--                                <span class="required">{{__("This Email used In")}}</span>--}}
+                        {{--                        <div class="d-flex flex-column mb-8 fv-row">--}}
+                        {{--                            <!--begin::Label-->--}}
+                        {{--                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
+                        {{--                                <span class="required">{{__("This Email used In")}}</span>--}}
 
-{{--                            </label>--}}
-{{--                            <!--end::Label-->--}}
-{{--                            <select class="form-select mb-2" data-placeholder="test" name="user[email][type]" >--}}
-{{--                                <option value="HOME" {{old('user.email.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>--}}
-{{--                                <option value="WORK"  {{old('user.email.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-                {{--         <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("Type")}}</span>
+                        {{--                            </label>--}}
+                        {{--                            <!--end::Label-->--}}
+                        {{--                            <select class="form-select mb-2" data-placeholder="test" name="user[email][type]" >--}}
+                        {{--                                <option value="HOME" {{old('user.email.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>--}}
+                        {{--                                <option value="WORK"  {{old('user.email.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>--}}
+                        {{--                            </select>--}}
+                        {{--                        </div>--}}
+                        {{--         <div class="d-flex flex-column mb-8 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                        <span class="required">{{__("Type")}}</span>
 
-                            </label>
-                            <!--end::Label-->
-                            <select class="form-select mb-2" data-placeholder="test" name="user[email][type]">
-                                <option value="HOME" {{old('user.phone.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
-                                <option value="WORK"  {{old('user.phone.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
-                            </select>
-                        </div> --}}
+                                    </label>
+                                    <!--end::Label-->
+                                    <select class="form-select mb-2" data-placeholder="test" name="user[email][type]">
+                                        <option value="HOME" {{old('user.phone.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
+                                        <option value="WORK"  {{old('user.phone.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
+                                    </select>
+                                </div> --}}
 
 
                     </div>
@@ -260,18 +252,29 @@
 
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
 
-{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">--}}
-{{--                            <span class="">{{__('IBAN')}}<span class="text-danger h4"> * </span></span>--}}
-{{--                        </label>--}}
-{{--                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}" /><br />--}}
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
+                            <span class="">{{__('Company Name')}}<span class="text-danger h4"> * </span></span>
+                        </label>
+                        <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][name]" value="{{old('wallet.bank.account.name') ?? $facility_name}}" /><br />
 
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('Account number')}}<span class="text-danger h4"> * </span></span>
                         </label>
-                        <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.number')}}" />
-                        <br>
+                        <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.number')}}" /><br/>
+
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
+                            <span class="">{{__('Bank Name')}}<span class="text-danger h4"> * </span></span>
+                        </label>
+                        <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')}}" /><br />
+
+                        {{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">--}}
+{{--                            <span class="">{{__('IBAN')}}<span class="text-danger h4"> * </span></span>--}}
+{{--                        </label>--}}
+{{--                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}" /><br />--}}
+
+
 
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("Bank Statement")}}</h2>
@@ -308,38 +311,6 @@
 
 
 
-                    </div>
-                    <div class="col-md-6">
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
-                            <span class="">{{__('Bank Name')}}<span class="text-danger h4"> * </span></span>
-                        </label>
-                        <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')}}" /><br />
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
-                            <span class="">{{__('Company Name')}}<span class="text-danger h4"> * </span></span>
-                        </label>
-                        <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][name]" value="{{old('wallet.bank.account.name') ?? $facility_name}}" /><br />
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h2 class="bold">{{__("Terms and conditions")}}</h2>
-                        </label>
-
-                        <div class="form-check" style="margin:10px 0px">
-                            <input class="form-check-input" type="checkbox" id="flexCheckDefault"  checked value="1">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                {{__('General approval')}}
-                            </label>
-                        </div>
-                        <div class="form-check" style="margin:10px 0px">
-                            <input class="form-check-input" type="checkbox" id="flexCheckChecked2" checked value="1">
-                            <label class="form-check-label" for="flexCheckChecked2">
-                                {{__('Charge Back')}}
-                            </label>
-                        </div>
-                        <div class="form-check" style="margin:10px 0px">
-                            <input class="form-check-input" type="checkbox" id="flexCheckChecked3" checked value="1">
-                            <label class="form-check-label" for="flexCheckChecked3">
-                                {{__('Refund')}}
-                            </label>
-                        </div>
                     </div>
 
                 </div>
