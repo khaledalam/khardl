@@ -1,255 +1,256 @@
-import React, { Fragment, useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import ImgPlaceholder from "../../../../assets/imgPlaceholder.png"
-import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg"
-import { IoCloseOutline, IoMenuOutline } from "react-icons/io5"
-import CategoryItem from "./CategoryItem"
-import ProductItem from "./ProductItem"
-import { useSelector, useDispatch } from "react-redux"
-import { MenuContext } from "react-flexible-sliding-menu"
-import Slider from "./Slider"
-import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlice"
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ImgPlaceholder from "../../../../assets/imgPlaceholder.png";
+import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg";
+import { IoCloseOutline, IoMenuOutline } from "react-icons/io5";
+import CategoryItem from "./CategoryItem";
+import ProductItem from "./ProductItem";
+import { useSelector, useDispatch } from "react-redux";
+import { MenuContext } from "react-flexible-sliding-menu";
+import Slider from "./Slider";
+import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlice";
 import {
-  logoUpload,
-  setBannerUpload,
-} from "../../../../redux/NewEditor/restuarantEditorSlice"
-import { useTranslation } from "react-i18next"
-import HeaderEdit from "./HeaderEdit"
-import { BiCloudUpload } from "react-icons/bi"
-import Cropper from 'react-easy-crop'
-import getCroppedImg from './cropImage'
-const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
-  const restuarantEditorStyle = useSelector(
-    (state) => state.restuarantEditorStyle
-  )
-  const [isVideo, setIsVideo] = useState(false)
-  const { t } = useTranslation()
-  const language = useSelector((state) => state.languageMode.languageMode)
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
-  const [rotation, setRotation] = useState(0)
-  const [zoom, setZoom] = useState(1)
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-  const [croppedImage, setCroppedImage] = useState(null)
-  const [uncroppedImage, setUncroppedImage] = useState(null)
-  const [isCropModalOpened, setIsCropModalOpened] = useState(false)
-  const [imgType, setImgType] = useState('')
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { toggleMenu } = useContext(MenuContext)
+    logoUpload,
+    setBannerUpload,
+} from "../../../../redux/NewEditor/restuarantEditorSlice";
+import { useTranslation } from "react-i18next";
+import HeaderEdit from "./HeaderEdit";
+import { BiCloudUpload } from "react-icons/bi";
+import Cropper from "react-easy-crop";
+import getCroppedImg from "./cropImage";
+const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
+    const restuarantEditorStyle = useSelector(
+        (state) => state.restuarantEditorStyle
+    );
+    const [isVideo, setIsVideo] = useState(false);
+    const { t } = useTranslation();
+    const language = useSelector((state) => state.languageMode.languageMode);
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [rotation, setRotation] = useState(0);
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [croppedImage, setCroppedImage] = useState(null);
+    const [uncroppedImage, setUncroppedImage] = useState(null);
+    const [isCropModalOpened, setIsCropModalOpened] = useState(false);
+    const [imgType, setImgType] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { toggleMenu } = useContext(MenuContext);
 
-  const {
-    page_color,
-    page_category_color,
-    product_background_color,
-    category_hover_color,
-    category_alignment,
-    category_shape,
+    const {
+        page_color,
+        page_category_color,
+        product_background_color,
+        category_hover_color,
+        category_alignment,
+        category_shape,
 
-    categoryDetail_cart_color,
-    categoryDetail_type,
-    categoryDetail_alignment,
-    categoryDetail_shape,
+        categoryDetail_cart_color,
+        categoryDetail_type,
+        categoryDetail_alignment,
+        categoryDetail_shape,
 
-    price_color,
-    logo,
-    banner_image,
-    banner_images,
-    header_color,
-    banner_background_color,
-    footer_color,
-    headerPosition,
-    logo_alignment,
-    logo_shape,
-    banner_type,
-    banner_shape,
-    text_fontFamily,
-    text_fontWeight,
-    text_fontSize,
-    text_alignment,
-    phoneNumber,
-    phoneNumber_alignment,
-    socialMediaIcons_alignment,
-    selectedSocialIcons,
-    text_color,
-  } = restuarantEditorStyle
-  
-  const onCropComplete = (croppedArea, croppedAreaPixels) => {
-    setCroppedAreaPixels(croppedAreaPixels)
-  }
-  const showCroppedImage = async () => {
-    try {
-      
-      const croppedImage = await getCroppedImg(
-       uncroppedImage,
-        croppedAreaPixels,
-        rotation
-      )
-      console.log('donee', { croppedImage })
-      setUncroppedImage(null)
-      setIsCropModalOpened(false)
-      if(imgType == 'logoUpload'){
-        dispatch(logoUpload(croppedImage))
-      } else {
-        dispatch(setBannerUpload(croppedImage))
-        setUploadSingleBanner(croppedImage)
-      }
-      // setCroppedImage(croppedImage)
-    } catch (e) {
-      console.error(e)
-    }
-  }
-  const selectedCategory = useSelector(
-    (state) => state.categoryAPI.selected_category
-  )
-  const cartItemsCount = useSelector(
-    (state) => state.categoryAPI.cartItemsCount
-  )
-  const uploadLogo = useSelector(
-    (state) => state.restuarantEditorStyle.logoUpload
-  )
+        price_color,
+        logo,
+        banner_image,
+        banner_images,
+        header_color,
+        banner_background_color,
+        footer_color,
+        headerPosition,
+        logo_alignment,
+        logo_shape,
+        banner_type,
+        banner_shape,
+        text_fontFamily,
+        text_fontWeight,
+        text_fontSize,
+        text_alignment,
+        phoneNumber,
+        phoneNumber_alignment,
+        socialMediaIcons_alignment,
+        selectedSocialIcons,
+        text_color,
+    } = restuarantEditorStyle;
 
-  const [uploadSingleBanner, setUploadSingleBanner] = useState(null)
+    const onCropComplete = (croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    };
+    const showCroppedImage = async () => {
+        try {
+            const croppedImage = await getCroppedImg(
+                uncroppedImage,
+                croppedAreaPixels,
+                rotation
+            );
+            console.log("donee", { croppedImage });
+            setUncroppedImage(null);
+            setIsCropModalOpened(false);
+            if (imgType == "logoUpload") {
+                dispatch(logoUpload(croppedImage));
+            } else {
+                dispatch(setBannerUpload(croppedImage));
+                setUploadSingleBanner(croppedImage);
+            }
+            // setCroppedImage(croppedImage)
+        } catch (e) {
+            console.error(e);
+        }
+    };
+    const selectedCategory = useSelector(
+        (state) => state.categoryAPI.selected_category
+    );
+    const cartItemsCount = useSelector(
+        (state) => state.categoryAPI.cartItemsCount
+    );
+    const uploadLogo = useSelector(
+        (state) => state.restuarantEditorStyle.logoUpload
+    );
 
-  const handleLogoUpload = (event) => {
-    event.preventDefault()
+    const [uploadSingleBanner, setUploadSingleBanner] = useState(null);
 
-    const selectedLogo = event.target.files[0]
-    if (selectedLogo) {
-      setUncroppedImage(URL.createObjectURL(selectedLogo))
-      setIsCropModalOpened(true)
-      setImgType('logoUpload')
-      dispatch(logoUpload(URL.createObjectURL(selectedLogo)))
-    }
-  }
+    const handleLogoUpload = (event) => {
+        event.preventDefault();
 
-  const handleBannerUpload = (event) => {
-    event.preventDefault()
+        const selectedLogo = event.target.files[0];
+        if (selectedLogo) {
+            setUncroppedImage(URL.createObjectURL(selectedLogo));
+            setIsCropModalOpened(true);
+            setImgType("logoUpload");
+            dispatch(logoUpload(URL.createObjectURL(selectedLogo)));
+        }
+    };
 
-    const selectedBanner = event.target.files[0]
+    const handleBannerUpload = (event) => {
+        event.preventDefault();
 
-    if (selectedBanner) {
-      if (selectedBanner.type.includes("video")) {
-        console.log("video", selectedBanner)
-        setIsVideo(true)
-        setUploadSingleBanner(URL.createObjectURL(selectedBanner))
-      } else {
-        setIsVideo(false)
-        setUncroppedImage(URL.createObjectURL(selectedBanner))
-        setIsCropModalOpened(true)
-        setImgType('setBannerUpload')
-        setUploadSingleBanner(URL.createObjectURL(selectedBanner))
-      }
-      dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)))
-    }
-  }
+        const selectedBanner = event.target.files[0];
 
-  useEffect(() => {
-    if (language !== "en") {
-      if (categories && categories.length > 0) {
-        dispatch(
-          selectedCategoryAPI({
-            name: categories[0]?.name,
-            id: categories && categories[0]?.id,
-          })
-        )
-      }
-    } else {
-      dispatch(
-        selectedCategoryAPI({
-          name: categories[0]?.name,
-          id: categories && categories[0]?.id,
-        })
-      )
-    }
-  }, [language, dispatch, categories])
+        if (selectedBanner) {
+            if (selectedBanner.type.includes("video")) {
+                console.log("video", selectedBanner);
+                setIsVideo(true);
+                setUploadSingleBanner(URL.createObjectURL(selectedBanner));
+            } else {
+                setIsVideo(false);
+                setUncroppedImage(URL.createObjectURL(selectedBanner));
+                setIsCropModalOpened(true);
+                setImgType("setBannerUpload");
+                setUploadSingleBanner(URL.createObjectURL(selectedBanner));
+            }
+            dispatch(setBannerUpload(URL.createObjectURL(selectedBanner)));
+        }
+    };
 
-  const clearLogo = () => {
-    dispatch(logoUpload(null))
-  }
-  const clearBanner = () => {
-    setUploadSingleBanner(null)
-    dispatch(setBannerUpload(null))
-  }
+    useEffect(() => {
+        if (language !== "en") {
+            if (categories && categories.length > 0) {
+                dispatch(
+                    selectedCategoryAPI({
+                        name: categories[0]?.name,
+                        id: categories && categories[0]?.id,
+                    })
+                );
+            }
+        } else {
+            dispatch(
+                selectedCategoryAPI({
+                    name: categories[0]?.name,
+                    id: categories && categories[0]?.id,
+                })
+            );
+        }
+    }, [language, dispatch, categories]);
 
-  const categoriesPlaceHolders = [
-    {
-      id: 1,
-      name: "category 1",
-      photo: ImgPlaceholder,
-    },
-    {
-      id: 2,
-      name: "category 2",
-      photo: ImgPlaceholder,
-    },
-    {
-      id: 3,
-      name: "category 3",
-      photo: ImgPlaceholder,
-    },
-    {
-      id: 4,
-      name: "category 2",
-      photo: ImgPlaceholder,
-    },
-    {
-      id: 5,
-      name: "category 3",
-      photo: ImgPlaceholder,
-    },
-  ]
-  const productPlaceHolders = [
-    {
-      id: 1,
-      description: "descriptiomn 1",
-      photo: ImgPlaceholder,
-      price: 176,
-      calories: 245,
-      availability: 1,
-    },
-    {
-      id: 2,
-      description: "descriptiomn 2",
-      photo: ImgPlaceholder,
-      price: 176,
-      calories: 245,
-      availability: 1,
-    },
-    {
-      id: 3,
-      description: "descriptiomn 3",
-      photo: ImgPlaceholder,
-      price: 176,
-      calories: 245,
-      availability: 1,
-    },
-  ]
+    const clearLogo = () => {
+        dispatch(logoUpload(null));
+    };
+    const clearBanner = () => {
+        setUploadSingleBanner(null);
+        dispatch(setBannerUpload(null));
+    };
 
-  const filterCategory =
-    categories && categories.length > 0
-      ? categories?.filter((category) => category.id === selectedCategory.id)
-      : [{ name: "Product", items: productPlaceHolders }]
+    const categoriesPlaceHolders = [
+        {
+            id: 1,
+            name: "category 1",
+            photo: ImgPlaceholder,
+        },
+        {
+            id: 2,
+            name: "category 2",
+            photo: ImgPlaceholder,
+        },
+        {
+            id: 3,
+            name: "category 3",
+            photo: ImgPlaceholder,
+        },
+        {
+            id: 4,
+            name: "category 2",
+            photo: ImgPlaceholder,
+        },
+        {
+            id: 5,
+            name: "category 3",
+            photo: ImgPlaceholder,
+        },
+    ];
+    const productPlaceHolders = [
+        {
+            id: 1,
+            description: "descriptiomn 1",
+            photo: ImgPlaceholder,
+            price: 176,
+            calories: 245,
+            availability: 1,
+        },
+        {
+            id: 2,
+            description: "descriptiomn 2",
+            photo: ImgPlaceholder,
+            price: 176,
+            calories: 245,
+            availability: 1,
+        },
+        {
+            id: 3,
+            description: "descriptiomn 3",
+            photo: ImgPlaceholder,
+            price: 176,
+            calories: 245,
+            availability: 1,
+        },
+    ];
 
-  const filetype = "video"
+    const filterCategory =
+        categories && categories.length > 0
+            ? categories?.filter(
+                  (category) => category.id === selectedCategory.id
+              )
+            : [{ name: "Product", items: productPlaceHolders }];
 
-  return (
-    <div
-      style={{
-        backgroundColor: page_color,
-        fontFamily: text_fontFamily,
-        fontWeight: text_fontWeight,
-      }}
-      className='w-full p-4 flex flex-col gap-6 relative'
-    >
-      {/* Header cart */}
-      {headerPosition !== "fixed" && (
-        <HeaderEdit
-          restaurantStyle={restuarantEditorStyle}
-          toggleSidebarCollapse={toggleSidebarCollapse}
-        />
-      )}
-      {/* logo */}
-      {/* <div
+    const filetype = "video";
+
+    return (
+        <div
+            style={{
+                backgroundColor: page_color,
+                fontFamily: text_fontFamily,
+                fontWeight: text_fontWeight,
+            }}
+            className="w-full p-4 flex flex-col gap-6 relative"
+        >
+            {/* Header cart */}
+            {headerPosition !== "fixed" && (
+                <HeaderEdit
+                    restaurantStyle={restuarantEditorStyle}
+                    toggleSidebarCollapse={toggleSidebarCollapse}
+                />
+            )}
+            {/* logo */}
+            {/* <div
         style={{ backgroundColor: page_color }}
         className={`w-full min-h-[100px]    rounded-xl flex ${logo_alignment === "center"
           ? "items-center justify-center"
@@ -295,374 +296,421 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse }) => {
           )}
         </div>
       </div> */}
-      {/* banner */}
-      {banner_type === "slider" ? (
-        <div className='w-full'>
-          <Slider banner_images={banner_images} />
-        </div>
-      ) : isVideo || (banner_image && banner_image?.type === "video") ? (
-        <div
-          className={`w-full min-h-[180px] max-h-[200px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
-        >
-          {uploadSingleBanner && (
-            <video
-              controls
-              className='absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]'
-            >
-              <source src={uploadSingleBanner} type='video/mp4' />
-              Your browser does not support the video tag.
-            </video>
-          )}
-          <div
-            style={{
-              borderRadius: banner_shape === "sharp" ? 0 : 12,
-            }}
-            className='w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative'
-          >
-            <label htmlFor='banner'>
-              <input
-                type='file'
-                name='banner'
-                id={"banner"}
-                accept='video/*, image/*'
-                onChange={handleBannerUpload}
-                className='hidden'
-                hidden
-              />
-              {uploadSingleBanner ? (
-                <IoCloseOutline
-                  size={28}
-                  className='text-red-500'
-                  onClick={clearBanner}
-                />
-              ) : (
-                <BiCloudUpload size={28} />
-              )}
-            </label>
-          </div>
-        </div>
-      ) : (
-        <div
-          style={{
-            backgroundColor: banner_background_color,
-            backgroundImage: uploadSingleBanner
-              ? `url(${uploadSingleBanner})`
-              : banner_image
-                ? `url(${banner_image?.url})`
-                : `url(${bannerPlaceholder})`,
-            borderRadius: banner_shape === "sharp" ? 0 : 12,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-          }}
-          className={`w-full min-h-[180px]   flex items-center justify-center`}
-        >
-          <div
-            style={{
-              borderRadius: banner_shape === "sharp" ? 0 : 12,
-            }}
-            className='w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative'
-          >
-            <label htmlFor='banner'>
-              <input
-                type='file'
-                name='banner'
-                id={"banner"}
-                accept='video/*, image/*'
-                onChange={handleBannerUpload}
-                className='hidden'
-                hidden
-              />
+            {/* banner */}
+            {!isLoading ? (
+                banner_type === "slider" ? (
+                    <div className="w-full">
+                        <Slider banner_images={banner_images} />
+                    </div>
+                ) : isVideo ||
+                  (banner_image && banner_image?.type === "video") ? (
+                    <div
+                        className={`w-full min-h-[180px] max-h-[200px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
+                    >
+                        {uploadSingleBanner && (
+                            <video
+                                controls
+                                className="absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]"
+                            >
+                                <source
+                                    src={uploadSingleBanner}
+                                    type="video/mp4"
+                                />
+                                Your browser does not support the video tag.
+                            </video>
+                        )}
+                        <div
+                            style={{
+                                borderRadius: banner_shape === "sharp" ? 0 : 12,
+                            }}
+                            className="w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative"
+                        >
+                            <label htmlFor="banner">
+                                <input
+                                    type="file"
+                                    name="banner"
+                                    id={"banner"}
+                                    accept="video/*, image/*"
+                                    onChange={handleBannerUpload}
+                                    className="hidden"
+                                    hidden
+                                />
+                                {uploadSingleBanner ? (
+                                    <IoCloseOutline
+                                        size={28}
+                                        className="text-red-500"
+                                        onClick={clearBanner}
+                                    />
+                                ) : (
+                                    <BiCloudUpload size={28} />
+                                )}
+                            </label>
+                        </div>
+                    </div>
+                ) : (
+                    <div
+                        style={{
+                            backgroundColor: banner_background_color,
+                            backgroundImage: uploadSingleBanner
+                                ? `url(${uploadSingleBanner})`
+                                : banner_image
+                                ? `url(${banner_image?.url})`
+                                : `url(${bannerPlaceholder})`,
+                            borderRadius: banner_shape === "sharp" ? 0 : 12,
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                        }}
+                        className={`w-full min-h-[180px]   flex items-center justify-center`}
+                    >
+                        <div
+                            style={{
+                                borderRadius: banner_shape === "sharp" ? 0 : 12,
+                            }}
+                            className="w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative"
+                        >
+                            <label htmlFor="banner">
+                                <input
+                                    type="file"
+                                    name="banner"
+                                    id={"banner"}
+                                    accept="video/*, image/*"
+                                    onChange={handleBannerUpload}
+                                    className="hidden"
+                                    hidden
+                                />
 
-              <img
-                src={
-                  uploadSingleBanner
-                    ? uploadSingleBanner
-                    : banner_image
-                      ? banner_image?.url
-                      : ImgPlaceholder
-                }
-                alt={""}
-                className='w-full h-full object-cover'
-              />
-            </label>
-            {uploadSingleBanner && (
-              <div className='absolute top-[-0.8rem] right-[-1rem]'>
-                <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
-                  <IoCloseOutline
-                    size={16}
-                    className='text-red-500'
-                    onClick={clearBanner}
-                  />
-                </div>
-              </div>
+                                <img
+                                    src={
+                                        uploadSingleBanner
+                                            ? uploadSingleBanner
+                                            : banner_image
+                                            ? banner_image?.url
+                                            : ImgPlaceholder
+                                    }
+                                    alt={""}
+                                    className="w-full h-full object-cover"
+                                />
+                            </label>
+                            {uploadSingleBanner && (
+                                <div className="absolute top-[-0.8rem] right-[-1rem]">
+                                    <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
+                                        <IoCloseOutline
+                                            size={16}
+                                            className="text-red-500"
+                                            onClick={clearBanner}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )
+            ) : (
+                <div className="skeleton w-[100px] h-[95px] w-full shrink-0"></div>
             )}
-          </div>
-        </div>
-      )}
 
-      {/* Category */}
-      <div
-        className={`w-full h-[500px] flex ${category_alignment === "center"
-          ? "flex-col justify-center"
-          : "flex-row"
-          } items-center gap-8`}
-      >
-        <div
-          className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${category_alignment === "left"
-            ? "order-1 w-[25%]"
-            : category_alignment === "right"
-              ? "order-2 w-[25%]"
-              : category_alignment === "center"
-                ? "w-full"
-                : "w-[25%]"
-            } `}
-        >
-          <div
-            style={{
-              backgroundColor: page_category_color,
-              borderRadius: category_shape === "sharp" ? 0 : 12,
-            }}
-            className='w-full py-3 flex items-center justify-center'
-          >
+            {/* Category */}
             <div
-              className={`flex ${category_alignment === "center"
-                ? "flex-row gap-10 "
-                : "flex-col gap-6"
-                } items-center `}
+                className={`w-full h-[500px] flex ${
+                    category_alignment === "center"
+                        ? "flex-col justify-center"
+                        : "flex-row"
+                } items-center gap-8`}
             >
-              {categories && categories.length > 0
-                ? categories?.map((category, i) => (
-                  <CategoryItem
-                    key={i}
-                    active={selectedCategory.id === category.id}
-                    name={category.name}
-                    imgSrc={category.photo}
-                    alt={category.name}
-                    hoverColor={category_hover_color}
-                    onClick={() =>
-                      dispatch(
-                        selectedCategoryAPI({
-                          name: category.name,
-                          id: category.id,
-                        })
-                      )
-                    }
-                    textColor={text_color}
-                    textAlign={text_alignment}
-                    fontWeight={text_fontWeight}
-                    shape={category_shape}
-                    isGrid={category_alignment === "center" ? false : true}
-                    fontSize={text_fontSize}
-                  />
-                ))
-                : categoriesPlaceHolders.map((category, i) => (
-                  <CategoryItem
-                    key={i}
-                    active={selectedCategory.id === category.id}
-                    name={category.name}
-                    imgSrc={category.photo}
-                    alt={category.name}
-                    hoverColor={category_hover_color}
-                    onClick={() =>
-                      dispatch(
-                        selectedCategoryAPI({
-                          name: category.name,
-                          id: category.id,
-                        })
-                      )
-                    }
-                    textColor={text_color}
-                    textAlign={text_alignment}
-                    fontWeight={text_fontWeight}
-                    shape={category_shape}
-                    isGrid={category_alignment === "center" ? false : true}
-                    fontSize={text_fontSize}
-                  />
-                ))}
-            </div>
-          </div>
-        </div>
-        <div
-          style={{ backgroundColor: product_background_color }}
-          className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${category_alignment === "left"
-            ? "order-2 w-[75%]"
-            : category_alignment === "right"
-              ? "order-1 w-[75%]"
-              : category_alignment === "center"
-                ? "w-full"
-                : "w-[75%]"
-            } ${categoryDetail_shape === "sharp" ? "" : "rounded-lg"
-            } bg-white p-8`}
-        >
-          <div
-            className={`w-full h-full flex flex-col items-center justify-center `}
-          >
-            <h3
-              style={{ fontWeight: text_fontWeight }}
-              className={`${text_fontFamily ? text_fontFamily : "font-semibold"
-                } text-[1.5rem] text-center my-4 relative capitalize`}
-            >
-              <span className='custom-underline capitalize'>
-                {selectedCategory.name}
-              </span>{" "}
-            </h3>
-
-            <div
-              className={`flex  ${category_alignment === "center"
-                ? "flex-row flex-wrap gap-12"
-                : "flex-col gap-6"
-                }  h-fit  p-4`}
-            >
-              {filterCategory &&
-                filterCategory[0]?.items
-                  .filter((item) => item.availability === 1)
-                  .slice(0, 2)
-                  .map((product, idx) => (
-                    <ProductItem
-                      key={idx + "prdt"}
-                      id={product.id}
-                      name={product.description}
-                      imgSrc={product.photo}
-                      amount={product.price}
-                      caloryInfo={product.calories}
-                      checkbox_required={
-                        product?.checkbox_required ?? ["true", "false"]
-                      }
-                      checkbox_input_titles={
-                        product?.checkbox_input_titles ?? [[]]
-                      }
-                      checkbox_input_names={
-                        product?.checkbox_input_names ?? [[]]
-                      }
-                      checkbox_input_prices={
-                        product?.checkbox_input_prices ?? [[]]
-                      }
-                      selection_required={
-                        product?.selection_required ?? ["true", "false"]
-                      }
-                      selection_input_titles={
-                        product?.selection_input_titles ?? [[]]
-                      }
-                      selection_input_names={
-                        product?.selection_input_names ?? [[]]
-                      }
-                      selection_input_prices={
-                        product?.selection_input_prices ?? [[]]
-                      }
-                      dropdown_required={
-                        product?.dropdown_required ?? ["true", "false"]
-                      }
-                      dropdown_input_titles={
-                        product?.dropdown_input_titles ?? [[]]
-                      }
-                      dropdown_input_names={
-                        product?.dropdown_input_names ?? [[]]
-                      }
-                      cartBgcolor={categoryDetail_cart_color}
-                      amountColor={price_color}
-                      textColor={text_color}
-                      textAlign={text_alignment}
-                      fontWeight={text_fontWeight}
-                      shape={categoryDetail_shape}
-                      fontSize={text_fontSize}
-                    />
-                  ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* social media */}
-      <div
-        style={{ backgroundColor: footer_color }}
-        className={`w-full min-h-[70px] px-3  rounded-xl flex ${socialMediaIcons_alignment === "center"
-          ? "items-center justify-center"
-          : socialMediaIcons_alignment === "left"
-            ? "items-center justify-start"
-            : socialMediaIcons_alignment === "right"
-              ? "items-center justify-end"
-              : ""
-          }`}
-      >
-        <div className='flex items-center gap-5'>
-          {selectedSocialIcons?.map((socialMedia) => (
-            <a
-              href={socialMedia.link ? socialMedia.link : "javascript:void(0)"}
-              key={socialMedia.id}
-              className='cursor-pointer'
-            >
-              <div className='w-[30px] h-[30px] rounded-full relative'>
-                <img
-                  src={socialMedia.imgUrl}
-                  alt={"whatsapp"}
-                  className='w-full h-full object-cover'
-                />
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-      <div
-        style={{ backgroundColor: footer_color }}
-        className={`w-full min-h-[70px]  rounded-xl flex  ${phoneNumber_alignment === "center"
-          ? "items-center justify-center"
-          : phoneNumber_alignment === "left"
-            ? "items-center justify-start"
-            : phoneNumber_alignment === "right"
-              ? "items-center justify-end"
-              : ""
-          }`}
-      >
-        <h3
-          className={`${text_fontFamily ? text_fontFamily : "font-semibold"
-            } text-lg`}
-        >
-          {phoneNumber}
-        </h3>
-      </div>
-      {isCropModalOpened && <div class="modal  fixed w-full h-full top-0 left-0 flex items-center justify-center" style={{ opacity: 1, pointerEvents: 'all' }}>
-          <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-
-          <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-
-
-
-            <div class="modal-content py-4 text-left px-6">
-
-              <div class="flex justify-between items-center pb-3">
-                <p class="text-2xl font-bold">Crop Image!</p>
-                <div class="modal-close cursor-pointer z-50">
-                  <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-                  </svg>
+                <div
+                    className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
+                        category_alignment === "left"
+                            ? "order-1 w-[25%]"
+                            : category_alignment === "right"
+                            ? "order-2 w-[25%]"
+                            : category_alignment === "center"
+                            ? "w-full"
+                            : "w-[25%]"
+                    } `}
+                >
+                    <div
+                        style={{
+                            backgroundColor: page_category_color,
+                            borderRadius: category_shape === "sharp" ? 0 : 12,
+                        }}
+                        className="w-full py-3 flex items-center justify-center"
+                    >
+                        <div
+                            className={`flex ${
+                                category_alignment === "center"
+                                    ? "flex-row gap-10 "
+                                    : "flex-col gap-6"
+                            } items-center `}
+                        >
+                            {categories && categories.length > 0 ? (
+                                categories?.map((category, i) => (
+                                    <CategoryItem
+                                        key={i}
+                                        active={
+                                            selectedCategory.id === category.id
+                                        }
+                                        name={category.name}
+                                        imgSrc={category.photo}
+                                        alt={category.name}
+                                        hoverColor={category_hover_color}
+                                        onClick={() =>
+                                            dispatch(
+                                                selectedCategoryAPI({
+                                                    name: category.name,
+                                                    id: category.id,
+                                                })
+                                            )
+                                        }
+                                        textColor={text_color}
+                                        textAlign={text_alignment}
+                                        fontWeight={text_fontWeight}
+                                        shape={category_shape}
+                                        isGrid={
+                                            category_alignment === "center"
+                                                ? false
+                                                : true
+                                        }
+                                        fontSize={text_fontSize}
+                                    />
+                                ))
+                            ) : (
+                                <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
+                            )}
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div className={'cropper-container'}>
+                {!isLoading && (
+                    <div
+                        style={{ backgroundColor: product_background_color }}
+                        className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${
+                            category_alignment === "left"
+                                ? "order-2 w-[75%]"
+                                : category_alignment === "right"
+                                ? "order-1 w-[75%]"
+                                : category_alignment === "center"
+                                ? "w-full"
+                                : "w-[75%]"
+                        } ${
+                            categoryDetail_shape === "sharp" ? "" : "rounded-lg"
+                        } bg-white p-8`}
+                    >
+                        <div
+                            className={`w-full h-full flex flex-col items-center justify-center `}
+                        >
+                            <h3
+                                style={{ fontWeight: text_fontWeight }}
+                                className={`${
+                                    text_fontFamily
+                                        ? text_fontFamily
+                                        : "font-semibold"
+                                } text-[1.5rem] text-center my-4 relative capitalize`}
+                            >
+                                <span className="custom-underline capitalize">
+                                    {selectedCategory.name}
+                                </span>{" "}
+                            </h3>
 
-                <Cropper
-                  image={uncroppedImage}
-                  crop={crop}
-                  rotation={rotation}
-                  zoom={zoom}
-                  aspect={4 / 3}
-                  onCropChange={setCrop}
-                  onRotationChange={setRotation}
-                  onCropComplete={onCropComplete}
-                  onZoomChange={setZoom}
-                />
-
-              </div>
-           
-
-              <div class="flex justify-end pt-2">
-
-                <button class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400"  onClick={()=>showCroppedImage()}>Save</button>
-              </div>
-
+                            <div
+                                className={`flex  ${
+                                    category_alignment === "center"
+                                        ? "flex-row flex-wrap gap-12"
+                                        : "flex-col gap-6"
+                                }  h-fit  p-4`}
+                            >
+                                {filterCategory &&
+                                    filterCategory[0]?.items
+                                        .filter(
+                                            (item) => item.availability === 1
+                                        )
+                                        .slice(0, 2)
+                                        .map((product, idx) => (
+                                            <ProductItem
+                                                key={idx + "prdt"}
+                                                id={product.id}
+                                                name={product.description}
+                                                imgSrc={product.photo}
+                                                amount={product.price}
+                                                caloryInfo={product.calories}
+                                                checkbox_required={
+                                                    product?.checkbox_required ?? [
+                                                        "true",
+                                                        "false",
+                                                    ]
+                                                }
+                                                checkbox_input_titles={
+                                                    product?.checkbox_input_titles ?? [
+                                                        [],
+                                                    ]
+                                                }
+                                                checkbox_input_names={
+                                                    product?.checkbox_input_names ?? [
+                                                        [],
+                                                    ]
+                                                }
+                                                checkbox_input_prices={
+                                                    product?.checkbox_input_prices ?? [
+                                                        [],
+                                                    ]
+                                                }
+                                                selection_required={
+                                                    product?.selection_required ?? [
+                                                        "true",
+                                                        "false",
+                                                    ]
+                                                }
+                                                selection_input_titles={
+                                                    product?.selection_input_titles ?? [
+                                                        [],
+                                                    ]
+                                                }
+                                                selection_input_names={
+                                                    product?.selection_input_names ?? [
+                                                        [],
+                                                    ]
+                                                }
+                                                selection_input_prices={
+                                                    product?.selection_input_prices ?? [
+                                                        [],
+                                                    ]
+                                                }
+                                                dropdown_required={
+                                                    product?.dropdown_required ?? [
+                                                        "true",
+                                                        "false",
+                                                    ]
+                                                }
+                                                dropdown_input_titles={
+                                                    product?.dropdown_input_titles ?? [
+                                                        [],
+                                                    ]
+                                                }
+                                                dropdown_input_names={
+                                                    product?.dropdown_input_names ?? [
+                                                        [],
+                                                    ]
+                                                }
+                                                cartBgcolor={
+                                                    categoryDetail_cart_color
+                                                }
+                                                amountColor={price_color}
+                                                textColor={text_color}
+                                                textAlign={text_alignment}
+                                                fontWeight={text_fontWeight}
+                                                shape={categoryDetail_shape}
+                                                fontSize={text_fontSize}
+                                            />
+                                        ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
-          </div>
-        </div>}
-    </div>
-  )
-}
+            {/* social media */}
+            <div
+                style={{ backgroundColor: footer_color }}
+                className={`w-full min-h-[70px] px-3  rounded-xl flex ${
+                    socialMediaIcons_alignment === "center"
+                        ? "items-center justify-center"
+                        : socialMediaIcons_alignment === "left"
+                        ? "items-center justify-start"
+                        : socialMediaIcons_alignment === "right"
+                        ? "items-center justify-end"
+                        : ""
+                }`}
+            >
+                <div className="flex items-center gap-5">
+                    {selectedSocialIcons?.map((socialMedia) => (
+                        <a
+                            href={
+                                socialMedia.link
+                                    ? socialMedia.link
+                                    : "javascript:void(0)"
+                            }
+                            key={socialMedia.id}
+                            className="cursor-pointer"
+                        >
+                            <div className="w-[30px] h-[30px] rounded-full relative">
+                                <img
+                                    src={socialMedia.imgUrl}
+                                    alt={"whatsapp"}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+            <div
+                style={{ backgroundColor: footer_color }}
+                className={`w-full min-h-[70px]  rounded-xl flex  ${
+                    phoneNumber_alignment === "center"
+                        ? "items-center justify-center"
+                        : phoneNumber_alignment === "left"
+                        ? "items-center justify-start"
+                        : phoneNumber_alignment === "right"
+                        ? "items-center justify-end"
+                        : ""
+                }`}
+            >
+                <h3
+                    className={`${
+                        text_fontFamily ? text_fontFamily : "font-semibold"
+                    } text-lg`}
+                >
+                    {phoneNumber}
+                </h3>
+            </div>
+            {isCropModalOpened && (
+                <div
+                    class="modal  fixed w-full h-full top-0 left-0 flex items-center justify-center"
+                    style={{ opacity: 1, pointerEvents: "all" }}
+                >
+                    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
-export default MainBoardEditor
+                    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+                        <div class="modal-content py-4 text-left px-6">
+                            <div class="flex justify-between items-center pb-3">
+                                <p class="text-2xl font-bold">Crop Image!</p>
+                                <div class="modal-close cursor-pointer z-50">
+                                    <svg
+                                        class="fill-current text-black"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 18 18"
+                                    >
+                                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div className={"cropper-container"}>
+                                <Cropper
+                                    image={uncroppedImage}
+                                    crop={crop}
+                                    rotation={rotation}
+                                    zoom={zoom}
+                                    aspect={4 / 3}
+                                    onCropChange={setCrop}
+                                    onRotationChange={setRotation}
+                                    onCropComplete={onCropComplete}
+                                    onZoomChange={setZoom}
+                                />
+                            </div>
+
+                            <div class="flex justify-end pt-2">
+                                <button
+                                    class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400"
+                                    onClick={() => showCroppedImage()}
+                                >
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default MainBoardEditor;
