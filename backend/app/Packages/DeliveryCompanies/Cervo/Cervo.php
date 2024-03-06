@@ -50,10 +50,10 @@ class Cervo  extends AbstractDeliveryCompany
                 "customer"=>$customer->address ,
                 "order_id"=>$order->id,
                 "id"=>$order->id,
-                "lng"=>$order->lat,
-                "lat"=> $order->lng,
+                "lng"=>$order->lat ?? '',
+                "lat"=> $order->lng ?? '',
                 "storelat"=>$branch->lat,
-                "storelng"=>$branch->lng,
+                "storelng"=>$branch->lng ,
                 "address"=>$customer->address,
             ];
         }
@@ -107,9 +107,15 @@ class Cervo  extends AbstractDeliveryCompany
                 data:  [],  
                 method: 'get'
             );
-            return $response['http_code'] == ResponseHelper::HTTP_OK ? true : false;
+            if($response['http_code'] == ResponseHelper::HTTP_OK ){
+                return true;
+            }else {
+                \Sentry\captureMessage("Cervo cannot cancel order #$id for restaurant #id".tenant()->id);
+                return false;
+            }
+            
         } catch (\Exception $e) {
-            logger($e->getMessage());
+            \Sentry\captureException($e);
             return false;
         }
     }

@@ -70,9 +70,9 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
         ];
     }
     public function cancelOtherOrders($module,Order $order){
-        if($module != 'streetline' && $order->streetline_ref){
-            (new StreetLine())->cancelOrder($order->streetline_ref);
-        }
+        // if($module != 'streetline' && $order->streetline_ref){
+        //     (new StreetLine())->cancelOrder($order->streetline_ref);
+        // }
         if($module != 'cervo' && $order->cervo_ref){
             (new Cervo())->cancelOrder($order->cervo_ref);
         }
