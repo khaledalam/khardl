@@ -6,6 +6,7 @@ use App\Models\Tenant\Order;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\RestaurantUser;
+use App\Models\Tenant\Setting;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
@@ -21,6 +22,7 @@ class Yeswa  extends AbstractDeliveryCompany
 
     public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool{
         $branch = $order->branch;
+        $setting = Setting::first();
         if(env('APP_ENV') == 'local'){
             $data = [
                 "api_key"=> env('YESWA_SECRET_API_KEY',''),
@@ -35,7 +37,7 @@ class Yeswa  extends AbstractDeliveryCompany
             ];
         }else {
             $data = [
-                "pickup_name"=>$branch->name,
+                "pickup_name"=> $setting->restaurant_name,
                 "pickup_latitude"=> $branch->lat,
                 "pickup_longitude"=>  $branch->lng,
                 "dropoff_name"=> $customer->fullName,
@@ -79,6 +81,7 @@ class Yeswa  extends AbstractDeliveryCompany
         }else if ($response['http_code'] == ResponseHelper::HTTP_BAD_REQUEST && $response['message'] == 'Order duplicated'){
             throw new Exception('Order duplicated');
         }else {
+            \Sentry\captureMessage(json_encode($response['message']));
             return false;
         }
 

@@ -31,7 +31,7 @@ class Cervo  extends AbstractDeliveryCompany
     public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool{
        
         $branch = $order->branch;
-
+        
         if(env('APP_ENV') == 'local'){
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
@@ -90,6 +90,7 @@ class Cervo  extends AbstractDeliveryCompany
             ]);
             return true;
         }else {
+            \Sentry\captureMessage(json_encode($response['message']));
             return false;
         }
      
