@@ -45,6 +45,8 @@ class OrderRepository
                 'payment_status' => PaymentMethod::PENDING,
                 'vat' => $cart->tax(),
                 'status' => Order::PENDING,
+                'lat'=>$user->lat ?? null,
+                'lng'=>$user->lng ?? null,
             ]);
             if($discount&&$coupon){
                 $user->coupons()->attach($coupon->id);

@@ -36,8 +36,8 @@ class Cervo  extends AbstractDeliveryCompany
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
                 "customer"=>"Testing customer",
-                "order_id"=>"Testing 22/2/$order->id",
-                "id"=>"Testing 22/2/$order->id",
+                "order_id"=>"Testing ".date("Y/m/d")." ".$order->id,
+                "id"=>"Testing ".date("Y/m/d")." ".$order->id,
                 "lng"=>34.266593,
                 "lat"=>31.279708,
                 "storelat"=>31.277202,
@@ -50,8 +50,8 @@ class Cervo  extends AbstractDeliveryCompany
                 "customer"=>$customer->address ,
                 "order_id"=>$order->id,
                 "id"=>$order->id,
-                "lng"=>$customer->lat,
-                "lat"=> $customer->lng,
+                "lng"=>$order->lat,
+                "lat"=> $order->lng,
                 "storelat"=>$branch->lat,
                 "storelng"=>$branch->lng,
                 "address"=>$customer->address,
@@ -84,6 +84,7 @@ class Cervo  extends AbstractDeliveryCompany
             data: $data
         );
         if($response['http_code'] == ResponseHelper::HTTP_OK){
+            \Sentry\captureMessage(json_encode($response['message']));
             $order->update([
                 'cervo_ref'=>$response['message']
             ]);
