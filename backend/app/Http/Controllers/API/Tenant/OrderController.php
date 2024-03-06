@@ -19,7 +19,8 @@ use Illuminate\Contracts\Database\Query\Builder;
 use App\Repositories\API\CustomerOrderRepository;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
-
+use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
+use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 
 class  OrderController extends BaseRepositoryController
 {
@@ -71,6 +72,9 @@ class  OrderController extends BaseRepositoryController
                 'status' => $request->status,
                 'reject_or_cancel_reason' => $request->reason
             ]);
+            if($order->isDelivery()){
+                (new AbstractDeliveryCompany)->cancelOtherOrders('All',$order);
+            }
         }
         switch ($request->status) {
             case Order::PENDING:
