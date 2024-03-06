@@ -17,14 +17,14 @@
 
         <ul class="nav nav-tabs fs-5" id="myTab" role="tablist" style="border-radius: 10%" >
             <li class="nav-item fs-5" role="presentation">
-                <button class="nav-link active" id="profile-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{{__('Personal Information')}}</button>
-              </li>
+                <button class="nav-link active" id="profile-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{{__('1')}}. {{__('Personal Information')}}</button>
+            </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link " id="home-tab" style="font-family: system-ui;font-size: 19px;" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{__('Business Details')}}</button>
+              <button class="nav-link " id="home-tab" style="font-family: system-ui;font-size: 19px;" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{{__('2')}}. {{__('Business Details')}}</button>
             </li>
 
             <li class="nav-item fs-5" role="presentation">
-              <button class="nav-link" id="bank-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#bank" type="button" role="tab" aria-controls="contact" aria-selected="false">{{__("Bank Details")}}</button>
+              <button class="nav-link" id="bank-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#bank" type="button" role="tab" aria-controls="contact" aria-selected="false">{{__('3')}}. {{__("Bank Details")}}</button>
             </li>
           </ul>
           <div class="tab-content" id="myTabContent" style="background-color: aliceblue" >
@@ -80,6 +80,7 @@
 
                             </label>
                         </div>
+
                         <div id="entity"  style="display: none;">
 
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
@@ -136,20 +137,20 @@
 
                         <div id="contact_person_group">
                             <!-- Name title input group -->
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!-- Label -->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_title">
-                                    <span class="required">{{ __("Title") }}</span>
+{{--                            <div class="d-flex flex-column mb-8 fv-row">--}}
+{{--                                <!-- Label -->--}}
+{{--                                <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_title">--}}
+{{--                                    <span class="required">{{ __("Title") }}</span>--}}
 
-                                </label>
-                                <!-- Input -->
-                                <select name="user[name][title]" id="user_title" class="form-select">
-                                    <option value="Mr" {{ old('user.name.title') == 'Mr'? 'selected' :'' }}>{{ __('Mr') }}</option>
-                                    <option value="Mrs" {{ old('user.name.title') == 'Mrs'? 'selected' :'' }}>{{ __('Mrs') }}</option>
-                                    <option value="Dr" {{ old('user.name.title') == 'Dr'? 'selected' :'' }}>{{ __('Dr') }}</option>
-                                    <option value="Prof" {{ old('user.name.title') == 'ProfMr'? 'selected' :'' }}>{{ __('Prof') }}</option>
-                                </select>
-                            </div>
+{{--                                </label>--}}
+{{--                                <!-- Input -->--}}
+{{--                                <select name="user[name][title]" id="user_title" class="form-select">--}}
+{{--                                    <option value="Mr" {{ old('user.name.title') == 'Mr'? 'selected' :'' }}>{{ __('Mr') }}</option>--}}
+{{--                                    <option value="Mrs" {{ old('user.name.title') == 'Mrs'? 'selected' :'' }}>{{ __('Mrs') }}</option>--}}
+{{--                                    <option value="Dr" {{ old('user.name.title') == 'Dr'? 'selected' :'' }}>{{ __('Dr') }}</option>--}}
+{{--                                    <option value="Prof" {{ old('user.name.title') == 'ProfMr'? 'selected' :'' }}>{{ __('Prof') }}</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
 
                             <!-- Name first input group -->
                             <div class="d-flex flex-column mb-8 fv-row">
@@ -175,11 +176,6 @@
                             </div>
                         </div>
 
-
-
-
-
-
                     </div>
                     <div class="col-md-6">
 
@@ -192,7 +188,7 @@
                         </label>
                         <!--end::Label-->
 
-                        <div class="input-group mb-3">
+                        <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text border-left " style="border-radius: 0">
                                     <input type="text" readonly  style="width: 40px;border:0;background-color:#f5f8fa" value="966">
@@ -204,18 +200,18 @@
 
                     <!--end::Input group-->
                     <!--begin::Input group-->
-                    <div class="d-flex flex-column mb-8 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">{{__("This Number used In")}}</span>
+{{--                    <div class="d-flex flex-column mb-8 fv-row">--}}
+{{--                        <!--begin::Label-->--}}
+{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
+{{--                            <span class="required">{{__("This Number used In")}}</span>--}}
 
-                        </label>
-                        <!--end::Label-->
-                        <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">
-                            <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
-                            <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
-                        </select>
-                    </div>
+{{--                        </label>--}}
+{{--                        <!--end::Label-->--}}
+{{--                        <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">--}}
+{{--                            <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>--}}
+{{--                            <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
 
                         <!--begin::Input group-->
                         <div class="d-flex flex-column mb-8 fv-row">
@@ -228,18 +224,19 @@
 
                             <input type="email" class="form-control" placeholder="{{__('Email')}}" name="user[email][address]" value="{{old('user.email.0.address') ?? $user->email}}" />
                         </div>
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">{{__("This Email used In")}}</span>
 
-                            </label>
-                            <!--end::Label-->
-                            <select class="form-select mb-2" data-placeholder="test" name="user[email][type]" >
-                                <option value="HOME" {{old('user.email.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
-                                <option value="WORK"  {{old('user.email.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
-                            </select>
-                        </div>
+{{--                        <div class="d-flex flex-column mb-8 fv-row">--}}
+{{--                            <!--begin::Label-->--}}
+{{--                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
+{{--                                <span class="required">{{__("This Email used In")}}</span>--}}
+
+{{--                            </label>--}}
+{{--                            <!--end::Label-->--}}
+{{--                            <select class="form-select mb-2" data-placeholder="test" name="user[email][type]" >--}}
+{{--                                <option value="HOME" {{old('user.email.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>--}}
+{{--                                <option value="WORK"  {{old('user.email.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
                 {{--         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -265,22 +262,19 @@
 
                     <div class="col-md-6">
 
-
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                            <span class="">{{__('IBAN')}}<span class="text-danger h4"> * </span></span>
-
-                        </label>
-                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}" /><br />
+{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">--}}
+{{--                            <span class="">{{__('IBAN')}}<span class="text-danger h4"> * </span></span>--}}
+{{--                        </label>--}}
+{{--                        <input id="bank_account_iban" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $iban}}" /><br />--}}
 
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                             <span class="">{{__('Account number')}}<span class="text-danger h4"> * </span></span>
-
                         </label>
                         <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.number')}}" />
                         <br>
 
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                            <h4 class="bold">{{__("Bank Statement")}}</h2>
+                            <h2 class="bold">{{__("Bank Statement")}}</h2>
 
                         </label>
 
@@ -291,6 +285,7 @@
                         </label>
                         <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][documents][0][number]" value="{{old('wallet.bank.account.number')}}" />
                        <br>
+
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -300,6 +295,7 @@
                             <!--end::Label-->
                             <input type="file" class="form-control form-control-solid" required  name="wallet[bank][documents][0][images][]"   />
                         </div>
+
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -314,19 +310,16 @@
 
                     </div>
                     <div class="col-md-6">
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
                             <span class="">{{__('Bank Name')}}<span class="text-danger h4"> * </span></span>
-
                         </label>
                         <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')}}" /><br />
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
                             <span class="">{{__('Company Name')}}<span class="text-danger h4"> * </span></span>
-
                         </label>
                         <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][name]" value="{{old('wallet.bank.account.name') ?? $facility_name}}" /><br />
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                             <h2 class="bold">{{__("Terms and conditions")}}</h2>
-
                         </label>
 
                         <div class="form-check" style="margin:10px 0px">

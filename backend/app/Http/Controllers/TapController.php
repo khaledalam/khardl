@@ -113,14 +113,12 @@ class TapController extends Controller
         $user = Auth::user();
         $restaurant_name = Setting::first()->restaurant_name;
         $tenant_id = tenant()->id;
-        $iban = '';
         $facility_name = '';
         tenancy()->central(function () use ($tenant_id, &$iban, &$facility_name) {
             $user = Tenant::find($tenant_id)->user;
-            $iban = $user->traderRegistrationRequirement?->IBAN;
             $facility_name = $user->traderRegistrationRequirement?->facility_name;
         });
-        return view('restaurant.payments_tap_create_business_submit_documents', compact('iban', 'user', 'facility_name', 'restaurant_name'));
+        return view('restaurant.payments_tap_create_business_submit_documents', compact( 'user', 'facility_name', 'restaurant_name'));
     }
 
     public function payments_submit_tap_documents(CreateBusinessRequest $request)
@@ -227,10 +225,23 @@ class TapController extends Controller
         });
         return view('restaurant.payments_tap_create_lead',compact('iban','facility_name','restaurant_name','user'));
     }
-    public function payments_submit_lead(CreateLeadRequest $request){
-
+    public function payments_submit_lead(CreateLeadRequest $request) {
 
         $data = $request->all();
+
+        $tenant_id = tenant()->id;
+        $userBankIban = '';
+        tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
+            $user = Tenant::find($tenant_id)->user;
+            $userBankIban = $user->traderRegistrationRequirement?->IBAN;
+        });
+
+        // Autofill data from our side to simplify the flow
+        $data['user']['name']['title'] = 'Mr';
+        $data['user']['phone'][0]['type'] = 'WORK';
+        $data['user']['email'][0]['type'] = 'WORK';
+        $data['wallet']['bank']['account']['iban'] = $userBankIban;
+
         $restaurant_logo = TapFileAPI::create([
             'file' => $request->file('brand.logo'),
             'purpose' => 'business_logo',

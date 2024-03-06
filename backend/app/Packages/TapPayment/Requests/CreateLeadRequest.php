@@ -16,7 +16,6 @@ class CreateLeadRequest  extends FormRequest
     protected $stopOnFirstFailure = true;
     public function rules()
     {
-
         $rules = [
 
             'brand.name.ar' => 'required|string',
@@ -26,7 +25,7 @@ class CreateLeadRequest  extends FormRequest
             'brand.channel_services.0.address' => 'required|string',
 
             'brand.logo'=>"required|mimes:jpeg,bmp,png,gif,svg,pdf",
-          
+
             'brand.operations.sales.currency' => 'required|string',
 
             'entity.country' => 'required|string',
@@ -34,7 +33,7 @@ class CreateLeadRequest  extends FormRequest
 
             'wallet.bank.name' => 'required|string',
             'wallet.bank.account.number' => 'required|string',
-            'wallet.bank.account.iban' => 'required|string',
+//            'wallet.bank.account.iban' => 'required|string', // fetch from backend reg. step-2
             'wallet.bank.account.name' => 'required|string',
             'wallet.bank.documents' => 'required|array',
             'wallet.bank.documents.*.type' => 'required|string',
@@ -43,17 +42,17 @@ class CreateLeadRequest  extends FormRequest
             'wallet.bank.documents.*.issuing_date' => 'required|date',
             'wallet.bank.documents.*.images' => 'required|array',
             'wallet.bank.documents.*.images.*' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf',
-        
+
             'user.name.last' => 'required|string',
-            'user.name.title' => 'required|string',
+//            'user.name.title' => 'required|string', // fetch from backend reg. step-2
             'user.name.first' => 'required|string',
 
             'user.email.0.address' => 'required|string',
-            'user.email.0.type' => 'required|string',
+//            'user.email.0.type' => 'required|string', // WORK
 
             'user.phone.0.country_code' => 'required|string',
             'user.phone.0.number' => 'required|string',
-            'user.phone.0.type' => 'required|string',
+//            'user.phone.0.type' => 'required|string', // WORK
 
 
             'platforms.*' => 'required|string',
@@ -72,14 +71,11 @@ class CreateLeadRequest  extends FormRequest
                 'entity.license.documents.*.expiry_date' => 'required|date',
 
             ]);
-        } 
+        }
         return $rules;
     }
     public function prepareForValidation()
     {
-       
-        
-
         $defaults = [
             'brand' => [
 
@@ -113,8 +109,6 @@ class CreateLeadRequest  extends FormRequest
                         'address'=> route('home')
                     ]
                 ],
-              
-
             ],
             'wallet' => [
                'bank'=>[
@@ -135,7 +129,7 @@ class CreateLeadRequest  extends FormRequest
                             ]
                         ]
                     ]
-                
+
                ]
             ],
             'entity' => [
@@ -143,7 +137,7 @@ class CreateLeadRequest  extends FormRequest
                 "is_licensed" => ($this->entity['is_licensed'] ?? false)?true:false,
             ],
             'user' => [
-                   
+
                     'phone' => [
                         [
                         'country_code' => '966',
@@ -188,12 +182,8 @@ class CreateLeadRequest  extends FormRequest
                 ]
             ];
         }
-        
+
         $this->replace($defaults);
-
-
-        
-
 
     }
 
