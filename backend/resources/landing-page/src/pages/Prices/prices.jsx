@@ -20,7 +20,7 @@ function Prices() {
         <div className="pt-[60px] max-md:px-[5px] max-md:py-[40px] max-w-full md:max-w-[1250px]" style={{margin:'auto'}}>
           <HeaderSection
             title={t("Prices")}
-            details={`${t("Home")} / ${t("Prices")}`}
+            details=""
           />
         </div>
         <div className="mt-22 mb-[130px]">
