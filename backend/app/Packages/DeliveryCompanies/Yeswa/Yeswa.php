@@ -79,6 +79,7 @@ class Yeswa  extends AbstractDeliveryCompany
         }else if ($response['http_code'] == ResponseHelper::HTTP_BAD_REQUEST && $response['message'] == 'Order duplicated'){
             throw new Exception('Order duplicated');
         }else {
+            \Sentry\captureMessage(json_encode($response['message']));
             return false;
         }
 
