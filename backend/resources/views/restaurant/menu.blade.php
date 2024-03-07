@@ -87,7 +87,7 @@
                                             </ul>
                                             <div class="tab-content mt-3">
                                                 <div class="tab-pane fade show active" id="en">
-                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en">
+                                                    <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
                                                 </div>
                                                 <div class="tab-pane fade" id="ar">
                                                     <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
