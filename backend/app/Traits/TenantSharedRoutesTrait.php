@@ -1,5 +1,6 @@
 <?php
 namespace App\Traits;
+use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 trait TenantSharedRoutesTrait
@@ -77,18 +78,19 @@ trait TenantSharedRoutesTrait
             ],
             'middleware'=>[
                 'restaurantNotLive'
-            ]  
+            ]
         ];
     }
     public static function run($groups){
         return Route::middleware($groups['middleware'])->group(function () use ($groups) {
             foreach ($groups['routes'] as $route => $name) {
                 Route::get($route, static function (Request $request) {
-                    return view('tenant');
+                    $logo = RestaurantStyle::first()?->logo;
+                    return view('tenant', compact('logo'));
                 })->name($name);
             }
         });
     }
-   
+
 
 }
