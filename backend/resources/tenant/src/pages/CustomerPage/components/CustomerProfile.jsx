@@ -8,6 +8,7 @@ import Places from "../../../components/Customers/CustomersEditor/components/Das
 import {updateCustomerAddress,updateProfileSaveStatus,} from "../../../redux/NewEditor/customerSlice"
 import {useSelector, useDispatch} from "react-redux"
 import ConfirmationModal from "../../../components/confirmationModal"
+import {useNavigate} from "react-router-dom";
 
 const CustomerProfile = () => {
   const {t} = useTranslation()
@@ -17,14 +18,13 @@ const CustomerProfile = () => {
   const [phone, setPhone] = useState("96611111111")
   const address = useSelector((state) => state.customerAPI.address?.addressValue)
   const customerAddress = useSelector((state) => state.customerAPI.address)
-  const saveProfileChange = useSelector((state) => state.customerAPI.saveProfileChanges)
 
   const [isDisabled, setIsDisabled] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
 
 
-  const userProfile =
+    const userProfile =
     JSON.parse(localStorage.getItem("userProfileInfo")) || null
 
   const fetchProfileData = async () => {
@@ -112,7 +112,17 @@ const CustomerProfile = () => {
           lng: customerAddress && customerAddress?.lng,
         })
           .then((r) => {
-            toast.success(t("Profile updated successfully"))
+
+
+            if (r?.data?.data?.should_logout) {
+                toast.success(t(r?.data?.message));
+                setTimeout(() => {
+                    window.location.reload();
+                }, 800);
+
+            } else {
+                toast.success(t("Profile updated successfully"));
+            }
           })
           .finally((r) => {
             setIsLoading(false)

@@ -5,6 +5,7 @@ namespace Tests\Feature\Web\Central\Auth\Login;
 use App\Actions\CreateTenantAction;
 use App\Jobs\SendVerifyEmailJob;
 use App\Models\Tenant;
+use App\Models\Tenant\RestaurantUser;
 use App\Models\TraderRequirement;
 use App\Models\User;
 use Illuminate\Support\Facades\Queue;
@@ -170,7 +171,7 @@ class CentralLoginTest extends TestCase
         $user = $this->createUser([
             'email' => $data['email'],
             'password' => $data['password'],
-            'status' => 'inactive'
+            'status' => RestaurantUser::INACTIVE
         ]);
         $past_code = $user->verification_code;
         $response = $this->postJson('/login', $data);

@@ -33,7 +33,7 @@ class RegisterController extends BaseController
     {
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
-        $input['status'] = 'inactive';
+        $input['status'] = RestaurantUser::INACTIVE;
         $user = User::create($input);
         $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
         $success['name'] =  "$user->first_name $user->last_name";
