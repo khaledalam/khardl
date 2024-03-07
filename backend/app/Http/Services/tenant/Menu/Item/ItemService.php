@@ -22,7 +22,14 @@ class ItemService
         // }
 
         // DB::table('categories')->where('id', $id)->where('branch_id', $branchId)->value('user_id') == Auth::user()->id && $request->hasFile('photo')
-        // TODO @todo validate the coming request
+        // TODO @todo validate the remain fields of the coming request
+
+        if (!$request->validate([
+            'item_name_en' => 'required|regex:/^[\p{Arabic}a-zA-Z\p{N}]+\h?[\p{N}\p{Arabic}a-zA-Z]*$/u',
+            'item_name_ar' => 'required|regex:/^[\p{Arabic}a-zA-Z\p{N}]+\h?[\p{N}\p{Arabic}a-zA-Z]*$/u',
+        ])) {
+            return redirect()->back()->with('error', __('Invalid Product Name'));
+        }
         // dd([
         // $request->checkboxInputNameEn,
         // $request->checkboxInputNameAr,

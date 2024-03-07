@@ -36,7 +36,7 @@
 
                             <!--end::Button-->
                             <!--begin::Menu-->
-                            <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
+                            <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
                                 <!--begin::Menu item-->
                                 @foreach ($categories as $category)
                                 <div class="menu-item mb-3">
@@ -72,7 +72,6 @@
                                     <!--end::Add label-->
                                     <form action="{{ route('restaurant.add-category', ['branchId' => $branchId]) }}" method="POST" id="category-submit" enctype="multipart/form-data">
                                         @csrf
-
 
                                         <div id="categoryForm" class="mt-2" style="display: none !important;">
                                             <ul class="nav nav-tabs" id="languageTabs">
@@ -311,27 +310,13 @@
     // script.js
     const addCategoryButton = document.getElementById("addCategoryButton");
     const categoryForm = document.getElementById("categoryForm");
-    const categoryInputForm = document.getElementById("categoryInputForm");
     const categoryNameInput = document.getElementById("categoryName");
     const categoryList = document.getElementById("categoryList");
 
     addCategoryButton.addEventListener("click", () => {
         categoryForm.style.display = "block";
+        categoryList.scrollTo(0, categoryList.scrollHeight);
         categoryNameInput.focus();
-    });
-
-    categoryInputForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const categoryName = categoryNameInput.value;
-        if (categoryName.trim() !== "") {
-            const listItem = document.createElement("li");
-            listItem.textContent = categoryName;
-            categoryList.appendChild(listItem);
-
-            categoryNameInput.value = "";
-            categoryForm.style.display = "none";
-        }
     });
 
 </script>
