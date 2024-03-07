@@ -833,32 +833,47 @@ const ProductItem = ({
                                                                         dropdown_idx
                                                                     ][0]
                                                                         ?.value[0] &&
-                                                                    dropdownItems?.map(
+                                                                    dropdownItems[
+                                                                        dropdown_idx
+                                                                    ]?.map(
                                                                         (
                                                                             item,
                                                                             idx
-                                                                        ) => (
-                                                                            <ProductDetailItem
-                                                                                key={
-                                                                                    idx
-                                                                                }
-                                                                                isDropDown
-                                                                                language={
-                                                                                    language
-                                                                                }
-                                                                                options={
-                                                                                    item
-                                                                                }
-                                                                                onChange={(
-                                                                                    e
-                                                                                ) =>
-                                                                                    handleDropdownChange(
-                                                                                        dropdown_idx,
-                                                                                        idx
-                                                                                    )
-                                                                                }
-                                                                            />
-                                                                        )
+                                                                        ) => {
+                                                                            if (
+                                                                                idx ===
+                                                                                0
+                                                                            ) {
+                                                                                return (
+                                                                                    <ProductDetailItem
+                                                                                        key={
+                                                                                            idx
+                                                                                        }
+                                                                                        isDropDown
+                                                                                        language={
+                                                                                            language
+                                                                                        }
+                                                                                        options={
+                                                                                            dropdownItems[
+                                                                                                dropdown_idx
+                                                                                            ]
+                                                                                        }
+                                                                                        onChange={(
+                                                                                            e
+                                                                                        ) =>
+                                                                                            handleDropdownChange(
+                                                                                                dropdown_idx,
+                                                                                                Number(
+                                                                                                    e
+                                                                                                        .target
+                                                                                                        .value
+                                                                                                )
+                                                                                            )
+                                                                                        }
+                                                                                    />
+                                                                                );
+                                                                            }
+                                                                        }
                                                                     )}
                                                             </div>
                                                         </div>
