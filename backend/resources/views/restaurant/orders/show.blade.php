@@ -219,8 +219,15 @@
                                                          </div>
                                                          <!--end::Avatar-->
                                                          <!--begin::Name-->
-                                                         <span class="text-gray-600 text-hover-khardl">{{$order->user->fullName}}</span>
-                                                         <!--end::Name-->
+                                                         <span class="text-gray-600 text-hover-khardl">{{$order?->manual_order_first_name
+                                                            ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
+                                                            : $order?->user->fullName}}</span>
+
+                                                         @if($order?->manual_order_first_name)
+                                                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i></div>
+                                                         @endif
+
+                                                     <!--end::Name-->
                                                      </div>
                                                  </td>
                                              </tr>

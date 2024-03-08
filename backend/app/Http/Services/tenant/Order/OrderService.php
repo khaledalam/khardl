@@ -58,6 +58,8 @@ class OrderService
             'delivery_type' => $delivery_type->name,
             'shipping_address' => $request->shipping_address,
             'order_notes' => $request->order_notes,
+            'manual_order_first_name' => $request->first_name,
+            'manual_order_last_name' => $request->last_name,
         ]);
         $order = new OrderRepository();
         return $order->create($orderRequest, $cart, $user);

@@ -36,6 +36,8 @@ class OrderRequest extends FormRequest
             'order_notes'=>'nullable',
             'cart'=>'nullable',
             'address'=>'nullable',
+            'manual_order_first_name' => 'nullable',
+            'manual_order_last_name' => 'nullable'
         ];
     }
     public function withValidator($validator)
