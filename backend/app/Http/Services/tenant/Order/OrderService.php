@@ -127,8 +127,8 @@ class OrderService
         $user = User::firstOrCreate(
             ['phone' => $request->phone],
             [
-                'first_name' => 'test', //$request->first_name,
-                'last_name' => 'test', //$request->last_name ?? $request->first_name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name ?? $request->first_name,
                 'address' => $request->shipping_address,
             ]
         );
