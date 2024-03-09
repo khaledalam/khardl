@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
-use App\Http\Controllers\PushNotificationController;
+
+use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\Tenant\RestaurantStyle;
@@ -327,6 +328,8 @@ Route::middleware([
 
 
         Route::middleware('auth:sanctum')->group(function () {
+            Route::post('save-token',[PushNotificationController::class,'saveToken']);
+            Route::post('test-push-notification',[PushNotificationController::class,'testPushNotification']);
             Route::apiResource('categories', CategoryController::class)->only([
                 'index'
             ]);

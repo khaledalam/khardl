@@ -839,6 +839,7 @@
     </div>
     <!--end::Scrolltop-->
 
+@endsection
 @section('js')
     <script>
         var normalChoiceSection = document.getElementById('normalChoiceSection');
@@ -1073,18 +1074,22 @@
 
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+
     <script>
-        // Initialize the timepicker with the existing value or default value
-        flatpickr(".time-24", {
-            enableTime: true,
-            noCalendar: true,
-            enableSeconds: false,
-            dateFormat: "H:i",
-            time_24hr: true
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            // Initialize the timepicker with the existing value or default value
+            flatpickr(".time-24", {
+                enableTime: true,
+                noCalendar: true,
+                enableSeconds: false,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
         });
     </script>
 
 
 @endsection
-@endsection
+

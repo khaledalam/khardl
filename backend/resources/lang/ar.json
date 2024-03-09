@@ -1015,5 +1015,6 @@
     "Order delivery is not enabled in restaurant settings":"توصيل الطلبات غير مفعل في اعدادات المطعم",
     "Reject reason":"سبب الرفض",
     "Reason":"السبب",
-    "Order has been created successfully":"تم انشاء الطلب بنجاح"
+    "Order has been created successfully":"تم انشاء الطلب بنجاح",
+    "token saved successfully.":"تم حفظ رقم الجهاز بنجاح."
 }
