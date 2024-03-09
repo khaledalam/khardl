@@ -72,9 +72,9 @@ class  OrderController extends BaseRepositoryController
                 'status' => $request->status,
                 'reject_or_cancel_reason' => $request->reason
             ]);
-            if($order->isDelivery()){
-                (new AbstractDeliveryCompany)->cancelOtherOrders('All',$order);
-            }
+            // if($order->isDelivery()){
+            //     (new AbstractDeliveryCompany)->cancelOtherOrders('All',$order);
+            // }
         }
         switch ($request->status) {
             case Order::PENDING:
