@@ -11,7 +11,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const selectedCategory = useSelector(
-        (state) => state.categoryAPI.selected_category
+        (state) => state.categoryAPI.selected_category,
     );
     const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
 
@@ -138,7 +138,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                 {Array(
                                     restaurantStyle
                                         ? restaurantStyle?.banner_images?.length
-                                        : 3
+                                        : 3,
                                 )
                                     .fill(1)
                                     .map((_, index) => (
@@ -257,7 +257,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                             selectedCategoryAPI({
                                                 name: category.name,
                                                 id: category.id,
-                                            })
+                                            }),
                                         )
                                     }
                                 />
@@ -269,7 +269,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                 ) : (
                                     <p className="text-2xl font-medium text-center">
                                         {t(
-                                            "No categories to be found at the moment"
+                                            "No categories to be found at the moment",
                                         )}
                                     </p>
                                 )}

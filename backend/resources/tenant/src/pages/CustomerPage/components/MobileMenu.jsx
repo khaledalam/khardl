@@ -1,44 +1,51 @@
-import React, {Fragment} from "react"
-import {RiMenuFoldFill, RiMenuUnfoldFill} from "react-icons/ri"
-import SideNavbar from "./SideNavbar"
-import {useSelector} from "react-redux"
+import React, { Fragment } from "react";
+import { RiMenuFoldFill, RiMenuUnfoldFill } from "react-icons/ri";
+import SideNavbar from "./SideNavbar";
+import { useSelector } from "react-redux";
 
 const MobileMenu = () => {
-  const language = useSelector((state) => state.languageMode.languageMode)
+    const language = useSelector((state) => state.languageMode.languageMode);
 
-  return (
-    <Fragment>
-      <div
-        className={`drawer lg:hidden ${language !== "en" ? "drawer-end" : ""}`}
-      >
-        <input id='mobile_en' type='checkbox' className='drawer-toggle' />
-        <div className='drawer-content'>
-          {/* Page content here */}
-          <label htmlFor='mobile_en' className='lg:hidden drawer-button'>
-            <RiMenuFoldFill
-              size={35}
-              className={`text-neutral-400 cursor-pointer ${
-                language === "en" ? "ml-4" : "mr-4"
-              }`}
-            />
-          </label>{" "}
-        </div>
-        <div className='drawer-side z-50 lg:hidden'>
-          <label
-            htmlFor='mobile_en'
-            aria-label='close sidebar'
-            className='drawer-overlay'
-          ></label>
-          <div className='menu lg:hidden bg-white p-4 w-72 md:w-80 min-h-full text-base-content'>
-            <SideNavbar />
-          </div>
-        </div>
-      </div>
-    </Fragment>
-  )
-}
+    return (
+        <Fragment>
+            <div
+                className={`drawer lg:hidden ${language !== "en" ? "drawer-end" : ""}`}
+            >
+                <input
+                    id="mobile_en"
+                    type="checkbox"
+                    className="drawer-toggle"
+                />
+                <div className="drawer-content">
+                    {/* Page content here */}
+                    <label
+                        htmlFor="mobile_en"
+                        className="lg:hidden drawer-button"
+                    >
+                        <RiMenuFoldFill
+                            size={35}
+                            className={`text-neutral-400 cursor-pointer ${
+                                language === "en" ? "ml-4" : "mr-4"
+                            }`}
+                        />
+                    </label>{" "}
+                </div>
+                <div className="drawer-side z-50 lg:hidden">
+                    <label
+                        htmlFor="mobile_en"
+                        aria-label="close sidebar"
+                        className="drawer-overlay"
+                    ></label>
+                    <div className="menu lg:hidden bg-white p-4 w-72 md:w-80 min-h-full text-base-content">
+                        <SideNavbar />
+                    </div>
+                </div>
+            </div>
+        </Fragment>
+    );
+};
 
-export default MobileMenu
+export default MobileMenu;
 
 /**  
  * 

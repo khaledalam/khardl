@@ -17,7 +17,7 @@ const CartItem = ({
     fetchCartData,
 }) => {
     const [feedback, setFeedback] = useState(
-        cartItem.notes !== null ? cartItem.notes : ""
+        cartItem.notes !== null ? cartItem.notes : "",
     );
     const [qtyCount, setQtyCount] = useState(cartItem.quantity);
     const [loading, setLoading] = useState(false);
@@ -58,7 +58,7 @@ const CartItem = ({
                       console.log(
                           option,
                           "oooooooooooooooooo",
-                          Object.values(option?.en)
+                          Object.values(option?.en),
                       );
 
                       const namesArray =
@@ -114,12 +114,12 @@ const CartItem = ({
         try {
             const response = await AxiosInstance.delete(
                 `/carts/` + cartItemId,
-                {}
+                {},
             );
 
             if (response?.data) {
                 const updatedCart = cartItems.filter(
-                    (item) => item.id !== cartItemId
+                    (item) => item.id !== cartItemId,
                 );
                 dispatch(setCartItemsData(updatedCart));
                 await fetchCartData().then((r) => null);
@@ -219,7 +219,7 @@ const CartItem = ({
                                                         </span>
                                                     )}
                                             </span>
-                                        )
+                                        ),
                                     )}{" "}
                                 )
                             </span>
@@ -230,7 +230,7 @@ const CartItem = ({
                     {t("SAR")} {cartItem.price}{" "}
                     {cartItem.options_price > 0 &&
                         ` + ${cartItem.options_price} ${t("SAR")}  ${t(
-                            "Options"
+                            "Options",
                         )}`}
                 </p>
                 <div className="flex items-center justify-between">
@@ -238,7 +238,7 @@ const CartItem = ({
                         <Feedback
                             value={feedback}
                             placeholder={t(
-                                "Item notes : e.g. Please make the meat medium cook"
+                                "Item notes : e.g. Please make the meat medium cook",
                             )}
                             onChange={(e) => setFeedback(e.target.value)}
                         />

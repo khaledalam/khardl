@@ -1,13 +1,15 @@
-import React, {useContext} from "react"
-import {useSelector, useDispatch} from "react-redux"
-import {changeLanguage} from "../redux/languageSlice"
-import AxiosInstance from "../axios/axios"
+import React, { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { changeLanguage } from "../redux/languageSlice";
+import AxiosInstance from "../axios/axios";
 import worldLangIcon from "../assets/worldLang.svg";
-import {MenuContext} from "react-flexible-sliding-menu";
-import {selectedCategoryAPI, setCategoriesAPI} from "../redux/NewEditor/categoryAPISlice";
+import { MenuContext } from "react-flexible-sliding-menu";
+import {
+    selectedCategoryAPI,
+    setCategoriesAPI,
+} from "../redux/NewEditor/categoryAPISlice";
 
-const LanguageButton = ({id}) => {
-
+const LanguageButton = ({ id }) => {
     const { closeMenu } = useContext(MenuContext);
     const dispatch = useDispatch();
 
@@ -15,7 +17,7 @@ const LanguageButton = ({id}) => {
         return state.restuarantEditorStyle;
     });
     const currentLanguage = useSelector(
-        (state) => state.languageMode.languageMode
+        (state) => state.languageMode.languageMode,
     );
     const buttonText =
         currentLanguage === "en" ? (
@@ -33,22 +35,22 @@ const LanguageButton = ({id}) => {
             const restaurantCategoriesResponse = await AxiosInstance.get(
                 `categories?items&user&branch${
                     id ? `&selected_branch_id=${id}` : ""
-                }`
+                }`,
             );
 
             console.log(
                 "editor rest restaurantCategoriesResponse OuterSidebarNav",
-                restaurantCategoriesResponse.data
+                restaurantCategoriesResponse.data,
             );
             if (restaurantCategoriesResponse.data) {
                 dispatch(
-                    setCategoriesAPI(restaurantCategoriesResponse.data?.data)
+                    setCategoriesAPI(restaurantCategoriesResponse.data?.data),
                 );
                 dispatch(
                     selectedCategoryAPI({
                         name: restaurantCategoriesResponse.data?.data[0].name,
                         id: restaurantCategoriesResponse.data?.data[0].id,
-                    })
+                    }),
                 );
 
                 console.log(">> branch_id >>", branch_id);
@@ -73,26 +75,26 @@ const LanguageButton = ({id}) => {
         });
     };
 
-    return <label
-        htmlFor={id}
-        aria-label="close sidebar"
-        className="w-[90%] mx-auto drawer-button rounded-lg p-1 flex items-center justify-center cursor-pointer"
-    >
-        <div
-            onClick={handleLanguageChange}
-            className="w-full mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center "
-            style={{
-                borderColor:
-                restuarantStyle?.categoryDetail_cart_color,
-            }}
+    return (
+        <label
+            htmlFor={id}
+            aria-label="close sidebar"
+            className="w-[90%] mx-auto drawer-button rounded-lg p-1 flex items-center justify-center cursor-pointer"
         >
-            <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
-                <img src={worldLangIcon} alt="language" />
+            <div
+                onClick={handleLanguageChange}
+                className="w-full mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center "
+                style={{
+                    borderColor: restuarantStyle?.categoryDetail_cart_color,
+                }}
+            >
+                <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
+                    <img src={worldLangIcon} alt="language" />
+                </div>
+                <h3 className=""> {buttonText}</h3>
             </div>
-            <h3 className=""> {buttonText}</h3>
-        </div>
-    </label>;
-
-}
+        </label>
+    );
+};
 
 export default LanguageButton;

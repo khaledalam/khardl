@@ -20,7 +20,7 @@ import Cropper from "react-easy-crop";
 import getCroppedImg from "./cropImage";
 const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
     const restuarantEditorStyle = useSelector(
-        (state) => state.restuarantEditorStyle
+        (state) => state.restuarantEditorStyle,
     );
     const [isVideo, setIsVideo] = useState(false);
     const { t } = useTranslation();
@@ -81,7 +81,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
             const croppedImage = await getCroppedImg(
                 uncroppedImage,
                 croppedAreaPixels,
-                rotation
+                rotation,
             );
             console.log("donee", { croppedImage });
             setUncroppedImage(null);
@@ -98,13 +98,13 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
         }
     };
     const selectedCategory = useSelector(
-        (state) => state.categoryAPI.selected_category
+        (state) => state.categoryAPI.selected_category,
     );
     const cartItemsCount = useSelector(
-        (state) => state.categoryAPI.cartItemsCount
+        (state) => state.categoryAPI.cartItemsCount,
     );
     const uploadLogo = useSelector(
-        (state) => state.restuarantEditorStyle.logoUpload
+        (state) => state.restuarantEditorStyle.logoUpload,
     );
 
     const [uploadSingleBanner, setUploadSingleBanner] = useState(null);
@@ -149,7 +149,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     selectedCategoryAPI({
                         name: categories[0]?.name,
                         id: categories && categories[0]?.id,
-                    })
+                    }),
                 );
             }
         } else {
@@ -157,7 +157,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                 selectedCategoryAPI({
                     name: categories[0]?.name,
                     id: categories && categories[0]?.id,
-                })
+                }),
             );
         }
     }, [language, dispatch, categories]);
@@ -227,7 +227,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
     const filterCategory =
         categories && categories.length > 0
             ? categories?.filter(
-                  (category) => category.id === selectedCategory.id
+                  (category) => category.id === selectedCategory.id,
               )
             : [{ name: "Product", items: productPlaceHolders }];
 
@@ -354,8 +354,8 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             backgroundImage: uploadSingleBanner
                                 ? `url(${uploadSingleBanner})`
                                 : banner_image
-                                ? `url(${banner_image?.url})`
-                                : `url(${bannerPlaceholder})`,
+                                  ? `url(${banner_image?.url})`
+                                  : `url(${bannerPlaceholder})`,
                             borderRadius: banner_shape === "sharp" ? 0 : 12,
                             backgroundSize: "cover",
                             backgroundRepeat: "no-repeat",
@@ -384,8 +384,8 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                         uploadSingleBanner
                                             ? uploadSingleBanner
                                             : banner_image
-                                            ? banner_image?.url
-                                            : ImgPlaceholder
+                                              ? banner_image?.url
+                                              : ImgPlaceholder
                                     }
                                     alt={""}
                                     className="w-full h-full object-cover"
@@ -422,10 +422,10 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                         category_alignment === "left"
                             ? "order-1 w-[25%]"
                             : category_alignment === "right"
-                            ? "order-2 w-[25%]"
-                            : category_alignment === "center"
-                            ? "w-full"
-                            : "w-[25%]"
+                              ? "order-2 w-[25%]"
+                              : category_alignment === "center"
+                                ? "w-full"
+                                : "w-[25%]"
                     } `}
                 >
                     <div
@@ -458,7 +458,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                                 selectedCategoryAPI({
                                                     name: category.name,
                                                     id: category.id,
-                                                })
+                                                }),
                                             )
                                         }
                                         textColor={text_color}
@@ -486,10 +486,10 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             category_alignment === "left"
                                 ? "order-2 w-[75%]"
                                 : category_alignment === "right"
-                                ? "order-1 w-[75%]"
-                                : category_alignment === "center"
-                                ? "w-full"
-                                : "w-[75%]"
+                                  ? "order-1 w-[75%]"
+                                  : category_alignment === "center"
+                                    ? "w-full"
+                                    : "w-[75%]"
                         } ${
                             categoryDetail_shape === "sharp" ? "" : "rounded-lg"
                         } bg-white p-8`}
@@ -520,7 +520,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                 {filterCategory &&
                                     filterCategory[0]?.items
                                         .filter(
-                                            (item) => item.availability === 1
+                                            (item) => item.availability === 1,
                                         )
                                         .slice(0, 2)
                                         .map((product, idx) => (
@@ -612,10 +612,10 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     socialMediaIcons_alignment === "center"
                         ? "items-center justify-center"
                         : socialMediaIcons_alignment === "left"
-                        ? "items-center justify-start"
-                        : socialMediaIcons_alignment === "right"
-                        ? "items-center justify-end"
-                        : ""
+                          ? "items-center justify-start"
+                          : socialMediaIcons_alignment === "right"
+                            ? "items-center justify-end"
+                            : ""
                 }`}
             >
                 <div className="flex items-center gap-5">
@@ -646,10 +646,10 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     phoneNumber_alignment === "center"
                         ? "items-center justify-center"
                         : phoneNumber_alignment === "left"
-                        ? "items-center justify-start"
-                        : phoneNumber_alignment === "right"
-                        ? "items-center justify-end"
-                        : ""
+                          ? "items-center justify-start"
+                          : phoneNumber_alignment === "right"
+                            ? "items-center justify-end"
+                            : ""
                 }`}
             >
                 <h3
