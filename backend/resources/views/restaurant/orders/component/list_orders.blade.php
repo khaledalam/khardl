@@ -144,7 +144,7 @@
                                             ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
                                             : $order?->user->fullName}}
                                         @if($order?->manual_order_first_name)
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i></div>
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i>
                                         @endif
                                     </a>
                                     <!--end::Title-->
