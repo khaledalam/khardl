@@ -1,18 +1,30 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
-const ProductDetailItem = ({
-    price,
-    label,
-    onChange,
-    language,
-    id,
-    name,
-    isCheckbox,
-    isRadio,
-    isDropDown,
-    options,
-}) => {
+
+const ProductDetailItem = forwardRef(function ProductDetailItem(
+    {
+        price,
+        label,
+        onChange,
+        language,
+        id,
+        name,
+        isCheckbox,
+        isRadio,
+        isDropDown,
+        options,
+    },
+    ref,
+) {
     const { t } = useTranslation();
+
+    const [selectValue, setSelectValue] = useState("");
+
+    const handleDropdownChange = (e) => {
+        setSelectValue(e.target.value);
+        onChange(e);
+    };
+
     return (
         <Fragment>
             {isCheckbox && (
@@ -60,9 +72,10 @@ const ProductDetailItem = ({
             )}
             {isDropDown && (
                 <select
+                    ref={ref}
                     className="select w-full max-w-[90%] select-bordered cursor-pointer"
-                    onChange={onChange}
-                    defaultValue=""
+                    onChange={handleDropdownChange}
+                    value={selectValue}
                 >
                     <option disabled value="">
                         select option
@@ -78,6 +91,6 @@ const ProductDetailItem = ({
             )}
         </Fragment>
     );
-};
+});
 
 export default ProductDetailItem;
