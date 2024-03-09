@@ -180,8 +180,9 @@
     </div>
     <!--end::Root-->
     <!--end::Body-->
+@endsection
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Check if preparation_time_delivery exists
@@ -198,5 +199,4 @@
         });
     });
     </script>
-@endsection
 @endsection

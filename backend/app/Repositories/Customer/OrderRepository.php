@@ -47,6 +47,7 @@ class OrderRepository
                 'status' => Order::PENDING,
                 'lat'=>$user->lat ?? null,
                 'lng'=>$user->lng ?? null,
+                'address'=>$user->address ?? null,
                 'manual_order_first_name' => $request->manual_order_first_name,
                 'manual_order_last_name' => $request->manual_order_last_name
             ]);

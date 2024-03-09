@@ -2,6 +2,7 @@
 
 namespace App\Packages\DeliveryCompanies\Cervo;
 
+use App\Models\Tenant;
 use App\Models\Tenant\Order;
 use App\Utils\ResponseHelper;
 use App\Models\Tenant\PaymentMethod;
@@ -29,9 +30,13 @@ class Cervo  extends AbstractDeliveryCompany
     ];
 
     public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool{
-       
+
         $branch = $order->branch;
-        
+        $tenant_id = tenant()->id;
+        $restaurant = tenancy()->central(function()use($tenant_id){
+            return Tenant::find($tenant_id);
+        });
+        $url = tenant_route($restaurant->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'webhook-client-delivery-companies').'?delivery_company=Cervo';
         if(env('APP_ENV') == 'local'){
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
@@ -47,21 +52,23 @@ class Cervo  extends AbstractDeliveryCompany
         }else {
             $token = $this->delivery_company->api_key;
             $data = [
-                "customer"=>$customer->address ,
+                "customer"=>$order?->manual_order_first_name
+                    ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
+                    : $order?->user->fullName,
                 "order_id"=>$order->id,
                 "id"=>$order->id,
                 "lng"=>$order->lat ?? '',
                 "lat"=> $order->lng ?? '',
                 "storelat"=>$branch->lat,
                 "storelng"=>$branch->lng ,
-                "address"=>$customer->address,
+                "address"=>$order->address ?? '',
             ];
         }
         if($duplicated){
             $data['id'] = "Duplicated $order->id";
             $data['order_id'] = "Duplicated $order->id";
         }
-      
+
 
         $data += [
 
@@ -73,11 +80,11 @@ class Cervo  extends AbstractDeliveryCompany
             "ispaid"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "NO PAID": "PAID",
             "status"=>self::STATUS_ORDER['NEW'],
             // nullable
-            "callback"=>route('webhook-client-delivery-companies').'?delivery_company=Cervo',
+            "callback"=>$url,
             "notes"=>"",
         ];
 
-        
+
         $response = $this->sendSync(
             url:   $this->delivery_company->api_url.'/order',
             token: $token,
@@ -93,10 +100,10 @@ class Cervo  extends AbstractDeliveryCompany
             \Sentry\captureMessage(json_encode($response['message']));
             return false;
         }
-     
+
     }
     public function cancelOrder($id): bool{
-        try {   
+        try {
             if(env('APP_ENV') == 'local'){
                 $token = env('CERVO_SECRET_API_KEY','');
             }else {
@@ -105,7 +112,7 @@ class Cervo  extends AbstractDeliveryCompany
             $response = $this->sendSync(
                 url: $this->delivery_company->api_url . '/cancelorder',
                 token: $token,
-                data:  [],  
+                data:  [],
                 method: 'get'
             );
             if($response['http_code'] == ResponseHelper::HTTP_OK ){
@@ -114,7 +121,7 @@ class Cervo  extends AbstractDeliveryCompany
                 \Sentry\captureMessage("Cervo cannot cancel order #$id for restaurant #id".tenant()->id);
                 return false;
             }
-            
+
         } catch (\Exception $e) {
             \Sentry\captureException($e);
             return false;
@@ -126,19 +133,19 @@ class Cervo  extends AbstractDeliveryCompany
             $order = Order::where('cervo_ref',$payload['order_id'])->first();
 
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-  
+
                 if($payload['tracking']){
                     $order->update([
                         'tracking_url'=> $payload['tracking']
-                    ]); 
+                    ]);
                 }
                 if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER']){
                     $order->update([
                         'status'=>Order::ACCEPTED,
                         'deliver_by'=> class_basename(static::class),
                     ]);
-                    $this->cancelOtherOrders("cervo",$order); 
-                   
+                    $this->cancelOtherOrders("cervo",$order);
+
                 }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
                     $order->update([
                         'status'=>Order::COMPLETED

@@ -54,7 +54,7 @@ class Yeswa  extends AbstractDeliveryCompany
             "pickup_phone"=> $branch->phone,
             "pickup_address"=> $branch->address,
             "dropoff_phone"=> $customer->phone,
-            "dropoff_address"=> $customer->address,
+            "dropoff_address"=> $order->address ?? '',
             "order_amount"=> $order->total,
             
             "payment_method"=>  self::CORRESPOND_METHODS[$order->payment_method->name]  ,
