@@ -11,6 +11,7 @@
         "doctrine/dbal": "^3.7",
         "guzzlehttp/guzzle": "^7.7",
         "kreait/firebase-php": "^7.9",
+        "kreait/laravel-firebase": "^5.7",
         "laravel-validation-rules/country-codes": "^4.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",

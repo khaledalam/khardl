@@ -196,7 +196,8 @@ return [
         "confirm_password" => "تاكيد كلمة المرور",
         "reason" => "السبب",
         "status" => "الحالة",
-        'url' => "الرابط"
+        'url' => "الرابط",
+        "token" => "رمز الجهاز"
 
     ],
     'values' => [
