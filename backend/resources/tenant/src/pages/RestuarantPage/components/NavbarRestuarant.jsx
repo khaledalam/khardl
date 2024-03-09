@@ -25,7 +25,7 @@ const NavbarRestuarant = () => {
         toggleMenu();
     };
     const cartItemsCount = useSelector(
-        (state) => state.categoryAPI.cartItemsCount
+        (state) => state.categoryAPI.cartItemsCount,
     );
     const fetchCartData = async () => {
         if (isLoggedIn == true) {
@@ -97,9 +97,9 @@ const NavbarRestuarant = () => {
                         restaurantStyle?.logo_alignment === "center"
                             ? " flex items-center justify-center"
                             : restaurantStyle?.logo_alignment === t("Left") ||
-                              restaurantStyle?.logo_alignment === "left"
-                            ? "items-center justify-start"
-                            : "items-center justify-end"
+                                restaurantStyle?.logo_alignment === "left"
+                              ? "items-center justify-start"
+                              : "items-center justify-end"
                     }`}
                 >
                     <div
@@ -108,9 +108,9 @@ const NavbarRestuarant = () => {
                             restaurantStyle?.logo_shape === t("Rounded")
                                 ? "rounded-full"
                                 : restaurantStyle?.logo_shape === "sharp" ||
-                                  restaurantStyle?.logo_shape === t("Sharp")
-                                ? "rounded-none"
-                                : ""
+                                    restaurantStyle?.logo_shape === t("Sharp")
+                                  ? "rounded-none"
+                                  : ""
                         }`}
                     >
                         {restaurantStyle.logo ? (

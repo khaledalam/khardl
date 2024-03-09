@@ -1,14 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const logoSlice = createSlice({
-  name: 'logo',
-  initialState: null,
-  reducers: {
-    setLogo: (state, action) => {
-      return action.payload;
+    name: "logo",
+    initialState: null,
+    reducers: {
+        setLogo: (state, action) => {
+            return action.payload;
+        },
+        clearLogo: () => null,
     },
-    clearLogo: () => null,
-  },
 });
 
 export const { setLogo, clearLogo } = logoSlice.actions;

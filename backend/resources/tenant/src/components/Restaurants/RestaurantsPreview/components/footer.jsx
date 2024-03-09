@@ -1,13 +1,28 @@
-import React from 'react';
-import { BsTwitter, BsMessenger, BsWhatsapp, BsInstagram, BsFacebook, BsLinkedin, BsTiktok, BsYoutube, BsTelegram } from 'react-icons/bs';
-import { FaYoutube } from 'react-icons/fa';
-import {useSelector} from "react-redux";
+import React from "react";
+import {
+    BsTwitter,
+    BsMessenger,
+    BsWhatsapp,
+    BsInstagram,
+    BsFacebook,
+    BsLinkedin,
+    BsTiktok,
+    BsYoutube,
+    BsTelegram,
+} from "react-icons/bs";
+import { FaYoutube } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 function Footer() {
-    const styleData = useSelector((state) => state.styleDataRestaurant.styleDataRestaurant);
+    const styleData = useSelector(
+        (state) => state.styleDataRestaurant.styleDataRestaurant,
+    );
 
-    const icons = styleData?.social_medias ? styleData?.social_medias : JSON.parse(sessionStorage.getItem('icons'));
-    const phoneNumber = styleData?.phone_number || sessionStorage.getItem('phoneNumber');
+    const icons = styleData?.social_medias
+        ? styleData?.social_medias
+        : JSON.parse(sessionStorage.getItem("icons"));
+    const phoneNumber =
+        styleData?.phone_number || sessionStorage.getItem("phoneNumber");
     const iconComponents = {
         BsWhatsapp,
         BsMessenger,
@@ -22,12 +37,10 @@ function Footer() {
     };
 
     return (
-        <div className='w-[100%] bg-[#000000] text-white'>
-            <div className='w-[100%] flex flex-wrap justify-center items-center gap-6 items-cnter py-2 px-6'>
-                <div className='text-xl text-center mb-2'>
-                    {phoneNumber}
-                </div>
-                <div className='flex items-cnter flex-wrap gap-2'>
+        <div className="w-[100%] bg-[#000000] text-white">
+            <div className="w-[100%] flex flex-wrap justify-center items-center gap-6 items-cnter py-2 px-6">
+                <div className="text-xl text-center mb-2">{phoneNumber}</div>
+                <div className="flex items-cnter flex-wrap gap-2">
                     {icons?.map((icon) => {
                         const IconComponent = iconComponents[icon.icon];
                         return (
@@ -43,8 +56,7 @@ function Footer() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Footer;
-

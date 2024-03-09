@@ -22,11 +22,11 @@ export const RestuarantEditor = () => {
     const categories = useSelector((state) => state.categoryAPI.categories);
 
     const isSidebarCollapse = useSelector(
-        (state) => state.restuarantEditorStyle.collapse_sidebar
+        (state) => state.restuarantEditorStyle.collapse_sidebar,
     );
     const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
     const template = useSelector(
-        (state) => state.restuarantEditorStyle.template
+        (state) => state.restuarantEditorStyle.template,
     );
 
     const handleSidebarCollapse = () => {
@@ -35,20 +35,19 @@ export const RestuarantEditor = () => {
 
     const fetchResStyleData = async () => {
         try {
-            const restaurantStyleResponse = await AxiosInstance.get(
-                `restaurant-style`
-            );
+            const restaurantStyleResponse =
+                await AxiosInstance.get(`restaurant-style`);
 
             if (restaurantStyleResponse.data) {
                 dispatch(
                     changeStyleDataRestaurant(
-                        restaurantStyleResponse.data?.data
-                    )
+                        restaurantStyleResponse.data?.data,
+                    ),
                 );
                 dispatch(
                     changeRestuarantEditorStyle(
-                        restaurantStyleResponse.data?.data
-                    )
+                        restaurantStyleResponse.data?.data,
+                    ),
                 );
             }
             setIsLoading(false);
@@ -65,16 +64,16 @@ export const RestuarantEditor = () => {
             const restaurantCategoriesResponse = await AxiosInstance.get(
                 `categories?items&user&branch${
                     branch_id ? `&selected_branch_id=${branch_id}` : ""
-                }`
+                }`,
             );
 
             console.log(
                 "editor rest restaurantCategoriesResponse RestuarantEditor",
-                restaurantCategoriesResponse.data
+                restaurantCategoriesResponse.data,
             );
             if (restaurantCategoriesResponse.data) {
                 dispatch(
-                    setCategoriesAPI(restaurantCategoriesResponse.data?.data)
+                    setCategoriesAPI(restaurantCategoriesResponse.data?.data),
                 );
 
                 console.log(">> branch_id >>", branch_id);
@@ -93,10 +92,10 @@ export const RestuarantEditor = () => {
 
     useEffect(() => {
         fetchCategoriesData().then(() =>
-            console.log("fetched categories successfully")
+            console.log("fetched categories successfully"),
         );
         fetchResStyleData().then(() =>
-            console.log("fetched restuarant style successfully")
+            console.log("fetched restuarant style successfully"),
         );
     }, []);
 

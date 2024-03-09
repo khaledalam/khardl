@@ -39,6 +39,7 @@ class Order extends Model
         'delivery_cost',
         'lat',
         'lng',
+        'address',
         'manual_order_first_name',
         'manual_order_last_name'
     ];

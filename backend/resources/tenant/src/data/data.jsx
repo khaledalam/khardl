@@ -1,9 +1,9 @@
-import ClientLogo1 from '../assets/ClientLogo1.webp';
-import ClientLogo2 from '../assets/ClientLogo2.webp';
-import ClientLogo3 from '../assets/ClientLogo3.webp';
+import ClientLogo1 from "../assets/ClientLogo1.webp";
+import ClientLogo2 from "../assets/ClientLogo2.webp";
+import ClientLogo3 from "../assets/ClientLogo3.webp";
 
-import PersonalImage from '../assets/image.webp';
-import Logo from '../assets/Logo.webp';
+import PersonalImage from "../assets/image.webp";
+import Logo from "../assets/Logo.webp";
 
 export const branches = [
     {
@@ -17,8 +17,8 @@ export const branches = [
     {
         branch_id: 3,
         branch_name: "Cake",
-    }
-]
+    },
+];
 
 export const categories = [
     {
@@ -45,8 +45,8 @@ export const categories = [
         category_id: 3,
         branch_id: 2,
         category_name: "Drinks",
-    }
-]
+    },
+];
 
 export const items = [
     {
@@ -65,7 +65,7 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
         checkbox_input_prices: [16, 18, 28],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
     },
     {
         id: 2,
@@ -83,7 +83,7 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup"],
         checkbox_input_prices: [9, 10],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
     },
     {
         id: 3,
@@ -101,7 +101,7 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
         checkbox_input_prices: [16, 18, 28],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
     },
     {
         id: 4,
@@ -119,7 +119,7 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
         checkbox_input_prices: [16, 18, 28],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
     },
     {
         id: 5,
@@ -137,7 +137,7 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup"],
         checkbox_input_prices: [9, 10],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
     },
     {
         id: 6,
@@ -155,9 +155,9 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup"],
         checkbox_input_prices: [9, 10],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
     },
-]
+];
 /*
 
 {
@@ -185,8 +185,6 @@ export const items = [
  }
   */
 
-
-
 /* Customers Data */
 
 export const OrdersCustomer = [
@@ -199,9 +197,9 @@ export const OrdersCustomer = [
         Total: "120",
         DateAdded: "9.9.2023",
         number_of_orders: 4,
-        delivary_price:30,
-        services_price:20,
-        pruducts_price:240,
+        delivary_price: 30,
+        services_price: 20,
+        pruducts_price: 240,
         items: [
             {
                 id: "1",
@@ -210,9 +208,10 @@ export const OrdersCustomer = [
                 price: 30,
                 image: PersonalImage,
                 number: 2,
-            }
+            },
         ],
-        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+        address:
+            "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia.",
     },
     {
         id: 2,
@@ -223,9 +222,9 @@ export const OrdersCustomer = [
         Total: "130",
         DateAdded: "2.9.2023",
         number_of_orders: 7,
-        delivary_price:30,
-        services_price:20,
-        pruducts_price:240,
+        delivary_price: 30,
+        services_price: 20,
+        pruducts_price: 240,
         items: [
             {
                 id: "1",
@@ -234,9 +233,10 @@ export const OrdersCustomer = [
                 price: 30,
                 image: PersonalImage,
                 number: 2,
-            }
+            },
         ],
-        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+        address:
+            "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia.",
     },
     {
         id: 3,
@@ -247,9 +247,9 @@ export const OrdersCustomer = [
         Total: "118",
         DateAdded: "7.9.2023",
         number_of_orders: 2,
-        delivary_price:30,
-        services_price:20,
-        pruducts_price:240,
+        delivary_price: 30,
+        services_price: 20,
+        pruducts_price: 240,
         items: [
             {
                 id: "1",
@@ -266,9 +266,10 @@ export const OrdersCustomer = [
                 price: 30,
                 image: PersonalImage,
                 number: 2,
-            }
+            },
         ],
-        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+        address:
+            "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia.",
     },
     {
         id: 4,
@@ -279,9 +280,9 @@ export const OrdersCustomer = [
         Total: "200",
         DateAdded: "8.9.2023",
         number_of_orders: 5,
-        delivary_price:30,
-        services_price:20,
-        pruducts_price:240,
+        delivary_price: 30,
+        services_price: 20,
+        pruducts_price: 240,
         items: [
             {
                 id: "1",
@@ -298,9 +299,10 @@ export const OrdersCustomer = [
                 price: 18,
                 image: PersonalImage,
                 number: 2,
-            }
+            },
         ],
-        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+        address:
+            "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia.",
     },
     {
         id: 5,
@@ -311,9 +313,9 @@ export const OrdersCustomer = [
         Total: "150",
         DateAdded: "4.9.2023",
         number_of_orders: 12,
-        delivary_price:30,
-        services_price:20,
-        pruducts_price:240,
+        delivary_price: 30,
+        services_price: 20,
+        pruducts_price: 240,
         items: [
             {
                 id: "1",
@@ -322,9 +324,10 @@ export const OrdersCustomer = [
                 price: 30,
                 image: PersonalImage,
                 number: 2,
-            }
+            },
         ],
-        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
+        address:
+            "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia.",
     },
     {
         id: 6,
@@ -335,9 +338,9 @@ export const OrdersCustomer = [
         Total: "150",
         DateAdded: "4.9.2023",
         number_of_orders: 8,
-        delivary_price:30,
-        services_price:20,
-        pruducts_price:240,
+        delivary_price: 30,
+        services_price: 20,
+        pruducts_price: 240,
         items: [
             {
                 id: "1",
@@ -346,90 +349,91 @@ export const OrdersCustomer = [
                 price: 30,
                 image: PersonalImage,
                 number: 2,
-            }
+            },
         ],
-        address: "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia."
-    }
-]
+        address:
+            "Unit 1/23 Hastings Road, Melbourne 3000, Victoria, Australia.",
+    },
+];
 export const clients = [
-    { 
+    {
         client_id: 1,
         client_image: ClientLogo1,
-        client_link:""
+        client_link: "",
     },
-    { 
+    {
         client_id: 2,
         client_image: ClientLogo2,
-        client_link:""
+        client_link: "",
     },
-    { 
+    {
         client_id: 3,
         client_image: ClientLogo3,
-        client_link:""
+        client_link: "",
     },
-    { 
+    {
         client_id: 4,
         client_image: ClientLogo1,
-        client_link:""
+        client_link: "",
     },
-    { 
+    {
         client_id: 5,
         client_image: ClientLogo2,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 6,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 7,
         client_image: ClientLogo1,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 8,
         client_image: ClientLogo2,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 9,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 10,
         client_image: ClientLogo2,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 11,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 12,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 13,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 14,
         client_image: ClientLogo3,
-        client_link:""
+        client_link: "",
     },
-    { 
+    {
         client_id: 15,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link: "",
     },
-    { 
+    {
         client_id: 16,
         client_image: ClientLogo3,
-        client_link:"" 
-    }
-  ];
+        client_link: "",
+    },
+];
