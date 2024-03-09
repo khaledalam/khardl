@@ -59,7 +59,7 @@ class Cervo  extends AbstractDeliveryCompany
                 "lat"=> $order->lng ?? '',
                 "storelat"=>$branch->lat,
                 "storelng"=>$branch->lng ,
-                "address"=>$customer->address,
+                "address"=>$order->address ?? '',
             ];
         }
         if($duplicated){

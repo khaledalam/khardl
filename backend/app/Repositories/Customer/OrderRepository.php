@@ -47,6 +47,7 @@ class OrderRepository
                 'status' => Order::PENDING,
                 'lat'=>$user->lat ?? null,
                 'lng'=>$user->lng ?? null,
+                'address'=>$user->address ?? null,
             ]);
             if($discount&&$coupon){
                 $user->coupons()->attach($coupon->id);

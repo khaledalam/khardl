@@ -39,7 +39,8 @@ class Order extends Model
         'reject_or_cancel_reason',
         'delivery_cost',
         'lat',
-        'lng'
+        'lng',
+        'address'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [
