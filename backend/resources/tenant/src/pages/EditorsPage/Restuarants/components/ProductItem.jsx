@@ -1,4 +1,11 @@
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, {
+    Fragment,
+    useCallback,
+    useEffect,
+    useState,
+    useRef,
+    useReducer,
+} from "react";
 import imgCart from "../../../../assets/headerCartIcon.svg";
 import imgCartWhite from "../../../../assets/cartWhiteIcon.svg";
 import imgHotFire from "../../../../assets/hot-fire.svg";
@@ -57,6 +64,7 @@ const ProductItem = ({
     dropdown_input_titles,
     dropdown_input_names,
 }) => {
+    const dropdDownRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const language = useSelector((state) => state.languageMode.languageMode);
@@ -271,12 +279,15 @@ const ProductItem = ({
 
     const finalPrice = qtyCount * totalPrice;
     function closeModal() {
+        if (dropdDownRef.current != null) {
+            dropdDownRef.current.value = "";
+        }
         document.getElementById(id).close();
     }
 
     const handleAddToCart = async () => {
         try {
-            setSpinner(true);
+            //setSpinner(true);
             let payload = {
                 item_id: id,
                 quantity: qtyCount,
@@ -288,21 +299,20 @@ const ProductItem = ({
             };
 
             const response = await AxiosInstance.post(`/carts`, payload);
-
-            console.log("response ", response);
             closeModal();
+            console.log("response ", response);
             if (response?.data) {
                 toast.success(`${t("Item added to cart")}`);
                 dispatch(getCartItemsCount(response?.data.data.items.length));
-                setGotoCart(true);
-                setSpinner(false);
+                //setGotoCart(true);
+                //setSpinner(false);
             }
         } catch (error) {
-            setSpinner(false);
+            //setSpinner(false);
             console.log(error);
 
             toast.error(error.response?.data?.message);
-            setGotoCart(false);
+            //setGotoCart(false);
         }
         dispatch(addItemToCart("props.name"));
     };
@@ -497,13 +507,14 @@ const ProductItem = ({
                             : "h-[550px]"
                     } flex flex-col justify-end`}
                 >
-                    <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-6 top-6">
-                            ✕
-                        </button>
-                        {/* <IoCloseCircleOutline size={22}/> */}
-                    </form>
+                    {/* if there is a button in form, it will close the modal */}
+                    <button
+                        className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-6 top-6"
+                        onClick={closeModal}
+                    >
+                        ✕
+                    </button>
+                    {/* <IoCloseCircleOutline size={22}/> */}
                     {isLoggedIn ? (
                         <Fragment>
                             {spinner && (
@@ -846,6 +857,9 @@ const ProductItem = ({
                                                                             ) {
                                                                                 return (
                                                                                     <ProductDetailItem
+                                                                                        ref={
+                                                                                            dropdDownRef
+                                                                                        }
                                                                                         key={
                                                                                             idx
                                                                                         }
