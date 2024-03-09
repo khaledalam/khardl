@@ -1016,5 +1016,6 @@
     "Reject reason":"سبب الرفض",
     "Reason":"السبب",
     "Order has been created successfully":"تم انشاء الطلب بنجاح",
-    "token saved successfully.":"تم حفظ رقم الجهاز بنجاح."
+    "token saved successfully.":"تم حفظ رقم الجهاز, بنجاح.",
+    "New order has been created for customer :name.":"تم انشاء طلب لعميل :name"
 }
