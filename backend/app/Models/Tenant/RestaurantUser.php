@@ -112,6 +112,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return substr($this->phone, 3);
     }
+    public function getCountUnreadNotificationsAttribute()
+    {
+        $countUnRead = $this->notifications()->orderByDesc('created_at')->where('read_at', null)->count();
+
+        return $countUnRead;
+    }
     // public function roles()
     // {
     //     return $this->belongsToMany(Role::class,'roles');
@@ -121,6 +127,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->whereHas('roles',function($q){
             return $q->where('name','Driver');
+        });
+    }
+    public function scopeWorkers()
+    {
+        return $this->whereHas('roles',function($q){
+            return $q->where('name','Worker');
         });
     }
     public function scopeActiveDrivers()

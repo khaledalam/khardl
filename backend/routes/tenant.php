@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
 
+use App\Http\Controllers\API\Tenant\Notification\NotificationController;
 use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
@@ -328,8 +329,21 @@ Route::middleware([
 
 
         Route::middleware('auth:sanctum')->group(function () {
+            //Notifications
+            //External notification (Push)
             Route::post('save-token',[PushNotificationController::class,'saveToken']);
             Route::post('test-push-notification',[PushNotificationController::class,'testPushNotification']);
+            //Internal notification
+            Route::prefix('notifications')->group(function () {
+                Route::controller(NotificationController::class)->group(function () {
+                    Route::get('get-all', 'index');
+                    Route::post('/read-notification/{id}','show');
+                    Route::post('/read-all','markAllAsRead');
+                });
+                Route::controller(ProfileController::class)->group(function () {
+                    Route::post('change-password', 'changePassword');
+                });
+            });
             Route::apiResource('categories', CategoryController::class)->only([
                 'index'
             ]);
