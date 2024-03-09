@@ -2,8 +2,11 @@
 
 namespace App\Repositories\Customer;
 
+use App\Enums\Admin\NotificationTypeEnum;
 use App\Models\Tenant\OrderStatusLogs;
+use App\Models\Tenant\RestaurantUser;
 use App\Models\Tenant\Setting;
+use App\Notifications\NotificationAction;
 use Exception;
 use App\Models\Tenant\Order;
 use App\Traits\APIResponseTrait;
@@ -14,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\OrderItem;
+use Illuminate\Support\Facades\Notification;
 
 class OrderRepository
 {
@@ -22,7 +26,6 @@ class OrderRepository
     {
         DB::beginTransaction();
         try {
-
             $user= $user ?? Auth::user();
             $subtotal = $cart->subTotal();
             $delivery = DeliveryType::where('name',$request->delivery_type)->first();
@@ -51,6 +54,7 @@ class OrderRepository
                 'manual_order_first_name' => $request->manual_order_first_name,
                 'manual_order_last_name' => $request->manual_order_last_name
             ]);
+            $this->sendNotifications($user, $order);
             if($discount&&$coupon){
                 $user->coupons()->attach($coupon->id);
             }
@@ -112,5 +116,16 @@ class OrderRepository
             'total'=>$total,
             'notes' => $notes
         ]);
+    }
+    public function sendNotifications($user, $order)
+    {
+        //Internal notification
+        $type = NotificationTypeEnum::OrderCreated;
+        $message = __('New order has been created for customer :name.',['name' => $user->full_name]);
+        //Send notification to all worker
+        $workers = RestaurantUser::workers()
+        ->where('branch_id',$order->branch_id)
+        ->get();
+        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
     }
 }
