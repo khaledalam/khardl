@@ -660,9 +660,6 @@
                 const lngInput = document.getElementById('lng' + branchId);
                 latInput.value = latLng.lat();
                 lngInput.value = latLng.lng();
-                const locationInput = document.getElementById('location');
-                locationInput.value = `${lngInput.value }, ${latInput.value }`;
-
             }
 
             function updateLocation(branchId) {
