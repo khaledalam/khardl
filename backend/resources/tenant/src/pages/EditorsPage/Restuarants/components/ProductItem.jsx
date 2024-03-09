@@ -437,7 +437,7 @@ const ProductItem = ({
                                     : ""
                             }`}
                         >
-                            {caloryInfo} Kcal
+                            {`${caloryInfo} ${t("Kcal")}`}
                         </p>
                     </div>
                     <div
