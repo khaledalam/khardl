@@ -1,1 +1,1 @@
-export * from "./Restuarants"
+export * from "./Restuarants";

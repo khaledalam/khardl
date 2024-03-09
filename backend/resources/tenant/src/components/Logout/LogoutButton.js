@@ -1,18 +1,16 @@
-import React, {useContext} from 'react'
-import { useNavigate } from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
-import { logout } from '../../redux/auth/authSlice'
-import { useAuthContext } from '../context/AuthContext'
-import { toast } from 'react-toastify';
-import {HTTP_NOT_AUTHENTICATED} from "../../config";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/auth/authSlice";
+import { useAuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import { HTTP_NOT_AUTHENTICATED } from "../../config";
 import logoutIcon from "../../assets/logout.svg";
-import {MenuContext} from "react-flexible-sliding-menu";
-import {useTranslation} from "react-i18next";
-
+import { MenuContext } from "react-flexible-sliding-menu";
+import { useTranslation } from "react-i18next";
 
 const LogoutButton = () => {
-
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
 
     const { setStatusCode } = useAuthContext();
@@ -43,24 +41,23 @@ const LogoutButton = () => {
     };
 
     return isLoggedIn ? (
-            <div className="w-full mb-20 cursor-pointer">
-                <div
-                    onClick={handleLogout}
-                    className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer"
-                    style={{
-                        borderColor:
-                        restuarantStyle?.categoryDetail_cart_color,
-                    }}
-                >
-                    <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
-                        <img src={logoutIcon} alt="home" />
-                    </div>
-                    <h3 className="">{t("Logout")}</h3>
+        <div className="w-full mb-20 cursor-pointer">
+            <div
+                onClick={handleLogout}
+                className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer"
+                style={{
+                    borderColor: restuarantStyle?.categoryDetail_cart_color,
+                }}
+            >
+                <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
+                    <img src={logoutIcon} alt="home" />
                 </div>
+                <h3 className="">{t("Logout")}</h3>
             </div>
-        ) : (
-            <div></div>
-        )
-}
+        </div>
+    ) : (
+        <div></div>
+    );
+};
 
 export default LogoutButton;

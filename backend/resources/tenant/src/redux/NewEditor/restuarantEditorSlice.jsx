@@ -250,7 +250,7 @@ const restuarantEditorSlice = createSlice({
         updateSelectedIconInput: (state, action) => {
             const { id, link } = action.payload;
             const iconToUpdate = state.selectedSocialIcons.find(
-                (icon) => icon.id === id
+                (icon) => icon.id === id,
             );
             if (iconToUpdate) {
                 iconToUpdate.link = link;
@@ -259,16 +259,16 @@ const restuarantEditorSlice = createSlice({
         mediaIconsToSelected: (state, action) => {
             const iconId = action.payload;
             const iconToMove = state.mediaCollection.find(
-                (icon) => icon.id === iconId
+                (icon) => icon.id === iconId,
             );
             if (iconToMove) {
                 state.mediaCollection = state.mediaCollection.filter(
-                    (icon) => icon.id !== iconToMove.id
+                    (icon) => icon.id !== iconToMove.id,
                 );
 
                 if (
                     state.selectedSocialIcons.some(
-                        (social) => social.id !== iconToMove.id
+                        (social) => social.id !== iconToMove.id,
                     )
                 ) {
                     state.selectedSocialIcons.push(iconToMove);
@@ -278,11 +278,11 @@ const restuarantEditorSlice = createSlice({
         moveSelectedIconsToMedia: (state, action) => {
             const iconIdToMove = action.payload;
             const iconToMove = state.selectedSocialIcons.find(
-                (icon) => icon.id === iconIdToMove
+                (icon) => icon.id === iconIdToMove,
             );
             if (iconToMove) {
                 state.selectedSocialIcons = state.selectedSocialIcons.filter(
-                    (icon) => icon.id !== iconIdToMove
+                    (icon) => icon.id !== iconIdToMove,
                 );
                 state.mediaCollection.push(iconToMove);
             }

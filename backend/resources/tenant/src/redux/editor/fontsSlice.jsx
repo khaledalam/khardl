@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const fontsSlice = createSlice({
-    name: 'fonts',
+    name: "fonts",
     initialState: {
         fontsList: [],
-        selectedFontFamily: 'cairo',
-        selectedFontWeight: 'normal',
-        selectedFontSize: '15px',
+        selectedFontFamily: "cairo",
+        selectedFontWeight: "normal",
+        selectedFontSize: "15px",
     },
     reducers: {
         setFontsList: (state, action) => {
@@ -24,5 +24,10 @@ const fontsSlice = createSlice({
     },
 });
 
-export const { setSelectedFontFamily, setSelectedFontWeight, setFontsList ,setSelectedFontSize} = fontsSlice.actions;
+export const {
+    setSelectedFontFamily,
+    setSelectedFontWeight,
+    setFontsList,
+    setSelectedFontSize,
+} = fontsSlice.actions;
 export default fontsSlice.reducer;

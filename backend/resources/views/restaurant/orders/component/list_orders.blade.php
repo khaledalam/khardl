@@ -139,7 +139,14 @@
                                 <!--end::Avatar-->
                                 <div class="ms-5">
                                     <!--begin::Title-->
-                                    <a href="#" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">{{$order->user->fullName}}</a>
+                                    <a href="{{route('restaurant.branch.order',['order'=>$order->id])}}" class="text-gray-800 text-hover-khardl fs-5 fw-bolder">
+                                        {{$order?->manual_order_first_name
+                                            ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
+                                            : $order?->user->fullName}}
+                                        @if($order?->manual_order_first_name)
+                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="{{__('Manual order name')}}"></i>
+                                        @endif
+                                    </a>
                                     <!--end::Title-->
                                 </div>
                             </div>
@@ -239,7 +246,7 @@
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-khardl fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a  href="{{route('restaurant.branch.order',['order'=>$order->id])}}" class="menu-link px-3">{{ __('View') }}</a>
+                                    <a href="{{route('restaurant.branch.order',['order'=>$order->id])}}" class="menu-link px-3">{{ __('View') }}</a>
                                 </div>
                                 <!--end::Menu item-->
                                 <!--begin::Menu item-->

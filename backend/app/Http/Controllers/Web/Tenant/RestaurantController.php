@@ -528,17 +528,23 @@ class RestaurantController extends BaseController
 //             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
 //         }
 
-        $categories = Category::
-            when($user->isWorker(), function (Builder $query, string $role) use ($user, $branchId) {
-                if ($branchId) {
-                    if ($branchId != $user->branch->id)
-                        return;
-                }
+        $categories = [];
+        if ($user->isWorker()) {
+            $categories = Category::
+                when($user->isWorker(), function (Builder $query, string $role) use ($user, $branchId) {
+                    if ($branchId) {
+                        if ($branchId != $user->branch->id)
+                            return;
+                    }
 
-                $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
-            })
+                    $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
+                })
+                ->get();
+        } else if($user->isRestaurantOwner()) {
+            $categories = Category::where('branch_id', $branchId ?? $user->branch->id)
+                ->get();
+        }
 
-            ->get();
         if ($branchId) {
             $branch = Branch::find($branchId);
         } else {
@@ -563,7 +569,8 @@ class RestaurantController extends BaseController
         $categories = Category::where('branch_id', $branchId)
 //            ->orderByRaw("id = $id DESC")
             ->get();
-        $selectedCategory = $categories->where('id', $id)->first();
+
+        $selectedCategory = Category::where('id',$id)->first();
         $items = Item::
             when($user->isWorker(), function (Builder $query, string $role) use ($user, $branchId) {
                 if ($branchId) {
@@ -573,7 +580,7 @@ class RestaurantController extends BaseController
 
                 $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
             })
-            ->where('category_id', $selectedCategory->id)
+            ->where('category_id', $selectedCategory?->id)
             ->where('branch_id', $branchId)
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'DESC')
