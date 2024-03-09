@@ -2,6 +2,7 @@
 
 namespace App\Packages\DeliveryCompanies\Cervo;
 
+use App\Models\Tenant;
 use App\Models\Tenant\Order;
 use App\Utils\ResponseHelper;
 use App\Models\Tenant\PaymentMethod;
@@ -31,7 +32,11 @@ class Cervo  extends AbstractDeliveryCompany
     public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool{
        
         $branch = $order->branch;
-        
+        $tenant_id = tenant()->id;
+        $restaurant = tenancy()->central(function()use($tenant_id){
+            return Tenant::find($tenant_id);
+        });
+        $url = tenant_route($restaurant->primary_domain->domain.'.'.config("tenancy.central_domains")[0],'webhook-client-delivery-companies').'?delivery_company=Cervo';
         if(env('APP_ENV') == 'local'){
             $token = env('CERVO_SECRET_API_KEY','');
             $data = [
@@ -47,7 +52,7 @@ class Cervo  extends AbstractDeliveryCompany
         }else {
             $token = $this->delivery_company->api_key;
             $data = [
-                "customer"=>$customer->address ,
+                "customer"=>$customer->fullName ,
                 "order_id"=>$order->id,
                 "id"=>$order->id,
                 "lng"=>$order->lat ?? '',
@@ -62,7 +67,7 @@ class Cervo  extends AbstractDeliveryCompany
             $data['order_id'] = "Duplicated $order->id";
         }
       
-
+      
         $data += [
 
             "date"=>now()->format('Y-m-d H:i:s'),
@@ -73,7 +78,7 @@ class Cervo  extends AbstractDeliveryCompany
             "ispaid"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "NO PAID": "PAID",
             "status"=>self::STATUS_ORDER['NEW'],
             // nullable
-            "callback"=>route('webhook-client-delivery-companies').'?delivery_company=Cervo',
+            "callback"=>$url,
             "notes"=>"",
         ];
 
