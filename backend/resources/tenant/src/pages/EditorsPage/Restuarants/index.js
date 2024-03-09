@@ -1,1 +1,1 @@
-export * from "./RestuarantEditor"
+export * from "./RestuarantEditor";

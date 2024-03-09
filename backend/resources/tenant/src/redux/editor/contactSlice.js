@@ -1,25 +1,59 @@
-import { createSlice } from '@reduxjs/toolkit';
-
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     icons: [
-        { id: 1, name: 'Whatsapp', icon: 'BsWhatsapp', color: 'Whatsapp', Link: '' },
-      
+        {
+            id: 1,
+            name: "Whatsapp",
+            icon: "BsWhatsapp",
+            color: "Whatsapp",
+            Link: "",
+        },
     ],
     more_icons: [
-        { id: 4, name: 'Telegram', icon: 'BsTelegram', color: 'Telegram', Link: '' },
-        { id: 5, name: 'Youtube', icon: 'FaYoutube', color: 'Youtube', Link: '' },
-        { id: 6, name: 'Instagram', icon: 'BsInstagram', color: 'Instagram', Link: '' },
-        { id: 7, name: 'Facebook', icon: 'BsFacebook', color: 'Facebook', Link: '' },
-        { id: 8, name: 'LinkedIn', icon: 'BsLinkedin', color: 'LinkedIn', Link: '' },
-        { id: 9, name: 'TikTok', icon: 'BsTiktok', color: 'TikTok', Link: '' },
+        {
+            id: 4,
+            name: "Telegram",
+            icon: "BsTelegram",
+            color: "Telegram",
+            Link: "",
+        },
+        {
+            id: 5,
+            name: "Youtube",
+            icon: "FaYoutube",
+            color: "Youtube",
+            Link: "",
+        },
+        {
+            id: 6,
+            name: "Instagram",
+            icon: "BsInstagram",
+            color: "Instagram",
+            Link: "",
+        },
+        {
+            id: 7,
+            name: "Facebook",
+            icon: "BsFacebook",
+            color: "Facebook",
+            Link: "",
+        },
+        {
+            id: 8,
+            name: "LinkedIn",
+            icon: "BsLinkedin",
+            color: "LinkedIn",
+            Link: "",
+        },
+        { id: 9, name: "TikTok", icon: "BsTiktok", color: "TikTok", Link: "" },
     ],
     selectedIconId: 1,
-    phoneNumber: '+96600000000',
+    phoneNumber: "+96600000000",
 };
 
 const contactSlice = createSlice({
-    name: 'contact',
+    name: "contact",
     initialState,
     reducers: {
         updateIconInput: (state, action) => {
@@ -41,21 +75,31 @@ const contactSlice = createSlice({
         },
         removeIcon: (state, action) => {
             const iconIdToRemove = action.payload;
-            state.icons = state.icons.filter(icon => icon.id !== iconIdToRemove);
+            state.icons = state.icons.filter(
+                (icon) => icon.id !== iconIdToRemove,
+            );
         },
         moveFromMoreToIcons: (state, action) => {
             const iconIdToMove = action.payload;
-            const iconToMove = state.more_icons.find(icon => icon.id === iconIdToMove);
+            const iconToMove = state.more_icons.find(
+                (icon) => icon.id === iconIdToMove,
+            );
             if (iconToMove) {
-                state.more_icons = state.more_icons.filter(icon => icon.id !== iconIdToMove);
+                state.more_icons = state.more_icons.filter(
+                    (icon) => icon.id !== iconIdToMove,
+                );
                 state.icons.push(iconToMove);
             }
         },
         moveFromIconsToMore: (state, action) => {
             const iconIdToMove = action.payload;
-            const iconToMove = state.icons.find(icon => icon.id === iconIdToMove);
+            const iconToMove = state.icons.find(
+                (icon) => icon.id === iconIdToMove,
+            );
             if (iconToMove) {
-                state.icons = state.icons.filter(icon => icon.id !== iconIdToMove);
+                state.icons = state.icons.filter(
+                    (icon) => icon.id !== iconIdToMove,
+                );
                 state.more_icons.push(iconToMove);
             }
         },
@@ -66,8 +110,9 @@ export const {
     updateIconInput,
     setSelectedIconId,
     updatePhoneNumber,
-    addIcon, removeIcon,
+    addIcon,
+    removeIcon,
     moveFromMoreToIcons,
-    moveFromIconsToMore
+    moveFromIconsToMore,
 } = contactSlice.actions;
 export default contactSlice.reducer;

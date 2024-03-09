@@ -42,7 +42,7 @@ const OrderTable = ({ data }) => {
                                         key={order.id}
                                         onClick={() =>
                                             navigate(
-                                                `/dashboard?orderId=${order.id}`
+                                                `/dashboard?orderId=${order.id}`,
                                             )
                                         }
                                         className="h-[80px] bg-white my-4 hover:shadow-lg hover:border hover:border-[var(--customer)] cursor-pointer"
@@ -101,16 +101,16 @@ const OrderTable = ({ data }) => {
                                             <div
                                                 className={`${
                                                     order.status.startsWith(
-                                                        "accepted"
+                                                        "accepted",
                                                     ) ||
                                                     order.status.startsWith(
-                                                        "ready"
+                                                        "ready",
                                                     ) ||
                                                     order.status.includes(
-                                                        "receive"
+                                                        "receive",
                                                     ) ||
                                                     order.status.includes(
-                                                        "complete"
+                                                        "complete",
                                                     )
                                                         ? "bg-[var(--accepted)]"
                                                         : "bg-[var(--rejected)]"
@@ -135,7 +135,7 @@ const OrderTable = ({ data }) => {
                                             <div className="flex items-center gap-2">
                                                 <span className="text-[1rem]">
                                                     {new Date(
-                                                        order?.created_at
+                                                        order?.created_at,
                                                     ).toLocaleString("en-US", {
                                                         day: "2-digit",
                                                         month: "2-digit",
@@ -145,14 +145,14 @@ const OrderTable = ({ data }) => {
                                                 <span className="text-xs text-[var(--customer)]">
                                                     {order?.created_at &&
                                                         new Date(
-                                                            order.created_at
+                                                            order.created_at,
                                                         ).toLocaleString(
                                                             "en-US",
                                                             {
                                                                 hour: "numeric",
                                                                 minute: "numeric",
                                                                 hour12: true,
-                                                            }
+                                                            },
                                                         )}
                                                 </span>
                                             </div>

@@ -15,18 +15,18 @@ const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
     const dispatch = useDispatch();
 
     const cartItemsCount = useSelector(
-        (state) => state.categoryAPI.cartItemsCount
+        (state) => state.categoryAPI.cartItemsCount,
     );
     const categories = useSelector((state) => state.categoryAPI.categories);
     const restuarantEditorStyle = useSelector(
-        (state) => state.restuarantEditorStyle
+        (state) => state.restuarantEditorStyle,
     );
     const handleGotoCart = () => {
         navigate("/cart");
     };
 
     const uploadLogo = useSelector(
-        (state) => state.restuarantEditorStyle.logoUpload
+        (state) => state.restuarantEditorStyle.logoUpload,
     );
     const clearLogo = () => {
         dispatch(logoUpload(null));
@@ -99,10 +99,10 @@ const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
                         logo_alignment === "center"
                             ? "items-center justify-center"
                             : logo_alignment === "left"
-                            ? "items-center justify-start"
-                            : logo_alignment === "right"
-                            ? "items-center justify-end"
-                            : ""
+                              ? "items-center justify-start"
+                              : logo_alignment === "right"
+                                ? "items-center justify-end"
+                                : ""
                     } `}
                 >
                     <div
@@ -126,8 +126,8 @@ const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
                                     uploadLogo
                                         ? uploadLogo
                                         : logo
-                                        ? logo
-                                        : ImgPlaceholder
+                                          ? logo
+                                          : ImgPlaceholder
                                 }
                                 alt={""}
                                 style={{

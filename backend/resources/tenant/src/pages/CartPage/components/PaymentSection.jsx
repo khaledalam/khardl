@@ -49,7 +49,7 @@ const PaymentSection = ({
     const [paymentMethod, setPaymentMethod] = useState(
         paymentMethods && paymentMethods[0]
             ? paymentMethods[0]?.name
-            : "Cash on Delivery"
+            : "Cash on Delivery",
     );
     const [deliveryCost, setDeliveryCost] = useState(0);
     const [activeDeliveryType, setActiveDeliveryType] = useState("pickup");
@@ -72,7 +72,7 @@ const PaymentSection = ({
                     notes: notes,
                     couponCode: couponCode,
                     token_id: response.id,
-                }
+                },
             );
 
             if (redirect.data) {
@@ -93,15 +93,15 @@ const PaymentSection = ({
                       (total, item) =>
                           total +
                           (item.price + item.options_price) * item.quantity,
-                      0
-                  )
+                      0,
+                  ),
               ) +
                   deliveryCost -
                   (couponDiscountValue && couponDiscountValue.discount
                       ? couponDiscountValue.discount
                       : cartCoupon
-                      ? cartCoupon
-                      : 0)
+                        ? cartCoupon
+                        : 0)
             : 0;
     };
     const priceSummary = cartItems
@@ -109,8 +109,8 @@ const PaymentSection = ({
               cartItems.reduce(
                   (total, item) =>
                       total + (item.price + item.options_price) * item.quantity,
-                  0
-              )
+                  0,
+              ),
           )
         : 0;
 
@@ -148,7 +148,7 @@ const PaymentSection = ({
                     });
                     if (cartResponse.data) {
                         toast.success(
-                            `${t("Order has been created successfully")}`
+                            `${t("Order has been created successfully")}`,
                         );
                         navigate(`/dashboard#orders`);
                         // navigate(`/dashboard?OrderId=${cartResponse.data?.order?.id}#orders`);
@@ -164,7 +164,7 @@ const PaymentSection = ({
                         delivery_type: deliveryType,
                         notes: notes,
                         couponCode: couponCode,
-                    }
+                    },
                 );
 
                 if (cartResponse.data) {
@@ -273,7 +273,7 @@ const PaymentSection = ({
                             addressValue:
                                 customerAddress &&
                                 customerAddress?.addressValue,
-                        })
+                        }),
                     );
                     toast.success(t("Profile updated successfully"));
                 })
@@ -483,7 +483,7 @@ const PaymentSection = ({
                                                     }
                                                     onChange={() => {
                                                         handlePaymentMethodChange(
-                                                            method
+                                                            method,
                                                         );
                                                     }}
                                                 />
@@ -512,7 +512,7 @@ const PaymentSection = ({
                                         }`}
                                         onClick={() => {
                                             handleDeliveryTypeChange(
-                                                deliveryType
+                                                deliveryType,
                                             );
                                         }}
                                     >
@@ -530,16 +530,16 @@ const PaymentSection = ({
                                                         deliveryType.name
                                                             .toLowerCase()
                                                             .includes(
-                                                                "delivery"
+                                                                "delivery",
                                                             )
                                                             ? BikeIcon
                                                             : deliveryType.name
-                                                                  .toLowerCase()
-                                                                  .includes(
-                                                                      "pickup"
-                                                                  )
-                                                            ? shopIcon
-                                                            : ""
+                                                                    .toLowerCase()
+                                                                    .includes(
+                                                                        "pickup",
+                                                                    )
+                                                              ? shopIcon
+                                                              : ""
                                                     }
                                                     alt={deliveryType.name}
                                                     className="w-full h-full object-contain"
@@ -548,7 +548,7 @@ const PaymentSection = ({
                                             <div className="flex flex-col">
                                                 <h3 className="text-[16px] font-medium capitalize">
                                                     {t(
-                                                        `${deliveryType.name.toLowerCase()}`
+                                                        `${deliveryType.name.toLowerCase()}`,
                                                     )}
                                                 </h3>
                                                 <p className="text-[14px]">
@@ -696,7 +696,7 @@ const PaymentSection = ({
                                     <Feedback
                                         imgUrl={couponIcon}
                                         placeholder={t(
-                                            "Type your coupon code here"
+                                            "Type your coupon code here",
                                         )}
                                         value={appliedCoupon?.code}
                                         onChange={(e) =>
@@ -726,8 +726,8 @@ const PaymentSection = ({
                                             if (couponCode === "") {
                                                 toast.error(
                                                     `${t(
-                                                        "Please Enter Coupon Code"
-                                                    )}`
+                                                        "Please Enter Coupon Code",
+                                                    )}`,
                                                 );
                                             } else {
                                                 handleCouponCodeValidity();
