@@ -123,7 +123,9 @@ class OrderRepository
         $type = NotificationTypeEnum::OrderCreated;
         $message = __('New order has been created for customer :name.',['name' => $user->full_name]);
         //Send notification to all worker
-        $workers = RestaurantUser::workers()->get();
+        $workers = RestaurantUser::workers()
+        ->where('branch_id',$order->branch_id)
+        ->get();
         if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
     }
 }
