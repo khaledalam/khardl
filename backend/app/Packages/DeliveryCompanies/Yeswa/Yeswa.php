@@ -92,13 +92,19 @@ class Yeswa  extends AbstractDeliveryCompany
             $order = Order::where('yeswa_ref',$payload['data']['trip_ref'])->firstOrFail();
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
 
-
-                if($data['track']){
+                $tracking_url = null;
+                if(isset($data['track'])){
+                    $tracking_url = $data['track'];
+                }
+                if(isset($data['tracking_url'])){
+                    $tracking_url = $data['tracking_url'];
+                }
+                if($tracking_url){
                     $order->update([
-                        'tracking_url'=> $data['track']
+                        'tracking_url'=>$tracking_url
                     ]);
                 }
-                if($data['job_status']  == 'ACCEPTED'){
+                if($data['job_status']  == 'ACCEPTED' || $data['job_status']  == 'STARTED' ||$data['job_status']  == 'ARRIVED' || $data['job_status']  == 'ASSIGNED' ){
                     $order->update([
                         'status'=>Order::ACCEPTED,
                         'deliver_by'=> class_basename(static::class),
