@@ -90,11 +90,13 @@ class Yeswa  extends AbstractDeliveryCompany
 
     }
     public function processWebhook(array $payload){
+       
         $data = isset($payload['data']["deliveries"][0])?$payload['data']["deliveries"][0]:null;
+    
         if(isset($data['job_status'])  ){
             $order = Order::where('yeswa_ref',$payload['data']['trip_ref'])->firstOrFail();
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-
+            
                 $tracking_url = null;
                 if(isset($data['track'])){
                     $tracking_url = $data['track'];
@@ -104,8 +106,8 @@ class Yeswa  extends AbstractDeliveryCompany
                 }
                 if(isset($payload['driver_phone']) && isset($payload['driver_name']) ){
                     $order->update([
-                        'driver_name'=> $payload['driver_name'],
-                        'driver_phone'=> $payload['driver_phone']
+                        'driver_name'=> $payload['data']['driver_name'],
+                        'driver_phone'=> $payload['data']['driver_phone']
                     ]); 
                 }
                 if($tracking_url){
