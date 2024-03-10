@@ -64,7 +64,7 @@ const ProductItem = ({
     dropdown_input_titles,
     dropdown_input_names,
 }) => {
-    const dropdDownRef = useRef(null);
+    const dropdDownRef = useRef([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const language = useSelector((state) => state.languageMode.languageMode);
@@ -279,42 +279,60 @@ const ProductItem = ({
 
     const finalPrice = qtyCount * totalPrice;
     function closeModal() {
-        if (dropdDownRef.current != null) {
-            dropdDownRef.current.value = "";
-        }
+        dropdDownRef.current.forEach((value, index) => {
+            if (dropdDownRef.current[index] != null) {
+                dropdDownRef.current[index].resetDropdown();
+            }
+        });
+
         document.getElementById(id).close();
     }
 
     const handleAddToCart = async () => {
-        try {
-            //setSpinner(true);
-            let payload = {
-                item_id: id,
-                quantity: qtyCount,
-                branch_id: branch_id,
-                notes: feedback,
-                selectedCheckbox: selectedCheckbox,
-                selectedRadio: selectedRadio,
-                selectedDropdown: selectedDropdown,
-            };
-
-            const response = await AxiosInstance.post(`/carts`, payload);
-            closeModal();
-            console.log("response ", response);
-            if (response?.data) {
-                toast.success(`${t("Item added to cart")}`);
-                dispatch(getCartItemsCount(response?.data.data.items.length));
-                //setGotoCart(true);
-                //setSpinner(false);
+        let passMandatoryDrodowns = true;
+        dropdown_required.map((isRequired, index) => {
+            if (isRequired === "true" && isNaN(selectedDropdown[index])) {
+                passMandatoryDrodowns = false;
             }
-        } catch (error) {
-            //setSpinner(false);
-            console.log(error);
+        });
 
-            toast.error(error.response?.data?.message);
-            //setGotoCart(false);
+        if (passMandatoryDrodowns) {
+            try {
+                //setSpinner(true);
+                let payload = {
+                    item_id: id,
+                    quantity: qtyCount,
+                    branch_id: branch_id,
+                    notes: feedback,
+                    selectedCheckbox: selectedCheckbox,
+                    selectedRadio: selectedRadio,
+                    selectedDropdown: selectedDropdown,
+                };
+
+                const response = await AxiosInstance.post(`/carts`, payload);
+                closeModal();
+                console.log("response ", response);
+                if (response?.data) {
+                    toast.success(`${t("Item added to cart")}`);
+                    dispatch(
+                        getCartItemsCount(response?.data.data.items.length),
+                    );
+                    //setGotoCart(true);
+                    //setSpinner(false);
+                }
+                setSelectedDropdown([]);
+            } catch (error) {
+                //setSpinner(false);
+                console.log(error);
+
+                toast.error(error.response?.data?.message);
+                setSelectedDropdown([]);
+                //setGotoCart(false);
+            }
+            dispatch(addItemToCart("props.name"));
+        } else {
+            toast.error("Select all mandatory options");
         }
-        dispatch(addItemToCart("props.name"));
     };
 
     // check is logged in or not
@@ -445,9 +463,10 @@ const ProductItem = ({
                                       : textAlign === t("Right")
                                         ? "text-right"
                                         : ""
-                            }`}
+                            } flex`}
                         >
-                            {`${caloryInfo} ${t("Kcal")}`}
+                            {caloryInfo}
+                            <img src={imgHotFire} alt="hot" className="px-1" />
                         </p>
                     </div>
                     <div
@@ -857,8 +876,13 @@ const ProductItem = ({
                                                                             ) {
                                                                                 return (
                                                                                     <ProductDetailItem
-                                                                                        ref={
-                                                                                            dropdDownRef
+                                                                                        ref={(
+                                                                                            el,
+                                                                                        ) =>
+                                                                                            (dropdDownRef.current[
+                                                                                                dropdown_idx
+                                                                                            ] =
+                                                                                                el)
                                                                                         }
                                                                                         key={
                                                                                             idx

@@ -1,4 +1,9 @@
-import React, { Fragment, useState, forwardRef } from "react";
+import React, {
+    Fragment,
+    useState,
+    forwardRef,
+    useImperativeHandle,
+} from "react";
 import { useTranslation } from "react-i18next";
 
 const ProductDetailItem = forwardRef(function ProductDetailItem(
@@ -19,6 +24,12 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
     const { t } = useTranslation();
 
     const [selectValue, setSelectValue] = useState("");
+
+    useImperativeHandle(ref, () => ({
+        resetDropdown() {
+            setSelectValue("");
+        },
+    }));
 
     const handleDropdownChange = (e) => {
         setSelectValue(e.target.value);
