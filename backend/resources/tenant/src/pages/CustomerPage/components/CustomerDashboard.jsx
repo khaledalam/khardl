@@ -25,6 +25,8 @@ const CustomerDashboard = () => {
         fetchProfileData().then((r) => null);
     }, []);
 
+    console.log("hererererer");
+
     const fetchProfileData = async () => {
         if (isLoading) return;
         setIsLoading(true);
@@ -75,7 +77,8 @@ const CustomerDashboard = () => {
     //   setIsViewMore(false)
     // }, [])
 
-    const slicedOrderData = ordersList ? ordersList.slice(0, orderLength) : [];
+    let slicedOrderData = ordersList ? ordersList.slice(0, orderLength) : [];
+
     return (
         <div className="p-6">
             <div className="flex items-center gap-3">

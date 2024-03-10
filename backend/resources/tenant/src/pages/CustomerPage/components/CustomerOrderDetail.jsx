@@ -12,17 +12,21 @@ const CustomerOrderDetail = ({ orderId }) => {
     const ordersList = useSelector((state) => state?.customerAPI?.ordersList);
     const language = useSelector((state) => state.languageMode.languageMode);
 
-    const singleOrder =
-        orderId && ordersList?.length > 0
-            ? ordersList.find((order) => order.id == orderId)
+    let singleOrder =
+        (orderId && ordersList?.length > 0)
+            ? ordersList.find((order) => {
+
+                console.log("order.id == orderId", order.id,  orderId)
+                return order.id == orderId;
+            })
             : null;
 
-    console.log("SASFAS", singleOrder);
+    console.log("SASFAS orderId ordersList", singleOrder, orderId, ordersList);
 
     const fetchOrderData = async () => {
         try {
             const ordersResponse = await AxiosInstance.get(
-                `orders?items&item=${orderId}`,
+                `order?id=${orderId}`,
             );
 
             console.log("ordersResponse >>>", ordersResponse.data);

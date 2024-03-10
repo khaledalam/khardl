@@ -39,6 +39,8 @@ export const CustomerPage = () => {
 
     let orderId = searchParam.get("orderId");
 
+    console.log("chParam.get(orde >>", orderId);
+
     useEffect(() => {
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         setIsMobile(isMobile);
@@ -105,6 +107,10 @@ export const CustomerPage = () => {
         fetchCardsData().then(() => {});
     }, []);
 
+
+
+    console.log("showOrderDetail :> ", showOrderDetail);
+
     return (
         <div>
             <NavbarCustomer
@@ -125,18 +131,18 @@ export const CustomerPage = () => {
                         isMobile ? "flex-[100%] w-full" : "flex-[80%]"
                     } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
                 >
-                    {activeNavItem === TABS.dashboard && !showOrderDetail ? (
+                    {t(activeNavItem) === TABS.dashboard && !showOrderDetail ? (
                         <CustomerDashboard />
-                    ) : activeNavItem === TABS.orders && !showOrderDetail ? (
+                    ) : t(activeNavItem) === TABS.orders && !showOrderDetail ? (
                         <CustomerOrder />
-                    ) : activeNavItem === TABS.profile && !showOrderDetail ? (
+                    ) : t(activeNavItem) === TABS.profile && !showOrderDetail ? (
                         <CustomerProfile />
-                    ) : activeNavItem === TABS.payment && !showOrderDetail ? (
+                    ) : t(activeNavItem) === TABS.payment && !showOrderDetail ? (
                         <CustomerPayment cardsList={cardsList} />
                     ) : (
                         <></>
                     )}
-                    {showOrderDetail && (
+                    {showOrderDetail && orderId && (
                         <CustomerOrderDetail orderId={orderId} />
                     )}
                 </div>
