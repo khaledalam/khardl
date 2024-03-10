@@ -8,6 +8,9 @@ use App\Utils\ResponseHelper;
 use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Http;
 use App\Models\Tenant\RestaurantUser;
+use App\Enums\Admin\NotificationTypeEnum;
+use App\Notifications\NotificationAction;
+use Illuminate\Support\Facades\Notification;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 
 
@@ -80,7 +83,7 @@ class Cervo  extends AbstractDeliveryCompany
             "ispaid"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "NO PAID": "PAID",
             "status"=>self::STATUS_ORDER['NEW'],
             // nullable
-            "callback"=>$url,
+            "callback"=>'https://9e10-156-207-75-53.ngrok-free.app/delivery-webhook?delivery_company=Cervo',
             "notes"=>"",
         ];
 
@@ -150,6 +153,7 @@ class Cervo  extends AbstractDeliveryCompany
                     $order->update([
                         'status'=>Order::COMPLETED
                     ]);
+                    $this->sendNotification($order);
                 }else if (
                     $payload['order_status'] == self::STATUS_ORDER['CANCELLED']){
                     // Todo @todo
@@ -162,6 +166,21 @@ class Cervo  extends AbstractDeliveryCompany
             }
         }
 
+    }
+    public function sendNotification($order)
+    {
+        //Internal notification
+        $type = NotificationTypeEnum::OrderDelivered;
+        $message = __('Order has been delivered for customer (:name) by delivery company (:company).',
+        [
+            'name' => $order?->user?->full_name,
+            'company' => 'Cervo'
+        ]);
+        //Send notification to all worker
+        $workers = RestaurantUser::workers()
+        ->where('branch_id',$order->branch_id)
+        ->get();
+        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
     }
     public function  verifyApiKey(string $api_key): bool{
 

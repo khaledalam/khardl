@@ -2,16 +2,19 @@
 
 namespace App\Packages\DeliveryCompanies\Yeswa;
 
+use Exception;
 use App\Models\Tenant\Order;
 use App\Models\Tenant\Branch;
+use App\Utils\ResponseHelper;
+use App\Models\Tenant\Setting;
 use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\RestaurantUser;
-use App\Models\Tenant\Setting;
-use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
+use App\Enums\Admin\NotificationTypeEnum;
+use App\Notifications\NotificationAction;
+use Illuminate\Support\Facades\Notification;
 use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
-use App\Utils\ResponseHelper;
-use Exception;
+use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 
 class Yeswa  extends AbstractDeliveryCompany
 {
@@ -56,7 +59,7 @@ class Yeswa  extends AbstractDeliveryCompany
             "dropoff_phone"=> $customer->phone,
             "dropoff_address"=> $order->address ?? '',
             "order_amount"=> $order->total,
-            
+
             "payment_method"=>  self::CORRESPOND_METHODS[$order->payment_method->name]  ,
             // nullable
             // "dropoff_time"=> "",
@@ -117,6 +120,7 @@ class Yeswa  extends AbstractDeliveryCompany
                     $order->update([
                         'status'=>Order::COMPLETED
                     ]);
+                    $this->sendNotification($order);
                 }else if ($data['job_status'] == 'FAILED' ){
                     if($order->status != Order::ACCEPTED)
                     $order->update([
@@ -127,6 +131,21 @@ class Yeswa  extends AbstractDeliveryCompany
             }
 
         }
+    }
+    public function sendNotification($order)
+    {
+        //Internal notification
+        $type = NotificationTypeEnum::OrderDelivered;
+        $message = __('Order has been delivered for customer (:name) by delivery company (:company).',
+        [
+            'name' => $order?->user?->full_name,
+            'company' => 'Yeswa'
+        ]);
+        //Send notification to all worker
+        $workers = RestaurantUser::workers()
+        ->where('branch_id',$order->branch_id)
+        ->get();
+        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
     }
     public function  cancelOrder($id): bool{
         try {
@@ -158,7 +177,7 @@ class Yeswa  extends AbstractDeliveryCompany
         }
     }
     public function  verifyApiKey(string $api_key): bool{
-       
+
         try {
             $response = $this->sendSync(
                 url: $this->delivery_company->api_url . '/auth_check/',
