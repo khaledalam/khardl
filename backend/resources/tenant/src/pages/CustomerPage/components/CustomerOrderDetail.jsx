@@ -90,7 +90,7 @@ const CustomerOrderDetail = ({ orderId }) => {
                                     <div className="w-full flex flex-col gap-4 ">
                                         <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">
                                             <h3 className="text-[1rem]">
-                                                {t('price')}
+                                                {t('Total Payment')}
                                             </h3>
                                             <h3 className="text-[1rem]">
                                                 {t("SAR")}{" "}{parseFloat(singleOrder?.total)}
@@ -102,16 +102,6 @@ const CustomerOrderDetail = ({ orderId }) => {
                                             </h3>
                                             <h3 className="text-[1rem]">
                                                 {t("SAR")}{" "}{singleOrder?.delivery_cost}
-                                            </h3>
-                                        </div>
-                                        <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">
-                                            <h3 className="text-[1rem]">
-                                                {t('Total Payment')}
-                                            </h3>
-                                            <h3 className="text-[1rem] font-bold">
-                                                {t("SAR")}{" "}{parseFloat(
-                                                    singleOrder?.total,
-                                                ) + singleOrder?.delivery_cost}
                                             </h3>
                                         </div>
                                         <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">

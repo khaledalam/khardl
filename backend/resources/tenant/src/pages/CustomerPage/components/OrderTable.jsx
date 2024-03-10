@@ -2,17 +2,18 @@ import React, { Fragment } from "react";
 import Eyes from "./Eyes";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import {useSelector} from "react-redux";
 
 const OrderTable = ({ data }) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const language = useSelector((state) => state.languageMode.languageMode);
 
-    console.log("from order table", data);
     return (
         <Fragment>
             {data && data.length > 0 ? (
                 <div className="w-full">
-                    <table className="w-full table border-separate border-spacing-y-4">
+                    <table className={`w-full table border-separate border-spacing-y-4 ${(language == 'ar' ? 'text-right' : '')}`} >
                         <thead className="w-full ">
                             <tr className="text-white bg-[var(--customer)] h-[60px] rounded-lg">
                                 <th className="font-bold text-[1rem]">
@@ -85,13 +86,13 @@ const OrderTable = ({ data }) => {
                                                     {order?.items.length >
                                                         1 && (
                                                         <h4 className="">
-                                                            and{" "}
+                                                            {`${t('and')}`}
                                                             {order?.items
                                                                 ? order?.items
                                                                       .length -
                                                                   1
                                                                 : 0}{" "}
-                                                            Others
+                                                            {t('Others')}
                                                         </h4>
                                                     )}
                                                 </div>
@@ -117,7 +118,7 @@ const OrderTable = ({ data }) => {
                                                 } rounded-xl flex items-center justify-center p-2 px-4 w-max`}
                                             >
                                                 <h3 className="capitalize">
-                                                    {order?.status}
+                                                    {t(order?.status)}
                                                 </h3>
                                             </div>
                                         </td>
