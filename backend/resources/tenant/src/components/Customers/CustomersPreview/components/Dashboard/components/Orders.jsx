@@ -34,7 +34,6 @@ function Orders() {
         try {
             const ordersResponse = await AxiosInstance.get(`orders?items&item`);
 
-            console.log("ordersResponse >>>", ordersResponse?.data?.data);
             if (ordersResponse.data) {
                 setOrders(Object.values(ordersResponse?.data?.data));
             }

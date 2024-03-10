@@ -28,6 +28,7 @@ export const CustomerPage = () => {
     const [searchParam] = useSearchParams();
     const [showOrderDetail, setShowOrderDetail] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [showMenu, setShowMenu] = useState(true);
 
     const TABS = {
         dashboard: t("Dashboard"),
@@ -36,13 +37,12 @@ export const CustomerPage = () => {
         // payment: t("Payment"), // @TODO: Add it again once payment cards logic finished
     };
 
-    const orderId = searchParam.get("orderId");
-    console.log("orderId", orderId);
+    let orderId = searchParam.get("orderId");
 
     useEffect(() => {
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
         setIsMobile(isMobile);
+        fetchResStyleData()
     }, []);
 
     useEffect(() => {
@@ -53,9 +53,6 @@ export const CustomerPage = () => {
         }
     }, [orderId]);
 
-    useEffect(() => {
-        fetchResStyleData()
-    }, []);
 
     const fetchResStyleData = async () => {
         try {
@@ -110,11 +107,15 @@ export const CustomerPage = () => {
 
     return (
         <div>
-            <NavbarCustomer customerDashboard={true} />
+            <NavbarCustomer
+                customerDashboard={true}
+                setShowMenu={setShowMenu}
+                showMenu={showMenu}
+            />
             <div className="flex bg-white h-[calc(100vh-75px)] w-full transition-all">
                 <div
                     className={`transition-all ${
-                        isMobile ? "flex-[0] hidden w-0" : "flex-[20%]"
+                        (isMobile || !showMenu) ? "flex-[0] hidden w-0" : "flex-[20%]"
                     } xl:flex-[20%] laptopXL:flex-[17%] overflow-hidden bg-white h-full `}
                 >
                     <SideNavbar />

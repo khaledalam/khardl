@@ -47,14 +47,14 @@ const MobileMenu = () => {
 
 export default MobileMenu;
 
-/**  
- * 
+/**
+ *
  ) : (
         // <Fragment>
         //   <div className='drawer drawer-end'>
         //     <input id='mobile_ar' type='checkbox' className='drawer-toggle' />
         //     <div className='drawer-content'>
-        //      
+        //
         //       <label htmlFor='mobile_ar' className='md:hidden drawer-button'>
         //         <RiMenuUnfoldFill
         //           size={35}
