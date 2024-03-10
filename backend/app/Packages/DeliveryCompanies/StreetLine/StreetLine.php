@@ -6,6 +6,9 @@ use App\Models\Tenant\Order;
 use App\Utils\ResponseHelper;
 use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\RestaurantUser;
+use App\Enums\Admin\NotificationTypeEnum;
+use App\Notifications\NotificationAction;
+use Illuminate\Support\Facades\Notification;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 
 
@@ -111,19 +114,19 @@ class StreetLine  extends AbstractDeliveryCompany
     public function processWebhook($payload){
         if(isset($payload["status_id"])  ){
             $order =Order::where('streetline_ref',$payload['order_id'])->firstOrFail();
-    
+
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
-                
+
                 if($payload['tracking_url']){
                     $order->update([
                         'tracking_url'=> $payload['tracking_url']
-                    ]); 
+                    ]);
                 }
                 if($payload['status_id'] == self::STATUS_ORDER['Order delivered']){
                         $order->update([
                             'status'=>Order::COMPLETED
                         ]);
-
+                        $this->sendNotification($order);
                 }else if( $payload['status_id'] == self::STATUS_ORDER['Order picked up'] ){
                         $order->update([
                             'status'=>Order::ACCEPTED,
@@ -131,9 +134,9 @@ class StreetLine  extends AbstractDeliveryCompany
                         ]);
                         $this->cancelOtherOrders("streetline",$order);
 
-                       
+
                 }else if(
-                    $payload['status_id'] == self::STATUS_ORDER['Order cancelled'] || 
+                    $payload['status_id'] == self::STATUS_ORDER['Order cancelled'] ||
                     $payload['status_id'] == self::STATUS_ORDER['Order failed'] ){
                     // Todo @todo
                     $order->update([
@@ -143,6 +146,21 @@ class StreetLine  extends AbstractDeliveryCompany
                 }
             }
         }
+    }
+    public function sendNotification($order)
+    {
+        //Internal notification
+        $type = NotificationTypeEnum::OrderDelivered;
+        $message = __('Order has been delivered for customer (:name) by delivery company (:company).',
+        [
+            'name' => $order?->user?->full_name,
+            'company' => 'Street line'
+        ]);
+        //Send notification to all worker
+        $workers = RestaurantUser::workers()
+        ->where('branch_id',$order->branch_id)
+        ->get();
+        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
     }
     public function  verifyApiKey(string $api_key): bool{
         try {

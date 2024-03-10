@@ -14,7 +14,7 @@ class DeliveryCompaniesWebhookHandler extends ProcessWebhookJob
     public function handle()
     {
         \Sentry\captureMessage('new Tenant delivery webhook');
- 
+
         $data = json_decode($this->webhookCall, true)['payload'];
         // TODO @todo do logs or sms or notifications
         // TODO @todo send tracking url to user to track his order
@@ -25,6 +25,6 @@ class DeliveryCompaniesWebhookHandler extends ProcessWebhookJob
         }else if ($data['delivery_company'] == 'yeswa') {// the webhook coming from Yeswa
         (new Yeswa)->processWebhook($data);
         }
-       
+
     }
 }

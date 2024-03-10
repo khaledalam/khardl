@@ -8,4 +8,5 @@ enum NotificationTypeEnum: string
 {
     use Values;
     case OrderCreated = 'order_created';
+    case OrderDelivered = 'order_delivered';
 }
