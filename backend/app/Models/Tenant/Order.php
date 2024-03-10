@@ -40,6 +40,8 @@ class Order extends Model
         'lat',
         'lng',
         'address',
+        'driver_name',
+        'driver_phone',
         'manual_order_first_name',
         'manual_order_last_name'
     ];
