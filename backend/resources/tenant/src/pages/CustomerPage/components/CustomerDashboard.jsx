@@ -108,7 +108,6 @@ const CustomerDashboard = () => {
                 <h3 className="my-4">{t("Last Orders")}</h3>
                 <div className="overflow-x-scroll hide-scroll">
                     <OrderTable data={slicedOrderData} />
-                    {console.log("slicedOrderData", slicedOrderData)}
                 </div>
             </div>
             {slicedOrderData.length > 0 && (

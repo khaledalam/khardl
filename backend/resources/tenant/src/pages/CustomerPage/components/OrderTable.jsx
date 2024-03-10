@@ -41,12 +41,7 @@ const OrderTable = ({ data }) => {
                                 data?.map((order) => (
                                     <tr
                                         key={order.id}
-                                        onClick={() =>
-                                            navigate(
-                                                `/dashboard?orderId=${order.id}`,
-                                            )
-                                        }
-                                        className="h-[80px] bg-white my-4 hover:shadow-lg hover:border hover:border-[var(--customer)] cursor-pointer"
+                                        className="h-[80px] bg-white my-4 hover:shadow-lg hover:border hover:border-[var(--customer)]"
                                     >
                                         <td>
                                             <h3 className="text-sm font-medium">
@@ -159,7 +154,9 @@ const OrderTable = ({ data }) => {
                                             </div>
                                         </td>
                                         <td>
-                                            <Eyes />
+                                                <Eyes cursorPointer={true} onClick={() =>
+                                                    navigate(`/dashboard?orderId=${order.id}`)
+                                                } />
                                         </td>
                                     </tr>
                                 ))}
