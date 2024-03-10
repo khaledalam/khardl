@@ -73,7 +73,7 @@ const CustomerOrder = () => {
                 <img src={orderIcon} alt="dashboard" className="" />
                 <h3 className="text-lg font-medium">{t("Orders")}</h3>
             </div>
-            <div className="my-5 flex flex-col md:flex-row w-full lg:w-[60%] items-center gap-4">
+            <div className="my-5 flex flex-col md:flex-row w-full items-center gap-4" style={{maxWidth: '700px'}}>
                 <div className="w-full md:w-2/3">
                     <PrimaryOrderSearch
                         value={search}

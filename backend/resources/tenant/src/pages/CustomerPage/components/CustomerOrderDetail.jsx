@@ -27,7 +27,7 @@ const CustomerOrderDetail = ({ orderId }) => {
                 className="flex items-center gap-2 mb-5 cursor-pointer"
             >
                 <BiChevronLeft size={30} />
-                <h3 className="">Display Order</h3>
+                <h3 className="">{t('Display Order')}</h3>
             </div>
             {singleOrder && (
                 <Fragment>
@@ -56,12 +56,12 @@ const CustomerOrderDetail = ({ orderId }) => {
                                             : "bg-[var(--rejected)]"
                                     } rounded-3xl flex items-center justify-center p-2 px-4 w-max`}
                                 >
-                                    <h3 className="">{singleOrder.status}</h3>
+                                    <h3 className="">{t(singleOrder.status)}</h3>
                                 </div>
                             </div>
                             <div className="self-start border-b border-black w-full my-5">
                                 <h3 className="text-[1rem] font-bold mb-4">
-                                    Product : (
+                                    {t('Product')} : (
                                     <span className="text-[var(--customer)]">
                                         {singleOrder.items.length}
                                     </span>
@@ -90,39 +90,36 @@ const CustomerOrderDetail = ({ orderId }) => {
                                     <div className="w-full flex flex-col gap-4 ">
                                         <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">
                                             <h3 className="text-[1rem]">
-                                                Price
+                                                {t('price')}
                                             </h3>
                                             <h3 className="text-[1rem]">
-                                                {t("SAR")}{" "}
-                                                {parseFloat(singleOrder?.total)}
-                                            </h3>
-                                        </div>
-                                        <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">
-                                            <h3 className="text-[1rem]">
-                                                Delivery fee
-                                            </h3>
-                                            <h3 className="text-[1rem]">
-                                                {t("SAR")}{" "}
-                                                {singleOrder?.delivery_cost}
+                                                {t("SAR")}{" "}{parseFloat(singleOrder?.total)}
                                             </h3>
                                         </div>
                                         <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">
                                             <h3 className="text-[1rem]">
-                                                Total payment
+                                                {t('Delivery fee')}
+                                            </h3>
+                                            <h3 className="text-[1rem]">
+                                                {t("SAR")}{" "}{singleOrder?.delivery_cost}
+                                            </h3>
+                                        </div>
+                                        <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">
+                                            <h3 className="text-[1rem]">
+                                                {t('Total Payment')}
                                             </h3>
                                             <h3 className="text-[1rem] font-bold">
-                                                {t("SAR")}{" "}
-                                                {parseFloat(
+                                                {t("SAR")}{" "}{parseFloat(
                                                     singleOrder?.total,
                                                 ) + singleOrder?.delivery_cost}
                                             </h3>
                                         </div>
                                         <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">
                                             <h3 className="text-[1rem]">
-                                                Payment method
+                                                {t('Payment Method')}
                                             </h3>
                                             <h3 className="text-[1rem]">
-                                                {singleOrder?.payment_method}
+                                                {t(singleOrder?.payment_method)}
                                             </h3>
                                         </div>
                                         <div className="flex items-center justify-between border-b border-neutral-200 last:border-none p-2">

@@ -42,7 +42,8 @@ export const CustomerPage = () => {
     console.log("chParam.get(orde >>", orderId);
 
     useEffect(() => {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+            || window.innerWidth < 800;
         setIsMobile(isMobile);
         fetchResStyleData()
     }, []);
