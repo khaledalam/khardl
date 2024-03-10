@@ -104,7 +104,7 @@ class Yeswa  extends AbstractDeliveryCompany
                 if(isset($data['tracking_url'])){
                     $tracking_url = $data['tracking_url'];
                 }
-                if(isset($payload['driver_phone']) && isset($payload['driver_name']) ){
+                if(isset($payload['data']['driver_phone']) && isset($payload['data']['driver_name']) ){
                     $order->update([
                         'driver_name'=> $payload['data']['driver_name'],
                         'driver_phone'=> $payload['data']['driver_phone']
