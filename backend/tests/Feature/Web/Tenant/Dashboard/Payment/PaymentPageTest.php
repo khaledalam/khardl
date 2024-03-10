@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Web\Tenant\Auth\Dashboard\Payment;
+namespace Tests\Feature\Web\Tenant\Dashboard\Payment;
 
 use App\Models\ROSubscription;
 use App\Models\Tenant\Order;
@@ -10,8 +10,6 @@ use App\Models\Tenant\Setting;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Tests\TenantTestCase;
-
-
 
 class PaymentPageTest extends TenantTestCase
 {
