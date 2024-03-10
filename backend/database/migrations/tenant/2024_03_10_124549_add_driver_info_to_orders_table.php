@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->double('lat')->nullable();
-            $table->double('lng')->nullable();
+            $table->string("driver_name")->nullable();
+            $table->string("driver_phone")->nullable();
         });
     }
 
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn(['lat','lng']);
+            $table->dropColumn(['driver_name','driver_phone']);
         });
     }
 };
