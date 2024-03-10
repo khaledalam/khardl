@@ -16,9 +16,9 @@ import { useNavigate } from "react-router-dom";
 const CustomerProfile = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const [firstName, setFirstName] = useState("John");
-    const [lastName, setLastName] = useState("Doe");
-    const [phone, setPhone] = useState("96611111111");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [phone, setPhone] = useState("");
     const address = useSelector(
         (state) => state.customerAPI.address?.addressValue,
     );

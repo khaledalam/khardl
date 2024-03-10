@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Logo from "../../assets/Logo.webp";
 import ContactUsCover from "../../assets/ContactUsCover.webp";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -9,12 +8,17 @@ import { GrPowerReset } from "react-icons/gr";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { HTTP_OK, PREFIX_KEY } from "../../config";
 import AxiosInstance from "../../axios/axios";
+import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 const VerificationPhone = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
     const { setStatusCode } = useAuthContext();
+
+    const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
 
     const {
         register: register,
@@ -105,7 +109,19 @@ const VerificationPhone = () => {
 
     useEffect(() => {
         let timer = startTimer();
+        fetchResStyleData()
     }, []);
+
+    const fetchResStyleData = async () => {
+        try {
+            AxiosInstance.get(`restaurant-style`).then((response) =>
+                dispatch(changeRestuarantEditorStyle(response.data?.data)),
+            );
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
+    };
 
     return (
         <div className="flex flex-col items-stretch justify-center">
@@ -120,11 +136,11 @@ const VerificationPhone = () => {
                     <div className="py-[80px] max-md:py-[60px]">
                         <div className="max-[860px]:w-[80vw] w-[450px] bg-white py-10 max-[860px]:px-2 shadow-lg rounded-2xl">
                             <div className="px-8 mb-3 flex flex-col items-center text-center">
-                                <img
-                                    src={Logo}
-                                    className="w-[80px]"
+                                {restuarantStyle?.logo ? <img
+                                    src={restuarantStyle?.logo}
+                                    className={`w-[80px] h-[80px]`}
                                     alt="logo"
-                                />
+                                /> : <div className="skeleton w-[80px] h-[80px] shrink-0"/> }
                                 <h3 className="pt-8 mb-3 text-md font-bold">
                                     {t("Please verify your phone number")}
                                 </h3>
