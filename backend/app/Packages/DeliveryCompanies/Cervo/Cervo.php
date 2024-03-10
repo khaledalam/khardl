@@ -83,7 +83,7 @@ class Cervo  extends AbstractDeliveryCompany
             "ispaid"=> ($order->payment_method->name == PaymentMethod::CASH_ON_DELIVERY)? "NO PAID": "PAID",
             "status"=>self::STATUS_ORDER['NEW'],
             // nullable
-            "callback"=>'https://9e10-156-207-75-53.ngrok-free.app/delivery-webhook?delivery_company=Cervo',
+            "callback"=>$url,
             "notes"=>"",
         ];
 
@@ -131,6 +131,7 @@ class Cervo  extends AbstractDeliveryCompany
         }
     }
     public function processWebhook($payload){
+       
         if(isset($payload["order_status"])  ){
 
             $order = Order::where('cervo_ref',$payload['order_id'])->first();
@@ -143,7 +144,7 @@ class Cervo  extends AbstractDeliveryCompany
                     ]);
                 }
                 if(isset($payload['driver_mobile']) && isset($payload['driver_name']) ){
-                    logger('test');
+                    
                     $order->update([
                         'driver_name'=> $payload['driver_name'],
                         'driver_phone'=> $payload['driver_mobile']
