@@ -2,14 +2,17 @@
 
 namespace App\Http\Services\API\tenant\Driver\Order;
 
-use App\Http\Requests\API\Driver\Order\ChangeStatusRequest;
 use App\Models\Tenant\Order;
+use Illuminate\Http\Request;
 use App\Models\Tenant\Setting;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\RestaurantUser;
+use App\Enums\Admin\NotificationTypeEnum;
+use App\Notifications\NotificationAction;
+use Illuminate\Support\Facades\Notification;
+use App\Http\Requests\API\Driver\Order\ChangeStatusRequest;
 use App\Http\Resources\API\Tenant\Collection\Driver\OrderCollection;
-use Illuminate\Http\Request;
 
 class OrderService
 {
@@ -63,6 +66,7 @@ class OrderService
         if($request->status == Order::COMPLETED){
             $order->status = Order::COMPLETED;
             $order->save();
+            $this->sendNotifications($order);
             return $this->sendResponse('', __('Order has been completed successfully'));
         }elseif($request->status == Order::CANCELLED){
             $order->status = Order::CANCELLED;
@@ -91,5 +95,16 @@ class OrderService
             return $this->sendResponse('', __('Order has been assigned to you successfully'));
         }
         return $this->sendError('', __('You can not assign this order for you'));
+    }
+    public function sendNotifications($order)
+    {
+        //Internal notification
+        $type = NotificationTypeEnum::OrderDelivered;
+        $message = __('Order has been delivered for customer (:name).',['name' => $order?->user?->full_name]);
+        //Send notification to all worker
+        $workers = RestaurantUser::workers()
+        ->where('branch_id',$order->branch_id)
+        ->get();
+        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
     }
 }
