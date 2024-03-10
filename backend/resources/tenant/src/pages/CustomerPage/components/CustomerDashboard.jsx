@@ -46,21 +46,23 @@ const CustomerDashboard = () => {
 
     const overviewInfo = [
         // @TODO: add wallet after handle pay with point and cashback
+        // @TODO: uncomment tht cashback and Loyalty points
+
         // {
         //   id: 1,
         //   title: t("Wallet"),
         //   amount: 700,
         // },
-        {
-            id: 2,
-            title: t("Loyalty Point"),
-            amount: loyaltyPoints || 0,
-        },
-        {
-            id: 3,
-            title: t("Total CashBack"),
-            amount: cashback || 0,
-        },
+        // {
+        //     id: 2,
+        //     title: t("Loyalty Point"),
+        //     amount: loyaltyPoints || 0,
+        // },
+        // {
+        //     id: 3,
+        //     title: t("Total CashBack"),
+        //     amount: cashback || 0,
+        // },
     ];
 
     // const onViewMore = useCallback(() => {
@@ -83,15 +85,15 @@ const CustomerDashboard = () => {
             <div className="w-full md:w-[80%] laptopXL:w-[70%] mx-auto flex items-center justify-around my-5">
                 {overviewInfo.map((overview) => (
                     <div
-                        key={overview.id}
+                        key={overview?.id}
                         className="w-[30%] md:w-[25%] h-[80px] md:h-[110px] rounded-2xl bg-[var(--customer)] p-3 text-white flex flex-col gap-3"
                     >
                         <h4 className="text-xs md:text-sm line-clamp-1 truncate">
-                            {overview.title}
+                            {overview?.title}
                         </h4>
                         <h2 className="font-bold text-white text-center text-sm md:text-2xl">
                             {!isLoading ? (
-                                overview.amount
+                                overview?.amount
                             ) : (
                                 <span className="loading loading-spinner text-secondary" />
                             )}

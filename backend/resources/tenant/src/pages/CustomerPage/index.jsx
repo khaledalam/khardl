@@ -15,6 +15,7 @@ import {
 } from "../../redux/NewEditor/customerSlice";
 import AxiosInstance from "../../axios/axios";
 import { useTranslation } from "react-i18next";
+import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice";
 
 export const CustomerPage = () => {
     const dispatch = useDispatch();
@@ -32,7 +33,7 @@ export const CustomerPage = () => {
         dashboard: t("Dashboard"),
         orders: t("Orders"),
         profile: t("Profile"),
-        payment: t("Payment"),
+        // payment: t("Payment"), // @TODO: Add it again once payment cards logic finished
     };
 
     const orderId = searchParam.get("orderId");
@@ -51,6 +52,21 @@ export const CustomerPage = () => {
             setShowOrderDetail(false);
         }
     }, [orderId]);
+
+    useEffect(() => {
+        fetchResStyleData()
+    }, []);
+
+    const fetchResStyleData = async () => {
+        try {
+            AxiosInstance.get(`restaurant-style`).then((response) =>
+                dispatch(changeRestuarantEditorStyle(response.data?.data)),
+            );
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
+    };
 
     const fetchOrdersData = async () => {
         try {

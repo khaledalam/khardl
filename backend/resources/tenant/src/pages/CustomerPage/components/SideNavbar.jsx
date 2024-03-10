@@ -57,16 +57,16 @@ const SideNavbar = () => {
             title: t("Profile"),
             link: "/dashboard#Profile",
         },
-        {
-            id: 4,
-            imgUrl: CardIcon,
-            activeImgUrl: CardWhiteIcon,
-            title: t("Payment"),
-            link: "/dashboard#Payment",
-        },
+        // {
+        //     id: 4,
+        //     imgUrl: CardIcon,
+        //     activeImgUrl: CardWhiteIcon,
+        //     title: t("Payment"),
+        //     link: "/dashboard#Payment",
+        // },
     ];
 
-    const pages = ["Profile", "Orders", "Payment", "Dashboard"];
+    const pages = ["Profile", "Orders", "Dashboard"]; // @TODO: add Payment
     pages.forEach(function (page) {
         if (
             window.location.href.indexOf(`#${page.toLowerCase()}`) > -1 ||

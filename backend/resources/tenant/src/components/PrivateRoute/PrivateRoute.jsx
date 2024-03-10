@@ -18,8 +18,6 @@ const PrivateRoute = () => {
         return;
     }
 
-    console.log(`status-code: ${statusCode}, loading: ${loading}`);
-
     if (statusCode === HTTP_NOT_AUTHENTICATED || statusCode === HTTP_BLOCKED) {
         // return <Navigate to='/login' state={{ from: location }} />
         return <Login state={{ from: location }} />;

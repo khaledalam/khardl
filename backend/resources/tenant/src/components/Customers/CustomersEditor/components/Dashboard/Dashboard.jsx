@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import TapPage from "./components/TapPage";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveTab } from "../../../../../redux/editor/dashboardTabSlice";
 import { setOrderShow } from "../../../../../redux/editor/orderShowSlice";
+import AxiosInstance from "../../../../../axios/axios";
+import {changeRestuarantEditorStyle} from "../../../../../redux/NewEditor/restuarantEditorSlice";
 
 const CustomerDashboard = () => {
     const activeTab = useSelector((state) => state.tab.activeTab);
@@ -37,7 +39,7 @@ const CustomerDashboard = () => {
                 <div className="h-full p-4 overflow-y-auto">
                     <ul className="space-y-3 font-medium py-6">
                         <li
-                            className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)] 
+                            className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Dashboard" ? "!bg-[var(--secondary)]" : ""}`}
                             onClick={() => {
                                 handleTabClick("Dashboard");
@@ -58,7 +60,7 @@ const CustomerDashboard = () => {
                             />
                         </li>
                         <li
-                            className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)] 
+                            className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Orders" ? "!bg-[var(--secondary)]" : ""}`}
                             onClick={() => {
                                 handleTabClick("Orders");
@@ -79,7 +81,7 @@ const CustomerDashboard = () => {
                             />
                         </li>
                         <li
-                            className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)] 
+                            className={`cursor-pointer flex justify-between items-center p-1  text-[var(--Forth)] hover:bg-[var(--secondary)]
               ${activeTab === "Profile" ? "!bg-[var(--secondary)]" : ""}`}
                             onClick={() => {
                                 handleTabClick("Profile");

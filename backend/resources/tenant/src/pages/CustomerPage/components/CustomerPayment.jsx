@@ -9,10 +9,9 @@ const CustomerPayment = ({ cardsList }) => {
     const { t } = useTranslation();
 
     /*
-  
+
   */
 
-    console.log({ cardsList });
     return (
         <div className="p-6">
             <div className="flex items-center gap-3">

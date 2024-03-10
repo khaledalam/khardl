@@ -17,6 +17,8 @@ const CustomerOrderDetail = ({ orderId }) => {
             ? ordersList.find((order) => order.id == orderId)
             : null;
 
+    console.log("SASFAS", singleOrder);
+
     const fetchOrderData = async () => {
         try {
             const ordersResponse = await AxiosInstance.get(
