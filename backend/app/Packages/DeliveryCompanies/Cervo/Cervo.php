@@ -30,7 +30,7 @@ class Cervo  extends AbstractDeliveryCompany
     ];
 
     public function assignToDriver(Order $order,RestaurantUser $customer,$duplicated = false):bool{
-       
+
         $branch = $order->branch;
         $tenant_id = tenant()->id;
         $restaurant = tenancy()->central(function()use($tenant_id){
@@ -52,7 +52,9 @@ class Cervo  extends AbstractDeliveryCompany
         }else {
             $token = $this->delivery_company->api_key;
             $data = [
-                "customer"=>$customer->fullName ,
+                "customer"=>$order?->manual_order_first_name
+                    ? $order?->manual_order_first_name . ' ' . $order?->manual_order_last_name
+                    : $order?->user->fullName,
                 "order_id"=>$order->id,
                 "id"=>$order->id,
                 "lng"=>$order->lat ?? '',
@@ -66,8 +68,8 @@ class Cervo  extends AbstractDeliveryCompany
             $data['id'] = "Duplicated $order->id";
             $data['order_id'] = "Duplicated $order->id";
         }
-      
-      
+
+
         $data += [
 
             "date"=>now()->format('Y-m-d H:i:s'),
@@ -82,7 +84,7 @@ class Cervo  extends AbstractDeliveryCompany
             "notes"=>"",
         ];
 
-        
+
         $response = $this->sendSync(
             url:   $this->delivery_company->api_url.'/order',
             token: $token,
@@ -98,10 +100,10 @@ class Cervo  extends AbstractDeliveryCompany
             \Sentry\captureMessage(json_encode($response['message']));
             return false;
         }
-     
+
     }
     public function cancelOrder($id): bool{
-        try {   
+        try {
             if(env('APP_ENV') == 'local'){
                 $token = env('CERVO_SECRET_API_KEY','');
             }else {
@@ -110,7 +112,7 @@ class Cervo  extends AbstractDeliveryCompany
             $response = $this->sendSync(
                 url: $this->delivery_company->api_url . '/cancelorder',
                 token: $token,
-                data:  [],  
+                data:  [],
                 method: 'get'
             );
             if($response['http_code'] == ResponseHelper::HTTP_OK ){
@@ -119,7 +121,7 @@ class Cervo  extends AbstractDeliveryCompany
                 \Sentry\captureMessage("Cervo cannot cancel order #$id for restaurant #id".tenant()->id);
                 return false;
             }
-            
+
         } catch (\Exception $e) {
             \Sentry\captureException($e);
             return false;
@@ -135,7 +137,7 @@ class Cervo  extends AbstractDeliveryCompany
                 if(isset($payload['tracking'])){
                     $order->update([
                         'tracking_url'=> $payload['tracking']
-                    ]); 
+                    ]);
                 }
                 if(isset($payload['driver_mobile']) && isset($payload['driver_name']) ){
                     logger('test');
@@ -149,8 +151,8 @@ class Cervo  extends AbstractDeliveryCompany
                         'status'=>Order::ACCEPTED,
                         'deliver_by'=> class_basename(static::class),
                     ]);
-                    $this->cancelOtherOrders("cervo",$order); 
-                   
+                    $this->cancelOtherOrders("cervo",$order);
+
                 }else if($payload['order_status'] == self::STATUS_ORDER['COMPLETED']){
                     $order->update([
                         'status'=>Order::COMPLETED

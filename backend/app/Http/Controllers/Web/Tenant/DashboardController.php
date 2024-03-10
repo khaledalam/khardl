@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -11,10 +12,12 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
+        $logo = RestaurantStyle::first()?->logo;
+
         return match(true){
             $user->isRestaurantOwner() => redirect()->route('restaurant.summary'),
             $user->isWorker() => redirect()->route('restaurant.branches'),
-            default => view('tenant')
+            default => view('tenant', compact('logo'))
         };
     }
 }

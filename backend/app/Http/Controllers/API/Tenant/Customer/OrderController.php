@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Tenant\Customer;
 
+use App\Models\Tenant\RestaurantUser;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
 use App\Models\Tenant\Setting;
@@ -70,6 +71,13 @@ class OrderController
 
         $user = Auth::user();
 
+        $shouldLogout = false;
+        if ($user->phone != $request->phone) {
+            // Remove verify phone status
+            $user->phone_verified_at = null;
+            $user->status = RestaurantUser::INACTIVE;
+            $shouldLogout= true;
+        }
 
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
@@ -80,9 +88,14 @@ class OrderController
 
         $user->save();
 
+        if ($shouldLogout) {
+            Auth::logout();
+        }
+
         return $this->sendResponse([
-            'ok' => true
-        ], '');
+            'ok' => true,
+            'should_logout' => $shouldLogout
+        ], __('Please re-login again'));
     }
     public function paymentRedirect(OrderRequest $request){
         $request->validate([

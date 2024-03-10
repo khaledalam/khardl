@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 
 use App\Http\Controllers\API\Tenant\Driver\Profile\ProfileController;
-use App\Http\Controllers\PushNotificationController;
+
+use App\Http\Controllers\API\Tenant\Notification\NotificationController;
+use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
+use App\Models\Tenant\RestaurantStyle;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -232,7 +235,8 @@ Route::group([
 
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
         Route::get('/cart', static function () {
-            return view('tenant');
+            $logo = RestaurantStyle::first()?->logo;
+            return view('tenant', compact('logo'));
         })->name('cart');
 
 
@@ -325,6 +329,21 @@ Route::middleware([
 
 
         Route::middleware('auth:sanctum')->group(function () {
+            //Notifications
+            //External notification (Push)
+            Route::post('save-token',[PushNotificationController::class,'saveToken']);
+            Route::post('test-push-notification',[PushNotificationController::class,'testPushNotification']);
+            //Internal notification
+            Route::prefix('notifications')->group(function () {
+                Route::controller(NotificationController::class)->group(function () {
+                    Route::get('get-all', 'index');
+                    Route::post('/read-notification/{id}','show');
+                    Route::post('/read-all','markAllAsRead');
+                });
+                Route::controller(ProfileController::class)->group(function () {
+                    Route::post('change-password', 'changePassword');
+                });
+            });
             Route::apiResource('categories', CategoryController::class)->only([
                 'index'
             ]);

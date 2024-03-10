@@ -50,7 +50,7 @@ const CartPage = () => {
                 }
                 dispatch(setCartItemsData(cartResponse.data?.data.items));
                 dispatch(
-                    getCartItemsCount(cartResponse.data?.data.items.length)
+                    getCartItemsCount(cartResponse.data?.data.items.length),
                 );
                 setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
                 setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
@@ -67,7 +67,7 @@ const CartPage = () => {
     const fetchResStyleData = async () => {
         try {
             AxiosInstance.get(`restaurant-style`).then((response) =>
-                dispatch(changeRestuarantEditorStyle(response.data?.data))
+                dispatch(changeRestuarantEditorStyle(response.data?.data)),
             );
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
@@ -88,13 +88,13 @@ const CartPage = () => {
                         addressValue:
                             profileResponse.data?.data?.address?.addressValue ??
                             t("N/A"),
-                    })
+                    }),
                 );
                 userProfileInfo["address"] =
                     profileResponse.data?.data?.address;
                 localStorage.setItem(
                     "userProfileInfo",
-                    JSON.stringify(userProfileInfo)
+                    JSON.stringify(userProfileInfo),
                 );
             }
             setUserInfo(profileResponse);

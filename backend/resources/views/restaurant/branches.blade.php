@@ -269,13 +269,12 @@
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('from') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="saturday_open"  required />
+                                            <input type="text" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="saturday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('to') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="saturday_close"  required />
-
+                                            <input type="text" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="saturday_close"  required />
                                         </div>
                                     </div>
 
@@ -293,12 +292,12 @@
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('from') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="sunday_open"  required />
+                                            <input type="text" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="sunday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('to') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="sunday_close"  required />
+                                            <input type="text" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="sunday_close"  required />
 
                                         </div>
                                     </div>
@@ -317,12 +316,12 @@
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('from') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="monday_open"  required />
+                                            <input type="text" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="monday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('to') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="monday_close"  required />
+                                            <input type="text" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="monday_close"  required />
 
                                         </div>
                                     </div>
@@ -341,12 +340,12 @@
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('from') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="tuesday_open"  required />
+                                            <input type="text" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="tuesday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('to') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="tuesday_close"  required />
+                                            <input type="text" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="tuesday_close"  required />
 
                                         </div>
                                     </div>
@@ -365,12 +364,12 @@
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('from') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="wednesday_open"  required />
+                                            <input type="text" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="wednesday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('to') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="wednesday_close"  required />
+                                            <input type="text" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="wednesday_close"  required />
 
                                         </div>
                                     </div>
@@ -389,12 +388,12 @@
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('from') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="thursday_open"  required />
+                                            <input type="text" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="thursday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('to') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="thursday_close"  required />
+                                            <input type="text" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="thursday_close"  required />
                                         </div>
                                     </div>
 
@@ -412,12 +411,12 @@
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('from') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid "  name="friday_open"  required />
+                                            <input type="text" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="friday_open"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                             <label>{{ __('to') }} </label>
-                                            <input type="time" step="900" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid "  name="friday_close"  required />
+                                            <input type="text" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="friday_close"  required />
                                         </div>
                                     </div>
 
@@ -577,7 +576,7 @@
                     <!--begin::Input-->
                     <div class="position-relative d-flex align-items-center">
                         <!--begin::Datepicker-->
-                        <input value="{{ old('name') }}" required name="name" class="form-control form-control-solid " />
+                        <input value="{{ old('name') }}" required name="name" class="form-control form-control-solid time-24" />
                         <!--end::Datepicker-->
                     </div>
                     <!--end::Input-->
@@ -588,7 +587,7 @@
                     <!--begin::Input-->
                     <div class="position-relative d-flex align-items-center">
                         <!--begin::Datepicker-->
-                        <input value="{{ old('phone') }}" required name="phone" class="form-control form-control-solid " />
+                        <input value="{{ old('phone') }}" required name="phone" class="form-control form-control-solid time-24" />
                         <!--end::Datepicker-->
                     </div>
                     <!--end::Input-->
@@ -650,12 +649,12 @@
                     <div class=" d-flex justify-content-between w-100">
                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                             <label for="normal_from">{{ __('from') }}  </label>
-                            <input type="time" step="900" class="form-control form-control-solid"  name="normal_from" id="normal_from" value="09:00"  />
+                            <input type="text" class="form-control form-control-solid time-24"  name="normal_from" id="normal_from" value="09:00"  />
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                             <label for="normal_to">{{ __('to') }}  </label>
-                            <input type="time" step="900" class="form-control form-control-solid"  name="normal_to" id="normal_to" value="20:00"  />
+                            <input type="text" class="form-control form-control-solid time-24"  name="normal_to" id="normal_to" value="20:00"  />
 
                         </div>
                     </div>
@@ -693,12 +692,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="saturday_open">{{ __('from') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid"  name="saturday_open" id="saturday_open"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="saturday_open" id="saturday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="saturday_close">{{ __('to') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid"  name="saturday_close" id="saturday_close"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="saturday_close" id="saturday_close"   />
 
                                 </div>
                             </div>
@@ -708,12 +707,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="sunday_open">{{ __('from') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="sunday_open" id="sunday_open"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="sunday_open" id="sunday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="sunday_close">{{ __('to') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="sunday_close" id="sunday_close"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="sunday_close" id="sunday_close"   />
 
                                 </div>
                             </div>
@@ -723,12 +722,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="monday_open">{{ __('from') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="monday_open" id="monday_open"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="monday_open" id="monday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="monday_close">{{ __('to') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="monday_close" id="monday_close"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="monday_close" id="monday_close"   />
 
                                 </div>
                             </div>
@@ -738,12 +737,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="tuesday_open">{{ __('from') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="tuesday_open" id="tuesday_open"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="tuesday_open" id="tuesday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="tuesday_close">{{ __('to') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="tuesday_close" id="tuesday_close"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="tuesday_close" id="tuesday_close"   />
                                 </div>
                             </div>
                         </div>
@@ -752,12 +751,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="wednesday_open">{{ __('from') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="wednesday_open" id="wednesday_open"  />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="wednesday_open" id="wednesday_open"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="wednesday_close">{{ __('to') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="wednesday_close" id="wednesday_close"  />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="wednesday_close" id="wednesday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -766,12 +765,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="thursday_open">{{ __('from') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="thursday_open" id="thursday_open"   />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="thursday_open" id="thursday_open"   />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="thursday_close">{{ __('to') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="thursday_close" id="thursday_close"  />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="thursday_close" id="thursday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -780,12 +779,12 @@
                             <div class=" d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="friday_open">{{ __('from') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="friday_open" id="friday_open"  />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="friday_open" id="friday_open"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5">
                                     <label for="friday_close">{{ __('to') }} </label>
-                                    <input type="time" step="900" class="form-control form-control-solid "  name="friday_close" id="friday_close"  />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="friday_close" id="friday_close"  />
                                 </div>
                             </div>
                         </div>
@@ -840,18 +839,20 @@
     </div>
     <!--end::Scrolltop-->
 
+@endsection
+@section('js')
     <script>
         var normalChoiceSection = document.getElementById('normalChoiceSection');
         var customChoiceTabs = document.getElementById('customChoiceTabs');
         var customChoiceContent = document.getElementById('customChoiceContent');
         function setRequiredForCustomChoice(required) {
-            var customInputs = customChoiceContent.querySelectorAll('input[type="time" step="900"]');
+            var customInputs = customChoiceContent.querySelectorAll('input[type="text"]');
             customInputs.forEach(function (input) {
                 input.required = required;
             });
         }
         function setRequiredForNormalChoice(required) {
-            var customInputs = normalChoiceSection.querySelectorAll('input[type="time" step="900"]');
+            var customInputs = normalChoiceSection.querySelectorAll('input[type="text"]');
             customInputs.forEach(function (input) {
                 input.required = required;
             });
@@ -1067,9 +1068,28 @@
                 }
             }
 
+
         });
 
 
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            // Initialize the timepicker with the existing value or default value
+            flatpickr(".time-24", {
+                enableTime: true,
+                noCalendar: true,
+                enableSeconds: false,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
+        });
+    </script>
+
+
 @endsection
+

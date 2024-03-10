@@ -33,7 +33,7 @@ class RegisterController extends BaseController
     {
         $input = $request->validated();
         $input['password'] = Hash::make($input['password']);
-        $input['status'] = 'inactive';
+        $input['status'] = RestaurantUser::INACTIVE;
         $user = User::create($input);
         $success['token'] =  $user->createToken('Personal Access Token')->accessToken;
         $success['name'] =  "$user->first_name $user->last_name";
@@ -130,7 +130,7 @@ class RegisterController extends BaseController
             ->where([
                 ['email', '=', $user?->email],
                 ['created_at', '>=', Carbon::now()->subMinutes(15)]
-            ]);
+            ])->get()->all();
 
         if (count($attempts) >= 3) {
             return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));

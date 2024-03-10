@@ -47,7 +47,8 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         'tap_verified',
         'loyalty_points',
         'cashback',
-        'default_lang'
+        'default_lang',
+        'device_token'
     ];
     const STATUS = [
         self::ACTIVE,
@@ -111,6 +112,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return substr($this->phone, 3);
     }
+    public function getCountUnreadNotificationsAttribute()
+    {
+        $countUnRead = $this->notifications()->orderByDesc('created_at')->where('read_at', null)->count();
+
+        return $countUnRead;
+    }
     // public function roles()
     // {
     //     return $this->belongsToMany(Role::class,'roles');
@@ -120,6 +127,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     {
         return $this->whereHas('roles',function($q){
             return $q->where('name','Driver');
+        });
+    }
+    public function scopeWorkers()
+    {
+        return $this->whereHas('roles',function($q){
+            return $q->where('name','Worker');
         });
     }
     public function scopeActiveDrivers()

@@ -26,32 +26,18 @@ class CategoryItemSeeder extends Seeder
 
             $branch->categories()->saveMany([
 
-                //BRANCH_ID
                 new Category([
-                    'name' => trans_json('First Category',__('First Category',[],'ar')),
+                    'name' => trans_json('First Category',__('First Category',[],'ar') . ' branch ' . $branch->id ),
                     'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
                     'branch_id' => BranchSeeder::BRANCH_ID
                 ]),
                 new Category([
-                    'name' => trans_json( 'Second Category',__( 'Second Category',[],'ar')),
+                    'name' => trans_json( 'Second Category',__( 'Second Category',[],'ar') . ' branch ' . $branch->id),
                     'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
                     'branch_id' => BranchSeeder::BRANCH_ID
                 ]),
-
-
-                // BRANCH_B_ID
                 new Category([
-                    'name' => trans_json('First Category',__('First Category',[],'ar')),
-                    'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
-                    'branch_id' => BranchSeeder::BRANCH_B_ID
-                ]),
-                new Category([
-                    'name' => trans_json( 'Second Category',__( 'Second Category',[],'ar')),
-                    'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
-                    'branch_id' => BranchSeeder::BRANCH_B_ID
-                ]),
-                new Category([
-                    'name' => trans_json('Third Category',__('First Category',[],'ar')),
+                    'name' => trans_json('Third Category',__('Third Category',[],'ar') . ' branch ' . $branch->id),
                     'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
                     'branch_id' => BranchSeeder::BRANCH_B_ID
                 ]),
@@ -69,7 +55,7 @@ class CategoryItemSeeder extends Seeder
                         'calories' => $faker->numberBetween(0, 500),
                         'name' =>  trans_json("Item " . $kk,"Item " . $kk),
                         'description' =>  trans_json("Description " . $kk,"Description " . $kk),
-     
+
                         'availability'=> (bool)$faker->numberBetween(0, 1),
                         'branch_id' => $branch->id,
                         'user_id'=>UserSeeder::RESTAURANT_WORKER_USER_ID

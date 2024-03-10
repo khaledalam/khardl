@@ -35,6 +35,8 @@ class OrderResource extends JsonResource
             'created_at'=>$this->created_at,
             'received_by_restaurant_at'=>$this->received_by_restaurant_at,
             'updated_at'=>$this->updated_at,
+            'manual_order_first_name' => $this->manual_order_first_name,
+            'manual_order_last_name' => $this->manual_order_last_name,
 
         ];
         if ($request->has('branch')) {

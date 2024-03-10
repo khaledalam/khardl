@@ -29,7 +29,7 @@
                                     </a>
                                       <!--end::Button-->
                                       <!--begin::Menu-->
-                                      <div class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
+                                      <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
                                           <!--begin::Menu item-->
                                           @foreach ($categories as $category)
                                             <div class="menu-item mb-3">
@@ -79,7 +79,7 @@
                                                     </ul>
                                                     <div class="tab-content mt-3">
                                                         <div class="tab-pane fade show active" id="en">
-                                                            <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en">
+                                                            <input type="text" class="form-control" placeholder="{{ __('Enter text in English') }}" name="name_en" id="categoryName">
                                                         </div>
                                                         <div class="tab-pane fade" id="ar">
                                                             <input type="text" class="form-control" placeholder="{{ __('Enter text in Arabic') }}" name="name_ar">
@@ -222,18 +222,7 @@
                                               </tr>
                                             @endforeach
 
-                                              <tr>
-                                                  <td colspan="6" class="text-center">
-                                                      <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target"> {{ __('add-new-item') }} <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-                                                          <span class="svg-icon svg-icon-2 me-3">
-                                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                                  <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                                                  <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
-                                                              </svg>
-                                                          </span>
-                                                          <!--end::Svg Icon--> </a>
-                                                  </td>
-                                              </tr>
+
 
                                           </tbody>
                                           <!--end::Table body-->
@@ -655,6 +644,7 @@
 
         addCategoryButton.addEventListener("click", () => {
             categoryForm.style.display = "block";
+            categoryList.scrollTo(0, categoryList.scrollHeight);
             categoryNameInput.focus();
         });
 

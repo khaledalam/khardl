@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+use App\Http\Services\Notification\PushNotificationService;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -54,5 +55,50 @@ if (!function_exists('getAmount')) {
         } else {
             return $input;
         }
+    }
+}
+if (!function_exists('sendPushNotification')) {
+    function sendPushNotification($target, $data, $title)
+    {
+        if ($target->device_token) {
+            try {
+                $pushService = new PushNotificationService();
+                $content = [
+                    'notification' => [
+                        'title' => $title,
+                        'data' => $data
+                    ],
+                    'token' => $target->device_token
+                ];
+                return $pushService->sendCloudMessage($content);
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+                \Sentry\captureException($e);
+            }
+        }
+        return;
+    }
+}if (!function_exists('sendMultiPushNotification')) {
+    function sendMultiPushNotification($data, $title, $tokens)
+    {
+        try {
+            $pushService = new PushNotificationService();
+            $content = [
+                'notification' => [
+                    'title' => $title,
+                    'data' => $data
+                ],
+            ];
+            return $pushService->sendMultiCloudMessage($content,$tokens);
+        } catch (\Exception $e) {
+            logger($e);//TODO: Send exception to sentry
+        }
+        return;
+    }
+}
+if (!function_exists('getAuth')) {
+    function getAuth()
+    {
+      return auth('sanctum')->user();
     }
 }

@@ -1,4 +1,11 @@
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, {
+    Fragment,
+    useCallback,
+    useEffect,
+    useState,
+    useRef,
+    useReducer,
+} from "react";
 import imgCart from "../../../../assets/headerCartIcon.svg";
 import imgCartWhite from "../../../../assets/cartWhiteIcon.svg";
 import imgHotFire from "../../../../assets/hot-fire.svg";
@@ -57,6 +64,7 @@ const ProductItem = ({
     dropdown_input_titles,
     dropdown_input_names,
 }) => {
+    const dropdDownRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const language = useSelector((state) => state.languageMode.languageMode);
@@ -271,12 +279,15 @@ const ProductItem = ({
 
     const finalPrice = qtyCount * totalPrice;
     function closeModal() {
+        if (dropdDownRef.current != null) {
+            dropdDownRef.current.value = "";
+        }
         document.getElementById(id).close();
     }
 
     const handleAddToCart = async () => {
         try {
-            setSpinner(true);
+            //setSpinner(true);
             let payload = {
                 item_id: id,
                 quantity: qtyCount,
@@ -288,21 +299,20 @@ const ProductItem = ({
             };
 
             const response = await AxiosInstance.post(`/carts`, payload);
-
-            console.log("response ", response);
             closeModal();
+            console.log("response ", response);
             if (response?.data) {
                 toast.success(`${t("Item added to cart")}`);
                 dispatch(getCartItemsCount(response?.data.data.items.length));
-                setGotoCart(true);
-                setSpinner(false);
+                //setGotoCart(true);
+                //setSpinner(false);
             }
         } catch (error) {
-            setSpinner(false);
+            //setSpinner(false);
             console.log(error);
 
             toast.error(error.response?.data?.message);
-            setGotoCart(false);
+            //setGotoCart(false);
         }
         dispatch(addItemToCart("props.name"));
     };
@@ -324,7 +334,7 @@ const ProductItem = ({
                     console.log(responseData);
                     localStorage.setItem(
                         "user-info",
-                        JSON.stringify(responseData?.data?.user)
+                        JSON.stringify(responseData?.data?.user),
                     );
 
                     console.log(">>> herer ", responseData?.data?.user?.status);
@@ -332,14 +342,14 @@ const ProductItem = ({
                     if (responseData.data.user.status === "inactive") {
                         sessionStorage.setItem(
                             PREFIX_KEY + "phone",
-                            responseData?.data?.user?.phone
+                            responseData?.data?.user?.phone,
                         );
                         setStatusCode(HTTP_NOT_VERIFIED);
                         navigate("/verification-phone");
                     } else if (responseData.data.user.status === "active") {
                         sessionStorage.setItem(
                             PREFIX_KEY + "phone",
-                            responseData?.data?.user?.phone
+                            responseData?.data?.user?.phone,
                         );
                         setStatusCode(HTTP_OK);
                         navigate("/verification-phone");
@@ -349,7 +359,7 @@ const ProductItem = ({
                     dispatch(changeLogState(true));
                     dispatch(changeUserState(responseData?.data?.user || null));
                     toast.success(
-                        `${t("You have been logged in successfully")}`
+                        `${t("You have been logged in successfully")}`,
                     );
                 } else {
                     console.log("response?.data?.success false");
@@ -424,20 +434,20 @@ const ProductItem = ({
                                     fontSize.includes("px")
                                         ? Number(fontSize.slice(0, 2)) - 3
                                         : typeof fontSize == "number"
-                                        ? fontSize - 3
-                                        : 13,
+                                          ? fontSize - 3
+                                          : 13,
                             }}
                             className={`${
                                 textAlign === t("Center")
                                     ? "text-center"
                                     : textAlign === t("Left")
-                                    ? "text-left"
-                                    : textAlign === t("Right")
-                                    ? "text-right"
-                                    : ""
+                                      ? "text-left"
+                                      : textAlign === t("Right")
+                                        ? "text-right"
+                                        : ""
                             }`}
                         >
-                            {caloryInfo} Kcal
+                            {`${caloryInfo} ${t("Kcal")}`}
                         </p>
                     </div>
                     <div
@@ -497,13 +507,14 @@ const ProductItem = ({
                             : "h-[550px]"
                     } flex flex-col justify-end`}
                 >
-                    <form method="dialog">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-6 top-6">
-                            ✕
-                        </button>
-                        {/* <IoCloseCircleOutline size={22}/> */}
-                    </form>
+                    {/* if there is a button in form, it will close the modal */}
+                    <button
+                        className="btn btn-xs btn-circle bg-white hover:bg-white text-black absolute right-6 top-6"
+                        onClick={closeModal}
+                    >
+                        ✕
+                    </button>
+                    {/* <IoCloseCircleOutline size={22}/> */}
                     {isLoggedIn ? (
                         <Fragment>
                             {spinner && (
@@ -607,7 +618,7 @@ const ProductItem = ({
                                             <input
                                                 type="text"
                                                 placeholder={t(
-                                                    "Say something nice..."
+                                                    "Say something nice...",
                                                 )}
                                                 value={feedback}
                                                 onChange={(e) =>
@@ -662,7 +673,7 @@ const ProductItem = ({
                                                                     ]?.map(
                                                                         (
                                                                             item,
-                                                                            idx
+                                                                            idx,
                                                                         ) => (
                                                                             <ProductDetailItem
                                                                                 key={
@@ -689,30 +700,30 @@ const ProductItem = ({
                                                                                     item.price ===
                                                                                     0
                                                                                         ? t(
-                                                                                              "Free"
+                                                                                              "Free",
                                                                                           )
                                                                                         : `${Number(
-                                                                                              item?.price
+                                                                                              item?.price,
                                                                                           )} ${t(
-                                                                                              "SAR"
+                                                                                              "SAR",
                                                                                           )}`
                                                                                 }
                                                                                 isCheckbox
                                                                                 onChange={(
-                                                                                    e
+                                                                                    e,
                                                                                 ) =>
                                                                                     handleCheckboxChange(
                                                                                         checkbox_idx,
                                                                                         idx,
-                                                                                        e
+                                                                                        e,
                                                                                     )
                                                                                 }
                                                                             />
-                                                                        )
+                                                                        ),
                                                                     )}
                                                             </div>
                                                         </div>
-                                                    )
+                                                    ),
                                                 )}
 
                                             {/* selection  */}
@@ -751,7 +762,7 @@ const ProductItem = ({
                                                                     ]?.map(
                                                                         (
                                                                             item,
-                                                                            idx
+                                                                            idx,
                                                                         ) => (
                                                                             <ProductDetailItem
                                                                                 key={
@@ -772,30 +783,30 @@ const ProductItem = ({
                                                                                     item.price ===
                                                                                     0
                                                                                         ? t(
-                                                                                              "Free"
+                                                                                              "Free",
                                                                                           )
                                                                                         : `${Number(
-                                                                                              item?.price
+                                                                                              item?.price,
                                                                                           )} ${t(
-                                                                                              "SAR"
+                                                                                              "SAR",
                                                                                           )}`
                                                                                 }
                                                                                 isRadio
                                                                                 onChange={(
-                                                                                    e
+                                                                                    e,
                                                                                 ) =>
                                                                                     handleRadioChange(
                                                                                         selection_idx,
                                                                                         idx,
-                                                                                        e
+                                                                                        e,
                                                                                     )
                                                                                 }
                                                                             />
-                                                                        )
+                                                                        ),
                                                                     )}
                                                             </div>
                                                         </div>
-                                                    )
+                                                    ),
                                                 )}
 
                                             {/* dropdown */}
@@ -833,36 +844,54 @@ const ProductItem = ({
                                                                         dropdown_idx
                                                                     ][0]
                                                                         ?.value[0] &&
-                                                                    dropdownItems?.map(
+                                                                    dropdownItems[
+                                                                        dropdown_idx
+                                                                    ]?.map(
                                                                         (
                                                                             item,
-                                                                            idx
-                                                                        ) => (
-                                                                            <ProductDetailItem
-                                                                                key={
-                                                                                    idx
-                                                                                }
-                                                                                isDropDown
-                                                                                language={
-                                                                                    language
-                                                                                }
-                                                                                options={
-                                                                                    item
-                                                                                }
-                                                                                onChange={(
-                                                                                    e
-                                                                                ) =>
-                                                                                    handleDropdownChange(
-                                                                                        dropdown_idx,
-                                                                                        idx
-                                                                                    )
-                                                                                }
-                                                                            />
-                                                                        )
+                                                                            idx,
+                                                                        ) => {
+                                                                            if (
+                                                                                idx ===
+                                                                                0
+                                                                            ) {
+                                                                                return (
+                                                                                    <ProductDetailItem
+                                                                                        ref={
+                                                                                            dropdDownRef
+                                                                                        }
+                                                                                        key={
+                                                                                            idx
+                                                                                        }
+                                                                                        isDropDown
+                                                                                        language={
+                                                                                            language
+                                                                                        }
+                                                                                        options={
+                                                                                            dropdownItems[
+                                                                                                dropdown_idx
+                                                                                            ]
+                                                                                        }
+                                                                                        onChange={(
+                                                                                            e,
+                                                                                        ) =>
+                                                                                            handleDropdownChange(
+                                                                                                dropdown_idx,
+                                                                                                Number(
+                                                                                                    e
+                                                                                                        .target
+                                                                                                        .value,
+                                                                                                ),
+                                                                                            )
+                                                                                        }
+                                                                                    />
+                                                                                );
+                                                                            }
+                                                                        },
                                                                     )}
                                                             </div>
                                                         </div>
-                                                    )
+                                                    ),
                                                 )}
                                         </div>
                                     </div>
@@ -934,8 +963,8 @@ const ProductItem = ({
                                                     color: amountColor
                                                         ? amountColor
                                                         : cartBgcolor
-                                                        ? "white"
-                                                        : "red",
+                                                          ? "white"
+                                                          : "red",
                                                 }}
                                                 className="text-[14px] font-bold"
                                             >
@@ -1012,7 +1041,7 @@ const ProductItem = ({
                                                         type="submit"
                                                         className="text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
                                                         value={t(
-                                                            "Create an account"
+                                                            "Create an account",
                                                         )}
                                                     />
                                                 </Link>

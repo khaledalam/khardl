@@ -4,7 +4,6 @@ namespace App\Models\Tenant;
 
 use App\Observers\OrderObserver;
 use Carbon\Carbon;
-use App\Models\Tenant\RestaurantUser;
 use Database\Factories\tenant\OrderFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,7 +41,9 @@ class Order extends Model
         'lng',
         'address',
         'driver_name',
-        'driver_phone'
+        'driver_phone',
+        'manual_order_first_name',
+        'manual_order_last_name'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [
