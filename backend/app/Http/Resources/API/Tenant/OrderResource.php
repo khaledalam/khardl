@@ -28,6 +28,8 @@ class OrderResource extends JsonResource
             'delivery_type' =>__(''.$this->delivery_type->name),
             'tracking_url'=>$this->tracking_url,
             'deliver_by'=>$this->deliver_by,
+            'driver_name'=>$this->driver_name,
+            'driver_phone'=>$this->driver_phone,
             'cancelable'=>$this->cancelable,
             'driver_id'=> new DriverResource($this->driver),
             'created_at'=>$this->created_at,

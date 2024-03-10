@@ -40,7 +40,9 @@ class Order extends Model
         'delivery_cost',
         'lat',
         'lng',
-        'address'
+        'address',
+        'driver_name',
+        'driver_phone'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [

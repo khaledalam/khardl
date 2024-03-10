@@ -132,9 +132,16 @@ class Cervo  extends AbstractDeliveryCompany
 
             if(!$order->deliver_by || $order->deliver_by == class_basename(static::class)){
   
-                if($payload['tracking']){
+                if(isset($payload['tracking'])){
                     $order->update([
                         'tracking_url'=> $payload['tracking']
+                    ]); 
+                }
+                if(isset($payload['driver_mobile']) && isset($payload['driver_name']) ){
+                    logger('test');
+                    $order->update([
+                        'driver_name'=> $payload['driver_name'],
+                        'driver_phone'=> $payload['driver_mobile']
                     ]); 
                 }
                 if($payload["order_status"]  == self::STATUS_ORDER['ACCEPTED_BY_DRIVER']){
