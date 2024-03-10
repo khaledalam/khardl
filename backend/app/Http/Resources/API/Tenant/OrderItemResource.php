@@ -14,15 +14,12 @@ class OrderItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-       
-
         $data = [
             'id' => $this->id,
-            'quantity' => $this->price,
             'price' => $this->price,
             'total' => $this->total,
             'quantity'=>$this->quantity,
-            
+
             'notes'=>$this->notes,
             'options_price'=>$this->options_price,
             'checkbox_options'=>$this->slice_options($this->checkbox_options),
@@ -31,8 +28,9 @@ class OrderItemResource extends JsonResource
         ];
         if ($request->has('item')) {
             $data['item'] = new ItemResource($this->item);
+            $data['test'] = 'test';
         }
-        
+
         return $data;
     }
     public function slice_options($data){

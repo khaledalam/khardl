@@ -9,9 +9,7 @@ const Orders = () => {
     const [loading, setLoading] = useState(false);
     const [orders, setOrders] = useState([]);
 
-    const Language = useSelector((state) => state.languageMode.languageMode);
     const orderShow = useSelector((state) => state.order.orderShow);
-    const idOrder = useSelector((state) => state.id.idOrder);
     const activeTab = useSelector((state) => state.tab.activeTab);
     const GlobalColor = useSelector((state) => state.button.GlobalColor);
 

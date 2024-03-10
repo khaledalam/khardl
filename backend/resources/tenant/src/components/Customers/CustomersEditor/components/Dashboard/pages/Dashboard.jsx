@@ -23,22 +23,23 @@ const Dashboard = () => {
         >
             <p className="mb-6 font-bold">{t("Dashboard")}</p>
             <div className="p-8 bg-white">
-                <div
-                    className={`grid grid-cols-3 gap-4 mb-4 ${divWidth <= 550 ? "grid-cols-1" : ""}`}
-                >
-                    <StatsCard title={t("Wallet")} Stats="700" />
-                    <StatsCard
-                        title={t("Loyalty Point")}
-                        Stats="500"
-                        ShowIcons={true}
-                    />
-                    <StatsCard
-                        title={t("Total Cash Back")}
-                        Stats="1500"
-                        ShowIcons={true}
-                        IsUp={true}
-                    />
-                </div>
+                {/* @TODO: uncomment tht cashback and Loyalty points*/}
+                {/*<div*/}
+                {/*    className={`grid grid-cols-3 gap-4 mb-4 ${divWidth <= 550 ? "grid-cols-1" : ""}`}*/}
+                {/*>*/}
+                {/*    <StatsCard title={t("Wallet")} Stats="700" />*/}
+                {/*    <StatsCard*/}
+                {/*        title={t("Loyalty Point")}*/}
+                {/*        Stats="500"*/}
+                {/*        ShowIcons={true}*/}
+                {/*    />*/}
+                {/*    <StatsCard*/}
+                {/*        title={t("Total Cash Back")}*/}
+                {/*        Stats="1500"*/}
+                {/*        ShowIcons={true}*/}
+                {/*        IsUp={true}*/}
+                {/*    />*/}
+                {/*</div>*/}
                 <LastOrders />
                 <div className="flex justify-center items-center">
                     <button

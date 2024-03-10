@@ -17,25 +17,6 @@ const CustomerOrderDetail = ({ orderId }) => {
             ? ordersList.find((order) => order.id == orderId)
             : null;
 
-    const fetchOrderData = async () => {
-        try {
-            const ordersResponse = await AxiosInstance.get(
-                `orders?items&item=${orderId}`,
-            );
-
-            console.log("ordersResponse >>>", ordersResponse.data);
-            if (ordersResponse.data) {
-                console.log(Object.values(ordersResponse?.data?.data));
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-        }
-    };
-    useEffect(() => {
-        fetchOrderData().then(() => {});
-    }, []);
-
     console.log("singleOrder", singleOrder);
     console.log("orderlist", ordersList);
 

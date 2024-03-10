@@ -18,7 +18,7 @@ class RestaurantStyleSeeder extends Seeder
     public function run($assets): void
     {
         // use public seeder folder
-        $logo_file = new UploadedFile(public_path('seeders/logo.png'), true);
+        $logo_file = new UploadedFile(public_path('assets/default_logo.png'), true);
         $logo = $assets . store_image($logo_file, RestaurantStyle::STORAGE, 'logo');
 
         $banner1_file = new UploadedFile(public_path('seeders/banner_1.jpeg'), true);

@@ -57,16 +57,16 @@ const SideNavbar = () => {
             title: t("Profile"),
             link: "/dashboard#Profile",
         },
-        {
-            id: 4,
-            imgUrl: CardIcon,
-            activeImgUrl: CardWhiteIcon,
-            title: t("Payment"),
-            link: "/dashboard#Payment",
-        },
+        // {
+        //     id: 4,
+        //     imgUrl: CardIcon,
+        //     activeImgUrl: CardWhiteIcon,
+        //     title: t("Payment"),
+        //     link: "/dashboard#Payment",
+        // },
     ];
 
-    const pages = ["Profile", "Orders", "Payment", "Dashboard"];
+    const pages = ["Profile", "Orders", "Dashboard"]; // @TODO: add Payment
     pages.forEach(function (page) {
         if (
             window.location.href.indexOf(`#${page.toLowerCase()}`) > -1 ||
@@ -89,9 +89,6 @@ const SideNavbar = () => {
         }
     }, [status]);
 
-    console.log("status updated", status);
-    console.log("saveProfile", saveProfileChange);
-
     return (
         <div className="mt-5">
             <div className="p-4 flex flex-col gap-4">
@@ -107,7 +104,7 @@ const SideNavbar = () => {
                 ))}
             </div>
 
-            <div className={"lg:hidden mt-5"}>
+            <div className={"mt-5"}>
                 <LanguageButton id={"test"} />
 
                 <div className={"w-[100%] mx-auto p-1 mt-5"}>

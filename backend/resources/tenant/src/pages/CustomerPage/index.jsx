@@ -15,6 +15,7 @@ import {
 } from "../../redux/NewEditor/customerSlice";
 import AxiosInstance from "../../axios/axios";
 import { useTranslation } from "react-i18next";
+import {changeRestuarantEditorStyle} from "../../redux/NewEditor/restuarantEditorSlice";
 
 export const CustomerPage = () => {
     const dispatch = useDispatch();
@@ -27,21 +28,23 @@ export const CustomerPage = () => {
     const [searchParam] = useSearchParams();
     const [showOrderDetail, setShowOrderDetail] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [showMenu, setShowMenu] = useState(true);
 
     const TABS = {
         dashboard: t("Dashboard"),
         orders: t("Orders"),
         profile: t("Profile"),
-        payment: t("Payment"),
+        // payment: t("Payment"), // @TODO: Add it again once payment cards logic finished
     };
 
-    const orderId = searchParam.get("orderId");
-    console.log("orderId", orderId);
+    let orderId = searchParam.get("orderId");
+
+    console.log("chParam.get(orde >>", orderId);
 
     useEffect(() => {
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
         setIsMobile(isMobile);
+        fetchResStyleData()
     }, []);
 
     useEffect(() => {
@@ -51,6 +54,18 @@ export const CustomerPage = () => {
             setShowOrderDetail(false);
         }
     }, [orderId]);
+
+
+    const fetchResStyleData = async () => {
+        try {
+            AxiosInstance.get(`restaurant-style`).then((response) =>
+                dispatch(changeRestuarantEditorStyle(response.data?.data)),
+            );
+        } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
+            console.log(error);
+        }
+    };
 
     const fetchOrdersData = async () => {
         try {
@@ -92,13 +107,21 @@ export const CustomerPage = () => {
         fetchCardsData().then(() => {});
     }, []);
 
+
+
+    console.log("showOrderDetail :> ", showOrderDetail);
+
     return (
         <div>
-            <NavbarCustomer customerDashboard={true} />
+            <NavbarCustomer
+                customerDashboard={true}
+                setShowMenu={setShowMenu}
+                showMenu={showMenu}
+            />
             <div className="flex bg-white h-[calc(100vh-75px)] w-full transition-all">
                 <div
                     className={`transition-all ${
-                        isMobile ? "flex-[0] hidden w-0" : "flex-[20%]"
+                        (isMobile || !showMenu) ? "flex-[0] hidden w-0" : "flex-[20%]"
                     } xl:flex-[20%] laptopXL:flex-[17%] overflow-hidden bg-white h-full `}
                 >
                     <SideNavbar />
@@ -108,18 +131,18 @@ export const CustomerPage = () => {
                         isMobile ? "flex-[100%] w-full" : "flex-[80%]"
                     } xl:flex-[80%] laptopXL:flex-[83%] overflow-x-hidden bg-neutral-100 h-full overflow-y-scroll hide-scroll`}
                 >
-                    {activeNavItem === TABS.dashboard && !showOrderDetail ? (
+                    {t(activeNavItem) === TABS.dashboard && !showOrderDetail ? (
                         <CustomerDashboard />
-                    ) : activeNavItem === TABS.orders && !showOrderDetail ? (
+                    ) : t(activeNavItem) === TABS.orders && !showOrderDetail ? (
                         <CustomerOrder />
-                    ) : activeNavItem === TABS.profile && !showOrderDetail ? (
+                    ) : t(activeNavItem) === TABS.profile && !showOrderDetail ? (
                         <CustomerProfile />
-                    ) : activeNavItem === TABS.payment && !showOrderDetail ? (
+                    ) : t(activeNavItem) === TABS.payment && !showOrderDetail ? (
                         <CustomerPayment cardsList={cardsList} />
                     ) : (
                         <></>
                     )}
-                    {showOrderDetail && (
+                    {showOrderDetail && orderId && (
                         <CustomerOrderDetail orderId={orderId} />
                     )}
                 </div>

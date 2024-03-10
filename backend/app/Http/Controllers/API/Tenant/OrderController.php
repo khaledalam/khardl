@@ -126,7 +126,6 @@ class  OrderController extends BaseRepositoryController
 
     public function handelDeliveryOrder($order,$request)
     {
-
         $settings = Setting::first();
         if($settings && $settings->drivers_option && $settings->delivery_companies_option){
             if($settings->limit_delivery_company){
@@ -148,7 +147,6 @@ class  OrderController extends BaseRepositoryController
     }
     public function assignOrderToDC($exceptJson,$order,$status)
     {
-
         $deliveryCompanies = DeliveryCompanies::assign($order,$order->user);
         if(empty($deliveryCompanies)){
             if ($exceptJson) {
