@@ -20,6 +20,8 @@ use App\Repositories\API\CustomerOrderRepository;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
+use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 
 class  OrderController extends BaseRepositoryController
@@ -68,13 +70,14 @@ class  OrderController extends BaseRepositoryController
         $statusLog->status = $request->status;
 
         if($request->status == Order::REJECTED && $request->reason){
+
             $order->update([
                 'status' => $request->status,
                 'reject_or_cancel_reason' => $request->reason
             ]);
-            // if($order->isDelivery()){
-            //     (new AbstractDeliveryCompany)->cancelOtherOrders('All',$order);
-            // }
+            if($order->isDelivery()){
+                (new Cervo)->cancelOtherOrders('All',$order);
+            }
         }
         switch ($request->status) {
             case Order::PENDING:
