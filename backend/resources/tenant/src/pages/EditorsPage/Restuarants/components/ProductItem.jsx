@@ -943,23 +943,6 @@ const ProductItem = ({
                                         />
                                     </div>
 
-                                    <div
-                                        onClick={() => navigate("/cart")}
-                                        style={{
-                                            backgroundColor: cartBgcolor
-                                                ? cartBgcolor
-                                                : "#F2FF00",
-                                        }}
-                                        className="w-[45px] h-[45px] relative flex items-center justify-center rounded-lg cursor-pointer"
-                                    >
-                                        <img
-                                            src={cartImg}
-                                            alt={"cart"}
-                                            className="p-2"
-                                            style={{ filter: "invert(1)" }}
-                                        />
-                                    </div>
-
                                     {categories?.length > 0 ? (
                                         <div
                                             style={{
