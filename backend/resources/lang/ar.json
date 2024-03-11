@@ -11,6 +11,7 @@
     "(and :count more error)":"وخطأ اخر",
     "(and :count more errors)":"و :count اخطاء اخري",
     ":name is not available":":name غير متاح",
+    ":branch is closed":":branch مغلق",
     ":option is required":":option مطلوب",
     ":option is required for :item":":option مطلوب للمنتج :item",
     "Maximum :option options for :item is ":"اقصي عدد خيارات للخبار :option للمنتح :item هو",
