@@ -72,26 +72,57 @@ if (!function_exists('sendPushNotification')) {
                 ];
                 return $pushService->sendCloudMessage($content);
             } catch (\Exception $e) {
-                dd($e->getMessage());
                 \Sentry\captureException($e);
             }
         }
         return;
     }
-}if (!function_exists('sendMultiPushNotification')) {
-    function sendMultiPushNotification($data, $title, $tokens)
+}
+if (!function_exists('sendMultiPushNotification')) {
+    function sendMultiPushNotification($data, $title, $body, $tokens, $type, $place = 'both')
     {
+        $readyData = [
+            'type' => $type,
+            'place' => $place,
+        ];
+        $notificationData = [
+            'title' => $title,
+            'body' => $body,
+        ];
+        $data = array_merge($data, $readyData, $notificationData);
+        try {
+            $pushService = new PushNotificationService();
+            return $pushService->sendMultiCloudMessage($title, $body, $data, $tokens);
+        } catch (\Exception $e) {
+            \Sentry\captureException($e);
+        }
+        return;
+    }
+}
+if (!function_exists('SendTopicMessage')) {
+    function SendTopicMessage($data, $title, $body, $tokens, $type, $topic = 'internal')
+    {
+        $readyData = [
+            'type' => $type,
+            'place' => $topic,
+        ];
+        $notificationData = [
+            'title' => $title,
+            'body' => $body,
+        ];
+        $data = array_merge($data, $readyData, $notificationData);
         try {
             $pushService = new PushNotificationService();
             $content = [
                 'notification' => [
-                    'title' => $title,
-                    'data' => $data
+                    $notificationData
                 ],
+                'data' => $data,
+                'topic' => $topic
             ];
-            return $pushService->sendMultiCloudMessage($content,$tokens);
+            return $pushService->sendTopicMessage($content, $topic, $tokens);
         } catch (\Exception $e) {
-            logger($e);//TODO: Send exception to sentry
+            \Sentry\captureException($e);
         }
         return;
     }

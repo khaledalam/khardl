@@ -141,11 +141,16 @@ class Yeswa  extends AbstractDeliveryCompany
             'name' => $order?->user?->full_name,
             'company' => 'Yeswa'
         ]);
+        $title = __('Order has been delivered');
         //Send notification to all worker
-        $workers = RestaurantUser::workers()
-        ->where('branch_id',$order->branch_id)
-        ->get();
-        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
+        $query = RestaurantUser::workers()
+            ->where('branch_id', $order->branch_id);
+        $workers = $query->get();
+        if ($workers->count())
+            Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
+        $workersTokens = $query->where('device_token', '!=', null)->pluck('device_token')->all();
+        $data = $order->only(['id', 'user_id', 'branch_id','delivery_type_id','total']);
+        SendTopicMessage($data ,$title, $message, $workersTokens, $type->value);
     }
     public function  cancelOrder($id): bool{
         try {

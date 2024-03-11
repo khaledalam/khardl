@@ -105,6 +105,7 @@ class OrderService
         $workers = RestaurantUser::workers()
         ->where('branch_id',$order->branch_id)
         ->get();
-        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
+        if($workers->count())
+            Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
     }
 }
