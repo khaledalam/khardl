@@ -135,6 +135,9 @@ class  OrderController extends BaseRepositoryController
                 AssignDeliveryCompany::dispatch($request->expectsJson(),$order,$request->status)->delay(now()->addMinutes(config('application.limit_delivery_company') ?? 15));
             }
             $order->update(['status' => $request->status]);
+            if ($request->expectsJson()) {
+                return $this->sendResponse(null, __('Order has been updated successfully.'));
+            }
             return redirect()->back()->with('success',__('Order has been updated successfully.'));
         }elseif($settings && $settings->delivery_companies_option){
             $order->update(['status' => $request->status]);
