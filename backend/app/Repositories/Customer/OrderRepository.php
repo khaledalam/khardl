@@ -64,9 +64,7 @@ class OrderRepository
             $statusLog->notes = 'Order Notes: ' . $request->order_notes;
             $statusLog->saveOrFail();
             $this->sendNotifications($user, $order);
-            dd(1);
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){
-
 
                 // @TODO: fetch transaction fee percentage that need to be deduce from
                 // each TAP transaction from super admin dashboard settings
