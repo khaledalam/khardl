@@ -123,17 +123,31 @@ class OrderRepository
 
         //Internal notification
         $type = NotificationTypeEnum::OrderCreated;
-        $message = __('New order has been created for customer :name.', ['name' => $user->full_name]);
-        $title = __('New order');
+        $message = [
+            'en' => 'New order has been created for customer (' . $user->full_name . ').',
+            'ar' => 'تم انشاء طلب لعميل (' . $user->full_name . ').'
+        ];
+        $title = [
+            'ar' => 'طلب جديد',
+            'en' => 'New order'
+        ];
         //Send notification to all worker
-        $query = RestaurantUser::workers()
-            ->where('branch_id', $order->branch_id);
-        $workers = $query->get();
-        if ($workers->count())
+        $workers = RestaurantUser::workers()
+            ->where('branch_id', $order->branch_id)
+            ->get();
+        if ($workers->count()) {
             Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
-
-        $workersTokens = $query->where('device_token', '!=', null)->pluck('device_token')->all();
-        $data = $order->only(['id', 'user_id', 'branch_id','delivery_type_id','total']);
-        sendMultiPushNotification($data ,$title, $message, $workersTokens, $type->value);
+            $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
+            $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
+        }
+    }
+    public function handleSingleNotification($workers, $data, $title, $body, $type)
+    {
+        foreach ($workers as $worker) {
+            $lang = $worker->default_lang == 'ar' ? 'ar' : 'en';
+            $notifyTitle = $title[$lang];
+            $notifyBody = $body[$lang];
+            sendPushNotification($worker, $data, $notifyTitle, $notifyBody, $type);
+        }
     }
 }
