@@ -19,7 +19,7 @@ const PrimaryOrderSelect = ({
             className={`flex flex-col gap-2 ${widthStyle ? widthStyle : "w-full"}`}
         >
             {label && (
-                <label className="text-[14px] font-normal text-neutral-700">
+                <label className="text-[13px] font-normal text-neutral-700">
                     {label}
                 </label>
             )}
@@ -37,7 +37,7 @@ const PrimaryOrderSelect = ({
                     } `}
                 >
                     <span
-                        className={`text-sm md:text-[1rem] ${
+                        className={`text-sm md:text-[0.8rem] ${
                             background ? "text-white" : "text-neutral-500"
                         }`}
                     >
@@ -62,7 +62,7 @@ const PrimaryOrderSelect = ({
                                         handleDropdown();
                                     }}
                                 >
-                                    <h3 className="text-[14px] text-neutral-500">
+                                    <h3 className="text-[12px] text-neutral-500">
                                         {item.text}
                                     </h3>
                                 </div>

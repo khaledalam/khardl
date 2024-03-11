@@ -83,12 +83,12 @@ const LanguageButton = ({ id }) => {
         >
             <div
                 onClick={handleLanguageChange}
-                className="w-full mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center "
+                className="w-full mx-auto flex flex-row gap-1 bg-neutral-100 rounded-lg border  items-center "
                 style={{
                     borderColor: restuarantStyle?.categoryDetail_cart_color,
                 }}
             >
-                <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
+                <div className="w-[50px] h-[50px] rounded-xl p-2  flex items-center justify-center">
                     <img src={worldLangIcon} alt="language" />
                 </div>
                 <h3 className=""> {buttonText}</h3>

@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import imgEyesWhite from "../../../assets/eyesWhite.svg";
 import imgEyes from "../../../assets/eyeIcon.svg";
 
-const Eyes = () => {
+const Eyes = ({cursorPointer = false, onClick = null}) => {
     const [isHovering, setIsHovering] = useState(false);
 
     return (
         <div
+            onClick={onClick}
             onMouseEnter={() => {
                 setIsHovering((prev) => !prev);
             }}
@@ -18,7 +19,7 @@ const Eyes = () => {
             <img
                 src={isHovering ? imgEyesWhite : imgEyes}
                 alt=""
-                className="object-contain w-full h-full"
+                className={`object-contain w-full h-full ${cursorPointer && 'cursor-pointer'}`}
             />
         </div>
     );

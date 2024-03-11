@@ -42,12 +42,12 @@ const OrderDetailsTable = ({ data = [], language }) => {
             <table className="w-full table">
                 <thead className="w-full ">
                     <tr className="text-black h-[60px]">
-                        <th className="font-bold text-[1rem]">Product</th>
-                        <th className="font-bold text-[1rem]">Name</th>
-                        <th className="font-bold text-[1rem]">Qty</th>
-                        <th className="font-bold text-[1rem]">Additional</th>
-                        <th className="font-bold text-[1rem]">Price</th>
-                        <th className="font-bold text-[1rem]">Notes</th>
+                        <th className="font-bold text-[1rem]">{t('Product')}</th>
+                        <th className="font-bold text-[1rem]">{t('Name')}</th>
+                        <th className="font-bold text-[1rem]">{t('Quantity')}</th>
+                        <th className="font-bold text-[1rem]">{t('additional')}</th>
+                        <th className="font-bold text-[1rem]">{t('price')}</th>
+                        <th className="font-bold text-[1rem]">{t('Notes')}</th>
                     </tr>
                 </thead>
                 <tbody>

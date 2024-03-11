@@ -377,12 +377,12 @@ const OuterSidebarNav = ({ id }) => {
                         navigate("/");
                         closeMenu();
                     }}
-                    className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
+                    className="w-[90%] mx-auto flex flex-row gap-1 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
                     style={{
                         borderColor: restuarantStyle?.categoryDetail_cart_color,
                     }}
                 >
-                    <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
+                    <div className="w-[50px] h-[50px] rounded-xl p-2  flex items-center justify-center">
                         <img src={homeIcon} alt="home" />
                     </div>
                     <h3 className="">{t("Homepage")}</h3>
@@ -440,13 +440,13 @@ const OuterSidebarNav = ({ id }) => {
                                             handleRedirect(role);
                                             closeMenu();
                                         }}
-                                        className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border items-center cursor-pointer"
+                                        className="w-[90%] mx-auto flex flex-row gap-1 bg-neutral-100 rounded-lg border items-center cursor-pointer"
                                         style={{
                                             borderColor:
                                                 restuarantStyle?.categoryDetail_cart_color,
                                         }}
                                     >
-                                        <div className="w-[60px] h-[50px] rounded-xl p-2 flex items-center justify-center">
+                                        <div className="w-[50px] h-[50px] rounded-xl p-2 flex items-center justify-center">
                                             <img
                                                 src={dashboardIcon}
                                                 alt="home"
@@ -465,13 +465,13 @@ const OuterSidebarNav = ({ id }) => {
 
                                             closeMenu();
                                         }}
-                                        className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
+                                        className="w-[90%] mx-auto flex flex-row gap-1 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
                                         style={{
                                             borderColor:
                                                 restuarantStyle?.categoryDetail_cart_color,
                                         }}
                                     >
-                                        <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
+                                        <div className="w-[50px] h-[50px] rounded-xl p-2  flex items-center justify-center">
                                             <img
                                                 src={dashboardIcon}
                                                 alt="home"
@@ -488,13 +488,13 @@ const OuterSidebarNav = ({ id }) => {
                                             handleRedirect(role);
                                             closeMenu();
                                         }}
-                                        className="w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
+                                        className="w-[90%] mx-auto flex flex-row gap-1 bg-neutral-100 rounded-lg border  items-center cursor-pointer "
                                         style={{
                                             borderColor:
                                                 restuarantStyle?.categoryDetail_cart_color,
                                         }}
                                     >
-                                        <div className="w-[60px] h-[50px] rounded-xl p-2  flex items-center justify-center">
+                                        <div className="w-[50px] h-[50px] rounded-xl p-2  flex items-center justify-center">
                                             <img
                                                 src={dashboardIcon}
                                                 alt="home"

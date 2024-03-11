@@ -73,7 +73,7 @@ const CustomerOrder = () => {
                 <img src={orderIcon} alt="dashboard" className="" />
                 <h3 className="text-lg font-medium">{t("Orders")}</h3>
             </div>
-            <div className="my-5 flex flex-col md:flex-row w-full lg:w-[60%] items-center gap-4">
+            <div className="my-5 flex flex-col md:flex-row w-full items-center gap-4" style={{maxWidth: '700px'}}>
                 <div className="w-full md:w-2/3">
                     <PrimaryOrderSearch
                         value={search}
@@ -88,16 +88,17 @@ const CustomerOrder = () => {
                             }
                             handleChange={(value) => setOrderStatus(value)}
                             options={[
+                                { value: "", text: t("All") },
                                 {
                                     value: "receivedByRestaurant",
-                                    text: "Received by Restaurant",
+                                    text: t("Received by Restaurant"),
                                 },
-                                { value: "pending", text: "Pending" },
-                                { value: "accepted", text: "Accepted" },
-                                { value: "rejected", text: "Rejected" },
-                                { value: "completed", text: "Completed" },
-                                { value: "ready", text: "Ready" },
-                                { value: "cancelled", text: "Cancelled" },
+                                { value: "pending", text: t("Pending") },
+                                { value: "accepted", text: t("Accepted") },
+                                { value: "rejected", text: t("Rejected") },
+                                { value: "completed", text: t("Completed") },
+                                { value: "ready", text: t("Ready") },
+                                { value: "cancelled", text: t("Cancelled") },
                             ]}
                         />
                     </div>
@@ -110,12 +111,12 @@ const CustomerOrder = () => {
                             options={[
                                 {
                                     value: "today",
-                                    text: "Today",
+                                    text: t("Today"),
                                 },
-                                { value: "last_day", text: "Last Day" },
-                                { value: "last_week", text: "Last Week" },
-                                { value: "last_month", text: "Last Month" },
-                                { value: "last_year", text: "Last Year" },
+                                { value: "last_day", text: t("Yesterday") },
+                                { value: "last_week", text: t("Last Week") },
+                                { value: "last_month", text: t("Last Month") },
+                                { value: "last_year", text: t("Last Year") },
                             ]}
                         />
                     </div>
