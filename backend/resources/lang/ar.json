@@ -1019,5 +1019,7 @@
     "token saved successfully.":"تم حفظ رقم الجهاز, بنجاح.",
     "New order has been created for customer :name.":"تم انشاء طلب لعميل :name",
     "Order has been delivered for customer (:name).":"تم توصيل الطلب للعميل :name",
-    "Order has been delivered for customer (:name) by delivery company (:company).":"تم توصيل الطلب للعميل :name عن طريقة شركة التوصيل :company"
+    "Order has been delivered for customer (:name) by delivery company (:company).":"تم توصيل الطلب للعميل :name عن طريقة شركة التوصيل :company",
+    "New order":"طلب جديد",
+    "Order has been delivered":"تم تسليم الطلب"
 }

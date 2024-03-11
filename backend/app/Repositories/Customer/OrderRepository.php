@@ -54,7 +54,6 @@ class OrderRepository
                 'manual_order_first_name' => $request->manual_order_first_name,
                 'manual_order_last_name' => $request->manual_order_last_name
             ]);
-            $this->sendNotifications($user, $order);
             if($discount&&$coupon){
                 $user->coupons()->attach($coupon->id);
             }
@@ -64,7 +63,8 @@ class OrderRepository
             $statusLog->status = Order::PENDING;
             $statusLog->notes = 'Order Notes: ' . $request->order_notes;
             $statusLog->saveOrFail();
-
+            $this->sendNotifications($user, $order);
+            dd(1);
             if($cart->hasPaymentCashOnDelivery($request->payment_method)){
 
 
@@ -85,6 +85,7 @@ class OrderRepository
                 DB::commit();
                 return $order;
             }
+
         }catch(Exception $e){
             DB::rollBack();
             logger($e->getMessage());
@@ -119,13 +120,34 @@ class OrderRepository
     }
     public function sendNotifications($user, $order)
     {
+
         //Internal notification
         $type = NotificationTypeEnum::OrderCreated;
-        $message = __('New order has been created for customer :name.',['name' => $user->full_name]);
+        $message = [
+            'en' => 'New order has been created for customer (' . $user->full_name . ').',
+            'ar' => 'تم انشاء طلب لعميل (' . $user->full_name . ').'
+        ];
+        $title = [
+            'ar' => 'طلب جديد',
+            'en' => 'New order'
+        ];
         //Send notification to all worker
         $workers = RestaurantUser::workers()
-        ->where('branch_id',$order->branch_id)
-        ->get();
-        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
+            ->where('branch_id', $order->branch_id)
+            ->get();
+        if ($workers->count()) {
+            Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
+            $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
+            $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
+        }
+    }
+    public function handleSingleNotification($workers, $data, $title, $body, $type)
+    {
+        foreach ($workers as $worker) {
+            $lang = $worker->default_lang == 'ar' ? 'ar' : 'en';
+            $notifyTitle = $title[$lang];
+            $notifyBody = $body[$lang];
+            sendPushNotification($worker, $data, $notifyTitle, $notifyBody, $type);
+        }
     }
 }

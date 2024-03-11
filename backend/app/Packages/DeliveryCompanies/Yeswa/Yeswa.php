@@ -140,20 +140,37 @@ class Yeswa  extends AbstractDeliveryCompany
 
         }
     }
-    public function sendNotification($order)
+    public function sendNotifications($user, $order)
     {
+
         //Internal notification
         $type = NotificationTypeEnum::OrderDelivered;
-        $message = __('Order has been delivered for customer (:name) by delivery company (:company).',
-        [
-            'name' => $order?->user?->full_name,
-            'company' => 'Yeswa'
-        ]);
+        $message = [
+            'en' => 'Order has been delivered for customer (' . $user->full_name . '). by Yeswa delivery company',
+            'ar' => 'تم توصيل الطلب للعميل (' . $user->full_name . ') بواسطة شركة الشحن يسوا'
+        ];
+        $title = [
+            'ar' => 'الطلب وصل',
+            'en' => 'Order delivered'
+        ];
         //Send notification to all worker
         $workers = RestaurantUser::workers()
-        ->where('branch_id',$order->branch_id)
-        ->get();
-        if($workers->count())Notification::send($workers, new NotificationAction($type, $message, $order));
+            ->where('branch_id', $order->branch_id)
+            ->get();
+        if ($workers->count()) {
+            Notification::send($workers, new NotificationAction($type, $message, $order->toArray()));
+            $data = $order->only(['id', 'user_id', 'branch_id', 'delivery_type_id', 'total']);
+            $this->handleSingleNotification($workers, $data, $title, $message, $type->value);
+        }
+    }
+    public function handleSingleNotification($workers, $data, $title, $body, $type)
+    {
+        foreach ($workers as $worker) {
+            $lang = $worker->default_lang == 'ar' ? 'ar' : 'en';
+            $notifyTitle = $title[$lang];
+            $notifyBody = $body[$lang];
+            sendPushNotification($worker, $data, $notifyTitle, $notifyBody, $type,'internal');
+        }
     }
     public function  cancelOrder($id): bool{
         try {

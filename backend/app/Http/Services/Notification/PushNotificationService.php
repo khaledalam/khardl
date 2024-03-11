@@ -5,6 +5,7 @@ namespace App\Http\Services\Notification;
 
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 class PushNotificationService
 {
@@ -21,10 +22,21 @@ class PushNotificationService
         $messaging->send($message);
         return response()->json(['message' => 'Push notification sent successfully']);
     }
-    public function sendMultiCloudMessage($content,$deviceTokens)
+    public function sendMultiCloudMessage($title, $body, $data, $deviceTokens)
     {
+        $messaging = $this->firebase->createMessaging();
+        $message = CloudMessage::new();
+        $message = $message->withNotification(Notification::create($title, $body))
+        ->withData($data);
+        $messaging->sendMulticast($message, $deviceTokens);
+        return response()->json(['message' => 'Push notification sent successfully']);
+    }
+    public function sendTopicMessage($content, $topic, $tokens)
+    {
+        $messaging = $this->firebase->createMessaging();
+        $messaging->subscribeToTopic($topic, $tokens);
         $message = CloudMessage::fromArray($content);
-        Firebase::messaging()->sendMulticast($message, $deviceTokens);
+        $messaging->send($message);
         return response()->json(['message' => 'Push notification sent successfully']);
     }
 }
