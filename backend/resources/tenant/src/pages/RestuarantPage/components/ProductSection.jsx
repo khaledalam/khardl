@@ -112,10 +112,8 @@ const ProductSection = ({ categories, isMobile }) => {
                                                                 ]
                                                             }
                                                             dropdown_required={
-                                                                product?.dropdown_required ?? [
-                                                                    "true",
-                                                                    "false",
-                                                                ]
+                                                                product?.dropdown_required ??
+                                                                []
                                                             }
                                                             dropdown_input_titles={
                                                                 product?.dropdown_input_titles ?? [
