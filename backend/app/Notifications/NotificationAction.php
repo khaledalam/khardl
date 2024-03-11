@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Enums\NotificationTypeEnum;
+use App\Models\Tenant;
 use Illuminate\Bus\Queueable;
 use App\Enums\NotificationType;
 use Illuminate\Notifications\Notification;
@@ -53,8 +54,8 @@ class NotificationAction extends Notification implements ShouldBroadcast, Should
   {
     return [
         'notification_type'   => $this->type,
-        'item_id'             => $this->model?->id,
-        'data'                => $this->model->toArray(),
+        'item_id'             => $this->model['id'],
+        'data'                => $this->model,
         'message'             => $this->message,
         'created_at'          => (string)now(),
     ];

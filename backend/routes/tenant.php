@@ -344,6 +344,7 @@ Route::middleware([
                     Route::post('change-password', 'changePassword');
                 });
             });
+            Route::post('change-language',[\App\Http\Controllers\API\Tenant\Profile\ProfileController::class,'changeLang']);
             Route::apiResource('categories', CategoryController::class)->only([
                 'index'
             ]);
