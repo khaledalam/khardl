@@ -4,6 +4,7 @@ namespace App\Models\Tenant;
 
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\PaymentMethod;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Database\Factories\tenant\BranchFactory;
@@ -95,6 +96,18 @@ class Branch extends Model
     {
       return BranchFactory::new();
     }
+
+    public function isClosed(): bool
+    {
+        $todayDay = strtolower(date("l"));
+        $dayClosed = $todayDay . '_closed';
+        $openingTodayTime = $todayDay . '_open';
+        $closingTodayTime = $todayDay . '_close';
+
+        return ($this->{$dayClosed}
+                || Carbon::parse($this->{$openingTodayTime})->isFuture()
+                || Carbon::parse($this->{$closingTodayTime})->isPast());
+    }
     // public function getDeliveryAvailabilityAttribute(){
     //     $delivery= $this->delivery_types()->where('name',DeliveryType::DELIVERY)->count();
     //     if(!$delivery) return false;
@@ -104,6 +117,6 @@ class Branch extends Model
     // }
     // public function getPickupAvailabilityAttribute(){
     //     return ( $this->delivery_types()->where('name',DeliveryType::PICKUP)->count())?true:false;
-    // } 
+    // }
 
 }
