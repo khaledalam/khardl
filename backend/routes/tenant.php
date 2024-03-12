@@ -102,7 +102,7 @@ Route::group([
 
         Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
 
-        Route::middleware(['restaurantOrWorker'])->group(function () {
+        Route::middleware(['restaurantOrWorker','ActiveRestaurantAndBranch'])->group(function () {
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -329,7 +329,7 @@ Route::middleware([
         Route::post('login', [APILoginController::class, 'login']);
 
 
-        Route::middleware('auth:sanctum')->group(function () {
+        Route::middleware(['auth:sanctum','ActiveRestaurantAndBranch'])->group(function () {
             //Notifications
             //External notification (Push)
             Route::post('save-token',[PushNotificationController::class,'saveToken']);

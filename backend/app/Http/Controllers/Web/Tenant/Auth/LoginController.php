@@ -54,11 +54,16 @@ class LoginController extends BaseController
         if (!Auth::attempt($credentials,true)) {
             return $this->sendError( __('Invalid email or password'),[] );
         }
-        if(!Auth::user()?->isRestaurantOwner() && (!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE)){
-            Auth::logout();
-            return $this->sendError(__('Only restaurant owner can login'), []);
-        }
         $user = Auth::user();
+        if(!$user?->isRestaurantOwner() && (!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE)){
+            Auth::logout();
+            return $this->sendError(__("Website doesn't have active subscription, Only restaurant owner can login"), []);
+        }
+        if(($user?->isDriver()  || $user?->isWorker() ) && !$user->branch?->active){
+            Auth::logout();
+            return $this->sendError(__('Cannot login, Branch is not active'), []);
+        }
+       
 
         $data = [
             'user'=>$user
