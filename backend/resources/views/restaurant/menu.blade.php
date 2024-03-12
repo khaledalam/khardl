@@ -4,6 +4,45 @@
 
 @section('content')
 <!--begin::Content-->
+@if($user->isRestaurantOwner())
+<div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Inbox App - Messages -->
+            <div class="flex-lg-row-fluid my-2">
+                <!--begin::Card-->
+                <div class="card">
+                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                        <div class="d-flex flex-wrap gap-1">
+                            <h3 class="text-primary">{{ __('Branches') }}</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach ($branches as $branch)
+                            <div class="col-md-3">
+                                <a href="{{ route('restaurant.menu',['branchId' => $branch->id]) }}">
+                                    <button type="button" class="btn btn-primary">
+                                        {{ $branch->name }}
+                                    </button>
+                                </a>
+                            </div>
+                            @endforeach
+                        </div>
+                        </ul>
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+        </div>
+        <!--end::Inbox App - Messages -->
+    </div>
+    <!--end::Container-->
+</div>
+@endif
 <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
     <!--begin::Post-->

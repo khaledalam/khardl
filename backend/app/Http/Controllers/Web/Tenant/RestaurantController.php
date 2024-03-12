@@ -550,7 +550,8 @@ class RestaurantController extends BaseController
         } else {
             $branch = Branch::find($user->branch->id);
         }
-        return view('restaurant.menu', compact('user', 'categories', 'branch', 'branchId'));
+        $branches = Branch::all();
+        return view('restaurant.menu', compact('user', 'categories', 'branch', 'branchId','branches'));
     }
     public function noBranches()
     {
