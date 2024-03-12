@@ -284,7 +284,7 @@
 
 
                     <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" id="myForm" method="POST" enctype="multipart/form-data">
+                    <form id="kt_modal_new_target_form" class="form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!--begin::Heading-->
                         <div class="mb-13 text-center">
@@ -319,10 +319,10 @@
                             </ul>
                             <div class="tab-content mt-3">
                                 <div class="tab-pane fade show active" id="name-en">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}"   name="item_name_en" />
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in english') }}" name="item_name_en"/>
                                 </div>
                                 <div class="tab-pane fade" id="name-ar">
-                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}"   name="item_name_ar" />
+                                    <input type="text" class="form-control form-control-solid"  rows="3" placeholder="{{ __('Enter name in arabic') }}" name="item_name_ar"/>
                                 </div>
                             </div>
                         </div>
@@ -424,161 +424,6 @@
         </div>
         <!--end::Modal dialog-->
     </div>
-    <!--end::Modal - New Target-->
-
-    <!--begin::Modal - New Target-->
-    {{-- <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
-        <!--begin::Modal dialog-->
-        <div class="modal-dialog modal-dialog-centered mw-650px">
-            <!--begin::Modal content-->
-            <div class="modal-content rounded">
-                <!--begin::Modal header-->
-                <div class="modal-header pb-0 border-0 justify-content-end">
-                    <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-khardl" data-bs-dismiss="modal">
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                        <span class="svg-icon svg-icon-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
-                            </svg>
-                        </span>
-                        <!--end::Svg Icon-->
-                    </div>
-                    <!--end::Close-->
-                </div>
-                <!--begin::Modal header-->
-                <!--begin::Modal body-->
-                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-
-
-                    <!-- Toolbar -->
-                    <div class="engage-toolbar d-flex position-fixed px-5 fw-bolder zindex-2 top-50 end-0 transform-90 mt-20 gap-2">
-                        <!--begin::Demos drawer toggle-->
-                        <button id="addCheckbox" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Checkbox">
-                            <span id="create_new_checkbox">+ Checkbox</span>
-                        </button>
-                        <!--end::Demos drawer toggle-->
-                        <!--begin::Help drawer toggle-->
-                        <button id="addSelection" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Selection">
-                            <span id="create_new_selection">+ Selection</span>
-                        </button>                        <!--end::Help drawer toggle-->
-                        <!--begin::Purchase link-->
-                        <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0" title="Add Dropdown">
-                            <span id="create_new_Dropdown">+ Dropdown</span>
-                        </button>
-                        <!--end::Purchase link-->
-                    </div>
-
-
-
-
-                    <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="#" id="myForm">
-                        <!--begin::Heading-->
-                        <div class="mb-13 text-center">
-                            <!--begin::Title-->
-                            <h1 class="mb-3">Create New Items</h1>
-                            <!--end::Title-->
-                        </div>
-                        <!--end::Heading-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">Item photo</span>
-                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
-                            </label>
-                            <!--end::Label-->
-                            <input type="file" class="form-control form-control-solid" multiple placeholder="Enter Target Title" name="photo[]" />
-                        </div>
-                        <!--end::Input group-->
-
-                         <!--begin::Input group-->
-                         <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                <span class="required">Item Title</span>
-                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
-                            </label>
-                            <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" name="input2[]" placeholder="Title">
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="row g-9 mb-8">
-                            <!--begin::Col-->
-                            <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-bold mb-2">price</label>
-                                <!--begin::Input-->
-                                <div class="position-relative d-flex align-items-center">
-                                    <!--begin::Datepicker-->
-                                    <input class="form-control form-control-solid ps-12" />
-                                    <!--end::Datepicker-->
-                                </div>
-                                <!--end::Input-->
-                            </div>
-                            <!--end::Col-->
-                            <!--begin::Col-->
-                            <div class="col-md-6 fv-row">
-                                <label class="required fs-6 fw-bold mb-2">Calories</label>
-                                <input class="form-control form-control-solid ps-12" />
-                            </div>
-                            <!--end::Col-->
-
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8">
-                            <label class="fs-6 fw-bold mb-2">Description</label>
-                            <textarea class="form-control form-control-solid" rows="3" name="description" placeholder="Write Description"></textarea>
-                        </div>
-                        <!--end::Input group-->
-
-
-
-                        <div id="checkboxes">
-                            <!-- Checkbox elements will be dynamically added here -->
-
-                        </div>
-
-
-                        <div id="selections">
-                            <!-- Checkbox elements will be dynamically added here -->
-                        </div>
-
-
-                        <div id="dropdowns">
-                            <!-- Checkbox elements will be dynamically added here -->
-                        </div>
-
-
-
-
-
-
-
-                        <!--begin::Actions-->
-                        <div class="text-center">
-                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Cancel</button>
-                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-khardl">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">{{ __('Please wait...') }}
-                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                            </button>
-                        </div>
-                        <!--end::Actions-->
-
-
-                    </form>
-                    <!--end:Form-->
-                </div>
-                <!--end::Modal body-->
-            </div>
-            <!--end::Modal content-->
-        </div>
-        <!--end::Modal dialog-->
-    </div> --}}
     <!--end::Modal - New Target-->
 
     <!--begin::Scrolltop-->
@@ -1047,19 +892,32 @@
                 return ;
             }
 
-
-
-            if(inputValueAR === '' && inputValue != ''){
-                alert(`Please fill name description in (Arabic) tab.`);
+            if (inputValueAR === '' && inputValue != ''){
+                alert("{{__('Please fill description in (Arabic) tab.')}}");
                 submitButton.disabled = false;
 
                 return ;
-            }else if(inputValue === '' && inputValueAR != ''){
-                alert(`Please fill name description in (English) tab.`);
+            } else if(inputValue === '' && inputValueAR != ''){
+                alert("{{__('Please fill description in (English) tab.')}}");
                 submitButton.disabled = false;
-
                 return ;
             }
+
+            var englishRegex = /^[0-9a-zA-Z\s]+$/;
+            var arabicRegex = /^[\u0600-\u06FF0-9\s]+$/;
+
+            if (!englishRegex.test(inputNameValue)) {
+                alert("{{__('English name is not valid')}}")
+                submitButton.disabled = false;
+                return ;
+            }
+
+            if (!arabicRegex.test(inputNameValueAR)) {
+                alert("{{__('Arabic name is not valid')}}");
+                submitButton.disabled = false;
+                return ;
+            }
+
             var waiting = document.querySelector('#waiting-item');
             waiting.style.display = 'block';
 

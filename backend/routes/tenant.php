@@ -138,6 +138,9 @@ Route::group([
 
             });
 
+            Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
+
+
             Route::middleware('restaurant')->group(function () {
 
                 // TAP Create Business
@@ -200,7 +203,6 @@ Route::group([
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
-                Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
                 Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
 
