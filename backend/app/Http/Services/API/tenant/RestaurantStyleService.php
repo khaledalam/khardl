@@ -82,7 +82,7 @@ class RestaurantStyleService
 
             $data->logo_url = $data->logo_url ?: $data->logo;
             // get branches of restaurant
-            $data['branches'] = Branch::all([
+            $data['branches'] = Branch::where('active',true)->get([
                 'name', 'id', 'lat', 'lng', 'preparation_time_delivery','delivery_availability', 'pickup_availability',
                 'monday_open',
                 'monday_close',

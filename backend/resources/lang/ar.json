@@ -1023,5 +1023,6 @@
     "Order has been delivered for customer (:name).":"تم توصيل الطلب للعميل :name",
     "Branch has been activated":"تم تنشيط الفرع",
     "Branch has been deactivated":"تم إلغاء تنشيط الفرع",
+    "This branch is no longer accepting orders":"هذا الفرع لم يعد يقبل الطلبات",
     "Order has been delivered for customer (:name) by delivery company (:company).":"تم توصيل الطلب للعميل :name عن طريقة شركة التوصيل :company"
 }

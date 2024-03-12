@@ -47,7 +47,10 @@ class OrderRequest extends FormRequest
 
         $validator->after(function ($validator) use($cart){
             $user = Auth::user();
+            if(!$cart->isActiveBranch()){
+                $validator->errors()->add('cart', __('This branch is no longer accepting orders'));
 
+            }
             if($this->delivery_type != DeliveryType::PICKUP && (!$user->address || !$user->lat || !$user->lng)){
                 $validator->errors()->add('address', __('Please update your location before place an order'));
                 return ;
