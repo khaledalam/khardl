@@ -190,7 +190,14 @@ return [
         "code" => "Coupon code",
         "module" => "Delivery company",
         "delivery_fee" => "Delivery fee",
-        "limit_delivery_company" => "Limit for drivers for pickup order"
+        "limit_delivery_company" => "Limit for drivers for pickup order",
+        "wallet.bank.name" => "Bank name",
+        "wallet.bank.account.number" => "Bank account number",
+        "wallet.bank.account.name" => "Company name",
+        "wallet.bank.documents.0.number" => "Bank Statement Number",
+        "wallet.bank.documents.0.images.0" => "Bank statement file",
+        "wallet.bank.documents.0.issuing_date" => "Bank Issuing date",
+        "brand.logo" => "Restaurant Logo"
     ],
 
 ];
