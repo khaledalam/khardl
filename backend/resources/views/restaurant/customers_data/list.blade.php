@@ -95,7 +95,7 @@
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3">{{ __('Edit') }}</a>
+                                                    <a href="{{ route('customers_data.edit',['restaurantUser' => $customer->id]) }}" class="menu-link px-3">{{ __('Edit') }}</a>
                                                 </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->

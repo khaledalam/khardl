@@ -26,3 +26,6 @@ input[type="email"]:-ms-input-placeholder {
 input[type="email"]::-webkit-input-placeholder {
     text-align: right;
 }
+[type="text"],[type="email"], [type="number"], [type="tel"], [type="url"]{
+    direction: rtl!important;
+}
