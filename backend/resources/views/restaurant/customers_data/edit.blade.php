@@ -110,7 +110,7 @@
                             <!--begin::Button-->
                             <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-khardl">
                                 <i class="bi bi-check2-square mx-1 text-black"></i>
-                                <span class="indicator-label">{{ __('edit')}}</span>
+                                <span class="indicator-label">{{ __('save')}}</span>
                                 <span class="indicator-progress">{{ __('please-wait')}}
                                     <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
