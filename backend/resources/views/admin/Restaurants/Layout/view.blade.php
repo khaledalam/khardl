@@ -261,7 +261,7 @@
 </div>
 @endsection
 
-@section('javascript')
+@section('js')
 <link rel="stylesheet" href="{{ global_asset('assets/css/data-tree.css')}}" />
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

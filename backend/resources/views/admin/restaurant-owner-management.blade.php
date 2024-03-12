@@ -154,17 +154,14 @@
             var form = button.closest('.delete-form');
 
             Swal.fire({
-                title: '{{ __('
-                are - you - sure ') }}'
+                title: '{{ __('are-you-sure') }}'
                 , text: "{{ __('you-wont-be-able-to-undo-this') }}"
                 , icon: 'warning'
                 , showCancelButton: true
                 , confirmButtonColor: '#d33'
                 , cancelButtonColor: '#3085d6'
-                , confirmButtonText: '{{ __('
-                delete ') }}'
-                , cancelButtonText: '{{ __('
-                cancel ') }}'
+                , confirmButtonText: '{{ __('delete ') }}'
+                , cancelButtonText: '{{ __('cancel') }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();

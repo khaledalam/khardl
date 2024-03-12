@@ -66,7 +66,6 @@
     <script>
         showAlert('success', '{{ session('success') }}');
 
-
         function showAlert(type, message) {
             Swal.fire({
                 icon: type,

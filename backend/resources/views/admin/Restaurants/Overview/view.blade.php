@@ -466,13 +466,14 @@
     </div>
     <!--end::Post-->
 </div>
+
 @section('charts')
-@if($profitDays&&$is_live)
-{!! $profitDays->renderChartJsLibrary() !!}
-{!! $profitDays->renderJs() !!}
-@endif
-@if($profitMonths&&$is_live)
-{!! $profitDays->renderChartJsLibrary() !!}
-{!! $profitMonths->renderJs() !!}
-@endif
-@stop
+    @if($profitDays&&$is_live)
+    {!! $profitDays->renderChartJsLibrary() !!}
+    {!! $profitDays->renderJs() !!}
+    @endif
+    @if($profitMonths&&$is_live)
+    {!! $profitDays->renderChartJsLibrary() !!}
+    {!! $profitMonths->renderJs() !!}
+    @endif
+@endsection

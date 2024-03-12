@@ -4,8 +4,6 @@
 
 @section('content')
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E
-   &libraries=places"></script>
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -25,12 +23,13 @@
                                 <!--begin::Image-->
 
                                     <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-sm-100 h-100">
-                                        <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{__('search-for-place')}}">
+                                        <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{__('search-for-place')}}" value="{{$branch->address}}">
                                         <div id="map{{ $branch->id }}" class="google_map"></div>
                                             <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
                                                 <input type="hidden" id="lng{{ $branch->id }}" name="lng" value="{{ $branch->lng }}" />
+                                                <input type="hidden" id="location{{ $branch->id }}" name="location" value="{{ $branch->address }}" />
                                                 <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl my-4 w-100">{{ __('save-location')}}</button>
                                             </form>
                                     </div>
@@ -53,6 +52,7 @@
                                                 @endif
                                                 <span
                                                     class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
+                                                    <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
                                             </div>
                                             <!--end::Title-->
                                         </div>
@@ -508,214 +508,24 @@
     </div>
     <!--end::Scrolltop-->
 @endsection
+
+
 @section('js')
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+
+    @include('components.map')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
     <script>
-        let maps = {}; // Store maps in an object
-        let markers = {}; // Store markers in an object
-
-        function initializeMap(branchId, lat, lng) {
-          const latLng = new google.maps.LatLng(lat, lng);
-
-          const map = new google.maps.Map(document.getElementById('map' + branchId), {
-            center: latLng,
-            zoom: 15,
-          });
-
-          const marker = new google.maps.Marker({
-            position: latLng,
-            map: map,
-            draggable: true,
-          });
-
-          markers[branchId] = marker; // Store the marker for this branch
-          maps[branchId] = map; // Store the map for this branch
-
-          google.maps.event.addListener(marker, 'dragend', function () {
-            updateLocationInput(marker.getPosition(), branchId);
-          });
-
-          // Add a click event listener to the map
-          google.maps.event.addListener(map, 'click', function (event) {
-            marker.setPosition(event.latLng);
-            updateLocationInput(event.latLng, branchId);
-          });
-        }
-
-        function updateLocationInput(latLng, branchId) {
-          const latInput = document.getElementById('lat' + branchId);
-          const lngInput = document.getElementById('lng' + branchId);
-          latInput.value = latLng.lat();
-          lngInput.value = latLng.lng();
-        }
-
-        function updateLocation(branchId) {
-            const marker = markers[branchId];
-            const latInput = document.getElementById('lat' + branchId);
-            const lngInput = document.getElementById('lng' + branchId);
-            const lat = parseFloat(latInput.value);
-            const lng = parseFloat(lngInput.value);
-
-            if (!isNaN(lat) && !isNaN(lng)) {
-                const latLng = new google.maps.LatLng(lat, lng);
-                marker.setPosition(latLng);
-                maps[branchId].setCenter(latLng);
-
-                $.ajax({
-                url: '/branches/update-location/' + branchId,
-                method: 'POST',
-                data: {
-                    lat: lat,
-                    lng: lng,
-                },
-                success: function (response) {
-                    console.log('Location updated successfully:');
-                },
-                error: function (error) {
-                    console.error('Error updating location:', error);
-                },
-                });
-            }
-            }
-
-
-        // Initialize the maps for each branch
-        @foreach ($branches as $branch)
-          initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
-        @endforeach
-
         document.addEventListener("DOMContentLoaded", (event) => {
-            let maps = {}; // Store maps in an object
-            let markers = {}; // Store markers in an object
-
-            function initializeMap(branchId, lat, lng) {
-                const latLng = new google.maps.LatLng(lat, lng);
-
-                const map = new google.maps.Map(document.getElementById('map' + branchId), {
-                    center: latLng,
-                    zoom: 8,
-                });
-
-                const input = document.getElementById("pac-input" + branchId);
-
-                const options = {
-                    fields: ["formatted_address", "geometry", "name"],
-                    strictBounds: false,
-                };
-                const autocomplete = new google.maps.places.Autocomplete(input, options);
-                autocomplete.bindTo("bounds", map);
-
-                const marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    draggable: true,
-                });
-
-                markers[branchId] = marker; // Store the marker for this branch
-                maps[branchId] = map; // Store the map for this branch
-
-                google.maps.event.addListener(marker, 'dragend', function () {
-                    updateLocationInput(marker.getPosition(), branchId);
-                });
-
-                // Add a click event listener to the map
-                google.maps.event.addListener(map, 'click', function (event) {
-                    marker.setPosition(event.latLng);
-                    updateLocationInput(event.latLng, branchId);
-                });
-                autocomplete.addListener("place_changed", () => {
-                    console.log('change location')
-                    // infowindow.close();
-                    marker.setVisible(false);
-
-                    const place = autocomplete.getPlace();
-
-                    if (!place.geometry || !place.geometry.location) {
-                        // User entered the name of a Place that was not suggested and
-                        // pressed the Enter key, or the Place Details request failed.
-                        window.alert("No details available for input: '" + place.name + "'");
-                        return;
-                    }
-                    const lat = place.geometry.location.lat();
-                    const lng = place.geometry.location.lng();
-                    selectedPlacePosition = new google.maps.LatLng(lat, lng);
-                    updateLocationInput(selectedPlacePosition, branchId);
-                    // If the place has a geometry, then present it on a map.
-                    if (place.geometry.viewport) {
-                        map.fitBounds(place.geometry.viewport);
-                    } else {
-                        map.setCenter(place.geometry.location);
-                        map.setZoom(17);
-                    }
-
-                    marker.setPosition(place.geometry.location);
-                    marker.setVisible(true);
-                    // infowindow.open(map, marker);
-                });
-
-                console.log("ok")
-            }
-
-            function updateLocationInput(latLng, branchId) {
-                const latInput = document.getElementById('lat' + branchId);
-                const lngInput = document.getElementById('lng' + branchId);
-                latInput.value = latLng.lat();
-                lngInput.value = latLng.lng();
-            }
-
-            function updateLocation(branchId) {
-                const marker = markers[branchId];
-                const latInput = document.getElementById('lat' + branchId);
-                const lngInput = document.getElementById('lng' + branchId);
-                const lat = parseFloat(latInput.value);
-                const lng = parseFloat(lngInput.value);
-
-                if (!isNaN(lat) && !isNaN(lng)) {
-                    const latLng = new google.maps.LatLng(lat, lng);
-                    marker.setPosition(latLng);
-                    maps[branchId].setCenter(latLng);
-
-                    $.ajax({
-                        url: '/branches/update-location/' + branchId,
-                        method: 'POST',
-                        data: {
-                            lat: lat,
-                            lng: lng,
-                        },
-                        success: function (response) {
-                            console.log('Location updated successfully:');
-                        },
-                        error: function (error) {
-                            console.error('Error updating location:', error);
-                        },
-                    });
-                }
-            }
-
-
-            // Initialize the maps for each branch
-            @foreach ($branches as $branch)
-                initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
-            @endforeach
-
+            // Initialize the timepicker with the existing value or default value
+            flatpickr(".time-24", {
+                enableTime: true,
+                noCalendar: true,
+                enableSeconds: false,
+                dateFormat: "H:i",
+                time_24hr: true
+            });
         });
     </script>
-
-
-
 @endsection
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", (event) => {
-        // Initialize the timepicker with the existing value or default value
-        flatpickr(".time-24", {
-            enableTime: true,
-            noCalendar: true,
-            enableSeconds: false,
-            dateFormat: "H:i",
-            time_24hr: true
-        });
-    });
-</script>

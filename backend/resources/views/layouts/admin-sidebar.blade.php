@@ -580,6 +580,7 @@
     </div>
     <!--end::Scrolltop-->
 
+    @yield('js')
     <!--begin::Javascript-->
     <script>
         var hostUrl = "assets/";
@@ -600,8 +601,9 @@
     <script src="{{ global_asset('assets/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/create-app.js')}}"></script>
     <script src="{{ global_asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
+
     @yield('javascript')
-    @yield('charts')
+    @stack('scripts')
 
     <script
         src="https://js.sentry-cdn.com/860125ea20f9254e5c411ffbdeb02c39.min.js"
