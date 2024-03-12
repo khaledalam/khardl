@@ -235,6 +235,7 @@ class CartRepository
             'tax' => $this->tax(),
             'coupon' => $this->coupon(),
             'discount' => $this->discount(),
+            'count' => $this->cartCount(),
             'items' => $items,
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
@@ -339,13 +340,17 @@ class CartRepository
         }
         return false;
     }
-    public function count()
+    public function cartCount()
     {
         $totalCount = 0;
         if($this->cart?->items?->count())
             $totalCount = $this->cart?->items?->pluck('quantity')->sum();
+        return $totalCount;
+    }
+    public function count()
+    {
         return $this->sendResponse([
-            'count' => $totalCount
+            'count' => $this->cartCount()
         ]);
     }
 
