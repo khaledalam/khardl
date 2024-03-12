@@ -1022,5 +1022,6 @@
     "Order has been delivered for customer (:name).":"تم توصيل الطلب للعميل :name",
     "Order has been delivered for customer (:name) by delivery company (:company).":"تم توصيل الطلب للعميل :name عن طريقة شركة التوصيل :company",
     "New order":"طلب جديد",
-    "Order has been delivered":"تم تسليم الطلب"
+    "Order has been delivered":"تم تسليم الطلب",
+    "Edit customer":"تعديل العميل"
 }

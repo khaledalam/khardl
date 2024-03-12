@@ -172,6 +172,8 @@ Route::group([
 
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
                     Route::get('/customers-data', 'index')->name('list');
+                    Route::get('/customers-data/{restaurantUser}/edit', 'edit')->name('edit');
+                    Route::put('/customers-data/{restaurantUser}/edit', 'update')->name('update');
                     Route::get('/customers-data/{restaurantUser}', 'show')->name('show');
                     Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
                 });
