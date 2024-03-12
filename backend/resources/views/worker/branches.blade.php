@@ -3,9 +3,13 @@
 @section('title', __('branches'))
 
 @section('content')
+<style>
+      .border-not-active {
+            border: 2px solid #e80000;
+        }
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E
-   &libraries=places"></script>
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -17,7 +21,7 @@
             <div id="kt_content_container" class="container-xxl">
                 <div class="card card-flush border-0 h-md-100">
                     <!--begin::Body-->
-                    <div class="card-body py-9">
+                    <div class="card-body py-9 {{!$branch->active ? 'border-not-active':''}}">
                         <!--begin::Row-->
                         <div class="row gx-9">
                             <!--begin::Col-->
@@ -43,6 +47,13 @@
                                 <div class="d-flex flex-column h-100">
                                     <!--begin::Header-->
                                     <div class="mb-7">
+                                        @if(!$branch->active)
+                                        <span
+                                                class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-warning text-capitalize mb-3">
+                                                {{ __('This branch is inactive') }}<br>
+                                                <small>  {{ __('You will not be able to receive orders from this branch') }}</small>
+                                            </span>
+                                        @endif
                                         <!--begin::Headin-->
                                         <div class="d-flex flex-stack mb-6">
                                             <!--begin::Title-->

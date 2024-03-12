@@ -8,6 +8,9 @@
         div.pac-container {
             z-index: 99999999999 !important;
         }
+        .border-not-active {
+            border: 2px solid #e80000;
+        }
     </style>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
 <!--begin::Content-->
@@ -51,7 +54,7 @@
             <div id="kt_content_container" class="container-xxl">
                 <div class="card card-flush border-0 h-md-100">
                     <!--begin::Body-->
-                    <div class="card-body py-9">
+                    <div class="card-body py-9 {{!$branch->active ? 'border-not-active':''}}" >
                         <!--begin::Row-->
                         <div class="row gx-9">
                             <!--begin::Col-->
@@ -74,16 +77,35 @@
                                     <!--begin::Header-->
                                     <div class="mb-7">
                                         <!--begin::Headin-->
+                                        @if(!$branch->active)
+                                        <span
+                                                class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-warning text-capitalize mb-3">
+                                                {{ __('This branch is inactive') }}<br>
+                                                <small>  {{ __('You will not be able to receive orders from this branch') }}</small>
+                                            </span>
+                                        @endif
                                         <div class="d-flex flex-stack mb-6">
                                             <!--begin::Title-->
-                                            <div class="flex-shrink-0 me-5">
+                                            <div class="flex-shrink-0 ">
                                                 @if ($branch->is_primary)
-                                                    <span
-                                                        class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-light-khardl text-capitalize">{{ __('primary-branch') }}</span>
-                                                @endif
                                                 <span
-                                                    class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
-                                                    <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
+                                                    class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-light-khardl text-capitalize">{{ __('primary-branch') }}</span>
+                                            @endif
+                                            <span
+                                                class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
+                                                <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
+                                                
+                                                 
+                                            </div>
+                                            <div class="flex-shrink-0 me-5">
+                                                @if(!$branch->active)
+                                            
+                                                    <div class="d-flex justify-content-center mt-1">
+                                                        <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}"
+                                                    class="btn btn-success text-center">{{__('Activate')}} <i class="fa  fa-play text-white m-2"></i></a>
+                                                    </div>
+                                                
+                                                @endif
                                             </div>
                                             <!--end::Title-->
                                         </div>

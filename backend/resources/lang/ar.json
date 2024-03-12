@@ -1015,9 +1015,13 @@
     "Order delivery is not enabled in restaurant settings":"توصيل الطلبات غير مفعل في اعدادات المطعم",
     "Reject reason":"سبب الرفض",
     "Reason":"السبب",
+    "This branch is inactive":"هذا الفرع غير نشط",
     "Order has been created successfully":"تم انشاء الطلب بنجاح",
+    "You will not be able to receive orders from this branch":"لن تتمكن من تلقي اي طلبات من هذا الفرع",
     "token saved successfully.":"تم حفظ رقم الجهاز, بنجاح.",
     "New order has been created for customer :name.":"تم انشاء طلب لعميل :name",
     "Order has been delivered for customer (:name).":"تم توصيل الطلب للعميل :name",
+    "Branch has been activated":"تم تنشيط الفرع",
+    "Branch has been deactivated":"تم إلغاء تنشيط الفرع",
     "Order has been delivered for customer (:name) by delivery company (:company).":"تم توصيل الطلب للعميل :name عن طريقة شركة التوصيل :company"
 }

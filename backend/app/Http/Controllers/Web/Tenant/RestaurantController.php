@@ -278,7 +278,14 @@ class RestaurantController extends BaseController
             compact('available_branches', 'user', 'branches')
         ); //view('branches')
     }
-
+    public function toggleBranch($id){
+        $branch = Branch::findOrFail($id);
+        $branch->update([
+            'active'=>!$branch->active
+        ]);
+        $message = $branch->active ? __("Branch has been activated"):__("Branch has been deactivated");
+        return redirect()->back()->with('success',$message);
+    }
     public function branches_site_editor()
     {
         $user = Auth::user();
