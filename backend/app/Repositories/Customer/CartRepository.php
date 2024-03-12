@@ -341,9 +341,11 @@ class CartRepository
     }
     public function count()
     {
-        $count = $this->cart?->items->count();
+        $totalCount = 0;
+        if($this->cart?->items?->count())
+            $totalCount = $this->cart?->items?->pluck('quantity')->sum();
         return $this->sendResponse([
-            'count' => $count
+            'count' => $totalCount
         ]);
     }
 
