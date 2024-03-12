@@ -1026,5 +1026,6 @@
     "Edit customer":"تعديل العميل",
     "Your request is pending and waiting for the respond of payment gateway.":"طلبك معلق وينتظر رد بوابة الدفع.",
     "You need to contact adminstration because of your payment gateway is not set.":"تحتاج إلى الاتصال بالإدارة لأن بوابة الدفع الخاصة بك لم يتم تعيينها.",
-    "Save":"حفظ"
+    "Save":"حفظ",
+    "Branches":"الفروع"
 }
