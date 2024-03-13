@@ -78,9 +78,9 @@
                                 <!--end::Cervo-->
 
                                 <!--begin::Streetline-->
-                                @if(isset($streetline))
-                                @include('restaurant.delivery_companies.streetline.index',['streetline' => $streetline,'isadmin' => 0])
-                                @endif
+{{--                                @if(isset($streetline))--}}
+{{--                                @include('restaurant.delivery_companies.streetline.index',['streetline' => $streetline,'isadmin' => 0])--}}
+{{--                                @endif--}}
                                 <!--end::Streetline-->
                             </div>
                             <!--end::Contacts App- View Contact-->
