@@ -317,7 +317,7 @@ $tap_info = $settings->lead_response;
                                             <div class="card-header pt-7">
                                                 <!--begin::Title-->
                                                 <h3 class="card-title align-items-start flex-column">
-                                                    <span class="card-label fw-bolder text-dark">{{ __('Tab business information') }}</span>
+                                                    <span class="card-label fw-bolder text-dark">{{ __('Business information') }}</span>
                                                 </h3>
                                                 <!--end::Title-->
                                             </div>
