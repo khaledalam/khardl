@@ -314,7 +314,7 @@ const ProductItem = ({
                 if (response?.data) {
                     toast.success(`${t("Item added to cart")}`);
                     dispatch(
-                        getCartItemsCount(response?.data.data.items.length),
+                        getCartItemsCount(response?.data.data.count),
                     );
                     //setGotoCart(true);
                 }
