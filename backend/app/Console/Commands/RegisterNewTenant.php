@@ -5,13 +5,9 @@ namespace App\Console\Commands;
 use App\Jobs\CreateTenantAdmin;
 use App\Models\User;
 use App\Models\Tenant;
-use Database\Seeders\UserSeeder;
 use Illuminate\Console\Command;
 use Database\Seeders\TenantActionSeeder;
-use Exception;
 use Illuminate\Database\UniqueConstraintViolationException;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
 
 class RegisterNewTenant extends Command
 {

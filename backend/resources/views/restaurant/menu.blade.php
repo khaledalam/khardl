@@ -63,9 +63,9 @@
             </div>
             <div class="d-flex flex-column flex-lg-row">
                 <!--begin::Sidebar-->
-                <div class="flex-column flex-lg-row-auto w-100 w-lg-400px mb-10 mb-lg-0">
+                <div class="flex-column flex-lg-row-auto w-100 w-lg-500px mb-10 mb-lg-0">
                     <!--begin::Sticky aside-->
-                    <div class="card card-flush mb-0" data-kt-sticky="true" data-kt-sticky-name="inbox-aside-sticky" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
+                    <div class="card card-flush mb-0" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
                         <!--begin::Aside content-->
                         <div class="card-body">
                             <!--begin::Button-->
@@ -78,11 +78,11 @@
                             <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
                                 <!--begin::Menu item-->
                                 @foreach ($categories as $category)
-                                <div class="row">
+                                <div class="row mb-2">
                                     <!--begin::Inbox-->
                                     @if($user->isRestaurantOwner())
                                     <div class="col-md-2 edit-category">
-                                        <button class="btn btn-primary btn-sm mt-2" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}')">
+                                        <button class="btn btn-primary btn-sm mt-3 rounded" onclick="EditCategory('{{ $category->getTranslation('name','ar') }}','{{ $category->getTranslation('name','en') }}','{{ $category->id }}', '{{$category->sort}}')">
                                             <i class="fa fa-edit"></i>
                                         </button>
                                     </div>
@@ -96,7 +96,7 @@
                                         </a>
                                     </div>
                                     <div class="col-md-2">
-                                        <span class="badge badge-light-success mt-5">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
+                                        <span class="badge badge-light-success mt-5">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
                                     </div>
                                     <!--end::Inbox-->
                                 </div>
@@ -134,6 +134,9 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#logo">{{__('logo')}}</a>
                                                 </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="sort-tab" data-bs-toggle="tab" href="#sort">{{__('sort')}}</a>
+                                                </li>
                                             </ul>
                                             <div class="tab-content mt-3">
                                                 <div class="tab-pane fade show active" id="en">
@@ -146,11 +149,17 @@
                                                     <label>{{__('category-logo')}}</label>
                                                     <input type="file" class="form-control form-control-solid" placeholder="Enter Target Title" name="photo" />
                                                 </div>
+                                                <div class="tab-pane fade" id="sort">
+                                                    <label>{{__('sort')}}</label>
+                                                    <input type="number" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('save') }}</button>
+                                                    <button type="button" onclick="hideCategoryAddForm()" class="btn btn-sm btn-info mx-1 mt-2">{{ __('Close') }}</button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="d-flex justify-content-center">
-                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('save') }}</button>
-                                        </div>
+
                                     </form>
                                     <form method="POST" id="category-edit" enctype="multipart/form-data">
                                         @csrf
@@ -166,6 +175,9 @@
                                                 <li class="nav-item">
                                                     <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#edit-logo">{{__('logo')}}</a>
                                                 </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="logo-tab" data-bs-toggle="tab" href="#edit-sort">{{__('sort')}}</a>
+                                                </li>
                                             </ul>
                                             <div class="tab-content mt-3">
                                                 <div class="tab-pane fade show active" id="edit-en">
@@ -178,11 +190,17 @@
                                                     <label>{{__('category-logo')}}</label>
                                                     <input type="file" class="form-control form-control-solid" accept="image/*" placeholder="Enter Target Title" name="photo" />
                                                 </div>
+                                                <div class="tab-pane fade" id="edit-sort">
+                                                    <label>{{__('sort')}}</label>
+                                                    <input type="number" min="1" max="{{count($categories)}}" class="form-control form-control-solid" name="sort" placeholder="{{__('The sorting order of category')}}" id="category_sort"/>
+                                                </div>
+                                            </div>
+                                            <div class="d-none justify-content-center" id="update-category-btn">
+                                                <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Update') }}</button>
+                                                <button type="button" onclick="hideCategoryEditForm()" class="btn btn-sm btn-info mx-1 mt-2">{{ __('Close') }}</button>
                                             </div>
                                         </div>
-                                        <div class="d-none justify-content-center" id="update-category-btn">
-                                            <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('Update') }}</button>
-                                        </div>
+
                                     </form>
                                 </div>
                             </div>
@@ -421,8 +439,7 @@
 
 </script>
 <script>
-    function EditCategory(category_ar,category_en,category_id){
-        console.log(category_ar,category_en);
+    function EditCategory(category_ar,category_en,category_id, category_sort){
         const updateBtn = document.getElementById("update-category-btn");
         updateBtn.classList.remove('d-none');
         updateBtn.classList.add('d-flex');
@@ -431,9 +448,11 @@
         categoryEnInput.value = category_en;
         const categoryArInput = document.getElementById("category_name_ar");
         categoryArInput.value = category_ar;
+        const categorySort = document.getElementById("category_sort");
+        categorySort.value = category_sort;
         categoryForm.style.display = "block";
         var form = document.getElementById('category-edit');
-        form.action = `{{ route('restaurant.edit-category', ['categoryId' => ':categoryId']) }}`.replace(':categoryId', category_id);
+        form.action = `{{ route('restaurant.edit-category', ['categoryId' => ':categoryId', 'branchId' => ':branchId']) }}`.replace(':categoryId', category_id).replace(':branchId', {{$branchId}});
     }
 </script>
 <script>
@@ -469,6 +488,14 @@
         inputContainer3.appendChild(newInput);
     });
 
+    const hideCategoryEditForm = function(){
+        document.getElementById("category-edit-form").style.display = 'none';
+    }
+
+    const hideCategoryAddForm = function(){
+        document.getElementById("categoryForm").style.display = 'none';
+    }
+
 
     document.getElementById('category-submit').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -478,17 +505,17 @@
         var inputValue = document.querySelector('input[name=name_ar]').value.trim();
         if (inputValue === '') {
             alert('Please fill in the input in (Arabic) tab.');
+            submitButton.disabled = false;
             return;
         }
         var inputValueAR = document.querySelector('input[name=name_en]').value.trim();
         console.log(inputValueAR);
         if (inputValueAR === '') {
             alert('Please fill in the input in the (English) tab .');
+            submitButton.disabled = false;
             return;
         }
         document.getElementById('category-submit').submit();
-
-
 
     });
 
