@@ -49,7 +49,7 @@ const Card = ({
                     <h2 className="font-bold text-[20px] text-[var(--primary)] mt-1">
                         {FeaturePrice}{" "}
                         {!isNaN(FeaturePrice)
-                            ? `${Language === "en" ? "SAR" : "ر.س"}`
+                            ? `${Language === "en" ? "SAR" : "ريال"}`
                             : ""}
                     </h2>
                     {FeatureDevice && (

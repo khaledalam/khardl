@@ -28,7 +28,7 @@ const Card = ({ FeatureImage, FeatureTitle, FeatureDetails, FeaturePrice, Featur
         }
         <div className="text-center flex flex-col items-center justify-start gap-1">
           <h2 className={`font-bold ${FeaturePrice ? "text-[22px]" : ""} mt-4`}>{FeatureTitle}</h2>
-          <h2 className="font-bold text-[20px] text-[var(--primary)] mt-1">{FeaturePrice} {!isNaN(FeaturePrice) ? `${Language === "en" ? "SAR" : "ر.س"}` : ""}</h2>
+          <h2 className="font-bold text-[20px] text-[var(--primary)] mt-1">{FeaturePrice} {!isNaN(FeaturePrice) ? `${Language === "en" ? "SAR" : "ريال"}` : ""}</h2>
           {FeatureDevice &&
             <div className="flex justify-start items-center gap-2 text-start mt-4">
               <FaStarOfLife size={10} className="text-red-500" />
