@@ -50,7 +50,7 @@ const CartPage = () => {
                 }
                 dispatch(setCartItemsData(cartResponse.data?.data.items));
                 dispatch(
-                    getCartItemsCount(cartResponse.data?.data.items.length),
+                    getCartItemsCount(cartResponse.data?.data.count),
                 );
                 setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
                 setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
