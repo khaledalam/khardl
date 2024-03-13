@@ -71,12 +71,19 @@ if (!function_exists('sendPushNotification')) {
                     'title' => $title,
                     'body' => $body,
                 ];
+                $sound = [
+                    'notification' => [
+                        'channel_id' => 'khrdl_create_order',
+                        'sound' => 'bell2',
+                    ]
+                ];
                 $data = array_merge($data, $readyData, $notificationData);
                 if($place == 'both' || $place == 'external'){
                     $content = [
                         'notification' => $notificationData,
                         'token' => $target->device_token,
-                        'data' => $data
+                        'data' => $data,
+                        'android' => $sound
                     ];
                 }else{
                     $content = [
