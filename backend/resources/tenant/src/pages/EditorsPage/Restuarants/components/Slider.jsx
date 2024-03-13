@@ -128,8 +128,7 @@ const Slider = ({ banner_images }) => {
                     marginBottom: "10px",
                 }}
             >
-                * Photo uploaded dimensions ratio should be 4:1 and best fit is
-                1400x350
+                {t("SliderHintUpload")}
             </p>
             <div className="mx-auto">
                 <ReactSlider {...settings}>
