@@ -42,6 +42,8 @@ class LoginController extends BaseController
         $data = [
             'user'=>$user
         ];
+        // Revoke existing tokens for the user
+        $user->tokens()->delete();
 
         $token = $user->createToken('Personal Access Token');
         if ($request->remember_me) {
