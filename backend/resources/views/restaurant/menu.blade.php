@@ -22,11 +22,11 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            @foreach ($branches as $branch)
+                            @foreach ($branches as $branchLoop)
                             <div class="col-md-3">
-                                <a href="{{ route('restaurant.menu',['branchId' => $branch->id]) }}">
+                                <a href="{{ route('restaurant.menu',['branchId' => $branchLoop->id]) }}">
                                     <button type="button" class="btn btn-primary">
-                                        {{ $branch->name }}
+                                        {{ $branchLoop->name }}
                                     </button>
                                 </a>
                             </div>
