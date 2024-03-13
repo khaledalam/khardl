@@ -22,12 +22,9 @@ class CategoryController
         // check is request coming from sancum
         if (request()->bearerToken()) {
             $this->model = Category::where('branch_id', $user->branch->id)
-                ->orderBy('created_at', 'DESC')
-                ->orderBy('updated_at', 'DESC');
+                ->orderBy('sort');
         } else {
-            $this->model = Category::
-                orderBy('created_at', 'DESC')
-                ->orderBy('updated_at', 'DESC');
+            $this->model = Category::orderBy('sort');
             if (request()->has('selected_branch_id') && request()->selected_branch_id) {
                 if (Category::where('branch_id', request()->selected_branch_id)->exists()) {
                     $this->model = $this->model->where('branch_id', request()->selected_branch_id);

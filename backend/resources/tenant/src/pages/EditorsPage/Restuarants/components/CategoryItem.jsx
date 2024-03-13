@@ -27,9 +27,8 @@ const CategoryItem = ({
 
     const handleMouseLeave = () => {
         setIsHover((prev) => !prev);
-        console.log("mouse leave");
     };
-    console.log("is hover", isHover);
+
     return (
         <div
             onMouseEnter={handleMouseEnter}

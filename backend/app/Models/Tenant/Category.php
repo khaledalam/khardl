@@ -19,7 +19,8 @@ class Category extends Model
         'name',
         'branch_id',
         'user_id',
-        'photo'
+        'photo',
+        'sort'
     ];
 
     public $translatable = ['name'];

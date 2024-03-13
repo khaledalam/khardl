@@ -29,17 +29,20 @@ class CategoryItemSeeder extends Seeder
                 new Category([
                     'name' => trans_json('First Category',__('First Category',[],'ar') . ' branch ' . $branch->id ),
                     'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
-                    'branch_id' => BranchSeeder::BRANCH_ID
+                    'branch_id' => BranchSeeder::BRANCH_ID,
+                    'sort' => 1
                 ]),
                 new Category([
                     'name' => trans_json( 'Second Category',__( 'Second Category',[],'ar') . ' branch ' . $branch->id),
                     'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
-                    'branch_id' => BranchSeeder::BRANCH_ID
+                    'branch_id' => BranchSeeder::BRANCH_ID,
+                    'sort' => 2
                 ]),
                 new Category([
                     'name' => trans_json('Third Category',__('Third Category',[],'ar') . ' branch ' . $branch->id),
                     'user_id' => UserSeeder::RESTAURANT_WORKER_USER_ID,
-                    'branch_id' => BranchSeeder::BRANCH_B_ID
+                    'branch_id' => BranchSeeder::BRANCH_B_ID,
+                    'sort' => 3
                 ]),
             ]);
 
