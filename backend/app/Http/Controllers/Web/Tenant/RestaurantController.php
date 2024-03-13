@@ -589,7 +589,36 @@ class RestaurantController extends BaseController
         return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
     }
 
+    public function editCategory(Request $request, $categoryId)
+    {
+        $category = Category::findOrFail($categoryId);
+        $validator = Validator::make($request->all(), [
+            'name_en' => 'required|string|max:100|min:2',
+            'name_ar' => 'required|string|max:100|min:2',
+            'photo' => 'nullable|mimes:png,jpg,jpeg,gif|max:4096',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors());
+        }
+        $category->update([
+            'name' => [
+                'ar' => $request->name_ar,
+                'en' => $request->name_en,
+            ]
+        ]);
+        $photoFile = $request->file('photo');
+        $filename = null;
+        if ($photoFile) {
+            $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+            while (Storage::disk('public')->exists('categories/' . $filename)) {
+                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+            }
+            $photoFile->storeAs('categories', $filename, 'public');
+            $category->update(['photo' => tenant_asset('categories/' . $filename)]);
+        }
 
+        return redirect()->back()->with('success', __('Updated successfully'));
+    }
     public function addCategory(Request $request, $branchId)
     {
 
@@ -633,7 +662,7 @@ class RestaurantController extends BaseController
             'updated_at' => now(),
         ]);
 
-        return redirect()->back()->with('success', 'Category successfully added.');
+        return redirect()->back()->with('success', __('Created successfully'));
     }
     public function deleteCategory($id)
     {
