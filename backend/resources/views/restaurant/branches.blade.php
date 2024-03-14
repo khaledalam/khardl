@@ -93,7 +93,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <p class="badge badge-light-success">{{$available_branches}}</p>
                             </div>
                             @if($available_branches > 0)
-                            <div class="row  d-flex justify-content-center align-items-center">
+                            <div class="row gx-9 d-flex justify-content-center align-items-center">
                                 <a href="#" class="fs-6 text-700 fw-bolder text-center p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">+ {{ __('add-new-branch') }}</a>
                             </div>
                             @endif
@@ -122,15 +122,15 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
         @forelse ($branches as $branch)
         <div class="post d-flex flex-column-fluid my-5" id="kt_post">
             <!--begin::Container-->
-            <div id="kt_content_container " class="container-xxl {{$branch->deleted_at?'opacity-75-i':''}}" >
+            <div id="kt_content_container " class="container-xxl " >
                 <div class="card card-flush border-0 h-md-100">
                     <!--begin::Body-->
-                    <div class="card-body py-9 {{$branch->deleted_at ? 'border-not-active':''}}" >
+                    <div class="card-body py-9 {{$branch->deleted_at ? 'border-not-active ':''}}" >
                         <!--begin::Row-->
                         <div class="row gx-9">
                             <!--begin::Col-->
                           
-                            <div class="col-sm-6 branches-google-maps ">
+                            <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}">
                                 @if(!$branch->deleted_at)
                                 <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}" value="{{$branch->address}}">
                                 @endif
@@ -167,9 +167,9 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 <small>  {{ __('You will not be able to receive orders from this branch') }}</small>
                                             </span>
                                         @endif
-                                        <div class="d-flex flex-stack mb-6">
+                                        <div class="d-flex flex-stack mb-6 {{$branch->deleted_at ? 'opacity-75-i':''}}">
                                             <!--begin::Title-->
-                                            <div class="flex-shrink-0 {{$branch->deleted_at?'opacity-75-i':''}}">
+                                            <div class="flex-shrink-0 ">
                                                 @if ($branch->is_primary)
                                                 <span
                                                     class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-light-khardl text-capitalize">{{ __('primary-branch') }}</span>
@@ -180,7 +180,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 
                                                  
                                             </div>
-                                            <div class="flex-shrink-0 me-5">
+                                            <div class="flex-shrink-0 me-5 ">
                                                 @if($branch->deleted_at)
 
                                                 <div class="d-flex justify-content-center mt-1">
