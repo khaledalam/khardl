@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Tenant\Customer;
 
-use App\Models\Tenant\Coupon;
 use App\Models\Tenant\DeliveryType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Repositories\Customer\CartRepository;
-use App\Packages\DeliveryCompanies\DeliveryCompanies;
 
 class OrderRequest extends FormRequest
 {
@@ -94,6 +92,12 @@ class OrderRequest extends FormRequest
             //     DeliveryCompanies::validateCustomerAddress($validator,$branch->lat,$branch->lng,$user->lat,$user->lng);
             // }
 
+            // Validate if branch is closed
+            if($cart->branch()->isClosed())
+            {
+                $validator->errors()->add('cart', __(':branch is closed',['branch'=> $cart?->branch()?->name]));
+                return;
+            }
         });
     }
 

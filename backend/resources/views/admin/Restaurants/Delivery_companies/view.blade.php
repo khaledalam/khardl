@@ -13,9 +13,9 @@
     <!--end::Cervo-->
 
     <!--begin::Streetline-->
-    @if(isset($streetline))
-    @include('restaurant.delivery_companies.streetline.index',['streetline' => $streetline,'isadmin' => 1])
-    @endif
+{{--    @if(isset($streetline))--}}
+{{--    @include('restaurant.delivery_companies.streetline.index',['streetline' => $streetline,'isadmin' => 1])--}}
+{{--    @endif--}}
     <!--end::Streetline-->
 </div>
 @if (!isset($yeswa)||!isset($cervo)||!isset($streetline))

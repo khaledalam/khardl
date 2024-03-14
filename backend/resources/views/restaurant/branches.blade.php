@@ -74,7 +74,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             opacity: 75%;
         }
     </style>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+
 <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -973,6 +973,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 @endsection
 @section('js')
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+
     <script>
         var normalChoiceSection = document.getElementById('normalChoiceSection');
         var customChoiceTabs = document.getElementById('customChoiceTabs');
@@ -1212,6 +1216,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 
     </script>
+
+    @include('components.map')
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
 

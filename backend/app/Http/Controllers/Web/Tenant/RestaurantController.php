@@ -258,7 +258,6 @@ class RestaurantController extends BaseController
         );
     }
 
-
     public function qr()
     {
         /** @var RestaurantUser $user */
@@ -269,8 +268,6 @@ class RestaurantController extends BaseController
             compact('user')
         );
     }
-
-
 
     public function branches()
     {
@@ -564,10 +561,12 @@ class RestaurantController extends BaseController
 
                     $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
                 })
-                ->get();
+                ->get()
+                ->sortBy('sort');
         } else if($user->isRestaurantOwner()) {
             $categories = Category::where('branch_id', $branchId ?? $user->branch->id)
-                ->get();
+                ->get()
+                ->sortBy('sort');
         }
 
         if ($branchId) {
@@ -575,7 +574,9 @@ class RestaurantController extends BaseController
         } else {
             $branch = Branch::find($user->branch->id);
         }
-        return view('restaurant.menu', compact('user', 'categories', 'branch', 'branchId'));
+        $branches = Branch::all();
+
+        return view('restaurant.menu', compact('user', 'categories', 'branch', 'branchId','branches'));
     }
     public function noBranches()
     {
@@ -613,15 +614,58 @@ class RestaurantController extends BaseController
         return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
     }
 
+    public function editCategory(Request $request, $categoryId, $branchId)
+    {
+        $categoriesCount = Category::where([
+                ['branch_id', '=', $branchId]
+        ])->count();
 
+        $validator = Validator::make($request->all(), [
+            'name_en' => 'required|string|max:100|min:2',
+            'name_ar' => 'required|string|max:100|min:2',
+            'photo' => 'nullable|mimes:png,jpg,jpeg,gif|max:4096',
+            'sort' => 'nullable|int|min:1|max:' . $categoriesCount
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors());
+        }
+
+        $category = Category::findOrFail($categoryId);
+
+        $category->update([
+            'name' => [
+                'ar' => $request->name_ar,
+                'en' => $request->name_en,
+            ],
+
+        ]);
+        $category->update(['sort' => $request->sort]);
+
+        $photoFile = $request->file('photo');
+        $filename = null;
+        if ($photoFile) {
+            $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+            while (Storage::disk('public')->exists('categories/' . $filename)) {
+                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+            }
+            $photoFile->storeAs('categories', $filename, 'public');
+            $category->update(['photo' => tenant_asset('categories/' . $filename)]);
+        }
+
+        return redirect()->back()->with('success', __('Updated successfully'));
+    }
     public function addCategory(Request $request, $branchId)
     {
-
+        $categoriesCount = Category::where([
+            ['branch_id', '=', $branchId],
+            ['sort', '=', $request->sort]
+        ])->count();
 
         $validator = Validator::make($request->all(), [
             'name_en' => 'required|string',
             'name_ar' => 'required|string',
             'new_category_photo' => 'nullable',
+            'sort' => 'nullable|int|min:1|max:' . $categoriesCount + 1
         ]);
 
 
@@ -651,13 +695,14 @@ class RestaurantController extends BaseController
         Category::create([
             'name' => trans_json($request->input('name_en'), $request->input('name_ar')),
             'photo' => $filename ? tenant_asset('categories/' . $filename) : null,
+            'sort' =>  $categoriesCount + 1,
             'user_id' => $userId,
             'branch_id' => $branchId,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        return redirect()->back()->with('success', 'Category successfully added.');
+        return redirect()->back()->with('success', __('Created successfully'));
     }
     public function deleteCategory($id)
     {

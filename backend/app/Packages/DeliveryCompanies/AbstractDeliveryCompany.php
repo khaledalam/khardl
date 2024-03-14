@@ -26,8 +26,8 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
     abstract public function verifyApiKey(string $api_key): bool;
     abstract public function cancelOrder($id): bool;
     abstract public function processWebhook(array $payload);
+    abstract public function sendNotifications($user, $order);
 
-   
     public function send(string $url,$token,array $data,string $method = 'post'): Promise{
         if($token){
             $response = Http::async()->withToken($token)
@@ -35,22 +35,22 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
         }else {
             $response = Http::async()->$method($url,$data);
         }
-        
+
         return $response;
 
-      
+
     }
     public function sendSync(string $url,$token,array $data,string $method = 'post'): array{
         try {
-   
+
             if($token){
                 $response = Http::withToken($token)
                 ->$method($url,$data);
             }else {
                 $response = Http::$method($url,$data);
             }
-          
-         
+
+
             if($response->successful()){
                 $response =  json_decode($response->getBody(), true);
                 return [
@@ -58,9 +58,9 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
                     'message'=> $response
                 ];
             }
-            
+
         }catch(\Exception $e){
-           
+
         }
         $response =  json_decode($response->getBody(), true);
         logger($response);
@@ -79,6 +79,6 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
         if($module != 'yeswa' && $order->yeswa_ref){
             (new Yeswa())->cancelOrder($order->yeswa_ref);
         }
-        
+
     }
 }

@@ -197,7 +197,15 @@ return [
         "reason" => "السبب",
         "status" => "الحالة",
         'url' => "الرابط",
-        "token" => "رمز الجهاز"
+        "token" => "رمز الجهاز",
+        "default_lang" => "اللغة الافتراضية",
+        "brand.logo" => "شعار المطعم",
+        "wallet.bank.name" => "اسم البنك",
+        "wallet.bank.account.number" => "رقم الحساب",
+        "wallet.bank.documents.0.number" => "رقم كشف الحساب",
+        "wallet.bank.documents.0.images.0" => "ملف كشف الحساب البنكي",
+        "wallet.bank.documents.0.issuing_date" => "تاريخ اصدار كشف الحساب",
+        "wallet.bank.account.name" => "اسم الشركة"
 
     ],
     'values' => [

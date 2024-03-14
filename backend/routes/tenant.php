@@ -120,6 +120,7 @@ Route::group([
             Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
             Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->middleware('permission:can_edit_menu')->name('restaurant.get-category');
             Route::post('/category/add/{branchId}', [RestaurantController::class, 'addCategory'])->middleware('permission:can_edit_menu')->name('restaurant.add-category');
+            Route::post('/category/edit/{categoryId}/{branchId}', [RestaurantController::class, 'editCategory'])->middleware('permission:can_edit_menu')->name('restaurant.edit-category');
             Route::name('restaurant.')->controller(AdminItemController::class)->group(function () {
                 Route::post('/category/{id}/{branchId}/add-item', 'store')->middleware('permission:can_edit_menu')->name('add-item');
                 Route::delete('/category/{id}/delete-item', 'delete')->middleware('permission:can_edit_menu')->name('delete-item');
@@ -138,6 +139,9 @@ Route::group([
                 // Route::delete('/orders/{order}',[OrderController::class,'destroy'])->name('restaurant.branch.order.destroy');
 
             });
+
+            Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
+
 
             Route::middleware('restaurant')->group(function () {
 
@@ -175,6 +179,8 @@ Route::group([
 
                 Route::name('customers_data.')->controller(CustomerDataController::class)->group(function () {
                     Route::get('/customers-data', 'index')->name('list');
+                    Route::get('/customers-data/{restaurantUser}/edit', 'edit')->name('edit');
+                    Route::put('/customers-data/{restaurantUser}/edit', 'update')->name('update');
                     Route::get('/customers-data/{restaurantUser}', 'show')->name('show');
                     Route::put('/change-status/{restaurantUser}', 'update_status')->name('change-status');
                 });
@@ -201,7 +207,6 @@ Route::group([
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
-                Route::post('/branches/update-location/{id}', [RestaurantController::class, 'updateBranchLocation'])->name('restaurant.update-branch-location');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
                 Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
 
@@ -347,6 +352,7 @@ Route::middleware([
                     Route::post('change-password', 'changePassword');
                 });
             });
+            Route::post('change-language',[\App\Http\Controllers\API\Tenant\Profile\ProfileController::class,'changeLang']);
             Route::apiResource('categories', CategoryController::class)->only([
                 'index'
             ]);

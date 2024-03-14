@@ -31,4 +31,23 @@ class CustomerDataService
         ->paginate(config('application.perPage')??20);
         return view('restaurant.customers_data.show', compact('user','restaurantUser','orders'));
     }
+    public function edit(Request $request,RestaurantUser $restaurantUser)
+    {
+        return view('restaurant.customers_data.edit', compact('restaurantUser'));
+    }
+    public function update($request,RestaurantUser $restaurantUser)
+    {
+        $restaurantUser->update($this->request_data($request));
+        return redirect()->route('customers_data.list')->with('success', __('Updated successfully'));
+    }
+    public function request_data($request)
+    {
+        return $request->only([
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'status',
+        ]);
+    }
 }

@@ -13,7 +13,6 @@ interface DeliveryCompanyInterface
     public function verifyApiKey(string $api_key) : bool;
     public function cancelOrder(string $id) : bool;
     public function processWebhook(array $payload);
-    public function sendNotification(Order $order);
 
 
 }

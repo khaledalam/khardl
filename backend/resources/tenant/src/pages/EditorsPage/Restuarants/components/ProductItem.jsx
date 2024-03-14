@@ -311,23 +311,22 @@ const ProductItem = ({
 
                 const response = await AxiosInstance.post(`/carts`, payload);
                 closeModal();
-                console.log("response ", response);
                 if (response?.data) {
                     toast.success(`${t("Item added to cart")}`);
                     dispatch(
-                        getCartItemsCount(response?.data.data.items.length),
+                        getCartItemsCount(response?.data.data.count),
                     );
                     //setGotoCart(true);
-                    //setSpinner(false);
                 }
+                setSpinner(false);
                 setSelectedDropdown([]);
             } catch (error) {
-                //setSpinner(false);
+                setSpinner(false);
                 console.log(error);
 
                 toast.error(error.response?.data?.message);
                 setSelectedDropdown([]);
-                //setGotoCart(false);
+                setGotoCart(false);
             }
             dispatch(addItemToCart("props.name"));
         } else {
@@ -951,7 +950,10 @@ const ProductItem = ({
                                                     : "#F2FF00",
                                             }}
                                             className="w-[45%] flex items-center justify-center gap-5  p-2 rounded-lg cursor-pointer"
-                                            onClick={handleAddToCart}
+                                            onClick={() => {
+                                                setSpinner(true);
+                                                handleAddToCart();
+                                            }}
                                         >
                                             <div className="w-[30px] h-[30px] cursor-pointer ">
                                                 <img

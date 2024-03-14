@@ -181,8 +181,8 @@
                                         <!--end::Card body-->
                                         <!--begin::Card footer-->
                                         <div class="card-footer d-flex justify-content-end py-6 px-9">
-                                            <button class="btn btn-light btn-active-light-primary me-2">{{__('discard')}}</button>
-                                            <button class="btn btn-khardl px-6">{{__('save-changes')}}</button>
+                                            <button class="btn btn-light btn-active-light-primary me-2" type="reset">{{__('discard')}}</button>
+                                            <button class="btn btn-khardl px-6" type="submit">{{__('save-changes')}}</button>
                                         </div>
                                         <!--end::Card footer-->
                                     </form>
@@ -206,20 +206,20 @@
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if preparation_time_delivery exists
-        var preparationTime = "{{ $branch->preparation_time_delivery ?? '' }}";
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if preparation_time_delivery exists
+            var preparationTime = "{{ $branch->preparation_time_delivery ?? '' }}";
 
-        // Initialize the timepicker with the existing value or default value
-        flatpickr("#prep-time", {
-            enableTime: true,
-            noCalendar: true,
-            enableSeconds: true,
-            dateFormat: "H:i:S",
-            defaultDate: preparationTime || "00:00:00",
-            time_24hr: true
+            // Initialize the timepicker with the existing value or default value
+            flatpickr("#prep-time", {
+                enableTime: true,
+                noCalendar: true,
+                enableSeconds: true,
+                dateFormat: "H:i:S",
+                defaultDate: preparationTime || "00:00:00",
+                time_24hr: true
+            });
         });
-    });
     </script>
 @endsection

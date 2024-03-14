@@ -66,9 +66,9 @@ Route::get('/health', static function (){
         'last_commit_url' => sprintf('https://github.com/mne-org/khardl/commit/%s', $commitHash),
         'last_commit_date' => sprintf('%s (timezone: Asia/Riyadh)', $commitDate->format('Y-m-d h:i:s A')),
         'mobile_app_orders_android_latest_versionCode' => 2,
-        'mobile_app_orders_android_latest_versionName' => '1.1',
+        'mobile_app_orders_android_latest_versionName' => '1.3',
         'mobile_app_orders_android_force_update' => false,
-        'mobile_app_orders_ios_latest_CURRENT_PROJECT_VERSION' => 2,
+        'mobile_app_orders_ios_latest_CURRENT_PROJECT_VERSION' => '1.5',
         'mobile_app_orders_ios_force_update' => false
 
     ]);
