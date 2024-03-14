@@ -59,8 +59,15 @@ class RestaurantController extends BaseController
         $RO_subscription = ROSubscription::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
         $setting  = Setting::first();
-
-        return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription','setting'));
+        $active_branches = Branch::where('active',true)->count();
+        $total_branches = $active_branches + ( $RO_subscription->number_of_branches ?? 0);
+        $amount = $total_branches * $subscription->amount;
+        $non_active_branches = Branch::where('active',false)->count();
+        if($RO_subscription->status == ROSubscription::SUSPEND && $active_branches == 0){
+            $amount =  $subscription->amount;
+            $total_branches = 1;
+        }
+        return view('restaurant.service', compact('user','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
     }
     public function serviceDeactivate()
     {
@@ -267,15 +274,26 @@ class RestaurantController extends BaseController
 
     public function branches()
     {
+      
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
-        $branches = Branch::iSWorker($user)
+        $branches = Branch::withTrashed()->iSWorker($user)->where('id','!=',3)
             ->get()
-            ->sortByDesc('is_primary');
-
+            ->sortByDesc(['deleted_at']);
+        $branch_cost = 0;
+        $branch_left = '';
+        if($current_sub = ROSubscription::first()){
+            $subscription = tenancy()->central(function () {
+                return Subscription::first();
+            });
+            $branch_cost =number_format($current_sub->calculateDaysLeftCost($subscription->amount),2);
+            $branch_left = $current_sub->getDateLeftAttribute();
+           
+        }
+       
         return view(
             ($user->isRestaurantOwner()) ? 'restaurant.branches' : 'worker.branches',
-            compact('available_branches', 'user', 'branches')
+            compact('available_branches', 'user', 'branches','branch_cost','branch_left')
         ); //view('branches')
     }
     public function toggleBranch($id){

@@ -156,6 +156,8 @@ Route::group([
                  // Step 3: save cards
                 Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
+                Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
+
 
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
