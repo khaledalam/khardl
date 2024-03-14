@@ -42,6 +42,11 @@ class TapController extends Controller
         ->whenPaymentStatus($request['payment_status']?? null)
         ->recent()
         ->paginate(config('application.perPage',10));
+
+        if ($user->ROSubscriptionInvoices && $request->filled('download') && $request->input('download') == 'csv') {
+            return $this->handleDownload($request, $user->ROSubscriptionInvoices);
+        }
+
         return view('restaurant.payments', compact('user', 'settings','orders'));
     }
     private function handleDownload($request, $model)
@@ -197,8 +202,7 @@ class TapController extends Controller
         }else {
             $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
         }
-     
- 
+
         $charge = TapCharge::createSub(
             data : [
                 'amount'=> $chargeData['cost'],
@@ -311,7 +315,6 @@ class TapController extends Controller
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
     public function renewBranch(RenewBranchRequest $request){
-    
         $data = $request->validated();
         $sub = ROSubscription::first();
         $centralSubscription = tenancy()->central(function(){
