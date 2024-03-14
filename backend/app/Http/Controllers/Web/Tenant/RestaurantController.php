@@ -277,7 +277,7 @@ class RestaurantController extends BaseController
       
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
-        $branches = Branch::withTrashed()->iSWorker($user)->where('id','!=',3)
+        $branches = Branch::withTrashed()->iSWorker($user)
             ->get()
             ->sortByDesc(['deleted_at']);
         $branch_cost = 0;
