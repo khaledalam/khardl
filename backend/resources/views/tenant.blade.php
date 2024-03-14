@@ -12,7 +12,7 @@
     <meta property="og:image" content="{{ $logo ?? global_asset('img/logo.png') }}" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{__('Khardl')}} - Restaurant Area</title>
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') . "?id=" . trim(exec('git log --pretty="%h" -n1 HEAD')) }}">
     <link rel="canonical" href="{{ $logo ?? global_asset('img/logo.png') }}" />
     <link rel="shortcut png" href="{{ $logo ?? global_asset('img/logo.png') }}"/>
     <link rel="icon" href="{{ $logo ?? global_asset('img/logo.png') }}"/>
@@ -35,7 +35,7 @@
             //    const url_tenant = "{{ preg_replace("/^http:/i", 'https:', request()->getSchemeAndHttpHost())}}";
         const tap_public_key = "{{env('TAP_PAYMENT_TECHNOLOGY_PUBLIC_KEY')}}";
     </script>
-    <script type="text/javascript" src="{{ mix('js/tenant.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/tenant.js') . "?id=" . trim(exec('git log --pretty="%h" -n1 HEAD')) }}"></script>
     <style>
 
         #gosell-gateway {
