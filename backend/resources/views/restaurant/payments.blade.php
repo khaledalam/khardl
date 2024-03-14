@@ -854,12 +854,11 @@ $tap_info = $settings->lead_response;
 
 @endif
 
-@push('scripts')
+
+@endsection
+
+@section('js')
 
 <script src="{{ global_asset('assets/js/custom/apps/ecommerce/sales/listing.js')}}"></script>
-@endpush
-@push('styles')
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-@endpush
 @endsection
