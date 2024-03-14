@@ -36,7 +36,7 @@
                          </ul>
                          <!--end:::Tabs-->
                          <!--begin::Button-->
-                         <a href="index.html" class="btn btn-icon btn-light-khardl btn-sm ms-auto me-lg-n7">
+                         <a href="{{route('restaurant.orders_all')}}" class="btn btn-icon btn-light-khardl btn-sm ms-auto me-lg-n7">
                              <!--begin::Svg Icon | path: icons/duotune/arrows/arr074.svg-->
                              <span class="svg-icon svg-icon-2">
                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -50,7 +50,7 @@
                          <!-- <a href="demo1/dist/apps/ecommerce/sales/edit-order.html" class="btn btn-light-khardl btn-sm me-lg-n7">Edit Order</a> -->
                          <!--end::Button-->
                          <!--begin::Button-->
-                         <a href="#" class="btn btn-active-light-khardl btn-sm">Edit Order</a>
+{{--                         <a href="#" class="btn btn-active-light-khardl btn-sm">Edit Order</a>--}}
                          @if($order->status == \App\Models\Tenant\Order::ACCEPTED)
                          <a href="#"  class="btn btn-light-success btn-sm text-black" >{{__("accepted")}}</a>
                          @elseif($order->status ==  \App\Models\Tenant\Order::PENDING)
