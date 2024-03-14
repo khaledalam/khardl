@@ -186,7 +186,7 @@ class TapController extends Controller
             if($sub->status == ROSubscription::SUSPEND ){
                 $n_branches = 0;
                 $branches = Branch::where('active',true)->count();
-                if($branches == 0){
+                if($branches == 0 && $sub->number_of_branches == 0){
                     $n_branches = 1;
                 }
                 $chargeData=  ROSubscription::serviceCalculate(ROSubscription::RENEW_AFTER_ONE_YEAR, $n_branches ,$centralSubscription->id);

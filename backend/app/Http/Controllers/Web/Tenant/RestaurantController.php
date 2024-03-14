@@ -63,7 +63,7 @@ class RestaurantController extends BaseController
         $total_branches = $active_branches + ( $RO_subscription->number_of_branches ?? 0);
         $amount = $total_branches * $subscription->amount;
         $non_active_branches = Branch::where('active',false)->count();
-        if($RO_subscription->status == ROSubscription::SUSPEND && $active_branches == 0){
+        if($RO_subscription && $RO_subscription->status  == ROSubscription::SUSPEND && $active_branches == 0 && $RO_subscription->number_of_branches == 0){
             $amount =  $subscription->amount;
             $total_branches = 1;
         }
@@ -454,7 +454,7 @@ class RestaurantController extends BaseController
             DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
         ]);
 
-        return redirect()->back()->with('success', 'Branch successfully added.');
+        return redirect()->back()->with('success', __('Branch successfully created'));
 
     }
     private function can_create_branch()
