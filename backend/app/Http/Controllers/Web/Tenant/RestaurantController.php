@@ -59,8 +59,15 @@ class RestaurantController extends BaseController
         $RO_subscription = ROSubscription::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
         $setting  = Setting::first();
-
-        return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription','setting'));
+        $active_branches = Branch::where('active',true)->count();
+        $total_branches = $active_branches + ( $RO_subscription->number_of_branches ?? 0);
+        $amount = $total_branches * $subscription->amount;
+        $non_active_branches = Branch::where('active',false)->count();
+        if($RO_subscription && $RO_subscription->status  == ROSubscription::SUSPEND && $active_branches == 0 && $RO_subscription->number_of_branches == 0){
+            $amount =  $subscription->amount;
+            $total_branches = 1;
+        }
+        return view('restaurant.service', compact('user','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
     }
     public function serviceDeactivate()
     {
@@ -264,18 +271,36 @@ class RestaurantController extends BaseController
 
     public function branches()
     {
+      
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
-        $branches = Branch::iSWorker($user)
+        $branches = Branch::withTrashed()->iSWorker($user)
             ->get()
-            ->sortByDesc('is_primary');
-
+            ->sortByDesc(['deleted_at']);
+        $branch_cost = 0;
+        $branch_left = '';
+        if($current_sub = ROSubscription::first()){
+            $subscription = tenancy()->central(function () {
+                return Subscription::first();
+            });
+            $branch_cost =number_format($current_sub->calculateDaysLeftCost($subscription->amount),2);
+            $branch_left = $current_sub->getDateLeftAttribute();
+           
+        }
+       
         return view(
             ($user->isRestaurantOwner()) ? 'restaurant.branches' : 'worker.branches',
-            compact('available_branches', 'user', 'branches')
+            compact('available_branches', 'user', 'branches','branch_cost','branch_left')
         ); //view('branches')
     }
-
+    public function toggleBranch($id){
+        $branch = Branch::findOrFail($id);
+        $branch->update([
+            'active'=>!$branch->active
+        ]);
+        $message = $branch->active ? __("Branch has been activated"):__("Branch has been deactivated");
+        return redirect()->back()->with('success',$message);
+    }
     public function branches_site_editor()
     {
         $user = Auth::user();
@@ -426,7 +451,7 @@ class RestaurantController extends BaseController
             DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
         ]);
 
-        return redirect()->back()->with('success', 'Branch successfully added.');
+        return redirect()->back()->with('success', __('Branch successfully created'));
 
     }
     private function can_create_branch()

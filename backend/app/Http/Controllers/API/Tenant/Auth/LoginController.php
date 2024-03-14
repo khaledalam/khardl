@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Utils\ResponseHelper;
+use App\Models\ROSubscription;
+use App\Models\Tenant\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -32,10 +34,16 @@ class LoginController extends BaseController
             return $this->sendError('Unauthorized.', ['error' => __('Invalid email or password')]);
         }
         $user = Auth::user();
+        if(!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE){
+            return $this->sendError('Unauthorized.', ['error' => __("Website doesn't have active subscription, Only restaurant owner can login")]);
+        }
         if(!Auth::user()->isWorker()&&!Auth::user()->isDriver()){
             return $this->sendError('Unauthorized.', ['error' => __('Only workers can logged in')]);
         }
-
+      
+        if(!$user->branch?->active){
+            return $this->sendError('Unauthorized.', ['error' => __('Cannot login, Branch is not active')]);
+        }
 
 
         // @TODO: uncomment if need!

@@ -4,9 +4,9 @@ namespace App\Http;
 
 use App\Http\Middleware\CORS;
 use App\Http\Middleware\Driver;
-use App\Http\Middleware\ForceLogOut;
 use App\Http\Middleware\Worker;
 use App\Http\Middleware\Restaurant;
+use App\Http\Middleware\ForceLogOut;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\TrustProxies;
@@ -38,6 +38,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\EnsureEmailIsNotVerified;
 use App\Http\Middleware\IsBusinessFilesSubmitted;
 use Spatie\Permission\Middlewares\RoleMiddleware;
+use App\Http\Middleware\ActiveRestaurantAndBranch;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -151,6 +152,7 @@ class Kernel extends HttpKernel
         'isLeadNotSubmitted'=>isLeadNotSubmitted::class,
         'isBusinessSubmitted'=>IsBusinessSubmitted::class,
         "trans_api"=>LocalizationApi::class,
+        'ActiveRestaurantAndBranch'=>ActiveRestaurantAndBranch::class
     ];
 
 }

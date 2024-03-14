@@ -7,6 +7,7 @@ use Database\Factories\tenant\ROSubscriptionFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Subscription as CentralSubscription;
+use App\Models\Tenant\Branch;
 use App\Models\Tenant\RestaurantUser;
 use Exception;
 
@@ -32,6 +33,7 @@ class ROSubscription extends Model
     public const RENEW_TO_CURRENT_END_DATE ="renew_to_current_end_date";
     public const RENEW_FROM_CURRENT_END_DATE ="renew_from_current_end_date";
     public const RENEW_AFTER_ONE_YEAR ="one_year";
+    public const RENEW_BRANCH ="renew_branch";
     public const TYPES = [
         self::NEW,
         self::RENEW_TO_CURRENT_END_DATE,
@@ -84,7 +86,7 @@ class ROSubscription extends Model
     }
     public static function serviceCalculate($type,$number_of_branches,$subscription_id,$json = false) {
         if(!in_array($type,self::TYPES)){
-            throw new Exception("Subscription type npt find in the list");
+            throw new Exception("Subscription type not find in the list");
         }
         $centralSubscription = tenancy()->central(function()use($subscription_id){
             return CentralSubscription::find($subscription_id);
@@ -115,7 +117,11 @@ class ROSubscription extends Model
 
             // }
             else if($type  ==  self::RENEW_AFTER_ONE_YEAR){
-                $data =[ 'number_of_branches'=>$number_of_branches,'cost' => $currentSubscription->amount];
+                $activeBranches = Branch::where('active',true)->count();
+                $branches = ($activeBranches)?$activeBranches : 1;
+                $cost = $centralSubscription->amount *   ($currentSubscription->number_of_branches + $branches );
+               
+                $data =[ 'number_of_branches'=>$number_of_branches,'cost' => $cost];
                 if($json)
                 return response()->json($data);
                 return $data;
