@@ -10,11 +10,11 @@ use Spatie\Translatable\HasTranslations;
 use Database\Factories\tenant\BranchFactory;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Branch extends Model
 {
-    use HasFactory;
-    // TODO @todo soft deletes
+    use HasFactory,SoftDeletes;
     protected $table = 'branches';
 
     protected $fillable = [
@@ -47,7 +47,8 @@ class Branch extends Model
         'sunday_closed',
         'preparation_time_delivery',
         'delivery_availability',
-        'pickup_availability'
+        'pickup_availability',
+        'active'
     ];
 
 

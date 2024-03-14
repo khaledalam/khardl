@@ -171,7 +171,7 @@ const DetailesItem = ({
                                                 backgroundColor: GlobalColor,
                                             }}
                                         >
-                                            {price} ر.س
+                                            {price} ريال
                                         </div>
                                     </div>
                                     <div className="border-b border-ternary-light my-2 mx-10 p-4">

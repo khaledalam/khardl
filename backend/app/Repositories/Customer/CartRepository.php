@@ -353,6 +353,10 @@ class CartRepository
             'count' => $this->cartCount()
         ]);
     }
+    public function isActiveBranch()
+    {
+        return $this->cart->branch->active;
+    }
 
 
 }

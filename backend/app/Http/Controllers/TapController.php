@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tenant\Order;
 use Carbon\Carbon;
 use App\Models\Tenant;
+use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
+use App\Models\Tenant\Branch;
 use App\Utils\ResponseHelper;
 use App\Models\ROSubscription;
 use App\Models\Tenant\Setting;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\Tap\TapBusiness;
 use App\Packages\TapPayment\Lead\Lead;
 use App\Jobs\SendApprovedBusinessEmailJob;
 use App\Models\Tenant\Tap\TapBusinessFile;
 use App\Http\Requests\Tenant\SaveCardRequest;
 use App\Packages\TapPayment\Business\Business;
+use App\Http\Requests\Tenant\RenewBranchRequest;
 use App\Models\Subscription as CentralSubscription;
 use App\Jobs\SendTAPLeadIDMerchantIDRequestEmailJob;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Exports\Restaurant\ExportSubscriptionInvoice;
-use App\Models\ROSubscriptionInvoice;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use App\Packages\TapPayment\Requests\CreateLeadRequest;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
@@ -182,7 +184,12 @@ class TapController extends Controller
         });
         if($sub){
             if($sub->status == ROSubscription::SUSPEND ){
-                $chargeData=  ROSubscription::serviceCalculate(ROSubscription::RENEW_AFTER_ONE_YEAR, 0 ,$centralSubscription->id);
+                $n_branches = 0;
+                $branches = Branch::where('active',true)->count();
+                if($branches == 0 && $sub->number_of_branches == 0){
+                    $n_branches = 1;
+                }
+                $chargeData=  ROSubscription::serviceCalculate(ROSubscription::RENEW_AFTER_ONE_YEAR, $n_branches ,$centralSubscription->id);
             }else {
                 $chargeData=  ROSubscription::serviceCalculate($data['type'],  $data['n_branches'],$centralSubscription->id);
             }
@@ -190,7 +197,8 @@ class TapController extends Controller
         }else {
             $chargeData = ROSubscription::serviceCalculate(ROSubscription::NEW, $data['n_branches'],$centralSubscription->id);
         }
-
+     
+ 
         $charge = TapCharge::createSub(
             data : [
                 'amount'=> $chargeData['cost'],
@@ -284,8 +292,16 @@ class TapController extends Controller
             $charge = TapCharge::retrieveSub($request->tap_id);
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 if ($charge['message']['status'] == 'CAPTURED') { // payment successful
+                    if(isset($charge['message']['metadata']['branch_id'])){
+                        return redirect()->route('restaurant.branches')
+                        ->with('success', __('You branch has been activated successfully'));
+                    }
                     return redirect()->route('restaurant.service')->with('success', __('You can now add a branch'));
                 } else {
+                    if(isset($charge['message']['metadata']['branch_id'])){
+                        return redirect()->route('restaurant.branches')
+                        ->with('error', __("The payment failed, and the subscription fee has not been paid"));
+                    }
                     return redirect()->route('restaurant.service')
                     ->with('error', __("The payment failed, and the subscription fee has not been paid"));
                 }
@@ -294,5 +310,33 @@ class TapController extends Controller
         }
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
+    public function renewBranch(RenewBranchRequest $request){
+    
+        $data = $request->validated();
+        $sub = ROSubscription::first();
+        $centralSubscription = tenancy()->central(function(){
+            return CentralSubscription::first();
+        });
+        $branch_cost =number_format($sub->calculateDaysLeftCost($centralSubscription->amount),2);
+        $charge = TapCharge::createSub(
+            data : [
+                'amount'=> $branch_cost,
+                'metadata'=>[
+                    'restaurant_id'=> tenant()->id,
+                    'subscription'=> ROSubscription::RENEW_BRANCH,
+                    'branch_id'=> $request->currenBranch,
+                    'n-branches'=> 1,
+                    'subscription_id'=>$centralSubscription->id
+                ],
+            ],
+            token_id: $data['token_id'],
+            redirect: route('tap.payments_redirect')
+        );
+        if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
+            return redirect($charge['message']['transaction']['url']);
+        }
 
+
+        return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
+    }
 }

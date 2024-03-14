@@ -59,8 +59,15 @@ class RestaurantController extends BaseController
         $RO_subscription = ROSubscription::first();
         $customer_tap_id = Auth::user()->tap_customer_id;
         $setting  = Setting::first();
-
-        return view('restaurant.service', compact('user','RO_subscription','customer_tap_id','subscription','setting'));
+        $active_branches = Branch::where('active',true)->count();
+        $total_branches = $active_branches + ( $RO_subscription->number_of_branches ?? 0);
+        $amount = $total_branches * $subscription->amount;
+        $non_active_branches = Branch::where('active',false)->count();
+        if($RO_subscription && $RO_subscription->status  == ROSubscription::SUSPEND && $active_branches == 0 && $RO_subscription->number_of_branches == 0){
+            $amount =  $subscription->amount;
+            $total_branches = 1;
+        }
+        return view('restaurant.service', compact('user','active_branches','RO_subscription','non_active_branches','customer_tap_id','subscription','setting','amount','total_branches'));
     }
     public function serviceDeactivate()
     {
@@ -251,7 +258,6 @@ class RestaurantController extends BaseController
         );
     }
 
-
     public function qr()
     {
         /** @var RestaurantUser $user */
@@ -263,22 +269,38 @@ class RestaurantController extends BaseController
         );
     }
 
-
-
     public function branches()
     {
+      
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
-        $branches = Branch::iSWorker($user)
+        $branches = Branch::withTrashed()->iSWorker($user)
             ->get()
-            ->sortByDesc('is_primary');
-
+            ->sortByDesc(['deleted_at']);
+        $branch_cost = 0;
+        $branch_left = '';
+        if($current_sub = ROSubscription::first()){
+            $subscription = tenancy()->central(function () {
+                return Subscription::first();
+            });
+            $branch_cost =number_format($current_sub->calculateDaysLeftCost($subscription->amount),2);
+            $branch_left = $current_sub->getDateLeftAttribute();
+           
+        }
+       
         return view(
             ($user->isRestaurantOwner()) ? 'restaurant.branches' : 'worker.branches',
-            compact('available_branches', 'user', 'branches')
+            compact('available_branches', 'user', 'branches','branch_cost','branch_left')
         ); //view('branches')
     }
-
+    public function toggleBranch($id){
+        $branch = Branch::findOrFail($id);
+        $branch->update([
+            'active'=>!$branch->active
+        ]);
+        $message = $branch->active ? __("Branch has been activated"):__("Branch has been deactivated");
+        return redirect()->back()->with('success',$message);
+    }
     public function branches_site_editor()
     {
         $user = Auth::user();
@@ -429,7 +451,7 @@ class RestaurantController extends BaseController
             DeliveryTypesSeeder::DELIVERY_TYPE_PICKUP
         ]);
 
-        return redirect()->back()->with('success', 'Branch successfully added.');
+        return redirect()->back()->with('success', __('Branch successfully created'));
 
     }
     private function can_create_branch()
@@ -539,10 +561,12 @@ class RestaurantController extends BaseController
 
                     $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
                 })
-                ->get();
+                ->get()
+                ->sortBy('sort');
         } else if($user->isRestaurantOwner()) {
             $categories = Category::where('branch_id', $branchId ?? $user->branch->id)
-                ->get();
+                ->get()
+                ->sortBy('sort');
         }
 
         if ($branchId) {
@@ -551,6 +575,7 @@ class RestaurantController extends BaseController
             $branch = Branch::find($user->branch->id);
         }
         $branches = Branch::all();
+
         return view('restaurant.menu', compact('user', 'categories', 'branch', 'branchId','branches'));
     }
     public function noBranches()
@@ -589,15 +614,58 @@ class RestaurantController extends BaseController
         return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
     }
 
+    public function editCategory(Request $request, $categoryId, $branchId)
+    {
+        $categoriesCount = Category::where([
+                ['branch_id', '=', $branchId]
+        ])->count();
 
+        $validator = Validator::make($request->all(), [
+            'name_en' => 'required|string|max:100|min:2',
+            'name_ar' => 'required|string|max:100|min:2',
+            'photo' => 'nullable|mimes:png,jpg,jpeg,gif|max:4096',
+            'sort' => 'nullable|int|min:1|max:' . $categoriesCount
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors());
+        }
+
+        $category = Category::findOrFail($categoryId);
+
+        $category->update([
+            'name' => [
+                'ar' => $request->name_ar,
+                'en' => $request->name_en,
+            ],
+
+        ]);
+        $category->update(['sort' => $request->sort]);
+
+        $photoFile = $request->file('photo');
+        $filename = null;
+        if ($photoFile) {
+            $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+            while (Storage::disk('public')->exists('categories/' . $filename)) {
+                $filename = Str::random(40) . '.' . $photoFile->getClientOriginalExtension();
+            }
+            $photoFile->storeAs('categories', $filename, 'public');
+            $category->update(['photo' => tenant_asset('categories/' . $filename)]);
+        }
+
+        return redirect()->back()->with('success', __('Updated successfully'));
+    }
     public function addCategory(Request $request, $branchId)
     {
-
+        $categoriesCount = Category::where([
+            ['branch_id', '=', $branchId],
+            ['sort', '=', $request->sort]
+        ])->count();
 
         $validator = Validator::make($request->all(), [
             'name_en' => 'required|string',
             'name_ar' => 'required|string',
             'new_category_photo' => 'nullable',
+            'sort' => 'nullable|int|min:1|max:' . $categoriesCount + 1
         ]);
 
 
@@ -627,13 +695,14 @@ class RestaurantController extends BaseController
         Category::create([
             'name' => trans_json($request->input('name_en'), $request->input('name_ar')),
             'photo' => $filename ? tenant_asset('categories/' . $filename) : null,
+            'sort' =>  $categoriesCount + 1,
             'user_id' => $userId,
             'branch_id' => $branchId,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        return redirect()->back()->with('success', 'Category successfully added.');
+        return redirect()->back()->with('success', __('Created successfully'));
     }
     public function deleteCategory($id)
     {

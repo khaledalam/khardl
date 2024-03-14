@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web\Tenant\Auth;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\ROSubscription;
+use App\Models\Tenant\Setting;
 use App\Packages\Msegat\Msegat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -46,9 +48,18 @@ class LoginCustomerController extends BaseController
     public function login(CustomerLoginRequest $request)
     {
         $user = RestaurantUser::where("phone",$request->phone)->first();
+        if(!$user?->isRestaurantOwner() && (!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE)){
+            Auth::logout();
+            return $this->sendError(__("Website doesn't have active subscription, Only restaurant owner can login"), []);
+        }
+        if(($user?->isDriver()  || $user?->isWorker() ) && !$user->branch?->active){
+            Auth::logout();
+            return $this->sendError(__('Cannot login, Branch is not active'), []);
+        }
         $user->status = RestaurantUser::INACTIVE;
         $user->phone_verified_at = null;
         $user->save();
+       
         Auth::loginUsingId($user->id,true);
         if($this->sendVerificationSMSCode($request)){
             $user = Auth::user();

@@ -3,10 +3,75 @@
 @section('title', __('branches'))
 
 @section('content')
+@push("styles")
+<link
+href="https://goSellJSLib.b-cdn.net/v2.0.0/css/gosell.css"
+rel="stylesheet"
+/>
+<link href="{{ global_asset('js/custom/creditCard/main.css')}}"rel="stylesheet" type="text/css" />
 
+<script
+type="text/javascript"
+src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
+></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+@endpush
+@push('scripts')
+    <script>
+        function submitPayment(e,branch){
+            e.preventDefault();
+            document.getElementById('currenBranch').value = branch;
+            goSell.submit();
+        }
+        goSell.goSellElements({
+        containerID:"root",
+        gateway:{
+            callback	: function(event){
+                if(event.card.id){
+                    var waiting = document.querySelector('#waiting-item');
+                    waiting.style.display = 'block';
+                    var submitButton = document.getElementById('tap-btn');
+                    submitButton.disabled = true;
+                    document.getElementById('token_id').value = event.id;
+                    document.getElementById('renewBranch').submit();
+                }
+            },
+            publicKey:"{{env('TAP_PUBLIC_API_KEY')}}",
+            language: "{{app()->getLocale()}}",
+            supportedCurrencies: "all",
+            supportedPaymentMethods: "all",
+            notifications: 'standard',
+            style: {
+                base: {
+                    color: '#535353',
+                    lineHeight: '18px',
+                    fontFamily: 'sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: 'rgba(0, 0, 0, 0.26)',
+                        fontSize:'15px'
+                    }
+                },
+                invalid: {
+                    color: 'red',
+                    iconColor: '#fa755a '
+                }
+            }
+        }
+        });
+    </script>
+@endpush
     <style>
         div.pac-container {
             z-index: 99999999999 !important;
+        }
+        .border-not-active {
+            border: 2px solid #e80000;
+        }
+        .opacity-75-i {
+            opacity: 75%;
         }
     </style>
 
@@ -27,9 +92,18 @@
                                 <p class="fw-bolder mx-3">{{ __('branches-available-to-add') }}</p>
                                 <p class="badge badge-light-success">{{$available_branches}}</p>
                             </div>
+                            @if($available_branches > 0)
+                            <div class="row gx-9 d-flex justify-content-center align-items-center">
+                                <a href="#" class="fs-6 text-700 fw-bolder text-center p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">+ {{ __('add-new-branch') }}</a>
+                            </div>
+                            @endif
                         </div>
                         <!--end::Row-->
                     </div>
+              
+                  
+               
+        
                     @if($available_branches == 0&&$branches->count())
                     <div class="alert alert-warning text-center mx-4">
                         <p>{{ __('You can add new branches from services') }}</p>
@@ -48,16 +122,20 @@
         @forelse ($branches as $branch)
         <div class="post d-flex flex-column-fluid my-5" id="kt_post">
             <!--begin::Container-->
-            <div id="kt_content_container" class="container-xxl">
+            <div id="kt_content_container " class="container-xxl " >
                 <div class="card card-flush border-0 h-md-100">
                     <!--begin::Body-->
-                    <div class="card-body py-9">
+                    <div class="card-body py-9 {{$branch->deleted_at ? 'border-not-active ':''}}" >
                         <!--begin::Row-->
                         <div class="row gx-9">
                             <!--begin::Col-->
-                            <div class="col-sm-6 branches-google-maps">
+                          
+                            <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}">
+                                @if(!$branch->deleted_at)
                                 <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}" value="{{$branch->address}}">
+                                @endif
                                 <div id="map{{ $branch->id }}" class="google_map" ></div>
+                                @if(!$branch->deleted_at)
                                 <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
                                         @csrf
                                         <input type="hidden" id="lat{{ $branch->id }}" name="lat" value="{{ $branch->lat }}" />
@@ -65,28 +143,101 @@
                                         <input type="hidden" id="location{{ $branch->id }}" name="location" value="{{ $branch->address }}" />
                                         <button id="save-location{{ $branch->id }}" type="submit" class="btn btn-khardl my-4 w-100">{{ __('save-location')}}</button>
                                 </form>
+                                @endif
                             </div>
+                         
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-sm-6">
                                 <!--begin::Wrapper-->
-                                <div class="d-fleسx flex-column h-100">
+                                <div class="d-flex flex-column h-100 ">
                                     <!--begin::Header-->
                                     <div class="mb-7">
                                         <!--begin::Headin-->
-                                        <div class="d-flex flex-stack mb-6">
+                                        @if($branch->deleted_at)
+                                            <span
+                                                class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-warning text-capitalize mb-3">
+                                                {{ __('This branch has been previously archived') }}<br>
+                                                <small>  {{ __('You will not be able to activate this branch or receive orders until after purchase') }}</small>
+                                            </span>
+                                        @elseif (!$branch->active)
+                                        <span
+                                                class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-warning text-capitalize mb-3">
+                                                {{ __('This branch is inactive') }}<br>
+                                                <small>  {{ __('You will not be able to receive orders from this branch') }}</small>
+                                            </span>
+                                        @endif
+                                        <div class="d-flex flex-stack mb-6 {{$branch->deleted_at ? 'opacity-75-i':''}}">
                                             <!--begin::Title-->
-                                            <div class="flex-shrink-0 me-5">
+                                            <div class="flex-shrink-0 ">
                                                 @if ($branch->is_primary)
-                                                    <span
-                                                        class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-light-khardl text-capitalize">{{ __('primary-branch') }}</span>
-                                                @endif
                                                 <span
-                                                    class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
-                                                    <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
+                                                    class="fs-7 fw-bolder me-2 d-block lh-1 pb-1 badge badge-light-khardl text-capitalize">{{ __('primary-branch') }}</span>
+                                            @endif
+                                            <span
+                                                class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
+                                                <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
+                                                
+                                                 
+                                            </div>
+                                            <div class="flex-shrink-0 me-5 ">
+                                                @if($branch->deleted_at)
+
+                                                <div class="d-flex justify-content-center mt-1">
+                                                    <a  data-bs-toggle="modal" data-bs-target="#kt_modal_new_target_renew"
+                                                class="btn btn-khardl text-center opacity-100 " > <span class=" text-white fw-bolder">{{__('Purchase')}} <i class="fas fa-money-bill-wave-alt text-white"></i></span></a>
+                                                </div>
+                                                @elseif(!$branch->active)
+                                            
+                                                    <div class="d-flex justify-content-center mt-1">
+                                                        <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}"
+                                                    class="btn btn-success text-center">{{__('Activate')}} <i class="fa  fa-play text-white m-2"></i></a>
+                                                    </div>
+                                                
+                                                @endif
                                             </div>
                                             <!--end::Title-->
                                         </div>
+                                        <div class="modal fade" id="kt_modal_new_target_renew" tabindex="-1" aria-hidden="true">
+                                            <!--begin::Modal dialog-->
+                                            <div class="modal-dialog modal-dialog-centered mw-650px">
+                                                <!--begin::Modal content-->
+                                                <div class="modal-content rounded p-15">
+                                                    <form action="{{route('tap.renewBranch')}}" id="renewBranch" method="POST">
+                                                        @csrf
+                                                    <input type="hidden" name="token_id" id="token_id" value="">
+                                                    <input type="hidden"  id="currenBranch" value="" name="currenBranch">
+
+                                                    <div class="modal-header pb-0 border-0  d-flex justify-content-center">
+                                                        <h5 class="modal-title text-center">
+                                                            {{__('Renewing the branch subscription period')}} ({{$branch_cost}}) {{__('SAR')}}
+                                                        </h5>
+                                                        <br>
+                                                       
+                                                    </div>
+                                                    <p class="text-center text-khardl">
+                                                        ({{$branch_left}})
+                                                    </p>
+                                                    <div id="root"></div>
+                                                    <p id="msg"></p>
+                                                  
+                                                    <button id="tap-btn"  type="submit"   onclick="submitPayment(event,{{$branch->id}})" class="btn btn-khardl text-white ">
+
+                                                        <span class="indicator-label"> {{__("purchase")}} ✔️</span>
+                                                        <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
+                                                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                    </button>
+                                                </form>
+                                                   
+                                                </div>
+
+                                                </div>
+                                               
+
+
+                                        </div>
+                                            <!--end::Modal body-->
+                                      
                                         <!--end::Heading-->
                                         <!--begin::Items-->
                                         <div class="d-flex align-items-center flex-wrap d-grid gap-2">
@@ -113,7 +264,7 @@
                                                 </div>
                                                 <!--end::Symbol-->
                                                 <!--begin::Info-->
-                                                <div class="m-0 position-relative">
+                                                <div class="m-0 position-relative {{$branch->deleted_at?'opacity-75-i':''}}">
                                                     <span class="fw-bold text-gray-400 d-block fs-8">{{ __('revenue') }}</span>
                                                     @if(isset($branch->total_revenues['number_formatted']))
                                                     <div class="revenues-container">
@@ -130,6 +281,7 @@
                                         <!--end::Items-->
                                     </div>
                                     <!--end::Header-->
+                                    @if(!$branch->deleted_at)
                                     <!--begin::Body-->
                                     <div class="mb-6">
                                         <!--begin::Text-->
@@ -183,6 +335,7 @@
                                         <div>
                                         </div>
                                     </div>
+                                    @endif
                                     <!--end::Footer-->
                                 </div>
                                 <!--end::Wrapper-->
@@ -500,28 +653,7 @@
             </div>
             @endif
         @endforelse
-        @if($available_branches > 0)
-            <!--begin::Post-->
-            <div class="post d-flex flex-column-fluid mt-10" id="kt_post">
-                <!--begin::Container-->
-                <div id="kt_content_container" class="container-xxl">
-                    <div class="card card-flush border-0 h-md-100">
-                        <!--begin::Body-->
-                        <div class="card-body py-9">
-                            <!--begin::Row-->
-                            <div class="row gx-9 h-100 d-flex justify-content-center align-items-center">
-                                <a href="#" class="fs-6 text-700 fw-bolder text-center border p-15 rounded fs-25" data-bs-toggle="modal" data-bs-target="#kt_modal_new_bransh">+ {{ __('add-new-branch') }}</a>
-                            </div>
-                            <!--end::Row-->
-                        </div>
-                        <!--end::Body-->
-                    </div>
-                </div>
-                <!--end::Container-->
-            </div>
-            <!--end::Post-->
-        @endif
-
+       
     </div>
     <!--end::Content-->
 
@@ -576,7 +708,7 @@
                     <!--begin::Input-->
                     <div class="position-relative d-flex align-items-center">
                         <!--begin::Datepicker-->
-                        <input value="{{ old('name') }}" required name="name" class="form-control form-control-solid" />
+                        <input value="{{ old('name') }}" required name="name" class="form-control form-control-solid " type="text" />
                         <!--end::Datepicker-->
                     </div>
                     <!--end::Input-->
@@ -587,7 +719,7 @@
                     <!--begin::Input-->
                     <div class="position-relative d-flex align-items-center">
                         <!--begin::Datepicker-->
-                        <input value="{{ old('phone') }}" required name="phone" class="form-control form-control-solid" />
+                        <input value="{{ old('phone') }}" required name="phone" class="form-control form-control-solid " type="text" />
                         <!--end::Datepicker-->
                     </div>
                     <!--end::Input-->
@@ -882,6 +1014,206 @@
             });
             document.querySelector('input[name="hours_option"]:checked').dispatchEvent(new Event('change'));
         }
+
+        // Initialize based on the default selected option
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            let maps = {}; // Store maps in an object
+            let markers = {}; // Store markers in an object
+
+            function initializeMap(branchId, lat, lng,viewOnly = false) {
+                const latLng = new google.maps.LatLng(lat, lng);
+
+                const map = new google.maps.Map(document.getElementById('map' + branchId), {
+                    center: latLng,
+                    zoom: 8,
+                });
+                if(!viewOnly){
+                    const input = document.getElementById("pac-input" + branchId);
+
+                    const options = {
+                        fields: ["formatted_address", "geometry", "name"],
+                        strictBounds: false,
+                    };
+                    const autocomplete = new google.maps.places.Autocomplete(input, options);
+                    autocomplete.bindTo("bounds", map);
+
+                    const marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        draggable: true,
+                    });
+
+                    markers[branchId] = marker; // Store the marker for this branch
+                    maps[branchId] = map; // Store the map for this branch
+
+                    google.maps.event.addListener(marker, 'dragend', function () {
+                        updateLocationInput(marker.getPosition(), branchId);
+                    });
+
+                    // Add a click event listener to the map
+                    google.maps.event.addListener(map, 'click', function (event) {
+                        marker.setPosition(event.latLng);
+                        updateLocationInput(event.latLng, branchId);
+                    });
+                    autocomplete.addListener("place_changed", () => {
+                        console.log('change location')
+                        // infowindow.close();
+                        marker.setVisible(false);
+
+                        const place = autocomplete.getPlace();
+
+                        if (!place.geometry || !place.geometry.location) {
+                            // User entered the name of a Place that was not suggested and
+                            // pressed the Enter key, or the Place Details request failed.
+                            window.alert("No details available for input: '" + place.name + "'");
+                            return;
+                        }
+                        const lat = place.geometry.location.lat();
+                        const lng = place.geometry.location.lng();
+                        selectedPlacePosition = new google.maps.LatLng(lat, lng);
+                        updateLocationInput(selectedPlacePosition, branchId);
+                        // If the place has a geometry, then present it on a map.
+                        if (place.geometry.viewport) {
+                            map.fitBounds(place.geometry.viewport);
+                        } else {
+                            map.setCenter(place.geometry.location);
+                            map.setZoom(17);
+                        }
+
+                        marker.setPosition(place.geometry.location);
+                        marker.setVisible(true);
+                        // infowindow.open(map, marker);
+                    });
+
+                }
+                
+                console.log("ok")
+            }
+
+            async function convertToAddress(lat, lng){
+
+                return await fetch(
+                    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCFkagJ1zc4jW9N3lRNlIyAIJJcNpOwecE`
+                )
+                    .then(async (res) => {
+                        const geocode = await res.json();
+                        return geocode?.results[0]?.formatted_address || geocode?.plus_code?.compound_code || `${lat},${lng}`;
+                    });
+            }
+
+            async function updateLocationInput(latLng, branchId) {
+
+                const latInput = document.getElementById('lat' + branchId);
+                const lngInput = document.getElementById('lng' + branchId);
+                latInput.value = latLng.lat();
+                lngInput.value = latLng.lng();
+
+                const addressFromLatLng = await convertToAddress(latLng.lat(), latLng.lng());
+
+                const locationInput = document.getElementById('location' + branchId);
+
+                if (locationInput) {
+                    locationInput.value = addressFromLatLng;
+                }
+
+                const locationInputBranch = document.getElementById('pac-input' + branchId);
+
+
+                if (locationInputBranch) {
+                    locationInputBranch.value = addressFromLatLng;
+                }
+            }
+
+            function updateLocation(branchId) {
+                const marker = markers[branchId];
+                const latInput = document.getElementById('lat' + branchId);
+                const lngInput = document.getElementById('lng' + branchId);
+                const lat = parseFloat(latInput.value);
+                const lng = parseFloat(lngInput.value);
+
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    const latLng = new google.maps.LatLng(lat, lng);
+                    marker.setPosition(latLng);
+                    maps[branchId].setCenter(latLng);
+
+                    $.ajax({
+                        url: '/branches/update-location/' + branchId,
+                        method: 'POST',
+                        data: {
+                            lat: lat,
+                            lng: lng,
+                        },
+                        success: function (response) {
+                            console.log('Location updated successfully:');
+                        },
+                        error: function (error) {
+                            console.error('Error updating location:', error);
+                        },
+                    });
+                }
+            }
+
+
+            // Initialize the maps for each branch
+            @foreach ($branches as $branch)
+                @if($branch->deleted_at)
+                initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }},true);
+                @else
+                initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
+
+                @endif
+            @endforeach
+
+
+            // New branch popup
+            const centerCoords = {lat: 24.7136, lng: 46.6753, address: '8779 Street Number 74, Al Olaya, 2593, Riyadh 12214, Saudi Arabia'}; // Default center coordinates
+            initializeMap('-new_branch', centerCoords?.lat, centerCoords?.lng);
+
+            document.getElementById('lat-new_branch').value = centerCoords.lat;
+            document.getElementById('lng-new_branch').value = centerCoords.lat;
+            document.getElementById('pac-input-new_branch').value = centerCoords.address;
+
+
+
+            google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
+
+                // If a marker exists, remove it
+                if (markers['-new_branch']) {
+                    markers['-new_branch'].setMap(null);
+                }
+
+                // Create a new marker at the clicked location
+                markers['-new_branch'] = new google.maps.Marker({
+                    map: maps['-new_branch'],
+                    position: event.latLng,
+                    draggable: true,
+                });
+
+                // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
+
+                const latnew_branch = document.getElementById('lat-new_branch' );
+                const lngnew_branch = document.getElementById('lng-new_branch' );
+
+                // Update the hidden input with the clicked location's latitude and longitude
+                latnew_branch.value = `${event.latLng.lat()}`;
+                lngnew_branch.value = `${event.latLng.lng()}`;
+            });
+
+
+            function updateTimeInput() {
+                var timeInput = document.getElementById("timeInput");
+                var timeValue = timeInput.value.split(":");
+                var hours = parseInt(timeValue[0], 10);
+
+                if (hours < 10) {
+                    timeInput.value = "0" + hours + ":" + timeValue[1];
+                }
+            }
+
+
+        });
+
 
     </script>
 

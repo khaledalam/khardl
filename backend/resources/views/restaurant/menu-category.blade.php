@@ -16,7 +16,7 @@
                           <!--begin::Sidebar-->
                           <div class="flex-column flex-lg-row-auto w-100 w-lg-275px mb-10 mb-lg-0">
                               <!--begin::Sticky aside-->
-                              <div class="card card-flush mb-0" data-kt-sticky="true" data-kt-sticky-name="inbox-aside-sticky" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
+                              <div class="card card-flush mb-0" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
                                   <!--begin::Aside content-->
                                   <div class="card-body">
                                       <!--begin::Button-->

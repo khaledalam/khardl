@@ -42,8 +42,7 @@
 }
 /* Menu page */
 .card-body .menu-column {
-    max-height: 280px;
-    overflow: auto;
+    max-height: 500px;
 }
 
 /* Summary */

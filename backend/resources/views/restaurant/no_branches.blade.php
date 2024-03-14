@@ -12,7 +12,7 @@
         <div id="kt_content_container" class="container-xxl">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-flush mb-0" data-kt-sticky="true" data-kt-sticky-name="inbox-aside-sticky" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
+                    <div class="card card-flush mb-0" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
                         <!--begin::Aside content-->
                         <div class="card-body" style="overflow-y: scroll;height: 20vh;">
                             <div class="alert alert-warning text-center">

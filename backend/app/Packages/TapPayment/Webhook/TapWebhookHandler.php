@@ -15,7 +15,8 @@ class TapWebhookHandler extends ProcessWebhookJob
     {
 
         $data = json_decode($this->webhookCall, true)['payload'];
-  
+      
+     
         if(isset($data['metadata']['subscription_id'])){ // subscription for RO
             RestaurantCharge::updateOrCreate($data);
         }
