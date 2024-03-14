@@ -77,7 +77,7 @@ $tap_info = $settings->lead_response;
                                                     <!--begin::Item-->
                                                     <tr>
                                                         <td>
-                                                            <span class="text-start">{{__('Number of branches')}}</span>
+                                                            <span class="text-start">{{__('Number of remain available branches')}}</span>
                                                         </td>
                                                         <td class="text-dark">
                                                             <span class="py-3 px-4 fs-23">{{ $user?->ROSubscription?->number_of_branches }}</span>
