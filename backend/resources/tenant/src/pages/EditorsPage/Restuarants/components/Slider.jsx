@@ -121,7 +121,16 @@ const Slider = ({ banner_images }) => {
 
     return (
         <div style={{ backgroundColor: bannerBgColor }} className="w-full p-5">
-            <div className="w-[92%] mx-auto">
+            <p
+                style={{
+                    fontSize: "12px",
+                    textAlign: "left",
+                    marginBottom: "10px",
+                }}
+            >
+                {t("SliderHintUpload")}
+            </p>
+            <div className="mx-auto">
                 <ReactSlider {...settings}>
                     {Array(
                         bannersUpload.length > sliderCount
@@ -133,6 +142,7 @@ const Slider = ({ banner_images }) => {
                             <div key={index} className={`h-[300px] !block`}>
                                 <div
                                     style={{
+                                        backgroundPosition: "center",
                                         backgroundRepeat: "no-repeat",
                                         backgroundSize: "cover",
                                         backgroundImage:
@@ -269,7 +279,6 @@ const Slider = ({ banner_images }) => {
                                             )}
                                         </div>
                                     )}
-
                                     <button
                                         onClick={removeEachSlide}
                                         disabled={sliderCount <= 2}
@@ -336,7 +345,7 @@ const Slider = ({ banner_images }) => {
                                     crop={crop}
                                     rotation={rotation}
                                     zoom={zoom}
-                                    aspect={4 / 3}
+                                    aspect={4 / 1}
                                     onCropChange={setCrop}
                                     onRotationChange={setRotation}
                                     onCropComplete={onCropComplete}

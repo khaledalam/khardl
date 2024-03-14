@@ -194,6 +194,8 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                                         ].url && (
                                                             <div
                                                                 style={{
+                                                                    backgroundPosition:
+                                                                        "center",
                                                                     backgroundRepeat:
                                                                         "no-repeat",
                                                                     backgroundSize:
