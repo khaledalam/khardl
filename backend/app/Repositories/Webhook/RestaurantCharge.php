@@ -11,23 +11,33 @@ use App\Models\ROSubscriptionInvoice;
 use App\Models\Tenant\RestaurantUser;
 use Spatie\WebhookClient\Models\WebhookCall;
 use App\Models\Subscription as CentralSubscription;
+use App\Models\Tenant\Branch;
 
 class RestaurantCharge
 {
     
     public static function updateOrCreate($data){
-        if($data['metadata']['subscription'] == ROSubscription::NEW){ 
-            self::CreateNewSubscription($data);
-        }
-        // buy new branches
-        else if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE || $data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE ){
-            self::BuyNewBranches($data);
-        }
-        // activate sub to 1 year 
-        else if ($data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR){
-            self::RenewSubscription($data);
-        }else {
-            logger('error occur while process payment in subscription, type not defined');
+        DB::beginTransaction();
+        try {
+            if($data['metadata']['subscription'] == ROSubscription::NEW){ 
+                self::CreateNewSubscription($data);
+            }
+            // buy new branches
+            else if ($data['metadata']['subscription'] == ROSubscription::RENEW_FROM_CURRENT_END_DATE || $data['metadata']['subscription'] == ROSubscription::RENEW_TO_CURRENT_END_DATE ){
+                self::BuyNewBranches($data);
+            }
+            // activate sub to 1 year 
+            else if ($data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR){
+                self::RenewSubscription($data);
+            }
+            else if ($data['metadata']['subscription'] == ROSubscription::RENEW_BRANCH){
+                self::renewBranch($data);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
         
     }
@@ -41,6 +51,18 @@ class RestaurantCharge
     {
         return self::processSubscription($data, function ($user, $data, $subscription) {
             $subscription->update(self::getSubscriptionAttributes($user, $data,$subscription));
+        });
+    }
+    public static function renewBranch($data)
+    {
+        return self::processSubscription($data, function ($user, $data, $subscription) {
+            $centralSubscription = tenancy()->central(function(){
+                return CentralSubscription::first();
+            });
+            $subscription->update([
+                'amount'=>$subscription->amount + $centralSubscription->amount
+            ]);
+            Branch::withTrashed()->findOrFail( $data['metadata']['branch_id'])->restore();
         });
     }
     public static function buyNewBranches($data)
@@ -83,13 +105,14 @@ class RestaurantCharge
 
     private static function processSubscription($data, Closure $callback)
     {
-        DB::beginTransaction();
-        try {
+       
             $user = RestaurantUser::first();
             $subscription = ROSubscription::first();
             
             if ($data['status'] == 'CAPTURED') { // if payment successful
                 $callback($user, $data, $subscription);
+                if( $data['metadata']['subscription'] == ROSubscription::RENEW_AFTER_ONE_YEAR)   // soft delete branches 
+                    Branch::where('active',false)->delete();
             }
 
             ROSubscriptionInvoice::create([
@@ -103,11 +126,6 @@ class RestaurantCharge
                 'card_id' => $data['card']['id'] ?? null,
                 'type' => $data['metadata']['subscription'],
             ]);
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+       
     }
 }

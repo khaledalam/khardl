@@ -21,16 +21,24 @@ class CategoryController
         $this->resource = new CategoryResource(new Category());
         // check is request coming from sancum
         if (request()->bearerToken()) {
-            $this->model = Category::where('branch_id', $user->branch->id)
+            $this->model = Category::whereHas('branch',function($q){
+                    return $q->where("active",true);
+                })->where('branch_id', $user->branch->id)
                 ->orderBy('sort');
         } else {
             $this->model = Category::orderBy('sort');
             if (request()->has('selected_branch_id') && request()->selected_branch_id) {
                 if (Category::where('branch_id', request()->selected_branch_id)->exists()) {
-                    $this->model = $this->model->where('branch_id', request()->selected_branch_id);
+                  
+                    // $this->model = $this->model->where('branch_id', request()->selected_branch_id);
+                    $this->model = $this->model->whereHas('branch',function($q){
+                        return $q->where("active",true);
+                    })->where('branch_id', request()->selected_branch_id);
                 } else {
 //                    $this->model = $this->model->where('branch_id', Branch::where('is_primary', true)->first()->id);
-                    $this->model = new Category();
+                    $this->model = $this->model->whereHas('branch',function($q){
+                        return $q->where("active",true);
+                    });
                 }
             }
         }

@@ -224,8 +224,8 @@
                         </div>
                         <!-- menu -->
                         <div class="menu-item menu-accordion">
-                            @if( \App\Models\Tenant\Branch::first())
-                            <a href="{{route('restaurant.menu',['branchId' => \App\Models\Tenant\Branch::where('is_primary',true)->first()->id])}}">
+                            @if( $id = \App\Models\Tenant\Branch::where('is_primary',true)->first()?->id)
+                            <a href="{{route('restaurant.menu',['branchId' => $id])}}">
                                 <span class="{{ ($link == 'menu') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->
@@ -269,8 +269,9 @@
 
                         <!-- workers -->
                         <div class="menu-item menu-accordion">
-                            @if(\App\Models\Tenant\Branch::first())
-                            <a href="{{route('restaurant.workers',['branchId' => \App\Models\Tenant\Branch::where('is_primary',true)->first()->id])}}">
+                            @if( $id = \App\Models\Tenant\Branch::where('is_primary',true)->first()?->id)
+                    
+                            <a href="{{route('restaurant.workers',['branchId' => $id])}}">
                                 <span class="{{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon -->

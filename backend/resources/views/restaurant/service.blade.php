@@ -151,11 +151,17 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 <!--begin::Price-->
                                                                 <div class="text-center">
 
-                                                                    <span class="mb-2 text-khardl">{{__('SAR')}}</span>
+                                                                  
                                                                     @if($RO_subscription?->amount)
-                                                                    <span class="fs-2x fw-bolder text-khardl text-center">{{$RO_subscription->amount}}</span>
+                                                                    <span class="mb-2 text-khardl">{{__('SAR')}}</span>  <span class="fs-2x fw-bolder text-khardl text-center">{{$amount}}</span>
+
+                                                                    <small class="text-khardl text-center">({{$subscription->amount}}*{{$total_branches}})</small>
                                                                     <br>
-                                                                    <span> {{__('Number of available branches')}} <strong>{{$RO_subscription->number_of_branches}}</strong></span>
+                                                                    @if($RO_subscription->number_of_branches > 0)
+                                                                    <span> {{__('Number of branches available to add')}} <strong>{{$RO_subscription->number_of_branches}}</strong> <br> 
+                                                                      
+                                                                      @endif
+                                                                    {{__('Number of current active branches')}} <strong>{{$active_branches}}</strong></span>
                                                                     @else
                                                                     <span class="fs-2x fw-bolder text-khardl text-center">{{$subscription->amount}}</span>
                                                                     @endif
@@ -337,12 +343,15 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                 <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                                     <h5 class="modal-title text-center">{{$subscription->name}} ({{__('Renew Subscription')}})</h5>
                                                                                 </div>
+                                                                                @if($non_active_branches > 0)
+                                                                                <strong class="text-warning text-center bg-danger">{{__('Inactivated branches will be archived until purchased again. Please make sure to activate the branches you may need before renewing.')}}</strong>
+                                                                                @endif
                                                                                 <div class="modal-body d-flex justify-content-center">
                                                                                     <div class="row">
 
                                                                                         <div class="col-12 mt-3">
                                                                                             <label for="factor">{{__('total-price')}} </label>
-                                                                                            <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{$RO_subscription->amount}}" readonly>
+                                                                                            <input type="text" readonly class="form-control bg-secondary" id="price" name="price" value="{{$amount}}" readonly>
                                                                                             <div id="root"></div>
                                                                                             <p id="msg"></p>
                                                                                         </div>
@@ -478,7 +487,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
         <script>
             // Execute the AJAX request when the radio button changes
-            $('input[name=renewalOption]').change(function() {
+            $('input[name=n_branches]').change(function() {
                 calculateRenewPrice();
             });
             $('#renewSubForm').on('submit',function(e){
@@ -486,12 +495,11 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 BuyNewSlots();
             });
             function calculateRenewPrice(){
-                var renewalOption = $('input[name=renewalOption]:checked').val();
-                $('#type').val(renewalOption);
+          
                 $.ajax({
                     type: 'GET',
                     url:  `{{ route('restaurant.service.calculate', ['type' => ':type','number_of_branches'=>':number_of_branches','subscription_id'=>':subscription_id']) }}`
-                    .replace(':type', renewalOption)
+                    .replace(':type', '{{\App\Models\ROSubscription::RENEW_TO_CURRENT_END_DATE}}')
                     .replace(':subscription_id', '{{$subscription->id}}')
                     .replace(':number_of_branches',  document.getElementById('n_branches').value),
                     success: function(response) {
@@ -522,7 +530,9 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 const factor = parseFloat(factorInput.value) || 1;
                 priceInput.value = "{{$subscription->amount}}" * factor;
             }
-
+            @if($RO_subscription && $RO_subscription->status == \App\Models\ROSubscription::ACTIVE)
+            calculateRenewPrice();
+            @endif
 
         </script>
      </div>

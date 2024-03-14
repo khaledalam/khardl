@@ -102,7 +102,7 @@ Route::group([
 
         Route::get('/customer-style', [CustomerStyleController::class, 'fetch'])->name('restaurant.customer.style.fetch');
 
-        Route::middleware(['restaurantOrWorker'])->group(function () {
+        Route::middleware(['restaurantOrWorker','ActiveRestaurantAndBranch'])->group(function () {
             Route::get('/profile', [RestaurantController::class, 'profile'])->name('restaurant.profile');
             Route::post('/profile', [RestaurantController::class, 'updateProfile'])->name('restaurant.profile-update');
             Route::get('/workers/{branchId}', [RestaurantController::class, 'workers'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.workers');
@@ -115,6 +115,7 @@ Route::group([
             Route::get('/branches-site-editor', [RestaurantController::class, 'branches_site_editor'])->name('restaurant.branches_site_editor');
             Route::get('/branches', [RestaurantController::class, 'branches'])->name('restaurant.branches');
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
+            Route::get('/branches/{id}/toggleBranch', [RestaurantController::class, 'toggleBranch'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-branch-status');
             Route::get('/no_branches', [RestaurantController::class, 'noBranches'])->middleware('permission:can_edit_menu')->name('restaurant.no_branches');
             Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
             Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->middleware('permission:can_edit_menu')->name('restaurant.get-category');
@@ -159,6 +160,8 @@ Route::group([
                  // Step 3: save cards
                 Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
+                Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
+
 
 
                 Route::get('/summary', [RestaurantController::class, 'index'])->name('restaurant.summary');
@@ -333,7 +336,7 @@ Route::middleware([
         Route::post('login', [APILoginController::class, 'login']);
 
 
-        Route::middleware('auth:sanctum')->group(function () {
+        Route::middleware(['auth:sanctum','ActiveRestaurantAndBranch'])->group(function () {
             //Notifications
             //External notification (Push)
             Route::post('save-token',[PushNotificationController::class,'saveToken']);
