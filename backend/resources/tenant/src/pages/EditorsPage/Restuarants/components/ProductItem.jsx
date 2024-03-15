@@ -313,9 +313,7 @@ const ProductItem = ({
                 closeModal();
                 if (response?.data) {
                     toast.success(`${t("Item added to cart")}`);
-                    dispatch(
-                        getCartItemsCount(response?.data.data.count),
-                    );
+                    dispatch(getCartItemsCount(response?.data.data.count));
                     //setGotoCart(true);
                 }
                 setSpinner(false);
@@ -330,6 +328,7 @@ const ProductItem = ({
             }
             dispatch(addItemToCart("props.name"));
         } else {
+            setSpinner(false);
             toast.error("Select all mandatory options");
         }
     };
