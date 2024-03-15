@@ -411,7 +411,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                                                                     <img alt="Logo" src="{{ global_asset('images/android_orders_app.webp') }}" style="height: 265px;" />
 
-                                                                    <h2 class="fw-boldest text-center text-khardl mt-3">{{__('free')}}</h2>
+                                                                    <h2 class="fw-boldest text-center text-khardl mt-3">{{__('Free')}}</h2>
 
                                                                 </div>
                                                                 <!--end::Price-->
@@ -455,7 +455,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                                                                     <img alt="Logo" src="{{ global_asset('images/iphone_orders_app.png') }}" style="height: 265px;" />
 
-                                                                    <h2 class="fw-boldest text-center text-khardl mt-3">{{__('free')}}</h2>
+                                                                    <h2 class="fw-boldest text-center text-khardl mt-3">{{__('Free')}}</h2>
 
                                                                 </div>
                                                                 <!--end::Price-->
