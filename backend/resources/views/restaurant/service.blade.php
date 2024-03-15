@@ -105,7 +105,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             <!--begin::Row-->
                                             <div class="row g-10">
 
-                                                <!--begin::Col-->
+                                                <!--begin::Col branch slot -->
                                                 <div class="col-xl-4">
                                                     <div class="d-flex h-100 align-items-center">
                                                         <!--begin::Option-->
@@ -116,7 +116,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                             <!--begin::Heading-->
                                                             <div class="mb-7 text-center px-10" style="padding-bottom: 15px;">
                                                                 <!--begin::image-->
-                                                                <div class="text-gray-400 fw-bold mb-5">
+                                                                <div class="text-gray-400 fw-bold my-5">
                                                                     <svg width="75" height="85" viewBox="0 0 75 85" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <rect x="1" width="74" height="74" rx="10" fill="url(#paint0_linear_57_2741)" />
                                                                         <path d="M0.0508283 55.9262C0.542169 54.5352 1.54179 54.1282 2.96498 54.1282C10.2843 54.1621 17.5866 54.1451 24.9059 54.1451C25.177 54.1451 25.448 54.1451 25.8208 54.1451C25.8208 53.8398 25.8208 53.5684 25.8208 53.314C25.8208 43.9168 25.8208 34.5196 25.8208 25.1224C25.8208 21.8826 27.7014 19.9998 30.9375 19.9998C40.5949 19.9998 50.2523 19.9998 59.9266 19.9998C63.0779 19.9998 64.9925 21.8995 64.9925 25.0376C64.9925 28.0908 64.9925 31.1271 64.9925 34.1803C64.9925 34.2991 64.9925 34.4348 64.9925 34.5535C64.9586 35.1981 64.5858 35.5882 64.0267 35.5713C63.5015 35.5543 63.1288 35.1642 63.1288 34.5535C63.1118 32.993 63.1288 31.4155 63.1288 29.8549C63.1288 29.6005 63.1288 29.3461 63.1288 29.0407C51.3366 29.0407 39.5783 29.0407 27.7523 29.0407C27.7523 37.3693 27.7523 45.7148 27.7523 54.1282C28.3961 54.1282 29.023 54.1282 29.6498 54.1282C31.4966 54.1282 32.2929 54.9084 32.2929 56.7404C32.2929 61.0997 32.2929 65.459 32.2929 69.8184C32.2929 70.0728 32.2929 70.3103 32.2929 70.6156C42.5772 70.6156 52.7937 70.6156 63.1288 70.6156C63.1288 70.3612 63.1288 70.1068 63.1288 69.8354C63.1288 60.0141 63.1288 50.1929 63.1288 40.3716C63.1288 40.185 63.1118 39.9815 63.1288 39.7949C63.1796 39.2351 63.5354 38.8789 64.0606 38.8789C64.5858 38.8789 64.9416 39.2351 64.9925 39.7949C65.0094 39.9985 64.9925 40.219 64.9925 40.4225C64.9925 53.5175 64.9925 66.6125 64.9925 79.7244C64.9925 82.625 63.8573 84.1177 61.0617 84.898C61.0279 84.9149 60.994 84.9319 60.9601 84.9658C41.2556 84.9658 21.5512 84.9658 1.84676 84.9658C0.982681 84.6435 0.389684 84.0499 0.0677711 83.1848C0.0677711 81.4037 0.0677711 79.6227 0.0677711 77.8586C0.355798 77.3836 0.728539 77.0613 1.30459 77.2479C1.89759 77.4345 1.94842 77.9434 1.94842 78.4862C1.93148 79.7753 1.96536 81.0645 1.93148 82.3536C1.91453 82.9134 2.1009 83.083 2.66001 83.083C11.6905 83.066 20.721 83.066 29.7346 83.083C30.2598 83.083 30.4292 82.9134 30.4292 82.3875C30.4123 73.8215 30.4123 65.2385 30.4292 56.6725C30.4292 56.0958 30.2259 55.9601 29.6837 55.9601C26.939 55.9771 24.1943 55.9771 21.4326 55.9771C21.2462 55.9771 21.0768 56.011 20.8396 56.0279C20.8396 56.3163 20.8396 56.5368 20.8396 56.7743C20.8396 59.2508 20.8396 61.7273 20.8396 64.2038C20.8396 65.2046 20.5516 65.493 19.5689 65.493C17.2986 65.493 15.0452 65.493 12.7748 65.493C11.7583 65.493 11.4533 65.1876 11.4533 64.1699C11.4533 61.6764 11.4533 59.183 11.4533 56.6725C11.4533 56.452 11.4533 56.2315 11.4533 55.9771C8.47139 55.9771 5.60806 55.9771 2.72779 55.9771C1.89759 55.9771 1.89759 55.9771 1.89759 56.8421C1.89759 61.4898 1.89759 66.1545 1.89759 70.8022C1.89759 71.5486 1.96536 72.2949 1.8637 73.0243C1.81288 73.3466 1.50791 73.7876 1.21988 73.8894C0.965738 73.9911 0.559111 73.7367 0.220256 73.601C0.135542 73.5671 0.0677711 73.4653 0 73.3975C0.0508283 67.5963 0.0508283 61.7612 0.0508283 55.9262ZM32.3099 83.083C32.5132 83.1 32.6657 83.1169 32.8351 83.1169C41.9842 83.1169 51.1502 83.1169 60.2993 83.1169C61.9597 83.1169 63.1118 81.9465 63.1288 80.2672C63.1457 77.8755 63.1288 75.4838 63.1288 73.0921C63.1288 72.9225 63.1118 72.7699 63.0949 72.6002C52.8106 72.6002 42.5772 72.6002 32.3268 72.6002C32.3099 76.0945 32.3099 79.5548 32.3099 83.083ZM27.7014 27.09C39.5444 27.09 51.3027 27.09 63.1118 27.09C63.1118 26.3437 63.1118 25.6482 63.1118 24.9528C63.1118 22.9512 62.0275 21.8656 60.0113 21.8656C54.5727 21.8656 49.151 21.8656 43.7123 21.8656C39.3072 21.8656 34.9191 21.8656 30.5139 21.8656C29.023 21.8656 27.82 22.8664 27.7014 24.2573C27.6506 25.1903 27.7014 26.1232 27.7014 27.09ZM13.4017 56.0619C13.4017 58.6062 13.4017 61.0997 13.4017 63.6271C15.2654 63.6271 17.0953 63.6271 18.959 63.6271C18.959 61.0997 18.959 58.5893 18.959 56.0619C17.1122 56.0619 15.2824 56.0619 13.4017 56.0619Z" fill="#040205" />
@@ -151,15 +151,15 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 <!--begin::Price-->
                                                                 <div class="text-center">
 
-                                                                  
+
                                                                     @if($RO_subscription?->amount)
                                                                     <span class="mb-2 text-khardl">{{__('SAR')}}</span>  <span class="fs-2x fw-bolder text-khardl text-center">{{$amount}}</span>
 
                                                                     <small class="text-khardl text-center">({{$subscription->amount}}*{{$total_branches}})</small>
                                                                     <br>
                                                                     @if($RO_subscription->number_of_branches > 0)
-                                                                    <span> {{__('Number of branches available to add')}} <strong>{{$RO_subscription->number_of_branches}}</strong> <br> 
-                                                                      
+                                                                    <span> {{__('Number of branches available to add')}} <strong>{{$RO_subscription->number_of_branches}}</strong> <br>
+
                                                                       @endif
                                                                     {{__('Number of current active branches')}} <strong>{{$active_branches}}</strong></span>
                                                                     @else
@@ -358,7 +358,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                         <div class="col-12 mt-3">
                                                                                             <div class="d-flex justify-content-center">
 
-                                                                                            <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit"   onclick="submitPayment(event)" class="btn btn-khardl text-white ">
+                                                                                            <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit" onclick="submitPayment(event)" class="btn btn-khardl text-white ">
 
                                                                                                 <span class="indicator-label">{{__("Renew Subscription")}}✔️</span>
                                                                                                 <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
@@ -388,6 +388,96 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                         <!--end::Option-->
                                                     </div>
                                                 </div>
+                                                <!--end::Col branch slot-->
+
+                                                <!--begin::Col orders mobile app android -->
+                                                <div class="col-xl-4">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75" style="padding-bottom: 45px;">
+                                                            <div class="w-100 text-right" style="padding: -15px !important;"></div>
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-1 text-center px-10" >
+                                                                <!--begin::image-->
+                                                                <div class="text-gray-400 fw-bold my-5">
+
+                                                                </div>
+                                                                <!--end::image-->
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">{{__('Android Order Mobile App')}}</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+
+                                                                    <img alt="Logo" src="{{ global_asset('images/android_orders_app.webp') }}" style="height: 265px;" />
+
+                                                                    <h2 class="fw-boldest text-center text-khardl mt-3">{{__('free')}}</h2>
+
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
+
+                                                            <!--begin::Select-->
+
+                                                            <!--end::Modal dialog-->
+                                                            <div class="d-flex flex-column">
+                                                                <div>
+                                                                    <a href="https://play.google.com/store/apps/details?id=com.khardl.orders" class="btn btn-sm btn-primary" ><i class="fas fa-mobile"></i>{{__("Install app")}}</a>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col mobile app android -->
+
+                                                <!--begin::Col orders mobile app iphone -->
+                                                <div class="col-xl-4">
+                                                    <div class="d-flex h-100 align-items-center">
+                                                        <!--begin::Option-->
+                                                        <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75" style="padding-bottom: 45px;">
+                                                            <div class="w-100 text-right" style="padding: -15px !important;"></div>
+                                                            <!--begin::Heading-->
+                                                            <div class="mb-1 text-center px-10" >
+                                                                <!--begin::image-->
+                                                                <div class="text-gray-400 fw-bold my-5">
+
+                                                                </div>
+                                                                <!--end::image-->
+                                                                <!--begin::Title-->
+                                                                <h3 class="text-dark mb-5 fw-boldest text-center">{{__('iPhone Order Mobile App')}}</h3>
+                                                                <!--end::Title-->
+                                                                <!--begin::Price-->
+                                                                <div class="text-center">
+
+                                                                    <img alt="Logo" src="{{ global_asset('images/iphone_orders_app.png') }}" style="height: 265px;" />
+
+                                                                    <h2 class="fw-boldest text-center text-khardl mt-3">{{__('free')}}</h2>
+
+                                                                </div>
+                                                                <!--end::Price-->
+                                                            </div>
+                                                            <!--end::Heading-->
+
+                                                            <!--begin::Select-->
+
+                                                            <!--end::Modal dialog-->
+                                                            <div class="d-flex flex-column">
+                                                                <div>
+                                                                    <a href="https://apps.apple.com/ae/app/khardl-orders/id6478204383" class="btn btn-sm btn-primary" ><i class="fas fa-mobile"></i>{{__("Install app")}}</a>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--end::Select-->
+                                                        </div>
+                                                        <!--end::Option-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Col mobile app iphone -->
+
                                             </div>
 
 
@@ -495,7 +585,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 BuyNewSlots();
             });
             function calculateRenewPrice(){
-          
+
                 $.ajax({
                     type: 'GET',
                     url:  `{{ route('restaurant.service.calculate', ['type' => ':type','number_of_branches'=>':number_of_branches','subscription_id'=>':subscription_id']) }}`
