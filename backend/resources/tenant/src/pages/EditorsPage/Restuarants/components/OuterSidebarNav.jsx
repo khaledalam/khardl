@@ -125,7 +125,7 @@ const OuterSidebarNav = ({ id }) => {
                         isClosed = branch.thursday_closed !== 0;
                         if (!isClosed) {
                             const startThursday = moment(
-                                branch.thursday_closed,
+                                branch.thursday_open,
                                 "HH:mm:ss",
                             );
                             const endThursday = moment(
