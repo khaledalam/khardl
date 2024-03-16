@@ -100,10 +100,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                         </div>
                         <!--end::Row-->
                     </div>
-              
-                  
-               
-        
+
+
+
+
                     @if($available_branches == 0&&$branches->count())
                     <div class="alert alert-warning text-center mx-4">
                         <p>{{ __('You can add new branches from services') }}</p>
@@ -129,7 +129,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                         <!--begin::Row-->
                         <div class="row gx-9">
                             <!--begin::Col-->
-                          
+
                             <div class="col-sm-6 branches-google-maps {{$branch->deleted_at ? 'opacity-75-i':''}}">
                                 @if(!$branch->deleted_at)
                                 <input id="pac-input{{ $branch->id }}" class="form-control" type="text" placeholder="{{ __('search-for-place')}}" value="{{$branch->address}}">
@@ -145,7 +145,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 </form>
                                 @endif
                             </div>
-                         
+
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-sm-6">
@@ -177,8 +177,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             <span
                                                 class="text-gray-800 fs-1 fw-bolder text-capitalize">{{ $branch->name }}</span>
                                                 <p > <a href="#" class="text-light bg-dark p-1 rounded">{{$branch->phone ?? ''}}</a> </p>
-                                                
-                                                 
+
+
                                             </div>
                                             <div class="flex-shrink-0 me-5 ">
                                                 @if($branch->deleted_at)
@@ -188,12 +188,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                 class="btn btn-khardl text-center opacity-100 " > <span class=" text-white fw-bolder">{{__('Purchase')}} <i class="fas fa-money-bill-wave-alt text-white"></i></span></a>
                                                 </div>
                                                 @elseif(!$branch->active)
-                                            
+
                                                     <div class="d-flex justify-content-center mt-1">
                                                         <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}"
                                                     class="btn btn-success text-center">{{__('Activate')}} <i class="fa  fa-play text-white m-2"></i></a>
                                                     </div>
-                                                
+
                                                 @endif
                                             </div>
                                             <!--end::Title-->
@@ -213,14 +213,14 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                             {{__('Renewing the branch subscription period')}} ({{$branch_cost}}) {{__('SAR')}}
                                                         </h5>
                                                         <br>
-                                                       
+
                                                     </div>
                                                     <p class="text-center text-khardl">
                                                         ({{$branch_left}})
                                                     </p>
                                                     <div id="root"></div>
                                                     <p id="msg"></p>
-                                                  
+
                                                     <button id="tap-btn"  type="submit"   onclick="submitPayment(event,{{$branch->id}})" class="btn btn-khardl text-white ">
 
                                                         <span class="indicator-label"> {{__("purchase")}} ✔️</span>
@@ -228,16 +228,16 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                     </button>
                                                 </form>
-                                                   
+
                                                 </div>
 
                                                 </div>
-                                               
+
 
 
                                         </div>
                                             <!--end::Modal body-->
-                                      
+
                                         <!--end::Heading-->
                                         <!--begin::Items-->
                                         <div class="d-flex align-items-center flex-wrap d-grid gap-2">
@@ -388,210 +388,104 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     </div>
                     <!--end::Heading-->
 
+
                     <!--begin::Input group-->
                     <div class="row g-9 mb-8">
-                        <!--begin::Col-->
+
                         <div class="col-md-12 fv-row">
+                            <div class="position-relative d-flex align-items-center">
+                                <div class="card-body pt-0">
+                                    <p class="form-label required fs-6 fw-bold mb-2">{{__("time")}}</p>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="existed_hours_option" id="existed_normalChoice" value="normal" checked>
+                                        <label class="form-check-label" for="existed_normalChoice">{{ __('choose-time-for-all-days') }}</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="existed_hours_option" id="existed_customChoice" value="custom">
+                                        <label class="form-check-label" for="existed_customChoice">{{ __('choose-time-for-custom-days') }}</label>
+                                    </div>
+                                    {{--                            <small>{{ __('time-in-24-h') }}</small>--}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- START: existed Hours input for normal choice -->
+                        <div  id="existed_normalChoiceSection">
+
+                            <div class=" d-flex justify-content-between w-100">
+                                <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
+                                    <label for="existed_normal_from">{{ __('from') }}  </label>
+                                    <input type="text" class="form-control form-control-solid time-24"  name="existed_normal_from" id="existed_normal_from" value="09:00"  />
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
+                                    <label for="existed_normal_to">{{ __('to') }}  </label>
+                                    <input type="text" class="form-control form-control-solid time-24"  name="existed_normal_to" id="existed_normal_to" value="20:00"  />
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--begin:: existed Hours input for normal choice-->
+
+                        <!--begin::Col-->
+                        <div class="col-md-12 fv-row" id="existed_customChoiceTabs">
                             <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6 d-flex justify-content-center">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark active" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_1">{{ __('saturday') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_2">{{ __('sunday') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_3">{{ __('monday') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_4">{{ __('tuesday') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_5">{{ __('wednesday') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_6">{{ __('thursday') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_7">{{ __('friday') }}</a>
-                                </li>
+
+                                @foreach([
+                                    'Sunday',
+                                    'Monday',
+                                    'Tuesday',
+                                    'Wednesday',
+                                    'Thursday',
+                                    'Friday',
+                                    'Saturday'
+                                ] as $idx => $weekDay)
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark {{$idx == 0 ? 'active' : ''}}" data-bs-toggle="tab" href="#kt_tab_pane_{{$branch->id}}_{{$idx + 1}}">{{ __(strtolower($weekDay)) }}</a>                                    </li>
+                                @endforeach
+
                             </ul>
 
                             <div class="tab-content" id="myTabContent">
 
-                                <div class="tab-pane fade show active" id="kt_tab_pane_{{$branch->id}}_1" role="tabpanel">
+                                @foreach([
+                                    'sunday',
+                                    'monday',
+                                    'tuesday',
+                                    'wednesday',
+                                    'thursday',
+                                    'friday',
+                                    'saturday'
+                                ] as $idx => $weekDay)
+                                <div class="tab-pane fade show {{$idx == 0 ? 'active' : ''}}" id="kt_tab_pane_{{$branch->id}}_{{$idx+1}}" role="tabpanel">
                                     <div class=" d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                             <label>{{ __('from') }} </label>
-                                            <input type="text" value="{{ $branch->saturday_open ? \Carbon\Carbon::parse($branch->saturday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="saturday_open"  required />
+                                            <input type="text" value="{{ $branch->{$weekDay . '_open'} ? \Carbon\Carbon::parse($branch->{$weekDay . '_open'})->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="{{$weekDay . '_open'}}"  required />
                                         </div>
 
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                             <label>{{ __('to') }} </label>
-                                            <input type="text" value="{{ $branch->saturday_close ? \Carbon\Carbon::parse($branch->saturday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="saturday_close"  required />
+                                            <input type="text" value="{{ $branch->{$weekDay . '_close'} ? \Carbon\Carbon::parse($branch->{$weekDay . '_close'})->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="{{$weekDay . '_close'}}"  required />
                                         </div>
                                     </div>
 
                                     <div class="row fv-row my-7">
                                         <div
                                             class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->saturday_closed) checked @endif name="saturday_closed" id="saturday_closed"
+                                            <input class="form-check-input" type="checkbox" @if($branch->{$weekDay . '_closed'}) checked @endif name="{{$weekDay . '_closed'}}" id="{{$weekDay . '_closed'}}"
                                                 value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="saturday_closed">{{ __('the-shop-is-closed-today') }}</label>
+                                            <label class="form-check-label text-gray-700 fw-bolder" for="{{$weekDay . '_closed'}}">{{ __('the-shop-is-closed-today') }}</label>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_2" role="tabpanel">
-                                    <div class=" d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('from') }} </label>
-                                            <input type="text" value="{{ $branch->sunday_open ? \Carbon\Carbon::parse($branch->sunday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="sunday_open"  required />
-                                        </div>
-
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('to') }} </label>
-                                            <input type="text" value="{{ $branch->sunday_close ? \Carbon\Carbon::parse($branch->sunday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="sunday_close"  required />
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row fv-row my-7">
-                                        <div
-                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->sunday_closed) checked @endif name="sunday_closed" id="sunday_closed"
-                                                value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="sunday_closed">{{ __('the-shop-is-closed-today') }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_3" role="tabpanel">
-                                    <div class=" d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('from') }} </label>
-                                            <input type="text" value="{{ $branch->monday_open ? \Carbon\Carbon::parse($branch->monday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="monday_open"  required />
-                                        </div>
-
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('to') }} </label>
-                                            <input type="text" value="{{ $branch->monday_close ? \Carbon\Carbon::parse($branch->monday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="monday_close"  required />
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row fv-row my-7">
-                                        <div
-                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->monday_closed) checked @endif name="monday_closed" id="monday_closed"
-                                                value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="monday_closed">{{ __('the-shop-is-closed-today') }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_4" role="tabpanel">
-                                    <div class=" d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('from') }} </label>
-                                            <input type="text" value="{{ $branch->tuesday_open ? \Carbon\Carbon::parse($branch->tuesday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="tuesday_open"  required />
-                                        </div>
-
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('to') }} </label>
-                                            <input type="text" value="{{ $branch->tuesday_close ? \Carbon\Carbon::parse($branch->tuesday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="tuesday_close"  required />
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row fv-row my-7">
-                                        <div
-                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->tuesday_closed) checked @endif name="tuesday_closed" id="tuesday_closed"
-                                                value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="tuesday_closed">{{ __('the-shop-is-closed-today') }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_5" role="tabpanel">
-                                    <div class=" d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('from') }} </label>
-                                            <input type="text" value="{{ $branch->wednesday_open ? \Carbon\Carbon::parse($branch->wednesday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="wednesday_open"  required />
-                                        </div>
-
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('to') }} </label>
-                                            <input type="text" value="{{ $branch->wednesday_close ? \Carbon\Carbon::parse($branch->wednesday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="wednesday_close"  required />
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row fv-row my-7">
-                                        <div
-                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->wednesday_closed) checked @endif name="wednesday_closed" id="wednesday_closed"
-                                                value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="wednesday_closed">{{ __('the-shop-is-closed-today') }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_6" role="tabpanel">
-                                    <div class=" d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('from') }} </label>
-                                            <input type="text" value="{{ $branch->thursday_open ? \Carbon\Carbon::parse($branch->thursday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="thursday_open"  required />
-                                        </div>
-
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('to') }} </label>
-                                            <input type="text" value="{{ $branch->thursday_close ? \Carbon\Carbon::parse($branch->thursday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="thursday_close"  required />
-                                        </div>
-                                    </div>
-
-                                    <div class="row fv-row my-7">
-                                        <div
-                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->thursday_closed) checked @endif name="thursday_closed" id="thursday_closed"
-                                                value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="thursday_closed">{{ __('the-shop-is-closed-today') }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="kt_tab_pane_{{$branch->id}}_7" role="tabpanel">
-                                    <div class=" d-flex justify-content-between w-100">
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('from') }} </label>
-                                            <input type="text" value="{{ $branch->friday_open ? \Carbon\Carbon::parse($branch->friday_open)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="friday_open"  required />
-                                        </div>
-
-                                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                            <label>{{ __('to') }} </label>
-                                            <input type="text" value="{{ $branch->friday_close ? \Carbon\Carbon::parse($branch->friday_close)->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="friday_close"  required />
-                                        </div>
-                                    </div>
-
-                                    <div class="row fv-row my-7">
-                                        <div
-                                            class="form-check form-check-custom form-check-solid mb-2  d-flex justify-content-center">
-                                            <input class="form-check-input" type="checkbox" @if($branch->friday_closed) checked @endif name="friday_closed" id="friday_closed"
-                                                value="1" />
-                                            <label class="form-check-label text-gray-700 fw-bolder" for="friday_closed">{{ __('the-shop-is-closed-today') }}</label>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
 
 
                             </div>
                         </div>
                         <!--end::Col-->
-
-
-
-
-
 
 
 
@@ -653,7 +547,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             </div>
             @endif
         @endforelse
-       
+
     </div>
     <!--end::Content-->
 
@@ -779,12 +673,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                  <div  id="normalChoiceSection">
 
                     <div class=" d-flex justify-content-between w-100">
-                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                            <label for="normal_from">{{ __('from') }}  </label>
+                        <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
+                            <label for="normal_from">{{ __('from') }}</label>
                             <input type="text" class="form-control form-control-solid time-24"  name="normal_from" id="normal_from" value="09:00"  />
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center w-50 mx-5">
+                        <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                             <label for="normal_to">{{ __('to') }}  </label>
                             <input type="text" class="form-control form-control-solid time-24"  name="normal_to" id="normal_to" value="20:00"  />
 
@@ -795,131 +689,50 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 <div class="col-md-12 fv-row"  id="customChoiceTabs">
 
                     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6 d-flex justify-content-center">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark active" data-bs-toggle="tab" href="#kt_tab_pane_8">{{ __('saturday') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_9">{{ __('sunday') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_10">{{ __('monday') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_11">{{ __('tuesday') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_12">{{ __('wednesday') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_13">{{ __('thursday') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" data-bs-toggle="tab" href="#kt_tab_pane_14">{{ __('friday') }}</a>
-                        </li>
+                        @foreach([
+                                    'Sunday',
+                                    'Monday',
+                                    'Tuesday',
+                                    'Wednesday',
+                                    'Thursday',
+                                    'Friday',
+                                    'Saturday'
+                                ] as $idx => $weekDay)
+                            <li class="nav-item">
+                                <a class="nav-link text-dark {{$idx == 0 ? 'active' : ''}}" data-bs-toggle="tab" href="#kt_tab_pane_{{8+$idx}}">{{ __(strtolower($weekDay)) }}</a>
+                            </li>
+                        @endforeach
                     </ul>
 
                     <div class="tab-content" id="customChoiceContent"  >
 
-                        <div class="tab-pane fade show active" id="kt_tab_pane_8" role="tabpanel">
-                            <div class=" d-flex justify-content-between w-100">
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="saturday_open">{{ __('from') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="saturday_open" id="saturday_open"   />
-                                </div>
+                        @foreach([
+                                   'Sunday',
+                                   'Monday',
+                                   'Tuesday',
+                                   'Wednesday',
+                                   'Thursday',
+                                   'Friday',
+                                   'Saturday'
+                               ] as $idx => $weekDay)
 
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="saturday_close">{{ __('to') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="saturday_close" id="saturday_close"   />
+                            <div class="tab-pane fade show {{$idx == 0 ? 'active' : ''}}" id="kt_tab_pane_{{$idx + 8}}" role="tabpanel">
+                                <div class=" d-flex justify-content-between w-100">
+                                    <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
+                                        <label for="{{strtolower($weekDay)}}_open">{{ __('from') }} </label>
+                                        <input type="text" class="form-control form-control-solid time-24"  name="{{strtolower($weekDay)}}_open" id="{{strtolower($weekDay)}}_open"   />
+                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
+                                    <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
+                                        <label for="{{strtolower($weekDay)}}_close">{{ __('to') }} </label>
+                                        <input type="text" class="form-control form-control-solid time-24"  name="{{strtolower($weekDay)}}_close" id="{{strtolower($weekDay)}}_close"   />
 
-                        <div class="tab-pane fade" id="kt_tab_pane_9" role="tabpanel">
-                            <div class=" d-flex justify-content-between w-100">
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="sunday_open">{{ __('from') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="sunday_open" id="sunday_open"   />
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="sunday_close">{{ __('to') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="sunday_close" id="sunday_close"   />
-
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="tab-pane fade" id="kt_tab_pane_10" role="tabpanel">
-                            <div class=" d-flex justify-content-between w-100">
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="monday_open">{{ __('from') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="monday_open" id="monday_open"   />
-                                </div>
+                        @endforeach
 
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="monday_close">{{ __('to') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="monday_close" id="monday_close"   />
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="kt_tab_pane_11" role="tabpanel">
-                            <div class=" d-flex justify-content-between w-100">
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="tuesday_open">{{ __('from') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="tuesday_open" id="tuesday_open"   />
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="tuesday_close">{{ __('to') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="tuesday_close" id="tuesday_close"   />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="kt_tab_pane_12" role="tabpanel">
-                            <div class=" d-flex justify-content-between w-100">
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="wednesday_open">{{ __('from') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="wednesday_open" id="wednesday_open"  />
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="wednesday_close">{{ __('to') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="wednesday_close" id="wednesday_close"  />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="kt_tab_pane_13" role="tabpanel">
-                            <div class=" d-flex justify-content-between w-100">
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="thursday_open">{{ __('from') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="thursday_open" id="thursday_open"   />
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="thursday_close">{{ __('to') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="thursday_close" id="thursday_close"  />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="tab-pane fade" id="kt_tab_pane_14" role="tabpanel">
-                            <div class=" d-flex justify-content-between w-100">
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="friday_open">{{ __('from') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="friday_open" id="friday_open"  />
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center w-50 mx-5">
-                                    <label for="friday_close">{{ __('to') }} </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="friday_close" id="friday_close"  />
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!--end::Col-->
@@ -1015,6 +828,45 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             document.querySelector('input[name="hours_option"]:checked').dispatchEvent(new Event('change'));
         }
 
+
+
+        var existed_normalChoiceSection = document.getElementById('existed_normalChoiceSection');
+        var existed_customChoiceTabs = document.getElementById('existed_customChoiceTabs');
+        var existed_customChoiceContent = document.getElementById('existed_customChoiceContent');
+        function existed_setRequiredForCustomChoice(required) {
+            var existed_customInputs = existed_customChoiceContent.querySelectorAll('input[type="text"]');
+            existed_customInputs.forEach(function (input) {
+                input.required = required;
+            });
+        }
+        function existed_setRequiredForNormalChoice(required) {
+            var existed_customInputs = existed_normalChoiceSection.querySelectorAll('input[type="text"]');
+            existed_customInputs.forEach(function (input) {
+                input.required = required;
+            });
+        }
+        if(document.querySelectorAll('input[name="existed_hours_option"]').length > 0){
+            // Hide/show sections based on the selected option
+            document.querySelectorAll('input[name="existed_hours_option"]').forEach(function (radio) {
+                radio.addEventListener('change', function () {
+                    if (this.value === 'normal') {
+                        existed_normalChoiceSection.style.display = 'block';
+                        existed_customChoiceTabs.style.display = 'none';
+                        existed_customChoiceContent.style.display = 'none';
+                        existed_setRequiredForNormalChoice(true);
+                        existed_setRequiredForCustomChoice(false);
+                    } else if (this.value === 'custom') {
+                        existed_normalChoiceSection.style.display = 'none';
+                        existed_customChoiceTabs.style.display = 'block';
+                        existed_customChoiceContent.style.display = 'block';
+                        existed_setRequiredForNormalChoice(false);
+                        existed_setRequiredForCustomChoice(true);
+                    }
+                });
+            });
+            document.querySelector('input[name="existed_hours_option"]:checked').dispatchEvent(new Event('change'));
+        }
+
         // Initialize based on the default selected option
 
         document.addEventListener("DOMContentLoaded", (event) => {
@@ -1087,7 +939,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     });
 
                 }
-                
+
                 console.log("ok")
             }
 
