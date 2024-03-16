@@ -41,8 +41,13 @@ class RestaurantStyle extends Model
 
     public function getBannerImageAttribute()
     {
+        $url = $this->attributes['banner_image'];
+        if ($url) {
+            $url .= '?ver=' . random_hash();
+        }
+
         return [
-            'url' => $this->attributes['banner_image'],
+            'url' => $url,
             'type' => $this->getFileType(pathinfo($this->attributes['banner_image'], PATHINFO_EXTENSION)),
         ];
     }
@@ -51,7 +56,12 @@ class RestaurantStyle extends Model
     {
         $images = [];
         foreach (json_decode($this->attributes['banner_images']) as $image) {
+
             $new['type'] = $this->getFileType(pathinfo($image, PATHINFO_EXTENSION));
+
+            if ($image) {
+                $image .= '?ver=' . random_hash();
+            }
             $new['url'] = $image;
             $images[] = $new;
         }

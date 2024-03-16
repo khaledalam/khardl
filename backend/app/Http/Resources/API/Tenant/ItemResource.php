@@ -14,10 +14,10 @@ class ItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        
+
         return [
             'id' => $this->id,
-            'photo' => $this->photo,
+            'photo' => $this->photo ? ($this->photo . '?ver=' . random_hash()) : $this->photo,
             'price' => $this->price,
             'calories' => $this->calories,
             'name' => $this->name,
@@ -35,7 +35,7 @@ class ItemResource extends JsonResource
             'dropdown_required' => $this->dropdown_required,
             'dropdown_input_names' => $this->dropdown_input_names,
             'dropdown_input_titles' => $this->dropdown_input_titles,
-            
+
         ];
     }
 }

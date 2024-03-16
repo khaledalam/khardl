@@ -14,6 +14,24 @@ if (!function_exists('trans_json')) {
     }
 }
 
+if (!function_exists('last_git_commit_hash')) {
+
+    function last_git_commit_hash()
+    {
+        return trim(exec('git log --pretty="%h" -n1 HEAD'));
+    }
+}
+
+if (!function_exists('random_hash')) {
+
+    function random_hash($len = 6)
+    {
+        return bin2hex(random_bytes($len));
+    }
+}
+
+
+
 if (!function_exists('store_image')) {
 
     function store_image($image, $store_at, $name = null)

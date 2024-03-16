@@ -229,6 +229,10 @@ class CartRepository
     {
         $settings = Setting::all()->firstOrFail();
         $items = $this->cart->items->load(['item']);
+        foreach ($items as &$item) {
+            $item['photo'] .= '?ver=' . random_hash();
+        }
+
         return $this->sendResponse([
             'sub_total' => $this->subTotal(),
             'total' => $this->total(),
