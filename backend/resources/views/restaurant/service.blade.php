@@ -432,10 +432,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                 </div>
                                                                 <!--end::image-->
                                                                 <!--begin::Title-->
-                                                                <h3 class="text-dark mb-5 fw-boldest text-center">{{__('Orders Mobile App')}}</h3>
+                                                                <h3 class="text-dark my-3 fw-boldest text-center">{{__('Orders Mobile App')}}</h3>
                                                                 <!--end::Title-->
                                                                 <!--begin::Price-->
-                                                                <div class="text-center">
+                                                                <div class="text-center my-5">
 
                                                                     <h2 class="fw-boldest text-center text-khardl mt-3">{{__('Free')}}</h2>
 
@@ -447,15 +447,19 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                             <!--begin::Select-->
 
                                                             <!--end::Modal dialog-->
-                                                            <div class="d-flex flex-column">
+                                                            <div class="d-flex flex-column text-center">
                                                                 <div>
-                                                                    <a href="https://play.google.com/store/apps/details?id=com.khardl.orders" class="btn btn-sm btn-primary" ><i class="fas fa-mobile"></i>{{__("Android Order Mobile App")}}</a>
+                                                                    <a href="https://play.google.com/store/apps/details?id=com.khardl.orders" >
+                                                                        <img src="{{global_asset('images/logo_playstore.svg')}}" width="150"/>
+                                                                    </a>
                                                                 </div>
 
                                                                 <br />
 
                                                                 <div>
-                                                                    <a href="https://apps.apple.com/ae/app/khardl-orders/id6478204383" class="btn btn-sm btn-primary" ><i class="fas fa-mobile"></i>{{__("iPhone Order Mobile App")}}</a>
+                                                                    <a href="https://apps.apple.com/ae/app/khardl-orders/id6478204383" >
+                                                                        <img src="{{global_asset('images/logo_appstore.svg')}}" width="150"/>
+                                                                    </a>
                                                                 </div>
 
                                                             </div>
