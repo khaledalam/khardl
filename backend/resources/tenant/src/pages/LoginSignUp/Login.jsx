@@ -77,7 +77,7 @@ const Login = () => {
                 );
                 localStorage.setItem(
                     "i18nextLng",
-                    response?.data?.data?.user?.default_lang ?? "ar",
+                    response?.data?.user?.default_lang ?? "ar",
                 );
                 if (responseData.data.user.status === "inactive") {
                     sessionStorage.setItem(

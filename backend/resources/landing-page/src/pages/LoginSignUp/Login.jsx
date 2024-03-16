@@ -47,11 +47,14 @@ const Login = () => {
          console.log(">>>>", response?.data?.success)
          if (response?.data?.success) {
             const responseData = response?.data;
-            console.log(responseData)
+            console.log("responseData>", responseData)
+             return;
             localStorage.setItem(
                'user-info',
                JSON.stringify(responseData?.data?.user)
-            )
+            );
+
+
             if (responseData?.data?.user?.status === 'inactive') {
                sessionStorage.setItem('email', responseData?.data?.user?.email)
                setStatusCode(HTTP_NOT_VERIFIED)
