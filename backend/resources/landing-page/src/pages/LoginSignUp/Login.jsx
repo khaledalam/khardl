@@ -47,8 +47,10 @@ const Login = () => {
          console.log(">>>>", response?.data?.success)
          if (response?.data?.success) {
             const responseData = response?.data;
-            console.log("responseData>", responseData)
-             return;
+            // console.log("responseData>", responseData)
+            //  return;
+
+
             localStorage.setItem(
                'user-info',
                JSON.stringify(responseData?.data?.user)
