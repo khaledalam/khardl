@@ -96,11 +96,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                 id="vid"
                                 loop
                                 autoPlay
-                                className={` z-[5] ${
-                                    isMobile
-                                        ? "max-h-[300px] w-full"
-                                        : "max-h-[350px] w-full"
-                                }  `}
+                                className="z-[5] max-h-[250px] md:max-h-[350px] w-full"
                             >
                                 <source
                                     src={
@@ -130,7 +126,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                   restaurantStyle?.banner_type === "slider" ? (
                     <div className="w-full">
                         <div
-                            className={`w-full md:w-5/6 mx-auto  ${
+                            className={`w-[85%] md:w-5/6 mx-auto  ${
                                 isMobile ? "" : " mb-8"
                             } laptopXL:w-[75%]`}
                         >
@@ -144,11 +140,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                     .map((_, index) => (
                                         <div
                                             key={index}
-                                            className={` ${
-                                                isMobile
-                                                    ? "h-[250px]"
-                                                    : "h-[350px]"
-                                            } !block`}
+                                            className="h-[250px] md:h-[350px] !block"
                                         >
                                             {restaurantStyle?.banner_images &&
                                             restaurantStyle?.banner_images
@@ -161,11 +153,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                                     id="vidSlider"
                                                     loop
                                                     autoPlay
-                                                    className={` z-[5] ${
-                                                        isMobile
-                                                            ? "max-h-[300px] w-full"
-                                                            : "max-h-[350px] w-full"
-                                                    }  `}
+                                                    className="z-[5] max-h-[250px] md:max-h-[350px] w-full"
                                                 >
                                                     <source
                                                         src={
