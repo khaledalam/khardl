@@ -140,7 +140,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                     .map((_, index) => (
                                         <div
                                             key={index}
-                                            className="h-[250px] md:h-[350px] !block"
+                                            className="h-[0px]!block"
                                         >
                                             {restaurantStyle?.banner_images &&
                                             restaurantStyle?.banner_images
@@ -182,14 +182,16 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                                         ].url && (
                                                             <div
                                                                 style={{
+                                                                    width: "100%",
+                                                                    height: "0",
+                                                                    paddingTop:
+                                                                        "25%",
                                                                     backgroundPosition:
                                                                         "center",
                                                                     backgroundRepeat:
                                                                         "no-repeat",
                                                                     backgroundSize:
-                                                                        "cover",
-                                                                    boxShadow:
-                                                                        "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
+                                                                        "contain",
                                                                     backgroundImage:
                                                                         restaurantStyle?.banner_images &&
                                                                         restaurantStyle
@@ -202,7 +204,7 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                                                                         ].url &&
                                                                         `url(${restaurantStyle?.banner_images[index].url})`,
                                                                 }}
-                                                                className={` h-full w-full rounded-md flex items-center justify-center   shadow-lg`}
+                                                                className={` h-full w-full rounded-md flex items-center justify-center`}
                                                             ></div>
                                                         )}
                                                 </>
