@@ -11,7 +11,6 @@ const PrivateRoute = () => {
    const { statusCode, loading } = useAuthContext()
 
    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
-   console.log(isLoggedIn)
 
     if (loading) {
         return;

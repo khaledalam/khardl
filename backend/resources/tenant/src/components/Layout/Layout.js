@@ -4,7 +4,6 @@ import { HTTP_NOT_VERIFIED, HTTP_OK } from "../../config";
 
 const Layout = () => {
     const { statusCode, loading } = useAuthContext();
-    // const { statusCode, loading } = useCheckAuthenticated()
 
     let location = useLocation();
     let state = location.state;
