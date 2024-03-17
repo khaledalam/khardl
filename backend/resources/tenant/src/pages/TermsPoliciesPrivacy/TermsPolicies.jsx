@@ -12,9 +12,6 @@ const Privacy = ({ onClose }) => {
     const Language = useSelector((state) => state.languageMode.languageMode);
     const navigate = useNavigate();
 
-    const handleBack = () => {
-        navigate("/");
-    };
     return (
         <>
             <div
@@ -48,7 +45,6 @@ const Privacy = ({ onClose }) => {
                                         )}
                                         <span
                                             className="max-md:!font-normal max-md:text-[18px]"
-                                            onClick={handleBack}
                                         >
                                             {Language === "en"
                                                 ? "Back"

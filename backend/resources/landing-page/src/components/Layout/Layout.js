@@ -14,11 +14,7 @@ const Layout = () => {
    console.log(`status-code: ${statusCode}, loading: ${loading}`)
 
    if (loading) {
-      return (
-         <p style={{ textAlign: 'center', padding: '20px 10px' }}>
-            Redirecting ...
-         </p>
-      )
+      return null;
    }
 
    // if (statusCode === HTTP_NOT_VERIFIED && !loading) {

@@ -31,11 +31,7 @@ const PrivateRoute = () => {
         return <Outlet />;
     }
 
-    return (
-        <p style={{ textAlign: "center", padding: "20px 10px" }}>
-            Redirecting ...
-        </p>
-    );
+    return null;
 };
 
 export default PrivateRoute;
