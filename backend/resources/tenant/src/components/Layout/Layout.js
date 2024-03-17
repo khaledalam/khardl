@@ -10,16 +10,6 @@ const Layout = () => {
     let state = location.state;
     let from = state ? state.from.pathname : "/";
 
-    console.log(`status-code: ${statusCode}, loading: ${loading}`);
-
-    if (loading) {
-        return (
-            <p style={{ textAlign: "center", padding: "20px 10px" }}>
-                Redirecting ...
-            </p>
-        );
-    }
-
     if (loading) {
         return;
     }
