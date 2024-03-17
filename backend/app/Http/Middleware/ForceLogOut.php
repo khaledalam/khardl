@@ -16,12 +16,12 @@ class ForceLogOut
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()?->force_logout) {
-            Auth::user()->force_logout = 0;
-            Auth::user()->save();
-            Auth::logout();
-            return redirect()->route('tenant_login');
-        }
+        // if (Auth::user() && Auth::user()?->force_logout == 1) {
+        //     Auth::user()->force_logout = 0;
+        //     Auth::user()->save();
+        //     Auth::logout();
+        //     return redirect()->route('tenant_login');
+        // }
         return $next($request);
     }
 }
