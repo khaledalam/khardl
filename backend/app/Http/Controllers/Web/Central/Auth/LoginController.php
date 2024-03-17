@@ -68,7 +68,8 @@ class LoginController extends BaseController
             $register = new RegisterController();
             $register->sendVerificationCode($request);
         }
-        // @TODO: uncomment if need!
+        $user->force_logout = 0;
+        $user->save();
         $data = [
             'user'=>$user
         ];
