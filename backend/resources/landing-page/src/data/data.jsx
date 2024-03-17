@@ -65,7 +65,8 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
         checkbox_input_prices: [16, 18, 28],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
+        dropdown_input_prices: [5, 9],
     },
     {
         id: 2,
@@ -83,7 +84,8 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup"],
         checkbox_input_prices: [9, 10],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
+        dropdown_input_prices: [5, 9],
     },
     {
         id: 3,
@@ -101,7 +103,8 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
         checkbox_input_prices: [16, 18, 28],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
+        dropdown_input_prices: [0, 7],
     },
     {
         id: 4,
@@ -119,7 +122,8 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup", "Mayo"],
         checkbox_input_prices: [16, 18, 28],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
+        dropdown_input_prices: [5, 0],
     },
     {
         id: 5,
@@ -137,7 +141,8 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup"],
         checkbox_input_prices: [9, 10],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
+        dropdown_input_prices: [5, 2],
     },
     {
         id: 6,
@@ -155,7 +160,8 @@ export const items = [
         checkbox_input_titles: "Topings",
         checkbox_input_names: ["Mayo", "Ketchup"],
         checkbox_input_prices: [9, 10],
-        dropdown_input_names: ["10 min", "15 min"]
+        dropdown_input_names: ["10 min", "15 min"],
+        dropdown_input_prices: [5, 2],
     },
 ]
 /*
@@ -352,84 +358,84 @@ export const OrdersCustomer = [
     }
 ]
 export const clients = [
-    { 
+    {
         client_id: 1,
         client_image: ClientLogo1,
         client_link:""
     },
-    { 
+    {
         client_id: 2,
         client_image: ClientLogo2,
         client_link:""
     },
-    { 
+    {
         client_id: 3,
         client_image: ClientLogo3,
         client_link:""
     },
-    { 
+    {
         client_id: 4,
         client_image: ClientLogo1,
         client_link:""
     },
-    { 
+    {
         client_id: 5,
         client_image: ClientLogo2,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 6,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 7,
         client_image: ClientLogo1,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 8,
         client_image: ClientLogo2,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 9,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 10,
         client_image: ClientLogo2,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 11,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 12,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 13,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 14,
         client_image: ClientLogo3,
         client_link:""
     },
-    { 
+    {
         client_id: 15,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link:""
     },
-    { 
+    {
         client_id: 16,
         client_image: ClientLogo3,
-        client_link:"" 
+        client_link:""
     }
   ];

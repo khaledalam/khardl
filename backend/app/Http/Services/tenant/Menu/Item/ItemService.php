@@ -86,6 +86,7 @@ class ItemService
                     'dropdown_required' => ($request->input('dropdown_required')) ? array_values($request->input('dropdown_required')) : null,
                     'dropdown_input_titles' => (isset($request->dropdownInputTitleEn)) ? array_map(null, $request->dropdownInputTitleEn, $request->dropdownInputTitleAr) : null,
                     'dropdown_input_names' => $this->processOptions($request, 'dropdownInputNameEn', 'dropdownInputNameAr'),
+                    'dropdown_input_prices' => $request->input('dropdownInputPrice') ? array_values($request->input('dropdownInputPrice')) : null,
                     'category_id' => $id,
                     'user_id' => Auth::user()->id,
                     'availability' => ($request->input('availability')) ? true : false,

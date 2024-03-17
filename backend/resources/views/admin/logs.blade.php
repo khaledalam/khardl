@@ -70,7 +70,7 @@
                 </div>
                 <!--end::Card header-->
                 <!--begin::Card body-->
-                <div class="card-body p-0">
+                <div class="card-body p-1">
                     <!--begin::Table wrapper-->
                     <div class="table-responsive">
                         <!--begin::Table-->

@@ -62,7 +62,7 @@ class CartRepository
             $options_price += $this->loopingTroughSelectionOptions($item,$request['selectedRadio'],$selection_options);
         }
         if($request['selectedDropdown'] ?? false){
-            $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
+            $options_price += $this->loopingTroughDropdownOptions($item,$request['selectedDropdown'],$dropdown_options);
         }
 
         $query = CartItem::where('item_id', $item->id)
@@ -119,12 +119,15 @@ class CartRepository
     }
     public function loopingTroughDropdownOptions($item, $options, &$updatedOptions)
     {
+        $totalPrice = 0;
         foreach ($options as $i => $option) {
             if($option!==null){
                 $updatedOptions[$i]['ar'][$item->dropdown_input_titles[$i][1]] = $item->dropdown_input_names[$i][$option][1];
                 $updatedOptions[$i]['en'][$item->dropdown_input_titles[$i][0]] = $item->dropdown_input_names[$i][$option][0];
+                $totalPrice += (float) $item->dropdown_input_prices[$i][$option];
             }
         }
+        return $totalPrice;
     }
     public function updateCartItem(CartItem $cartItem, $request)
     {

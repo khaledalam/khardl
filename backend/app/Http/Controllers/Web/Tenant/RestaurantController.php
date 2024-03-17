@@ -271,7 +271,7 @@ class RestaurantController extends BaseController
 
     public function branches()
     {
-      
+
         $user = Auth::user();
         $available_branches = $user->number_of_available_branches();
         $branches = Branch::withTrashed()->iSWorker($user)
@@ -285,9 +285,9 @@ class RestaurantController extends BaseController
             });
             $branch_cost =number_format($current_sub->calculateDaysLeftCost($subscription->amount),2);
             $branch_left = $current_sub->getDateLeftAttribute();
-           
+
         }
-       
+
         return view(
             ($user->isRestaurantOwner()) ? 'restaurant.branches' : 'worker.branches',
             compact('available_branches', 'user', 'branches','branch_cost','branch_left')
@@ -422,6 +422,7 @@ class RestaurantController extends BaseController
                         'dropdown_required' => $item->dropdown_required,
                         'dropdown_input_titles' => $item->dropdown_input_titles,
                         'dropdown_input_names' => $item->dropdown_input_names,
+                        'dropdown_input_prices' => $item->dropdown_input_prices,
                         'user_id' => Auth::user()->id
                     ]);
 

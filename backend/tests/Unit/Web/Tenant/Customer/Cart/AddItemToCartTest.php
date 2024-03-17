@@ -33,7 +33,8 @@ class AddItemToCartTest extends CartData
             $totalOptionPrice += $optionPrice;
             [$selectionOptions, $optionPrice] = $this->selectionOptions($selectedRadio, $item);
             $totalOptionPrice += $optionPrice;
-            $dropDownOptions = $this->dropDownOptions($selectedDropdown, $item);
+            [$dropDownOptions, $optionPrice] = $this->dropDownOptions($selectedDropdown, $item);
+            $totalOptionPrice += $optionPrice;
             $this->assertDatabaseHas('cart_items', [
                 'notes' => $data['notes'],
                 'item_id' => $data['item_id'],
@@ -150,7 +151,8 @@ class AddItemToCartTest extends CartData
             'selection_required' => null,
             'dropdown_required' => $hasDropdown ? $itemFactory->dataOptionRequired($hasDropdown, true) : null,
             'dropdown_input_titles' => $hasDropdown ? $itemFactory->dataOptionTitles($hasDropdown) : null,
-            'dropdown_input_names' => $hasDropdown ? $itemFactory->dataOptionNames($hasDropdown) : null,
+            'dropdown_input_names' => $hasDropdown ? $dropdownNames = $itemFactory->dataOptionNames($hasDropdown) : null,
+            'dropdown_input_prices' => $hasDropdown ? $itemFactory->dataOptionPrices($hasDropdown, $dropdownNames) : null,
         ]);
         $data = [
             'item_id' => $item->id,

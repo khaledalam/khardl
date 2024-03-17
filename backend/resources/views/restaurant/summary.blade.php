@@ -55,7 +55,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-12">
                                     <div class="card">
-                                        <div class="card-body p-0">
+                                        <div class="card-body p-1">
                                             <h1>{{ $profitLast7Days->options['chart_title'] }}</h1>
                                             {!! $profitLast7Days->renderHtml() !!}
                                         </div>
@@ -98,7 +98,7 @@
                                 <div class="row justify-content-center">
                                     <div class="col-md-12">
                                         <div class="card">
-                                            <div class="card-body p-0">
+                                            <div class="card-body p-1">
                                                 <h1>{{ $profitLast4Months->options['chart_title'] }}</h1>
                                                 {!! $profitLast4Months->renderHtml() !!}
                                             </div>

@@ -192,7 +192,7 @@
                                                     {{ $innerOption[0] }}
                                                     @endif
                                                 </span>
-                                                @if(isset($item?->selection_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->checkbox_input_prices[$key][$innerKey] }} {{ __('SAR') }})</span>@endif
+                                                @if(isset($item?->selection_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->selection_input_prices[$key][$innerKey] }} {{ __('SAR') }})</span>@endif
                                             </li>
                                             @endforeach
                                         </ul>
@@ -204,7 +204,7 @@
                                 @if ($item?->dropdown_input_titles)
                                 <tr>
                                     <td>
-                                        <span class="text-start">{{__('Dropdown (without price)')}}</span>
+                                        <span class="text-start">{{__('Dropdown')}}</span>
                                     </td>
                                     <td class="text-dark">
                                         @foreach ($item?->dropdown_input_titles as $key => $option)
@@ -225,6 +225,7 @@
                                                     {{ $innerOption[0] }}
                                                     @endif
                                                 </span>
+                                                @if(isset($item?->dropdown_input_prices[$key][$innerKey]))<span class="text-success">({{ $item?->dropdown_input_prices[$key][$innerKey] }} {{ __('SAR') }})</span>@endif
                                             </li>
                                             @endforeach
                                         </ul>

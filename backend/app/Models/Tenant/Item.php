@@ -7,7 +7,6 @@ use Database\Factories\tenant\ItemFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
 class Item extends Model
@@ -36,6 +35,7 @@ class Item extends Model
         'dropdown_required',
         'dropdown_input_titles',
         'dropdown_input_names',
+        'dropdown_input_prices',
         'availability'
     ];
     public $translatable = ['description','name'];
@@ -52,6 +52,7 @@ class Item extends Model
         'dropdown_required' => 'array',
         'dropdown_input_titles' => 'array',
         'dropdown_input_names' => 'array',
+        'dropdown_input_prices' => 'array'
     ];
     const STORAGE = "items";
     const STORAGE_SEEDER = "seeders/items";

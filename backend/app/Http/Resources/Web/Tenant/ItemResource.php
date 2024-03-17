@@ -35,6 +35,7 @@ class ItemResource extends JsonResource
             'dropdown_required' => $this->dropdown_required,
             'dropdown_input_titles' => $this->dropdown_input_titles,
             'dropdown_input_names'  => $this->dropdown_input_names,
+            'dropdown_input_prices' => $this->dropdown_input_prices,
         ];
     }
 }

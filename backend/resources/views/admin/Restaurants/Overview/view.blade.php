@@ -153,7 +153,7 @@
                         <div class="card-body pt-2 pb-4 d-flex align-items-center">
                             <div class="container">
                                 <div class="card">
-                                    <div class="card-body p-0">
+                                    <div class="card-body p-1">
                                         <h1>{{ $profitMonths->options['chart_title'] }}</h1>
                                         {!! $profitMonths->renderHtml() !!}
                                     </div>
@@ -172,7 +172,7 @@
                         <div class="card-body pt-2 pb-4 d-flex align-items-center">
                             <div class="container">
                                 <div class="card">
-                                    <div class="card-body p-0">
+                                    <div class="card-body p-1">
                                         <h1>{{ $profitDays->options['chart_title'] }}</h1>
                                         {!! $profitDays->renderHtml() !!}
                                     </div>

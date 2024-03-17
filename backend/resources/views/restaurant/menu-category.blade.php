@@ -145,7 +145,7 @@
                                       </div>
                                       <!--end::Pagination-->
                                   </div>
-                                  <div class="card-body p-0">
+                                  <div class="card-body p-1">
                                       <!--begin::Table-->
                                       <table class="table table-hover table-row-dashed fs-6 gy-5 my-0" id="kt_inbox_listing">
                                           <!--begin::Table body-->
@@ -277,7 +277,7 @@
                         </button>                        <!--end::Help drawer toggle-->
                         <!--begin::Purchase link-->
                         <button id="addDropdown" class="engage-demos-toggle btn btn-flex h-35px bg-body btn-color-gray-700 btn-active-color-gray-900 shadow-sm fs-6 px-4 rounded-top-0 btn-khardl" title="Add Dropdown">
-                            <span id="create_new_Dropdown">+ {{ __('Dropdown (without price)') }}</span>
+                            <span id="create_new_Dropdown">+ {{ __('Dropdown') }}</span>
                         </button>
                         <!--end::Purchase link-->
                     </div>
@@ -765,7 +765,7 @@
                     <!--begin::Label-->
                     <div class="d-flex justify-content-between align-items-center">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="">{{ __('Dropdown (without price)') }}</span>
+                            <span class="">{{ __('Dropdown') }}</span>
                         </label>
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
 
@@ -827,6 +827,7 @@
                         <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50" placeholder="{{ __('Name in english') }}">
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in arabic') }}">
 
+                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
                         <button class="invisible btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>
             `; }else {
@@ -835,6 +836,7 @@
                         <input type="text"  required name="dropdownInputNameEn[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Name in english') }}">
                         <input type="text"  required name="dropdownInputNameAr[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"   placeholder="{{ __('Name in arabic') }}">
 
+                        <input type="number" min="0" step="0.1" required name="dropdownInputPrice[${optionCount}][]" class="form-control form-control-solid mx-3 w-50"  placeholder="{{ __('Price') }}">
                         <button class="delete-option btn btn-sm btn-white"><i class="fas fa-trash"></i></button>
                     </div>
             `;

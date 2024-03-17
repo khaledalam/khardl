@@ -42,7 +42,8 @@ class ItemFactory extends Factory
             'selection_input_prices' => $hasSelection ? $this->dataOptionPrices($hasSelection, $selectionNames) : null,
             'dropdown_required' => $hasDropdown ? $this->dataOptionRequired($hasDropdown) : null,
             'dropdown_input_titles' => $hasDropdown ? $this->dataOptionTitles($hasDropdown) : null,
-            'dropdown_input_names' => $hasDropdown ? $this->dataOptionNames($hasDropdown) : null,
+            'dropdown_input_names' => $hasDropdown ? $dropdownNames = $this->dataOptionNames($hasDropdown) : null,
+            'dropdown_input_prices' => $hasDropdown ? $this->dataOptionPrices($hasDropdown, $dropdownNames) : null,
             'availability' => fake()->boolean,
             'photo' => 'http://first.khardl:8000/tenancy/assets/seeders/items/' . fake()->numberBetween(1, 10) . '.jpg'
         ];
