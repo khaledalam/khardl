@@ -58,6 +58,7 @@ class LoginCustomerController extends BaseController
         }
         $user->status = RestaurantUser::INACTIVE;
         $user->phone_verified_at = null;
+        $user->force_logout = 0;
         $user->save();
        
         Auth::loginUsingId($user->id,true);
