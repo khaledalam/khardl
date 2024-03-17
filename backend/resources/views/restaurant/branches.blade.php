@@ -397,39 +397,42 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div class="card-body pt-0">
                                     <p class="form-label required fs-6 fw-bold mb-2">{{__("time")}}</p>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="existed_hours_option" id="existed_normalChoice" value="normal" checked>
+                                        <input class="form-check-input" type="radio" name="existed_hours_option" id="existed_normalChoice" value="normal" @if($branch->existed_hours_option == 'normal') checked @endif>
                                         <label class="form-check-label" for="existed_normalChoice">{{ __('choose-time-for-all-days') }}</label>
                                     </div>
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="existed_hours_option" id="existed_customChoice" value="custom">
+                                        <input class="form-check-input" type="radio" name="existed_hours_option" id="existed_customChoice" value="custom" @if($branch->existed_hours_option == 'custom') checked @endif>
                                         <label class="form-check-label" for="existed_customChoice">{{ __('choose-time-for-custom-days') }}</label>
                                     </div>
-                                    {{--                            <small>{{ __('time-in-24-h') }}</small>--}}
                                 </div>
                             </div>
                         </div>
 
                         <!-- START: existed Hours input for normal choice -->
-                        <div  id="existed_normalChoiceSection">
+                        <div id="existed_normalChoiceSection">
 
-                            <div class=" d-flex justify-content-between w-100">
+                            <small class="d-flex m-4">{{ __('time-in-24-h') }}</small>
+                            <div class="d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                     <label for="existed_normal_from">{{ __('from') }}  </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="existed_normal_from" id="existed_normal_from" value="09:00"  />
+                                    <input type="text" class="form-control form-control-solid time-24"  name="existed_normal_from" id="existed_normal_from" value="{{$branch->existed_normal_from ?? "09:00"}}"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                     <label for="existed_normal_to">{{ __('to') }}  </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="existed_normal_to" id="existed_normal_to" value="20:00"  />
-
+                                    <input type="text" class="form-control form-control-solid time-24"  name="existed_normal_to" id="existed_normal_to" value="{{$branch->existed_normal_to ?? "20:00"}}"  />
                                 </div>
                             </div>
+
+
                         </div>
                         <!--begin:: existed Hours input for normal choice-->
 
                         <!--begin::Col-->
                         <div class="col-md-12 fv-row" id="existed_customChoiceTabs">
+                            <small class="d-flex m-4">{{ __('time-in-24-h') }}</small>
+
                             <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6 d-flex justify-content-center">
 
                                 @foreach([
@@ -665,7 +668,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <input class="form-check-input" type="radio" name="hours_option" id="customChoice" value="custom">
                                 <label class="form-check-label" for="customChoice">{{ __('choose-time-for-custom-days') }}</label>
                             </div>
-{{--                            <small>{{ __('time-in-24-h') }}</small>--}}
+                            <small>{{ __('time-in-24-h') }}</small>
                         </div>
                     </div>
                 </div>
