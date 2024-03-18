@@ -42,12 +42,16 @@ const OrderDetailsTable = ({ data = [], language }) => {
             <table className="w-full table">
                 <thead className="w-full ">
                     <tr className="text-black h-[60px]">
-                        <th className="font-bold text-[1rem]">{t('Product')}</th>
-                        <th className="font-bold text-[1rem]">{t('Name')}</th>
-                        <th className="font-bold text-[1rem]">{t('Quantity')}</th>
-                        <th className="font-bold text-[1rem]">{t('additional')}</th>
-                        <th className="font-bold text-[1rem]">{t('price')}</th>
-                        <th className="font-bold text-[1rem]">{t('Notes')}</th>
+                        <th className="font-bold text-[1rem]">
+                            {t("Product")}
+                        </th>
+                        <th className="font-bold text-[1rem]">{t("Name")}</th>
+                        <th className="font-bold text-[1rem]">
+                            {t("Quantity")}
+                        </th>
+                        {/* <th className="font-bold text-[1rem]">{t('additional')}</th> */}
+                        <th className="font-bold text-[1rem]">{t("price")}</th>
+                        <th className="font-bold text-[1rem]">{t("Notes")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,23 +69,6 @@ const OrderDetailsTable = ({ data = [], language }) => {
                                 <td className="h-full">{order?.item?.name}</td>
                                 <td>
                                     <h3 className="">{order?.quantity}</h3>
-                                </td>
-                                <td>
-                                    {/* <ul className='list-disc'>
-                    {idx &&
-                      getCheckbox(idx) &&
-                      getCheckbox(idx).length > 0 &&
-                      getCheckbox(idx)?.map((item) => (
-                        <li className=''>{item[0]}</li>
-                      ))}
-                    {idx &&
-                      getSelectionNames(idx) &&
-                      getSelectionNames(idx).length > 0 &&
-                      getSelectionNames(idx)?.map((item) => (
-                        <li className=''>{item.name}</li>
-                      ))}
-                  </ul> */}
-                                    <h3 className=""></h3>
                                 </td>
                                 <td>
                                     <h3 className="">
