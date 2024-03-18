@@ -63,6 +63,7 @@ const ProductItem = ({
     dropdown_required,
     dropdown_input_titles,
     dropdown_input_names,
+    dropdown_input_prices,
 }) => {
     const dropdDownRef = useRef([]);
     const dispatch = useDispatch();
@@ -279,6 +280,7 @@ const ProductItem = ({
 
     const finalPrice = qtyCount * totalPrice;
     function closeModal() {
+        setSelectedDropdown([]);
         dropdDownRef.current.forEach((value, index) => {
             if (dropdDownRef.current[index] != null) {
                 dropdDownRef.current[index].resetDropdown();
@@ -891,6 +893,11 @@ const ProductItem = ({
                                                                                         }
                                                                                         options={
                                                                                             dropdownItems[
+                                                                                                dropdown_idx
+                                                                                            ]
+                                                                                        }
+                                                                                        optionsPrice={
+                                                                                            dropdown_input_prices[
                                                                                                 dropdown_idx
                                                                                             ]
                                                                                         }
