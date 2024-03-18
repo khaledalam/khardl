@@ -18,6 +18,7 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
         isRadio,
         isDropDown,
         options,
+        optionsPrice,
     },
     ref,
 ) {
@@ -93,9 +94,11 @@ const ProductDetailItem = forwardRef(function ProductDetailItem(
                     </option>
                     {options.map((option, idx) => (
                         <option key={idx} value={idx}>
-                            {language === "en"
-                                ? option.value[0]
-                                : option.value[1]}
+                            {`${
+                                language === "en"
+                                    ? option.value[0]
+                                    : option.value[1]
+                            } (${optionsPrice[idx]} ${t("SAR")})`}
                         </option>
                     ))}
                 </select>

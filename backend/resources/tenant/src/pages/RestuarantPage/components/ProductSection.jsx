@@ -125,6 +125,11 @@ const ProductSection = ({ categories, isMobile }) => {
                                                                     [],
                                                                 ]
                                                             }
+                                                            dropdown_input_prices={
+                                                                product?.dropdown_input_prices ?? [
+                                                                    [],
+                                                                ]
+                                                            }
                                                             cartBgcolor={
                                                                 restaurantStyle?.categoryDetail_cart_color
                                                             }
