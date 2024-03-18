@@ -69,6 +69,18 @@ class LoginController extends BaseController
             $register->sendVerificationCode($request);
         }
         $user->force_logout = 0;
+     
+        if($user->restaurant){
+            $user->restaurant->run(function ($tenant) {
+                $RO =  RestaurantUser::first();
+               
+                if($RO){
+                    $RO->force_logout = 0;
+                    $RO->save();
+        
+                }
+            });
+        }
         $user->save();
         $data = [
             'user'=>$user
