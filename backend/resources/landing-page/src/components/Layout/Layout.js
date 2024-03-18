@@ -11,19 +11,10 @@ const Layout = () => {
    let state = location.state
    let from = state ? state.from.pathname : '/'
 
-   console.log(`status-code: ${statusCode}, loading: ${loading}`)
 
    if (loading) {
-      return null;
+      return;
    }
-
-   // if (statusCode === HTTP_NOT_VERIFIED && !loading) {
-   //    return <Navigate to={from} state={{ from: location }} />
-   // }
-
-    if (loading) {
-        return;
-    }
 
    if (statusCode === HTTP_OK) {
        window.location.href = '/dashboard';

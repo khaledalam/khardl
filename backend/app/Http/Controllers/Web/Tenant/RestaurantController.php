@@ -288,6 +288,41 @@ class RestaurantController extends BaseController
 
         }
 
+        $weekdays = [];
+        for ($i = 0; $i < 7; $i++) {
+            $weekdays[] = date('l', strtotime("Sunday +$i days"));
+        }
+
+        foreach ($branches as &$branch) {
+            $opens = $closes = [];
+            $branch['existed_hours_option'] = 'normal';
+
+            foreach ($weekdays as $day) {
+                if ($branch->{strtolower($day) . '_closed'}) {
+                    $branch['existed_hours_option'] = 'custom';
+                    goto out;
+                }
+                $open = $branch->{strtolower($day) . '_open'};
+                $close = $branch->{strtolower($day) . '_close'};
+
+                if (!in_array($open, $opens)) {
+                    $opens[] = $open;
+                }
+
+                if (!in_array($close, $closes)) {
+                    $closes[] = $close;
+                }
+
+                if (count($opens) > 1 || count($closes) > 1) {
+                    $branch['existed_hours_option'] = 'custom';
+                    goto out;
+                }
+            }
+            $branch['existed_normal_from'] = $opens[0];
+            $branch['existed_normal_to'] = $closes[0];
+            out:
+        }
+
         return view(
             ($user->isRestaurantOwner()) ? 'restaurant.branches' : 'worker.branches',
             compact('available_branches', 'user', 'branches','branch_cost','branch_left')
@@ -323,6 +358,16 @@ class RestaurantController extends BaseController
             return redirect()->back()->with('error', 'Not allowed to create branch');
         }
 
+        $daysRules = $weekdays = $formattedData = [];
+        for ($i = 0; $i < 7; $i++) {
+            $weekdays[] = date('l', strtotime("Sunday +$i days"));
+        }
+
+        foreach ($weekdays as $day) {
+            $daysRules[strtolower($day) . '_open'] = [Rule::when($request->hours_option == 'custom', 'date_format:H:i')];
+            $daysRules[strtolower($day) . '_close'] = [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:' . strtolower($day) . '_open')];
+        }
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|string',
@@ -332,20 +377,7 @@ class RestaurantController extends BaseController
             'copy_menu' => 'required',
             'normal_from' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i')],
             'normal_to' => [Rule::when($request->hours_option == 'normal', 'date_format:H:i|after:normal_from')],
-            'saturday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
-            'saturday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:saturday_open')],
-            'sunday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
-            'sunday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:sunday_open')],
-            'monday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
-            'monday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:monday_open')],
-            'tuesday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
-            'tuesday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:tuesday_open')],
-            'wednesday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
-            'wednesday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:wednesday_open')],
-            'thursday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
-            'thursday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:thursday_open')],
-            'friday_open' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i')],
-            'friday_close' => [Rule::when($request->hours_option == 'custom', 'date_format:H:i|after:friday_open')],
+            ...$daysRules
         ]);
 
         $branchesExist = DB::table('branches')->where('is_primary', 1)->exists();
@@ -361,29 +393,22 @@ class RestaurantController extends BaseController
             }
         };
 
-        $newBranchId = DB::table('branches')->insertGetId([
+        $data = [
             'name' => $validatedData['name'],
             'phone' => $validatedData['phone'],
             'address' => $validatedData['address'],
             'lat' => (float) $validatedData['lat-new_branch'],
             'lng' => (float) $validatedData['lng-new_branch'],
-
             'is_primary' => !$branchesExist,
-            'saturday_open' => $time($request->input('saturday_open')),
-            'saturday_close' => $time($request->input('saturday_close'), false),
-            'sunday_open' => $time($request->input('sunday_open')),
-            'sunday_close' => $time($request->input('sunday_close'), false),
-            'monday_open' => $time($request->input('monday_open')),
-            'monday_close' => $time($request->input('monday_close'), false),
-            'tuesday_open' => $time($request->input('tuesday_open')),
-            'tuesday_close' => $time($request->input('tuesday_close'), false),
-            'wednesday_open' => $time($request->input('wednesday_open')),
-            'wednesday_close' => $time($request->input('wednesday_close'), false),
-            'thursday_open' => $time($request->input('thursday_open')),
-            'thursday_close' => $time($request->input('thursday_close'), false),
-            'friday_open' => $time($request->input('friday_open')),
-            'friday_close' => $time($request->input('friday_close'), false),
-        ]);
+        ];
+
+        foreach ($weekdays as $day) {
+            $data[strtolower($day) . '_open'] = $time($validatedData[strtolower($day) . '_open']);
+            $data[strtolower($day) . '_close'] = $time($validatedData[strtolower($day) . '_close'], false);
+            $data[strtolower($day) . '_closed'] = $request->has(strtolower($day) . '_closed') && $request->hours_option == 'custom' ? 1 : 0;
+        }
+
+        $newBranchId = DB::table('branches')->insertGetId($data);
 
         if ($validatedData['copy_menu'] != "None") {
 
@@ -473,46 +498,40 @@ class RestaurantController extends BaseController
         // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
         //     return;
 
+        $daysRules = $weekdays = $formattedData = [];
+        for ($i = 0; $i < 7; $i++) {
+            $weekdays[] = date('l', strtotime("Sunday +$i days"));
+        }
+
+        foreach ($weekdays as $day) {
+            $daysRules[strtolower($day) . '_open'] = [Rule::when($request->existed_hours_option == 'custom', 'date_format:H:i')];
+            $daysRules[strtolower($day) . '_close'] = [Rule::when($request->existed_hours_option == 'custom', 'date_format:H:i|after:' . strtolower($day) . '_open')];
+        }
+
         $validatedData = $request->validate([
-            'saturday_open' => 'required|date_format:H:i',
-            'saturday_close' => 'required|date_format:H:i|after:saturday_open',
-            'sunday_open' => 'required|date_format:H:i',
-            'sunday_close' => 'required|date_format:H:i|after:sunday_open',
-            'monday_open' => 'required|date_format:H:i',
-            'monday_close' => 'required|date_format:H:i|after:monday_open',
-            'tuesday_open' => 'required|date_format:H:i',
-            'tuesday_close' => 'required|date_format:H:i|after:tuesday_open',
-            'wednesday_open' => 'required|date_format:H:i',
-            'wednesday_close' => 'required|date_format:H:i|after:wednesday_open',
-            'thursday_open' => 'required|date_format:H:i',
-            'thursday_close' => 'required|date_format:H:i|after:thursday_open',
-            'friday_open' => 'required|date_format:H:i',
-            'friday_close' => 'required|date_format:H:i|after:friday_open',
+            'existed_normal_from' => [Rule::when($request->existed_hours_option == 'normal', 'date_format:H:i')],
+            'existed_normal_to' => [Rule::when($request->existed_hours_option == 'normal', 'date_format:H:i|after:existed_normal_from')],
+            ...$daysRules
         ]);
 
-        $formattedData = [
-            'saturday_open' => Carbon::createFromFormat('H:i', $validatedData['saturday_open'])->format('H:i'),
-            'saturday_close' => Carbon::createFromFormat('H:i', $validatedData['saturday_close'])->format('H:i'),
-            'sunday_open' => Carbon::createFromFormat('H:i', $validatedData['sunday_open'])->format('H:i'),
-            'sunday_close' => Carbon::createFromFormat('H:i', $validatedData['sunday_close'])->format('H:i'),
-            'monday_open' => Carbon::createFromFormat('H:i', $validatedData['monday_open'])->format('H:i'),
-            'monday_close' => Carbon::createFromFormat('H:i', $validatedData['monday_close'])->format('H:i'),
-            'tuesday_open' => Carbon::createFromFormat('H:i', $validatedData['tuesday_open'])->format('H:i'),
-            'tuesday_close' => Carbon::createFromFormat('H:i', $validatedData['tuesday_close'])->format('H:i'),
-            'wednesday_open' => Carbon::createFromFormat('H:i', $validatedData['wednesday_open'])->format('H:i'),
-            'wednesday_close' => Carbon::createFromFormat('H:i', $validatedData['wednesday_close'])->format('H:i'),
-            'thursday_open' => Carbon::createFromFormat('H:i', $validatedData['thursday_open'])->format('H:i'),
-            'thursday_close' => Carbon::createFromFormat('H:i', $validatedData['thursday_close'])->format('H:i'),
-            'friday_open' => Carbon::createFromFormat('H:i', $validatedData['friday_open'])->format('H:i'),
-            'friday_close' => Carbon::createFromFormat('H:i', $validatedData['friday_close'])->format('H:i'),
-            'saturday_closed' => $request->has('saturday_closed') ? 1 : 0,
-            'sunday_closed' => $request->has('sunday_closed') ? 1 : 0,
-            'monday_closed' => $request->has('monday_closed') ? 1 : 0,
-            'tuesday_closed' => $request->has('tuesday_closed') ? 1 : 0,
-            'wednesday_closed' => $request->has('wednesday_closed') ? 1 : 0,
-            'thursday_closed' => $request->has('thursday_closed') ? 1 : 0,
-            'friday_closed' => $request->has('friday_closed') ? 1 : 0,
-        ];
+
+        $time = function ($timeInner, $open = true) use ($request) {
+            if ($request->existed_hours_option == 'normal') {
+                if ($open)
+                    return Carbon::createFromFormat('H:i', $request->input('existed_normal_from'))->format('H:i');
+                else
+                    return Carbon::createFromFormat('H:i', $request->input('existed_normal_to'))->format('H:i');
+            } else {
+                return Carbon::createFromFormat('H:i', $timeInner)->format('H:i');
+            }
+        };
+
+        foreach ($weekdays as $day) {
+
+            $formattedData[strtolower($day) . '_open'] = $time($validatedData[strtolower($day) . '_open']);
+            $formattedData[strtolower($day) . '_close'] = $time($validatedData[strtolower($day) . '_close'], false);
+            $formattedData[strtolower($day) . '_closed'] = $request->has(strtolower($day) . '_closed') && $request->existed_hours_option == 'custom' ? 1 : 0;
+        }
 
         DB::table('branches')->where('id', $id)->update($formattedData);
 

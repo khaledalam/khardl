@@ -16,7 +16,6 @@ const Logout = () => {
 
    useEffect(() => {
       if (!isLoggedIn) {
-         // navigate('/login', { replace: true })
          toast.error('You have to be Loggedin to Logout')
       } else {
          dispatch(logout({ method: 'GET' }))
@@ -34,15 +33,6 @@ const Logout = () => {
                console.error(err.message)
                toast.error('Logout failed')
             })
-
-         // .then(() => {
-         //    navigate('/login', { replace: true })
-         //    toast.success('Logged out successfully')
-         // })
-         // .catch((err) => {
-         //    console.error(err.message)
-         //    toast.error('Logout failed')
-         // })
       }
       dispatch(setIsOpen(false))
    }, [])

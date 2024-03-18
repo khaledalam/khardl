@@ -1,12 +1,31 @@
-## Describe your changes
+## Description
 
-## Issue ticket number and link
+## What type of PR is this? (check all applicable)
 
-## Checklist before requesting a review
-- [ ] I have performed a self-review of my code
-- [ ] If it is a core feature, I have added thorough tests.
-- [ ] Cover the main purpose of the task (implement feature / fix bug / etc..)
-- [ ] Write test cases to cover your code changes
-- [ ] Write document if needed for your code changes
-- [ ] Add to postman if you implement/fix anything related to endpoints
-- [ ] Add any new env vars to .env.sample file
+- [ ] 🍕 Feature
+- [ ] 🐛 Bug Fix
+- [ ] 📝 Documentation Update
+- [ ] 🎨 Style
+- [ ] 🧑‍💻 Code Refactor
+- [ ] 🔥 Performance Improvements
+- [ ] ✅ Test
+- [ ] 🤖 Build
+- [ ] 🔁 CI
+- [ ] 📦 Chore (Release)
+- [ ] ⏩ Revert
+
+## Related Tickets & Documents
+
+
+## Mobile & Desktop Screenshots/Recordings
+
+
+## Steps to QA
+
+
+## Added to documentation?
+
+- [ ] 📜 README.md
+- [x] 🙅 no documentation needed
+
+## [optional] Are there any post-deployment tasks we need to perform?

@@ -13,26 +13,28 @@ $tap_info = $settings->lead_response;
 @if ($settings->lead_response)
 <!--begin::Content-->
 <div class="accordion" id="accordionExample">
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#paid_orders" aria-expanded="true" aria-controls="paid_orders">
-                {{ __('Online paid orders') }}
-            </button>
-        </h2>
-        <div id="paid_orders" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-                <!--begin::Content-->
-                @if($orders?->count())
-                @include('restaurant.orders.component.list_orders',['orders' => $orders])
-                @else
-                <div class="alert alert-warning text-center">
-                    <h4>{{ __('You do not have any online paid orders yet') }}</h4>
-                </div>
-                @endif
 
-            </div>
-        </div>
-    </div>
+{{--    <div class="accordion-item">--}}
+{{--        <h2 class="accordion-header" id="headingOne">--}}
+{{--            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#paid_orders" aria-expanded="true" aria-controls="paid_orders">--}}
+{{--                {{ __('Online paid orders') }}--}}
+{{--            </button>--}}
+{{--        </h2>--}}
+{{--        <div id="paid_orders" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">--}}
+{{--            <div class="accordion-body">--}}
+{{--                <!--begin::Content-->--}}
+{{--                @if($orders?->count())--}}
+{{--                @include('restaurant.orders.component.list_orders',['orders' => $orders])--}}
+{{--                @else--}}
+{{--                <div class="alert alert-warning text-center">--}}
+{{--                    <h4>{{ __('You do not have any online paid orders yet') }}</h4>--}}
+{{--                </div>--}}
+{{--                @endif--}}
+
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
     <div class="accordion-item">
         <h2 class="accordion-header" id="headingOne">
             <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#subscriptions" aria-expanded="true" aria-controls="subscriptions">
