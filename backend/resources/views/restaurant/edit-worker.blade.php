@@ -86,11 +86,8 @@
                                             <label class="required form-label">{{ __('password')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="password" name="password" class="form-control mb-2" disabled minlength="8" placeholder="Password" value="***********" />
+                                            <input type="password" @if(!$user?->hasPermissionWorker('can_modify_and_see_other_workers')) disabled @endif name="password" class="form-control mb-2" minlength="6" placeholder="Password" value="" />
                                             <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{ __('password')}} {{ __('is-not-possible-to-change')}}</div>
-                                            <!--end::Description-->
                                         </div>
                                         <!--end::Input group-->
 
