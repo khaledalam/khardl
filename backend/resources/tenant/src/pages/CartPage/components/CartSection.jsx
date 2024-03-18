@@ -26,10 +26,7 @@ const CartSection = ({ cartItems }) => {
             console.log("cart >>>", cartResponse.data?.data.items);
             if (cartResponse.data) {
                 dispatch(setCartItemsData(cartResponse.data?.data.items));
-
-                dispatch(
-                    getCartItemsCount(cartResponse.data?.data.items.length),
-                );
+                dispatch(getCartItemsCount(cartResponse.data?.data.count));
             }
         } catch (error) {
             console.log(error);
