@@ -20,8 +20,17 @@ import { IoClose } from "react-icons/io5";
 import "./PaymentSection.css";
 import { updateCustomerAddress } from "../../../redux/NewEditor/customerSlice";
 import ConfirmationModal from "../../../components/confirmationModal";
+import {
+    ApplePayButton,
+    ThemeMode,
+    SupportedNetworks,
+    Scope,
+    Environment,
+    Locale,
+    ButtonType,
+    Edges
+   } from '@tap-payments/apple-pay-button'
 
-import { GoSellElements } from "@tap-payments/gosell";
 import Places from "../../../components/Customers/CustomersEditor/components/Dashboard/components/Places";
 
 const PaymentSection = ({
@@ -353,44 +362,100 @@ const PaymentSection = ({
                         </div>
                     )}
                     <div>
-                        <GoSellElements
-                            gateway={{
-                                publicKey: tap_public_key,
-                                language: "ar",
-                                supportedCurrencies: "all",
-                                supportedPaymentMethods: "all",
-                                notifications: "standard",
-                                callback: callbackFunc,
-                                labels: {
-                                    cardNumber: "Card Number",
-                                    expirationDate: "MM/YY",
-                                    cvv: "CVV",
-                                    cardHolder: "Name on Card",
-                                    actionButton: "Pay",
-                                },
-                                style: {
-                                    base: {
-                                        color: "#535353",
-                                        lineHeight: "18px",
-                                        fontFamily: "sans-serif",
-                                        fontSmoothing: "antialiased",
-                                        fontSize: "16px",
-                                        "::placeholder": {
-                                            color: "rgba(0, 0, 0, 0.26)",
-                                            fontSize: "15px",
-                                        },
-                                    },
-                                    invalid: {
-                                        color: "red",
-                                        iconColor: "#fa755a ",
-                                    },
-                                },
-                            }}
-                        />
-
+                       
                         <form method="dialog" className="flex gap-2">
+                        <ApplePayButton
+                            // The public Key provided by Tap
+                            publicKey={'pk_live_JpkqYWOn4wPlT17LMDjgZ8RV'}
+                            //The environment of the SDK and it can be one of these environments
+                            environment={Environment.Development}
+                            //to enable the debug mode
+                            debug
+                            merchant={{
+                                //  The merchant domain name
+                                domain: 'khardl.com',
+                                //  The merchant identifier provided by Tap
+                                id: 'merchant_VPSa524724I5zv6lO14728'
+                            }}
+                            transaction={{
+                                // The amount to be charged
+                                amount: '12',
+                                // The currency of the amount
+                                currency: 'SAR'
+                            }}
+                            // The scope of the SDK and it can be one of these scopes:
+                            // [TapToken,AppleToken], by default it is TapToken)
+                            scope={Scope.TapToken}
+                            acceptance={{
+                                // The supported networks for the Apple Pay button and it
+                                // can be one of these networks: [Mada,Visa,MasterCard], by default
+                                // we bring all the supported networks from tap merchant configuration
+                                supportedBrands: [SupportedNetworks.Mada, SupportedNetworks.Visa, SupportedNetworks.MasterCard],
+                                supportedCards : ["DEBIT","CREDIT"],
+                                    supportedCardsWithAuthentications : ["3DS","EMV"]
+                            }}
+                            // The billing contact information
+                            customer={{
+                                id: 'cus_LV06G4620241548c2JK1002613',
+                                name: [
+                                {
+                                //"en or ar",
+                                lang: Locale.EN,
+                                // "First name of the customer.",
+                                first: 'test',
+                                //"Last name of the customer.",
+                                last: 'tester',
+                                // "Middle name of the customer.",
+                                middle: 'test'
+                                }
+                                ],
+                                // Defines the contact details for the customer & to be used in creating the billing contact info in Apple pay request
+                                contact: {
+                                //"The customer's email",
+                                email: 'test@gmail.com',
+                                //"The customer's phone number"
+                                phone: {
+                                //"The customer's country code",
+                                countryCode: '+20',
+                                //"The customer's phone number
+                                number: '10XXXXXX56'
+                                }
+                                }
+                            }}
+                            //for styling button
+                            interface={{
+                                //The locale of the Apple Pay button and it can be one of these locales:[EN,AR]
+                                locale: Locale.EN,
+                                // The theme of the Apple Pay button and it can be one of
+                                // these values : [light,Dark], by default it is detected from user device
+                                theme: ThemeMode.DARK,
+                                // The type of the Apple Pay
+                                type: ButtonType.BUY,
+                                // The border of the Apple Pay button and it can be one of these values:[curved,straight]
+                                edges: Edges.CURVED
+                            }}
+                            // optional (A callback function that will be called when you cancel
+                            // the payment process)
+                            onCancel={() => console.log('cancelled')}
+                            // optional (A callback function that will be called when you have an error)
+                            onError={(err) => console.error(err)}
+                            // optional (A async function that will be called after creating the token
+                            // successfully)
+                            onSuccess={async (token) => {
+                                // do your stuff here...
+                                console.log(token)
+                            }}
+                            // optional (A callback function that will be called when you button is clickable)
+                            onReady={() => {
+                                console.log('Ready')
+                            }}
+                            // optional (A callback function that will be called when the button clicked)
+                            onClick={() => {
+                                console.log('Clicked')
+                            }}
+                            />
                             <div
-                                onClick={() => GoSellElements.submit()}
+                            
                                 style={{
                                     backgroundColor:
                                         styles?.categoryDetail_cart_color,
