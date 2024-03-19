@@ -373,7 +373,7 @@ const PaymentSection = ({
                             debug
                             merchant={{
                                 //  The merchant domain name
-                                domain: 'khardl.com',
+                                domain: 'first.khardl4test.xyz',
                                 //  The merchant identifier provided by Tap
                                 id: 'merchant_VPSa524724I5zv6lO14728'
                             }}
