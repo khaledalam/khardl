@@ -40,7 +40,7 @@ class UserFactory extends Factory
             'status'=> 'active',
             'address' => 'test address',
             'position'=>"Super Admin",
-            'password' => bcrypt('password'),
+            'password' => bcrypt('khardl@123'),
             'remember_token' => Str::random(10),
         ];
     }

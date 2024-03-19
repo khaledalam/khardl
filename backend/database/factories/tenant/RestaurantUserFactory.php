@@ -25,7 +25,7 @@ class RestaurantUserFactory extends Factory
             'phone' => fake()->numerify('966#########'),
             'status' => fake()->randomElement(['active', 'inactive', 'suspended']),
             'address' => fake()->address,
-            'password' => bcrypt('password'),
+            'password' => bcrypt('khardl@123'),
             'branch_id' => Branch::factory(),
             'remember_token' => Str::random(10),
         ];

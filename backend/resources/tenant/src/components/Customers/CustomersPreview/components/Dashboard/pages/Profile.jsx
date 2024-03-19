@@ -110,7 +110,9 @@ const Profile = () => {
                                 <input
                                     type="text"
                                     value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
+                                    onChange={(e) => null}
+                                    disabled={true}
+                                    readOnly={true}
                                     className="text-[14px] bg-[var(--secondary)] w-[100%] py-3 rounded-full px-4 appearance-none"
                                     placeholder={`${t("Phone")}`}
                                 />
