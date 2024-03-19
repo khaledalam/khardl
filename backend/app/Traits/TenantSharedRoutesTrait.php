@@ -1,6 +1,7 @@
 <?php
 namespace App\Traits;
 use App\Models\Tenant\RestaurantStyle;
+use App\Models\Tenant\Setting;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 trait TenantSharedRoutesTrait
@@ -86,7 +87,9 @@ trait TenantSharedRoutesTrait
             foreach ($groups['routes'] as $route => $name) {
                 Route::get($route, static function (Request $request) {
                     $logo = RestaurantStyle::first()?->logo;
-                    return view('tenant', compact('logo'));
+                    $restaurant_name = Setting::first()->restaurant_name;
+
+                    return view('tenant', compact('logo', 'restaurant_name'));
                 })->name($name);
             }
         });
