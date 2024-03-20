@@ -71,10 +71,20 @@ if (!function_exists('sendPushNotification')) {
                     'title' => $title,
                     'body' => $body,
                 ];
-                $sound = [
+                $androidSound = [
                     'notification' => [
                         'channel_id' => 'khrdl_create_order',
                         'sound' => 'bell2',
+                    ]
+                ];
+                $appleSound = [
+                    'headers' => [
+                        'apns-priority' => '10'
+                    ],
+                    'payload' => [
+                        'aps' => [
+                            'sound' => 'bell2.mp3'
+                        ]
                     ]
                 ];
                 $data = array_merge($data, $readyData, $notificationData);
@@ -83,7 +93,8 @@ if (!function_exists('sendPushNotification')) {
                         'notification' => $notificationData,
                         'token' => $target->device_token,
                         'data' => $data,
-                        'android' => $sound
+                        'android' => $androidSound,
+                        'apns' => $appleSound
                     ];
                 }else{
                     $content = [
