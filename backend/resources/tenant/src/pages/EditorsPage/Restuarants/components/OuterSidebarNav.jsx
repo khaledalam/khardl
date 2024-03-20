@@ -1,3 +1,4 @@
+/* eslint-disable no-eval */
 import React, {
     Fragment,
     useContext,
@@ -41,145 +42,21 @@ const OuterSidebarNav = ({ id }) => {
             let tempBranches = [...restuarantStyle.branches];
             return tempBranches.map((branch) => {
                 let isClosed = false;
-                var currentDate = new Date();
                 var currentHour = moment();
-
-                switch (currentDate.getDay()) {
-                    case 0:
-                        isClosed = branch.sunday_closed !== 0;
-                        if (!isClosed) {
-                            const startSunday = moment(
-                                branch.sunday_open,
-                                "HH:mm:ss",
-                            );
-                            const endSunday = moment(
-                                branch.sunday_close,
-                                "HH:mm:ss",
-                            );
-
-                            const sundayRange = moment.range(
-                                startSunday,
-                                endSunday,
-                            );
-                            isClosed = !sundayRange.contains(currentHour);
-                        }
-                        break;
-                    case 1:
-                        isClosed = branch.monday_closed !== 0;
-                        if (!isClosed) {
-                            const startMonday = moment(
-                                branch.monday_open,
-                                "HH:mm:ss",
-                            );
-                            const endMonday = moment(
-                                branch.monday_close,
-                                "HH:mm:ss",
-                            );
-
-                            const mondayRange = moment.range(
-                                startMonday,
-                                endMonday,
-                            );
-                            isClosed = !mondayRange.contains(currentHour);
-                        }
-                        break;
-                    case 2:
-                        isClosed = branch.tuesday_closed !== 0;
-                        if (!isClosed) {
-                            const startTuesday = moment(
-                                branch.tuesday_open,
-                                "HH:mm:ss",
-                            );
-                            const endTuesday = moment(
-                                branch.tuesday_close,
-                                "HH:mm:ss",
-                            );
-
-                            const tuesdayRange = moment.range(
-                                startTuesday,
-                                endTuesday,
-                            );
-                            isClosed = !tuesdayRange.contains(currentHour);
-                        }
-                        break;
-                    case 3:
-                        isClosed = branch.wednesday_closed !== 0;
-                        if (!isClosed) {
-                            const startWednesday = moment(
-                                branch.wednesday_open,
-                                "HH:mm:ss",
-                            );
-                            const endWednesday = moment(
-                                branch.wednesday_close,
-                                "HH:mm:ss",
-                            );
-
-                            const wednesdayRange = moment.range(
-                                startWednesday,
-                                endWednesday,
-                            );
-                            isClosed = !wednesdayRange.contains(currentHour);
-                        }
-                        break;
-                    case 4:
-                        isClosed = branch.thursday_closed !== 0;
-                        if (!isClosed) {
-                            const startThursday = moment(
-                                branch.thursday_open,
-                                "HH:mm:ss",
-                            );
-                            const endThursday = moment(
-                                branch.thursday_close,
-                                "HH:mm:ss",
-                            );
-
-                            const thursdayRange = moment.range(
-                                startThursday,
-                                endThursday,
-                            );
-                            isClosed = !thursdayRange.contains(currentHour);
-                        }
-                        break;
-                    case 5:
-                        isClosed = branch.friday_closed !== 0;
-                        if (!isClosed) {
-                            const startFriday = moment(
-                                branch.friday_closed,
-                                "HH:mm:ss",
-                            );
-                            const endFriday = moment(
-                                branch.friday_close,
-                                "HH:mm:ss",
-                            );
-
-                            const fridayRange = moment.range(
-                                startFriday,
-                                endFriday,
-                            );
-                            isClosed = !fridayRange.contains(currentHour);
-                        }
-                        break;
-                    case 6:
-                        isClosed = branch.saturday_closed !== 0;
-                        if (!isClosed) {
-                            const startSaturday = moment(
-                                branch.saturday_closed,
-                                "HH:mm:ss",
-                            );
-                            const endSaturday = moment(
-                                branch.saturday_close,
-                                "HH:mm:ss",
-                            );
-
-                            const saturdayRange = moment.range(
-                                startSaturday,
-                                endSaturday,
-                            );
-                            isClosed = !saturdayRange.contains(currentHour);
-                        }
-                        break;
-                    default:
-                        return branch;
+                var currentDay = currentHour.format("dddd").toLowerCase();
+                let isBranchClosed = eval("branch." + currentDay + "_closed");
+                isClosed = isBranchClosed !== 0;
+                if (!isClosed) {
+                    let branchStart = moment(
+                        eval("branch." + currentDay + "_open"),
+                        "HH:mm:ss",
+                    );
+                    let branchEnd = moment(
+                        eval("branch." + currentDay + "_close"),
+                        "HH:mm:ss",
+                    );
+                    let branchRage = moment.range(branchStart, branchEnd);
+                    isClosed = !branchRage.contains(currentHour);
                 }
 
                 return {

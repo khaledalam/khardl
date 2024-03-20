@@ -27,13 +27,13 @@ class UserSeeder extends Seeder
             'id' => self::SUPER_ADMIN_USER_ID,
             'first_name' => "khardl",
             'last_name' => "admin",
-            'email' => "khardl@admin.com",
+            'email' => "info@khardl.com",
             'phone'=>'966999999999',
             'email_verified_at' => now(),
             'status'=> 'active',
             'address' => 'test address',
             'position'=>"Super Admin",
-            'password' => bcrypt('password'),
+            'password' => bcrypt('khardl@123'),
             'remember_token' => Str::random(10),
         ]);
 
@@ -88,7 +88,7 @@ class UserSeeder extends Seeder
             'phone'=>'966222222222',
             'position'=>"Restaurant Owner",
             'restaurant_name' => $restaurant_name,
-            'password' => bcrypt('password'),
+            'password' => bcrypt('khardl@123'),
             'remember_token' => Str::random(10),
         ]);
         $faker = (new Factory())::create();
