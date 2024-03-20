@@ -177,7 +177,6 @@ const OuterSidebarNav = ({ id }) => {
     }, [selectedPickUpBranch, selectedDeliveryBranch]);
 
     const handleRedirect = (role) => {
-        console.log(role);
         if (role.toLowerCase() == "customer") {
             navigate("/dashboard#Dashboard");
         } else if (role.toLowerCase() == "driver") {

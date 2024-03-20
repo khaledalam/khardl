@@ -117,7 +117,7 @@ const CustomerDashboard = () => {
                         className="flex items-center gap-2 w-36 rounded-2xl bg-[var(--customer)] p-3 text-white"
                     >
                         <BsChevronDoubleDown size={20} color={"#fff"} />
-                        <h3 className="">{"View More"}</h3>
+                        <h3 className="">{t("view more")}</h3>
                     </div>
                 </div>
             )}
