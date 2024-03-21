@@ -400,7 +400,20 @@
                                     <div class="me-5 position-relative">
                                         <!--begin::Avatar-->
                                         <div class="symbol symbol-35px symbol-circle">
-                                            <img alt="Pic" src="../assets/media/avatars/300-6.jpg" />
+                                            @php
+                                                $restaurant->run(function() use ($restaurant){
+                                                    $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
+
+                                                    if ($restaurant->is_live()) {
+                                                        echo <<<HTML
+                                                            <img alt="Pic" src="$logo" />
+                                                        HTML;
+                                                    } else {
+                                                        echo '<img alt="Pic" src="'. global_asset('assets/default_logo.png') . '" />';
+                                                    }
+
+                                                });
+                                            @endphp
                                         </div>
                                         <!--end::Avatar-->
                                     </div>
