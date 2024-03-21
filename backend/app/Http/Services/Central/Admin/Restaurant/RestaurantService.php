@@ -21,7 +21,7 @@ class RestaurantService
     {
         $query = Tenant::query()->with('primary_domain')
             ->whenSearch($request['search'] ?? null);
-        $restaurants = $query->get();
+        $restaurants = $query->orderBy('created_at','DESC')->get();
         $totalRestaurantsCount = count($restaurants);
 
         // TODO @todo make sub active or not tag with search

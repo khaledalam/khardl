@@ -134,8 +134,18 @@
                                 <!--begin::Card body-->
                                 <div class="card-body d-flex flex-center flex-column p-9 pt-3">
 
+{{--                                    {{dd($restaurant)}}--}}
                                     <!--begin::Name-->
                                     <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
+                                        @php
+                                            $restaurant->run(function(){
+                                                $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
+												echo <<<HTML
+                                                    <img alt="Logo" src="$logo" class="h-70px logo" />
+                                                HTML;
+
+                                            });
+                                        @endphp
                                         {{ $restaurant?->restaurant_name }}
                                         @if($restaurant?->is_live())
                                         <span class="badge badge-light-success fw-bolder">{{ __('live')}}</span>
