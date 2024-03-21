@@ -37,25 +37,25 @@
                                         <h3 class="fw-bolder m-0">{{__('settings')}}</h3>
                                     </div>
                                     <div class="card-title m-0 float-right">
-                                      
+
                                         @if($branch->active)
-                                            
+
                                         <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" id="Activate"
                                             class="btn btn-danger text-center"><label for="Activate">{{__('Deactivate')}}</label> <i class="fa  fa-play text-white m-2"></i>
                                                 </a>
-                                            
-                                        
+
+
                                         @else
-                                            
+
                                                 <a href="{{route('restaurant.update-branch-status',['id'=>$branch->id])}}" id="Activate"
                                             class="btn btn-success text-center"><label for="Activate">{{__('Activate')}}</label> <i class="fa  fa-play text-white m-2"></i>
                                                 </a>
-                                            
+
                                         @endif
-                                  
+
                                     </div>
                                 </div>
-                                
+
                                 <!--begin::Card header-->
                                 <!--begin::Content-->
                                 <div id="kt_account_settings_email_preferences" class="collapse show">
@@ -218,7 +218,8 @@
                 enableSeconds: true,
                 dateFormat: "H:i:S",
                 defaultDate: preparationTime || "00:00:00",
-                time_24hr: true
+                time_24hr: true,
+                disableMobile: true
             });
         });
     </script>
