@@ -145,6 +145,8 @@
                                                     echo <<<HTML
                                                         <img alt="Logo" src="$logo" class="h-70px logo" />
                                                     HTML;
+												} else {
+													echo '<img alt="Logo" src="'. global_asset('assets/default_logo.png') . '" class="h-70px logo" />';
 												}
 
                                             });
