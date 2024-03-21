@@ -56,7 +56,7 @@ class CreateLeadRequest  extends FormRequest
 
 
             'platforms.*' => 'required|string',
-            'payment_provider.technology_id' => 'required|string',
+            // 'payment_provider.technology_id' => 'required|string',
         ];
         if ($this->input('entity.is_licensed')) {
             $rules = array_merge($rules, [
@@ -162,9 +162,9 @@ class CreateLeadRequest  extends FormRequest
                 'platforms'=>[
                     env('TAP_PLATFORM_ID')
                 ],
-                'payment_provider' => [
-                    'technology_id' => env('TAP_PAYMENT_TECHNOLOGY_ID'),
-                ],
+                // 'payment_provider' => [
+                //     'technology_id' => env('TAP_PAYMENT_TECHNOLOGY_ID'),
+                // ],
             ];
         if($this->entity['is_licensed'] ?? false){
             $defaults['entity']['license']= [

@@ -211,13 +211,10 @@ class PaymentPageTest extends TenantTestCase
                 "metadata": {
                     "mtd": "metadata"
                 },
-                 "platforms": [
+                "platforms": [
                     "commerce_platform_xxxxxxxxxx"
                 ],
-                "payment_provider": {
-                    "settlement_by": "payment_facilitator_xxxxxxxxxxx",
-                    "technology_id": "technology_xxxxxxxxxxxx"
-                }
+              
             }
         }';
     }

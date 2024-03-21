@@ -63,7 +63,7 @@ class Tap
     public static function sendToLead(string $url,array $data,string $method = 'post',bool $withFiles = false){
         try {
             $secret_key =env('TAP_PAYMENT_TECHNOLOGY_SECRET_KEY_LIVE','');
-            $prefix_url = env('TAP_API_URL','https://api.tap.company/v2');
+            $prefix_url ='https://api.tap.company/v3';
             
             $response = Http::withToken($secret_key)
             ->$method($prefix_url.$url,$data);
