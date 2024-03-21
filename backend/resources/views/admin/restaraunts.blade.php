@@ -141,7 +141,7 @@
                                             $restaurant->run(function() use ($restaurant){
                                                 $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
 
-												if ($restaurant->is_live() || $restaurant?->user?->status == \App\Models\User::STATUS_ACTIVE) {
+												if ($restaurant->is_live()) {
                                                     echo <<<HTML
                                                         <img alt="Logo" src="$logo" class="h-70px logo" />
                                                     HTML;
