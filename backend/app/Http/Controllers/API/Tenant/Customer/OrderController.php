@@ -109,6 +109,7 @@ class OrderController
                     'amount'=> $order->total,
                     'metadata'=>[
                         'order_id'=> $order->id,
+                        'branch_id'=> $order->branch->id,
                         'customer_id'=>Auth::id()
                     ],
                 ],

@@ -795,9 +795,7 @@ const ProductItem = ({
                                                                                         : item
                                                                                               ?.value[1]
                                                                                 }
-                                                                                name={
-                                                                                    "radio_item"
-                                                                                }
+                                                                                name={`radio_item_${selection_idx}`}
                                                                                 price={
                                                                                     item.price ===
                                                                                     0
