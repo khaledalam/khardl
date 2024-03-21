@@ -138,11 +138,14 @@
                                     <!--begin::Name-->
                                     <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
                                         @php
-                                            $restaurant->run(function(){
+                                            $restaurant->run(function() use ($restaurant){
                                                 $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
-												echo <<<HTML
-                                                    <img alt="Logo" src="$logo" class="h-70px logo" />
-                                                HTML;
+
+												if ($restaurant->is_live() || $restaurant?->user?->status == \App\Models\User::STATUS_ACTIVE) {
+                                                    echo <<<HTML
+                                                        <img alt="Logo" src="$logo" class="h-70px logo" />
+                                                    HTML;
+												}
 
                                             });
                                         @endphp
@@ -150,7 +153,7 @@
                                         @if($restaurant?->is_live())
                                         <span class="badge badge-light-success fw-bolder">{{ __('live')}}</span>
 
-                                        @elseif ($restaurant->status == "active")
+                                        @elseif ($restaurant->user->status == \App\Models\User::STATUS_ACTIVE)
                                         <span class="badge badge-light-warning fw-bolder">{{ __('pending')}}</span>
                                         @elseif ($restaurant?->user?->isBlocked())
                                         <span class="badge badge-danger fw-bolder">{{ __('blocked')}}</span>
