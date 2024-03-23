@@ -118,6 +118,25 @@ class RegisterController extends BaseController
         return $this->sendResponse(['url'=>$tenant->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID)], 'User complete register step two successfully.');
     }
 
+    public function getStepTwoData(Request $request)
+    {
+        $user = auth()->user();
+
+        return $this->sendResponse([
+            'commercial_registration' => $user?->traderRegistrationRequirement?->commercial_registration,
+            'tax_registration_certificate' => $user?->traderRegistrationRequirement?->tax_registration_certificate,
+            'bank_certificate' => $user?->traderRegistrationRequirement?->bank_certificate,
+            'identity_of_owner_or_manager' => $user?->traderRegistrationRequirement?->identity_of_owner_or_manager,
+            'national_address' => $user?->traderRegistrationRequirement?->national_address,
+            'IBAN' => $user?->traderRegistrationRequirement?->IBAN ?? "",
+            'facility_name' => $user?->traderRegistrationRequirement?->facility_name ?? "",
+            'needed'
+
+        ], 'Fetched User complete register step two.');
+
+
+    }
+
 
     public function sendVerificationCode(Request $request): JsonResponse
     {

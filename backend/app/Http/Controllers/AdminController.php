@@ -553,7 +553,7 @@ class AdminController extends Controller
         }
 
         if ($user) {
-            $user->status = User::STATUS_BLOCKED;
+            $user->status = User::STATUS_REJECTED;
             $user->save();
         }
 

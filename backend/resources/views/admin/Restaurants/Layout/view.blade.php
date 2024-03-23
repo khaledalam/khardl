@@ -186,11 +186,18 @@
                                         <button style="border: 0;" type="submit" class="badge badge-light-danger btn-confirm text-hover-white bg-hover-danger p-5 m-3">{{ __('deny')}}</button>
                                     </form>
 
+
                                 </div>
                                 @elseif ($restaurant?->user?->isBlocked())
-                                <div class="d-flex justify-content-left w-100 mt-auto mb-2">
-                                    <span class="badge badge-danger p-2 fs-6">{{ __('blocked')}}</span>
-                                </div>
+                                    <div class="d-flex justify-content-left w-100 mt-auto mb-2">
+                                        <span class="badge badge-danger p-2 fs-6">{{ __('blocked')}}</span>
+                                    </div>
+                                @endif
+
+                                @if ($restaurant?->user?->status == \App\Models\User::STATUS_REJECTED)
+                                    <div class="d-flex justify-content-left w-80 mt-auto my-2">
+                                        <span class="badge badge-info p-1 fs-3">{{ __('rejected')}}</span>
+                                    </div>
                                 @endif
                                 <!--end::Progress-->
                             </div>

@@ -44,7 +44,10 @@ const Login = () => {
            // remember_me: data.remember_me, // used only in API token-based
          });
 
-         console.log(">>>>", response?.data?.success)
+         // console.log(">>>>", response?.data);
+         //
+         // return;
+
          if (response?.data?.success) {
             const responseData = response?.data;
             // console.log("responseData>", responseData)
@@ -61,7 +64,7 @@ const Login = () => {
                sessionStorage.setItem('email', responseData?.data?.user?.email)
                setStatusCode(HTTP_NOT_VERIFIED)
                navigate('/verification-email')
-            } else if (responseData?.data?.step2_status === 'incomplete') {
+            } else if (responseData?.data?.step2_status === 'incomplete' || responseData?.data?.user?.status === "reject") {
                setStatusCode(HTTP_NOT_ACCEPTED)
                navigate('/complete-register')
             } else if (

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use App\Utils\ResponseHelper;
 use Closure;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class EnsureTraderRegistrationIsNotComplete
         if ($user && $user->hasRole('Restaurant Owner')) {
 
             // Check if the trader's registration requirements are not fulfilled.
-            if ($user->traderRegistrationRequirement) {
+            if ($user->traderRegistrationRequirement && $user?->status != User::STATUS_REJECTED) {
                 if ($request->expectsJson()) {
                     return ResponseHelper::response([
                         'message' => 'User is already approved',

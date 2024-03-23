@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import bgRegistration from "../../assets/register-bg.png"
 import {useTranslation} from "react-i18next"
 import MainText from "../../components/MainText"
@@ -17,9 +17,12 @@ function CompleteRegistration() {
 
   const {setStatusCode} = useAuthContext()
   const [files, setFiles] = useState()
-  const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
-  const [fileUploadSuccess, setFileUploadSuccess] = useState({
+    const [IBAN, setIBAN] = useState("");
+    const [facilityName, setFacilityName] = useState("");
+
+    const [fileUploadSuccess, setFileUploadSuccess] = useState({
     commercial_registration: false,
     tax_registration_certificate: false,
     national_address: false,
@@ -45,6 +48,10 @@ function CompleteRegistration() {
     register,
     formState: {errors},
   } = useForm()
+
+    useEffect(() => {
+        fetchStep2Data();
+    }, []);
 
   // API POST REQUEST
   const onSubmit = async (data) => {
@@ -100,6 +107,45 @@ function CompleteRegistration() {
     }
     setLoading(false)
   }
+
+
+    const fetchStep2Data = async () => {
+        if (loading) return
+        setLoading(true)
+
+        try {
+            if(!selectedFiles.tax_registration_certificate){
+                selectedFiles.tax_registration_certificate = null;
+            }
+            const response = await AxiosInstance.get(
+                `/register-step2`,
+                {
+                    headers: {
+                        Accept: "application/json",
+                        // * Don't remove *
+                        "Content-Type": "multipart/form-data",
+                        "X-CSRF-TOKEN": window.csrfToken,
+                    },
+                }
+            )
+
+            if (response) {
+                const responseData = await response?.data?.data
+
+                setIBAN(responseData?.IBAN);
+                setFacilityName(responseData?.facility_name);
+                console.log("fetch: responseData", responseData);
+
+            } else {
+
+            }
+        } catch (error) {
+            toast.error(`${t(error.response.data.message)}`)
+        }
+        setLoading(false)
+    }
+
+
 
   return (
     <div className='flex flex-col items-stretch justify-center '>
@@ -440,6 +486,8 @@ function CompleteRegistration() {
                 <input
                   type='text'
                   className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                  value={IBAN}
+                  onChange={e => setIBAN(e.target.value)}
                   {...register("IBAN", {required: true})}
                   placeholder={t("IBAN")}
                 />
@@ -459,6 +507,8 @@ function CompleteRegistration() {
                 <input
                   minLength={5}
                   type='text'
+                  value={facilityName}
+                  onChange={e => setFacilityName(e.target.value)}
                   className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
                   {...register("facility_name", {required: true})}
                   placeholder={t("Facility Name")}

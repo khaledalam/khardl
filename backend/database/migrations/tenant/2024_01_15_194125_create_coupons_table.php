@@ -1,6 +1,8 @@
 <?php
 
 use App\Enums\Admin\CouponTypes;
+use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,6 +14,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        try {
+            Type::addType('enum', StringType::class);
+        }catch(Throwable $e){}
+
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->enum('type', CouponTypes::values())->default(CouponTypes::FIXED_COUPON);
