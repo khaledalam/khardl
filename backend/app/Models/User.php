@@ -92,6 +92,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->status === self::STATUS_BLOCKED;
     }
 
+    public function isRejected()
+    {
+        return $this->status === self::STATUS_REJECTED;
+    }
+
     public function isActive()
     {
         return $this->status === self::STATUS_ACTIVE;

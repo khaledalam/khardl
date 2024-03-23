@@ -554,6 +554,7 @@ class AdminController extends Controller
 
         if ($user) {
             $user->status = User::STATUS_REJECTED;
+            $user->reject_reasons = json_encode($selectedOption);
             $user->save();
         }
 
@@ -570,7 +571,7 @@ class AdminController extends Controller
         ]);
 
         return redirect()->back()->with([
-            'success' => 'User denied successfully',
+            'success' => __('Restaurant rejected successfully'),
             'user' => Auth::user()
         ]);
     }

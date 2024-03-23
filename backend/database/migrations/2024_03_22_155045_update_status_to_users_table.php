@@ -21,6 +21,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
 
             $table->string('status')->default(User::STATUS_ACTIVE)->change();
+            $table->json('reject_reasons')->default(json_encode([]));
         });
     }
 
@@ -35,6 +36,7 @@ return new class extends Migration
 
         Schema::table('users', function (Blueprint $table) {
             $table->enum('status', [User::STATUS_ACTIVE, User::STATUS_BLOCKED, User::STATUS_INACTIVE])->default('active');
+            $table->dropColumn('reject_reasons');
         });
     }
 };

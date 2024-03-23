@@ -49,7 +49,6 @@ class RegisterController extends BaseController
 
     public function stepTwo(Request $request)
     {
-
         $request->validate([
             'commercial_registration' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
             'tax_registration_certificate' => 'nullable|mimes:pdf,jpg,jpeg,png|max:16384',
@@ -62,9 +61,8 @@ class RegisterController extends BaseController
 
         $user = auth()->user();
 
-
         // Check if the trader's registration requirements already fulfilled.
-        if ($user->traderRegistrationRequirement) {
+        if ($user?->traderRegistrationRequirement) {
             return $this->sendResponse(null, 'User already completed register step2 successfully.');
         }
 
@@ -122,6 +120,17 @@ class RegisterController extends BaseController
     {
         $user = auth()->user();
 
+        $needs = [];
+        $files_fields = ['commercial_registration', 'tax_registration_certificate', 'bank_certificate',
+            'identity_of_owner_or_manager', 'national_address'];
+
+        foreach ($files_fields as $field) {
+            if (!$user?->traderRegistrationRequirement?->{$field}
+                || ($user->status == User::STATUS_REJECTED && in_array($field, json_decode($user?->reject_reasons)))) {
+                $needs[] = $field;
+            }
+        }
+
         return $this->sendResponse([
             'commercial_registration' => $user?->traderRegistrationRequirement?->commercial_registration,
             'tax_registration_certificate' => $user?->traderRegistrationRequirement?->tax_registration_certificate,
@@ -130,10 +139,8 @@ class RegisterController extends BaseController
             'national_address' => $user?->traderRegistrationRequirement?->national_address,
             'IBAN' => $user?->traderRegistrationRequirement?->IBAN ?? "",
             'facility_name' => $user?->traderRegistrationRequirement?->facility_name ?? "",
-            'needed'
-
+            'needs' => $needs
         ], 'Fetched User complete register step two.');
-
 
     }
 

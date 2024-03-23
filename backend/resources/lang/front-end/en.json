@@ -45,6 +45,7 @@
     "Email Error": "Please enter your email",
     "Phone Error": "Please enter phone number",
     "Password Error": "Please enter your password",
+    "File Error": "File Error",
     "Commercial Record Error": "Please enter the commercial record",
     "Tax registration certificate Error": "Please enter your tax registration certificate",
     "Bank certificate Error": "Please enter the bank certificate",

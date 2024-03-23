@@ -19,6 +19,7 @@ function CompleteRegistration() {
   const [files, setFiles] = useState()
     const [loading, setLoading] = useState(false)
 
+    const [needs, setNeeds] = useState([]);
     const [IBAN, setIBAN] = useState("");
     const [facilityName, setFacilityName] = useState("");
 
@@ -65,15 +66,15 @@ function CompleteRegistration() {
       const response = await AxiosInstance.post(
         `/register-step2`,
         {
-          commercial_registration: selectedFiles.commercial_registration,
+          commercial_registration: selectedFiles?.commercial_registration,
           tax_registration_certificate:
-            selectedFiles.tax_registration_certificate,
-          bank_certificate: selectedFiles.bank_certificate,
+            selectedFiles?.tax_registration_certificate,
+          bank_certificate: selectedFiles?.bank_certificate,
           identity_of_owner_or_manager:
-            selectedFiles.identity_of_owner_or_manager,
-          national_address: selectedFiles.national_address,
-          IBAN: data.IBAN,
-          facility_name: data.facility_name,
+            selectedFiles?.identity_of_owner_or_manager,
+          national_address: selectedFiles?.national_address,
+          IBAN: data?.IBAN,
+          facility_name: data?.facility_name,
         },
         {
           headers: {
@@ -134,6 +135,7 @@ function CompleteRegistration() {
 
                 setIBAN(responseData?.IBAN);
                 setFacilityName(responseData?.facility_name);
+                setNeeds(responseData?.needs)
                 console.log("fetch: responseData", responseData);
 
             } else {
@@ -146,6 +148,15 @@ function CompleteRegistration() {
     }
 
 
+    const getFileTitle = (field) => {
+      return {
+          'commercial_registration': 'Commercial Record',
+          'tax_registration_certificate': 'Tax registration certificate',
+          'bank_certificate': 'Bank certificate',
+          'identity_of_owner_or_manager': 'Identity of the owner or manager',
+          'national_address': 'National address'
+      }[field] ?? 'file';
+    }
 
   return (
     <div className='flex flex-col items-stretch justify-center '>
@@ -170,312 +181,71 @@ function CompleteRegistration() {
             className='flex flex-col items-center gap-6 w-[80%] max-sm:w-[90%]'
             encType='multipart/form-data'
           >
-            {/* First Input */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("Commercial Record")} <span className='text-red-500'>*</span>
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                {...register("commercial_registration", {
-                  required: true,
-                })}
-                id='Input(1)'
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    commercial_registration: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    commercial_registration: selectedFileName,
-                  })
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    commercial_registration: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(1)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.commercial_registration && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
+
+              {needs.map((fileField, idx) => {
+                  return <div className='w-[100%]' key={idx}>
+                      <div className='mb-2 font-semibold'>
+                          {t(getFileTitle(fileField))} <span className='text-red-500'>*</span>
+                          <p>
+                              <small className='text-gray-500'>
+                                  <i>
+                                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
+                                  </i>
+                              </small>
+                          </p>
+                      </div>
+                      <input
+                          type='file'
+                          accept='application/pdf,image/*'
+                          {...register(fileField, {
+                              required: true,
+                          })}
+                          id={`Input(${idx})`}
+                          className='hidden'
+                          onChange={(event) => {
+                              setFileUploadSuccess({
+                                  ...fileUploadSuccess,
+                                  [fileField]: true,
+                              })
+                              const selectedFileName = event.target.files[0]
+                              setSelectedFiles({
+                                  ...selectedFiles,
+                                  [fileField]: selectedFileName,
+                              })
+                              setSelectedFileNames({
+                                  ...selectedFileNames,
+                                  [fileField]: selectedFileName.name,
+                              })
+                          }}
+                      />
+                      <label
+                          htmlFor={`Input(${idx})`}
+                          className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
+                      >
+                          <FiUpload size={24} />
+                          <h1>{t("Attach a PDF file")}</h1>
+                      </label>
+                      {fileUploadSuccess[fileField] && (
+                          <span className='text-green-500 text-xs mt-1 ms-2'>
                   {t("File uploaded successfully")}
                 </span>
-              )}
-              {selectedFileNames.commercial_registration && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.commercial_registration}
+                      )}
+                      {selectedFileNames[fileField] && (
+                          <span className='text-blue-500 text-xs mt-1 ms-2'>
+                  {selectedFileNames[fileField]}
                 </span>
-              )}
-              {errors.commercial_registration &&
-                !fileUploadSuccess.commercial_registration &&
-                !selectedFileNames.commercial_registration && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("Commercial Record Error")}
+                      )}
+                      {errors[fileField] &&
+                      !fileUploadSuccess[fileField] &&
+                      !selectedFileNames[fileField] && (
+                          <span className='text-red-500 text-xs mt-1 ms-2'>
+                    {t("File Error")}
                   </span>
-                )}
-            </div>
+                      )}
+                  </div>
+              })}
 
-            {/* Input 2 */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("Tax registration certificate")}{" "}
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                id='Input(2)'
-                {...register("tax_registration_certificate")}
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    tax_registration_certificate: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    tax_registration_certificate: selectedFileName,
-                  })
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    tax_registration_certificate: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(2)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.tax_registration_certificate && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.tax_registration_certificate && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.tax_registration_certificate}
-                </span>
-              )}
-              {errors.tax_registration_certificate &&
-                !fileUploadSuccess.tax_registration_certificate &&
-                !selectedFileNames.tax_registration_certificate && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("Tax registration certificate Error")}
-                  </span>
-                )}
-            </div>
 
-            {/* Input 3 */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("National address")} <span className='text-red-500'>*</span>
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                id='Input(3)'
-                {...register("national_address", {required: true})}
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    national_address: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    national_address: selectedFileName,
-                  })
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    national_address: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(3)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.national_address && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.national_address && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.national_address}
-                </span>
-              )}
-              {errors.national_address &&
-                !fileUploadSuccess.national_address &&
-                !selectedFileNames.national_address && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("National address Error")}
-                  </span>
-                )}
-            </div>
-
-            {/* Input 4 */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("Identity of the owner or manager")}{" "}
-                <span className='text-red-500'>*</span>
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                id='Input(4)'
-                {...register("identity_of_owner_or_manager", {
-                  required: true,
-                })}
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    identity_of_owner_or_manager: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    identity_of_owner_or_manager: selectedFileName,
-                  })
-
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    identity_of_owner_or_manager: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(4)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.identity_of_owner_or_manager && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.identity_of_owner_or_manager && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.identity_of_owner_or_manager}
-                </span>
-              )}
-              {errors.identity_of_owner_or_manager &&
-                !fileUploadSuccess.identity_of_owner_or_manager &&
-                !selectedFileNames.identity_of_owner_or_manager && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("Identity of the owner or manager Error")}
-                  </span>
-                )}
-            </div>
-
-            {/* Input 5 */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("Bank certificate")} <span className='text-red-500'>*</span>
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                id='Input(5)'
-                {...register("bank_certificate", {required: true})}
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    bank_certificate: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    bank_certificate: selectedFileName,
-                  })
-
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    bank_certificate: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(5)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.bank_certificate && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.bank_certificate && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.bank_certificate}
-                </span>
-              )}
-              {errors.bank_certificate &&
-                !fileUploadSuccess.bank_certificate &&
-                !selectedFileNames.bank_certificate && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("Bank certificate Error")}
-                  </span>
-                )}
-            </div>
             {/* Input 6 */}
             <div className='w-[100%] flex flex-col items-start gap-4'>
               <div className='w-[100%]'>
@@ -536,7 +306,7 @@ function CompleteRegistration() {
                     role='status'
                     className='fixed top-0 right-0 h-screen w-screen z-10'
                   >
-                    <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
+                    <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'/>
                     <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
                       <svg
                         aria-hidden='true'
