@@ -10,6 +10,7 @@ use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\Tenant\RestaurantStyle;
+use App\Models\Tenant\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -244,7 +245,9 @@ Route::group([
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
         Route::get('/cart', static function () {
             $logo = RestaurantStyle::first()?->logo;
-            return view('tenant', compact('logo'));
+            $restaurant_name = Setting::first()->restaurant_name;
+
+            return view('tenant', compact('logo', 'restaurant_name'));
         })->name('cart');
 
 

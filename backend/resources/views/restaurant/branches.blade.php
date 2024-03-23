@@ -1090,7 +1090,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 noCalendar: true,
                 enableSeconds: false,
                 dateFormat: "H:i",
-                time_24hr: true
+                time_24hr: true,
+                disableMobile: true
             });
         });
     </script>

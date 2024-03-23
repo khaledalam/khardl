@@ -22,7 +22,7 @@ class StoreOrderFormRequest extends FormRequest
             'last_name' => 'nullable|string|max:255',
             'branch_id' => 'required|integer|exists:branches,id',
             'delivery_type_id' => 'required|integer|exists:delivery_types,id',
-            'shipping_address' => 'required|max:255',
+            'shipping_address' => 'required_if:delivery_type_id,1|max:255',
             'order_notes' => 'nullable|max:255',
             'products' => 'required|array',
             'products.*' => ['required', 'min:1'],

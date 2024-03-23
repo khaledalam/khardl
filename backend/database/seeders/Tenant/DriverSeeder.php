@@ -30,7 +30,7 @@ class DriverSeeder extends Seeder
             'address' => 'test address',
             "lat" => 24.7136,
             "lng" => 46.6753,
-            'password' => bcrypt(env("NOVA_ADMIN_PASSWORD", 'password')),
+            'password' => bcrypt('khardl@123'),
             'remember_token' => Str::random(10),
         ]);
         $user->branch()->associate($branch);

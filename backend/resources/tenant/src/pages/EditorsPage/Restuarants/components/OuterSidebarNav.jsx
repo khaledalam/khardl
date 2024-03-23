@@ -177,13 +177,13 @@ const OuterSidebarNav = ({ id }) => {
     }, [selectedPickUpBranch, selectedDeliveryBranch]);
 
     const handleRedirect = (role) => {
-        console.log(role);
-        if (role == "Customer") {
+        if (role.toLowerCase() == "customer") {
             navigate("/dashboard#Dashboard");
-        } else if (role == "Driver") {
+        } else if (role.toLowerCase() == "driver") {
             window.open(window.location.href + "orders-all");
+        } else if (role.toLowerCase() == "worker") {
+            window.open(window.location.href + "branches");
         } else {
-            console.log(window.location.href);
             window.open(window.location.href + "summary");
         }
     };

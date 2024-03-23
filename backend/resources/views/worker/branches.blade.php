@@ -537,7 +537,8 @@
                 noCalendar: true,
                 enableSeconds: false,
                 dateFormat: "H:i",
-                time_24hr: true
+                time_24hr: true,
+                disableMobile: true
             });
         });
     </script>
