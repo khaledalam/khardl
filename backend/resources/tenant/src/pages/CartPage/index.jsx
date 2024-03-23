@@ -1,68 +1,30 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
-import CartHeader from "./components/CartHeader";
-import CartSection from "./components/CartSection";
-import PaymentSection from "./components/PaymentSection";
-import LoadingSpinner from "./components/LoadingSpinner";
-import AxiosInstance from "../../axios/axios";
 import { useTranslation } from "react-i18next";
+import AxiosInstance from "../../axios/axios";
+import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import {
     setCartItemsData,
     getCartItemsCount,
 } from "../../redux/NewEditor/categoryAPISlice";
-import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
-import { updateCustomerAddress } from "../../redux/NewEditor/customerSlice";
+import CartItem from "./components/CartItem";
+import { RadioButton } from "primereact/radiobutton";
+import pmcc from "../../assets/pmcc.png";
+import pmcod from "../../assets/pmcod.png";
+
+import "./index.scss";
 
 const CartPage = () => {
-    const [isloading, setIsLoading] = useState(true);
-    const [paymentMethodsData, setPaymentMethodsData] = useState(null);
-    const [address, setAddress] = useState(null);
-    const [tap, setTap] = useState(null);
-    const [deliveryTypesData, setDeliveryTypesData] = useState(null);
-    const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
-
-    const [cartCoupon, setCartCoupon] = useState(null);
-    const [appliedCoupon, setAppliedCoupon] = useState(null);
-    const [userInfo, setUserInfo] = useState(null);
-
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { t } = useTranslation();
-    const language = useSelector((state) => state.languageMode.languageMode);
-    const cartItems = useSelector((state) => state.categoryAPI.cartItemsData);
+    const cartItemsData = useSelector(
+        (state) => state.categoryAPI.cartItemsData,
+    );
+    const [paymentMethod, setPaymentMethod] = useState("pm-cod");
 
-    // console.log("useSelector",useSelector((state) => state.categoryAPI.cartItemsCount))
-
-    const fetchCartData = async () => {
-        try {
-            const cartResponse = await AxiosInstance.get(`carts`);
-
-            console.log("cart >>>", cartResponse.data);
-            if (cartResponse.data) {
-                if (
-                    cartResponse.data.data.discount &&
-                    cartResponse.data.data.coupon.id
-                ) {
-                    setCartCoupon(cartResponse.data.data.discount);
-                    setAppliedCoupon(cartResponse.data.data.coupon);
-                }
-                dispatch(setCartItemsData(cartResponse.data?.data.items));
-                dispatch(
-                    getCartItemsCount(cartResponse.data?.data.count),
-                );
-                setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
-                setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
-                setAddress(cartResponse.data?.data?.address ?? t("N/A"));
-                setTap(cartResponse.data?.data?.tap_information);
-            }
-        } catch (error) {
-            // toast.error(`${t('Failed to send verification code')}`)
-            console.log(error);
-        } finally {
-        }
-    };
+    useEffect(() => {
+        fetchResStyleData().then(() => null);
+        fetchCartData().then(() => null);
+    }, []);
 
     const fetchResStyleData = async () => {
         try {
@@ -75,105 +37,106 @@ const CartPage = () => {
         }
     };
 
-    const fetchProfileData = async () => {
-        const userProfileInfo = {};
+    const fetchCartData = async () => {
         try {
-            const profileResponse = await AxiosInstance.get(`user`);
-            console.log("profileResponse >>>", profileResponse.data);
-            if (profileResponse.data) {
-                dispatch(
-                    updateCustomerAddress({
-                        lat: profileResponse.data?.data?.address?.lat,
-                        lng: profileResponse.data?.data?.address?.lng,
-                        addressValue:
-                            profileResponse.data?.data?.address?.addressValue ??
-                            t("N/A"),
-                    }),
-                );
-                userProfileInfo["address"] =
-                    profileResponse.data?.data?.address;
-                localStorage.setItem(
-                    "userProfileInfo",
-                    JSON.stringify(userProfileInfo),
-                );
+            const cartResponse = await AxiosInstance.get(`carts`);
+
+            console.log("cart >>>", cartResponse.data);
+            if (cartResponse.data) {
+                if (
+                    cartResponse.data.data.discount &&
+                    cartResponse.data.data.coupon.id
+                ) {
+                    // setCartCoupon(cartResponse.data.data.discount);
+                    // setAppliedCoupon(cartResponse.data.data.coupon);
+                }
+                console.log(cartResponse.data?.data.items);
+                dispatch(setCartItemsData(cartResponse.data?.data.items));
+                dispatch(getCartItemsCount(cartResponse.data?.data.count));
+                // setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
+                // setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
+                // setAddress(cartResponse.data?.data?.address ?? t("N/A"));
+                // setTap(cartResponse.data?.data?.tap_information);
             }
-            setUserInfo(profileResponse);
         } catch (error) {
+            // toast.error(`${t('Failed to send verification code')}`)
             console.log(error);
         } finally {
-            setIsLoading(false);
         }
     };
 
-    useEffect(() => {
-        setIsLoading(true);
-        fetchCartData().then((r) => null);
-        fetchResStyleData().then(() => null);
-        fetchProfileData().then((r) => null);
-    }, []);
-
+    const { t } = useTranslation();
     return (
-        <>
-            <Helmet>
-                <title>{t("Your Cart")}</title>
-                <link
-                    rel="icon"
-                    type="image/png"
-                    href={restuarantStyle.logo}
-                    sizes="16x16"
-                />
-            </Helmet>
-
-            <div className="w-[98%] mx-auto mt-14">
-                <div className="w-full lg:w-[70%] laptopXL:w-[80%] mx-auto">
-                    <CartHeader
-                        styles={restuarantStyle}
-                        isloading={isloading}
-                    />
-                    {!cartItems || cartItems.length === 0 ? (
-                        <div className="h-[40vh] w-full flex items-center justify-center">
-                            <div className="w-1/2 mx-auto flex flex-col items-center justify-center gap-6">
-                                <h3 className="text-3xl text-center ">
-                                    {!isloading && t("Your cart is empty")}
-                                </h3>
-                                {isloading ? (
-                                    <div className="skeleton btn w-1/2 w-full shrink-0"></div>
-                                ) : (
-                                    <button
-                                        style={{
-                                            backgroundColor:
-                                                restuarantStyle?.categoryDetail_cart_color,
-                                        }}
-                                        onClick={() => navigate("/")}
-                                        className={`btn w-1/2`}
-                                    >
-                                        {t("Continue Shopping")}
-                                    </button>
-                                )}
+        <div className="p-12">
+            <h1 className="font-bold text-xl">{t("Your Cart")}</h1>
+            <div className="grid grid-cols-12 gap-x-6 pt-8">
+                <div className="col-span-7">
+                    <div className="flex flex-col gap-y-6">
+                        {cartItemsData &&
+                            cartItemsData.length > 0 &&
+                            cartItemsData.map((item, index) => {
+                                return (
+                                    <CartItem
+                                        key={"cartitem" + index}
+                                        cartitem={item}
+                                    />
+                                );
+                            })}
+                    </div>
+                </div>
+                <div className="col-span-5 paymentDetails p-4">
+                    <h2>{t("Review Order Details")}</h2>
+                    <div className="cartDetailSection h-24 mt-8"></div>
+                    <div className="cartDetailSection h-36xw mt-8">
+                        <h3>{t("Select Payment Method")}</h3>
+                        <div
+                            key="pm-cc"
+                            className="flex align-items-center mt-4"
+                        >
+                            <RadioButton
+                                inputId="pm-cc"
+                                name="category"
+                                value="pm-cc"
+                                onChange={(e) => setPaymentMethod("pm-cc")}
+                                checked={paymentMethod === "pm-cc"}
+                            />
+                            <div htmlFor="pm-cc" className="flex mx-2">
+                                <img
+                                    src={pmcc}
+                                    alt=""
+                                    width={25}
+                                    height={25}
+                                    className="mx-2"
+                                ></img>
+                                {t("Credit Card")}
                             </div>
                         </div>
-                    ) : (
-                        <Fragment>
-                            <CartSection cartItems={cartItems} />
-                            <PaymentSection
-                                userInfo={userInfo}
-                                styles={restuarantStyle}
-                                cartCoupon={cartCoupon}
-                                appliedCoupon={appliedCoupon}
-                                tap={tap}
-                                paymentMethods={paymentMethodsData}
-                                deliveryTypes={deliveryTypesData}
-                                cartItems={cartItems}
-                                fetchCartData={fetchCartData}
-                                deliveryAddress={address}
-                                isloading={isloading}
-                                setIsLoading={setIsLoading}
+                        <div
+                            key="pm-cod"
+                            className="flex align-items-center mt-4"
+                        >
+                            <RadioButton
+                                inputId="pm-cod"
+                                name="category"
+                                value="pm-cod"
+                                onChange={(e) => setPaymentMethod("pm-cod")}
+                                checked={paymentMethod === "pm-cod"}
                             />
-                        </Fragment>
-                    )}
+                            <div htmlFor="pm-cod" className="flex mx-2">
+                                <img
+                                    src={pmcod}
+                                    alt=""
+                                    width={25}
+                                    height={25}
+                                    className="mx-2"
+                                ></img>
+                                {t("Cash on Delivery")}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

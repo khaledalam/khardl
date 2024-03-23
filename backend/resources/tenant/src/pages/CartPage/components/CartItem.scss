@@ -1,0 +1,42 @@
+.cartitem .p-card {
+    border-width: 1px;
+    box-shadow: none;
+}
+
+.cartitem .p-card .p-card-content {
+    padding: 0;
+}
+
+.cartitem img {
+    width: 65px;
+    height: 65px !important;
+}
+
+.cartitem h2 {
+    font-family: "AlmaraiBold";
+    font-weight: 600;
+    font-size: larger;
+}
+
+.cartitem p {
+    font-family: "cairo";
+}
+
+.cartitem textarea {
+    border-width: 1px;
+    background-color: #fdfdfb;
+    margin-left: 117px;
+    height: 65px;
+    padding: 12px;
+    font-family: "cairo";
+}
+
+.cartitem textarea:dir(rtl) {
+    margin-right: 117px;
+}
+
+.quantityBtn {
+    border-radius: 10px;
+    margin-top: 15px;
+    height: 35px;
+}

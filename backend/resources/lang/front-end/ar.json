@@ -362,7 +362,7 @@
     "This restaurant has no subscription yet.": "لا يوجد اشتراك فعال لهذا المطعم بعد",
     "Yes": "نعم",
     "Delete": "حذف",
-    "Your Cart": "السله",
+    "Your Cart": "السلة",
     "Continue Shopping": "مواصلة التسوق",
     "Checkout": "الدفع",
     "Empty Cart": "تفريغ السله",
@@ -451,7 +451,7 @@
     "Dashboard Customer": "عميل لوحة القيادة",
     "No categories to be found at the moment": "لا توجد فئات يمكن العثور عليها في الوقت الراهن",
     "Type your coupon code here": "اكتب رمز القسيمة الخاص بك هنا",
-    "Item notes : e.g. Please make the meat medium cook": "ملاحظات العنصر: على سبيل المثال. ",
+    "Item notes : e.g. Please make the meat medium cook": "ملاحظات العنصر..",
     "Payment Summary": "ملخص الدفع",
     "Coupon Discount": "خصم القسيمة",
     "Delivery fee": "رسوم التوصيل",
@@ -477,5 +477,7 @@
     "Enable location permissions for this website in your browser settings.": "تمكين أذونات الموقع لهذا الموقع في إعدادات المتصفح الخاص بك.",
     "Sorry, Geolocation is not supported by your browser. You can continue by typing your location on the map.": "عذرًا، لا يدعم متصفحك تحديد الموقع الجغرافي. ",
     "Unable to access your location. You can continue by typing your location on the map.": "غير قادر على الوصول إلى موقعك. ",
-    "SliderHintUpload": "يرجي رفع صورة ب تناسب ٤:١ و افضل مقاس هو ١٤٠ في ٣٥٠ *"
+    "SliderHintUpload": "يرجي رفع صورة ب تناسب ٤:١ و افضل مقاس هو ١٤٠ في ٣٥٠ *",
+    "extras": "الاضافات",
+    "Review Order Details": "تفاصيل الطلب"
 }
