@@ -4,7 +4,14 @@ import { useSelector } from 'react-redux'
 import Login from '../../pages/LoginSignUp/Login'
 import VerificationEmail from '../../pages/LoginSignUp/VerificationEmail'
 import CompleteRegistration from '../../pages/LoginSignUp/CompleteRegistration'
-import {HTTP_BLOCKED, HTTP_NOT_ACCEPTED, HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";
+import {
+    HTTP_BLOCKED,
+    HTTP_NOT_ACCEPTED,
+    HTTP_NOT_AUTHENTICATED,
+    HTTP_NOT_VERIFIED,
+    HTTP_OK,
+    HTTP_REJECTED
+} from "../../config";
 
 const PrivateRoute = () => {
    let location = useLocation()

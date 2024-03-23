@@ -35,7 +35,6 @@ const useAxiosAuth = () => {
 
    axiosAuth.interceptors.request.use(
       (request) => {
-         console.log('request sent: axiosAuth.interceptors.request')
          return request
       },
       (error) => Promise.reject(error)
@@ -50,10 +49,7 @@ const useAxiosAuth = () => {
 
           if (error?.response?.status === HTTP_NOT_AUTHENTICATED) {
 
-              console.log(">> axiosAuth.interceptors.response", error?.response?.status)
-
               localStorage.setItem('user-info', "");
-             console.log('>> navigate to login route')
             // if (location.pathname === '/register') navigate('/register')
             if (!privateRoute) navigate(location.pathname)
             else navigate('/login')

@@ -194,7 +194,7 @@
                                     </div>
                                 @endif
 
-                                @if ($restaurant?->user?->status == \App\Models\User::STATUS_REJECTED)
+                                @if ($restaurant?->user?->isRejected())
                                     <div class="d-flex justify-content-left w-80 mt-auto my-2">
                                         <span class="badge badge-info p-1 fs-3">{{ __('rejected')}}</span>
                                     </div>

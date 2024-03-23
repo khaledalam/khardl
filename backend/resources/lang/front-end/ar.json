@@ -47,6 +47,7 @@
     "Account successfully created": "تم إنشاء الحساب بنجاح",
     "Account creation failed": "فشلت عملية انشاء الحساب",
     "You have been logged in successfully": "تم تسجيل الدخول بنجاح",
+    "Account requirements rejected، please resubmit": "تم رفض بعض البيانات المطلوبه، يرجي اعاده الادخال",
     "You have been logged out successfully": "تم تسجيل الخروج بنجاح",
     "Login failed": "فشلت عملية تسجيل الدخول",
     "Logout": "تسجيل الخروج",

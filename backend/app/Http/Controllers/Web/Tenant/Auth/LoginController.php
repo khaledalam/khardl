@@ -59,11 +59,15 @@ class LoginController extends BaseController
             Auth::logout();
             return $this->sendError(__("Website doesn't have active subscription, Only restaurant owner can login"), []);
         }
+//        if ($user?->isRejected()) {
+//            Auth::logout();
+//            return $this->sendError(__("Account requirements rejected، please resubmit"), []);
+//        }
         if(($user?->isDriver()  || $user?->isWorker() ) && !$user->branch?->active){
             Auth::logout();
             return $this->sendError(__('Cannot login, Branch is not active'), []);
         }
-       
+
 
         $data = [
             'user'=>$user

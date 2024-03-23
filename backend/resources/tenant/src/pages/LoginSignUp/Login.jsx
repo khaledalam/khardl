@@ -48,7 +48,6 @@ const Login = () => {
     const fetchResStyleData = async () => {
         try {
             AxiosInstance.get(`restaurant-style`).then((response) => {
-                console.log("DATA", response.data?.data);
                 dispatch(changeRestuarantEditorStyle(response.data?.data));
             });
             setisLoading(false);

@@ -24,11 +24,11 @@ function CompleteRegistration() {
     const [facilityName, setFacilityName] = useState("");
 
     const [fileUploadSuccess, setFileUploadSuccess] = useState({
-    commercial_registration: false,
-    tax_registration_certificate: false,
-    national_address: false,
-    identity_of_owner_or_manager: false,
-    bank_certificate: false,
+    commercial_registration: null,
+    tax_registration_certificate: null,
+    national_address: null,
+    identity_of_owner_or_manager: null,
+    bank_certificate: null,
   })
   const [selectedFileNames, setSelectedFileNames] = useState({
     commercial_registration: "",
@@ -38,17 +38,26 @@ function CompleteRegistration() {
     bank_certificate: "",
   })
   const [selectedFiles, setSelectedFiles] = useState({
-    commercial_registration: false,
-    tax_registration_certificate: false,
-    national_address: false,
-    identity_of_owner_or_manager: false,
-    bank_certificate: false,
+    commercial_registration: null,
+    tax_registration_certificate: null,
+    national_address: null,
+    identity_of_owner_or_manager: null,
+    bank_certificate: null,
   })
   const {
     handleSubmit,
     register,
+      setValue,
     formState: {errors},
   } = useForm()
+
+    const $filesNames = [
+        'commercial_registration',
+        'tax_registration_certificate',
+        'bank_certificate',
+        'identity_of_owner_or_manager',
+        'national_address'
+    ]
 
     useEffect(() => {
         fetchStep2Data();
@@ -60,9 +69,12 @@ function CompleteRegistration() {
     setLoading(true)
 
     try {
-        if(!selectedFiles.tax_registration_certificate){
-            selectedFiles.tax_registration_certificate = null;
+        for(let $fileName in $filesNames) {
+            if(!selectedFiles[$filesNames]){
+                selectedFiles[$filesNames] = null;
+            }
         }
+
       const response = await AxiosInstance.post(
         `/register-step2`,
         {
@@ -132,13 +144,11 @@ function CompleteRegistration() {
 
             if (response) {
                 const responseData = await response?.data?.data
-
                 setIBAN(responseData?.IBAN);
                 setFacilityName(responseData?.facility_name);
+                setValue('IBAN', responseData?.IBAN)
+                setValue('facility_name', responseData?.facility_name)
                 setNeeds(responseData?.needs)
-                console.log("fetch: responseData", responseData);
-
-            } else {
 
             }
         } catch (error) {
@@ -257,6 +267,7 @@ function CompleteRegistration() {
                   type='text'
                   className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
                   value={IBAN}
+                  defaultValue={IBAN}
                   onChange={e => setIBAN(e.target.value)}
                   {...register("IBAN", {required: true})}
                   placeholder={t("IBAN")}

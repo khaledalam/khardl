@@ -12,9 +12,8 @@ import { changeLogState } from "../../redux/auth/authSlice";
 import { setIsOpen } from "../../redux/features/drawerSlice";
 import { useAuthContext } from "../../components/context/AuthContext";
 import {
-    HTTP_NOT_VERIFIED,
     HTTP_NOT_AUTHENTICATED,
-    HTTP_OK,
+    HTTP_OK, WEBSITE_URL,
 } from "../../config";
 import AxiosInstance from "../../axios/axios";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
@@ -46,7 +45,7 @@ const Login = () => {
         try {
             setSpinner(true);
             AxiosInstance.get(`restaurant-style`).then((response) => {
-                console.log("DATA", response.data?.data);
+                console.log(response.data?.data);
                 dispatch(changeRestuarantEditorStyle(response.data?.data));
                 setSpinner(false);
             });
@@ -71,10 +70,15 @@ const Login = () => {
 
             if (response?.data?.success) {
                 const responseData = response?.data;
-                console.log(
-                    responseData,
-                    "const responseData = await response?.data;",
-                );
+
+                if (responseData?.data?.user?.status == 'rejected') {
+                   toast.warning(t('Account requirements rejected، please resubmit'));
+                   setTimeout(() => {
+                       window.location.href = WEBSITE_URL;
+                   }, 1500);
+                   return;
+                }
+
                 localStorage.setItem(
                     "user-info",
                     JSON.stringify(responseData?.data?.user),

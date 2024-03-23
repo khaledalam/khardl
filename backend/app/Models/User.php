@@ -44,7 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'email_verified_at'
     ];
     public const STORAGE = "user_files";
-    public const STATUS_REJECTED = "reject";
+    public const STATUS_REJECTED = "rejected";
     public const STATUS_BLOCKED = "blocked";
     public const STATUS_ACTIVE = "active";
     public const STATUS_INACTIVE = "inactive";

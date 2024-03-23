@@ -556,6 +556,14 @@ class AdminController extends Controller
             $user->status = User::STATUS_REJECTED;
             $user->reject_reasons = json_encode($selectedOption);
             $user->save();
+
+            // set user status in tenant table too
+            $tenant->run(function () use($user, $selectedOption){
+                $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+                $rUser->status = RestaurantUser::REJECTED;
+                $rUser->reject_reasons = json_encode($selectedOption);
+                $rUser->save();
+            });
         }
 
         SendDeniedEmailJob::dispatch($user, $selectedOption);

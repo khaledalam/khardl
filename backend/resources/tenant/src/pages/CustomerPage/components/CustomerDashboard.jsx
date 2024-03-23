@@ -25,8 +25,6 @@ const CustomerDashboard = () => {
         fetchProfileData().then((r) => null);
     }, []);
 
-    console.log("hererererer");
-
     const fetchProfileData = async () => {
         if (isLoading) return;
         setIsLoading(true);

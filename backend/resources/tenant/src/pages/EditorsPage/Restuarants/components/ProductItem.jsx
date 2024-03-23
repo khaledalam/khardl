@@ -399,13 +399,9 @@ const ProductItem = ({
         navigate("/cart");
     };
 
-    console.log("checboxItem", checkboxItems);
-    console.log("radioItems", radioItems);
-    console.log("selectionItems", dropdownItems);
 
     return (
         <Fragment>
-            {console.log(id)}
             <div
                 key={valuekey}
                 style={{
