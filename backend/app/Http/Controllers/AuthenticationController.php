@@ -39,7 +39,7 @@ class AuthenticationController extends Controller
 //            else
 //
             if ($user->hasVerifiedEmail()) {
-                if (!$user?->traderRegistrationRequirement) {
+                if (!$user?->traderRegistrationRequirement || $user->isRejected()) {
                     return ResponseHelper::response([
                         'message' => 'User trader documents are not approved yet',
                         'is_loggedin' => true

@@ -23,5 +23,4 @@ export const HTTP_ACCEPTED             = 205;
 // not approve restaurant owner trade documents
 export const HTTP_NOT_ACCEPTED         = 206;
 export const HTTP_BLOCKED              = 207;
-export const HTTP_REJECTED             = 208;
 

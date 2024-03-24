@@ -235,7 +235,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         if ($response['http_code'] == ResponseHelper::HTTP_OK) {
             DB::table('phone_verification_tokens')->where('user_id', $this->id)->delete();
             $this->phone_verified_at = now();
-            $this->status = 'active';
+            $this->status = RestaurantUser::ACTIVE;
             $this->save();
             return true;
         }

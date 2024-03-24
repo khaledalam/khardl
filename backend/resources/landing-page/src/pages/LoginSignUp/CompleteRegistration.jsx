@@ -20,8 +20,6 @@ function CompleteRegistration() {
     const [loading, setLoading] = useState(false)
 
     const [needs, setNeeds] = useState([]);
-    const [IBAN, setIBAN] = useState("");
-    const [facilityName, setFacilityName] = useState("");
 
     const [fileUploadSuccess, setFileUploadSuccess] = useState({
     commercial_registration: null,
@@ -127,9 +125,6 @@ function CompleteRegistration() {
         setLoading(true)
 
         try {
-            if(!selectedFiles.tax_registration_certificate){
-                selectedFiles.tax_registration_certificate = null;
-            }
             const response = await AxiosInstance.get(
                 `/register-step2`,
                 {
@@ -144,8 +139,6 @@ function CompleteRegistration() {
 
             if (response) {
                 const responseData = await response?.data?.data
-                setIBAN(responseData?.IBAN);
-                setFacilityName(responseData?.facility_name);
                 setValue('IBAN', responseData?.IBAN)
                 setValue('facility_name', responseData?.facility_name)
                 setNeeds(responseData?.needs)
@@ -266,9 +259,7 @@ function CompleteRegistration() {
                 <input
                   type='text'
                   className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
-                  value={IBAN}
-                  defaultValue={IBAN}
-                  onChange={e => setIBAN(e.target.value)}
+                  onChange={e => setValue('IBAN', e.target.value)}
                   {...register("IBAN", {required: true})}
                   placeholder={t("IBAN")}
                 />
@@ -288,8 +279,7 @@ function CompleteRegistration() {
                 <input
                   minLength={5}
                   type='text'
-                  value={facilityName}
-                  onChange={e => setFacilityName(e.target.value)}
+                  onChange={e => setValue('facility_name', e.target.value)}
                   className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
                   {...register("facility_name", {required: true})}
                   placeholder={t("Facility Name")}

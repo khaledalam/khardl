@@ -72,18 +72,13 @@ const Login = () => {
                responseData.data?.user?.status === 'active'
             ) {
                 setStatusCode(HTTP_OK);
-
-               //  navigate('/')
-               // settimeout(() => {
-               //     window.location.href = '/dashboard';
-               //     //
-               // }, 500);
+                toast.success(`${t('You have been logged in successfully')}`)
             } else {
                navigate('/error')
             }
             dispatch(changeLogState(true))
             dispatch(setIsOpen(false))
-            toast.success(`${t('You have been logged in successfully')}`)
+
          } else {
              setSpinner(false)
             throw new Error(`${response?.data?.error || t('Login failed')}`)

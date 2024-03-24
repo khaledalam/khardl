@@ -10,14 +10,11 @@ import {
     HTTP_NOT_AUTHENTICATED,
     HTTP_NOT_VERIFIED,
     HTTP_OK,
-    HTTP_REJECTED
 } from "../../config";
 
 const PrivateRoute = () => {
    let location = useLocation()
    const { statusCode, loading } = useAuthContext()
-
-   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
     if (loading) {
         return;

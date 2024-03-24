@@ -18,6 +18,7 @@ import {
 import AxiosInstance from "../../axios/axios";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
 import imgLogo from "../../assets/khardl_Logo.png";
+import {HTTP_NOT_ACCEPTED} from "../../../../landing-page/src/config";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -70,14 +71,6 @@ const Login = () => {
 
             if (response?.data?.success) {
                 const responseData = response?.data;
-
-                if (responseData?.data?.user?.status == 'rejected') {
-                   toast.warning(t('Account requirements rejected، please resubmit'));
-                   setTimeout(() => {
-                       window.location.href = WEBSITE_URL;
-                   }, 1500);
-                   return;
-                }
 
                 localStorage.setItem(
                     "user-info",

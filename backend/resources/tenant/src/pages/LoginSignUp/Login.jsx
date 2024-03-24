@@ -92,8 +92,7 @@ const Login = () => {
                 } else if (responseData.data.user.status === "active") {
                     setStatusCode(HTTP_OK);
                 } else if (responseData.data.user.status === "reject") {
-                    setStatusCode(HTTP_NOT_ACCEPTED)
-                    navigate('/complete-register');
+                    setStatusCode(HTTP_NOT_ACCEPTED);
                 } else {
                     navigate("/error");
                 }

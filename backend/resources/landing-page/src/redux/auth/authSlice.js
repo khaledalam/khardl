@@ -12,8 +12,6 @@ export const getIsLoggedIn = () => {
 
     let userInfo = localStorage.getItem('user-info') || {};
 
-    console.log("getIsLoggedIn", userInfo)
-
    return (userInfo?.user?.email?.length > 0 || false);
 }
 

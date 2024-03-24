@@ -29,6 +29,15 @@ class Restaurant
             return abort(403, 'Unauthorized');
         }
 
+        if ($user->isRejected()) {
+            if ($request->expectsJson()) {
+                return ResponseHelper::response([
+                    'message' => __('Account requirements rejected، please resubmit'),
+                    'is_loggedin' => false
+                ], ResponseHelper::HTTP_NOT_ACCEPTED);
+            }
+            return redirect()->route("complete-register");
+        }
         // If the user is not a "Restaurant Owner" or has already fulfilled registration requirements, continue.
 
         return $next($request);
