@@ -341,7 +341,7 @@
                                 <a href="{{ route('admin.download.file',  ['path' =>\App\Models\User::STORAGE .'/'. $restaurant->user->id, 'fileName'=>$restaurant->restaurant_name.' - Trader requirements' ]) }}" class="btn btn-khardl ">
                                     <i class="fas fa-download me-1 text-black"></i> {{ __('download') }}
                                     <span class="badge bg-success ms-1">
-                                        {{count(\File::allFiles(storage_path("app/private/user_files/{$restaurant->user?->id}")))}} {{ __('files') }}
+                                        {{$filesCount}} {{ __('files') }}
                                     </span>
                                 </a>
                             </div>
