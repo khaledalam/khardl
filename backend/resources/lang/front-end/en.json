@@ -62,7 +62,7 @@
     "Account successfully created": "Account successfully created",
     "Account creation failed": "Account creation failed",
     "You have been logged in successfully": "You have successfully logged in.",
-    "Account requirements rejected، please resubmit": "Account requirements rejected، please resubmit",
+    "Account requirements rejected، please resubmit from main domain": "Account requirements rejected، please resubmit from main domain",
     "You have been logged out successfully": "You have successfully logged out.",
     "Login failed": "Login failed",
     "Logout failed": "Logout failed",

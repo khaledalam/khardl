@@ -21,7 +21,6 @@ import AxiosInstance from "../../axios/axios";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
 import imgLogo from "../../assets/khardl_Logo.png";
 import { getCartItemsCount } from "../../redux/NewEditor/categoryAPISlice";
-import {HTTP_NOT_ACCEPTED} from "../../../../landing-page/src/config";
 
 const Login = () => {
     const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
@@ -91,8 +90,6 @@ const Login = () => {
                     navigate("/verification-phone");
                 } else if (responseData.data.user.status === "active") {
                     setStatusCode(HTTP_OK);
-                } else if (responseData.data.user.status === "reject") {
-                    setStatusCode(HTTP_NOT_ACCEPTED);
                 } else {
                     navigate("/error");
                 }

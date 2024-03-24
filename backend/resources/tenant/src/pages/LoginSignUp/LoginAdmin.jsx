@@ -18,7 +18,6 @@ import {
 import AxiosInstance from "../../axios/axios";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
 import imgLogo from "../../assets/khardl_Logo.png";
-import {HTTP_NOT_ACCEPTED} from "../../../../landing-page/src/config";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -84,13 +83,11 @@ const Login = () => {
                     "email",
                     responseData?.data?.user?.email,
                 );
+
                 setStatusCode(HTTP_OK);
+                toast.success(`${t("You have been logged in successfully")}`);
                 dispatch(changeLogState(true));
                 dispatch(setIsOpen(false));
-                toast.success(`${t("You have been logged in successfully")}`);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 100);
 
                 // worker
                 if (
@@ -101,6 +98,10 @@ const Login = () => {
                 } else {
                     navigate("/summary");
                 }
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 200);
             } else {
                 console.log("response?.data?.success false");
                 setSpinner(false);

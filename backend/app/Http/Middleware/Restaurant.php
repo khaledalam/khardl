@@ -32,7 +32,7 @@ class Restaurant
         if ($user->isRejected()) {
             if ($request->expectsJson()) {
                 return ResponseHelper::response([
-                    'message' => __('Account requirements rejected، please resubmit'),
+                    'message' => __('Account requirements rejected، please resubmit from main domain'),
                     'is_loggedin' => false
                 ], ResponseHelper::HTTP_NOT_ACCEPTED);
             }
