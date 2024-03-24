@@ -33,7 +33,6 @@ const useAxiosAuth = () => {
 
     axiosAuth.interceptors.request.use(
         (request) => {
-            console.log("request sent: axiosAuth.interceptors.request");
             return request;
         },
         (error) => Promise.reject(error),
@@ -45,24 +44,15 @@ const useAxiosAuth = () => {
             return response;
         },
         (error) => {
-            console.log(
-                "axiosAuth.interceptors.response",
-                error?.response?.status,
-            );
+
 
             if (window.location?.pathname.indexOf("login-admins") !== -1) {
-                console.log("twetw");
                 return;
             }
 
             if (error?.response?.status === HTTP_NOT_AUTHENTICATED) {
-                console.log(
-                    "axiosAuth.interceptors.response",
-                    error?.response?.status,
-                );
 
                 localStorage.setItem("isLoggedIn", "");
-                console.log("navigate to login route");
                 // if (location.pathname === '/register') navigate('/register')
                 if (!privateRoute) navigate(location.pathname);
                 else navigate("/login");

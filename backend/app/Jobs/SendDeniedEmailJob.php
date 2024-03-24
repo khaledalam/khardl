@@ -18,15 +18,15 @@ class SendDeniedEmailJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $user;
-    protected $message;
+    protected $reasons;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(User $user, $message = null)
+    public function __construct(User $user, $reasons)
     {
         $this->user = $user;
-        $this->message = $message;
+        $this->reasons = $reasons;
     }
 
     /**
@@ -35,7 +35,10 @@ class SendDeniedEmailJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            Mail::to($this->user->email)->queue(new DeniedEmail($this->user, $this->message));
+            Mail::to($this->user->email)->queue(new DeniedEmail(
+                $this->user,
+                $this->reasons
+            ));
             $action = [
                 'en' => '[ok] Sent denied email notification',
                 'ar' => '[تم] ارسال بريد بالرفض',

@@ -25,7 +25,7 @@ class EnsureTraderRegistrationIsComplete
         if ($user && $user->hasRole('Restaurant Owner')) {
 
             // Check if the trader's registration requirements are not fulfilled.
-            if (!$user->traderRegistrationRequirement) {
+            if (!$user->traderRegistrationRequirement || $user->isRejected()) {
                 if ($request->expectsJson()) {
                     return ResponseHelper::response([
                         'message' => 'User trader documents are not approved yet',

@@ -157,6 +157,8 @@
 
                                         @elseif ($restaurant->user->status == \App\Models\User::STATUS_ACTIVE)
                                         <span class="badge badge-light-warning fw-bolder">{{ __('pending')}}</span>
+                                        @elseif ($restaurant?->user?->isRejected())
+                                            <span class="badge badge-danger fw-bolder">{{ __('rejected')}}</span>
                                         @elseif ($restaurant?->user?->isBlocked())
                                         <span class="badge badge-danger fw-bolder">{{ __('blocked')}}</span>
                                         @else

@@ -4,13 +4,17 @@ import { useSelector } from 'react-redux'
 import Login from '../../pages/LoginSignUp/Login'
 import VerificationEmail from '../../pages/LoginSignUp/VerificationEmail'
 import CompleteRegistration from '../../pages/LoginSignUp/CompleteRegistration'
-import {HTTP_BLOCKED, HTTP_NOT_ACCEPTED, HTTP_NOT_AUTHENTICATED, HTTP_NOT_VERIFIED, HTTP_OK} from "../../config";
+import {
+    HTTP_BLOCKED,
+    HTTP_NOT_ACCEPTED,
+    HTTP_NOT_AUTHENTICATED,
+    HTTP_NOT_VERIFIED,
+    HTTP_OK,
+} from "../../config";
 
 const PrivateRoute = () => {
    let location = useLocation()
    const { statusCode, loading } = useAuthContext()
-
-   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
 
     if (loading) {
         return;

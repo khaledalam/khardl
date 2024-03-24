@@ -73,9 +73,7 @@ function Map({ inputStyle }) {
     const inputValueRef = useRef();
 
     const center = useMemo(() => {
-        console.log("safasfasdtgdasghdsahgadfghdfshsd");
         if (filterBranch) {
-            console.log("hererer filterBranch");
             return {
                 lat: parseFloat(filterBranch.lat),
                 lng: parseFloat(filterBranch.lng),

@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
                 return redirect()->back()->with('error', __('You are not allowed to access this page'));
             }
-            // TODO performance get first one 
+            // TODO performance get first one
             $id = $user->restaurant->run(function ($tenant) {
                 return  RestaurantUser::whereHas('roles', function ($query) {
                         $query->where('name', 'Restaurant Owner');
