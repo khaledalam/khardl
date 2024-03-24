@@ -32,7 +32,7 @@ const Places = ({ inputStyle }) => {
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: "AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E",
         version: "weekly",
-        language: Language || "ar",
+        language: "en",
         libraries,
     });
 
@@ -73,9 +73,7 @@ function Map({ inputStyle }) {
     const inputValueRef = useRef();
 
     const center = useMemo(() => {
-        console.log("safasfasdtgdasghdsahgadfghdfshsd");
         if (filterBranch) {
-            console.log("hererer filterBranch");
             return {
                 lat: parseFloat(filterBranch.lat),
                 lng: parseFloat(filterBranch.lng),
@@ -90,10 +88,7 @@ function Map({ inputStyle }) {
     const containerStyle = {
         width: "100%",
         height: "400px",
-        borderWidth: 6,
-        borderColor: "#E16449",
         padding: 5,
-        borderRadius: 6,
     };
 
     const dispatch = useDispatch();
@@ -263,7 +258,7 @@ function PlacesAutoComplete({ inputStyle, inputRef, inputValueRef }) {
 
     return (
         <Combobox onSelect={handleSelect}>
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-4">
                 <ConfirmationModal
                     isOpen={modalOpen}
                     message={t(modalMessage)}
@@ -281,9 +276,9 @@ function PlacesAutoComplete({ inputStyle, inputRef, inputValueRef }) {
                 />
                 <div
                     onClick={getPosition}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg p-1 border border-[var(--customer)] cursor-pointer"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg p-1 border border-[text-gray-900] cursor-pointer"
                 >
-                    <MdLocationPin size={28} color={"red"} />
+                    <MdLocationPin size={28} color="grey" />
                 </div>
             </div>
 

@@ -8,8 +8,9 @@
 }
 
 .cartitem img {
-    width: 65px;
-    height: 65px !important;
+    width: 85px;
+    height: 85px !important;
+    margin: 0 auto;
 }
 
 .cartitem h2 {
@@ -25,18 +26,17 @@
 .cartitem textarea {
     border-width: 1px;
     background-color: #fdfdfb;
-    margin-left: 117px;
     height: 65px;
     padding: 12px;
     font-family: "cairo";
-}
-
-.cartitem textarea:dir(rtl) {
-    margin-right: 117px;
 }
 
 .quantityBtn {
     border-radius: 10px;
     margin-top: 15px;
     height: 35px;
+}
+
+.p-radiobutton.p-highlight .p-radiobutton-box {
+    background: var(--myColor);
 }
