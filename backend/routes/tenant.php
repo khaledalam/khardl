@@ -86,9 +86,6 @@ Route::group([
 
     Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
     Route::post('login-admins', [LoginController::class, 'login']);
-    Route::get('/login-trial', static function () {
-        return view('tenant');
-    })->name('login-trial')->middleware('guest');
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');

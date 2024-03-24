@@ -54,10 +54,12 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         self::ACTIVE,
         self::INACTIVE,
         self::SUSPENDED,
+        self::REJECTED,
     ];
     const ACTIVE = 'active';
     const INACTIVE = 'inactive';
     const SUSPENDED = 'suspended';
+    const REJECTED = 'rejected';
     protected $dateFormat = 'Y-m-d H:i:s';
     /**
      * The attributes that should be hidden for serialization.
@@ -233,7 +235,7 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
         if ($response['http_code'] == ResponseHelper::HTTP_OK) {
             DB::table('phone_verification_tokens')->where('user_id', $this->id)->delete();
             $this->phone_verified_at = now();
-            $this->status = 'active';
+            $this->status = RestaurantUser::ACTIVE;
             $this->save();
             return true;
         }
@@ -291,6 +293,11 @@ class RestaurantUser extends Authenticatable implements MustVerifyEmail
     protected static function newFactory()
     {
       return RestaurantUserFactory::new();
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->status == self::REJECTED;
     }
 }
 

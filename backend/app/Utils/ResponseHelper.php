@@ -31,5 +31,5 @@ class ResponseHelper {
     {
         return response()->json(['message' => $message,'data'=>$data], $code);
     }
-    
+
 }

@@ -222,7 +222,11 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
             Route::get('complete-register', static function(){
                     return view("central");
                 })->name("complete-register");
+
                 Route::post('register-step2', [RegisterController::class, 'stepTwo']);
+
+                Route::get('register-step2', [RegisterController::class, 'getStepTwoData']);
+
             });
 
             Route::middleware(['accepted'])->group(function () {

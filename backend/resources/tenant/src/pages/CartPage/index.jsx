@@ -39,7 +39,6 @@ const CartPage = () => {
         try {
             const cartResponse = await AxiosInstance.get(`carts`);
 
-            console.log("cart >>>", cartResponse.data);
             if (cartResponse.data) {
                 if (
                     cartResponse.data.data.discount &&
@@ -79,7 +78,6 @@ const CartPage = () => {
         const userProfileInfo = {};
         try {
             const profileResponse = await AxiosInstance.get(`user`);
-            console.log("profileResponse >>>", profileResponse.data);
             if (profileResponse.data) {
                 dispatch(
                     updateCustomerAddress({
