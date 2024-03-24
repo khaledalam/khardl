@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
 
             $table->string('status')->default(User::STATUS_ACTIVE)->change();
-            $table->json('reject_reasons')->default(json_encode([]));
+            $table->json('reject_reasons')->nullable();
         });
     }
 
