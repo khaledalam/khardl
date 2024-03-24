@@ -341,7 +341,7 @@
                                 <a href="{{ route('admin.download.file',  ['path' =>\App\Models\User::STORAGE .'/'. $restaurant->user->id, 'fileName'=>$restaurant->restaurant_name.' - Trader requirements' ]) }}" class="btn btn-khardl ">
                                     <i class="fas fa-download me-1 text-black"></i> {{ __('download') }}
                                     <span class="badge bg-success ms-1">
-                                        5 {{ __('files') }}
+                                        {{$filesCount}} {{ __('files') }}
                                     </span>
                                 </a>
                             </div>
@@ -358,17 +358,17 @@
                     <div class="card-body  row">
 
                         <!--begin::Input group-->
-                        <div class="col-md-6 mb-5">
-                            <!--begin::Label-->
-                            <label class=" fw-bold text-muted">{{ __('delivery-contract') }}
-                                <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
-                            <!--end::Label-->
-                            <!--begin::Col-->
-                            <div class="">
-                                {{ __('no-file-available') }}
-                            </div>
-                            <!--end::Col-->
-                        </div>
+{{--                        <div class="col-md-6 mb-5">--}}
+{{--                            <!--begin::Label-->--}}
+{{--                            <label class=" fw-bold text-muted">{{ __('delivery-contract') }}--}}
+{{--                                <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>--}}
+{{--                            <!--end::Label-->--}}
+{{--                            <!--begin::Col-->--}}
+{{--                            <div class="">--}}
+{{--                                {{ __('no-file-available') }}--}}
+{{--                            </div>--}}
+{{--                            <!--end::Col-->--}}
+{{--                        </div>--}}
 
                         <div class="col-md-6 mb-5">
                             <!--begin::Label-->

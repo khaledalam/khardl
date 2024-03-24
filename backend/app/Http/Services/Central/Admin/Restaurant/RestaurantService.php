@@ -21,7 +21,7 @@ class RestaurantService
     {
         $query = Tenant::query()->with('primary_domain')
             ->whenSearch($request['search'] ?? null);
-        $restaurants = $query->get();
+        $restaurants = $query->orderBy('created_at','DESC')->get();
         $totalRestaurantsCount = count($restaurants);
 
         // TODO @todo make sub active or not tag with search
@@ -89,11 +89,20 @@ class RestaurantService
         $user = Auth::user();
         $compareEarningResult = $dailyEarning > $last7DaysAverageEarning ? 'higher' : 'lower';
         $compareOrderResult = $dailyOrders > $last7DaysAverageOrders ? 'higher' : 'lower';
+
+        $path = storage_path("app/private/user_files/{$restaurant->user?->id}");
+        if (!file_exists($path)) {
+            $filesCount = 0;
+        } else {
+            $filesCount = count(\File::allFiles($path));
+        }
+
         return view(
             'admin.Restaurants.Layout.view',
             compact(
                 'restaurant',
                 'user',
+                'filesCount',
                 'logo',
                 'is_live',
                 'owner',

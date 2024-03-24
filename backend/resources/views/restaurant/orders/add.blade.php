@@ -74,20 +74,21 @@
                                                 <label class="required form-label">{{ __('Delivery Type') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Select2-->
-                                                <select class="form-select mb-2" data-hide-search="true" data-placeholder="Select Type" name="delivery_type_id" required>
+                                                <select class="form-select mb-2" data-hide-search="true" data-placeholder="Select Type" name="delivery_type_id" id="delivery_type_id" required>
                                                     @foreach ($deliveryTypes as $type)
-                                                    <option value="{{ $type->id }}"
-                                                        @if (old('delivery_type_id') == $type->id)
-                                                            {{ 'selected' }}
-                                                        @endif
-                                                        >{{ __(''.$type->name) }}</option>
+                                                        <option value="{{ $type->id }}"
+                                                            @if (old('delivery_type_id') == $type->id)
+                                                                {{ 'selected' }}
+                                                            @endif
+                                                            >{{ __(''.$type->name) }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 <!--end::Select2-->
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Input group-->
-                                            <div class="fv-row">
+                                            <div class="fv-row" id="ship_address_section">
                                                 <!--begin::Label-->
                                                 <label class="required form-label">{{ __('Shipping address') }}</label>
                                                 <!--end::Label-->
@@ -657,6 +658,19 @@
             delete productTotals[productId][copy];
             $(this).closest('tr').remove();
             updateTotalCost();
+        });
+
+        $('#delivery_type_id').on('change', function(e) {
+
+            if (e.target.value == 1) { // delivery
+                $('#ship_address_section').show();
+                $('#ship_address_section').append(`
+                     <input id="address" type="text" name="shipping_address" placeholder="{{ __('Address') }}" class="form-control mb-2" value="{{ old('shipping_address') }}" required />
+                `);
+            } else { // pickup
+                $('#ship_address_section').hide();
+                $('#address').remove();
+            }
         });
 
         function updateTotalCost() {

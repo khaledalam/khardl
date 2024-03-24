@@ -44,7 +44,6 @@ class RestaurantController extends BaseController
     }
     public function index()
     {
-
         return $this->restaurantService->index();
     }
 

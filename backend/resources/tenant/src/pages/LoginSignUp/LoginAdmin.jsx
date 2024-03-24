@@ -12,9 +12,8 @@ import { changeLogState } from "../../redux/auth/authSlice";
 import { setIsOpen } from "../../redux/features/drawerSlice";
 import { useAuthContext } from "../../components/context/AuthContext";
 import {
-    HTTP_NOT_VERIFIED,
     HTTP_NOT_AUTHENTICATED,
-    HTTP_OK,
+    HTTP_OK, WEBSITE_URL,
 } from "../../config";
 import AxiosInstance from "../../axios/axios";
 import { changeRestuarantEditorStyle } from "../../redux/NewEditor/restuarantEditorSlice";
@@ -46,7 +45,7 @@ const Login = () => {
         try {
             setSpinner(true);
             AxiosInstance.get(`restaurant-style`).then((response) => {
-                console.log("DATA", response.data?.data);
+                console.log(response.data?.data);
                 dispatch(changeRestuarantEditorStyle(response.data?.data));
                 setSpinner(false);
             });
@@ -71,10 +70,7 @@ const Login = () => {
 
             if (response?.data?.success) {
                 const responseData = response?.data;
-                console.log(
-                    responseData,
-                    "const responseData = await response?.data;",
-                );
+
                 localStorage.setItem(
                     "user-info",
                     JSON.stringify(responseData?.data?.user),
@@ -87,13 +83,11 @@ const Login = () => {
                     "email",
                     responseData?.data?.user?.email,
                 );
+
                 setStatusCode(HTTP_OK);
+                toast.success(`${t("You have been logged in successfully")}`);
                 dispatch(changeLogState(true));
                 dispatch(setIsOpen(false));
-                toast.success(`${t("You have been logged in successfully")}`);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 100);
 
                 // worker
                 if (
@@ -104,6 +98,10 @@ const Login = () => {
                 } else {
                     navigate("/summary");
                 }
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 200);
             } else {
                 console.log("response?.data?.success false");
                 setSpinner(false);

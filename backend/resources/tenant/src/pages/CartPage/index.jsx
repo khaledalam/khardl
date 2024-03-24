@@ -200,7 +200,10 @@ const CartPage = () => {
                         </div>
                     </div>
 
-                    <Button label={t("Place Order")} className="w-full placeOrderBtn" />
+                    <Button
+                        label={t("Place Order")}
+                        className="w-full placeOrderBtn"
+                    />
                 </div>
             </div>
         </div>

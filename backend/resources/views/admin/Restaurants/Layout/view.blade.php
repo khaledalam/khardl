@@ -186,11 +186,18 @@
                                         <button style="border: 0;" type="submit" class="badge badge-light-danger btn-confirm text-hover-white bg-hover-danger p-5 m-3">{{ __('deny')}}</button>
                                     </form>
 
+
                                 </div>
                                 @elseif ($restaurant?->user?->isBlocked())
-                                <div class="d-flex justify-content-left w-100 mt-auto mb-2">
-                                    <span class="badge badge-danger p-2 fs-6">{{ __('blocked')}}</span>
-                                </div>
+                                    <div class="d-flex justify-content-left w-100 mt-auto mb-2">
+                                        <span class="badge badge-danger p-2 fs-6">{{ __('blocked')}}</span>
+                                    </div>
+                                @endif
+
+                                @if ($restaurant?->user?->isRejected())
+                                    <div class="d-flex justify-content-left w-80 mt-auto my-2">
+                                        <span class="badge badge-info p-1 fs-3">{{ __('rejected')}}</span>
+                                    </div>
                                 @endif
                                 <!--end::Progress-->
                             </div>
@@ -311,25 +318,29 @@ new DataTree({
                     cancelButtonText: '{{ __('no-cancel') }}',
                     html: `
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="commercial-registration-number">
+                            <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="commercial_registration">
                             <label class="form-check-label" for="option1">{{ __('commercial-registration-number') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="delivery-company-contract">
-                            <label class="form-check-label" for="option2">{{ __('delivery-company-contract') }}</label>
+                            <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="identity_of_owner_or_manager">
+                            <label class="form-check-label" for="option2">{{ __('identity_of_owner_or_manager') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="tax-number">
+                            <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="tax_registration_certificate">
                             <label class="form-check-label" for="option3">{{ __('tax-number') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="bank-certificate">
+                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="bank_certificate">
                             <label class="form-check-label" for="option4">{{ __('bank-certificate') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option5" name="options[]" value="others">
-                            <label class="form-check-label" for="option5">{{ __('others') }}</label>
+                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="national_address">
+                            <label class="form-check-label" for="option4">{{ __('national_address') }}</label>
                         </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option5" name="options[]" value="others">
+                            <label class="form-check-label" for="option5">{{ __('others') }}</LABEL>
+                        </DIV>
                     `,
                     preConfirm: function() {
                         var selectedOptions = [];

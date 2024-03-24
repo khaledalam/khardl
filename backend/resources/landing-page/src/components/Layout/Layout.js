@@ -16,19 +16,21 @@ const Layout = () => {
       return;
    }
 
+    if (statusCode === HTTP_NOT_ACCEPTED) {
+        return <Navigate to='/complete-register' />
+    }
+
+    if (statusCode === HTTP_NOT_VERIFIED) {
+        return <Navigate to='/verification-email' state={{ from: location }} />
+    }
+
    if (statusCode === HTTP_OK) {
        window.location.href = '/dashboard';
        return;
       return <Navigate to={from} state={{ from: location }} />
    }
 
-   if (statusCode === HTTP_NOT_VERIFIED) {
-      return <Navigate to='/verification-email' state={{ from: location }} />
-   }
 
-   if (statusCode === HTTP_NOT_ACCEPTED) {
-      return <Navigate to='/complete-register' />
-   }
 
    return <Outlet />
 }

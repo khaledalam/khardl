@@ -25,21 +25,15 @@ export const AuthContextProvider = (props) => {
        console.log("HERERE")
       try {
          const response = await axiosAuth.post( API_ENDPOINT + '/auth-validation')
-         localStorage.setItem('i18nextLng', response?.data?.default_locale ?? 'ar')              
+         localStorage.setItem('i18nextLng', response?.data?.default_locale ?? 'ar')
          // dispatch(changeLanguage(response?.data?.default_locale))
-         
+
          setStatusCode(response?.status)
          dispatch(changeLogState(response?.data?.is_loggedin || false))
-
-          console.log("HERERE >> ", sessionStorage.getItem('email'))
 
          if(!response?.data?.is_loggedin){
             sessionStorage.removeItem('email');
          }
-
-
-          console.log("HERERE 2 >> ", sessionStorage.getItem('email'))
-
 
       } catch (err) {
          sessionStorage.removeItem('email');

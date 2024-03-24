@@ -68,7 +68,7 @@ Route::get('/health', static function (){
         'mobile_app_orders_android_latest_versionCode' => 2,
         'mobile_app_orders_android_latest_versionName' => '1.3',
         'mobile_app_orders_android_force_update' => false,
-        'mobile_app_orders_ios_latest_CURRENT_PROJECT_VERSION' => '1.5',
+        'mobile_app_orders_ios_latest_CURRENT_PROJECT_VERSION' => '1.6',
         'mobile_app_orders_ios_force_update' => false
 
     ]);
@@ -222,7 +222,11 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
             Route::get('complete-register', static function(){
                     return view("central");
                 })->name("complete-register");
+
                 Route::post('register-step2', [RegisterController::class, 'stepTwo']);
+
+                Route::get('register-step2', [RegisterController::class, 'getStepTwoData']);
+
             });
 
             Route::middleware(['accepted'])->group(function () {

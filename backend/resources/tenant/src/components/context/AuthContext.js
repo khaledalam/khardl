@@ -32,7 +32,7 @@ export const AuthContextProvider = (props) => {
             const response = await axiosAuth.post(
                 API_ENDPOINT + "/auth-validation",
             );
-            if (response.data.is_loggedin) {
+            if (response?.data?.is_loggedin) {
                 localStorage.setItem(
                     "i18nextLng",
                     response?.data?.default_locale ?? "ar",
@@ -40,9 +40,7 @@ export const AuthContextProvider = (props) => {
                 let newLanguage = response?.data?.default_locale;
                 dispatch(changeLanguage(newLanguage));
             }
-            console.log(statusCode);
             setStatusCode(response?.status);
-            console.log(statusCode);
 
             if (statusCode === HTTP_NOT_VERIFIED && response?.data?.phone) {
                 sessionStorage.setItem(

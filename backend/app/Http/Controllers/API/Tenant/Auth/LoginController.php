@@ -35,13 +35,16 @@ class LoginController extends BaseController
         }
         $user = Auth::user();
         if(!Setting::first()?->is_live || ROSubscription::first()?->status != ROSubscription::ACTIVE){
+            Auth::logout();
             return $this->sendError('Unauthorized.', ['error' => __("Website doesn't have active subscription, Only restaurant owner can login")]);
         }
         if(!Auth::user()->isWorker()&&!Auth::user()->isDriver()){
+            Auth::logout();
             return $this->sendError('Unauthorized.', ['error' => __('Only workers can logged in')]);
         }
-      
+
         if(!$user->branch?->active){
+            Auth::logout();
             return $this->sendError('Unauthorized.', ['error' => __('Cannot login, Branch is not active')]);
         }
 
@@ -74,6 +77,7 @@ class LoginController extends BaseController
         /** @var ?User $user */
         $user = auth()?->user();
         $user->tokens()->delete();
+        Auth::logout();
         return ResponseHelper::response([
             'message' => 'logged out successfully',
             'is_loggedin' => false

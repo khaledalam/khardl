@@ -44,9 +44,18 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'email_verified_at'
     ];
     public const STORAGE = "user_files";
+    public const STATUS_REJECTED = "rejected";
     public const STATUS_BLOCKED = "blocked";
     public const STATUS_ACTIVE = "active";
+    public const STATUS_INACTIVE = "inactive";
     public const RESTAURANT_ROLE = "Restaurant Owner";
+
+    public const STATUSES = [
+        self::STATUS_BLOCKED,
+        self::STATUS_ACTIVE,
+        self::STATUS_INACTIVE,
+        self::STATUS_REJECTED
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -81,6 +90,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function isBlocked()
     {
         return $this->status === self::STATUS_BLOCKED;
+    }
+
+    public function isRejected()
+    {
+        return $this->status === self::STATUS_REJECTED;
     }
 
     public function isActive()

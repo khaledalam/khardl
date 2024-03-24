@@ -1026,39 +1026,44 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             @endforeach
 
 
-            // New branch popup
-            const centerCoords = {lat: 24.7136, lng: 46.6753, address: '8779 Street Number 74, Al Olaya, 2593, Riyadh 12214, Saudi Arabia'}; // Default center coordinates
-            initializeMap('-new_branch', centerCoords?.lat, centerCoords?.lng);
+            if (document.getElementById('pac-input-new_branch')) {
 
-            document.getElementById('lat-new_branch').value = centerCoords.lat;
-            document.getElementById('lng-new_branch').value = centerCoords.lat;
-            document.getElementById('pac-input-new_branch').value = centerCoords.address;
+                // New branch popup
+                const centerCoords = {
+                    lat: 24.7136,
+                    lng: 46.6753,
+                    address: '8779 Street Number 74, Al Olaya, 2593, Riyadh 12214, Saudi Arabia'
+                }; // Default center coordinates
+                initializeMap('-new_branch', centerCoords?.lat, centerCoords?.lng);
 
+                document.getElementById('lat-new_branch').value = centerCoords.lat;
+                document.getElementById('lng-new_branch').value = centerCoords.lat;
+                document.getElementById('pac-input-new_branch').value = centerCoords.address;
 
+                google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
 
-            google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
+                    // If a marker exists, remove it
+                    if (markers['-new_branch']) {
+                        markers['-new_branch'].setMap(null);
+                    }
 
-                // If a marker exists, remove it
-                if (markers['-new_branch']) {
-                    markers['-new_branch'].setMap(null);
-                }
+                    // Create a new marker at the clicked location
+                    markers['-new_branch'] = new google.maps.Marker({
+                        map: maps['-new_branch'],
+                        position: event.latLng,
+                        draggable: true,
+                    });
 
-                // Create a new marker at the clicked location
-                markers['-new_branch'] = new google.maps.Marker({
-                    map: maps['-new_branch'],
-                    position: event.latLng,
-                    draggable: true,
+                    // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
+
+                    const latnew_branch = document.getElementById('lat-new_branch');
+                    const lngnew_branch = document.getElementById('lng-new_branch');
+
+                    // Update the hidden input with the clicked location's latitude and longitude
+                    latnew_branch.value = `${event.latLng.lat()}`;
+                    lngnew_branch.value = `${event.latLng.lng()}`;
                 });
-
-                // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
-
-                const latnew_branch = document.getElementById('lat-new_branch' );
-                const lngnew_branch = document.getElementById('lng-new_branch' );
-
-                // Update the hidden input with the clicked location's latitude and longitude
-                latnew_branch.value = `${event.latLng.lat()}`;
-                lngnew_branch.value = `${event.latLng.lng()}`;
-            });
+            }
 
 
             function updateTimeInput() {
@@ -1070,7 +1075,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     timeInput.value = "0" + hours + ":" + timeValue[1];
                 }
             }
-
 
         });
 
@@ -1090,7 +1094,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 noCalendar: true,
                 enableSeconds: false,
                 dateFormat: "H:i",
-                time_24hr: true
+                time_24hr: true,
+                disableMobile: true
             });
         });
     </script>

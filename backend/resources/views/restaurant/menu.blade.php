@@ -96,7 +96,8 @@
                                         </a>
                                     </div>
                                     <div class="col-md-2">
-                                        <span class="badge badge-light-success mt-5">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
+                                        <span class="badge badge-light-info mt-1">{{ $category->sort }} {{__('sort')}}</span>
+                                        <span class="badge badge-light-success mt-1">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
                                     </div>
                                     <!--end::Inbox-->
                                 </div>
