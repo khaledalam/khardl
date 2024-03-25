@@ -195,8 +195,8 @@
                                 @endif
 
                                 @if ($restaurant?->user?->isRejected())
-                                    <div class="d-flex justify-content-left w-80 mt-auto my-2">
-                                        <span class="badge badge-info p-1 fs-3">{{ __('rejected')}}</span>
+                                    <div class="d-flex flex-column justify-content-left w-80 mt-auto my-2">
+                                        <span class="badge badge-danger p-3 fs-6 text-center">{{ __('rejected')}}</span>
                                     </div>
                                 @endif
                                 <!--end::Progress-->
