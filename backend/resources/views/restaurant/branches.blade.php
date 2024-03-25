@@ -416,12 +416,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                             <div class="d-flex justify-content-between w-100">
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                     <label for="existed_normal_from">{{ __('from') }}  </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="existed_normal_from" id="existed_normal_from_{{$branch->id}}" value="{{$branch->saturday_open ?? "09:00"}}"  />
+                                    <input type="text" class="form-control form-control-solid time-24 from"  name="existed_normal_from" id="existed_normal_from_{{$branch->id}}" value="{{$branch->saturday_open ?? "09:00"}}"  />
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                     <label for="existed_normal_to">{{ __('to') }}  </label>
-                                    <input type="text" class="form-control form-control-solid time-24"  name="existed_normal_to" id="existed_normal_to_{{$branch->id}}" value="{{$branch->saturday_close ?? "20:00"}}"  />
+                                    <input type="text" class="form-control form-control-solid time-24 to"  name="existed_normal_to" id="existed_normal_to_{{$branch->id}}" value="{{$branch->saturday_close ?? "20:00"}}"  />
                                 </div>
                             </div>
 
@@ -465,12 +465,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                     <div class=" d-flex justify-content-between w-100">
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                             <label>{{ __('from') }} </label>
-                                            <input type="text" value="{{ $branch->{$weekDay . '_open'} ? \Carbon\Carbon::parse($branch->{$weekDay . '_open'})->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="{{$weekDay . '_open'}}"  required />
+                                            <input type="text" value="{{ $branch->{$weekDay . '_open'} ? \Carbon\Carbon::parse($branch->{$weekDay . '_open'})->format('H:i') : '' }}" class="form-control form-control-solid time-24 from"  name="{{$weekDay . '_open'}}"  required />
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                             <label>{{ __('to') }} </label>
-                                            <input type="text" value="{{ $branch->{$weekDay . '_close'} ? \Carbon\Carbon::parse($branch->{$weekDay . '_close'})->format('H:i') : '' }}" class="form-control form-control-solid time-24"  name="{{$weekDay . '_close'}}"  required />
+                                            <input type="text" value="{{ $branch->{$weekDay . '_close'} ? \Carbon\Carbon::parse($branch->{$weekDay . '_close'})->format('H:i') : '' }}" class="form-control form-control-solid time-24 to"  name="{{$weekDay . '_close'}}"  required />
                                         </div>
                                     </div>
 
@@ -678,12 +678,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                      <div class=" d-flex justify-content-between w-100">
                         <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                             <label for="normal_from">{{ __('from') }}</label>
-                            <input type="text" class="form-control form-control-solid time-24"  name="normal_from" id="normal_from" value="09:00"  />
+                            <input type="text" class="form-control form-control-solid time-24 from"  name="normal_from" id="normal_from" value="09:00"  />
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                             <label for="normal_to">{{ __('to') }}  </label>
-                            <input type="text" class="form-control form-control-solid time-24"  name="normal_to" id="normal_to" value="20:00"  />
+                            <input type="text" class="form-control form-control-solid time-24 to"  name="normal_to" id="normal_to" value="20:00"  />
 
                         </div>
                     </div>
@@ -725,12 +725,12 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div class=" d-flex justify-content-between w-100">
                                     <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                         <label for="{{strtolower($weekDay)}}_open">{{ __('from') }} </label>
-                                        <input type="text" class="form-control form-control-solid time-24"  name="{{strtolower($weekDay)}}_open" id="{{strtolower($weekDay)}}_open"   />
+                                        <input type="text" class="form-control form-control-solid time-24 from"  name="{{strtolower($weekDay)}}_open" id="{{strtolower($weekDay)}}_open"   />
                                     </div>
 
                                     <div class="d-flex justify-content-between align-items-center w-50 mx-5 gap-1">
                                         <label for="{{strtolower($weekDay)}}_close">{{ __('to') }} </label>
-                                        <input type="text" class="form-control form-control-solid time-24"  name="{{strtolower($weekDay)}}_close" id="{{strtolower($weekDay)}}_close"   />
+                                        <input type="text" class="form-control form-control-solid time-24 to"  name="{{strtolower($weekDay)}}_close" id="{{strtolower($weekDay)}}_close"   />
 
                                     </div>
                                 </div>
@@ -794,6 +794,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzMlj17cdLKcXdS2BlKkl0d31zG04aj2E&libraries=places"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+
 
     <script>
         let normalChoiceSection = document.getElementById('normalChoiceSection');
@@ -948,7 +952,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                 }
 
-                console.log("ok")
             }
 
             async function convertToAddress(lat, lng){
@@ -1026,46 +1029,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             @endforeach
 
 
-            if (document.getElementById('pac-input-new_branch')) {
-
-                // New branch popup
-                const centerCoords = {
-                    lat: 24.7136,
-                    lng: 46.6753,
-                    address: '8779 Street Number 74, Al Olaya, 2593, Riyadh 12214, Saudi Arabia'
-                }; // Default center coordinates
-                initializeMap('-new_branch', centerCoords?.lat, centerCoords?.lng);
-
-                document.getElementById('lat-new_branch').value = centerCoords.lat;
-                document.getElementById('lng-new_branch').value = centerCoords.lat;
-                document.getElementById('pac-input-new_branch').value = centerCoords.address;
-
-                google.maps.event.addListener(maps['-new_branch'], 'click', function (event) {
-
-                    // If a marker exists, remove it
-                    if (markers['-new_branch']) {
-                        markers['-new_branch'].setMap(null);
-                    }
-
-                    // Create a new marker at the clicked location
-                    markers['-new_branch'] = new google.maps.Marker({
-                        map: maps['-new_branch'],
-                        position: event.latLng,
-                        draggable: true,
-                    });
-
-                    // document.getElementById('pac-input-new_branch').value = markers['-new_branch'].position.lat() + ' ' + markers['-new_branch'].position.lng();
-
-                    const latnew_branch = document.getElementById('lat-new_branch');
-                    const lngnew_branch = document.getElementById('lng-new_branch');
-
-                    // Update the hidden input with the clicked location's latitude and longitude
-                    latnew_branch.value = `${event.latLng.lat()}`;
-                    lngnew_branch.value = `${event.latLng.lng()}`;
-                });
-            }
-
-
             function updateTimeInput() {
                 var timeInput = document.getElementById("timeInput");
                 var timeValue = timeInput.value.split(":");
@@ -1076,19 +1039,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 }
             }
 
-        });
-
-
-    </script>
-
-    @include('components.map')
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
-
-    <script>
-
-        document.addEventListener("DOMContentLoaded", (event) => {
-            // Initialize the timepicker with the existing value or default value
             flatpickr(".time-24", {
                 enableTime: true,
                 noCalendar: true,
@@ -1097,8 +1047,51 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 time_24hr: true,
                 disableMobile: true
             });
+
+
+            function getTimeAsNumberOfMinutes(time)
+            {
+                let timeParts = time.split(":");
+                let timeInMinutes = (timeParts[0] * 60) + timeParts[1];
+                return timeInMinutes;
+            }
+
+            $('.time-24').on('keydown', function (e) {
+
+                console.log([...e.target.classList], [...e.target.classList].indexOf('from'))
+
+                if ([...e.target.classList].indexOf('from') > -1) {
+                    let toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];
+
+                    let time1InMinutesForTime1 = getTimeAsNumberOfMinutes(e.target.value);
+                    let time1InMinutesForTime2 = getTimeAsNumberOfMinutes(toInput.value);
+
+                    if (time1InMinutesForTime1 > time1InMinutesForTime2) {
+                        e.target.value = e.target.oldvalue;
+
+                        this.dispatchEvent(new Event('change'));
+
+
+                        alert("Enter valid time");
+
+                    }
+
+                } else {
+                    let fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];
+                }
+
+
+
+
+            })
+
         });
+
+
     </script>
+
+    @include('components.map')
+
 
 
 @endsection

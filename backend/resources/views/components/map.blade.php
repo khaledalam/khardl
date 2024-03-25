@@ -67,8 +67,6 @@
                 marker.setVisible(true);
                 // infowindow.open(map, marker);
             });
-
-            console.log("ok")
         }
 
         async function convertToAddress(lat, lng) {
