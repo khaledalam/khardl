@@ -48,7 +48,7 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                             <!--begin::Label-->
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="name_ar">
-                                <span class="required"> {{__("Restaurant Name (Arabic)")}}</span>
+                                <span class="required"> {{__("Restaurant name (Arabic)")}}</span>
 
                             </label>
                             <!--end::Label-->

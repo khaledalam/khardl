@@ -2,6 +2,8 @@
 
 use App\Models\Tenant\Order;
 use App\Models\Tenant\PaymentMethod;
+use Doctrine\DBAL\Types\StringType;
+use Doctrine\DBAL\Types\Type;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,6 +15,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        try {
+            Type::addType('enum', StringType::class);
+        }catch(Throwable $e){}
+
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('transaction_id')->unique()->nullable(); // This field is marked as unique to avoid duplicate entries

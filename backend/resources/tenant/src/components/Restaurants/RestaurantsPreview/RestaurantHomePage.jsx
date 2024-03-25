@@ -31,8 +31,6 @@ const RestaurantHomePage = (props) => {
             if (restaurantCategoriesResponse.data) {
                 setCategories(restaurantCategoriesResponse.data?.data);
 
-                console.log(">> branch_id >>", branch_id);
-
                 if (!branch_id) {
                     branch_id =
                         restaurantCategoriesResponse.data?.data[0]?.branch?.id;

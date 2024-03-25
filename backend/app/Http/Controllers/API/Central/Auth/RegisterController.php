@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Central\Auth;
 use App\Enums\Admin\LogTypes;
 use App\Jobs\SendVerifyEmailJob;
 use App\Models\Log;
+use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
 use App\Models\User;
 use App\Models\Promoter;
@@ -51,20 +52,21 @@ class RegisterController extends BaseController
     {
 
         $request->validate([
-            'commercial_registration' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
+            'commercial_registration' => 'nullable|mimes:pdf,jpg,jpeg,png|max:16384',
             'tax_registration_certificate' => 'nullable|mimes:pdf,jpg,jpeg,png|max:16384',
-            'bank_certificate' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
-            'identity_of_owner_or_manager' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
-            'national_address' => 'required|mimes:pdf,jpg,jpeg,png|max:16384',
+            'bank_certificate' => 'nullable|mimes:pdf,jpg,jpeg,png|max:16384',
+            'identity_of_owner_or_manager' => 'nullable|mimes:pdf,jpg,jpeg,png|max:16384',
+            'national_address' => 'nullable|mimes:pdf,jpg,jpeg,png|max:16384',
             'IBAN' => 'required|string|min:10|max:255',
             'facility_name' => 'required|string|min:5|max:255',
+            'bank_name' => 'required|string|min:5|max:255',
+            'national_id_number' => 'required|string|min:5|max:255',
         ]);
 
         $user = auth()->user();
 
-
         // Check if the trader's registration requirements already fulfilled.
-        if ($user->traderRegistrationRequirement) {
+        if ($user?->traderRegistrationRequirement && !$user->isRejected()) {
             return $this->sendResponse(null, 'User already completed register step2 successfully.');
         }
 
@@ -87,17 +89,51 @@ class RegisterController extends BaseController
             'national_address'
         ];
 
+        $userRejectedReasons = json_decode($user?->reject_reasons) ?? [];
+
         foreach ($fileNames as $fileKey) {
+
             if ($request->hasFile($fileKey)) {
+
+                if (($key = array_search($fileKey, $userRejectedReasons)) !== false) {
+                    unset($userRejectedReasons[$key]);
+                }
+
                 $input[$fileKey] = $request->file($fileKey)->storeAs(
                     "user_files/{$user_id}",
-                    $fileKey . '_' . hash_file('sha256', $request->file($fileKey)->getRealPath()) . '.' . $request->file($fileKey)->getClientOriginalExtension(),
+                    $fileKey . '_' . date("Y-m-d") . '_' . hash_file('sha256', $request->file($fileKey)->getRealPath()) . '.' . $request->file($fileKey)->getClientOriginalExtension(),
                     'private'
                 );
+            } else if ($user?->traderRegistrationRequirement?->{$fileKey}) {
+                $input[$fileKey] = $user?->traderRegistrationRequirement?->{$fileKey};
+            } else {
+                return $this->sendError('Fail', $fileKey . __('is missing'));
             }
         }
         TraderRequirement::create($input);
 
+
+        if ($user->isRejected()) {
+
+            if (!count($userRejectedReasons)) {
+                $user->status = User::STATUS_ACTIVE;
+                $user->save();
+
+                $tenant = Tenant::findOrFail(Tenant::where('restaurant_name', '=', $user->restaurant_name)->first()?->id);
+                // set user status in tenant table too
+                $tenant->run(function () use($user){
+                    $rUser = RestaurantUser::where('email', '=', $user?->email)->first();
+                    $rUser->status = RestaurantUser::ACTIVE;
+                    $rUser->reject_reasons = json_encode([]);
+                    $rUser->save();
+                });
+
+            }
+
+            $url = Tenant::where('restaurant_name', '=', $user?->restaurant_name)->first()->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID); //  USER restaurant owner id
+
+            return $this->sendResponse(['url' => $url], 'User complete register step two successfully.');
+        }
 
         // Create tenant logic...
 
@@ -118,10 +154,37 @@ class RegisterController extends BaseController
         return $this->sendResponse(['url'=>$tenant->impersonationUrl(CreateTenantAdmin::RESTAURANT_OWNER_USER_ID)], 'User complete register step two successfully.');
     }
 
+    public function getStepTwoData(Request $request)
+    {
+        $user = auth()->user();
+
+        $needs = [];
+        $files_fields = ['commercial_registration', 'tax_registration_certificate', 'bank_certificate',
+            'identity_of_owner_or_manager', 'national_address'];
+
+        foreach ($files_fields as $field) {
+            if (!$user?->traderRegistrationRequirement?->{$field}
+                || ($user->isRejected() && in_array($field, json_decode($user?->reject_reasons) ?? []))) {
+                $needs[] = $field;
+            }
+        }
+
+        return $this->sendResponse([
+            'commercial_registration' => $user?->traderRegistrationRequirement?->commercial_registration,
+            'tax_registration_certificate' => $user?->traderRegistrationRequirement?->tax_registration_certificate,
+            'bank_certificate' => $user?->traderRegistrationRequirement?->bank_certificate,
+            'identity_of_owner_or_manager' => $user?->traderRegistrationRequirement?->identity_of_owner_or_manager,
+            'national_address' => $user?->traderRegistrationRequirement?->national_address,
+            'IBAN' => $user?->traderRegistrationRequirement?->IBAN ?? "",
+            'facility_name' => $user?->traderRegistrationRequirement?->facility_name ?? "",
+            'needs' => $needs
+        ], 'Fetched User complete register step two.');
+
+    }
+
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
-
         $today = Carbon::today();
         $user = Auth::user();
         // You might want a new table to track verification code attempts.
@@ -135,7 +198,6 @@ class RegisterController extends BaseController
         if (count($attempts) >= 3) {
             return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
-
 
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();

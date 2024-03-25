@@ -4,9 +4,6 @@ import { PREFIX_KEY } from "../../config";
 
 export const logout = createAsyncThunk("auth/logout", async ({ method }) => {
     const response = await Axios({ url: "/logout", method });
-    console.log("logout: ");
-    console.log(response);
-    console.log("rtqwerew");
     sessionStorage.removeItem(PREFIX_KEY + "email");
     localStorage.removeItem("user-info");
     return response?.data?.is_loggedin;
@@ -24,7 +21,7 @@ export const getIsLoggedIn = () => {
 };
 
 export const getUser = () => {
-    console.log("get user", JSON.parse(localStorage.getItem("user-info")));
+
     return JSON.parse(localStorage.getItem("user-info")) || false;
 };
 

@@ -47,7 +47,6 @@ const Login = () => {
     const fetchResStyleData = async () => {
         try {
             AxiosInstance.get(`restaurant-style`).then((response) => {
-                console.log("DATA", response.data?.data);
                 dispatch(changeRestuarantEditorStyle(response.data?.data));
             });
             setisLoading(false);
@@ -65,8 +64,6 @@ const Login = () => {
 
                 // remember_me: data.remember_me, // used only in API token-based
             });
-
-            console.log("tetetete");
 
             if (response?.data?.success) {
                 const responseData = response?.data;

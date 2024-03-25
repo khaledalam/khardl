@@ -14,7 +14,6 @@ class Category extends Model
 
     protected $table = 'categories';
 
-
     protected $fillable = [
         'name',
         'branch_id',

@@ -46,12 +46,11 @@ const NavbarRestuarant = () => {
     };
     useEffect(() => {
         fetchCartData().then(() => {
-            console.log("fetched cart items count successfully");
         });
     }, []);
     const { header_color, headerPosition, categoryDetail_cart_color } =
         restaurantStyle;
-    console.log("restaurantStyle", restaurantStyle);
+
     useEffect(() => {
         const checkOrderQueryParam = () => {
             if (searchParams.has("message")) {
