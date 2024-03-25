@@ -156,7 +156,7 @@
                                         <span class="badge badge-light-success fw-bolder">{{ __('live')}}</span>
 
                                         @elseif ($restaurant->user->status == \App\Models\User::STATUS_ACTIVE)
-                                        <span class="badge badge-light-warning fw-bolder">{{ __('pending')}}</span>
+                                        <span class="badge badge-light-info fw-bolder">{{ __('pending')}}</span>
                                         @elseif ($restaurant?->user?->isRejected())
                                             <span class="badge badge-danger fw-bolder">{{ __('rejected')}}</span>
                                         @elseif ($restaurant?->user?->isBlocked())
@@ -170,6 +170,17 @@
                                     <!--begin::Position-->
                                     <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</div>
                                     <!--end::Position-->
+
+                                    @if(count(json_decode($restaurant?->user?->reject_reasons)) > 0)
+                                        <div >
+                                            <b class="fs-4">{{__('Rejection reasons')}}:</b>
+                                            <ul>
+                                            @foreach(json_decode($restaurant?->user?->reject_reasons) as $idx => $reason)
+                                                <li class="fs-6 text-danger small">{{ __(ucfirst(str_replace('_', ' ', $reason)))}}</li>
+                                            @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
 
                                     <div class="d-flex flex-center flex-wrap">
                                         <!--begin::Stats-->
