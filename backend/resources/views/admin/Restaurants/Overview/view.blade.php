@@ -307,9 +307,9 @@
                                 <div class="col-lg-8 d-flex align-items-center">
                                     {{-- @if($restaurant->isApproved == 0)
                                         <span class="badge badge-warning">{{ __('pending') }}</span> --}}
-                                    @if(count(json_decode($restaurant?->user?->reject_reasons)) > 0)
+                                    @if(count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
                                         <ul>
-                                            @foreach(json_decode($restaurant?->user?->reject_reasons) as $idx => $reason)
+                                            @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
                                                 <li class="fs-6 text-danger small">{{ __(ucfirst(str_replace('_', ' ', $reason)))}}</li>
                                             @endforeach
                                         </ul>
