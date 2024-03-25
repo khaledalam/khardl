@@ -162,7 +162,7 @@ class RegisterController extends BaseController
 
         foreach ($files_fields as $field) {
             if (!$user?->traderRegistrationRequirement?->{$field}
-                || ($user->isRejected() && in_array($field, json_decode($user?->reject_reasons)))) {
+                || ($user->isRejected() && in_array($field, json_decode($user?->reject_reasons) ?? []))) {
                 $needs[] = $field;
             }
         }
