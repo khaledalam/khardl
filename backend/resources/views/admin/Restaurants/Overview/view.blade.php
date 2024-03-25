@@ -310,7 +310,7 @@
                                     @if(count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
                                         <ul>
                                             @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
-                                                <li class="fs-6 text-danger small">{{ __(ucfirst(str_replace('_', ' ', $reason)))}}</li>
+                                                <li class="fs-6 text-danger small">{{ ucfirst(str_replace('_', ' ', __($reason)))}}</li>
                                             @endforeach
                                         </ul>
                                     @endif
