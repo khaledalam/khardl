@@ -3,6 +3,7 @@
 namespace Database\Seeders\Tenant;
 
 use App\Models\Tenant\Branch;
+use Carbon\Carbon;
 use Database\Seeders\Tenant\BranchSeeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
