@@ -87,7 +87,7 @@ class RegisterController extends BaseController
             'national_address'
         ];
 
-        $userRejectedReasons = json_decode($user?->reject_reasons);
+        $userRejectedReasons = json_decode($user?->reject_reasons) ?? [];
 
         foreach ($fileNames as $fileKey) {
 
