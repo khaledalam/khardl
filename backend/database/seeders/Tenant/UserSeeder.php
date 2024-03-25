@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Tenant;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Branch;
 use Illuminate\Database\Seeder;
