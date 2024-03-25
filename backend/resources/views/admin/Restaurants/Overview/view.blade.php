@@ -287,7 +287,7 @@
                             @if ($is_live)
                             <span class="badge badge-success">{{ __('active') }}</span>
                             @elseif($restaurant->user->isRejected())
-                            <span class="badge badge-danger">{{ __($restaurant->user->status) }}</span>
+                                <span class="badge badge-danger">{{ __($restaurant->user->status) }}</span>
                             @else
                                 <span class="badge badge-info">{{ __($restaurant->user->status) }}</span>
                             @endif
@@ -299,27 +299,25 @@
 
                     @if ($restaurant?->user?->isRejected())
                         <!--begin::Input group-->
-                            <div class="row mb-7">
-                                <!--begin::Label-->
-                                <label class="col-lg-4 fw-bold text-muted">{{ __('Rejection reasons') }}</label>
-                                <!--end::Label-->
-                                <!--begin::Col-->
-                                <div class="col-lg-8 d-flex align-items-center">
-                                    {{-- @if($restaurant->isApproved == 0)
-                                        <span class="badge badge-warning">{{ __('pending') }}</span> --}}
-                                    @if(count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
-                                        <ul>
-                                            @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
-                                                <li class="fs-6 text-danger small">{{ ucfirst(str_replace('_', ' ', __($reason)))}}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                </div>
-                                <!--end::Col-->
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('Rejection reasons') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 d-flex align-items-center">
+                                {{-- @if($restaurant->isApproved == 0)
+                                    <span class="badge badge-warning">{{ __('pending') }}</span> --}}
+                                @if(count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
+                                    <ul>
+                                        @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
+                                            <li class="fs-6 text-danger small">{{ __($reason)}}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
-                            <!--end::Input group-->
-
+                            <!--end::Col-->
                         </div>
+                        <!--end::Input group-->
                     @endif
 
 

@@ -172,14 +172,12 @@
                                     <!--end::Position-->
 
                                     @if(count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
-                                        <div >
-                                            <b class="fs-4">{{__('Rejection reasons')}}:</b>
-                                            <ul>
-                                            @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
-                                                <li class="fs-6 text-danger small">{{ ucfirst(str_replace('_', ' ', __($reason)))}}</li>
-                                            @endforeach
-                                            </ul>
-                                        </div>
+                                        <b class="fs-4">{{__('Rejection reasons')}}:</b>
+                                        <ul>
+                                        @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
+                                            <li class="fs-6 text-danger small">{{ __($reason)}}</li>
+                                        @endforeach
+                                        </ul>
                                     @endif
 
                                     <div class="d-flex flex-center flex-wrap">
