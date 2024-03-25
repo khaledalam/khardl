@@ -22,11 +22,12 @@ function CompleteRegistration() {
     const [needs, setNeeds] = useState([]);
 
     const [fileUploadSuccess, setFileUploadSuccess] = useState({
-    commercial_registration: null,
-    tax_registration_certificate: null,
-    national_address: null,
-    identity_of_owner_or_manager: null,
-    bank_certificate: null,
+        commercial_registration: null,
+        tax_registration_certificate: null,
+        national_address: null,
+        identity_of_owner_or_manager: null,
+        bank_certificate: null,
+
   })
   const [selectedFileNames, setSelectedFileNames] = useState({
     commercial_registration: "",
@@ -84,7 +85,9 @@ function CompleteRegistration() {
             selectedFiles?.identity_of_owner_or_manager,
           national_address: selectedFiles?.national_address,
           IBAN: data?.IBAN,
-          facility_name: data?.facility_name,
+            facility_name: data?.facility_name,
+            bank_name: data?.bank_name,
+            national_id_number: data?.national_id_number,
         },
         {
           headers: {
@@ -141,6 +144,8 @@ function CompleteRegistration() {
                 const responseData = await response?.data?.data
                 setValue('IBAN', responseData?.IBAN)
                 setValue('facility_name', responseData?.facility_name)
+                setValue('bank_name', responseData?.bank_name)
+                setValue('national_id_number', responseData?.national_id_number)
                 setNeeds(responseData?.needs)
 
             }
@@ -249,9 +254,31 @@ function CompleteRegistration() {
               })}
 
 
-            {/* Input 6 */}
+            {/*Text Inputs*/}
             <div className='w-[100%] flex flex-col items-start gap-4'>
-              <div className='w-[100%]'>
+
+                {/* Bank name Input */}
+                <div className='w-[100%]'>
+                    <div className='mb-2 font-semibold'>
+                        {t("Bank name")}
+                        <span className='text-red-500'>*</span>
+                    </div>
+                    <input
+                        type='text'
+                        className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                        onChange={e => setValue('bank_name', e.target.value)}
+                        {...register("bank_name", {required: true})}
+                        placeholder={t("Bank name")}
+                    />
+                    {errors.bank_name && (
+                        <span className='text-red-500 text-xs mt-1 ms-2'>
+                    {t("Bank name Error")}
+                  </span>
+                    )}
+                </div>
+
+                {/* IBAN Input */}
+                <div className='w-[100%]'>
                 <div className='mb-2 font-semibold'>
                   {t("Bank IBAN")}
                   <span className='text-red-500'>*</span>
@@ -261,7 +288,7 @@ function CompleteRegistration() {
                   className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
                   onChange={e => setValue('IBAN', e.target.value)}
                   {...register("IBAN", {required: true})}
-                  placeholder={t("IBAN")}
+                  placeholder={t("Bank IBAN")}
                 />
                 {errors.IBAN && (
                   <span className='text-red-500 text-xs mt-1 ms-2'>
@@ -270,8 +297,8 @@ function CompleteRegistration() {
                 )}
               </div>
 
-              {/* Input 7 */}
-              <div className='w-[100%]'>
+                {/* Facility Name Input */}
+                <div className='w-[100%]'>
                 <div className='mb-2 font-semibold'>
                   {t("Facility Name")}
                   <span className='text-red-500'>*</span>
@@ -290,6 +317,27 @@ function CompleteRegistration() {
                   </span>
                 )}
               </div>
+
+                {/* National ID Input */}
+                <div className='w-[100%]'>
+                    <div className='mb-2 font-semibold'>
+                        {t("National ID")}
+                        <span className='text-red-500'>*</span>
+                    </div>
+                    <input
+                        minLength={5}
+                        type='text'
+                        onChange={e => setValue('national_id_number', e.target.value)}
+                        className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                        {...register("national_id_number", {required: true})}
+                        placeholder={t("National ID")}
+                    />
+                    {errors.national_id && (
+                        <span className='text-red-500 text-xs mt-1 ms-2'>
+                    {t("National ID Error")}
+                  </span>
+                    )}
+                </div>
 
               <div className='flex justify-start items-center gap-2 text-start font-bold'>
                 <FaStarOfLife size={10} className='text-red-500' />

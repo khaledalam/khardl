@@ -59,6 +59,8 @@ class RegisterController extends BaseController
             'national_address' => 'nullable|mimes:pdf,jpg,jpeg,png|max:16384',
             'IBAN' => 'required|string|min:10|max:255',
             'facility_name' => 'required|string|min:5|max:255',
+            'bank_name' => 'required|string|min:5|max:255',
+            'national_id_number' => 'required|string|min:5|max:255',
         ]);
 
         $user = auth()->user();
@@ -183,7 +185,6 @@ class RegisterController extends BaseController
 
     public function sendVerificationCode(Request $request): JsonResponse
     {
-
         $today = Carbon::today();
         $user = Auth::user();
         // You might want a new table to track verification code attempts.
@@ -197,7 +198,6 @@ class RegisterController extends BaseController
         if (count($attempts) >= 3) {
             return $this->sendError('Fail', __('Too many attempts. Request a new verification code after 15 minutes from now.'));
         }
-
 
         // Generate the verification code using the model's method.
         $user->generateVerificationCode();
