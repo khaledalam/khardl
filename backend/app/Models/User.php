@@ -45,7 +45,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public const STATUS_BLOCKED = "blocked";
     public const STATUS_ACTIVE = "active";
     public const STATUS_INACTIVE = "inactive";
-    public const STATUS_PENDING = "pending";
     public const RESTAURANT_ROLE = "Restaurant Owner";
 
     public const STATUSES = [
@@ -98,11 +97,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function isActive()
     {
         return $this->status === self::STATUS_ACTIVE;
-    }
-
-    public function isPending()
-    {
-        return $this->status === self::STATUS_PENDING;
     }
 
     public function getFullNameAttribute()
