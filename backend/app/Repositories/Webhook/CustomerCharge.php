@@ -24,11 +24,13 @@ class CustomerCharge
             }
             if($data['status'] == 'CAPTURED'){
                 $order->update([
-                    "payment_status"=> PaymentMethod::PAID
+                    "payment_status"=> PaymentMethod::PAID,
+                    'transaction_id'=>$data['id']
                 ]);
             }else if ($data['status'] != 'CAPTURED'){
                 $order->update([
-                    "payment_status"=> PaymentMethod::FAILED
+                    "payment_status"=> PaymentMethod::FAILED,
+                    'transaction_id'=>$data['id']
                 ]);
             }
             DB::commit();
