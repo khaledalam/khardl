@@ -18,7 +18,7 @@
                         <div class="me-7 mb-4">
                             <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
 
-                                <img alt="Logo" src="{{ $logo ?? global_asset('img/logo.png') }}" />
+                                <img alt="Logo" src="{{ $logo ?? global_asset('assets/default_logo.png') }}" />
 
                                 @if($is_live)<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>@endif
 
