@@ -5,8 +5,8 @@ const customerAPISlice = createSlice({
     initialState: {
         activeNavItem: "Dashboard",
         address: {
-            lat: 28.45,
-            lng: 45.45,
+            lat: 26.39925,
+            lng: 49.98436,
             addressValue: "",
         },
         ordersList: null,
