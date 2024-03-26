@@ -77,7 +77,7 @@ const Register = () => {
 
       // Validation
       if (!/^(?!.*--)[a-z0-9]+(?:[-\s][a-z0-9]+)*$/i.test(value)) {
-         setErr(t('Restaurant name Error'));
+         setErr(t('Restaurant name English Error'));
       } else {
          setErr("");
       }
@@ -86,9 +86,11 @@ const Register = () => {
    // API POST REQUEST
    const onSubmit = async (data) => {
       try {
-         if(err){setErr(t('Restaurant name Error'));
-      return
-      }
+         if(err){
+             setErr(t('Restaurant name English Error'));
+             return
+         }
+
          setSpinner(true);
          const response = await AxiosInstance.post(`/register`, {
             first_name: data.first_name,
@@ -100,6 +102,8 @@ const Register = () => {
             password: data.password,
             c_password: data.c_password,
             terms_and_policies: data.terms_and_policies,
+             dob: data.dob,
+             restaurant_name_ar: data.restaurant_name_ar
          });
          console.log(response.data);
          toast.success(`${t('Account successfully created')}`)
@@ -190,10 +194,10 @@ const Register = () => {
                                        )}
                                     </div>
                                  </div>
-                                 {/* Input 3 */}
-                                 <div>
+                                 {/* R- name EN Input */}
+                                 <div className={"mb-2"}>
                                     <h4 className='ms-2 text-[13px] font-semibold'>
-                                       {t('Restaurant name')} <span className="text-red-500">*</span>
+                                       {t('Restaurant name')} ({t('English')}) <span className="text-red-500">*</span>
                                     </h4>
 
                                     {Language === 'en' ? (<div className='joined-input-group flex items-center justify-between'>
@@ -201,10 +205,6 @@ const Register = () => {
                                           className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
                                           placeholder={t('Restaurant name')}
                                           style={{ marginBottom: 0 }}
-                                          // {...register('restaurant_name', {
-                                          //    required: true,
-                                          //    validate: validateRestaurantName,
-                                          // })}
                                           onChange={onChangeHandler}
                                           onFocus={handleInputFocus}
                                           onBlur={handleInputBlur}
@@ -251,17 +251,36 @@ const Register = () => {
                                     )}
                                      {err && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {err || t('Restaurant name Error')}
+                                          {err || t('Restaurant name English Error')}
                                        </span>
                                     )}
                                     {errors.restaurant_name && (
                                        <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {errors.restaurant_name.message || t('Restaurant name Error')}
+                                          {errors.restaurant_name.message || t('Restaurant name English Error')}
                                        </span>
                                     )}
                                  </div>
 
-                                 {/* Input 4 */}
+                                  {/* R- name AR Input */}
+                                  <div>
+                                      <h4 className='ms-2 text-[13px] font-semibold'>
+                                          {t('Restaurant name')} ({t('Arabic')}) <span className="text-red-500">*</span>
+                                      </h4>
+                                      <input
+                                          className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] boreder-none rounded-full bg-[var(--third)]`}
+                                          placeholder={`${t('Restaurant name')} (${t('Arabic')})`}
+                                          {...register('restaurant_name_ar', {
+                                              required: true,
+                                          })}
+                                      />
+                                      {errors.restaurant_name_ar && (
+                                          <span className='text-red-500 text-xs mt-1 ms-2'>
+                                          {errors.restaurant_name_ar.message || t('Restaurant Name Arabic Error')}
+                                       </span>
+                                      )}
+                                  </div>
+
+                                 {/* Position Input */}
                                  <div>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                        {t('Position')} <span className="text-red-500">*</span>
@@ -280,7 +299,7 @@ const Register = () => {
                                     )}
                                  </div>
 
-                                 {/* Input 5 */}
+                                 {/* Email Input */}
                                  <div>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                        {t('Email')} <span className="text-red-500">*</span>
@@ -298,7 +317,7 @@ const Register = () => {
                                     )}
                                  </div>
 
-                                 {/* Input 6 */}
+                                 {/* Phone Input */}
                                  <div>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                        {t('Phone')}  <span className="text-red-500">*</span>
@@ -321,7 +340,27 @@ const Register = () => {
                                     )}
                                  </div>
 
-                                 {/* Input 7 */}
+                                  {/* Date of birth Input */}
+                                  <div>
+                                      <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
+                                          {t('Date of birth')}  <span className="text-red-500">*</span>
+                                      </h4>
+                                      <input
+                                          type='date'
+                                          className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
+                                          placeholder={t('Date of birth')}
+                                          {...register('dob', {
+                                              required: true,
+                                          })}
+                                      />
+                                      {errors.dob && (
+                                          <span className='text-red-500 text-xs mt-1 ms-2'>
+                                          {errors.dob.message || t('Date of birth Error')}
+                                       </span>
+                                      )}
+                                  </div>
+
+                                 {/* Password Input */}
                                  <div className='relative'>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                        {t('Password')} <span className="text-red-500">*</span>
@@ -361,7 +400,7 @@ const Register = () => {
                                     </div>
                                  </div>
 
-                                 {/* Input 8 */}
+                                 {/* Confirm Password Input */}
                                  <div className='relative'>
                                     <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
                                        {t('Confirm password')} <span className="text-red-500">*</span>
@@ -401,6 +440,7 @@ const Register = () => {
                                     </div>
                                  </div>
 
+                                  {/*Terms*/}
                                  <div className='flex justify-start items-center gap-2'>
                                     <input
                                        id={`checkbox-1`}

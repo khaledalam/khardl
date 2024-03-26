@@ -39,7 +39,7 @@
     "First name Error": "Please enter the first name",
     "Last name Error": "Please enter the last name",
     "Business name Error": "Please enter the business name",
-    "Restaurant name Error": "Please enter the valid restaurant name",
+    "Restaurant name English Error": "Please enter the valid english restaurant name",
     "Position Error": "Please enter the position",
     "Reset password Error": "Please re-enter your password",
     "Email Error": "Please enter your email",

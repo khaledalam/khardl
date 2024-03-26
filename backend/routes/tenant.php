@@ -335,7 +335,6 @@ Route::middleware([
     Route::prefix('api')->group(function () {
         Route::post('login', [APILoginController::class, 'login']);
 
-
         Route::middleware(['auth:sanctum','ActiveRestaurantAndBranch'])->group(function () {
             //Notifications
             //External notification (Push)
@@ -392,16 +391,9 @@ Route::middleware([
                 'store',
                 'show'
             ]);
-
         });
-
-
     });
-
-
-
 });
-
 
 
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {

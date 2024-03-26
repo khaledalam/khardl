@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\TraderRequirement;
 use App\Models\User;
+use Carbon\Carbon;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Support\Str;
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
             'id' => self::SUPER_ADMIN_USER_ID,
             'first_name' => "khardl",
             'last_name' => "admin",
+            'dob' => Carbon::now()->subYears(30),
             'email' => "info@khardl.com",
             'phone'=>'966999999999',
             'email_verified_at' => now(),
@@ -48,7 +50,9 @@ class UserSeeder extends Seeder
             'tax_registration_certificate' => $faker->filePath(),
             'bank_certificate' => $faker->filePath(),
             'identity_of_owner_or_manager' => $faker->filePath(),
-            'national_address' => $faker->address
+            'national_address' => $faker->address,
+            'bank_name' => $faker->company,
+            'national_id_number' => $faker->uuid
         ]);
 
         $this->createRO(self::RESTAURANT_OWNER_USER_ID, 'khardl', 'first');
@@ -81,6 +85,7 @@ class UserSeeder extends Seeder
             'id' => $id,
             'first_name' => $name,
             'last_name' => "Restaurant",
+            'dob' => Carbon::now()->subYears(30),
             'email' => $name . "@restaurant.com",
             'email_verified_at' => now(),
             'status'=> 'active',
@@ -88,6 +93,7 @@ class UserSeeder extends Seeder
             'phone'=>'966222222222',
             'position'=>"Restaurant Owner",
             'restaurant_name' => $restaurant_name,
+            'restaurant_name_ar' =>'مطعم' . $id,
             'password' => bcrypt('khardl@123'),
             'remember_token' => Str::random(10),
         ]);
@@ -100,7 +106,9 @@ class UserSeeder extends Seeder
             'tax_registration_certificate' => $faker->filePath(),
             'bank_certificate' => $faker->filePath(),
             'identity_of_owner_or_manager' => $faker->filePath(),
-            'national_address' => $faker->address
+            'national_address' => $faker->address,
+            'bank_name' => $faker->company,
+            'national_id_number' => $faker->uuid
         ]);
 
         $user->assignRole(Role::findByName('Restaurant Owner'));
