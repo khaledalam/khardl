@@ -981,6 +981,7 @@
     "TAP request to create Merchant ID from Lead ID sent" : "تم ارسال طلب تاب لانشاء معرف العميل من معرف التاجر",
     "TAP request to create Merchant ID from Lead ID fail" : "فشل ارسال طلب تاب لاتشاء معرف العميل من معرف التاجر",
     "Update restaurant merchant id" : "تحديث معرف تاجر المطعم",
+    "Contact US Form": "نموذج اتصل بنا",
     "Restore" : "ارجاع",
     "Are you sure you want to restore this coupon ?" : "هل أنت متأكد أنك تريد استعادة هذه القسيمة؟",
     "External URL" : "رابط خارجي",

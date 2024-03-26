@@ -772,6 +772,7 @@
     "TAP request to create Merchant ID from Lead ID sent" : "TAP request to create Merchant ID from Lead ID sent",
     "TAP request to create Merchant ID from Lead ID fail" : "TAP request to create Merchant ID from Lead ID fail",
     "Update restaurant merchant id" : "Update restaurant merchant id",
+    "Contact US Form": "Contact US Form",
     "Restore" : "Restore",
     "Are you sure you want to restore this coupon ?" : "Are you sure you want to restore this coupon ? ",
     "External URL" : "External URL",

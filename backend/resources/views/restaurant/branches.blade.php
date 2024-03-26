@@ -905,7 +905,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 return (timeParts[0] * 60) + timeParts[1];
             }
 
-            $('.time-24').on('keydown', function (e) {
+            $('.time-24').on('change', function (e) {
 
                 console.log([...e.target.classList], [...e.target.classList].indexOf('from'))
 
@@ -918,8 +918,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                     if (time1InMinutesForTime1 > time1InMinutesForTime2) {
                         e.target.value = e.target.oldvalue;
 
-                        this.dispatchEvent(new Event('change'));
 
+                        console.log($(this))
 
                         alert("Enter valid time");
 
