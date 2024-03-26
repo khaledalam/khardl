@@ -905,33 +905,32 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 return (timeParts[0] * 60) + timeParts[1];
             }
 
+
+            $('.time-24').on('focusin', function (e) {
+                $(this).data('val', $(this).val());
+            });
+
             $('.time-24').on('change', function (e) {
 
-                console.log([...e.target.classList], [...e.target.classList].indexOf('from'))
+                let $isFromTime = [...e.target.classList].indexOf('from') > -1;
 
-                if ([...e.target.classList].indexOf('from') > -1) {
-                    let toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];
+                let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[
+                    $isFromTime ? 0 : 1
+                ];
+                let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[
+                    $isFromTime ? 1 : 0
+                ];
 
-                    let time1InMinutesForTime1 = getTimeAsNumberOfMinutes(e.target.value);
-                    let time1InMinutesForTime2 = getTimeAsNumberOfMinutes(toInput.value);
+                let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);
+                let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);
 
-                    if (time1InMinutesForTime1 > time1InMinutesForTime2) {
-                        e.target.value = e.target.oldvalue;
-
-
-                        console.log($(this))
-
-                        alert("Enter valid time");
-
-                    }
-
-                } else {
-                    let fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];
+                if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {
+                    e.target.value = $(this).data('val');
+                    alert("{{__("Time from should be before to")}}");
                 }
-
-
-
-
+                else {
+                    $(this).data('val', $(this).val());
+                }
             })
 
         });
