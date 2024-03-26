@@ -39,8 +39,6 @@
                 updateLocationInput(event.latLng, branchId);
             });
             autocomplete.addListener("place_changed", () => {
-                console.log('change location')
-                // infowindow.close();
                 marker.setVisible(false);
 
                 const place = autocomplete.getPlace();
