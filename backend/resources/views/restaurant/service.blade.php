@@ -153,9 +153,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
 
                                                                     @if($RO_subscription?->amount)
-                                                                    <span class="mb-2 text-khardl">{{__('SAR')}}</span>  <span class="fs-2x fw-bolder text-khardl text-center">{{$amount}}</span>
+                                                                    <span class="mb-2 text-khardl">{{__('SAR')}}</span>  <span class="fs-2x fw-bolder text-khardl text-center">{{$subscription->amount}}</span>
 
-                                                                    <small class="text-khardl text-center">({{$subscription->amount}}*{{$total_branches}})</small>
                                                                     <br>
                                                                     @if($RO_subscription->number_of_branches > 0)
                                                                     <span> {{__('Number of branches available to add')}} <strong>{{$RO_subscription->number_of_branches}}</strong> <br>
@@ -313,7 +312,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                             <div class="col-12 mt-3">
                                                                                                 <button id="tap-btn"  id="kt_modal_new_target_submit" type="submit" style="width:200px"  onclick="submitPayment(event)" class="btn btn-khardl text-white ">
 
-                                                                                                    <span class="indicator-label">{{__('Renew Subscription')}} ✔️</span>
+                                                                                                    <span class="indicator-label">{{__('Buy New branch')}} ✔️</span>
                                                                                                     <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
                                                                                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                                                                 </button>
@@ -343,6 +342,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                                                                 <div class="modal-header pb-0 border-0  d-flex justify-content-center">
                                                                                     <h5 class="modal-title text-center">{{$subscription->name}} ({{__('Renew Subscription')}})</h5>
                                                                                 </div>
+
+                                                                               <p class="text-khardl text-center">({{$subscription->amount}}* {{$total_branches}}   {{__('branch ')}}  ) </p>
                                                                                 @if($non_active_branches > 0)
                                                                                 <strong class="text-warning text-center bg-danger">{{__('Inactivated branches will be archived until purchased again. Please make sure to activate the branches you may need before renewing.')}}</strong>
                                                                                 @endif
