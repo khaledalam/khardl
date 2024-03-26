@@ -15,9 +15,9 @@
     <meta property="og:title" content="Kardl" />
     <meta property="og:url" content="Kardl.com" />
     <meta property="og:site_name" content="Kardl" />
-    <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
-    <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
-    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
+    <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
+    <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}"/>
+    <link rel="icon" href="{{ global_asset('images/Logo.webp')}}"/>
     <!--begin::Fonts-->
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
@@ -124,7 +124,7 @@
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <!--begin::Logo-->
                 <a href="/">
-                    <img alt="Logo" src="{{ global_asset('/img/logo.png') }}" class="h-30px" />
+                    <img alt="Logo" src="{{ global_asset('/images/Logo.webp') }}" class="h-30px" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Aside toggler-->
@@ -270,7 +270,7 @@
                         <!-- workers -->
                         <div class="menu-item menu-accordion">
                             @if( $id = \App\Models\Tenant\Branch::where('is_primary',true)->first()?->id)
-                    
+
                             <a href="{{route('restaurant.workers',['branchId' => $id])}}">
                                 <span class="{{ ($link == 'workers') ? 'menu-link active' : 'menu-link ' }}">
                                     <span class="menu-icon">
@@ -531,7 +531,7 @@
                     <!--begin::Mobile logo-->
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a href="/" class="d-lg-none">
-                            <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
+                            <img alt="Logo" src="{{ global_asset('images/Logo.webp') }}" class="h-30px" />
                         </a>
                     </div>
                     <!--end::Mobile logo-->
