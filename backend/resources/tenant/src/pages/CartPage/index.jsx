@@ -121,6 +121,7 @@ const CartPage = () => {
                         deliveryType === "dt-delivery" ? "Delivery" : "PICKUP",
                     notes: orderNotes,
                     couponCode: coupon,
+                    address: "test"
                 });
                 if (cartResponse.data) {
                     toast.success(
