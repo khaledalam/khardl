@@ -1,0 +1,42 @@
+.cartitem .p-card {
+    border-width: 1px;
+    box-shadow: none;
+}
+
+.cartitem .p-card .p-card-content {
+    padding: 0;
+}
+
+.cartitem img {
+    width: 85px;
+    height: 85px !important;
+    margin: 0 auto;
+}
+
+.cartitem h2 {
+    font-family: "AlmaraiBold";
+    font-weight: 600;
+    font-size: larger;
+}
+
+.cartitem p {
+    font-family: "cairo";
+}
+
+.cartitem textarea {
+    border-width: 1px;
+    background-color: #fdfdfb;
+    height: 65px;
+    padding: 12px;
+    font-family: "cairo";
+}
+
+.quantityBtn {
+    border-radius: 10px;
+    margin-top: 15px;
+    height: 35px;
+}
+
+.p-radiobutton.p-highlight .p-radiobutton-box {
+    background: var(--myColor);
+}

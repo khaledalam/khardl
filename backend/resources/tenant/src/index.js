@@ -8,6 +8,7 @@ import store from "./redux/store";
 import ScrollToTop from "./ScrollToTop";
 import App from "./App";
 import { AuthContextProvider } from "./components/context/AuthContext";
+import "primereact/resources/themes/lara-light-blue/theme.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
