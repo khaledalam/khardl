@@ -1018,6 +1018,8 @@
     "By name, email, phone" : "بالاسم والبريد والهاتف",
     "View and edit drivers" : "عرض وتحرير السائقين",
     "Delivery options" : "خيارات التوصيل",
+    "branch ":"فرع",
+    "Buy New branch":"شراء فرع جديد",
     "Max time for drivers to pickup order" : "أقصى وقت للسائقين لاستلام الطلب",
     "The number of minutes for drivers so he can pick up order before order goes to delivery companies" : "عدد الدقائق لدي السائق لالتقاط الطلب قبل خروج الطلب الي شركات التوصيل",
     "Number of minutes" : "عدد الدقائق",
