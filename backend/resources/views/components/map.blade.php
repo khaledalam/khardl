@@ -39,8 +39,6 @@
                 updateLocationInput(event.latLng, branchId);
             });
             autocomplete.addListener("place_changed", () => {
-                console.log('change location')
-                // infowindow.close();
                 marker.setVisible(false);
 
                 const place = autocomplete.getPlace();
@@ -67,8 +65,6 @@
                 marker.setVisible(true);
                 // infowindow.open(map, marker);
             });
-
-            console.log("ok")
         }
 
         async function convertToAddress(lat, lng) {
