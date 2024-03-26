@@ -2,12 +2,7 @@
 
 namespace App\Models;
 
-use App\Jobs\SendVerifyEmailJob;
-use App\Mail\verifyEmail;
 use Database\Factories\UserFactory;
-use Illuminate\Bus\Queueable;
-use Illuminate\Support\Str;
-use App\Models\TraderRequirement;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
@@ -28,12 +23,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     protected $fillable = [
         'first_name',
         'last_name',
+        'dob',
         'position',
         'email',
         'password',
         'phone',
         'status',
         'restaurant_name',
+        'restaurant_name_ar',
         'verification_code',
         'last_login',
         'address',
@@ -41,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'default_lang',
         'loyalty_points',
         'cashback',
-        'email_verified_at'
+        'email_verified_at',
     ];
     public const STORAGE = "user_files";
     public const STATUS_REJECTED = "rejected";
@@ -101,6 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->status === self::STATUS_ACTIVE;
     }
+
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
@@ -111,12 +109,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return DB::table('permissions')->where('user_id', $this->id)->value($permission) === 1;
     }
 
-
-
     public function traderRegistrationRequirement()
     {
         return $this->hasOne(TraderRequirement::class);
     }
+
     public function generateVerificationCode()
     {
         // TODO @todo create new email_verification_tokens record
@@ -133,13 +130,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->hasOne(Tenant::class);
     }
 
-
-    public function sendEmailVerificationNotification()
-    {
-        die("here");
-        //dispactches the job to the queue passing it this User object
-        verifyEmail::dispatch($this);
-    }
     /* Scopes */
     public function scopeRestaurantOwners($query)
     {

@@ -18,7 +18,7 @@
                         <div class="me-7 mb-4">
                             <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
 
-                                <img alt="Logo" src="{{ $logo ?? global_asset('img/logo.png') }}" />
+                                <img alt="Logo" src="{{ $logo ?? global_asset('assets/default_logo.png') }}" />
 
                                 @if($is_live)<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px"></div>@endif
 
@@ -195,8 +195,8 @@
                                 @endif
 
                                 @if ($restaurant?->user?->isRejected())
-                                    <div class="d-flex justify-content-left w-80 mt-auto my-2">
-                                        <span class="badge badge-info p-1 fs-3">{{ __('rejected')}}</span>
+                                    <div class="d-flex flex-column justify-content-left w-80 mt-auto my-2">
+                                        <span class="badge badge-danger p-3 fs-6 text-center">{{ __('rejected')}}</span>
                                     </div>
                                 @endif
                                 <!--end::Progress-->
@@ -319,7 +319,7 @@ new DataTree({
                     html: `
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="commercial_registration">
-                            <label class="form-check-label" for="option1">{{ __('commercial-registration-number') }}</label>
+                            <label class="form-check-label" for="option1">{{ __('commercial_registration') }}</label>
                         </div>
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="identity_of_owner_or_manager">

@@ -21,21 +21,21 @@ class Charge extends Tap implements ChargeInterface
             'customer'=>[
                 'id'=> Auth::user()->tap_customer_id,
             ],
-            'merchant_id'=>[
+            'merchant'=>[
                 'id'=>$merchant_id
             ],
             'source'=>[
                 'id'=>$token_id
             ],
             'platform'=>[
-                env('TAP_PLATFORM_ID')
+                'id'=>env('TAP_PLATFORM_ID')
             ],
             'post'=>[
                 'url'=>route('webhook-client-tap-payment')
             ],
-            "source"=>[
-                "id"=>"src_all"
-            ],
+            // "source"=>[
+            //     "id"=>"src_all"
+            // ],
             'redirect'=>[
                 'url'=>$redirect 
             ] 
@@ -63,9 +63,9 @@ class Charge extends Tap implements ChargeInterface
             'post'=>[
                 'url'=>route('webhook-client-tap-payment')
             ],
-            "source"=>[
-                "id"=>"src_all"
-            ],
+            // "source"=>[
+            //     "id"=>"src_all"
+            // ],
             'redirect'=>[
                 'url'=>$redirect 
             ] 

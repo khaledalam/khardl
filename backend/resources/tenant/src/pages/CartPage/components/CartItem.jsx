@@ -1,97 +1,41 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { BiMinusCircle } from "react-icons/bi";
-import { IoAddCircleOutline, IoClose } from "react-icons/io5";
-import Feedback from "./Feedback";
-import AxiosInstance from "../../../axios/axios";
-import { useDispatch } from "react-redux";
-import { setCartItemsData } from "../../../redux/NewEditor/categoryAPISlice";
-import { toast } from "react-toastify";
+import React, { useState } from "react";
+import { Card } from "primereact/card";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Button } from "primereact/button";
+import { MdDelete } from "react-icons/md";
+import AxiosInstance from "../../../axios/axios";
+import { toast } from "react-toastify";
 
-const CartItem = ({
-    cartItem,
-    cartItems,
-    language,
-    isMobile,
-    styles,
-    fetchCartData,
-}) => {
-    const [feedback, setFeedback] = useState(
-        cartItem.notes !== null ? cartItem.notes : "",
-    );
-    const [qtyCount, setQtyCount] = useState(cartItem.quantity);
-    const [loading, setLoading] = useState(false);
+import "./CartItem.scss";
 
-    const dispatch = useDispatch();
+const CartItem = ({ cartitem, onReload }) => {
     const { t } = useTranslation();
+    const language = useSelector((state) => state.languageMode.languageMode);
+    const [value, setValue] = useState("");
+    const [qtyCount, setQtyCount] = useState(cartitem.quantity);
 
-    const checkbox_options_names =
-        cartItem && cartItem?.checkbox_options !== null
-            ? cartItem?.checkbox_options
-                  .map((option, key) => {
-                      const namesArray =
-                          language === "en"
-                              ? Object.values(option?.en)
-                              : Object.values(option?.ar);
-                      return namesArray;
-                  })[0][0]
-                  .map((option, idx) => option)
-            : [];
-    const selection_options_names =
-        cartItem &&
-        cartItem?.selection_options !== null &&
-        cartItem?.selection_options > 0
-            ? cartItem?.selection_options
-                  .map((option, key) => {
-                      const namesArray =
-                          language === "en"
-                              ? Object.values(option?.en)
-                              : Object.values(option?.ar);
-                      return namesArray;
-                  })[0]
-                  .map((option, idx) => ({ name: option[0] }))
-            : [];
-    const selection_dropdown_names =
-        cartItem && cartItem?.dropdown_options !== null
-            ? cartItem?.dropdown_options
-                  .map((option, key) => {
-                      console.log(
-                          option,
-                          "oooooooooooooooooo",
-                          Object.values(option?.en),
-                      );
+    const restaurantStyle = useSelector((state) => {
+        return state.restuarantEditorStyle;
+    });
 
-                      const namesArray =
-                          language === "en"
-                              ? Object.values(option?.en)
-                              : Object.values(option?.ar);
-                      return namesArray;
-                  })[0]
-                  .map((option, idx) => ({ name: option }))
-            : [];
-    console.log("checkbox_options name", checkbox_options_names);
-    console.log("selection_options name", selection_options_names);
-    console.log("selection_dropdown name", selection_dropdown_names);
-
-    const handleQuantityChange = async (newQuantity) => {
-        if (loading) return;
-        setLoading(true);
+    const handleRemoveItem = async (cartItemId) => {
         try {
-            await AxiosInstance.put(`/carts/${cartItem.id}`, {
-                quantity: newQuantity,
-            })
-                .then((e) => {
-                    // toast.success(`${t("Item quantity updated")}`)
-                    console.log("successfully", e);
-                })
-                .finally(async () => {
-                    setLoading(false);
-                    await fetchCartData().then((r) => null);
-                });
+            const response = await AxiosInstance.delete(
+                `/carts/` + cartItemId,
+                {},
+            );
+
+            if (response?.data) {
+                onReload();
+                toast.success(`${t("Item removed from cart")}`);
+            }
         } catch (error) {
-            console.log("error: ", error);
+            console.log("err removing item from cart", error);
         }
     };
+
     const incrementQty = () => {
         const newQuantity = qtyCount + 1;
         setQtyCount(newQuantity);
@@ -106,168 +50,89 @@ const CartItem = ({
         }
     };
 
-    // useEffect(() => {
-    //   handleQuantityChange().then(r => null);
-    // }, [qtyCount]);
-
-    const handleRemoveItem = async (cartItemId) => {
+    const handleQuantityChange = async (newQuantity) => {
         try {
-            const response = await AxiosInstance.delete(
-                `/carts/` + cartItemId,
-                {},
-            );
-
-            if (response?.data) {
-                const updatedCart = cartItems.filter(
-                    (item) => item.id !== cartItemId,
-                );
-                dispatch(setCartItemsData(updatedCart));
-                await fetchCartData().then((r) => null);
-                toast.success(`${t("Item removed from cart")}`);
-            }
+            await AxiosInstance.put(`/carts/${cartitem.id}`, {
+                quantity: newQuantity,
+            })
+                .then((e) => {
+                    toast.success(`${t("Item quantity updated")}`);
+                    console.log("successfully", e);
+                })
+                .finally(async () => {
+                    onReload();
+                });
         } catch (error) {
-            console.log("err removing item from cart", error);
+            console.log("error: ", error);
         }
     };
 
     return (
-        <div className="h-[200px] laptopXL:h-[220px] w-full flex items-center gap-4 p-2  lg:p-5 border-b border-b-[var(--primary)]">
-            <div className="w-[28%] lg:w-[20%] h-full flex flex-col xl:flex-row items-start justify-center">
-                <div className="flex h-full flex-col justify-between">
-                    <div className="w-[90px] h-[90px] lg:w-[120px] laptopXL:w-[140px] lg:h-[120px] laptopXL:h-[140px] p-2 rounded-full bg-neutral-100">
+        <div className="cartitem">
+            <Card>
+                <div className="flex">
+                    <div className="w-2/12 flex items-center">
                         <img
-                            src={cartItem?.item?.photo}
-                            alt=""
-                            className="w-full h-full object-cover rounded-full"
-                        />
+                            className="rounded-lg"
+                            src={cartitem.item.photo}
+                            alt="item_photo"
+                        ></img>
                     </div>
-                    <div className="flex items-center justify-between w-[90px] lg:w-[120px] cursor-pointer laptopXL:w-[150px]">
-                        <BiMinusCircle
-                            size={25}
-                            color={loading ? "gray" : "black"}
-                            onClick={(e) => !loading && decrementQty()}
-                        />
-                        <span>{cartItem.quantity}</span>
-                        <IoAddCircleOutline
-                            size={25}
-                            color={loading ? "gray" : "black"}
-                            onClick={(e) => !loading && incrementQty()}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="w-[72%] lg:w-[80%] flex flex-col h-full  justify-between relative">
-                <h3 className="text-lg">
-                    {language === "en"
-                        ? cartItem.item.name.en
-                        : cartItem.item.name.ar}
-                    {(checkbox_options_names.length > 0 ||
-                        selection_options_names.length > 0 ||
-                        selection_dropdown_names.length > 0) && (
-                        <span>
-                            <span className="mx-4">+</span>
-                            <span className="text-[15px]">
-                                ( Extras:{"  "}
-                                {checkbox_options_names.length > 0 &&
-                                    checkbox_options_names.map((option, i) => (
-                                        <span className="font-normal" key={i}>
-                                            <span>{option[0]}</span>
-                                            {i <
-                                                checkbox_options_names.length -
-                                                    1 && (
-                                                <span className="mx-3">+</span>
-                                            )}
-                                        </span>
-                                    ))}
-                                {selection_options_names.length > 0 &&
-                                    checkbox_options_names.length > 0 && (
-                                        <span className="mx-3">+</span>
-                                    )}
-                                {selection_options_names.length > 0 &&
-                                    selection_options_names.map((option, i) => (
-                                        <span key={i} className="font-normal">
-                                            <span>{option.name}</span>
-                                            {i > 0 &&
-                                                i <
-                                                    checkbox_options_names.length -
-                                                        1 && (
-                                                    <span className="mx-3">
-                                                        +
-                                                    </span>
-                                                )}
-                                        </span>
-                                    ))}{" "}
-                                {selection_options_names.length > 0 &&
-                                    checkbox_options_names.length > 0 &&
-                                    selection_dropdown_names.length > 0 && (
-                                        <span className="mx-3">+</span>
-                                    )}
-                                {selection_dropdown_names.length > 0 &&
-                                    selection_dropdown_names.map(
-                                        (option, i) => (
-                                            <span
-                                                key={i}
-                                                className="font-normal"
-                                            >
-                                                <span>{option.name}</span>
-                                                {i > 0 &&
-                                                    i <
-                                                        checkbox_options_names.length -
-                                                            1 && (
-                                                        <span className="mx-3">
-                                                            +
-                                                        </span>
-                                                    )}
-                                            </span>
-                                        ),
-                                    )}{" "}
-                                )
-                            </span>
-                        </span>
-                    )}
-                </h3>
-                <p className="">
-                    {t("SAR")} {cartItem.price}{" "}
-                    {cartItem.options_price > 0 &&
-                        ` + ${cartItem.options_price} ${t("SAR")}  ${t(
-                            "Options",
-                        )}`}
-                </p>
-                <div className="flex items-center justify-between">
-                    <div className="w-full lg:w-5/6">
-                        <Feedback
-                            value={feedback}
+                    <div className="w-7/12 px-4">
+                        <div className="flex h-20 mb-3">
+                            <div className="py-2 px-2">
+                                <h2>
+                                    {language === "en"
+                                        ? cartitem.item.name.en
+                                        : cartitem.item.name.ar}
+                                </h2>
+                                <p className="mt-4">{`${t("extras")}: `}</p>
+                            </div>
+                        </div>
+                        <InputTextarea
+                            className="w-full invisible sm:visible"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            rows={5}
+                            cols={30}
                             placeholder={t(
                                 "Item notes : e.g. Please make the meat medium cook",
                             )}
-                            onChange={(e) => setFeedback(e.target.value)}
                         />
                     </div>
-                    <div
-                        style={{
-                            backgroundColor: styles?.categoryDetail_cart_color,
-                        }}
-                        onClick={() => handleRemoveItem(cartItem.id)}
-                        className={` ${
-                            styles?.categoryDetail_cart_color
-                                ? ""
-                                : "bg-[var(--primary)]"
-                        } ${
-                            isMobile
-                                ? "absolute top-[2rem] right-[.6rem]"
-                                : "relative"
-                        } relative flex items-center justify-center cursor-pointer rounded-lg w-[40px] h-[35px]`}
-                    >
-                        <IoClose size={25} className="cursor-pointer" />
+                    <div className="w-3/12 flex flex-col items-end justify-between">
+                        <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center">
+                            <Button
+                                onClick={() => handleRemoveItem(cartitem.id)}
+                            >
+                                <MdDelete className="text-lg text-white " />
+                            </Button>
+                        </div>
+                        <div className="h-20 w-40">
+                            <h2 className="text-center">{`${cartitem.total} ${t("SAR")}`}</h2>
+                            <div className="flex quantityBtn bg-neutral-50">
+                                <div className="w-2/6 py-1 text-center">
+                                    <Button
+                                        className="w-full"
+                                        label="+"
+                                        onClick={incrementQty}
+                                    />
+                                </div>
+                                <div className="w-2/6 py-1 text-center">
+                                    {cartitem.quantity}
+                                </div>
+                                <div className="w-2/6 py-1 text-center">
+                                    <Button
+                                        className="w-full"
+                                        label="-"
+                                        onClick={decrementQty}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <h3 className="font-bold">
-                    {t("Total")}:{t("SAR")}{" "}
-                    {/* {cartItems? parseFloat(cartItems.reduce((total, item) =>total + (item.price + item.options_price) * item.quantity,0)): 0} */}
-                    {(cartItem.price + cartItem.options_price) *
-                        cartItem.quantity}
-                </h3>
-            </div>
+            </Card>
         </div>
     );
 };

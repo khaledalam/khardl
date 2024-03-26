@@ -205,15 +205,23 @@
 
                     <div class="row mb-7">
                         <!--begin::Label-->
-                        <label class="col-lg-4 fw-bold text-muted">@if (app()->getLocale() == 'en')
-                            {{ __('restaurant-name') }}
-                            @else
-                            {{ __('the-name') }}
-                            @endif </label>
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('Restaurant name (English)') }}</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
                             <span class="fw-bolder fs-6 text-gray-800">{{ $restaurant->restaurant_name }}</span>
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <div class="row mb-7">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 fw-bold text-muted">
+                            {{ __('Restaurant name (Arabic)') }}
+                        </label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8">
+                            <span class="fw-bolder fs-6 text-gray-800">{{ $restaurant->restaurant_name_ar }}</span>
                         </div>
                         <!--end::Col-->
                     </div>
@@ -250,7 +258,7 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 fv-row">
-                            <span class="fw-bold text-gray-800 fs-6">{{ $restaurant->user->email }}</span>
+                            <a href="mailto:{{ $restaurant->user->email }}" class="fw-bold text-gray-800 fs-6">{{ $restaurant->user->email }}</a>
                             @if(!is_null($restaurant->user->email_verified_at))
                             <span class="badge badge-success">{{ __('verified') }}</span>
                             @else
@@ -268,12 +276,23 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 d-flex align-items-center">
-                            <span class="fw-bolder fs-6 text-gray-800 me-2">{{ $restaurant->user->phone }}</span>
+                            <a href="tel:{{ $restaurant->user->phone }}" class="fw-bolder fs-6 text-gray-800 me-2">{{ $restaurant->user->phone }}</a>
 
                         </div>
                         <!--end::Col-->
                     </div>
                     <!--end::Input group-->
+                    <div class="row mb-7">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('National ID') }}
+                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="national id number"></i></label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8">
+                            {{$restaurant->user->traderRegistrationRequirement->national_id_number}}
+                        </div>
+                        <!--end::Col-->
+                    </div>
                     <!--begin::Input group-->
                     <div class="row mb-7">
                         <!--begin::Label-->
@@ -286,13 +305,41 @@
                                 <span class="badge badge-warning">{{ __('pending') }}</span> --}}
                             @if ($is_live)
                             <span class="badge badge-success">{{ __('active') }}</span>
+                            @elseif($restaurant->user->isRejected())
+                                <span class="badge badge-danger">{{ __($restaurant->user->status) }}</span>
                             @else
-                            <span class="badge badge-warning">{{ __('inactive') }}</span>
+                                <span class="badge badge-info">{{ __($restaurant->user->status) }}</span>
                             @endif
                         </div>
                         <!--end::Col-->
                     </div>
                     <!--end::Input group-->
+
+
+                    @if ($restaurant?->user?->isRejected())
+                        <!--begin::Input group-->
+                        <div class="row mb-7">
+                            <!--begin::Label-->
+                            <label class="col-lg-4 fw-bold text-muted">{{ __('Rejection reasons') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Col-->
+                            <div class="col-lg-8 d-flex align-items-center">
+                                {{-- @if($restaurant->isApproved == 0)
+                                    <span class="badge badge-warning">{{ __('pending') }}</span> --}}
+                                @if(count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
+                                    <ul>
+                                        @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
+                                            <li class="fs-6 text-danger small">{{ __($reason)}}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+                            <!--end::Col-->
+                        </div>
+                        <!--end::Input group-->
+                    @endif
+
+
                     <!--begin::Input group-->
                     <div class="row mb-7">
                         <!--begin::Label-->
@@ -300,7 +347,7 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
-                            <a href="#" class="fw-bold fs-6 text-gray-800 text-hover-primary">{{ $restaurant->created_at->format('Y-m-d') }}</a>
+                            <span class="fw-bold fs-6 text-gray-800">{{ $restaurant->created_at->format('Y-m-d H:i') }}</span>
                         </div>
                         <!--end::Col-->
                     </div>
@@ -318,8 +365,19 @@
                     </div>
                     <div class="row mb-7">
                         <!--begin::Label-->
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('Bank name') }}
+                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Bank name"></i></label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8">
+                            {{$restaurant->user->traderRegistrationRequirement->bank_name}}
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                    <div class="row mb-7">
+                        <!--begin::Label-->
                         <label class="col-lg-4 fw-bold text-muted">{{ __('IBAN') }}
-                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
+                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="bank iban"></i></label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8">
@@ -327,6 +385,7 @@
                         </div>
                         <!--end::Col-->
                     </div>
+
                 </div>
                 <!--begin::downloaded-->
                 <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">

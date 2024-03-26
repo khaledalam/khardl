@@ -32,6 +32,7 @@ class CreateTenantAction
                 "last_name" =>$user->last_name,
                 "phone"=>$user->phone,
                 'restaurant_name'=>$domain,
+                'restaurant_name_ar'=>$user->restaurant_name_ar,
                 "password" => $user->password,
             ]);
             $domain = Domain::create([
@@ -48,6 +49,7 @@ class CreateTenantAction
                 "last_name" =>$user->last_name,
                 "phone"=>$user->phone,
                 'restaurant_name'=>$domain,
+                'restaurant_name_ar'=>$user->restaurant_name_ar,
                 "password" => $user->password,
             ]);
         }

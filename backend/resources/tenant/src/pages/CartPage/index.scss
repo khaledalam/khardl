@@ -1,0 +1,69 @@
+.paymentDetails {
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+
+    h2 {
+        font-family: "AlmaraiBold";
+        font-size: 24px;
+    }
+
+    h3 {
+        font-family: "AlmaraiBold";
+        font-size: 18px;
+    }
+
+    .p-radiobutton-box {
+        border-width: 2px;
+    }
+
+    .p-radiobutton-input {
+        border-width: 1px;
+    }
+
+    .p-radiobutton.p-highlight .p-radiobutton-box {
+        border-width: 0px;
+    }
+
+    .map input {
+        border-width: 1px;
+        border-radius: 7px;
+        height: 40px;
+    }
+
+    textarea {
+        width: 100%;
+        border-width: 1px;
+        background-color: #fdfdfb;
+        height: 65px;
+        padding: 12px;
+        font-family: "cairo";
+    }
+
+    .p-divider,
+    input {
+        border-width: 1px;
+    }
+}
+
+.cartDetailSection {
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(248, 250, 252, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.addressSection {
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(248, 250, 252, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.placeOrderBtn {
+    height: 40px;
+    background: var(--myColor);
+    margin-top: 15px;
+    color: white;
+}
