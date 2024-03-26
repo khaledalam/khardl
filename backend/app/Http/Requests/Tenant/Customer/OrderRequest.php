@@ -40,7 +40,6 @@ class OrderRequest extends FormRequest
     }
     public function withValidator($validator)
     {
-
         $cart = CartRepository::get();
 
         $validator->after(function ($validator) use($cart){
@@ -49,8 +48,10 @@ class OrderRequest extends FormRequest
                 $validator->errors()->add('cart', __('This branch is no longer accepting orders'));
 
             }
-            if($this->delivery_type != DeliveryType::PICKUP && (!$user->address || !$user->lat || !$user->lng)){
-                $validator->errors()->add('address', __('Please update your location before place an order'));
+            if($this->delivery_type == DeliveryType::DELIVERY &&
+                (!$user->address || !$user->lat || !$user->lng) && !$this->address
+            ){
+                $validator->errors()->add('address', __('Please update your location or enter customer address before place an order'));
                 return ;
             }
             if(!$cart->hasItems()){

@@ -948,7 +948,6 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                 }
 
-                console.log("ok")
             }
 
             async function convertToAddress(lat, lng){
