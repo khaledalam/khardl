@@ -56,7 +56,7 @@ const CartItem = ({ cartitem, onReload }) => {
                 quantity: newQuantity,
             })
                 .then((e) => {
-                    toast.success(`${t("Item quantity updated")}`)
+                    toast.success(`${t("Item quantity updated")}`);
                     console.log("successfully", e);
                 })
                 .finally(async () => {
@@ -90,7 +90,7 @@ const CartItem = ({ cartitem, onReload }) => {
                             </div>
                         </div>
                         <InputTextarea
-                            className="w-full"
+                            className="w-full invisible sm:visible"
                             value={value}
                             onChange={(e) => setValue(e.target.value)}
                             rows={5}

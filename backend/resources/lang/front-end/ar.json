@@ -493,5 +493,7 @@
     "Unable to access your location. You can continue by typing your location on the map.": "غير قادر على الوصول إلى موقعك. ",
     "SliderHintUpload": "يرجي رفع صورة ب تناسب ٤:١ و افضل مقاس هو ١٤٠ في ٣٥٠ *",
     "extras": "الاضافات",
-    "Review Order Details": "تفاصيل الطلب"
+    "Review Order Details": "تفاصيل الطلب",
+    "Custom Address" : "اختر موقع التوصيل",
+    "thereAreNoData": "عفوا، لا يوجد بيانات"
 }

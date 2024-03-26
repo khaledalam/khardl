@@ -25,7 +25,7 @@ const CartAddress = ({
                 name="customAddress"
                 onChange={() => onChange(1)}
                 isChecked={selectedDeliveryAddress === 1}
-                displayName="Custom Address"
+                displayName={t("Custom Address")}
             />
 
             {selectedDeliveryAddress === 1 && (
