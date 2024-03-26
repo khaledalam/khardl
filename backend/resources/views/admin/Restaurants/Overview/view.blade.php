@@ -301,15 +301,7 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 d-flex align-items-center">
-                            {{-- @if($restaurant->isApproved == 0)
-                                <span class="badge badge-warning">{{ __('pending') }}</span> --}}
-                            @if ($is_live)
-                            <span class="badge badge-success">{{ __('active') }}</span>
-                            @elseif($restaurant->user->isRejected())
-                                <span class="badge badge-danger">{{ __($restaurant->user->status) }}</span>
-                            @else
-                                <span class="badge badge-info">{{ __($restaurant->user->status) }}</span>
-                            @endif
+                            @include('components.restaurant-status-badge')
                         </div>
                         <!--end::Col-->
                     </div>
