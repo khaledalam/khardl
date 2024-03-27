@@ -417,7 +417,7 @@
     "Payment Summary": "Payment Summary",
     "Coupon Discount": "Coupon Discount",
     "Delivery fee": "Delivery fee",
-    "Total Payment": "Total Payment",
+    "Total Payment": "Total",
     "Restaurant Login Page": "Restaurant Login Page",
     "No Recent Orders...": "No Recent Orders...",
     "You have no saved card at the moment": "You have no saved card at the moment",
@@ -439,7 +439,9 @@
     "Unable to access your location. You can continue by typing your location on the map.": "Unable to access your location. You can continue by typing your location on the map.",
     "SliderHintUpload": "* Photo uploaded dimensions ratio should be 4:1 and best fit is 1400x350",
     "extras": "extras",
-    "Review Order Details": "Review Order Details",
+    "Review Order Details": "Order Details",
     "Custom Address": "Choose custom address",
-    "thereAreNoData": "No data available"
+    "thereAreNoData": "Your cart is currently empty",
+    "Before proceeding to checkout you must add some products to cart": "Before proceeding to checkout you must add some products to cart",
+    "subtotal": "Subtotal"
 }

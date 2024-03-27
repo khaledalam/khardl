@@ -37,7 +37,7 @@ export const AuthContextProvider = (props) => {
                     "i18nextLng",
                     response?.data?.default_locale ?? "ar",
                 );
-                let newLanguage = response?.data?.default_locale;
+                let newLanguage = response?.data?.default_locale ?? "ar";
                 dispatch(changeLanguage(newLanguage));
             }
             setStatusCode(response?.status);
