@@ -48,7 +48,7 @@
                                             Reason for Denial:
                                             Upon careful consideration, we have found that certain information provided
                                             does not align with our requirements or guidelines
-                                            <br>
+                                            <br><br />
                                             <b>Reasons:</b>
                                             <br>
                                             <ul>

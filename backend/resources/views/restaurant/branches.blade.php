@@ -906,30 +906,33 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
             }
 
 
-            $('.time-24').on('focusin', function (e) {
-                $(this).data('val', $(this).val());
-            });
+            // $('.time-24').on('focusin', function (e) {
+            //     console.log("tetw")
+            //     $(this).data('valuee', $(this).val());
+            //     e.target.value = $(this).data('valuee');
+            // });
 
             $('.time-24').on('change', function (e) {
 
+                e.preventDefault();
+
                 let $isFromTime = [...e.target.classList].indexOf('from') > -1;
 
-                let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[
-                    $isFromTime ? 0 : 1
-                ];
-                let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[
-                    $isFromTime ? 1 : 0
-                ];
+                let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];
+                let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];
 
                 let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);
                 let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);
 
+                console.log("from: ", $fromInput.value, $time1InMinutesForTimeFrom)
+                console.log("to: ", $toInput.value, $time1InMinutesForTimeTo)
+
                 if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {
-                    e.target.value = $(this).data('val');
                     alert("{{__("Time from should be before to")}}");
+                    $(this).defaultValue = e.target.defaultValue;
                 }
                 else {
-                    $(this).data('val', $(this).val());
+                    $(this).defaultValue = $(this).val();
                 }
             })
 
