@@ -895,46 +895,76 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                 enableSeconds: false,
                 dateFormat: "H:i",
                 time_24hr: true,
-                disableMobile: true
+                disableMobile: true,
+                // @TODO: need to handle the validation of From to be before To time.
+                onClose: function(selectedDates, dateStr, instance) {
+
+                    return;
+
+                    console.log("here: ", this, dateStr, instance)
+
+                    let $input = instance.input;
+
+                    let $isFromTime = [...$input.classList].indexOf('from') > -1;
+
+                    let $fromInput = $input.parentNode.parentNode.getElementsByTagName('input')[0];
+                    let $toInput = $input.parentNode.parentNode.getElementsByTagName('input')[1];
+
+
+                    let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);
+                    let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);
+
+                    console.log("from: ", $fromInput.value, $fromInput)
+                    console.log("to: ", $toInput.value, $toInput)
+
+                    if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {
+                        alert("{{__("Time from should be before to")}}");
+                        $input.value = $($input).data('val')
+                    }
+                    else {
+                        $($input).data('val', $input.value);
+                    }
+
+                }
             });
 
 
-            function getTimeAsNumberOfMinutes(time)
-            {
-                let timeParts = time.split(":");
-                return (timeParts[0] * 60) + timeParts[1];
-            }
+            // function getTimeAsNumberOfMinutes(time)
+            // {
+            //     let timeParts = time.split(":");
+            //     return (timeParts[0] * 60) + timeParts[1];
+            // }
 
 
             // $('.time-24').on('focusin', function (e) {
             //     console.log("tetw")
             //     $(this).data('valuee', $(this).val());
-            //     e.target.value = $(this).data('valuee');
+            //     e.target.value = $(this).data('val');
             // });
 
-            $('.time-24').on('change', function (e) {
+            {{--$('.time-24').on('change', function (e) {--}}
 
-                e.preventDefault();
+            {{--    e.preventDefault();--}}
 
-                let $isFromTime = [...e.target.classList].indexOf('from') > -1;
+            {{--    let $isFromTime = [...e.target.classList].indexOf('from') > -1;--}}
 
-                let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];
-                let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];
+            {{--    let $fromInput = e.target.parentNode.parentNode.getElementsByTagName('input')[0];--}}
+            {{--    let $toInput = e.target.parentNode.parentNode.getElementsByTagName('input')[1];--}}
 
-                let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);
-                let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);
+            {{--    let $time1InMinutesForTimeFrom = getTimeAsNumberOfMinutes($fromInput.value);--}}
+            {{--    let $time1InMinutesForTimeTo = getTimeAsNumberOfMinutes($toInput.value);--}}
 
-                console.log("from: ", $fromInput.value, $time1InMinutesForTimeFrom)
-                console.log("to: ", $toInput.value, $time1InMinutesForTimeTo)
+            {{--    console.log("from: ", $fromInput.value, $time1InMinutesForTimeFrom)--}}
+            {{--    console.log("to: ", $toInput.value, $time1InMinutesForTimeTo)--}}
 
-                if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {
-                    alert("{{__("Time from should be before to")}}");
-                    $(this).defaultValue = e.target.defaultValue;
-                }
-                else {
-                    $(this).defaultValue = $(this).val();
-                }
-            })
+            {{--    if (parseInt($time1InMinutesForTimeFrom) > parseInt($time1InMinutesForTimeTo)) {--}}
+            {{--        --}}{{--alert("{{__("Time from should be before to")}}");--}}
+            {{--            e.target.value = $(this).data('val')--}}
+            {{--    }--}}
+            {{--    else {--}}
+            {{--        $(this).data('val', $(this).val());--}}
+            {{--    }--}}
+            {{--})--}}
 
         });
 
