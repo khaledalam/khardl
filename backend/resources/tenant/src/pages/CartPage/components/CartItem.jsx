@@ -70,15 +70,15 @@ const CartItem = ({ cartitem, onReload }) => {
     return (
         <div className="cartitem">
             <Card>
-                <div className="flex">
-                    <div className="w-2/12 flex items-center">
+                <div className="grid grid-cols-12 relative">
+                    <div className="col-span-2 flex items-center">
                         <img
                             className="rounded-lg"
                             src={cartitem.item.photo}
                             alt="item_photo"
                         ></img>
                     </div>
-                    <div className="w-7/12 px-4">
+                    <div className="col-span-10 xl:col-span-7 px-4">
                         <div className="flex h-20 mb-3">
                             <div className="py-2 px-2">
                                 <h2>
@@ -90,7 +90,7 @@ const CartItem = ({ cartitem, onReload }) => {
                             </div>
                         </div>
                         <InputTextarea
-                            className="w-full invisible sm:visible"
+                            className="w-full visible"
                             value={value}
                             onChange={(e) => setValue(e.target.value)}
                             rows={5}
@@ -100,14 +100,7 @@ const CartItem = ({ cartitem, onReload }) => {
                             )}
                         />
                     </div>
-                    <div className="w-3/12 flex flex-col items-end justify-between">
-                        <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center">
-                            <Button
-                                onClick={() => handleRemoveItem(cartitem.id)}
-                            >
-                                <MdDelete className="text-lg text-white " />
-                            </Button>
-                        </div>
+                    <div className="mt-4 xl:mt-0 col-span-12 xl:col-span-3 flex flex-col items-center xl:items-end justify-end">
                         <div className="h-20 w-40">
                             <h2 className="text-center">{`${cartitem.total} ${t("SAR")}`}</h2>
                             <div className="flex quantityBtn bg-neutral-50">
@@ -130,6 +123,11 @@ const CartItem = ({ cartitem, onReload }) => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center absolute top-1 left-1">
+                        <Button onClick={() => handleRemoveItem(cartitem.id)}>
+                            <MdDelete className="text-lg text-white " />
+                        </Button>
                     </div>
                 </div>
             </Card>
