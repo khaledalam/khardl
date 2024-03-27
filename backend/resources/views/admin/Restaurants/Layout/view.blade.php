@@ -338,9 +338,25 @@ new DataTree({
                             <label class="form-check-label" for="option4">{{ __('national_address') }}</label>
                         </div>
                         <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="national_id_number">
+                            <label class="form-check-label" for="option4">{{ __('National ID') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="dob">
+                            <label class="form-check-label" for="option4">{{ __('Date of birth') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="bank_name">
+                            <label class="form-check-label" for="option4">{{ __('Bank name') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="IBAN">
+                            <label class="form-check-label" for="option4">{{ __('IBAN') }}</label>
+                        </div>
+                        <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" id="option5" name="options[]" value="others">
                             <label class="form-check-label" for="option5">{{ __('others') }}</LABEL>
-                        </DIV>
+                        </div>
                     `,
                     preConfirm: function() {
                         var selectedOptions = [];

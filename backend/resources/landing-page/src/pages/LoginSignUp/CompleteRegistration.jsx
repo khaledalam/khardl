@@ -20,6 +20,7 @@ function CompleteRegistration() {
     const [loading, setLoading] = useState(false)
 
     const [needs, setNeeds] = useState([]);
+    const [needsText, setNeedsText] = useState([]);
 
     const [fileUploadSuccess, setFileUploadSuccess] = useState({
         commercial_registration: null,
@@ -77,17 +78,16 @@ function CompleteRegistration() {
       const response = await AxiosInstance.post(
         `/register-step2`,
         {
-          commercial_registration: selectedFiles?.commercial_registration,
-          tax_registration_certificate:
-            selectedFiles?.tax_registration_certificate,
-          bank_certificate: selectedFiles?.bank_certificate,
-          identity_of_owner_or_manager:
-            selectedFiles?.identity_of_owner_or_manager,
-          national_address: selectedFiles?.national_address,
-          IBAN: data?.IBAN,
+            commercial_registration: selectedFiles?.commercial_registration,
+            tax_registration_certificate: selectedFiles?.tax_registration_certificate,
+            bank_certificate: selectedFiles?.bank_certificate,
+            identity_of_owner_or_manager: selectedFiles?.identity_of_owner_or_manager,
+            national_address: selectedFiles?.national_address,
+            IBAN: data?.IBAN,
             facility_name: data?.facility_name,
             bank_name: data?.bank_name,
             national_id_number: data?.national_id_number,
+            dob: data?.dob
         },
         {
           headers: {
@@ -144,9 +144,11 @@ function CompleteRegistration() {
                 const responseData = await response?.data?.data
                 setValue('IBAN', responseData?.IBAN)
                 setValue('facility_name', responseData?.facility_name)
+                setValue('dob', responseData?.dob)
                 setValue('bank_name', responseData?.bank_name)
                 setValue('national_id_number', responseData?.national_id_number)
                 setNeeds(responseData?.needs)
+                setNeedsText(responseData?.needsText)
 
             }
         } catch (error) {
@@ -258,7 +260,7 @@ function CompleteRegistration() {
             <div className='w-[100%] flex flex-col items-start gap-4'>
 
                 {/* Bank name Input */}
-                <div className='w-[100%]'>
+                {needsText.indexOf('bank_name') > -1 && <div className='w-[100%]'>
                     <div className='mb-2 font-semibold'>
                         {t("Bank name")}
                         <span className='text-red-500'>*</span>
@@ -275,10 +277,10 @@ function CompleteRegistration() {
                     {t("Bank name Error")}
                   </span>
                     )}
-                </div>
+                </div>}
 
                 {/* IBAN Input */}
-                <div className='w-[100%]'>
+                {needsText.indexOf('IBAN') > -1 &&<div className='w-[100%]'>
                 <div className='mb-2 font-semibold'>
                   {t("Bank IBAN")}
                   <span className='text-red-500'>*</span>
@@ -295,10 +297,10 @@ function CompleteRegistration() {
                     {t("IBAN Error")}
                   </span>
                 )}
-              </div>
+              </div>}
 
                 {/* Facility Name Input */}
-                <div className='w-[100%]'>
+                {needsText.indexOf('facility_name') > -1 && <div className='w-[100%]'>
                 <div className='mb-2 font-semibold'>
                   {t("Facility Name")}
                   <span className='text-red-500'>*</span>
@@ -316,10 +318,10 @@ function CompleteRegistration() {
                     {t("Facility Name Error")}
                   </span>
                 )}
-              </div>
+              </div>}
 
                 {/* National ID Input */}
-                <div className='w-[100%]'>
+                {needsText.indexOf('national_id_number') > -1 && <div className='w-[100%]'>
                     <div className='mb-2 font-semibold'>
                         {t("National ID")}
                         <span className='text-red-500'>*</span>
@@ -337,7 +339,28 @@ function CompleteRegistration() {
                     {t("National ID Error")}
                   </span>
                     )}
-                </div>
+                </div>}
+
+                {/* DOB Input */}
+                {needsText.indexOf('dob') > -1 && <div className='w-[100%]'>
+                    <div className='mb-2 font-semibold'>
+                        {t("Date of birth")}
+                        <span className='text-red-500'>*</span>
+                    </div>
+                    <input
+                        minLength={5}
+                        type='date'
+                        onChange={e => setValue('dob', e.target.value)}
+                        className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                        {...register("dob", {required: true})}
+                        placeholder={t("Date of birth")}
+                    />
+                    {errors.dob && (
+                        <span className='text-red-500 text-xs mt-1 ms-2'>
+                    {t("Date of birth Error")}
+                  </span>
+                    )}
+                </div>}
 
               <div className='flex justify-start items-center gap-2 text-start font-bold'>
                 <FaStarOfLife size={10} className='text-red-500' />
