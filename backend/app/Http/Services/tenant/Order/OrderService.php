@@ -56,7 +56,7 @@ class OrderService
             $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
         }
 
-        return view('admin.order-inquiry', compact('user','order', 'locale', 'orderStatusLogs'));
+        return view('restaurant.order-inquiry', compact('user','order', 'locale', 'orderStatusLogs'));
 
     }
     public function create()
