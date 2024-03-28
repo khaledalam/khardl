@@ -333,7 +333,7 @@
                     <!-- menu -->
 
                         <!-- Orders -->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'orders-all' || $link == 'orders-add' || $link == 'unavailable-products') ? 'show' : '' }}">
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ($link == 'order-inquiry' || $link == 'orders-all' || $link == 'orders-add' || $link == 'unavailable-products') ? 'show' : '' }}">
                                 <span class="menu-link">
                                     <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
