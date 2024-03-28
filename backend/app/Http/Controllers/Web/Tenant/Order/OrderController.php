@@ -16,15 +16,6 @@ class OrderController extends BaseController
     }
     public function index(Request $request)
     {
-        // for alter old rows.
-        $tenants = Tenant::all();
-        foreach ($tenants as $tenant) {
-            if (!$tenant->mapper_hash) {
-                $tenant->mapper_hash = generateToken();
-                $tenant->save();
-            }
-        }
-
         return $this->orderService->getList($request);
     }
 
