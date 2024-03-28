@@ -1,8 +1,21 @@
 <?php
 declare(strict_types=1);
 use App\Http\Services\Notification\PushNotificationService;
+use App\Models\Tenant;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
+if (!function_exists('generate_token')) {
+    function generateToken($length = 5)
+    {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // 35 ^ 5 => 52,521,875
+        $token = '';
+        for ($i = 0; $i < $length; $i++) {
+            $token .= $characters[random_int(0, strlen($characters) - 1)];
+        }
+        return strtoupper($token);
+    }
+}
 
 if (!function_exists('trans_json')) {
     function trans_json($value, $value_ar)
@@ -183,3 +196,31 @@ if (!function_exists('getAuth')) {
       return auth('sanctum')->user();
     }
 }
+
+if (!function_exists('getTenantByHash')) {
+    function getTenantByHash(string $hash)
+    {
+        return Cache::rememberForever($hash, function() use($hash) {
+            return Tenant::all()->where('mapper_hash', '=', $hash)->first();
+        });
+    }
+}
+
+if (!function_exists('getTenantByOrderId')) {
+    function getTenantByOrderId(string $orderid)
+    {
+        if (strlen($orderid) < 5) {
+            return null;
+        }
+        $tenant_hash = substr($orderid, 0, 5);
+
+        $tenant = getTenantByHash($tenant_hash);
+
+        return $tenant;
+
+        return Cache::remember($orderid, 100, function() use($tenant) {
+            return $tenant;
+        });
+    }
+}
+

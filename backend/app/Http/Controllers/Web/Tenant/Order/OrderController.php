@@ -18,6 +18,10 @@ class OrderController extends BaseController
         return $this->orderService->getList($request);
     }
 
+    public function inquiry(Request $request)
+    {
+        return $this->orderService->inquiry($request);
+    }
     public function create()
     {
         return $this->orderService->create();

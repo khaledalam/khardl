@@ -5,11 +5,13 @@ namespace App\Http\Services\tenant\Order;
 use App\Http\Requests\Tenant\Customer\AddItemToCartRequest;
 use App\Http\Requests\Tenant\Customer\OrderRequest;
 use App\Http\Resources\Web\Tenant\ItemResource;
+use App\Models\Tenant;
 use App\Models\Tenant\Branch;
 use App\Models\Tenant\Cart;
 use App\Models\Tenant\DeliveryType;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Order;
+use App\Models\Tenant\OrderStatusLogs;
 use App\Models\Tenant\PaymentMethod;
 use App\Models\Tenant\Product;
 use App\Models\User;
@@ -34,6 +36,28 @@ class OrderService
         ->whenPaymentStatus($request['payment_status']?? null)
         ->paginate(config('application.perPage')??20);
         return view('restaurant.orders.list', compact('user', 'orders'));
+    }
+
+    public function inquiry($request)
+    {
+        $order = null;
+        $orderStatusLogs = null;
+        $locale = app()->getLocale();
+        $user = Auth::user();
+
+        if ($request->has('order_id')) {
+            $validatedData = $request->validate([
+                'order_id' => 'required|string|min:16|max:16',
+            ]);
+
+            $order_id = $validatedData['order_id'];
+
+            $order = Tenant\Order::find($order_id)->first();
+            $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
+        }
+
+        return view('admin.order-inquiry', compact('user','order', 'locale', 'orderStatusLogs'));
+
     }
     public function create()
     {
