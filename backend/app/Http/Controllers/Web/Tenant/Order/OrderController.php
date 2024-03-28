@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Tenant\Order;
 use App\Http\Requests\Web\Tenant\Order\StoreOrderFormRequest;
 use App\Http\Services\tenant\Order\OrderService;
 use App\Http\Controllers\Web\BaseController;
+use App\Models\Tenant;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\Product;
 use Illuminate\Http\Request;
@@ -15,6 +16,15 @@ class OrderController extends BaseController
     }
     public function index(Request $request)
     {
+        // for alter old rows.
+        $tenants = Tenant::all();
+        foreach ($tenants as $tenant) {
+            if (!$tenant->mapper_hash) {
+                $tenant->mapper_hash = generateToken();
+                $tenant->save();
+            }
+        }
+
         return $this->orderService->getList($request);
     }
 

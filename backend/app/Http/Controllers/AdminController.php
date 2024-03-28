@@ -421,7 +421,6 @@ class AdminController extends Controller
             $order_id = $validatedData['order_id'];
             $tenant_id = getTenantByOrderId($order_id)?->id;
 
-
             $restaurant = Tenant::findOrFail($tenant_id);
 
             $restaurant->run(function() use (&$order, &$orderStatusLogs, $order_id){
@@ -429,7 +428,8 @@ class AdminController extends Controller
                     'payment_method', 'branch', 'delivery_type', 'user',
                     'items', 'items.item', 'coupon'
                 )->where('id', '=', $order_id)?->first();
-                $orderStatusLogs = OrderStatusLogs::all()?->sortByDesc("created_at");
+
+                $orderStatusLogs = OrderStatusLogs::all()->where('order_id', '=', $order?->id)?->sortByDesc("created_at");
             });
         }
 

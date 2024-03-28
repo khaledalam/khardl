@@ -53,7 +53,8 @@ class OrderService
             $order_id = $validatedData['order_id'];
 
             $order = Tenant\Order::find($order_id)?->first();
-            $orderStatusLogs = OrderStatusLogs::all()?->sortByDesc("created_at");
+            $orderStatusLogs = OrderStatusLogs::all()->where('order_id', '=', $order?->id)
+                ?->sortByDesc("created_at");
         }
 
         return view('restaurant.order-inquiry', compact('user','order', 'locale', 'orderStatusLogs'));
