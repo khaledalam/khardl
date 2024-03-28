@@ -428,8 +428,8 @@ class AdminController extends Controller
                 $order = Tenant\Order::with(
                     'payment_method', 'branch', 'delivery_type', 'user',
                     'items', 'items.item', 'coupon'
-                )->where('id', '=', $order_id)->first();
-                $orderStatusLogs = OrderStatusLogs::all()->sortByDesc("created_at");
+                )->where('id', '=', $order_id)?->first();
+                $orderStatusLogs = OrderStatusLogs::all()?->sortByDesc("created_at");
             });
         }
 

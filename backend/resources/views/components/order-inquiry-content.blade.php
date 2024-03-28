@@ -27,15 +27,9 @@
 
             @if (request('order_id') && $order)
                 <div class="conatiner m-2 alert alert-success">
-
                     @include('restaurant.orders.order-details')
-
-
                 </div>
-
-
-
-            @elseif(request('name'))
+            @elseif(request('order_id'))
                 @if (app()->getLocale() == 'ar')
                     <h5 class="mt-2 alert alert-warning">{{ request('order_id') }} : {{ __('Order not found') }}</h5>
                 @else
