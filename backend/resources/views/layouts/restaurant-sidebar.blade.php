@@ -346,6 +346,14 @@
                                     <span class="menu-arrow"></span>
                                 </span>
                             <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                <a href="{{route('restaurant.order-inquiry')}}">
+                                    <div class="{{ ($link == 'order-inquiry') ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot {{ ($link == 'order-inquiry') ? 'bg-light' : '' }}"></span>
+                                        </span>
+                                        <span class="menu-title">{{__('order inquiry')}}</span>
+                                    </div>
+                                </a>
                                 <a href="{{route('restaurant.orders_all')}}">
                                     <div class="{{ ($link == 'orders-all') ? 'menu-link active' : 'menu-link ' }}">
                                         <span class="menu-bullet">

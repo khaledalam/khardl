@@ -209,6 +209,22 @@
                                     </div>
                                 </div>
                             @endif
+
+                            @if($user?->hasPermission('can_access_restaurants'))
+                                <!-- Staff evaluation -->
+                                    <div class="menu-item">
+                                        <a class="menu-link {{($admin_link == 'order-inquiry') ? 'active' : ''}}" href="{{ route('admin.order-inquiry') }}">
+                                                            <span class="menu-icon">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                                                <span class="svg-icon svg-icon-2">
+                                                                    <i class=" fa fa-question"></i>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </span>
+                                            <span class="menu-title">{{ __('order inquiry')}}</span>
+                                        </a>
+                                    </div>
+                            @endif
                             <!-- Supports -->
                             @if($user?->hasPermission('can_see_admins') || $user?->hasPermission('can_add_admins'))
                             <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{($admin_link == 'user-management' || $admin_link == 'add-user') ? 'show' : ''}}">
