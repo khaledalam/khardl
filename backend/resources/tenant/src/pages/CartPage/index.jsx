@@ -24,6 +24,8 @@ import { useNavigate } from "react-router-dom";
 import NoDataImg from "../../assets/no-data.png";
 import ClipLoader from "react-spinners/ClipLoader";
 
+import PaymentCardGoSell from "./components/PaymentCardGoSell";
+import { GoSellElements } from "@tap-payments/gosell";
 import "./index.scss";
 
 const CartPage = () => {
@@ -115,31 +117,59 @@ const CartPage = () => {
     };
 
     const handlePlaceOrder = async () => {
-        try {
+        if (paymentMethod === "pm-cc") {
+            GoSellElements.submit();
+        } else {
             try {
-                const cartResponse = await AxiosInstance.post(`/orders`, {
-                    payment_method:
-                        paymentMethod === "pm-cod"
-                            ? "Cash on Delivery"
-                            : "Online",
-                    delivery_type:
-                        deliveryType === "dt-delivery" ? "Delivery" : "PICKUP",
-                    notes: orderNotes,
-                    couponCode: coupon,
-                    address: "test",
-                });
-                if (cartResponse.data) {
-                    toast.success(
-                        `${t("Order has been created successfully")}`,
-                    );
-                    navigate(`/dashboard#orders`);
+                try {
+                    const cartResponse = await AxiosInstance.post(`/orders`, {
+                        payment_method:
+                            paymentMethod === "pm-cod"
+                                ? "Cash on Delivery"
+                                : "Online",
+                        delivery_type:
+                            deliveryType === "dt-delivery"
+                                ? "Delivery"
+                                : "PICKUP",
+                        notes: orderNotes,
+                        couponCode: coupon,
+                        address: "test",
+                    });
+                    if (cartResponse.data) {
+                        toast.success(
+                            `${t("Order has been created successfully")}`,
+                        );
+                        navigate(`/dashboard#orders`);
+                    }
+                } catch (error) {
+                    toast.error(error.response.data.message);
                 }
             } catch (error) {
                 toast.error(error.response.data.message);
+                console.log(error);
+            }
+        }
+    };
+
+    const cardPaymentCallbackFunc = async (response) => {
+        try {
+            const redirect = await AxiosInstance.post(
+                `/orders/payment/redirect`,
+                {
+                    payment_method: paymentMethod,
+                    delivery_type: deliveryType,
+                    notes: orderNotes,
+                    couponCode: coupon,
+                    token_id: response.id,
+                },
+            );
+
+            if (redirect.data) {
+                console.log("redirect ==>", redirect.data);
+                window.location.href = redirect.data;
             }
         } catch (error) {
             toast.error(error.response.data.message);
-            console.log(error);
         }
     };
 
@@ -184,28 +214,47 @@ const CartPage = () => {
                             <div className="cartDetailSection h-24 mt-8 invisible"></div> */}
                                     <div className="cartDetailSection h-36xw">
                                         <h3>{t("Select Payment Method")}</h3>
-                                        <CartDetailSection
-                                            name="pm-cc"
-                                            onChange={(e) =>
-                                                setPaymentMethod("pm-cc")
-                                            }
-                                            isChecked={
-                                                paymentMethod === "pm-cc"
-                                            }
-                                            img={pmcc}
-                                            displayName="Credit Card"
-                                        />
-                                        <CartDetailSection
-                                            name="pm-cod"
-                                            onChange={(e) =>
-                                                setPaymentMethod("pm-cod")
-                                            }
-                                            isChecked={
-                                                paymentMethod === "pm-cod"
-                                            }
-                                            img={pmcod}
-                                            displayName="Cash on Delivery"
-                                        />
+                                        {cart.payment_methods.map((method) => {
+                                            let name =
+                                                method.name === "Online"
+                                                    ? "pm-cc"
+                                                    : "pm-cod";
+                                            let displayName =
+                                                method.name === "Online"
+                                                    ? "Credit Card"
+                                                    : "Cash on Delivery";
+                                            let img =
+                                                method.name === "Online"
+                                                    ? pmcc
+                                                    : pmcod;
+
+                                            return (
+                                                <CartDetailSection
+                                                    key={method.name}
+                                                    name={method.name}
+                                                    onChange={(e) =>
+                                                        setPaymentMethod(name)
+                                                    }
+                                                    isChecked={
+                                                        paymentMethod === name
+                                                    }
+                                                    img={img}
+                                                    displayName={displayName}
+                                                    callBackfn={
+                                                        cardPaymentCallbackFunc
+                                                    }
+                                                />
+                                            );
+                                        })}
+                                        {paymentMethod === "pm-cc" && (
+                                            <div className="mt-6">
+                                                <PaymentCardGoSell
+                                                    callBackWithToken={
+                                                        cardPaymentCallbackFunc
+                                                    }
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Delivery Type")}</h3>
@@ -235,15 +284,17 @@ const CartPage = () => {
                                         />
                                     </div>
                                     <div className="mt-8">
-                                        <CartAddress
-                                            userAddress={userAddress}
-                                            selectedDeliveryAddress={
-                                                deliveryAddress
-                                            }
-                                            onChange={(type) =>
-                                                setDeliveryAddress(type)
-                                            }
-                                        />
+                                        {deliveryType === "dt-delivery" && (
+                                            <CartAddress
+                                                userAddress={userAddress}
+                                                selectedDeliveryAddress={
+                                                    deliveryAddress
+                                                }
+                                                onChange={(type) =>
+                                                    setDeliveryAddress(type)
+                                                }
+                                            />
+                                        )}
                                     </div>
                                     <div className="cartDetailSection h-32 mt-8">
                                         <h3 className="mb-2">
