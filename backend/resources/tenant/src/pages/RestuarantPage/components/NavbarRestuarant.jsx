@@ -45,8 +45,7 @@ const NavbarRestuarant = () => {
         }
     };
     useEffect(() => {
-        fetchCartData().then(() => {
-        });
+        fetchCartData().then(() => {});
     }, []);
     const { header_color, headerPosition, categoryDetail_cart_color } =
         restaurantStyle;
@@ -79,17 +78,13 @@ const NavbarRestuarant = () => {
                 }}
                 className="w-full  flex flex-row items-center justify-between px-7 xl:px-12 py-2"
             >
-                {categoryDetail_cart_color !== "#FFFFFF" ? (
-                    <div
-                        onClick={toggleTheMenu}
-                        style={{ backgroundColor: categoryDetail_cart_color }}
-                        className="w-[40px] h-[40px]   rounded-lg cursor-pointer p-1 flex items-center justify-center"
-                    >
-                        <IoMenuOutline size={38} className="text-white" />
-                    </div>
-                ) : (
-                    <div className="skeleton w-12 h-12 shrink-0"></div>
-                )}
+                <div
+                    onClick={toggleTheMenu}
+                    className="w-[40px] h-[40px] rounded-lg cursor-pointer p-1 flex items-center justify-center"
+                >
+                    <IoMenuOutline size={38} className="text-black" />
+                </div>
+
                 <div
                     className={`w-full ${
                         restaurantStyle?.logo_alignment === t("Center") ||
