@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
-  <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}" />
-  <link rel="icon" href="{{ global_asset('img/logo.png')}}" />
+  <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
+  <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}" />
+  <link rel="icon" href="{{ global_asset('images/Logo.webp')}}" />
   <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
   <title>{{ __('Promoter') }}</title>
   <style>

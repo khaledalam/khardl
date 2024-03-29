@@ -491,28 +491,41 @@ class RestaurantController extends BaseController
         return false;
     }
 
-
-    public function updateBranch(Request $request, $id)
+    private function updateBranchValidation(Request $request)
     {
-        // if(Auth::user()->id != DB::table('branches')->where('id', $id)->value('user_id'))
-        //     return;
-
-        $daysRules = $weekdays = $formattedData = [];
+        $daysRules = $weekdays = [];
         for ($i = 0; $i < 7; $i++) {
             $weekdays[] = date('l', strtotime("Sunday +$i days"));
         }
 
+        $msgs = [];
+
         foreach ($weekdays as $day) {
             $daysRules[strtolower($day) . '_open'] = [Rule::when($request->existed_hours_option == 'custom', 'date_format:H:i')];
             $daysRules[strtolower($day) . '_close'] = [Rule::when($request->existed_hours_option == 'custom', 'date_format:H:i|after:' . strtolower($day) . '_open')];
+            $msgs[strtolower($day) . '_close.after'] = __("Time from should be before to") . ' ' . __('on') . ' ' . __(strtolower($day));
         }
 
-        $validatedData = $request->validate([
+        return $request->validate([
             'existed_normal_from' => [Rule::when($request->existed_hours_option == 'normal', 'date_format:H:i')],
             'existed_normal_to' => [Rule::when($request->existed_hours_option == 'normal', 'date_format:H:i|after:existed_normal_from')],
             ...$daysRules
-        ]);
+            ],
+            [
+                'existed_normal_to.after'=>__("Time from should be before to"),
+                ...$msgs
+            ]
+        );
+    }
 
+    public function updateBranch(Request $request, $id)
+    {
+        $weekdays = $formattedData = [];
+        for ($i = 0; $i < 7; $i++) {
+            $weekdays[] = date('l', strtotime("Sunday +$i days"));
+        }
+
+        $validatedData = $this->updateBranchValidation($request);
 
         $time = function ($timeInner, $open = true) use ($request) {
             if ($request->existed_hours_option == 'normal') {
@@ -526,7 +539,6 @@ class RestaurantController extends BaseController
         };
 
         foreach ($weekdays as $day) {
-
             $formattedData[strtolower($day) . '_open'] = $time($validatedData[strtolower($day) . '_open']);
             $formattedData[strtolower($day) . '_close'] = $time($validatedData[strtolower($day) . '_close'], false);
             $formattedData[strtolower($day) . '_closed'] = $request->has(strtolower($day) . '_closed') && $request->existed_hours_option == 'custom' ? 1 : 0;
@@ -675,16 +687,15 @@ class RestaurantController extends BaseController
     }
     public function addCategory(Request $request, $branchId)
     {
-        $categoriesCount = Category::where([
+        $categoriesCountAll = Category::where([
             ['branch_id', '=', $branchId],
-            ['sort', '=', $request->sort]
         ])->count();
 
         $validator = Validator::make($request->all(), [
             'name_en' => 'required|string',
             'name_ar' => 'required|string',
             'new_category_photo' => 'nullable',
-            'sort' => 'nullable|int|min:1|max:' . $categoriesCount + 1
+            'sort' => 'nullable|int|min:1|max:' . $categoriesCountAll + 1
         ]);
 
 
@@ -714,7 +725,7 @@ class RestaurantController extends BaseController
         Category::create([
             'name' => trans_json($request->input('name_en'), $request->input('name_ar')),
             'photo' => $filename ? tenant_asset('categories/' . $filename) : null,
-            'sort' =>  $categoriesCount + 1,
+            'sort' =>  $categoriesCountAll + 1,
             'user_id' => $userId,
             'branch_id' => $branchId,
             'created_at' => now(),

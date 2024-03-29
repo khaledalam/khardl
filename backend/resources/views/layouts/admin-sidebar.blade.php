@@ -11,9 +11,9 @@
     <meta property="og:title" content="" />
     <meta property="og:url" content="#/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
-    <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
-    <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
-    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
+    <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
+    <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}"/>
+    <link rel="icon" href="{{ global_asset('images/Logo.webp')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ global_asset('assets/css/admin-main.css')}}" rel="stylesheet" type="text/css" />
@@ -105,7 +105,7 @@
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
                     <a href="{{ route('admin.dashboard') }}">
-                        <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-70px logo" />
+                        <img alt="Logo" src="{{ global_asset('images/Logo.webp') }}" class="h-70px logo" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Aside toggler-->
@@ -208,6 +208,22 @@
 
                                     </div>
                                 </div>
+                            @endif
+
+                            @if($user?->hasPermission('can_access_restaurants'))
+                                <!-- Staff evaluation -->
+                                    <div class="menu-item">
+                                        <a class="menu-link {{($admin_link == 'order-inquiry') ? 'active' : ''}}" href="{{ route('admin.order-inquiry') }}">
+                                                            <span class="menu-icon">
+                                                                <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
+                                                                <span class="svg-icon svg-icon-2">
+                                                                    <i class=" fa fa-question"></i>
+                                                                </span>
+                                                                <!--end::Svg Icon-->
+                                                            </span>
+                                            <span class="menu-title">{{ __('order inquiry')}}</span>
+                                        </a>
+                                    </div>
                             @endif
                             <!-- Supports -->
                             @if($user?->hasPermission('can_see_admins') || $user?->hasPermission('can_add_admins'))
@@ -352,7 +368,7 @@
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="../../demo1/dist/index.html" class="d-lg-none">
-                                <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
+                                <img alt="Logo" src="{{ global_asset('images/Logo.webp') }}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->

@@ -8,6 +8,7 @@ use App\Jobs\SendApprovedEmailJob;
 use App\Jobs\SendApprovedRestaurantEmailJob;
 use App\Jobs\SendDeniedEmailJob;
 use App\Models\CentralSetting;
+use App\Models\Tenant\OrderStatusLogs;
 use App\Models\Tenant\Setting as TenantSettings;
 use App\Models\Tenant;
 use App\Models\Tenant\RestaurantUser;
@@ -405,12 +406,42 @@ class AdminController extends Controller
         return view('admin.user-management', compact('user', 'admins'));
     }
 
+    public function orderInquiry(Request $request)
+    {
+        $order = null;
+        $orderStatusLogs = null;
+        $locale = app()->getLocale();
+        $user = Auth::user();
+
+        if ($request->has('order_id')) {
+            $validatedData = $request->validate([
+                'order_id' => 'required|string|min:16|max:16',
+            ]);
+
+            $order_id = $validatedData['order_id'];
+            $tenant_id = getTenantByOrderId($order_id)?->id;
+
+            $restaurant = Tenant::findOrFail($tenant_id);
+
+            $restaurant->run(function() use (&$order, &$orderStatusLogs, $order_id){
+                $order = Tenant\Order::with(
+                    'payment_method', 'branch', 'delivery_type', 'user',
+                    'items', 'items.item', 'coupon'
+                )->where('id', '=', $order_id)?->first();
+
+                $orderStatusLogs = OrderStatusLogs::all()->where('order_id', '=', $order?->id)?->sortByDesc("created_at");
+            });
+        }
+
+        return view('admin.order-inquiry', compact('user','order', 'locale', 'orderStatusLogs'));
+    }
+
     public function restaurantOwnerManagement(Request $request)
     {
         $admins = User::whenType($request['type']??null)
-        ->where('id','!=',1)
-        ->orderBy('id','desc')
-        ->paginate(config('application.perPage')??20);
+            ->where('id','!=',1)
+            ->orderBy('id','desc')
+            ->paginate(config('application.perPage')??20);
         $user = Auth::user();
         return view('admin.restaurant-owner-management', compact('user', 'admins'));
     }
