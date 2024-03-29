@@ -3,18 +3,14 @@
 use App\Http\Controllers\Web\Central\Admin\Log\LogController;
 use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
 use App\Http\Controllers\Web\Central\GlobalPromoterController;
-use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use App\Models\Tenant\RestaurantStyle;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
-use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Web\Central\Admin\Dashboard\DashboardController as SuperAdminDashboard;
@@ -25,7 +21,6 @@ use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
 use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
 use App\Http\Controllers\Web\Central\DeliveryWebhookController;
-use App\Models\CentralSetting;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,12 +69,11 @@ Route::get('/health', static function (){
     ]);
 })->name('health');
 
-
- Route::get('/test', function (){
+Route::get('/test', function (){
      return response()->json([
          'status' => 'test'
      ]);
- })->name('test');
+})->name('test');
 
 
 Route::get('promoter/{name}', [GlobalPromoterController::class, 'show'])->name('global.promoter.show');
