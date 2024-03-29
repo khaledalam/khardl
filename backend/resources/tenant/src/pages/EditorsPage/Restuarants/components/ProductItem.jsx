@@ -399,7 +399,6 @@ const ProductItem = ({
         navigate("/cart");
     };
 
-
     return (
         <Fragment>
             <div
@@ -967,16 +966,7 @@ const ProductItem = ({
                                                 />
                                             </div>
 
-                                            <h3
-                                                style={{
-                                                    color: amountColor
-                                                        ? amountColor
-                                                        : cartBgcolor
-                                                          ? "white"
-                                                          : "red",
-                                                }}
-                                                className="text-[14px] font-bold"
-                                            >
+                                            <h3 className="text-[14px] font-bold text-white">
                                                 {t("SAR")}{" "}
                                                 {totalPrice &&
                                                     finalPrice.toFixed(2)}

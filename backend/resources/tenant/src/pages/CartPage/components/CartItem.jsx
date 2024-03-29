@@ -124,7 +124,7 @@ const CartItem = ({ cartitem, onReload }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center absolute top-1 left-1">
+                    <div className="w-7 h-7 bg-red-500 rounded-full flex items-center justify-center absolute top-1 left-1 deleteBtn">
                         <Button onClick={() => handleRemoveItem(cartitem.id)}>
                             <MdDelete className="text-lg text-white " />
                         </Button>
