@@ -40,3 +40,8 @@
 .p-radiobutton.p-highlight .p-radiobutton-box {
     background: var(--myColor);
 }
+
+.deleteBtn:dir(ltr) {
+    right: 0.25rem;
+    left: unset;
+}
