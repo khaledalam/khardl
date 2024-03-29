@@ -540,7 +540,7 @@ function CompleteRegistration() {
                       }}
                   />
                   <label
-                      htmlFor={`Input(identity_of_owner_or_manager)`}
+                      htmlFor={`Input(national_address)`}
                       className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
                   >
                       <FiUpload size={24} /><h1>{t("Attach a PDF file")}</h1>
