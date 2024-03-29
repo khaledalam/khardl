@@ -41,6 +41,8 @@ class RestaurantStyle extends Model
             }
         }
 
+        return 'image';
+
         // Default to 'unknown' or handle other types if needed
         return 'unknown';
     }
