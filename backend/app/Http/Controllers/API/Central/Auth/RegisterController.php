@@ -57,10 +57,10 @@ class RegisterController extends BaseController
             'identity_of_owner_or_manager' => 'nullable|mimes:pdf,jpg,jpeg,png|max:25600',
             'national_address' => 'nullable|mimes:pdf,jpg,jpeg,png|max:25600',
 
-            'IBAN' => 'required|string|min:10|max:255',
-            'facility_name' => 'required|string|min:5|max:255',
-            'bank_name' => 'required|string|min:5|max:255',
-            'national_id_number' => 'required|string|min:5|max:255',
+            'commercial_registration_number' => 'nullable|string|min:5|max:255',
+            'IBAN' => 'nullable|string|min:10|max:255',
+            'facility_name' => 'nullable|string|min:5|max:255',
+            'national_id_number' => 'nullable|string|min:5|max:255',
             'dob' => 'nullable|date_format:Y-m-d'
         ]);
 
@@ -166,10 +166,17 @@ class RegisterController extends BaseController
         $user = auth()->user();
 
         $needs = [];
-        $files_fields = ['commercial_registration', 'tax_registration_certificate', 'bank_certificate',
-            'identity_of_owner_or_manager', 'national_address'];
+        $files_fields = [
+            'commercial_registration', 'tax_registration_certificate',
+            'bank_certificate', 'identity_of_owner_or_manager',
+            'national_address'
+        ];
 
-        $text_fields = ['IBAN', 'facility_name', 'bank_name', 'national_id_number'];
+        // dob (on user level not traderRegistrationRequirement
+        $text_fields = [
+            'IBAN', 'facility_name',
+            'national_id_number', 'commercial_registration_number'
+        ];
 
         // files
         foreach ($files_fields as $field) {
@@ -187,12 +194,12 @@ class RegisterController extends BaseController
             }
         }
         //dob
-        if (!$user?->dob || ($user->isRejected() && in_array('dob', json_decode($user?->reject_reasons) ?? []))) {
-            $needsText[] = 'dob';
-        }
+        $needsText[] = 'dob';
 
         return $this->sendResponse([
             'commercial_registration' => $user?->traderRegistrationRequirement?->commercial_registration,
+            'commercial_registration_number' => $user?->traderRegistrationRequirement?->commercial_registration_number,
+
             'tax_registration_certificate' => $user?->traderRegistrationRequirement?->tax_registration_certificate,
             'bank_certificate' => $user?->traderRegistrationRequirement?->bank_certificate,
             'identity_of_owner_or_manager' => $user?->traderRegistrationRequirement?->identity_of_owner_or_manager,
@@ -200,7 +207,6 @@ class RegisterController extends BaseController
             'IBAN' => $user?->traderRegistrationRequirement?->IBAN ?? "",
             'facility_name' => $user?->traderRegistrationRequirement?->facility_name ?? "",
             'dob' => $user?->dob ?? "",
-            'bank_name' => $user?->traderRegistrationRequirement?->bank_name ?? "",
             'needs' => $needs,
             'needsText' => $needsText
         ], 'Fetched User complete register step two.');

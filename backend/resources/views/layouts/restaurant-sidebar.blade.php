@@ -12,9 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Kardl" />
-    <meta property="og:url" content="Kardl.com" />
-    <meta property="og:site_name" content="Kardl" />
+    <meta property="og:title" content="__('khardl')}}" />
+    <meta property="og:url" content="khardl.com" />
+    <meta property="og:site_name" content="__('khardl')}}" />
     <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
     <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}"/>
     <link rel="icon" href="{{ global_asset('images/Logo.webp')}}"/>
