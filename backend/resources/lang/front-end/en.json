@@ -446,5 +446,7 @@
     "Custom Address": "Choose custom address",
     "thereAreNoData": "Your cart is currently empty",
     "Before proceeding to checkout you must add some products to cart": "Before proceeding to checkout you must add some products to cart",
-    "subtotal": "Subtotal"
+    "subtotal": "Subtotal",
+    "Set default address": "Set default address",
+    "Write custom address": "Type custom address"
 }
