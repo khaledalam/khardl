@@ -66,9 +66,9 @@ class RestaurantStyleService
         if (isset($request->banner_images) && $request->banner_images) {
             foreach ($request->banner_images as $k => $image) {
                 $banner_image = tenant_asset(store_image($image, RestaurantStyle::STORAGE, 'banner_image_' . $k + 1));
-                if ($banner_image) {
-                    $banner_image .= '?ver=' . random_hash();
-                }
+//                if ($banner_image) {
+//                    $banner_image .= '?ver=' . random_hash();
+//                }
                 $banner_images[] = $banner_image;
 
             }
