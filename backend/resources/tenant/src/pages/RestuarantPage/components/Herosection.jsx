@@ -81,46 +81,50 @@ const Herosection = ({ isMobile, categories, isCatLoading }) => {
                 (restaurantStyle &&
                     restaurantStyle?.banner_type === t("One-photo")) ? (
                     <div
-                        className={`w-full md:w-5/6 overflow-hidden shadow-lg  ${
-                            isMobile ? "h-[250px]" : "h-[471px] mb-8"
-                        } laptopXL:w-[75%] skeleton`}
-                        style={{
-                            boxShadow: "0px 6px 4px 0px rgba(0, 0, 0, 0.43)",
-                            borderRadius: 12,
-                        }}
+                        className={`w-[85%] md:w-5/6 mx-auto  ${
+                            isMobile ? "" : " mb-8"
+                        } laptopXL:w-[75%]`}
                     >
-                        {restaurantStyle?.banner_image &&
-                        restaurantStyle?.banner_image?.type === "video" ? (
-                            <video
-                                controls
-                                id="vid"
-                                loop
-                                autoPlay
-                                className="z-[5] max-h-[250px] md:max-h-[350px] w-full"
-                            >
-                                <source
-                                    src={
-                                        restaurantStyle?.banner_image
-                                            ? restaurantStyle?.banner_image?.url
-                                            : ""
-                                    }
-                                />
-                                Your browser does not support the video tag.
-                            </video>
-                        ) : (
-                            <>
-                                {restaurantStyle?.banner_image?.url && (
-                                    <img
+                        <div
+                            className={` h-full w-full rounded-md flex items-center justify-center`}
+                            style={{
+                                height: "0",
+                                paddingTop: "25%",
+                                backgroundPosition: "center",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "contain",
+                                backgroundImage:
+                                    restaurantStyle?.banner_image &&
+                                    restaurantStyle?.banner_image?.url &&
+                                    `url(${restaurantStyle?.banner_image?.url})`,
+                            }}
+                        >
+                            {restaurantStyle?.banner_image &&
+                            restaurantStyle?.banner_image?.type === "video" ? (
+                                <video
+                                    controls
+                                    id="vid"
+                                    loop
+                                    autoPlay
+                                    className="z-[5] max-h-[250px] md:max-h-[350px] w-full"
+                                >
+                                    <source
                                         src={
                                             restaurantStyle?.banner_image &&
                                             restaurantStyle?.banner_image?.url
+                                                ? restaurantStyle?.banner_image
+                                                      ?.url
+                                                : ""
                                         }
                                         alt="banner"
                                         className="w-full h-full object-cover"
                                     />
-                                )}
-                            </>
-                        )}
+                                    Your browser does not support the video tag.
+                                </video>
+                            ) : (
+                                <></>
+                            )}
+                        </div>
                     </div>
                 ) : restaurantStyle?.banner_type === t("Slider") ||
                   restaurantStyle?.banner_type === "slider" ? (
