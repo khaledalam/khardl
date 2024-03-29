@@ -237,6 +237,7 @@ const OuterSidebarNav = ({ id }) => {
 
     return (
         <div
+            style={{ fontFamily: "cairo" }}
             ref={refOuterNav}
             className="w-full bg-white h-[100vh] flex flex-col items-center justify-between cursor-pointer"
         >

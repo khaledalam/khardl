@@ -23,8 +23,10 @@ import { MdLocationPin } from "react-icons/md";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useTranslation } from "react-i18next";
 import ConfirmationModal from "../../../../../confirmationModal";
+import AxiosInstance from "../../../../../../axios/axios";
+import { toast } from "react-toastify";
 
-const Places = ({ inputStyle }) => {
+const Places = ({ inputStyle, isCart, user }) => {
     const [libraries, _] = useState(["places"]);
     const Language = useSelector((state) => state.languageMode.languageMode);
     const { t } = useTranslation();
@@ -43,7 +45,7 @@ const Places = ({ inputStyle }) => {
             </div>
         );
     }
-    return <Map inputStyle={inputStyle} />;
+    return <Map isCart={isCart} user={user} inputStyle={inputStyle} />;
 };
 
 const convertToAddress = async (lat, lng) => {
@@ -60,9 +62,11 @@ const convertToAddress = async (lat, lng) => {
     });
 };
 
-function Map({ inputStyle }) {
+function Map({ inputStyle, isCart, user }) {
     const restuarantStyle = useSelector((state) => state.restuarantEditorStyle);
     const customerAddress = useSelector((state) => state.customerAPI.address);
+    const [isAddressChanged, setIsAddressChanged] = useState(false);
+    const { t } = useTranslation();
 
     const branches = restuarantStyle.branches;
     const filterBranch = branches?.filter(
@@ -99,7 +103,7 @@ function Map({ inputStyle }) {
         const lng = latLng.lng();
         dispatch(updateCustomerAddress({ lat: lat, lng: lng }));
         const addressText = await convertToAddress(lat, lng);
-
+        
         dispatch(
             updateCustomerAddress({
                 lat: lat,
@@ -107,6 +111,7 @@ function Map({ inputStyle }) {
                 addressValue: addressText,
             }),
         );
+        setIsAddressChanged(true);
     };
     const handleMapClick = async (event) => {
         const { latLng } = event;
@@ -126,6 +131,27 @@ function Map({ inputStyle }) {
         );
     };
 
+    const handleSetDefaultAddress = async () => {
+        try {
+            await AxiosInstance.post(`/user`, {
+                first_name: user.firstName,
+                last_name: user.lastName,
+                phone: user.phone,
+                address: customerAddress?.addressValue,
+                lat: customerAddress?.lat,
+                lng: customerAddress?.lng,
+            })
+                .then((r) => {
+                    toast.success(t("Address updated successfully"));
+                })
+                .finally((r) => {
+                    // setLoading(false);
+                });
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    };
+
     console.log("Center:", center);
     return (
         <div className="w-full ">
@@ -134,6 +160,9 @@ function Map({ inputStyle }) {
                     inputStyle={inputStyle}
                     inputRef={inputRef}
                     inputValueRef={inputValueRef}
+                    isCart={isCart}
+                    saveLocation={handleSetDefaultAddress}
+                    AddressChanged={isAddressChanged}
                 />
             </div>
 
@@ -170,10 +199,18 @@ function Map({ inputStyle }) {
     );
 }
 
-function PlacesAutoComplete({ inputStyle, inputRef, inputValueRef }) {
+function PlacesAutoComplete({
+    inputStyle,
+    inputRef,
+    inputValueRef,
+    isCart,
+    saveLocation,
+    AddressChanged,
+}) {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const { t } = useTranslation();
+    const [isAddressChanged, setIsAddressChanged] = useState(AddressChanged);
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
     const {
@@ -204,6 +241,7 @@ function PlacesAutoComplete({ inputStyle, inputRef, inputValueRef }) {
                 addressValue: address,
             }),
         );
+        setIsAddressChanged(true);
         clearSuggestions();
     };
     const handleAlert = (message) => {
@@ -220,11 +258,7 @@ function PlacesAutoComplete({ inputStyle, inputRef, inputValueRef }) {
             navigator.geolocation.getCurrentPosition(async (position) => {
                 let lat = position.coords.latitude;
                 let lng = position.coords.longitude;
-
-                dispatch(updateCustomerAddress({ lat: lat, lng: lng }));
-
                 const addressText = await convertToAddress(lat, lng);
-
                 dispatch(
                     updateCustomerAddress({
                         lat: lat,
@@ -232,6 +266,7 @@ function PlacesAutoComplete({ inputStyle, inputRef, inputValueRef }) {
                         addressValue: addressText,
                     }),
                 );
+                setIsAddressChanged(true);
             }, positionError);
         } else {
             handleAlert(
@@ -272,7 +307,7 @@ function PlacesAutoComplete({ inputStyle, inputRef, inputValueRef }) {
                     onChange={(e) => setValue(e.target.value)}
                     disabled={!ready}
                     className={inputStyle}
-                    placeholder={customerAddress?.addressValue}
+                    placeholder={t("Write custom address")}
                 />
                 <div
                     onClick={getPosition}
@@ -280,6 +315,16 @@ function PlacesAutoComplete({ inputStyle, inputRef, inputValueRef }) {
                 >
                     <MdLocationPin size={28} color="grey" />
                 </div>
+                {isCart && (AddressChanged || isAddressChanged) && (
+                    <div>
+                        <button
+                            onClick={() => saveLocation()}
+                            className="w-40 h-10 flex items-center justify-center rounded-lg p-1 border border-[text-gray-900] "
+                        >
+                            {t("Set default address")}
+                        </button>
+                    </div>
+                )}
             </div>
 
             <ComboboxPopover>
