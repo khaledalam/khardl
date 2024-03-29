@@ -362,7 +362,7 @@
     "Restaurant is not live yet.": "لم يتم تفعيل المطعم بعد",
     "Go To Login Restaurant Page": "الذهاب الي صفحة تسجيل الدخول للمطعم",
     "Main Khardl Website": "موقع خردل الرئيسي",
-    "delivery": "التوصيل",
+    "delivery": "توصيل",
     "Delivery": "التوصيل",
     "receipt": "الاستلام",
     "Receipt": "الاستلام",
@@ -497,8 +497,10 @@
     "SliderHintUpload": "يرجي رفع صورة ب تناسب ٤:١ و افضل مقاس هو ١٤٠ في ٣٥٠ *",
     "extras": "الاضافات",
     "Review Order Details": "تفاصيل الطلب",
-    "Custom Address": "اختر موقع التوصيل",
+    "Custom Address": "عنوان مخصص",
     "thereAreNoData": "السلة حاليا فارغة",
     "Before proceeding to checkout you must add some products to cart": "يجب عليك إضافة بعض المنتجات إلى سلة التسوق الخاصة بك",
-    "Subtotal": "المجموع الفرعي"
+    "Subtotal": "المجموع الفرعي",
+    "Set default address": "حفظ العنوان",
+    "Write custom address": "اكتب عنوان مخصص"
 }

@@ -45,6 +45,8 @@ const CartPage = () => {
         (state) => state.categoryAPI.cartItemsData,
     );
 
+    const customerAddress = useSelector((state) => state.customerAPI.address);
+
     const [paymentMethod, setPaymentMethod] = useState("pm-cod");
     const [deliveryType, setDeliveryType] = useState("dt-delivery");
     const [deliveryAddress, setDeliveryAddress] = useState(0);
@@ -52,6 +54,7 @@ const CartPage = () => {
     const [orderNotes, setOrderNotes] = useState("");
     const [coupon, setCoupon] = useState("");
     const [cart, setCart] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         setLoading(true);
@@ -101,7 +104,7 @@ const CartPage = () => {
     const fetchProfileData = async () => {
         try {
             const profileResponse = await AxiosInstance.get(`user`);
-            console.log("profileResponse >>>", profileResponse.data);
+            setUser(profileResponse.data.data);
             if (profileResponse.data.data.address) {
                 let userAddress = profileResponse.data.data.address;
                 setUserAddress(userAddress);
@@ -117,6 +120,7 @@ const CartPage = () => {
     };
 
     const handlePlaceOrder = async () => {
+        let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
         if (paymentMethod === "pm-cc") {
             GoSellElements.submit();
         } else {
@@ -133,13 +137,13 @@ const CartPage = () => {
                                 : "PICKUP",
                         notes: orderNotes,
                         couponCode: coupon,
-                        address: "test",
+                        address: orderAddress,
                     });
                     if (cartResponse.data) {
                         toast.success(
                             `${t("Order has been created successfully")}`,
                         );
-                        navigate(`/dashboard#orders`);
+                        //navigate(`/dashboard#orders`);
                     }
                 } catch (error) {
                     toast.error(error.response.data.message);
@@ -152,6 +156,8 @@ const CartPage = () => {
     };
 
     const cardPaymentCallbackFunc = async (response) => {
+        let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
+
         try {
             const redirect = await AxiosInstance.post(
                 `/orders/payment/redirect`,
@@ -160,6 +166,7 @@ const CartPage = () => {
                     delivery_type: deliveryType,
                     notes: orderNotes,
                     couponCode: coupon,
+                    address: orderAddress,
                     token_id: response.id,
                 },
             );
@@ -286,6 +293,7 @@ const CartPage = () => {
                                     <div className="mt-8">
                                         {deliveryType === "dt-delivery" && (
                                             <CartAddress
+                                                user={user}
                                                 userAddress={userAddress}
                                                 selectedDeliveryAddress={
                                                     deliveryAddress
@@ -312,7 +320,7 @@ const CartPage = () => {
                                             )}
                                         />
                                     </div>
-                                    <div className="cartDetailSection h-64 mt-8">
+                                    <div className="cartDetailSection mt-8">
                                         <h3 className="mb-4">
                                             {t("Payment Summary")}
                                         </h3>
@@ -324,13 +332,15 @@ const CartPage = () => {
                                                 ) + ` ${t("SAR")}`}
                                             </div>
                                         </div>
-                                        <div className="flex justify-between mt-4">
-                                            <div>{t("Delivery fee")}</div>
-                                            <div>
-                                                {cart?.delivery_fee +
-                                                    ` ${t("SAR")}`}
+                                        {deliveryType === "dt-delivery" && (
+                                            <div className="flex justify-between mt-4">
+                                                <div>{t("Delivery fee")}</div>
+                                                <div>
+                                                    {cart?.delivery_fee +
+                                                        ` ${t("SAR")}`}
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
                                         <div className="flex justify-between mt-4">
                                             <div>{t("Coupon Discount")}</div>
                                             <div>

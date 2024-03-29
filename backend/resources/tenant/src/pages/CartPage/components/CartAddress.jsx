@@ -3,22 +3,21 @@ import CartDetailSection from "./CartDetailSection";
 import Places from "../../../components/Customers/CustomersEditor/components/Dashboard//components/Places";
 
 const CartAddress = ({
-    userAddress,
+    user,
     isChecked,
     onChange,
     selectedDeliveryAddress,
 }) => {
     const { t } = useTranslation();
-
     return (
         <div className="addressSection">
             <h2>{t("Address")}</h2>
-            {userAddress?.addressValue && (
+            {user?.address?.addressValue && (
                 <CartDetailSection
-                    name={userAddress?.addressValue}
+                    name={user?.address?.addressValue}
                     onChange={() => onChange(0)}
                     isChecked={selectedDeliveryAddress === 0}
-                    displayName={userAddress?.addressValue}
+                    displayName={user?.address?.addressValue}
                 />
             )}
             <CartDetailSection
@@ -30,7 +29,7 @@ const CartAddress = ({
 
             {selectedDeliveryAddress === 1 && (
                 <div className="w-full mt-2 map">
-                    <Places />
+                    <Places isCart={true} user={user} />
                 </div>
             )}
         </div>
