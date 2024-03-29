@@ -63,9 +63,9 @@ class RestaurantStyle extends Model
 
             $new['type'] = $this->getFileType(pathinfo($image, PATHINFO_EXTENSION));
 
-            if ($image) {
-                $image .= '?ver=' . random_hash();
-            }
+//            if ($image) {
+//                $image .= '?ver=' . random_hash();
+//            }
             $new['url'] = $image;
             $images[] = $new;
         }
