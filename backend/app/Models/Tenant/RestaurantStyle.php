@@ -30,13 +30,13 @@ class RestaurantStyle extends Model
         $videoExtensions = ['mp4', 'avi', 'mov', 'wmv'];
 
         foreach ($imageExtensions as $imageExtension) {
-            if (strpos($imageExtension,  $url) != false) {
+            if (strpos($imageExtension, $url) != false) {
                 return 'image';
             }
         }
 
         foreach ($videoExtensions as $videoExtension) {
-            if (strpos($videoExtension,  $url) != false) {
+            if (strpos($videoExtension, $url) != false) {
                 return 'video';
             }
         }
@@ -44,7 +44,7 @@ class RestaurantStyle extends Model
 //        return 'image';
 
         // Default to 'unknown' or handle other types if needed
-        return 'unknown';
+        return $url;
     }
 
     public function getBannerImageAttribute()
