@@ -131,7 +131,7 @@ const ProductSection = ({ categories, isMobile }) => {
                                                                 ]
                                                             }
                                                             cartBgcolor={
-                                                                restaurantStyle?.categoryDetail_cart_color
+                                                                restaurantStyle?.page_color
                                                             }
                                                             amountColor={
                                                                 restaurantStyle?.price_color
