@@ -58,17 +58,17 @@ class RestaurantStyleService
         }
         if (isset($request->banner_image) && $request->banner_image) {
             $banner_image = tenant_asset(store_image($request->file('banner_image'), RestaurantStyle::STORAGE, 'banner_image'));
-//            if ($banner_image) {
-//                $banner_image .= '?ver=' . random_hash();
-//            }
+            if ($banner_image) {
+                $banner_image .= '?ver=' . random_hash();
+            }
             $data['banner_image'] = $banner_image;
         }
         if (isset($request->banner_images) && $request->banner_images) {
             foreach ($request->banner_images as $k => $image) {
                 $banner_image = tenant_asset(store_image($image, RestaurantStyle::STORAGE, 'banner_image_' . $k + 1));
-//                if ($banner_image) {
-//                    $banner_image .= '?ver=' . random_hash();
-//                }
+                if ($banner_image) {
+                    $banner_image .= '?ver=' . random_hash();
+                }
                 $banner_images[] = $banner_image;
 
             }
@@ -90,9 +90,9 @@ class RestaurantStyleService
 
             $data->logo_url = $data->logo_url ?: $data->logo;
 
-//            if ($data->logo_url) {
-//                $data->logo_url .= '?ver=' . random_hash();
-//            }
+            if ($data->logo_url) {
+                $data->logo_url .= '?ver=' . random_hash();
+            }
             // get branches of restaurant
             $data['branches'] = Branch::where('active',true)->get([
                 'name', 'id', 'lat', 'lng', 'preparation_time_delivery','delivery_availability', 'pickup_availability',

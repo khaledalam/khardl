@@ -24,42 +24,33 @@ class RestaurantStyle extends Model
         return $this->belongsTo(RestaurantUser::class);
     }
 
-    public function getFileType($url)
+    public function getFileType($extension)
     {
         $imageExtensions = ['png', 'jpg', 'jpeg','gif', 'webp'];
         $videoExtensions = ['mp4', 'avi', 'mov', 'wmv'];
 
-        foreach ($imageExtensions as $imageExtension) {
-            if (strpos($imageExtension, $url) != false) {
-                return 'image';
-            }
+        if (in_array($extension, $imageExtensions)) {
+            return 'image';
+        } elseif (in_array($extension, $videoExtensions)) {
+            return 'video';
         }
-
-        foreach ($videoExtensions as $videoExtension) {
-            if (strpos($videoExtension, $url) != false) {
-                return 'video';
-            }
-        }
-
-//        return 'image';
 
         // Default to 'unknown' or handle other types if needed
-        return $url;
+        return 'unknown';
     }
 
     public function getBannerImageAttribute()
     {
         $url = $this->attributes['banner_image'];
-
-        $type = $this->getFileType($url);
-
-//        if ($url) {
-//            $url .= '?ver=' . random_hash();
-//        }
+        if ($url) {
+            $url .= '?ver=' . random_hash();
+        }
 
         return [
             'url' => $url,
-            'type' => $type,
+            'type' => $this->getFileType(
+                pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION)
+            ),
         ];
     }
 
@@ -68,11 +59,11 @@ class RestaurantStyle extends Model
         $images = [];
         foreach (json_decode($this->attributes['banner_images']) as $image) {
 
-            $new['type'] = $this->getFileType($image);
+            $new['type'] = $this->getFileType(pathinfo(parse_url($image, PHP_URL_PATH), PATHINFO_EXTENSION));
 
-//            if ($image) {
-//                $image .= '?ver=' . random_hash();
-//            }
+            if ($image) {
+                $image .= '?ver=' . random_hash();
+            }
             $new['url'] = $image;
             $images[] = $new;
         }
