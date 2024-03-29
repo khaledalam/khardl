@@ -90,9 +90,9 @@ class RestaurantStyleService
 
             $data->logo_url = $data->logo_url ?: $data->logo;
 
-            if ($data->logo_url) {
-                $data->logo_url .= '?ver=' . random_hash();
-            }
+//            if ($data->logo_url) {
+//                $data->logo_url .= '?ver=' . random_hash();
+//            }
             // get branches of restaurant
             $data['branches'] = Branch::where('active',true)->get([
                 'name', 'id', 'lat', 'lng', 'preparation_time_delivery','delivery_availability', 'pickup_availability',

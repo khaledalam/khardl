@@ -17,7 +17,7 @@ class ItemResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'photo' => $this->photo ? ($this->photo . '?ver=' . random_hash()) : $this->photo,
+            'photo' => $this->photo,
             'price' => $this->price,
             'calories' => $this->calories,
             'name' => $this->name,
