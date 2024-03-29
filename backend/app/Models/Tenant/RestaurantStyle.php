@@ -41,7 +41,7 @@ class RestaurantStyle extends Model
             }
         }
 
-        return 'image';
+//        return 'image';
 
         // Default to 'unknown' or handle other types if needed
         return 'unknown';
@@ -68,7 +68,7 @@ class RestaurantStyle extends Model
         $images = [];
         foreach (json_decode($this->attributes['banner_images']) as $image) {
 
-            $new['type'] = $this->getFileType(pathinfo($image, PATHINFO_EXTENSION));
+            $new['type'] = $this->getFileType($image);
 
 //            if ($image) {
 //                $image .= '?ver=' . random_hash();
