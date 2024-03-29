@@ -26,7 +26,6 @@ class RestaurantStyle extends Model
 
     public function getFileType($extension)
     {
-
         $imageExtensions = ['png', 'jpg', 'jpeg','gif', 'webp'];
         $videoExtensions = ['mp4', 'avi', 'mov', 'wmv'];
 
@@ -44,7 +43,7 @@ class RestaurantStyle extends Model
     {
         $url = $this->attributes['banner_image'];
 
-        $type = $this->getFileType(pathinfo($this->attributes['banner_image'], PATHINFO_EXTENSION));
+        $type = $this->getFileType(pathinfo($url, PATHINFO_EXTENSION));
 
         if ($url) {
             $url .= '?ver=' . random_hash();
