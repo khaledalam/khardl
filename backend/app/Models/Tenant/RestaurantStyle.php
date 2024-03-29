@@ -45,9 +45,9 @@ class RestaurantStyle extends Model
 
         $type = $this->getFileType(pathinfo($url, PATHINFO_EXTENSION));
 
-        if ($url) {
-            $url .= '?ver=' . random_hash();
-        }
+//        if ($url) {
+//            $url .= '?ver=' . random_hash();
+//        }
 
         return [
             'url' => $url,
