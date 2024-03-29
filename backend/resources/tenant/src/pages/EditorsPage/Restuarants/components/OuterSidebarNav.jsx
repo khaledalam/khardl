@@ -266,7 +266,7 @@ const OuterSidebarNav = ({ id }) => {
                 {branches?.some((e) => e.pickup_availability === 1) ? (
                     <PrimarySelectWithIcon
                         imgUrl="shop"
-                        text={t("Pickup")}
+                        text={t("pickup")}
                         defaultValue={getPickUpDefaultVal()}
                         onChange={(value) => {
                             setSelectedPickBranch(value);
