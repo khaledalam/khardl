@@ -143,7 +143,7 @@ const CartPage = () => {
                         toast.success(
                             `${t("Order has been created successfully")}`,
                         );
-                        //navigate(`/dashboard#orders`);
+                        navigate(`/dashboard#orders`);
                     }
                 } catch (error) {
                     toast.error(error.response.data.message);
