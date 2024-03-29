@@ -250,12 +250,10 @@ class CartRepository
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],
-            'tap_information'=> [
-                'merchant_id'=>$settings->merchant_id ?? '',
-                'tap_customer_id'=>$this->cart?->user?->tap_customer_id,
-                "tap_public_key"=>env('TAP_PAYMENT_TECHNOLOGY_NEW_SECRET_KEY_LIVE',''),
-                'url_host'=>parse_url(request()->getSchemeAndHttpHost() , PHP_URL_HOST)
-            ],
+            // 'tap_information'=> [
+            //     'tap_customer_id'=>$this->cart->user->tap_customer_id,
+            //     'redirect'=>route('orders.payment')
+            // ],
             'address' => $this->cart->user->address
         ], $message);
     }
