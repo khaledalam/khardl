@@ -377,6 +377,7 @@
     "the-id-of-the-owner-of-manager" : "هوية المالك او المدير",
     "no-file-available" : "لا يوجد ملف متاح",
     "commercial-registration" : "التسجيل التجاري",
+    "commercial-registration-number" : "رقم التسجيل التجاري",
     "tax-number" : "الرقم الضريبي",
     "bank-certificate" : "شهادة بنكية",
     "national_address": "العنوان الوطني",
