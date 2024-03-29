@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { GiCardPickup } from "react-icons/gi";
+import { MdDeliveryDining } from "react-icons/md";
 
 const PrimarySelectWithIcon = ({
     imgUrl,
@@ -37,7 +38,11 @@ const PrimarySelectWithIcon = ({
         >
             <div className={` flex items-center gap-1  border-r `}>
                 <div className="w-[30px] h-[30px] rounded-xl flex items-center justify-center">
-                    <GiCardPickup />
+                    {imgUrl === "shop" ? (
+                        <GiCardPickup />
+                    ) : (
+                        <MdDeliveryDining />
+                    )}
                 </div>
                 <h3
                     className="capitalize pr-2 w-max"

@@ -265,8 +265,8 @@ const OuterSidebarNav = ({ id }) => {
                 {/* pick up */}
                 {branches?.some((e) => e.pickup_availability === 1) ? (
                     <PrimarySelectWithIcon
-                        imgUrl={shopIcon}
-                        text={t("Pickup")}
+                        imgUrl="shop"
+                        text={t("pickup")}
                         defaultValue={getPickUpDefaultVal()}
                         onChange={(value) => {
                             setSelectedPickBranch(value);
@@ -285,7 +285,7 @@ const OuterSidebarNav = ({ id }) => {
                 {/* delivery */}
                 {branches?.some((e) => e.delivery_availability === 1) ? (
                     <PrimarySelectWithIcon
-                        imgUrl={deliveryIcon}
+                        imgUrl="delivery"
                         text={t("Delivery")}
                         defaultValue={getDeliveryDefaultVal()}
                         onChange={(value) => {

@@ -97,8 +97,7 @@ export const RestuarantHomePage = () => {
 
     useEffect(() => {
         fetchResStyleData();
-        fetchCategoriesData().then(() => {
-        });
+        fetchCategoriesData().then(() => {});
     }, []);
 
     // let pickupFirstBranch =
@@ -142,7 +141,7 @@ export const RestuarantHomePage = () => {
             <div
                 style={{
                     backgroundColor: restaurantStyle?.page_color,
-                    fontFamily: restaurantStyle.text_fontFamily,
+                    fontFamily: "cairo",
                     minHeight: "calc(100vh - 230px)",
                 }}
             >
