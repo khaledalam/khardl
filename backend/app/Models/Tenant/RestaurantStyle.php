@@ -24,15 +24,21 @@ class RestaurantStyle extends Model
         return $this->belongsTo(RestaurantUser::class);
     }
 
-    public function getFileType($extension)
+    public function getFileType($url)
     {
         $imageExtensions = ['png', 'jpg', 'jpeg','gif', 'webp'];
         $videoExtensions = ['mp4', 'avi', 'mov', 'wmv'];
 
-        if (in_array($extension, $imageExtensions)) {
-            return 'image';
-        } elseif (in_array($extension, $videoExtensions)) {
-            return 'video';
+        foreach ($imageExtensions as $imageExtension) {
+            if (strpos('.' . $imageExtension,  $url) != false) {
+                return 'image';
+            }
+        }
+
+        foreach ($videoExtensions as $videoExtension) {
+            if (strpos('.' . $videoExtension,  $url) != false) {
+                return 'video';
+            }
         }
 
         // Default to 'unknown' or handle other types if needed
@@ -43,7 +49,7 @@ class RestaurantStyle extends Model
     {
         $url = $this->attributes['banner_image'];
 
-        $type = $this->getFileType(pathinfo($url, PATHINFO_EXTENSION));
+        $type = $this->getFileType($url);
 
 //        if ($url) {
 //            $url .= '?ver=' . random_hash();
