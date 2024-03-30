@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "primereact/card";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
@@ -67,6 +67,28 @@ const CartItem = ({ cartitem, onReload }) => {
         }
     };
 
+    const parseOptionItems = () => {
+        const allOptions = [];
+
+        if (cartitem.dropdown_options) {
+            allOptions.push(...cartitem.dropdown_options);
+        }
+
+        if (cartitem.selection_options) {
+            allOptions.push(...cartitem.selection_options);
+        }
+
+        let optionText = "";
+        const jsxOption = allOptions.map((option) => {
+            let optionKey = Object.keys(option[language])[0];
+            const oneOptionStr = `${optionKey} - ${option[language][optionKey]}`;
+
+            optionText += oneOptionStr;
+        });
+
+        return optionText;
+    };
+
     return (
         <div className="cartitem">
             <Card>
@@ -86,7 +108,7 @@ const CartItem = ({ cartitem, onReload }) => {
                                         ? cartitem.item.name.en
                                         : cartitem.item.name.ar}
                                 </h2>
-                                <p className="mt-4">{`${t("extras")}: `}</p>
+                                <p className="mt-4">{`${t("extras")}: ${parseOptionItems()}`}</p>
                             </div>
                         </div>
                         <InputTextarea

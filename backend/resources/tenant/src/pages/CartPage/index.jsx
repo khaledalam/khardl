@@ -27,6 +27,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import PaymentCardGoSell from "./components/PaymentCardGoSell";
 import { GoSellElements } from "@tap-payments/gosell";
 import "./index.scss";
+import OrderReviewSummary from "./components/OrderReviewSummary";
 
 const CartPage = () => {
     const { t } = useTranslation();
@@ -217,9 +218,10 @@ const CartPage = () => {
                                     </div>
                                 </div>
                                 <div className="sm:col-span-5 col-span-12 paymentDetails p-4 mt-6 sm:mt-0">
-                                    {/* <h2>{t("Review Order Details")}</h2>
-                            <div className="cartDetailSection h-24 mt-8 invisible"></div> */}
-                                    <div className="cartDetailSection h-36xw">
+                                    <div className="cartDetailSection mt-6">
+                                        <OrderReviewSummary cart={cart} />
+                                    </div>
+                                    <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Payment Method")}</h3>
                                         {cart.payment_methods.map((method) => {
                                             let name =
