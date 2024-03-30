@@ -36,7 +36,7 @@
                                 <div class="card-body mx-md-4 pb-5">
                                     <div class="text-center">
                                         <div class="logo">
-                                            <img src="{{ global_asset('img/logo.png') }}" style="width: 185px;"
+                                            <img src="{{ global_asset('images/Logo.webp') }}" style="width: 185px;"
                                                 alt="logo">
 
                                         </div>

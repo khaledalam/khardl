@@ -27,7 +27,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                     <li class="nav-item">
-                        <a href="{{ url('/') }}"><img class="nav-logo" src="{{asset('img/logo.png')}}"
+                        <a href="{{ url('/') }}"><img class="nav-logo" src="{{asset('images/Logo.webp')}}"
                                 alt="logo"></a>
                     </li>
                     <li class="nav-item">

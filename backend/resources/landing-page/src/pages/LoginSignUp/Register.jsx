@@ -102,8 +102,7 @@ const Register = () => {
             password: data.password,
             c_password: data.c_password,
             terms_and_policies: data.terms_and_policies,
-             dob: data.dob,
-             restaurant_name_ar: data.restaurant_name_ar
+            restaurant_name_ar: data.restaurant_name_ar
          });
          console.log(response.data);
          toast.success(`${t('Account successfully created')}`)
@@ -339,26 +338,6 @@ const Register = () => {
                                        </span>
                                     )}
                                  </div>
-
-                                  {/* Date of birth Input */}
-                                  <div>
-                                      <h4 className='mb-2 ms-2 text-[13px] font-semibold'>
-                                          {t('Date of birth')}  <span className="text-red-500">*</span>
-                                      </h4>
-                                      <input
-                                          type='date'
-                                          className={`w-[100%] mt-0 p-[10px] px-[16px] max-[540px]:py-[15px] border-none rounded-full bg-[var(--third)]`}
-                                          placeholder={t('Date of birth')}
-                                          {...register('dob', {
-                                              required: true,
-                                          })}
-                                      />
-                                      {errors.dob && (
-                                          <span className='text-red-500 text-xs mt-1 ms-2'>
-                                          {errors.dob.message || t('Date of birth Error')}
-                                       </span>
-                                      )}
-                                  </div>
 
                                  {/* Password Input */}
                                  <div className='relative'>

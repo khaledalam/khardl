@@ -34,6 +34,7 @@ class CreateTenantAction
                 'restaurant_name'=>$domain,
                 'restaurant_name_ar'=>$user->restaurant_name_ar,
                 "password" => $user->password,
+                'mapper_hash' => generateToken() // used for order_id prefix
             ]);
             $domain = Domain::create([
                 'domain' => $domain,
@@ -51,6 +52,7 @@ class CreateTenantAction
                 'restaurant_name'=>$domain,
                 'restaurant_name_ar'=>$user->restaurant_name_ar,
                 "password" => $user->password,
+                'mapper_hash' => generateToken() // used for order_id prefix
             ]);
         }
 

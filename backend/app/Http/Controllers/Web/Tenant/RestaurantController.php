@@ -687,16 +687,15 @@ class RestaurantController extends BaseController
     }
     public function addCategory(Request $request, $branchId)
     {
-        $categoriesCount = Category::where([
+        $categoriesCountAll = Category::where([
             ['branch_id', '=', $branchId],
-            ['sort', '=', $request->sort]
         ])->count();
 
         $validator = Validator::make($request->all(), [
             'name_en' => 'required|string',
             'name_ar' => 'required|string',
             'new_category_photo' => 'nullable',
-            'sort' => 'nullable|int|min:1|max:' . $categoriesCount + 1
+            'sort' => 'nullable|int|min:1|max:' . $categoriesCountAll + 1
         ]);
 
 
@@ -726,7 +725,7 @@ class RestaurantController extends BaseController
         Category::create([
             'name' => trans_json($request->input('name_en'), $request->input('name_ar')),
             'photo' => $filename ? tenant_asset('categories/' . $filename) : null,
-            'sort' =>  $categoriesCount + 1,
+            'sort' =>  $categoriesCountAll + 1,
             'user_id' => $userId,
             'branch_id' => $branchId,
             'created_at' => now(),

@@ -128,7 +128,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="/register/?ref={{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $promoter->url }}</a>
+                                                    <a href="/register?ref={{ $promoter->url }}" target="_blank" class="text-dark fw-bolder text-hover-primary d-block fs-6">{{ $promoter->url }}</a>
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-light-success fw-bolder px-4 py-3">{{ $promoter->entered }}</span>

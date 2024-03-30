@@ -326,29 +326,49 @@ new DataTree({
                     cancelButtonText: '{{ __('no-cancel') }}',
                     html: `
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option1" name="options[]" value="commercial_registration">
-                            <label class="form-check-label" for="option1">{{ __('commercial_registration') }}</label>
+                            <input type="checkbox" class="form-check-input" id="commercial_registration" name="options[]" value="commercial_registration">
+                            <label class="form-check-label" for="commercial_registration">{{ __('commercial-registration') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option2" name="options[]" value="identity_of_owner_or_manager">
-                            <label class="form-check-label" for="option2">{{ __('identity_of_owner_or_manager') }}</label>
+                            <input type="checkbox" class="form-check-input" id="commercial_registration_number" name="options[]" value="commercial_registration_number">
+                            <label class="form-check-label" for="commercial_registration_number">{{ __('commercial-registration-number') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option3" name="options[]" value="tax_registration_certificate">
-                            <label class="form-check-label" for="option3">{{ __('tax-number') }}</label>
+                            <input type="checkbox" class="form-check-input" id="tax_registration_certificate" name="options[]" value="tax_registration_certificate">
+                            <label class="form-check-label" for="tax_registration_certificate">{{ __('tax-number') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="bank_certificate">
-                            <label class="form-check-label" for="option4">{{ __('bank-certificate') }}</label>
+                            <input type="checkbox" class="form-check-input" id="bank_certificate" name="options[]" value="bank_certificate">
+                            <label class="form-check-label" for="bank_certificate">{{ __('bank-certificate') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option4" name="options[]" value="national_address">
-                            <label class="form-check-label" for="option4">{{ __('national_address') }}</label>
+                            <input type="checkbox" class="form-check-input" id="bank_name" name="options[]" value="bank_name">
+                            <label class="form-check-label" for="bank_name">{{ __('Bank name') }}</label>
                         </div>
                         <div class="form-check my-2">
-                            <input type="checkbox" class="form-check-input" id="option5" name="options[]" value="others">
-                            <label class="form-check-label" for="option5">{{ __('others') }}</LABEL>
-                        </DIV>
+                            <input type="checkbox" class="form-check-input" id="IBAN" name="options[]" value="IBAN">
+                            <label class="form-check-label" for="IBAN">{{ __('IBAN') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="identity_of_owner_or_manager" name="options[]" value="identity_of_owner_or_manager">
+                            <label class="form-check-label" for="identity_of_owner_or_manager">{{ __('identity_of_owner_or_manager') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="national_id_number" name="options[]" value="national_id_number">
+                            <label class="form-check-label" for="national_id_number">{{ __('National ID') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="dob" name="options[]" value="dob">
+                            <label class="form-check-label" for="dob">{{ __('Date of birth') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="national_address" name="options[]" value="national_address">
+                            <label class="form-check-label" for="national_address">{{ __('national_address') }}</label>
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" id="others" name="options[]" value="others">
+                            <label class="form-check-label" for="others">{{ __('others') }}</LABEL>
+                        </div>
                     `,
                     preConfirm: function() {
                         var selectedOptions = [];

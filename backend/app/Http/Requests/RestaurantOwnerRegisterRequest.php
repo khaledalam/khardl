@@ -41,8 +41,7 @@ class RestaurantOwnerRegisterRequest extends FormRequest
                 'string',
                 'regex:/^[0-9\p{Arabic}\s]+$/u',
             ],
-
-            'dob' => 'required|date_format:Y-m-d'
+            'dob' => 'nullable|date_format:Y-m-d'
         ];
     }
 

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
-    <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}" />
-    <link rel="icon" href="{{ global_asset('img/logo.png')}}" />
+    <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
+    <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}" />
+    <link rel="icon" href="{{ global_asset('images/Logo.webp')}}" />
     <link href="{{ global_asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
     <title>{{ __('Promoters') }}</title>
     <style>
@@ -65,7 +65,7 @@
                     </td>
                     <td>
                         <h4 style="display: inline-block">
-                            <a href="/register/?ref={{ $promoter->url }}" target="_blank" class="text-primary fw-bolder text-hover-primary ">
+                            <a href="/register?ref={{ $promoter->url }}" target="_blank" class="text-primary fw-bolder text-hover-primary ">
                                 {{ __('Click here') }}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5" />

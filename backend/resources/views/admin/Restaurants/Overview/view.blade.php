@@ -232,7 +232,7 @@
                         <!--begin::Col-->
                         <div class="col-lg-8">
                             <span class="fw-bolder fs-6 text-gray-800">
-                                <a href="{{ $restaurant->route('home') }}">
+                                <a href="{{ $restaurant->route('home') }}" target="_blank">
                                     <p class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1">{{$restaurant->primary_domain->domain}} <i class="fas fa-external-link-alt"></i></p>
                                 </a>
                             </span>
@@ -301,15 +301,7 @@
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-lg-8 d-flex align-items-center">
-                            {{-- @if($restaurant->isApproved == 0)
-                                <span class="badge badge-warning">{{ __('pending') }}</span> --}}
-                            @if ($is_live)
-                            <span class="badge badge-success">{{ __('active') }}</span>
-                            @elseif($restaurant->user->isRejected())
-                                <span class="badge badge-danger">{{ __($restaurant->user->status) }}</span>
-                            @else
-                                <span class="badge badge-info">{{ __($restaurant->user->status) }}</span>
-                            @endif
+                            @include('components.restaurant-status-badge')
                         </div>
                         <!--end::Col-->
                     </div>

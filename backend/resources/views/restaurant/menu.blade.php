@@ -152,7 +152,7 @@
                                                 </div>
                                                 <div class="tab-pane fade" id="sort">
                                                     <label>{{__('sort')}}</label>
-                                                    <input type="number" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
+                                                    <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
                                                 </div>
                                                 <div class="d-flex justify-content-center">
                                                     <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('save') }}</button>

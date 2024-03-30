@@ -14,9 +14,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->date('dob')->nullable();
-            $table->string('restaurant_name_ar')->nullable();
+        Schema::table('trader_requirements', function (Blueprint $table) {
+            $table->string('bank_name')->nullable()->change();
         });
     }
 
@@ -25,8 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['dob', 'restaurant_name_ar']);
+        Schema::table('trader_requirements', function (Blueprint $table) {
+            $table->string('bank_name')->change();
         });
     }
 };

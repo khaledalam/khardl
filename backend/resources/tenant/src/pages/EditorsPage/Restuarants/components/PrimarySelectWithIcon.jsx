@@ -1,6 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import { GiCardPickup } from "react-icons/gi";
+import { MdDeliveryDining } from "react-icons/md";
+
 const PrimarySelectWithIcon = ({
     imgUrl,
     text,
@@ -33,21 +36,18 @@ const PrimarySelectWithIcon = ({
             style={{ borderColor: restuarantStyle?.categoryDetail_cart_color }}
             className={`w-[90%] mx-auto flex flex-row gap-3 bg-neutral-100 rounded-lg border  items-center cursor-pointer `}
         >
-            <div
-                style={{
-                    backgroundColor: restuarantStyle?.categoryDetail_cart_color,
-                    borderColor: restuarantStyle?.categoryDetail_cart_color,
-                }}
-                className={` flex items-center gap-1  border-r `}
-            >
-                <div className="w-[50px] h-[50px] rounded-xl flex items-center justify-center">
-                    <img
-                        src={imgUrl}
-                        alt="deliveryIcon"
-                        style={{ filter: "invert(1)" }}
-                    />
+            <div className={` flex items-center gap-1  border-r `}>
+                <div className="w-[30px] h-[30px] rounded-xl flex items-center justify-center">
+                    {imgUrl === "shop" ? (
+                        <GiCardPickup />
+                    ) : (
+                        <MdDeliveryDining />
+                    )}
                 </div>
-                <h3 className="capitalize pr-2 w-max" style={{ color: "#fff" }}>
+                <h3
+                    className="capitalize pr-2 w-max"
+                    style={{ color: "#000000" }}
+                >
                     {text}
                 </h3>
             </div>

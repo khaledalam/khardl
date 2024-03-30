@@ -28,6 +28,7 @@
         border-width: 1px;
         border-radius: 7px;
         height: 40px;
+        padding: 0 10px;
     }
 
     textarea {
@@ -66,4 +67,21 @@
     background: var(--myColor);
     margin-top: 15px;
     color: white;
+}
+
+.tap-payments-notification-title {
+    padding: 0px;
+}
+
+.tap-payments-notification-title.tap-payments-notification-title-centered div {
+    text-align: center !important;
+    line-height: 40px;
+}
+
+.tap-payments-options.tap-payments-options-close-only a {
+    margin-top: 10px;
+}
+
+.tap-payments-options.tap-payments-options-close-only:dir(rtl) {
+    margin-top: 0;
 }

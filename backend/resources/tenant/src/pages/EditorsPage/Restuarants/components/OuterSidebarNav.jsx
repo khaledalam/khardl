@@ -237,6 +237,7 @@ const OuterSidebarNav = ({ id }) => {
 
     return (
         <div
+            style={{ fontFamily: "cairo" }}
             ref={refOuterNav}
             className="w-full bg-white h-[100vh] flex flex-col items-center justify-between cursor-pointer"
         >
@@ -265,8 +266,8 @@ const OuterSidebarNav = ({ id }) => {
                 {/* pick up */}
                 {branches?.some((e) => e.pickup_availability === 1) ? (
                     <PrimarySelectWithIcon
-                        imgUrl={shopIcon}
-                        text={t("PICKUP")}
+                        imgUrl="shop"
+                        text={t("pickup")}
                         defaultValue={getPickUpDefaultVal()}
                         onChange={(value) => {
                             setSelectedPickBranch(value);
@@ -285,7 +286,7 @@ const OuterSidebarNav = ({ id }) => {
                 {/* delivery */}
                 {branches?.some((e) => e.delivery_availability === 1) ? (
                     <PrimarySelectWithIcon
-                        imgUrl={deliveryIcon}
+                        imgUrl="delivery"
                         text={t("Delivery")}
                         defaultValue={getDeliveryDefaultVal()}
                         onChange={(value) => {
