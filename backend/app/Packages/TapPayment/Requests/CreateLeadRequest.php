@@ -24,7 +24,7 @@ class CreateLeadRequest  extends FormRequest
             'brand.channel_services.0.channel' => 'required|string',
             'brand.channel_services.0.address' => 'required|string',
 
-            'brand.logo'=>"required|mimes:jpeg,bmp,png,gif,svg,pdf",
+            'brand.logo'=>"nullable|mimes:jpeg,bmp,png,gif,svg,pdf",
 
             'brand.operations.sales.currency' => 'required|string',
 
@@ -32,8 +32,9 @@ class CreateLeadRequest  extends FormRequest
             'entity.is_licensed' => 'nullable|boolean',
 
             'wallet.bank.name' => 'required|string',
-            'wallet.bank.account.number' => 'required|string',
-//            'wallet.bank.account.iban' => 'required|string', // fetch from backend reg. step-2
+            'wallet.bank.account.number' => 'nullable|string',
+            'wallet.bank.account.swift' => 'nullable|string',
+            'wallet.bank.account.iban' => 'nullable|string', // fetch from backend reg. step-2
             'wallet.bank.account.name' => 'required|string',
             'wallet.bank.documents' => 'required|array',
             'wallet.bank.documents.*.type' => 'required|string',
@@ -84,7 +85,7 @@ class CreateLeadRequest  extends FormRequest
                         'currency' => 'SAR',
                     ],
                 ],
-                'logo'=>$this->brand['logo'] ?? null,
+              
                 "terms"=> [
                     [
                         "term"=> "general",
@@ -116,6 +117,7 @@ class CreateLeadRequest  extends FormRequest
                     "account"=>[
                         "number"=> $this->wallet['bank']['account']['number'] ?? null,
                         "iban"=> $this->wallet['bank']['account']['iban'] ?? null,
+                        "swift"=> $this->wallet['bank']['account']['swift'] ?? null,
                         "name"=> $this->wallet['bank']['account']['name'] ?? null,
                     ],
                     'documents'=>[
@@ -181,6 +183,11 @@ class CreateLeadRequest  extends FormRequest
                    ]
                 ]
             ];
+        }
+        if($this->brand['logo'] ?? null){
+            $$defaults['brand'] = array_merge($defaults['brand'], [
+                'logo'=>$this->brand['logo']
+            ]);
         }
 
         $this->replace($defaults);

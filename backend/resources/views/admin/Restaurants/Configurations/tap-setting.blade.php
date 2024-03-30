@@ -15,7 +15,7 @@
     <!--begin::Content-->
     <div class="container content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
         <!--begin::Post-->
-        <form id="kt_modal_new_target_form" class="form card"  method="POST" enctype="multipart/form-data" action="{{route('tap.payments_submit_lead')}}">
+        <form id="kt_modal_new_target_form" class="form card"  method="POST" enctype="multipart/form-data" action="{{route('admin.tap.sign-new-lead',['tenant'=>$restaurant->id])}}">
             @csrf
 
             <ul class="nav nav-tabs fs-5" id="myTab" role="tablist" style="border-radius: 10%" >
@@ -75,11 +75,11 @@
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__('Restaurant Logo')}}</span>
+                                    <span>{{__('Restaurant Logo')}}</span>
                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" ></i>
                                 </label>
                                 <!--end::Label-->
-                                <input type="file" class="form-control form-control-solid" required  name="brand[logo]" placeholder="Enter Target Title"  />
+                                <input type="file" class="form-control form-control-solid"   name="brand[logo]" placeholder="Enter Target Title"  />
                             </div>
 
                             <div id="entity"  style="display: none;">
@@ -95,7 +95,7 @@
 
                                     </label>
                                     <!--end::Label-->
-                                    <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number')}}" />
+                                    <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number' ?? $traderRegistrationRequirement->commercial_registration )}}" />
                                 </div>
                                 <div class="d-flex flex-column mb-8 fv-row">
                                     <!--begin::Label-->
@@ -171,34 +171,39 @@
                                 <!--end::Label-->
                                 <select id="countrySelect" class="form-select" name="user[nationality]"></select>
                             </div>
-                            <div class="d-flex flex-column mb-8 fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__("National ID")}}</span>
-                                </label>
-                                <!--end::Label-->
-                                <input type="text" class="form-control" placeholder="{{__('National ID')}}" name="user[identification][number]" value="{{old('user.identification.number')}}" />
-                            </div>
+                           
                             <!--end::Input group-->
 
                             <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8 fv-row">
-                                <!--begin::Label-->
-                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__("Phone Number")}}</span>
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                        <span class="required">{{__("Phone Number")}}</span>
 
-                                </label>
-                                <!--end::Label-->
+                                    </label>
+                                    <!--end::Label-->
 
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text border-left " style="border-radius: 0">
-                                        <input type="text" readonly  style="width: 40px;border:0;background-color:#f5f8fa" value="966">
-                                    </span>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text border-left " style="border-radius: 0">
+                                            <input type="text" readonly  style="width: 40px;border:0;background-color:#f5f8fa" value="966">
+                                        </span>
+                                        </div>
+                                        <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($RO->phone,3)}}" />
                                     </div>
-                                    <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($RO->phone,3)}}" />
-                                </div>
-                            </div>
+                                    <div class="d-flex flex-column mb-8 fv-row">
+                                       <!--begin::Label-->
+                                       <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                           <span class="required">{{__("This Number used In")}}</span>
+
+                                       </label>
+                                       <!--end::Label-->
+                                       <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">
+                                           <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
+                                           <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
+                                       </select>
+                                   </div>
+                            </div> 
 
                         <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8 fv-row">
@@ -211,7 +216,64 @@
 
                                 <input type="email" class="form-control" placeholder="{{__('Email')}}" name="user[email][address]" value="{{old('user.email.0.address') ?? $RO->email}}" />
                             </div>
+                        <div class="d-flex flex-column mb-8 fv-row">
+                             <!--begin::Label-->
+                             <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                 <span class="required">{{__("This Email used In")}}</span>
 
+                             </label>
+                             <!--end::Label-->
+                             <select class="form-select mb-2" data-placeholder="test" name="user[email][type]" >
+                                 <option value="HOME" {{old('user.email.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
+                                 <option value="WORK"  {{old('user.email.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
+                             </select>
+                         </div>
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                 
+    
+                                <!--end::Label-->
+                                <div class="d-flex flex-column mb-8 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="countrySelect">
+                                        <span class="required">{{__('Country of origin')}}</span>
+    
+                                    </label>
+                                    <!--end::Label-->
+                                    <select id="countrySelect2" class="form-select"  placeholder="{{ __('country') }}" name="user[birth][country]"></select>
+                                </div>
+                                <!--begin::Input group-->
+                                <div class="d-flex flex-column mb-8 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                        {{__("City")}}
+    
+                                    </label>
+                                    <!--end::Label-->
+                                    <input type="text" class="form-control" placeholder="{{ __('City') }}" name="user[birth][city]" value="{{old('user.birth.city')}}" />
+                                </div>
+                                <div class="d-flex flex-column mb-8 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                        <span class="required">{{__("National ID")}}</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <input type="text" class="form-control" placeholder="{{__('National ID')}}" name="user[identification][number]" value="{{old('user.identification.number')}}" />
+                                </div>
+                                <!--begin::Input group-->
+                                <div class="d-flex flex-column mb-8 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                        <span class="required">{{__("Date of birth")}}</span>
+    
+                                    </label>
+                                    <!--end::Label-->
+                                    <input type="date" name="user[birth][date]" class="form-control mb-2" value="{{ old('user.birth.date') }}" />
+                                    <small class="text-info">{{__('The date of birth must match the National ID number')}}</small>
+                                </div>
+    
+    
+                            </div>
 
                         </div>
                     </div>
@@ -221,7 +283,11 @@
 
 
                         <div class="col-md-12">
-                          
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
+                                <span class="">{{__('Bank Name')}}<span class="text-danger h4"> * </span></span>
+                            </label>
+                            <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')}}" /><br />
+
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
                                 <span class="">{{__('Company Name')}}<span class="text-danger h4"> * </span></span>
                             </label>
@@ -230,6 +296,10 @@
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                                 <span class="">{{__('Account number')}}<span class="text-danger h4"> * </span></span>
                             </label>
+                            <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.iban') ?? $traderRegistrationRequirement->IBAN}}" /><br/>
+                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
+                                <span class="">{{__('Bank IBAN')}}<span class="text-danger h4"> * </span></span>
+                            </label>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $traderRegistrationRequirement->IBAN}}" /><br/>
 
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
@@ -237,11 +307,7 @@
                             </label>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][swift]" value="{{old('wallet.bank.account.swift')}}" /><br/>
 
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
-                                <span class="">{{__('Bank Name')}}<span class="text-danger h4"> * </span></span>
-                            </label>
-                            <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')}}" /><br />
-
+                           
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
                                 <h2 class="bold">{{__("Bank Statement")}}</h2>
 
@@ -365,27 +431,35 @@
             .then(data => {
                 // Populate the select element with options
                 let countrySelect = document.getElementById('countrySelect');
+                let countrySelect2 = document.getElementById('countrySelect2');   
                 data.forEach((country) => {
 
-                    let option = document.createElement('option');
+               
 
-                    option.value = country.alpha2_code;
-                    option.text = (lang == 'en') ? country.english_name : country.arabic_name;
+                let option = document.createElement('option');
+                let option2 = document.createElement('option');
 
-                    
-                    if ('{{ old("user.birth.country") }}' || '{{ old("user.nationality") }}') {
-                        if (country.alpha2_code == '{{ old("user.nationality") }}') {
-                            option.selected = true;
-                        }
-                    
-                    } else {
-                        if (country.alpha2_code == 'SA') {
-                            option.selected = true;
-                        }
+                option.value = country.alpha2_code;
+                option.text = (lang == 'en') ? country.english_name : country.arabic_name;
+
+                option2.value = country.alpha2_code;
+                option2.text = (lang == 'en') ? country.english_name : country.arabic_name;
+                if ('{{ old("user.birth.country") }}' || '{{ old("user.nationality") }}') {
+                    if (country.alpha2_code == '{{ old("user.nationality") }}') {
+                        option.selected = true;
                     }
+                    if (country.alpha2_code == '{{ old("user.birth.country") }}') {
+                        option2.selected = true;
+                    }
+                } else {
+                    if (country.alpha2_code == 'SA') {
+                        option.selected = true;
+                        option2.selected = true;
+                    }
+                }
 
-                    countrySelect.add(option);
-                    
+                countrySelect.add(option);
+                countrySelect2.add(option2);
                 });
             })
             .catch(error => console.error('Error fetching country data:', error));
@@ -404,10 +478,10 @@
     });
     document.getElementById('kt_modal_new_target_submit').addEventListener('click', function(event) {
         event.preventDefault();
-        {{--if (!areCheckboxesChecked()) {--}}
-        {{--    alert(`{{__('Please check all terms and conditions before submitting.')}}`);--}}
-        {{--    return ;--}}
-        {{--}--}}
+        // if (!areCheckboxesChecked()) 
+        //  alert(`{{__('Please check all terms and conditions before submitting.')}}`);
+        //     return ;
+       
         Swal.fire({
             title: '{{ __('are-you-sure') }}',
             text: "{{ __('you-wont-be-able-to-undo-this') }}",

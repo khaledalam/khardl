@@ -224,23 +224,25 @@ class TapController extends Controller
 
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
-    public function payments_submit_lead_get(){
-        $user = Auth::user();
-        $restaurant_name = Setting::first()->restaurant_name;
-        $tenant_id = tenant()->id;
-        $iban = '';
-        $facility_name = '';
-        tenancy()->central(function () use ($tenant_id, &$iban, &$facility_name) {
-            $user = Tenant::find($tenant_id)->user;
-            $iban = $user->traderRegistrationRequirement?->IBAN;
-            $facility_name = $user->traderRegistrationRequirement?->facility_name;
-        });
-        return view('restaurant.payments_tap_create_lead',compact('iban','facility_name','restaurant_name','user'));
-    }
+    // public function payments_submit_lead_get(){
+    //     $user = Auth::user();
+    //     $restaurant_name = Setting::first()->restaurant_name;
+    //     $tenant_id = tenant()->id;
+    //     $iban = '';
+    //     $facility_name = '';
+    //     tenancy()->central(function () use ($tenant_id, &$iban, &$facility_name) {
+    //         $user = Tenant::find($tenant_id)->user;
+    //         $iban = $user->traderRegistrationRequirement?->IBAN;
+    //         $facility_name = $user->traderRegistrationRequirement?->facility_name;
+    //     });
+    //     return view('restaurant.payments_tap_create_lead',compact('iban','facility_name','restaurant_name','user'));
+    // }
+
+    // Central domain
     public function payments_submit_lead(CreateLeadRequest $request) {
 
         $data = $request->all();
-
+   
         $tenant_id = tenant()->id;
         $userBankIban = '';
         tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
