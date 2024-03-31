@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Tenant\Order;
 use Illuminate\Support\Str;
 use App\Rules\UniqueSubdomain;
 use App\Http\Requests\PhoneValidation;
@@ -35,8 +36,25 @@ class RestaurantOwnerRegisterRequest extends FormRequest
             'phone' => 'required|regex:/^(966)?\d{9}$/|unique:users',
             'terms_and_policies' => 'accepted',
             'restaurant_name' => ['required','string','min:3','max:255',new UniqueSubdomain()],
+            'restaurant_name_ar' => [
+                'required',
+                'string',
+                'regex:/^[0-9\p{Arabic}\s]+$/u',
+            ],
+            'dob' => 'nullable|date_format:Y-m-d'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'restaurant_name_ar.required' => __('Restaurant arabic name is required'),
+            'restaurant_name_ar.regex' => __('Restaurant arabic name is invalid'),
+            'dob.required' => __('Date of birth is required'),
+            'dob.regex' => __('Date of birth is invalid'),
+        ];
+    }
+
     protected function prepareForValidation()
     {
         $this->validatePhone();

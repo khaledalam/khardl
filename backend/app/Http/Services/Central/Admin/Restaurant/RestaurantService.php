@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Services\tenant\Restaurant\RestaurantService as TenantRestaurantService;
 use App\Models\ROSubscription;
+use App\Models\Tenant\RestaurantUser;
 
 class RestaurantService
 {
@@ -21,7 +22,7 @@ class RestaurantService
     {
         $query = Tenant::query()->with('primary_domain')
             ->whenSearch($request['search'] ?? null);
-        $restaurants = $query->get();
+        $restaurants = $query->orderBy('created_at','DESC')->get();
         $totalRestaurantsCount = count($restaurants);
 
         // TODO @todo make sub active or not tag with search
@@ -82,18 +83,30 @@ class RestaurantService
             $cervo,
             $streetline,
             $subscription,
-            $setting
+            $setting,
+            $RO,
+            $restaurant_name
         ] = $this->getRestaurantData($restaurant);
 
         $owner = $restaurant->user;
         $user = Auth::user();
+        $traderRegistrationRequirement = $restaurant->user->traderRegistrationRequirement;
         $compareEarningResult = $dailyEarning > $last7DaysAverageEarning ? 'higher' : 'lower';
         $compareOrderResult = $dailyOrders > $last7DaysAverageOrders ? 'higher' : 'lower';
+            
+        $path = storage_path("app/private/user_files/{$restaurant->user?->id}");
+        if (!file_exists($path)) {
+            $filesCount = 0;
+        } else {
+            $filesCount = count(\File::allFiles($path));
+        }
+
         return view(
             'admin.Restaurants.Layout.view',
             compact(
                 'restaurant',
                 'user',
+                'filesCount',
                 'logo',
                 'is_live',
                 'owner',
@@ -117,13 +130,17 @@ class RestaurantService
                 'cervo',
                 'streetline',
                 'subscription',
-                'setting'
+                'setting',
+                'traderRegistrationRequirement',
+                'RO',
+                'restaurant_name'
             )
         );
     }
 
     protected function getRestaurantData(Tenant $restaurant)
     {
+    
         $data = $restaurant->run(function ($restaurant) {
             $tenantRestaurantService = new TenantRestaurantService();
             $info = $restaurant->info(false);
@@ -147,6 +164,10 @@ class RestaurantService
             $streetline = DeliveryCompany::where("module", class_basename(StreetLine::class))->first();
             $subscription = ROSubscription::first();
             $setting = Setting::first();
+            $RO =  RestaurantUser::first();
+            $restaurant_name = $setting->restaurant_name;
+       
+           
             return [
                 $info['logo'],
                 $info['is_live'],
@@ -170,7 +191,9 @@ class RestaurantService
                 $cervo,
                 $streetline,
                 $subscription,
-                $setting
+                $setting,
+                $RO,
+                $restaurant_name
             ];
         });
 

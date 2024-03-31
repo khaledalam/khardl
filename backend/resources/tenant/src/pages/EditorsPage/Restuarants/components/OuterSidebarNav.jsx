@@ -139,8 +139,6 @@ const OuterSidebarNav = ({ id }) => {
                     }),
                 );
 
-                console.log(">> branch_id >>", branch_id);
-
                 if (!branch_id) {
                     branch_id =
                         restaurantCategoriesResponse.data?.data[0]?.branch?.id;
@@ -177,13 +175,13 @@ const OuterSidebarNav = ({ id }) => {
     }, [selectedPickUpBranch, selectedDeliveryBranch]);
 
     const handleRedirect = (role) => {
-        console.log(role);
-        if (role == "Customer") {
+        if (role.toLowerCase() == "customer") {
             navigate("/dashboard#Dashboard");
-        } else if (role == "Driver") {
+        } else if (role.toLowerCase() == "driver") {
             window.open(window.location.href + "orders-all");
+        } else if (role.toLowerCase() == "worker") {
+            window.open(window.location.href + "branches");
         } else {
-            console.log(window.location.href);
             window.open(window.location.href + "summary");
         }
     };
@@ -239,6 +237,7 @@ const OuterSidebarNav = ({ id }) => {
 
     return (
         <div
+            style={{ fontFamily: "cairo" }}
             ref={refOuterNav}
             className="w-full bg-white h-[100vh] flex flex-col items-center justify-between cursor-pointer"
         >
@@ -267,8 +266,8 @@ const OuterSidebarNav = ({ id }) => {
                 {/* pick up */}
                 {branches?.some((e) => e.pickup_availability === 1) ? (
                     <PrimarySelectWithIcon
-                        imgUrl={shopIcon}
-                        text={t("PICKUP")}
+                        imgUrl="shop"
+                        text={t("pickup")}
                         defaultValue={getPickUpDefaultVal()}
                         onChange={(value) => {
                             setSelectedPickBranch(value);
@@ -287,7 +286,7 @@ const OuterSidebarNav = ({ id }) => {
                 {/* delivery */}
                 {branches?.some((e) => e.delivery_availability === 1) ? (
                     <PrimarySelectWithIcon
-                        imgUrl={deliveryIcon}
+                        imgUrl="delivery"
                         text={t("Delivery")}
                         defaultValue={getDeliveryDefaultVal()}
                         onChange={(value) => {

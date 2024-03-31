@@ -65,7 +65,7 @@
                 <!--begin::Sidebar-->
                 <div class="flex-column flex-lg-row-auto w-100 w-lg-500px mb-10 mb-lg-0">
                     <!--begin::Sticky aside-->
-                    <div class="card card-flush mb-0" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
+                    <div class="card card-flush mb-0 overflow-scroll py-2" data-kt-sticky-offset="{default: false, xl: '0px'}" data-kt-sticky-width="{lg: '275px'}" data-kt-sticky-left="auto" data-kt-sticky-animation="false" data-kt-sticky-zindex="95">
                         <!--begin::Aside content-->
                         <div class="card-body">
                             <!--begin::Button-->
@@ -96,7 +96,8 @@
                                         </a>
                                     </div>
                                     <div class="col-md-2">
-                                        <span class="badge badge-light-success mt-5">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
+                                        <span class="badge badge-light-info mt-1">{{ $category->sort }} {{__('sort')}}</span>
+                                        <span class="badge badge-light-success mt-1">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }} {{__('Products')}}</span>
                                     </div>
                                     <!--end::Inbox-->
                                 </div>
@@ -151,7 +152,7 @@
                                                 </div>
                                                 <div class="tab-pane fade" id="sort">
                                                     <label>{{__('sort')}}</label>
-                                                    <input type="number" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
+                                                    <input type="number" name="sort" min="1" max="{{count($categories)+1}}" value="{{count($categories)+1}}" class="form-control form-control-solid" placeholder="{{__('The sorting order of category')}}" />
                                                 </div>
                                                 <div class="d-flex justify-content-center">
                                                     <button type="submit" class="btn btn-sm btn-khardl mx-1 mt-2" id="saveCategoryBtn">{{ __('save') }}</button>

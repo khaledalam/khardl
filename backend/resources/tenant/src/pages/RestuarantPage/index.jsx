@@ -54,7 +54,6 @@ export const RestuarantHomePage = () => {
                         id: restaurantCategoriesResponse.data?.data[0].id,
                     }),
                 );
-                console.log(">> branch_id >>", branch_id);
 
                 if (!branch_id && id) {
                     //if no branch id in local storage and id passed to fetch cats
@@ -81,7 +80,6 @@ export const RestuarantHomePage = () => {
     const fetchResStyleData = async () => {
         try {
             AxiosInstance.get(`restaurant-style`).then((response) => {
-                console.log("DATA", response.data?.data);
                 dispatch(changeRestuarantEditorStyle(response.data?.data));
             });
             setisLoading(false);
@@ -99,9 +97,7 @@ export const RestuarantHomePage = () => {
 
     useEffect(() => {
         fetchResStyleData();
-        fetchCategoriesData().then(() => {
-            console.log("fetched restuarant style successfully");
-        });
+        fetchCategoriesData().then(() => {});
     }, []);
 
     // let pickupFirstBranch =
@@ -145,7 +141,7 @@ export const RestuarantHomePage = () => {
             <div
                 style={{
                     backgroundColor: restaurantStyle?.page_color,
-                    fontFamily: restaurantStyle.text_fontFamily,
+                    fontFamily: "cairo",
                     minHeight: "calc(100vh - 230px)",
                 }}
             >

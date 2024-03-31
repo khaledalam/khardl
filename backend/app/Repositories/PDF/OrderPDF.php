@@ -23,7 +23,7 @@ class OrderPDF implements PdfPrintInterface
             $logo = RestaurantStyle::first()->logo;
             $data = [
                 'restaurant_name'=> $this->restaurant->restaurant_name,
-                'logo' =>($logo)?storage_path("app/public/".RestaurantStyle::STORAGE."/".basename($logo)): public_path('/img/logo.png')
+                'logo' =>($logo)?storage_path("app/public/".RestaurantStyle::STORAGE."/".basename($logo)): public_path('/images/Logo.webp')
             ];
             if($this->id){
                 $data['orders'] = [ Order::with(['delivery_type:id,name','payment_method:id,name','items.item','user:id,first_name,last_name','branch:id,name'])->findOrFail($this->id)];

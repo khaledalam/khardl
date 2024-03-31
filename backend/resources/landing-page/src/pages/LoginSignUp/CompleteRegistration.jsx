@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import bgRegistration from "../../assets/register-bg.png"
 import {useTranslation} from "react-i18next"
 import MainText from "../../components/MainText"
@@ -17,14 +17,18 @@ function CompleteRegistration() {
 
   const {setStatusCode} = useAuthContext()
   const [files, setFiles] = useState()
-  const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
-  const [fileUploadSuccess, setFileUploadSuccess] = useState({
-    commercial_registration: false,
-    tax_registration_certificate: false,
-    national_address: false,
-    identity_of_owner_or_manager: false,
-    bank_certificate: false,
+    const [needs, setNeeds] = useState([]);
+    const [needsText, setNeedsText] = useState([]);
+
+    const [fileUploadSuccess, setFileUploadSuccess] = useState({
+        commercial_registration: null,
+        tax_registration_certificate: null,
+        national_address: null,
+        identity_of_owner_or_manager: null,
+        bank_certificate: null,
+
   })
   const [selectedFileNames, setSelectedFileNames] = useState({
     commercial_registration: "",
@@ -34,17 +38,30 @@ function CompleteRegistration() {
     bank_certificate: "",
   })
   const [selectedFiles, setSelectedFiles] = useState({
-    commercial_registration: false,
-    tax_registration_certificate: false,
-    national_address: false,
-    identity_of_owner_or_manager: false,
-    bank_certificate: false,
+    commercial_registration: null,
+    tax_registration_certificate: null,
+    national_address: null,
+    identity_of_owner_or_manager: null,
+    bank_certificate: null,
   })
   const {
     handleSubmit,
     register,
+      setValue,
     formState: {errors},
   } = useForm()
+
+    const $filesNames = [
+        'commercial_registration',
+        'tax_registration_certificate',
+        'bank_certificate',
+        'identity_of_owner_or_manager',
+        'national_address'
+    ]
+
+    useEffect(() => {
+        fetchStep2Data();
+    }, []);
 
   // API POST REQUEST
   const onSubmit = async (data) => {
@@ -52,21 +69,26 @@ function CompleteRegistration() {
     setLoading(true)
 
     try {
-        if(!selectedFiles.tax_registration_certificate){
-            selectedFiles.tax_registration_certificate = null;
+        for(let $fileName in $filesNames) {
+            if(!selectedFiles[$filesNames]){
+                selectedFiles[$filesNames] = null;
+            }
         }
+
       const response = await AxiosInstance.post(
         `/register-step2`,
         {
-          commercial_registration: selectedFiles.commercial_registration,
-          tax_registration_certificate:
-            selectedFiles.tax_registration_certificate,
-          bank_certificate: selectedFiles.bank_certificate,
-          identity_of_owner_or_manager:
-            selectedFiles.identity_of_owner_or_manager,
-          national_address: selectedFiles.national_address,
-          IBAN: data.IBAN,
-          facility_name: data.facility_name,
+            commercial_registration: selectedFiles?.commercial_registration,
+            tax_registration_certificate: selectedFiles?.tax_registration_certificate,
+            bank_certificate: selectedFiles?.bank_certificate,
+            identity_of_owner_or_manager: selectedFiles?.identity_of_owner_or_manager,
+            national_address: selectedFiles?.national_address,
+
+            commercial_registration_number: data?.commercial_registration_number,
+            IBAN: data?.IBAN,
+            facility_name: data?.facility_name,
+            national_id_number: data?.national_id_number,
+            dob: data?.dob
         },
         {
           headers: {
@@ -101,6 +123,52 @@ function CompleteRegistration() {
     setLoading(false)
   }
 
+
+    const fetchStep2Data = async () => {
+        if (loading) return
+        setLoading(true)
+
+        try {
+            const response = await AxiosInstance.get(
+                `/register-step2`,
+                {
+                    headers: {
+                        Accept: "application/json",
+                        // * Don't remove *
+                        "Content-Type": "multipart/form-data",
+                        "X-CSRF-TOKEN": window.csrfToken,
+                    },
+                }
+            )
+
+            if (response) {
+                const responseData = await response?.data?.data
+                setValue('IBAN', responseData?.IBAN)
+                setValue('commercial_registration_number', responseData?.commercial_registration_number)
+                setValue('facility_name', responseData?.facility_name)
+                setValue('dob', responseData?.dob)
+                setValue('national_id_number', responseData?.national_id_number)
+                setNeeds(responseData?.needs)
+                setNeedsText(responseData?.needsText)
+
+            }
+        } catch (error) {
+            toast.error(`${t(error.response.data.message)}`)
+        }
+        setLoading(false)
+    }
+
+
+    const getFileTitle = (field) => {
+      return {
+          'commercial_registration': 'Commercial Record',
+          'tax_registration_certificate': 'Tax registration certificate',
+          'bank_certificate': 'Bank certificate',
+          'identity_of_owner_or_manager': 'Identity of the owner or manager',
+          'national_address': 'National address'
+      }[field] ?? 'file';
+    }
+
   return (
     <div className='flex flex-col items-stretch justify-center '>
       <div
@@ -124,357 +192,376 @@ function CompleteRegistration() {
             className='flex flex-col items-center gap-6 w-[80%] max-sm:w-[90%]'
             encType='multipart/form-data'
           >
-            {/* First Input */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("Commercial Record")} <span className='text-red-500'>*</span>
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                {...register("commercial_registration", {
-                  required: true,
-                })}
-                id='Input(1)'
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    commercial_registration: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    commercial_registration: selectedFileName,
-                  })
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    commercial_registration: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(1)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.commercial_registration && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.commercial_registration && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.commercial_registration}
-                </span>
-              )}
-              {errors.commercial_registration &&
-                !fileUploadSuccess.commercial_registration &&
-                !selectedFileNames.commercial_registration && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("Commercial Record Error")}
+
+
+              {/* File: commercial_registration */}
+              {needs.indexOf('commercial_registration') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t(getFileTitle('commercial_registration'))} <span className='text-red-500'>*</span>
+                      <p>
+                          <small className='text-gray-500'>
+                              <i>{t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}</i>
+                          </small>
+                      </p>
+                  </div>
+                  <input
+                      type='file'
+                      accept='application/pdf,image/*'
+                      {...register('commercial_registration', {
+                          required: true,
+                      })}
+                      id={`Input(commercial_registration)`}
+                      className='hidden'
+                      onChange={(event) => {
+                          setFileUploadSuccess({
+                              ...fileUploadSuccess,
+                              commercial_registration: true,
+                          })
+                          const selectedFileName = event.target.files[0]
+                          setSelectedFiles({
+                              ...selectedFiles,
+                              commercial_registration: selectedFileName,
+                          })
+                          setSelectedFileNames({
+                              ...selectedFileNames,
+                              commercial_registration: selectedFileName.name,
+                          })
+                      }}
+                  />
+                  <label
+                      htmlFor={`Input(commercial_registration)`}
+                      className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
+                  >
+                      <FiUpload size={24} /><h1>{t("Attach a PDF file")}</h1>
+                  </label>
+                  {fileUploadSuccess['commercial_registration'] && (
+                      <span className='text-green-500 text-xs mt-1 ms-2'>{t("File uploaded successfully")}</span>
+                  )}
+                  {selectedFileNames['commercial_registration'] && (
+                      <span className='text-blue-500 text-xs mt-1 ms-2'>{selectedFileNames['commercial_registration']}</span>
+                  )}
+                  {errors['commercial_registration'] && !fileUploadSuccess['commercial_registration'] && !selectedFileNames['commercial_registration'] && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>{t("File Error")}</span>
+                  )}
+              </div>}
+
+              {/* Text: commercial_registration_number Input */}
+              {needsText.indexOf('commercial_registration_number') > -1 &&<div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t("Commercial registration number")}
+                      <span className='text-red-500'>*</span>
+                  </div>
+                  <input
+                      type='text'
+                      className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                      onChange={e => setValue('commercial_registration_number', e.target.value)}
+                      {...register("commercial_registration_number", {required: true})}
+                      placeholder={t("Commercial registration number")}
+                  />
+                  {errors.commercial_registration_number && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>
+                    {t("Commercial registration number Error")}
                   </span>
-                )}
-            </div>
+                  )}
+              </div>}
 
-            {/* Input 2 */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("Tax registration certificate")}{" "}
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                id='Input(2)'
-                {...register("tax_registration_certificate")}
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    tax_registration_certificate: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    tax_registration_certificate: selectedFileName,
-                  })
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    tax_registration_certificate: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(2)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.tax_registration_certificate && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.tax_registration_certificate && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.tax_registration_certificate}
-                </span>
-              )}
-              {errors.tax_registration_certificate &&
-                !fileUploadSuccess.tax_registration_certificate &&
-                !selectedFileNames.tax_registration_certificate && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("Tax registration certificate Error")}
-                  </span>
-                )}
-            </div>
 
-            {/* Input 3 */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("National address")} <span className='text-red-500'>*</span>
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                id='Input(3)'
-                {...register("national_address", {required: true})}
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    national_address: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    national_address: selectedFileName,
-                  })
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    national_address: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(3)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.national_address && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.national_address && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.national_address}
-                </span>
-              )}
-              {errors.national_address &&
-                !fileUploadSuccess.national_address &&
-                !selectedFileNames.national_address && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("National address Error")}
-                  </span>
-                )}
-            </div>
+              {/* File: tax_registration_certificate */}
+              {needs.indexOf('tax_registration_certificate') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t(getFileTitle('tax_registration_certificate'))}
+                      <p>
+                          <small className='text-gray-500'>
+                              <i>{t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}</i>
+                          </small>
+                      </p>
+                  </div>
+                  <input
+                      type='file'
+                      accept='application/pdf,image/*'
+                      {...register('tax_registration_certificate', {
+                          required: false,
+                      })}
+                      id={`Input(tax_registration_certificate)`}
+                      className='hidden'
+                      onChange={(event) => {
+                          setFileUploadSuccess({
+                              ...fileUploadSuccess,
+                              tax_registration_certificate: true,
+                          })
+                          const selectedFileName = event.target.files[0]
+                          setSelectedFiles({
+                              ...selectedFiles,
+                              tax_registration_certificate: selectedFileName,
+                          })
+                          setSelectedFileNames({
+                              ...selectedFileNames,
+                              tax_registration_certificate: selectedFileName.name,
+                          })
+                      }}
+                  />
+                  <label
+                      htmlFor={`Input(tax_registration_certificate)`}
+                      className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
+                  >
+                      <FiUpload size={24} /><h1>{t("Attach a PDF file")}</h1>
+                  </label>
+                  {fileUploadSuccess['tax_registration_certificate'] && (
+                      <span className='text-green-500 text-xs mt-1 ms-2'>{t("File uploaded successfully")}</span>
+                  )}
+                  {selectedFileNames['tax_registration_certificate'] && (
+                      <span className='text-blue-500 text-xs mt-1 ms-2'>{selectedFileNames['tax_registration_certificate']}</span>
+                  )}
+                  {errors['tax_registration_certificate'] && !fileUploadSuccess['tax_registration_certificate'] && !selectedFileNames['tax_registration_certificate'] && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>{t("File Error")}</span>
+                  )}
+              </div>}
 
-            {/* Input 4 */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("Identity of the owner or manager")}{" "}
-                <span className='text-red-500'>*</span>
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                id='Input(4)'
-                {...register("identity_of_owner_or_manager", {
-                  required: true,
-                })}
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    identity_of_owner_or_manager: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    identity_of_owner_or_manager: selectedFileName,
-                  })
 
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    identity_of_owner_or_manager: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(4)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.identity_of_owner_or_manager && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.identity_of_owner_or_manager && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.identity_of_owner_or_manager}
-                </span>
-              )}
-              {errors.identity_of_owner_or_manager &&
-                !fileUploadSuccess.identity_of_owner_or_manager &&
-                !selectedFileNames.identity_of_owner_or_manager && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("Identity of the owner or manager Error")}
-                  </span>
-                )}
-            </div>
+              {/* File: bank_certificate */}
+              {needs.indexOf('bank_certificate') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t(getFileTitle('bank_certificate'))} <span className='text-red-500'>*</span>
+                      <p>
+                          <small className='text-gray-500'>
+                              <i>{t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}</i>
+                          </small>
+                      </p>
+                  </div>
+                  <input
+                      type='file'
+                      accept='application/pdf,image/*'
+                      {...register('bank_certificate', {
+                          required: true,
+                      })}
+                      id={`Input(bank_certificate)`}
+                      className='hidden'
+                      onChange={(event) => {
+                          setFileUploadSuccess({
+                              ...fileUploadSuccess,
+                              bank_certificate: true,
+                          })
+                          const selectedFileName = event.target.files[0]
+                          setSelectedFiles({
+                              ...selectedFiles,
+                              bank_certificate: selectedFileName,
+                          })
+                          setSelectedFileNames({
+                              ...selectedFileNames,
+                              bank_certificate: selectedFileName.name,
+                          })
+                      }}
+                  />
+                  <label
+                      htmlFor={`Input(bank_certificate)`}
+                      className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
+                  >
+                      <FiUpload size={24} /><h1>{t("Attach a PDF file")}</h1>
+                  </label>
+                  {fileUploadSuccess['bank_certificate'] && (
+                      <span className='text-green-500 text-xs mt-1 ms-2'>{t("File uploaded successfully")}</span>
+                  )}
+                  {selectedFileNames['bank_certificate'] && (
+                      <span className='text-blue-500 text-xs mt-1 ms-2'>{selectedFileNames['bank_certificate']}</span>
+                  )}
+                  {errors['bank_certificate'] && !fileUploadSuccess['bank_certificate'] && !selectedFileNames['bank_certificate'] && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>{t("File Error")}</span>
+                  )}
+              </div>}
 
-            {/* Input 5 */}
-            <div className='w-[100%]'>
-              <div className='mb-2 font-semibold'>
-                {t("Bank certificate")} <span className='text-red-500'>*</span>
-                <p>
-                  <small className='text-gray-500'>
-                    <i>
-                      {t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}
-                    </i>
-                  </small>
-                </p>
-              </div>
-              <input
-                type='file'
-                accept='application/pdf,image/*'
-                id='Input(5)'
-                {...register("bank_certificate", {required: true})}
-                className='hidden'
-                onChange={(event) => {
-                  setFileUploadSuccess({
-                    ...fileUploadSuccess,
-                    bank_certificate: true,
-                  })
-                  const selectedFileName = event.target.files[0]
-                  setSelectedFiles({
-                    ...selectedFiles,
-                    bank_certificate: selectedFileName,
-                  })
-
-                  setSelectedFileNames({
-                    ...selectedFileNames,
-                    bank_certificate: selectedFileName.name,
-                  })
-                }}
-              />
-              <label
-                htmlFor='Input(5)'
-                className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
-              >
-                <FiUpload size={24} />
-                <h1>{t("Attach a PDF file")}</h1>
-              </label>
-              {fileUploadSuccess.bank_certificate && (
-                <span className='text-green-500 text-xs mt-1 ms-2'>
-                  {t("File uploaded successfully")}
-                </span>
-              )}
-              {selectedFileNames.bank_certificate && (
-                <span className='text-blue-500 text-xs mt-1 ms-2'>
-                  {selectedFileNames.bank_certificate}
-                </span>
-              )}
-              {errors.bank_certificate &&
-                !fileUploadSuccess.bank_certificate &&
-                !selectedFileNames.bank_certificate && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
-                    {t("Bank certificate Error")}
-                  </span>
-                )}
-            </div>
-            {/* Input 6 */}
-            <div className='w-[100%] flex flex-col items-start gap-4'>
-              <div className='w-[100%]'>
-                <div className='mb-2 font-semibold'>
-                  {t("Bank IBAN")}
-                  <span className='text-red-500'>*</span>
-                </div>
-                <input
-                  type='text'
-                  className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
-                  {...register("IBAN", {required: true})}
-                  placeholder={t("IBAN")}
-                />
-                {errors.IBAN && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
+              {/* IBAN Input */}
+              {needsText.indexOf('IBAN') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t("Bank IBAN")}
+                      <span className='text-red-500'>*</span>
+                  </div>
+                  <input
+                      type='text'
+                      className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                      onChange={e => setValue('IBAN', e.target.value)}
+                      {...register("IBAN", {required: true})}
+                      placeholder={t("Bank IBAN")}
+                  />
+                  {errors.IBAN && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>
                     {t("IBAN Error")}
                   </span>
-                )}
-              </div>
+                  )}
+              </div>}
 
-              {/* Input 7 */}
-              <div className='w-[100%]'>
-                <div className='mb-2 font-semibold'>
-                  {t("Facility Name")}
-                  <span className='text-red-500'>*</span>
-                </div>
-                <input
-                  minLength={5}
-                  type='text'
-                  className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
-                  {...register("facility_name", {required: true})}
-                  placeholder={t("Facility Name")}
-                />
-                {errors.facility_name && (
-                  <span className='text-red-500 text-xs mt-1 ms-2'>
+              {/* Facility Name Input */}
+              {needsText.indexOf('facility_name') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t("Facility Name")}
+                      <span className='text-red-500'>*</span>
+                  </div>
+                  <input
+                      minLength={5}
+                      type='text'
+                      onChange={e => setValue('facility_name', e.target.value)}
+                      className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                      {...register("facility_name", {required: true})}
+                      placeholder={t("Facility Name")}
+                  />
+                  {errors.facility_name && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>
                     {t("Facility Name Error")}
                   </span>
-                )}
-              </div>
+                  )}
+              </div>}
+
+
+              {/* File: identity_of_owner_or_manager */}
+              {needs.indexOf('identity_of_owner_or_manager') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t(getFileTitle('identity_of_owner_or_manager'))} <span className='text-red-500'>*</span>
+                      <p>
+                          <small className='text-gray-500'>
+                              <i>{t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}</i>
+                          </small>
+                      </p>
+                  </div>
+                  <input
+                      type='file'
+                      accept='application/pdf,image/*'
+                      {...register('identity_of_owner_or_manager', {
+                          required: true,
+                      })}
+                      id={`Input(identity_of_owner_or_manager)`}
+                      className='hidden'
+                      onChange={(event) => {
+                          setFileUploadSuccess({
+                              ...fileUploadSuccess,
+                              identity_of_owner_or_manager: true,
+                          })
+                          const selectedFileName = event.target.files[0]
+                          setSelectedFiles({
+                              ...selectedFiles,
+                              identity_of_owner_or_manager: selectedFileName,
+                          })
+                          setSelectedFileNames({
+                              ...selectedFileNames,
+                              identity_of_owner_or_manager: selectedFileName.name,
+                          })
+                      }}
+                  />
+                  <label
+                      htmlFor={`Input(identity_of_owner_or_manager)`}
+                      className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
+                  >
+                      <FiUpload size={24} /><h1>{t("Attach a PDF file")}</h1>
+                  </label>
+                  {fileUploadSuccess['identity_of_owner_or_manager'] && (
+                      <span className='text-green-500 text-xs mt-1 ms-2'>{t("File uploaded successfully")}</span>
+                  )}
+                  {selectedFileNames['identity_of_owner_or_manager'] && (
+                      <span className='text-blue-500 text-xs mt-1 ms-2'>{selectedFileNames['identity_of_owner_or_manager']}</span>
+                  )}
+                  {errors['identity_of_owner_or_manager'] && !fileUploadSuccess['identity_of_owner_or_manager'] && !selectedFileNames['identity_of_owner_or_manager'] && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>{t("File Error")}</span>
+                  )}
+              </div>}
+
+              {/* Text: National ID Input */}
+              {needsText.indexOf('national_id_number') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t("National ID")}
+                      <span className='text-red-500'>*</span>
+                  </div>
+                  <input
+                      minLength={5}
+                      type='text'
+                      onChange={e => setValue('national_id_number', e.target.value)}
+                      className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                      {...register("national_id_number", {required: true})}
+                      placeholder={t("National ID")}
+                  />
+                  {errors.national_id && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>
+                    {t("National ID Error")}
+                  </span>
+                  )}
+              </div>}
+
+              {/* Text: DOB Input */}
+              {needsText.indexOf('dob') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t("Date of birth")}
+                      <span className='text-red-500'>*</span>
+                  </div>
+                  <input
+                      minLength={5}
+                      type='date'
+                      onChange={e => setValue('dob', e.target.value)}
+                      className={`h-[50px] px-4 bg-[#ececec] hover:bg-[#dadada] rounded-xl flex flex-col items-start justify-center w-[100%]`}
+                      {...register("dob", {required: true})}
+                      placeholder={t("Date of birth")}
+                  />
+                  {errors.dob && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>
+                    {t("Date of birth Error")}
+                  </span>
+                  )}
+              </div>}
+
+
+              {/* File: national_address */}
+              {needs.indexOf('national_address') > -1 && <div className='w-[100%]'>
+                  <div className='mb-2 font-semibold'>
+                      {t(getFileTitle('national_address'))} <span className='text-red-500'>*</span>
+                      <p>
+                          <small className='text-gray-500'>
+                              <i>{t("Accept")}: PDF, JPG, JPEG, PNG {t("size <= 16 MG")}</i>
+                          </small>
+                      </p>
+                  </div>
+                  <input
+                      type='file'
+                      accept='application/pdf,image/*'
+                      {...register('national_address', {
+                          required: true,
+                      })}
+                      id={`Input(national_address)`}
+                      className='hidden'
+                      onChange={(event) => {
+                          setFileUploadSuccess({
+                              ...fileUploadSuccess,
+                              national_address: true,
+                          })
+                          const selectedFileName = event.target.files[0]
+                          setSelectedFiles({
+                              ...selectedFiles,
+                              national_address: selectedFileName,
+                          })
+                          setSelectedFileNames({
+                              ...selectedFileNames,
+                              national_address: selectedFileName.name,
+                          })
+                      }}
+                  />
+                  <label
+                      htmlFor={`Input(national_address)`}
+                      className={`h-[130px] bg-[#ececec] hover:bg-[#dadada] text-[#04020550] rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer`}
+                  >
+                      <FiUpload size={24} /><h1>{t("Attach a PDF file")}</h1>
+                  </label>
+                  {fileUploadSuccess['national_address'] && (
+                      <span className='text-green-500 text-xs mt-1 ms-2'>{t("File uploaded successfully")}</span>
+                  )}
+                  {selectedFileNames['national_address'] && (
+                      <span className='text-blue-500 text-xs mt-1 ms-2'>{selectedFileNames['national_address']}</span>
+                  )}
+                  {errors['national_address'] && !fileUploadSuccess['national_address'] && !selectedFileNames['national_address'] && (
+                      <span className='text-red-500 text-xs mt-1 ms-2'>{t("File Error")}</span>
+                  )}
+              </div>}
+
 
               <div className='flex justify-start items-center gap-2 text-start font-bold'>
-                <FaStarOfLife size={10} className='text-red-500' />
-                <h1>{t("Must match the bank certificate")}</h1>
+                  <FaStarOfLife size={10} className='text-red-500' />
+                  <h1>{t("Must match the bank certificate")}</h1>
               </div>
-            </div>
+
             <button
               disabled={loading}
               type='submit'
@@ -486,7 +573,7 @@ function CompleteRegistration() {
                     role='status'
                     className='fixed top-0 right-0 h-screen w-screen z-10'
                   >
-                    <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'></div>
+                    <div className='rounded-s-md max-[860px]:rounded-b-lg max-[860px]:rounded-s-none relative bg-black opacity-25 flex justify-center items-center w-[100%] h-[100%]'/>
                     <div className='absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 '>
                       <svg
                         aria-hidden='true'

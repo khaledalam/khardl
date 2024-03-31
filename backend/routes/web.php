@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\Web\Central\Admin\Log\LogController;
-use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
-use App\Http\Controllers\Web\Central\GlobalPromoterController;
-use App\Models\Tenant;
 use App\Models\User;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
+use App\Models\CentralSetting;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tenant\RestaurantStyle;
+use App\Http\Controllers\TapController;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
@@ -17,15 +16,17 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Web\Central\Admin\Dashboard\DashboardController as SuperAdminDashboard;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
-use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Central\Admin\Log\LogController;
+use App\Http\Controllers\Web\Central\GlobalPromoterController;
 use App\Http\Controllers\Web\Central\DeliveryWebhookController;
-use App\Models\CentralSetting;
+use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
+use App\Http\Controllers\Web\Central\Admin\Dashboard\DashboardController as SuperAdminDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,7 @@ Route::get('/health', static function (){
         'mobile_app_orders_android_latest_versionCode' => 2,
         'mobile_app_orders_android_latest_versionName' => '1.3',
         'mobile_app_orders_android_force_update' => false,
-        'mobile_app_orders_ios_latest_CURRENT_PROJECT_VERSION' => '1.5',
+        'mobile_app_orders_ios_latest_CURRENT_PROJECT_VERSION' => '1.6',
         'mobile_app_orders_ios_force_update' => false
 
     ]);
@@ -81,83 +82,6 @@ Route::get('/health', static function (){
      ]);
  })->name('test');
 
-// Route::post('/logout', function(){
-//     Auth::logout();
-//     return redirect()->route('login')->with('success', 'You have been logged out.');
-// })->middleware('auth')->name('logout');
-
-// Route::group(['middleware' => ['guest']], function () {
-//     Route::get('/register/{url}', [RegisterController::class, 'showRegisterForm'])->name('register.token');
-// });
-
-// Route::get('/forgot-password', function () {
-//     return view('auth.forgot-password');
-// })->middleware('guest')->name('password.request');
-
-// Route::post('/reset-password', function (Request $request) {
-//     $request->validate([
-//         'token' => 'required',restaurants
-//         'email' => 'required|email',
-//         'password' => 'required|min:8|confirmed',
-//     ]);
-
-//     $status = Password::reset(
-//         $request->only('email', 'password', 'password_confirmation', 'token'),
-//         function (User $user, string $password) {
-//             $user->forceFill([
-//                 'password' => Hash::make($password)
-//             ])->setRememberToken(Str::random(60));
-
-//             $user->save();
-
-//             event(new PasswordReset($user));
-//         }
-//     );
-
-//     return $status === Password::PASSWORD_RESET
-//                 ? redirect()->route('login')->with('status', __($status))
-//                 : back()->withErrors(['email' => [__($status)]]);
-// })->middleware('guest')->name('password.update');
-
-// Route::post('/forgot-password', function (Request $request) {
-//     $request->validate(['email' => 'required|email']);
-
-//     $status = Password::sendResetLink(
-//         $request->only('email')
-//     );
-
-//     return $status === Password::RESET_LINK_SENT
-//                 ? back()->with(['status' => __($status)])
-//                 : back()->withErrors(['email' => __($status)]);
-// })->middleware('guest')->name('password.email');
-
-
-// Route::middleware('web')->group(function () {
-
-//     Route::get('/email/verify', function () {
-//         if (auth()->user()->email_verified_at !== null) {
-//             return redirect('/summary'); // Redirect to a different route for already verified users
-//         }
-//         return view('auth.verify');
-//     })->middleware('auth')->name('verification.notice');
-
-//     Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//         if (auth()->user()->email_verified_at !== null) {
-//             return redirect('/summary'); // Redirect to a different route for already verified users
-//         }
-//         $request->fulfill();
-//         return redirect('/summary')->with('success', 'Verification successful. Good job!');
-
-//     })->middleware(['auth', 'signed'])->name('verification.verify');
-
-//     Route::post('/email/verification-notification', function (Request $request) {
-//         if (auth()->user()->email_verified_at !== null) {
-//             return redirect('/summary'); // Redirect to a different route for already verified users
-//         }
-//         $request->user()->sendEmailVerificationNotification();
-//         return back()->with('message', 'Verification link sent!');
-//     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-// });
 
 Route::get('promoter/{name}', [GlobalPromoterController::class, 'show'])->name('global.promoter.show');
 Route::get('promoters', [GlobalPromoterController::class, 'index'])->name('global.promoters');
@@ -222,7 +146,11 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
             Route::get('complete-register', static function(){
                     return view("central");
                 })->name("complete-register");
+
                 Route::post('register-step2', [RegisterController::class, 'stepTwo']);
+
+                Route::get('register-step2', [RegisterController::class, 'getStepTwoData']);
+
             });
 
             Route::middleware(['accepted'])->group(function () {
@@ -241,6 +169,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
+                        Route::post('/restaurants/{tenant}/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.sign-new-lead');
+
                       });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
@@ -248,6 +178,7 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                     Route::get('/promoters', [AdminController::class, 'promoters'])->middleware('permission:can_promoters')->name('promoters');
                     Route::get('/user-management', [AdminController::class, 'userManagement'])->middleware('permission:can_see_admins')->name('user-management');
                     Route::get('/restaurant-owner-management', [AdminController::class, 'restaurantOwnerManagement'])->middleware('permission:can_see_restaurant_owners')->name('restaurant-owner-management');
+                    Route::get('/order-inquiry', [AdminController::class, 'orderInquiry'])->middleware('permission:can_access_restaurants')->name('order-inquiry');
                     Route::delete('/user-management/delete/{id}', [AdminController::class, 'deleteUser'])->middleware('permission:can_edit_admins')->name('delete-user');
                     Route::delete('/promoters/delete/{id}', [AdminController::class, 'deletePromoter'])->middleware('permission:can_promoters')->name('delete-promoter');
                     Route::get('/user-management/edit/{id}', [AdminController::class, 'userManagementEdit'])->middleware('permission:can_edit_admins')->name('user-management-edit');
@@ -296,22 +227,5 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
 
     Route::post('/delivery-webhook', [DeliveryWebhookController::class,'redirect'])->name('delivery.webhook-post');
 
-
 });
 //-----------------------------------------------------------------------------------------------------------------------
-
-// Old blade view
-//Auth::routes();
-
-// define auth routes manually
-// Authentication Routes...
-//Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-//Route::post('/login', [LoginController::class, 'login']);
-//Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-//
-//// Password Reset Routes...
-//Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-//Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-//Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-//Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
-

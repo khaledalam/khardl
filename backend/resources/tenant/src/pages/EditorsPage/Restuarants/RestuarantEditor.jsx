@@ -76,7 +76,6 @@ export const RestuarantEditor = () => {
                     setCategoriesAPI(restaurantCategoriesResponse.data?.data),
                 );
 
-                console.log(">> branch_id >>", branch_id);
 
                 if (!branch_id) {
                     branch_id =
@@ -91,12 +90,8 @@ export const RestuarantEditor = () => {
     };
 
     useEffect(() => {
-        fetchCategoriesData().then(() =>
-            console.log("fetched categories successfully"),
-        );
-        fetchResStyleData().then(() =>
-            console.log("fetched restuarant style successfully"),
-        );
+        fetchCategoriesData().then(() => {});
+        fetchResStyleData().then(() => {});
     }, []);
 
     return (

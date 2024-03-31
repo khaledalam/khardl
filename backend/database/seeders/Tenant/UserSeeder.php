@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Tenant;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Branch;
 use Illuminate\Database\Seeder;
@@ -24,7 +25,7 @@ class UserSeeder extends Seeder
     {
         $branch = Branch::find(BranchSeeder::BRANCH_ID);
 
-      
+
         if(env('APP_ENV') == 'local'){
             $customer_tap_id = Customer::DEFAULT_CUSTOMER_ID;
         }else {
@@ -42,7 +43,7 @@ class UserSeeder extends Seeder
             "lat"=>24.7136,
             "lng"=> 46.6753,
             'tap_customer_id'=> $customer_tap_id,
-            'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
+            'password' => bcrypt('khardl@123'),
             'remember_token' => Str::random(10),
         ]);
         $user->branch()->associate($branch);
@@ -70,7 +71,7 @@ class UserSeeder extends Seeder
             "lat"=>24.7136,
             "lng"=> 46.6753,
             'tap_customer_id'=> $customer_tap_id,
-            'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
+            'password' => bcrypt('khardl@123'),
             'remember_token' => Str::random(10),
         ]);
         $user->branch()->associate($branch);
@@ -98,7 +99,7 @@ class UserSeeder extends Seeder
             "lat"=>24.7136,
             "lng"=> 46.6753,
             'tap_customer_id'=> $customer_tap_id,
-            'password' => bcrypt(env("NOVA_ADMIN_PASSWORD",'password')),
+            'password' => bcrypt('khardl@123'),
             'remember_token' => Str::random(10),
         ]);
 

@@ -225,7 +225,7 @@
                         </td>
                         <!--end::Total=-->
                         <td>
-                            <span class="fw-bolder">{{$order->shipping_address}}</span>
+                            <span class="fw-bolder">{{$order->shipping_address ?? $order->user->address ?? $order->address ?? __('NA')}}</span>
                         </td>
                         <!--begin::Date Added=-->
                         <td class="text-end" data-order="2022-03-22">

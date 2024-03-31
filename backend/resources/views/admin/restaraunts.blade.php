@@ -134,25 +134,40 @@
                                 <!--begin::Card body-->
                                 <div class="card-body d-flex flex-center flex-column p-9 pt-3">
 
+{{--                                    {{dd($restaurant)}}--}}
                                     <!--begin::Name-->
                                     <a href="{{ route('admin.view-restaurants', ['tenant' => $restaurant->id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bolder mb-0">
-                                        {{ $restaurant?->restaurant_name }}
-                                        @if($restaurant?->is_live())
-                                        <span class="badge badge-light-success fw-bolder">{{ __('live')}}</span>
+                                        @php
+                                            $restaurant->run(function() use ($restaurant){
+                                                $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
 
-                                        @elseif ($restaurant->status == "active")
-                                        <span class="badge badge-light-warning fw-bolder">{{ __('pending')}}</span>
-                                        @elseif ($restaurant?->user?->isBlocked())
-                                        <span class="badge badge-danger fw-bolder">{{ __('blocked')}}</span>
-                                        @else
-                                        <span class="badge badge-light-danger fw-bolder">{{ __('not_live')}}</span>
-                                        @endif
+												if ($restaurant->is_live()) {
+                                                    echo <<<HTML
+                                                        <img alt="Logo" src="$logo" class="h-70px logo" />
+                                                    HTML;
+												} else {
+													echo '<img alt="Logo" src="'. global_asset('assets/default_logo.png') . '" class="h-70px logo" />';
+												}
+
+                                            });
+                                        @endphp
+                                        {{ $restaurant?->restaurant_name }}
+                                        @include('components.restaurant-status-badge')
                                     </a>
 
                                     <!--end::Name-->
                                     <!--begin::Position-->
                                     <div class="fw-bold text-gray-400 mb-6">{{ $restaurant->first_name }} {{ $restaurant->last_name }}</div>
                                     <!--end::Position-->
+
+                                    @if(count(json_decode($restaurant?->user?->reject_reasons) ?? []) > 0)
+                                        <b class="fs-4">{{__('Rejection reasons')}}:</b>
+                                        <ul>
+                                        @foreach(json_decode($restaurant?->user?->reject_reasons) ?? [] as $reason)
+                                            <li class="fs-6 text-danger small">{{ __($reason)}}</li>
+                                        @endforeach
+                                        </ul>
+                                    @endif
 
                                     <div class="d-flex flex-center flex-wrap">
                                         <!--begin::Stats-->
@@ -385,7 +400,20 @@
                                     <div class="me-5 position-relative">
                                         <!--begin::Avatar-->
                                         <div class="symbol symbol-35px symbol-circle">
-                                            <img alt="Pic" src="../assets/media/avatars/300-6.jpg" />
+                                            @php
+                                                $restaurant->run(function() use ($restaurant){
+                                                    $logo = App\Models\Tenant\RestaurantStyle::first()->logo;
+
+                                                    if ($restaurant->is_live()) {
+                                                        echo <<<HTML
+                                                            <img alt="Pic" src="$logo" />
+                                                        HTML;
+                                                    } else {
+                                                        echo '<img alt="Pic" src="'. global_asset('assets/default_logo.png') . '" />';
+                                                    }
+
+                                                });
+                                            @endphp
                                         </div>
                                         <!--end::Avatar-->
                                     </div>

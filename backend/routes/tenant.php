@@ -10,6 +10,7 @@ use App\Http\Controllers\Notification\PushNotificationController;
 use App\Http\Controllers\Web\Tenant\Driver\DriverController;
 use App\Http\Controllers\Web\Tenant\Setting\SettingController;
 use App\Models\Tenant\RestaurantStyle;
+use App\Models\Tenant\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -85,9 +86,6 @@ Route::group([
 
     Route::post('login', [LoginCustomerController::class, 'login'])->name('tenant_login');
     Route::post('login-admins', [LoginController::class, 'login']);
-    Route::get('/login-trial', static function () {
-        return view('tenant');
-    })->name('login-trial')->middleware('guest');
     // guest
     Route::get('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout_get');
     Route::post('logout', [AuthenticationController::class, 'logout'])->name('tenant_logout');
@@ -155,9 +153,9 @@ Route::group([
                 // Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
 
                 // Step 2 instead of business : Lead
-                Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get')->middleware('isLeadSubmitted');
-                Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
-                 // Step 3: save cards
+                // Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get')->middleware('isLeadSubmitted');
+                // Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
+                // Step 3: save cards
                 Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
@@ -192,6 +190,7 @@ Route::group([
                 Route::get('branches/{branch}/settings', [RestaurantController::class, 'settingsBranch'])->name('restaurant.settings.branch');
                 Route::put('branches/{branch}/settings', [RestaurantController::class, 'updateSettingsBranch'])->name('restaurant.settings.branch.update');
                 Route::controller(TenantOrderController::class)->group(function () {
+                    Route::get('/order-inquiry', 'inquiry')->name('restaurant.order-inquiry');
                     Route::get('orders-all', 'index')->name('restaurant.orders_all');
                     Route::get('orders-add', 'create')->name('restaurant.orders_add');
                     Route::post('orders-add', 'store')->name('restaurant.order.store');
@@ -244,7 +243,9 @@ Route::group([
         Route::get('/restaurant-style', [RestaurantStyleController::class, 'fetch'])->name('restaurant.restaurant.style.fetch');
         Route::get('/cart', static function () {
             $logo = RestaurantStyle::first()?->logo;
-            return view('tenant', compact('logo'));
+            $restaurant_name = Setting::first()->restaurant_name;
+
+            return view('tenant', compact('logo', 'restaurant_name'));
         })->name('cart');
 
 
@@ -335,7 +336,6 @@ Route::middleware([
     Route::prefix('api')->group(function () {
         Route::post('login', [APILoginController::class, 'login']);
 
-
         Route::middleware(['auth:sanctum','ActiveRestaurantAndBranch'])->group(function () {
             //Notifications
             //External notification (Push)
@@ -392,16 +392,9 @@ Route::middleware([
                 'store',
                 'show'
             ]);
-
         });
-
-
     });
-
-
-
 });
-
 
 
 Route::group(['prefix' => config('sanctum.prefix', 'sanctum')], static function () {

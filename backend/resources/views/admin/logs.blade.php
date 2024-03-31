@@ -152,13 +152,6 @@
                                                         {{ implode(',',(array)$log->metadata)}}
                                                         @endif
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <div class="modal-footer d-flex align-items-center justify-content-between">
-                                                            <button type="button" class="btn btn-secondary p-2 btn-sm" data-bs-dismiss="modal">
-                                                                {{ __('Close') }}
-                                                            </button>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

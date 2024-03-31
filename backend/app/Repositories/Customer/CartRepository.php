@@ -101,7 +101,6 @@ class CartRepository
             foreach ($option as $j => $sub_option) {
                 $updatedOptions[$i]['ar'][$item->checkbox_input_titles[$i][1]][] = [$item->checkbox_input_names[$i][$sub_option][1], $item->checkbox_input_prices[$i][$sub_option]];
                 $updatedOptions[$i]['en'][$item->checkbox_input_titles[$i][0]][] = [$item->checkbox_input_names[$i][$sub_option][0], $item->checkbox_input_prices[$i][$sub_option]];
-
                 $totalPrice += (float) $item->checkbox_input_prices[$i][$sub_option];
             }
         }
@@ -232,9 +231,10 @@ class CartRepository
     {
         $settings = Setting::all()->firstOrFail();
         $items = $this->cart->items->load(['item']);
-        foreach ($items as &$item) {
-            $item['photo'] .= '?ver=' . random_hash();
-        }
+
+//        foreach ($items as &$item) {
+//            $item['item']['photo'] .= '?ver=' . random_hash();
+//        }
 
         return $this->sendResponse([
             'sub_total' => $this->subTotal(),
@@ -247,12 +247,10 @@ class CartRepository
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],
-            'tap_information'=> [
-                'merchant_id'=>$settings->merchant_id ?? '',
-                'tap_customer_id'=>$this->cart?->user?->tap_customer_id,
-                "tap_public_key"=>env('TAP_PAYMENT_TECHNOLOGY_NEW_SECRET_KEY_LIVE',''),
-                'url_host'=>parse_url(request()->getSchemeAndHttpHost() , PHP_URL_HOST)
-            ],
+            // 'tap_information'=> [
+            //     'tap_customer_id'=>$this->cart->user->tap_customer_id,
+            //     'redirect'=>route('orders.payment')
+            // ],
             'address' => $this->cart->user->address
         ], $message);
     }

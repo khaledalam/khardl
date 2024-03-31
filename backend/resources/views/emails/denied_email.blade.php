@@ -39,17 +39,23 @@
                                             <img src="chilis-restaurant-logo-png-4.png" style="width: 185px;"
                                                 alt="logo">
                                         </div>
-                                        <h4 style="font-weight: 700;color: red" class="mt-4 mb-4 pb-1">DENIED</h4>
+                                        <h4 style="font-weight: 700;color: red" class="mt-4 mb-4 pb-1">Rejected</h4>
                                         <p style="text-align: left;"><b>Dear {{ $user->first_name }},</b><br>
 
-                                            We regret to inform you that your account request has been denied. Our team
+                                            We regret to inform you that your account request has been rejected. Our team
                                             has reviewed your information and determined that it does not meet our
                                             criteria for approval at this time.
                                             Reason for Denial:
                                             Upon careful consideration, we have found that certain information provided
                                             does not align with our requirements or guidelines
+                                            <br><br />
+                                            <b>Reasons:</b>
                                             <br>
-                                            <br>
+                                            <ul>
+                                                @foreach($reasons as $reason)
+                                                    <li>{{$reason}}</li>
+                                                @endforeach
+                                            </ul>
                                             <br>
                                             <br>
                                             <b>Next Steps:</b>

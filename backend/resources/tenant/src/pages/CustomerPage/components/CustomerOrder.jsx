@@ -26,6 +26,8 @@ const CustomerOrder = () => {
     const ordersMetadata = useSelector(
         (state) => state.customerAPI.ordersMetadata,
     );
+    const Language = useSelector((state) => state.languageMode.languageMode)
+
 
     // useEffect(() => {
     //   fetchOrderPerpage().then(() => {})
@@ -130,7 +132,7 @@ const CustomerOrder = () => {
                     <div className="w-[200px]">
                         <PrimaryOrderSelect
                             background
-                            defaultValue={`Show ${orderPerPage}`}
+                            defaultValue={`${t('show')} ${orderPerPage}`}
                             handleChange={(value) => setOrderPerPage(value)}
                             options={[
                                 {
@@ -153,7 +155,7 @@ const CustomerOrder = () => {
                         />
                     </div>
                     <h3 className="">
-                        {t("page")} {pageNumber} of{" "}
+                        {t("page")} {pageNumber} {t('of')} {" "}
                         {ordersMetadata ? ordersMetadata?.last_page : 1}
                     </h3>
                 </div>
@@ -167,10 +169,13 @@ const CustomerOrder = () => {
                                 : "border-neutral-800 disabled:bg-neutral-300 cursor-not-allowed border-solid"
                         }  rounded-full flex items-center justify-center !p-0 `}
                     >
-                        <MdKeyboardArrowLeft
+                        {Language == 'en' ? <MdKeyboardArrowLeft
                             size={20}
                             color={pagelinks?.prev ? "#fff" : "#000"}
-                        />
+                        /> : <MdKeyboardArrowRight
+                            size={20}
+                            color={pagelinks?.next ? "#fff" : "#000"}
+                        />}
                     </button>
                     <button
                         disabled={pagelinks?.next === null}
@@ -181,10 +186,13 @@ const CustomerOrder = () => {
                                 : "border-neutral-800 disabled:bg-neutral-300 cursor-not-allowed border-solid"
                         }  rounded-full flex items-center justify-center !p-0 `}
                     >
-                        <MdKeyboardArrowRight
+                        {Language == 'en' ? <MdKeyboardArrowRight
                             size={20}
                             color={pagelinks?.next ? "#fff" : "#000"}
-                        />
+                        /> : <MdKeyboardArrowLeft
+                            size={20}
+                            color={pagelinks?.prev ? "#fff" : "#000"}
+                        />}
                     </button>
                 </div>
             </div>

@@ -34,7 +34,7 @@
                                 <div class="card-body mx-md-4 pb-5">
                                     <div class="text-center">
                                         <div class="logo">
-                                            <img src="{{global_asset('img/logo.png')}}" style="width: 185px;"
+                                            <img src="{{global_asset('images/Logo.webp')}}" style="width: 185px;"
                                                 alt="logo">
                                         </div>
                                         <h4 style="font-weight: 700;color: green;" class="mt-4 mb-4 pb-1">New LEAD</h4>

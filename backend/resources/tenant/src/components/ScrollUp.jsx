@@ -26,32 +26,17 @@ const ScrollUp = () => {
                     : "right-6 max-[450px]:right-4"
             }  `}
         >
-            {restaurantStyle?.categoryDetail_cart_color !== "#FFFFFF" ? (
-                <button
-                    style={{
-                        background: restaurantStyle?.categoryDetail_cart_color
-                            ? restaurantStyle?.categoryDetail_cart_color
-                            : "",
-                    }}
-                    onClick={() =>
-                        window.scrollTo({ top: 0, behavior: "smooth" })
-                    }
-                    className={`p-[6px]  shadow-lg cursor-pointer w-fit rounded-md  flex flex-col items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-2  ${
-                        scrollY > scrollThreshold ? "block" : "hidden"
-                    }`}
-                >
-                    <AiOutlineArrowUp
-                        className="text-[#525252] text-[25px] max-[450px]:text-[20px]"
-                        style={{
-                            color: restaurantStyle?.banner_background_color
-                                ? restaurantStyle?.banner_background_color
-                                : "",
-                        }}
-                    />
-                </button>
-            ) : (
-                <div className="skeleton w-12 h-12 shrink-0"></div>
-            )}
+            <button
+                style={{
+                    background: "black",
+                }}
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className={`p-[6px]  shadow-lg cursor-pointer w-fit rounded-md  flex flex-col items-center justify-center overflow-hidden transform transition-transform hover:-translate-y-2  ${
+                    scrollY > scrollThreshold ? "block" : "hidden"
+                }`}
+            >
+                <AiOutlineArrowUp className="text-white text-[25px] max-[450px]:text-[20px]" />
+            </button>
         </div>
     );
 };

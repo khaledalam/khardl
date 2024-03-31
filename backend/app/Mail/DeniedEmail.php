@@ -12,17 +12,16 @@ class DeniedEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
-    public $message;
+    public $reasons;
     /**
      * Create a new message instance.
      *
-     * @param  \App\Models\User  $user
      * @return void
      */
-    public function __construct($user, $message = null)
+    public function __construct($user, $reasons)
     {
         $this->user = $user;
-        $this->message = $message;
+        $this->reasons = $reasons;
     }
 
     /**
@@ -32,7 +31,7 @@ class DeniedEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Account Denied')->view('emails.denied_email');
+        return $this->subject('Account Rejected | Requirements')->view('emails.denied_email');
 
     }
 }

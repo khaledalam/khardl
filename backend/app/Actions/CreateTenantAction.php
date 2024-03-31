@@ -17,12 +17,18 @@ class CreateTenantAction
         User $user,
         $tenantId = null): Tenant
     {
+        do {
+            $mapper_hash = generateToken();
+            $tenant = Tenant::whereJsonContains('data->mapper_hash', $mapper_hash)->first();
+        } while($tenant);
+
         if(env('APP_ENV')=='testing'){
             $tenantId = $tenantId ?? '140c813f-5794-4e47-8e28-3426ac01f1f8';
             $database = config('tenancy.database.prefix').$tenantId;
             if ($this->databaseExists($database)) {
                 $this->dropDatabase($database);
             }
+
             $tenant = Tenant::create([
                 'id' => $tenantId,
                 'user_id'=> $user->id,
@@ -32,7 +38,9 @@ class CreateTenantAction
                 "last_name" =>$user->last_name,
                 "phone"=>$user->phone,
                 'restaurant_name'=>$domain,
+                'restaurant_name_ar'=>$user->restaurant_name_ar,
                 "password" => $user->password,
+                'mapper_hash' => $mapper_hash // used for order_id prefix
             ]);
             $domain = Domain::create([
                 'domain' => $domain,
@@ -48,7 +56,9 @@ class CreateTenantAction
                 "last_name" =>$user->last_name,
                 "phone"=>$user->phone,
                 'restaurant_name'=>$domain,
+                'restaurant_name_ar'=>$user->restaurant_name_ar,
                 "password" => $user->password,
+                'mapper_hash' => $mapper_hash // used for order_id prefix
             ]);
         }
 

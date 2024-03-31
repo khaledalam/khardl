@@ -2,6 +2,7 @@
 
 namespace App\Models\Tenant;
 
+use App\Models\Tenant;
 use App\Observers\OrderObserver;
 use Carbon\Carbon;
 use Database\Factories\tenant\OrderFactory;
@@ -12,6 +13,8 @@ class Order extends Model
 {
     use HasFactory;
     protected $table = 'orders';
+
+    public $incrementing = false;
 
     protected $fillable = [
         'transaction_id',
@@ -73,6 +76,27 @@ class Order extends Model
     {
         parent::boot();
         self::observe(OrderObserver::class);
+
+        $tenant_id = tenant()->id;
+
+        self::creating(function ($model) use($tenant_id){
+
+            // 5 6 5
+            // Tenant mapper hash - date(YY-MM-DD) - order unique hash
+            
+            // 5 7 => 12
+            // Tenant mapper hash - order unique hash
+            $prefix = Tenant::find($tenant_id)->mapper_hash;
+//            $suffix = date('ymd') . generateToken();
+
+            do {
+                $suffix = generateToken(7);
+                $ID = $prefix . $suffix;
+                $order = Order::where('id', '=', $ID)->first();
+            } while($order);
+
+            $model->id = $ID;
+        });
     }
     public function getCreatedAtAttribute($value)
     {
@@ -214,10 +238,10 @@ class Order extends Model
         return $this->belongsTo(Coupon::class);
     }
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class)->withPivot('quantity', 'price_at_order_time')->withTimestamps();
-    }
+//    public function products()
+//    {
+//        return $this->belongsToMany(Product::class)->withPivot('quantity', 'price_at_order_time')->withTimestamps();
+//    }
 
     public function payment_method()
     {

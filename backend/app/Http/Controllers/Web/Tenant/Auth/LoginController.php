@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Tenant\Auth;
 use App\Http\Controllers\Web\BaseController;
 use App\Models\ROSubscription;
 use App\Models\Subscription;
+use App\Models\Subscription as CentralSubscription;
 use App\Models\Tenant\Setting;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class LoginController extends BaseController
 
         $credentials = request(['email', 'password']);
 
-        if (!Auth::attempt($credentials,true)) {
+        if (!Auth::attempt($credentials, $request->remember_me)) {
             return $this->sendError( __('Invalid email or password'),[] );
         }
         $user = Auth::user();
@@ -59,11 +60,19 @@ class LoginController extends BaseController
             Auth::logout();
             return $this->sendError(__("Website doesn't have active subscription, Only restaurant owner can login"), []);
         }
-        if(($user?->isDriver()  || $user?->isWorker() ) && !$user->branch?->active){
+        if ($user?->isRejected()) {
+            Auth::logout();
+            return $this->sendError(__("Account requirements rejected، please resubmit from main domain"), []);
+        }
+
+        if(($user?->isDriver() || $user?->isWorker() ) && !$user->branch?->active){
             Auth::logout();
             return $this->sendError(__('Cannot login, Branch is not active'), []);
         }
-       
+
+//        tenancy()->central(function() use($credentials){
+//            Auth::attempt($credentials, true);
+//        });
 
         $data = [
             'user'=>$user

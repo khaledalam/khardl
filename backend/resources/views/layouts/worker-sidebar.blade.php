@@ -4,18 +4,18 @@
 <head>
     <base href="" />
     <title>{{ __('khardl')}} | @yield('title', __('dashboard'))</title>
-    <meta charset="utf-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="" />
-    <meta property="og:url" content="#/metronic" />
-    <meta property="og:site_name" content="Keenthemes | Metronic" />
-    <link rel="canonical" href="{{ global_asset('img/logo.png')}}" />
-    <link rel="shortcut png" href="{{ global_asset('img/logo.png')}}"/>
-    <link rel="icon" href="{{ global_asset('img/logo.png')}}"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Khardl, Digital Ecosystem Solution For Restaurants, Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only">
+    <meta name="keywords" content="Khardl, Restaurants Ecosystem, food">
+    <meta name="author" content="Khardl">
+    <meta property="og:title" content="Khardl - Digital Ecosystem Solution For Restaurants" />
+    <meta property="og:description" content="Khardl, Digital Ecosystem Solution For Restaurants, Create your website and app with Khardl in minutes, start selling right away, and pay based on your orders only" />
+    <meta property="og:image" content="{{ global_asset('images/Logo.webp')}}" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
+    <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}"/>
+    <link rel="icon" href="{{ global_asset('images/Logo.webp')}}"/>
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ global_asset('assets/css/global.css')}}" rel="stylesheet" type="text/css" />
     @if(app()->getLocale() === 'ar')
@@ -113,7 +113,7 @@
                 <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                     <!--begin::Logo-->
                     <a href="/">
-                        <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
+                        <img alt="Logo" src="{{ global_asset('images/Logo.webp') }}" class="h-30px" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Aside toggler-->
@@ -298,7 +298,7 @@
                         <!--begin::Mobile logo-->
                         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                             <a href="/" class="d-lg-none">
-                                <img alt="Logo" src="{{ global_asset('img/logo.png') }}" class="h-30px" />
+                                <img alt="Logo" src="{{ global_asset('images/Logo.webp') }}" class="h-30px" />
                             </a>
                         </div>
                         <!--end::Mobile logo-->
