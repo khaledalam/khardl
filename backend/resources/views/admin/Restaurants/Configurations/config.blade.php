@@ -43,11 +43,7 @@
                 <!--end::Col-->
             </div>
         </div>
-        <div class="card-body p-9" >
-            <label class="col-lg-4 fw-bold text-muted" >{{ __('Lead information') }}
-                <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
-            <div id="tree" style="direction: ltr;"></div>
-        </div>
+      
         <div class="text-center">
             <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">Reset ↻</button>
             <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">

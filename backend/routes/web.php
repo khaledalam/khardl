@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\Web\Central\Admin\Log\LogController;
-use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
-use App\Http\Controllers\Web\Central\GlobalPromoterController;
-use App\Models\Tenant;
 use App\Models\User;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
+use App\Models\CentralSetting;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tenant\RestaurantStyle;
+use App\Http\Controllers\TapController;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
@@ -17,15 +16,17 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Web\Central\Admin\Dashboard\DashboardController as SuperAdminDashboard;
 use App\Http\Controllers\API\ContactUsController;
 use App\Http\Controllers\AuthenticationController;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use App\Http\Controllers\Web\Central\Auth\LoginController;
 use App\Http\Controllers\API\Central\Auth\RegisterController;
-use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Central\Admin\Log\LogController;
+use App\Http\Controllers\Web\Central\GlobalPromoterController;
 use App\Http\Controllers\Web\Central\DeliveryWebhookController;
-use App\Models\CentralSetting;
+use App\Http\Controllers\API\Central\Auth\ResetPasswordController;
+use App\Http\Controllers\Web\Central\Admin\Restaurant\RestaurantController;
+use App\Http\Controllers\Web\Central\Admin\Dashboard\DashboardController as SuperAdminDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -168,6 +169,8 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
                         Route::get('/restaurants/{tenant}/tap/details','tapLead')->middleware('permission:can_view_restaurants')->name('view-restaurants-tap-lead');
                         Route::get('/restaurants','index')->middleware('permission:can_access_restaurants')->name('restaurants');
                         Route::post('/delivery/{tenant}', 'activeAndDeactivateDelivery')->name('delivery.activateAndDeactivate');
+                        Route::post('/restaurants/{tenant}/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.sign-new-lead');
+
                       });
                     Route::post('/save-settings', [AdminController::class, 'saveSettings'])->middleware('permission:can_settings')->name('save-settings');
                     Route::get('/settings', [AdminController::class, 'settings'])->middleware('permission:can_settings')->name('settings');
@@ -223,7 +226,6 @@ Route::group(['middleware' => ['universal', 'trans_api', InitializeTenancyByDoma
     })->name('change.language');
 
     Route::post('/delivery-webhook', [DeliveryWebhookController::class,'redirect'])->name('delivery.webhook-post');
-
 
 });
 //-----------------------------------------------------------------------------------------------------------------------
