@@ -7,8 +7,11 @@ import { Button } from "primereact/button";
 import { MdDelete } from "react-icons/md";
 import AxiosInstance from "../../../axios/axios";
 import { toast } from "react-toastify";
+import { BsFillArrowRightCircleFill } from "react-icons/bs";
+
 
 import "./CartItem.scss";
+import parseOptionItems from "./Utils";
 
 const CartItem = ({ cartitem, onReload }) => {
     const { t } = useTranslation();
@@ -67,27 +70,7 @@ const CartItem = ({ cartitem, onReload }) => {
         }
     };
 
-    const parseOptionItems = () => {
-        const allOptions = [];
-
-        if (cartitem.dropdown_options) {
-            allOptions.push(...cartitem.dropdown_options);
-        }
-
-        if (cartitem.selection_options) {
-            allOptions.push(...cartitem.selection_options);
-        }
-
-        let optionText = "";
-        const jsxOption = allOptions.map((option) => {
-            let optionKey = Object.keys(option[language])[0];
-            const oneOptionStr = `${optionKey} - ${option[language][optionKey]}`;
-
-            optionText += oneOptionStr;
-        });
-
-        return optionText;
-    };
+    let optionsItems = parseOptionItems(cartitem);
 
     return (
         <div className="cartitem">
@@ -101,14 +84,25 @@ const CartItem = ({ cartitem, onReload }) => {
                         ></img>
                     </div>
                     <div className="col-span-10 xl:col-span-7 px-4">
-                        <div className="flex h-20 mb-3">
+                        <div className="flex h-auto mb-3">
                             <div className="py-2 px-2">
                                 <h2>
                                     {language === "en"
                                         ? cartitem.item.name.en
                                         : cartitem.item.name.ar}
                                 </h2>
-                                <p className="mt-4">{`${t("extras")}: ${parseOptionItems()}`}</p>
+                                {optionsItems.length > 0 && (<>
+                                    <p className={language == 'en' ? "mr-2" : "ml-2"}>{`${t("Extras")}:`}</p>
+                                    <ul>
+                                        {optionsItems.map(
+                                            item => <li className={"text-gray-900"}>
+                                                <span className={"flex justify-start items-center"}>
+                                                    <BsFillArrowRightCircleFill color={"#c0c0c0"} size={20} className={"mx-1"} /> {item}
+                                                </span>
+                                            </li>)
+                                        }
+                                    </ul>
+                                </>)}
                             </div>
                         </div>
                         <InputTextarea
