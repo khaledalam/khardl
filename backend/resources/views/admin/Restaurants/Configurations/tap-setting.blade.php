@@ -96,7 +96,7 @@
 
                                     </label>
                                     <!--end::Label-->
-                                    <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number' ?? $traderRegistrationRequirement->commercial_registration_number )}}" />
+                                    <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number') ?? $traderRegistrationRequirement->commercial_registration_number }}" />
                                 </div>
                                 <div class="d-flex flex-column mb-8 fv-row">
                                     <!--begin::Label-->
@@ -270,7 +270,7 @@
     
                                     </label>
                                     <!--end::Label-->
-                                    <input type="date" required name="user[birth][date]" class="form-control mb-2" value="{{ old('user.birth.date') }}" />
+                                    <input type="date" required name="user[birth][date]" class="form-control mb-2" value="{{ old('user.birth.date')  ?? $owner->dob}}" />
                                     <small class="text-info">{{__('The date of birth must match the National ID number')}}</small>
                                 </div>
     
