@@ -64,7 +64,7 @@
 
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <label clas s="d-flex align-items-center fs-6 fw-bold mb-2" for="is_licensed">
-                                    <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" {{old('entity.is_licensed')?'checked':''}} />
+                                    <input id="is_licensed" type="checkbox" class="mx-2" name="entity[is_licensed]" checked />
 
                                     <span class="required">{{__('Is Entity Licensed')}}</span>
                                     <!--end::Label-->
@@ -95,12 +95,12 @@
 
                                     </label>
                                     <!--end::Label-->
-                                    <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number' ?? $traderRegistrationRequirement->commercial_registration )}}" />
+                                    <input type="text" class="form-control" name="entity[license][number]" value="{{old('entity.license.number' ?? $traderRegistrationRequirement->commercial_registration_number )}}" />
                                 </div>
                                 <div class="d-flex flex-column mb-8 fv-row">
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        <span class="required">{{__("Number of Memorandum of Association")}}</span>
+                                        {{__("Number of Memorandum of Association")}}
 
                                     </label>
                                     <!--end::Label-->
@@ -109,8 +109,7 @@
                                 <div class="d-flex flex-column mb-8 fv-row">
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        <span class="required">{{__("Issuing date")}}</span>
-
+                                        {{__("Issuing date")}}
                                     </label>
                                     <!--end::Label-->
                                     <input type="date" name="entity[license][documents][0][issuing_date]" class="form-control mb-2" value="{{ old('entity.license.documents.0.issuing_date') }}" />
@@ -118,7 +117,7 @@
                                 <div class="d-flex flex-column mb-8 fv-row">
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        <span class="required">{{__("Expiry date")}}</span>
+                                        {{__("Expiry date")}}
 
                                     </label>
                                     <!--end::Label-->
@@ -169,7 +168,7 @@
     
                                 </label>
                                 <!--end::Label-->
-                                <select id="countrySelect" class="form-select" name="user[nationality]"></select>
+                                <select id="countrySelect" class="form-select" required name="user[nationality]"></select>
                             </div>
                            
                             <!--end::Input group-->
@@ -191,20 +190,21 @@
                                         </div>
                                         <input type="text" class="form-control" name="user[phone][number]" value="{{ old('user.phone.0.number')  ?? substr($RO->phone,3)}}" />
                                     </div>
-                                    <div class="d-flex flex-column mb-8 fv-row">
-                                       <!--begin::Label-->
-                                       <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                           <span class="required">{{__("This Number used In")}}</span>
-
-                                       </label>
-                                       <!--end::Label-->
-                                       <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">
-                                           <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
-                                           <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
-                                       </select>
-                                   </div>
+                                   
                             </div> 
+                            <div class="d-flex flex-column mb-8 fv-row">
+                                <!--begin::Label-->
+                                <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                    {{__("This Number used In")}}
 
+                                </label>
+                                <!--end::Label-->
+                                <select class="form-select mb-2" data-placeholder="test" name="user[phone][type]">
+                                    <option ></option>
+                                    <option value="HOME" {{old('user.phone.0.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
+                                    <option value="WORK"  {{old('user.phone.0.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
+                                </select>
+                            </div>
                         <!--begin::Input group-->
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
@@ -219,11 +219,12 @@
                         <div class="d-flex flex-column mb-8 fv-row">
                              <!--begin::Label-->
                              <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                 <span class="required">{{__("This Email used In")}}</span>
+                                {{__("This Email used In")}}
 
                              </label>
                              <!--end::Label-->
                              <select class="form-select mb-2" data-placeholder="test" name="user[email][type]" >
+                                <option ></option>
                                  <option value="HOME" {{old('user.email.type') == 'HOME'? 'selected' :''}}>{{__('Home')}}</option>
                                  <option value="WORK"  {{old('user.email.type') == 'WORK'? 'selected' :''}}>{{__('Work')}}</option>
                              </select>
@@ -258,7 +259,7 @@
                                         <span class="required">{{__("National ID")}}</span>
                                     </label>
                                     <!--end::Label-->
-                                    <input type="text" class="form-control" placeholder="{{__('National ID')}}" name="user[identification][number]" value="{{old('user.identification.number')}}" />
+                                    <input type="text" class="form-control" placeholder="{{__('National ID')}}" required name="user[identification][number]" value="{{old('user.identification.number') ?? $traderRegistrationRequirement->national_id_number}}" />
                                 </div>
                                 <!--begin::Input group-->
                                 <div class="d-flex flex-column mb-8 fv-row">
@@ -268,7 +269,7 @@
     
                                     </label>
                                     <!--end::Label-->
-                                    <input type="date" name="user[birth][date]" class="form-control mb-2" value="{{ old('user.birth.date') }}" />
+                                    <input type="date" required name="user[birth][date]" class="form-control mb-2" value="{{ old('user.birth.date') }}" />
                                     <small class="text-info">{{__('The date of birth must match the National ID number')}}</small>
                                 </div>
     
@@ -286,51 +287,48 @@
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
                                 <span class="">{{__('Bank Name')}}<span class="text-danger h4"> * </span></span>
                             </label>
-                            <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')}}" /><br />
+                            <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')   ?? $traderRegistrationRequirement->bank_name}}" /><br />
 
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
-                                <span class="">{{__('Company Name')}}<span class="text-danger h4"> * </span></span>
+                                <span class="">{{__('Company Name')}}</span>
                             </label>
                             <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][account][name]" value="{{old('wallet.bank.account.name') ?? $traderRegistrationRequirement->facility_name}}" /><br />
 
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                                <span class="">{{__('Account number')}}<span class="text-danger h4"> * </span></span>
+                                <span class="">{{__('Account number')}}</span>
                             </label>
-                            <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.iban') ?? $traderRegistrationRequirement->IBAN}}" /><br/>
+                            <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][number]" value="{{old('wallet.bank.account.number') }}" /><br/>
                              <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
                                 <span class="">{{__('Bank IBAN')}}<span class="text-danger h4"> * </span></span>
                             </label>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][iban]" value="{{old('wallet.bank.account.iban') ?? $traderRegistrationRequirement->IBAN}}" /><br/>
 
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                                <span class="">{{__('Account number')}}<span class="text-danger h4"> * </span></span>
+                                <span class="">{{__('Swift Number')}}</span>
                             </label>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][account][swift]" value="{{old('wallet.bank.account.swift')}}" /><br/>
 
                            
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="entity_group">
-                                <h2 class="bold">{{__("Bank Statement")}}</h2>
-
+                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
+                                <span class="">{{__('Bank Statement number')}}<span class="text-danger h4"> * </span></span>
                             </label>
-
-
-                           
                         <br>
-
+                            <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][documents][0][number]" value="{{old('wallet.bank.documents.0.number')}}" /><br/>
+                           
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__('Bank Statement File')}}</span>
+                                    {{__('Bank Statement File')}}
                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
                                 </label>
                                 <!--end::Label-->
-                                <input type="file" class="form-control form-control-solid" required  name="wallet[bank][documents][0][images][]"   />
+                                <input type="file" class="form-control form-control-solid"   name="wallet[bank][documents][0][images][]"   />
                             </div>
 
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__("Issuing date")}}</span>
+                                    {{__("Issuing date")}}
 
                                 </label>
                                 <!--end::Label-->
@@ -349,14 +347,10 @@
                     <div class="tab-pane fade  " id="tax" role="tabpanel" aria-labelledby="tax-tab">
                         <div class="row m-4" >
 
-                            <label class="d-flex align-items-center fs-6 fw-bold mb-2" >
-                                <h2 class="bold">{{__("Tax Document")}}</h2>
-
-                            </label>
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__("Number")}}</span>
+                                    {{__("Number")}}
 
                                 </label>
                                 <!--end::Label-->
@@ -366,7 +360,7 @@
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__("Issuing date")}}</span>
+                                    {{__("Issuing date")}}
 
                                 </label>
                                 <!--end::Label-->
@@ -375,7 +369,7 @@
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    <span class="required">{{__("Expiry date")}}</span>
+                                    {{__("Expiry date")}}
 
                                 </label>
                                 <!--end::Label-->
@@ -383,11 +377,11 @@
                                 <div class="d-flex flex-column mb-8 fv-row">
                                     <!--begin::Label-->
                                     <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                        <span class="required">{{__('Tax Document file')}}</span>
+                                        {{__('Tax Document file')}}
                                         <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" ></i>
                                     </label>
                                     <!--end::Label-->
-                                    <input type="file" class="form-control form-control-solid" required  name="entity[tax][documents][0][images][]" placeholder="Enter Target Title"  />
+                                    <input type="file" class="form-control form-control-solid"  name="documents" placeholder="Enter Target Title"  />
                                 </div>
 
                             </div>
@@ -466,30 +460,23 @@
 
 
 
-        document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var submitButton = document.querySelector('#kt_modal_new_target_submit');
-            submitButton.disabled = true;
-            var waiting = document.querySelector('#waiting-item');
-            waiting.style.display = 'block';
-            document.getElementById('kt_modal_new_target_form').submit();
-        });
-
+     
     });
-    document.getElementById('kt_modal_new_target_submit').addEventListener('click', function(event) {
+    document.getElementById('kt_modal_new_target_form').addEventListener('submit', function(event) {
         event.preventDefault();
-        // if (!areCheckboxesChecked()) 
-        //  alert(`{{__('Please check all terms and conditions before submitting.')}}`);
-        //     return ;
+        var submitButton = document.querySelector('#kt_modal_new_target_submit');
+        submitButton.disabled = true;
+        var waiting = document.querySelector('#waiting-item');
+        waiting.style.display = 'block';
        
         Swal.fire({
             title: '{{ __('are-you-sure') }}',
-            text: "{{ __('you-wont-be-able-to-undo-this') }}",
+            text: `{{ __("Are you sure you want to sign new contract ?") }}`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#009ef7',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: '{{ __('submit') }}',
+            confirmButtonText: '{{ __('yes') }}',
             cancelButtonText: '{{ __('cancel') }}'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -518,7 +505,7 @@
 
     // Initial call to toggleEntityVisibility to set initial visibility based on checkbox state
     toggleEntityVisibility();
-  
+    
 </script>
 
 @push('scripts')

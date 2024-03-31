@@ -115,22 +115,11 @@ class CreateLeadRequest  extends FormRequest
                'bank'=>[
                     "name"=> $this->wallet['bank']['name'] ?? null,
                     "account"=>[
-                        "number"=> $this->wallet['bank']['account']['number'] ?? null,
+            
                         "iban"=> $this->wallet['bank']['account']['iban'] ?? null,
-                        "swift"=> $this->wallet['bank']['account']['swift'] ?? null,
                         "name"=> $this->wallet['bank']['account']['name'] ?? null,
                     ],
-                    'documents'=>[
-                        [
-                            "type"=> "Bank Statement",
-                            "issuing_country"=> "SA",
-                            "number"=> $this->wallet['bank']['documents'][0]['number'] ?? null,
-                            "issuing_date"=> $this->wallet['bank']['documents'][0]['issuing_date'] ?? null,
-                            "images"=> [
-                                $this->wallet['bank']['documents'][0]['images'][0] ?? null,
-                            ]
-                        ]
-                    ]
+                   
 
                ]
             ],
@@ -139,23 +128,31 @@ class CreateLeadRequest  extends FormRequest
                 "is_licensed" => ($this->entity['is_licensed'] ?? false)?true:false,
             ],
             'user' => [
-
+                    'identification' => [
+                        'type' => 'national_id',
+                        'issuer'=>"SA",
+                        'number' => $this->user['identification']['number'] ?? ''
+                    ],
                     'phone' => [
                         [
                         'country_code' => '966',
                         "number"=> $this->user['phone']['number'] ?? null,
-                        "type"=> $this->user['phone']['type'] ?? null,
+          
                         "primary"=> true
                         ]
                     ],
+                    'birth' => [
+                        'country' => 'SA',
+                        'date' => $this->user['birth']['date'] ?? ''
+                    ],
                     'name' => [
-                        "title"=>$this->user['name']['title'] ?? null,
+                        // "title"=>$this->user['name']['title'] ?? null,
                         "first"=>$this->user['name']['first'] ?? null,
                         "last"=>$this->user['name']['last'] ?? null,
                     ],
                     'email' => [
                       [
-                        'type' =>  $this->user['email']['type'] ?? null,
+                       
                         "address"=>$this->user['email']['address'] ?? null,
                         "primary"=> true
                       ]
@@ -173,22 +170,50 @@ class CreateLeadRequest  extends FormRequest
                 'country' => 'SA',
                 'type' => 'commercial_registration',
                 "number"=>$this->entity['license']['number'] ?? null,
-                "documents"=>[
-                   [
+                
+            ];
+            if($this->entity['license']['documents'][0]['number'] ?? null){
+                $defaults['entity']['license']['documents'] = 
+                [
                     "type"=> "Memorandum of Association",
                     "issuing_country"=> "SA",
                     "number"=> $this->entity['license']['documents'][0]['number'] ?? null,
                     "issuing_date"=>  $this->entity['license']['documents'][0]['issuing_date'] ?? null,
                     "expiry_date"=> $this->entity['license']['documents'][0]['expiry_date'] ?? null,
-                   ]
-                ]
-            ];
+                ];
+            }
+           
         }
+        if($this->wallet['bank']['documents'][0]['number'] ?? false){
+            $defaults['wallet']['bank']['documents'] = 
+            [
+                    "type"=> "Bank Statement",
+                    "issuing_country"=> "SA",
+                    "number"=> $this->wallet['bank']['documents'][0]['number'],
+                    "issuing_date"=> $this->wallet['bank']['documents'][0]['issuing_date'] ?? null,
+             ];
+          
+        }
+      
         if($this->brand['logo'] ?? null){
-            $$defaults['brand'] = array_merge($defaults['brand'], [
-                'logo'=>$this->brand['logo']
-            ]);
+            $defaults['brand']['logo']=$this->brand['logo'];
         }
+        if($this->user['phone']['type'] ?? null){
+            $defaults['user']['phone']['type'] =$this->user['phone']['type'];
+        }
+        if($this->user['email']['type'] ?? null){
+            $defaults['user']['phone']['type'] =$this->user['email']['type'];
+        }
+        if($this->wallet['bank']['documents'][0]['images'][0] ?? null){
+            $defaults['wallet']['bank']['documents'][0]['images'][0] =  $this->wallet['bank']['documents'][0]['images'][0];
+        }
+        if($this->wallet['bank']['account']['swift'] ?? null){
+            $defaults['wallet']['bank']['account']['swift'] = $this->wallet['bank']['account']['swift'] ?? null;
+        }                  
+        if($this->wallet['bank']['account']['number'] ?? null){
+            $defaults['wallet']['bank']['account']['number'] = $this->wallet['bank']['account']['number'] ?? null;
+        }    
+       
 
         $this->replace($defaults);
 

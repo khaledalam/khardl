@@ -243,35 +243,50 @@ class TapController extends Controller
 
         $data = $request->all();
    
-        $tenant_id = tenant()->id;
-        $userBankIban = '';
-        tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
-            $user = Tenant::find($tenant_id)->user;
-            $userBankIban = $user->traderRegistrationRequirement?->IBAN;
-        });
+        // $tenant_id = tenant()->id;
+        // $userBankIban = '';
+        // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
+        //     $user = Tenant::find($tenant_id)->user;
+        //     $userBankIban = $user->traderRegistrationRequirement?->IBAN;
+        // });
 
         // Autofill data from our side to simplify the flow
-        $data['user']['name']['title'] = 'Mr';
-        $data['user']['phone'][0]['type'] = 'WORK';
-        $data['user']['email'][0]['type'] = 'WORK';
-        $data['wallet']['bank']['account']['iban'] = $userBankIban;
+        // $data['user']['name']['title'] = 'Mr';
+        // $data['user']['phone'][0]['type'] = 'WORK';
+        // $data['user']['email'][0]['type'] = 'WORK';
+        // $data['wallet']['bank']['account']['iban'] = $userBankIban;
+        if($request->file('brand.logo')){
+            $restaurant_logo = TapFileAPI::create([
+                'file' => $request->file('brand.logo'),
+                'purpose' => 'business_logo',
+                'title' => "Restaurant Logo"
+            ]);
+            $data['brand']['logo']=$restaurant_logo['message']['id'];
 
-        $restaurant_logo = TapFileAPI::create([
-            'file' => $request->file('brand.logo'),
-            'purpose' => 'business_logo',
-            'title' => "Restaurant Logo"
-        ]);
+        }
+        if($request->file("wallet.bank.documents.0.images.0")){
+            $bank_statement = TapFileAPI::create([
+                'file' => $request->file("wallet.bank.documents.0.images.0"),
+                'purpose' => 'identity_document',
+                'title' => "Bank Statement"
+            ]);
+            $data['wallet']['bank']['documents'][0]['images'][0]=$bank_statement['message']['id'];
 
-        $bank_statement = TapFileAPI::create([
-            'file' => $request->file("wallet.bank.documents.0.images.0"),
-            'purpose' => 'identity_document',
-            'title' => "Bank Statement"
-        ]);
+        }
+        if($request->file("entity.tax.documents.0.images.0")){
+            $tax = TapFileAPI::create([
+                'file' => $request->file("entity.tax.documents.0.images.0"),
+                'purpose' => 'tax_document_user_upload',
+                'title' => "Tax Document"
+            ]);
+            $data['entity']['tax']['documents'][0]['images'][0]=$tax['message']['id'];
+
+        }
+
+       
         if ($restaurant_logo['http_code'] != ResponseHelper::HTTP_OK || $bank_statement['http_code'] != ResponseHelper::HTTP_OK ) {
             return redirect()->back()->with('error', __('Failed to upload files'));
         }
-        $data['brand']['logo']=$restaurant_logo['message']['id'];
-        $data['wallet']['bank']['documents'][0]['images'][0]=$bank_statement['message']['id'];
 
         $response = Lead::connect($data);
         if($response['http_code'] == ResponseHelper::HTTP_OK){
