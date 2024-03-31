@@ -24,6 +24,7 @@ use App\Models\Subscription as CentralSubscription;
 use App\Jobs\SendTAPLeadIDMerchantIDRequestEmailJob;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Exports\Restaurant\ExportSubscriptionInvoice;
+use App\Models\Tenant\RestaurantUser;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use App\Packages\TapPayment\Requests\CreateLeadRequest;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
@@ -224,67 +225,84 @@ class TapController extends Controller
 
         return redirect()->route('restaurant.service')->with('error', __('Error occur please try again'));
     }
-    public function payments_submit_lead_get(){
-        $user = Auth::user();
-        $restaurant_name = Setting::first()->restaurant_name;
-        $tenant_id = tenant()->id;
-        $iban = '';
-        $facility_name = '';
-        tenancy()->central(function () use ($tenant_id, &$iban, &$facility_name) {
-            $user = Tenant::find($tenant_id)->user;
-            $iban = $user->traderRegistrationRequirement?->IBAN;
-            $facility_name = $user->traderRegistrationRequirement?->facility_name;
-        });
-        return view('restaurant.payments_tap_create_lead',compact('iban','facility_name','restaurant_name','user'));
-    }
-    public function payments_submit_lead(CreateLeadRequest $request) {
+    // public function payments_submit_lead_get(){
+    //     $user = Auth::user();
+    //     $restaurant_name = Setting::first()->restaurant_name;
+    //     $tenant_id = tenant()->id;
+    //     $iban = '';
+    //     $facility_name = '';
+    //     tenancy()->central(function () use ($tenant_id, &$iban, &$facility_name) {
+    //         $user = Tenant::find($tenant_id)->user;
+    //         $iban = $user->traderRegistrationRequirement?->IBAN;
+    //         $facility_name = $user->traderRegistrationRequirement?->facility_name;
+    //     });
+    //     return view('restaurant.payments_tap_create_lead',compact('iban','facility_name','restaurant_name','user'));
+    // }
 
+    // Central domain
+    public function payments_submit_lead($tenant,CreateLeadRequest $request) {
+        $tenant = Tenant::findOrFail($tenant);
         $data = $request->all();
-
-        $tenant_id = tenant()->id;
-        $userBankIban = '';
-        tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
-            $user = Tenant::find($tenant_id)->user;
-            $userBankIban = $user->traderRegistrationRequirement?->IBAN;
-        });
+     
+        // $tenant_id = tenant()->id;
+        // $userBankIban = '';
+        // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
+        //     $user = Tenant::find($tenant_id)->user;
+        //     $userBankIban = $user->traderRegistrationRequirement?->IBAN;
+        // });
 
         // Autofill data from our side to simplify the flow
-        $data['user']['name']['title'] = 'Mr';
-        $data['user']['phone'][0]['type'] = 'WORK';
-        $data['user']['email'][0]['type'] = 'WORK';
-        $data['wallet']['bank']['account']['iban'] = $userBankIban;
+        // $data['user']['name']['title'] = 'Mr';
+        // $data['user']['phone'][0]['type'] = 'WORK';
+        // $data['user']['email'][0]['type'] = 'WORK';
+        // $data['wallet']['bank']['account']['iban'] = $userBankIban;
+        if($request->file('brand.logo')){
+            $restaurant_logo = TapFileAPI::create([
+                'file' => $request->file('brand.logo'),
+                'purpose' => 'business_logo',
+                'title' => "Restaurant Logo"
+            ]);
+            $data['brand']['logo']=$restaurant_logo['message']['id'];
 
-        $restaurant_logo = TapFileAPI::create([
-            'file' => $request->file('brand.logo'),
-            'purpose' => 'business_logo',
-            'title' => "Restaurant Logo"
-        ]);
-
-        $bank_statement = TapFileAPI::create([
-            'file' => $request->file("wallet.bank.documents.0.images.0"),
-            'purpose' => 'identity_document',
-            'title' => "Bank Statement"
-        ]);
-        if ($restaurant_logo['http_code'] != ResponseHelper::HTTP_OK || $bank_statement['http_code'] != ResponseHelper::HTTP_OK ) {
-            return redirect()->back()->with('error', __('Failed to upload files'));
         }
-        $data['brand']['logo']=$restaurant_logo['message']['id'];
-        $data['wallet']['bank']['documents'][0]['images'][0]=$bank_statement['message']['id'];
+        if($request->file("wallet.bank.documents.0.images.0")){
+            $bank_statement = TapFileAPI::create([
+                'file' => $request->file("wallet.bank.documents.0.images.0"),
+                'purpose' => 'identity_document',
+                'title' => "Bank Statement"
+            ]);
+            $data['wallet']['bank']['documents'][0]['images'][0]=$bank_statement['message']['id'];
+
+        }
+        if($request->file("entity.tax.documents.0.images.0")){
+            $tax = TapFileAPI::create([
+                'file' => $request->file("entity.tax.documents.0.images.0"),
+                'purpose' => 'tax_document_user_upload',
+                'title' => "Tax Document"
+            ]);
+            $data['entity']['tax']['documents'][0]['images'][0]=$tax['message']['id'];
+
+        }
+
+    
 
         $response = Lead::connect($data);
         if($response['http_code'] == ResponseHelper::HTTP_OK){
+            logger($request);
+            $tenant->run(function()use($response){
+                Setting::first()->update([
+                    'lead_id'=> $response['message']['id'],
+                    'lead_response'=>$response['message']
+                ]);
+                SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
+                    user: RestaurantUser::first(),
+                    lead_id :  $response['message']['id'],
+                );
+            });
+            
+           
 
-            Setting::first()->update([
-                'lead_id'=> $response['message']['id'],
-                'lead_response'=>$response['message']
-            ]);
-            SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
-                user: auth()->user(),
-                lead_id :  $response['message']['id'],
-            );
-            // TODO @todo add to Log action
-
-            return redirect()->route('restaurant.service')->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
+            return redirect()->route('admin.view-restaurants',['tenant'=>$tenant])->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
         }
         return redirect()->back()
         ->withInput($request->input())
