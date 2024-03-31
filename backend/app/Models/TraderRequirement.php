@@ -20,7 +20,8 @@ class TraderRequirement extends Model
         'bank_certificate',
         'identity_of_owner_or_manager',
         'national_address',
-        'national_id_number',
+        'national_id_number',   
+        'commercial_registration_number',
         'bank_name'
     ];
 
