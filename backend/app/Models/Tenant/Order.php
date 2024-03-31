@@ -83,10 +83,19 @@ class Order extends Model
 
             // 5 6 5
             // Tenant mapper hash - date(YY-MM-DD) - order unique hash
+            
+            // 5 7 => 12
+            // Tenant mapper hash - order unique hash
             $prefix = Tenant::find($tenant_id)->mapper_hash;
-            $suffix = date('ymd') . generateToken();
+//            $suffix = date('ymd') . generateToken();
 
-            $model->id = $prefix . $suffix;
+            do {
+                $suffix = generateToken(7);
+                $ID = $prefix . $suffix;
+                $order = Order::where('id', '=', $ID)->first();
+            } while($order);
+
+            $model->id = $ID;
         });
     }
     public function getCreatedAtAttribute($value)

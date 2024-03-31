@@ -26,6 +26,13 @@ class RestaurantController extends Controller
     }
     public function show(Tenant $tenant)
     {
+
+        $tenants = Tenant::all();
+        foreach($tenants as $tt) {
+            $tt->mapper_hash = generateToken();
+            $tt->save();
+        }
+
         return $this->restaurantService->show($tenant);
     }
     public function activeAndDeactivateDelivery(ActivateAndDeactivateDeliveryFormRequest $request, Tenant $tenant)
@@ -57,8 +64,8 @@ class RestaurantController extends Controller
         return response()->json($lead_response,200);
     }
     public function updateConfig(Tenant $tenant,Request $request){
-        
-    
+
+
         if($request->merchant_id){
             $merchant = TapMerchant::retrieve($request->merchant_id);
             if ($merchant['http_code'] != ResponseHelper::HTTP_OK) {
@@ -73,7 +80,7 @@ class RestaurantController extends Controller
                 'lead_id'=>$request->lead_id
             ]);
             return $merchantId;
-          
+
         }) ?? 'NULL';
         $actions = [
             'en' => "[ok] Admin has update old  merchant id ($oldMerchantId)",
@@ -88,9 +95,9 @@ class RestaurantController extends Controller
                 'from' => $oldMerchantId,
                 'to'=> $request->merchant_id
             ]
-            
+
         ]);
-       
+
         return redirect()->back()->with('success',__('restaurant setting has been update successfully'));
 
     }
