@@ -36,13 +36,13 @@ class CreateLeadRequest  extends FormRequest
             'wallet.bank.account.swift' => 'nullable|string',
             'wallet.bank.account.iban' => 'nullable|string', // fetch from backend reg. step-2
             'wallet.bank.account.name' => 'required|string',
-            'wallet.bank.documents' => 'required|array',
-            'wallet.bank.documents.*.type' => 'required|string',
-            'wallet.bank.documents.*.number' => 'required|string',
-            'wallet.bank.documents.*.issuing_country' => 'required|string',
-            'wallet.bank.documents.*.issuing_date' => 'required|date',
-            'wallet.bank.documents.*.images' => 'required|array',
-            'wallet.bank.documents.*.images.*' => 'required|mimes:jpeg,bmp,png,gif,svg,pdf',
+            'wallet.bank.documents' => 'nullable|array',
+            'wallet.bank.documents.*.type' => 'nullable|string',
+            'wallet.bank.documents.*.number' => 'nullable|string',
+            'wallet.bank.documents.*.issuing_country' => 'nullable|string',
+            'wallet.bank.documents.*.issuing_date' => 'nullable|date',
+            'wallet.bank.documents.*.images' => 'nullable|array',
+            'wallet.bank.documents.*.images.*' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf',
 
             'user.name.last' => 'required|string',
 //            'user.name.title' => 'required|string', // fetch from backend reg. step-2
@@ -64,12 +64,12 @@ class CreateLeadRequest  extends FormRequest
                 'entity.license.number' => 'required|string',
                 'entity.license.country' => 'required|string',
                 'entity.license.type' => 'required|string',
-                'entity.license.documents' => 'required|array',
-                'entity.license.documents.*.type' => 'required|string',
-                'entity.license.documents.*.number' => 'required|string',
-                'entity.license.documents.*.issuing_country' => 'required|string',
-                'entity.license.documents.*.issuing_date' => 'required|date',
-                'entity.license.documents.*.expiry_date' => 'required|date',
+                'entity.license.documents' => 'nullable|array',
+                'entity.license.documents.*.type' => 'nullable|string',
+                'entity.license.documents.*.number' => 'nullable|string',
+                'entity.license.documents.*.issuing_country' => 'nullable|string',
+                'entity.license.documents.*.issuing_date' => 'nullable|date',
+                'entity.license.documents.*.expiry_date' => 'nullable|date',
 
             ]);
         }

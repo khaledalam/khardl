@@ -239,10 +239,10 @@ class TapController extends Controller
     // }
 
     // Central domain
-    public function payments_submit_lead(CreateLeadRequest $request) {
-
+    public function payments_submit_lead($tenant,CreateLeadRequest $request) {
+        $tenant = Tenant::findOrFail($tenant);
         $data = $request->all();
-   
+        dd($data);
         // $tenant_id = tenant()->id;
         // $userBankIban = '';
         // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
@@ -283,25 +283,25 @@ class TapController extends Controller
 
         }
 
-       
-        if ($restaurant_logo['http_code'] != ResponseHelper::HTTP_OK || $bank_statement['http_code'] != ResponseHelper::HTTP_OK ) {
-            return redirect()->back()->with('error', __('Failed to upload files'));
-        }
+    
 
         $response = Lead::connect($data);
         if($response['http_code'] == ResponseHelper::HTTP_OK){
+            logger($request);
+            $tenant->run(function()use($response){
+                Setting::first()->update([
+                    'lead_id'=> $response['message']['id'],
+                    'lead_response'=>$response['message']
+                ]);
+                SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
+                    user: auth()->user(),
+                    lead_id :  $response['message']['id'],
+                );
+            });
+            
+           
 
-            Setting::first()->update([
-                'lead_id'=> $response['message']['id'],
-                'lead_response'=>$response['message']
-            ]);
-            SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
-                user: auth()->user(),
-                lead_id :  $response['message']['id'],
-            );
-            // TODO @todo add to Log action
-
-            return redirect()->route('restaurant.service')->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
+            return redirect()->route('view-restaurants',['tenant'=>$tenant])->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
         }
         return redirect()->back()
         ->withInput($request->input())
