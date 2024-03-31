@@ -24,6 +24,7 @@ use App\Models\Subscription as CentralSubscription;
 use App\Jobs\SendTAPLeadIDMerchantIDRequestEmailJob;
 use App\Packages\TapPayment\File\File as TapFileAPI;
 use App\Exports\Restaurant\ExportSubscriptionInvoice;
+use App\Models\Tenant\RestaurantUser;
 use App\Packages\TapPayment\Charge\Charge as TapCharge;
 use App\Packages\TapPayment\Requests\CreateLeadRequest;
 use App\Packages\TapPayment\Requests\CreateBusinessRequest;
@@ -294,7 +295,7 @@ class TapController extends Controller
                     'lead_response'=>$response['message']
                 ]);
                 SendTAPLeadIDMerchantIDRequestEmailJob::dispatch(
-                    user: auth()->user(),
+                    user: RestaurantUser::first(),
                     lead_id :  $response['message']['id'],
                 );
             });
