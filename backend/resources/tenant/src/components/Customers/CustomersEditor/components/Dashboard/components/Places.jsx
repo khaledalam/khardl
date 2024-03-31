@@ -103,7 +103,7 @@ function Map({ inputStyle, isCart, user }) {
         const lng = latLng.lng();
         dispatch(updateCustomerAddress({ lat: lat, lng: lng }));
         const addressText = await convertToAddress(lat, lng);
-        
+
         dispatch(
             updateCustomerAddress({
                 lat: lat,
@@ -152,7 +152,6 @@ function Map({ inputStyle, isCart, user }) {
         }
     };
 
-    console.log("Center:", center);
     return (
         <div className="w-full ">
             <div className="mb-6">
