@@ -26,13 +26,6 @@ class RestaurantController extends Controller
     }
     public function show(Tenant $tenant)
     {
-
-        $tenants = Tenant::all();
-        foreach($tenants as $tt) {
-            $tt->mapper_hash = generateToken();
-            $tt->save();
-        }
-
         return $this->restaurantService->show($tenant);
     }
     public function activeAndDeactivateDelivery(ActivateAndDeactivateDeliveryFormRequest $request, Tenant $tenant)

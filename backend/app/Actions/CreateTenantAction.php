@@ -19,7 +19,7 @@ class CreateTenantAction
     {
         do {
             $mapper_hash = generateToken();
-            $tenant = Tenant::where('mapper_hash', '=', $mapper_hash)->first();
+            $tenant = Tenant::whereJsonContains('data->mapper_hash', $mapper_hash)->first();
         } while($tenant);
 
         if(env('APP_ENV')=='testing'){
