@@ -13,7 +13,8 @@
     @else
     
     <!--begin::Content-->
-    <div class="container content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
+    <div class="container content d-flex flex-column flex-column-fluid pt-5" id="kt_content" style="background-color: #c2da08;
+    padding: 15px 15px; !important">
         <!--begin::Post-->
         <form id="kt_modal_new_target_form" class="form card"  method="POST" enctype="multipart/form-data" action="{{route('admin.tap.sign-new-lead',['tenant'=>$restaurant->id])}}">
             @csrf

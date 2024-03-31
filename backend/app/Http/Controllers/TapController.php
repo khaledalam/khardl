@@ -243,7 +243,7 @@ class TapController extends Controller
     public function payments_submit_lead($tenant,CreateLeadRequest $request) {
         $tenant = Tenant::findOrFail($tenant);
         $data = $request->all();
-        dd($data);
+     
         // $tenant_id = tenant()->id;
         // $userBankIban = '';
         // tenancy()->central(function () use ($tenant_id, &$userBankIban,) {
@@ -302,7 +302,7 @@ class TapController extends Controller
             
            
 
-            return redirect()->route('view-restaurants',['tenant'=>$tenant])->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
+            return redirect()->route('admin.view-restaurants',['tenant'=>$tenant])->with('success', __('Your tap account has been created successfully, waiting for approval and we will contact you then'));
         }
         return redirect()->back()
         ->withInput($request->input())
