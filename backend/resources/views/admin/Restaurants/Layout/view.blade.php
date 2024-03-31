@@ -232,6 +232,9 @@
                             <li class="nav-item mt-2">
                                 <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#config">{{ __('configurations')}}</a>
                             </li>
+                            <li class="nav-item mt-2">
+                                <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#tap">{{ __('Payment gateway')}}</a>
+                            </li>
                             @endif
                             <!--end::Nav item-->
                             <!--begin::Nav item-->
@@ -242,6 +245,7 @@
                         </ul>
                         <!--begin::Navs-->
                     </div>
+                    
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="overview" role="tab-panel">
                             @include('admin.Restaurants.Overview.view')
@@ -257,6 +261,10 @@
                         </div>
                         <div class="tab-pane fade config" id="config" role="tab-panel">
                             @include('admin.Restaurants.Configurations.config')
+                        </div>
+
+                        <div class="tab-pane fade tap" id="tap" role="tab-panel">
+                            @include('admin.Restaurants.Configurations.tap-setting')
                         </div>
                     </div>
                 </div>

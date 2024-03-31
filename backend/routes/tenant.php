@@ -153,9 +153,9 @@ Route::group([
                 // Route::post('/payments/tap-create-business-submit-documents', [TapController::class, 'payments_submit_tap_documents'])->name('tap.payments_submit_tap_documents')->middleware('isBusinessFilesSubmitted');
 
                 // Step 2 instead of business : Lead
-                Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get')->middleware('isLeadSubmitted');
-                Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
-                 // Step 3: save cards
+                // Route::get('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead_get'])->name('tap.payments_submit_lead_get')->middleware('isLeadSubmitted');
+                // Route::post('/payments/tap-create-lead', [TapController::class, 'payments_submit_lead'])->name('tap.payments_submit_lead')->middleware('isLeadSubmitted');
+                // Step 3: save cards
                 Route::post('/payments/tap-create-card-details', [TapController::class, 'payments_submit_card_details'])->name('tap.payments_submit_card_details');
                 Route::get('/payments/tap-card-details-redirect', [TapController::class, 'payments_redirect'])->name('tap.payments_redirect');
                 Route::post('/payments/renew-branch', [TapController::class, 'renewBranch'])->name('tap.renewBranch');
