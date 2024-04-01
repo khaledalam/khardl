@@ -154,6 +154,7 @@ const CartPage = () => {
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
         try {
+            setLoading(true);
             const redirect = await AxiosInstance.post(
                 `/orders/payment/redirect`,
                 {
@@ -171,6 +172,7 @@ const CartPage = () => {
                 window.location.href = redirect.data;
             }
         } catch (error) {
+            setLoading(false);
             toast.error(error.response.data.message);
         }
     };
