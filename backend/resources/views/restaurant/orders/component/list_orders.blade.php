@@ -216,6 +216,8 @@
                             <span class="badge badge-danger">{{__(''.$order->payment_status)}}</span>
                             @elseif($order->payment_status ==  \App\Models\Tenant\PaymentMethod::PENDING)
                                 <span class="badge badge-warning">{{__(''.$order->payment_status)}}</span>
+                            @elseif($order->payment_status ==  \App\Models\Tenant\PaymentMethod::REFUNDED)
+                                <span class="badge badge-info">{{__(''.$order->payment_status)}}</span>
                             @endif
 
                         </td>

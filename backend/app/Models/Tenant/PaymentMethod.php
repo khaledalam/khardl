@@ -14,7 +14,7 @@ class PaymentMethod extends Model
     public const PENDING = 'pending';
     public const PAID = 'paid';
     public const FAILED = 'failed';
-
+    public const REFUNDED = 'refunded';
     protected $fillable = [
         'id',
         'name',
