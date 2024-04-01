@@ -16,7 +16,6 @@ Development: https://khardl4test.xyz/
 
 #### prerequisites
 - install [docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/)
-- copy .env.example in root folder to .env
 - copy backend/.env.example to backend/.env
 
 First, navigate to your project directory and run the following shell scripts:
@@ -56,9 +55,16 @@ First, navigate to your project directory and run the following shell scripts:
 ### Add Subdomain (Tenant or Restaurant domain) to Hosts File:
 To access the new tenant via a subdomain, add this line to your system's hosts file:
 
-```127.0.0.1   test.khardl ```
+```
+127.0.0.1   khardl
+127.0.0.1   test.khardl 
+127.0.0.1   first.khardl
+127.0.0.1   second.khardl
+127.0.0.1   third.khardl
+```
+Where `test` is the name of Tenant(Restaurant name - subdomain)
 
-Where `test` is the name of Tenant(Restaurant name)
+note: if after setup and navigate to first.khardl:8000 not work try to use different browser.
 
 Additional Resources: [How to Edit Hosts File](https://www.hostinger.com/tutorials/how-to-edit-hosts-file).
 
