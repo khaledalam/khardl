@@ -55,7 +55,7 @@ const CartPage = () => {
         (state) => state.categoryAPI.cartItemsData,
     );
     const [tap, setTap] = useState(null);
-
+    console.log(tap);
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
 
@@ -282,7 +282,7 @@ const CartPage = () => {
                                                     debug
                                                     merchant={{
                                                         //  The merchant domain name
-                                                        domain: window.location.hostname,
+                                                        domain: 'first.khardl4test.xyz',
                                                         //  The merchant identifier provided by Tap
                                                         id: tap.merchant_id
                                                     }}
@@ -300,8 +300,8 @@ const CartPage = () => {
                                                         // can be one of these networks: [Mada,Visa,MasterCard], by default
                                                         // we bring all the supported networks from tap merchant configuration
                                                         supportedBrands: [SupportedNetworks.Mada, SupportedNetworks.Visa, SupportedNetworks.MasterCard],
-                                                        supportedCards : ["DEBIT","CREDIT"],
-                                                            supportedCardsWithAuthentications : ["3DS","EMV"]
+                                                        supportedCards : "ALL",
+                                                            supportedCardsWithAuthentications : ["3DS"]
                                                     }}
                                                     // The billing contact information
                                                     customer={{
@@ -330,7 +330,7 @@ const CartPage = () => {
                                                     onSuccess={async (token) => {
                                                         // do your stuff here...
                                                         console.log(token)
-                                                        callbackFunc(token);
+                                                        // callbackFunc(token);
                                                     }}
                                                     // optional (A callback function that will be called when you button is clickable)
                                                     onReady={() => {
