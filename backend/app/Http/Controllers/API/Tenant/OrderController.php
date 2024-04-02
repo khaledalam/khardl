@@ -2,27 +2,31 @@
 
 namespace App\Http\Controllers\API\Tenant;
 
-use App\Jobs\AssignDeliveryCompany;
 use App\Models\Tenant\Order;
-use App\Models\Tenant\Setting;
 use Illuminate\Http\Request;
+use App\Utils\ResponseHelper;
+use App\Models\Tenant\Setting;
 use Faker\Provider\id_ID\Color;
 use Illuminate\Validation\Rule;
 use App\Traits\APIResponseTrait;
-use App\Models\Tenant\PaymentMethod;
+use App\Jobs\AssignDeliveryCompany;
 
+use App\Models\Tenant\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tenant\OrderStatusLogs;
 use App\Repositories\API\OrderRepository;
+use App\Packages\TapPayment\Refund\Refund;
 use App\Http\Requests\OrderStatusChangeRequest;
+use App\Packages\DeliveryCompanies\Cervo\Cervo;
+use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
 use Illuminate\Contracts\Database\Query\Builder;
 use App\Repositories\API\CustomerOrderRepository;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
-use App\Http\Controllers\API\Tenant\BaseRepositoryController;
-use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
-use App\Packages\DeliveryCompanies\Cervo\Cervo;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
-use App\Packages\DeliveryCompanies\Yeswa\Yeswa;
+use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
+use App\Http\Controllers\API\Tenant\BaseRepositoryController;
+use Exception;
+use Spatie\WebhookClient\Models\WebhookCall;
 
 class  OrderController extends BaseRepositoryController
 {
@@ -65,10 +69,55 @@ class  OrderController extends BaseRepositoryController
             }
             return redirect()->back()->with('error',__('This branch does not support delivery'));
         }
+        $setting = Setting::first();
         $statusLog = new OrderStatusLogs();
         $statusLog->order_id = $order->id;
         $statusLog->status = $request->status;
+        if(
+            ($request->status == Order::REJECTED || $request->status == Order::CANCELLED) 
+            && $order->payment_method->name == PaymentMethod::ONLINE 
+            && $order->payment_status == PaymentMethod::PAID 
+            && $order->transaction_id
+            && $setting->merchant_id
+        ){
+    
+            
+            $refund = Refund::create([
+                "charge_id"=> $order->transaction_id,
+                "amount"=> $order->total,
+                "reason"=>($request->reason)?$request->reason:"The order has been $request->status"
+            ],
+            $setting->merchant_id
+            );
+            if ($refund['http_code'] == ResponseHelper::HTTP_OK && $refund['message']['status'] == 'REFUNDED') {
+                $order->status = $request->status;
+                $order->payment_status = PaymentMethod::REFUNDED;
+                $order->refund_id = $refund['message']['id'];
+                if($order->reason) $order->reject_or_cancel_reason = $request->reason;
+                $order->save();
+                WebhookCall::create([
+                    'name'=>'tap-payment',
+                    'url'=>route('webhook-client-tap-payment'),
+                    'payload'=>$refund['message']
+                ]);
+                if ($request->expectsJson()) {
+                    return $this->sendResponse(null, __('Order has been updated successfully with Refunded'));
+                }
+                return redirect()->back()->with('success',__('Order has been updated successfully with Refunded'));
 
+            }else {
+                WebhookCall::create([
+                    'name'=>'tap-payment',
+                    'url'=>route('webhook-client-tap-payment'),
+                    'payload'=>$refund['message'],
+                    'exception'=>$refund['message']
+                ]);
+                if ($request->expectsJson()) {
+                    return $this->sendError('Fail', __('The process of refunding the amount to the customer failed'));
+                }
+                return redirect()->back()->with('error',__('The process of refunding the amount to the customer failed'));
+            }
+        }
         if($request->status == Order::REJECTED && $request->reason){
 
             $order->update([

@@ -125,7 +125,7 @@ Route::group([
                 Route::get('/item/{item}', 'show')->middleware('permission:can_edit_menu')->name('view-item');
             });
             Route::delete('/category/delete/{id}', [RestaurantController::class, 'deleteCategory'])->middleware('permission:can_edit_menu')->name('restaurant.delete-category');
-            Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment','isLeadNotSubmitted'])->name('tap.payments');
+            Route::get('/payments', [TapController::class, 'payments'])->middleware(['permission:can_control_payment'])->name('tap.payments');
             Route::get('/download/pdf', [DownloadController::class, 'downloadPDF'])
                 ->name("download.pdf");
             Route::group(['prefix' => '/branches'], function () {

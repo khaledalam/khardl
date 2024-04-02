@@ -59,8 +59,8 @@ const CartPage = () => {
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
 
-    const [paymentMethod, setPaymentMethod] = useState("pm-cod");
-    const [deliveryType, setDeliveryType] = useState("dt-delivery");
+    const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
+    const [deliveryType, setDeliveryType] = useState("Delivery");
     const [deliveryAddress, setDeliveryAddress] = useState(0);
     const [userAddress, setUserAddress] = useState(null);
     const [orderNotes, setOrderNotes] = useState("");
@@ -133,20 +133,14 @@ const CartPage = () => {
 
     const handlePlaceOrder = async () => {
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
-        if (paymentMethod === "pm-cc") {
+        if (paymentMethod === "Online") {
             GoSellElements.submit();
         } else {
             try {
                 try {
                     const cartResponse = await AxiosInstance.post(`/orders`, {
-                        payment_method:
-                            paymentMethod === "pm-cod"
-                                ? "Cash on Delivery"
-                                : "Online",
-                        delivery_type:
-                            deliveryType === "dt-delivery"
-                                ? "Delivery"
-                                : "PICKUP",
+                        payment_method: paymentMethod,
+                        delivery_type: deliveryType,
                         notes: orderNotes,
                         couponCode: coupon,
                         address: orderAddress,
@@ -171,6 +165,7 @@ const CartPage = () => {
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
         try {
+            setLoading(true);
             const redirect = await AxiosInstance.post(
                 `/orders/payment/redirect`,
                 {
@@ -188,6 +183,7 @@ const CartPage = () => {
                 window.location.href = redirect.data;
             }
         } catch (error) {
+            setLoading(false);
             toast.error(error.response.data.message);
         }
     };
@@ -235,14 +231,8 @@ const CartPage = () => {
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Payment Method")}</h3>
                                         {cart.payment_methods.map((method) => {
-                                            let name =
-                                                method.name === "Online"
-                                                    ? "pm-cc"
-                                                    : "pm-cod";
-                                            let displayName =
-                                                method.name === "Online"
-                                                    ? "Credit Card"
-                                                    : "Cash on Delivery";
+                                            let name = method.name 
+                                            let displayName = method.name ;
                                             let img =
                                                 method.name === "Online"
                                                     ? pmcc
@@ -266,7 +256,7 @@ const CartPage = () => {
                                                 />
                                             );
                                         })}
-                                        {paymentMethod === "pm-cc" && (
+                                        {paymentMethod === "Online" && (
                                             <div className="mt-6">
                                                 <PaymentCardGoSell
                                                     callBackWithToken={
@@ -348,32 +338,32 @@ const CartPage = () => {
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Delivery Type")}</h3>
                                         <CartDetailSection
-                                            name="dt-delivery"
+                                            name="Delivery"
                                             onChange={(e) => {
                                                 fetchProfileData();
-                                                setDeliveryType("dt-delivery");
+                                                setDeliveryType("Delivery");
                                             }}
                                             isChecked={
-                                                deliveryType === "dt-delivery"
+                                                deliveryType === "Delivery"
                                             }
                                             img={dtdelivery}
                                             displayName="delivery"
                                         />
 
                                         <CartDetailSection
-                                            name="dt-pickup"
+                                            name="PICKUP"
                                             onChange={(e) =>
-                                                setDeliveryType("dt-pickup")
+                                                setDeliveryType("PICKUP")
                                             }
                                             isChecked={
-                                                deliveryType === "dt-pickup"
+                                                deliveryType === "PICKUP"
                                             }
                                             img={dtpickup}
-                                            displayName="pickup"
+                                            displayName="PICKUP"
                                         />
                                     </div>
                                     <div className="mt-8">
-                                        {deliveryType === "dt-delivery" && (
+                                        {deliveryType === "Delivery" && (
                                             <CartAddress
                                                 user={user}
                                                 userAddress={userAddress}
@@ -414,7 +404,7 @@ const CartPage = () => {
                                                 ) + ` ${t("SAR")}`}
                                             </div>
                                         </div>
-                                        {deliveryType === "dt-delivery" && (
+                                        {deliveryType === "Delivery" && (
                                             <div className="flex justify-between mt-4">
                                                 <div>{t("Delivery fee")}</div>
                                                 <div>
