@@ -101,6 +101,12 @@ class OrderController
         $request->validate([
             'token_id'=>"string|required" // token id for tap payment
         ]);
+
+        return route("home",[
+            'status'=>true,
+            'message'=>"test",
+        ]);
+
         try {
             $merchant_id = Setting::first()->merchant_id;
             $order = $this->order->create($request,$this->cart);
@@ -117,6 +123,8 @@ class OrderController
                 token_id: $request->token_id,
                 redirect: route('orders.payment.response')
             );
+
+
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
                 \Sentry\captureMessage(json_encode($charge['message']['source']));
                 if($charge['message']['source']['payment_method'] == 'APPLE_PAY'){
@@ -137,9 +145,10 @@ class OrderController
                         'status'=>$status,
                         'message'=>$message
                     ]));
-                    return redirect()->route("home",[
+
+                    return route("home",[
                         'status'=>$status,
-                        'message'=>$message
+                        'message'=>$message,
                     ]);
                 }else {
                     return redirect($charge['message']['transaction']['url']);
