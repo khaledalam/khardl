@@ -118,7 +118,7 @@ class OrderController
                 redirect: route('orders.payment.response')
             );
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-                \Sentry\captureMessage($charge['message']['source']);
+                \Sentry\captureMessage(json_encode($charge['message']['source']));
                 if($charge['message']['source']['payment_method'] == 'APPLE_PAY'){
                     $message = __('Payment failed, please try again');
                     $status = false;
