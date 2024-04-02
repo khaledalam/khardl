@@ -282,7 +282,7 @@ const CartPage = () => {
                                                     debug
                                                     merchant={{
                                                         //  The merchant domain name
-                                                        domain: 'first.khardl4test.xyz',
+                                                        domain: window.location.hostname,
                                                         //  The merchant identifier provided by Tap
                                                         id: tap.merchant_id
                                                     }}
