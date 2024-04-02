@@ -31,7 +31,7 @@ class CreateLeadRequest  extends FormRequest
             'entity.country' => 'required|string',
             'entity.is_licensed' => 'nullable|boolean',
 
-            'wallet.bank.name' => 'required|string',
+            'wallet.bank.name' => 'nullable|string',
             'wallet.bank.account.number' => 'nullable|string',
             'wallet.bank.account.swift' => 'nullable|string',
             'wallet.bank.account.iban' => 'nullable|string', // fetch from backend reg. step-2
