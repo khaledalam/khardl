@@ -183,8 +183,8 @@ const CartPage = () => {
             );
 
             if (redirect.data) {
-                console.log("redirect ==>", redirect.data);
-                window.location.href = redirect.data;
+                console.log("redirect ==>", redirect);
+                // window.location.href = redirect.data;
             }
         } catch (error) {
             setLoading(false);
