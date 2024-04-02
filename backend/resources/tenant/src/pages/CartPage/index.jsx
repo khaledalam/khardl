@@ -282,9 +282,7 @@ const CartPage = () => {
                                                     }}
                                                     transaction={{
                                                         // The amount to be charged
-                                                        amount: Number(cart?.total).toFixed(
-                                                            2,
-                                                        ),
+                                                        amount: Number(cart?.total + cart?.delivery_fee).toFixed(2),
                                                         // The currency of the amount
                                                         currency: 'SAR'
                                                     }}
