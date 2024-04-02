@@ -46,7 +46,8 @@ class Order extends Model
         'driver_name',
         'driver_phone',
         'manual_order_first_name',
-        'manual_order_last_name'
+        'manual_order_last_name',
+        'refund_id'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
     protected $casts = [

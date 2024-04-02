@@ -25,6 +25,8 @@ use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use App\Packages\DeliveryCompanies\StreetLine\StreetLine;
 use App\Packages\DeliveryCompanies\AbstractDeliveryCompany;
 use App\Http\Controllers\API\Tenant\BaseRepositoryController;
+use Exception;
+use Spatie\WebhookClient\Models\WebhookCall;
 
 class  OrderController extends BaseRepositoryController
 {
@@ -90,15 +92,26 @@ class  OrderController extends BaseRepositoryController
             if ($refund['http_code'] == ResponseHelper::HTTP_OK && $refund['message']['status'] == 'REFUNDED') {
                 $order->status = $request->status;
                 $order->payment_status = PaymentMethod::REFUNDED;
+                $order->refund_id = $refund['message']['id'];
                 if($order->reason) $order->reject_or_cancel_reason = $request->reason;
                 $order->save();
-
+                WebhookCall::create([
+                    'name'=>'tap-payment',
+                    'url'=>route('webhook-client-tap-payment'),
+                    'payload'=>$refund['message']
+                ]);
                 if ($request->expectsJson()) {
                     return $this->sendResponse(null, __('Order has been updated successfully with Refunded'));
                 }
                 return redirect()->back()->with('success',__('Order has been updated successfully with Refunded'));
 
             }else {
+                WebhookCall::create([
+                    'name'=>'tap-payment',
+                    'url'=>route('webhook-client-tap-payment'),
+                    'payload'=>$refund['message'],
+                    'exception'=>$refund['message']
+                ]);
                 if ($request->expectsJson()) {
                     return $this->sendError('Fail', __('The process of refunding the amount to the customer failed'));
                 }
