@@ -102,17 +102,12 @@ class OrderController
             'token_id'=>"string|required" // token id for tap payment
         ]);
 
-        return route("home",[
-            'status'=>true,
-            'message'=>"test",
-        ]);
-
         try {
             $merchant_id = Setting::first()->merchant_id;
             $order = $this->order->create($request,$this->cart);
             $charge = TapCharge::create(
                 data : [
-                    'amount'=> 0.5,
+                    'amount'=> $order->total,
                     'metadata'=>[
                         'order_id'=> $order->id,
                         'branch_id'=> $order->branch->id,
@@ -126,11 +121,9 @@ class OrderController
 
 
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-                \Sentry\captureMessage(json_encode($charge['message']['source']));
                 if($charge['message']['source']['payment_method'] == 'APPLE_PAY'){
                     $message = __('Payment failed, please try again');
                     $status = false;
-                    \Sentry\captureMessage($charge['message']['status']);
 
                     if($charge['message']['status'] == 'CAPTURED'){
                         try {
@@ -141,18 +134,14 @@ class OrderController
                         $status = true;
                         $message = __("The payment was successful, your order is pending");
                     }
-                    \Sentry\captureMessage(redirect()->route("home",[
-                        'status'=>$status,
-                        'message'=>$message
-                    ]));
 
                     return route("home",[
                         'status'=>$status,
                         'message'=>$message,
                     ]);
-                }else {
-                    return redirect($charge['message']['transaction']['url']);
                 }
+
+                return redirect($charge['message']['transaction']['url']);
             }
         }catch(Exception $e){
             logger($e->getMessage());
