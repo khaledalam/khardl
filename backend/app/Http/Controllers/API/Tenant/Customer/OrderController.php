@@ -97,7 +97,7 @@ class OrderController
             'should_logout' => $shouldLogout
         ], __('Please re-login again'));
     }
-    public function paymentRedirect(OrderRequest $request){
+    public function paymentRedirect(OrderRequest $request,CartRepository $cart){
         $request->validate([
             'token_id'=>"string|required" // token id for tap payment
         ]);
@@ -118,7 +118,25 @@ class OrderController
                 redirect: route('orders.payment.response')
             );
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-                return response()->json($charge['message']['transaction']['url'],200);
+                if($charge['message']['source']['payment_method'] == 'APPLE_PAY'){
+                    $message = __('Payment failed, please try again');
+                    $status = false;
+                    if($charge['message']['status'] == 'CAPTURED'){
+                        try {
+                            $cart->trash();
+                        }catch(Exception $e){
+
+                        }
+                        $status = true;
+                        $message = __("The payment was successful, your order is pending");
+                    }
+                    return redirect()->route("home",[
+                        'status'=>$status,
+                        'message'=>$message
+                    ]);
+                }else {
+                    return redirect($charge['message']['transaction']['url']);
+                }
             }
         }catch(Exception $e){
             logger($e->getMessage());
