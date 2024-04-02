@@ -6,6 +6,8 @@ import AxiosInstance from "../../../../axios/axios";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { MenuContext } from "react-flexible-sliding-menu";
+import GoBackHomeIcon from "../../../../assets/GoBackHomeIcon.png";
+import PrimaryDropDown from "./PrimaryDropDown";
 
 const Navbar = ({ toggleSidebarCollapse }) => {
     const { t } = useTranslation();
@@ -138,24 +140,52 @@ const Navbar = ({ toggleSidebarCollapse }) => {
 
     return (
         <Fragment>
-            <div className="h-[70px] w-full bg-white flex items-center justify-between px-8">
-                <IoMenuOutline
+            <div className="relative z-40 h-[56px] w-full bg-white flex items-center justify-between px-[17px] border-b border-[rgba(0,0,0,0.3)]">
+                {/* <IoMenuOutline
                     size={42}
                     className="text-neutral-400 cursor-pointer"
                     onClick={toggleMenu}
-                />
-                <div className="flex items-center gap-4 cursor-pointer">
+                /> */}
+                <img src={GoBackHomeIcon} className='hover:cursor-pointer' alt='icon' onClick={toggleMenu} />
+                <PrimaryDropDown
+                        // handleChange={handleChange}
+                        innerClassName="border-none shadow-none"
+                        defaultValue={
+                            restuarantStyle.template === "template-1"
+                                ? t("Template 1")
+                                : restuarantStyle.template === "template-2"
+                                  ? t("Template 2")
+                                  : restuarantStyle.template === "template-3"
+                                    ? t("Template 3")
+                                    : " "
+                        }
+                        dropdownList={[
+                            {
+                                value: "template-1",
+                                text: t("Template 1"),
+                            },
+                            {
+                              value: "template-2",
+                              text: "Template 2",
+                            },
+                            {
+                              value: "template-3",
+                              text: "Template 3",
+                            },
+                        ]}
+                    />
+                <div className="flex items-center gap-[8px] cursor-pointer">
                     <button
                         onClick={() => window.open("/")}
-                        className="btn btn-active w-[100px] bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200"
+                        className="w-[63px] h-[24px] text-[11px] font-bold bg-white hover:bg-neutral-200 active:bg-neutral-200 border-[0.5px] rounded-[50px] "
                     >
                         {t("Preview")}
                     </button>
                     <button
                         onClick={handleSubmitResStyle}
-                        className="btn btn-active w-[100px] bg-neutral-200 hover:bg-neutral-200 active:bg-neutral-200"
+                        className="w-[63px] h-[24px] text-[11px] font-bold bg-white hover:bg-neutral-200 active:bg-neutral-200 rounded-[50px] border-[0.5px]"
                     >
-                        {t("Save")}
+                        {t("Publish")}
                     </button>
                 </div>
             </div>
