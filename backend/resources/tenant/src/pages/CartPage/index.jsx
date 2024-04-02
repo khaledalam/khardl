@@ -162,6 +162,10 @@ const CartPage = () => {
     };
 
     const cardPaymentCallbackFunc = async (response) => {
+
+        console.log("here inside callback");
+
+
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
         try {
@@ -231,7 +235,7 @@ const CartPage = () => {
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Payment Method")}</h3>
                                         {cart.payment_methods.map((method) => {
-                                            let name = method.name 
+                                            let name = method.name
                                             let displayName = method.name ;
                                             let img =
                                                 method.name === "Online"
@@ -319,6 +323,8 @@ const CartPage = () => {
                                                     // successfully)
                                                     onSuccess={async (token) => {
                                                         // do your stuff here...
+
+                                                        console.log("here inline");
 
                                                         cardPaymentCallbackFunc(token);
 
