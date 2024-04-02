@@ -179,7 +179,7 @@ const CartPage = () => {
                     notes: orderNotes,
                     couponCode: coupon,
                     address: orderAddress,
-                    token_id: response.id,
+                    token_id: response?.id,
                 },
             );
 
@@ -277,7 +277,7 @@ const CartPage = () => {
                                                     // The public Key provided by Tap
                                                     publicKey={tap.tap_public_key}
                                                     //The environment of the SDK and it can be one of these environments
-                                                    environment={Environment.Beta}
+                                                    environment={Environment.Development}
                                                     //to enable the debug mode
                                                     debug
                                                     merchant={{
@@ -306,7 +306,7 @@ const CartPage = () => {
                                                     // The billing contact information
                                                     customer={{
                                                         id: tap.tap_customer_id,
-                                                    
+
                                                     }}
                                                     //for styling button
                                                     interface={{
@@ -329,8 +329,9 @@ const CartPage = () => {
                                                     // successfully)
                                                     onSuccess={async (token) => {
                                                         // do your stuff here...
-                                                        console.log(token)
-                                                        // callbackFunc(token);
+
+                                                        cardPaymentCallbackFunc(token);
+
                                                     }}
                                                     // optional (A callback function that will be called when you button is clickable)
                                                     onReady={() => {
