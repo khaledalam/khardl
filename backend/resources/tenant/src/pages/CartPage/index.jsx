@@ -288,7 +288,7 @@ const CartPage = () => {
                                                     }}
                                                     transaction={{
                                                         // The amount to be charged
-                                                        amount: '12',
+                                                        amount: 1,
                                                         // The currency of the amount
                                                         currency: 'SAR'
                                                     }}
