@@ -51,7 +51,6 @@ export const AuthContextProvider = (props) => {
             dispatch(changeLogState(response?.data?.is_loggedin || false));
             dispatch(changeUserState(response?.data?.user || null));
         } catch (err) {
-            console.log(err);
             setStatusCode(err?.response?.status);
             // localStorage.setItem("i18nextLng",err.response.data.default_locale || "ar");
             dispatch(changeLogState(err.response?.data?.is_loggedin || false));

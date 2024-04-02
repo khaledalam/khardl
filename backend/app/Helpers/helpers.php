@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Storage;
 if (!function_exists('generate_token')) {
     function generateToken($length = 5)
     {
-        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // 35 ^ 5 => 52,521,875
+//        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // 35 ^ 5 => 52,521,875
+        $characters = '0123456789'; // 10 ^ 5 => 100,000
         $token = '';
         for ($i = 0; $i < $length; $i++) {
             $token .= $characters[random_int(0, strlen($characters) - 1)];

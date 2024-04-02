@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import parseOptionItems from "./Utils";
 
 export default function OrderReviewSummary({ cart }) {
     const { t } = useTranslation();
@@ -12,20 +13,12 @@ export default function OrderReviewSummary({ cart }) {
             const productCount = product.quantity;
             const productPrice = productCount * product.price;
 
-            const allOptions = [];
+            // [ Category, Option Name, Price ]
+            let optionsItems = parseOptionItems(product, true);
 
-            if (product.dropdown_options) {
-                allOptions.push(...product.dropdown_options);
-            }
-
-            if (product.selection_options) {
-                allOptions.push(...product.selection_options);
-            }
-
-            const jsxOption = allOptions.map((option) => {
-                let optionKey = Object.keys(option[language])[0];
-                const optionName = `${optionKey} - ${option[language][optionKey]}`;
-                const optionPrice = option.price;
+            const jsxOption = optionsItems.map((option) => {
+                const optionName = `${option[0]} - ${option[1]}`;
+                const optionPrice = option[2];
 
                 extra += Number(optionPrice);
                 return (
@@ -54,7 +47,7 @@ export default function OrderReviewSummary({ cart }) {
                         </span>
                     </div>
                     <div className="flex justify-between mt-3">
-                        <span>{t("extras")}</span>
+                        <span>{t("Extras")}</span>
                         <span>
                             {extra} {t("SAR")}
                         </span>

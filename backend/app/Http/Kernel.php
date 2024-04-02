@@ -149,7 +149,7 @@ class Kernel extends HttpKernel
         'role' => RoleMiddleware::class,
         'isBusinessFilesSubmitted'=>IsBusinessFilesSubmitted::class,
         'isLeadSubmitted'=>isLeadSubmitted::class,
-        'isLeadNotSubmitted'=>isLeadNotSubmitted::class,
+        // 'isLeadNotSubmitted'=>isLeadNotSubmitted::class,
         'isBusinessSubmitted'=>IsBusinessSubmitted::class,
         "trans_api"=>LocalizationApi::class,
         'ActiveRestaurantAndBranch'=>ActiveRestaurantAndBranch::class

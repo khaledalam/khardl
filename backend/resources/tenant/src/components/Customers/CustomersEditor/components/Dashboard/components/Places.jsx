@@ -154,7 +154,6 @@ function Map({ inputStyle, isCart, user }) {
         }
     };
 
-    console.log("Center:", center);
     return (
         <div className="w-full ">
             <div className="mb-6">
