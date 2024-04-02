@@ -11,6 +11,8 @@ import {
 import CartItem from "./components/CartItem";
 import pmcc from "../../assets/pmcc.png";
 import pmcod from "../../assets/pmcod.png";
+import apple from "../../assets/apple-logo.png";
+import applePay from "../../assets/apple-pay.png";
 import dtpickup from "../../assets/dtpickup.png";
 import dtdelivery from "../../assets/dtdelivery.png";
 
@@ -59,7 +61,7 @@ const CartPage = () => {
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
 
-    const [paymentMethod, setPaymentMethod] = useState("Cash on Delivery");
+    const [paymentMethod, setPaymentMethod] = useState("Online");
     const [deliveryType, setDeliveryType] = useState("Delivery");
     const [deliveryAddress, setDeliveryAddress] = useState(0);
     const [userAddress, setUserAddress] = useState(null);
@@ -192,6 +194,16 @@ const CartPage = () => {
         }
     };
 
+    const sortPaymentMethods = (a, b) => {
+        const order = ["Card", "Apple Pay", "Cash on Delivery"];
+        return order.indexOf(a.name) - order.indexOf(b.name);
+      }
+
+    function isSafari() {
+        const userAgentString = navigator.userAgent;
+        return /Safari/i.test(userAgentString) && !/Chrome/i.test(userAgentString);
+      }
+
     return (
         <div className="p-12">
             {loading && (
@@ -234,13 +246,16 @@ const CartPage = () => {
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Payment Method")}</h3>
-                                        {cart.payment_methods.map((method) => {
-                                            let name = method.name
+                                        {cart.payment_methods.sort(sortPaymentMethods).map((method) => {
+                                            if (method.name === "Apple Pay" && !isSafari()) {
+                                                return;
+                                            }
+                                            let name = method.name 
                                             let displayName = method.name ;
                                             let img =
                                                 method.name === "Online"
                                                     ? pmcc
-                                                    : pmcod;
+                                                    : method.name === "Apple Pay" ? apple : pmcod;
 
                                             return (
                                                 <CartDetailSection
@@ -342,6 +357,20 @@ const CartPage = () => {
                                                     />
                                             </div>
                                         )}
+                                        {paymentMethod === "Apple Pay" && (
+                                            <div className="mt-6">
+                                                <button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">
+                                                    <div className="font-semibold text-[20px]">Buy with</div>
+                                                    <img 
+                                                    src={applePay}                        
+                                                    alt=""
+                                                    width={50}
+                                                    height={50}
+                                                    className="mx-2" />
+                                                </button>
+                                            </div>
+                                        )}
+
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Delivery Type")}</h3>
