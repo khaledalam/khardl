@@ -326,6 +326,8 @@ const CartPage = () => {
 
                                                         console.log("here inline");
 
+                                                        console.log(token);
+
                                                         cardPaymentCallbackFunc(token);
 
                                                     }}
