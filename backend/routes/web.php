@@ -1,19 +1,14 @@
 <?php
 
 use App\Models\User;
-use App\Models\Tenant;
 use Illuminate\Http\Request;
-use App\Models\CentralSetting;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
-use App\Models\Tenant\RestaurantStyle;
 use App\Http\Controllers\TapController;
 use Illuminate\Support\Facades\Session;
 use App\Traits\CentralSharedRoutesTrait;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\AdminController;
-use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\API\ContactUsController;
