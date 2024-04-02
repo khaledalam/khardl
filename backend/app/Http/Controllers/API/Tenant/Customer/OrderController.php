@@ -106,7 +106,7 @@ class OrderController
             $order = $this->order->create($request,$this->cart);
             $charge = TapCharge::create(
                 data : [
-                    'amount'=> $order->total,
+                    'amount'=> 0.5,
                     'metadata'=>[
                         'order_id'=> $order->id,
                         'branch_id'=> $order->branch->id,
@@ -118,9 +118,12 @@ class OrderController
                 redirect: route('orders.payment.response')
             );
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
+                \Sentry\captureMessage($charge['message']['source']);
                 if($charge['message']['source']['payment_method'] == 'APPLE_PAY'){
                     $message = __('Payment failed, please try again');
                     $status = false;
+                    \Sentry\captureMessage($charge['message']['status']);
+
                     if($charge['message']['status'] == 'CAPTURED'){
                         try {
                             $cart->trash();
@@ -130,6 +133,10 @@ class OrderController
                         $status = true;
                         $message = __("The payment was successful, your order is pending");
                     }
+                    \Sentry\captureMessage(redirect()->route("home",[
+                        'status'=>$status,
+                        'message'=>$message
+                    ]));
                     return redirect()->route("home",[
                         'status'=>$status,
                         'message'=>$message
