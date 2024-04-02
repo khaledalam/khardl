@@ -271,7 +271,7 @@ const CartPage = () => {
                                                     // The public Key provided by Tap
                                                     publicKey={tap.tap_public_key}
                                                     //The environment of the SDK and it can be one of these environments
-                                                    environment={Environment.Development}
+                                                    environment={Environment.Beta}
                                                     //to enable the debug mode
                                                     debug
                                                     merchant={{
@@ -282,7 +282,9 @@ const CartPage = () => {
                                                     }}
                                                     transaction={{
                                                         // The amount to be charged
-                                                        amount: 1,
+                                                        amount: Number(cart?.total).toFixed(
+                                                            2,
+                                                        ),
                                                         // The currency of the amount
                                                         currency: 'SAR'
                                                     }}
