@@ -125,6 +125,8 @@
     "Coupon has been expired":"لقد انتهت صلاحية القسيمة",
     "Coupon applied for only subtotal above :total":"يتم تطبيق الكوبون عندما يكون المجموع الفرعي اكثر من :total",
     "Coupon removed successfully":"تمت إزالة القسيمة بنجاح",
+    "Order id is required": "يرجي ادخال رقم الطلب",
+    "Enter valid Order id consists of 12 characters": "يرجي ادخل رقم طلب صحيح مكون من 12 رقم",
     "Order has been cancelled successfully":"تم إلغاء الطلب بنجاح",
     "You can not change this order status":"لا يمكنك تغيير حالة الطلب هذه",
     "Not found":"غير موجود",
