@@ -57,7 +57,6 @@ const CartPage = () => {
         (state) => state.categoryAPI.cartItemsData,
     );
     const [tap, setTap] = useState(null);
-    console.log(tap);
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
 
@@ -165,9 +164,6 @@ const CartPage = () => {
 
     const cardPaymentCallbackFunc = async (response) => {
 
-        console.log("here inside callback");
-
-
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
         try {
@@ -203,6 +199,12 @@ const CartPage = () => {
         const userAgentString = navigator.userAgent;
         return /Safari/i.test(userAgentString) && !/Chrome/i.test(userAgentString);
       }
+
+
+      const getTotalPrice = () => Number(
+            parseFloat(cart?.total) +
+            (deliveryType === "PICKUP" ? 0.0 : parseFloat(cart?.delivery_fee))
+        ).toFixed(2);
 
     return (
         <div className="p-12">
@@ -250,7 +252,7 @@ const CartPage = () => {
                                             if (method.name === "Apple Pay" && !isSafari()) {
                                                 return;
                                             }
-                                            let name = method.name 
+                                            let name = method.name
                                             let displayName = method.name ;
                                             let img =
                                                 method.name === "Online"
@@ -297,7 +299,7 @@ const CartPage = () => {
                                                     }}
                                                     transaction={{
                                                         // The amount to be charged
-                                                        amount: Number(cart?.total + cart?.delivery_fee).toFixed(2),
+                                                        amount: getTotalPrice(),
                                                         // The currency of the amount
                                                         currency: 'SAR'
                                                     }}
@@ -361,8 +363,8 @@ const CartPage = () => {
                                             <div className="mt-6">
                                                 <button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">
                                                     <div className="font-semibold text-[20px]">Buy with</div>
-                                                    <img 
-                                                    src={applePay}                        
+                                                    <img
+                                                    src={applePay}
                                                     alt=""
                                                     width={50}
                                                     height={50}
@@ -468,7 +470,7 @@ const CartPage = () => {
                                         <div className="flex justify-between mt-1">
                                             <div>{t("Total Payment")}</div>
                                             <div>
-                                                {`${Number(cart?.total + cart?.delivery_fee).toFixed(2)} ${t("SAR")}`}
+                                                {`${getTotalPrice()} ${t("SAR")}`}
                                             </div>
                                         </div>
                                     </div>
