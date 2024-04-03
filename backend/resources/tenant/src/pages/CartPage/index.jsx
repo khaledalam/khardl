@@ -193,11 +193,6 @@ const CartPage = () => {
         }
     };
 
-    const sortPaymentMethods = (a, b) => {
-        const order = ["Card", "Apple Pay", "Cash on Delivery"];
-        return order.indexOf(a.name) - order.indexOf(b.name);
-    };
-
     return (
         <div className="p-12">
             {loading && (
@@ -240,56 +235,83 @@ const CartPage = () => {
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Payment Method")}</h3>
-                                        {cart.payment_methods
-                                            .sort(sortPaymentMethods)
-                                            .map((method) => {
-                                                if (
-                                                    method.name ===
-                                                        "Apple Pay" &&
-                                                    !isSafari
-                                                ) {
-                                                    return;
+                                        {cart.payment_methods.some(
+                                            (obj) => obj.name === "Online",
+                                        ) && (
+                                            <CartDetailSection
+                                                key={"Online"}
+                                                name={"Online"}
+                                                onChange={(e) =>
+                                                    setPaymentMethod("Online")
                                                 }
-                                                let name = method.name;
-                                                let displayName = method.name;
-                                                let img =
-                                                    method.name === "Online"
-                                                        ? pmcc
-                                                        : method.name ===
-                                                            "Apple Pay"
-                                                          ? apple
-                                                          : pmcod;
-
-                                                return (
-                                                    <CartDetailSection
-                                                        key={method.name}
-                                                        name={method.name}
-                                                        onChange={(e) =>
-                                                            setPaymentMethod(
-                                                                name,
-                                                            )
-                                                        }
-                                                        isChecked={
-                                                            paymentMethod ===
-                                                            name
-                                                        }
-                                                        img={img}
-                                                        displayName={
-                                                            displayName
-                                                        }
-                                                        callBackfn={
-                                                            cardPaymentCallbackFunc
-                                                        }
-                                                    />
-                                                );
-                                            })}
+                                                isChecked={
+                                                    paymentMethod === "Online"
+                                                }
+                                                img={pmcc}
+                                                displayName="Card"
+                                                callBackfn={
+                                                    cardPaymentCallbackFunc
+                                                }
+                                            />
+                                        )}
+                                        {cart.payment_methods.some(
+                                            (obj) => obj.name === "Online",
+                                        ) &&
+                                            isSafari && (
+                                                <CartDetailSection
+                                                    key={"Apple Pay"}
+                                                    name={"ApplePay"}
+                                                    onChange={(e) =>
+                                                        setPaymentMethod(
+                                                            "Apple Pay",
+                                                        )
+                                                    }
+                                                    isChecked={
+                                                        paymentMethod ===
+                                                        "Apple Pay"
+                                                    }
+                                                    img={apple}
+                                                    displayName={"Apple Pay"}
+                                                    callBackfn={
+                                                        cardPaymentCallbackFunc
+                                                    }
+                                                />
+                                            )}
+                                        {cart.payment_methods.some(
+                                            (obj) =>
+                                                obj.name === "Cash on Delivery",
+                                        ) && (
+                                            <CartDetailSection
+                                                key={"Cash on Delivery"}
+                                                name={"Cash on Delivery"}
+                                                onChange={(e) =>
+                                                    setPaymentMethod(
+                                                        "Cash on Delivery",
+                                                    )
+                                                }
+                                                isChecked={
+                                                    paymentMethod ===
+                                                    "Cash on Delivery"
+                                                }
+                                                img={pmcod}
+                                                displayName="Cash on Delivery"
+                                                callBackfn={
+                                                    cardPaymentCallbackFunc
+                                                }
+                                            />
+                                        )}
                                         {paymentMethod === "Online" && (
-                                            <div className="mt-6">
+                                            <div className="mt-6 space-y-3">
                                                 <PaymentCardGoSell
                                                     callBackWithToken={
                                                         cardPaymentCallbackFunc
                                                     }
                                                 />
+                                                <button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">
+                                                    <div className="font-semibold text-[20px] py-3">
+                                                        Buy with Card
+                                                    </div>
+                                                </button>
                                             </div>
                                         )}
                                         {paymentMethod === "Apple Pay" && (
