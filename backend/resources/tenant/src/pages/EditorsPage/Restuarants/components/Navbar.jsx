@@ -177,13 +177,13 @@ const Navbar = ({ toggleSidebarCollapse }) => {
                 <div className="flex items-center gap-[8px] cursor-pointer">
                     <button
                         onClick={() => window.open("/")}
-                        className="w-[63px] h-[24px] text-[11px] font-bold bg-white hover:bg-neutral-200 active:bg-neutral-200 border-[0.5px] rounded-[50px] "
+                        className="w-[63px] h-[24px] text-[10px] font-semibold bg-white hover:bg-neutral-200 active:bg-neutral-200 border-[0.5px] rounded-[50px] "
                     >
                         {t("Preview")}
                     </button>
                     <button
                         onClick={handleSubmitResStyle}
-                        className="w-[63px] h-[24px] text-[11px] font-bold bg-white hover:bg-neutral-200 active:bg-neutral-200 rounded-[50px] border-[0.5px]"
+                        className="w-[63px] h-[24px] text-[10px] font-semibold bg-white hover:bg-neutral-200 active:bg-neutral-200 rounded-[50px] border-[0.5px]"
                     >
                         {t("Publish")}
                     </button>

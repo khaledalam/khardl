@@ -14,6 +14,8 @@ import {
     setCategoriesAPI,
 } from "../../../redux/NewEditor/categoryAPISlice";
 import HeaderEdit from "./components/HeaderEdit";
+import { LeftSideBar } from "./components/LeftSideBar";
+import { RightSideBar } from "./components/RightSideBar";
 
 export const RestuarantEditor = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +27,7 @@ export const RestuarantEditor = () => {
         (state) => state.restuarantEditorStyle.collapse_sidebar,
     );
     const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
+    console.log("karim - restaurantStyle : ", restaurantStyle);
     const template = useSelector(
         (state) => state.restuarantEditorStyle.template,
     );
@@ -95,20 +98,23 @@ export const RestuarantEditor = () => {
     }, []);
 
     return (
-        <div className="block">
+        <div className="block" style={
+            {fontFamily: "Plus Jakarta Sans, sans-serif"}
+        }>
             <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
-            <div className="flex bg-white h-[calc(100vh-75px)] w-full transition-all hide-scroll">
+            <div className="flex bg-[#EEEEEE] h-[100vh] w-full transition-all hide-scroll">
                 <div
-                    className={`transition-all h-full ${
-                        isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[18%]"
-                    } xl:flex-[30%] laptopXL:flex-[25%] overflow-x-hidden bg-white h-full `}
+                    className={`transition-all ${
+                        isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[20%]"
+                    } xl:flex-[20%] laptopXL:flex-[25%] overflow-x-hidden bg-white h-[646px] border-r border-[rgba(0,0,0,0.3)]`}
                 >
-                    <SidebarEditor />
+                    {/* <SidebarEditor /> */}
+                    <LeftSideBar />
                 </div>
                 <div
                     className={` transition-all h-full ${
-                        isSidebarCollapse ? "flex-[100%] w-full" : "flex-[82%]"
-                    } xl:flex-[70%] laptopXL:flex-[75%] overflow-x-hidden bg-neutral-200`}
+                        isSidebarCollapse ? "flex-[100%] w-full" : "flex-[60%]"
+                    } xl:flex-[80%] laptopXL:flex-[50%] overflow-x-hidden bg-neutral-200`}
                 >
                     {template === "template-1" && (
                         <div className="w-full h-full  flex flex-col gap-2">
@@ -133,6 +139,14 @@ export const RestuarantEditor = () => {
                             </div>
                         </div>
                     )}
+                </div>
+                <div
+                    className={`transition-all ${
+                        isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[20%]"
+                    } xl:flex-[20%] laptopXL:flex-[25%] overflow-x-hidden h-[646px] bg-white border-l border-[rgba(0,0,0,0.3)]`}
+                >
+                    {/* <SidebarEditor /> */}
+                    <RightSideBar />
                 </div>
             </div>
         </div>
