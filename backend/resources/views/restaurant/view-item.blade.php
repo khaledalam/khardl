@@ -135,11 +135,12 @@
                                     </td>
                                     <td class="text-dark">
                                         @foreach ($item?->checkbox_input_titles as $key => $option)
+
                                         @if(isset($option[$key]))
-                                        <span>{{ $option[$key] }}</span>
-                                        @if(isset($item->checkbox_input_maximum_choices[$key]))
-                                        <small class="text-muted">({{ __('Max') }} : <strong>{{ $item->checkbox_input_maximum_choices[$key] }}</strong>)</small>
-                                        @endif
+                                            <span>{{ $option[$key] }}</span>
+                                            @if(isset($item->checkbox_input_maximum_choices[$key]))
+                                                <small class="text-muted">({{ __('Max') }} : <strong>{{ $item->checkbox_input_maximum_choices[$key] }}</strong>)</small>
+                                            @endif
                                         @endif
                                         @php
                                         $innerSelection = [];
@@ -149,7 +150,7 @@
                                         @endphp
                                         <ul>
                                             @foreach($innerSelection as $innerKey => $innerOption)
-                                            @if(isset($innerOption[$key][$innerKey]))
+                                            @if(isset($innerOption[$key]))
                                             <li>
                                                 <span>
                                                     @if(app()->getLocale() == 'ar')
