@@ -79,7 +79,6 @@ export const RestuarantEditor = () => {
                     setCategoriesAPI(restaurantCategoriesResponse.data?.data),
                 );
 
-
                 if (!branch_id) {
                     branch_id =
                         restaurantCategoriesResponse.data?.data[0]?.branch?.id;
@@ -98,23 +97,22 @@ export const RestuarantEditor = () => {
     }, []);
 
     return (
-        <div className="block" style={
-            {fontFamily: "Plus Jakarta Sans, sans-serif"}
-        }>
+        <div
+            className="block"
+            style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
+        >
             <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
-            <div className="flex bg-[#EEEEEE] h-[100vh] w-full transition-all hide-scroll">
-                <div
-                    className={`transition-all ${
-                        isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[20%]"
-                    } xl:flex-[20%] laptopXL:flex-[25%] overflow-x-hidden bg-white h-[646px] border-r border-[rgba(0,0,0,0.3)]`}
-                >
+            <div className="flex flex-col md:flex-row bg-[#EEEEEE] h-[100vh] w-full transition-all hide-scroll">
+                <div className="transition-all flex-[40px] md:flex-[20%] overflow-x-hidden bg-white h-[40px] md:h-[646px] border-b md:border-r border-[rgba(0,0,0,0.3)]">
                     {/* <SidebarEditor /> */}
                     <LeftSideBar />
                 </div>
                 <div
                     className={` transition-all h-full ${
-                        isSidebarCollapse ? "flex-[100%] w-full" : "flex-[60%]"
-                    } xl:flex-[80%] laptopXL:flex-[50%] overflow-x-hidden bg-neutral-200`}
+                        isSidebarCollapse
+                            ? "flex-[100%] w-full"
+                            : "flex-[calc(100% - 180px)]"
+                    } xl:flex-[80%] overflow-x-hidden bg-neutral-200`}
                 >
                     {template === "template-1" && (
                         <div className="w-full h-full  flex flex-col gap-2">
@@ -141,9 +139,7 @@ export const RestuarantEditor = () => {
                     )}
                 </div>
                 <div
-                    className={`transition-all ${
-                        isSidebarCollapse ? "flex-[0] hidden w-0" : "flex-[20%]"
-                    } xl:flex-[20%] laptopXL:flex-[25%] overflow-x-hidden h-[646px] bg-white border-l border-[rgba(0,0,0,0.3)]`}
+                    className={`transition-all flex-[140px] md:flex-[20%] overflow-x-hidden h-[646px] bg-white border-t md:border-l border-[rgba(0,0,0,0.3)]`}
                 >
                     {/* <SidebarEditor /> */}
                     <RightSideBar />
