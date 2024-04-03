@@ -101,10 +101,6 @@ const CartPage = () => {
                 }
                 dispatch(setCartItemsData(cartResponse.data?.data.items));
                 dispatch(getCartItemsCount(cartResponse.data?.data.count));
-                cartResponse.data.data.payment_methods = [
-                    ...cartResponse.data.data.payment_methods,
-                    { name: "Online" },
-                ];
                 setCart(cartResponse.data?.data);
                 // setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
                 // setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
