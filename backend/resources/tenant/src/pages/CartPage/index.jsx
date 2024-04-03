@@ -58,7 +58,6 @@ const CartPage = () => {
         (state) => state.categoryAPI.cartItemsData,
     );
     const [tap, setTap] = useState(null);
-    console.log(tap);
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
 
@@ -102,6 +101,10 @@ const CartPage = () => {
                 }
                 dispatch(setCartItemsData(cartResponse.data?.data.items));
                 dispatch(getCartItemsCount(cartResponse.data?.data.count));
+                cartResponse.data.data.payment_methods = [
+                    ...cartResponse.data.data.payment_methods,
+                    { name: "Online" },
+                ];
                 setCart(cartResponse.data?.data);
                 // setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
                 // setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
@@ -165,8 +168,6 @@ const CartPage = () => {
     };
 
     const cardPaymentCallbackFunc = async (response) => {
-        console.log("here inside callback");
-
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
         try {
@@ -192,6 +193,14 @@ const CartPage = () => {
             toast.error(error.response.data.message);
         }
     };
+
+    const getTotalPrice = () =>
+        Number(
+            parseFloat(cart?.total) +
+                (deliveryType === "PICKUP"
+                    ? 0.0
+                    : parseFloat(cart?.delivery_fee)),
+        ).toFixed(2);
 
     return (
         <div className="p-12">
@@ -309,7 +318,7 @@ const CartPage = () => {
                                                 />
                                                 <button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">
                                                     <div className="font-semibold text-[20px] py-3">
-                                                        Buy with Card
+                                                        {t("Buy with Card")}
                                                     </div>
                                                 </button>
                                             </div>
@@ -318,7 +327,7 @@ const CartPage = () => {
                                             <div className="mt-6">
                                                 <button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">
                                                     <div className="font-semibold text-[20px]">
-                                                        Buy with
+                                                        {t("Buy with")}
                                                     </div>
                                                     <img
                                                         src={applePay}
@@ -427,7 +436,7 @@ const CartPage = () => {
                                         <div className="flex justify-between mt-1">
                                             <div>{t("Total Payment")}</div>
                                             <div>
-                                                {`${Number(cart?.total + cart?.delivery_fee).toFixed(2)} ${t("SAR")}`}
+                                                {`${getTotalPrice()} ${t("SAR")}`}
                                             </div>
                                         </div>
                                     </div>

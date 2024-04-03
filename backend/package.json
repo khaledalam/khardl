@@ -89,6 +89,7 @@
         "moment": "^2.30.1",
         "moment-range": "^4.0.2",
         "primereact": "^10.5.3",
+        "react-device-detect": "^2.2.3",
         "react-spinners": "^0.13.8"
     },
     "keywords": [

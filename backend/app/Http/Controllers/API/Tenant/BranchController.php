@@ -19,6 +19,7 @@ class BranchController extends Controller
         $user = Auth::user();
         $branch = Branch::where('id',$branch)
         ->findOrFail($user->branch->id);
+
         // if ($request->has('delivery_availability')) {
         //     $deliveryTypeId = DeliveryType::where("name",DeliveryType::DELIVERY)->first()->id;
         //     if($request->delivery_availability){
@@ -45,6 +46,7 @@ class BranchController extends Controller
         if ($request->has('preparation_time_delivery')) {
             $updateData['preparation_time_delivery'] = $request->input('preparation_time_delivery');
         }
+
         $branch->update($updateData);
         return $this->sendResponse(null, __('Branch has been updated successfully.'));
 
