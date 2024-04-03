@@ -48,7 +48,8 @@ class Branch extends Model
         'preparation_time_delivery',
         'delivery_availability',
         'pickup_availability',
-        'active'
+        'active',
+        'display_category_icon'
     ];
 
 
