@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Tenant\Branch;
 use App\Traits\APIResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Models\Tenant\DeliveryType;
 use Illuminate\Support\Facades\Auth;
 
 class BranchController extends Controller
