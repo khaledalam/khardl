@@ -58,7 +58,6 @@ const CartPage = () => {
         (state) => state.categoryAPI.cartItemsData,
     );
     const [tap, setTap] = useState(null);
-    console.log(tap);
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
 
@@ -165,7 +164,6 @@ const CartPage = () => {
     };
 
     const cardPaymentCallbackFunc = async (response) => {
-        console.log("here inside callback");
 
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
@@ -197,6 +195,12 @@ const CartPage = () => {
         const order = ["Card", "Apple Pay", "Cash on Delivery"];
         return order.indexOf(a.name) - order.indexOf(b.name);
     };
+
+
+      const getTotalPrice = () => Number(
+            parseFloat(cart?.total) +
+            (deliveryType === "PICKUP" ? 0.0 : parseFloat(cart?.delivery_fee))
+        ).toFixed(2);
 
     return (
         <div className="p-12">
@@ -259,7 +263,6 @@ const CartPage = () => {
                                                             "Apple Pay"
                                                           ? apple
                                                           : pmcod;
-
                                                 return (
                                                     <CartDetailSection
                                                         key={method.name}
@@ -405,7 +408,7 @@ const CartPage = () => {
                                         <div className="flex justify-between mt-1">
                                             <div>{t("Total Payment")}</div>
                                             <div>
-                                                {`${Number(cart?.total + cart?.delivery_fee).toFixed(2)} ${t("SAR")}`}
+                                                {`${getTotalPrice()} ${t("SAR")}`}
                                             </div>
                                         </div>
                                     </div>

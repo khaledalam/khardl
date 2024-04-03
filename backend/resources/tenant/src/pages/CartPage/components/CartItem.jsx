@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { MdDelete } from "react-icons/md";
 import AxiosInstance from "../../../axios/axios";
 import { toast } from "react-toastify";
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
+import {BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill} from "react-icons/bs";
 
 
 import "./CartItem.scss";
@@ -97,7 +97,10 @@ const CartItem = ({ cartitem, onReload }) => {
                                         {optionsItems.map(
                                             item => <li className={"text-gray-900"}>
                                                 <span className={"flex justify-start items-center"}>
-                                                    <BsFillArrowRightCircleFill color={"#c0c0c0"} size={20} className={"mx-1"} /> {item}
+                                                    {language == 'en'
+                                                        ? <BsFillArrowRightCircleFill color={"#c0c0c0"} size={20} className={"mx-1"} />
+                                                        : <BsFillArrowLeftCircleFill color={"#c0c0c0"} size={20} className={"mx-1"} />
+                                                    } {item}
                                                 </span>
                                             </li>)
                                         }
