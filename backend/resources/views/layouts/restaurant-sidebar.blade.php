@@ -396,20 +396,22 @@
                             </a>
                         </div>
 
-                        <div class="menu-item menu-accordion">
-                            <a href="{{route('restaurant.qr')}}">
-                                <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
-                                    <span class="menu-icon">
-                                        <!--begin::Svg Icon -->
-                                            <span class="svg-icon svg-icon-2">
-                                                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>qr-code</title><path d="M367.3,458.76H128.53V53.25H367.3v82.26h24V53.27A53.42,53.42,0,0,0,338,0H157.8a53.42,53.42,0,0,0-53.25,53.27V458.76A53.39,53.39,0,0,0,157.8,512H338a53.38,53.38,0,0,0,53.25-53.24V376.5h-24ZM247.91,45.08a6.16,6.16,0,1,1,6.15-6.14A6.14,6.14,0,0,1,247.91,45.08Zm-32.78-25.4c0-1.8,3-3.3,6.57-3.3h52.43c3.6,0,6.55,1.5,6.55,3.3v1.63c0,1.8-2.95,3.28-6.55,3.28H221.7c-3.61,0-6.57-1.47-6.57-3.28Zm65.55,469.4a6.57,6.57,0,0,1-6.55,6.54H221.7a6.58,6.58,0,0,1-6.57-6.54v-3.28a6.6,6.6,0,0,1,6.57-6.56h52.43a6.59,6.59,0,0,1,6.55,6.56Z" fill="#2b2b2b"/><path d="M360.48,173.81H384v23.48H360.48Zm-117.42,0H219.6v23.48h23.47ZM360.48,338.18H384V314.7H360.48Zm0-93.92v23.49H337.22v23.47h23.26V267.75H384v23.47h23.48v70.46H337V338.18H313.53V314.7H337V291.45H313.53V314.7H290V291.45H266.55V314.7H290v23.48H266.55v23.49H196.09V291.22H219.6V267.75h23.49v23.47h23.24V267.75H243.09V244.26h23.24V220.77H243.09v23.49H219.6V220.77H196.09V150.34h70.46v23.47H290v23.48H266.55v23.26H290V197.28h23.49v23.26H337V197.28H313.53V173.81H337V150.34h70.44v70.43H384v23.49H360.48V220.77H337.22v23.49ZM254.7,162.19H207.95v46.74H254.7Zm0,140.89H207.95v46.74H254.7Zm70.94-70.94H277.92v47.73h47.72Zm23.2,117.68h46.74V303.08H348.84Zm0-140.89h46.74V162.19H348.84ZM243.07,314.7H219.6v23.48h23.47Zm70.44-70.44H290v23.49h23.48Z" fill="#2b2b2b"/></svg>
-                                            </span>
-                                        <!--end::Svg Icon-->
+                        @if(\App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
+                            <div class="menu-item menu-accordion">
+                                <a href="{{route('restaurant.qr')}}">
+                                    <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon -->
+                                                <span class="svg-icon svg-icon-2">
+                                                <i class="bi bi-camera"></i>
+                                                </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                            <span class="menu-title">{{__('QR Maker')}}</span>
                                     </span>
-                                        <span class="menu-title">{{__('QR Maker')}}</span>
-                                </span>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
+                        @endif
 
                         <!-- Services -->
                         <div class="menu-item menu-accordion">

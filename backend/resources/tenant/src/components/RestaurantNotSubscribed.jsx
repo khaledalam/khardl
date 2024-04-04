@@ -62,7 +62,7 @@ const RestaurantNotSubscribed = () => {
                                                 ) : (
                                                     <Link
                                                         to={"/login-admins"}
-                                                        className={`flex qitems-center justify-center bg-[#ececec] cta-btn shadow-lg transition-all delay-100  py-2 px-6 text-[1rem] hover:bg-[#d6eb16] hover:text-black hover:bg-gray-50`}
+                                                        className={`flex items-center justify-center bg-[#ececec] cta-btn shadow-lg transition-all delay-100  py-2 px-6 text-[1rem] hover:bg-[#d6eb16] hover:text-black hover:bg-gray-50`}
                                                     >
                                                         {" "}
                                                         {t(
