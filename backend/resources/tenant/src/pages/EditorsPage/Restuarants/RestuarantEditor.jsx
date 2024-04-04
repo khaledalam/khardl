@@ -103,15 +103,14 @@ export const RestuarantEditor = () => {
         >
             <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
             <div className="flex flex-col md:flex-row bg-[#EEEEEE] h-[100vh] w-full transition-all hide-scroll">
-                <div className="transition-all flex-[40px] md:flex-[20%] overflow-x-hidden bg-white h-[40px] md:h-[646px] border-b md:border-r border-[rgba(0,0,0,0.3)]">
+                <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
                     {/* <SidebarEditor /> */}
                     <LeftSideBar />
+                    {/* <RightSideBar /> */}
                 </div>
                 <div
                     className={` transition-all h-full ${
-                        isSidebarCollapse
-                            ? "flex-[100%] w-full"
-                            : "flex-[calc(100% - 180px)]"
+                        isSidebarCollapse ? "flex-[100%] w-full" : "flex-[50%]"
                     } xl:flex-[80%] overflow-x-hidden bg-neutral-200`}
                 >
                     {template === "template-1" && (
@@ -139,10 +138,10 @@ export const RestuarantEditor = () => {
                     )}
                 </div>
                 <div
-                    className={`transition-all flex-[140px] md:flex-[20%] overflow-x-hidden h-[646px] bg-white border-t md:border-l border-[rgba(0,0,0,0.3)]`}
+                    className={`transition-all flex-[140px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
                 >
                     {/* <SidebarEditor /> */}
-                    <RightSideBar />
+                    {/* <RightSideBar /> */}
                 </div>
             </div>
         </div>
