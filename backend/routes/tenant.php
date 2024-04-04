@@ -205,6 +205,9 @@ Route::group([
                 Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status')->withTrashed();
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
 
+                Route::post('/qr-create', [RestaurantController::class, 'qrCreate'])->name('restaurant.qr-create');
+                Route::get('/qr-download/{id}', [RestaurantController::class, 'downloadQrCode'])->name('restaurant.qr-delete');
+
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');
                 Route::delete('/workers/delete/{id}', [RestaurantController::class, 'deleteWorker'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.delete-worker');
