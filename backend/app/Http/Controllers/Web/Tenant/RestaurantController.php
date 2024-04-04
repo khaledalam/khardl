@@ -260,8 +260,18 @@ class RestaurantController extends BaseController
         );
     }
 
+
+    private function qrCanAccess()
+    {
+        return Setting::first()?->is_live && ROSubscription::first()?->status == ROSubscription::ACTIVE;
+    }
+
     public function qr()
     {
+        if (!$this->qrCanAccess()) {
+            return redirect()->route('restaurant.summary')->with('error', __('You are not allowed to access this page'));
+        }
+
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $qrcodes = QrCode::paginate(10);
@@ -272,7 +282,12 @@ class RestaurantController extends BaseController
         );
     }
 
+
     public function qrCreate(Request $request){
+
+        if (!$this->qrCanAccess()) {
+            return redirect()->route('restaurant.summary')->with('error', __('You are not allowed to access this page'));
+        }
 
         $imagePath = "";
         if (file_exists($request->file("file"))) {
@@ -372,6 +387,10 @@ class RestaurantController extends BaseController
 
     public function downloadQrCode($id)
     {
+        if (!$this->qrCanAccess()) {
+            return redirect()->route('restaurant.summary')->with('error', __('You are not allowed to access this page'));
+        }
+
         $qr = QrCode::findOrFail($id);
         $fileName = $qr->image_path;
         $disk = 'qr_codes';
