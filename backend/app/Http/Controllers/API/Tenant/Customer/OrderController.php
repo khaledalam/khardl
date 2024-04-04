@@ -143,8 +143,9 @@ class OrderController
                 return $charge['message']['transaction']['url'];
             }
         }catch(Exception $e){
-            logger($e->getMessage());
+            \Sentry\captureMessage('failed charge '.$e->getMessage());
         }
+  
         return route("home",[
             'status'=>false,
             'message'=>__('Payment failed, please try again')
