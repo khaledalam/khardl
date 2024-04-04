@@ -31,6 +31,9 @@ class UpdateItemCartRequest extends FormRequest
         return [
             'quantity' => 'required|int|min:1', 
             'notes' => 'nullable|string',
+            'selectedCheckbox'=> 'nullable',
+            'selectedRadio'=> 'nullable',
+            'selectedDropdown'=> 'nullable',
         ];
     }
 
