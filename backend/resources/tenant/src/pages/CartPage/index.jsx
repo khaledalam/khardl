@@ -134,6 +134,9 @@ const CartPage = () => {
     };
 
     const handlePlaceOrder = async () => {
+
+        console.log("handlePlaceOrder func, paymentMethod: ", paymentMethod);
+
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
         if (paymentMethod === "Online") {
             GoSellElements.submit();
@@ -312,27 +315,88 @@ const CartPage = () => {
                                                         cardPaymentCallbackFunc
                                                     }
                                                 />
-                                                <button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">
-                                                    <div className="font-semibold text-[20px] py-3">
-                                                        {t("Buy with Card")}
-                                                    </div>
-                                                </button>
+                                                {/*<button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">*/}
+                                                {/*    <div className="font-semibold text-[20px] py-3">*/}
+                                                {/*        {t("Buy with Card")}*/}
+                                                {/*    </div>*/}
+                                                {/*</button>*/}
                                             </div>
                                         )}
                                         {paymentMethod === "Apple Pay" && (
                                             <div className="mt-6">
-                                                <button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">
-                                                    <div className="font-semibold text-[20px]">
-                                                        {t("Buy with")}
-                                                    </div>
-                                                    <img
-                                                        src={applePay}
-                                                        alt=""
-                                                        width={50}
-                                                        height={50}
-                                                        className="mx-2"
-                                                    />
-                                                </button>
+                                                <ApplePayButton
+                                                    // The public Key provided by Tap
+                                                    publicKey={tap.tap_public_key}
+                                                    //The environment of the SDK and it can be one of these environments
+                                                    environment={Environment.Beta}
+                                                    //to enable the debug mode
+                                                    debug
+                                                    merchant={{
+                                                        //  The merchant domain name
+                                                        domain: window.location.hostname,
+                                                        //  The merchant identifier provided by Tap
+                                                        id: tap.merchant_id
+                                                    }}
+                                                    transaction={{
+                                                        // The amount to be charged
+                                                        amount: getTotalPrice(),
+                                                        // The currency of the amount
+                                                        currency: 'SAR'
+                                                    }}
+                                                    // The scope of the SDK and it can be one of these scopes:
+                                                    // [TapToken,AppleToken], by default it is TapToken)
+                                                    scope={Scope.TapToken}
+                                                    acceptance={{
+                                                        // The supported networks for the Apple Pay button and it
+                                                        // can be one of these networks: [Mada,Visa,MasterCard], by default
+                                                        // we bring all the supported networks from tap merchant configuration
+                                                        supportedBrands: [SupportedNetworks.Mada, SupportedNetworks.Visa, SupportedNetworks.MasterCard],
+                                                        supportedCards : "ALL",
+                                                        supportedCardsWithAuthentications : ["3DS"]
+                                                    }}
+                                                    // The billing contact information
+                                                    customer={{
+                                                        id: tap.tap_customer_id,
+
+                                                    }}
+                                                    //for styling button
+                                                    interface={{
+                                                        //The locale of the Apple Pay button and it can be one of these locales:[EN,AR]
+                                                        locale: Locale.EN,
+                                                        // The theme of the Apple Pay button and it can be one of
+                                                        // these values : [light,Dark], by default it is detected from user device
+                                                        theme: ThemeMode.DARK,
+                                                        // The type of the Apple Pay
+                                                        type: ButtonType.BUY,
+                                                        // The border of the Apple Pay button and it can be one of these values:[curved,straight]
+                                                        edges: Edges.CURVED
+                                                    }}
+                                                    // optional (A callback function that will be called when you cancel
+                                                    // the payment process)
+                                                    onCancel={() => console.log('cancelled')}
+                                                    // optional (A callback function that will be called when you have an error)
+                                                    onError={(err) => console.error(err)}
+                                                    // optional (A async function that will be called after creating the token
+                                                    // successfully)
+                                                    onSuccess={async (token) => {
+                                                        // do your stuff here...
+
+                                                        console.log("here inline");
+
+                                                        console.log(token);
+
+                                                        cardPaymentCallbackFunc(token);
+
+                                                    }}
+                                                    // optional (A callback function that will be called when you button is clickable)
+                                                    onReady={() => {
+                                                        console.log('Ready')
+                                                    }}
+                                                    // optional (A callback function that will be called when the button clicked)
+                                                    onClick={() => {
+                                                        console.log('Clicked')
+                                                    }}
+                                                />
                                             </div>
                                         )}
                                     </div>
