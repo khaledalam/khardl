@@ -86,8 +86,7 @@ class  OrderController extends BaseRepositoryController
                 "charge_id"=> $order->transaction_id,
                 "amount"=> $order->total,
                 "reason"=>($request->reason)?$request->reason:"The order has been $request->status"
-            ],
-            $setting->merchant_id
+            ]
             );
             if ($refund['http_code'] == ResponseHelper::HTTP_OK && $refund['message']['status'] == 'REFUNDED') {
                 $order->status = $request->status;
