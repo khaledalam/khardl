@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Web\Tenant;
 
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
 use App\Models\Tenant\Item;
+use App\Models\Tenant\QrCode;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use Database\Seeders\Tenant\DeliveryTypesSeeder;
 use Database\Seeders\Tenant\PaymentMethodSeeder;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
@@ -280,6 +282,7 @@ class RestaurantController extends BaseController
             ])->attach('file', $request->file('file')->getPathname(), $request->file('file')->getClientOriginalName())
                 ->post("https://qrcode-monkey.p.rapidapi.com/qr/uploadImage");
 
+
             if ($response->successful()) {
 
                 $uploadedFile = $request->file('file'); //Instead of before taking $response->json and taking the "file" name from the response, I now tried uploading image to the server and getting logo made by inputing URL not fileName I get from this api
@@ -338,18 +341,19 @@ class RestaurantController extends BaseController
                 "gradientType" => "linear",
                 "gradientOnEyes" => $gradientOnEyes,
                 //Putting an actual link to a working picture as test to see does it work on a picture that is accessible, so its not my local host
-                "logo" =>  'https://cdn.discordapp.com/attachments/994811549057302528/1224883581604593795/khardl_pic_02.jpg?ex=661f1cbb&is=660ca7bb&hm=62fa9549e2ac9cce397820db43b6347bc6491904eeeae4adbbbf0ca275048b22&',
+                "logo" =>  'https://www.fnordware.com/superpng/pnggrad16rgb.png',
                 "logoMode" => $logoMode
             ],
             "size" => $request->input('size'),
             "download" => "true",
-            "file" => "svg"
+            "file" => "png"
         ]);
+
 
         if ($response->successful()) {
             $imageContent = $response->body();
 
-            $imagePath = uniqid() . '.svg';
+            $imagePath = uniqid() . '.png';
             Storage::disk('qr_codes')->put($imagePath, $imageContent);
 
             $qrCode = QrCode::create([

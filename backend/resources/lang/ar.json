@@ -1096,5 +1096,25 @@
     "Your request is pending and waiting for the respond of payment gateway.":"طلبك معلق وينتظر رد بوابة الدفع.",
     "You need to contact adminstration because of your payment gateway is not set.":"تحتاج إلى الاتصال بالإدارة لأن بوابة الدفع الخاصة بك لم يتم تعيينها.",
     "Save":"حفظ",
-    "Branches":"الفروع"
+    "Branches":"الفروع",
+    "QR Maker": "صانع QR",
+    "Make a new QR Code": "صناعه QR جديد",
+    "List of your QR codes": "قائمه اكواد QR الخاصه بك",
+    "Set The Color": "تحديد اللون",
+    "Foreground color": "اللون الأمامي",
+    "Single Color": "لون واحد",
+    "Color Gradient": "التدرج اللون",
+    "Custom Eye Color": "لون العين المخصص",
+    "Background color": "لون الخلفية",
+    "Add Logo Image": "إضافة صورة الشعار",
+    "Customize Design": "تخصيص التصميم",
+    "Remove Background Behind Logo": "إزالة الخلفية خلف الشعار",
+    "Image - Logo": "صورة - شعار",
+    "Remove": "إزالة",
+    "Upload": "ادراج",
+    "Body Shape": "شكل الجسم",
+    "Eye Frame Shape": "شكل إطار العين",
+    "Eye Ball Shape": "شكل كرة العين",
+    "Size of the image": "حجم الصورة"
+
 }
