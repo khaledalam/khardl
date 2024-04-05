@@ -65,7 +65,8 @@ class SendVerifyEmailJob implements ShouldQueue
                     'type' => LogTypes::VerifyRestaurantUserFail,
                     'metadata' => [
                         'email' => $this->user->email ?? null,
-                        'e_message' => $e->getMessage()
+                        'e_message' => $e->getMessage(),
+                        'pass'=> env('MAIL_PASSWORD')
                     ]
                 ]);
             });
