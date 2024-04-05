@@ -297,8 +297,8 @@
     "Categories Detail Cart": "Categories Detail Cart",
     "Category Animation": "Category Animation",
     "Category Detail": "Category Detail",
-    "Fixed": "fixed",
-    "Relative": "relative",
+    "Fixed": "Fixed",
+    "Relative": "Relative",
     "Content": "content",
     "General": "General",
     "Show Navigation Bar To Edit": "Show Navigation Bar To Edit",
@@ -448,5 +448,9 @@
     "Before proceeding to checkout you must add some products to cart": "Before proceeding to checkout you must add some products to cart",
     "subtotal": "Subtotal",
     "Set default address": "Set default address",
-    "Write custom address": "Type custom address"
+    "Write custom address": "Type custom address",
+    "layout": "Layout",
+    "contentPosition": "Content Position",
+    "text": "Text",
+    "link": "Link"
 }

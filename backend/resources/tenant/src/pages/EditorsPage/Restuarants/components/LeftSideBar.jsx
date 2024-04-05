@@ -2,81 +2,16 @@ import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import FlashDown from "../../../../assets/flashDown.svg";
 
-export const LeftSideBar = () => {
+export const LeftSideBar = ({
+    activeSection,
+    setActiveSection,
+    activeSubitem,
+    setActiveSubitem,
+    navItems,
+}) => {
     const { t } = useTranslation();
-    const [activeSection, setActiveSection] = useState(null);
-    const [activeSubitem, setActiveSubitem] = useState(null);
-
-    const navItems = [
-        {
-            title: t("Header"),
-            subItems: [
-                {
-                    title: t("Side Menu"),
-                },
-                {
-                    title: t("Order Cart"),
-                },
-                {
-                    title: t("Home"),
-                },
-            ],
-        },
-        {
-            title: t("Logo"),
-            subItems: [
-                {
-                    title: t("Logo"),
-                },
-            ],
-        },
-        {
-            title: t("Banner"),
-            subItems: [
-                {
-                    title: t("Banner"),
-                },
-            ],
-        },
-        {
-            title: t("Menu Category"),
-            subItems: [
-                {
-                    title: t("Category"),
-                },
-            ],
-        },
-        {
-            title: t("Menu Category Detail"),
-            subItems: [
-                {
-                    title: t("Menu Name"),
-                },
-                {
-                    title: t("Total Calories"),
-                },
-                {
-                    title: t("Price"),
-                },
-            ],
-        },
-        {
-            title: t("Social Media"),
-            subItems: [
-                {
-                    title: t("Social Media"),
-                },
-            ],
-        },
-        {
-            title: t("Footer "),
-            subItems: [
-                {
-                    title: t("Footer "),
-                },
-            ],
-        },
-    ];
+    // const [activeSection, setActiveSection] = useState(null);
+    // const [activeSubitem, setActiveSubitem] = useState(null);
 
     const toggleSection = (sectionId) => {
         setActiveSection(sectionId === activeSection ? null : sectionId);
@@ -104,8 +39,8 @@ export const LeftSideBar = () => {
                         className="text-[#1118278A] text-[12px] font-light leading-[16px] relative"
                     >
                         <div
-                            className={`${activeSection === `section-${index}` ? "bg-[#F3F3F3] text-[#111827]" : ""} whitespace-nowrap md:whitespace-normal py-[4px] md:py-[8px] px-[8px] md:px-[24px] rounded-[50px] flex flex-row items-center md:flex-none space-x-[8px] md:space-x-0`}
-                            onClick={() => toggleSection(`section-${index}`)}
+                            className={`${activeSection === index ? "bg-[#F3F3F3] text-[#111827]" : ""} whitespace-nowrap md:whitespace-normal py-[4px] md:py-[8px] px-[8px] md:px-[24px] rounded-[50px] flex flex-row items-center md:flex-none space-x-[8px] md:space-x-0`}
+                            onClick={() => toggleSection(index)}
                         >
                             <div>{item.title}</div>
                             <div className="md:hidden w-[10px] h-[10px]">
@@ -116,19 +51,19 @@ export const LeftSideBar = () => {
                                 />
                             </div>
                         </div>
-                        <ul
+                        {/* <ul
                             className={`${activeSection === `section-${index}` ? "block absolute z-50 top-0 left-0 w-[137px]  border rounded-[8px] h-[56px]" : "hidden"}`}
                         >
                             Hello
-                        </ul>
-                        {/* <ul
-                            className={`pl-4 text-[10px] leading-[13px] space-y-[16px] font-medium overflow-hidden transition-all duration-300 ${activeSection === `section-${index}` ? "max-h-40 mt-[16px]" : "max-h-0"} `}
+                        </ul> */}
+                        <ul
+                            className={`pl-4 text-[10px] leading-[13px] space-y-[16px] font-medium overflow-hidden transition-all duration-300 ${activeSection === index ? "max-h-40 mt-[16px]" : "max-h-0"} `}
                         >
                             {item.subItems.map((subItem, i) => (
                                 <li
                                     key={`sub-section-${i}`}
                                     className={`${
-                                        activeSection === `section-${index}` &&
+                                        activeSection === index &&
                                         activeSubitem === i
                                             ? "bg-[#F3F3F3] text-[#111827]"
                                             : ""
@@ -138,7 +73,7 @@ export const LeftSideBar = () => {
                                     {subItem.title}
                                 </li>
                             ))}
-                        </ul> */}
+                        </ul>
                     </li>
                 ))}
             </ul>

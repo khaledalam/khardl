@@ -16,8 +16,10 @@ import {
 import HeaderEdit from "./components/HeaderEdit";
 import { LeftSideBar } from "./components/LeftSideBar";
 import { RightSideBar } from "./components/RightSideBar";
+import { useTranslation } from "react-i18next";
 
 export const RestuarantEditor = () => {
+    const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(true);
 
     const dispatch = useDispatch();
@@ -27,10 +29,12 @@ export const RestuarantEditor = () => {
         (state) => state.restuarantEditorStyle.collapse_sidebar,
     );
     const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
-    console.log("karim - restaurantStyle : ", restaurantStyle);
     const template = useSelector(
         (state) => state.restuarantEditorStyle.template,
     );
+
+    const [activeSubitem, setActiveSubitem] = useState(null);
+    const [activeSection, setActiveSection] = useState(null);
 
     const handleSidebarCollapse = () => {
         dispatch(setSidebarCollapse(!isSidebarCollapse));
@@ -96,17 +100,137 @@ export const RestuarantEditor = () => {
         fetchResStyleData().then(() => {});
     }, []);
 
+    const navItems = [
+        {
+            title: t("Header"),
+            subItems: [
+                {
+                    title: t("Side Menu"),
+                    layout: ["positionLayout", "color"],
+                    contentPosition: ["positionContent"],
+                    text: [],
+                    link: [],
+                },
+                {
+                    title: t("Order Cart"),
+                    layout: ["positionLayout", "color", "radius"],
+                    contentPosition: ["positionContent", "color", "radius"],
+                    text: [],
+                    link: [],
+                },
+                {
+                    title: t("Home"),
+                    layout: ["positionLayout", "color", "radius"],
+                    contentPosition: ["positionContent", "color", "radius"],
+                    text: [],
+                    link: [],
+                },
+            ],
+        },
+        {
+            title: t("Logo"),
+            subItems: [
+                {
+                    title: t("Logo"),
+                    layout: ["color"],
+                    contentPosition: ["positionContent", "radius"],
+                    text: [],
+                    link: [],
+                },
+            ],
+        },
+        {
+            title: t("Banner"),
+            subItems: [
+                {
+                    title: t("Banner"),
+                    layout: [],
+                    contentPosition: [],
+                    text: [],
+                    link: [],
+                },
+            ],
+        },
+        {
+            title: t("Menu Category"),
+            subItems: [
+                {
+                    title: t("Category"),
+                    layout: ["positionLayout", "Type", "color", "radius"],
+                    contentPosition: [],
+                    text: ["font", "weight", "size", "color"],
+                    link: [],
+                },
+            ],
+        },
+        {
+            title: t("Menu Category Detail"),
+            subItems: [
+                {
+                    title: t("Menu Name"),
+                    layout: ["color"],
+                    contentPosition: [],
+                    text: ["font", "weight", "size", "color"],
+                    link: [],
+                },
+                {
+                    title: t("Total Calories"),
+                    layout: ["color"],
+                    contentPosition: [],
+                    text: ["font", "weight", "size", "color"],
+                    link: [],
+                },
+                {
+                    title: t("Price"),
+                    layout: ["color"],
+                    contentPosition: [],
+                    text: ["font", "weight", "size", "color"],
+                    link: [],
+                },
+            ],
+        },
+        {
+            title: t("Social Media"),
+            subItems: [
+                {
+                    title: t("Social Media"),
+                    layout: ["color"],
+                    contentPosition: ["positionContent", "radius", "color"],
+                    text: [],
+                    link: ["linkTo"],
+                },
+            ],
+        },
+        {
+            title: t("Footer "),
+            subItems: [
+                {
+                    title: t("Footer "),
+                    layout: ["color"],
+                    contentPosition: ["positionContent"],
+                    text: ["font", "weight", "size", "color"],
+                    link: [],
+                },
+            ],
+        },
+    ];
+
     return (
         <div
             className="block"
             style={{ fontFamily: "Plus Jakarta Sans, sans-serif" }}
         >
             <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
-            <div className="flex flex-col md:flex-row bg-[#EEEEEE] h-[100vh] w-full transition-all hide-scroll">
+            <div className="flex flex-col md:flex-row bg-[#EEEEEE] h-[calc(100vh-56px)] w-full transition-all hide-scroll">
                 <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
                     {/* <SidebarEditor /> */}
-                    <LeftSideBar />
-                    {/* <RightSideBar /> */}
+                    <LeftSideBar
+                        activeSubitem={activeSubitem}
+                        setActiveSubitem={setActiveSubitem}
+                        activeSection={activeSection}
+                        setActiveSection={setActiveSection}
+                        navItems={navItems}
+                    />
                 </div>
                 <div
                     className={` transition-all h-full ${
@@ -138,10 +262,16 @@ export const RestuarantEditor = () => {
                     )}
                 </div>
                 <div
-                    className={`transition-all flex-[140px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
+                    className={`transition-all flex-[140px] max-h-[140px] md:max-h-full md:flex-[25%] md:max-w-[240px] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
                 >
                     {/* <SidebarEditor /> */}
-                    {/* <RightSideBar /> */}
+                    <RightSideBar
+                        activeSubitem={activeSubitem}
+                        setActiveSubitem={setActiveSubitem}
+                        activeSection={activeSection}
+                        setActiveSection={setActiveSection}
+                        navItems={navItems}
+                    />
                 </div>
             </div>
         </div>
