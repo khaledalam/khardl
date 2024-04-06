@@ -7,13 +7,15 @@ mix.postCss("resources/css/app.css", "public/css", [
 
 mix.options({
     postCss: [require("autoprefixer")],
+    // processCssUrls: false,
+    logs: false
 });
 
 mix.setPublicPath("public");
 
 mix.webpackConfig({
     resolve: {
-        extensions: [".js", ".vue", ".jsx"],
+        extensions: [".*",".wasm",".mjs",".js",".jsx",".json",".vue"],
         alias: {
             "@": __dirname + "resources",
         },
@@ -23,7 +25,11 @@ mix.webpackConfig({
     },
 }).react();
 
-mix.js("resources/landing-page/src/index.js", "public/js/central.js").version();
-mix.js("resources/tenant/src/index.js", "public/js/tenant.js").version();
+mix.js("resources/landing-page/src/index.js", "public/js/central.js");
+mix.js("resources/tenant/src/index.js", "public/js/tenant.js");
 // mix.copy("resources/landing-page/public", "public");
 // mix.copy("resources/tenant/public", "public");
+
+if (mix.inProduction()) {
+    mix.version();
+}
