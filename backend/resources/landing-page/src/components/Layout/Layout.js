@@ -7,10 +7,10 @@ const Layout = () => {
    const { statusCode, loading } = useAuthContext()
    // const { statusCode, loading } = useCheckAuthenticated()
 
+
    let location = useLocation()
    let state = location.state
    let from = state ? state.from.pathname : '/'
-
 
    if (loading) {
       return;
