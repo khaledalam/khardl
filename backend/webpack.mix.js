@@ -5,10 +5,14 @@ mix.postCss("resources/css/app.css", "public/css", [
     tailwindcss("./tailwind.config.js"),
 ]);
 
+mix.disableSuccessNotifications();
+mix.disableNotifications();
+
 mix.options({
     postCss: [require("autoprefixer")],
     processCssUrls: false,
-    logs: false
+    logs: false,
+    clearConsole: true,
 });
 
 mix.setPublicPath("public");
@@ -27,33 +31,22 @@ mix.webpackConfig({
         rules: [
             {
                 test: /(\.(png|jpe?g|gif|webp)$|^((?!font).)*\.svg$)/,
-                loaders: {
-                    loader: 'file-loader',
-                    options: {
-                        name: '[path][name].[ext]?[hash]',
-                        context: 'resources/assets',
-                    }
-                },
+                exclude: /node_modules/,
+                use: ['file-loader?name=[name].[ext]']
             }
         ]
+    },
+    stats: {
+        warnings: false,
     }
 
 }).react();
 
-mix.js("resources/landing-page/src/index.js", "public/js/central.js");
-mix.js("resources/tenant/src/index.js", "public/js/tenant.js");
 // mix.copy("resources/landing-page/public", "public");
 // mix.copy("resources/tenant/public", "public");
+mix.js("resources/landing-page/src/index.js", "public/js/central.js");
+mix.js("resources/tenant/src/index.js", "public/js/tenant.js");
 
-mix.options({
-    terser: {
-        terserOptions: {
-            compress: {
-                drop_console: true
-            }
-        }
-    }
-});
 
 if (mix.inProduction()) {
     mix.version();
