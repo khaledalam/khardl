@@ -11,7 +11,6 @@ const Layout = () => {
    let state = location.state
    let from = state ? state.from.pathname : '/'
 
-
    if (loading) {
       return;
    }
