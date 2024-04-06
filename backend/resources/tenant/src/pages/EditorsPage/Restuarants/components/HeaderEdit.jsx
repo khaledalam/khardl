@@ -6,6 +6,9 @@ import { RiMenuFoldFill } from "react-icons/ri";
 import { IoCloseOutline } from "react-icons/io5";
 import { logoUpload } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import ImgPlaceholder from "../../../../assets/imgPlaceholder.png";
+import HeaderSidebar from "../../../../assets/headerSidebar.svg";
+import HeaderHomeIcon from "../../../../assets/headerHomeIcon.svg";
+import HedaerIconCart from "../../../../assets/headerIconCart.svg";
 const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
     const [isCropModalOpened, setIsCropModalOpened] = useState(false);
     const [uncroppedImage, setUncroppedImage] = useState(null);
@@ -82,77 +85,17 @@ const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
             style={{
                 backgroundColor: restaurantStyle?.header_color,
             }}
-            className="w-full min-h-[85px] z-10  rounded-xl flex items-center justify-between px-2"
+            className="w-full h-[56px] z-10 rounded-[50px] flex items-center justify-between px-[16px] md:mt-[8px]"
         >
-            <div
-                onClick={toggleSidebarCollapse}
-                style={{ fontWeight: restaurantStyle?.text_fontWeight }}
-                className={`btn hover:bg-neutral-100 flex items-center gap-3 cursor-pointer`}
-            >
-                <RiMenuFoldFill size={30} className="text-neutral-400" />
-            </div>
-
-            {uploadLogo || logo ? (
+            <div className="flex justify-start w-[30px]">
                 <div
-                    style={{ backgroundColor: page_color }}
-                    className={`w-full min-h-[100px]    rounded-xl flex ${
-                        logo_alignment === "center"
-                            ? "items-center justify-center"
-                            : logo_alignment === "left"
-                              ? "items-center justify-start"
-                              : logo_alignment === "right"
-                                ? "items-center justify-end"
-                                : ""
-                    } `}
+                    onClick={toggleSidebarCollapse}
+                    style={{ fontWeight: restaurantStyle?.text_fontWeight }}
+                    className={`flex items-center gap-3 cursor-pointer`}
                 >
-                    <div
-                        style={{
-                            borderRadius: logo_shape === "sharp" ? 0 : 12,
-                        }}
-                        className="w-[60px] h-[60px] p-2 bg-neutral-100 relative"
-                    >
-                        <input
-                            type="file"
-                            name="logo"
-                            id={"logo"}
-                            accept="image/*"
-                            onChange={handleLogoUpload}
-                            className="hidden"
-                            hidden
-                        />
-                        <label htmlFor="logo">
-                            <img
-                                src={
-                                    uploadLogo
-                                        ? uploadLogo
-                                        : logo
-                                          ? logo
-                                          : ImgPlaceholder
-                                }
-                                alt={""}
-                                style={{
-                                    borderRadius:
-                                        logo_shape === "sharp" ? 0 : 12,
-                                }}
-                                className="w-full h-full object-cover"
-                            />
-                        </label>
-                        {uploadLogo && (
-                            <div className="absolute top-[-0.8rem] right-[-1rem] cursor-pointer">
-                                <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
-                                    <IoCloseOutline
-                                        size={16}
-                                        className="text-red-500 cursor-pointer"
-                                        onClick={clearLogo}
-                                    />
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                    <img src={HeaderSidebar} alt="sidebar icon" />
                 </div>
-            ) : (
-                <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
-            )}
+            </div>
 
             <div
                 onClick={
@@ -160,18 +103,18 @@ const HeaderEdit = ({ restaurantStyle, toggleSidebarCollapse }) => {
                         ? handleGotoCart
                         : () => {}
                 }
-                className="w-[50px] h-[50px] rounded-lg bg-neutral-200 relative flex items-center justify-center cursor-pointer"
+                className="w-[30px] h-[30px] pl-[8px] pr-[7px] pb-[9px] pt-[6px] rounded-full bg-[#F3F3F3] relative flex items-center justify-center cursor-pointer"
             >
-                <img src={cartHeaderImg} alt={"cart"} className="" />
+                <img src={HedaerIconCart} alt={"cart"} className="" />
                 {cartItemsCount > 0 && (
-                    <div className="absolute top-[-0.5rem] right-[-0.5rem]">
-                        <div className="w-[20px] h-[20px] rounded-full p-1 bg-red-500 flex items-center justify-center">
-                            <span className="text-white font-bold text-xs">
-                                {cartItemsCount}
-                            </span>
-                        </div>
+                    <div className="absolute top-0 right-0">
+                        <div className="w-[10px] h-[10px] rounded-full bg-[#FF3D00] flex items-center justify-center"></div>
                     </div>
                 )}
+            </div>
+
+            <div className="pt-[6px] pb-[9px] pr-[7px] pl-[8px] bg-[#F3F3F3] rounded-full">
+                <img src={HeaderHomeIcon} alt={"home icon"} className="" />
             </div>
         </div>
     );

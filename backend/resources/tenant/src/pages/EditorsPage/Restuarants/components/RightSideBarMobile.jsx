@@ -36,19 +36,20 @@ import {
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
 import EditorColorSelect from "./EditorColorSelect";
 
-export const RightSideBar = ({
+export const RightSideBarMobile = ({
     activeSection,
     setActiveSection,
     activeSubitem,
     setActiveSubitem,
     navItems,
+    activeDesignSection,
+    setActiveDesignSection,
 }) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const restuarantEditorStyle = useSelector(
         (state) => state.restuarantEditorStyle,
     );
-    const [activeDesignSection, setActiveDesignSection] = useState(null);
 
     useEffect(() => {
         activeSubitem != null &&
@@ -87,8 +88,13 @@ export const RightSideBar = ({
         text_fontSize,
     } = restuarantEditorStyle;
 
+    let actSecTitle = navItems[activeSection]?.title || null;
+    let actSubTitle =
+        navItems[activeSection]?.subItems[activeSubitem]?.title || null;
+
     return (
         <div className="flex flex-col">
+            Mobile
             <div className="flex flex-row px-[16px]">
                 <h2 className="font-medium text-[12px] leading-[16px] mt-[16px] mb-4 pr-[10px]">
                     {t("Designs")}
@@ -115,83 +121,85 @@ export const RightSideBar = ({
                                         </div>
                                     ),
                             )}
-                            {/* {navItems[activeSection].subItems[activeSubitem].map(
-                        (title) => (
-                            <div className="text-[10px]">{title}</div>
-                        ),
-                    )} */}
-                            {/* {navItems[activeSection].subItems[activeSubitem].layout
-                        .length > 0 && <div className="">Layout</div>}
-                    {navItems[activeSection].subItems[activeSubitem]
-                        .contentPosition.length > 0 && (
-                        <div>contentPosition</div>
-                    )}
-                    {navItems[activeSection].subItems[activeSubitem].text
-                        .length > 0 && <div>text</div>}
-                    {navItems[activeSection].subItems[activeSubitem].link
-                        .length > 0 && <div>link</div>} */}
                         </div>
                     </div>
                 )}
-                {/* <div className="flex flex-col gap-4">
-                {navItems.map((item, index) => (
-                    <ul key={`item-${index}`} className="flex flex-col gap-2">
-                        {item.subItems.map((subItem, subIndex) => (
-                            <li key={`subIndex-${subIndex}`}>
-                                {subItem.layout.length > 0 && <div>Layout</div>}
-                                {subItem.contentPosition.length > 0 && (
-                                    <div>contentPosition</div>
-                                )}
-                                {subItem.text.length > 0 && <div>text</div>}
-                                {subItem.link.length > 0 && <div>link</div>}
-                            </li>
-                        ))}
-                    </ul>
-                ))} 
-            </div> */}
             </div>
             {activeDesignSection != null && (
-                <div className="px-[16px] space-y-[8px]">
-                    {/* {navItems[activeSection].title == "Header" ? (
-                        navItems[activeSection].subItems[activeSubitem].title ==
-                        "Side Menu" ? (
-                            <div>side menu</div>
-                        ) : activeDesignSection == "Order Cart" ? (
-                            <div>order Cart</div>
-                        ) : activeDesignSection == "Home" ? (
-                            <div>Home</div>
+                <div className="">
+                    {/* {actSecTitle == "Header" ? (
+                        actSubTitle == "Side Menu" ? (
+                            activeDesignSection == "layout" ? (
+                                <div className="px-[16px] space-y-[8px]">
+                                    <EditorSelect
+                                        label={t("Position")}
+                                        defaultValue={
+                                            headerPosition === "relative"
+                                                ? t("Relative")
+                                                : t("Fixed")
+                                        }
+                                        handleChange={(value) =>
+                                            dispatch(setHeaderPosition(value))
+                                        }
+                                        options={[
+                                            {
+                                                value: "fixed",
+                                                text: t("Fixed"),
+                                            },
+                                            {
+                                                value: "relative",
+                                                text: t("Relative"),
+                                            },
+                                        ]}
+                                    />
+                                    <EditorColorSelect
+                                        label={t("Color")}
+                                        modalId={"page-modal"}
+                                        color={`${t(page_color)}`}
+                                        handleColorChange={(color) =>
+                                            dispatch(headerColor(color))
+                                        }
+                                    />
+                                </div>
+                            ) : activeDesignSection == "contentPosition" ? (
+                                <div>contentPosition 2</div>
+                            ) : activeDesignSection == "text" ? (
+                                <div>text 2</div>
+                            ) : activeDesignSection == "link" ? (
+                                <div>link 2</div>
+                            ) : (
+                                <></>
+                            )
+                        ) : actSubTitle == "Order Cart" ? (
+                            activeDesignSection == "layout" ? (
+                                <div>layout 2</div>
+                            ) : activeDesignSection == "contentPosition" ? (
+                                <div>contentPosition 2</div>
+                            ) : activeDesignSection == "text" ? (
+                                <div>text 2</div>
+                            ) : activeDesignSection == "link" ? (
+                                <div>link 2</div>
+                            ) : (
+                                <></>
+                            )
+                        ) : actSubTitle == "Home" ? (
+                            activeDesignSection == "layout" ? (
+                                <div>layout 2</div>
+                            ) : activeDesignSection == "contentPosition" ? (
+                                <div>contentPosition 2</div>
+                            ) : activeDesignSection == "text" ? (
+                                <div>text 2</div>
+                            ) : activeDesignSection == "link" ? (
+                                <div>link 2</div>
+                            ) : (
+                                <></>
+                            )
                         ) : (
                             <></>
                         )
                     ) : (
                         <></>
                     )} */}
-                    {/* {t(activeDesignSection)}
-                    {navItems[activeSection].title}
-                    {navItems[activeSection].subItems[activeSubitem].title} */}
-                    {/* <EditorSelect
-                        label={t("Position")}
-                        defaultValue={
-                            headerPosition === "relative"
-                                ? t("Relative")
-                                : t("Fixed")
-                        }
-                        handleChange={(value) =>
-                            dispatch(setHeaderPosition(value))
-                        }
-                        options={[
-                            { value: "fixed", text: t("Fixed") },
-                            { value: "relative", text: t("Relative") },
-                        ]}
-                    />
-                    <EditorColorSelect
-                        label={t("Color")}
-                        modalId={"page-modal"}
-                        color={`${t(page_color)}`}
-                        handleColorChange={(color) =>
-                            dispatch(pageColor(color))
-                        }
-                    /> */}
                 </div>
             )}
         </div>

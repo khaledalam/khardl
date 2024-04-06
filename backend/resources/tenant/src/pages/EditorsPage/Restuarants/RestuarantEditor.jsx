@@ -15,12 +15,15 @@ import {
 } from "../../../redux/NewEditor/categoryAPISlice";
 import HeaderEdit from "./components/HeaderEdit";
 import { LeftSideBar } from "./components/LeftSideBar";
-import { RightSideBar } from "./components/RightSideBar";
+import { RightSideBarMobile } from "./components/RightSideBarMobile";
+import { RightSideBarDesktop } from "./components/RightSideBarDesktop";
 import { useTranslation } from "react-i18next";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 export const RestuarantEditor = () => {
     const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(true);
+    const { width } = useWindowSize();
 
     const dispatch = useDispatch();
     const categories = useSelector((state) => state.categoryAPI.categories);
@@ -35,6 +38,7 @@ export const RestuarantEditor = () => {
 
     const [activeSubitem, setActiveSubitem] = useState(null);
     const [activeSection, setActiveSection] = useState(null);
+    const [activeDesignSection, setActiveDesignSection] = useState(null);
 
     const handleSidebarCollapse = () => {
         dispatch(setSidebarCollapse(!isSidebarCollapse));
@@ -230,6 +234,8 @@ export const RestuarantEditor = () => {
                         activeSection={activeSection}
                         setActiveSection={setActiveSection}
                         navItems={navItems}
+                        activeDesignSection={activeDesignSection}
+                        setActiveDesignSection={setActiveDesignSection}
                     />
                 </div>
                 <div
@@ -265,13 +271,27 @@ export const RestuarantEditor = () => {
                     className={`transition-all flex-[140px] max-h-[140px] md:max-h-full md:flex-[25%] md:max-w-[240px] overflow-x-hidden h-[646px] bg-white border-t md:border-t-0 md:border-l border-[rgba(0,0,0,0.3)]`}
                 >
                     {/* <SidebarEditor /> */}
-                    <RightSideBar
-                        activeSubitem={activeSubitem}
-                        setActiveSubitem={setActiveSubitem}
-                        activeSection={activeSection}
-                        setActiveSection={setActiveSection}
-                        navItems={navItems}
-                    />
+                    {width < 768 ? (
+                        <RightSideBarMobile
+                            activeSubitem={activeSubitem}
+                            setActiveSubitem={setActiveSubitem}
+                            activeSection={activeSection}
+                            setActiveSection={setActiveSection}
+                            navItems={navItems}
+                            activeDesignSection={activeDesignSection}
+                            setActiveDesignSection={setActiveDesignSection}
+                        />
+                    ) : (
+                        <RightSideBarDesktop
+                            activeSubitem={activeSubitem}
+                            setActiveSubitem={setActiveSubitem}
+                            activeSection={activeSection}
+                            setActiveSection={setActiveSection}
+                            navItems={navItems}
+                            activeDesignSection={activeDesignSection}
+                            setActiveDesignSection={setActiveDesignSection}
+                        />
+                    )}
                 </div>
             </div>
         </div>

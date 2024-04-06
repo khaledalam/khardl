@@ -106,7 +106,7 @@ const restuarantEditorSlice = createSlice({
         phoneNumber: "",
         phoneNumber_alignment: "center",
 
-        page_color: "#fafafa",
+        page_color: "#EEEEEE",
         category_background_color: "#4466ff",
         page_category_color: "#ffffff",
         product_background_color: "white",

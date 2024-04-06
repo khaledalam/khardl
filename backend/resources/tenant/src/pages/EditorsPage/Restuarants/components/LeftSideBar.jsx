@@ -8,6 +8,8 @@ export const LeftSideBar = ({
     activeSubitem,
     setActiveSubitem,
     navItems,
+    activeDesignSection,
+    setActiveDesignSection,
 }) => {
     const { t } = useTranslation();
     // const [activeSection, setActiveSection] = useState(null);
@@ -16,6 +18,7 @@ export const LeftSideBar = ({
     const toggleSection = (sectionId) => {
         setActiveSection(sectionId === activeSection ? null : sectionId);
         setActiveSubitem(null);
+        setActiveDesignSection(null);
     };
 
     return (

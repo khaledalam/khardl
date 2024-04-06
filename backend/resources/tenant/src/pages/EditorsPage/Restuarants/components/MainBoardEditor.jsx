@@ -13,6 +13,9 @@ import {
     logoUpload,
     setBannerUpload,
 } from "../../../../redux/NewEditor/restuarantEditorSlice";
+import EmptyBackground from "../../../../assets/emptyBackground.png";
+import EmptyBackground60 from "../../../../assets/emptyBackground60.png";
+import UploadIcon from "../../../../assets/uploadIcon.png";
 import { useTranslation } from "react-i18next";
 import HeaderEdit from "./HeaderEdit";
 import { BiCloudUpload } from "react-icons/bi";
@@ -240,7 +243,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                 fontFamily: text_fontFamily,
                 fontWeight: text_fontWeight,
             }}
-            className="w-full p-4 flex flex-col gap-6 relative"
+            className="w-full p-4 flex flex-col gap-[16px] relative"
         >
             {/* Header cart */}
             {headerPosition !== "fixed" && (
@@ -250,52 +253,72 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                 />
             )}
             {/* logo */}
-            {/* <div
-        style={{ backgroundColor: page_color }}
-        className={`w-full min-h-[100px]    rounded-xl flex ${logo_alignment === "center"
-          ? "items-center justify-center"
-          : logo_alignment === "left"
-            ? "items-center justify-start"
-            : logo_alignment === "right"
-              ? "items-center justify-end"
-              : ""
-          } `}
-      >
-     
-        <div
-          style={{ borderRadius: logo_shape === "sharp" ? 0 : 12 }}
-          className='w-[60px] h-[60px] p-2 bg-neutral-100 relative'
-        >
-          <input
-            type='file'
-            name='logo'
-            id={"logo"}
-            accept='image/*'
-            onChange={handleLogoUpload}
-            className='hidden'
-            hidden
-          />
-          <label htmlFor='logo'>
-            <img
-              src={uploadLogo ? uploadLogo : logo ? logo : ImgPlaceholder}
-              alt={""}
-              style={{ borderRadius: logo_shape === "sharp" ? 0 : 12 }}
-              className='w-full h-full object-cover'
-            />
-          </label>
-          {uploadLogo && (
-            <div className='absolute top-[-0.8rem] right-[-1rem] cursor-pointer'>
-              <div className='w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center'>
-                <IoCloseOutline
-                  size={16}
-                  className='text-red-500 cursor-pointer'
-                  onClick={clearLogo}
-                />
-              </div>
+            <div
+                // style={{ backgroundColor: page_color }}
+                // style={{
+                //     background:
+                //         "repeating-linear-gradient(-35deg, rgba(42, 110, 79, 0.3), rgba(42, 110, 79, 0.3) 1px, #FFF 1px, #FFF 12px)",
+                // }}
+                className={`w-full h-[80px] bg-white rounded-xl flex ${
+                    logo_alignment === "center"
+                        ? "items-center justify-center"
+                        : logo_alignment === "left"
+                          ? "items-center justify-start"
+                          : logo_alignment === "right"
+                            ? "items-center justify-end"
+                            : ""
+                } `}
+            >
+                <div
+                    style={{
+                        borderRadius: logo_shape === "sharp" ? 0 : 12,
+                        backgroundImage: `url(${
+                            uploadLogo
+                                ? uploadLogo
+                                : logo
+                                  ? logo
+                                  : EmptyBackground60
+                        })`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                    }}
+                    className="w-[60px] h-[60px] flex flex-col items-center pt-[17px] pb-[7px] relative"
+                >
+                    <input
+                        type="file"
+                        name="logo"
+                        id={"logo"}
+                        accept="image/*"
+                        onChange={handleLogoUpload}
+                        className="hidden"
+                        hidden
+                    />
+                    <span className="uppercase text-[12px] leading-[16px] font-semibold text-black/[.54] mb-[3px]">
+                        {t("Logo")}
+                    </span>
+                    <label htmlFor="logo">
+                        <img
+                            src={UploadIcon}
+                            alt={""}
+                            style={{
+                                borderRadius: logo_shape === "sharp" ? 0 : 12,
+                            }}
+                            className="w-[18px] h-[18px] object-cover"
+                        />
+                    </label>
+                    {uploadLogo && (
+                        <div className="absolute top-[-0.8rem] right-[-1rem] cursor-pointer">
+                            <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">
+                                <IoCloseOutline
+                                    size={16}
+                                    className="text-red-500 cursor-pointer"
+                                    onClick={clearLogo}
+                                />
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-          )}
-        </div>
-      </div> */}
             {/* banner */}
             {!isLoading ? (
                 banner_type === "slider" ? (
@@ -665,8 +688,8 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     class="modal  fixed w-full h-full top-0 left-0 flex items-center justify-center"
                     style={{ opacity: 1, pointerEvents: "all" }}
                 >
+                    hello
                     <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-
                     <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
                         <div class="modal-content py-4 text-left px-6">
                             <div class="flex justify-between items-center pb-3">
