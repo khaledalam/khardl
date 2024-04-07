@@ -48,6 +48,10 @@ class OrderService
         if ($request->has('order_id')) {
             $validatedData = $request->validate([
                 'order_id' => 'required|string|min:12|max:12',
+            ], [
+                'order_id.required'=>__("Order id is required"),
+                'order_id.min' => __('Enter valid Order id consists of 12 characters'),
+                'order_id.max' => __('Enter valid Order id consists of 12 characters')
             ]);
 
             $order_id = $validatedData['order_id'];

@@ -301,7 +301,7 @@
                                 <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference"></i>
                             </label>
                             <!--end::Label-->
-                            <input type="file" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" />
+                            <input type="file" class="form-control form-control-solid" required placeholder="Enter Target Title" name="photo" accept="image/*" />
                         </div>
                         <!--end::Input group-->
 

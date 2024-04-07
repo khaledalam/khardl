@@ -88,7 +88,6 @@ const App = () => {
         "/success",
         "/failed",
         "/verification-phone",
-        "/login-trial",
         "/login-admins",
         "/summary",
     ].includes(location.pathname);
@@ -98,7 +97,6 @@ const App = () => {
         "/dashboard",
         "/site-editor/restaurants",
         "/login",
-        "/login-trial",
         "/login-admins",
         "/register",
         "/register/:url",

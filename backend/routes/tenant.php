@@ -204,7 +204,10 @@ Route::group([
                 Route::delete('coupons/delete/{coupon}',[CouponController::class,'delete'])->name('coupons.delete')->withTrashed();
                 Route::post('coupons/restore/{coupon}',[CouponController::class,'restore'])->name('coupons.restore')->withTrashed();
                 Route::post('coupons/change-status/{coupon}',[CouponController::class,'changeStatus'])->name('coupons.change-status')->withTrashed();
+
                 Route::get('/qr', [RestaurantController::class, 'qr'])->name('restaurant.qr');
+                Route::post('/qr-create', [RestaurantController::class, 'qrCreate'])->name('restaurant.qr-create');
+                Route::get('/qr-download/{id}', [RestaurantController::class, 'downloadQrCode'])->name('restaurant.qr-download');
 
                 Route::post('/branches/add', [RestaurantController::class, 'addBranch'])->name('restaurant.add-branch');
                 Route::any('/callback', [TapController::class, 'callback'])->name('tap.callback');

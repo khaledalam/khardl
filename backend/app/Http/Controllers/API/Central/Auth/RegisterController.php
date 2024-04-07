@@ -113,7 +113,7 @@ class RegisterController extends BaseController
                 );
             } else if ($user?->traderRegistrationRequirement?->{$fileKey}) {
                 $input[$fileKey] = $user?->traderRegistrationRequirement?->{$fileKey};
-            } else {
+            } else if($fileKey != 'tax_registration_certificate') { // optional
                 return $this->sendError('Fail', $fileKey . __('is missing'));
             }
         }

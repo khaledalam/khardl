@@ -395,6 +395,24 @@
                                 </span>
                             </a>
                         </div>
+
+                        @if(\App\Models\Tenant\Setting::first()?->is_live && \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
+                            <div class="menu-item menu-accordion">
+                                <a href="{{route('restaurant.qr')}}">
+                                    <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon -->
+                                                <span class="svg-icon svg-icon-2">
+                                                <i class="bi bi-camera"></i>
+                                                </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                            <span class="menu-title">{{__('QR Maker')}}</span>
+                                    </span>
+                                </a>
+                            </div>
+                        @endif
+
                         <!-- Services -->
                         <div class="menu-item menu-accordion">
                             <a href="{{route('restaurant.service')}}">
@@ -627,13 +645,14 @@
                                                 <span class="menu-title position-relative">{{ __('language')}}
                                                     <span
                                                         class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">@if(app()->getLocale() != 'ar'){{ __('english')}} @else {{ __('arabic')}} @endif
-                                                        <img class="w-15px h-15px rounded-1 ms-2"
-                                                             @if(app()->getLocale() != 'ar')
-                                                             src="{{ global_asset('assets/media/flags/united-kingdom.svg') }}"
-                                                             @else
-                                                             src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
-                                                             @endif
-                                                             alt="" /></span></span>
+{{--                                                        <img class="w-15px h-15px rounded-1 ms-2"--}}
+{{--                                                             @if(app()->getLocale() != 'ar')--}}
+{{--                                                             src="{{ global_asset('assets/media/flags/united-kingdom.svg') }}"--}}
+{{--                                                             @else--}}
+{{--                                                             src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"--}}
+{{--                                                             @endif--}}
+{{--                                                             alt="" />--}}
+                                                    </span></span>
                                         </a>
                                         <!--begin::Menu sub-->
                                         <div class="menu-sub menu-sub-dropdown w-175px py-4">
@@ -644,8 +663,8 @@
                                                     <button style="border: 0;" type="submit"
                                                             class="w-100 menu-link d-flex px-5 active">
                                                             <span class="symbol symbol-20px me-4">
-                                                                <img class="rounded-1"
-                                                                     src={{ global_asset('assets/media/flags/united-kingdom.svg') }} alt="" />
+{{--                                                                <img class="rounded-1"--}}
+{{--                                                                     src={{ global_asset('assets/media/flags/united-kingdom.svg') }} alt="" />--}}
                                                             </span>{{ __('english')}}</button>
                                                 </form>
                                             </div>
@@ -657,8 +676,9 @@
                                                     <button style="border: 0;" type="submit"
                                                             class="w-100 menu-link d-flex px-5 active">
                                                         <span class="symbol symbol-20px me-4">
-                                                            <img class="rounded-1" src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"
-                                                                 alt="" /> </span>{{ __('arabic')}}</button>
+{{--                                                            <img class="rounded-1" src="{{ global_asset('assets/media/flags/saudi-arabia.svg') }}"--}}
+{{--                                                                 alt="" />--}}
+                                                        </span>{{ __('arabic')}}</button>
                                                 </form>
                                             </div>
                                             <!--end::Menu item-->

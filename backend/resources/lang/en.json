@@ -326,6 +326,7 @@
     "payment-online":"Payment online",
     "customer-reception-methods":"Customer reception methods",
     "pick-up-from-the-restaurant":"Pick up from the restaurant",
+    "display-categories-icons": "Display categories icons",
     "pick-up-by-car":"Pick up by Car",
     "Delivery":"Delivery",
     "PICKUP":"PICKUP",
@@ -667,7 +668,7 @@
     "Restaurant have no active subscription yet":   "Restaurant have no active subscription yet",
     "Restaurant not in live mode yet":"Restaurant not in live mode yet",
     "Your subscription has expired, please activate it before it is deactivated":"Your subscription has expired, please activate it before it is deactivated",
-    "Tab information" : "Tab information",
+    "Tab information" : "Payment gateway information",
     "Transactions information" : "Transactions information",
     "Current subscription" : "Current subscription",
     "Start date" : "Start date",
@@ -833,5 +834,10 @@
     "This Email used In":"This Email used In",
     "Number of Memorandum of Association":"Number of Memorandum of Association",
     "Issuing date":"Issuing date",
-    "Expiry date":"Expiry date"
+    "Expiry date":"Expiry date",
+    "QR Maker": "QR Maker",
+    "Make a new QR Code": "Make a new QR Code",
+    "List of your QR codes": "List of your QR codes",
+    "Set The Color": "Set The Color",
+    "Foreground color": "Foreground color"
 }

@@ -30,6 +30,7 @@ import PaymentCardGoSell from "./components/PaymentCardGoSell";
 import { GoSellElements } from "@tap-payments/gosell";
 import "./index.scss";
 import OrderReviewSummary from "./components/OrderReviewSummary";
+import { isSafari } from "react-device-detect";
 import {
     ApplePayButton,
     ThemeMode,
@@ -38,8 +39,8 @@ import {
     Environment,
     Locale,
     ButtonType,
-    Edges
-   } from '@tap-payments/apple-pay-button'
+    Edges,
+} from "@tap-payments/apple-pay-button";
 const CartPage = () => {
     const { t } = useTranslation();
 
@@ -57,11 +58,10 @@ const CartPage = () => {
         (state) => state.categoryAPI.cartItemsData,
     );
     const [tap, setTap] = useState(null);
-    console.log(tap);
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
 
-    const [paymentMethod, setPaymentMethod] = useState("Online");
+    const [paymentMethod, setPaymentMethod] = useState(null);
     const [deliveryType, setDeliveryType] = useState("Delivery");
     const [deliveryAddress, setDeliveryAddress] = useState(0);
     const [userAddress, setUserAddress] = useState(null);
@@ -134,6 +134,9 @@ const CartPage = () => {
     };
 
     const handlePlaceOrder = async () => {
+
+        console.log("handlePlaceOrder func, paymentMethod: ", paymentMethod);
+
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
         if (paymentMethod === "Online") {
             GoSellElements.submit();
@@ -164,10 +167,6 @@ const CartPage = () => {
     };
 
     const cardPaymentCallbackFunc = async (response) => {
-
-        console.log("here inside callback");
-
-
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
         try {
@@ -194,15 +193,13 @@ const CartPage = () => {
         }
     };
 
-    const sortPaymentMethods = (a, b) => {
-        const order = ["Card", "Apple Pay", "Cash on Delivery"];
-        return order.indexOf(a.name) - order.indexOf(b.name);
-      }
-
-    function isSafari() {
-        const userAgentString = navigator.userAgent;
-        return /Safari/i.test(userAgentString) && !/Chrome/i.test(userAgentString);
-      }
+    const getTotalPrice = () =>
+        Number(
+            parseFloat(cart?.total) +
+                (deliveryType === "PICKUP"
+                    ? 0.0
+                    : parseFloat(cart?.delivery_fee)),
+        ).toFixed(2);
 
     return (
         <div className="p-12">
@@ -246,43 +243,88 @@ const CartPage = () => {
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Payment Method")}</h3>
-                                        {cart.payment_methods.sort(sortPaymentMethods).map((method) => {
-                                            if (method.name === "Apple Pay" && !isSafari()) {
-                                                return;
-                                            }
-                                            let name = method.name 
-                                            let displayName = method.name ;
-                                            let img =
-                                                method.name === "Online"
-                                                    ? pmcc
-                                                    : method.name === "Apple Pay" ? apple : pmcod;
-
-                                            return (
+                                        {cart.payment_methods.some(
+                                            (obj) => obj.name === "Online",
+                                        ) && (
+                                            <CartDetailSection
+                                                key={"Online"}
+                                                name={"Online"}
+                                                onChange={(e) =>
+                                                    setPaymentMethod("Online")
+                                                }
+                                                isChecked={
+                                                    paymentMethod === "Online"
+                                                }
+                                                img={pmcc}
+                                                displayName="Card"
+                                                callBackfn={
+                                                    cardPaymentCallbackFunc
+                                                }
+                                            />
+                                        )}
+                                        {cart.payment_methods.some(
+                                            (obj) => obj.name === "Online",
+                                        ) &&
+                                            isSafari && (
                                                 <CartDetailSection
-                                                    key={method.name}
-                                                    name={method.name}
+                                                    key={"Apple Pay"}
+                                                    name={"ApplePay"}
                                                     onChange={(e) =>
-                                                        setPaymentMethod(name)
+                                                        setPaymentMethod(
+                                                            "Apple Pay",
+                                                        )
                                                     }
                                                     isChecked={
-                                                        paymentMethod === name
+                                                        paymentMethod ===
+                                                        "Apple Pay"
                                                     }
-                                                    img={img}
-                                                    displayName={displayName}
+                                                    img={apple}
+                                                    displayName={"Apple Pay"}
                                                     callBackfn={
                                                         cardPaymentCallbackFunc
                                                     }
                                                 />
-                                            );
-                                        })}
+                                            )}
+                                        {cart.payment_methods.some(
+                                            (obj) =>
+                                                obj.name === "Cash on Delivery",
+                                        ) && (
+                                            <CartDetailSection
+                                                key={"Cash on Delivery"}
+                                                name={"Cash on Delivery"}
+                                                onChange={(e) =>
+                                                    setPaymentMethod(
+                                                        "Cash on Delivery",
+                                                    )
+                                                }
+                                                isChecked={
+                                                    paymentMethod ===
+                                                    "Cash on Delivery"
+                                                }
+                                                img={pmcod}
+                                                displayName="Cash on Delivery"
+                                                callBackfn={
+                                                    cardPaymentCallbackFunc
+                                                }
+                                            />
+                                        )}
                                         {paymentMethod === "Online" && (
-                                            <div className="mt-6">
+                                            <div className="mt-6 space-y-3">
                                                 <PaymentCardGoSell
                                                     callBackWithToken={
                                                         cardPaymentCallbackFunc
                                                     }
                                                 />
-                                                 <ApplePayButton
+                                                {/*<button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">*/}
+                                                {/*    <div className="font-semibold text-[20px] py-3">*/}
+                                                {/*        {t("Buy with Card")}*/}
+                                                {/*    </div>*/}
+                                                {/*</button>*/}
+                                            </div>
+                                        )}
+                                        {paymentMethod === "Apple Pay" && (
+                                            <div className="mt-6">
+                                                <ApplePayButton
                                                     // The public Key provided by Tap
                                                     publicKey={tap.tap_public_key}
                                                     //The environment of the SDK and it can be one of these environments
@@ -297,7 +339,7 @@ const CartPage = () => {
                                                     }}
                                                     transaction={{
                                                         // The amount to be charged
-                                                        amount: Number(cart?.total + cart?.delivery_fee).toFixed(2),
+                                                        amount: getTotalPrice(),
                                                         // The currency of the amount
                                                         currency: 'SAR'
                                                     }}
@@ -310,7 +352,7 @@ const CartPage = () => {
                                                         // we bring all the supported networks from tap merchant configuration
                                                         supportedBrands: [SupportedNetworks.Mada, SupportedNetworks.Visa, SupportedNetworks.MasterCard],
                                                         supportedCards : "ALL",
-                                                            supportedCardsWithAuthentications : ["3DS"]
+                                                        supportedCardsWithAuthentications : ["3DS"]
                                                     }}
                                                     // The billing contact information
                                                     customer={{
@@ -354,23 +396,9 @@ const CartPage = () => {
                                                     onClick={() => {
                                                         console.log('Clicked')
                                                     }}
-                                                    />
+                                                />
                                             </div>
                                         )}
-                                        {paymentMethod === "Apple Pay" && (
-                                            <div className="mt-6">
-                                                <button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">
-                                                    <div className="font-semibold text-[20px]">Buy with</div>
-                                                    <img 
-                                                    src={applePay}                        
-                                                    alt=""
-                                                    width={50}
-                                                    height={50}
-                                                    className="mx-2" />
-                                                </button>
-                                            </div>
-                                        )}
-
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Delivery Type")}</h3>
@@ -468,7 +496,7 @@ const CartPage = () => {
                                         <div className="flex justify-between mt-1">
                                             <div>{t("Total Payment")}</div>
                                             <div>
-                                                {`${Number(cart?.total + cart?.delivery_fee).toFixed(2)} ${t("SAR")}`}
+                                                {`${getTotalPrice()} ${t("SAR")}`}
                                             </div>
                                         </div>
                                     </div>

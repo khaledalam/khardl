@@ -18,7 +18,7 @@ const useAxiosAuth = () => {
         "/create-new-password",
         "/restaurant-not-live",
         "/restaurant-not-subscribed",
-        "/login-trial",
+        "/login-admins",
     ].includes(location.pathname);
 
     const axiosAuth = axios.create({

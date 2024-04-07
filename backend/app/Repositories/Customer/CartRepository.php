@@ -130,10 +130,27 @@ class CartRepository
     }
     public function updateCartItem(CartItem $cartItem, $request)
     {
+        $options_price = 0;
+        $checkbox_options = null;
+        $selection_options = null;
+        $dropdown_options = null;
+        if($request['selectedCheckbox'] ?? false){
+            $options_price += $this->loopingTroughCheckboxOptions($cartItem->item,$request['selectedCheckbox'],$checkbox_options);
+        }
+        if($request['selectedRadio'] ?? false){
+            $options_price += $this->loopingTroughSelectionOptions($cartItem->item,$request['selectedRadio'],$selection_options);
+        }
+        if($request['selectedDropdown'] ?? false){
+            $options_price += $this->loopingTroughDropdownOptions($cartItem->item,$request['selectedDropdown'],$dropdown_options);
+        }
+      
         return $cartItem->update([
-            'notes'     => $request['notes'] ?? '',
+            'notes'     => $request['notes'] ?? $cartItem->notes,
             'quantity'  => $request['quantity'],
-            'total' =>($cartItem->item->price + $cartItem->options_price) * $request['quantity'] ,
+            'checkbox_options' =>  $checkbox_options,
+            'selection_options' =>  $selection_options,
+            'dropdown_options' =>  $dropdown_options,
+            'total' =>($cartItem->item->price + $options_price) * $request['quantity'] ,
         ]);
     }
 

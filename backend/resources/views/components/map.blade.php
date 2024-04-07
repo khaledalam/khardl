@@ -1,9 +1,10 @@
 <script>
+
     document.addEventListener("DOMContentLoaded", (event) => {
         let maps = {}; // Store maps in an object
         let markers = {}; // Store markers in an object
 
-        function initializeMap(branchId, lat, lng) {
+        function initializeMapOnClick(branchId, lat, lng) {
             const latLng = new google.maps.LatLng(lat, lng);
 
             const map = new google.maps.Map(document.getElementById('map' + branchId), {
@@ -38,6 +39,7 @@
                 marker.setPosition(event.latLng);
                 updateLocationInput(event.latLng, branchId);
             });
+
             autocomplete.addListener("place_changed", () => {
                 marker.setVisible(false);
 
@@ -66,6 +68,40 @@
                 // infowindow.open(map, marker);
             });
         }
+
+        const mapContainers = document.querySelectorAll('.map-container');
+        mapContainers.forEach(container => {
+            container.addEventListener('click', function handleClick() {
+                console.log('Container clicked');
+                const branchIdElement = this.getAttribute('data-branch-id');
+                console.log('Branch ID:', branchIdElement);
+                if (branchIdElement) {
+                    const latElement = document.getElementById('lat' + branchIdElement);
+                    const lngElement = document.getElementById('lng' + branchIdElement);
+                    console.log('Latitude element:', latElement);
+                    console.log('Longitude element:', lngElement);
+                    if (latElement && lngElement) {
+                        const lat = parseFloat(latElement.value);
+                        const lng = parseFloat(lngElement.value);
+                        console.log('Latitude:', lat);
+                        console.log('Longitude:', lng);
+                        initializeMapOnClick(branchIdElement, lat, lng);
+                        document.getElementById('save-location' + branchIdElement).style.display = 'block';
+                        document.getElementById('pac-input' + branchIdElement).style.display = 'block';
+                        container.removeEventListener('click', handleClick);
+                    } else {
+                        console.log('Latitude or longitude element not found');
+                    }
+                } else {
+                    console.log('Branch ID attribute not found');
+                }
+            });
+        });
+
+
+
+
+
 
         async function convertToAddress(lat, lng) {
 
@@ -101,10 +137,6 @@
             }
         }
 
-        // Initialize the maps for each branch
-        @foreach ($branches as $branch)
-        initializeMap({{ $branch->id }}, {{ $branch->lat }}, {{ $branch->lng }});
-        @endforeach
 
         if (document.getElementById('pac-input-new_branch')) {
 
