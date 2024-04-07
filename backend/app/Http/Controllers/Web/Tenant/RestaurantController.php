@@ -377,7 +377,7 @@ class RestaurantController extends BaseController
             Storage::disk(QrCode::STORAGE)->put($imageName, $imageContent);
 
             $qrCode = QrCode::create([
-                'image_path' => QrCode::STORAGE . $imageName,
+                'image_path' => tenant_asset(QrCode::STORAGE . '/' . $imageName),
                 'url' => $request->input('data'),
                 'name' => $request->input('name'),
             ]);
