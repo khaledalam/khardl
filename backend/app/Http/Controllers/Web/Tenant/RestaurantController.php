@@ -371,18 +371,20 @@ class RestaurantController extends BaseController
             $imageContent = $response->body();
 
             // short uuid
-            $imageUrl = tenant_asset(store_image($imageContent, QrCode::STORAGE, uniqid('', false)));
+//            $imageUrl = tenant_asset(store_image($uploadedFile, QrCode::STORAGE, uniqid('', false)));
 
+            $imageName = uniqid('', false) . '.png';
+            Storage::disk(QrCode::STORAGE)->put($imageName, $imageContent);
 
             $qrCode = QrCode::create([
-                'image_path' => $imageUrl,
+                'image_path' => QrCode::STORAGE . $imageName,
                 'url' => $request->input('data'),
                 'name' => $request->input('name'),
             ]);
 
             return response()->streamDownload(function () use ($imageContent) {
                     echo $imageContent;
-                }, $request->input('name') . '_qr_code.svg').redirect(route("restaurant.qr"));
+                }, $request->input('name') . '_qr_code.png').redirect(route("restaurant.qr"));
         } else {
             return "cURL Error 2 #: " . $response->status();
         }
