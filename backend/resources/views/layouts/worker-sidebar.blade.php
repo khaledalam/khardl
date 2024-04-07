@@ -427,10 +427,10 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                        <a href="{{ route('tenant_logout_get') }}"
+                                        <a href="{{ route('tenant_logout') }}"
                                         class="menu-link px-5" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">{{ __('sign-out')}}</a>
-                                        <form id="logout-form" action="{{ route('tenant_logout_get') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('tenant_logout') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
                                     </div>
