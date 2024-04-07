@@ -40,7 +40,7 @@ const Header = () => {
         //    // dispatch(changeLogState(false))
         //    dispatch(setIsOpen(false))
         //    navigate('/login')
-        //    toast.success('Logged out successfully') //toast.success(`${t("Logged out successfully")}`)
+        //    toast.success('Logged out successfully') //toast.success(`${t("You have been logged out successfully")}`)
         // } catch (err) {
         //    console.error(err.message)
         //    toast.error('Logout failed') // toast.error(`${t("Login failed")}`)
@@ -49,6 +49,7 @@ const Header = () => {
         try {
             await dispatch(logout({ method: "POST" })).unwrap();
             setStatusCode(HTTP_NOT_AUTHENTICATED);
+
             navigate("/login", { replace: true });
             toast.success(`${t("You have been logged out successfully")}`);
         } catch (err) {
