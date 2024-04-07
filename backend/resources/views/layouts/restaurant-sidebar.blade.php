@@ -396,7 +396,7 @@
                             </a>
                         </div>
 
-                        @if(\App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
+                        @if(\App\Models\Tenant\Setting::first()?->is_live && \App\Models\ROSubscription::first()?->status == \App\Models\ROSubscription::ACTIVE)
                             <div class="menu-item menu-accordion">
                                 <a href="{{route('restaurant.qr')}}">
                                     <span class="{{ ($link == 'qr' ) ? 'menu-link active' : 'menu-link ' }}">
