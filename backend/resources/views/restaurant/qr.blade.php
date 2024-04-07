@@ -644,7 +644,6 @@
                     <!--begin::Item-->
                         @foreach ($qrcodes as $qrcode)
 
-
                             <div class="d-flex align-items-center mb-8">
                                 <!--begin::Bullet-->
                                 <span class="bullet bullet-vertical h-40px bg-primary"></span>
@@ -652,14 +651,14 @@
                                 <!--begin::Checkbox-->
                                 <div class="form-check form-check-custom form-check-solid mx-5">
                                     <a href="{{ route('restaurant.qr-download', $qrcode->id) }}" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url('{{route('restaurant.qr-download', $qrcode->id)}}'"></span>
+                                        <span class="symbol-label" style="background-image:url('{{route('restaurant.qr-download', $qrcode->id)}}')"></span>
                                     </a>
                                 </div>
                                 <!--end::Checkbox-->
                                 <!--begin::Description-->
                                 <div class="flex-grow-1">
                                     <a href="#" class="text-gray-800 text-hover-primary fw-bolder fs-6">{{ $qrcode->name }}</a>
-                                    <span class="fw-bold d-block">{{ $qrcode->url }}</span>
+                                    <span class="fw-bold d-block text-hover-primary">{{ $qrcode->url }}</span>
                                 </div>
                             </div>
                         @endforeach
