@@ -33,25 +33,7 @@ function Services() {
     {
       image: Branches,
       title: `${t("Each Branch")}`,
-      Price: 388,
-    },
-  ];
-  const Fees = [
-    {
-      title: `${t("Monthly")}`,
-      Price: 299,
-    },
-    {
-      title: `${t("3 months")}`,
-      Price: 499,
-    },
-    {
-      title: `${t("6 months")}`,
-      Price: 799,
-    },
-    {
-      title: `${t("12 months")}`,
-      Price: 1299,
+      Price: 399,
     },
   ];
   const direction = localStorage.getItem("i18nextLng") === "en" ? "ltr" : "rtl";
