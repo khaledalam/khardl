@@ -377,17 +377,17 @@ class RestaurantController extends BaseController
             Storage::disk(QrCode::STORAGE)->put($imageName, $imageContent);
 
             $qrCode = QrCode::create([
-                'image_path' => tenant_asset(QrCode::STORAGE . '/' . $imageName),
+                'image_path' => $imageName,
                 'url' => $request->input('data'),
                 'name' => $request->input('name'),
             ]);
 
             return response()->streamDownload(function () use ($imageContent) {
-                    echo $imageContent;
+//                    echo $imageContent;
                 }, $request->input('name') . '_qr_code.png').redirect(route("restaurant.qr"));
-        } else {
-            return "cURL Error 2 #: " . $response->status();
         }
+
+        return "cURL Error 2 #: " . $response->status();
     }
 
     public function downloadQrCode($id)
@@ -399,7 +399,6 @@ class RestaurantController extends BaseController
         $qr = QrCode::findOrFail($id);
         $fileName = $qr->image_path;
 
-
         if (!Storage::disk(QrCode::STORAGE)->exists($fileName)) {
             abort(404);
         }
@@ -407,7 +406,7 @@ class RestaurantController extends BaseController
         $fileContents = Storage::disk(QrCode::STORAGE)->get($fileName);
 
         return response($fileContents)
-            ->header('Content-Type', 'image/svg+xml')
+            ->header('Content-Type', 'image/png')
             ->header('Content-Disposition', 'attachment; filename="' . $fileName . '"');
 
     }
