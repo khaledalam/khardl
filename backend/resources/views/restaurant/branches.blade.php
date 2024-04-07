@@ -145,9 +145,9 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             <img src="{{ global_asset("images/blured_map.png") }}" class="img-fluid" alt="">
                                         </div>
                                     </div>
-                                    
+
                                     <style>
-                                        
+
                                         .google_map {
                                             position: relative;
                                             width: 100%;
@@ -156,6 +156,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
 
                                         .map-overlay {
                                             position: relative;
+                                            cursor: pointer;
                                         }
 
                                         .overlay-text {
@@ -187,8 +188,8 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                         }
 
                                     </style>
-                                    
-                                    
+
+
 
                                     @if(!$branch->deleted_at)
                                     <form action="{{ route('restaurant.update-branch-location', ['id' => $branch->id]) }}" method="POST">
@@ -201,10 +202,10 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                     @endif
                                 </div>
                             </div>
-                            
+
 
                             </style>
-                            
+
 
                             <!--end::Col-->
                             <!--begin::Col-->
