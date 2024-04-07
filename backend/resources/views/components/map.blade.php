@@ -146,7 +146,7 @@
                 lng: 46.6753,
                 address: '8779 Street Number 74, Al Olaya, 2593, Riyadh 12214, Saudi Arabia'
             }; // Default center coordinates
-            initializeMap('-new_branch', centerCoords?.lat, centerCoords?.lng);
+            initializeMapOnClick('-new_branch', centerCoords?.lat, centerCoords?.lng);
 
             document.getElementById('lat-new_branch').value = centerCoords.lat;
             document.getElementById('lng-new_branch').value = centerCoords.lat;
