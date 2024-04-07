@@ -117,7 +117,7 @@
                                       <!--end::Actions-->
                                       <!--begin::Pagination-->
                                       <div class="d-flex align-items-center flex-wrap gap-2">
-                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('add-new-item') }}
+                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('create-new-items') }}
                                               <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
                                               <span class="svg-icon svg-icon-2 me-3">
                                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
