@@ -599,7 +599,7 @@
                                                         <div class="col-lg-9">
                                                             <label for="customRange1" class="form-label">{{ __('Size of the image') }}</label>
                                                             <input type="range" name="size" class="form-range" id="customRange1" min="200" max="2000" step="100" value="200">
-                                                            <output id="rangeValue">200x200</output>
+                                                            <output id="rangeValue" dir="{{app()->getLocale() == 'ar' ? 'rtl' : 'ltr'}}">200x200</output>
                                                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                                                             <script>
                                                                 $(document).ready(function(){
