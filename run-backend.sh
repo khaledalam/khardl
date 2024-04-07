@@ -37,6 +37,8 @@ php artisan create:tenant first
 php artisan create:tenant second
 php artisan create:tenant third
 
+php artisan tenant:add-dummy-branch-slot first
+
 php artisan serv # --port 80
 
 
