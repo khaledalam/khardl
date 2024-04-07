@@ -138,6 +138,7 @@
     "Super master admin can not blocked":"لا يمكنك حظر المشرف الرئيسي",
     "You have to select one option at least!":"عليك اختيار خيار واحد علي الاقل",
     "You are not allowed to access this page":"لا يمكنك الوصول الي هذه الصفحة",
+    "QR Code has been created successfully": "تم انشاء رمز QR بنجاح",
     "failed to download":"فشل التحميل",
     "Customer style saved successfully.":"تم حفظ اعدادات التصميم",
     "Customer style fetched successfully.":"اعداات التصميم",

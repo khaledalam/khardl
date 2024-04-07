@@ -275,7 +275,7 @@ class RestaurantController extends BaseController
 
         /** @var RestaurantUser $user */
         $user = Auth::user();
-        $qrcodes = QrCode::paginate(10);
+        $qrcodes = QrCode::orderBy('id', 'desc')->paginate(10);
 
         return view(
             'restaurant.qr',
@@ -382,9 +382,8 @@ class RestaurantController extends BaseController
                 'name' => $request->input('name'),
             ]);
 
-            return response()->streamDownload(function () use ($imageContent) {
-//                    echo $imageContent;
-                }, $request->input('name') . '_qr_code.png').redirect(route("restaurant.qr"));
+            return redirect()->route("restaurant.qr")
+                ->with('success',__('QR Code has been created successfully'));
         }
 
         return "cURL Error 2 #: " . $response->status();
