@@ -398,14 +398,13 @@ class RestaurantController extends BaseController
 
         $qr = QrCode::findOrFail($id);
         $fileName = $qr->image_path;
-        $disk = 'qrcodes';
 
 
-        if (!Storage::disk($disk)->exists($fileName)) {
+        if (!Storage::disk(QrCode::STORAGE)->exists($fileName)) {
             abort(404);
         }
 
-        $fileContents = Storage::disk($disk)->get($fileName);
+        $fileContents = Storage::disk(QrCode::STORAGE)->get($fileName);
 
         return response($fileContents)
             ->header('Content-Type', 'image/svg+xml')
