@@ -652,7 +652,7 @@
                                 <!--begin::Checkbox-->
                                 <div class="form-check form-check-custom form-check-solid mx-5">
                                     <a href="{{ route('restaurant.qr-delete', $qrcode->id) }}" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url('{{ global_asset('storage/qr_codes/' . $qrcode->image_path )}}'"></span>
+                                        <span class="symbol-label" style="background-image:url('{{ global_asset('tenancy/assets/' . $qrcode->image_path )}}'"></span>
                                     </a>
                                 </div>
                                 <!--end::Checkbox-->
