@@ -76,7 +76,6 @@ export const RestuarantEditor = () => {
                     setCategoriesAPI(restaurantCategoriesResponse.data?.data),
                 );
 
-
                 if (!branch_id) {
                     branch_id =
                         restaurantCategoriesResponse.data?.data[0]?.branch?.id;

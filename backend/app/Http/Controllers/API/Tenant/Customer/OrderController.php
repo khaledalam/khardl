@@ -121,7 +121,7 @@ class OrderController
 
 
             if ($charge['http_code'] == ResponseHelper::HTTP_OK) {
-                if($charge['message']['source']['payment_method'] == 'APPLE_PAY'){
+                if(isset($charge['message']['source']['payment_method']) && $charge['message']['source']['payment_method'] == 'APPLE_PAY'){
                     $message = __('Payment failed, please try again');
                     $status = false;
 
@@ -140,14 +140,13 @@ class OrderController
                         'message'=>$message,
                     ]);
                 }
-
-                return redirect($charge['message']['transaction']['url']);
+                return $charge['message']['transaction']['url'];
             }
         }catch(Exception $e){
-            logger($e->getMessage());
+            \Sentry\captureMessage('failed charge '.$e->getMessage());
         }
-
-        return redirect()->route("home",[
+  
+        return route("home",[
             'status'=>false,
             'message'=>__('Payment failed, please try again')
         ]);

@@ -336,6 +336,7 @@
                         <div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
 
                             <!--begin::Shipping address-->
+                        @if($order->delivery_type->name != App\Models\Tenant\DeliveryType::PICKUP)
                             <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
                                 <!--begin::Background-->
                                 <div class="position-absolute top-0 end-0 opacity-10 pe-none text-end">
@@ -359,6 +360,7 @@
                                 </div>
                                 <!--end::Card body-->
                             </div>
+                        @endif
                             <!--end::Shipping address-->
                         </div>
                         <div class="row">
