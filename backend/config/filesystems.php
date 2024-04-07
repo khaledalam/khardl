@@ -41,9 +41,9 @@ return [
             'root' => storage_path('app/private'),
         ],
 
-        'qr_codes' => [
+        'qrcodes' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/qr_codes'),
+            'root' => storage_path('app/public/qrcodes'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],

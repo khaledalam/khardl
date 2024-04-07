@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Tenant;
 use App\Http\Requests\Tenant\BranchSettings\UpdateBranchSettingFromRequest;
 use App\Models\Tenant\Item;
 use App\Models\Tenant\QrCode;
+use App\Models\Tenant\RestaurantStyle;
 use App\Packages\DeliveryCompanies\DeliveryCompanies;
 use Database\Seeders\Tenant\DeliveryTypesSeeder;
 use Database\Seeders\Tenant\PaymentMethodSeeder;
@@ -289,7 +290,7 @@ class RestaurantController extends BaseController
             return redirect()->route('restaurant.summary')->with('error', __('You are not allowed to access this page'));
         }
 
-        $imagePath = "";
+        $imageUrl = "";
         if (file_exists($request->file("file"))) {
             $response = Http::withHeaders([
                 "X-RapidAPI-Host" => "qrcode-monkey.p.rapidapi.com",
@@ -303,9 +304,10 @@ class RestaurantController extends BaseController
                 $uploadedFile = $request->file('file'); //Instead of before taking $response->json and taking the "file" name from the response, I now tried uploading image to the server and getting logo made by inputing URL not fileName I get from this api
 
 
-                $imagePath = uniqid('', true) . '.' . $uploadedFile->getClientOriginalExtension();
-                Storage::disk('qr_codes')->put($imagePath, file_get_contents($uploadedFile));
+//                $imagePath = uniqid('', false) . '.' . $uploadedFile->getClientOriginalExtension();
+//                Storage::disk('qrcodes')->put($imagePath, file_get_contents($uploadedFile));
 
+                $imageUrl = tenant_asset(store_image($uploadedFile, QrCode::STORAGE, uniqid('', true)));
             } else {
                 return "cURL Error 1 #: " . $response->status();
             }
@@ -356,7 +358,7 @@ class RestaurantController extends BaseController
                 "gradientType" => "linear",
                 "gradientOnEyes" => $gradientOnEyes,
                 //Putting an actual link to a working picture as test to see does it work on a picture that is accessible, so its not my local host
-                "logo" =>  'https://www.fnordware.com/superpng/pnggrad16rgb.png',
+                "logo" => $imageUrl, // 'https://www.fnordware.com/superpng/pnggrad16rgb.png',
                 "logoMode" => $logoMode
             ],
             "size" => $request->input('size'),
@@ -368,11 +370,12 @@ class RestaurantController extends BaseController
         if ($response->successful()) {
             $imageContent = $response->body();
 
-            $imagePath = uniqid() . '.png';
-            Storage::disk('qr_codes')->put($imagePath, $imageContent);
+            // short uuid
+            $imageUrl = tenant_asset(store_image($imageContent, QrCode::STORAGE, uniqid('', false)));
+
 
             $qrCode = QrCode::create([
-                'image_path' => $imagePath,
+                'image_path' => $imageUrl,
                 'url' => $request->input('data'),
                 'name' => $request->input('name'),
             ]);
@@ -393,7 +396,7 @@ class RestaurantController extends BaseController
 
         $qr = QrCode::findOrFail($id);
         $fileName = $qr->image_path;
-        $disk = 'qr_codes';
+        $disk = 'qrcodes';
 
 
         if (!Storage::disk($disk)->exists($fileName)) {

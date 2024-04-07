@@ -13,4 +13,6 @@ class QrCode extends Model
 
     protected $fillable = ['image_path', 'url', 'name'];
 
+    const STORAGE = 'qr-codes';
+
 }
