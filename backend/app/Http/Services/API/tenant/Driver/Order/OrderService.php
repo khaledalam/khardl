@@ -23,7 +23,7 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        $query = Order::with('payment_method')
+        $query = Order::with(['payment_method','items','branch','user'])
             ->delivery()
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->when($request->status == 'ready', function ($query) {
@@ -61,6 +61,7 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $query = $user->driver_orders()
+            ->with(['items','branch','user'])
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->whenStatus($request['status'] ?? null)
             ->WhenDateString($request['date_string']??null)
