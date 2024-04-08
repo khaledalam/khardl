@@ -96,7 +96,7 @@ export const RightSideBarDesktop = ({
     let actSubTitle =
         navItems[activeSection]?.subItems[activeSubitem]?.title || null;
 
-    const [openItems, setOpenItems] = useState([]); // Manage open sub-items
+    const [openItems, setOpenItems] = useState([0]); // Manage open sub-items
 
     const handleItemClick = (index) => {
         setOpenItems((prev) =>

@@ -206,10 +206,10 @@ export const RestuarantEditor = () => {
             ],
         },
         {
-            title: t("Footer "),
+            title: t("Footer"),
             subItems: [
                 {
-                    title: t("Footer "),
+                    title: t("Footer"),
                     layout: ["color"],
                     contentPosition: ["positionContent"],
                     text: ["font", "weight", "size", "color"],

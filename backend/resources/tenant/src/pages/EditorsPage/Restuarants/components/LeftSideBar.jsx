@@ -42,7 +42,7 @@ export const LeftSideBar = ({
                         className="text-[#1118278A] text-[12px] font-light leading-[16px] relative"
                     >
                         <div
-                            className={`${activeSection === index ? "bg-[#F3F3F3] text-[#111827]" : ""} whitespace-nowrap md:whitespace-normal py-[4px] md:py-[8px] px-[8px] md:px-[24px] rounded-[50px] flex flex-row items-center md:flex-none space-x-[8px] md:space-x-0`}
+                            className={`${activeSection === index ? "bg-[#F3F3F3] text-[#111827]" : ""} cursor-pointer whitespace-nowrap md:whitespace-normal py-[4px] md:py-[8px] px-[8px] md:px-[24px] rounded-[50px] flex flex-row items-center md:flex-none space-x-[8px] md:space-x-0`}
                             onClick={() => toggleSection(index)}
                         >
                             <div>{item.title}</div>
@@ -60,7 +60,7 @@ export const LeftSideBar = ({
                             Hello
                         </ul> */}
                         <ul
-                            className={`pl-4 text-[10px] leading-[13px] space-y-[16px] font-medium overflow-hidden transition-all duration-300 ${activeSection === index ? "max-h-40 mt-[16px]" : "max-h-0"} `}
+                            className={`px-4 text-[10px] leading-[13px] space-y-[16px] font-medium overflow-hidden transition-all duration-300 ${activeSection === index ? "max-h-40 mt-[16px]" : "max-h-0"} `}
                         >
                             {item.subItems.map((subItem, i) => (
                                 <li
@@ -70,7 +70,7 @@ export const LeftSideBar = ({
                                         activeSubitem === i
                                             ? "bg-[#F3F3F3] text-[#111827]"
                                             : ""
-                                    } ml-[14px] pt-[6px] pb-[5px] px-[24px] rounded-[50px]`}
+                                    } ml-[14px] pt-[6px] pb-[5px] px-[24px] rounded-[50px] cursor-pointer`}
                                     onClick={() => setActiveSubitem(i)}
                                 >
                                     {subItem.title}
