@@ -156,6 +156,10 @@ class Order extends Model
     {
         return $query->where('status', self::READY);
     }
+    public function scopeRejected($query)
+    {
+        return $query->where('status', self::REJECTED);
+    }
     public function scopeDelivery($query)
     {
         return $query->whereHas('delivery_type',function($q){
@@ -196,6 +200,10 @@ class Order extends Model
                 $startDate = Carbon::now()->subDays(7)->startOfDay();
                 $endDate = Carbon::now()->subDays(1)->endOfDay();
                 return $q->whereBetween('created_at', [$startDate,$endDate]);
+            } elseif ($date == 'this_month') {
+                $startOfMonth = now()->startOfMonth();
+                $endOfMonth = now()->endOfMonth();
+                return $q->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
             }
         });
     }

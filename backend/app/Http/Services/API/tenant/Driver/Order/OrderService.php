@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\API\tenant\Driver\Order;
 
+use App\Http\Resources\API\Tenant\Collection\Driver\DriverOrderCollection;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Setting;
@@ -54,6 +55,21 @@ class OrderService
         $orders = $query->paginate($perPage);
 
         return $this->sendResponse(new OrderCollection($orders), '');
+    }
+    public function history(Request $request)
+    {
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+        $query = $user->driver_orders()
+            ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
+            ->whenStatus($request['status'] ?? null)
+            ->WhenDateString($request['date_string']??null)
+            ->recent();
+
+        $perPage = config('application.perPage', 20);
+        $orders = $query->paginate($perPage);
+
+        return $this->sendResponse(new DriverOrderCollection($orders), '');
     }
     /*
     "accepted" when receive from restaurant (prerequisite "received_by_restaurant")
