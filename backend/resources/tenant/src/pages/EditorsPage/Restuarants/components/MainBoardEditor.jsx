@@ -5,6 +5,7 @@ import bannerPlaceholder from "../../../../assets/banner-placeholder.jpg";
 import { IoCloseOutline, IoMenuOutline } from "react-icons/io5";
 import CategoryItem from "./CategoryItem";
 import ProductItem from "./ProductItem";
+import EditorSlider from "./EditorSlider";
 import { useSelector, useDispatch } from "react-redux";
 import { MenuContext } from "react-flexible-sliding-menu";
 import Slider from "./Slider";
@@ -21,9 +22,12 @@ import HeaderEdit from "./HeaderEdit";
 import { BiCloudUpload } from "react-icons/bi";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "./cropImage";
+import RightIcon from "../../../../assets/rightIcon.png";
+import LeftIcon from "../../../../assets/leftIcon.png";
 const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
+    console.log("categories", categories);
     const restuarantEditorStyle = useSelector(
-        (state) => state.restuarantEditorStyle,
+        (state) => state.restuarantEditorStyle
     );
     const [isVideo, setIsVideo] = useState(false);
     const { t } = useTranslation();
@@ -84,7 +88,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
             const croppedImage = await getCroppedImg(
                 uncroppedImage,
                 croppedAreaPixels,
-                rotation,
+                rotation
             );
             console.log("donee", { croppedImage });
             setUncroppedImage(null);
@@ -101,13 +105,13 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
         }
     };
     const selectedCategory = useSelector(
-        (state) => state.categoryAPI.selected_category,
+        (state) => state.categoryAPI.selected_category
     );
     const cartItemsCount = useSelector(
-        (state) => state.categoryAPI.cartItemsCount,
+        (state) => state.categoryAPI.cartItemsCount
     );
     const uploadLogo = useSelector(
-        (state) => state.restuarantEditorStyle.logoUpload,
+        (state) => state.restuarantEditorStyle.logoUpload
     );
 
     const [uploadSingleBanner, setUploadSingleBanner] = useState(null);
@@ -152,7 +156,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     selectedCategoryAPI({
                         name: categories[0]?.name,
                         id: categories && categories[0]?.id,
-                    }),
+                    })
                 );
             }
         } else {
@@ -160,7 +164,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                 selectedCategoryAPI({
                     name: categories[0]?.name,
                     id: categories && categories[0]?.id,
-                }),
+                })
             );
         }
     }, [language, dispatch, categories]);
@@ -230,7 +234,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
     const filterCategory =
         categories && categories.length > 0
             ? categories?.filter(
-                  (category) => category.id === selectedCategory.id,
+                  (category) => category.id === selectedCategory.id
               )
             : [{ name: "Product", items: productPlaceHolders }];
 
@@ -254,19 +258,14 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
             )}
             {/* logo */}
             <div
-                // style={{ backgroundColor: page_color }}
-                // style={{
-                //     background:
-                //         "repeating-linear-gradient(-35deg, rgba(42, 110, 79, 0.3), rgba(42, 110, 79, 0.3) 1px, #FFF 1px, #FFF 12px)",
-                // }}
                 className={`w-full h-[80px] bg-white rounded-xl flex ${
                     logo_alignment === "center"
                         ? "items-center justify-center"
                         : logo_alignment === "left"
-                          ? "items-center justify-start"
-                          : logo_alignment === "right"
-                            ? "items-center justify-end"
-                            : ""
+                        ? "items-center justify-start"
+                        : logo_alignment === "right"
+                        ? "items-center justify-end"
+                        : ""
                 } `}
             >
                 <div
@@ -276,8 +275,8 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             uploadLogo
                                 ? uploadLogo
                                 : logo
-                                  ? logo
-                                  : EmptyBackground60
+                                ? logo
+                                : EmptyBackground60
                         })`,
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",
@@ -293,7 +292,11 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                         className="hidden"
                         hidden
                     />
-                    <span className="uppercase text-[12px] leading-[16px] font-semibold text-black/[.54] mb-[3px]">
+                    <span
+                        className={`uppercase text-[12px] leading-[16px] font-semibold text-black/[.54] mb-[3px] ${
+                            (logo || uploadLogo) && "hidden"
+                        }`}
+                    >
                         {t("Logo")}
                     </span>
                     <label htmlFor="logo">
@@ -303,7 +306,9 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             style={{
                                 borderRadius: logo_shape === "sharp" ? 0 : 12,
                             }}
-                            className="w-[18px] h-[18px] object-cover"
+                            className={`w-[18px] h-[18px] object-cover ${
+                                (logo || uploadLogo) && "hidden"
+                            }`}
                         />
                     </label>
                     {uploadLogo && (
@@ -377,13 +382,13 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             backgroundImage: uploadSingleBanner
                                 ? `url(${uploadSingleBanner})`
                                 : banner_image
-                                  ? `url(${banner_image?.url})`
-                                  : `url(${EmptyBackground})`,
+                                ? `url(${banner_image?.url})`
+                                : `url(${EmptyBackground})`,
                             borderRadius: banner_shape === "sharp" ? 0 : 12,
                             backgroundSize: "cover",
                             backgroundRepeat: "no-repeat",
                         }}
-                        className={`w-full min-h-[180px] h-[300px] flex pt-[56px] md:pt-[80px] justify-center`}
+                        className={`w-full min-h-[180px] h-[300px] flex pt-[56px] md:pt-[80px] justify-center relative`}
                     >
                         <div className="flex flex-col items-center">
                             <span className="uppercase text-[24px] leading-[30px] font-semibold text-black/[.54] mb-[8px]">
@@ -428,23 +433,25 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                 <div className="skeleton w-[100px] h-[95px] w-full shrink-0"></div>
             )}
 
+            {/* <EditorSlider items={categories} /> */}
+
             {/* Category */}
             <div
-                className={`w-full h-[500px] flex ${
+                className={`w-full h-full flex ${
                     category_alignment === "center"
                         ? "flex-col justify-center"
                         : "flex-row"
-                } items-center gap-8`}
+                } items-center gap-[16px]`}
             >
                 <div
                     className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll ${
                         category_alignment === "left"
                             ? "order-1 w-[25%]"
                             : category_alignment === "right"
-                              ? "order-2 w-[25%]"
-                              : category_alignment === "center"
-                                ? "w-full"
-                                : "w-[25%]"
+                            ? "order-2 w-[25%]"
+                            : category_alignment === "center"
+                            ? "w-full"
+                            : "w-[25%]"
                     } `}
                 >
                     <div
@@ -452,102 +459,98 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             backgroundColor: page_category_color,
                             borderRadius: category_shape === "sharp" ? 0 : 12,
                         }}
-                        className="w-full py-3 flex items-center justify-center"
+                        className="w-full h-40 py-3 flex items-center justify-between"
                     >
                         <div
-                            className={`flex ${
-                                category_alignment === "center"
-                                    ? "flex-row gap-10 "
-                                    : "flex-col gap-6"
-                            } items-center `}
+                            className={`flex items-center justify-between w-full px-[16px]`}
                         >
-                            {console.log("fsfa", categories)}
-                            {categories && categories.length > 0 ? (
-                                categories?.map((category, i) => (
-                                    <CategoryItem
-                                        key={i}
-                                        active={
-                                            selectedCategory.id === category.id
-                                        }
-                                        name={category.name}
-                                        imgSrc={category.photo}
-                                        alt={category.name}
-                                        hoverColor={category_hover_color}
-                                        onClick={() =>
-                                            dispatch(
-                                                selectedCategoryAPI({
-                                                    name: category.name,
-                                                    id: category.id,
-                                                }),
-                                            )
-                                        }
-                                        textColor={text_color}
-                                        textAlign={text_alignment}
-                                        fontWeight={text_fontWeight}
-                                        shape={category_shape}
-                                        isGrid={
-                                            category_alignment === "center"
-                                                ? false
-                                                : true
-                                        }
-                                        fontSize={text_fontSize}
-                                    />
-                                ))
-                            ) : (
-                                <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
-                            )}
+                            <button className="w-[25px] h-[25px] bg-black/10 rounded-full flex justify-center items-center">
+                                <img src={LeftIcon} alt="left icon" />
+                            </button>
+                            <div
+                                className={`flex ${
+                                    category_alignment === "center"
+                                        ? "flex-row gap-[30px] "
+                                        : "flex-col gap-6"
+                                } items-center `}
+                            >
+                                {categories && categories.length > 0 ? (
+                                    categories?.map((category, i) => (
+                                        <CategoryItem
+                                            key={i}
+                                            active={
+                                                selectedCategory.id ===
+                                                category.id
+                                            }
+                                            name={category.name}
+                                            imgSrc={category.photo}
+                                            alt={category.name}
+                                            hoverColor={category_hover_color}
+                                            onClick={() =>
+                                                dispatch(
+                                                    selectedCategoryAPI({
+                                                        name: category.name,
+                                                        id: category.id,
+                                                    })
+                                                )
+                                            }
+                                            textColor={text_color}
+                                            textAlign={text_alignment}
+                                            fontWeight={text_fontWeight}
+                                            shape={category_shape}
+                                            isGrid={
+                                                category_alignment === "center"
+                                                    ? false
+                                                    : true
+                                            }
+                                            fontSize={text_fontSize}
+                                        />
+                                    ))
+                                ) : (
+                                    <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
+                                )}
+                            </div>
+                            <button className="w-[25px] h-[25px] bg-black/10 rounded-full flex justify-center items-center">
+                                <img src={RightIcon} alt="right icon" />
+                            </button>
                         </div>
                     </div>
                 </div>
                 {!isLoading && (
                     <div
                         style={{ backgroundColor: product_background_color }}
-                        className={`h-full overflow-x-hidden overflow-y-scroll hide-scroll  ${
+                        className={`h-full  ${
                             category_alignment === "left"
                                 ? "order-2 w-[75%]"
                                 : category_alignment === "right"
-                                  ? "order-1 w-[75%]"
-                                  : category_alignment === "center"
-                                    ? "w-full"
-                                    : "w-[75%]"
+                                ? "order-1 w-[75%]"
+                                : category_alignment === "center"
+                                ? "w-full"
+                                : "w-[75%]"
                         } ${
                             categoryDetail_shape === "sharp" ? "" : "rounded-lg"
-                        } bg-white p-8`}
+                        } bg-white py-[32]`}
                     >
                         <div
-                            className={`w-full h-full flex flex-col items-center justify-center `}
+                            className={`w-full h-full flex flex-col max-h-[610px] items-center justify-center `}
                         >
-                            <h3
-                                style={{ fontWeight: text_fontWeight }}
-                                className={`${
-                                    text_fontFamily
-                                        ? text_fontFamily
-                                        : "font-semibold"
-                                } text-[1.5rem] text-center my-4 relative capitalize`}
-                            >
-                                <span className="custom-underline capitalize">
-                                    {selectedCategory.name}
-                                </span>{" "}
-                            </h3>
-
                             <div
                                 className={`flex  ${
                                     category_alignment === "center"
-                                        ? "flex-row flex-wrap gap-12"
+                                        ? "flex-row flex-wrap gap-[25px] justify-center"
                                         : "flex-col gap-6"
-                                }  h-fit  p-4`}
+                                }  h-fit p-4 overflow-y-scroll hide-scroll`}
                             >
                                 {filterCategory &&
                                     filterCategory[0]?.items
                                         .filter(
-                                            (item) => item.availability === 1,
+                                            (item) => item.availability === 1
                                         )
-                                        .slice(0, 2)
                                         .map((product, idx) => (
                                             <ProductItem
                                                 key={idx + "prdt"}
                                                 id={product.id}
-                                                name={product.description}
+                                                name={product.name}
                                                 imgSrc={product.photo}
                                                 amount={product.price}
                                                 caloryInfo={product.calories}
@@ -632,20 +635,16 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     socialMediaIcons_alignment === "center"
                         ? "items-center justify-center"
                         : socialMediaIcons_alignment === "left"
-                          ? "items-center justify-start"
-                          : socialMediaIcons_alignment === "right"
-                            ? "items-center justify-end"
-                            : ""
+                        ? "items-center justify-start"
+                        : socialMediaIcons_alignment === "right"
+                        ? "items-center justify-end"
+                        : ""
                 }`}
             >
                 <div className="flex items-center gap-5">
                     {selectedSocialIcons?.map((socialMedia) => (
                         <a
-                            href={
-                                socialMedia.link
-                                    ? socialMedia.link
-                                    : null
-                            }
+                            href={socialMedia.link ? socialMedia.link : null}
                             key={socialMedia.id}
                             className="cursor-pointer"
                         >
@@ -660,24 +659,27 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     ))}
                 </div>
             </div>
+            {/* footer */}
             <div
                 style={{ backgroundColor: footer_color }}
                 className={`w-full min-h-[70px]  rounded-xl flex  ${
                     phoneNumber_alignment === "center"
                         ? "items-center justify-center"
                         : phoneNumber_alignment === "left"
-                          ? "items-center justify-start"
-                          : phoneNumber_alignment === "right"
-                            ? "items-center justify-end"
-                            : ""
+                        ? "items-center justify-start"
+                        : phoneNumber_alignment === "right"
+                        ? "items-center justify-end"
+                        : ""
                 }`}
             >
                 <h3
                     className={`${
-                        text_fontFamily ? text_fontFamily : "font-semibold"
-                    } text-lg`}
+                        text_fontFamily
+                            ? text_fontFamily
+                            : "font-['Plus Jakarta Sans']"
+                    } text-black text-opacity-50 text-[10px] font-normal leading-3 tracking-tight`}
                 >
-                    {phoneNumber}
+                    {t("Powered by @Khardl")}
                 </h3>
             </div>
             {isCropModalOpened && (
@@ -685,7 +687,6 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     class="modal  fixed w-full h-full top-0 left-0 flex items-center justify-center"
                     style={{ opacity: 1, pointerEvents: "all" }}
                 >
-                    hello
                     <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
                     <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
                         <div class="modal-content py-4 text-left px-6">

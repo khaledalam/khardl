@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import FlashDown from "../../../../assets/flashDown.svg";
+import { use } from "i18next";
 
 export const LeftSideBar = ({
     activeSection,
@@ -42,7 +43,11 @@ export const LeftSideBar = ({
                         className="text-[#1118278A] text-[12px] font-light leading-[16px] relative"
                     >
                         <div
-                            className={`${activeSection === index ? "bg-[#F3F3F3] text-[#111827]" : ""} cursor-pointer whitespace-nowrap md:whitespace-normal py-[4px] md:py-[8px] px-[8px] md:px-[24px] rounded-[50px] flex flex-row items-center md:flex-none space-x-[8px] md:space-x-0`}
+                            className={`${
+                                activeSection === index
+                                    ? "bg-[#F3F3F3] text-[#111827]"
+                                    : ""
+                            } cursor-pointer whitespace-nowrap md:whitespace-normal py-[4px] md:py-[8px] px-[8px] md:px-[24px] rounded-[50px] flex flex-row items-center md:flex-none space-x-[8px] md:space-x-0`}
                             onClick={() => toggleSection(index)}
                         >
                             <div>{item.title}</div>
@@ -55,12 +60,20 @@ export const LeftSideBar = ({
                             </div>
                         </div>
                         {/* <ul
-                            className={`${activeSection === `section-${index}` ? "block absolute z-50 top-0 left-0 w-[137px]  border rounded-[8px] h-[56px]" : "hidden"}`}
+                            className={`${
+                                activeSection === index
+                                    ? "block absolute bg-black z-auto top-0 left-0 w-[137px]  border rounded-[8px] h-[56px]"
+                                    : "hidden"
+                            }`}
                         >
                             Hello
                         </ul> */}
                         <ul
-                            className={`px-4 text-[10px] leading-[13px] space-y-[16px] font-medium overflow-hidden transition-all duration-300 ${activeSection === index ? "max-h-40 mt-[16px]" : "max-h-0"} `}
+                            className={`px-4 text-[10px] leading-[13px] space-y-[16px] font-medium overflow-hidden transition-all duration-300 ${
+                                activeSection === index
+                                    ? "max-h-40 mt-[16px]"
+                                    : "max-h-0"
+                            } `}
                         >
                             {item.subItems.map((subItem, i) => (
                                 <li

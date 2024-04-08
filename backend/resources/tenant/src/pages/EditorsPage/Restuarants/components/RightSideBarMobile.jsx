@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PrimarySelect from "./PrimarySelect";
 import EditorSelect from "./EditorSelect";
+import EditorAlignment from "./EditorAlignment";
+import EditorPercentageInput from "./EditorPercentageInput";
+import EditorSizeSelect from "./EditorSizeSelect";
+import EditorLink from "./EditorLink";
 import LogoAlignment from "./LogoAlignment";
 import SocialMediaCollection from "./SocialMediaCollection";
 import { IoAdd } from "react-icons/io5";
@@ -48,14 +52,14 @@ export const RightSideBarMobile = ({
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const restuarantEditorStyle = useSelector(
-        (state) => state.restuarantEditorStyle,
+        (state) => state.restuarantEditorStyle
     );
 
     useEffect(() => {
         activeSubitem != null &&
             console.log(
                 "now : ",
-                navItems[activeSection].subItems[activeSubitem],
+                navItems[activeSection].subItems[activeSubitem]
             );
     }, [activeSection, activeSubitem]);
 
@@ -94,7 +98,6 @@ export const RightSideBarMobile = ({
 
     return (
         <div className="flex flex-col">
-            Mobile
             <div className="flex flex-row px-[16px]">
                 <h2 className="font-medium text-[12px] leading-[16px] mt-[16px] mb-4 pr-[10px]">
                     {t("Designs")}
@@ -103,7 +106,7 @@ export const RightSideBarMobile = ({
                     <div className="flex flex-col">
                         <div className="flex flex-row h-[24px] border-l pl-[8px] mt-[12px] space-x-[8px]">
                             {Object.keys(
-                                navItems[activeSection].subItems[activeSubitem],
+                                navItems[activeSection].subItems[activeSubitem]
                             ).map(
                                 (key, index) =>
                                     key != "title" &&
@@ -115,18 +118,152 @@ export const RightSideBarMobile = ({
                                             onClick={() =>
                                                 setActiveDesignSection(key)
                                             }
-                                            className={`text-[10px] h-[24px] font-light leading-[13px] rounded-[50px] pt-[5px] pb-[6px] pr-[11px] pl-[12px] ${activeDesignSection === key ? "font-medium bg-[#F3F3F3]" : ""}`}
+                                            className={`text-[10px] h-[24px] font-light leading-[13px] rounded-[50px] pt-[5px] pb-[6px] pr-[11px] pl-[12px] ${
+                                                activeDesignSection === key
+                                                    ? "font-medium bg-[#F3F3F3]"
+                                                    : ""
+                                            }`}
                                         >
                                             {t(key)}
                                         </div>
-                                    ),
+                                    )
                             )}
                         </div>
                     </div>
                 )}
             </div>
             {activeDesignSection != null && (
-                <div className="">
+                <div className="px-[16px]">
+                    {navItems[activeSection].subItems[activeSubitem][
+                        activeDesignSection
+                    ].map((subItem, subIndex) => (
+                        <div key={subIndex} className="py-1">
+                            {subItem == "positionLayout" ? (
+                                <EditorSelect
+                                    label={t("Position")}
+                                    defaultValue={
+                                        headerPosition === "relative"
+                                            ? t("Relative")
+                                            : t("Fixed")
+                                    }
+                                    handleChange={(value) =>
+                                        dispatch(setHeaderPosition(value))
+                                    }
+                                    options={[
+                                        {
+                                            value: "fixed",
+                                            text: t("Fixed"),
+                                        },
+                                        {
+                                            value: "relative",
+                                            text: t("Relative"),
+                                        },
+                                    ]}
+                                />
+                            ) : subItem == "color" ? (
+                                <EditorColorSelect
+                                    label={t("Color")}
+                                    modalId={"page-modal"}
+                                    color={`${t(page_color)}`}
+                                    handleColorChange={(color) =>
+                                        dispatch(headerColor(color))
+                                    }
+                                />
+                            ) : subItem == "positionContent" ? (
+                                <EditorAlignment
+                                    defaultValue={logo_alignment}
+                                    onChange={(value) =>
+                                        dispatch(logoAlignment(value))
+                                    }
+                                />
+                            ) : subItem == "radius" ? (
+                                <EditorPercentageInput
+                                    label={t("Border Radius")}
+                                    percentage={10}
+                                />
+                            ) : subItem == "font" ? (
+                                <EditorSelect
+                                    label={t("Font")}
+                                    defaultValue={t("Inter")}
+                                    handleChange={(value) =>
+                                        dispatch(setHeaderPosition(value))
+                                    }
+                                    options={[
+                                        {
+                                            value: "inter",
+                                            text: t("Inter"),
+                                        },
+                                        {
+                                            value: "jakarta",
+                                            text: t("Jakarta"),
+                                        },
+                                    ]}
+                                />
+                            ) : subItem == "type" ? (
+                                <EditorSelect
+                                    label={t("Type")}
+                                    defaultValue={t("Stack")}
+                                    handleChange={(value) =>
+                                        dispatch(setHeaderPosition(value))
+                                    }
+                                    options={[
+                                        {
+                                            value: "stack",
+                                            text: t("Stack"),
+                                        },
+                                        {
+                                            value: "grid",
+                                            text: t("Grid"),
+                                        },
+                                    ]}
+                                />
+                            ) : subItem == "weight" ? (
+                                <EditorSelect
+                                    label={t("Weight")}
+                                    defaultValue={t("Regular")}
+                                    handleChange={(value) =>
+                                        dispatch(setHeaderPosition(value))
+                                    }
+                                    options={[
+                                        {
+                                            value: "regular",
+                                            text: t("Regular"),
+                                        },
+                                        {
+                                            value: "light",
+                                            text: t("Light"),
+                                        },
+                                    ]}
+                                />
+                            ) : subItem == "size" ? (
+                                <EditorSizeSelect
+                                    label={t("Size")}
+                                    defaultValue={t("Regular")}
+                                    handleChange={(value) =>
+                                        dispatch(setHeaderPosition(value))
+                                    }
+                                />
+                            ) : subItem == "linkTo" ? (
+                                <EditorLink
+                                    label={t("Link")}
+                                    handleChange={(value) =>
+                                        dispatch(setHeaderPosition(value))
+                                    }
+                                />
+                            ) : (
+                                <></>
+                            )}
+                        </div>
+                    ))}
+                    {/* <div>{actSecTitle}</div>
+                    <div>{actSubTitle}</div>
+                    <div>{activeDesignSection}</div>
+                    {console.log(
+                        "lll: ",
+                        navItems[activeSection].subItems[activeSubitem][
+                            activeDesignSection
+                        ]
+                    )} */}
                     {/* {actSecTitle == "Header" ? (
                         actSubTitle == "Side Menu" ? (
                             activeDesignSection == "layout" ? (

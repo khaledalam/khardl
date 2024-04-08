@@ -35,6 +35,7 @@ import { useAuthContext } from "../../../../components/context/AuthContext";
 import { useForm } from "react-hook-form";
 import { getCartItemsCount } from "../../../../redux/NewEditor/categoryAPISlice";
 import cartImg from "../../../../assets/cartLgIcon.svg";
+import Burger from "../../../../assets/burger.png";
 
 const ProductItem = ({
     id,
@@ -352,7 +353,7 @@ const ProductItem = ({
                     console.log(responseData);
                     localStorage.setItem(
                         "user-info",
-                        JSON.stringify(responseData?.data?.user),
+                        JSON.stringify(responseData?.data?.user)
                     );
 
                     console.log(">>> herer ", responseData?.data?.user?.status);
@@ -360,14 +361,14 @@ const ProductItem = ({
                     if (responseData.data.user.status === "inactive") {
                         sessionStorage.setItem(
                             PREFIX_KEY + "phone",
-                            responseData?.data?.user?.phone,
+                            responseData?.data?.user?.phone
                         );
                         setStatusCode(HTTP_NOT_VERIFIED);
                         navigate("/verification-phone");
                     } else if (responseData.data.user.status === "active") {
                         sessionStorage.setItem(
                             PREFIX_KEY + "phone",
-                            responseData?.data?.user?.phone,
+                            responseData?.data?.user?.phone
                         );
                         setStatusCode(HTTP_OK);
                         navigate("/verification-phone");
@@ -377,7 +378,7 @@ const ProductItem = ({
                     dispatch(changeLogState(true));
                     dispatch(changeUserState(responseData?.data?.user || null));
                     toast.success(
-                        `${t("You have been logged in successfully")}`,
+                        `${t("You have been logged in successfully")}`
                     );
                 } else {
                     console.log("response?.data?.success false");
@@ -402,6 +403,25 @@ const ProductItem = ({
     return (
         <Fragment>
             <div
+                key={valuekey}
+                className="w-36 h-44 flex flex-col items-center bg-white rounded-md border border-black border-opacity-10"
+                onClick={() => document.getElementById(id).showModal()}
+            >
+                <div className="w-36 h-[86px]  bg-zinc-100 rounded-md flex justify-center items-center">
+                    <img className="w-[60px] h-[60px]" src={imgSrc} />
+                </div>
+                <div className="text-black text-opacity-75 mt-[12px] text-xs font-semibold font-['Inter']">
+                    {name}
+                </div>
+                <div className=" text-black text-opacity-75 mt-[7px] text-[8px] font-light font-['Inter']">
+                    {caloryInfo}
+                </div>
+                <div className="e text-orange-600 text-xs mt-[16px] font-medium font-['Inter']">
+                    {t("SAR")} {amount}
+                </div>
+            </div>
+
+            {/* <div
                 key={valuekey}
                 style={{
                     boxShadow: "4px 0px  10px 0px rgba(0, 0, 0, 0.25)",
@@ -447,17 +467,17 @@ const ProductItem = ({
                                     fontSize.includes("px")
                                         ? Number(fontSize.slice(0, 2)) - 3
                                         : typeof fontSize == "number"
-                                          ? fontSize - 3
-                                          : 13,
+                                        ? fontSize - 3
+                                        : 13,
                             }}
                             className={`${
                                 textAlign === t("Center")
                                     ? "text-center"
                                     : textAlign === t("Left")
-                                      ? "text-left"
-                                      : textAlign === t("Right")
-                                        ? "text-right"
-                                        : ""
+                                    ? "text-left"
+                                    : textAlign === t("Right")
+                                    ? "text-right"
+                                    : ""
                             } flex`}
                         >
                             {caloryInfo}
@@ -506,7 +526,7 @@ const ProductItem = ({
                         </h3>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* You can open the modal using document.getElementById('ID').showModal() method */}
             <dialog id={id} className="modal">
                 <div
@@ -632,7 +652,7 @@ const ProductItem = ({
                                             <input
                                                 type="text"
                                                 placeholder={t(
-                                                    "Say something nice...",
+                                                    "Say something nice..."
                                                 )}
                                                 value={feedback}
                                                 onChange={(e) =>
@@ -687,7 +707,7 @@ const ProductItem = ({
                                                                     ]?.map(
                                                                         (
                                                                             item,
-                                                                            idx,
+                                                                            idx
                                                                         ) => (
                                                                             <ProductDetailItem
                                                                                 key={
@@ -714,30 +734,30 @@ const ProductItem = ({
                                                                                     item.price ===
                                                                                     0
                                                                                         ? t(
-                                                                                              "Free",
+                                                                                              "Free"
                                                                                           )
                                                                                         : `${Number(
-                                                                                              item?.price,
+                                                                                              item?.price
                                                                                           )} ${t(
-                                                                                              "SAR",
+                                                                                              "SAR"
                                                                                           )}`
                                                                                 }
                                                                                 isCheckbox
                                                                                 onChange={(
-                                                                                    e,
+                                                                                    e
                                                                                 ) =>
                                                                                     handleCheckboxChange(
                                                                                         checkbox_idx,
                                                                                         idx,
-                                                                                        e,
+                                                                                        e
                                                                                     )
                                                                                 }
                                                                             />
-                                                                        ),
+                                                                        )
                                                                     )}
                                                             </div>
                                                         </div>
-                                                    ),
+                                                    )
                                                 )}
 
                                             {/* selection  */}
@@ -776,7 +796,7 @@ const ProductItem = ({
                                                                     ]?.map(
                                                                         (
                                                                             item,
-                                                                            idx,
+                                                                            idx
                                                                         ) => (
                                                                             <ProductDetailItem
                                                                                 key={
@@ -795,30 +815,30 @@ const ProductItem = ({
                                                                                     item.price ===
                                                                                     0
                                                                                         ? t(
-                                                                                              "Free",
+                                                                                              "Free"
                                                                                           )
                                                                                         : `${Number(
-                                                                                              item?.price,
+                                                                                              item?.price
                                                                                           )} ${t(
-                                                                                              "SAR",
+                                                                                              "SAR"
                                                                                           )}`
                                                                                 }
                                                                                 isRadio
                                                                                 onChange={(
-                                                                                    e,
+                                                                                    e
                                                                                 ) =>
                                                                                     handleRadioChange(
                                                                                         selection_idx,
                                                                                         idx,
-                                                                                        e,
+                                                                                        e
                                                                                     )
                                                                                 }
                                                                             />
-                                                                        ),
+                                                                        )
                                                                     )}
                                                             </div>
                                                         </div>
-                                                    ),
+                                                    )
                                                 )}
 
                                             {/* dropdown */}
@@ -861,7 +881,7 @@ const ProductItem = ({
                                                                     ]?.map(
                                                                         (
                                                                             item,
-                                                                            idx,
+                                                                            idx
                                                                         ) => {
                                                                             if (
                                                                                 idx ===
@@ -870,7 +890,7 @@ const ProductItem = ({
                                                                                 return (
                                                                                     <ProductDetailItem
                                                                                         ref={(
-                                                                                            el,
+                                                                                            el
                                                                                         ) =>
                                                                                             (dropdDownRef.current[
                                                                                                 dropdown_idx
@@ -895,25 +915,25 @@ const ProductItem = ({
                                                                                             ]
                                                                                         }
                                                                                         onChange={(
-                                                                                            e,
+                                                                                            e
                                                                                         ) =>
                                                                                             handleDropdownChange(
                                                                                                 dropdown_idx,
                                                                                                 Number(
                                                                                                     e
                                                                                                         .target
-                                                                                                        .value,
-                                                                                                ),
+                                                                                                        .value
+                                                                                                )
                                                                                             )
                                                                                         }
                                                                                     />
                                                                                 );
                                                                             }
-                                                                        },
+                                                                        }
                                                                     )}
                                                             </div>
                                                         </div>
-                                                    ),
+                                                    )
                                                 )}
                                         </div>
                                     </div>
@@ -1040,7 +1060,7 @@ const ProductItem = ({
                                                         type="submit"
                                                         className="text-[var(--primary)] cursor-pointer hover:text-blue-300 py-2 px-2 text-md "
                                                         value={t(
-                                                            "Create an account",
+                                                            "Create an account"
                                                         )}
                                                     />
                                                 </Link>

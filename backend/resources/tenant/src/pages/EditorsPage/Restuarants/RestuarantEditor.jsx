@@ -29,11 +29,11 @@ export const RestuarantEditor = () => {
     const categories = useSelector((state) => state.categoryAPI.categories);
 
     const isSidebarCollapse = useSelector(
-        (state) => state.restuarantEditorStyle.collapse_sidebar,
+        (state) => state.restuarantEditorStyle.collapse_sidebar
     );
     const restaurantStyle = useSelector((state) => state.restuarantEditorStyle);
     const template = useSelector(
-        (state) => state.restuarantEditorStyle.template,
+        (state) => state.restuarantEditorStyle.template
     );
 
     const [activeSubitem, setActiveSubitem] = useState(null);
@@ -46,19 +46,20 @@ export const RestuarantEditor = () => {
 
     const fetchResStyleData = async () => {
         try {
-            const restaurantStyleResponse =
-                await AxiosInstance.get(`restaurant-style`);
+            const restaurantStyleResponse = await AxiosInstance.get(
+                `restaurant-style`
+            );
 
             if (restaurantStyleResponse.data) {
                 dispatch(
                     changeStyleDataRestaurant(
-                        restaurantStyleResponse.data?.data,
-                    ),
+                        restaurantStyleResponse.data?.data
+                    )
                 );
                 dispatch(
                     changeRestuarantEditorStyle(
-                        restaurantStyleResponse.data?.data,
-                    ),
+                        restaurantStyleResponse.data?.data
+                    )
                 );
             }
             setIsLoading(false);
@@ -75,16 +76,16 @@ export const RestuarantEditor = () => {
             const restaurantCategoriesResponse = await AxiosInstance.get(
                 `categories?items&user&branch${
                     branch_id ? `&selected_branch_id=${branch_id}` : ""
-                }`,
+                }`
             );
 
             console.log(
                 "editor rest restaurantCategoriesResponse RestuarantEditor",
-                restaurantCategoriesResponse.data,
+                restaurantCategoriesResponse.data
             );
             if (restaurantCategoriesResponse.data) {
                 dispatch(
-                    setCategoriesAPI(restaurantCategoriesResponse.data?.data),
+                    setCategoriesAPI(restaurantCategoriesResponse.data?.data)
                 );
 
                 if (!branch_id) {
@@ -206,10 +207,10 @@ export const RestuarantEditor = () => {
             ],
         },
         {
-            title: t("Footer"),
+            title: t("Footer "),
             subItems: [
                 {
-                    title: t("Footer"),
+                    title: t("Footer "),
                     layout: ["color"],
                     contentPosition: ["positionContent"],
                     text: ["font", "weight", "size", "color"],
@@ -226,7 +227,7 @@ export const RestuarantEditor = () => {
         >
             <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
             <div className="flex flex-col md:flex-row bg-[#EEEEEE] h-[calc(100vh-56px)] w-full transition-all hide-scroll">
-                <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
+                <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] md:overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
                     {/* <SidebarEditor /> */}
                     <LeftSideBar
                         activeSubitem={activeSubitem}
