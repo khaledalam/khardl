@@ -115,7 +115,7 @@ Route::group([
             Route::put('/branches/{id}', [RestaurantController::class, 'updateBranch'])->middleware('permission:can_modify_working_time')->name('restaurant.update-branch');
             Route::get('/branches/{id}/toggleBranch', [RestaurantController::class, 'toggleBranch'])->middleware('permission:can_modify_and_see_other_workers')->name('restaurant.update-branch-status');
             Route::get('/no_branches', [RestaurantController::class, 'noBranches'])->middleware('permission:can_edit_menu')->name('restaurant.no_branches');
-            Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
+//            Route::get('/menu/{branchId}', [RestaurantController::class, 'menu'])->middleware('permission:can_edit_menu')->name('restaurant.menu');
             Route::get('/menu/{id}/{branchId}', [RestaurantController::class, 'getCategory'])->middleware('permission:can_edit_menu')->name('restaurant.get-category');
             Route::post('/category/add/{branchId}', [RestaurantController::class, 'addCategory'])->middleware('permission:can_edit_menu')->name('restaurant.add-category');
             Route::post('/category/edit/{categoryId}/{branchId}', [RestaurantController::class, 'editCategory'])->middleware('permission:can_edit_menu')->name('restaurant.edit-category');
@@ -373,6 +373,7 @@ Route::middleware([
                 Route::prefix('driver')->group(function () {
                     Route::controller(DriverOrderController::class)->group(function () {
                         Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
+                        Route::get('drivers-calendar', 'history')->name('restaurant.drivers.history');
                         Route::post('change-status/{order}', 'changeStatus')->name('changeStatus');
                         Route::post('assign-order/{order}', 'assignOrder')->name('assign_order');
                     });

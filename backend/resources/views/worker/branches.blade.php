@@ -127,7 +127,7 @@
                                             <!--begin::Stat-->
                                                 <div
                                                     class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                    <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('edit-menu') }}</a>
+                                                    <a href="{{ route('restaurant.get-category', ['id' => \App\Models\Tenant\Category::where('branch_id', $branch->id)?->first()?->id ?? -1, 'branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('edit-menu') }}</a>
                                                 </div>
                                             @endif
                                         </div>

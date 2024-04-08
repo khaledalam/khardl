@@ -715,42 +715,43 @@ class RestaurantController extends BaseController
 
     }
 
-    public function menu($branchId)
-    {
+//    public function menu($branchId)
+//    {
+//
+//        $user = Auth::user();
+//        //         if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
+////             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
+////         }
+//
+//        $categories = [];
+//        if ($user->isWorker()) {
+//            $categories = Category::
+//                when($user->isWorker(), function (Builder $query, string $role) use ($user, $branchId) {
+//                    if ($branchId) {
+//                        if ($branchId != $user->branch->id)
+//                            return;
+//                    }
+//
+//                    $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
+//                })
+//                ->get()
+//                ->sortBy('sort');
+//        } else if($user->isRestaurantOwner()) {
+//            $categories = Category::where('branch_id', $branchId ?? $user->branch->id)
+//                ->get()
+//                ->sortBy('sort');
+//        }
+//
+//        if ($branchId) {
+//            $branch = Branch::find($branchId);
+//        } else {
+//            $branch = Branch::find($user->branch->id);
+//        }
+//        $branches = Branch::all();
+//
+//        return view('restaurant.menu', compact('user', 'categories', 'branch', 'branchId','branches'));
+//    }
 
-        $user = Auth::user();
-        //         if($user->id != DB::table('branches')->where('id', $branchId)->value('user_id')){
-//             return redirect()->route('restaurant.branches')->with('error', 'Unauthorized access');
-//         }
-
-        $categories = [];
-        if ($user->isWorker()) {
-            $categories = Category::
-                when($user->isWorker(), function (Builder $query, string $role) use ($user, $branchId) {
-                    if ($branchId) {
-                        if ($branchId != $user->branch->id)
-                            return;
-                    }
-
-                    $query->where('branch_id', $user->branch->id)->where('user_id', $user->id);
-                })
-                ->get()
-                ->sortBy('sort');
-        } else if($user->isRestaurantOwner()) {
-            $categories = Category::where('branch_id', $branchId ?? $user->branch->id)
-                ->get()
-                ->sortBy('sort');
-        }
-
-        if ($branchId) {
-            $branch = Branch::find($branchId);
-        } else {
-            $branch = Branch::find($user->branch->id);
-        }
-        $branches = Branch::all();
-
-        return view('restaurant.menu', compact('user', 'categories', 'branch', 'branchId','branches'));
-    }
     public function noBranches()
     {
         $user = Auth::user();
@@ -784,7 +785,10 @@ class RestaurantController extends BaseController
             ->orderBy('created_at', 'DESC')
             ->orderBy('updated_at', 'DESC')
             ->get();
-        return view('restaurant.menu-category', compact('user', 'selectedCategory', 'categories', 'items', 'branchId'));
+
+        $branches = Branch::all();
+
+        return view('restaurant.menu-category', compact('branches', 'user', 'selectedCategory', 'categories', 'items', 'branchId'));
     }
 
     public function editCategory(Request $request, $categoryId, $branchId)
@@ -887,7 +891,7 @@ class RestaurantController extends BaseController
             DB::table('items')->where('category_id', $id)->delete();
             DB::table('categories')->where('id', $id)->delete();
 
-            return redirect()->route('restaurant.menu', ['branchId' => $selectedCategory->branch_id])->with('success', 'Category successfully deleted.');
+            return redirect()->route('restaurant.get-category', ['id' => Category::where('branch_id', $selectedCategory->branch_id)?->first()?->id ?? -1, 'branchId' => $selectedCategory->branch_id])->with('success', 'Category successfully deleted.');
 
         } else {
             return redirect()->back()->with('error', 'You are not authorized to access that page.');

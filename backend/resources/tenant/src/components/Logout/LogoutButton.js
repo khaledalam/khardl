@@ -8,6 +8,7 @@ import { HTTP_NOT_AUTHENTICATED } from "../../config";
 import logoutIcon from "../../assets/logout.svg";
 import { MenuContext } from "react-flexible-sliding-menu";
 import { useTranslation } from "react-i18next";
+import {getCartItemsCount} from "../../redux/NewEditor/categoryAPISlice";
 
 const LogoutButton = () => {
     const { t } = useTranslation();
@@ -30,9 +31,10 @@ const LogoutButton = () => {
                 .unwrap()
                 .then((res) => {
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
-                    navigate("/", { replace: true });
+                    dispatch(getCartItemsCount(0))
+                    navigate("/login", { replace: true });
                     closeMenu();
-                    toast.success("Logged out successfully");
+                    toast.success(t("You have been logged out successfully"));
                 });
         } catch (err) {
             console.error(err.message);

@@ -24,9 +24,11 @@ class OrderResource extends JsonResource
             'shipping_address'=>$this->shipping_address,
             'delivery_cost'=> $this->delivery_type->cost,
             'order_notes'=>$this->order_notes,
+            'branch'=> $this->whenLoaded('branch'),
             'platform_fee' => '',
             'delivery_type' =>__(''.$this->delivery_type->name),
             'tracking_url'=>$this->tracking_url,
+            'customer'=>$this->whenLoaded('user'),
             'deliver_by'=>$this->deliver_by,
             'driver_name'=>$this->driver_name,
             'driver_phone'=>$this->driver_phone,
@@ -37,6 +39,7 @@ class OrderResource extends JsonResource
             'updated_at'=>$this->updated_at,
             'manual_order_first_name' => $this->manual_order_first_name,
             'manual_order_last_name' => $this->manual_order_last_name,
+            'items' => OrderItemResource::collection($this->whenLoaded('items')),
 
         ];
         if ($request->has('branch')) {

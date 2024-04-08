@@ -12,6 +12,7 @@ import { useAuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import { HTTP_NOT_AUTHENTICATED } from "../../config";
 import Li from "./Li";
+import {getCartItemsCount} from "../../redux/NewEditor/categoryAPISlice";
 
 const Header = () => {
     const [isMobile, setIsMobile] = useState(false);
@@ -38,8 +39,9 @@ const Header = () => {
                 .then((res) => {
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
+                    dispatch(getCartItemsCount(0))
                     navigate("/login", { replace: true });
-                    toast.success("Logged out successfully");
+                    toast.success(t("You have been logged out successfully"));
                 });
         } catch (err) {
             console.error(err.message);

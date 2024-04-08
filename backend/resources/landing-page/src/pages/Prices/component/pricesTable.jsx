@@ -49,9 +49,12 @@ function PricesTable() {
                 <div className="mt-4 flex justify-between items-start gap-4 min-w-[150px]">
                   <p>
                     <span className="small">{t("SAR")}</span>
-                    <span className="price">{299}</span>
+                    <span className="price">{1399}</span>
                   </p>
-                  <PricesDropdown />
+                    <span className="text-[#C0D123] ms-2 hover:text-[#C0D123]">
+                      {t("* Yearly")}
+                    </span>
+                  {/*<PricesDropdown />*/}
                 </div>
               </div>
             </div>

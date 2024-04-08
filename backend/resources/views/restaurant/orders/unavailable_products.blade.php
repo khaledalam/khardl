@@ -41,7 +41,7 @@
                             <table class="table table-row-bordered table-flush align-middle gy-6">
                                 <!--begin::Thead-->
                                 <thead class="border-bottom border-gray-200 fs-6 fw-bolder bg-lighten">
-                                    <tr>
+                                    <tr class="px-3">
                                         <th>{{ __('ID') }}</th>
                                         <th>{{ __('Image') }}</th>
                                         <th>{{ __('Name') }}</th>
@@ -59,7 +59,7 @@
                                 <!--begin::Tbody-->
                                 <tbody class="fs-6 fw-bold text-gray-600">
                                     @foreach ($products as $product)
-                                    <tr>
+                                    <tr class="px-3">
                                         <td class="px-2">
                                             <a href="#">
                                                 {{ $product->id }}
