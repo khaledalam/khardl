@@ -160,7 +160,7 @@ export const RestuarantEditor = () => {
             subItems: [
                 {
                     title: t("Category"),
-                    layout: ["positionLayout", "Type", "color", "radius"],
+                    layout: ["positionLayout", "type", "color", "radius"],
                     contentPosition: [],
                     text: ["font", "weight", "size", "color"],
                     link: [],

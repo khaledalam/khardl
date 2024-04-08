@@ -322,13 +322,13 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
             {/* banner */}
             {!isLoading ? (
                 banner_type === "slider" ? (
-                    <div className="w-full">
+                    <div className="w-full h-[300px]">
                         <Slider banner_images={banner_images} />
                     </div>
                 ) : isVideo ||
                   (banner_image && banner_image?.type === "video") ? (
                     <div
-                        className={`w-full min-h-[180px] max-h-[200px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
+                        className={`w-full min-h-[180px] max-h-[300px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
                     >
                         {uploadSingleBanner && (
                             <video
@@ -378,19 +378,17 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                 ? `url(${uploadSingleBanner})`
                                 : banner_image
                                   ? `url(${banner_image?.url})`
-                                  : `url(${bannerPlaceholder})`,
+                                  : `url(${EmptyBackground})`,
                             borderRadius: banner_shape === "sharp" ? 0 : 12,
                             backgroundSize: "cover",
                             backgroundRepeat: "no-repeat",
                         }}
-                        className={`w-full min-h-[180px]   flex items-center justify-center`}
+                        className={`w-full min-h-[180px] h-[300px] flex pt-[56px] md:pt-[80px] justify-center`}
                     >
-                        <div
-                            style={{
-                                borderRadius: banner_shape === "sharp" ? 0 : 12,
-                            }}
-                            className="w-[100px] h-[95px] rounded-lg p-2 bg-neutral-100 relative"
-                        >
+                        <div className="flex flex-col items-center">
+                            <span className="uppercase text-[24px] leading-[30px] font-semibold text-black/[.54] mb-[8px]">
+                                {t("Banner")}
+                            </span>
                             <label htmlFor="banner">
                                 <input
                                     type="file"
@@ -401,19 +399,17 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                     className="hidden"
                                     hidden
                                 />
-
                                 <img
-                                    src={
-                                        uploadSingleBanner
-                                            ? uploadSingleBanner
-                                            : banner_image
-                                              ? banner_image?.url
-                                              : ImgPlaceholder
-                                    }
+                                    src={UploadIcon}
                                     alt={""}
-                                    className="w-full h-full object-cover"
+                                    style={{
+                                        borderRadius:
+                                            logo_shape === "sharp" ? 0 : 12,
+                                    }}
+                                    className="w-[18px] h-[18px] object-cover"
                                 />
                             </label>
+
                             {uploadSingleBanner && (
                                 <div className="absolute top-[-0.8rem] right-[-1rem]">
                                     <div className="w-[20px] h-[20px] rounded-full p-1 bg-neutral-100 flex items-center justify-center">

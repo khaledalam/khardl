@@ -3,6 +3,9 @@ import { useTranslation } from "react-i18next";
 import PrimarySelect from "./PrimarySelect";
 import EditorSelect from "./EditorSelect";
 import EditorAlignment from "./EditorAlignment";
+import EditorPercentageInput from "./EditorPercentageInput";
+import EditorSizeSelect from "./EditorSizeSelect";
+import EditorLink from "./EditorLink";
 import SocialMediaCollection from "./SocialMediaCollection";
 import { IoAdd } from "react-icons/io5";
 import PhoneInput from "react-phone-input-2";
@@ -103,30 +106,15 @@ export const RightSideBarDesktop = ({
         );
     };
 
-    const sidebarData = [
-        {
-            title: "Item 1",
-            subItems: ["Sub Item 1.1", "Sub Item 1.2", "Sub Item 1.3"],
-        },
-        {
-            title: "Item 2",
-            subItems: ["Sub Item 2.1", "Sub Item 2.2", "Sub Item 2.3"],
-        },
-        {
-            title: "Item 3",
-            subItems: ["Sub Item 3.1", "Sub Item 3.2", "Sub Item 3.3"],
-        },
-    ];
-
     return (
-        <div className="flex flex-col px-[16px]">
+        <div className="flex flex-col px-[16px] h-full">
             <div className="flex flex-row">
                 <h2 className="font-medium text-[14px] leading-[18px] mt-[24px] pr-[10px]">
                     {t("Designs")}
                 </h2>
             </div>
-            <div>
-                <ul className="flex flex-col py-4 divide-y divide-black/[0.2]">
+            <div className="h-full">
+                <ul className="flex flex-col py-4 divide-y divide-black/[0.2] h-full">
                     {activeSubitem != null &&
                         Object.keys(
                             navItems[activeSection].subItems[activeSubitem],
@@ -224,6 +212,120 @@ export const RightSideBarDesktop = ({
                                                         onChange={(value) =>
                                                             dispatch(
                                                                 logoAlignment(
+                                                                    value,
+                                                                ),
+                                                            )
+                                                        }
+                                                    />
+                                                ) : subItem == "radius" ? (
+                                                    <EditorPercentageInput
+                                                        label={t(
+                                                            "Border Radius",
+                                                        )}
+                                                        percentage={10}
+                                                    />
+                                                ) : subItem == "font" ? (
+                                                    <EditorSelect
+                                                        label={t("Font")}
+                                                        defaultValue={t(
+                                                            "Inter",
+                                                        )}
+                                                        handleChange={(value) =>
+                                                            dispatch(
+                                                                setHeaderPosition(
+                                                                    value,
+                                                                ),
+                                                            )
+                                                        }
+                                                        options={[
+                                                            {
+                                                                value: "inter",
+                                                                text: t(
+                                                                    "Inter",
+                                                                ),
+                                                            },
+                                                            {
+                                                                value: "jakarta",
+                                                                text: t(
+                                                                    "Jakarta",
+                                                                ),
+                                                            },
+                                                        ]}
+                                                    />
+                                                ) : subItem == "type" ? (
+                                                    <EditorSelect
+                                                        label={t("Type")}
+                                                        defaultValue={t(
+                                                            "Stack",
+                                                        )}
+                                                        handleChange={(value) =>
+                                                            dispatch(
+                                                                setHeaderPosition(
+                                                                    value,
+                                                                ),
+                                                            )
+                                                        }
+                                                        options={[
+                                                            {
+                                                                value: "stack",
+                                                                text: t(
+                                                                    "Stack",
+                                                                ),
+                                                            },
+                                                            {
+                                                                value: "grid",
+                                                                text: t("Grid"),
+                                                            },
+                                                        ]}
+                                                    />
+                                                ) : subItem == "weight" ? (
+                                                    <EditorSelect
+                                                        label={t("Weight")}
+                                                        defaultValue={t(
+                                                            "Regular",
+                                                        )}
+                                                        handleChange={(value) =>
+                                                            dispatch(
+                                                                setHeaderPosition(
+                                                                    value,
+                                                                ),
+                                                            )
+                                                        }
+                                                        options={[
+                                                            {
+                                                                value: "regular",
+                                                                text: t(
+                                                                    "Regular",
+                                                                ),
+                                                            },
+                                                            {
+                                                                value: "light",
+                                                                text: t(
+                                                                    "Light",
+                                                                ),
+                                                            },
+                                                        ]}
+                                                    />
+                                                ) : subItem == "size" ? (
+                                                    <EditorSizeSelect
+                                                        label={t("Size")}
+                                                        defaultValue={t(
+                                                            "Regular",
+                                                        )}
+                                                        handleChange={(value) =>
+                                                            dispatch(
+                                                                setHeaderPosition(
+                                                                    value,
+                                                                ),
+                                                            )
+                                                        }
+                                                    />
+                                                ) : subItem == "linkTo" ? (
+                                                    <EditorLink
+                                                        label={t("Link")}
+                                                        handleChange={(value) =>
+                                                            dispatch(
+                                                                setHeaderPosition(
                                                                     value,
                                                                 ),
                                                             )
