@@ -84,7 +84,7 @@ class Order extends Model
 
             // 5 6 5
             // Tenant mapper hash - date(YY-MM-DD) - order unique hash
-            
+
             // 5 7 => 12
             // Tenant mapper hash - order unique hash
             $prefix = Tenant::find($tenant_id)->mapper_hash;
@@ -197,6 +197,12 @@ class Order extends Model
                 $endDate = Carbon::now()->subDays(1)->endOfDay();
                 return $q->whereBetween('created_at', [$startDate,$endDate]);
             }
+        });
+    }
+    public function scopeWhenDateRange($query, $from, $to)
+    {
+        return $query->when($from != null && $to !=null, function ($q) use ($from, $to) {
+            return $q->whereBetween('created_at',[$from,$to]);
         });
     }
     public function scopeWhenPaymentStatus($query, $status)
