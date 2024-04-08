@@ -130,10 +130,27 @@ class CartRepository
     }
     public function updateCartItem(CartItem $cartItem, $request)
     {
+        $options_price = 0;
+        $checkbox_options = null;
+        $selection_options = null;
+        $dropdown_options = null;
+        if($request['selectedCheckbox'] ?? false){
+            $options_price += $this->loopingTroughCheckboxOptions($cartItem->item,$request['selectedCheckbox'],$checkbox_options);
+        }
+        if($request['selectedRadio'] ?? false){
+            $options_price += $this->loopingTroughSelectionOptions($cartItem->item,$request['selectedRadio'],$selection_options);
+        }
+        if($request['selectedDropdown'] ?? false){
+            $options_price += $this->loopingTroughDropdownOptions($cartItem->item,$request['selectedDropdown'],$dropdown_options);
+        }
+      
         return $cartItem->update([
-            'notes'     => $request['notes'] ?? '',
+            'notes'     => $request['notes'] ?? $cartItem->notes,
             'quantity'  => $request['quantity'],
-            'total' =>($cartItem->item->price + $cartItem->options_price) * $request['quantity'] ,
+            'checkbox_options' =>  $checkbox_options,
+            'selection_options' =>  $selection_options,
+            'dropdown_options' =>  $dropdown_options,
+            'total' =>($cartItem->item->price + $options_price) * $request['quantity'] ,
         ]);
     }
 
@@ -247,10 +264,12 @@ class CartRepository
             'payment_methods' => $this->paymentMethods(),
             'delivery_types' => $this->deliveryTypes(),
             'delivery_fee' => $settings['delivery_fee'],
-            // 'tap_information'=> [
-            //     'tap_customer_id'=>$this->cart->user->tap_customer_id,
-            //     'redirect'=>route('orders.payment')
-            // ],
+            'tap_information'=> [
+                'merchant_id'=>$settings->merchant_id ?? '',
+                'tap_customer_id'=>$this->cart?->user?->tap_customer_id,
+                "tap_public_key"=>env('TAP_PAYMENT_TECHNOLOGY_NEW_SECRET_KEY_LIVE',''),
+                'url_host'=>parse_url(request()->getSchemeAndHttpHost() , PHP_URL_HOST)
+            ],
             'address' => $this->cart->user->address
         ], $message);
     }

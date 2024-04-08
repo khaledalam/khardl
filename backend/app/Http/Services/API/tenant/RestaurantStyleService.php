@@ -3,6 +3,7 @@
 namespace App\Http\Services\API\tenant;
 
 use App\Models\Tenant\Branch;
+use App\Models\Tenant\Setting;
 use Illuminate\Http\Request;
 use App\Traits\APIResponseTrait;
 use Illuminate\Support\Facades\Auth;
@@ -108,7 +109,8 @@ class RestaurantStyleService
                 'sunday_open',
                 'sunday_close',
                 'sunday_closed',
-                'is_primary'
+                'is_primary',
+                'display_category_icon'
             ]);
         }
 

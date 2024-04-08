@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ImgBurger from "../../../../assets/burger.png";
 import { useTranslation } from "react-i18next";
+import {useSelector} from "react-redux";
 
 const CategoryItem = ({
     active,
@@ -19,6 +20,15 @@ const CategoryItem = ({
 }) => {
     const [isHover, setIsHover] = useState(false);
     const { t } = useTranslation();
+
+    const {branches} = useSelector((state) => state.restuarantEditorStyle);
+
+    if (!branches)return;
+
+    let selectedBranch = branches?.filter(
+        (b) => b?.id == localStorage.getItem("selected_branch_id"),
+    )[0];
+
 
     const handleMouseEnter = () => {
         setIsHover((prev) => !prev);
@@ -39,7 +49,7 @@ const CategoryItem = ({
                 isGrid ? "flex-row" : "flex-col"
             } gap-3 items-center`}
         >
-            <div
+            {selectedBranch?.display_category_icon == '1' && <div
                 style={{
                     backgroundColor: isHover
                         ? hoverColor
@@ -56,6 +66,7 @@ const CategoryItem = ({
                         shape === "sharp" ? "" : "rounded-full"
                     } justify-center`}
                 >
+
                     <img
                         src={imgSrc ? imgSrc : ImgBurger}
                         alt={alt}
@@ -64,7 +75,7 @@ const CategoryItem = ({
                         } `}
                     />
                 </div>
-            </div>
+            </div>}
             <h3
                 style={{
                     color: textColor,

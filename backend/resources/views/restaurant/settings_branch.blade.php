@@ -167,6 +167,7 @@
                                             <small class="text-muted">{{ __('prepare food takes how long time') }}</small>
 
                                             <div class="separator separator-dashed my-6"></div>
+
                                             <label class="form-check form-check-custom form-check-solid align-items-start">
                                                 <!--begin::Input-->
                                                 <input type="text" class="form-control" name="preparation_time_delivery" id="prep-time" value="{{ $branch->preparation_time_delivery }}">
@@ -177,6 +178,22 @@
 													</span>
                                                 <!--end::Label-->
                                             </label>
+
+                                            <div class="separator separator-dashed my-6"></div>
+
+                                            <!-- display_category_icon begin::Option-->
+                                            <label class="form-check form-check-custom form-check-solid align-items-start">
+                                                <!--begin::Input-->
+                                                <input class="form-check-input me-3" type="checkbox" name="display_category_icon" value="{{$branch->display_category_icon}}" {{($branch->display_category_icon)?'checked':''}}  />
+                                                <!--end::Input-->
+                                                <!--begin::Label-->
+                                                <span class="form-check-label d-flex flex-column align-items-start">
+                                                    <span class="fw-bolder fs-5 mb-0">{{__('display-categories-icons')}}</span>
+                                                </span>
+                                                <!--end::Label-->
+                                            </label>
+                                            <!--display_category_icon end::Option-->
+
                                         </div>
                                         <!--end::Card body-->
                                         <!--begin::Card footer-->

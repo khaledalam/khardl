@@ -11,6 +11,8 @@ import {
 import CartItem from "./components/CartItem";
 import pmcc from "../../assets/pmcc.png";
 import pmcod from "../../assets/pmcod.png";
+import apple from "../../assets/apple-logo.png";
+import applePay from "../../assets/apple-pay.png";
 import dtpickup from "../../assets/dtpickup.png";
 import dtdelivery from "../../assets/dtdelivery.png";
 
@@ -28,7 +30,17 @@ import PaymentCardGoSell from "./components/PaymentCardGoSell";
 import { GoSellElements } from "@tap-payments/gosell";
 import "./index.scss";
 import OrderReviewSummary from "./components/OrderReviewSummary";
-
+import { isSafari } from "react-device-detect";
+import {
+    ApplePayButton,
+    ThemeMode,
+    SupportedNetworks,
+    Scope,
+    Environment,
+    Locale,
+    ButtonType,
+    Edges,
+} from "@tap-payments/apple-pay-button";
 const CartPage = () => {
     const { t } = useTranslation();
 
@@ -45,11 +57,12 @@ const CartPage = () => {
     const cartItemsData = useSelector(
         (state) => state.categoryAPI.cartItemsData,
     );
+    const [tap, setTap] = useState(null);
 
     const customerAddress = useSelector((state) => state.customerAPI.address);
 
-    const [paymentMethod, setPaymentMethod] = useState("pm-cod");
-    const [deliveryType, setDeliveryType] = useState("dt-delivery");
+    const [paymentMethod, setPaymentMethod] = useState(null);
+    const [deliveryType, setDeliveryType] = useState("Delivery");
     const [deliveryAddress, setDeliveryAddress] = useState(0);
     const [userAddress, setUserAddress] = useState(null);
     const [orderNotes, setOrderNotes] = useState("");
@@ -92,7 +105,7 @@ const CartPage = () => {
                 // setPaymentMethodsData(cartResponse.data?.data?.payment_methods);
                 // setDeliveryTypesData(cartResponse.data?.data?.delivery_types);
                 // setAddress(cartResponse.data?.data?.address ?? t("N/A"));
-                // setTap(cartResponse.data?.data?.tap_information);
+                setTap(cartResponse.data?.data?.tap_information);
             }
         } catch (error) {
             // toast.error(`${t('Failed to send verification code')}`)
@@ -121,21 +134,18 @@ const CartPage = () => {
     };
 
     const handlePlaceOrder = async () => {
+
+        console.log("handlePlaceOrder func, paymentMethod: ", paymentMethod);
+
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
-        if (paymentMethod === "pm-cc") {
+        if (paymentMethod === "Online") {
             GoSellElements.submit();
         } else {
             try {
                 try {
                     const cartResponse = await AxiosInstance.post(`/orders`, {
-                        payment_method:
-                            paymentMethod === "pm-cod"
-                                ? "Cash on Delivery"
-                                : "Online",
-                        delivery_type:
-                            deliveryType === "dt-delivery"
-                                ? "Delivery"
-                                : "PICKUP",
+                        payment_method: paymentMethod,
+                        delivery_type: deliveryType,
                         notes: orderNotes,
                         couponCode: coupon,
                         address: orderAddress,
@@ -160,6 +170,7 @@ const CartPage = () => {
         let orderAddress = `${customerAddress.lat},${customerAddress.lng}`;
 
         try {
+            setLoading(true);
             const redirect = await AxiosInstance.post(
                 `/orders/payment/redirect`,
                 {
@@ -168,18 +179,27 @@ const CartPage = () => {
                     notes: orderNotes,
                     couponCode: coupon,
                     address: orderAddress,
-                    token_id: response.id,
+                    token_id: response?.id,
                 },
             );
 
             if (redirect.data) {
-                console.log("redirect ==>", redirect.data);
+                console.log("redirect ==>", redirect);
                 window.location.href = redirect.data;
             }
         } catch (error) {
+            setLoading(false);
             toast.error(error.response.data.message);
         }
     };
+
+    const getTotalPrice = () =>
+        Number(
+            parseFloat(cart?.total) +
+                (deliveryType === "PICKUP"
+                    ? 0.0
+                    : parseFloat(cart?.delivery_fee)),
+        ).toFixed(2);
 
     return (
         <div className="p-12">
@@ -223,44 +243,159 @@ const CartPage = () => {
                                     </div>
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Payment Method")}</h3>
-                                        {cart.payment_methods.map((method) => {
-                                            let name =
-                                                method.name === "Online"
-                                                    ? "pm-cc"
-                                                    : "pm-cod";
-                                            let displayName =
-                                                method.name === "Online"
-                                                    ? "Credit Card"
-                                                    : "Cash on Delivery";
-                                            let img =
-                                                method.name === "Online"
-                                                    ? pmcc
-                                                    : pmcod;
-
-                                            return (
+                                        {cart.payment_methods.some(
+                                            (obj) => obj.name === "Online",
+                                        ) && (
+                                            <CartDetailSection
+                                                key={"Online"}
+                                                name={"Online"}
+                                                onChange={(e) =>
+                                                    setPaymentMethod("Online")
+                                                }
+                                                isChecked={
+                                                    paymentMethod === "Online"
+                                                }
+                                                img={pmcc}
+                                                displayName="Card"
+                                                callBackfn={
+                                                    cardPaymentCallbackFunc
+                                                }
+                                            />
+                                        )}
+                                        {cart.payment_methods.some(
+                                            (obj) => obj.name === "Online",
+                                        ) &&
+                                            isSafari && (
                                                 <CartDetailSection
-                                                    key={method.name}
-                                                    name={method.name}
+                                                    key={"Apple Pay"}
+                                                    name={"ApplePay"}
                                                     onChange={(e) =>
-                                                        setPaymentMethod(name)
+                                                        setPaymentMethod(
+                                                            "Apple Pay",
+                                                        )
                                                     }
                                                     isChecked={
-                                                        paymentMethod === name
+                                                        paymentMethod ===
+                                                        "Apple Pay"
                                                     }
-                                                    img={img}
-                                                    displayName={displayName}
+                                                    img={apple}
+                                                    displayName={"Apple Pay"}
                                                     callBackfn={
                                                         cardPaymentCallbackFunc
                                                     }
                                                 />
-                                            );
-                                        })}
-                                        {paymentMethod === "pm-cc" && (
-                                            <div className="mt-6">
+                                            )}
+                                        {cart.payment_methods.some(
+                                            (obj) =>
+                                                obj.name === "Cash on Delivery",
+                                        ) && (
+                                            <CartDetailSection
+                                                key={"Cash on Delivery"}
+                                                name={"Cash on Delivery"}
+                                                onChange={(e) =>
+                                                    setPaymentMethod(
+                                                        "Cash on Delivery",
+                                                    )
+                                                }
+                                                isChecked={
+                                                    paymentMethod ===
+                                                    "Cash on Delivery"
+                                                }
+                                                img={pmcod}
+                                                displayName="Cash on Delivery"
+                                                callBackfn={
+                                                    cardPaymentCallbackFunc
+                                                }
+                                            />
+                                        )}
+                                        {paymentMethod === "Online" && (
+                                            <div className="mt-6 space-y-3">
                                                 <PaymentCardGoSell
                                                     callBackWithToken={
                                                         cardPaymentCallbackFunc
                                                     }
+                                                />
+                                                {/*<button className="bg-black text-white w-full rounded-[12px] flex justify-center items-center">*/}
+                                                {/*    <div className="font-semibold text-[20px] py-3">*/}
+                                                {/*        {t("Buy with Card")}*/}
+                                                {/*    </div>*/}
+                                                {/*</button>*/}
+                                            </div>
+                                        )}
+                                        {paymentMethod === "Apple Pay" && (
+                                            <div className="mt-6">
+                                                <ApplePayButton
+                                                    // The public Key provided by Tap
+                                                    publicKey={tap.tap_public_key}
+                                                    //The environment of the SDK and it can be one of these environments
+                                                    environment={Environment.Beta}
+                                                    //to enable the debug mode
+                                                    debug
+                                                    merchant={{
+                                                        //  The merchant domain name
+                                                        domain: window.location.hostname,
+                                                        //  The merchant identifier provided by Tap
+                                                        id: tap.merchant_id
+                                                    }}
+                                                    transaction={{
+                                                        // The amount to be charged
+                                                        amount: getTotalPrice(),
+                                                        // The currency of the amount
+                                                        currency: 'SAR'
+                                                    }}
+                                                    // The scope of the SDK and it can be one of these scopes:
+                                                    // [TapToken,AppleToken], by default it is TapToken)
+                                                    scope={Scope.TapToken}
+                                                    acceptance={{
+                                                        // The supported networks for the Apple Pay button and it
+                                                        // can be one of these networks: [Mada,Visa,MasterCard], by default
+                                                        // we bring all the supported networks from tap merchant configuration
+                                                        supportedBrands: [SupportedNetworks.Mada, SupportedNetworks.Visa, SupportedNetworks.MasterCard],
+                                                        supportedCards : "ALL",
+                                                        supportedCardsWithAuthentications : ["3DS"]
+                                                    }}
+                                                    // The billing contact information
+                                                    customer={{
+                                                        id: tap.tap_customer_id,
+
+                                                    }}
+                                                    //for styling button
+                                                    interface={{
+                                                        //The locale of the Apple Pay button and it can be one of these locales:[EN,AR]
+                                                        locale: Locale.EN,
+                                                        // The theme of the Apple Pay button and it can be one of
+                                                        // these values : [light,Dark], by default it is detected from user device
+                                                        theme: ThemeMode.DARK,
+                                                        // The type of the Apple Pay
+                                                        type: ButtonType.BUY,
+                                                        // The border of the Apple Pay button and it can be one of these values:[curved,straight]
+                                                        edges: Edges.CURVED
+                                                    }}
+                                                    // optional (A callback function that will be called when you cancel
+                                                    // the payment process)
+                                                    onCancel={() => console.log('cancelled')}
+                                                    // optional (A callback function that will be called when you have an error)
+                                                    onError={(err) => console.error(err)}
+                                                    // optional (A async function that will be called after creating the token
+                                                    // successfully)
+                                                    onSuccess={async (token) => {
+                                                        // do your stuff here...
+
+                                                        console.log("here inline");
+
+                                                        console.log(token);
+
+                                                        cardPaymentCallbackFunc(token);
+
+                                                    }}
+                                                    // optional (A callback function that will be called when you button is clickable)
+                                                    onReady={() => {
+                                                        console.log('Ready')
+                                                    }}
+                                                    // optional (A callback function that will be called when the button clicked)
+                                                    onClick={() => {
+                                                        console.log('Clicked')
+                                                    }}
                                                 />
                                             </div>
                                         )}
@@ -268,32 +403,32 @@ const CartPage = () => {
                                     <div className="cartDetailSection h-36xw mt-8">
                                         <h3>{t("Select Delivery Type")}</h3>
                                         <CartDetailSection
-                                            name="dt-delivery"
+                                            name="Delivery"
                                             onChange={(e) => {
                                                 fetchProfileData();
-                                                setDeliveryType("dt-delivery");
+                                                setDeliveryType("Delivery");
                                             }}
                                             isChecked={
-                                                deliveryType === "dt-delivery"
+                                                deliveryType === "Delivery"
                                             }
                                             img={dtdelivery}
                                             displayName="delivery"
                                         />
 
                                         <CartDetailSection
-                                            name="dt-pickup"
+                                            name="PICKUP"
                                             onChange={(e) =>
-                                                setDeliveryType("dt-pickup")
+                                                setDeliveryType("PICKUP")
                                             }
                                             isChecked={
-                                                deliveryType === "dt-pickup"
+                                                deliveryType === "PICKUP"
                                             }
                                             img={dtpickup}
-                                            displayName="pickup"
+                                            displayName="PICKUP"
                                         />
                                     </div>
                                     <div className="mt-8">
-                                        {deliveryType === "dt-delivery" && (
+                                        {deliveryType === "Delivery" && (
                                             <CartAddress
                                                 user={user}
                                                 userAddress={userAddress}
@@ -334,7 +469,7 @@ const CartPage = () => {
                                                 ) + ` ${t("SAR")}`}
                                             </div>
                                         </div>
-                                        {deliveryType === "dt-delivery" && (
+                                        {deliveryType === "Delivery" && (
                                             <div className="flex justify-between mt-4">
                                                 <div>{t("Delivery fee")}</div>
                                                 <div>
@@ -361,7 +496,7 @@ const CartPage = () => {
                                         <div className="flex justify-between mt-1">
                                             <div>{t("Total Payment")}</div>
                                             <div>
-                                                {`${Number(cart?.total + cart?.delivery_fee).toFixed(2)} ${t("SAR")}`}
+                                                {`${getTotalPrice()} ${t("SAR")}`}
                                             </div>
                                         </div>
                                     </div>

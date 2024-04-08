@@ -1,19 +1,21 @@
 
 <?php $setting = \App\Models\Tenant\Setting::first();?>
 
-@if( !$setting->lead_id && !$setting->merchant_id)
+{{--@if( !$setting->lead_id && !$setting->merchant_id)--}}
 
-<div class="alert alert-warning text-center">
-    <h3>{{ __('You need to configure your payment account to start selling') }}</h3>
-    <a href="{{ route('tap.payments_submit_lead_get') }}">
-        <button class="btn btn-primary btn-sm my-2">{{ __('Manage payment gateway') }}</button>
-    </a>
+{{--    <div class="alert alert-warning text-center">--}}
+{{--        <h3>{{ __('You need to configure your payment account to start selling') }}</h3>--}}
+{{--    --}}{{--    <a href="{{ route('tap.payments_submit_lead_get') }}">--}}
+{{--    --}}{{--        <button class="btn btn-primary btn-sm my-2">{{ __('Manage payment gateway') }}</button>--}}
+{{--    --}}{{--    </a>--}}
+{{--    </div>--}}
+{{--@endif--}}
+
+@if($setting->lead_id && !$setting->merchant_id)
+    <div class="alert alert-warning text-center">
+        <h3>{{ __('Your payment gateway account is currently waiting for approval to process selling orders') }}</h3>
+
     </div>
-@elseif($setting->lead_id && !$setting->merchant_id)
-<div class="alert alert-warning text-center">
-    <h3>{{ __('Your payment gateway account is currently waiting for approval to process selling orders') }}</h3>
-
-</div>
 @endif
 @if ($sub=\App\Models\ROSubscription::first())
     @if($sub->status ==  \App\Models\ROSubscription::ACTIVE && \App\Models\Tenant\Branch::count() == 0)

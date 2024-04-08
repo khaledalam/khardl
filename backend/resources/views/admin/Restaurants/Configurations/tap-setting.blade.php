@@ -1,17 +1,88 @@
  <!--begin::details View-->
  <div class="card mt-5 mb-xl-10" id="kt_profile_details_view">
-    <!--begin::Card header-->
-    @if($setting->lead_id)
-    <div class="container">
-        <div class="d-flex justify-content-center mt-5">
-            <h2 class="badge badge-primary text-center w-20">{{__('The payment gateway is linked to the restaurant')}}</h2> 
-
+    <div class="text-center m-3">
+        <!--begin::Card title-->
+        <div class="card-title m-0 ">
+            <h3 class="fw-bolder m-0  badge-primary p-2">{{ __('Payment gateway keys') }}</h3>
         </div>
-
-
+        <!--end::Card title-->
     </div>
-    @else
+        <div class="mb-2">
+            @if($setting->lead_id)
+                <div class="container">
+                    <div class="d-flex justify-content-center mt-5">
+                        <h2 class="badge badge-primary text-center w-20">{{__('The payment gateway is linked to the restaurant')}}</h2> 
+            
+                    </div>
+            
+            
+                </div>
+            @endif
+            <form action="{{route('admin.update-restaurants-config',['tenant'=>$restaurant->id])}}" method="POST">
+                @csrf
+                @method('PATCH')
+            
+                <!--begin::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body p-9">
+                    <!--begin::Row-->
+        
+                    <div class="row mb-7">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('Merchant ID') }}
+                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8">
+                            <input type="text" name="merchant_id" class="form-control" id="" value="{{$setting->merchant_id}}">
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                </div>
+                <div class="card-body p-9">
+                    <!--begin::Row-->
+        
+                    <div class="row mb-7">
+                        <!--begin::Label-->
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('Lead ID') }}
+                            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control " name="lead_id" value="{{$setting->lead_id}}">
+                        </div>
+                        <!--end::Col-->
+                    </div>
+                </div>
+              
+                <div class="text-center">
+                    <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
+                        <span class="indicator-label">{{__('save-changes')}} ✔️</span>
+                        <span class="indicator-progress" id="waiting-item">{{__('please-wait')}}
+                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                    </button>
+                </div>
+            </form>
+            @if($setting->lead_response)
+            <div class="card-body p-9" >
+                <label class="col-lg-4 fw-bold text-muted" >{{ __('Lead information') }}
+                    <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
+                <div id="tree" style="direction: ltr;"></div>
+            </div>
+            @endif
+        </div>
+        
+    <!--begin::Card header-->
+    @if(!$setting->lead_id)
     
+    <hr>
+    <div class="text-center m-3">
+        <!--begin::Card title-->
+        <div class="card-title m-0 ">
+            <h3 class="fw-bolder m-0  badge-primary p-2">{{ __('New contract with payment gateway') }}</h3>
+        </div>
+        <!--end::Card title-->
+    </div>
     <!--begin::Content-->
     <div class="container content d-flex flex-column flex-column-fluid pt-5" id="kt_content" style="background-color: #c2da08;
     padding: 15px 15px; !important">
@@ -31,7 +102,7 @@
                 <button class="nav-link" id="bank-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#bank" type="button" role="tab" aria-controls="contact" aria-selected="false">3. {{__("Bank Details")}}<span class="text-danger">*</span></button>
                 </li>
                 <li class="nav-item fs-5" role="presentation">
-                    <button class="nav-link" id="tax-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#tax" type="button" role="tab" aria-controls="tax" aria-selected="false">4. {{__("Tax Document")}}</button>
+                    <button class="nav-link" id="tax-tab" style="font-family: system-ui;font-size: 19px;"  data-bs-toggle="tab" data-bs-target="#tax" type="button" role="tab" aria-controls="tax" aria-selected="false">4. {{__("Tax Number")}}</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -286,7 +357,7 @@
 
                         <div class="col-md-12">
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_swift_code">
-                                <span class="">{{__('Bank Name')}}<span class="text-danger h4"> * </span></span>
+                                <span class="">{{__('Bank Name')}}</span>
                             </label>
                             <input id="bank_account_swift_code" type="text" class="form-control" name="wallet[bank][name]" value="{{old('wallet.bank.name')   ?? $traderRegistrationRequirement->bank_name}}" /><br />
 
@@ -311,7 +382,7 @@
 
                            
                             <label class="d-flex align-items-center fs-6 fw-bold mb-2" for="bank_account_iban">
-                                <span class="">{{__('Bank Statement number')}}<span class="text-danger h4"> * </span></span>
+                                <span class="">{{__('IBAN authentication number')}}<span class="text-danger h4"> * </span></span>
                             </label>
                         <br>
                             <input id="bank_account_number" type="text" class="form-control" name="wallet[bank][documents][0][number]" value="{{old('wallet.bank.documents.0.number')}}" /><br/>
@@ -319,7 +390,7 @@
                             <div class="d-flex flex-column mb-8 fv-row">
                                 <!--begin::Label-->
                                 <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                                    {{__('Bank Statement File')}}
+                                    {{__('IBAN certificate file')}}
                                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"></i>
                                 </label>
                                 <!--end::Label-->
@@ -406,13 +477,7 @@
     </div>
     <!--end::Content-->
     @endif
-    @if($setting->lead_response)
-    <div class="card-body p-9" >
-        <label class="col-lg-4 fw-bold text-muted" >{{ __('Lead information') }}
-            <i class="fas fa-download-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Country of origination"></i></label>
-        <div id="tree" style="direction: ltr;"></div>
-    </div>
-    @endif
+ 
 
 
  </div>

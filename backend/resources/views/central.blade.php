@@ -11,7 +11,7 @@
     <meta property="og:image" content="{{ global_asset('images/Logo.webp')}}" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Khardl - Digital Ecosystem Solution For Restaurants</title>
-    <link rel="stylesheet" href="{{ mix('css/app.css') . "?id=" . trim(exec('git log --pretty="%h" -n1 HEAD')) }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="canonical" href="{{ global_asset('images/Logo.webp')}}" />
     <link rel="shortcut png" href="{{ global_asset('images/Logo.webp')}}"/>
@@ -31,7 +31,7 @@
         window.csrfToken = "{{ csrf_token() }}";
 
     </script>
-    <script type="text/javascript" src="{{ mix('js/central.js') . "?id=" . trim(exec('git log --pretty="%h" -n1 HEAD')) }}"></script>
+    <script type="text/javascript" src="{{ mix('js/central.js') }}"></script>
 
     @if(App\Models\CentralSetting::first()?->live_chat_enabled)
         <script type="text/javascript">
