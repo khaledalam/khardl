@@ -38,7 +38,7 @@ const Navbar = ({ toggleSidebarCollapse }) => {
             restuarantStyle.socialMediaIcons_alignment;
         inputs.phoneNumber = restuarantStyle.phoneNumber;
         inputs.phoneNumber_alignment = restuarantStyle.phoneNumber_alignment;
-        inputs.page_color = restuarantStyle.page_color;
+        inputs.page_color = restuarantStyle?.page_color;
         inputs.product_background_color =
             restuarantStyle.product_background_color;
         inputs.page_category_color = restuarantStyle.page_category_color;

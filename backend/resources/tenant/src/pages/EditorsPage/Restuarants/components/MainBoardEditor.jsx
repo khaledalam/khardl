@@ -461,6 +461,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                     : "flex-col gap-6"
                             } items-center `}
                         >
+                            {console.log("fsfa", categories)}
                             {categories && categories.length > 0 ? (
                                 categories?.map((category, i) => (
                                     <CategoryItem
@@ -643,7 +644,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             href={
                                 socialMedia.link
                                     ? socialMedia.link
-                                    : "javascript:void(0)"
+                                    : null
                             }
                             key={socialMedia.id}
                             className="cursor-pointer"

@@ -222,7 +222,7 @@ const restuarantEditorSlice = createSlice({
         },
 
         changeRestuarantEditorStyle: (state, action) => {
-            action.payload.page_color = "green";
+            // action.payload.page_color = "green";
             const root = document.querySelector(":root");
             root.style.setProperty("--myColor", action.payload.page_color);
             return (state = {

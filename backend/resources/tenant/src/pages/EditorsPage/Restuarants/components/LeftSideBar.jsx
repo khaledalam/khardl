@@ -29,7 +29,7 @@ export const LeftSideBar = ({
             <ul
                 className="flex flex-row items-center md:items-start overflow-x-scroll md:overflow-x-hidden md:flex-col md:space-y-[16px] space-x-[8px] md:space-x-0 px-[8px] md:px-0"
                 style={{
-                    webkitScrollbar: {
+                    WebkitScrollbar: {
                         display: "none",
                     },
                     msOverflowStyle: "none",

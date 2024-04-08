@@ -206,7 +206,7 @@ const CartPage = () => {
             {loading && (
                 <div className={"m-auto w-28 pt-28"}>
                     <ClipLoader
-                        color={restaurantStyle.page_color}
+                        color={restaurantStyle?.page_color}
                         loading={loading}
                         size={100}
                     />
