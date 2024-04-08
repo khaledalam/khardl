@@ -24,6 +24,7 @@ class OrderService
 
         $query = Order::with('payment_method')
             ->delivery()
+            ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->when($request->status == 'ready', function ($query) {
                 $settings = Setting::first();
                 $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
@@ -66,7 +67,7 @@ class OrderService
         if($request->status == Order::COMPLETED){
             $order->status = Order::COMPLETED;
             $order->save();
-            $this->sendNotifications($order);
+            $this->sendNotifications($user, $order);
             return $this->sendResponse('', __('Order has been completed successfully'));
         }elseif($request->status == Order::CANCELLED){
             $order->status = Order::CANCELLED;
