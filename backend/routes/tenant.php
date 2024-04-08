@@ -373,6 +373,7 @@ Route::middleware([
                 Route::prefix('driver')->group(function () {
                     Route::controller(DriverOrderController::class)->group(function () {
                         Route::get('drivers-orders', 'index')->name('restaurant.drivers.all');
+                        Route::get('drivers-calendar', 'history')->name('restaurant.drivers.history');
                         Route::post('change-status/{order}', 'changeStatus')->name('changeStatus');
                         Route::post('assign-order/{order}', 'assignOrder')->name('assign_order');
                     });
