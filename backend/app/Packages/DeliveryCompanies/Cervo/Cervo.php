@@ -161,7 +161,7 @@ class Cervo  extends AbstractDeliveryCompany
                     $order->update([
                         'status'=>Order::COMPLETED
                     ]);
-                    $this->sendNotification($order);
+                    $this->sendNotifications($order);
                 }else if (
                     $payload['order_status'] == self::STATUS_ORDER['CANCELLED']){
                     // Todo @todo
@@ -175,14 +175,14 @@ class Cervo  extends AbstractDeliveryCompany
         }
 
     }
-    public function sendNotifications($user, $order)
+    public function sendNotifications($order)
     {
 
         //Internal notification
         $type = NotificationTypeEnum::OrderDelivered;
         $message = [
-            'en' => 'Order has been delivered for customer (' . $user->full_name . '). by Cervo delivery company',
-            'ar' => 'تم توصيل الطلب للعميل (' . $user->full_name . ') بواسطة شركة الشحن سيرفو.'
+            'en' => 'Order has been delivered for customer (' . $order->user?->full_name . '). by Cervo delivery company',
+            'ar' => 'تم توصيل الطلب للعميل (' . $order->user?->full_name . ') بواسطة شركة الشحن سيرفو.'
         ];
         $title = [
             'ar' => 'الطلب وصل',
