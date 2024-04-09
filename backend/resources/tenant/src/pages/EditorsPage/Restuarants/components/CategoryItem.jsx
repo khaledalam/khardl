@@ -31,7 +31,6 @@ const CategoryItem = ({
 
     const handleMouseEnter = () => {
         setIsHover((prev) => !prev);
-        console.log("mouse Enter");
     };
 
     const handleMouseLeave = () => {
@@ -44,7 +43,7 @@ const CategoryItem = ({
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
             key={valuekey}
-            className={`flex w-5/6 cursor-pointer ${
+            className={`flex w-full cursor-pointer ${
                 isGrid ? "flex-row" : "flex-col"
             } gap-[16px] items-center`}
         >
@@ -59,7 +58,7 @@ const CategoryItem = ({
                     }}
                     className={`w-[60px] h-[60px] ${
                         shape === "sharp" ? "" : "rounded-full"
-                    }  flex items-center justify-center scale-100 hover:scale-125 transition-all duration-300  bg-neutral-100  `}
+                    }  flex items-center justify-center scale-100 hover:scale-110 transition-all duration-300  bg-neutral-100  `}
                 >
                     <div
                         className={`w-full h-full flex items-center ${

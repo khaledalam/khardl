@@ -227,7 +227,7 @@ export const RestuarantEditor = () => {
         >
             <Navbar toggleSidebarCollapse={handleSidebarCollapse} />
             <div className="flex flex-col md:flex-row bg-[#EEEEEE] h-[calc(100vh-56px)] w-full transition-all hide-scroll">
-                <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] md:overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
+                <div className="transition-all flex-[40px] md:flex-[25%] md:max-w-[240px] overflow-x-hidden bg-white max-h-[40px] md:max-h-full md:h-[646px] border-b md:border-b-0 md:border-r border-[rgba(0,0,0,0.3)]">
                     {/* <SidebarEditor /> */}
                     <LeftSideBar
                         activeSubitem={activeSubitem}

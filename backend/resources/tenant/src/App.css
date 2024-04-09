@@ -212,3 +212,13 @@ body::-webkit-scrollbar-track {
     align-items: center;
     justify-content: center;
 }
+
+.swiper-wrapper {
+    justify-content: center !important;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

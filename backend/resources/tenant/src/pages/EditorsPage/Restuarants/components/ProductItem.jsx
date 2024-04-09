@@ -36,6 +36,7 @@ import { useForm } from "react-hook-form";
 import { getCartItemsCount } from "../../../../redux/NewEditor/categoryAPISlice";
 import cartImg from "../../../../assets/cartLgIcon.svg";
 import Burger from "../../../../assets/burger.png";
+import KcalIcon from "../../../../assets/kcalIcon.png";
 
 const ProductItem = ({
     id,
@@ -403,6 +404,35 @@ const ProductItem = ({
     return (
         <Fragment>
             <div
+                className="w-36 h-44"
+                key={valuekey}
+                onClick={() => document.getElementById(id).showModal()}
+            >
+                <div className="w-36 h-44 bg-white rounded-xl border border-red-900 border-opacity-10 flex flex-col justify-between items-center">
+                    <div className="w-36 h-[86px] bg-orange-100 bg-opacity-10 rounded-xl flex justify-center items-center">
+                        <img className="w-[60px] h-[60px]" src={imgSrc} />
+                    </div>
+                    <div className=" text-black text-opacity-75 text-xs font-semibold font-['Inter']">
+                        {name}
+                    </div>
+                    <div className="w-full h-3">
+                        <div className="left-[16px] flex justify-center">
+                            <img className="w-3 h-3" src={KcalIcon} />
+                            <span className="text-black text-opacity-75 text-[10px] font-medium font-['Inter']">
+                                {caloryInfo} {t("Kcal")}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="w-28 h-6">
+                        <div className="w-28 h-6 bg-red-900 rounded-tl-[30px] rounded-tr-[30px] flex justify-center items-center">
+                            <div className=" text-white text-xs font-medium font-['Inter']">
+                                {t("SAR")} {amount}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* <div
                 key={valuekey}
                 className="w-36 h-44 flex flex-col items-center bg-white rounded-md border border-black border-opacity-10"
                 onClick={() => document.getElementById(id).showModal()}
@@ -419,7 +449,7 @@ const ProductItem = ({
                 <div className="e text-orange-600 text-xs mt-[16px] font-medium font-['Inter']">
                     {t("SAR")} {amount}
                 </div>
-            </div>
+            </div> */}
 
             {/* <div
                 key={valuekey}

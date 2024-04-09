@@ -9,6 +9,7 @@ import EditorSlider from "./EditorSlider";
 import { useSelector, useDispatch } from "react-redux";
 import { MenuContext } from "react-flexible-sliding-menu";
 import Slider from "./Slider";
+import Sliderr from "./Sliderr";
 import { selectedCategoryAPI } from "../../../../redux/NewEditor/categoryAPISlice";
 import {
     logoUpload,
@@ -25,7 +26,6 @@ import getCroppedImg from "./cropImage";
 import RightIcon from "../../../../assets/rightIcon.png";
 import LeftIcon from "../../../../assets/leftIcon.png";
 const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
-    console.log("categories", categories);
     const restuarantEditorStyle = useSelector(
         (state) => state.restuarantEditorStyle
     );
@@ -240,6 +240,13 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
 
     const filetype = "video";
 
+    const scrollToSection = (sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     return (
         <div
             style={{
@@ -327,55 +334,61 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
             {/* banner */}
             {!isLoading ? (
                 banner_type === "slider" ? (
-                    <div className="w-full h-[300px]">
-                        <Slider banner_images={banner_images} />
-                    </div>
-                ) : isVideo ||
-                  (banner_image && banner_image?.type === "video") ? (
-                    <div
-                        className={`w-full min-h-[180px] max-h-[300px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
-                    >
-                        {uploadSingleBanner && (
-                            <video
-                                controls
-                                className="absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]"
-                            >
-                                <source
-                                    src={uploadSingleBanner}
-                                    type="video/mp4"
-                                />
-                                Your browser does not support the video tag.
-                            </video>
-                        )}
-                        <div
-                            style={{
-                                borderRadius: banner_shape === "sharp" ? 0 : 12,
-                            }}
-                            className="w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative"
-                        >
-                            <label htmlFor="banner">
-                                <input
-                                    type="file"
-                                    name="banner"
-                                    id={"banner"}
-                                    accept="video/*, image/*"
-                                    onChange={handleBannerUpload}
-                                    className="hidden"
-                                    hidden
-                                />
-                                {uploadSingleBanner ? (
-                                    <IoCloseOutline
-                                        size={28}
-                                        className="text-red-500"
-                                        onClick={clearBanner}
-                                    />
-                                ) : (
-                                    <BiCloudUpload size={28} />
-                                )}
-                            </label>
+                    <>
+                        <div className="w-full h-[300px]">
+                            <Slider banner_images={banner_images} />
                         </div>
-                    </div>
+                        {/* <div className="w-full h-[300px]">
+                            <Sliderr banner_images={banner_images} />
+                        </div> */}
+                    </>
                 ) : (
+                    // : isVideo ||
+                    //   (banner_image && banner_image?.type === "video") ? (
+                    //     <div
+                    //         className={`w-full min-h-[180px] max-h-[300px] overflow-hidden relative  border border-neutral-100  flex items-center justify-center`}
+                    //     >
+                    //         {uploadSingleBanner && (
+                    //             <video
+                    //                 controls
+                    //                 className="absolute top-0 right-0 bottom-0 z-[5] left-0 w-full max-h-[200px]"
+                    //             >
+                    //                 <source
+                    //                     src={uploadSingleBanner}
+                    //                     type="video/mp4"
+                    //                 />
+                    //                 Your browser does not support the video tag.
+                    //             </video>
+                    //         )}
+                    //         <div
+                    //             style={{
+                    //                 borderRadius: banner_shape === "sharp" ? 0 : 12,
+                    //             }}
+                    //             className="w-14 h-14 rounded-lg p-2 flex items-center z-10 justify-center bg-neutral-100 relative"
+                    //         >
+                    //             <label htmlFor="banner">
+                    //                 <input
+                    //                     type="file"
+                    //                     name="banner"
+                    //                     id={"banner"}
+                    //                     accept="video/*, image/*"
+                    //                     onChange={handleBannerUpload}
+                    //                     className="hidden"
+                    //                     hidden
+                    //                 />
+                    //                 {uploadSingleBanner ? (
+                    //                     <IoCloseOutline
+                    //                         size={28}
+                    //                         className="text-red-500"
+                    //                         onClick={clearBanner}
+                    //                     />
+                    //                 ) : (
+                    //                     <BiCloudUpload size={28} />
+                    //                 )}
+                    //             </label>
+                    //         </div>
+                    //     </div>
+                    // )
                     <div
                         style={{
                             backgroundColor: banner_background_color,
@@ -454,7 +467,11 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                             : "w-[25%]"
                     } `}
                 >
-                    <div
+                    <EditorSlider
+                        items={categories}
+                        scrollToSection={scrollToSection}
+                    />
+                    {/* <div
                         style={{
                             backgroundColor: page_category_color,
                             borderRadius: category_shape === "sharp" ? 0 : 12,
@@ -514,7 +531,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                 <img src={RightIcon} alt="right icon" />
                             </button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 {!isLoading && (
                     <div
@@ -532,17 +549,13 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                         } bg-white py-[32]`}
                     >
                         <div
-                            className={`w-full h-full flex flex-col max-h-[610px] items-center justify-center `}
+                            className={`w-full h-full flex flex-col max-h-[610px] items-start justify-center `}
                         >
                             <div
-                                className={`flex  ${
-                                    category_alignment === "center"
-                                        ? "flex-row flex-wrap gap-[25px] justify-center"
-                                        : "flex-col gap-6"
-                                }  h-fit p-4 overflow-y-scroll hide-scroll`}
+                                className={`flex flex-col gap-[30px] h-fit p-4 overflow-y-scroll hide-scroll`}
                             >
-                                {filterCategory &&
-                                    filterCategory[0]?.items
+                                {/* {categories &&
+                                    categories[0].items
                                         .filter(
                                             (item) => item.availability === 1
                                         )
@@ -622,7 +635,123 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                                 shape={categoryDetail_shape}
                                                 fontSize={text_fontSize}
                                             />
-                                        ))}
+                                        ))} */}
+                                {categories &&
+                                    categories.map((category, i) => (
+                                        <div
+                                            className="flex flex-col"
+                                            key={i}
+                                            id={category.name}
+                                        >
+                                            <div className="text-black text-opacity-75 text-lg font-medium mb-[16px]">
+                                                {category.name}
+                                            </div>
+                                            <div className="flex flex-row flex-wrap gap-[25px] justify-start">
+                                                {/* {category.items.map(
+                                                    (product, idx) => (
+                                                        <div>Hello</div>
+                                                    )
+                                                )} */}
+                                                {category.items.map(
+                                                    (product, idx) => (
+                                                        <ProductItem
+                                                            key={idx + "prdt"}
+                                                            id={product.id}
+                                                            name={product.name}
+                                                            imgSrc={
+                                                                product.photo
+                                                            }
+                                                            amount={
+                                                                product.price
+                                                            }
+                                                            caloryInfo={
+                                                                product.calories
+                                                            }
+                                                            checkbox_required={
+                                                                product?.checkbox_required ?? [
+                                                                    "true",
+                                                                    "false",
+                                                                ]
+                                                            }
+                                                            checkbox_input_titles={
+                                                                product?.checkbox_input_titles ?? [
+                                                                    [],
+                                                                ]
+                                                            }
+                                                            checkbox_input_names={
+                                                                product?.checkbox_input_names ?? [
+                                                                    [],
+                                                                ]
+                                                            }
+                                                            checkbox_input_prices={
+                                                                product?.checkbox_input_prices ?? [
+                                                                    [],
+                                                                ]
+                                                            }
+                                                            selection_required={
+                                                                product?.selection_required ?? [
+                                                                    "true",
+                                                                    "false",
+                                                                ]
+                                                            }
+                                                            selection_input_titles={
+                                                                product?.selection_input_titles ?? [
+                                                                    [],
+                                                                ]
+                                                            }
+                                                            selection_input_names={
+                                                                product?.selection_input_names ?? [
+                                                                    [],
+                                                                ]
+                                                            }
+                                                            selection_input_prices={
+                                                                product?.selection_input_prices ?? [
+                                                                    [],
+                                                                ]
+                                                            }
+                                                            dropdown_required={
+                                                                product?.dropdown_required ?? [
+                                                                    "true",
+                                                                    "false",
+                                                                ]
+                                                            }
+                                                            dropdown_input_titles={
+                                                                product?.dropdown_input_titles ?? [
+                                                                    [],
+                                                                ]
+                                                            }
+                                                            dropdown_input_names={
+                                                                product?.dropdown_input_names ?? [
+                                                                    [],
+                                                                ]
+                                                            }
+                                                            cartBgcolor={
+                                                                categoryDetail_cart_color
+                                                            }
+                                                            amountColor={
+                                                                price_color
+                                                            }
+                                                            textColor={
+                                                                text_color
+                                                            }
+                                                            textAlign={
+                                                                text_alignment
+                                                            }
+                                                            fontWeight={
+                                                                text_fontWeight
+                                                            }
+                                                            shape={
+                                                                categoryDetail_shape
+                                                            }
+                                                            fontSize={
+                                                                text_fontSize
+                                                            }
+                                                        />
+                                                    )
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     </div>
@@ -691,7 +820,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                     <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
                         <div class="modal-content py-4 text-left px-6">
                             <div class="flex justify-between items-center pb-3">
-                                <p class="text-2xl font-bold">Crop Image!</p>
+                                <p class="text-2xl font-bold">Crop Image!!!</p>
                                 <div class="modal-close cursor-pointer z-50">
                                     <svg
                                         class="fill-current text-black"
@@ -710,7 +839,7 @@ const MainBoardEditor = ({ categories, toggleSidebarCollapse, isLoading }) => {
                                     crop={crop}
                                     rotation={rotation}
                                     zoom={zoom}
-                                    aspect={4 / 1}
+                                    aspect={1}
                                     onCropChange={setCrop}
                                     onRotationChange={setRotation}
                                     onCropComplete={onCropComplete}
