@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\API\tenant\Driver\Order;
 
+use App\Http\Resources\API\Tenant\Collection\Driver\DriverOrderCollection;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Setting;
@@ -22,8 +23,9 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
 
-        $query = Order::with('payment_method')
+        $query = Order::with(['payment_method','items','branch','user'])
             ->delivery()
+            ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->when($request->status == 'ready', function ($query) {
                 $settings = Setting::first();
                 $limitDrivers = $settings->limit_delivery_company ?? config('application.limit_delivery_company', 15);
@@ -54,6 +56,22 @@ class OrderService
 
         return $this->sendResponse(new OrderCollection($orders), '');
     }
+    public function history(Request $request)
+    {
+        /** @var RestaurantUser $user */
+        $user = Auth::user();
+        $query = $user->driver_orders()
+            ->with(['items','branch','user'])
+            ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
+            ->whenStatus($request['status'] ?? null)
+            ->WhenDateString($request['date_string']??null)
+            ->recent();
+
+        $perPage = config('application.perPage', 20);
+        $orders = $query->paginate($perPage);
+
+        return $this->sendResponse(new DriverOrderCollection($orders), '');
+    }
     /*
     "accepted" when receive from restaurant (prerequisite "received_by_restaurant")
     "completed" when the order is delivered (prerequisite "accepted")
@@ -66,7 +84,7 @@ class OrderService
         if($request->status == Order::COMPLETED){
             $order->status = Order::COMPLETED;
             $order->save();
-            $this->sendNotifications($order);
+            $this->sendNotifications($user, $order);
             return $this->sendResponse('', __('Order has been completed successfully'));
         }elseif($request->status == Order::CANCELLED){
             $order->status = Order::CANCELLED;

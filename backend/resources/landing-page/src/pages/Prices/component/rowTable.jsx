@@ -12,7 +12,7 @@ const RowTable = ({ points, price, without }) => {
           <h1>
             {" "}
             <span className="small">{t("SAR")}</span>
-            <span className="price">{t("388")}</span>
+            <span className="price">{t("399")}</span>
             <span className="small">{t("/Branch")}</span>
             <span className="text-[#C0D123] ms-2 hover:text-[#C0D123]">
               {t("* Yearly")}

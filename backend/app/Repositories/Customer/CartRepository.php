@@ -37,7 +37,7 @@ class CartRepository
     public function add(AddItemToCartRequest $request): JsonResponse
     {
         if(!$this->hasBranch($request->branch_id)){
-            return $this->sendError('Fail', __('Cannot add item from different branch.'));
+            return $this->sendError(__('Cannot add item from different branch.'));
         }
         $item = Item::findOrFail($request->item_id);
         $this->createCartItem($item, $request->all());
@@ -143,7 +143,7 @@ class CartRepository
         if($request['selectedDropdown'] ?? false){
             $options_price += $this->loopingTroughDropdownOptions($cartItem->item,$request['selectedDropdown'],$dropdown_options);
         }
-      
+
         return $cartItem->update([
             'notes'     => $request['notes'] ?? $cartItem->notes,
             'quantity'  => $request['quantity'],

@@ -41,6 +41,7 @@ import FailedPayment from "./pages/FailedPayment";
 import * as Sentry from "@sentry/react";
 
 import { initializeApp } from "firebase/app";
+import {t} from "i18next";
 const firebaseConfig = {
     apiKey: "AIzaSyD7xao9Wm2JTWWJwS5IvgNYWJWiSh48mwM",
     authDomain: "khardl.firebaseapp.com",
@@ -93,6 +94,7 @@ const App = () => {
     ].includes(location.pathname);
     const showFooter = ![
         "/",
+        "/branches",
         "/cart",
         "/dashboard",
         "/site-editor/restaurants",
@@ -245,12 +247,14 @@ const App = () => {
                                 </Route>{" "}
                             </Routes>{" "}
                         </div>{" "}
-                        {showFooter && !loading && (
-                            <div className="p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] ">
-                                <Footer />
-                            </div>
-                        )}{" "}
+                        {/*{showFooter && !loading && (*/}
+                        {/*    <div className="p-[30px] pt-[60px] max-md:px-[5px] max-md:py-[40px] ">*/}
+                        {/*        <Footer />*/}
+                        {/*    </div>*/}
+                        {/*)}{" "}*/}
+                        {showFooter && !loading && (<div className="mini-footer">{t("All rights reserved")}</div>)}
                     </div>{" "}
+
                 </div>{" "}
             </MenuProvider>
         </>
