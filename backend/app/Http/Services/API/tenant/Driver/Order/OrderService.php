@@ -3,6 +3,7 @@
 namespace App\Http\Services\API\tenant\Driver\Order;
 
 use App\Http\Resources\API\Tenant\Collection\Driver\DriverOrderCollection;
+use App\Http\Resources\API\Tenant\OrderResource;
 use App\Models\Tenant\Order;
 use Illuminate\Http\Request;
 use App\Models\Tenant\Setting;
@@ -61,7 +62,7 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $query = $user->driver_orders()
-            ->with(['items','branch','user'])
+            ->with(['user'])
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->whenStatus($request['status'] ?? null)
             ->WhenDateString($request['date_string']??null)
@@ -71,6 +72,12 @@ class OrderService
         $orders = $query->paginate($perPage);
 
         return $this->sendResponse(new DriverOrderCollection($orders), '');
+    }
+    public function orderDetails(Request $request, Order $order)
+    {
+        $request['km'] = 'get value';
+        $order->load(['user','branch','items']);
+        return $this->sendResponse(new OrderResource($order), '');
     }
     /*
     "accepted" when receive from restaurant (prerequisite "received_by_restaurant")
@@ -94,6 +101,7 @@ class OrderService
         }elseif($request->status == Order::ACCEPTED){//Mean picked up
             $order->status = $request->status;
             $order->driver_id = $user->id;
+            $order->accepted_at = now();
             $order->save();
             return $this->sendResponse('', __('Order has been picked up successfully'));
         }

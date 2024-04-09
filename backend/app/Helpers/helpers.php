@@ -206,6 +206,21 @@ if (!function_exists('getTenantByHash')) {
         });
     }
 }
+if (!function_exists('haversineDistance')) {
+    function haversineDistance($lat1, $long1, $lat2, $lon2)
+    {
+        $R = 6371;
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLon = deg2rad($lon2 - $long1);
+
+        $a = sin($dLat / 2) * sin($dLat / 2) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLon / 2) * sin($dLon / 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        $distance = $R * $c;
+
+        return $distance;
+    }
+}
 
 if (!function_exists('getTenantByOrderId')) {
     function getTenantByOrderId(string $orderid)
