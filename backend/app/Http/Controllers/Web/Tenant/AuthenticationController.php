@@ -56,6 +56,7 @@ class AuthenticationController extends Controller
         /** @var ?User $user */
         $user = auth()?->user();
         if ($user) {
+
             tenancy()->central(function ($tenant) {
                 $user = User::where('email',$tenant->email)->first();
                 if($user){
@@ -67,9 +68,10 @@ class AuthenticationController extends Controller
                 return ResponseHelper::response([
                     'message' => 'logged out successfully',
                     'is_loggedin' => false
-                ], ResponseHelper::HTTP_OK);
+                ], ResponseHelper::HTTP_REDIRECT_TO_CENTERAL);
             }
-            return redirect()->route("home");
+
+            return redirect()->route("homeCentral");
         }
 
         if ($request->expectsJson()) {

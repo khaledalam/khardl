@@ -139,7 +139,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                 <div class="map-container" data-branch-id="{{ $branch->id }}">
                                     <div id="map{{ $branch->id }}" class="google_map">
                                         <div class="map-overlay">
-                                            <div class="overlay-text"><?xml version="1.0" encoding="UTF-8"?>
+                                            <div class="overlay-text">
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.19 512.19" style="enable-background:new 0 0 512.19 512.19;" xml:space="preserve" width="48" height="48"><g><circle cx="256.095" cy="256.095" r="85.333"/><path d="M496.543,201.034C463.455,147.146,388.191,56.735,256.095,56.735S48.735,147.146,15.647,201.034   c-20.862,33.743-20.862,76.379,0,110.123c33.088,53.888,108.352,144.299,240.448,144.299s207.36-90.411,240.448-144.299   C517.405,277.413,517.405,234.777,496.543,201.034z M256.095,384.095c-70.692,0-128-57.308-128-128s57.308-128,128-128   s128,57.308,128,128C384.024,326.758,326.758,384.024,256.095,384.095z"/></g></svg>
                                             </div>
                                             <img src="{{ global_asset("images/blured_map.png") }}" class="img-fluid" alt="">
@@ -352,7 +352,7 @@ src="https://goSellJSLib.b-cdn.net/v2.0.0/js/gosell.js"
                                             <!--begin::Stat-->
                                                 <div
                                                     class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-6 mb-3">
-                                                    <a href="{{ route('restaurant.menu', ['branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('edit-menu') }}</a>
+                                                    <a href="{{ route('restaurant.get-category', ['id' => \App\Models\Tenant\Category::where('branch_id', $branch->id)?->first()?->id ?? -1, 'branchId' => $branch->id]) }}" class="fs-6 text-700 fw-bolder">{{ __('edit-menu') }}</a>
                                                 </div>
                                         </div>
                                         <!--end::Stats-->

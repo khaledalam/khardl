@@ -13,6 +13,7 @@ import { useAuthContext } from "./context/AuthContext";
 import { MdOutlineDeliveryDining, MdOutlineDoneAll } from "react-icons/md";
 import Model from "./Restaurants/RestaurantsPreview/components/Model";
 import Login from "./Restaurants/RestaurantsPreview/components/Login";
+import {getCartItemsCount} from "../redux/NewEditor/categoryAPISlice";
 
 export const SideMenu = () => {
     const { closeMenu } = useContext(MenuContext);
@@ -51,8 +52,9 @@ export const SideMenu = () => {
                 .unwrap()
                 .then((res) => {
                     setStatusCode(HTTP_NOT_AUTHENTICATED);
+                    dispatch(getCartItemsCount(0))
                     navigate("/login", { replace: true });
-                    toast.success("Logged out successfully");
+                    toast.success(t("You have been logged out successfully"));
                 });
         } catch (err) {
             console.error(err.message);
@@ -203,7 +205,7 @@ export const SideMenu = () => {
                         ></Button>
 
                         <Button
-                            title={t("Logout")}
+                            title={t("Logoutgg")}
                             onClick={handleLogout}
                             classContainer="!w-100 !px-[16px] !font-medium !bg-[var(--danger)]"
                             style={{

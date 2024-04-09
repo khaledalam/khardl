@@ -128,3 +128,5 @@ VALUES (NULL, '2024-01-31', '2025-02-28', '10', '2', 'test_sub_id', '1', 'active
 DEALLOCATE PREPARE stmt;
 
 ```
+or use command: `tenant:add-dummy-branch-slot {name=first}` 
+e.g. php artisan tenant:add-dummy-branch-slot first

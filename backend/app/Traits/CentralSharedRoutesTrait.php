@@ -13,7 +13,7 @@ trait CentralSharedRoutesTrait
     {
         return [
             'routes'=>[
-                ''=>"home",
+                ''=>"homeCentral",
                 'advantages'=>'advantages',
                 'restaurant-not-found'=>'restaurant_not_found',
                 'clients'=>'clients',

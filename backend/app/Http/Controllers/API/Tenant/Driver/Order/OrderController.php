@@ -18,6 +18,10 @@ class OrderController extends BaseController
     {
         return $this->orderService->getList($request);
     }
+    public function history(Request $request)
+    {
+        return $this->orderService->history($request);
+    }
     public function changeStatus(ChangeStatusRequest $request, Order $order)
     {
         return $this->orderService->changeStatus($request,$order);

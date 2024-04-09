@@ -1,9 +1,49 @@
 @extends('layouts.restaurant-sidebar')
 
 @section('title', DB::table('branches')->where('id', $branchId)->value('name'))
-@section('subtitle', $selectedCategory->name)
+@section('subtitle', $selectedCategory?->name)
 
 @section('content')
+
+    @if($user->isRestaurantOwner())
+        <div class="content d-flex flex-column flex-column pt-0" id="kt_content">
+
+            <!--begin::Post-->
+            <div class="post d-flex flex-column" id="kt_post">
+                <!--begin::Container-->
+                <div id="kt_content_container" class="container-xxl">
+                    <!--begin::Inbox App - Messages -->
+                    <div class="flex-lg-row-fluid my-2">
+                        <!--begin::Card-->
+                        <div class="card">
+                            <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                <div class="d-flex flex-wrap gap-1">
+                                    <h3 class="text-primary">{{ __('Branches') }}</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    @foreach ($branches as $branchLoop)
+                                        <div class="col-md-3">
+                                            <a href="{{ route('restaurant.get-category',['id'=> \App\Models\Tenant\Category::where('branch_id', $branchLoop->id)?->first()?->id ?? -1, 'branchId' => $branchLoop->id]) }}">
+                                                <button type="button" class="btn btn-sm @if($branchLoop->id == $branchId) btn-warning text-black @else btn-primary @endif">
+                                                    @if($branchLoop->id == $branchId)<i class="fa fa-arrow-down text-black mx-1"></i>@endif {{ $branchLoop->name }}
+                                                </button>
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--end::Card-->
+                    </div>
+                </div>
+                <!--end::Inbox App - Messages -->
+            </div>
+            <!--end::Container-->
+        </div>
+    @endif
     <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid pt-0" id="kt_content">
 
@@ -20,13 +60,11 @@
                                   <!--begin::Aside content-->
                                   <div class="card-body">
                                       <!--begin::Button-->
-                                      <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">
-                                        <p class="btn btn-primary text-uppercase w-100 mb-10">
-
-                                                {{ __('all-categories') }}
-
-                                        </p>
-                                    </a>
+{{--                                      <a href="{{route('restaurant.menu', ['branchId' => $branchId])}}">--}}
+{{--                                        <p class="btn btn-primary text-uppercase w-100 mb-10">--}}
+{{--                                                {{ __('all-categories') }}--}}
+{{--                                        </p>--}}
+{{--                                    </a>--}}
                                       <!--end::Button-->
                                       <!--begin::Menu-->
                                       <div id="categoryList" class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
@@ -34,8 +72,8 @@
                                           @foreach ($categories as $category)
                                             <div class="menu-item mb-3">
                                                 <!--begin::Inbox-->
-                                                <a href="{{ route('restaurant.get-category', ['id' => $category->id, 'branchId' => $branchId]) }}">
-                                                    <span class="menu-link @if ($category->id === $selectedCategory->id) active @endif">
+                                                <a href="{{ route('restaurant.get-category', ['id' => $category?->id, 'branchId' => $branchId]) }}">
+                                                    <span class="menu-link @if ($category?->id === $selectedCategory?->id) active @endif">
                                                         <img src="{{ $category->photo ?? global_asset('img/category-icon.png') }}" width="50" height="50" class="mx-2" style="border-radius: 50%;" />
                                                         <span class="menu-title fw-bolder">{{ $category->name }}</span>
                                                         <span class="badge badge-light-success my-2">{{ DB::table('items')->where('category_id', $category->id)->where('branch_id', $branchId)->count() }}</span>
@@ -112,12 +150,13 @@
                                   <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                                       <!--begin::Actions-->
                                       <div class="d-flex flex-wrap gap-1">
-                                          <h3 class="text-primary">{{ DB::table('branches')->where('id', $branchId)->value('name') }} | {{ $selectedCategory->name }}</h3>
+                                          <h3 class="text-primary">{{ DB::table('branches')->where('id', $branchId)?->value('name') }} @if($selectedCategory) | {{ $selectedCategory->name }} @endif</h3>
                                       </div>
                                       <!--end::Actions-->
                                       <!--begin::Pagination-->
                                       <div class="d-flex align-items-center flex-wrap gap-2">
-                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('add-new-item') }}
+                                          @if($selectedCategory)
+                                          <a href="#" class="btn btn-sm btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{ __('create-new-items') }}
                                               <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
                                               <span class="svg-icon svg-icon-2 me-3">
                                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -127,7 +166,7 @@
                                               </span>
                                               <!--end::Svg Icon-->
                                            </a>
-                                           <form class="delete-form" action="{{ route('restaurant.delete-category', ['id' => $selectedCategory->id]) }}" method="POST">
+                                          <form class="delete-form" action="{{ route('restaurant.delete-category', ['id' => $selectedCategory->id]) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="delete-button btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
@@ -142,6 +181,7 @@
                                               <!--end::Svg Icon-->
                                             </button>
                                           </form>
+                                           @endif
                                       </div>
                                       <!--end::Pagination-->
                                   </div>
@@ -284,6 +324,7 @@
 
 
                     <!--begin:Form-->
+                    @if($selectedCategory)
                     <form id="kt_modal_new_target_form" class="form" action="{{ route('restaurant.add-item', ['id' => $selectedCategory->id, 'branchId' => $branchId]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <!--begin::Heading-->
@@ -416,7 +457,8 @@
                         </div>
                         <!--end::Actions-->
                     </form>
-                    <!--end:Form-->
+                    @endif
+                        <!--end:Form-->
                 </div>
                 <!--end::Modal body-->
             </div>
