@@ -61,7 +61,7 @@ class OrderService
         /** @var RestaurantUser $user */
         $user = Auth::user();
         $query = $user->driver_orders()
-            ->with(['items','branch','user'])
+            ->with(['user'])
             ->WhenDateRange($request['from'] ?? null, $request['to'] ?? null)
             ->whenStatus($request['status'] ?? null)
             ->WhenDateString($request['date_string']??null)
