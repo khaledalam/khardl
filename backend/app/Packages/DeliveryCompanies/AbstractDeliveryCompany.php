@@ -26,7 +26,7 @@ abstract class AbstractDeliveryCompany implements DeliveryCompanyInterface
     abstract public function verifyApiKey(string $api_key): bool;
     abstract public function cancelOrder($id): bool;
     abstract public function processWebhook(array $payload);
-    abstract public function sendNotifications($user, $order);
+    abstract public function sendNotifications($order);
 
     public function send(string $url,$token,array $data,string $method = 'post'): Promise{
         if($token){
